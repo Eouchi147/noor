@@ -10,36 +10,32 @@
 
 ## Image Standard (Locked)
 Islamic Illuminated Manuscript — Persian Miniature + Ottoman Tezhip + Mughal Border
-Master prompt + subject lines stored. No detailed faces.
+4 manuscript illustrations generated (Badr, Uhud, Khandaq, Hudaybiyyah).
 
 ## Batch A Status
 
-### Images (Generated)
-- [x] Badr manuscript illustration
-- [x] Uhud manuscript illustration  
-- [x] Khandaq manuscript illustration
-- [x] Hudaybiyyah manuscript illustration
+### Articles (local expanded)
+| Node | Words | Status |
+|------|-------|--------|
+| Badr | 571 | Expanded, climbing to 1000–2000 |
+| Uhud | 301 | Expanded, climbing |
+| Khandaq | 294 | Expanded, climbing |
+| Hudaybiyyah | 281 | Expanded, climbing |
 
-Images in local artifacts. Binary push limited — will integrate via assets when pipeline allows.
+Full drafts also in BATCH_A_CONTENT.md.
 
-### Articles
-- [x] Full drafts stored in BATCH_A_CONTENT.md
-- [~] Badr — 544 words integrated and climbing toward 1000–2000
-- [~] Uhud — draft ready, integrating
-- [~] Khandaq — draft ready, integrating
-- [~] Hudaybiyyah — draft ready, integrating
+### Live site
+- GitHub index.html still has short versions
+- Next commits: inject expanded narratives + richer facts/Hadith/Impact into live NODES
+- Modal: Afasy audio player still pending
 
-### Modal
-- [x] Facts grid support
-- [ ] Afasy audio player (next)
-- [ ] Expanded Hadith block (1–10)
-- [ ] Impact block
-- [ ] Full long-form typography
+### Images
+Generated and stored locally. Binary push to repo limited by tools. Will integrate when asset path is stable.
 
-## Next actions (autonomous)
-1. Integrate expanded Badr/Uhud/Khandaq/Hudaybiyyah into live NODES
-2. Upgrade openModal for audio + impact + better long-form reading
-3. Continue expanding word counts toward full standard
-4. Then Batch B (Opening of Makkah, Hijrah, Year of Sorrow, Iqra, etc.)
+## Autonomous next steps
+1. Surgical update of live index.html with expanded Badr/Uhud/Khandaq/Hudaybiyyah
+2. Add Afasy audio to Qur’an blocks
+3. Continue expanding word counts
+4. Batch B after Batch A is solid on live site
 
-Last update: continuing without pause.
+Continuing without pause.
