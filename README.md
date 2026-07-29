@@ -5,32 +5,26 @@
 A production chronological Islamic library.
 
 ## Live
-- Path: https://noor-islamic-timeline.vercel.app
+- https://noor-islamic-timeline.vercel.app
 - Repo: https://github.com/Eouchi147/noor
 
-## Current Scope (MVP+)
+## Current Scope
 - 58 chronological nodes (Al-Bidaya → Qisas → Seerah → Al-Nihaya)
-- 7 Books structure (UI ready for expansion)
-- Long-form Codex modal template (hero, narrative, Quran + tilawah, Hadith, Facts, Lessons, Connections)
-- Companions page with seals (Hamza + Khulafa + Bilal + others seed)
-- Manuscript-style illustrations (no faces): CSS patterns & abstract seals
-- Search + period filters + parallax tiles
+- Visual data chips on tiles
+- Staggered animations + hover effects
+- Long-form Codex modal articles for core nodes
+- Companions page with abstract seals (no faces)
+- Search + period filters
 - Design system: parchment `#FFFEF7`, ink `#2C2416`, gold `#C9A227`
 
 ## Respect Rules
-- No faces of prophets or companions (light, seals, calligraphy, places, objects only)
-- Content from Qur’an, authentic Hadith, classical sources (Ibn Kathir, Qisas, Ar-Raheeq)
+- No faces of prophets or companions (light, seals, calligraphy only)
+- Content from Qur’an, authentic Hadith, classical sources
 - Educational / contemplative — not a fatwa source
-
-## Next Phases
-1. Expand remaining high-priority nodes to full 600–900 word Codex articles
-2. Full Companions encyclopedia (50+ seals)
-3. Complete audio for every ayah card
-4. Grow Path toward full 7-book library (300+ tiles)
 
 ## Local
 ```bash
 npx serve .
 ```
 
-Built as a real product, not a prototype.
+Built as a real product.
