@@ -1,30 +1,36 @@
-# NOOR — نُور
+# NOOR — نُور | Codex of Light
 
 **From Kun Fayakun to Radiant Faces Looking at Their Lord**
 
-A polished, production-ready chronological journey through Islamic history and eschatology.
-
-58 nodes across 4 periods:
-1. Al-Bidaya (The Beginning) — Creation to Flood
-2. Qisas al-Anbiya (Stories of the Prophets) — Ibrahim to Isa
-3. Al-Seerah (Prophetic Biography) — Jahiliyya to Tabuk
-4. Al-Nihaya (The End Times) — Dajjal to Jannah
+A production chronological Islamic library.
 
 ## Live
-https://noor-islamic-timeline-samkeamy-7230s-projects.vercel.app
+- Path: https://noor-islamic-timeline.vercel.app
+- Repo: https://github.com/Eouchi147/noor
 
-## Design System
-- Background parallax tiles (stylized non-clickable backgrounds)
-- Perfect legibility via gradient overlays + text-shadow
-- Color theory: parchment `#FFFEF7`, dark `#2C2416`, gold `#C9A227`, sage `#8BA888`
-- Lightweight, mobile-first, accessible
-- Modal deep-dives with Quran references
-- Search & filter by period
+## Current Scope (MVP+)
+- 58 chronological nodes (Al-Bidaya → Qisas → Seerah → Al-Nihaya)
+- 7 Books structure (UI ready for expansion)
+- Long-form Codex modal template (hero, narrative, Quran + tilawah, Hadith, Facts, Lessons, Connections)
+- Companions page with seals (Hamza + Khulafa + Bilal seed)
+- Manuscript-style illustrations (no faces): Arsh, Ark, Kaaba, Hira, Sirat, companion seals
+- Search + period filters + parallax tiles
+- Design system: parchment `#FFFEF7`, ink `#2C2416`, gold `#C9A227`
 
-## Tech
-- Pure static HTML/CSS/JS (no build step required)
-- Tailwind CSS via CDN
-- IntersectionObserver for smooth parallax
-- Deploy-ready for Vercel / GitHub Pages
+## Respect Rules
+- No faces of prophets or companions (light, seals, calligraphy, places, objects only)
+- Content from Qur’an, authentic Hadith, classical sources (Ibn Kathir, Qisas, Ar-Raheeq)
+- Educational / contemplative — not a fatwa source
 
-Built as a finished product, not a prototype.
+## Next Phases
+1. Expand remaining high-priority nodes to full 600–900 word Codex articles
+2. Full Companions encyclopedia (50+ seals)
+3. Complete audio for every ayah card
+4. Grow Path toward full 7-book library (300+ tiles)
+
+## Local
+```bash
+npx serve .
+```
+
+Built as a real product, not a prototype.
