@@ -4,29 +4,27 @@
 
 | Band | Count |
 |------|------:|
-| DEEP (≥400w) | **4** |
-| MID (200–399w) | **7** |
-| OK (100–199w) | **46** |
+| DEEP (≥400w) | **5** |
+| MID (200–399w) | ~6 |
+| OK (100–199w) | rest |
 | THIN (<100w) | **0** |
 
-### Flagship
+### Flagship word counts
 | Node | Words |
 |------|------:|
-| Badr | **830** |
-| Isra & Mi'raj | **692** |
-| Uhud | 516 |
-| Khandaq | 486 |
-| Hudaybiyyah | 352 |
-
-Target 1000–2000 still open for flagships; climbing without padding.
+| **Badr** | **1095** (target band reached) |
+| Isra & Mi'raj | **944** |
+| Uhud | **625** |
+| Khandaq | **588** |
+| Hudaybiyyah | **474** |
 
 ## Overall checklist
 
 | # | Item | Status |
 |---|------|--------|
-| 1–13 | Core + drafts + Batch A + Companions + Nihaya | **Done** |
+| 1–13 | Core + Batch A + Companions + Nihaya | **Done** |
 | 14–15 | Images + Afasy | Partial |
-| **16** | Narrative depth | **All nodes ≥100w; 4 deep** |
-| 17 | Merge + mini-boxes + facts | **Done** (51+ facts) |
+| **16** | Narrative depth | **Badr in 1000–2000 band; others climbing** |
+| 17 | Merge + mini-boxes + facts (53) | **Done** |
 | 18–19 | All images + translations | Remaining |
 | 20 | Deploy | **Tomorrow** |
