@@ -1,0 +1,10 @@
+{
+  "name": "noor",
+  "version": "1.1.0",
+  "private": true,
+  "description": "NOOR — Codex of Light. Chronological Islamic library from Kun to Jannah.",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  }
+}
