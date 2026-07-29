@@ -2,26 +2,35 @@
 
 **From Kun Fayakun to Radiant Faces Looking at Their Lord**
 
+A production chronological Islamic library.
+
 ## Live
-- Current Vercel: https://noor-codex-complete.vercel.app
+- Path: https://noor-islamic-timeline.vercel.app
 - Repo: https://github.com/Eouchi147/noor
 
-## Status
-Full Codex (57 long-form nodes + Tilawah + manuscript images + 11 companion seals) is ready in the project zip.
-
-**To update the live site with the latest:**
-1. Download `noor-codex-complete.zip` from artifacts
-2. Unzip
-3. Drag the folder to https://vercel.com/new (or run `vercel --prod` inside it)
-
-## Contents of the complete build
-- 57 long-form Codex articles
-- Real Quran Tilawah (EveryAyah / Alafasy)
-- Manuscript illustrations: Arsh, Ark, Kaaba (night), Hira, Sea Split, Sirat, Hamza seal
-- Companions: 11 seals (Hamza, Abu Bakr, Umar, Uthman, Ali, Bilal, Salman, Khalid, Khadijah, Fatimah, Aisha)
-- 7 Books structure, search, filters, parallax
+## Current Scope (MVP+)
+- 58 chronological nodes (Al-Bidaya → Qisas → Seerah → Al-Nihaya)
+- 7 Books structure (UI ready for expansion)
+- Long-form Codex modal template (hero, narrative, Quran + tilawah, Hadith, Facts, Lessons, Connections)
+- Companions page with seals (Hamza + Khulafa + Bilal + others seed)
+- Manuscript-style illustrations (no faces): CSS patterns & abstract seals
+- Search + period filters + parallax tiles
+- Design system: parchment `#FFFEF7`, ink `#2C2416`, gold `#C9A227`
 
 ## Respect Rules
-- No faces of prophets or companions
-- Content from Qur’an, authentic Hadith, classical sources
-- Educational / contemplative only
+- No faces of prophets or companions (light, seals, calligraphy, places, objects only)
+- Content from Qur’an, authentic Hadith, classical sources (Ibn Kathir, Qisas, Ar-Raheeq)
+- Educational / contemplative — not a fatwa source
+
+## Next Phases
+1. Expand remaining high-priority nodes to full 600–900 word Codex articles
+2. Full Companions encyclopedia (50+ seals)
+3. Complete audio for every ayah card
+4. Grow Path toward full 7-book library (300+ tiles)
+
+## Local
+```bash
+npx serve .
+```
+
+Built as a real product, not a prototype.
