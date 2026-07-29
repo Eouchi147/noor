@@ -1,35 +1,34 @@
 # NOOR Content Status
 
 **Building** — deploy when Vercel resets.  
-**i18n foundation locked** (I18N_FOUNDATION.md).
+**i18n foundation locked.**
 
-## Expanded node drafts: **35**
+## Expanded node drafts: **41**
 
 ### Al-Bidaya
 Adam · Hawwa · Qabil & Habil · Nuh · Hud · Salih
 
 ### Qisas
-Ibrahim · Sacrifice · Kaaba · Yusuf  
-Musa (Nile → Magicians → Sea → Pharaoh drowned)  
-Dawud · Sulayman · Yunus · Zakariya · Yahya · Maryam · Isa
+Ibrahim cycle · Yusuf · full Musa arc · Dawud · Sulayman · Yunus · Zakariya · Yahya · Maryam · Isa
 
-### Al-Seerah
-Jahiliyya · Year of the Elephant · Birth · Iqra · Year of Sorrow · Taif · Isra & Mi’raj · Hijrah  
+### Al-Seerah (major arc)
+Jahiliyya · Year of the Elephant · Birth · Iqra · Year of Sorrow · Taif · Isra & Mi’raj · Hijrah · Change of Qibla  
 **Batch A (full + Afasy):** Badr · Uhud · Khandaq · Hudaybiyyah  
-Opening of Makkah · Farewell Hajj · Death of the Prophet (drafts ready)
+Letters to Kings · Khaybar · Opening of Makkah · Tabuk · Farewell Hajj · Death of the Prophet
 
-### Al-Khulafa (drafts ready)
-Abu Bakr (Ridda + mushaf) · Umar (Faruq)
+### Al-Khulafa (complete draft set)
+Abu Bakr · Umar · Uthman · Ali
 
 ### Companions
-12 expandable seals with full articles
+12 expandable seals
 
 ### Nihaya
 Extreme focus retained
 
-## Next
-- Uthman · Ali · remaining Seerah (Khaybar, Tabuk, Letters to Kings…)
-- Merge all drafts into live NODES with facts/Hadith/Impact
-- Word counts toward 1000–2000
+## Coverage vs 86-node target
+Core prophetic and Seerah spine is substantially drafted. Remaining work is:
+- Thin nodes still on one-line placeholders
+- Word counts toward 1000–2000 on flagship articles
+- Merge all drafts into live NODES with facts/Hadith/Impact/Afasy
 - Full EN JSON export for translators
-- Deploy tomorrow
+- Deploy when limit resets
