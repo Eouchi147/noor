@@ -4,25 +4,29 @@
 
 | # | Item | Status |
 |---|------|--------|
-| 1 | Project structure | **Done** |
-| 2 | Visual system | **Done** |
-| 3 | Menu / navigation | **Done** |
-| 4 | i18n foundation | **Done** |
-| 5 | 86-node chronology map | **Done** |
-| 6–7 | Bidaya + Qisas drafts | **Drafted** |
-| 8 | Batch A (Badr–Hudaybiyyah) | **Done + merged** |
-| 9–10 | Seerah rest + Khulafa | **Drafted / partial merge** |
-| 11–13 | Companions, Nihaya, master EN pack | **Done** |
-| 14–15 | Images + Afasy | **Partial** |
-| 16 | Narratives 1000–2000 words | **In progress** (Badr 637w; others 150–400w) |
-| 17 | Merge drafts → live index | **Mostly done** (47 nodes ≥100w) |
-| 18 | Images for every tile | **Remaining** |
-| 19 | Full translations | **Remaining** |
+| 1–5 | Structure, visuals, menu, i18n, map | **Done** |
+| 6–13 | Drafts, Batch A, Companions, Nihaya, EN pack | **Done / drafted** |
+| 14–15 | Images + Afasy | Partial |
+| 16 | Narratives 1000–2000 words | **In progress** |
+| 17 | Merge → live index | **Mostly done** |
+| 18–19 | All images + translations | Remaining |
 | 20 | Deploy | **Tomorrow** |
 
-## Local index.html
-- ~47 nodes with ≥100 word details
-- ~4 nodes with ≥300 words
-- Badr deepest at 637 words
-- Batch A (Badr, Uhud, Khandaq, Hudaybiyyah) merged
-- Ready to push for deploy when Vercel resets
+## Flagship word counts (local index)
+
+| Node | Words |
+|------|------:|
+| Badr | 637 |
+| Isra & Mi'raj | 483 |
+| Uhud | 438 |
+| Khandaq | 384 |
+| Hudaybiyyah | 352 |
+| Ibrahim | 273 |
+| Nuh | 236 |
+| Opening of Makkah | 227 |
+| Adam | 224 |
+| Sea Split | 222 |
+
+Target: 1000–2000 per flagship. Climbing.
+
+Local index.html ready to push when Vercel resets.
