@@ -20,20 +20,26 @@ Master prompt + subject lines stored. No detailed faces.
 - [x] Khandaq manuscript illustration
 - [x] Hudaybiyyah manuscript illustration
 
-Images currently in local artifacts. Binary push to GitHub limited by current tools — will integrate via assets folder or CDN next.
+Images in local artifacts. Binary push limited — will integrate via assets when pipeline allows.
 
 ### Articles
-- [ ] Badr — expanding to 1000–2000 words
-- [ ] Uhud — expanding to 1000–2000 words
-- [ ] Khandaq — expanding to 1000–2000 words
-- [ ] Hudaybiyyah — expanding to 1000–2000 words
+- [x] Full drafts stored in BATCH_A_CONTENT.md
+- [~] Badr — 544 words integrated and climbing toward 1000–2000
+- [~] Uhud — draft ready, integrating
+- [~] Khandaq — draft ready, integrating
+- [~] Hudaybiyyah — draft ready, integrating
 
 ### Modal
 - [x] Facts grid support
-- [ ] Afasy audio player
+- [ ] Afasy audio player (next)
 - [ ] Expanded Hadith block (1–10)
 - [ ] Impact block
 - [ ] Full long-form typography
 
-## Next
-Continue expanding the four core Seerah articles to full depth, upgrade modal with audio, then move to Batch B.
+## Next actions (autonomous)
+1. Integrate expanded Badr/Uhud/Khandaq/Hudaybiyyah into live NODES
+2. Upgrade openModal for audio + impact + better long-form reading
+3. Continue expanding word counts toward full standard
+4. Then Batch B (Opening of Makkah, Hijrah, Year of Sorrow, Iqra, etc.)
+
+Last update: continuing without pause.
