@@ -2,29 +2,24 @@
 
 ## Status 16 — Narrative depth
 
-| Band | Count |
-|------|------:|
-| DEEP (≥400w) | **5** |
-| MID (200–399w) | ~6 |
-| OK (100–199w) | rest |
-| THIN (<100w) | **0** |
+| Node | Words | Band |
+|------|------:|------|
+| **Isra & Mi'raj** | **1132** | 1000–2000 |
+| **Badr** | **1095** | 1000–2000 |
+| Uhud | 625 | DEEP |
+| Khandaq | 588 | DEEP |
+| Hudaybiyyah | 474 | DEEP |
+| Opening of Makkah | 423 | DEEP |
 
-### Flagship word counts
-| Node | Words |
-|------|------:|
-| **Badr** | **1095** (target band reached) |
-| Isra & Mi'raj | **944** |
-| Uhud | **625** |
-| Khandaq | **588** |
-| Hudaybiyyah | **474** |
+THIN nodes: **0** · Facts grids: **53+** · Tile mini-boxes: active
 
-## Overall checklist
+## Checklist
 
 | # | Item | Status |
 |---|------|--------|
 | 1–13 | Core + Batch A + Companions + Nihaya | **Done** |
 | 14–15 | Images + Afasy | Partial |
-| **16** | Narrative depth | **Badr in 1000–2000 band; others climbing** |
-| 17 | Merge + mini-boxes + facts (53) | **Done** |
+| **16** | Narrative depth | **2 flagships in target band** |
+| 17 | Merge + mini-boxes + facts | **Done** |
 | 18–19 | All images + translations | Remaining |
 | 20 | Deploy | **Tomorrow** |
