@@ -1,23 +1,29 @@
 # NOOR Content Status
 
-**Building** — deploy when Vercel resets.  
-**i18n foundation locked** · master EN pack = translator source of truth.
+## Ordered checklist
 
-## Expanded node drafts: **51**
+| # | Item | Status |
+|---|------|--------|
+| 1 | Project structure (SPA, tiles, modals, filters) | **Done** |
+| 2 | Visual system | **Done** |
+| 3 | Menu / navigation | **Done** |
+| 4 | i18n foundation | **Done** |
+| 5 | 86-node chronology map | **Done** |
+| 6 | Al-Bidaya drafts | **Drafted** |
+| 7 | Qisas drafts | **Drafted** |
+| 8 | Seerah Batch A (Badr–Hudaybiyyah) | **Done** + merged |
+| 9 | Seerah rest | **Drafted** + partial merge |
+| 10 | Al-Khulafa | **Drafted** |
+| 11 | Companions expandable | **Done** |
+| 12 | Al-Nihaya extreme focus | **Done** |
+| 13 | Master EN pack (52 nodes) | **Done** |
+| 14 | Manuscript images (all tiles) | **Partial** (4 of ~86) |
+| 15 | Afasy audio | **Partial** |
+| 16 | Narratives 1000–2000 words | **In progress** (Badr 637w) |
+| 17 | Merge drafts → live index.html | **In progress** |
+| 18 | Images for every tile | **Remaining** |
+| 19 | Full translations | **Remaining** |
+| 20 | Deploy | **Tomorrow** (Vercel limit) |
 
-Local: `artifacts/i18n_en_nodes.json`
-
-### Coverage (substantially complete core)
-
-**Al-Bidaya** — Adam, Hawwa, Qabil & Habil, Nuh, Flood, Hud, Salih  
-**Qisas** — Ibrahim, Isma’il, Sacrifice, Kaaba, Lut, Yusuf, Ayyub, full Musa arc, Dawud, Sulayman, Yunus, Zakariya, Yahya, Maryam, Isa (birth + table)  
-**Seerah** — Jahiliyya → Death including Batch A (Badr–Hudaybiyyah full + Afasy), Opening, Tabuk, Farewell  
-**Khulafa** — Abu Bakr, Umar, Uthman, Ali  
-**Companions** — 12 expandable seals  
-**Nihaya** — Extreme focus retained  
-
-### Next
-1. Merge master pack into deployable index.html NODES
-2. Deepen flagship articles toward 1000–2000 words
-3. Remaining thin nodes (if any under 86)
-4. Deploy when Vercel limit resets
+## Current work
+Merging master pack into deployable index (step 17). Batch A + many prophet nodes merged into local index.html.
