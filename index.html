@@ -10,26 +10,16 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227',soft:'#F7F3E9'}}}}</script>
 <style>
-:root{
-  --parchment:#FFFEF7; --ink:#2C2416; --gold:#C9A227; --soft:#F7F3E9;
-  --ease:cubic-bezier(.22,1,.36,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--soft:#F7F3E9;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .font-amiri{font-family:Amiri,serif}
-
-/* Progress */
 #progress{height:2.5px;background:linear-gradient(90deg,#C9A227,#e8c547,#C9A227);width:0;position:fixed;top:0;left:0;z-index:300;box-shadow:0 0 12px rgba(201,162,39,.45);transition:width .1s linear}
-
-/* Header / Menu */
 .header{position:sticky;top:0;z-index:50;background:rgba(255,254,247,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(44,36,22,.07)}
 .nav-link{position:relative;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65);transition:color .25s}
 .nav-link:hover{color:var(--ink)}
 .nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--gold);transition:width .3s var(--ease)}
 .nav-link:hover::after{width:100%}
-
-/* Hero light effects */
 .hero{position:relative;overflow:hidden;isolation:isolate}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 20%,#2C2416 0%,#1A160F 55%,#0F0D0A 100%)}
 .hero-glow{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(90px);opacity:.35;pointer-events:none}
@@ -38,85 +28,40 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .hero-glow-3{bottom:-80px;right:5%;background:radial-gradient(circle,#C9A22733 0%,transparent 70%);opacity:.2}
 .hero-rays{position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 30%,transparent 0deg 8deg,rgba(201,162,39,.03) 8deg 9deg);opacity:.6;mask-image:radial-gradient(ellipse 70% 50% at 50% 30%,black,transparent)}
 .hero-fade{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,var(--parchment),transparent);pointer-events:none}
-
-/* Tiles — smooth physics */
-.tile{position:relative;overflow:hidden;border-radius:1.35rem;min-height:280px;cursor:pointer;
-  opacity:0;transform:translateY(28px) scale(.98);
-  animation:tileIn .7s var(--ease) forwards;
-  transition:transform .4s var(--ease), box-shadow .4s var(--ease);
-  will-change:transform;}
+.tile{position:relative;overflow:hidden;border-radius:1.35rem;min-height:280px;cursor:pointer;opacity:0;transform:translateY(28px) scale(.98);animation:tileIn .7s var(--ease) forwards;transition:transform .4s var(--ease),box-shadow .4s var(--ease);will-change:transform}
 @keyframes tileIn{to{opacity:1;transform:translateY(0) scale(1)}}
 .tile:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 22px 40px rgba(44,36,22,.14),0 0 0 1px rgba(201,162,39,.25)}
 .tile:active{transform:translateY(-3px) scale(1.005)}
 .tile-bg{position:absolute;inset:-15%;z-index:0;transition:transform .6s var(--ease)}
 .tile:hover .tile-bg{transform:scale(1.08)}
-.tile-overlay{position:absolute;inset:0;z-index:1;
-  background:linear-gradient(165deg,rgba(26,22,15,.78) 0%,rgba(44,36,22,.42) 45%,rgba(26,22,15,.88) 100%);
-  transition:opacity .35s}
+.tile-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(165deg,rgba(26,22,15,.78) 0%,rgba(44,36,22,.42) 45%,rgba(26,22,15,.88) 100%);transition:opacity .35s}
 .tile:hover .tile-overlay{opacity:.92}
 .tile-shine{position:absolute;inset:0;z-index:2;background:linear-gradient(125deg,transparent 30%,rgba(255,255,255,.07) 45%,transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
 .tile:hover .tile-shine{opacity:1}
 .tile-content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;color:#FFFEF7;text-shadow:0 2px 8px rgba(0,0,0,.45)}
-
-/* Abstract geometric patterns (light, no images) */
-.pattern-1{background:
-  radial-gradient(circle at 28% 35%,rgba(201,162,39,.28),transparent 48%),
-  radial-gradient(circle at 75% 70%,rgba(201,162,39,.12),transparent 40%),
-  linear-gradient(145deg,#1A160F,#2C2416 60%,#1F1A12)}
-.pattern-2{background:
-  radial-gradient(ellipse 80% 50% at 70% 15%,rgba(139,168,136,.35),transparent 55%),
-  linear-gradient(165deg,#1F1A12,#2C2416)}
-.pattern-3{background:
-  repeating-linear-gradient(45deg,transparent,transparent 14px,rgba(201,162,39,.07) 14px,rgba(201,162,39,.07) 28px),
-  linear-gradient(180deg,#221C14,#2C2416)}
-.pattern-4{background:
-  radial-gradient(circle at 50% 85%,rgba(201,162,39,.2),transparent 42%),
-  linear-gradient(205deg,#1A160F,#332B1E)}
-.pattern-5{background:
-  conic-gradient(from 25deg at 50% 50%,#2C2416,#3D3224,#2C2416,#1A160F,#2C2416)}
-.pattern-nihaya{background:
-  radial-gradient(circle at 50% -10%,rgba(201,162,39,.32),transparent 48%),
-  linear-gradient(180deg,#0F0D0A,#1A160F 70%,#12100C)}
-
-/* Data chip */
-.data-chip{font-size:.62rem;font-weight:600;letter-spacing:.02em;padding:.2rem .55rem;border-radius:999px;
-  background:rgba(201,162,39,.16);border:1px solid rgba(201,162,39,.3);color:#f0d878;
-  display:inline-block;margin-bottom:.5rem;backdrop-filter:blur(4px)}
-
-/* Modal */
-.modal-backdrop{position:fixed;inset:0;background:rgba(15,13,10,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem;
-  opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.pattern-1{background:radial-gradient(circle at 28% 35%,rgba(201,162,39,.28),transparent 48%),radial-gradient(circle at 75% 70%,rgba(201,162,39,.12),transparent 40%),linear-gradient(145deg,#1A160F,#2C2416 60%,#1F1A12)}
+.pattern-2{background:radial-gradient(ellipse 80% 50% at 70% 15%,rgba(139,168,136,.35),transparent 55%),linear-gradient(165deg,#1F1A12,#2C2416)}
+.pattern-3{background:repeating-linear-gradient(45deg,transparent,transparent 14px,rgba(201,162,39,.07) 14px,rgba(201,162,39,.07) 28px),linear-gradient(180deg,#221C14,#2C2416)}
+.pattern-4{background:radial-gradient(circle at 50% 85%,rgba(201,162,39,.2),transparent 42%),linear-gradient(205deg,#1A160F,#332B1E)}
+.pattern-5{background:conic-gradient(from 25deg at 50% 50%,#2C2416,#3D3224,#2C2416,#1A160F,#2C2416)}
+.pattern-nihaya{background:radial-gradient(circle at 50% -10%,rgba(201,162,39,.32),transparent 48%),linear-gradient(180deg,#0F0D0A,#1A160F 70%,#12100C)}
+.data-chip{font-size:.62rem;font-weight:600;letter-spacing:.02em;padding:.2rem .55rem;border-radius:999px;background:rgba(201,162,39,.16);border:1px solid rgba(201,162,39,.3);color:#f0d878;display:inline-block;margin-bottom:.5rem;backdrop-filter:blur(4px)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,13,10,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
 .modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--parchment);border-radius:1.5rem;max-width:44rem;width:100%;max-height:90vh;overflow-y:auto;
-  transform:translateY(28px) scale(.96);transition:transform .4s var(--ease);
-  border:1px solid rgba(201,162,39,.12);box-shadow:0 25px 50px rgba(0,0,0,.25)}
+.modal{background:var(--parchment);border-radius:1.5rem;max-width:44rem;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(28px) scale(.96);transition:transform .4s var(--ease);border:1px solid rgba(201,162,39,.12);box-shadow:0 25px 50px rgba(0,0,0,.25)}
 .modal-backdrop.open .modal{transform:translateY(0) scale(1)}
-
-/* Filter pills */
 .filter-btn{transition:all .25s var(--ease);border:1px solid transparent}
 .filter-btn.active{background:#2C2416;color:#FFFEF7;border-color:#2C2416}
 .filter-btn:not(.active):hover{background:rgba(44,36,22,.06)}
-
-/* Soft section fade */
 .section-soft{background:linear-gradient(180deg,rgba(44,36,22,.02),transparent)}
-
-@media (prefers-reduced-motion:reduce){
-  .tile,.tile-bg,.modal,.modal-backdrop{animation:none!important;transition:none!important}
-  .tile{opacity:1;transform:none}
-}
+@media (prefers-reduced-motion:reduce){.tile,.tile-bg,.modal,.modal-backdrop{animation:none!important;transition:none!important}.tile{opacity:1;transform:none}}
 </style>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
-
-<!-- Clearer Menu -->
 <header class="header">
   <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-    <a href="#" class="flex items-center gap-2.5 shrink-0">
-      <span class="font-amiri text-2xl text-gold leading-none">ن</span>
-      <span class="font-semibold tracking-tight text-[15px]">نُور</span>
-    </a>
+    <a href="#" class="flex items-center gap-2.5 shrink-0"><span class="font-amiri text-2xl text-gold leading-none">ن</span><span class="font-semibold tracking-tight text-[15px]">نُور</span></a>
     <nav class="hidden sm:flex items-center gap-7">
       <a href="#timeline" class="nav-link">The Path</a>
       <a href="#timeline" class="nav-link" onclick="document.querySelector('[data-period=bidaya]').click()">Al-Bidaya</a>
@@ -128,34 +73,19 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
     <a href="#timeline" class="sm:hidden text-xs font-semibold px-3 py-1.5 rounded-full bg-ink text-parchment">Path</a>
   </div>
 </header>
-
-<!-- Hero with light effects -->
 <section class="hero pt-20 pb-28 sm:pt-28 sm:pb-36">
-  <div class="hero-bg"></div>
-  <div class="hero-glow hero-glow-1"></div>
-  <div class="hero-glow hero-glow-2"></div>
-  <div class="hero-glow hero-glow-3"></div>
-  <div class="hero-rays"></div>
-  <div class="hero-fade"></div>
+  <div class="hero-bg"></div><div class="hero-glow hero-glow-1"></div><div class="hero-glow hero-glow-2"></div><div class="hero-glow hero-glow-3"></div><div class="hero-rays"></div><div class="hero-fade"></div>
   <div class="relative max-w-4xl mx-auto px-4 text-center text-parchment">
     <p class="font-amiri text-gold text-3xl sm:text-4xl mb-4 tracking-wide">نُورٌ عَلَىٰ نُورٍ</p>
     <h1 class="text-4xl sm:text-5xl md:text-[3.4rem] font-bold mb-5 leading-[1.15]">Codex of Light</h1>
     <p class="text-base sm:text-lg text-parchment/80 max-w-2xl mx-auto leading-relaxed mb-9">A chronological library of 58 nodes — from the Throne over the water to the radiant faces looking at their Lord. Qur’an, authentic Hadith, classical sources. Light only. No faces.</p>
-    <a href="#timeline" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gold text-ink font-semibold text-sm hover:bg-[#d4b03a] transition shadow-lg shadow-gold/25">
-      Enter the Path
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
+    <a href="#timeline" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gold text-ink font-semibold text-sm hover:bg-[#d4b03a] transition shadow-lg shadow-gold/25">Enter the Path <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
-
-<!-- Timeline -->
 <section id="timeline" class="py-16 sm:py-20 section-soft">
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-9">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-bold mb-1.5">The Path</h2>
-        <p class="text-ink/55 text-sm">58 nodes • Kun → Jannah • Tap any tile</p>
-      </div>
+      <div><h2 class="text-2xl sm:text-3xl font-bold mb-1.5">The Path</h2><p class="text-ink/55 text-sm">58 nodes • Kun → Jannah • Tap any tile</p></div>
       <div id="period-filters" class="flex flex-wrap gap-2">
         <button class="filter-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink text-parchment" data-period="all">All</button>
         <button class="filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-period="bidaya">Al-Bidaya</button>
@@ -167,13 +97,10 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
     <div id="timeline-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </div>
 </section>
-
 <section class="py-16 sm:py-20 text-center">
   <p class="font-amiri text-2xl sm:text-3xl text-gold mb-4 leading-relaxed">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ<br class="sm:hidden"/> إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
   <p class="text-ink/55 text-sm max-w-md mx-auto leading-relaxed">Educational Codex. Qur’an • authentic Hadith • classical sources. Prophets represented by light and seals only.</p>
 </section>
-
-<!-- Modal -->
 <div id="modal-backdrop" class="modal-backdrop">
   <div class="modal">
     <div class="sticky top-0 bg-parchment/95 backdrop-blur border-b border-ink/8 px-5 py-3.5 flex items-center justify-between z-10">
@@ -183,131 +110,79 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
     <div id="modal-body" class="px-5 py-6"></div>
   </div>
 </div>
-
 <script>
 const NODES = [
-{id:1,period:"bidaya",titleEn:"Kun Fayakun — Arsh over Water",titleAr:"كن فيكون",metric:"The Beginning",summary:"Before creation the Throne was over the water and the Pen wrote the Qadar of all things.",details:`Before anything of the heavens or the earth, the Throne of Allah was upon the water. The first thing Allah created was the Pen. He commanded it: “Write.” It wrote the decree of all things until the Hour. The six days of creation are periods whose measure belongs only to Allah. Nothing of weariness touched Him. The entire Path that follows — from Adam to the radiant faces — is simply the reading of what was already written in the Preserved Tablet.`,pattern:"pattern-1",quran:[{ref:"11:7",ar:"وَهُوَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ وَكَانَ عَرْشُهُ عَلَى الْمَاءِ",en:"And it is He who created the heavens and the earth in six days, and His Throne was upon the water."}],hadith:["The first thing Allah created was the Pen. He said to it: Write. It said: What shall I write? He said: Write the Qadar of all things until the Hour."],facts:[{label:"Key",value:"Throne over water"},{label:"First creation",value:"The Pen"}],lessons:["Everything begins with the command Kun.","The Qadar was written before the creation of the heavens and the earth."],connections:[2,58]},
-{id:2,period:"bidaya",titleEn:"Adam from Clay — Ruh Breathed",titleAr:"آدم من طين",metric:"First human",summary:"Allah fashioned Adam from clay and breathed into him of His spirit.",details:`Allah created Adam with His own hands from clay taken from different parts of the earth — that is why the children of Adam vary in colour and nature. When the soul was breathed into him he sneezed and the first words he spoke were Alhamdulillah. The angels were commanded to prostrate to him as a mark of honour. All of them prostrated except Iblis, who refused out of arrogance and envy. He was expelled and became the open enemy of Adam and his descendants. From Adam and Hawwa the entire human story begins.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Material",value:"Clay"},{label:"First words",value:"Alhamdulillah"}],lessons:["The first human was taught gratitude.","Arrogance was the first sin of Iblis."],connections:[1,3]},
-{id:5,period:"bidaya",titleEn:"Nuh — 950 Years",titleAr:"نوح",metric:"950 years",summary:"He called his people for 950 years. Only a few believed. The Ark was the vessel of mercy.",details:`Nuh lived among his people for nine hundred and fifty years, calling them night and day, in secret and in public. They mocked him as he built the Ark on dry land. When the command came, the oven of the earth overflowed and the gates of the heaven opened. Only those who boarded with him were saved. His own son refused, saying he would take refuge on a mountain. The wave came between them. Nuh was told that his son was not of his family because of his deed. The Ark came to rest on Mount Judi. From that remnant the second human beginning began.`,pattern:"pattern-4",quran:[{ref:"29:14",ar:"وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا",en:"And We certainly sent Noah to his people, and he remained among them a thousand years minus fifty years."}],hadith:["The first messenger was Nuh."],facts:[{label:"Years of dawah",value:"950"},{label:"Mountain",value:"Judi"}],lessons:["Patience in calling is measured in centuries, not days.","When the command comes, the flood does not wait."],connections:[1,6]},
-{id:9,period:"qisas",titleEn:"Ibrahim — Fire Cool & Peace",titleAr:"إبراهيم النار",metric:"Khalilullah",summary:"Thrown into the fire for breaking the idols. Allah made the fire cool and peace upon him.",details:`Ibrahim smashed the idols of his people, leaving the largest one standing with the axe on its neck. When they returned they asked who had done this. He pointed to the large idol. They knew the truth but refused it. They built a great fire and threw him into it. Allah commanded the fire: “O fire, be coolness and safety upon Ibrahim.” He walked out unharmed. This was the open declaration of Tawhid against an entire civilization of idolatry. From that moment the path of the Hanif was set for all who would come after.`,pattern:"pattern-2",quran:[{ref:"21:69",ar:"قُلْنَا يَا نَارُ كُونِي بَرْدًا وَسَلَامًا عَلَىٰ إِبْرَاهِيمَ",en:"We said, O fire, be coolness and safety upon Abraham."}],hadith:["Ibrahim is the Khalil of Allah."],facts:[{label:"Title",value:"Khalilullah"},{label:"Miracle",value:"Fire cooled"}],lessons:["Tawhid is worth any fire.","Allah’s command turns the instrument of destruction into coolness and peace."],connections:[8,10]},
-{id:12,period:"qisas",titleEn:"Yusuf — The Dream",titleAr:"يوسف",metric:"Well to throne",summary:"Eleven stars, the sun and the moon prostrating. The beginning of a long trial that ends in honour.",details:`Yusuf saw in a dream eleven stars and the sun and the moon prostrating to him. His father Ya‘qub warned him not to tell his brothers. The brothers, driven by envy, threw him into a well. He was sold into Egypt, resisted the wife of the Aziz, was imprisoned, interpreted dreams, and rose to become the treasurer of Egypt. Years later his brothers came as beggars. He revealed himself with the words: “I am Yusuf, and this is my brother.” The dream was fulfilled. The story of Yusuf is the clearest proof that patience under injustice ends in elevation by the permission of Allah.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Arc",value:"Well → throne"}],lessons:["Patience turns the well into a throne.","Envy is the disease of the brothers."],connections:[11,13]},
-{id:17,period:"qisas",titleEn:"Sea Split",titleAr:"انشقاق البحر",metric:"12 paths",summary:"Twelve paths like mountains. My Lord is with me.",details:`The Children of Israel stood between the sea and Pharaoh’s army. They cried “We are overtaken!” Musa replied with certainty: “No. Indeed, with me is my Lord; He will guide me.” Allah commanded him to strike the sea. It parted into twelve dry paths, each portion standing like a great mountain. They crossed. When Pharaoh entered, the sea closed. Allah preserved his body as a sign. This is the standing proof that when the servant is between the sea and the enemy, the only way forward is the way Allah opens.`,pattern:"pattern-4",quran:[{ref:"26:63",ar:"",en:"Then We inspired to Moses, Strike with your staff the sea, and it parted..."}],hadith:[],facts:[{label:"Paths",value:"Twelve"}],lessons:["Certainty opens the sea.","The way appears when there is no way."],connections:[16,18]},
-{id:27,period:"seerah",titleEn:"Isra and Mi'raj",titleAr:"الإسراء والمعراج",metric:"One night",summary:"From the Kaaba to the Farthest Mosque, then through the seven heavens to the Lote Tree — the night the five prayers were given.",details:`The Isra and Mi’raj stands among the greatest signs given to the final Messenger. Classical sources place it after the Year of Sorrow, when Khadijah and Abu Talib had died and the earthly protections around the Prophet had been stripped away. In that darkness Allah opened a door that no human power could open.\n\nThe journey has two linked movements. The Isra is the night journey from al-Masjid al-Haram in Makkah to al-Masjid al-Aqsa in Jerusalem. The Mi’raj is the ascent from the rock of Jerusalem through the seven heavens to the Lote Tree of the Utmost Boundary (Sidrat al-Muntaha). The Qur’an opens the account with the words: “Glory be to Him Who took His servant by night from the Sacred Mosque to the Farthest Mosque whose precincts We have blessed, that We might show him of Our signs” (17:1). The language of “His servant” is deliberate — the highest honour is given under the title of pure servanthood.\n\nAt al-Aqsa the Prophet led the previous prophets in prayer. This single act is theologically dense: it affirms the continuity of revelation, the unity of the prophetic chain, and the finality of Muhammad’s mission. The prophets of the past stand behind the Seal. From there the ascent begins. In each heaven he meets a prophet — Adam, Yahya and Isa, Yusuf, Idris, Harun, Musa, and finally Ibrahim leaning against the Bayt al-Ma’mur. At the Lote Tree even Jibril stops; the Prophet continues alone. Beyond the boundary of created form the fifty daily prayers are prescribed, then reduced, through the intercession of Musa, to five — with the reward of fifty. The five daily prayers are therefore not merely a legal obligation; they are the living remnant of that night, the daily mi’raj of the believer.\n\nClassical scholarship debated whether the journey was bodily or spiritual. The majority of the early community held that it was both bodily and in a state of wakefulness. The event is treated as a miracle that confirms prophethood.\n\nHistorical context: Jerusalem and the Temple Mount had been the centre of Jewish worship for more than a thousand years. The first qibla of the Muslims was toward Jerusalem. Earliest non-Muslim sources (Doctrina Jacobi c. 634–640, Thomas the Presbyter c. 640, Sebeos 660s) confirm a monotheistic movement under a man named Muhammad, oriented toward the God of Abraham and connected to the sacred geography of Jerusalem, already visible within a few years of the traditional date. The miracle itself remains a matter of revelation and faith; the world into which it was given is independently attested.\n\nThe morning after the journey the Quraysh mocked. Abu Bakr believed without having seen and was named as-Siddiq.`,pattern:"pattern-5",quran:[{ref:"17:1",ar:"سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى",en:"Glory be to Him Who took His servant by night from the Sacred Mosque to the Farthest Mosque whose precincts We have blessed, that We might show him of Our signs."}],hadith:["The Prophet was taken by night from the Kaaba to the Farthest Mosque, then raised through the heavens. At the Lote Tree the fifty prayers were prescribed and reduced to five."],facts:[{label:"Gift",value:"5 daily prayers"},{label:"Title given",value:"as-Siddiq"},{label:"Context",value:"After Year of Sorrow"}],lessons:["The five prayers are the living remnant of the Mi’raj.","Belief without seeing is the mark of the Siddiq.","The final Messenger leads the earlier prophets in prayer.","Servanthood is the highest station."],connections:[26,28,29]},
-{id:29,period:"seerah",titleEn:"Iqra — First Revelation",titleAr:"اقرأ",metric:"Age 40",summary:"In the cave of Hira the first words of the final revelation descended: Read, in the name of your Lord who created.",details:`At forty, after years of solitude and worship in the cave of Hira, the angel came. He squeezed the Prophet three times, each time more tightly, then released him and said: “Iqra — Read.” The Prophet replied: “I am not a reader.” The angel recited the first five ayat of Surah al-Alaq. The Prophet returned trembling to Khadijah, who covered him and believed without hesitation. This was the beginning of the final revelation — the light that would complete the Path that began with Kun.`,pattern:"pattern-1",quran:[{ref:"96:1-5",ar:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",en:"Read in the name of your Lord who created."}],hadith:["The first revelation came while he was in the cave of Hira."],facts:[{label:"Age",value:"40"},{label:"Place",value:"Cave of Hira"}],lessons:["The first command is to read in the name of the Creator.","The weight of revelation is real."],connections:[28,30]},
-{id:35,period:"seerah",titleEn:"Badr — 313 vs 1000",titleAr:"بدر",metric:"313 vs 1000",summary:"The first major battle. A small band of believers faced a Quraysh army three times their size.",details:`The Muslims set out intending only to intercept a caravan. Instead they found themselves facing a Quraysh army three times their number. The Prophet ﷺ raised his hands in dua until his cloak fell from his shoulders. Abu Bakr held him and said: “Enough, O Messenger of Allah. Your Lord will fulfill His promise to you.” The battle was fierce. Angels descended. The leaders of Quraysh fell. It was the day of Furqan — the criterion that forever distinguished truth from falsehood.`,pattern:"pattern-3",quran:[{ref:"3:123",ar:"وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ",en:"And already had Allah given you victory at Badr while you were few in number."}],hadith:["This is the day of Furqan."],facts:[{label:"Believers",value:"313"},{label:"Quraysh",value:"~1000"}],lessons:["Numbers do not decide the outcome when Allah is with you.","Badr is the day the truth was made clear."],connections:[34,36]},
-{id:39,period:"seerah",titleEn:"The Opening of Makkah",titleAr:"فتح مكة",metric:"10,000",summary:"Ten thousand entered. The idols fell. General amnesty.",details:`After the Quraysh broke the treaty of Hudaybiyyah, the Prophet marched with ten thousand. Makkah surrendered with almost no fighting. He entered, purified the Kaaba of its idols, and declared general amnesty: “Go, for you are free.” Bilal climbed the Kaaba and called the adhan. The city of idols became the city of Tawhid in a single day. Mercy after victory is the Prophetic way.`,pattern:"pattern-1",quran:[],hadith:[],facts:[{label:"Army",value:"10,000"},{label:"Policy",value:"General amnesty"}],lessons:["Mercy after victory is the Prophetic way.","The idols fell in a single day."],connections:[38,40]},
-{id:41,period:"seerah",titleEn:"The Farewell Hajj",titleAr:"حجة الوداع",metric:"Completed",summary:"The final pilgrimage. The sermon that completed the religion.",details:`In the tenth year after Hijrah the Prophet performed his only Hajj. At Arafah he delivered the Farewell Sermon: the sanctity of blood, property and honour; the abolition of usury and blood feuds; the rights of women; the equality of all believers. Then the verse was revealed: “This day I have perfected for you your religion and completed My favour upon you and have approved for you Islam as religion.” He died a few months later.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Event",value:"Farewell Sermon"},{label:"Place",value:"Arafah"}],lessons:["The religion was completed at Arafah.","The final sermon is a charter for the ummah."],connections:[40,42]},
-{id:48,period:"nihaya",titleEn:"Dajjal — The Great Deceiver",titleAr:"الدجال",metric:"Greatest fitnah",summary:"The greatest fitnah of the end times. One-eyed, claiming divinity, with miracles that will test every heart.",details:`There is no fitnah greater than the fitnah of the Dajjal from the creation of Adam until the Hour. He will appear at a time of severe hardship, claiming to be the Lord. He will travel the earth rapidly and perform apparent miracles. Written between his eyes is Kafir — every believer will read it. The protection is the first ten ayat of Surah al-Kahf. He will be killed by Isa ibn Maryam at the gate of Ludd.`,pattern:"pattern-nihaya",quran:[],hadith:["There is no fitnah greater than the fitnah of the Dajjal from the creation of Adam until the Hour."],facts:[{label:"Protection",value:"First 10 of al-Kahf"},{label:"End",value:"Killed by Isa"}],lessons:["Memorize the first ten ayat of al-Kahf.","The greatest deception will be unmasked."],connections:[47,49]},
-{id:56,period:"nihaya",titleEn:"As-Sirat — The Bridge",titleAr:"الصراط",metric:"Thinner than hair",summary:"A bridge over Hell, thinner than a hair and sharper than a sword. People will cross according to their light.",details:`After the Judgment, the Sirat will be set over the Fire. It is thinner than a hair and sharper than a sword. The people will be given light according to their deeds. The strongest in faith will cross like lightning. Others like the wind, like a horse, like a man running, walking, or crawling. The hooks of the Fire will snatch those whose light is insufficient. The Prophet ﷺ will be the first to cross and will intercede for his ummah.`,pattern:"pattern-nihaya",quran:[],hadith:["The Sirat will be laid over the back of Hell. It is thinner than a hair and sharper than a sword."],facts:[{label:"Nature",value:"Over Hell"},{label:"First to cross",value:"The Prophet ﷺ"}],lessons:["The light of deeds is the only way across.","Some will cross in the blink of an eye; others will crawl."],connections:[55,57]},
-{id:58,period:"nihaya",titleEn:"Jannah — What No Eye Has Seen",titleAr:"الجنة",metric:"The Vision",summary:"The final abode. Gardens beneath which rivers flow. The greatest joy is the vision of the Face of Allah.",details:`The final station of the Path is Jannah. Rivers of water, milk, wine that does not intoxicate, and pure honey. Gardens, spouses, and delights that no eye has seen, no ear has heard, and that have never occurred to the heart of man. Yet the greatest of all joys is the vision of the Face of Allah. The faces that Day will be radiant, looking at their Lord. This is the end for which the entire story was written — from the Throne over the water to the radiant faces.`,pattern:"pattern-nihaya",quran:[{ref:"75:22-23",ar:"وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ ۝ إِلَىٰ رَبِّهَا نَاظِرَةٌ",en:"Faces that Day will be radiant, looking at their Lord."}],hadith:["Allah said: I have prepared for My righteous servants what no eye has seen, no ear has heard, and what has never occurred to the heart of man."],facts:[{label:"Greatest joy",value:"Seeing Allah"},{label:"Promise",value:"What no eye has seen"}],lessons:["The Path ends in the vision of the Face of the Lord.","Everything in this world is a shadow of the real."],connections:[57,1]}
+{id:1,period:"bidaya",titleEn:"Kun Fayakun — Arsh over Water",titleAr:"كن فيكون",metric:"The Beginning",summary:"Before creation the Throne was over the water and the Pen wrote the Qadar of all things.",details:`Before anything of the heavens or the earth, the Throne of Allah was upon the water. The first thing Allah created was the Pen. He commanded it: “Write.” It wrote the decree of all things until the Hour. The entire Path that follows is the reading of what was already written.`,pattern:"pattern-1",quran:[{ref:"11:7",ar:"وَهُوَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ وَكَانَ عَرْشُهُ عَلَى الْمَاءِ",en:"And it is He who created the heavens and the earth in six days, and His Throne was upon the water."}],hadith:["The first thing Allah created was the Pen."],facts:[{label:"Key",value:"Throne over water"}],lessons:["Everything begins with Kun."],connections:[2,58]},
+{id:2,period:"bidaya",titleEn:"Adam from Clay — Ruh Breathed",titleAr:"آدم من طين",metric:"First human",summary:"Allah fashioned Adam from clay and breathed into him of His spirit.",details:`Allah created Adam with His own hands from clay taken from different parts of the earth. When the soul was breathed into him he sneezed and the first words he spoke were Alhamdulillah. The angels were commanded to prostrate; all did except Iblis, who refused out of arrogance. From Adam and Hawwa the human story begins.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Material",value:"Clay"}],lessons:["The first human was taught gratitude."],connections:[1,3]},
+{id:5,period:"bidaya",titleEn:"Nuh — 950 Years",titleAr:"نوح",metric:"950 years",summary:"He called his people for 950 years. Only a few believed. The Ark was the vessel of mercy.",details:`Nuh lived among his people for nine hundred and fifty years, calling them night and day. They mocked him as he built the Ark on dry land. When the command came, the flood destroyed the rejecters. Only those who boarded were saved. His own son refused and was lost. The Ark rested on Mount Judi.`,pattern:"pattern-4",quran:[{ref:"29:14",ar:"وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا",en:"And We certainly sent Noah to his people, and he remained among them a thousand years minus fifty years."}],hadith:[],facts:[{label:"Years",value:"950"}],lessons:["Patience is measured in centuries."],connections:[1,6]},
+{id:9,period:"qisas",titleEn:"Ibrahim — Fire Cool & Peace",titleAr:"إبراهيم النار",metric:"Khalilullah",summary:"Thrown into the fire for breaking the idols. Allah made the fire cool and peace upon him.",details:`Ibrahim smashed the idols, leaving the largest with the axe. They built a fire and threw him in. Allah said: O fire, be coolness and safety upon Ibrahim. He walked out unharmed. This was the public declaration of Tawhid.`,pattern:"pattern-2",quran:[{ref:"21:69",ar:"قُلْنَا يَا نَارُ كُونِي بَرْدًا وَسَلَامًا عَلَىٰ إِبْرَاهِيمَ",en:"We said, O fire, be coolness and safety upon Abraham."}],hadith:[],facts:[{label:"Title",value:"Khalilullah"}],lessons:["Tawhid is worth any fire."],connections:[8,10]},
+{id:10,period:"qisas",titleEn:"Isma'il — The Sacrifice",titleAr:"إسماعيل",metric:"Ransom",summary:"The dream of sacrifice. Both father and son submitted. A ram was given in ransom.",details:`Ibrahim saw in a dream that he was sacrificing his son. He told Isma’il, who replied: “O my father, do as you are commanded. You will find me, if Allah wills, of the patient.” When both had submitted and Ibrahim laid him down, Allah called out that the vision had been fulfilled. A great ram was provided as ransom. This is the origin of the sacrifice that remains in the rites of Hajj and Eid al-Adha. The story is the purest demonstration of submission — father and son together.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Outcome",value:"Ram given in ransom"}],lessons:["True submission is shared between father and son.","Allah does not demand the fulfillment of every trial He tests with."],connections:[9,11]},
+{id:12,period:"qisas",titleEn:"Yusuf — The Dream",titleAr:"يوسف",metric:"Well to throne",summary:"Eleven stars, the sun and the moon prostrating. Patience under injustice ends in elevation.",details:`Yusuf saw eleven stars and the sun and the moon prostrating to him. His brothers, driven by envy, threw him into a well. He was sold into Egypt, resisted temptation, was imprisoned, interpreted dreams, and rose to become treasurer of Egypt. Years later his brothers came as beggars. He revealed himself. The dream was fulfilled. Patience under injustice ends in elevation by the permission of Allah.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Arc",value:"Well → throne"}],lessons:["Patience turns the well into a throne."],connections:[11,13]},
+{id:17,period:"qisas",titleEn:"Sea Split",titleAr:"انشقاق البحر",metric:"12 paths",summary:"Twelve paths like mountains. My Lord is with me.",details:`The Children of Israel stood between the sea and Pharaoh’s army. They cried “We are overtaken!” Musa replied: “No. Indeed, with me is my Lord; He will guide me.” Allah commanded him to strike the sea. It parted into twelve dry paths. They crossed. When Pharaoh entered, the sea closed. Allah preserved his body as a sign.`,pattern:"pattern-4",quran:[{ref:"26:63",ar:"",en:"Then We inspired to Moses, Strike with your staff the sea, and it parted..."}],hadith:[],facts:[{label:"Paths",value:"Twelve"}],lessons:["Certainty opens the sea."],connections:[16,18]},
+{id:19,period:"qisas",titleEn:"Isa — The Word",titleAr:"عيسى كلمة",metric:"Be, and it is",summary:"Created by the word Be. Born of a virgin. Spoke in the cradle.",details:`Isa ibn Maryam was created by the word of Allah — “Be, and it is” — without a father. His mother Maryam was a pure woman who withdrew in devotion. The angel announced to her a pure son. She conceived and withdrew further. When the pains of childbirth came she was given a stream and ripe dates. When she returned to her people with the child they accused her. The infant spoke from the cradle, defending her and declaring himself a servant of Allah, a prophet, and a sign. Isa performed miracles by Allah’s permission: healing the blind and the leper, raising the dead, and fashioning a bird from clay. He confirmed the Torah and brought the Injil. The Qur’an insists they did not kill him nor crucify him; rather Allah raised him. He will return near the end of time.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Creation",value:"By the word Be"},{label:"Return",value:"Near the end of time"}],lessons:["The Word of Allah creates what He wills.","Purity and devotion of Maryam are held up as a sign."],connections:[18,20,21]},
+{id:26,period:"seerah",titleEn:"The Year of Sorrow",titleAr:"عام الحزن",metric:"Double loss",summary:"Khadijah and Abu Talib died in the same year. The earthly protections were removed.",details:`In a single year the Prophet lost the two people who had protected him most in this world. Khadijah, his first wife and the first to believe, died. She had been his comfort, his support, and the first human to accept the revelation. Shortly afterward Abu Talib, his uncle and the chief of Banu Hashim who had shielded him from Quraysh, also died. With their deaths the tribal protection that had kept the Prophet safe in Makkah largely collapsed. The year is remembered as the Year of Sorrow. It was in the shadow of this double loss that the Isra and Mi’raj occurred — a divine opening after the earthly doors had closed.`,pattern:"pattern-1",quran:[],hadith:[],facts:[{label:"Losses",value:"Khadijah & Abu Talib"}],lessons:["When earthly support is removed, divine support is near.","The greatest journeys sometimes begin in the deepest grief."],connections:[24,27]},
+{id:27,period:"seerah",titleEn:"Isra and Mi'raj",titleAr:"الإسراء والمعراج",metric:"One night",summary:"From the Kaaba to the Farthest Mosque, then through the seven heavens to the Lote Tree — the night the five prayers were given.",details:`The Isra and Mi’raj stands among the greatest signs given to the final Messenger. Classical sources place it after the Year of Sorrow. The Isra is the night journey from al-Masjid al-Haram to al-Masjid al-Aqsa. The Mi’raj is the ascent through the seven heavens to the Lote Tree of the Utmost Boundary. At al-Aqsa the Prophet led the previous prophets in prayer. At the Lote Tree the fifty daily prayers were prescribed and reduced to five. The five prayers are the living remnant of that night. Abu Bakr believed without seeing and was named as-Siddiq. Earliest non-Muslim sources (Doctrina Jacobi, Thomas the Presbyter, Sebeos) confirm the broader historical setting of a monotheistic movement under Muhammad connected to the Abrahamic tradition and Jerusalem.`,pattern:"pattern-5",quran:[{ref:"17:1",ar:"سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى",en:"Glory be to Him Who took His servant by night from the Sacred Mosque to the Farthest Mosque..."}],hadith:[],facts:[{label:"Gift",value:"5 daily prayers"}],lessons:["The five prayers are the living remnant of the Mi’raj.","Belief without seeing is the mark of the Siddiq."],connections:[26,28,29]},
+{id:29,period:"seerah",titleEn:"Iqra — First Revelation",titleAr:"اقرأ",metric:"Age 40",summary:"In the cave of Hira the first words of the final revelation descended.",details:`At forty the angel came in the cave of Hira. He squeezed the Prophet three times then said Iqra. The first five ayat of al-Alaq were revealed. Khadijah believed without hesitation. This was the beginning of the final light.`,pattern:"pattern-1",quran:[{ref:"96:1-5",ar:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",en:"Read in the name of your Lord who created."}],hadith:[],facts:[{label:"Age",value:"40"}],lessons:["The first command is to read."],connections:[28,30]},
+{id:31,period:"seerah",titleEn:"Hijrah — The Cave of Thawr",titleAr:"غار ثور",metric:"Cave of Thawr",summary:"Abu Bakr and the Prophet in the cave. The spider and the dove. The migration that founded a community.",details:`When the Quraysh resolved to kill the Prophet, he left Makkah at night with Abu Bakr. They took refuge in the Cave of Thawr for three days. The search party reached the mouth of the cave. Abu Bakr feared, but the Prophet said: “What do you think of two when Allah is their third?” Classical reports mention a spider’s web and a dove’s nest at the entrance that convinced the pursuers the cave was empty. From there they continued to Madinah. The Hijrah marks the beginning of the Islamic calendar and the transition from a persecuted group in Makkah to a community with a city, a constitution, and a public presence.`,pattern:"pattern-1",quran:[],hadith:["What do you think of two when Allah is their third?"],facts:[{label:"Companions",value:"Abu Bakr"},{label:"Duration",value:"3 days in the cave"}],lessons:["Allah is the third of two who trust Him.","The Hijrah turned a persecuted circle into a community."],connections:[30,32]},
+{id:34,period:"seerah",titleEn:"Change of Qibla",titleAr:"تحويل القبلة",metric:"From Jerusalem",summary:"From Jerusalem to the Kaaba. A test of obedience and a return to the House of Ibrahim.",details:`For more than a year and a half after the Hijrah the Muslims prayed facing Jerusalem, the first qibla. Then the command came to turn toward the Sacred Mosque in Makkah. The change was a test of obedience and a restoration of the House built by Ibrahim and Isma’il as the direction of prayer. Some of the People of the Book and the hypocrites used it as a point of criticism. The Qur’an addresses the matter directly, affirming that the change was by divine command and that the true direction is known to Allah. The episode also underlines the continuity between the final message and the pure religion of Ibrahim.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"From",value:"Jerusalem"},{label:"To",value:"Kaaba"}],lessons:["Obedience is tested in the direction of prayer.","The final qibla returns to the House of Ibrahim."],connections:[33,35]},
+{id:35,period:"seerah",titleEn:"Badr — 313 vs 1000",titleAr:"بدر",metric:"313 vs 1000",summary:"The day the truth was distinguished from falsehood.",details:`The Muslims faced a Quraysh army three times their size. The Prophet raised his hands until his cloak fell. Abu Bakr said: Enough, your Lord will fulfill His promise. Angels descended. It was the day of Furqan.`,pattern:"pattern-3",quran:[{ref:"3:123",ar:"وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ",en:"And already had Allah given you victory at Badr while you were few."}],hadith:[],facts:[{label:"Believers",value:"313"}],lessons:["Numbers do not decide when Allah is with you."],connections:[34,36]},
+{id:36,period:"seerah",titleEn:"Uhud",titleAr:"أحد",metric:"Archers left post",summary:"The archers left their post. The Prophet was wounded. Seventy martyrs. A hard lesson in obedience.",details:`After Badr the Quraysh returned seeking revenge. At Uhud the Prophet positioned fifty archers on a hill with clear orders not to leave their post. When the battle seemed won, many of the archers left to collect spoils. Khalid ibn al-Walid (still then with Quraysh) exploited the gap. The Muslims were thrown into confusion. The Prophet was wounded, his face bloodied, a tooth broken. Seventy Muslims were martyred, including Hamza. The Qur’an later explained the setback as a test and a consequence of disobedience. Uhud taught that victory is not automatic and that the orders of the Messenger must be followed even when the immediate situation appears favourable.`,pattern:"pattern-3",quran:[],hadith:[],facts:[{label:"Martyrs",value:"~70"},{label:"Lesson",value:"Obedience"}],lessons:["Leaving the post of duty invites the enemy.","Even the Prophet was tested with wounds."],connections:[35,37]},
+{id:37,period:"seerah",titleEn:"Khandaq — The Trench",titleAr:"الخندق",metric:"The Trench",summary:"Salman suggested the trench. The confederates were turned back by the wind and by Allah’s help.",details:`A coalition of Quraysh, Ghatafan and other tribes gathered to destroy the Muslim community in Madinah. Salman al-Farisi suggested a tactic unknown to the Arabs: dig a trench across the vulnerable northern approach. The Muslims dug for days in hard ground. The confederates arrived and were stopped by the trench. A long siege followed. Hunger, cold, and fear pressed on the believers. Then Allah sent a bitter wind that overturned the enemy tents and filled their eyes with dust. The coalition broke up and withdrew. The Qur’an describes the episode in Surah al-Ahzab. The trench marked a turning point: after it the initiative shifted permanently toward the Muslims.`,pattern:"pattern-3",quran:[],hadith:[],facts:[{label:"Idea",value:"Salman al-Farisi"},{label:"Outcome",value:"Coalition withdrew"}],lessons:["Wisdom from outside the tribe can save the community.","Allah can turn the weather itself into an army."],connections:[36,38]},
+{id:38,period:"seerah",titleEn:"Hudaybiyyah",titleAr:"الحديبية",metric:"Clear victory",summary:"The treaty that looked like a defeat but was a clear victory.",details:`In the sixth year the Prophet set out for Umrah with about 1,400 companions. They were stopped at Hudaybiyyah. Negotiations produced a treaty that appeared one-sided: the Muslims would return that year without performing Umrah, and various clauses seemed to favour Quraysh. Many companions were distressed. Umar voiced the pain openly. Then the opening of Surah al-Fath was revealed: “Indeed, We have given you a clear victory.” Within two years the treaty’s quiet advantages — the cessation of hostilities, the freedom for people to join Islam, the moral high ground — prepared the way for the Opening of Makkah. Hudaybiyyah teaches that divine victory sometimes arrives disguised as concession.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Appearance",value:"Concession"},{label:"Reality",value:"Clear victory"}],lessons:["Victory can wear the clothes of compromise.","The revelation named it a clear victory while many still felt defeat."],connections:[37,39]},
+{id:39,period:"seerah",titleEn:"The Opening of Makkah",titleAr:"فتح مكة",metric:"10,000",summary:"Ten thousand entered. The idols fell. General amnesty.",details:`After Quraysh broke the treaty, the Prophet marched with ten thousand. Makkah surrendered with almost no fighting. He purified the Kaaba of its idols and declared general amnesty: “Go, for you are free.” Bilal climbed the Kaaba and called the adhan. Mercy after victory is the Prophetic way.`,pattern:"pattern-1",quran:[],hadith:[],facts:[{label:"Army",value:"10,000"}],lessons:["Mercy after victory is the Prophetic way."],connections:[38,40]},
+{id:41,period:"seerah",titleEn:"The Farewell Hajj",titleAr:"حجة الوداع",metric:"Completed",summary:"The final pilgrimage. The sermon that completed the religion.",details:`In the tenth year the Prophet performed his only Hajj. At Arafah he delivered the Farewell Sermon. Then the verse was revealed: “This day I have perfected for you your religion…” He died a few months later.`,pattern:"pattern-2",quran:[],hadith:[],facts:[{label:"Place",value:"Arafah"}],lessons:["The religion was completed at Arafah."],connections:[40,42]},
+{id:42,period:"seerah",titleEn:"The Death of the Prophet ﷺ",titleAr:"وفاة النبي",metric:"Return",summary:"In the room of Aisha. The last words were a prayer and a choice. The seal of prophethood returned to his Lord.",details:`In the eleventh year after Hijrah the Prophet fell ill. He continued to lead the prayer as long as he could, then ordered Abu Bakr to lead in his place — a clear indication. His final days were spent in the room of Aisha. He chose the company of the Highest Friend. Among his last words were a warning against taking graves as places of worship and a prayer of surrender. When he died, Umar at first refused to accept it. Abu Bakr came and recited: “Muhammad is not but a messenger; messengers have passed away before him…” The community was tested by the departure of the one who had been its axis. The seal of prophethood had returned to his Lord. The Path continued through the Qur’an and the Sunnah he left behind.`,pattern:"pattern-1",quran:[],hadith:[],facts:[{label:"Place",value:"Room of Aisha"},{label:"Successor indication",value:"Abu Bakr leads prayer"}],lessons:["Even the final Messenger returns to his Lord.","The community is tested by the loss of its axis.","What remains is the Book and the Sunnah."],connections:[41,43]},
+{id:48,period:"nihaya",titleEn:"Dajjal — The Great Deceiver",titleAr:"الدجال",metric:"Greatest fitnah",summary:"The greatest fitnah of the end times.",details:`There is no fitnah greater than the Dajjal from the creation of Adam until the Hour. He will be one-eyed, with Kafir written between his eyes. The protection is the first ten ayat of al-Kahf. Isa will kill him at the gate of Ludd.`,pattern:"pattern-nihaya",quran:[],hadith:["There is no fitnah greater than the fitnah of the Dajjal."],facts:[{label:"Protection",value:"First 10 of al-Kahf"}],lessons:["Memorize the protection."],connections:[47,49]},
+{id:56,period:"nihaya",titleEn:"As-Sirat — The Bridge",titleAr:"الصراط",metric:"Thinner than hair",summary:"The bridge over Hell. People cross according to their light.",details:`The Sirat is thinner than a hair and sharper than a sword. People cross according to their deeds — some like lightning, some crawling. The Prophet will be the first to cross and will intercede for his ummah.`,pattern:"pattern-nihaya",quran:[],hadith:["The Sirat will be laid over the back of Hell."],facts:[{label:"Nature",value:"Over Hell"}],lessons:["Light of deeds is the only way across."],connections:[55,57]},
+{id:58,period:"nihaya",titleEn:"Jannah — What No Eye Has Seen",titleAr:"الجنة",metric:"The Vision",summary:"The final abode. The greatest joy is looking at the Face of Allah.",details:`Gardens beneath which rivers flow. What no eye has seen. Yet the greatest of all delights is the vision of the Face of Allah. Faces that Day will be radiant, looking at their Lord. This is the end of the Path that began with Kun.`,pattern:"pattern-nihaya",quran:[{ref:"75:22-23",ar:"وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ",en:"Faces that Day will be radiant, looking at their Lord."}],hadith:["I have prepared for My righteous servants what no eye has seen."],facts:[{label:"Greatest joy",value:"Seeing Allah"}],lessons:["The Path ends in the vision."],connections:[57,1]}
 ];
 
-const existing = new Set(NODES.map(n => n.id));
-const placeholders = [
-  {id:3,period:"bidaya",titleEn:"Hawwa — Garden of Jannah",titleAr:"حواء",summary:"Hawwa created from Adam’s rib. Together in the Garden until the slip."},
-  {id:4,period:"bidaya",titleEn:"Qabil & Habil — First Burial",titleAr:"قابيل وهابيل",summary:"The first murder. A crow taught Qabil how to bury his brother."},
-  {id:6,period:"bidaya",titleEn:"Hud — The Wind",titleAr:"هود",summary:"The people of Ad rejected their messenger. A barren wind destroyed them."},
-  {id:7,period:"bidaya",titleEn:"Salih — The She-Camel",titleAr:"صالح",summary:"Thamud asked for a sign. The she-camel was given. They hamstrung her."},
-  {id:8,period:"qisas",titleEn:"Ibrahim — The Search",titleAr:"إبراهيم يبحث",summary:"He looked at the star, the moon, and the sun, then turned to the Lord of the worlds."},
-  {id:10,period:"qisas",titleEn:"Isma'il — The Sacrifice",titleAr:"إسماعيل",summary:"The dream of sacrifice. Both father and son submitted. A ram was given in ransom."},
-  {id:11,period:"qisas",titleEn:"Kaaba Raised",titleAr:"الكعبة",summary:"Ibrahim and Isma'il raise the foundations of the House."},
-  {id:13,period:"qisas",titleEn:"Musa — The Box",titleAr:"موسى الصندوق",summary:"The infant placed in a box on the Nile. Raised in the house of the one who would kill the boys."},
-  {id:14,period:"qisas",titleEn:"Musa — The Staff",titleAr:"عصا موسى",summary:"The staff became a serpent. The hand became white. The signs against Pharaoh began."},
-  {id:15,period:"qisas",titleEn:"Musa — The Plagues",titleAr:"الآيات",summary:"Flood, locusts, lice, frogs, blood. Signs that only increased the arrogance."},
-  {id:16,period:"qisas",titleEn:"Musa — Night Journey of the Israelites",titleAr:"خروج بني إسرائيل",summary:"They left by night. Pharaoh pursued. The sea stood between them and freedom."},
-  {id:18,period:"qisas",titleEn:"Sinai Tablets",titleAr:"الألواح",summary:"Forty nights. The Tablets. The golden calf."},
-  {id:19,period:"qisas",titleEn:"Isa — The Word",titleAr:"عيسى كلمة",summary:"Created by the word Be. Born of a virgin. Spoke in the cradle."},
-  {id:20,period:"qisas",titleEn:"Isa — The Table",titleAr:"المائدة",summary:"The disciples asked for a table from heaven. It was given as a feast and a sign."},
-  {id:21,period:"qisas",titleEn:"Isa — Raised",titleAr:"رفع عيسى",summary:"They did not kill him nor crucify him. Allah raised him to Himself."},
-  {id:22,period:"seerah",titleEn:"Birth of the Prophet ﷺ",titleAr:"مولد النبي",summary:"In the Year of the Elephant. The light that would complete the Path was born in Makkah."},
-  {id:23,period:"seerah",titleEn:"The Cave of Hira — Before Revelation",titleAr:"غار حراء قبل",summary:"Years of solitude and worship. The heart being prepared for the weight of the Word."},
-  {id:24,period:"seerah",titleEn:"Khadijah — First Believer",titleAr:"خديجة",summary:"When the revelation came she believed without hesitation and covered him."},
-  {id:25,period:"seerah",titleEn:"The Early Converts",titleAr:"السابقون",summary:"Abu Bakr, Ali, Zayd, Bilal and the first circle of light."},
-  {id:26,period:"seerah",titleEn:"The Year of Sorrow",titleAr:"عام الحزن",summary:"Khadijah and Abu Talib died in the same year. The protection of the clan was gone."},
-  {id:28,period:"seerah",titleEn:"Hira — Tahannuth",titleAr:"غار حراء",summary:"At forty he retreated to the cave of Hira for nights of worship."},
-  {id:30,period:"seerah",titleEn:"The Boycott",titleAr:"المقاطعة",summary:"Three years of siege in the mountain pass. The document was eaten by worms."},
-  {id:31,period:"seerah",titleEn:"Hijrah — The Cave of Thawr",titleAr:"غار ثور",summary:"Abu Bakr and the Prophet in the cave. The spider and the dove."},
-  {id:32,period:"seerah",titleEn:"Arrival in Madinah",titleAr:"الوصول إلى المدينة",summary:"The Ansar waited. The camel chose the place. The first masjid was built."},
-  {id:33,period:"seerah",titleEn:"The Constitution of Madinah",titleAr:"صحيفة المدينة",summary:"The first written constitution. Muslims, Jews and others as one community."},
-  {id:34,period:"seerah",titleEn:"Change of Qibla",titleAr:"تحويل القبلة",summary:"From Jerusalem to the Kaaba. A test of obedience and a return to the House of Ibrahim."},
-  {id:36,period:"seerah",titleEn:"Uhud",titleAr:"أحد",summary:"The archers left their post. The Prophet was wounded. Seventy martyrs."},
-  {id:37,period:"seerah",titleEn:"Khandaq — The Trench",titleAr:"الخندق",summary:"Salman suggested the trench. The confederates were turned back by the wind."},
-  {id:38,period:"seerah",titleEn:"Hudaybiyyah",titleAr:"الحديبية",summary:"The treaty that looked like a defeat but was a clear victory."},
-  {id:40,period:"seerah",titleEn:"Hunayn and Ta'if",titleAr:"حنين والطائف",summary:"Initial defeat at Hunayn, then victory. The siege of Ta'if."},
-  {id:42,period:"seerah",titleEn:"The Death of the Prophet ﷺ",titleAr:"وفاة النبي",summary:"In the room of Aisha. The last words were a prayer and a choice."},
-  {id:43,period:"nihaya",titleEn:"The Signs Begin",titleAr:"أشراط الساعة",summary:"The minor signs have appeared. The major signs are yet to come."},
-  {id:44,period:"nihaya",titleEn:"The Mahdi",titleAr:"المهدي",summary:"A man from the family of the Prophet who will fill the earth with justice."},
-  {id:45,period:"nihaya",titleEn:"The Descent of Isa",titleAr:"نزول عيسى",summary:"Isa will descend at the white minaret in Damascus. He will kill the Dajjal."},
-  {id:46,period:"nihaya",titleEn:"Yajuj and Majuj",titleAr:"يأجوج ومأجوج",summary:"The barrier of Dhul-Qarnayn will break. They will swarm across the earth."},
-  {id:47,period:"nihaya",titleEn:"Dabbat al-Ard — The Beast",titleAr:"دابة الأرض",summary:"A beast emerges speaking to people and marking faces."},
-  {id:49,period:"nihaya",titleEn:"The Rising of the Sun from the West",titleAr:"طلوع الشمس من مغربها",summary:"The door of repentance will close. No soul will benefit from its faith after that."},
-  {id:50,period:"nihaya",titleEn:"The Trumpet",titleAr:"النفخ في الصور",summary:"The first blast will cause all to die. The second will raise them for the Standing."},
-  {id:51,period:"nihaya",titleEn:"The Resurrection",titleAr:"البعث",summary:"Every soul will be returned to its body. The first to rise will be the Prophet ﷺ."},
-  {id:52,period:"nihaya",titleEn:"The Standing",titleAr:"الوقوف",summary:"A day whose length is fifty thousand years. The sweat will reach the mouths of some."},
-  {id:53,period:"nihaya",titleEn:"The Scales",titleAr:"الموازين",summary:"Deeds will be weighed. A single atom of good or evil will be seen."},
-  {id:54,period:"nihaya",titleEn:"The Books",titleAr:"الكتب",summary:"The record of every deed. Given in the right hand or from behind the back."},
-  {id:55,period:"nihaya",titleEn:"Shafa'a — Maqam Mahmud",titleAr:"الشفاعة",summary:"All prophets say Nafsi nafsi. Muhammad ﷺ is given the praised station."},
-  {id:57,period:"nihaya",titleEn:"The Vision",titleAr:"الرؤية",summary:"The greatest delight of Jannah is the vision of the Face of Allah."}
+const existing=new Set(NODES.map(n=>n.id));
+const placeholders=[
+{id:3,period:"bidaya",titleEn:"Hawwa — Garden of Jannah",titleAr:"حواء",summary:"Hawwa created from Adam’s rib. Together in the Garden until the slip."},
+{id:4,period:"bidaya",titleEn:"Qabil & Habil — First Burial",titleAr:"قابيل وهابيل",summary:"The first murder. A crow taught Qabil how to bury his brother."},
+{id:6,period:"bidaya",titleEn:"Hud — The Wind",titleAr:"هود",summary:"The people of Ad rejected their messenger. A barren wind destroyed them."},
+{id:7,period:"bidaya",titleEn:"Salih — The She-Camel",titleAr:"صالح",summary:"Thamud asked for a sign. The she-camel was given. They hamstrung her."},
+{id:8,period:"qisas",titleEn:"Ibrahim — The Search",titleAr:"إبراهيم يبحث",summary:"He looked at the star, the moon, and the sun, then turned to the Lord of the worlds."},
+{id:11,period:"qisas",titleEn:"Kaaba Raised",titleAr:"الكعبة",summary:"Ibrahim and Isma'il raise the foundations of the House."},
+{id:13,period:"qisas",titleEn:"Musa — The Box",titleAr:"موسى الصندوق",summary:"The infant placed in a box on the Nile. Raised in the house of the one who would kill the boys."},
+{id:14,period:"qisas",titleEn:"Musa — The Staff",titleAr:"عصا موسى",summary:"The staff became a serpent. The hand became white. The signs against Pharaoh began."},
+{id:15,period:"qisas",titleEn:"Musa — The Plagues",titleAr:"الآيات",summary:"Flood, locusts, lice, frogs, blood. Signs that only increased the arrogance."},
+{id:16,period:"qisas",titleEn:"Musa — Night Journey of the Israelites",titleAr:"خروج بني إسرائيل",summary:"They left by night. Pharaoh pursued. The sea stood between them and freedom."},
+{id:18,period:"qisas",titleEn:"Sinai Tablets",titleAr:"الألواح",summary:"Forty nights. The Tablets. The golden calf."},
+{id:20,period:"qisas",titleEn:"Isa — The Table",titleAr:"المائدة",summary:"The disciples asked for a table from heaven. It was given as a feast and a sign."},
+{id:21,period:"qisas",titleEn:"Isa — Raised",titleAr:"رفع عيسى",summary:"They did not kill him nor crucify him. Allah raised him to Himself."},
+{id:22,period:"seerah",titleEn:"Birth of the Prophet ﷺ",titleAr:"مولد النبي",summary:"In the Year of the Elephant. The light that would complete the Path was born in Makkah."},
+{id:23,period:"seerah",titleEn:"The Cave of Hira — Before Revelation",titleAr:"غار حراء قبل",summary:"Years of solitude and worship. The heart being prepared for the weight of the Word."},
+{id:24,period:"seerah",titleEn:"Khadijah — First Believer",titleAr:"خديجة",summary:"When the revelation came she believed without hesitation and covered him."},
+{id:25,period:"seerah",titleEn:"The Early Converts",titleAr:"السابقون",summary:"Abu Bakr, Ali, Zayd, Bilal and the first circle of light."},
+{id:28,period:"seerah",titleEn:"Hira — Tahannuth",titleAr:"غار حراء",summary:"At forty he retreated to the cave of Hira for nights of worship."},
+{id:30,period:"seerah",titleEn:"The Boycott",titleAr:"المقاطعة",summary:"Three years of siege in the mountain pass. The document was eaten by worms."},
+{id:32,period:"seerah",titleEn:"Arrival in Madinah",titleAr:"الوصول إلى المدينة",summary:"The Ansar waited. The camel chose the place. The first masjid was built."},
+{id:33,period:"seerah",titleEn:"The Constitution of Madinah",titleAr:"صحيفة المدينة",summary:"The first written constitution. Muslims, Jews and others as one community."},
+{id:40,period:"seerah",titleEn:"Hunayn and Ta'if",titleAr:"حنين والطائف",summary:"Initial defeat at Hunayn, then victory. The siege of Ta'if."},
+{id:43,period:"nihaya",titleEn:"The Signs Begin",titleAr:"أشراط الساعة",summary:"The minor signs have appeared. The major signs are yet to come."},
+{id:44,period:"nihaya",titleEn:"The Mahdi",titleAr:"المهدي",summary:"A man from the family of the Prophet who will fill the earth with justice."},
+{id:45,period:"nihaya",titleEn:"The Descent of Isa",titleAr:"نزول عيسى",summary:"Isa will descend at the white minaret in Damascus. He will kill the Dajjal."},
+{id:46,period:"nihaya",titleEn:"Yajuj and Majuj",titleAr:"يأجوج ومأجوج",summary:"The barrier of Dhul-Qarnayn will break. They will swarm across the earth."},
+{id:47,period:"nihaya",titleEn:"Dabbat al-Ard — The Beast",titleAr:"دابة الأرض",summary:"A beast emerges speaking to people and marking faces."},
+{id:49,period:"nihaya",titleEn:"The Rising of the Sun from the West",titleAr:"طلوع الشمس من مغربها",summary:"The door of repentance will close. No soul will benefit from its faith after that."},
+{id:50,period:"nihaya",titleEn:"The Trumpet",titleAr:"النفخ في الصور",summary:"The first blast will cause all to die. The second will raise them for the Standing."},
+{id:51,period:"nihaya",titleEn:"The Resurrection",titleAr:"البعث",summary:"Every soul will be returned to its body. The first to rise will be the Prophet ﷺ."},
+{id:52,period:"nihaya",titleEn:"The Standing",titleAr:"الوقوف",summary:"A day whose length is fifty thousand years. The sweat will reach the mouths of some."},
+{id:53,period:"nihaya",titleEn:"The Scales",titleAr:"الموازين",summary:"Deeds will be weighed. A single atom of good or evil will be seen."},
+{id:54,period:"nihaya",titleEn:"The Books",titleAr:"الكتب",summary:"The record of every deed. Given in the right hand or from behind the back."},
+{id:55,period:"nihaya",titleEn:"Shafa'a — Maqam Mahmud",titleAr:"الشفاعة",summary:"All prophets say Nafsi nafsi. Muhammad ﷺ is given the praised station."},
+{id:57,period:"nihaya",titleEn:"The Vision",titleAr:"الرؤية",summary:"The greatest delight of Jannah is the vision of the Face of Allah."}
 ];
-placeholders.forEach(p => {
-  if (!existing.has(p.id)) {
-    NODES.push({...p, details: p.summary + " Full long-form article continues to be illuminated in the Codex.", pattern: p.period==="nihaya"?"pattern-nihaya":(p.period==="seerah"?"pattern-1":"pattern-2"), quran:[], hadith:[], facts:[], lessons:[], connections:[]});
-  }
-});
+placeholders.forEach(p=>{if(!existing.has(p.id)){NODES.push({...p,details:p.summary+" Full long-form article continues to be illuminated in the Codex.",pattern:p.period==="nihaya"?"pattern-nihaya":(p.period==="seerah"?"pattern-1":"pattern-2"),quran:[],hadith:[],facts:[],lessons:[],connections:[]})}});
 NODES.sort((a,b)=>a.id-b.id);
 
-function renderTimeline(period="all"){
-  const g=document.getElementById("timeline-grid");
-  const list=period==="all"?NODES:NODES.filter(n=>n.period===period);
-  g.innerHTML=list.map((n,i)=>`
-    <button class="tile text-left" style="animation-delay:${Math.min(i*0.028,0.5)}s" onclick="openModal(${n.id})">
-      <div class="tile-bg ${n.pattern||'pattern-1'}"></div>
-      <div class="tile-overlay"></div>
-      <div class="tile-shine"></div>
-      <div class="tile-content">
-        ${n.metric?`<span class="data-chip">${n.metric}</span>`:''}
-        <div class="text-[10px] uppercase tracking-wider text-parchment/55 mb-1">${n.period} • #${String(n.id).padStart(2,'0')}</div>
-        <div class="font-semibold text-[15px] leading-snug mb-1">${n.titleEn}</div>
-        <div class="font-amiri text-gold/90 text-sm">${n.titleAr||''}</div>
-      </div>
-    </button>`).join("");
-}
-
-function openModal(id){
-  const n=NODES.find(x=>x.id===id);if(!n)return;
-  document.getElementById("modal-title").textContent=n.titleEn;
-  const quranHtml=(n.quran&&n.quran.length)?n.quran.map(q=>`
-    <div class="mt-4 p-4 bg-white rounded-xl border border-ink/8">
-      <div class="text-xs font-bold text-gold mb-1">${q.ref}</div>
-      ${q.ar?`<p class="font-amiri text-base text-right leading-loose mb-2" dir="rtl">${q.ar}</p>`:''}
-      ${q.en?`<p class="text-sm text-ink/70">${q.en}</p>`:''}
-    </div>`).join(""):"";
-  document.getElementById("modal-body").innerHTML=`
-    <div class="font-amiri text-gold text-2xl mb-2">${n.titleAr||''}</div>
-    <p class="text-ink/70 leading-relaxed mb-5">${n.summary}</p>
-    <div class="leading-relaxed whitespace-pre-line text-[15px] text-ink/85">${n.details||''}</div>
-    ${quranHtml}
-    ${(n.hadith&&n.hadith.length)?`<div class="mt-6"><h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2">Hadith</h3><ul class="space-y-1.5">${n.hadith.map(h=>`<li class="text-sm text-ink/75 pl-3 border-l-2 border-gold/40">${h}</li>`).join("")}</ul></div>`:''}
-    ${(n.lessons&&n.lessons.length)?`<div class="mt-6"><h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2">Ibrah — Lessons</h3><ul class="space-y-1.5">${n.lessons.map(l=>`<li class="text-sm text-ink/80 flex gap-2"><span class="text-gold">✦</span><span>${l}</span></li>`).join("")}</ul></div>`:''}
-    <div class="mt-8 pt-4 border-t border-ink/8 text-xs text-ink/40 flex justify-between">
-      <span>Node ${n.id} of 58</span>
-      <button onclick="closeModal()" class="text-gold font-medium hover:underline">Close</button>
-    </div>`;
-  document.getElementById("modal-backdrop").classList.add("open");
-  document.body.style.overflow="hidden";
-}
+function renderTimeline(period="all"){const g=document.getElementById("timeline-grid");const list=period==="all"?NODES:NODES.filter(n=>n.period===period);g.innerHTML=list.map((n,i)=>`<button class="tile text-left" style="animation-delay:${Math.min(i*0.028,0.5)}s" onclick="openModal(${n.id})"><div class="tile-bg ${n.pattern||'pattern-1'}"></div><div class="tile-overlay"></div><div class="tile-shine"></div><div class="tile-content">${n.metric?`<span class="data-chip">${n.metric}</span>`:''}<div class="text-[10px] uppercase tracking-wider text-parchment/55 mb-1">${n.period} • #${String(n.id).padStart(2,'0')}</div><div class="font-semibold text-[15px] leading-snug mb-1">${n.titleEn}</div><div class="font-amiri text-gold/90 text-sm">${n.titleAr||''}</div></div></button>`).join("")}
+function openModal(id){const n=NODES.find(x=>x.id===id);if(!n)return;document.getElementById("modal-title").textContent=n.titleEn;const quranHtml=(n.quran&&n.quran.length)?n.quran.map(q=>`<div class="mt-4 p-4 bg-white rounded-xl border border-ink/8"><div class="text-xs font-bold text-gold mb-1">${q.ref}</div>${q.ar?`<p class="font-amiri text-base text-right leading-loose mb-2" dir="rtl">${q.ar}</p>`:''}${q.en?`<p class="text-sm text-ink/70">${q.en}</p>`:''}</div>`).join(""):"";document.getElementById("modal-body").innerHTML=`<div class="font-amiri text-gold text-2xl mb-2">${n.titleAr||''}</div><p class="text-ink/70 leading-relaxed mb-5">${n.summary}</p><div class="leading-relaxed whitespace-pre-line text-[15px] text-ink/85">${n.details||''}</div>${quranHtml}${(n.hadith&&n.hadith.length)?`<div class="mt-6"><h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2">Hadith</h3><ul class="space-y-1.5">${n.hadith.map(h=>`<li class="text-sm text-ink/75 pl-3 border-l-2 border-gold/40">${h}</li>`).join("")}</ul></div>`:''}${(n.lessons&&n.lessons.length)?`<div class="mt-6"><h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2">Ibrah — Lessons</h3><ul class="space-y-1.5">${n.lessons.map(l=>`<li class="text-sm text-ink/80 flex gap-2"><span class="text-gold">✦</span><span>${l}</span></li>`).join("")}</ul></div>`:''}<div class="mt-8 pt-4 border-t border-ink/8 text-xs text-ink/40 flex justify-between"><span>Node ${n.id} of 58</span><button onclick="closeModal()" class="text-gold font-medium hover:underline">Close</button></div>`;document.getElementById("modal-backdrop").classList.add("open");document.body.style.overflow="hidden"}
 function closeModal(){document.getElementById("modal-backdrop").classList.remove("open");document.body.style.overflow=""}
-document.getElementById("modal-close").onclick=closeModal;
-document.getElementById("modal-backdrop").onclick=e=>{if(e.target===e.currentTarget)closeModal()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-
-document.getElementById("period-filters").onclick=e=>{
-  const btn=e.target.closest(".filter-btn");if(!btn)return;
-  document.querySelectorAll(".filter-btn").forEach(b=>{b.classList.remove("active","bg-ink","text-parchment");b.classList.add("bg-ink/5","text-ink/70")});
-  btn.classList.add("active","bg-ink","text-parchment");btn.classList.remove("bg-ink/5","text-ink/70");
-  renderTimeline(btn.dataset.period);
-};
-
+document.getElementById("modal-close").onclick=closeModal;document.getElementById("modal-backdrop").onclick=e=>{if(e.target===e.currentTarget)closeModal()};document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("period-filters").onclick=e=>{const btn=e.target.closest(".filter-btn");if(!btn)return;document.querySelectorAll(".filter-btn").forEach(b=>{b.classList.remove("active","bg-ink","text-parchment");b.classList.add("bg-ink/5","text-ink/70")});btn.classList.add("active","bg-ink","text-parchment");btn.classList.remove("bg-ink/5","text-ink/70");renderTimeline(btn.dataset.period)};
 window.onscroll=()=>{const h=document.documentElement;document.getElementById("progress").style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+"%"};
 renderTimeline();
 </script>
