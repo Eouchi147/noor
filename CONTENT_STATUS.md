@@ -1,47 +1,33 @@
 # NOOR Content Status
 
-**Building mode** — deploy tomorrow when Vercel limit resets.
+**Building mode** — deploy when Vercel limit resets.
+**i18n foundation locked** — maximum languages later (see I18N_FOUNDATION.md).
 
-## Expanded nodes (solid narratives + facts + Qur’an + lessons)
+## Expanded nodes (26) — solid narratives + facts + Qur’an + lessons
 
 ### Al-Bidaya
-- Adam from Clay — Ruh Breathed
-- Hawwa — Mother of Humanity
-- Qabil & Habil — First Murder
-- Nuh — 950 Years of Dawah
-- Hud — People of Aad
-- Salih — The She-Camel
+Adam · Hawwa · Qabil & Habil · Nuh · Hud · Salih
 
 ### Qisas al-Anbiya
-- Ibrahim — Fire Cool & Peace
-- The Sacrifice — Dream of Isma’il
-- Kaaba Raised — Ibrahim & Isma’il
-- Yusuf — From Well to Throne
-- Musa — Nile Basket
-- Musa — Fire of Sinai (Tuwa)
-- Sea Split — Twelve Paths
-- Dawud — Zabur & Iron
-- Sulayman — Wind, Jinn & Hudhud
-- Yunus — The Fish & the Darkness
-- Isa — The Word & the Spirit
+Ibrahim · Sacrifice · Kaaba Raised · Yusuf  
+Musa (Nile, Sinai Fire, Magicians, Sea Split, Pharaoh drowned)  
+Dawud · Sulayman · Yunus  
+Zakariya · Yahya · Maryam · Isa
 
-### Al-Seerah (Batch A — full standard)
-- Badr — 313 vs 1000 (long-form + Afasy + Impact)
-- Uhud — Archers on the Hill
-- Khandaq — The Trench
-- Hudaybiyyah — Manifest Victory
+### Al-Seerah
+Jahiliyya · Year of the Elephant · Iqra · Isra & Mi’raj  
+**Batch A (full standard + Afasy):** Badr · Uhud · Khandaq · Hudaybiyyah
 
-### Companions (fully expandable)
-12 seals with full articles, facts grids, Hadith, Impact blocks.
+### Companions
+12 seals, fully expandable (articles, facts, Hadith, Impact)
 
 ### Al-Nihaya
-Extreme focus retained with infographic-style cards.
+Extreme focus + infographic structure retained
 
-## Target
-86-node complete chronology (see CHRONOLOGY.md).
-Content standard: 1000–2000 words, facts 4–8, Qur’an + Afasy, Hadith 1–10, Impact.
+## Infrastructure
+- i18n: `t()`, lang switcher shell, RTL-ready, stable node schema
+- Chronology map: 86 nodes (CHRONOLOGY.md)
+- Manuscript images: 4 generated locally
 
-## Next build steps
-1. Continue expanding remaining nodes (Musa Pharaoh/magicians, Maryam, Zakariya, Yahya, full Seerah gaps, Khulafa)
-2. Push fuller local index to main when ready
-3. Deploy tomorrow
+## Still to expand
+Remaining Seerah gaps · Al-Khulafa · word counts toward 1000–2000 · full JSON export for translators
