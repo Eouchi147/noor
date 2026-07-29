@@ -2,153 +2,222 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Companions — NOOR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Companions — NOOR | نُور</title>
+<meta name="description" content="Abstract seals of the Companions of the Messenger. No faces. Light and titles only."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227'}}}}</script>
-<style>body{background:#FFFEF7;color:#2C2416;font-family:Inter,system-ui,sans-serif}.font-amiri{font-family:Amiri,serif}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.font-amiri{font-family:Amiri,serif}
+.header{position:sticky;top:0;z-index:50;background:rgba(255,254,247,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(44,36,22,.07)}
+.nav-link{position:relative;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65);transition:color .25s}
+.nav-link:hover{color:var(--ink)}
+.nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--gold);transition:width .3s var(--ease)}
+.nav-link:hover::after{width:100%}
+.seal{border-radius:1.35rem;overflow:hidden;border:1px solid rgba(44,36,22,.08);background:#fff;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.seal:hover{transform:translateY(-5px);box-shadow:0 18px 36px rgba(44,36,22,.1),0 0 0 1px rgba(201,162,39,.18)}
+.seal-face{height:11rem;display:flex;align-items:center;justify-content:center;position:relative}
+.seal-face::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,22,15,.15),transparent 40%);pointer-events:none}
+.seal-glyph{font-family:Amiri,serif;font-size:2.75rem;color:rgba(201,162,39,.85);text-shadow:0 0 40px rgba(201,162,39,.25);position:relative;z-index:1}
+</style>
 </head>
 <body class="antialiased">
-<header class="sticky top-0 z-50 bg-parchment/90 backdrop-blur border-b border-ink/8">
-  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2">
-      <span class="font-amiri text-2xl text-gold">ن</span>
-      <span class="font-semibold">نُور</span>
+<header class="header">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+      <span class="font-amiri text-2xl text-gold leading-none">ن</span>
+      <span class="font-semibold tracking-tight text-[15px]">نُور</span>
     </a>
-    <nav class="flex gap-5 text-sm font-medium text-ink/70">
-      <a href="index.html" class="hover:text-ink">Path</a>
-      <a href="index.html#books" class="hover:text-ink">Books</a>
+    <nav class="flex items-center gap-6 text-sm">
+      <a href="index.html" class="nav-link">The Path</a>
+      <a href="index.html#timeline" class="nav-link" onclick="try{document.querySelector('[data-period=nihaya]').click()}catch(e){}">Nihaya</a>
+      <span class="text-ink/40 font-medium">Companions</span>
     </nav>
   </div>
 </header>
 
-<section class="py-16">
-  <div class="max-w-5xl mx-auto px-4 text-center mb-12">
-    <p class="font-amiri text-gold text-3xl mb-2">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
-    <h1 class="text-3xl font-bold mb-3">Companions of the Messenger</h1>
-    <p class="text-ink/60 max-w-xl mx-auto">Abstract seals only. No faces. Each seal represents a virtue or title. Full biographies expand as Book 5 (Al-Khulafa) is illuminated.</p>
+<section class="pt-16 pb-10 sm:pt-20 sm:pb-14">
+  <div class="max-w-3xl mx-auto px-4 text-center">
+    <p class="font-amiri text-gold text-3xl sm:text-4xl mb-3">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
+    <h1 class="text-3xl sm:text-4xl font-bold mb-4">Companions of the Messenger</h1>
+    <p class="text-ink/60 leading-relaxed max-w-xl mx-auto">Abstract seals only. No faces. Each seal carries a title and a virtue. The Companions are remembered by light, names, and the marks they left on the Path.</p>
   </div>
-
-  <div class="max-w-5xl mx-auto px-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22744 0%,transparent 60%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-5xl text-gold/80">أسد</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Asadullah</div>
-        <h3 class="font-semibold mb-1">Hamza ibn Abd al-Muttalib</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">حمزة بن عبد المطلب</p>
-        <p class="text-sm text-ink/70 leading-relaxed">Lion of Allah and of His Messenger. Uncle of the Prophet. Early convert. Martyred at Uhud while defending the Messenger.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">أَبُو بَكْرٍ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">As-Siddiq</div>
-        <h3 class="font-semibold mb-1">Abu Bakr as-Siddiq</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">أبو بكر الصديق</p>
-        <p class="text-sm text-ink/70 leading-relaxed">The first adult male to believe. Companion of the Cave. First Caliph. His truthfulness never wavered.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">عُمَرُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Al-Faruq</div>
-        <h3 class="font-semibold mb-1">Umar ibn al-Khattab</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">عمر بن الخطاب</p>
-        <p class="text-sm text-ink/70 leading-relaxed">The one who distinguished truth from falsehood. Second Caliph. Justice was his hallmark. The lands of the empires began to open under him.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">عُثْمَانُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Dhun-Nurayn</div>
-        <h3 class="font-semibold mb-1">Uthman ibn Affan</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">عثمان بن عفان</p>
-        <p class="text-sm text-ink/70 leading-relaxed">Possessor of the Two Lights. Third Caliph. Compiled the Qur’an into a single official mushaf. Known for extreme modesty and generosity.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">عَلِيٌّ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Abu Turab</div>
-        <h3 class="font-semibold mb-1">Ali ibn Abi Talib</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">علي بن أبي طالب</p>
-        <p class="text-sm text-ink/70 leading-relaxed">Cousin and son-in-law of the Prophet. First child to believe. Fourth Caliph. Gate of the city of knowledge. Courage and knowledge combined.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">بِلَالٌ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Mu’adhdhin</div>
-        <h3 class="font-semibold mb-1">Bilal ibn Rabah</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">بلال بن رباح</p>
-        <p class="text-sm text-ink/70 leading-relaxed">First mu’adhdhin of Islam. Former slave tortured for his faith. His voice called the adhan from the Kaaba on the day of the Conquest of Makkah.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">سَلْمَانُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Al-Farisi</div>
-        <h3 class="font-semibold mb-1">Salman al-Farisi</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">سلمان الفارسي</p>
-        <p class="text-sm text-ink/70 leading-relaxed">The seeker who crossed empires looking for the true prophet. Suggested the trench at Khandaq. The Prophet said of him: “Salman is one of us, the Ahl al-Bayt.”</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">خَالِدٌ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Sayfullah</div>
-        <h3 class="font-semibold mb-1">Khalid ibn al-Walid</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">خالد بن الوليد</p>
-        <p class="text-sm text-ink/70 leading-relaxed">The Sword of Allah. Never defeated in battle after accepting Islam. Instrumental at Mu’tah, the Conquest, and the wars of apostasy.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">خَدِيجَةُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
-        <h3 class="font-semibold mb-1">Khadijah bint Khuwaylid</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">خديجة بنت خويلد</p>
-        <p class="text-sm text-ink/70 leading-relaxed">First to believe. The Prophet’s first wife and strongest supporter. Mother of Fatimah. When the first revelation came, she was the one who covered him and believed without hesitation.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">فَاطِمَةُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Sayyidat Nisa al-Alamin</div>
-        <h3 class="font-semibold mb-1">Fatimah bint Muhammad</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">فاطمة بنت محمد</p>
-        <p class="text-sm text-ink/70 leading-relaxed">The daughter of the Prophet, wife of Ali, mother of Hasan and Husayn. Part of the Prophet, the one whose pleasure is the pleasure of Allah.</p>
-      </div>
-    </div>
-
-    <div class="rounded-2xl overflow-hidden border border-ink/8 bg-white">
-      <div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22733 0%,transparent 55%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-4xl text-gold/80">عَائِشَةُ</span></div>
-      <div class="p-5">
-        <div class="text-xs uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
-        <h3 class="font-semibold mb-1">Aisha bint Abi Bakr</h3>
-        <p class="font-amiri text-sm text-ink/60 mb-2">عائشة بنت أبي بكر</p>
-        <p class="text-sm text-ink/70 leading-relaxed">Mother of the Believers. The most knowledgeable of the women of the ummah. Many of the rulings and details of the Sunnah were preserved through her.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <p class="text-center text-sm text-ink/50 mt-12 max-w-lg mx-auto">More seals will be added as Book 5 expands. Prophets remain represented only by light, seals, and calligraphy — never faces.</p>
 </section>
 
-<footer class="border-t border-ink/8 py-8 text-center text-xs text-ink/40">
-  <p><a href="index.html" class="hover:text-ink">← Back to the Path</a></p>
+<section class="pb-20">
+  <div class="max-w-6xl mx-auto px-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    <!-- Abu Bakr -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.28),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">الصِّدِّيق</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">As-Siddiq</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Abu Bakr as-Siddiq</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">أبو بكر الصديق</p>
+        <p class="text-sm text-ink/70 leading-relaxed">First adult male to believe. Companion of the Cave. First Caliph. His truthfulness never wavered — even on the morning after the Isra.</p>
+      </div>
+    </article>
+
+    <!-- Umar -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.22),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">الفَارُوق</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Al-Faruq</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Umar ibn al-Khattab</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">عمر بن الخطاب</p>
+        <p class="text-sm text-ink/70 leading-relaxed">The one who distinguished truth from falsehood. Second Caliph. Justice was his hallmark. The lands of the empires began to open under him.</p>
+      </div>
+    </article>
+
+    <!-- Uthman -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.22),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">ذُو النُّورَيْن</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Dhun-Nurayn</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Uthman ibn Affan</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">عثمان بن عفان</p>
+        <p class="text-sm text-ink/70 leading-relaxed">Possessor of the Two Lights. Third Caliph. Compiled the Qur’an into a single official mushaf. Extreme modesty and generosity.</p>
+      </div>
+    </article>
+
+    <!-- Ali -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.25),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">أَبُو تُرَاب</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Abu Turab</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Ali ibn Abi Talib</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">علي بن أبي طالب</p>
+        <p class="text-sm text-ink/70 leading-relaxed">Cousin and son-in-law of the Prophet. First child to believe. Fourth Caliph. Gate of the city of knowledge. Courage and knowledge combined.</p>
+      </div>
+    </article>
+
+    <!-- Hamza -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.3),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">أَسَدُ اللَّه</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Asadullah</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Hamza ibn Abd al-Muttalib</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">حمزة بن عبد المطلب</p>
+        <p class="text-sm text-ink/70 leading-relaxed">Lion of Allah and of His Messenger. Uncle of the Prophet. Early convert. Martyred at Uhud while defending the Messenger.</p>
+      </div>
+    </article>
+
+    <!-- Bilal -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.22),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">مُؤَذِّن</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Mu’adhdhin</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Bilal ibn Rabah</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">بلال بن رباح</p>
+        <p class="text-sm text-ink/70 leading-relaxed">First mu’adhdhin of Islam. Former slave tortured for his faith. His voice called the adhan from the Kaaba on the day of the Opening of Makkah.</p>
+      </div>
+    </article>
+
+    <!-- Salman -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.22),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">الفَارِسِيّ</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Al-Farisi</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Salman al-Farisi</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">سلمان الفارسي</p>
+        <p class="text-sm text-ink/70 leading-relaxed">The seeker who crossed empires looking for the true prophet. Suggested the trench at Khandaq. The Prophet said: “Salman is one of us, the Ahl al-Bayt.”</p>
+      </div>
+    </article>
+
+    <!-- Khalid -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.25),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">سَيْفُ اللَّه</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Sayfullah</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Khalid ibn al-Walid</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">خالد بن الوليد</p>
+        <p class="text-sm text-ink/70 leading-relaxed">The Sword of Allah. Never defeated in battle after accepting Islam. Instrumental at Mu’tah, the Opening, and the wars of apostasy.</p>
+      </div>
+    </article>
+
+    <!-- Khadijah -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.28),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">أُمُّ المُؤْمِنِين</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Umm al-Mu’minin</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Khadijah bint Khuwaylid</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">خديجة بنت خويلد</p>
+        <p class="text-sm text-ink/70 leading-relaxed">First to believe. The Prophet’s first wife and strongest supporter. When the first revelation came, she covered him and believed without hesitation.</p>
+      </div>
+    </article>
+
+    <!-- Fatimah -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.26),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">سَيِّدَةُ نِسَاء</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Sayyidat Nisa al-Alamin</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Fatimah bint Muhammad</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">فاطمة بنت محمد</p>
+        <p class="text-sm text-ink/70 leading-relaxed">Daughter of the Prophet, wife of Ali, mother of Hasan and Husayn. Part of the Prophet — the one whose pleasure is the pleasure of Allah.</p>
+      </div>
+    </article>
+
+    <!-- Aisha -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.22),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">أُمُّ المُؤْمِنِين</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Umm al-Mu’minin</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Aisha bint Abi Bakr</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">عائشة بنت أبي بكر</p>
+        <p class="text-sm text-ink/70 leading-relaxed">Mother of the Believers. The most knowledgeable of the women of the ummah. Many rulings and details of the Sunnah were preserved through her.</p>
+      </div>
+    </article>
+
+    <!-- Abu Ubaydah -->
+    <article class="seal">
+      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.2),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
+        <span class="seal-glyph">أَمِينُ الأُمَّة</span>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">Amin al-Ummah</div>
+        <h3 class="font-semibold text-[15px] mb-0.5">Abu Ubaydah ibn al-Jarrah</h3>
+        <p class="font-amiri text-sm text-ink/55 mb-2">أبو عبيدة بن الجراح</p>
+        <p class="text-sm text-ink/70 leading-relaxed">The Trustworthy of the Ummah. One of the ten promised Paradise. Led the armies into Syria. Known for humility and reliability.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="text-center text-sm text-ink/50 mt-14 max-w-lg mx-auto leading-relaxed">
+    More seals will be added over time. Prophets remain represented only by light, seals, and calligraphy — never faces.
+  </p>
+</section>
+
+<footer class="border-t border-ink/8 py-10 text-center">
+  <a href="index.html" class="text-sm text-gold font-medium hover:underline">← Back to the Path</a>
+  <p class="text-xs text-ink/40 mt-3">NOOR — Codex of Light</p>
 </footer>
 </body>
 </html>
