@@ -1,33 +1,35 @@
 # NOOR Content Status
 
-**Building mode** — deploy when Vercel limit resets.
-**i18n foundation locked** — maximum languages later (see I18N_FOUNDATION.md).
+**Building** — deploy when Vercel resets.  
+**i18n foundation locked** (I18N_FOUNDATION.md).
 
-## Expanded nodes (26) — solid narratives + facts + Qur’an + lessons
+## Expanded node drafts: **35**
 
 ### Al-Bidaya
 Adam · Hawwa · Qabil & Habil · Nuh · Hud · Salih
 
-### Qisas al-Anbiya
-Ibrahim · Sacrifice · Kaaba Raised · Yusuf  
-Musa (Nile, Sinai Fire, Magicians, Sea Split, Pharaoh drowned)  
-Dawud · Sulayman · Yunus  
-Zakariya · Yahya · Maryam · Isa
+### Qisas
+Ibrahim · Sacrifice · Kaaba · Yusuf  
+Musa (Nile → Magicians → Sea → Pharaoh drowned)  
+Dawud · Sulayman · Yunus · Zakariya · Yahya · Maryam · Isa
 
 ### Al-Seerah
-Jahiliyya · Year of the Elephant · Iqra · Isra & Mi’raj  
-**Batch A (full standard + Afasy):** Badr · Uhud · Khandaq · Hudaybiyyah
+Jahiliyya · Year of the Elephant · Birth · Iqra · Year of Sorrow · Taif · Isra & Mi’raj · Hijrah  
+**Batch A (full + Afasy):** Badr · Uhud · Khandaq · Hudaybiyyah  
+Opening of Makkah · Farewell Hajj · Death of the Prophet (drafts ready)
+
+### Al-Khulafa (drafts ready)
+Abu Bakr (Ridda + mushaf) · Umar (Faruq)
 
 ### Companions
-12 seals, fully expandable (articles, facts, Hadith, Impact)
+12 expandable seals with full articles
 
-### Al-Nihaya
-Extreme focus + infographic structure retained
+### Nihaya
+Extreme focus retained
 
-## Infrastructure
-- i18n: `t()`, lang switcher shell, RTL-ready, stable node schema
-- Chronology map: 86 nodes (CHRONOLOGY.md)
-- Manuscript images: 4 generated locally
-
-## Still to expand
-Remaining Seerah gaps · Al-Khulafa · word counts toward 1000–2000 · full JSON export for translators
+## Next
+- Uthman · Ali · remaining Seerah (Khaybar, Tabuk, Letters to Kings…)
+- Merge all drafts into live NODES with facts/Hadith/Impact
+- Word counts toward 1000–2000
+- Full EN JSON export for translators
+- Deploy tomorrow
