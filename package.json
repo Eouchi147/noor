@@ -2,12 +2,12 @@
   "name": "noor",
   "version": "1.0.1",
   "private": true,
-  "description": "NOOR — Chronological Islamic journey from Kun Fayakun to Jannah. 58 nodes.",
+  "description": "NOOR \u2014 Chronological Islamic journey from Kun Fayakun to Jannah. 64 nodes.",
   "scripts": {
     "start": "npx serve .",
-    "build": "node scripts/build.mjs && node scripts/build-i18n.mjs",
     "css": "tailwindcss -c tailwind.config.cjs -i tw-input.css -o assets/tw.css --minify",
-    "test": "node tests/e2e.mjs"
+    "test": "node tests/e2e.mjs",
+    "content": "node scripts/build.mjs && node scripts/build-i18n.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0",
