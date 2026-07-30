@@ -777,7 +777,7 @@ On the span, the only sound the tradition reports from its greatest voices is a 
 
 And the file the Sahihayn append to the crossing, which the Codex refuses to trim: the Qantara. After the bridge, the saved are halted on an arch before {{n:64|the Garden}} — and retribution is settled between them for the injustices that remained among believers, "until, when they are refined and purified, they are given leave to enter." The Garden's door policy: no unresolved wrong walks through. Forgive your brother tonight, the tile suggests, or the arch will hold the meeting later.
 
-The last man across is the tradition's most tender comedy: dragged, scorched, crawling — and then bargaining with his Lord tree by tree, oath after broken oath, until he is asked what would satisfy him and laughed toward more than he dreamed. He is the floor of {{n:64|the next node}}: the least citizen of a kingdom {{n:59|ten times this world}}.`,
+The last man across is the tradition's most tender comedy: dragged, scorched, crawling — and then bargaining with his Lord tree by tree, oath after broken oath, until he is asked what would satisfy him and laughed toward more than he dreamed. He is the floor of {{n:64|the next node}}: the least citizen of a kingdom {{n:64|ten times this world}}.`,
 sequence:{phase:"Al-Qiyamah", position:"The crossing", note:"19:71-72 — universal arrival, selective salvation; Qantara after the span"},
 timeline:[
  {label:"All arrive at it", detail:"19:71 — “a matter decreed”"},

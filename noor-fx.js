@@ -1,5 +1,5 @@
 /* ============================================================
-   NOOR FX — shared experience engine (vanilla, zero-build)
+   NOOR FX: shared experience engine (vanilla, zero-build)
    Particles · starfield · parallax · tilt physics · reveals ·
    lazy images · i18n · tilawah audio · cross-links · toasts
    All animation is transform/opacity only (GPU-composited).
@@ -13,12 +13,12 @@ const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 /* ---------------- i18n (Phase A: EN master inline; packs fetched per-language) ---------------- */
 const UI_EN = {
-  "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.about":"About",
+  "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.about":"About",
   "hero.kicker":"نُورٌ عَلَىٰ نُورٍ","hero.title":"Codex of Light",
-  "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord — an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
+  "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
   "hero.cta.enter":"Enter the Path","hero.cta.characters":"Characters",
-  "stats.nodes":"Nodes","stats.characters":"Characters","stats.quran":"Ayat cited","stats.hadith":"Hadith cited",
-  "books.title":"Seven Books","books.sub":"The architecture of the Codex — four books are open on the Path today.",
+  "stats.nodes":"Chapters","stats.characters":"Characters","stats.places":"Places","stats.words":"Words","stats.quran":"Ayat cited","stats.hadith":"Hadith cited",
+  "books.title":"Seven Books","books.sub":"The architecture of the Codex. Four books are open on the Path today.",
   "books.inpath":"In the Path","books.coming":"Coming",
   "book.1.desc":"Creation, the Arsh, Adam, the Flood","book.2.desc":"The prophets from Nuh to Isa",
   "book.3.desc":"Arabia before the Light","book.4.desc":"The Seerah of Muhammad ﷺ",
@@ -27,17 +27,25 @@ const UI_EN = {
   "path.title":"The Path","path.sub":"Kun Fayakun → Jannah · tap any tile to open its chapter",
   "filter.all":"All",
   "period.bidaya":"Al-Bidaya","period.qisas":"Qisas al-Anbiya","period.seerah":"Al-Seerah","period.nihaya":"Al-Nihaya",
-  "period.bidaya.desc":"The beginning — creation, Adam, and the first generations","period.qisas.desc":"The prophets — Ibrahim to Isa","period.seerah.desc":"The final Messenger ﷺ — from Jahiliyya to his passing","period.nihaya.desc":"The signs, the Hour, and the two eternal homes",
+  "period.bidaya.desc":"The beginning: creation, Adam, and the first generations","period.qisas.desc":"The prophets, Ibrahim to Isa","period.seerah.desc":"The final Messenger ﷺ, from Jahiliyya to his passing","period.nihaya.desc":"The signs, the Hour, and the two eternal homes",
   "search.placeholder":"Search the Codex…","search.none":"No matches in the Codex",
-  "modal.sequence":"Sequence","modal.order":"Order of Events","modal.shield":"The Shield — Protection",
-  "modal.quran":"Qur'an","modal.hadith":"Hadith & Athar","modal.facts":"Facts","modal.lessons":"Ibrah — Lessons",
+  "modal.sequence":"Sequence","modal.order":"Order of Events","modal.shield":"The Shield · Protection",
+  "modal.quran":"Qur'an","modal.hadith":"Hadith & Athar","modal.facts":"Facts","modal.lessons":"Ibrah · Lessons",
   "modal.connected":"Connected in the Path","modal.close":"Close","modal.tilawah":"Tilawah","modal.node":"Node",
-  "about.text":"NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only — never faces. Not a source of legal rulings.",
+  "modal.meaning":"Meaning","modal.whennow":"When the Ummah Says It",
+  "about.text":"NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.",
   "footer.back":"← Back to the Path","footer.note":"Qur'an · authentic Hadith · classical sirah",
-  "chars.title":"Characters","chars.sub":"Named beings across the Codex — companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
+  "chars.title":"Characters","chars.sub":"Named beings across the Codex: companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
   "chars.companions":"Companions","chars.angels":"Angels","chars.jinn":"Jinn","chars.animals":"Animals of the Signs","chars.endtime":"End of Time",
-  "chars.companions.desc":"Those who saw the Prophet ﷺ, believed, and died upon Islam.","chars.angels.desc":"Created from light. They do not disobey.","chars.jinn.desc":"Created from smokeless fire — believers and rebels.","chars.animals.desc":"Creatures tied to a prophetic story or a clear ayah — nothing invented.","chars.endtime.desc":"Named figures and forces of the final trials.",
-  "chars.fullpage":"Full companions page →","lang.label":"Language","lang.fallback":"English shown — this language pack isn't installed yet."
+  "chars.companions.desc":"Those who saw the Prophet ﷺ, believed, and died upon Islam.","chars.angels.desc":"Created from light. They do not disobey.","chars.jinn.desc":"Created from smokeless fire: believers and rebels.","chars.animals.desc":"Creatures tied to a prophetic story or a clear ayah. Nothing invented.","chars.endtime.desc":"Named figures and forces of the final trials.",
+  "chars.fullpage":"Full companions page →","lang.label":"Language","lang.fallback":"English shown until this language pack is installed.",
+  "places.title":"Places","places.sub":"The geography of the Codex: sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end.",
+  "places.sanctuaries":"Sanctuaries","places.mountains":"Mountains & Heights","places.cities":"Cities & Lands","places.waters":"Waters & Valleys","places.endtimes":"Stations of the End",
+  "places.sanctuaries.desc":"The three mosques of journeys, and the first mosque of this ummah.","places.mountains.desc":"Where revelation landed, armies learned, and pilgrims stand.","places.cities.desc":"The cities and lands that carried the story, from Babylon to Tabuk.","places.waters.desc":"Wells, rivers, seas and valleys that heaven used as instruments.","places.endtimes.desc":"Addresses fixed in prophecy: the minaret, the gate, the plain, the gathering.",
+  "words.title":"Words of the Path","words.sub":"The exact supplications spoken inside the story: who first said each one, what it did, and when the ummah says it now.",
+  "words.verses":"The Words","words.verses.desc":"Eighteen sentences from the Path, sourced, translated, and ready for tonight.",
+  "words.saidnow":"Say it now",
+  "atlas.open":"Open"
 };
 const NOOR_I18N = {
   lang: localStorage.getItem("noor_lang") || "en",
@@ -101,22 +109,42 @@ function playAyah(ref, btn){
   if (btn) { currentBtn = btn; btn.classList.add("playing"); }
 }
 
-/* ---------------- cross-links ---------------- */
+/* ---------------- cross-links (4 types: n=node c=character p=place w=word) ---------------- */
+const ETYPE = { n:"node", c:"char", p:"place", w:"word" };
 function linkify(text){
   if (!text) return "";
-  return String(text).replace(/\{\{(n|c):([^|}]+)\|([^}]+)\}\}/g, (_, typ, id, label) => {
+  return String(text).replace(/\{\{(n|c|p|w):([^|}]+)\|([^}]+)\}\}/g, (_, typ, id, label) => {
     const safe = label.replace(/"/g, "&quot;");
-    return `<button type="button" class="entity-link" data-etype="${typ === "n" ? "node" : "char"}" data-eid="${id}">${safe}</button>`;
+    return `<button type="button" class="entity-link el-${typ}" data-etype="${ETYPE[typ]}" data-eid="${id}">${safe}</button>`;
   });
 }
-function bindEntityLinks(root, onNode, onChar){
+/* handlers: {node(id), char(id), place(id), word(id)}: unspecified types get the default cross-page hop */
+function bindEntityLinks(root, handlers){
+  const h = Object.assign({
+    node: id => location.href = "index.html?node=" + id,
+    char: id => location.href = "characters.html?open=" + encodeURIComponent(id),
+    place: id => location.href = "places.html?open=" + encodeURIComponent(id),
+    word: id => location.href = "words.html?open=" + encodeURIComponent(id)
+  }, handlers || {});
   (root || document).querySelectorAll(".entity-link").forEach(btn => {
     btn.onclick = e => {
       e.preventDefault(); e.stopPropagation();
-      if (btn.dataset.etype === "node") onNode(+btn.dataset.eid);
-      else onChar(btn.dataset.eid);
+      const t = btn.dataset.etype;
+      h[t](t === "node" ? +btn.dataset.eid : btn.dataset.eid);
     };
   });
+}
+
+/* ---------------- count-up numbers ---------------- */
+function countUp(el, target, ms){
+  if (REDUCED) { el.textContent = target; return; }
+  const t0 = performance.now(), dur = ms || 1100;
+  function tick(t){
+    const p = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 
 /* ---------------- scroll reveals (one observer, stagger via --d) ---------------- */
@@ -157,6 +185,7 @@ function initHeroCanvas(canvas){
     const r = canvas.getBoundingClientRect();
     W = canvas.width = Math.round(r.width * DPR); H = canvas.height = Math.round(r.height * DPR);
   }
+  let shooting = null, nextShot = 3500 + Math.random()*6000;
   function seed(){
     stars = Array.from({length: N_STARS}, () => ({ x: Math.random()*W, y: Math.random()*H*0.72, r: (Math.random()*1.1+0.3)*DPR, p: Math.random()*Math.PI*2, s: Math.random()*0.9+0.25 }));
     motes = Array.from({length: N_MOTES}, () => spawnMote(true));
@@ -181,6 +210,28 @@ function initHeroCanvas(canvas){
       ctx.globalAlpha = mo.o * (0.65 + 0.35*Math.sin(mo.p*2));
       ctx.fillStyle = "#E9C86A";
       ctx.beginPath(); ctx.arc(mo.x, mo.y, mo.r, 0, 6.2832); ctx.fill();
+    }
+    /* occasional shooting star */
+    nextShot -= dt;
+    if (!shooting && nextShot <= 0) {
+      const x0 = W * (0.15 + Math.random()*0.7), y0 = H * (0.05 + Math.random()*0.25);
+      const ang = Math.PI * (0.72 + Math.random()*0.16);
+      shooting = { x: x0, y: y0, vx: Math.cos(ang)*0.9*DPR, vy: Math.sin(ang)*0.9*DPR, life: 0, max: 520 + Math.random()*260 };
+      nextShot = 6000 + Math.random()*8000;
+    }
+    if (shooting) {
+      const s = shooting; s.life += dt;
+      const px = s.x, py = s.y;
+      s.x += s.vx*dt*0.6; s.y += s.vy*dt*0.6;
+      const fade = 1 - s.life/s.max;
+      if (fade <= 0) shooting = null;
+      else {
+        const grad = ctx.createLinearGradient(px - s.vx*46, py - s.vy*46, s.x, s.y);
+        grad.addColorStop(0, "rgba(255,253,242,0)");
+        grad.addColorStop(1, `rgba(255,253,242,${0.75*fade})`);
+        ctx.strokeStyle = grad; ctx.lineWidth = 1.3*DPR; ctx.globalAlpha = 1;
+        ctx.beginPath(); ctx.moveTo(px - s.vx*46, py - s.vy*46); ctx.lineTo(s.x, s.y); ctx.stroke();
+      }
     }
     ctx.globalAlpha = 1;
     raf = requestAnimationFrame(frame);
@@ -271,7 +322,7 @@ function initProgress(bar){
 }
 
 /* ---------------- exports ---------------- */
-window.NoorFX = { initReveal, initLazyBg, initHeroCanvas, initParallax, initTilt, initTileDrift, initProgress, REDUCED, FINE };
+window.NoorFX = { initReveal, initLazyBg, initHeroCanvas, initParallax, initTilt, initTileDrift, initProgress, countUp, REDUCED, FINE };
 window.NOOR_I18N = NOOR_I18N;
 window.t = t;
 window.toast = toast;

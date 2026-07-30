@@ -11,10 +11,10 @@ Every architectural choice must keep translation cheap, consistent, and complete
    - HTML/JS never hardcodes narrative text except as the English source of truth during build.
 
 2. **One source of truth per language**
-   - `/i18n/en.json` — English (source)
-   - `/i18n/ar.json` — Arabic
-   - `/i18n/fr.json` — French
-   - `/i18n/{lang}.json` — every additional language
+   - `/i18n/en.json`, English (source)
+   - `/i18n/ar.json`, Arabic
+   - `/i18n/fr.json`, French
+   - `/i18n/{lang}.json`, every additional language
    - Same keys everywhere. Missing keys fall back to English.
 
 3. **Keys, not sentences in code**
@@ -48,7 +48,7 @@ Every architectural choice must keep translation cheap, consistent, and complete
    - Load only the active language pack.
    - Keep the fast mobile SPA spirit.
 
-## Minimal runtime API (Phase A — in index.html)
+## Minimal runtime API (Phase A: in index.html)
 
 ```js
 NOOR_I18N.t(key)           // resolve UI string

@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<meta name="description" content="NOOR Characters: companions of the Prophet ﷺ, angels, jinn, animals of the signs, and beings of the end of time. Seals of light, never faces."/>
+<meta name="description" content="NOOR Places: the geography of the Codex. Sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end of time."/>
 <meta name="theme-color" content="#14100A"/>
-<title>Characters · NOOR Codex of Light</title>
+<title>Places · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css"/>
 <link rel="stylesheet" href="assets/hub.css"/>
-<script src="characters.js" defer></script>
+<script src="places.js" defer></script>
 <script src="noor-fx.js" defer></script>
 <script src="noor-hub.js" defer></script>
 </head>
@@ -27,8 +27,8 @@
 <nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
 <a href="index.html#books" class="hover:text-ink transition-colors" data-i18n="nav.books">Books</a>
 <a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
-<a href="characters.html" class="text-ink font-semibold transition-colors" data-i18n="nav.characters">Characters</a>
-<a href="places.html" class="hover:text-ink transition-colors" data-i18n="nav.places">Places</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="text-ink font-semibold transition-colors" data-i18n="nav.places">Places</a>
 <a href="words.html" class="hover:text-ink transition-colors" data-i18n="nav.words">Words</a>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
 <option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
@@ -38,8 +38,8 @@
 <div class="md:hidden border-t border-ink/5 overflow-x-auto">
 <div class="flex gap-2 px-4 py-2 text-xs font-semibold whitespace-nowrap">
 <a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
-<a href="characters.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold" data-i18n="nav.characters">Characters</a>
-<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold" data-i18n="nav.places">Places</a>
 <a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
 <a href="index.html#books" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.books">Books</a>
 </div>
@@ -54,9 +54,9 @@
 </svg>
 <div class="hero-fade" aria-hidden="true"></div>
 <div class="relative z-[3] max-w-4xl mx-auto px-4 pt-14 pb-16 text-center">
-<p class="font-amiri text-gold text-xl sm:text-2xl mb-3">خَلَقَ · أَمَرَ · سَخَّرَ</p>
-<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold" data-i18n="chars.title">Characters</span></h1>
-<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed" data-i18n="chars.sub"></p>
+<p class="font-amiri text-gold text-xl sm:text-2xl mb-3">وَهَٰذَا الْبَلَدِ الْأَمِينِ</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold" data-i18n="places.title">Places</span></h1>
+<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed" data-i18n="places.sub"></p>
 <div id="chero-stats" class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-parchment/60"></div>
 </div>
 </section>
@@ -68,7 +68,7 @@
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16" id="hub-main"></main>
 
 <footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
-<div class="absolute inset-0 opacity-40 pattern-beast" aria-hidden="true"></div>
+<div class="absolute inset-0 opacity-40 pl-end" aria-hidden="true"></div>
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
 <p class="text-xs text-parchment/50 leading-relaxed" data-i18n="about.text"></p>
@@ -76,7 +76,7 @@
 </div>
 </footer>
 
-<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Characters">
+<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Places">
 <div class="modal">
 <div class="modal-girih" aria-hidden="true"></div>
 <div class="modal-hero" id="modal-hero"></div>
@@ -89,15 +89,14 @@
 
 <script>
 window.NOOR_HUB = {
-  data: () => CHARACTERS,
-  type: "char",
+  data: () => PLACES,
+  type: "place",
   sections: [
-    {key:"companions", chip:"chip-sahaba", gate:"sg-sahaba", ar:"الصحابة", tk:"chars.companions", dk:"chars.companions.desc",
-     extraHeader:'<a href="companions.html" class="text-[11px] font-semibold text-gold/90 hover:text-gold underline underline-offset-2" data-i18n="chars.fullpage">Full companions page →</a>'},
-    {key:"angels", chip:"chip-angel", gate:"sg-angel", ar:"الملائكة", tk:"chars.angels", dk:"chars.angels.desc"},
-    {key:"jinn", chip:"chip-jinn", gate:"sg-jinn", ar:"الجن", tk:"chars.jinn", dk:"chars.jinn.desc"},
-    {key:"animals", chip:"chip-animal", gate:"sg-animal", ar:"دواب الآيات", tk:"chars.animals", dk:"chars.animals.desc"},
-    {key:"endtime", chip:"chip-beast", gate:"sg-beast", ar:"النهاية", tk:"chars.endtime", dk:"chars.endtime.desc"}
+    {key:"sanctuaries", chip:"chip-sanctuary", gate:"sg-sanctuary", ar:"المقدسات", tk:"places.sanctuaries", dk:"places.sanctuaries.desc"},
+    {key:"mountains", chip:"chip-mountain", gate:"sg-mountain", ar:"الجبال والمشاعر", tk:"places.mountains", dk:"places.mountains.desc"},
+    {key:"cities", chip:"chip-city", gate:"sg-city", ar:"المدن والديار", tk:"places.cities", dk:"places.cities.desc"},
+    {key:"waters", chip:"chip-water", gate:"sg-water", ar:"المياه والأودية", tk:"places.waters", dk:"places.waters.desc"},
+    {key:"endtimes", chip:"chip-end", gate:"sg-end", ar:"منازل النهاية", tk:"places.endtimes", dk:"places.endtimes.desc"}
   ]
 };
 </script>

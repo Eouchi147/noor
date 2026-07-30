@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<meta name="description" content="NOOR — Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur'an with tilawah, authentic Hadith, classical sources."/>
+<meta name="description" content="NOOR · Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur'an with tilawah, authentic Hadith, classical sources."/>
 <meta name="theme-color" content="#14100A"/>
-<title>NOOR — نُور | Codex of Light</title>
+<title>NOOR · نُور | Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -29,20 +29,24 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .logo-seal{transition:transform .5s cubic-bezier(.22,1,.36,1)}
 a:hover .logo-seal{transform:rotate(12deg)}
 
-/* ============ HERO ============ */
-#hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#0D0B07 0%,#171208 46%,#2C2416 78%,#4A3D26 100%);isolation:isolate}
-#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-.ray{position:absolute;top:-22%;left:50%;width:190px;height:130%;z-index:1;pointer-events:none;transform-origin:top center;background:linear-gradient(180deg,rgba(233,200,106,.16),rgba(233,200,106,.05) 55%,transparent 82%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);animation:rayPulse 9s ease-in-out infinite alternate;will-change:opacity}
+/* ============ HERO v2 · lapis night ============ */
+#hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#04060F 0%,#080D22 34%,#101530 58%,#232038 76%,#4A3D26 100%);isolation:isolate}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.aurora{position:absolute;top:-30%;left:-25%;width:150%;height:90%;z-index:1;pointer-events:none;background:radial-gradient(55% 42% at 30% 55%,rgba(30,58,138,.4),transparent 70%),radial-gradient(45% 38% at 68% 40%,rgba(124,58,237,.20),transparent 70%),radial-gradient(38% 30% at 52% 68%,rgba(201,162,39,.13),transparent 70%);animation:auroraDrift 26s ease-in-out infinite alternate;will-change:transform}
+@keyframes auroraDrift{from{transform:translate3d(-2.5%,0,0) scale(1)}to{transform:translate3d(2.5%,3%,0) scale(1.06)}}
+.ray{position:absolute;top:-22%;left:50%;width:190px;height:130%;z-index:2;pointer-events:none;transform-origin:top center;background:linear-gradient(180deg,rgba(233,200,106,.15),rgba(233,200,106,.05) 55%,transparent 82%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);animation:rayPulse 9s ease-in-out infinite alternate;will-change:opacity}
 .ray.r2{transform:translateX(-50%) rotate(-16deg);animation-duration:12s;opacity:.6}
 .ray.r3{transform:translateX(-50%) rotate(15deg);animation-duration:14s;opacity:.5}
 .ray.r1{transform:translateX(-50%)}
-@keyframes rayPulse{from{opacity:.28}to{opacity:.75}}
-.moonglow{position:absolute;top:9%;right:12%;width:150px;height:150px;border-radius:50%;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(255,253,242,.55) 0%,rgba(233,200,106,.22) 38%,transparent 70%);filter:blur(2px);animation:moonFloat 11s ease-in-out infinite alternate;will-change:transform}
-@keyframes moonFloat{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10px,14px,0)}}
-.dune{position:absolute;left:-4%;right:-4%;bottom:-2px;z-index:2;pointer-events:none;will-change:transform}
+@keyframes rayPulse{from{opacity:.22}to{opacity:.66}}
+.crescent{position:absolute;top:8%;inset-inline-end:9%;width:170px;height:170px;z-index:2;pointer-events:none;animation:moonFloat 12s ease-in-out infinite alternate;will-change:transform;filter:drop-shadow(0 0 26px rgba(244,227,161,.4))}
+@keyframes moonFloat{from{transform:translate3d(0,0,0) rotate(-14deg)}to{transform:translate3d(-9px,13px,0) rotate(-11deg)}}
+.ghost-noor{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:1;pointer-events:none;font-family:Amiri,serif;font-size:min(46vw,430px);line-height:1;color:rgba(233,200,106,.045);text-shadow:0 0 90px rgba(233,200,106,.06);user-select:none}
+.arch{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2;pointer-events:none;opacity:.5}
+.dune{position:absolute;left:-4%;right:-4%;bottom:-2px;z-index:3;pointer-events:none;will-change:transform}
 .dune svg{display:block;width:100%;height:auto}
-.hero-fade{position:absolute;inset:auto 0 0 0;height:34%;z-index:3;background:linear-gradient(180deg,transparent,var(--parchment));pointer-events:none}
-.hero-content{position:relative;z-index:4}
+.hero-fade{position:absolute;inset:auto 0 0 0;height:30%;z-index:4;background:linear-gradient(180deg,transparent,var(--parchment));pointer-events:none}
+.hero-content{position:relative;z-index:5}
 .shimmer-gold{background:linear-gradient(100deg,#8a7020 8%,#C9A227 26%,#F4E3A1 42%,#C9A227 58%,#8a7020 92%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5.5s linear infinite}
 @keyframes shimmer{to{background-position:-220% center}}
 .hero-kicker{letter-spacing:.06em;text-shadow:0 0 26px rgba(233,200,106,.4)}
@@ -211,10 +215,12 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="logo-seal w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
-<nav class="hidden md:flex items-center gap-5 text-sm font-medium text-ink/65">
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
 <a href="#books" class="hover:text-ink transition-colors" data-i18n="nav.books">Books</a>
 <a href="#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="hover:text-ink transition-colors" data-i18n="nav.places">Places</a>
+<a href="words.html" class="hover:text-ink transition-colors" data-i18n="nav.words">Words</a>
 <a href="#about" class="hover:text-ink transition-colors" data-i18n="nav.about">About</a>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
 <option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
@@ -224,6 +230,15 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
 </button>
 </div>
+<div class="md:hidden border-t border-ink/5 overflow-x-auto">
+<div class="flex gap-2 px-4 py-2 text-xs font-semibold whitespace-nowrap">
+<a href="#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="#books" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.books">Books</a>
+</div>
+</div>
 <div id="search-bar" class="hidden border-t border-ink/5 bg-parchment">
 <div class="max-w-6xl mx-auto px-4 py-3 relative">
 <input id="search-input" type="search" data-i18n-ph="search.placeholder" placeholder="Search the Codex…" class="w-full px-4 py-2.5 rounded-xl bg-white border border-ink/10 text-sm focus:border-gold/60 focus:outline-none transition-colors"/>
@@ -232,26 +247,46 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </div>
 </header>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO v2 ============ -->
 <section id="hero">
+<div class="aurora" aria-hidden="true"></div>
+<div class="ghost-noor" data-depth="0.06" aria-hidden="true">نُور</div>
 <canvas id="hero-canvas" aria-hidden="true"></canvas>
 <div class="ray r1" aria-hidden="true"></div><div class="ray r2" aria-hidden="true"></div><div class="ray r3" aria-hidden="true"></div>
-<div class="moonglow" data-depth="0.35" aria-hidden="true"></div>
-<div class="dune" data-depth="0.12" aria-hidden="true" style="opacity:.5">
-<svg viewBox="0 0 1440 210" preserveAspectRatio="none" style="height:210px"><path d="M0,140 C210,90 360,150 560,120 C760,90 900,40 1085,86 C1230,122 1345,96 1440,116 L1440,210 L0,210 Z" fill="#241D11"/><g fill="#241D11"><path d="M1058,86 l0,-34 a6 9 0 0 1 12,0 l0,30 Z"/><circle cx="1092" cy="74" r="17"/><rect x="1075" y="74" width="34" height="16"/><path d="M1129,88 l0,-26 a5 8 0 0 1 10,0 l0,24 Z"/></g></svg>
+<svg class="crescent" data-depth="0.3" viewBox="0 0 100 100" aria-hidden="true">
+<defs><radialGradient id="mg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="mm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
+<circle cx="50" cy="50" r="36" fill="url(#mg)" mask="url(#mm)"/>
+<circle cx="50" cy="50" r="47" fill="none" stroke="rgba(244,227,161,.16)" stroke-width="0.8"/>
+</svg>
+<svg class="arch" width="620" height="360" viewBox="0 0 620 360" fill="none" aria-hidden="true">
+<path d="M60 360 V190 C60 95 170 30 310 30 C450 30 560 95 560 190 V360" stroke="rgba(233,200,106,.42)" stroke-width="1.2"/>
+<path d="M74 360 V194 C74 105 178 44 310 44 C442 44 546 105 546 194 V360" stroke="rgba(233,200,106,.18)" stroke-width="1"/>
+<path d="M310 6 l7 12 12 2 -8 10 2 13 -13 -6 -13 6 2 -13 -8 -10 12 -2 Z" fill="rgba(233,200,106,.5)"/>
+<circle cx="60" cy="188" r="3" fill="rgba(233,200,106,.5)"/><circle cx="560" cy="188" r="3" fill="rgba(233,200,106,.5)"/>
+</svg>
+<div class="dune" data-depth="0.1" aria-hidden="true" style="opacity:.6">
+<svg viewBox="0 0 1440 230" preserveAspectRatio="none" style="height:230px">
+<path d="M0,150 C200,105 340,160 540,132 C720,108 830,64 980,96 C1130,126 1330,102 1440,122 L1440,230 L0,230 Z" fill="#0E1224"/>
+<g fill="#0E1224">
+<path d="M1010,96 l0,-46 a5 8 0 0 1 10,0 l0,42 Z"/><path d="M1013,46 l2,-9 2,9 Z"/>
+<circle cx="1054" cy="80" r="21"/><rect x="1032" y="80" width="44" height="18"/>
+<path d="M1054,52 l2,-10 2,10 Z"/>
+<path d="M1102,98 l0,-38 a4.5 7 0 0 1 9,0 l0,36 Z"/><path d="M1104,56 l2,-8 2,8 Z"/>
+<path d="M905,110 c8,-14 6,-26 2,-34 c12,6 16,22 10,36 Z"/><path d="M918,112 c6,-10 5,-20 2,-27 c9,5 12,17 8,28 Z"/>
+</g></svg>
 </div>
-<div class="dune" data-depth="0.24" aria-hidden="true" style="opacity:.75">
-<svg viewBox="0 0 1440 170" preserveAspectRatio="none" style="height:170px"><path d="M0,120 C260,60 480,140 720,105 C960,70 1180,140 1440,88 L1440,170 L0,170 Z" fill="#1B150C"/></svg>
+<div class="dune" data-depth="0.22" aria-hidden="true" style="opacity:.8">
+<svg viewBox="0 0 1440 170" preserveAspectRatio="none" style="height:170px"><path d="M0,120 C240,62 470,142 720,106 C950,74 1180,140 1440,90 L1440,170 L0,170 Z" fill="#0A0D1C"/></svg>
 </div>
-<div class="dune" data-depth="0.42" aria-hidden="true">
-<svg viewBox="0 0 1440 130" preserveAspectRatio="none" style="height:130px"><path d="M0,84 C320,130 560,54 860,92 C1120,124 1300,74 1440,98 L1440,130 L0,130 Z" fill="#14100A"/></svg>
+<div class="dune" data-depth="0.4" aria-hidden="true">
+<svg viewBox="0 0 1440 130" preserveAspectRatio="none" style="height:130px"><path d="M0,84 C320,130 560,54 860,92 C1120,124 1300,74 1440,98 L1440,130 L0,130 Z" fill="#070910"/></svg>
 </div>
 <div class="hero-fade" aria-hidden="true"></div>
 
 <div class="hero-content max-w-4xl mx-auto px-4 pt-20 pb-24 sm:pt-24 sm:pb-28 text-center">
 <p class="hero-kicker font-amiri text-gold text-2xl sm:text-3xl mb-4" data-i18n="hero.kicker">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-4"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord — an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
+<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
 <div class="flex flex-wrap justify-center gap-3 mb-10">
 <a href="#timeline" class="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm" data-i18n="hero.cta.enter">Enter the Path</a>
 <a href="characters.html" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.characters">Characters</a>
@@ -266,7 +301,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="ornament mb-3 text-xl">۞</div>
 <div class="text-center mb-9">
 <h2 class="text-2xl sm:text-3xl font-bold text-ink mb-1.5" data-i18n="books.title">Seven Books</h2>
-<p class="text-ink/55 text-sm" data-i18n="books.sub">The architecture of the Codex — four books are open on the Path today.</p>
+<p class="text-ink/55 text-sm" data-i18n="books.sub">The architecture of the Codex. Four books are open on the Path today.</p>
 </div>
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="book-cards"></div>
 </section>
@@ -294,8 +329,8 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="absolute inset-0 opacity-40 pattern-nihaya" aria-hidden="true"></div>
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-xl sm:text-2xl text-gold mb-2">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
-<p class="text-parchment/75 text-sm leading-relaxed mb-5">“Faces that Day will be radiant, looking at their Lord.” — 75:22-23</p>
-<p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only — never faces. Not a source of legal rulings.</p>
+<p class="text-parchment/75 text-sm leading-relaxed mb-5">“Faces that Day will be radiant, looking at their Lord.” (75:22-23)</p>
+<p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
 <p class="mt-6 text-[11px] tracking-[.18em] uppercase text-gold/70" data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
 </div>
 </section>
@@ -324,24 +359,26 @@ const PERIODS = {
   nihaya:{ar:"النهاية", nameKey:"period.nihaya", descKey:"period.nihaya.desc", gate:"gate-nihaya"}
 };
 const BOOKS = [
-  {n:1,name:"Al-Bidaya",ar:"البداية",dk:"book.1.desc",active:true,range:"1–8"},
-  {n:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",dk:"book.2.desc",active:true,range:"9–23"},
+  {n:1,name:"Al-Bidaya",ar:"البداية",dk:"book.1.desc",active:true,range:"1-8"},
+  {n:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",dk:"book.2.desc",active:true,range:"9-23"},
   {n:3,name:"Al-Jahiliyyah",ar:"الجاهلية",dk:"book.3.desc",active:false},
-  {n:4,name:"An-Noor",ar:"النور",dk:"book.4.desc",active:true,range:"24–45"},
+  {n:4,name:"An-Noor",ar:"النور",dk:"book.4.desc",active:true,range:"24-45"},
   {n:5,name:"Al-Khulafa",ar:"الخلفاء",dk:"book.5.desc",active:false},
   {n:6,name:"Al-Umam",ar:"الأمم",dk:"book.6.desc",active:false},
-  {n:7,name:"Al-Nihaya",ar:"النهاية",dk:"book.7.desc",active:true,range:"46–64"}
+  {n:7,name:"Al-Nihaya",ar:"النهاية",dk:"book.7.desc",active:true,range:"46-64"}
 ];
 let currentFilter = "all";
 let lastFocus = null;
 
 /* ---------- hero stats ---------- */
 function renderStats(){
-  const M = (typeof NOOR_META !== "undefined") ? NOOR_META : {nodes:NODES.length, characters:71, quran:0, hadith:0};
+  const M = (typeof NOOR_META !== "undefined") ? NOOR_META : {nodes:NODES.length, characters:98, places:34, words:18, quran:0, hadith:0};
   $("hero-stats").innerHTML = [
     [M.nodes, t("stats.nodes")], [M.characters, t("stats.characters")],
+    [M.places, t("stats.places")], [M.words, t("stats.words")],
     [M.quran, t("stats.quran")], [M.hadith, t("stats.hadith")]
-  ].map(([v,l]) => `<div class="hero-stat px-4 py-2 rounded-xl text-parchment"><div class="v text-lg font-bold text-gold">${v}</div><div class="text-[10px] uppercase tracking-wider text-parchment/60">${l}</div></div>`).join("");
+  ].map(([v,l]) => `<div class="hero-stat px-3.5 py-2 rounded-xl text-parchment"><div class="v text-lg font-bold text-gold" data-count="${v}">0</div><div class="text-[10px] uppercase tracking-wider text-parchment/60">${l}</div></div>`).join("");
+  $("hero-stats").querySelectorAll("[data-count]").forEach((el,i) => setTimeout(() => NoorFX.countUp(el, +el.dataset.count, 1000), 150 + i*90));
 }
 
 /* ---------- books ---------- */
@@ -402,7 +439,7 @@ function renderPath(filter){
             <div class="font-semibold text-parchment">${t(PERIODS[k].nameKey)}</div>
             <div class="text-parchment/60 text-xs mt-0.5">${t(PERIODS[k].descKey)}</div>
           </div>
-          <span class="gate-count px-3 py-1 rounded-full text-xs font-semibold">${list[0].id}–${list[list.length-1].id}</span>
+          <span class="gate-count px-3 py-1 rounded-full text-xs font-semibold">${list[0].id}-${list[list.length-1].id}</span>
         </div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">${list.map(tileHtml).join("")}</div>
@@ -465,7 +502,7 @@ function openModal(id, push = true){
   if (n.connections && n.connections.length) html += sect(t("modal.connected"),
     `<div class="flex flex-wrap gap-1.5">${n.connections.map(cid=>{
       const cn = NODES.find(x=>x.id===cid);
-      return cn?`<button class="conn-chip" data-conn="${cid}">#${cid} · ${cn.titleEn.split("—")[0].trim()}</button>`:"";
+      return cn?`<button class="conn-chip" data-conn="${cid}">#${cid} · ${cn.titleEn.split(":")[0].trim()}</button>`:"";
     }).join("")}</div>`);
   html += `<div class="mset mt-8 pt-4 border-t border-ink/8 flex items-center justify-between text-xs text-ink/40">
     <span>${t("modal.node")} ${n.id} · ${t(PERIODS[n.period].nameKey)}</span>
@@ -475,7 +512,7 @@ function openModal(id, push = true){
   body.querySelectorAll(".audio-btn").forEach(b => b.onclick = () => playAyah(b.dataset.ref, b));
   body.querySelectorAll("[data-conn]").forEach(b => b.onclick = () => openModal(+b.dataset.conn));
   const c2 = $("modal-close-2"); if (c2) c2.onclick = closeModal;
-  bindEntityLinks(body, nid => openModal(nid), cid => { location.href = "characters.html?open=" + encodeURIComponent(cid); });
+  bindEntityLinks(body, { node: nid => openModal(nid) });
 
   $("modal-backdrop").classList.add("open");
   $("modal-backdrop").scrollTop = 0;

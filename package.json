@@ -2,7 +2,7 @@
   "name": "noor",
   "version": "1.0.1",
   "private": true,
-  "description": "NOOR \u2014 Chronological Islamic journey from Kun Fayakun to Jannah. 64 nodes.",
+  "description": "NOOR: Chronological Islamic journey from Kun Fayakun to Jannah. 64 chapters, 4 linked hubs.",
   "scripts": {
     "start": "npx serve .",
     "css": "tailwindcss -c tailwind.config.cjs -i tw-input.css -o assets/tw.css --minify",

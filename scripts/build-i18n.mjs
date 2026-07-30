@@ -18,14 +18,16 @@ vm.runInContext(uiSrc[0].replace('const UI_EN','this.UI_EN'), sb);
 // nodes + characters
 vm.runInContext(read('nodes.js') + ';this.N=NODES;', sb);
 vm.runInContext(read('characters.js') + ';this.C=CHARACTERS;', sb);
+vm.runInContext(read('places.js') + ';this.P=PLACES;', sb);
+vm.runInContext(read('words.js') + ';this.W=WORDS;', sb);
 
 const pack = {
   _meta: {
     language: 'en', source: true, generated: 'scripts/build-i18n.mjs',
-    instructions: 'Copy this file to i18n/{code}.json and translate every string VALUE. Never translate keys, ids, refs, or Arabic ayah text (quran[].ar is intentionally absent here — it is language-invariant). Keep {{n:ID|label}} and {{c:id|label}} markers intact: translate only the label after the pipe.'
+    instructions: 'Copy this file to i18n/{code}.json and translate every string VALUE. Never translate keys, ids, refs, or Arabic ayah text (quran[].ar is intentionally absent here: it is language-invariant). Keep {{n:ID|label}} and {{c:id|label}} markers intact: translate only the label after the pipe.'
   },
   ui: sb.UI_EN,
-  nodes: {}, characters: {}
+  nodes: {}, characters: {}, places: {}, words: {}
 };
 for (const n of sb.N) {
   pack.nodes[n.id] = {
@@ -49,7 +51,15 @@ for (const [sec, list] of Object.entries(sb.C)) {
     };
   }
 }
+for (const [sec, list] of Object.entries(sb.P)) for (const p of list) {
+  pack.places[p.id] = { section: sec, titleEn: p.titleEn, role: p.role, summary: p.summary, details: p.details,
+    facts: (p.facts||[]).map(f => ({label:f.label, value:f.value})), quran: (p.quran||[]).map(q => ({ref:q.ref, en:q.en})), hadith: (p.hadith||[]).map(h => ({text:h.text, source:h.source})) };
+}
+for (const [sec, list] of Object.entries(sb.W)) for (const w of list) {
+  pack.words[w.id] = { section: sec, titleEn: w.titleEn, translit: w.translit, meaning: w.meaning, role: w.role, summary: w.summary, details: w.details,
+    whenNow: w.whenNow||[], facts: (w.facts||[]).map(f => ({label:f.label, value:f.value})), quran: (w.quran||[]).map(q => ({ref:q.ref, en:q.en})), hadith: (w.hadith||[]).map(h => ({text:h.text, source:h.source})) };
+}
 fs.mkdirSync(path.join(ROOT, 'i18n'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'i18n/en.json'), JSON.stringify(pack, null, 1));
 console.log('i18n/en.json written:', (fs.statSync(path.join(ROOT,'i18n/en.json')).size/1024).toFixed(0) + ' KB',
-  '· ui keys:', Object.keys(pack.ui).length, '· nodes:', Object.keys(pack.nodes).length, '· characters:', Object.keys(pack.characters).length);
+  '· ui keys:', Object.keys(pack.ui).length, '· nodes:', Object.keys(pack.nodes).length, '· characters:', Object.keys(pack.characters).length, '· places:', Object.keys(pack.places).length, '· words:', Object.keys(pack.words).length);

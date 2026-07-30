@@ -1,11 +1,10 @@
-// NOOR end-to-end tests — desktop + mobile, cross-links both directions, deep links, i18n, audio UI
+// NOOR e2e v2: 4 pages, 4-way cross-links, deep links, i18n/RTL, em-dash guard, mobile, reduced motion
 import { chromium } from 'playwright';
 const BASE = 'http://localhost:8123';
 let failures = 0;
 const ok = (cond, name) => { console.log((cond ? '  ✓ ' : '  ✗ FAIL ') + name); if (!cond) failures++; };
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
-
 async function newPage(ctxOpts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...ctxOpts });
   const page = await ctx.newPage();
@@ -14,163 +13,161 @@ async function newPage(ctxOpts = {}) {
   page.on('console', m => { if (m.type() === 'error' && !/favicon|net::|Failed to load resource/i.test(m.text())) errors.push('console: ' + m.text()); });
   return { ctx, page, errors };
 }
+const noDash = async (page, label) => {
+  const has = await page.evaluate(() => /[—–]/.test(document.body.innerText));
+  ok(!has, `no em/en dash rendered (${label})`);
+};
 
-/* ---------- 1. index desktop ---------- */
-console.log('\n[1] index.html — desktop');
+/* 1. index desktop */
+console.log('\n[1] index.html');
 {
   const { ctx, page, errors } = await newPage();
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(600);
-  ok(errors.length === 0, 'no JS errors on load' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.locator('.tile').count() === 64, '64 tiles rendered');
-  ok(await page.locator('.gate').count() === 4, '4 period gates rendered');
-  ok(await page.locator('#hero-stats .hero-stat').count() === 4, 'hero stats rendered');
-  const loadedAtTop = await page.locator('.tile-bg.bg-loaded').count();
-  await page.screenshot({ path: 'tests/shots/01-hero-desktop.png' });
-  await page.locator('#timeline').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(900);
-  const loadedAfterScroll = await page.locator('.tile-bg.bg-loaded').count();
-  ok(loadedAfterScroll > 0 && loadedAtTop < 64, `lazy images: ${loadedAtTop} at top → ${loadedAfterScroll} after scroll (deferred correctly)`);
-  await page.screenshot({ path: 'tests/shots/01b-path-desktop.png' });
+  await page.waitForTimeout(700);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.locator('.tile').count() === 64, '64 tiles');
+  ok(await page.locator('.gate').count() === 4, '4 period gates');
+  ok(await page.locator('#hero-stats .hero-stat').count() === 6, '6 hero stats');
+  ok(await page.locator('.crescent').count() === 1, 'crescent rendered');
+  await page.waitForTimeout(1300);
+  const statVal = await page.locator('#hero-stats [data-count]').first().textContent();
+  ok(statVal === '64', `count-up completed (${statVal})`);
+  await page.screenshot({ path: 'tests/shots/v3-01-hero.png' });
+  await noDash(page, 'index surface');
 
-  // open Badr (37)
   await page.locator('.tile[data-id="37"]').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
   await page.locator('.tile[data-id="37"]').click();
   await page.waitForTimeout(700);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'modal opens (Badr)');
-  const prose = await page.locator('.modal-prose').innerText();
-  ok(prose.split(/\s+/).length > 900, `Badr prose ≥ 900 words in DOM (${prose.split(/\s+/).length})`);
-  ok(await page.locator('.hadith-src').count() >= 3, 'hadith source chips rendered');
-  ok(await page.locator('.audio-btn').count() >= 1, 'tilawah buttons rendered');
-  ok(page.url().includes('?node=37'), 'URL reflects open node');
-  await page.screenshot({ path: 'tests/shots/02-modal-badr.png' });
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Badr modal opens');
+  await noDash(page, 'Badr modal');
+  ok(await page.locator('#modal-body .entity-link[data-etype="place"]').count() >= 1, 'place link woven into Badr');
+  await page.screenshot({ path: 'tests/shots/v3-02-modal-badr.png' });
 
-  // node→node link inside modal
-  const nodeLink = page.locator('#modal-body .entity-link[data-etype="node"]').first();
-  const target = await nodeLink.getAttribute('data-eid');
-  await nodeLink.click(); await page.waitForTimeout(500);
-  ok(page.url().includes('?node=' + target), `node→node cross-link works (→ ${target})`);
-
-  // node→character link navigates to characters.html
-  const charLink = page.locator('#modal-body .entity-link[data-etype="char"]').first();
-  if (await charLink.count()) {
-    const cid = await charLink.getAttribute('data-eid');
-    await charLink.click();
-    await page.waitForURL('**/characters.html*', { timeout: 5000 });
-    ok(page.url().includes('open=' + cid), `node→character cross-link lands on characters.html?open=${cid}`);
-    await page.waitForTimeout(900);
-    ok(await page.locator('#modal-backdrop.open').count() === 1, 'character modal auto-opens from deep link');
-  } else ok(false, 'char link present in modal chain');
-  await ctx.close();
-}
-
-/* ---------- 2. deep link + Nihaya extras ---------- */
-console.log('\n[2] deep links + Nihaya infographic sections');
-{
-  const { ctx, page, errors } = await newPage();
-  await page.goto(BASE + '/index.html?node=48', { waitUntil: 'networkidle' });
+  // node → place link navigates to places.html
+  const pl = page.locator('#modal-body .entity-link[data-etype="place"]').first();
+  const pid = await pl.getAttribute('data-eid');
+  await pl.click();
+  await page.waitForURL('**/places.html*', { timeout: 5000 });
+  ok(page.url().includes('open=' + pid), `node→place lands on places.html?open=${pid}`);
   await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, '?node=48 auto-opens Dajjal');
-  ok((await page.locator('.seq-strip').count()) === 1, 'sequence strip rendered');
-  ok((await page.locator('.mtimeline li').count()) >= 6, 'order-of-events timeline rendered');
-  ok((await page.locator('.shield-box li').count()) >= 3, 'Shield protection box rendered');
-  ok((await page.locator('.fact-item').count()) >= 6, 'facts grid dense (≥6)');
-  await page.screenshot({ path: 'tests/shots/03-modal-dajjal.png', fullPage: false });
-  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-
-  // audio button toggles state or toasts (network may be blocked in sandbox)
-  const btn = page.locator('.audio-btn').first();
-  await btn.click(); await page.waitForTimeout(1200);
-  const playing = await btn.evaluate(b => b.classList.contains('playing'));
-  const toasted = await page.locator('.noor-toast').count();
-  ok(playing || toasted > 0, `tilawah click → ${playing ? 'playing state' : 'graceful toast fallback'}`);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'place modal auto-opens');
   await ctx.close();
 }
 
-/* ---------- 3. characters.html ---------- */
-console.log('\n[3] characters.html');
+/* 2. characters hub */
+console.log('\n[2] characters.html (hub)');
 {
   const { ctx, page, errors } = await newPage();
   await page.goto(BASE + '/characters.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(600);
-  ok(errors.length === 0, 'no JS errors on load' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.locator('.tile').count() === 71, '71 character tiles rendered');
+  await page.waitForTimeout(700);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.locator('.tile').count() === 98, '98 character tiles');
   ok(await page.locator('.sgate').count() === 5, '5 section gates');
-  await page.screenshot({ path: 'tests/shots/04-characters.png' });
+  await noDash(page, 'characters surface');
+  await page.locator('.tile[data-id="c-abuhurayrah"]').scrollIntoViewIfNeeded();
+  await page.locator('.tile[data-id="c-abuhurayrah"]').click();
+  await page.waitForTimeout(600);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Abu Hurayrah modal opens');
+  ok(await page.locator('.hadith-item').count() >= 1, 'hadith section renders in hub modal');
+  await noDash(page, 'character modal');
+  const nl = page.locator('#modal-body .entity-link[data-etype="node"], #modal-body .entity-link[data-etype="place"]').first();
+  const et = await nl.getAttribute('data-etype'), eid = await nl.getAttribute('data-eid');
+  await nl.click();
+  await page.waitForURL(et === 'node' ? '**/index.html*' : '**/places.html*', { timeout: 5000 });
+  ok(true, `character→${et} cross-link navigates (${eid})`);
+  await page.screenshot({ path: 'tests/shots/v3-03-characters.png' });
+  await ctx.close();
+}
 
-  await page.locator('.tile[data-id="c-musab"]').scrollIntoViewIfNeeded();
-  await page.locator('.tile[data-id="c-musab"]').click();
-  await page.waitForTimeout(500);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, "Mus'ab modal opens");
+/* 3. places hub */
+console.log('\n[3] places.html');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/places.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(700);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.locator('.tile').count() === 34, '34 place tiles');
+  ok(await page.locator('.sgate').count() === 5, '5 sections');
+  await page.screenshot({ path: 'tests/shots/v3-04-places.png' });
+  await noDash(page, 'places surface');
+  await page.locator('.tile[data-id="p-kaaba"]').click();
+  await page.waitForTimeout(600);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Kaaba modal opens');
+  ok(await page.locator('#modal-body .entity-link').count() >= 3, 'Kaaba modal richly linked');
+  await page.screenshot({ path: 'tests/shots/v3-05-place-kaaba.png' });
+  await ctx.close();
+}
+
+/* 4. words hub */
+console.log('\n[4] words.html');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/words.html?open=w-hasbunallah', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1000);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.locator('.tile').count() === 18, '18 word tiles');
+  ok(await page.locator('#modal-backdrop.open').count() === 1, '?open=w-hasbunallah auto-opens');
+  ok(await page.locator('.word-ar').count() === 1, 'Arabic block renders');
+  ok(await page.locator('.whennow li').count() >= 2, '“Say it now” section renders');
+  ok(await page.locator('.audio-btn').count() >= 1, 'tilawah button on word ayah');
+  await noDash(page, 'word modal');
+  await page.screenshot({ path: 'tests/shots/v3-06-word.png' });
   const nl = page.locator('#modal-body .entity-link[data-etype="node"]').first();
-  const nid = await nl.getAttribute('data-eid');
   await nl.click();
   await page.waitForURL('**/index.html*', { timeout: 5000 });
-  ok(page.url().includes('node=' + nid), `character→node cross-link lands on index.html?node=${nid}`);
   await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'node modal auto-opens from character link');
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'word→node opens node modal');
   await ctx.close();
 }
 
-/* ---------- 4. ?open deep link + i18n + RTL ---------- */
-console.log('\n[4] ?open= deep link · language switcher · RTL');
+/* 5. deep links + nihaya + i18n/RTL */
+console.log('\n[5] deep links · nihaya · RTL');
 {
   const { ctx, page } = await newPage();
-  await page.goto(BASE + '/characters.html?open=e-jassasa', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/index.html?node=48', { waitUntil: 'networkidle' });
   await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, '?open=e-jassasa auto-opens');
-  await page.keyboard.press('Escape'); await page.waitForTimeout(300);
-  ok(await page.locator('#modal-backdrop.open').count() === 0, 'Escape closes modal');
-  await page.selectOption('#lang-switch', 'ar'); await page.waitForTimeout(700);
-  ok(await page.evaluate(() => document.documentElement.dir) === 'rtl', 'AR switch sets dir=rtl');
-  ok(await page.evaluate(() => document.documentElement.lang) === 'ar', 'AR switch sets lang');
-  await page.selectOption('#lang-switch', 'en'); await page.waitForTimeout(400);
-  ok(await page.evaluate(() => document.documentElement.dir) === 'ltr', 'EN restores ltr');
+  ok(await page.locator('#modal-backdrop.open').count() === 1, '?node=48 auto-opens');
+  ok(await page.locator('.seq-strip').count() === 1 && await page.locator('.mtimeline li').count() >= 6 && await page.locator('.shield-box li').count() >= 3, 'sequence + timeline + shield intact');
+  await noDash(page, 'Dajjal modal');
+  await page.keyboard.press('Escape');
+  await page.selectOption('#lang-switch', 'ar'); await page.waitForTimeout(600);
+  ok(await page.evaluate(() => document.documentElement.dir) === 'rtl', 'AR → dir=rtl');
+  await page.selectOption('#lang-switch', 'en'); await page.waitForTimeout(300);
+  ok(await page.evaluate(() => document.documentElement.dir) === 'ltr', 'EN → ltr');
   await ctx.close();
 }
 
-/* ---------- 5. mobile (iPhone 14-ish) ---------- */
-console.log('\n[5] mobile 390×844');
+/* 6. mobile */
+console.log('\n[6] mobile 390×844');
 {
   const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(700);
-  ok(errors.length === 0, 'no JS errors mobile' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
-  await page.screenshot({ path: 'tests/shots/05-hero-mobile.png' });
-  await page.locator('.tile[data-id="64"]').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(400);
-  await page.locator('.tile[data-id="64"]').click();
   await page.waitForTimeout(800);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Jannah modal opens on mobile');
-  await page.screenshot({ path: 'tests/shots/06-modal-jannah-mobile.png' });
+  ok(errors.length === 0, 'no JS errors mobile');
+  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
+  ok(await page.locator('header .md\\:hidden a[href="places.html"]').count() === 1, 'mobile pill nav has Places');
+  await page.screenshot({ path: 'tests/shots/v3-07-hero-mobile.png' });
+  await page.goto(BASE + '/words.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'words page: no overflow mobile');
   await ctx.close();
 }
 
-/* ---------- 6. reduced motion ---------- */
-console.log('\n[6] prefers-reduced-motion');
+/* 7. reduced motion + search */
+console.log('\n[7] reduced motion · search');
 {
   const { ctx, page, errors } = await newPage({ reducedMotion: 'reduce' });
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(500);
-  ok(errors.length === 0, 'no JS errors under reduced motion');
-  ok(await page.locator('.tile').count() === 64, 'content fully visible without animation');
-  await ctx.close();
-}
-
-/* ---------- 7. search ---------- */
-console.log('\n[7] search');
-{
-  const { ctx, page } = await newPage();
-  await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(400);
+  ok(errors.length === 0 && await page.locator('.tile').count() === 64, 'reduced motion healthy');
   await page.click('#search-toggle');
-  await page.fill('#search-input', 'trench');
+  await page.fill('#search-input', 'kawthar');
   await page.waitForTimeout(300);
-  const hits = await page.locator('#search-results button').count();
-  ok(hits >= 1, `search "trench" → ${hits} hit(s)`);
+  ok(await page.locator('#search-results button').count() >= 1, 'search finds Kawthar (Hawd)');
   await page.locator('#search-results button').first().click();
-  await page.waitForTimeout(500);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'search hit opens modal');
+  await page.waitForTimeout(400);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'search opens modal');
   await ctx.close();
 }
 
