@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="NOOR Characters — Prophets' companions, angels, jinn, animals of the Quran, and beings of the end of time."/>
+<meta name="theme-color" content="#2C2416"/>
+<title>Characters — NOOR Codex of Light</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227',sage:'#8BA888',deep:'#1A160F'},fontFamily:{amiri:['Amiri','serif'],inter:['Inter','system-ui','sans-serif']}}}}</script>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+.font-amiri{font-family:Amiri,serif}
+.tile{position:relative;overflow:hidden;border-radius:1.25rem;min-height:220px;isolation:isolate;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;cursor:pointer}
+.tile:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(44,36,22,.15)}
+.tile-bg{position:absolute;inset:-8%;background-size:cover;background-position:center;z-index:0}
+.tile-overlay{position:absolute;inset:0;background:linear-gradient(165deg,rgba(26,22,15,.82) 0%,rgba(44,36,22,.55) 50%,rgba(26,22,15,.9) 100%);z-index:1}
+.tile-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:1.25rem;color:#FFFEF7;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+.pattern-angel{background:radial-gradient(circle at 40% 30%,#C9A22744 0%,transparent 50%),linear-gradient(145deg,#1A160F,#2C2416)}
+.pattern-jinn{background:radial-gradient(ellipse at 60% 70%,#7c3aed33 0%,transparent 55%),linear-gradient(160deg,#1F1A12,#2C2416)}
+.pattern-animal{background:radial-gradient(circle at 30% 60%,#8BA88844 0%,transparent 50%),linear-gradient(180deg,#221C14,#2C2416)}
+.pattern-beast{background:radial-gradient(circle at 50% 20%,#C9A22722 0%,transparent 45%),linear-gradient(200deg,#0F0D09,#1A160F)}
+.pattern-sahaba{background:radial-gradient(circle at 50% 40%,#3b82f633 0%,transparent 50%),linear-gradient(135deg,#1A160F,#2C2416)}
+.pattern-prophet{background:radial-gradient(circle at 50% 0%,#C9A22733 0%,transparent 45%),linear-gradient(180deg,#1A160F,#2C2416)}
+.chip{display:inline-flex;align-items:center;padding:.15rem .55rem;border-radius:9999px;font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.chip-angel{background:#C9A22722;color:#c9a227}
+.chip-jinn{background:#7c3aed22;color:#a78bfa}
+.chip-animal{background:#8BA88822;color:#8BA888}
+.chip-beast{background:#ef444422;color:#f87171}
+.chip-sahaba{background:#3b82f622;color:#93c5fd}
+.chip-prophet{background:#C9A22733;color:#f0d878}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,12,8,.78);backdrop-filter:blur(10px);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+.modal{background:#FFFEF7;border-radius:1.5rem;max-width:42rem;width:100%;margin-bottom:2.5rem;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.4);transform:translateY(18px) scale(.98);transition:transform .35s;position:relative}
+.modal-backdrop.open .modal{transform:translateY(0) scale(1)}
+.modal-hero{height:160px;position:relative;overflow:hidden}
+.modal-body{padding:1.5rem 1.5rem 2rem}
+.facts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:480px){.facts-grid{grid-template-columns:repeat(3,1fr)}}
+.fact-item{background:linear-gradient(145deg,rgba(201,162,39,.06),rgba(30,58,138,.04));border:1px solid rgba(201,162,39,.18);border-radius:10px;padding:10px 12px}
+.section-nav a{transition:color .2s,border-color .2s}
+.section-nav a.active{color:#2C2416;border-color:#C9A227}
+.fade-up{opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.entity-link{color:#C9A227;font-weight:600;cursor:pointer;border-bottom:1px dashed rgba(201,162,39,.45)}
+.entity-link:hover{color:#8a7020}
+.drop-cap::first-letter{float:left;font-family:Amiri,serif;font-size:2.6rem;line-height:.85;padding-right:.3rem;color:#C9A227;font-weight:700}
+</style>
+</head>
+<body class="antialiased">
+
+<header class="sticky top-0 z-40 bg-parchment/92 backdrop-blur-md border-b border-ink/6">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-widest uppercase text-ink/45">CODEX OF LIGHT</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-5 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink">Path</a>
+<a href="characters.html" class="text-ink font-semibold">Characters</a>
+<a href="index.html#books" class="hover:text-ink">Books</a>
+</nav>
+</div>
+</header>
+
+<!-- Hero -->
+<section class="relative overflow-hidden">
+<div class="absolute inset-0 pattern-prophet"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-parchment"></div>
+<div class="relative max-w-4xl mx-auto px-4 pt-12 pb-14 text-center">
+<p class="font-amiri text-gold text-xl sm:text-2xl mb-2">خَلَقَ · أَمَرَ · سَخَّرَ</p>
+<h1 class="text-3xl sm:text-4xl font-bold text-parchment mb-3">Characters</h1>
+<p class="text-parchment/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">Named beings across the Codex — companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.</p>
+</div>
+</section>
+
+<!-- Section nav -->
+<nav class="section-nav sticky top-14 z-30 bg-parchment/95 backdrop-blur border-b border-ink/6">
+<div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap gap-2 justify-center text-xs font-semibold">
+<a href="#companions" class="px-3 py-1.5 rounded-full border border-ink/15 text-ink/60 hover:text-ink">Companions</a>
+<a href="#angels" class="px-3 py-1.5 rounded-full border border-ink/15 text-ink/60 hover:text-ink">Angels</a>
+<a href="#jinn" class="px-3 py-1.5 rounded-full border border-ink/15 text-ink/60 hover:text-ink">Jinn</a>
+<a href="#animals" class="px-3 py-1.5 rounded-full border border-ink/15 text-ink/60 hover:text-ink">Animals</a>
+<a href="#endtime" class="px-3 py-1.5 rounded-full border border-ink/15 text-ink/60 hover:text-ink">End of Time</a>
+</div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16">
+
+<!-- COMPANIONS -->
+<section id="companions">
+<div class="mb-6">
+<div class="flex items-end justify-between gap-3 flex-wrap">
+<div>
+<span class="chip chip-sahaba mb-2">Sahaba</span>
+<h2 class="text-2xl font-bold text-ink">Companions</h2>
+<p class="text-ink/55 text-sm mt-1">Those who saw the Prophet ﷺ, believed, and died upon Islam. Expandable seals of the closest and most frequently named.</p>
+</div>
+<a href="companions.html" class="text-xs font-semibold text-gold hover:underline">Full companions page →</a>
+</div>
+</div>
+<div id="grid-companions" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+</section>
+
+<!-- ANGELS -->
+<section id="angels">
+<div class="mb-6">
+<span class="chip chip-angel mb-2">Mala'ika</span>
+<h2 class="text-2xl font-bold text-ink">Angels</h2>
+<p class="text-ink/55 text-sm mt-1">Created from light. They do not disobey. Named angels of revelation, provision, the Trumpet, the Fire, and the grave.</p>
+</div>
+<div id="grid-angels" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+</section>
+
+<!-- JINN -->
+<section id="jinn">
+<div class="mb-6">
+<span class="chip chip-jinn mb-2">Jinn</span>
+<h2 class="text-2xl font-bold text-ink">Jinn</h2>
+<p class="text-ink/55 text-sm mt-1">Created from smokeless fire. Accountable like humans. Believers and rebels — from Iblis to the company that heard the Quran.</p>
+</div>
+<div id="grid-jinn" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+</section>
+
+<!-- ANIMALS -->
+<section id="animals">
+<div class="mb-6">
+<span class="chip chip-animal mb-2">Animals</span>
+<h2 class="text-2xl font-bold text-ink">Animals of the Signs</h2>
+<p class="text-ink/55 text-sm mt-1">Creatures named or made into signs in the Quran and authentic reports — not every animal, only those tied to a prophetic story or clear ayah.</p>
+</div>
+<div id="grid-animals" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+</section>
+
+<!-- END TIME -->
+<section id="endtime">
+<div class="mb-6">
+<span class="chip chip-beast mb-2">Al-Nihaya</span>
+<h2 class="text-2xl font-bold text-ink">Beings of the End of Time</h2>
+<p class="text-ink/55 text-sm mt-1">The Dajjal, the Beast of the Earth, Yajuj and Majuj, and the descent of Isa — named figures and forces of the final trials.</p>
+</div>
+<div id="grid-endtime" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
+</section>
+
+</main>
+
+<footer class="bg-ink text-parchment py-10 mt-8">
+<div class="max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Educational Codex. Prophets and companions are represented by light and seals — never by faces. Content from Quran, authentic Hadith, and classical sources.</p>
+<a href="index.html" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+</div>
+</footer>
+
+<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+<div class="modal">
+<div class="modal-hero" id="modal-hero"></div>
+<div class="modal-body" id="modal-body"></div>
+<button type="button" id="modal-close" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/35 text-white flex items-center justify-center z-10" aria-label="Close">×</button>
+</div>
+</div>
+
+<script>
+const CHARACTERS = {
+companions: [
+{id:"c-abubakr",titleEn:"Abu Bakr as-Siddiq",titleAr:"أبو بكر الصديق",role:"First caliph · Companion in the cave",summary:"The first adult free man to believe. Companion of the Hijrah. As-Siddiq after Isra.",pattern:"pattern-sahaba",
+details:`Abu Bakr Abdullah ibn Abi Quhafa was the closest companion of the Prophet ﷺ in loyalty and companionship. He was the first free adult male to accept Islam. When the Prophet described the Isra and Mi'raj, Abu Bakr affirmed it without hesitation and earned the title as-Siddiq. He shared the cave of Thawr during the Hijrah. After the Prophet's death he was chosen as the first caliph and fought the wars of apostasy and the refusal of zakat, preserving the unity of the community and the obligation of the religion. He was buried beside the Prophet in Madinah.`,
+facts:[{label:"Title",value:"as-Siddiq"},{label:"Hijrah",value:"Cave of Thawr"},{label:"Caliphate",value:"First"}]},
+{id:"c-umar",titleEn:"Umar ibn al-Khattab",titleAr:"عمر بن الخطاب",role:"Second caliph · al-Faruq",summary:"His Islam was a conquest. Justice and expansion under his rule.",pattern:"pattern-sahaba",
+details:`Umar ibn al-Khattab accepted Islam after fierce opposition, and his conversion strengthened the public presence of the Muslims in Makkah. The Prophet ﷺ gave him the title al-Faruq — the one who distinguishes truth from falsehood. As second caliph he oversaw the conquests of the Levant, Egypt, and Persia, established administrative systems, and was known for personal austerity and severe justice. He was assassinated while leading the prayer and is buried next to the Prophet and Abu Bakr.`,
+facts:[{label:"Title",value:"al-Faruq"},{label:"Caliphate",value:"Second"},{label:"Known for",value:"Justice"}]},
+{id:"c-uthman",titleEn:"Uthman ibn Affan",titleAr:"عثمان بن عفان",role:"Third caliph · Dhun-Nurayn",summary:"Married two daughters of the Prophet. Compiled the Quran into the standard mushaf.",pattern:"pattern-sahaba",
+details:`Uthman ibn Affan was among the early Muslims of high standing in Quraysh. He married Ruqayyah, and after her death Umm Kulthum — two daughters of the Prophet ﷺ — and was called Dhun-Nurayn, the possessor of two lights. He equipped the army of hardship (Tabuk) with great generosity. As third caliph he commissioned the standard written copies of the Quran from the compilation preserved under Abu Bakr, unifying the community upon one textual form. He was killed in his home while reciting the Quran during the fitnah.`,
+facts:[{label:"Title",value:"Dhun-Nurayn"},{label:"Legacy",value:"Mushaf unification"},{label:"Caliphate",value:"Third"}]},
+{id:"c-ali",titleEn:"Ali ibn Abi Talib",titleAr:"علي بن أبي طالب",role:"Fourth caliph · Gate of knowledge",summary:"Raised in the Prophet's house. First youth to believe. Husband of Fatimah.",pattern:"pattern-sahaba",
+details:`Ali ibn Abi Talib was the cousin of the Prophet ﷺ and was raised in his household. He was among the first to believe as a youth. He slept in the Prophet's bed on the night of the Hijrah so the assassins would find him instead. He married Fatimah and fathered al-Hasan and al-Husayn. He was known for knowledge, courage at Badr, Uhud, and Khaybar, and for asceticism. As fourth caliph he faced the civil conflicts after Uthman's death. He was assassinated in Kufa and is central to both Sunni and Shi'i memory, with different theological framings.`,
+facts:[{label:"Relation",value:"Cousin & son-in-law"},{label:"Caliphate",value:"Fourth"},{label:"Trait",value:"Knowledge & courage"}]},
+{id:"c-khadijah",titleEn:"Khadijah bint Khuwaylid",titleAr:"خديجة بنت خويلد",role:"First believer · Mother of the believers",summary:"First to believe. Supported the Prophet with wealth and certainty when revelation began.",pattern:"pattern-sahaba",
+details:`Khadijah bint Khuwaylid was a merchant of dignity and wealth in Makkah. She hired Muhammad ﷺ for trade and later proposed marriage. When the first revelation came in Hira, she comforted him, covered him, and took him to Waraqah ibn Nawfal. She was the first to believe in his message. She bore him all his children except Ibrahim. She died before the Hijrah in the Year of Sorrow. The Prophet never forgot her rank and spoke of her with a love that outlasted later marriages.`,
+facts:[{label:"Rank",value:"First believer"},{label:"Support",value:"Wealth & certainty"},{label:"Death",value:"Year of Sorrow"}]},
+{id:"c-aisha",titleEn:"Aisha bint Abi Bakr",titleAr:"عائشة بنت أبي بكر",role:"Mother of the believers · Scholar",summary:"Among the most prolific narrators of hadith. Daughter of Abu Bakr.",pattern:"pattern-sahaba",
+details:`Aisha bint Abi Bakr married the Prophet ﷺ in Madinah and became one of the Mothers of the Believers. She narrated a large body of hadith on worship, family life, and the Prophet's character. After his death she was a reference for knowledge among the companions and the following generation. Her role in the fitnah after Uthman's death is recorded in the classical histories; she later expressed regret for the bloodshed. She died in Madinah and is buried in al-Baqi'.`,
+facts:[{label:"Role",value:"Hadith scholar"},{label:"Father",value:"Abu Bakr"},{label:"Title",value:"Umm al-Mu'minin"}]},
+{id:"c-hamza",titleEn:"Hamza ibn Abd al-Muttalib",titleAr:"حمزة بن عبد المطلب",role:"Lion of Allah · Martyr of Uhud",summary:"Uncle of the Prophet. His Islam strengthened the Muslims. Martyred at Uhud.",pattern:"pattern-sahaba",
+details:`Hamza ibn Abd al-Muttalib was the uncle of the Prophet ﷺ and a formidable warrior of Quraysh. His acceptance of Islam was a turning point for the public strength of the early Muslims in Makkah. At Badr he fought with distinction. At Uhud he was martyred and mutilated by Wahshi at the instigation of Hind. The Prophet grieved him deeply and called him the Lion of Allah and His Messenger. He is the master of martyrs in the memory of the community.`,
+facts:[{label:"Title",value:"Lion of Allah"},{label:"Death",value:"Uhud"},{label:"Relation",value:"Uncle"}]},
+{id:"c-bilal",titleEn:"Bilal ibn Rabah",titleAr:"بلال بن رباح",role:"First mu'adhdhin",summary:"Tortured for Islam in Makkah. Gave the adhan from the Kaaba at the Opening.",pattern:"pattern-sahaba",
+details:`Bilal ibn Rabah was an Abyssinian slave in Makkah who accepted Islam early and was tortured under the sun with a heavy stone on his chest, repeating Ahad, Ahad. Abu Bakr purchased and freed him. In Madinah he became the first mu'adhdhin. At the Opening of Makkah he climbed the Kaaba and gave the adhan — a reversal of every humiliation he had endured. He remained devoted to the Prophet and struggled to give the adhan after the Prophet's death because of grief.`,
+facts:[{label:"Role",value:"First mu'adhdhin"},{label:"Trial",value:"Torture in Makkah"},{label:"Symbol",value:"Adhan on Kaaba"}]},
+{id:"c-salman",titleEn:"Salman al-Farisi",titleAr:"سلمان الفارسي",role:"Seeker of the Prophet · Counsel of the trench",summary:"Persian seeker who crossed religions and lands until he found the Prophet in Madinah.",pattern:"pattern-sahaba",
+details:`Salman the Persian left his homeland in search of the true religion, serving Christian teachers and being sold into slavery before reaching Madinah. He recognized the Prophet ﷺ by signs he had been taught. At the Battle of the Trench he advised digging a ditch — a method unknown to the Arabs of that region — and the counsel was accepted. The Prophet said Salman is from us, the people of the House. His story is the archetype of the sincere seeker who leaves home for truth.`,
+facts:[{label:"Origin",value:"Persia"},{label:"Counsel",value:"The Trench"},{label:"Rank",value:"Ahl al-Bayt (by hadith)"}]},
+
+,{id:"c-zayd",titleEn:"Zayd ibn Harithah",titleAr:"زيد بن حارثة",role:"Adopted son · Commander",summary:"Freed and adopted by the Prophet. Only companion named in the Quran.",pattern:"pattern-sahaba",
+details:`Zayd ibn Harithah was purchased and freed by Khadijah and given to the Prophet, who adopted him. He preferred the Prophet over his own biological father when given the choice. He married Zaynab; the later Quranic ruling on adopted names and marriage is tied to his story. He commanded the expedition of Mu'tah and was martyred there. He is the only companion mentioned by name in the Quran.`,
+facts:[{label:"Status",value:"Named in Quran"},{label:"Death",value:"Mu'tah"}]},
+{id:"c-zubayr",titleEn:"Zubayr ibn al-Awwam",titleAr:"الزبير بن العوام",role:"Among the ten promised Paradise",summary:"Disciple of the Prophet from youth. Among the ashara mubashara.",pattern:"pattern-sahaba",
+details:`Az-Zubayr ibn al-Awwam accepted Islam young and was among the earliest. He emigrated to Abyssinia and to Madinah, fought at Badr and Uhud, and was named among the ten promised Paradise. His later role in the fitnah after Uthman is recorded in the histories. He is remembered as a disciple of courage from the first generation.`,
+facts:[{label:"Rank",value:"Ashara mubashara"},{label:"Early",value:"Youth convert"}]},
+{id:"c-saad",titleEn:"Sa'd ibn Abi Waqqas",titleAr:"سعد بن أبي وقاص",role:"Archer of the ummah · Qadisiyyah",summary:"Among the ten promised Paradise. Led the conquest of Iraq.",pattern:"pattern-sahaba",
+details:`Sa'd ibn Abi Waqqas was an early convert and among the ten promised Paradise. The Prophet prayed for his aim in archery. He commanded the Muslim army at al-Qadisiyyah against the Sassanids and played a major role in the conquest of Iraq under Umar. He was known for piety and for avoiding some of the later civil conflicts when possible.`,
+facts:[{label:"Rank",value:"Ashara mubashara"},{label:"Battle",value:"Qadisiyyah"}]},
+{id:"c-fatimah",titleEn:"Fatimah az-Zahra",titleAr:"فاطمة الزهراء",role:"Daughter of the Prophet · Wife of Ali",summary:"The Prophet said she is the leader of the women of the Garden.",pattern:"pattern-sahaba",
+details:`Fatimah bint Muhammad married Ali ibn Abi Talib and bore al-Hasan and al-Husayn. The Prophet loved her intensely and would stand for her when she entered. Authentic reports describe her as the leader of the women of the believers or of the women of the Garden. She died months after her father. Through her the line of the Ahl al-Bayt continues in Islamic memory.`,
+facts:[{label:"Father",value:"Muhammad ﷺ"},{label:"Husband",value:"Ali"},{label:"Rank",value:"Leader of women of Jannah"}]},
+],
+
+angels: [
+{id:"a-jibril",titleEn:"Jibril (Gabriel)",titleAr:"جبريل",role:"Angel of revelation",summary:"Brought the Quran to the Prophet ﷺ. Appeared in different forms. The trusted Spirit.",pattern:"pattern-angel",
+details:`Jibril is the angel of revelation — ar-Ruh al-Amin, the Trusted Spirit. He brought the Quran down upon the heart of Muhammad ﷺ. He appeared in his true form with six hundred wings; he also appeared in the form of a man, including the famous appearance as Dihyah or as an unknown questioner who sat with the companions and asked about Islam, iman, and ihsan. He accompanied the Prophet on the Isra and Mi'raj and opened the doors of the heavens. The Quran names him as the one who brought the revelation by Allah's permission.`,
+facts:[{label:"Role",value:"Revelation"},{label:"Title",value:"Ruh al-Amin"},{label:"Form",value:"600 wings (true form)"}],
+quran:[{ref:"26:193-194",ar:"نَزَلَ بِهِ الرُّوحُ الْأَمِينُ عَلَىٰ قَلْبِكَ",en:"The Trusted Spirit has brought it down upon your heart."}]},
+{id:"a-mikail",titleEn:"Mikail (Michael)",titleAr:"ميكائيل",role:"Angel of provision & rain",summary:"Associated with sustenance and the rain that brings life to the earth.",pattern:"pattern-angel",
+details:`Mikail is named in the Quran alongside Jibril. Whoever is an enemy to Allah, His angels, His messengers, Jibril and Mikail — then Allah is an enemy to the disbelievers. Classical reports associate him with the provision of creation and the rain. He is among the highest of the angels, always in obedience, with no share of the rebellion of Iblis.`,
+facts:[{label:"Role",value:"Provision & rain"},{label:"Named in",value:"Quran 2:98"}]},
+{id:"a-israfil",titleEn:"Israfil",titleAr:"إسرافيل",role:"Bearer of the Trumpet",summary:"Assigned to the Horn. When he blows, the Hour unfolds.",pattern:"pattern-angel",
+details:`Israfil is the angel assigned to the Trumpet (as-Sur). Authentic reports describe him as already prepared, waiting for the command to blow. The first blow will cause the death of all in the heavens and earth except whom Allah wills; the second will raise the dead for the standing. His role ties the angels of the command to the final events of NOOR's Nihaya section.`,
+facts:[{label:"Role",value:"The Trumpet"},{label:"Blows",value:"Two (death, rising)"}]},
+{id:"a-malik",titleEn:"Malik",titleAr:"مالك",role:"Keeper of Jahannam",summary:"The angel who oversees the Fire. The people of the Fire will call to him for death.",pattern:"pattern-angel",
+details:`Malik is the keeper of Hell. The Quran describes the people of the Fire calling: O Malik, let your Lord put an end to us. He will say: You will remain. He does not smile; his post is severity. The existence of named keepers of the Fire and the Garden underscores that the afterlife is administered by command, not by chaos.`,
+facts:[{label:"Role",value:"Keeper of the Fire"},{label:"Ayah",value:"43:77"}]},
+{id:"a-munkar-nakir",titleEn:"Munkar and Nakir",titleAr:"منكر ونكير",role:"Questioners of the grave",summary:"The two angels who question the dead in the grave about Lord, religion, and prophet.",pattern:"pattern-angel",
+details:`Munkar and Nakir are the two angels who come to the dead in the grave and ask: Who is your Lord? What is your religion? Who is your prophet? The believer answers with clarity; the hypocrite and disbeliever falter. The grave is the first station of the afterlife, and their questioning is part of the sequence that ends in the Garden or the Fire. Reports about them are in the sunan and are accepted in mainstream creed.`,
+facts:[{label:"Role",value:"Grave questioning"},{label:"Questions",value:"Lord · Religion · Prophet"}]},
+{id:"a-ridwan",titleEn:"Ridwan",titleAr:"رضوان",role:"Keeper of Jannah",summary:"The angel associated with the guardianship of the Garden.",pattern:"pattern-angel",
+details:`Ridwan is named in classical sources as the keeper of Paradise. While the Quran emphasizes the Garden's rivers, dwellings, and the look at Allah's Face more than the name of its keeper, the tradition of a named guardian parallels Malik at the Fire and completes the picture of a created order under command in both abodes.`,
+facts:[{label:"Role",value:"Keeper of Jannah"}]},
+
+,{id:"a-harut-marut",titleEn:"Harut and Marut",titleAr:"هاروت وماروت",role:"Angels at Babylon — a test",summary:"Angels sent as a trial in Babylon. Magic was taught as a test; disbelief was warned against.",pattern:"pattern-angel",
+details:`The Quran mentions Harut and Marut in Babylon in the context of people who followed what the shayatin recited against the kingdom of Sulayman. Two angels at Babylon taught people magic as a trial, saying: we are only a test, so do not disbelieve. The verse is a warning: magic was not from Sulayman; the shayatin disbelieved. Harut and Marut are a difficult node in tafsir — angels acting as a test in a specific historical frame — and the Codex records them so the reader does not confuse Sulayman with sorcery.`,
+facts:[{label:"Place",value:"Babylon"},{label:"Role",value:"Test"},{label:"Ayah",value:"2:102"}]},
+],
+
+jinn: [
+{id:"j-iblis",titleEn:"Iblis (Shaytan)",titleAr:"إبليس",role:"The rebel · Enemy of Adam's line",summary:"Refused to prostrate to Adam. Asked for respite until the Day. Leads the shayatin.",pattern:"pattern-jinn",
+details:`Iblis was among the jinn and was present with the angels when Allah commanded the prostration to Adam. He refused out of pride, arguing that he was better because he was created from fire and Adam from clay. He was expelled and asked for respite until the Day of Resurrection. He swore to lie in wait for the children of Adam on the straight path. He is not an independent power; he only whispers and invites. His plot is weak for those who remember Allah. The Quran distinguishes him from the angels: he was of the jinn, and he disobeyed.`,
+facts:[{label:"Origin",value:"Jinn (fire)"},{label:"Crime",value:"Pride / refusal"},{label:"Limit",value:"Whisper only"}],
+quran:[{ref:"18:50",ar:"إِلَّا إِبْلِيسَ كَانَ مِنَ الْجِنِّ فَفَسَقَ عَنْ أَمْرِ رَبِّهِ",en:"Except Iblis. He was of the jinn, and he departed from the command of his Lord."}]},
+{id:"j-believing",titleEn:"The Believing Jinn",titleAr:"الجن المؤمنون",role:"Listeners of the Quran",summary:"A company of jinn heard the Quran and returned to their people as warners.",pattern:"pattern-jinn",
+details:`Surah al-Jinn and passages in al-Ahqaf describe a group of jinn who listened to the Quran being recited and believed. They returned to their people as warners, affirming that they had heard a wondrous recitation that guides to rectitude. They acknowledged that some among the jinn had sought refuge in men and increased them in burden. Their story establishes that the message is for both humans (ath-thaqalan) and that among the jinn there are Muslims and there are wrongdoers.`,
+facts:[{label:"Event",value:"Heard the Quran"},{label:"Response",value:"Believed & warned"},{label:"Surah",value:"al-Jinn"}]},
+{id:"j-ifrit",titleEn:"Ifrit of Sulayman",titleAr:"عفريت من الجن",role:"Offered to bring the throne",summary:"An ifrit of the jinn offered to bring the throne of Bilqis before Sulayman stood from his place.",pattern:"pattern-jinn",
+details:`When Sulayman asked who would bring him the throne of the Queen of Saba before they came in submission, an ifrit of the jinn offered to bring it before Sulayman rose from his place. One who had knowledge of the Book brought it in the blink of an eye. The episode shows the capacity of the jinn, the greater capacity granted through knowledge from Allah, and Sulayman's recognition that it was a test of gratitude.`,
+facts:[{label:"Context",value:"Throne of Bilqis"},{label:"Offer",value:"Before standing"},{label:"Surah",value:"an-Naml"}]},
+],
+
+animals: [
+{id:"an-salih",titleEn:"The She-Camel of Salih",titleAr:"ناقة صالح",role:"Clear sign for Thamud",summary:"A she-camel brought forth as a sign. Thamud hamstrung her and were destroyed.",pattern:"pattern-animal",
+details:`The people of Thamud demanded a sign from Salih. Allah brought forth a she-camel as a clear proof, with a share of the water appointed for her and a share for them. They were commanded not to harm her. They hamstrung her. The cry seized them, and they became lifeless in their homes. The camel is not a mythic ornament; it is a named sign in the Quran whose violation brought a known punishment.`,
+facts:[{label:"People",value:"Thamud"},{label:"Crime",value:"Hamstrung"},{label:"Result",value:"The cry"}]},
+{id:"an-kahf",titleEn:"The Dog of the Cave",titleAr:"كلب أصحاب الكهف",role:"Companion of the Sleepers",summary:"The dog of the People of the Cave stretched his forelegs at the entrance.",pattern:"pattern-animal",
+details:`The People of the Cave were youths who fled persecution for their faith in the One God. They slept for centuries. Their dog stretched his forelegs on the threshold. The Quran mentions the dog without disgrace — a companion of the righteous in their refuge. Debates about the dog's name or exact number of the sleepers are secondary; the point is the mercy shown to a group of young believers and the inclusion of their animal in the story.`,
+facts:[{label:"Story",value:"Ashab al-Kahf"},{label:"Role",value:"At the threshold"},{label:"Surah",value:"al-Kahf"}]},
+{id:"an-hoopoe",titleEn:"The Hoopoe of Sulayman",titleAr:"هدهد سليمان",role:"Scout of Saba",summary:"Brought news of Bilqis and her people who bowed to the sun.",pattern:"pattern-animal",
+details:`Sulayman checked the birds and found the hoopoe absent. When it returned it brought news of a woman ruling in Saba, with a great throne, whose people prostrated to the sun. Sulayman sent a letter with the hoopoe. The story establishes that animals, by Allah's gift, can serve prophetic missions — and that Sulayman's kingdom included understanding of birds.`,
+facts:[{label:"Role",value:"Brought news of Saba"},{label:"King",value:"Sulayman"},{label:"Surah",value:"an-Naml"}]},
+{id:"an-ant",titleEn:"The Ant of Sulayman",titleAr:"نملة سليمان",role:"Warned her colony",summary:"An ant warned the others to enter their dwellings lest Sulayman's army crush them.",pattern:"pattern-animal",
+details:`As Sulayman's army approached a valley of ants, an ant said: O ants, enter your dwellings lest Sulayman and his soldiers crush you while they do not perceive. Sulayman smiled at her words and thanked Allah for the favor of understanding. The episode is a sign of the reach of his gift and a model of care even for the smallest creatures under a just kingdom.`,
+facts:[{label:"Gift",value:"Speech of animals"},{label:"Response",value:"Sulayman's thanks"}]},
+{id:"an-yunus",titleEn:"The Whale of Yunus",titleAr:"الحوت يونس",role:"Vessel of repentance",summary:"Swallowed Yunus when he left in anger. He glorified Allah in the darkness.",pattern:"pattern-animal",
+details:`Yunus left his people in anger before Allah's command had come for departure. He boarded a ship; the lot fell against him; he was thrown into the sea and swallowed by the whale. In the darkness he called: There is no god but You; glory be to You; I was among the wrongdoers. He was cast onto the shore sick, and a gourd plant grew over him. The whale was a vessel of discipline and mercy — not a random predator.`,
+facts:[{label:"Prophet",value:"Yunus"},{label:"Dua",value:"In the darkness"},{label:"Surah",value:"al-Anbiya / as-Saffat"}]},
+{id:"an-fil",titleEn:"The Birds of the Elephant",titleAr:"طير الأبابيل",role:"Destroyed Abraha's army",summary:"Flocks of birds pelted the army of the Elephant with stones of baked clay.",pattern:"pattern-animal",
+details:`Abraha marched from Yemen with elephants to destroy the Kaaba in the year of the Prophet's birth. Allah sent birds in flocks — ababil — who struck the army with stones of baked clay, leaving them like eaten straw. The event is Surah al-Fil. It protected the House and marked the year in which Muhammad ﷺ was born.`,
+facts:[{label:"Enemy",value:"Abraha"},{label:"Year",value:"~570 CE"},{label:"Surah",value:"al-Fil"}]},
+{id:"an-wolf",titleEn:"The Wolf of Yusuf's Story",titleAr:"ذئب يوسف",role:"False accusation",summary:"Yaqub's sons claimed a wolf had eaten Yusuf. The shirt proved the lie.",pattern:"pattern-animal",
+details:`The brothers of Yusuf, having thrown him into the well, brought his shirt with false blood and told Yaqub that a wolf had eaten him. Yaqub said their souls had tempted them to a matter and that patience was beautiful. The wolf never attacked Yusuf; the animal was a cover for their crime. The story is a warning about using the natural world as a lie against the innocent.`,
+facts:[{label:"Role",value:"False cover story"},{label:"Truth",value:"Shirt with false blood"}]},
+
+,{id:"an-abil",titleEn:"The Birds of Ababil",titleAr:"طير أبابيل",role:"Army against the Elephant",summary:"Flocks that struck Abraha's forces with stones of baked clay.",pattern:"pattern-animal",
+details:`In the Year of the Elephant, Allah sent birds in flocks — ababil — against Abraha's army. They struck them with stones of sijjil until the army was like eaten straw. The event is Surah al-Fil and protected the Kaaba in the year of the Prophet's birth. (Also listed in Path node Year of the Elephant.)`,
+facts:[{label:"Surah",value:"al-Fil"},{label:"Year",value:"~570 CE"}]},
+{id:"an-cow",titleEn:"The Cow of Bani Israel",titleAr:"بقرة بني إسرائيل",role:"Command that exposed a murder",summary:"Bani Israel ordered to slaughter a cow to resolve a murder dispute.",pattern:"pattern-animal",
+details:`Surah al-Baqarah narrates that Bani Israel were commanded to slaughter a cow after disputing a murder. They asked many questions that narrowed the requirement. When they finally complied and struck the dead with part of her, Allah brought the dead to life to name the killer. The story is a lesson on obedience without excessive questioning and gives the surah its name.`,
+facts:[{label:"Surah",value:"al-Baqarah"},{label:"Lesson",value:"Obey without excess debate"}]},
+{id:"an-fish-khidr",titleEn:"The Fish of Musa and the Servant",titleAr:"حوت موسى والخضر",role:"Sign at the junction of the two seas",summary:"The fish revived and swam away, marking the meeting place with the servant of Allah.",pattern:"pattern-animal",
+details:`Musa set out to meet a servant of Allah at the junction of the two seas. The fish they carried as provision revived and took its way into the sea. When Musa asked for the meal, his young companion remembered the fish at the rock. They returned and found the servant — al-Khidr in the tradition — and the famous journey of three strange acts began. The fish was the sign of the place.`,
+facts:[{label:"Sign",value:"Meeting place"},{label:"Surah",value:"al-Kahf"}]},
+],
+
+endtime: [
+{id:"e-dajjal",titleEn:"Ad-Dajjal",titleAr:"الدجال",role:"The great deceiver",summary:"The greatest fitnah before the Hour. Claims divinity. Killed by Isa at Lod.",pattern:"pattern-beast",
+details:`The Dajjal is the greatest trial from the time of Adam until the Hour. Authentic hadith describe his appearance, his one-eyed mark, the word kafir on his forehead that believers will read, his wonders that test the people, and the command to seek refuge from him even in prayer. Isa ibn Maryam will descend and kill him at the gate of Lod. The Dajjal is not a metaphor; he is a being of the end of time whose trial is defeated by knowledge, steadfastness, and the return of the Messiah.`,
+facts:[{label:"Fitnah",value:"Greatest"},{label:"End",value:"Killed by Isa at Lod"},{label:"Refuge",value:"Prayer & knowledge"}]},
+{id:"e-dabba",titleEn:"Dabbat al-Ard",titleAr:"دابة الأرض",role:"Beast of the Earth",summary:"A creature from the earth that will speak to the people and mark them.",pattern:"pattern-beast",
+details:`Among the major signs of the Hour is the Beast of the Earth. The Quran says that when the word falls upon them, We shall bring out for them a creature from the earth that will speak to them because the people were not certain of Our signs. Reports describe it marking the people with a seal of belief or disbelief. Its appearance is among the sequence of clear, public signs that the Hour has drawn near.`,
+facts:[{label:"Sign",value:"Major"},{label:"Action",value:"Speaks / marks"},{label:"Ayah",value:"27:82"}]},
+{id:"e-yajuj",titleEn:"Yajuj and Majuj",titleAr:"يأجوج ومأجوج",role:"Hordes behind the barrier",summary:"Peoples behind the barrier of Dhul-Qarnayn. They will swarm when it falls.",pattern:"pattern-beast",
+details:`Yajuj and Majuj are peoples contained behind a barrier built by Dhul-Qarnayn, described in Surah al-Kahf. When the promise of Allah comes, the barrier will be leveled and they will swarm from every height. Isa and the believers will take refuge; Allah will destroy them by a means He wills. They are part of the geography of the end of time in both Quran and hadith.`,
+facts:[{label:"Barrier",value:"Dhul-Qarnayn"},{label:"Sign",value:"Swarm after release"},{label:"Surah",value:"al-Kahf"}]},
+{id:"e-isa-return",titleEn:"Isa — The Descent",titleAr:"نزول عيسى",role:"Return at the end of time",summary:"Descends at the white minaret in Damascus. Breaks the cross, kills the swine, ends the Dajjal.",pattern:"pattern-beast",
+details:`Isa ibn Maryam was not killed or crucified; he was raised. He will descend near the white minaret east of Damascus as a just ruler of this community, pray behind their leader, break the cross, kill the swine, abolish the jizyah of that phase, and kill the Dajjal at Lod. His descent is a central tenet of the eschatology of Ahl al-Sunnah and connects the story of Maryam's son in the Quran to the final victory of tawhid over the greatest false claimant.`,
+facts:[{label:"Place",value:"Damascus minaret"},{label:"Acts",value:"Ends Dajjal · justice"},{label:"Status",value:"Raised, not slain"}]},
+]
+};
+
+const PERIODS_CHIP = {
+companions:"chip-sahaba",angels:"chip-angel",jinn:"chip-jinn",animals:"chip-animal",endtime:"chip-beast"
+};
+
+function renderSection(key, gridId) {
+  const list = CHARACTERS[key] || [];
+  const g = document.getElementById(gridId);
+  if (!g) return;
+  g.innerHTML = list.map(n => `
+    <article class="tile fade-up" data-key="${key}" data-id="${n.id}" role="button" tabindex="0">
+      <div class="tile-bg ${n.pattern}"></div>
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <span class="chip ${PERIODS_CHIP[key]} mb-1">${key === 'endtime' ? 'Nihaya' : key}</span>
+        <h3 class="font-semibold text-[15px] leading-snug">${n.titleEn}</h3>
+        <p class="font-amiri text-sm opacity-90">${n.titleAr || ''}</p>
+        <p class="text-[11px] opacity-70 mt-0.5">${n.role || ''}</p>
+        <p class="text-xs opacity-75 mt-1 line-clamp-2">${n.summary || ''}</p>
+      </div>
+    </article>
+  `).join('');
+  g.querySelectorAll('.tile').forEach(t => {
+    t.onclick = () => openChar(t.dataset.key, t.dataset.id);
+    t.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') openChar(t.dataset.key, t.dataset.id); };
+  });
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), {threshold: 0.12});
+  g.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
+
+
+function linkify(text){
+  if(!text) return "";
+  return String(text).replace(/\{\{(n|c):([^|}]+)\|([^}]+)\}\}/g, function(_, typ, id, label){
+    const safe = label.replace(/"/g, "&quot;");
+    if(typ === "n") return '<button type="button" class="entity-link" data-etype="node" data-eid="'+id+'">'+safe+"</button>";
+    return '<button type="button" class="entity-link" data-etype="char" data-eid="'+id+'">'+safe+"</button>";
+  });
+}
+function openEntity(etype, eid){
+  if(etype === "node"){
+    window.location.href = "index.html?node="+encodeURIComponent(eid);
+    return;
+  }
+  openCharFromId(eid);
+}
+function openCharFromId(eid){
+  for (const key of Object.keys(CHARACTERS)){
+    const n = CHARACTERS[key].find(x => x.id === eid);
+    if(n){ openChar(key, eid); return; }
+  }
+}
+function bindEntityLinks(root){
+  (root||document).querySelectorAll(".entity-link").forEach(function(btn){
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); openEntity(btn.dataset.etype, btn.dataset.eid); };
+  });
+}
+
+function openChar(key, id) {
+  const n = (CHARACTERS[key] || []).find(x => x.id === id);
+  if (!n) return;
+  const hero = document.getElementById('modal-hero');
+  const body = document.getElementById('modal-body');
+  hero.className = 'modal-hero ' + (n.pattern || 'pattern-sahaba');
+  hero.innerHTML = `<div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent"></div>
+    <div class="absolute bottom-0 p-4 text-parchment">
+      <span class="chip ${PERIODS_CHIP[key]} mb-1">${key}</span>
+      <h2 class="text-xl font-bold">${n.titleEn}</h2>
+      <p class="font-amiri">${n.titleAr || ''}</p>
+    </div>`;
+  const facts = (n.facts || []).map(f => `<div class="fact-item"><div class="text-[10px] uppercase text-ink/40">${f.label}</div><div class="text-sm font-semibold">${f.value}</div></div>`).join('');
+  const quran = (n.quran || []).map(q => `<div class="mt-3 p-3 rounded-xl border border-gold/30 bg-gradient-to-br from-parchment to-[#FBF6E8]">
+      <div class="text-xs font-bold text-gold mb-1">${q.ref}</div>
+      ${q.ar ? `<p class="font-amiri text-right text-base leading-loose" dir="rtl">${q.ar}</p>` : ''}
+      ${q.en ? `<p class="text-sm text-ink/70 mt-1">${q.en}</p>` : ''}
+    </div>`).join('');
+  body.innerHTML = `
+    <p class="text-xs text-ink/45 mb-2">${n.role || ''}</p>
+    <div class="drop-cap modal-prose text-ink/85 leading-relaxed whitespace-pre-line">${linkify(n.details || n.summary || '')}</div>
+    ${facts ? `<div class="mt-5"><h3 class="text-xs uppercase tracking-wider text-ink/40 mb-2">Facts</h3><div class="facts-grid">${facts}</div></div>` : ''}
+    ${quran ? `<div class="mt-5"><h3 class="text-xs uppercase tracking-wider text-ink/40 mb-2">Qur'an</h3>${quran}</div>` : ''}
+    <button type="button" onclick="closeModal()" class="mt-6 text-gold text-sm font-medium">Close</button>`;
+  document.getElementById('modal-backdrop').classList.add('open');
+  bindEntityLinks(document.getElementById('modal-body'));
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').onclick = closeModal;
+document.getElementById('modal-backdrop').onclick = e => { if (e.target === e.currentTarget) closeModal(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Active section highlight
+const sectionLinks = document.querySelectorAll('.section-nav a');
+const sections = ['companions','angels','jinn','animals','endtime'].map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 'companions';
+  sections.forEach(s => { if (s && s.getBoundingClientRect().top < 160) current = s.id; });
+  sectionLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, {passive: true});
+
+renderSection('companions', 'grid-companions');
+renderSection('angels', 'grid-angels');
+renderSection('jinn', 'grid-jinn');
+renderSection('animals', 'grid-animals');
+renderSection('endtime', 'grid-endtime');
+try{
+  const sp=new URLSearchParams(location.search);
+  const oid=sp.get('open');
+  if(oid) setTimeout(function(){ openCharFromId(oid); }, 150);
+  if(location.hash){
+    const el=document.querySelector(location.hash);
+    if(el) setTimeout(function(){ el.scrollIntoView({behavior:'smooth'}); }, 100);
+  }
+}catch(e){}
+
+</script>
+</body>
+</html>

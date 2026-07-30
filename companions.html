@@ -2,227 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Companions — NOOR | نُور</title>
-<meta name="description" content="Abstract seals of the Companions. Click any seal for full article, facts, Hadith, and Impact. No faces."/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Companions — NOOR Codex of Light</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227'}}}}</script>
+<script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227',deep:'#1A160F'}}}}</script>
 <style>
-:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--ease:cubic-bezier(.22,1,.36,1)}
-*{box-sizing:border-box}
-body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:#FFFEF7;color:#2C2416;font-family:Inter,system-ui,sans-serif}
 .font-amiri{font-family:Amiri,serif}
-.header{position:sticky;top:0;z-index:50;background:rgba(255,254,247,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(44,36,22,.07)}
-.nav-link{position:relative;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65);transition:color .25s}
-.nav-link:hover{color:var(--ink)}
-.nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--gold);transition:width .3s var(--ease)}
-.nav-link:hover::after{width:100%}
-.seal{border-radius:1.35rem;overflow:hidden;border:1px solid rgba(44,36,22,.08);background:#fff;transition:transform .35s var(--ease),box-shadow .35s var(--ease);cursor:pointer;text-align:left}
-.seal:hover{transform:translateY(-5px);box-shadow:0 18px 36px rgba(44,36,22,.1),0 0 0 1px rgba(201,162,39,.18)}
-.seal-face{height:11rem;display:flex;align-items:center;justify-content:center;position:relative}
-.seal-face::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,22,15,.15),transparent 40%);pointer-events:none}
-.seal-glyph{font-family:Amiri,serif;font-size:2.4rem;color:rgba(201,162,39,.85);text-shadow:0 0 40px rgba(201,162,39,.25);position:relative;z-index:1}
-.modal-backdrop{position:fixed;inset:0;background:rgba(15,13,10,.72);backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
-.modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--parchment);border-radius:1.5rem;max-width:42rem;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(24px) scale(.97);transition:transform .4s var(--ease);border:1px solid rgba(201,162,39,.12);box-shadow:0 25px 50px rgba(0,0,0,.25)}
-.modal-backdrop.open .modal{transform:translateY(0) scale(1)}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1.25rem 0}
-.info-card{background:#fff;border:1px solid rgba(44,36,22,.08);border-radius:1rem;padding:1rem;text-align:center}
-.info-card .label{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(44,36,22,.45);margin-bottom:.25rem}
-.info-card .value{font-size:1rem;font-weight:600}
-.impact-box{background:#2C2416;color:#FFFEF7;border-radius:1rem;padding:1.15rem 1.25rem;margin:1.5rem 0}
-.impact-box h4{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(201,162,39,.9);margin-bottom:.5rem}
+.seal{transition:transform .3s,box-shadow .3s}
+.seal:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(44,36,22,.14)}
 </style>
 </head>
 <body class="antialiased">
-<header class="header">
-  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
-      <span class="font-amiri text-2xl text-gold leading-none">ن</span>
-      <span class="font-semibold tracking-tight text-[15px]">نُور</span>
-    </a>
-    <nav class="flex items-center gap-6 text-sm">
-      <a href="index.html" class="nav-link">The Path</a>
-      <a href="index.html#timeline" class="nav-link">Nihaya</a>
-      <span class="text-ink/40 font-medium">Companions</span>
-    </nav>
-  </div>
+<header class="sticky top-0 z-40 bg-parchment/92 backdrop-blur border-b border-ink/5">
+<div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri font-bold text-lg">ن</div>
+<span class="font-amiri text-lg text-ink">نُور</span>
+</a>
+<nav class="text-sm text-ink/60 flex gap-5">
+<a href="index.html" class="hover:text-ink">Path</a>
+<a href="index.html#books" class="hover:text-ink">Books</a>
+</nav>
+</div>
 </header>
 
-<section class="pt-16 pb-10 sm:pt-20 sm:pb-14">
-  <div class="max-w-3xl mx-auto px-4 text-center">
-    <p class="font-amiri text-gold text-3xl sm:text-4xl mb-3">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
-    <h1 class="text-3xl sm:text-4xl font-bold mb-4">Companions of the Messenger</h1>
-    <p class="text-ink/60 leading-relaxed max-w-xl mx-auto">Abstract seals only. No faces. Tap any seal for the full article — facts, Hadith, and Impact.</p>
-  </div>
-</section>
-
-<section class="pb-20">
-  <div id="seals-grid" class="max-w-6xl mx-auto px-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-  <p class="text-center text-sm text-ink/50 mt-14 max-w-lg mx-auto leading-relaxed">Prophets and Companions are represented only by light, seals, and calligraphy — never faces.</p>
-</section>
-
-<footer class="border-t border-ink/8 py-10 text-center">
-  <a href="index.html" class="text-sm text-gold font-medium hover:underline">← Back to the Path</a>
-  <p class="text-xs text-ink/40 mt-3">NOOR — Codex of Light</p>
-</footer>
-
-<div id="modal-backdrop" class="modal-backdrop">
-  <div class="modal">
-    <div class="sticky top-0 bg-parchment/95 backdrop-blur border-b border-ink/8 px-5 py-3.5 flex items-center justify-between z-10">
-      <span id="modal-title" class="font-semibold text-sm truncate pr-4"></span>
-      <button id="modal-close" class="w-8 h-8 rounded-lg hover:bg-ink/5 flex items-center justify-center text-lg leading-none">✕</button>
-    </div>
-    <div id="modal-body" class="px-5 py-6"></div>
-  </div>
+<section class="max-w-5xl mx-auto px-4 py-12">
+<div class="text-center mb-12">
+<p class="font-amiri text-gold text-2xl mb-2">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
+<h1 class="text-3xl sm:text-4xl font-bold text-ink mb-3">Companions of the Messenger</h1>
+<p class="text-ink/60 max-w-xl mx-auto text-sm leading-relaxed">Abstract seals only. No faces. Each seal represents a virtue or title. Full biographies expand as Book 5 (Al-Khulafa) is illuminated.</p>
 </div>
 
-<script>
-const COMPANIONS = [
-{
-  id:1, title:"Abu Bakr as-Siddiq", ar:"أبو بكر الصديق", glyph:"الصِّدِّيق", titleEn:"As-Siddiq",
-  summary:"First adult male to believe. Companion of the Cave. First Caliph. His truthfulness never wavered.",
-  details:`Abu Bakr ibn Abi Quhafa was the first adult free man to believe in the Messenger of Allah. When the Prophet ﷺ returned from the Isra and Mi’raj and the people of Makkah mocked him, Abu Bakr said without hesitation that if Muhammad had said it, then it was true. From that day he was known as as-Siddiq — the Truthful.\n\nHe was the Companion of the Cave on the Hijrah. Allah revealed concerning the two of them: “He was the second of two, when they were in the cave.” He spent his wealth freely in the path of Allah — freeing slaves, equipping armies, and supporting the community. After the death of the Prophet ﷺ he was chosen as the first Caliph. He fought the Ridda wars, preserved the unity of the ummah, and ordered the first compilation of the Qur’an into a single mushaf after the heavy losses at Yamamah.\n\nHis caliphate was short but decisive. He left the ummah united and the Book preserved. The Prophet said of him that if the faith of Abu Bakr were weighed against the faith of the rest of the ummah, the faith of Abu Bakr would outweigh it.`,
-  facts:[{label:"Title",value:"As-Siddiq"},{label:"Role",value:"First Caliph"},{label:"Key event",value:"Companion of the Cave"},{label:"Legacy",value:"Unity + Mushaf"}],
-  hadith:["If the faith of Abu Bakr were weighed against the faith of the ummah, his would outweigh it.","Abu Bakr was the second of two in the cave."],
-  lessons:["Truthfulness is a foundation of leadership.","Wealth spent in the path of Allah is never lost.","Unity of the ummah was preserved at the cost of personal comfort."]
-},
-{
-  id:2, title:"Umar ibn al-Khattab", ar:"عمر بن الخطاب", glyph:"الفَارُوق", titleEn:"Al-Faruq",
-  summary:"The one who distinguished truth from falsehood. Second Caliph. Justice was his hallmark.",
-  details:`Umar ibn al-Khattab was among the strongest of Quraysh before Islam. His conversion was a turning point for the early community; the Muslims began to pray openly after he accepted the faith. The Prophet gave him the title al-Faruq — the one who distinguishes truth from falsehood.\n\nAs second Caliph he expanded the lands of Islam into the territories of the two great empires of the age. Jerusalem was opened under his watch; he entered the city in humility. He established the diwan, the Islamic calendar from the Hijrah, and a system of justice that became proverbial. He was known for his severity with himself and his gentleness with the weak.\n\nHe was assassinated while leading the prayer. His last concern was the continuity of the ummah. The Prophet had indicated that if there were to be a prophet after him, it would have been Umar — a statement of the height of his rank among the companions.`,
-  facts:[{label:"Title",value:"Al-Faruq"},{label:"Role",value:"Second Caliph"},{label:"Key legacy",value:"Justice + expansion"},{label:"Opened",value:"Jerusalem & more"}],
-  hadith:["If there were to be a prophet after me, it would have been Umar.","The truth is with Umar, or is upon the tongue of Umar."],
-  lessons:["Justice is the hallmark of true authority.","Severity with the self and mercy with the weak go together.","Institutions outlast individuals."]
-},
-{
-  id:3, title:"Uthman ibn Affan", ar:"عثمان بن عفان", glyph:"ذُو النُّورَيْن", titleEn:"Dhun-Nurayn",
-  summary:"Possessor of the Two Lights. Third Caliph. Compiled the official mushaf. Extreme modesty and generosity.",
-  details:`Uthman ibn Affan was known for extreme modesty. The angels were said to be shy of him. He married two daughters of the Prophet ﷺ — hence the title Dhun-Nurayn, Possessor of the Two Lights. He equipped the army of hardship (Tabuk) from his own wealth and purchased the well of Rumah for the Muslims.\n\nAs third Caliph he ordered the standardisation of the Qur’anic text into a single official mushaf, copied and distributed to the major centres of the ummah. This act preserved the unity of the recitation and the text for all later generations. His caliphate ended in fitnah and assassination; he refused to fight the rebels in order to avoid bloodshed among Muslims.\n\nHis legacy is the Book in the form that reached us, and the example of a man who preferred to be killed rather than open the door of killing within the ummah.`,
-  facts:[{label:"Title",value:"Dhun-Nurayn"},{label:"Role",value:"Third Caliph"},{label:"Key act",value:"Official Mushaf"},{label:"Virtue",value:"Modesty + generosity"}],
-  hadith:["Every prophet has a companion in Paradise, and my companion in Paradise is Uthman.","Uthman is shy, and the angels are shy of him."],
-  lessons:["The preservation of the Book is among the greatest services.","Modesty is a form of strength.","Avoiding fitnah can cost a life and still be victory."]
-},
-{
-  id:4, title:"Ali ibn Abi Talib", ar:"علي بن أبي طالب", glyph:"أَبُو تُرَاب", titleEn:"Abu Turab",
-  summary:"Cousin and son-in-law of the Prophet. First child to believe. Fourth Caliph. Gate of the city of knowledge.",
-  details:`Ali ibn Abi Talib was raised in the household of the Prophet ﷺ. He was the first child to believe. He slept in the Prophet’s bed on the night of the Hijrah so that the assassins would find him instead. He married Fatimah and was the father of Hasan and Husayn.\n\nThe Prophet said: “I am the city of knowledge and Ali is its gate.” He was renowned for courage in battle, for depth of knowledge, and for asceticism. As fourth Caliph he faced the most severe internal fitnah of the early period. He was assassinated while entering the mosque for prayer.\n\nHis legacy is knowledge, courage, and the bloodline of the Ahl al-Bayt through Fatimah. The Prophet’s love for him and for his family is established in multiple authentic reports.`,
-  facts:[{label:"Title",value:"Abu Turab"},{label:"Role",value:"Fourth Caliph"},{label:"Key rank",value:"Gate of knowledge"},{label:"Family",value:"Husband of Fatimah"}],
-  hadith:["I am the city of knowledge and Ali is its gate.","Ali is from me and I am from Ali."],
-  lessons:["Knowledge and courage can dwell in one person.","The household of the Prophet is to be loved without excess or neglect.","Fitnah tests even the closest of the companions."]
-},
-{
-  id:5, title:"Hamza ibn Abd al-Muttalib", ar:"حمزة بن عبد المطلب", glyph:"أَسَدُ اللَّه", titleEn:"Asadullah",
-  summary:"Lion of Allah and of His Messenger. Uncle of the Prophet. Martyred at Uhud.",
-  details:`Hamza ibn Abd al-Muttalib was the uncle of the Prophet ﷺ and one of the strongest men of Quraysh. His conversion gave the early Muslims a powerful protector. He was given the title Asadullah — the Lion of Allah — and Asad Rasulillah — the Lion of the Messenger of Allah.\n\nAt Uhud he fought with extraordinary courage and was martyred. Hind bint Utbah had his body mutilated in revenge for her father and brother killed at Badr. The Prophet was deeply grieved. He named Hamza Sayyid ash-Shuhada — the master of the martyrs.\n\nHis name remains among the highest of the martyrs of Islam. The mountain of Uhud is tied to his memory, and the Prophet said that Uhud is a mountain that loves us and that we love.`,
-  facts:[{label:"Title",value:"Asadullah"},{label:"Rank",value:"Master of Martyrs"},{label:"Death",value:"Uhud"},{label:"Relation",value:"Uncle of the Prophet"}],
-  hadith:["The master of the martyrs is Hamza.","Uhud is a mountain that loves us and we love it."],
-  lessons:["Courage in defence of the Messenger is never forgotten.","Martyrdom at the side of the Prophet is a high station.","Revenge mutilation does not diminish the rank of the martyr."]
-},
-{
-  id:6, title:"Bilal ibn Rabah", ar:"بلال بن رباح", glyph:"مُؤَذِّن", titleEn:"Mu’adhdhin",
-  summary:"First mu’adhdhin of Islam. Former slave tortured for his faith. Called the adhan from the Kaaba on the day of the Opening.",
-  details:`Bilal ibn Rabah was an Abyssinian slave in Makkah. When he accepted Islam he was tortured by his master under the burning sun with a heavy stone on his chest. He repeated only “Ahad, Ahad” — One, One. Abu Bakr purchased and freed him.\n\nThe Prophet chose him as the first mu’adhdhin of Islam. His voice called the believers to prayer in Madinah. On the day of the Opening of Makkah, Bilal climbed the Kaaba and gave the adhan over the city that had tortured him. The symbolism was complete: the slave who had been crushed for saying “Ahad” now proclaimed the same truth from the highest point of the Sanctuary.\n\nAfter the death of the Prophet he found it difficult to give the adhan in Madinah. His life is the standing proof that Islam levels the ranks of race and status before Allah.`,
-  facts:[{label:"Title",value:"First Mu’adhdhin"},{label:"Origin",value:"Abyssinian"},{label:"Key moment",value:"Adhan from Kaaba"},{label:"Virtue",value:"Steadfast under torture"}],
-  hadith:["Bilal’s footsteps were heard in Paradise ahead of the Prophet in a dream.","The Prophet said to Bilal: Tell me of the most hopeful act you have done in Islam."],
-  lessons:["Status before Allah is not determined by lineage or wealth.","The voice that was silenced under torture was raised over the Kaaba.","Steadfastness under persecution is itself a form of victory."]
-},
-{
-  id:7, title:"Salman al-Farisi", ar:"سلمان الفارسي", glyph:"الفَارِسِيّ", titleEn:"Al-Farisi",
-  summary:"The seeker who crossed empires. Suggested the trench. The Prophet said: Salman is one of us, the Ahl al-Bayt.",
-  details:`Salman was born in Persia in a Zoroastrian family. He left home seeking the true religion, moving through Christianity in Syria and elsewhere, until he was told of a prophet who would appear in Arabia. He was sold into slavery and ended up in Madinah. When the Prophet arrived, Salman tested him against the signs he had been given, then accepted Islam and was freed.\n\nAt the Battle of the Trench he suggested the defensive strategy used in Persia: digging a trench against cavalry. The idea was adopted and became the key to the defence of Madinah. The Prophet said of him: “Salman is one of us, the Ahl al-Bayt.”\n\nHis life is the archetype of the sincere seeker who crosses every border — of land, religion, and status — until he finds the truth.`,
-  facts:[{label:"Origin",value:"Persia"},{label:"Key counsel",value:"The Trench"},{label:"Rank",value:"Ahl al-Bayt (by statement)"},{label:"Path",value:"Seeker across empires"}],
-  hadith:["Salman is one of us, the Ahl al-Bayt.","The trench was the counsel of Salman."],
-  lessons:["Sincere seeking is rewarded even across long years.","Useful knowledge can come from outside the familiar culture.","The Prophet’s household is defined by closeness of faith as well as blood."]
-},
-{
-  id:8, title:"Khalid ibn al-Walid", ar:"خالد بن الوليد", glyph:"سَيْفُ اللَّه", titleEn:"Sayfullah",
-  summary:"The Sword of Allah. Never defeated after accepting Islam. Instrumental at Mu’tah, the Opening, and the Ridda.",
-  details:`Khalid ibn al-Walid was one of the finest military minds of Quraysh. At Uhud, while still a disbeliever, he led the cavalry manoeuvre that turned the battle against the Muslims. After accepting Islam he never lost a battle.\n\nThe Prophet named him Sayfullah — the Sword of Allah. He commanded at Mu’tah after the three appointed leaders were martyred, extracting the army with skill. He took part in the Opening of Makkah and later led the campaigns that broke the power of the apostate tribes and the early Byzantine fronts in Syria.\n\nUmar later removed him from overall command to ensure that the people would not attribute victory to Khalid rather than to Allah. Khalid accepted the decision. His life is the example of a brilliant commander who placed the ummah above his own position.`,
-  facts:[{label:"Title",value:"Sayfullah"},{label:"Record",value:"Undefeated after Islam"},{label:"Key battles",value:"Mu’tah, Opening, Ridda"},{label:"Virtue",value:"Skill + obedience"}],
-  hadith:["Khalid is one of the swords of Allah."],
-  lessons:["Military genius is a trust to be used for Allah.","Obedience to the leader of the ummah outweighs personal command.","A past of opposing the truth does not prevent a future of serving it."]
-},
-{
-  id:9, title:"Khadijah bint Khuwaylid", ar:"خديجة بنت خويلد", glyph:"أُمُّ المُؤْمِنِين", titleEn:"Umm al-Mu’minin",
-  summary:"First to believe. The Prophet’s first wife and strongest supporter. When revelation came, she covered him and believed.",
-  details:`Khadijah bint Khuwaylid was a respected merchant of Quraysh. She hired Muhammad ﷺ for a trading journey, then proposed marriage. She was the first person to believe in him when the revelation began. When he returned from the cave of Hira trembling, she covered him, reassured him, and took him to her cousin Waraqah ibn Nawfal.\n\nShe spent her wealth in support of the mission. She bore all of the Prophet’s children except Ibrahim. She died in the Year of Sorrow, and the Prophet grieved her deeply. Jibril conveyed Allah’s greeting of peace to her and gave her glad tidings of a house in Paradise of pearls, with no noise and no toil.\n\nShe is the mother of the believers in the fullest sense: the first to believe, the first to support, and the mother of Fatimah through whom the Ahl al-Bayt continued.`,
-  facts:[{label:"Title",value:"Umm al-Mu’minin"},{label:"Rank",value:"First to believe"},{label:"Key act",value:"Supported the revelation"},{label:"Glad tidings",value:"House in Paradise"}],
-  hadith:["Jibril said: Convey to Khadijah peace from her Lord, and give her glad tidings of a house in Paradise of pearls."],
-  lessons:["The first support of a prophet can be a spouse who believes without hesitation.","Wealth used for the mission is remembered in the highest company.","The Year of Sorrow marks the weight of her loss."]
-},
-{
-  id:10, title:"Fatimah bint Muhammad", ar:"فاطمة بنت محمد", glyph:"سَيِّدَةُ نِسَاء", titleEn:"Sayyidat Nisa al-Alamin",
-  summary:"Daughter of the Prophet, wife of Ali, mother of Hasan and Husayn. Part of the Prophet.",
-  details:`Fatimah was the youngest daughter of the Prophet ﷺ and Khadijah. She was married to Ali ibn Abi Talib and became the mother of Hasan and Husayn. The Prophet said that she is part of him; what hurts her hurts him, and what pleases her pleases him.\n\nShe is called Sayyidat Nisa al-Alamin — the mistress of the women of the worlds — and Sayyidat Nisa Ahl al-Jannah — the mistress of the women of the people of Paradise. After the death of the Prophet she grieved intensely and lived only a short time beyond him.\n\nThrough her the lineage of the Prophet continued. The love of Fatimah and her family is part of the love of the Messenger. Her station is among the highest of the women of this ummah and of the previous communities.`,
-  facts:[{label:"Title",value:"Sayyidat Nisa"},{label:"Parents",value:"The Prophet & Khadijah"},{label:"Husband",value:"Ali"},{label:"Sons",value:"Hasan & Husayn"}],
-  hadith:["Fatimah is part of me. What hurts her hurts me.","Fatimah is the mistress of the women of the people of Paradise."],
-  lessons:["The daughter of the Prophet is to be honoured without excess or neglect.","Her pleasure is tied to the pleasure of the Messenger.","The Ahl al-Bayt continue through her."]
-},
-{
-  id:11, title:"Aisha bint Abi Bakr", ar:"عائشة بنت أبي بكر", glyph:"أُمُّ المُؤْمِنِين", titleEn:"Umm al-Mu’minin",
-  summary:"Mother of the Believers. The most knowledgeable of the women of the ummah. Many rulings of the Sunnah preserved through her.",
-  details:`Aisha bint Abi Bakr was the daughter of Abu Bakr and one of the wives of the Prophet ﷺ. She was known for sharp intelligence, strong memory, and deep knowledge of the religion. A large portion of the Hadith literature — especially on matters of worship, family life, and the personal practice of the Prophet — was transmitted through her.\n\nThe Prophet received revelation in her presence. She was the one in whose room he was when he chose the company of the Highest Friend at the end of his life. After his death she became a major reference for the companions and the following generation on questions of fiqh and the Sunnah.\n\nHer life also included the episode of the Ifk (the false accusation), in which Allah revealed her innocence in the Qur’an. She is among the most important transmitters of knowledge in the history of Islam.`,
-  facts:[{label:"Title",value:"Umm al-Mu’minin"},{label:"Father",value:"Abu Bakr"},{label:"Role",value:"Major Hadith source"},{label:"Key event",value:"Ifk — innocence revealed"}],
-  hadith:["Take half of your religion from this red-haired one (Aisha).","The Prophet died in Aisha’s room, on her day, against her chest."],
-  lessons:["Knowledge of the Sunnah was preserved through the household of the Prophet.","A woman’s scholarship can shape the understanding of an entire ummah.","Allah defended her honour in the Qur’an itself."]
-},
-{
-  id:12, title:"Abu Ubaydah ibn al-Jarrah", ar:"أبو عبيدة بن الجراح", glyph:"أَمِينُ الأُمَّة", titleEn:"Amin al-Ummah",
-  summary:"The Trustworthy of the Ummah. One of the ten promised Paradise. Led the armies into Syria.",
-  details:`Abu Ubaydah ibn al-Jarrah was among the earliest converts and one of the ten companions promised Paradise. The Prophet named him Amin al-Ummah — the Trustworthy of the Ummah. He was known for humility, reliability, and quiet strength.\n\nHe played a major role in the campaigns in Syria. When the plague of Amwas struck, he was among those who remained with the troops. He died in the plague. Umar had wished to appoint him as his successor if the opportunity had arisen; the trust placed in him by the Prophet was shared by the leading companions.\n\nHis title remains one of the highest statements of character in the early ummah: the man the Messenger of Allah named the Trustworthy of the entire community.`,
-  facts:[{label:"Title",value:"Amin al-Ummah"},{label:"Rank",value:"One of the ten"},{label:"Theatre",value:"Syria"},{label:"Virtue",value:"Trust + humility"}],
-  hadith:["Every ummah has a trustworthy one, and the trustworthy one of this ummah is Abu Ubaydah ibn al-Jarrah."],
-  lessons:["Trustworthiness is a rank the Prophet himself bestows.","Leadership in the field can be quiet and still decisive.","The ten promised Paradise include those known for character as much as for battle."]
-}
-];
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-function renderSeals(){
-  document.getElementById('seals-grid').innerHTML = COMPANIONS.map(c => `
-    <button class="seal" onclick="openCompanion(${c.id})">
-      <div class="seal-face" style="background:radial-gradient(circle at 50% 35%,rgba(201,162,39,.25),transparent 55%),linear-gradient(165deg,#1A160F,#2C2416)">
-        <span class="seal-glyph">${c.glyph}</span>
-      </div>
-      <div class="p-5">
-        <div class="text-[10px] uppercase tracking-wider text-gold font-semibold mb-1">${c.titleEn}</div>
-        <h3 class="font-semibold text-[15px] mb-0.5">${c.title}</h3>
-        <p class="font-amiri text-sm text-ink/55 mb-2">${c.ar}</p>
-        <p class="text-sm text-ink/70 leading-relaxed line-clamp-3">${c.summary}</p>
-        <div class="mt-3 text-[11px] text-gold font-medium">Open article →</div>
-      </div>
-    </button>
-  `).join('');
-}
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22744 0%,transparent 60%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-5xl text-gold/80">أسد</span></div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Asadullah</div>
+<h2 class="font-semibold text-lg text-ink">Hamza ibn Abd al-Muttalib</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">حمزة بن عبد المطلب</p>
+<p class="text-sm text-ink/65 leading-relaxed">Lion of Allah and of His Messenger. Uncle of the Prophet. Early convert. Martyred at Uhud while defending the Messenger.</p>
+</div>
+</article>
 
-function openCompanion(id){
-  const c = COMPANIONS.find(x => x.id === id); if(!c) return;
-  document.getElementById('modal-title').textContent = c.title;
-  const factsHtml = c.facts && c.facts.length ? `<div class="info-grid">${c.facts.map(f=>`<div class="info-card"><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`).join('')}</div>` : '';
-  const hadithHtml = c.hadith && c.hadith.length ? `<div class="mt-6"><h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2">Hadith</h3><ul class="space-y-1.5">${c.hadith.map(h=>`<li class="text-sm text-ink/75 pl-3 border-l-2 border-gold/40">${h}</li>`).join('')}</ul></div>` : '';
-  const impactHtml = c.lessons && c.lessons.length ? `<div class="impact-box"><h4>Impact / Ibrah</h4><ul class="space-y-1.5">${c.lessons.map(l=>`<li class="text-sm opacity-90 flex gap-2"><span class="text-gold">✦</span><span>${l}</span></li>`).join('')}</ul></div>` : '';
-  document.getElementById('modal-body').innerHTML = `
-    <div class="font-amiri text-gold text-2xl mb-1">${c.ar}</div>
-    <div class="text-xs uppercase tracking-wider text-ink/45 mb-3">${c.titleEn}</div>
-    <p class="text-ink/70 leading-relaxed mb-4">${c.summary}</p>
-    ${factsHtml}
-    <div class="leading-relaxed whitespace-pre-line text-[15px] text-ink/85">${c.details}</div>
-    ${hadithHtml}
-    ${impactHtml}
-    <div class="mt-8 pt-4 border-t border-ink/8 text-xs text-ink/40 flex justify-between">
-      <span>Companion seal · NOOR</span>
-      <button onclick="closeModal()" class="text-gold font-medium hover:underline">Close</button>
-    </div>`;
-  document.getElementById('modal-backdrop').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">أَبُو بَكْرٍ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">As-Siddiq</div>
+<h2 class="font-semibold text-lg text-ink">Abu Bakr as-Siddiq</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">أبو بكر الصديق</p>
+<p class="text-sm text-ink/65 leading-relaxed">The first adult male to believe. Companion of the Cave. First Caliph. His truthfulness never wavered.</p>
+</div>
+</article>
 
-function closeModal(){document.getElementById('modal-backdrop').classList.remove('open');document.body.style.overflow='';}
-document.getElementById('modal-close').onclick = closeModal;
-document.getElementById('modal-backdrop').onclick = e => { if(e.target === e.currentTarget) closeModal(); };
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
-renderSeals();
-</script>
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">عُمَرُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Al-Faruq</div>
+<h2 class="font-semibold text-lg text-ink">Umar ibn al-Khattab</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">عمر بن الخطاب</p>
+<p class="text-sm text-ink/65 leading-relaxed">The one who distinguished truth from falsehood. Second Caliph. Justice was his hallmark. The lands of the empires began to open under him.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">عُثْمَانُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Dhun-Nurayn</div>
+<h2 class="font-semibold text-lg text-ink">Uthman ibn Affan</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">عثمان بن عفان</p>
+<p class="text-sm text-ink/65 leading-relaxed">Possessor of the Two Lights. Third Caliph. Compiled the Qur’an into a single official mushaf. Known for extreme modesty and generosity.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">عَلِيٌّ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Abu Turab</div>
+<h2 class="font-semibold text-lg text-ink">Ali ibn Abi Talib</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">علي بن أبي طالب</p>
+<p class="text-sm text-ink/65 leading-relaxed">Cousin and son-in-law of the Prophet. First child to believe. Fourth Caliph. Gate of the city of knowledge. Courage and knowledge combined.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">بِلَالٌ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Mu’adhdhin</div>
+<h2 class="font-semibold text-lg text-ink">Bilal ibn Rabah</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">بلال بن رباح</p>
+<p class="text-sm text-ink/65 leading-relaxed">First mu’adhdhin of Islam. Former slave tortured for his faith. His voice called the adhan from the Kaaba on the day of the Conquest of Makkah.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">سَلْمَانُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Al-Farisi</div>
+<h2 class="font-semibold text-lg text-ink">Salman al-Farisi</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">سلمان الفارسي</p>
+<p class="text-sm text-ink/65 leading-relaxed">The seeker who crossed empires looking for the true prophet. Suggested the trench at Khandaq. The Prophet said of him: “Salman is one of us, the Ahl al-Bayt.”</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-3xl text-gold">خَالِدٌ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Sayfullah</div>
+<h2 class="font-semibold text-lg text-ink">Khalid ibn al-Walid</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">خالد بن الوليد</p>
+<p class="text-sm text-ink/65 leading-relaxed">The Sword of Allah. Never defeated in battle after accepting Islam. Instrumental at Mu’tah, the Conquest, and the wars of apostasy.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-2xl text-gold">خَدِيجَةُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
+<h2 class="font-semibold text-lg text-ink">Khadijah bint Khuwaylid</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">خديجة بنت خويلد</p>
+<p class="text-sm text-ink/65 leading-relaxed">First to believe. The Prophet’s first wife and strongest supporter. Mother of Fatimah. When the first revelation came, she was the one who covered him and believed without hesitation.</p>
+</div>
+</article>
+
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-2xl text-gold">فَاطِمَةُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Sayyidat Nisa al-Alamin</div>
+<h2 class="font-semibold text-lg text-ink">Fatimah bint Muhammad</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">فاطمة بنت محمد</p>
+<p class="text-sm text-ink/65 leading-relaxed">The daughter of the Prophet, wife of Ali, mother of Hasan and Husayn. Part of the Prophet, the one whose pleasure is the pleasure of Allah.</p>
+</div>
+</article>
+
+<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
+<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
+<span class="font-amiri text-2xl text-gold">عَائِشَةُ</span>
+</div>
+<div class="p-5">
+<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
+<h2 class="font-semibold text-lg text-ink">Aisha bint Abi Bakr</h2>
+<p class="font-amiri text-ink/70 text-sm mb-2">عائشة بنت أبي بكر</p>
+<p class="text-sm text-ink/65 leading-relaxed">Mother of the Believers. The most knowledgeable of the women of the ummah. Many of the rulings and details of the Sunnah were preserved through her.</p>
+</div>
+</article>
+
+</div>
+
+<p class="text-center text-xs text-ink/40 mt-14 leading-relaxed max-w-md mx-auto">
+More seals will be added as Book 5 expands. Prophets remain represented only by light, seals, and calligraphy — never faces.
+</p>
+</section>
 </body>
 </html>

@@ -3,18 +3,22 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="NOOR — Codex of Light. From Kun Fayakun to Jannah."/>
+<meta name="description" content="NOOR — Codex of Light. From Kun Fayakun to Jannah. Long-form Islamic chronological library with tilawah, seals, and manuscript illustrations."/>
 <meta name="theme-color" content="#2C2416"/>
-<title>NOOR — Codex of Light</title>
+<title>NOOR — نُور | Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="nodes.js"></script>
-<script>tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227',sage:'#8BA888',deep:'#1A160F'},fontFamily:{amiri:['Amiri','serif'],inter:['Inter','system-ui','sans-serif']}}}}</script>
+<script>
+tailwind.config={theme:{extend:{colors:{parchment:'#FFFEF7',ink:'#2C2416',gold:'#C9A227',sage:'#8BA888',deep:'#1A160F'},fontFamily:{amiri:['Amiri','serif'],inter:['Inter','system-ui','sans-serif']}}}}
+</script>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227}
+html{scroll-behavior:smooth}
 body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
 .font-amiri{font-family:Amiri,serif}
-.tile{position:relative;overflow:hidden;border-radius:1.25rem;min-height:250px;isolation:isolate;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.tile{position:relative;overflow:hidden;border-radius:1.25rem;min-height:280px;isolation:isolate;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
 .tile:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(44,36,22,.15)}
 .tile-bg{position:absolute;inset:-12%;background-size:cover;background-position:center;will-change:transform;z-index:0}
 .tile-overlay{position:absolute;inset:0;background:linear-gradient(165deg,rgba(26,22,15,.8) 0%,rgba(44,36,22,.5) 50%,rgba(26,22,15,.88) 100%);z-index:1}
@@ -29,30 +33,61 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .modal-backdrop.open{opacity:1;pointer-events:auto}
 .modal{background:#FFFEF7;border-radius:1.5rem;max-width:46rem;width:100%;margin-bottom:2.5rem;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.4);transform:translateY(18px) scale(.98);transition:transform .35s cubic-bezier(.22,1,.36,1);position:relative}
 .modal-backdrop.open .modal{transform:translateY(0) scale(1)}
-.modal-hero{height:220px;position:relative;overflow:hidden;background-size:cover;background-position:center;background-color:#1A160F}
+.modal-hero{height:220px;position:relative;overflow:hidden;background-size:cover;background-position:center}
 .modal-body{padding:1.6rem 1.6rem 2.2rem}
-.data-chip{font-size:.62rem;font-weight:600;padding:.15rem .45rem;border-radius:999px;background:rgba(201,162,39,.18);border:1px solid rgba(201,162,39,.3);color:#f0d878;display:inline-block}
-.data-chip.metric{background:rgba(201,162,39,.2);border:1px solid rgba(201,162,39,.35);color:#FFFEF7;font-weight:600}
-.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;border-radius:9999px;font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.data-chip{font-size:.62rem;font-weight:600;padding:.15rem .45rem;border-radius:999px;background:rgba(201,162,39,.18);border:1px solid rgba(201,162,39,.3);color:#f0d878;display:inline-block}.data-chip.metric{background:rgba(255,254,247,.12);border-color:rgba(255,254,247,.22);color:#FFFEF7}.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;border-radius:9999px;font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 .chip-bidaya{background:#8BA88822;color:#5a7a58}.chip-qisas{background:#C9A22722;color:#8a7020}.chip-seerah{background:#3b82f622;color:#1e40af}.chip-nihaya{background:#7c3aed22;color:#5b21b6}
 #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#C9A227,#8BA888);z-index:60;width:0%}
 .fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}.fade-up.visible{opacity:1;transform:translateY(0)}
 .quran-card{border:1px solid rgba(201,162,39,.35);border-radius:.9rem;padding:.9rem 1.1rem;background:linear-gradient(135deg,#FFFEF7,#FBF6E8)}
-.audio-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:9999px;background:#2C2416;color:#FFFEF7;font-size:.68rem;font-weight:600;cursor:pointer;border:none}
+.audio-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:9999px;background:#2C2416;color:#FFFEF7;font-size:.68rem;font-weight:600;transition:all .2s;cursor:pointer;border:none}
 .audio-btn:hover,.audio-btn.playing{background:#C9A227;color:#1A160F}
+.facts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.65rem}
+.fact-item{background:#F7F3E8;border-radius:.7rem;padding:.65rem;text-align:center}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.entity-link{color:#C9A227;font-weight:600;cursor:pointer;border-bottom:1px dashed rgba(201,162,39,.45);text-decoration:none;transition:color .15s,border-color .15s}
+.entity-link:hover{color:#8a7020;border-bottom-color:#C9A227}
+.drop-cap::first-letter{float:left;font-family:Amiri,serif;font-size:2.9rem;line-height:.82;padding-right:.35rem;color:#C9A227;font-weight:700}
+.modal-prose{font-size:15.5px;line-height:1.75;color:rgba(44,36,22,.88)}
+.modal-prose p{margin-bottom:1em}
+.modal{max-width:40rem}
+@media(min-width:768px){.modal{max-width:48rem}}
+
+/* —— Visual data mini-boxes (tiles + modal) —— */
+.tile-data-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tile-mini{
+  background:rgba(255,254,247,.12);
+  border:1px solid rgba(201,162,39,.25);
+  border-radius:6px;
+  padding:3px 7px;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.tile-mini .lbl{font-size:8px;text-transform:uppercase;letter-spacing:.04em;color:rgba(255,254,247,.55);line-height:1.2}
+.tile-mini .val{font-size:11px;font-weight:600;color:rgba(255,254,247,.92);line-height:1.25}
 .facts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 @media(min-width:480px){.facts-grid{grid-template-columns:repeat(3,1fr)}}
-.fact-item{background:linear-gradient(145deg,rgba(201,162,39,.06),rgba(30,58,138,.04));border:1px solid rgba(201,162,39,.18);border-radius:10px;padding:10px 12px}
-.tile-data-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-.tile-mini{background:rgba(255,254,247,.12);border:1px solid rgba(201,162,39,.25);border-radius:6px;padding:3px 7px}
-.tile-mini .lbl{font-size:8px;text-transform:uppercase;color:rgba(255,254,247,.55)}
-.tile-mini .val{font-size:11px;font-weight:600;color:rgba(255,254,247,.92)}
-.drop-cap::first-letter{float:left;font-family:Amiri,serif;font-size:2.9rem;line-height:.82;padding-right:.35rem;color:#C9A227;font-weight:700}
-.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fact-item{
+  background:linear-gradient(145deg,rgba(201,162,39,.06),rgba(30,58,138,.04));
+  border:1px solid rgba(201,162,39,.18);
+  border-radius:10px;
+  padding:10px 12px;
+  transition:border-color .2s, transform .2s;
+}
+.fact-item:hover{border-color:rgba(201,162,39,.4);transform:translateY(-1px)}
+.data-chip.metric{
+  background:rgba(201,162,39,.2);
+  border:1px solid rgba(201,162,39,.35);
+  color:#FFFEF7;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+
 </style>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
+
 <header class="sticky top-0 z-40 bg-parchment/92 backdrop-blur-md border-b border-ink/6">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
 <a href="#" class="flex items-center gap-2.5">
@@ -62,10 +97,15 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-ink/65">
 <a href="#books" class="hover:text-ink">Books</a>
 <a href="#timeline" class="hover:text-ink">Path</a>
-<a href="companions.html" class="hover:text-ink">Companions</a>
-<select id="lang-switch" class="text-xs bg-transparent border border-ink/15 rounded-full px-2 py-1" onchange="NOOR_I18N.setLang(this.value)"><option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option></select>
+<a href="characters.html" class="hover:text-ink">Characters</a>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-2" onchange="NOOR_I18N.setLang(this.value)">
+<option value="en">EN</option>
+<option value="ar">AR</option>
+<option value="fr">FR</option>
+</select>
+<a href="#about" class="hover:text-ink">About</a>
 </nav>
-<button id="search-toggle" class="p-2 rounded-lg hover:bg-ink/5" aria-label="Search" type="button">
+<button id="search-toggle" class="p-2 rounded-lg hover:bg-ink/5" aria-label="Search">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
 </button>
 </div>
@@ -76,25 +116,34 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 </div>
 </div>
 </header>
+
 <section class="relative overflow-hidden">
 <div class="absolute inset-0 pattern-nihaya"></div>
-<div class="absolute inset-0 bg-gradient-to-b from-transparent to-parchment"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-parchment"></div>
 <div class="relative max-w-4xl mx-auto px-4 pt-14 pb-16 text-center">
-<p class="font-amiri text-gold text-2xl sm:text-3xl mb-3">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="font-amiri text-gold text-2xl sm:text-3xl mb-3 tracking-wide">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="text-3xl sm:text-5xl font-bold text-parchment leading-tight mb-4">Codex of Light</h1>
-<p class="text-parchment/80 text-sm sm:text-base max-w-2xl mx-auto mb-7">A living chronological library from the Throne over the water to the radiant faces looking at their Lord.</p>
-<a href="#timeline" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold text-ink font-semibold text-sm">Enter the Path</a>
+<p class="text-parchment/80 text-sm sm:text-base max-w-2xl mx-auto mb-7 leading-relaxed">A living chronological library from the Throne over the water to the radiant faces looking at their Lord. Long-form articles, companion seals, Quran with tilawah, and a continuous Path of growing toward 86 nodes.</p>
+<div class="flex flex-wrap justify-center gap-3">
+<a href="#timeline" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold text-ink font-semibold text-sm hover:bg-gold/90 shadow-lg">Enter the Path</a>
+<a href="characters.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-parchment/10 text-parchment border border-parchment/25 text-sm hover:bg-parchment/20">Characters</a>
+</div>
 </div>
 </section>
+
 <section id="books" class="max-w-6xl mx-auto px-4 py-12">
-<div class="text-center mb-8"><h2 class="text-2xl font-bold text-ink mb-1">Seven Books</h2></div>
+<div class="text-center mb-8">
+<h2 class="text-2xl font-bold text-ink mb-1">Seven Books</h2>
+<p class="text-ink/55 text-sm">Structure of the Codex. Current Path covers Books 1, 2, 4 and 7.</p>
+</div>
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5" id="book-cards"></div>
 </section>
-<section id="timeline" class="max-w-6xl mx-auto px-4 pb-16">
+
+<section id="timeline" class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-7">
 <div>
-<h2 class="text-2xl font-bold text-ink">The Path</h2>
-<p class="text-ink/55 text-sm" id="path-meta">Loading…</p>
+<h2 class="text-2xl font-bold text-ink mb-0.5">The Path</h2>
+<p class="text-ink/55 text-sm">growing toward 86 nodes • Kun → Jannah • Click any tile for the Codex article</p>
 </div>
 <div class="flex flex-wrap gap-1.5" id="period-filters">
 <button data-period="all" class="filter-btn active px-2.5 py-1 rounded-full text-xs font-semibold bg-ink text-parchment">All</button>
@@ -104,44 +153,430 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <button data-period="nihaya" class="filter-btn px-2.5 py-1 rounded-full text-xs font-semibold bg-ink/5 text-ink/70">Nihaya</button>
 </div>
 </div>
-<div id="timeline-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4.5"></div>
+<div id="timeline-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"></div>
 </section>
+
 <section id="about" class="bg-ink text-parchment py-12">
 <div class="max-w-3xl mx-auto px-4 text-center">
-<p class="font-amiri text-xl text-gold mb-2">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
-<p class="text-parchment/75 text-sm mb-4">Faces that Day will be radiant, looking at their Lord. — 75:22-23</p>
+<p class="font-amiri text-xl sm:text-2xl text-gold mb-2">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
+<p class="text-parchment/75 text-sm leading-relaxed mb-4">“Faces that Day will be radiant, looking at their Lord.” — 75:22-23</p>
+<p class="text-xs text-parchment/45 leading-relaxed">NOOR is an educational and contemplative Codex. Content from the Qur’an, authentic Hadith, and classical sources. Prophets are represented by light and seals only — never faces. Not a source of legal rulings.</p>
 </div>
 </section>
+
 <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true">
 <div class="modal" id="modal">
 <div class="modal-hero" id="modal-hero"></div>
 <div class="modal-body" id="modal-body"></div>
-<button id="modal-close" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/35 text-white flex items-center justify-center z-10" aria-label="Close" type="button">×</button>
+<button id="modal-close" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/35 text-white flex items-center justify-center hover:bg-black/55 z-10" aria-label="Close">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+</button>
 </div>
 </div>
+
 <script>
-const NOOR_I18N={lang:localStorage.getItem('noor_lang')||'en',ui:{en:{}},rtl:['ar','ur','fa'],t(k){return k},setLang(c){this.lang=c;localStorage.setItem('noor_lang',c);document.documentElement.lang=c;document.documentElement.dir=this.rtl.includes(c)?'rtl':'ltr';if(typeof renderTimeline==='function')renderTimeline('all')}};
-const AYAH_MAP={"3:123":"003123","8:9":"008009","17:1":"017001","48:1":"048001","21:69":"021069","110:1":"110001","33:9":"033009","3:152":"003152","8:17":"008017","48:18":"048018","105:1-5":"105001","75:22-23":"075022"};
-let currentAudio=null;
-function playAyah(ref){let code=AYAH_MAP[ref];if(!code){const m=String(ref).match(/^(\d{1,3}):(\d{1,3})/);if(m)code=m[1].padStart(3,'0')+m[2].padStart(3,'0');}if(!code)return;if(currentAudio){currentAudio.pause();currentAudio=null;}currentAudio=new Audio('https://everyayah.com/data/Alafasy_128kbps/'+code+'.mp3');currentAudio.play().catch(function(){});}
-const PERIODS={bidaya:{name:"Al-Bidaya",ar:"البداية"},qisas:{name:"Qisas",ar:"قصص الأنبياء"},seerah:{name:"Seerah",ar:"السيرة"},nihaya:{name:"Nihaya",ar:"النهاية"}};
-const BOOKS=[{id:1,name:"Al-Bidaya",ar:"البداية",desc:"Creation to Flood",status:"active"},{id:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",desc:"Prophets",status:"active"},{id:4,name:"An-Noor",ar:"النور",desc:"Seerah",status:"active"},{id:7,name:"Al-Nihaya",ar:"النهاية",desc:"End of Times",status:"active"}];
-function renderBooks(){var el=document.getElementById("book-cards");if(!el)return;el.innerHTML=BOOKS.map(function(b){return '<div class="p-4 rounded-xl bg-white border border-ink/8"><div class="font-amiri text-lg">'+b.ar+'</div><div class="font-semibold text-sm">'+b.name+'</div><div class="text-xs text-ink/50">'+b.desc+'</div></div>'}).join("")}
-function renderTimeline(f){f=f||"all";var g=document.getElementById("timeline-grid");if(!g)return;if(typeof NODES==="undefined"||!NODES||!NODES.length){g.innerHTML="<p class='text-ink/50 p-8 text-center'>Nodes are loading… If this stays empty, refresh once or check that nodes.js is deployed.</p>";return;}var list=f==="all"?NODES:NODES.filter(function(n){return n.period===f});var meta=document.getElementById('path-meta');if(meta)meta.textContent=NODES.length+' nodes on Path • growing toward 58 • Kun → Jannah';g.innerHTML=list.map(function(n){var imgStyle=n.image?("background-image:url('"+n.image+"');background-size:cover;background-position:center;"):'';var facts='';if(n.facts&&n.facts.length){facts='<div class="tile-data-row">'+n.facts.slice(0,3).map(function(f){return '<div class="tile-mini"><div class="lbl">'+f.label+'</div><div class="val">'+f.value+'</div></div>'}).join('')+'</div>';}return '<article class="tile fade-up cursor-pointer" data-id="'+n.id+'" role="button" tabindex="0"><div class="tile-bg '+(n.pattern||'pattern-1')+'" style="'+imgStyle+'"></div><div class="tile-overlay"></div><div class="tile-content"><span class="chip chip-'+(n.period||'')+'">'+(PERIODS[n.period]?PERIODS[n.period].name:(n.period||''))+'</span><h3 class="font-semibold text-[15px] mt-1">'+n.titleEn+'</h3><p class="font-amiri text-sm opacity-90">'+(n.titleAr||'')+'</p><p class="text-xs opacity-70 line-clamp-2">'+(n.summary||'')+'</p>'+facts+'</div></article>'}).join('');document.querySelectorAll('.fade-up').forEach(function(el){el.classList.add('visible')});document.querySelectorAll('.tile').forEach(function(t){t.onclick=function(){openModal(+t.dataset.id)};t.onkeydown=function(e){if(e.key==='Enter'||e.key===' ')openModal(+t.dataset.id)}})}
-function openModal(id){if(typeof NODES==="undefined")return;var n=NODES.find(function(x){return x.id===id});if(!n)return;var hero=document.getElementById('modal-hero');var body=document.getElementById('modal-body');hero.className='modal-hero';if(n.image){hero.style.backgroundImage="url('"+n.image+"')"}else{hero.style.backgroundImage='';hero.className='modal-hero '+(n.pattern||'pattern-1')}hero.innerHTML='<div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent"></div><div class="absolute bottom-0 p-4 text-parchment"><h2 class="text-xl font-bold">'+n.titleEn+'</h2><p class="font-amiri">'+(n.titleAr||'')+'</p></div>';var q=(n.quran||[]).map(function(q){return '<div class="quran-card mb-2"><div class="flex justify-between items-center"><span class="text-xs font-bold text-gold">'+q.ref+'</span><button type="button" class="audio-btn" onclick="playAyah(\''+q.ref+'\')">Tilawah</button></div>'+(q.ar?'<p class="font-amiri text-right mt-1" dir="rtl">'+q.ar+'</p>':'')+(q.en?'<p class="text-sm text-ink/70 mt-1">'+q.en+'</p>':'')+'</div>'}).join('');var facts=(n.facts||[]).map(function(f){return '<div class="fact-item"><div class="text-[10px] text-ink/40">'+f.label+'</div><div class="text-sm font-semibold">'+f.value+'</div></div>'}).join('');body.innerHTML='<p class="font-amiri text-gold text-sm mb-3">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="drop-cap text-ink/85 leading-relaxed whitespace-pre-line">'+(n.details||n.summary||'')+'</div>'+(q?'<div class="mt-6"><h3 class="text-xs uppercase text-ink/40 mb-2">Qur\'an</h3>'+q+'</div>':'')+(facts?'<div class="mt-6"><h3 class="text-xs uppercase text-ink/40 mb-2">Facts</h3><div class="facts-grid">'+facts+'</div></div>':'')+'<button type="button" onclick="closeModal()" class="mt-6 text-gold text-sm">Close</button>';document.getElementById('modal-backdrop').classList.add('open');document.body.style.overflow='hidden'}
-function closeModal(){document.getElementById('modal-backdrop').classList.remove('open');document.body.style.overflow='';if(currentAudio){currentAudio.pause();currentAudio=null}}
-function init(){
-renderBooks();renderTimeline();
-var pf=document.getElementById('period-filters');if(pf)pf.onclick=function(e){var btn=e.target.closest('.filter-btn');if(!btn)return;document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active','bg-ink','text-parchment');b.classList.add('bg-ink/5','text-ink/70')});btn.classList.add('active','bg-ink','text-parchment');btn.classList.remove('bg-ink/5','text-ink/70');renderTimeline(btn.dataset.period)};
-var mc=document.getElementById('modal-close');if(mc)mc.onclick=closeModal;
-var mb=document.getElementById('modal-backdrop');if(mb)mb.onclick=function(e){if(e.target===e.currentTarget)closeModal()};
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
-var st=document.getElementById('search-toggle');var sb=document.getElementById('search-bar');var si=document.getElementById('search-input');var sr=document.getElementById('search-results');
-if(st&&sb)st.onclick=function(){sb.classList.toggle('hidden');if(!sb.classList.contains('hidden')&&si)si.focus()};
-if(si&&sr)si.oninput=function(e){var q=e.target.value.trim().toLowerCase();if(q.length<2||typeof NODES==='undefined'){sr.classList.add('hidden');return}var hits=NODES.filter(function(n){return (n.titleEn||'').toLowerCase().indexOf(q)>=0||(n.titleAr||'').indexOf(q)>=0||(n.summary||'').toLowerCase().indexOf(q)>=0}).slice(0,8);sr.classList.remove('hidden');sr.innerHTML=hits.length?hits.map(function(n){return '<button type="button" class="w-full text-left px-3 py-2 rounded-lg hover:bg-ink/5 flex gap-2" data-id="'+n.id+'"><span class="text-xs font-mono text-ink/40">#'+n.id+'</span><span class="font-medium text-sm">'+n.titleEn+'</span></button>'}).join(''):'<div class="px-3 py-2 text-sm text-ink/50">No matches</div>';sr.querySelectorAll('button').forEach(function(b){b.onclick=function(){openModal(+b.dataset.id);sr.classList.add('hidden');si.value=''}})};
-window.addEventListener('scroll',function(){var h=document.documentElement;var pct=(h.scrollTop/(h.scrollHeight-h.clientHeight||1))*100;var p=document.getElementById('progress');if(p)p.style.width=pct+'%'},{passive:true});
+/* ========== NOOR i18n FOUNDATION ==========
+   Goal: maximum languages. Content is data. UI uses t().
+   Phase A: English source + switcher shell + RTL-ready.
+   Later: load /i18n/{lang}.json and re-render.
+*/
+const NOOR_I18N = {
+  lang: localStorage.getItem('noor_lang') || 'en',
+  // UI dictionary (English source of truth). Add keys here as UI grows.
+  ui: {
+    en: {
+      'nav.path': 'The Path',
+      'nav.bidaya': 'Al-Bidaya',
+      'nav.qisas': 'Qisas',
+      'nav.seerah': 'Seerah',
+      'nav.nihaya': 'Nihaya',
+      'nav.companions': 'Characters',
+      'hero.subtitle': 'A chronological library of light — from the Throne over the water to the radiant faces looking at their Lord.',
+      'hero.cta': 'Enter the Path',
+      'path.title': 'The Path',
+      'path.meta': 'nodes • Kun → Jannah • Tap any tile',
+      'filter.all': 'All',
+      'filter.bidaya': 'Al-Bidaya',
+      'filter.qisas': 'Qisas',
+      'filter.seerah': 'Seerah',
+      'filter.nihaya': 'Nihaya',
+      'modal.close': 'Close',
+      'modal.hadith': 'Hadith',
+      'modal.impact': 'Impact / Ibrah',
+      'modal.play': 'Play Afasy',
+      'footer.note': 'Educational Codex. Qur’an • authentic Hadith • classical sources. Prophets represented by light and seals only.',
+      'lang.label': 'Language'
+    }
+    // ar, fr, ... added later as full JSON files or inline objects
+  },
+  rtl: ['ar', 'ur', 'fa', 'he', 'ps'],
+  t(key) {
+    const pack = this.ui[this.lang] || this.ui.en;
+    return pack[key] ?? this.ui.en[key] ?? key;
+  },
+  setLang(code) {
+    this.lang = code;
+    localStorage.setItem('noor_lang', code);
+    document.documentElement.lang = code;
+    document.documentElement.dir = this.rtl.includes(code) ? 'rtl' : 'ltr';
+    // Apply UI strings currently in DOM
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (k) el.textContent = this.t(k);
+    });
+    // Future: re-fetch node pack for this language and re-render timeline
+    if (typeof renderTimeline === 'function') renderTimeline(
+      document.querySelector('.filter-btn.active')?.dataset?.period || 'all'
+    );
+  }
+};
+// Apply saved language on load
+document.documentElement.lang = NOOR_I18N.lang;
+document.documentElement.dir = NOOR_I18N.rtl.includes(NOOR_I18N.lang) ? 'rtl' : 'ltr';
+document.addEventListener('DOMContentLoaded',()=>{const s=document.getElementById('lang-switch');if(s)s.value=NOOR_I18N.lang;});
+</script>
+
+<script>
+// Audio helper — EveryAyah Alafasy
+const AYAH_MAP = {
+  "2:102":"002102",
+  "2:124":"002124",
+  "2:125":"002125",
+  "2:127":"002127",
+  "2:144":"002144",
+  "2:185":"002185",
+  "2:214":"002214",
+  "2:249":"002249",
+  "2:30":"002030",
+  "2:31":"002031",
+  "2:34":"002034",
+  "2:35":"002035",
+  "2:37":"002037",
+  "3:103":"003103",
+  "3:123":"003123",
+  "3:152":"003152",
+  "3:159":"003159",
+  "4:157":"004157",
+  "4:159":"004159",
+  "5:27":"005027",
+  "5:3":"005003",
+  "6:74":"006074",
+  "7:11":"007011",
+  "7:142":"007142",
+  "7:143":"007143",
+  "7:54":"007054",
+  "8:17":"008017",
+  "8:42":"008042",
+  "8:9":"008009",
+  "9:100":"009100",
+  "9:25":"009025",
+  "9:40":"009040",
+  "11:37":"011037",
+  "11:44":"011044",
+  "11:7":"011007",
+  "12:100":"012100",
+  "12:21":"012021",
+  "12:4":"012004",
+  "12:54":"012054",
+  "15:28":"015028",
+  "15:29":"015029",
+  "16:126":"016126",
+  "17:1":"017001",
+  "17:79":"017079",
+  "17:81":"017081",
+  "18:10":"018010",
+  "18:22":"018022",
+  "18:74":"018074",
+  "18:94":"018094",
+  "19:16":"019016",
+  "19:30":"019030",
+  "20:12":"020012",
+  "20:14":"020014",
+  "21:69":"021069",
+  "21:87":"021087",
+  "26:63":"026063",
+  "27:16":"027016",
+  "27:18":"027018",
+  "27:82":"027082",
+  "28:7":"028007",
+  "29:14":"029014",
+  "33:21":"033021",
+  "33:9":"033009",
+  "34:10":"034010",
+  "36:51":"036051",
+  "37:102":"037102",
+  "37:107":"037107",
+  "38:26":"038026",
+  "39:68":"039068",
+  "43:77":"043077",
+  "48:1":"048001",
+  "48:18":"048018",
+  "50:38":"050038",
+  "53:13":"053013",
+  "53:14":"053014",
+  "54:1":"054001",
+  "75:22":"075022",
+  "75:23":"075023",
+  "89:27":"089027",
+  "89:28":"089028",
+  "96:1":"096001",
+  "96:1-5":"096001",
+  "99:7":"099007",
+  "99:8":"099008",
+  "105:1":"105001",
+  "105:1-5":"105001",
+  "110:1":"110001",
+  "110:2":"110002",
+  "110:3":"110003"
+};
+let currentAudio = null;
+function playAyah(ref) {
+  let code = AYAH_MAP[ref];
+  if (!code) {
+    // Auto-resolve standard "sura:ayah" or "sura:start-end" (plays start)
+    const m = String(ref).trim().match(/^(\d{1,3}):(\d{1,3})/);
+    if (m) code = m[1].padStart(3,"0") + m[2].padStart(3,"0");
+  }
+  if (!code) { alert("Tilawah for this reference will be added shortly."); return; }
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  const url = `https://everyayah.com/data/Alafasy_128kbps/${code}.mp3`;
+  currentAudio = new Audio(url);
+  currentAudio.play().catch(() => {});
+  document.querySelectorAll(".audio-btn").forEach(b => b.classList.remove("playing"));
+  if (typeof event !== "undefined") event?.target?.closest(".audio-btn")?.classList.add("playing");
+  currentAudio.onended = () => document.querySelectorAll(".audio-btn").forEach(b => b.classList.remove("playing"));
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+
+/* NODES loaded from nodes.js */
+
+const PERIODS = {
+  bidaya:{name:"Al-Bidaya",ar:"البداية",desc:"Creation to Flood",count:8},
+  qisas:{name:"Qisas al-Anbiya",ar:"قصص الأنبياء",desc:"Ibrahim to Isa",count:15},
+  seerah:{name:"Al-Seerah",ar:"السيرة",desc:"Jahiliyya to Tabuk",count:20},
+  nihaya:{name:"Al-Nihaya",ar:"النهاية",desc:"Dajjal to Jannah",count:15}
+};
+
+const BOOKS = [
+  {id:1,name:"Al-Bidaya",ar:"البداية",desc:"Creation, Arsh, Adam, Flood",status:"active"},
+  {id:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",desc:"The Prophets from Nuh to Isa",status:"active"},
+  {id:3,name:"Al-Jahiliyyah",ar:"الجاهلية",desc:"Arabia before the Light",status:"next"},
+  {id:4,name:"An-Noor",ar:"النور",desc:"The Seerah of Muhammad ﷺ",status:"active"},
+  {id:5,name:"Al-Khulafa",ar:"الخلفاء",desc:"Companions & the Four Caliphs",status:"next"},
+  {id:6,name:"Al-Umam",ar:"الأمم",desc:"Spread of Islam across nations",status:"next"},
+  {id:7,name:"Al-Nihaya",ar:"النهاية",desc:"Signs, Qiyamah, Jannah",status:"active"}
+];
+
+function renderBooks(){
+  const c=document.getElementById("book-cards");
+  c.innerHTML=BOOKS.map(b=>`
+    <div class="p-4 rounded-xl bg-white border border-ink/8 ${b.status==='active'?'hover:border-gold/40':''} transition">
+      <div class="font-amiri text-lg text-ink mb-0.5">${b.ar}</div>
+      <div class="font-semibold text-sm text-ink mb-0.5">${b.name}</div>
+      <div class="text-xs text-ink/50 mb-2">${b.desc}</div>
+      <span class="text-[10px] font-semibold uppercase tracking-wide ${b.status==='active'?'text-gold':'text-ink/30'}">${b.status==='active'?'In Path':'Coming'}</span>
+    </div>`).join("");
+}
+
+function renderTimeline(f="all"){
+  const g=document.getElementById("timeline-grid");
+  const list=f==="all"?NODES:NODES.filter(n=>n.period===f);
+  g.innerHTML=list.map(n=>`
+    <article class="tile fade-up cursor-pointer" data-id="${n.id}" role="button" tabindex="0">
+      <div class="tile-bg ${n.pattern}" data-parallax style="${n.image?`background-image:url('${n.image}');background-size:cover;background-position:center;`:''}"></div>
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="chip chip-${n.period}">${PERIODS[n.period].name}</span>
+          <span class="text-[10px] text-parchment/55 font-mono">#${String(n.id).padStart(2,"0")}</span>
+        </div>
+        ${n.metric?`<div class="mb-1.5"><span class="data-chip metric">${n.metric}</span></div>`:''}
+        <h3 class="font-semibold text-[15px] leading-snug mb-0.5">${n.titleEn}</h3>
+        <p class="font-amiri text-parchment/90 text-sm mb-1">${n.titleAr}</p>
+        <p class="text-xs text-parchment/70 line-clamp-2">${n.summary}</p>
+        ${n.facts&&n.facts.length?`<div class="tile-data-row">${n.facts.slice(0,3).map(f=>`<div class="tile-mini"><div class="lbl">${f.label}</div><div class="val">${f.value}</div></div>`).join("")}</div>`:''}
+      </div>
+    </article>`).join("");
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.12});
+  g.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
+  g.querySelectorAll(".tile").forEach(t=>{
+    t.addEventListener("click",()=>openModal(+t.dataset.id));
+    t.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" ")openModal(+t.dataset.id)});
+  });
+  setupParallax();
+}
+
+function setupParallax(){
+  const tiles=document.querySelectorAll("[data-parallax]");
+  const onScroll=()=>tiles.forEach(bg=>{
+    const rect=bg.parentElement.getBoundingClientRect();
+    const center=rect.top+rect.height/2;
+    const viewCenter=window.innerHeight/2;
+    const offset=(center-viewCenter)*0.06;
+    bg.style.transform=`translate3d(0,${offset}px,0)`;
+  });
+  window.addEventListener("scroll",onScroll,{passive:true});
+  onScroll();
+}
+
+
+function linkify(text){
+  if(!text) return "";
+  // {{n:12|Yusuf}} or {{c:c-abubakr|Abu Bakr}}
+  return String(text).replace(/\{\{(n|c):([^|}]+)\|([^}]+)\}\}/g, function(_, typ, id, label){
+    const safe = label.replace(/"/g, "&quot;");
+    if(typ === "n") return '<button type="button" class="entity-link" data-etype="node" data-eid="'+id+'">'+safe+"</button>";
+    return '<button type="button" class="entity-link" data-etype="char" data-eid="'+id+'">'+safe+"</button>";
+  });
+}
+function openEntity(etype, eid){
+  if(etype === "node"){
+    openModal(+eid);
+    return;
+  }
+  // characters live on characters.html
+  window.location.href = "characters.html?open="+encodeURIComponent(eid);
+}
+function bindEntityLinks(root){
+  (root || document).querySelectorAll(".entity-link").forEach(function(btn){
+    btn.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      openEntity(btn.dataset.etype, btn.dataset.eid);
+    };
+  });
+}
+
+function openModal(id){
+  const n=NODES.find(x=>x.id===id);
+  if(!n)return;
+  const hero=document.getElementById("modal-hero");
+  const body=document.getElementById("modal-body");
+  if(n.image){
+    hero.style.backgroundImage=`url('${n.image}')`;
+    hero.className="modal-hero";
+  }else{
+    hero.style.backgroundImage="";
+    hero.className=`modal-hero ${n.pattern}`;
+  }
+  hero.innerHTML=`
+    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-4 text-parchment">
+      <div class="chip chip-${n.period} mb-1">${PERIODS[n.period].name}</div>
+      <h2 class="text-xl font-bold leading-tight">${n.titleEn}</h2>
+      <p class="font-amiri text-base opacity-90">${n.titleAr}</p>
+    </div>`;
+
+  const quranHtml = (n.quran&&n.quran.length)?`
+    <div class="mt-6">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2.5">Qur’an</h3>
+      <div class="space-y-2.5">
+        ${n.quran.map(q=>`
+          <div class="quran-card">
+            <div class="flex items-start justify-between gap-2 mb-1.5">
+              <span class="text-xs font-bold text-gold">${q.ref}</span>
+              <button class="audio-btn" onclick="playAyah('${q.ref}')">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Tilawah
+              </button>
+            </div>
+            ${q.ar?`<p class="font-amiri text-base text-ink leading-loose text-right mb-1.5" dir="rtl">${q.ar}</p>`:''}
+            ${q.en?`<p class="text-sm text-ink/70 leading-relaxed">${q.en}</p>`:''}
+          </div>`).join("")}
+      </div>
+    </div>`:"";
+
+  const hadithHtml = (n.hadith&&n.hadith.length)?`
+    <div class="mt-6">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2.5">Hadith & Athar</h3>
+      <ul class="space-y-1.5">
+        ${n.hadith.map(h=>`<li class="text-sm text-ink/75 leading-relaxed pl-2.5 border-l-2 border-gold/40">${h}</li>`).join("")}
+      </ul>
+    </div>`:"";
+
+  const factsHtml = (n.facts&&n.facts.length)?`
+    <div class="mt-6">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2.5">Facts</h3>
+      <div class="facts-grid">
+        ${n.facts.map(f=>`<div class="fact-item"><div class="text-[10px] uppercase tracking-wide text-ink/40 mb-0.5">${f.label}</div><div class="text-sm font-semibold text-ink">${f.value}</div></div>`).join("")}
+      </div>
+    </div>`:"";
+
+  const lessonsHtml = (n.lessons&&n.lessons.length)?`
+    <div class="mt-6">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2.5">Ibrah — Lessons</h3>
+      <ul class="space-y-1.5">
+        ${n.lessons.map(l=>`<li class="text-sm text-ink/80 leading-relaxed flex gap-2"><span class="text-gold mt-0.5">✦</span><span>${l}</span></li>`).join("")}
+      </ul>
+    </div>`:"";
+
+  const connHtml = (n.connections&&n.connections.length)?`
+    <div class="mt-6 pt-4 border-t border-ink/8">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/40 mb-2.5">Connected in the Path</h3>
+      <div class="flex flex-wrap gap-1.5">
+        ${n.connections.map(cid=>{
+          const cn=NODES.find(x=>x.id===cid);
+          return cn?`<button onclick="openModal(${cid})" class="px-2.5 py-1 rounded-full text-xs font-medium bg-ink/5 hover:bg-gold/15 text-ink/70 hover:text-ink transition">#${cid} ${cn.titleEn.split("—")[0].trim()}</button>`:"";
+        }).join("")}
+      </div>
+    </div>`:"";
+
+  body.innerHTML=`
+    <p class="font-amiri text-gold text-sm mb-3">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <div class="drop-cap text-ink/85 leading-relaxed text-[15px] whitespace-pre-line">${linkifylinkify(n.details||n.summary||'')}</div>
+    ${quranHtml}
+    ${hadithHtml}
+    ${factsHtml}
+    ${lessonsHtml}
+    ${connHtml}
+    <div class="mt-6 pt-3 border-t border-ink/8 flex items-center justify-between text-xs text-ink/40">
+      <span>Node ${n.id} • ${n.type||"Event"}</span>
+      <button onclick="closeModal()" class="text-gold font-medium hover:underline">Close</button>
+    </div>`;
+  document.getElementById("modal-backdrop").classList.add("open");
+  bindEntityLinks(body);
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(){
+  document.getElementById("modal-backdrop").classList.remove("open");
+  document.body.style.overflow="";
+  if(currentAudio){currentAudio.pause();currentAudio=null;}
+}
+
+document.getElementById("period-filters").addEventListener("click",e=>{
+  const btn=e.target.closest(".filter-btn");
+  if(!btn)return;
+  document.querySelectorAll(".filter-btn").forEach(b=>{b.classList.remove("active","bg-ink","text-parchment");b.classList.add("bg-ink/5","text-ink/70")});
+  btn.classList.add("active","bg-ink","text-parchment");
+  btn.classList.remove("bg-ink/5","text-ink/70");
+  renderTimeline(btn.dataset.period);
+});
+
+document.getElementById("search-toggle").addEventListener("click",()=>{
+  document.getElementById("search-bar").classList.toggle("hidden");
+  document.getElementById("search-input").focus();
+});
+document.getElementById("search-input").addEventListener("input",e=>{
+  const q=e.target.value.trim().toLowerCase();
+  const results=document.getElementById("search-results");
+  if(q.length<2){results.classList.add("hidden");return;}
+  const hits=NODES.filter(n=>n.titleEn.toLowerCase().includes(q)||n.titleAr.includes(q)||n.summary.toLowerCase().includes(q)||(n.details||"").toLowerCase().includes(q)).slice(0,8);
+  results.classList.remove("hidden");
+  results.innerHTML=hits.length?hits.map(n=>`<button class="w-full text-left px-3 py-2 rounded-lg hover:bg-ink/5 flex items-center gap-2.5" data-id="${n.id}"><span class="text-xs font-mono text-ink/40">#${n.id}</span><span class="font-medium text-sm">${n.titleEn}</span></button>`).join(""):'<div class="px-3 py-2 text-sm text-ink/50">No matches</div>';
+  results.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{openModal(+b.dataset.id);results.classList.add("hidden");document.getElementById("search-input").value=""}));
+});
+
+document.getElementById("modal-close").addEventListener("click",closeModal);
+document.getElementById("modal-backdrop").addEventListener("click",e=>{if(e.target===e.currentTarget)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+window.addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById("progress").style.width=pct+"%";
+},{passive:true});
+
+renderBooks();
+renderTimeline();
 </script>
 </body>
 </html>
