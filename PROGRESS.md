@@ -1,27 +1,17 @@
 # NOOR Progress Log
 
-## Locked Standards
-- Narrative target: 1000–2000 words per node
-- Facts 4–8 · Qur’an + Afasy · Hadith 1–10 · Impact
-- Images: Islamic Illuminated Manuscript style
-- Complete chronology: **86 nodes** (see CHRONOLOGY.md)
+## v2 “Illuminated” — July 2026
+- Fixed fatal production bugs (nodes.js syntax, linkifylinkify, missing ?node= deep links)
+- Path 58 → 64 nodes, renumbered chronologically, links remapped & validated by scripts/build.mjs
+- Characters 37 → 71 seals; characters.js extracted; links both directions
+- Nihaya rebuilt: sequence strips, order-of-events timelines, Shield boxes, Muslim 2901/2941 ordering
+- Visual engine: starfield/motes canvas, layered parallax, tilt physics, period gates, cinematic modal
+- Tailwind compiled (assets/tw.css); i18n Phase A + i18n/en.json; e2e suite green (40 assertions)
 
-## Live Now
-| Area | Status |
-|------|--------|
-| Batch A (Badr, Uhud, Khandaq, Hudaybiyyah) | Long-form + facts + Afasy + Impact |
-| Companions page | 12 seals, all clickable, full articles |
-| Nihaya | Extreme focus, infographic cards |
-| Chronology map | 86 nodes defined |
-
-## In Progress
-- Expanding all remaining prophet nodes (Adam → Isa cycle)
-- Filling Seerah gaps
-- Adding Al-Khulafa nodes
-- Manuscript images integration
+## Locked Standards (unchanged)
+- Narrative 1000–2000 flagships · 400–800 secondary · facts 4–8 · Qur'an + Afasy · hadith with sources · Ibrah
+- Illuminated manuscript art only — no faces of prophets or companions
+- 86-node vision mapped in CHRONOLOGY.md; current canonical Path: 64
 
 ## Deploy
-https://noor-islamic-timeline.vercel.app
-https://noor-islamic-timeline.vercel.app/companions.html
-
-Redeploy on Vercel after each major commit if cache lags.
+https://noor-islamic-timeline.vercel.app — push per NOOR-HANDOFF.md §3, then redeploy if cache lags.

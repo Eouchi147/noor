@@ -2,7 +2,7 @@
 
 A chronological Islamic educational Codex from **Kun Fayakun** to **Jannah**.
 
-**58 nodes** • Qur’an • authentic Hadith • classical sources  
+**64 nodes • 71 character seals** • Qur’an (107 ayat, with tilawah) • authentic Hadith (161, with sources) • classical sirah  
 Prophets and Companions represented by **light and abstract seals only** — never faces.
 
 ## Live
@@ -17,23 +17,20 @@ Repo: https://github.com/Eouchi147/noor
 |--------|--------|
 | **Al-Bidaya** | Creation → Nuh, Hud, Salih |
 | **Qisas al-Anbiya** | Ibrahim → Isa |
-| **Al-Seerah** | Birth of the Prophet → Farewell Hajj & Death |
-| **Al-Nihaya** | Signs of the Hour → Jannah (**extreme focus**, infographic-style data cards) |
+| **Al-Seerah** | Jahiliyya → Farewell Hajj → the Passing ﷺ |
+| **Al-Nihaya** | Minor Signs → Mahdi → the Ten → Hawd → Sirat → Jannah (sequence strips, timelines, Shield boxes) |
 
-## Current status (July 2026)
+## Current status (July 2026 — v2 “Illuminated”)
 
-- Visual system: soft light effects, smooth tile physics, CSS-only abstract patterns (fast on iPhone)
-- Nihaya section: denser long-form + visual data cards + protection notes (Dajjal)
-- Companions page: richer abstract seals, matching design language, 12 seals
-- Most major nodes have proper long-form content
+- 64-node Path (chronologically renumbered) — every node with facts grid, Qur'an + Alafasy tilawah, sourced hadith, lessons, cross-links
+- Flagships: Isra 1031 · Badr 1041 · Uhud 1094 · Khandaq 901 · Hudaybiyyah 907 · Fath 909 · Adam 1013 · Ibrahim 715 · Iqra 670 · Jannah 718 words
+- Characters hub: 71 seals (Companions · Angels · Jinn · Animals · End of Time), linked both ways with the Path
+- Visual engine (noor-fx.js): starfield + gold motes, layered parallax, 3D tilt tiles, illuminated period gates, cinematic modal — GPU-only, reduced-motion aware
+- Tailwind precompiled to assets/tw.css (no runtime CDN compiler) — ~130 KB gz critical path, images lazy-loaded
+- i18n Phase A + i18n/en.json master pack (translator-ready) · deep links ?node= / ?open=
+- e2e suite: tests/e2e.mjs (40 assertions, desktop + iPhone viewport)
 
-## Next smooth steps
-
-1. Fill any remaining short nodes (Hawwa, Qabil & Habil, a few minor Seerah) to full length
-2. Add 4–6 more Companion seals as needed
-3. Optional: soft period intro banners when filtering
-4. Final mobile QA pass on real iPhone
-5. Optional Arabic-first toggle later
+See NOOR-HANDOFF.md for the full delivery report and push guide.
 
 ## Respect rules
 
@@ -43,8 +40,9 @@ Repo: https://github.com/Eouchi147/noor
 
 ## Tech
 
-- `index.html` (main SPA) + `companions.html`
-- Tailwind via CDN, pure CSS animations
+- `index.html` + `characters.html` (+ legacy `companions.html`) · data: `nodes.js`, `characters.js` · engine: `noor-fx.js`
+- Content pipeline: `scripts/patches/*` → `node scripts/build.mjs` (validates links/images, prints audit)
+- Tailwind precompiled to `assets/tw.css`, pure CSS/canvas animations
 - Deployed on Vercel from this repo
 
 ```bash
