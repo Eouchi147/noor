@@ -45,6 +45,7 @@
   .ng-go:hover{filter:brightness(1.05)}
   .ng-think{display:inline-block;margin:.5rem 0 0 .2rem;color:rgba(44,36,22,.5);font-size:.75rem;animation:ngPulse 1.1s ease-in-out infinite}
   @keyframes ngPulse{0%,100%{opacity:.4}50%{opacity:1}}
+  @media (max-width:640px){.ng-in{font-size:16px}}
   @media (prefers-reduced-motion: reduce){.ng-sheet,.ng-a{animation:none}}`;
 
   let styled = false;

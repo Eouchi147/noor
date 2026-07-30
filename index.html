@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <meta name="description" content="NOOR · Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur'an with tilawah, authentic Hadith, classical sources."/>
 <meta name="theme-color" content="#14100A"/>
 <title>NOOR · نُور | Codex of Light</title>
@@ -81,8 +81,9 @@ a:hover .logo-seal{transform:rotate(12deg)}
 #codex-count{background:linear-gradient(180deg,rgba(44,36,22,.045),rgba(44,36,22,0));border-bottom:1px solid rgba(44,36,22,.06)}
 #codex-count #hero-stats{scrollbar-width:none;-ms-overflow-style:none}
 #codex-count #hero-stats::-webkit-scrollbar{display:none}
-.hero-stat{flex:none;display:flex;align-items:baseline;gap:.45rem;background:rgba(255,254,247,.75);border:1px solid rgba(201,162,39,.28);white-space:nowrap}
+.hero-stat{flex:none;display:flex;align-items:baseline;justify-content:center;gap:.4rem;background:rgba(255,254,247,.75);border:1px solid rgba(201,162,39,.28);white-space:nowrap;min-width:0}
 .hero-stat .v{font-variant-numeric:tabular-nums;line-height:1}
+@media(max-width:639px){.hero-stat{flex-direction:column;align-items:center;gap:.1rem;padding:.5rem .3rem}.hero-stat div:last-child{white-space:normal;text-align:center;line-height:1.25}}
 .btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 6px 22px rgba(201,162,39,.35);transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,162,39,.45)}
 .btn-ghost{border:1px solid rgba(255,254,247,.28);color:#FFFEF7;transition:background .25s,transform .25s}
@@ -316,6 +317,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
   .mset{opacity:1;transform:none;animation:none}
 }
 </style>
+<style>html{-webkit-text-size-adjust:100%}body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -446,7 +448,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 
 <!-- ============ CODEX COUNTERS (relocated from hero) ============ -->
 <div id="codex-count">
-<div id="hero-stats" class="max-w-5xl mx-auto px-4 py-3.5 flex flex-nowrap sm:justify-center gap-2 overflow-x-auto"></div>
+<div id="hero-stats" class="max-w-5xl mx-auto px-4 py-3.5 grid grid-cols-3 sm:flex sm:justify-center gap-2"></div>
 </div>
 
 <!-- ============ BOOKS ============ -->
