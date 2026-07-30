@@ -226,3 +226,10 @@ Owner's iPhone screenshot showed the page zoomed out with the old horizontally-s
 - Guide free-text input is 16px on small screens (prevents iOS auto-zoom on focus).
 - `theme-color` metas everywhere (dark night tint for hero pages) so the browser chrome matches.
 All 101 e2e assertions green (band grid still satisfies the 6-chip and count-up checks).
+
+### v9.1 — nav wrap + scale lock + cache-bust
+
+Owner's second iPhone screenshot: page still auto-shrunk (white right gutter) and mobile nav pills ran off the right edge; counters stacked 1-per-row (stale CSS).
+- Root causes: (1) `minimum-scale` was unset, so iOS could still shrink-to-fit; now `minimum-scale=1.0` locks scale at exactly 1 on every page. (2) The mobile pill nav was a horizontal scroll strip; it is now a centered two-row wrap on all pages (nothing cut, no scroll container, Health pill added to hub strips). (3) vercel.json serves /assets immutable for a year with an unchanged filename, so phones held old tw.css (hence the stacked counters, `grid-cols-3` missing): all `tw.css`/`hub.css` links now carry `?v=9`; bump this query on any future CSS rebuild.
+- `overflow-x: clip` extended to html as well as body. Decorative hero layers that exceed the viewport are all inside `#hero{overflow:hidden}` (verified by element scan; document scrollWidth = 390 at 390).
+All 101 e2e assertions green. Note for the owner: after deploying, close and reopen the tab on the phone once so Safari drops the old cached CSS.
