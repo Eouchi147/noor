@@ -78,8 +78,11 @@ a:hover .logo-seal{transform:rotate(12deg)}
 @keyframes shimmer{to{background-position:-220% center}}
 .hero-kicker{letter-spacing:.06em;text-shadow:0 0 26px rgba(233,200,106,.4),0 1px 10px rgba(4,6,15,.7)}
 .hero-sub{text-shadow:0 1px 14px rgba(4,6,15,.85)}
-.hero-stat{background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.hero-stat .v{font-variant-numeric:tabular-nums}
+#codex-count{background:linear-gradient(180deg,rgba(44,36,22,.045),rgba(44,36,22,0));border-bottom:1px solid rgba(44,36,22,.06)}
+#codex-count #hero-stats{scrollbar-width:none;-ms-overflow-style:none}
+#codex-count #hero-stats::-webkit-scrollbar{display:none}
+.hero-stat{flex:none;display:flex;align-items:baseline;gap:.45rem;background:rgba(255,254,247,.75);border:1px solid rgba(201,162,39,.28);white-space:nowrap}
+.hero-stat .v{font-variant-numeric:tabular-nums;line-height:1}
 .btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 6px 22px rgba(201,162,39,.35);transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,162,39,.45)}
 .btn-ghost{border:1px solid rgba(255,254,247,.28);color:#FFFEF7;transition:background .25s,transform .25s}
@@ -427,19 +430,22 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="mist" aria-hidden="true"></div>
 <div class="hero-fade" aria-hidden="true"></div>
 
-<div class="hero-content max-w-4xl mx-auto px-4 pt-20 pb-24 sm:pt-24 sm:pb-28 text-center">
-<p class="hero-kicker font-amiri text-gold text-2xl sm:text-3xl mb-4" data-i18n="hero.kicker">نُورٌ عَلَىٰ نُورٍ</p>
-<h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-4"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="hero-sub text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
-<div class="flex flex-wrap justify-center gap-3 mb-10">
+<div class="hero-content max-w-4xl mx-auto px-4 pt-28 pb-24 sm:pt-36 sm:pb-32 text-center">
+<p class="hero-kicker font-amiri text-gold text-2xl sm:text-3xl mb-5" data-i18n="hero.kicker">نُورٌ عَلَىٰ نُورٍ</p>
+<h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-10"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
+<div class="flex flex-wrap justify-center gap-3">
 <a href="#timeline" class="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm" data-i18n="hero.cta.enter">Enter the Path</a>
 <a href="characters.html" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.characters">Characters</a>
 <a href="kids.html" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.kids">✦ Little Codex</a>
 </div>
-<div id="hero-stats" class="flex flex-wrap justify-center gap-2.5"></div>
-<div class="mt-10 flex justify-center"><svg class="scroll-cue w-5 h-5 text-parchment/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
+<div class="mt-12 flex justify-center"><svg class="scroll-cue w-5 h-5 text-parchment/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
 </div>
 </section>
+
+<!-- ============ CODEX COUNTERS (relocated from hero) ============ -->
+<div id="codex-count">
+<div id="hero-stats" class="max-w-5xl mx-auto px-4 py-3.5 flex flex-nowrap sm:justify-center gap-2 overflow-x-auto"></div>
+</div>
 
 <!-- ============ BOOKS ============ -->
 <section id="books" class="max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-4">
@@ -658,6 +664,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-xl sm:text-2xl text-gold mb-2">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
 <p class="text-parchment/75 text-sm leading-relaxed mb-5">“Faces that Day will be radiant, looking at their Lord.” (75:22-23)</p>
+<p class="text-parchment/60 text-sm leading-relaxed max-w-xl mx-auto mb-5" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
 <p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
 <p class="mt-6 text-[11px] tracking-[.18em] uppercase text-gold/70" data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
 </div>
@@ -708,7 +715,7 @@ function renderStats(){
     [M.nodes, t("stats.nodes")], [M.characters, t("stats.characters")],
     [M.places, t("stats.places")], [M.words, t("stats.words")],
     [M.quran, t("stats.quran")], [M.hadith, t("stats.hadith")]
-  ].map(([v,l]) => `<div class="hero-stat px-3.5 py-2 rounded-xl text-parchment"><div class="v text-lg font-bold text-gold" data-count="${v}">0</div><div class="text-[10px] uppercase tracking-wider text-parchment/60">${l}</div></div>`).join("");
+  ].map(([v,l]) => `<div class="hero-stat px-3 py-1.5 rounded-full text-ink"><div class="v text-sm font-bold text-gold" data-count="${v}">0</div><div class="text-[9px] uppercase tracking-wider text-ink/45">${l}</div></div>`).join("");
   $("hero-stats").querySelectorAll("[data-count]").forEach((el,i) => setTimeout(() => NoorFX.countUp(el, +el.dataset.count, 1000), 150 + i*90));
 }
 

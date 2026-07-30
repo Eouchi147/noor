@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d1b45">
+<title>Echo of Light · Little Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--lapis:#1E3A8A;--deep:#14100A;--accent:#e879f9}
+html{overflow-x:hidden}
+body{min-height:100svh;display:flex;flex-direction:column;overflow-x:hidden;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:linear-gradient(178deg,#0d1b45 0%,#1E3A8A 58%,#2d4fb3 100%);background-attachment:fixed}
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.st{position:absolute;border-radius:50%;background:#fff;opacity:.3;animation:tw var(--d,4s) ease-in-out var(--dl,0s) infinite}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.9}}
+.cres{position:absolute;bottom:9%;left:5%;width:58px;height:58px;filter:drop-shadow(0 0 14px rgba(233,200,106,.45));animation:flo 11s ease-in-out infinite alternate}
+@keyframes flo{from{transform:translateY(0)}to{transform:translateY(9px)}}
+.bar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;font-size:14px}
+.bar a{color:var(--gold-hi);text-decoration:none;font-weight:600}
+.bar a:hover{text-decoration:underline}
+.bar a:focus-visible,.reset:focus-visible{outline:3px solid var(--gold-hi);outline-offset:3px;border-radius:6px}
+.twrap{display:flex;align-items:center;gap:8px}
+.gtitle{font-variant:small-caps;letter-spacing:.16em;font-weight:700;color:var(--gold-hi);font-size:15px;white-space:nowrap}
+.chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid rgba(201,162,39,.55);color:#8a6d15;background:rgba(233,200,106,.16);white-space:nowrap}
+.chip.done{border-color:rgba(255,253,244,.35);color:#d9f7e7;background:rgba(52,211,153,.22)}
+main{position:relative;z-index:1;flex:1;display:flex;justify-content:center;align-items:flex-start;padding:6px 12px 20px}
+.stage{position:relative;width:min(560px,100%);background:#FFFDF4;border:3px solid var(--gold);border-radius:22px;padding:14px clamp(10px,3.4vw,20px) 20px;box-shadow:0 18px 50px rgba(8,12,40,.5),0 0 0 1px rgba(233,200,106,.35);overflow:hidden}
+.stage::before{content:"";position:absolute;inset:4px;border:1px solid rgba(201,162,39,.7);border-radius:16px;pointer-events:none;z-index:4}
+.status{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.echoBox{display:flex;align-items:baseline;gap:7px}
+.num{font-size:34px;font-weight:800;line-height:1;display:inline-block;color:var(--ink)}
+.num.pop{animation:cpop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cpop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a744d}
+.mid{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.moons{display:flex;gap:4px}
+.moon{width:22px;height:22px;display:inline-flex;transition:opacity .35s,transform .35s,filter .35s}
+.moon svg{width:100%;height:100%}
+.moon.lost{opacity:.18;transform:translateY(3px) scale(.9);filter:grayscale(1)}
+.beads{position:relative;display:flex;justify-content:center;gap:6px;padding:11px 0 5px}
+.beads::before{content:"";position:absolute;left:9%;right:9%;top:50%;height:2px;background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.4) 12%,rgba(201,162,39,.4) 88%,rgba(201,162,39,0))}
+.bead{position:relative;width:13px;height:13px;border-radius:50%;background:#f6eed4;border:1.5px solid #d8c48c}
+.bead.on{background:radial-gradient(circle at 35% 30%,#ffe3ff,var(--accent) 62%,#a63bbc);border-color:#cf6fdf;box-shadow:0 0 9px rgba(232,121,249,.6);animation:bpop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes bpop{0%{transform:scale(.4)}55%{transform:scale(1.45)}100%{transform:scale(1)}}
+.msg{min-height:50px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;font-weight:600;color:#6d5a31;padding:2px 6px}
+.msg.gold{font-family:Amiri,serif;font-size:19px;color:#8a6d15}
+.msg.swap{animation:msgIn .38s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.gridWrap{position:relative;margin:4px auto 0;width:min(430px,100%)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,3.5vw,16px);container-type:inline-size}
+.med{position:relative;aspect-ratio:1;border-radius:50%;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .3s,filter .3s}
+.med:focus-visible{outline:3px solid var(--gold-hi);outline-offset:4px}
+.glow{position:absolute;inset:-24%;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transform:scale(.72);background:radial-gradient(circle,var(--gA) 0%,var(--gB) 40%,rgba(255,255,255,0) 70%)}
+.clip{position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:1;box-shadow:0 6px 18px rgba(44,36,22,.18)}
+.disc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 34%,#FFFDF4 0 40%,var(--t1) 72%,var(--t2) 100%)}
+.ring{position:absolute;inset:0;width:100%;height:100%}
+.txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 12%}
+.ar{font-family:Amiri,serif;font-weight:700;color:var(--tk);font-size:22px;font-size:9.4cqw;line-height:1.3;text-align:center}
+.m3 .ar{font-size:17px;font-size:6.9cqw}
+.en{font-size:10px;font-size:max(9px,3.1cqw);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--tk);opacity:.72}
+.sweep{position:absolute;top:-25%;bottom:-25%;left:-6%;width:52%;opacity:0;transform:translateX(-130%) rotate(14deg);background:linear-gradient(102deg,rgba(255,255,255,0),rgba(255,255,255,.92) 50%,rgba(255,255,255,0))}
+.halo{position:absolute;inset:-3%;border-radius:50%;border:2.5px solid var(--c2);opacity:0;pointer-events:none;z-index:2}
+.med.shine{animation:medPop .5s cubic-bezier(.34,1.56,.64,1)}
+.med.shine .glow{animation:glowB .5s ease-out}
+.med.shine .sweep{animation:sweepX .42s .06s ease}
+.med.shine .halo{animation:haloX .42s .08s ease-out}
+.med.shine .ar{animation:arGlow .48s ease}
+.med.shine.soft{animation:medPopS .55s ease}
+.med.shine.soft .glow{animation:glowS .55s ease-out}
+@keyframes medPop{0%{transform:scale(1)}38%{transform:scale(1.09)}100%{transform:scale(1)}}
+@keyframes medPopS{0%{transform:scale(1)}45%{transform:scale(1.035)}100%{transform:scale(1)}}
+@keyframes glowB{0%{opacity:0;transform:scale(.72)}30%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.3)}}
+@keyframes glowS{0%{opacity:0;transform:scale(.75)}40%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.15)}}
+@keyframes sweepX{0%{opacity:0;transform:translateX(-130%) rotate(14deg)}18%{opacity:1}82%{opacity:1}100%{opacity:0;transform:translateX(150%) rotate(14deg)}}
+@keyframes haloX{0%{opacity:.95;transform:scale(.78)}100%{opacity:0;transform:scale(1.3)}}
+@keyframes arGlow{0%{filter:brightness(1)}35%{filter:brightness(1.55) drop-shadow(0 0 6px rgba(255,255,255,.8))}100%{filter:brightness(1)}}
+.med.tap{animation:tapPop .32s cubic-bezier(.34,1.56,.64,1)}
+.med.tap .glow{animation:glowT .34s ease-out}
+@keyframes tapPop{0%{transform:scale(1)}45%{transform:scale(1.11)}75%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes glowT{0%{opacity:0;transform:scale(.8)}40%{opacity:.85;transform:scale(1)}100%{opacity:0;transform:scale(1.18)}}
+.grid.pre .med{opacity:.7;filter:saturate(.6)}
+.stage.dim .med{opacity:.45;filter:saturate(.3)}
+.begin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;transition:opacity .32s,transform .32s}
+.begin.gone{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.8)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:12px 24px;border-radius:17px;border:2px solid #a8861f;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#2C2416;font-family:Inter,system-ui,sans-serif;font-size:17px;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 16px rgba(20,16,10,.25);transition:transform .15s}
+.btn:active{transform:scale(.95)}
+.btn:focus-visible{outline:3px solid var(--gold-hi);outline-offset:3px}
+.btn.ghost{background:#FFFDF4;border-color:var(--gold);color:#7c6215}
+.btn.mini{background:none;border:none;box-shadow:none;color:#8a6d15;text-decoration:underline;font-size:14.5px;font-weight:700;padding:8px 18px}
+.flash{position:absolute;inset:0;border-radius:19px;pointer-events:none;opacity:0;z-index:3;box-shadow:inset 0 0 64px rgba(232,121,249,.5),inset 0 0 26px rgba(233,200,106,.65)}
+.flash.go{animation:flashA .95s ease}
+@keyframes flashA{0%{opacity:0}22%{opacity:1}100%{opacity:0}}
+.p{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:6;will-change:transform,opacity}
+.p.star{border-radius:0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.bs{position:absolute;left:0;top:0;width:7px;height:7px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 10px 2px rgba(233,200,106,.75);pointer-events:none;z-index:6;opacity:0;will-change:transform,opacity}
+.foot{justify-content:center;gap:14px;padding-bottom:16px}
+.reset{background:none;border:0;color:rgba(233,200,106,.6);text-decoration:underline;font-size:12px;cursor:pointer;padding:10px 6px;font-family:inherit}
+.ov{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 50% 42%,rgba(30,58,138,.88),rgba(10,14,38,.94));opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s;overflow:hidden}
+.ov.show{opacity:1;visibility:visible;transition:opacity .4s}
+.rays{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;border-radius:50%;transform:translate(-50%,-50%);background:repeating-conic-gradient(from 0deg,rgba(233,200,106,.13) 0 8deg,rgba(233,200,106,0) 8deg 16deg)}
+.ov.show .rays{animation:spin 32s linear infinite}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.ovCard{position:relative;z-index:2;width:min(430px,100%);background:#FFFDF4;border:3px solid var(--gold);border-radius:22px;padding:26px 20px 22px;text-align:center;box-shadow:0 24px 70px rgba(5,8,25,.6)}
+.ovCard::before{content:"";position:absolute;inset:4px;border:1px solid rgba(201,162,39,.7);border-radius:16px;pointer-events:none}
+.ov.show .ovCard{animation:cardIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cardIn{from{opacity:0;transform:scale(.86) translateY(14px)}to{opacity:1;transform:none}}
+.medal{width:84px;height:84px;margin:0 auto 6px;display:block;filter:drop-shadow(0 4px 10px rgba(201,162,39,.5))}
+.ovCard h2{font-family:Amiri,serif;font-size:27px;margin:2px 0 8px;color:var(--ink)}
+.ayah{font-family:Amiri,serif;font-size:20px;line-height:1.5;color:#6b5426;margin:0 0 6px}
+.meaning{font-size:14.5px;font-weight:700;color:#8d34a3;margin:0 0 6px}
+.bestLine{font-size:13px;font-weight:700;color:#8a744d;margin:0 0 14px}
+.softLine{font-size:14px;color:#8a744d;margin:4px 0 16px}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media (min-width:900px){main{padding-top:26px}.cres{width:84px;height:84px;left:9%;bottom:12%}}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation:none !important;transition:none !important}
+.med.shine{transform:scale(1.05)}
+.med.shine .glow{opacity:.85;transform:scale(1.05)}
+.med.shine .halo{opacity:.7;transform:scale(1)}
+.med.tap{transform:scale(1.06)}
+}
+</style>
+</head>
+<body>
+<div class="sky" id="sky" aria-hidden="true">
+<svg class="cres" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#E9C86A"/></svg>
+</div>
+<header class="bar">
+<a href="../kids.html">☾ Little Codex</a>
+<span class="twrap"><span class="gtitle">Echo of Light</span><span class="chip done" id="doneChip" hidden>✓ completed</span></span>
+</header>
+<main>
+<section class="stage" id="stage" aria-label="Echo of Light game">
+<div class="status">
+<div class="echoBox"><span class="num" id="count">0</span><span class="lbl">echoes</span></div>
+<div class="mid">
+<span class="chip" id="bestChip" hidden>Best <b id="bestN">0</b></span>
+<div class="moons" id="moons" aria-label="three patience moons"></div>
+</div>
+</div>
+<div class="beads" id="beads" aria-hidden="true"></div>
+<p class="msg" id="msg" aria-live="polite">Four holy words glow one by one. Echo them back!</p>
+<div class="gridWrap">
+<div class="grid pre" id="grid" role="group" aria-label="Four dhikr medallions"></div>
+<button class="btn begin" id="begin">✦ Begin the echo</button>
+</div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+</section>
+</main>
+<footer class="bar foot">
+<a href="../kids.html">☾ Back to the Little Codex</a>
+<button class="reset" id="reset" aria-label="Start over. Clears your saved progress for this game only.">start over</button>
+</footer>
+
+<div class="ov" id="winOv" role="dialog" aria-modal="true" aria-labelledby="winH">
+<div class="rays" aria-hidden="true"></div>
+<div class="ovCard">
+<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#C9A227"/><path d="M17.2 3.2l.8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8z" fill="#E9C86A"/></svg>
+<h2 id="winH">Twelve echoes of light!</h2>
+<p class="ayah">Light words, heavy on the Scale (Bukhari 7563).</p>
+<p class="meaning">La ilaha illallah: the key sentence of it all</p>
+<p class="bestLine" id="winBest"></p>
+<div class="row">
+<button class="btn" id="againB">Play again</button>
+<a class="btn ghost" href="../kids.html">☾ Little Codex</a>
+</div>
+<button class="btn mini" id="moreB">Keep echoing ✦</button>
+</div>
+</div>
+
+<div class="ov" id="restOv" role="dialog" aria-modal="true" aria-labelledby="restH">
+<div class="ovCard">
+<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#C9A227"/></svg>
+<h2 id="restH">What a chain of light!</h2>
+<p class="softLine" id="restLine"></p>
+<p class="softLine">Take a breath. The medallions will wait for you.</p>
+<div class="row">
+<button class="btn" id="retryB">Echo again</button>
+<a class="btn ghost" href="../kids.html">☾ Little Codex</a>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+let RM=false; try{RM=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+const KEY='nk-echo';
+const MEDS=[
+{ar:'سُبْحَانَ ٱللَّه',en:'SubhanAllah',c1:'#0f9d6a',c2:'#6ee7b7',tk:'#0a6b47',t1:'rgba(110,231,183,.32)',t2:'rgba(15,157,106,.26)',gA:'rgba(110,231,183,.95)',gB:'rgba(52,211,153,.55)',line:'SubhanAllah: Allah is above every flaw'},
+{ar:'ٱلْحَمْدُ لِلَّٰه',en:'Alhamdulillah',c1:'#C9A227',c2:'#F1DC9A',tk:'#7c6215',t1:'rgba(233,200,106,.34)',t2:'rgba(201,162,39,.28)',gA:'rgba(241,220,154,.95)',gB:'rgba(233,200,106,.55)',line:'Alhamdulillah: every thanks belongs to Him'},
+{ar:'ٱللَّهُ أَكْبَر',en:'Allahu Akbar',c1:'#1E3A8A',c2:'#93c5fd',tk:'#1c3273',t1:'rgba(147,197,253,.36)',t2:'rgba(30,58,138,.30)',gA:'rgba(147,197,253,.95)',gB:'rgba(96,165,250,.5)',line:'Allahu Akbar: greater than everything, always'},
+{ar:'لَا إِلَٰهَ إِلَّا ٱللَّه',en:'La ilaha illallah',c1:'#e0506f',c2:'#ffb3c6',tk:'#a02645',t1:'rgba(255,179,198,.36)',t2:'rgba(224,80,111,.26)',gA:'rgba(255,179,198,.95)',gB:'rgba(251,113,133,.5)',line:'La ilaha illallah: the key sentence of it all'}
+];
+const CHEERS=['Beautiful echo!','The light grows!','MashaAllah, again!','Bright and true!','What a chain!'];
+const G={seq:[],pos:0,count:0,best:0,done:false,moons:3,state:'idle',stepMs:550,speed:1};
+window.NK=G;
+const stage=$('stage'),grid=$('grid'),msgEl=$('msg');
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify({done:G.done,best:G.best}))}catch(e){}}
+try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d){G.done=!!d.done;G.best=+d.best||0}}catch(e){}
+
+/* night sky stars */
+(function(){const sky=$('sky');for(let i=0;i<35;i++){const s=document.createElement('span');s.className='st';const big=Math.random()>.78;s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*90)+'%';s.style.width=s.style.height=(big?3:2)+'px';s.style.setProperty('--d',(2.6+Math.random()*3.6)+'s');s.style.setProperty('--dl',(-Math.random()*6)+'s');sky.appendChild(s)}})();
+
+/* medallions */
+const medEls=[];
+MEDS.forEach((m,i)=>{
+const b=document.createElement('button');
+b.className='med m'+i;b.id='med'+i;b.type='button';
+b.setAttribute('aria-label',m.en);
+b.style.setProperty('--c2',m.c2);b.style.setProperty('--tk',m.tk);
+b.style.setProperty('--t1',m.t1);b.style.setProperty('--t2',m.t2);
+b.style.setProperty('--gA',m.gA);b.style.setProperty('--gB',m.gB);
+let pet='';for(let j=0;j<8;j++)pet+='<path d="M50 7l2.2 3.6L50 14.2l-2.2-3.6z" transform="rotate('+(j*45)+' 50 50)" fill="'+m.c1+'" opacity=".75"/>';
+b.innerHTML='<span class="glow"></span><span class="clip"><span class="disc"></span>'
++'<svg class="ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><defs><linearGradient id="mg'+i+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+m.c2+'"/><stop offset="1" stop-color="'+m.c1+'"/></linearGradient></defs>'
++'<circle cx="50" cy="50" r="46.4" fill="none" stroke="url(#mg'+i+')" stroke-width="2.8"/>'
++'<circle cx="50" cy="50" r="36" fill="none" stroke="'+m.c1+'" stroke-width="1.1" stroke-dasharray="2.1 4.4" opacity=".5"/>'+pet+'</svg>'
++'<span class="txt"><span class="ar" lang="ar" dir="rtl">'+m.ar+'</span><span class="en">'+m.en+'</span></span>'
++'<span class="sweep"></span></span><span class="halo"></span>';
+b.addEventListener('click',()=>onMed(i));
+grid.appendChild(b);medEls.push(b);
+});
+
+/* bead chain of 12 */
+const beadEls=[];
+(function(){const w=$('beads');for(let i=0;i<12;i++){const s=document.createElement('span');s.className='bead';w.appendChild(s);beadEls.push(s)}})();
+
+/* patience moons */
+const MOON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#C9A227"/></svg>';
+const moonEls=[];
+(function(){const w=$('moons');for(let i=0;i<3;i++){const s=document.createElement('span');s.className='moon';s.innerHTML=MOON;w.appendChild(s);moonEls.push(s)}})();
+
+function refreshChips(){$('doneChip').hidden=!G.done;$('bestChip').hidden=!(G.best>0);$('bestN').textContent=G.best}
+function refreshMoons(){moonEls.forEach((el,i)=>el.classList.toggle('lost',i>=G.moons))}
+refreshChips();refreshMoons();
+
+/* one shared rAF loop: scheduled tasks, particles, border runners */
+let rafId=0,lastT=0;
+const tasks=[],parts=[],runners=[];
+function ensure(){if(!rafId)rafId=requestAnimationFrame(loop)}
+function after(ms,fn){tasks.push({due:performance.now()+ms,fn});ensure()}
+function W(ms){return Math.max(16,ms*G.speed)}
+function periPoint(q,w,h){const iw=w-6,ih=h-6,P=2*(iw+ih);let d=(q%1)*P;
+if(d<iw)return[3+d,3];d-=iw;if(d<ih)return[3+iw,3+d];d-=ih;if(d<iw)return[3+iw-d,3+ih];d-=iw;return[3,3+ih-d]}
+function loop(t){
+for(let i=tasks.length-1;i>=0;i--){if(t>=tasks[i].due){const f=tasks[i].fn;tasks.splice(i,1);f()}}
+const dt=lastT?Math.min(40,t-lastT):16;lastT=t;
+for(let i=parts.length-1;i>=0;i--){const p=parts[i];const a=(t-p.t0)/p.life;
+if(a>=1){p.el.remove();parts.splice(i,1);continue}
+p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=p.g*dt;
+p.el.style.transform='translate('+p.x+'px,'+p.y+'px) rotate('+(p.r0+a*p.rs)+'deg) scale('+(1-a*.5)+')';
+p.el.style.opacity=a<.15?(a/.15):(1-(a-.15)/.85)}
+for(let i=runners.length-1;i>=0;i--){const r=runners[i];const a=(t-r.t0)/r.dur;
+if(a>=1){r.el.remove();runners.splice(i,1);continue}
+if(a<0){r.el.style.opacity=0;continue}
+const pt=periPoint(a+r.off,r.w,r.h);
+r.el.style.transform='translate('+(pt[0]-3.5)+'px,'+(pt[1]-3.5)+'px)';
+r.el.style.opacity=Math.sin(Math.PI*a)}
+if(tasks.length||parts.length||runners.length){rafId=requestAnimationFrame(loop)}else{rafId=0;lastT=0}
+}
+function spawnP(host,x,y,color,star){
+if(RM||parts.length>=40)return;
+const el=document.createElement('span');el.className='p'+(star?' star':'');
+el.style.background=color;host.appendChild(el);
+const an=Math.random()*Math.PI*2,sp=.05+Math.random()*.13;
+parts.push({el,x,y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp-.05,g:.00038,life:620+Math.random()*380,t0:performance.now(),r0:Math.random()*360,rs:200*(Math.random()-.5)});
+ensure();
+}
+function burst(x,y,color,n){for(let i=0;i<n;i++)spawnP(stage,x,y,i%3===0?'#E9C86A':color,i%2===0)}
+function shower(host){
+if(RM)return;
+const w=host.clientWidth,cols=['#E9C86A','#e879f9','#ffffff','#C9A227'];
+for(let i=0;i<20;i++){
+if(parts.length>=40)break;
+const el=document.createElement('span');el.className='p'+(i%2?' star':'');
+el.style.background=cols[i%4];host.appendChild(el);
+parts.push({el,x:Math.random()*w,y:8+Math.random()*30,vx:(Math.random()-.5)*.06,vy:.03+Math.random()*.07,g:.00055,life:850+Math.random()*320,t0:performance.now(),r0:Math.random()*360,rs:260*(Math.random()-.5)});
+}
+ensure();
+}
+function borderRun(){
+if(RM)return;
+const w=stage.clientWidth,h=stage.clientHeight;
+for(let i=0;i<4;i++){
+if(runners.length>=8)break;
+const el=document.createElement('span');el.className='bs';stage.appendChild(el);
+runners.push({el,t0:performance.now()+i*40,dur:950,off:i*.25,w,h});
+}
+ensure();
+}
+
+/* ui helpers */
+function setMsg(t,gold){msgEl.textContent=t;msgEl.classList.toggle('gold',!!gold);
+if(!RM){msgEl.classList.remove('swap');void msgEl.offsetWidth;msgEl.classList.add('swap')}}
+function popEl(el){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');after(520,()=>el.classList.remove('pop'))}
+function flashStage(){const f=$('flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
+function shineMed(k,soft){
+const el=medEls[k];
+el.classList.remove('shine','soft');void el.offsetWidth;
+if(soft)el.classList.add('soft');
+el.classList.add('shine');
+after(Math.min(500,G.stepMs*.92),()=>el.classList.remove('shine','soft'));
+}
+
+/* core loop */
+function nextK(){let k=Math.floor(Math.random()*4);const n=G.seq.length;
+if(n>=2&&G.seq[n-1]===k&&G.seq[n-2]===k)k=(k+1+Math.floor(Math.random()*3))%4;return k}
+function playSeq(){
+G.state='show';G.pos=0;stage.classList.remove('dim');setMsg('Listen...');
+G.seq.forEach((k,i)=>after(W(520)+i*G.stepMs,()=>shineMed(k)));
+after(W(520)+G.seq.length*G.stepMs+W(120),()=>{G.state='input';setMsg('Your turn!')});
+}
+function onMed(k){
+if(G.state!=='input')return;
+const el=medEls[k];
+el.classList.remove('tap');void el.offsetWidth;el.classList.add('tap');
+after(340,()=>el.classList.remove('tap'));
+const sr=stage.getBoundingClientRect(),br=el.getBoundingClientRect();
+burst(br.left-sr.left+br.width/2,br.top-sr.top+br.height/2,MEDS[k].c2,8);
+if(k===G.seq[G.pos]){G.pos++;if(G.pos===G.seq.length)roundDone()}
+else mistake();
+}
+function roundDone(){
+G.state='wait';G.count=G.seq.length;
+const c=$('count');c.textContent=G.count;popEl(c);
+if(G.count<=12)beadEls[G.count-1].classList.add('on');
+borderRun();
+if(G.count>G.best){G.best=G.count;save();refreshChips()}
+if(G.count===12){
+if(!G.done){G.done=true;save();refreshChips()}
+flashStage();shower(stage);setMsg(MEDS[2].line,true);
+after(W(1800),openWin);
+}else if(G.count%4===0){
+flashStage();shower(stage);
+setMsg(MEDS[(G.count/4-1)%4].line,true);
+after(W(2050),grow);
+}else{
+setMsg(CHEERS[G.count%CHEERS.length]);
+after(W(820),grow);
+}
+}
+function grow(){G.seq.push(nextK());playSeq()}
+function mistake(){
+G.state='wait';G.moons--;refreshMoons();stage.classList.add('dim');
+setMsg('Almost! Listen again...');
+if(G.moons>0){after(W(1150),playSeq)}
+else{save();after(W(950),openRest)}
+}
+function resetRun(){G.seq=[];G.pos=0;G.count=0;G.moons=3;refreshMoons();
+beadEls.forEach(b=>b.classList.remove('on'));$('count').textContent='0'}
+function startRun(){G.seq=[nextK()];setMsg('Listen...');after(W(600),playSeq)}
+
+/* overlays */
+const winOv=$('winOv'),restOv=$('restOv');
+function openWin(){$('winBest').textContent='Best chain: '+G.best;winOv.classList.add('show');
+after(W(400),()=>shower(winOv));after(W(450),()=>$('againB').focus())}
+function openRest(){$('restLine').textContent=G.count>0?'You echoed '+G.count+' light'+(G.count===1?'':'s')+' tonight. Best: '+G.best+'.':'The medallions are warming up for you.';
+restOv.classList.add('show');after(W(450),()=>$('retryB').focus())}
+$('againB').addEventListener('click',()=>{winOv.classList.remove('show');resetRun();startRun()});
+$('moreB').addEventListener('click',()=>{winOv.classList.remove('show');setMsg('The echo goes on...');after(W(700),grow)});
+$('retryB').addEventListener('click',()=>{restOv.classList.remove('show');resetRun();startRun()});
+$('begin').addEventListener('click',()=>{
+if(G.state!=='idle')return;
+$('begin').classList.add('gone');grid.classList.remove('pre');startRun();
+});
+$('reset').addEventListener('click',()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+/* soft wake cascade, once, then the page rests */
+if(!RM)after(700,()=>{if(G.state!=='idle')return;
+[0,1,2,3].forEach((k,i)=>after(190*i,()=>{if(G.state==='idle')shineMed(k,true)}))});
+})();
+</script>
+</body>
+</html>

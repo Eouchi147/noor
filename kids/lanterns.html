@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Lanterns ☾ Little Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parchment:#FFFEF7; --ink:#2C2416; --gold:#C9A227; --gold-hi:#E9C86A;
+  --lapis:#1E3A8A; --deep:#14100A; --rose:#fb7185; --card:#FFFDF4;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; min-height:100svh; display:flex; flex-direction:column;
+  font-family:Inter,system-ui,sans-serif; color:#F3E9C2;
+  background:linear-gradient(180deg,#0d1b45 0%,#1E3A8A 55%,#2d4fb3 100%);
+  background-attachment:fixed; overflow-x:hidden;
+}
+#bgStars{position:fixed; inset:0; z-index:0; pointer-events:none}
+#bgStars span{
+  position:absolute; width:2px; height:2px; border-radius:50%;
+  background:#fff; opacity:.2; animation:tw 3.4s ease-in-out infinite;
+}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.85}}
+#bgCres{position:fixed; top:14px; right:16px; width:44px; z-index:0; opacity:.9;
+  filter:drop-shadow(0 0 10px rgba(233,200,106,.55)); pointer-events:none}
+header,footer{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; font-size:13px;
+}
+header a,footer a,.linkish{color:#F1E4B3; text-decoration:none; font-weight:600}
+header a:hover,footer a:hover,.linkish:hover{color:var(--gold-hi)}
+.gtitle{font-size:11.5px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-hi); font-weight:700}
+footer{justify-content:center; gap:10px; font-size:12.5px; opacity:.9; margin-top:auto; padding-bottom:16px}
+.linkish{background:none; border:none; font:600 12.5px Inter; cursor:pointer; padding:4px; opacity:.75}
+main{position:relative; z-index:1; width:min(560px,100% - 20px); margin:0 auto; text-align:center}
+.titleRow{display:flex; align-items:baseline; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:2px}
+h1{font-family:Amiri,serif; font-size:clamp(30px,9vw,40px); margin:0; color:var(--gold-hi);
+  text-shadow:0 2px 18px rgba(233,200,106,.35)}
+#doneNote{font-size:11px; font-weight:700; color:var(--ink); background:var(--gold-hi);
+  border-radius:999px; padding:3px 10px; letter-spacing:.4px}
+.sub{margin:6px 0 10px; font-size:13.5px; opacity:.88}
+#hud{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:10px}
+.chip{background:var(--card); color:var(--ink); border:1px solid var(--gold);
+  border-radius:999px; padding:7px 13px; font-size:12px; font-weight:700; min-height:32px;
+  display:inline-flex; align-items:center; gap:6px}
+.cr{color:#b9a97c; font-size:14px; transition:color .3s, text-shadow .3s}
+.cr.on{color:#a8780a; text-shadow:0 0 8px rgba(233,200,106,.9)}
+.bb{font-size:10px; font-weight:600; color:#7a6a3e; margin-left:2px}
+#stage{
+  position:relative; background:var(--card); border:3px solid var(--gold); border-radius:22px;
+  padding:9px; box-shadow:0 22px 60px rgba(4,8,26,.55);
+}
+#stage::after{content:""; position:absolute; inset:4px; border:1px solid rgba(201,162,39,.55);
+  border-radius:16px; pointer-events:none; z-index:12}
+#scene{
+  position:relative; width:100%; aspect-ratio:8/9; max-height:520px; margin:0 auto;
+  border-radius:14px; overflow:hidden; background:#0a1140;
+}
+.skyL{position:absolute; inset:0; pointer-events:none}
+#Lnight{background:linear-gradient(180deg,#0a1140 0%,#16295f 55%,#27408f 100%)}
+#Ldawn{background:linear-gradient(180deg,#1c2158 0%,#54387b 42%,#c4738b 74%,#f0b87e 100%); opacity:0}
+#Lday{background:linear-gradient(180deg,#2f6bc4 0%,#6ea3e2 52%,#bfe0f2 84%,#f6e9c8 100%); opacity:0}
+#Ldusk{background:linear-gradient(180deg,#252056 0%,#6f3a6e 42%,#c75d5f 74%,#f2a35e 100%); opacity:0}
+#sceneStars{position:absolute; inset:0 0 38% 0; pointer-events:none}
+#sceneStars i{position:absolute; border-radius:50%; background:#fff}
+#sun{position:absolute; left:0; top:0; width:130px; height:130px; margin:-65px 0 0 -65px;
+  pointer-events:none; will-change:transform}
+.sHalo{position:absolute; inset:0;
+  background:radial-gradient(circle,rgba(255,214,120,.55) 0%,rgba(255,190,110,0) 68%)}
+.sCore{position:absolute; inset:30%;
+  background:radial-gradient(circle,#FFFBE8 0% 26%,#FFE07E 54%,rgba(255,190,80,0) 72%)}
+.sAmb{position:absolute; inset:28%; opacity:0;
+  background:radial-gradient(circle,#FFD9A6 0% 28%,#FF9A5A 56%,rgba(255,110,60,0) 74%)}
+#moon{position:absolute; left:0; top:0; width:88px; height:88px; margin:-44px 0 0 -44px;
+  opacity:0; pointer-events:none; will-change:transform}
+.mHalo{position:absolute; inset:6%;
+  background:radial-gradient(circle,rgba(240,236,210,.3) 0%,rgba(240,236,210,0) 62%)}
+#moon svg{position:absolute; inset:17%; filter:drop-shadow(0 0 6px rgba(244,236,208,.8))}
+#guide{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
+#guide path.road{fill:none; stroke:rgba(233,200,106,.34); stroke-width:1.6; stroke-dasharray:2 7; stroke-linecap:round}
+.mk{fill:rgba(233,200,106,.42); transition:fill .3s, filter .3s}
+.mk.hot{fill:#fb7185; filter:drop-shadow(0 0 6px rgba(251,113,133,.95))}
+.mk.done{fill:#E9C86A; filter:drop-shadow(0 0 5px rgba(233,200,106,.9))}
+#ground{position:absolute; left:0; right:0; bottom:0; height:40%; pointer-events:none}
+#houseWrap{position:absolute; left:50%; bottom:1.5%; width:52%; max-width:240px;
+  transform:translateX(-50%); z-index:4; pointer-events:none}
+#houseGlow{position:absolute; inset:-34% -26%;
+  background:radial-gradient(ellipse at 50% 62%,rgba(255,224,140,.55) 0%,rgba(255,224,140,0) 66%);
+  opacity:0; transition:opacity .9s}
+#house{position:relative; display:block; width:100%; transition:filter .8s}
+#house.shine{filter:drop-shadow(0 0 24px rgba(233,200,106,.9))}
+.hw{fill:#10173a; stroke:rgba(201,162,39,.4); stroke-width:.8; transition:fill .5s, filter .5s}
+.hw.on{fill:#FFE7A3; filter:drop-shadow(0 0 4px rgba(255,225,150,.95))}
+#door{transition:fill .5s} #door.on{fill:#FFDf8e}
+.lantern{
+  position:absolute; top:36%; height:28%; width:19%; z-index:5;
+  background:none; border:none; padding:0; margin:0; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent; color:#F3E9C2;
+}
+.lantern svg{width:min(48px,62%); height:auto; overflow:visible; transition:opacity .4s}
+.lname{font-size:10.5px; font-weight:700; letter-spacing:.4px; margin-top:1px}
+.aname{font-family:Amiri,serif; font-size:12.5px; color:var(--gold-hi); line-height:1.15}
+.lantern.missed svg{opacity:.5}
+.lantern.missed .lname,.lantern.missed .aname{opacity:.55}
+.gg{opacity:0; transition:opacity .45s}
+.lantern.lit .gg{opacity:.55}
+.flame{transform-origin:22px 37px; transform:scale(0); opacity:0;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), opacity .25s}
+.lantern.lit .flame{transform:scale(1); opacity:1}
+body.playing .lantern.lit .flame{animation:flick 1.3s ease-in-out infinite alternate}
+@keyframes flick{from{transform:scale(1)}to{transform:scale(.9,1.07)}}
+.lantern.lit svg{filter:drop-shadow(0 0 8px rgba(255,215,114,.75))}
+.lantern.now svg{filter:drop-shadow(0 0 8px rgba(251,113,133,.8))}
+.ring{position:absolute; left:50%; top:32%; width:56px; height:56px; margin:-28px 0 0 -28px;
+  border:3px solid var(--rose); border-radius:50%; opacity:0; pointer-events:none}
+.lantern.now .ring{animation:ringP 1.05s ease-out infinite}
+@keyframes ringP{0%{transform:scale(.5); opacity:.95}70%{opacity:.3}100%{transform:scale(1.65); opacity:0}}
+.bub{position:absolute; left:50%; top:-6%; transform:translate(-50%,0) scale(0);
+  background:var(--rose); color:#fff; font-size:11px; font-weight:700; padding:5px 10px;
+  border-radius:999px; opacity:0; white-space:nowrap; pointer-events:none; z-index:7;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+  box-shadow:0 3px 10px rgba(10,14,40,.4)}
+.bub.on{transform:translate(-50%,0) scale(1); opacity:1}
+.lantern[data-i="0"] .bub{left:0; transform:translate(0,0) scale(0); transform-origin:0 100%}
+.lantern[data-i="0"] .bub.on{transform:translate(0,0) scale(1)}
+.lantern[data-i="4"] .bub{left:auto; right:0; transform:translate(0,0) scale(0); transform-origin:100% 100%}
+.lantern[data-i="4"] .bub.on{transform:translate(0,0) scale(1)}
+.bub.soft{background:#3b437c}
+.bub.litb{background:linear-gradient(180deg,#E9C86A,#C9A227); color:var(--ink)}
+@keyframes shk{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.lantern.shake svg{animation:shk .28s linear 2}
+#fx{position:absolute; inset:0; pointer-events:none; z-index:8}
+.p{position:absolute; width:7px; height:7px; border-radius:50%; pointer-events:none}
+.spark{position:absolute; width:11px; height:11px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle,#FFF6D8 0% 30%,#E9C86A 60%,rgba(233,200,106,0) 75%);
+  box-shadow:0 0 10px rgba(233,200,106,.9)}
+#flash{position:absolute; left:50%; top:36%; transform:translate(-50%,-50%) scale(0);
+  font-size:clamp(19px,6vw,26px); font-weight:800; color:#fff; z-index:9; pointer-events:none;
+  text-shadow:0 2px 16px rgba(251,113,133,.9),0 0 30px rgba(233,200,106,.7); white-space:nowrap}
+.ov{position:absolute; inset:0; z-index:10; display:none; align-items:center; justify-content:center;
+  background:rgba(9,13,36,.5); border-radius:14px; padding:12px}
+.ov.show{display:flex}
+.ovCard{position:relative; background:var(--card); border:3px solid var(--gold); border-radius:20px;
+  padding:22px 18px 20px; width:min(94%,340px); color:var(--ink);
+  box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.ovCard::after{content:""; position:absolute; inset:4px; border:1px solid rgba(201,162,39,.5);
+  border-radius:15px; pointer-events:none}
+.ov.show .ovCard{animation:cardIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cardIn{from{transform:scale(.65); opacity:0}}
+.ovCard h2{font-family:Amiri,serif; font-size:26px; margin:4px 0 8px; color:#7a5c07}
+.ovCard p{font-size:14px; line-height:1.5; margin:6px 0}
+.ovMoon{font-size:26px; color:var(--gold); line-height:1}
+.btn{min-height:58px; padding:14px 24px; border-radius:999px; border:2px solid var(--gold);
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold)); color:var(--ink);
+  font:800 16px Inter; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  gap:6px; box-shadow:0 5px 16px rgba(201,162,39,.4); text-decoration:none;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1); margin:6px 4px 0}
+.btn:hover{transform:scale(1.04)} .btn:active{transform:scale(.94)}
+.btn.ghost{background:var(--card); color:var(--lapis)}
+.scr{font-size:24px; color:#c9bd93; margin:0 3px; transition:color .3s, text-shadow .3s}
+.scr.on{color:#a8780a; text-shadow:0 0 10px rgba(233,200,106,.95)}
+#ovWin{position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center;
+  background:rgba(8,11,32,.78); overflow:hidden; padding:14px}
+#ovWin.show{display:flex}
+#rays{position:absolute; left:50%; top:50%; width:160vmax; height:160vmax; border-radius:50%;
+  background:repeating-conic-gradient(rgba(233,200,106,.15) 0deg 11deg, rgba(233,200,106,0) 11deg 30deg);
+  animation:spin 28s linear infinite}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+#ovWin .ovCard{z-index:2; width:min(94%,380px)}
+.winLine{font-family:Amiri,serif; font-size:19px; line-height:1.55; color:var(--ink); margin:10px 0 4px}
+.winCite{font-size:13px; line-height:1.6; color:#5c4d23}
+.winRule{color:var(--gold); font-size:13px; letter-spacing:6px; margin:8px 0 2px}
+button:focus-visible,a:focus-visible{outline:3px solid var(--gold-hi); outline-offset:2px; border-radius:10px}
+@media (min-width:900px){ main{width:560px} }
+@media (max-width:340px){
+  .lname{font-size:9.5px} .aname{font-size:11px} .chip{padding:6px 9px; font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  #bgStars span{animation:none}
+  .lantern.now .ring{animation:none; opacity:.75; transform:scale(1)}
+  body.playing .lantern.lit .flame{animation:none}
+  #rays{animation:none}
+  .ov.show .ovCard{animation:none}
+  .btn{transition:none} .bub{transition:opacity .2s}
+}
+</style>
+</head>
+<body>
+<div id="bgStars" aria-hidden="true"></div>
+<svg id="bgCres" viewBox="0 0 60 60" aria-hidden="true">
+  <path d="M30 6 A24 24 0 1 0 30 54 A19 19 0 1 1 30 6 Z" fill="#E9C86A"/>
+</svg>
+<header>
+  <a href="../kids.html">☾ Little Codex</a>
+  <span class="gtitle">Five Lanterns</span>
+</header>
+<main>
+  <div class="titleRow">
+    <h1>Five Lanterns</h1>
+    <span id="doneNote" hidden>✓ completed</span>
+  </div>
+  <p class="sub">Tap each lantern at its own time. Light all five, three days in a row!</p>
+  <div id="hud">
+    <span class="chip" id="dayChip">Day 1</span>
+    <span class="chip" id="litChip">✦ 0 / 5</span>
+    <span class="chip" id="streakChip" aria-label="perfect day streak"><span class="cr">☾</span><span class="cr">☾</span><span class="cr">☾</span><span class="bb" id="bestBB" hidden></span></span>
+  </div>
+  <section id="stage" aria-label="Five Lanterns game">
+    <div id="scene">
+      <div class="skyL" id="Lnight"></div>
+      <div class="skyL" id="Ldawn"></div>
+      <div class="skyL" id="Lday"></div>
+      <div class="skyL" id="Ldusk"></div>
+      <div id="sceneStars" aria-hidden="true"></div>
+      <div id="sun" aria-hidden="true"><div class="sHalo"></div><div class="sCore"></div><div class="sAmb"></div></div>
+      <div id="moon" aria-hidden="true"><div class="mHalo"></div>
+        <svg viewBox="0 0 60 60"><path d="M30 6 A24 24 0 1 0 30 54 A19 19 0 1 1 30 6 Z" fill="#F4ECD0"/></svg>
+      </div>
+      <svg id="guide" aria-hidden="true"><path class="road" d=""/></svg>
+      <svg id="ground" viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 42 Q80 10 170 36 T400 30 L400 160 L0 160 Z" fill="#1b2656"/>
+        <g fill="#111a44">
+          <path d="M34 42 A17 13 0 0 1 68 42 Z"/>
+          <rect x="46" y="40" width="10" height="10"/>
+          <rect x="76" y="12" width="6" height="34"/>
+          <path d="M74 12 A5 5 0 0 1 84 12 Z"/>
+          <circle cx="79" cy="5" r="1.6" fill="#C9A227"/>
+          <circle cx="51" cy="26" r="1.6" fill="#C9A227"/>
+        </g>
+        <path d="M0 74 Q110 46 220 68 T400 58 L400 160 L0 160 Z" fill="#0f1738"/>
+        <g fill="#0b122e">
+          <circle cx="330" cy="70" r="9"/><circle cx="344" cy="74" r="7"/>
+          <circle cx="52" cy="86" r="8"/><circle cx="64" cy="90" r="6"/>
+        </g>
+      </svg>
+      <div id="houseWrap">
+        <div id="houseGlow"></div>
+        <svg id="house" viewBox="0 0 240 176" aria-hidden="true">
+          <ellipse cx="120" cy="170" rx="98" ry="6" fill="#0a0f28" opacity=".65"/>
+          <rect x="28" y="58" width="184" height="108" rx="10" fill="#202860" stroke="#C9A227" stroke-width="1.2"/>
+          <rect x="22" y="50" width="196" height="11" rx="5.5" fill="#2a3370" stroke="#C9A227" stroke-width=".8"/>
+          <path d="M78 50 A42 32 0 0 1 162 50 Z" fill="#2c3778" stroke="#C9A227" stroke-width="1"/>
+          <rect x="119" y="14" width="2" height="9" fill="#C9A227"/>
+          <path d="M120 4 A6 6 0 1 0 120 15 A4.6 4.6 0 1 1 120 4 Z" fill="#E9C86A"/>
+          <path id="door" d="M106 166 L106 158 A14 14 0 0 1 134 158 L134 166 Z" fill="#141b45" stroke="#C9A227" stroke-width="1"/>
+          <g id="hwins"></g>
+        </svg>
+      </div>
+      <div id="lamps"></div>
+      <div id="fx" aria-hidden="true"></div>
+      <div id="flash" aria-hidden="true"></div>
+      <div class="ov show" id="ovStart">
+        <div class="ovCard">
+          <div class="ovMoon">☾</div>
+          <h2>Five Lanterns</h2>
+          <p>A light crosses the sky, from dawn to night.</p>
+          <p>When a lantern glows <b style="color:#e04c62">Now!</b>, tap it fast to light it.</p>
+          <p><b>Light all five. Do it three days in a row!</b></p>
+          <button class="btn" id="startBtn">Begin Day 1</button>
+        </div>
+      </div>
+      <div class="ov" id="ovSum">
+        <div class="ovCard">
+          <div aria-hidden="true"><span class="scr">☾</span><span class="scr">☾</span><span class="scr">☾</span></div>
+          <h2 id="sumTitle">Day 1</h2>
+          <p id="sumSub"></p>
+          <button class="btn" id="sumBtn">Begin Day 2</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="ovWin">
+  <div id="rays" aria-hidden="true"></div>
+  <div class="ovCard">
+    <div class="ovMoon">☾ ✦ ☾</div>
+    <h2>The whole house shines!</h2>
+    <p class="winLine">Five lights a day keep the heart's house bright.</p>
+    <div class="winRule" aria-hidden="true">✦ ✦ ✦</div>
+    <p class="winCite">The Prophet ﷺ said prayer is the first thing asked about on the Day of Rising (Tirmidhi 413, hasan).</p>
+    <div>
+      <button class="btn" id="againBtn">Play again</button>
+      <a class="btn ghost" href="../kids.html">☾ Little Codex</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <a href="../kids.html">☾ Back to the Little Codex</a>
+  <span aria-hidden="true">·</span>
+  <button class="linkish" id="resetLink">start over</button>
+</footer>
+<div id="sr" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"></div>
+<script>
+(function(){
+"use strict";
+var qs=function(s){return document.querySelector(s)};
+var KEY="nk-lanterns";
+var FAST=/[?&]fast=1/.test(location.search);
+var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var BASE=FAST?4200:56000;
+var P=[
+ {n:"Fajr",  a:"الفجر",  s:.005,e:.115},
+ {n:"Dhuhr", a:"الظهر",  s:.30, e:.41},
+ {n:"Asr",   a:"العصر",  s:.445,e:.555},
+ {n:"Maghrib",a:"المغرب",s:.60, e:.71},
+ {n:"Isha",  a:"العشاء", s:.80, e:.93}
+];
+var scene=qs("#scene"),fx=qs("#fx"),flashEl=qs("#flash"),sun=qs("#sun"),moon=qs("#moon"),
+ sAmb=qs(".sAmb"),sHalo=qs(".sHalo"),Ldawn=qs("#Ldawn"),Lday=qs("#Lday"),Ldusk=qs("#Ldusk"),
+ sceneStars=qs("#sceneStars"),guide=qs("#guide"),road=guide.querySelector(".road"),
+ lamps=qs("#lamps"),house=qs("#house"),houseGlow=qs("#houseGlow"),doorEl=qs("#door"),
+ dayChip=qs("#dayChip"),litChip=qs("#litChip"),bestBB=qs("#bestBB"),
+ ovStart=qs("#ovStart"),ovSum=qs("#ovSum"),ovWin=qs("#ovWin"),
+ sumTitle=qs("#sumTitle"),sumSub=qs("#sumSub"),srEl=qs("#sr");
+var phase="start",day=1,streak=0,best=0,doneF=false,dayRow=0;
+var t=0,lastTs=0,cycle=BASE,lit=[0,0,0,0,0],wst=["p","p","p","p","p"];
+var W=0,H=0,cx=0,cy=0,RX=0,RY=0,pc=0,bubT=[0,0,0,0,0],seqT=[];
+var lampEls=[],bubEls=[],mkEls=[],hwEls=[];
+
+/* build page stars */
+(function(){
+  var bg=qs("#bgStars"),i,s;
+  for(i=0;i<35;i++){
+    s=document.createElement("span");
+    s.style.left=(Math.random()*100)+"%";
+    s.style.top=(Math.random()*100)+"%";
+    s.style.width=s.style.height=(Math.random()<.3?3:2)+"px";
+    s.style.animationDuration=(2.4+Math.random()*2.6)+"s";
+    s.style.animationDelay=(-Math.random()*4)+"s";
+    bg.appendChild(s);
+  }
+  for(i=0;i<24;i++){
+    s=document.createElement("i");
+    s.style.left=(Math.random()*100)+"%";
+    s.style.top=(Math.random()*92)+"%";
+    var z=Math.random()<.25?2.6:1.8;
+    s.style.width=s.style.height=z+"px";
+    s.style.opacity=(.35+Math.random()*.55).toFixed(2);
+    sceneStars.appendChild(s);
+  }
+})();
+
+/* lantern buttons */
+var LSVG='<svg viewBox="0 0 44 84" aria-hidden="true">'+
+ '<circle cx="22" cy="6" r="2.6" fill="none" stroke="#C9A227" stroke-width="1.6"/>'+
+ '<rect x="21" y="8" width="2" height="5" fill="#C9A227"/>'+
+ '<path d="M12 19 Q22 8 32 19 Z" fill="#1c234d" stroke="#C9A227" stroke-width="1.2" stroke-linejoin="round"/>'+
+ '<path d="M13 19 L31 19 L34 44 L10 44 Z" fill="#232b5e" stroke="#C9A227" stroke-width="1.4" stroke-linejoin="round"/>'+
+ '<path d="M16.5 22 L27.5 22 L29.5 41.5 L14.5 41.5 Z" fill="rgba(255,255,255,.1)"/>'+
+ '<ellipse class="gg" cx="22" cy="32" rx="11" ry="13" fill="#FFDF8E"/>'+
+ '<g class="flame"><path d="M22 25 C26.5 30 26 35.5 22 37.5 C18 35.5 17.5 30 22 25 Z" fill="#FFD772"/>'+
+ '<circle cx="22" cy="33.5" r="2.4" fill="#FFF6DA"/></g>'+
+ '<path d="M10 44 L34 44 L31 49.5 L13 49.5 Z" fill="#1c234d" stroke="#C9A227" stroke-width=".9" stroke-linejoin="round"/>'+
+ '<rect x="20.6" y="49.5" width="2.8" height="20" fill="#1a2148" stroke="rgba(201,162,39,.55)" stroke-width=".6"/>'+
+ '<rect x="14" y="69.5" width="16" height="4.5" rx="2.2" fill="#1c234d" stroke="rgba(201,162,39,.6)" stroke-width=".6"/>'+
+ '</svg>';
+(function(){
+  var html="",i;
+  for(i=0;i<5;i++){
+    html+='<button class="lantern" data-i="'+i+'" style="left:'+(i*20+0.5)+'%" '+
+     'aria-label="'+P[i].n+' lantern, tap when it glows">'+
+     '<span class="ring"></span><span class="bub"></span>'+LSVG+
+     '<span class="lname">'+P[i].n+'</span><span class="aname">'+P[i].a+'</span></button>';
+  }
+  lamps.innerHTML=html;
+  lampEls=[].slice.call(lamps.querySelectorAll(".lantern"));
+  bubEls=lampEls.map(function(el){return el.querySelector(".bub")});
+  lampEls.forEach(function(el){
+    el.addEventListener("click",function(){tap(+el.dataset.i)});
+  });
+})();
+
+/* house windows: 3 rows of 5, row 0 = bottom */
+(function(){
+  var g=qs("#hwins"),ys=[120,90,62],r,c;
+  for(r=0;r<3;r++)for(c=0;c<5;c++){
+    var rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+    rect.setAttribute("x",41+36*c); rect.setAttribute("y",ys[r]);
+    rect.setAttribute("width",14); rect.setAttribute("height",18);
+    rect.setAttribute("rx",5); rect.setAttribute("class","hw");
+    g.appendChild(rect); hwEls.push(rect);
+  }
+})();
+
+/* dome geometry */
+function apos(deg){
+  var r=deg*Math.PI/180;
+  return [cx+RX*Math.cos(r), cy-RY*Math.sin(r)];
+}
+function mkTheta(i){
+  if(i===4)return 25;
+  var mid=(P[i].s+P[i].e)/2;
+  return 190-200*(mid/.74);
+}
+(function(){
+  var i;
+  for(i=0;i<5;i++){
+    var m=document.createElementNS("http://www.w3.org/2000/svg","path");
+    m.setAttribute("d","M0 -5 L4.2 0 L0 5 L-4.2 0 Z");
+    m.setAttribute("class","mk");
+    guide.appendChild(m); mkEls.push(m);
+  }
+})();
+function geo(){
+  W=scene.clientWidth; H=scene.clientHeight;
+  cx=W*.5; cy=H*.655; RX=W*.42; RY=H*.5;
+  var d="",a,p;
+  for(a=180;a>=0;a-=4){ p=apos(a); d+=(a===180?"M":"L")+p[0].toFixed(1)+" "+p[1].toFixed(1)+" "; }
+  road.setAttribute("d",d);
+  for(a=0;a<5;a++){ p=apos(mkTheta(a)); mkEls[a].setAttribute("transform","translate("+p[0].toFixed(1)+" "+p[1].toFixed(1)+")"); }
+}
+var rzT=0;
+addEventListener("resize",function(){clearTimeout(rzT); rzT=setTimeout(function(){geo(); render(t)},140)});
+
+/* sky + traveling light */
+function ramp(v,a,b){var x=(v-a)/(b-a); return x<0?0:(x>1?1:x)}
+function render(tt){
+  var dawn=ramp(tt,0,.05)*(1-ramp(tt,.13,.24));
+  var dayW=ramp(tt,.16,.30)*(1-ramp(tt,.52,.70));
+  var dusk=ramp(tt,.50,.62)*(1-ramp(tt,.70,.80));
+  var starsOp=Math.max(1-ramp(tt,.02,.12), ramp(tt,.72,.82));
+  Ldawn.style.opacity=dawn.toFixed(3);
+  Lday.style.opacity=dayW.toFixed(3);
+  Ldusk.style.opacity=dusk.toFixed(3);
+  sceneStars.style.opacity=(starsOp*.95).toFixed(3);
+  var st=Math.min(tt/.74,1), th=190-200*st, r=th*Math.PI/180;
+  var sx=cx+RX*Math.cos(r), sy=cy-RY*Math.sin(r);
+  var lift=Math.sin(r); if(lift<0)lift=0; if(lift>1)lift=1;
+  var sc=1+.32*(1-lift);
+  var amber=Math.max(1-ramp(tt,.10,.22), ramp(tt,.55,.68));
+  sun.style.transform="translate("+sx.toFixed(1)+"px,"+sy.toFixed(1)+"px) scale("+sc.toFixed(3)+")";
+  sun.style.opacity=(1-ramp(tt,.735,.775)).toFixed(3);
+  sAmb.style.opacity=amber.toFixed(3);
+  sHalo.style.opacity=(.55+.4*amber).toFixed(3);
+  var mt=ramp(tt,.755,1), thm=-5+200*mt, rm=thm*Math.PI/180;
+  var mx=cx+RX*Math.cos(rm), my=cy-RY*Math.sin(rm);
+  moon.style.transform="translate("+mx.toFixed(1)+"px,"+my.toFixed(1)+"px)";
+  moon.style.opacity=(ramp(tt,.76,.80)*(1-ramp(tt,.985,1))).toFixed(3);
+}
+
+/* helpers */
+function sr(msg){srEl.textContent=msg}
+function bub(i,txt,kind,hide){
+  var b=bubEls[i];
+  b.textContent=txt; b.className="bub on"+(kind?" "+kind:"");
+  clearTimeout(bubT[i]);
+  if(hide)bubT[i]=setTimeout(function(){b.classList.remove("on")},hide);
+}
+function sceneRect(){return scene.getBoundingClientRect()}
+function burst(x,y,n,rose){
+  if(RM)return;
+  var i,m=Math.min(n,40-pc);
+  for(i=0;i<m;i++){
+    var d=document.createElement("div"); d.className="p";
+    d.style.background=(rose&&i%3===0)?"radial-gradient(circle,#ffd3da,#fb7185 70%)":"radial-gradient(circle,#FFF6D8,#E9C86A 70%)";
+    d.style.left=x+"px"; d.style.top=y+"px"; fx.appendChild(d); pc++;
+    var an=Math.random()*Math.PI*2, dist=26+Math.random()*44;
+    d.animate([
+      {transform:"translate(-50%,-50%) scale(1)",opacity:1},
+      {transform:"translate(calc(-50% + "+(Math.cos(an)*dist).toFixed(0)+"px), calc(-50% + "+(Math.sin(an)*dist-14).toFixed(0)+"px)) scale(.2)",opacity:0}
+    ],{duration:620+Math.random()*320,easing:"cubic-bezier(.2,.7,.4,1)"}).onfinish=(function(el){return function(){el.remove();pc--}})(d);
+  }
+}
+function flash(txt){
+  flashEl.textContent=txt;
+  flashEl.animate([
+    {transform:"translate(-50%,-50%) scale(0)",opacity:0},
+    {transform:"translate(-50%,-50%) scale(1.15)",opacity:1,offset:.4},
+    {transform:"translate(-50%,-50%) scale(1)",opacity:1,offset:.68},
+    {transform:"translate(-50%,-50%) scale(1)",opacity:0}
+  ],{duration:RM?600:1500,easing:"cubic-bezier(.34,1.56,.64,1)"});
+}
+function lampPoint(i){
+  var r=lampEls[i].getBoundingClientRect(), sr2=sceneRect();
+  return [r.left-sr2.left+r.width/2, r.top-sr2.top+r.height*.3];
+}
+function chipPop(el){
+  el.animate([{transform:"scale(1)"},{transform:"scale(1.18)"},{transform:"scale(1)"}],
+   {duration:380,easing:"cubic-bezier(.34,1.56,.64,1)"});
+}
+function updHud(){
+  dayChip.textContent="Day "+day;
+  litChip.textContent="✦ "+lit.reduce(function(a,b){return a+b},0)+" / 5";
+  var crs=qs("#streakChip").querySelectorAll(".cr");
+  for(var i=0;i<3;i++)crs[i].classList.toggle("on",i<streak);
+  if(best>0){bestBB.hidden=false; bestBB.textContent="best "+best}
+}
+function updGlow(){
+  var n=0; hwEls.forEach(function(w){if(w.classList.contains("on"))n++});
+  houseGlow.style.opacity=(n/15*.85).toFixed(2);
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify({done:doneF,bestStreak:best}))}catch(e){}
+}
+
+/* day loop */
+function startDay(){
+  seqT.forEach(clearTimeout); seqT=[]; bubT.forEach(clearTimeout);
+  t=0; lastTs=0; lit=[0,0,0,0,0]; wst=["p","p","p","p","p"]; dayRow=streak;
+  cycle=Math.max(BASE*Math.pow(.88,day-1),BASE*.5);
+  lampEls.forEach(function(el){el.classList.remove("now","lit","missed","shake")});
+  bubEls.forEach(function(b){b.classList.remove("on")});
+  mkEls.forEach(function(m){m.classList.remove("hot","done")});
+  if(streak===0){hwEls.forEach(function(w){w.classList.remove("on")}); doorEl.classList.remove("on");
+    house.classList.remove("shine"); updGlow();}
+  ovStart.classList.remove("show"); ovSum.classList.remove("show"); ovWin.classList.remove("show");
+  updHud(); render(0);
+  phase="day"; document.body.classList.add("playing");
+  sr("Day "+day+" begins. Watch for Fajr.");
+  requestAnimationFrame(tick);
+}
+function tick(ts){
+  if(phase!=="day")return;
+  if(!lastTs)lastTs=ts;
+  var dt=Math.min(ts-lastTs,80); lastTs=ts;
+  t+=dt/cycle;
+  if(t>=1){t=1; render(1); endDay(); return;}
+  render(t); windows();
+  requestAnimationFrame(tick);
+}
+function windows(){
+  for(var i=0;i<5;i++){
+    if(wst[i]==="p"&&t>=P[i].s&&t<P[i].e){
+      wst[i]="a"; lampEls[i].classList.add("now"); mkEls[i].classList.add("hot");
+      bub(i,"Now!","",0); sr(P[i].n+" time! Tap the lantern.");
+    }else if(wst[i]==="a"&&t>=P[i].e){
+      wst[i]="m"; lampEls[i].classList.remove("now"); lampEls[i].classList.add("missed");
+      mkEls[i].classList.remove("hot");
+      bub(i,"Catch it tomorrow!","soft",1900); sr(P[i].n+" passed. Catch it tomorrow.");
+    }
+  }
+}
+function tap(i){
+  if(phase!=="day")return;
+  var st=wst[i],el=lampEls[i];
+  if(st==="a"){light(i)}
+  else if(st==="p"){
+    el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake");
+    bub(i,"Not yet!","soft",1100);
+  }
+  else if(st==="m"){bub(i,"Tomorrow, inshaAllah!","soft",1400)}
+  else{var p=lampPoint(i); burst(p[0],p[1],3,false)}
+}
+function light(i){
+  wst[i]="l"; lit[i]=1;
+  var el=lampEls[i];
+  el.classList.remove("now"); el.classList.add("lit");
+  mkEls[i].classList.remove("hot"); mkEls[i].classList.add("done");
+  el.querySelector("svg").animate(
+   [{transform:"scale(1)"},{transform:"scale(1.26)"},{transform:"scale(1)"}],
+   {duration:430,easing:"cubic-bezier(.34,1.56,.64,1)"});
+  bub(i,"Lit! ✦","litb",950);
+  var p=lampPoint(i); burst(p[0],p[1],10,true);
+  updHud(); chipPop(litChip);
+  var n=lit.reduce(function(a,b){return a+b},0);
+  sr(P[i].n+" lantern lit. "+n+" of 5.");
+  if(n===5){flash("All five lights! ✦"); burst(W/2,H*.34,14,true)}
+}
+function endDay(){
+  phase="fill"; document.body.classList.remove("playing");
+  lampEls.forEach(function(el){el.classList.remove("now")});
+  mkEls.forEach(function(m){m.classList.remove("hot")});
+  var n=lit.reduce(function(a,b){return a+b},0), d=380;
+  for(var i=0;i<5;i++){
+    if(lit[i]){
+      (function(idx,del){seqT.push(setTimeout(function(){fly(idx)},del))})(i,d);
+      d+=180;
+    }
+  }
+  seqT.push(setTimeout(function(){afterFill(n)},d+740));
+}
+function fly(i){
+  var target=hwEls[dayRow*5+i];
+  var srct=sceneRect(), tr=target.getBoundingClientRect(), from=lampPoint(i);
+  var tx=tr.left-srct.left+tr.width/2, ty=tr.top-srct.top+tr.height/2;
+  if(RM){target.classList.add("on"); updGlow(); return;}
+  var s=document.createElement("div"); s.className="spark";
+  s.style.left=from[0]+"px"; s.style.top=from[1]+"px"; fx.appendChild(s);
+  var dx=tx-from[0], dy=ty-from[1];
+  s.animate([
+    {transform:"translate(-50%,-50%) scale(1)",opacity:1},
+    {transform:"translate(calc(-50% + "+(dx*.5).toFixed(0)+"px), calc(-50% + "+(dy*.5-30).toFixed(0)+"px)) scale(.9)",opacity:1,offset:.55},
+    {transform:"translate(calc(-50% + "+dx.toFixed(0)+"px), calc(-50% + "+dy.toFixed(0)+"px)) scale(.45)",opacity:.95}
+  ],{duration:640,easing:"cubic-bezier(.45,.1,.5,1)"}).onfinish=function(){
+    s.remove(); target.classList.add("on"); updGlow(); burst(tx,ty,3,false);
+  };
+}
+function afterFill(n){
+  var perfect=n===5;
+  if(perfect){streak++; if(streak>best)best=streak;}
+  else streak=0;
+  updHud(); save();
+  if(streak>=3){winSeq()}else{summary(n,perfect)}
+}
+function summary(n,perfect){
+  phase="summary";
+  sumTitle.textContent="Day "+day+" ✦ "+n+" of 5 lights";
+  sumSub.textContent=perfect?
+    (streak===1?"One shining day! Two more in a row.":"Two days in a row! Just one more!"):
+    "So close! Tomorrow is a fresh start. You can catch all five.";
+  var scrs=ovSum.querySelectorAll(".scr");
+  for(var i=0;i<3;i++)scrs[i].classList.toggle("on",i<streak);
+  qs("#sumBtn").textContent="Begin Day "+(day+1);
+  ovSum.classList.add("show");
+  sr(sumTitle.textContent+". "+sumSub.textContent);
+}
+function winSeq(){
+  phase="win";
+  if(!doneF){doneF=true}
+  save(); qs("#doneNote").hidden=false;
+  doorEl.classList.add("on");
+  house.classList.add("shine"); houseGlow.style.opacity="1";
+  house.animate([{transform:"scale(1)"},{transform:"scale(1.06)"},{transform:"scale(1)"}],
+   {duration:900,easing:"cubic-bezier(.34,1.56,.64,1)",iterations:2});
+  if(!RM){
+    var hr=qs("#houseWrap").getBoundingClientRect(), srct=sceneRect();
+    var hx=hr.left-srct.left+hr.width/2, hy=hr.top-srct.top+hr.height/2;
+    for(var i=0;i<12;i++){
+      (function(k){
+        setTimeout(function(){
+          if(pc>=40)return;
+          var d=document.createElement("div"); d.className="p";
+          d.style.background="radial-gradient(circle,#FFF6D8,#E9C86A 70%)";
+          d.style.left=hx+"px"; d.style.top=hy+"px"; fx.appendChild(d); pc++;
+          var a0=k/12*Math.PI*2, rr=56;
+          function pt(a){return "translate(calc(-50% + "+(Math.cos(a)*rr*1.4).toFixed(0)+"px), calc(-50% + "+(Math.sin(a)*rr*.7-20).toFixed(0)+"px)) scale(1)"}
+          d.animate([
+            {transform:pt(a0),opacity:0},
+            {transform:pt(a0+2.2),opacity:1,offset:.35},
+            {transform:pt(a0+4.4)+" scale(.3)",opacity:0}
+          ],{duration:1150,easing:"ease-in-out"}).onfinish=function(){d.remove();pc--};
+        },k*55);
+      })(i);
+    }
+  }
+  sr("Three perfect days! The whole house shines.");
+  setTimeout(function(){
+    ovWin.classList.add("show");
+    if(!RM){
+      var card=ovWin.querySelector(".ovCard");
+      for(var i=0;i<26;i++){
+        (function(k){
+          setTimeout(function(){
+            if(pc>=40)return;
+            var d=document.createElement("div"); d.className="p";
+            d.style.background=k%4===0?"radial-gradient(circle,#ffd3da,#fb7185 70%)":"radial-gradient(circle,#FFF6D8,#E9C86A 70%)";
+            d.style.left=(8+Math.random()*84)+"%"; d.style.top="-3%";
+            ovWin.appendChild(d); pc++;
+            d.animate([
+              {transform:"translateY(0) scale(1)",opacity:1},
+              {transform:"translateY("+(220+Math.random()*260).toFixed(0)+"px) scale(.3)",opacity:0}
+            ],{duration:1050+Math.random()*150,easing:"cubic-bezier(.3,.6,.6,1)"}).onfinish=function(){d.remove();pc--};
+          },k*70);
+        })(i);
+      }
+    }
+  },RM?300:1600);
+}
+
+/* wires */
+qs("#startBtn").addEventListener("click",function(){if(phase==="start")startDay()});
+qs("#sumBtn").addEventListener("click",function(){if(phase!=="summary")return; day++; startDay()});
+qs("#againBtn").addEventListener("click",function(){
+  if(phase!=="win")return; streak=0; day=1; updHud(); startDay();
+});
+qs("#resetLink").addEventListener("click",function(){
+  try{localStorage.removeItem(KEY)}catch(e){} location.reload();
+});
+
+/* load save */
+(function(){
+  try{
+    var s=JSON.parse(localStorage.getItem(KEY)||"null");
+    if(s){best=s.bestStreak||0; if(s.done){doneF=true; qs("#doneNote").hidden=false}}
+  }catch(e){}
+  updHud();
+})();
+geo(); render(0);
+})();
+</script>
+</body>
+</html>

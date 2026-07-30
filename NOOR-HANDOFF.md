@@ -190,3 +190,21 @@ Owner flagged sentences that were "not very english... not clear enough" (Khinza
 **Optional live mode:** api/guide.js is a dormant Vercel function. Set `ANTHROPIC_API_KEY` in Vercel → the free-text box silently upgrades to real Claude answers, constrained to the open article, 2-3 sentences, no rulings. Without the key the site is 100% static and the curated layer answers alone. Nothing to configure otherwise.
 
 Tests: suite grown to 68 assertions (rose draw, 9 mizan cards, debt strip, seven chips, kids full round on mobile, guide pill gating on/off, glossary free-text). All pass. i18n/en.json regenerated (165 UI keys).
+
+## v7 — "Ten Wonders" (game pack, hero air)
+
+**Hero decluttered per owner.** The "From the Throne over the water..." subtitle moved out of the hero into the About section (same i18n key). The six stat boxes left the hero entirely: they are now a slim counter band (#codex-count) between the hero and Seven Books: horizontally scrollable chips on mobile, centered on desktop, same count-up. The rose now stands nearly alone: kicker, title, three CTAs.
+
+**Little Codex expanded 1 → 10 activities.** Nine new self-contained games in kids/ (all: single file, zero deps, inline SVG art, one rAF loop, ≤44KB each, reduced-motion fallbacks, localStorage nk-* progress, gentle-failure design, no dashes, no human figures):
+1. Story Steps (story-steps.html): order 6 prophet stories, 5 moments each, streak stars.
+2. Two by Two (ark-pairs.html): memory pairs that physically board Nuh's ark; 11:41 finale.
+3. Catch the Name (star-catcher.html): falling-star match of 12 Beautiful Names, multiplier flames, constellation end.
+4. Build with Ibrahim (kaaba-builder.html): stack 12 courses, perfect-drop bonuses, kiswa drape, 2:127.
+5. Hajar's Search (zamzam.html): alternate-tap sa'i ×7, dig frenzy, water eruption, five jars; Muslim 2473.
+6. Three Words in the Dark (yunus.html): collect the du'a of Yunus word by word, sea lightens, whale + gourd vine; 21:88.
+7. The 700 Seed (orchard.html): plant, hold-to-water, watch 7 ears roll to 700, harvest to baskets; 2:261.
+8. Five Lanterns (lanterns.html): tap prayers as light crosses the sky dome, house fills with glow, 3-day streak; Tirmidhi 413 (hasan).
+9. Echo of Light (echo.html): dhikr Simon on four Amiri medallions; Bukhari 7563 finale.
+kids.html gained a "More Wonders" grid (9 accent-ringed cards with ✓ done seals read from localStorage) and a wonders counter ("X of 10", the Greatest Game counts at 7 gems).
+
+Tests: suite at 88 assertions, all green (hub cards, per-game smoke: clean load, overflow, dash, back-link).

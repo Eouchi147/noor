@@ -223,6 +223,24 @@ console.log('\n[8] kids.html');
     if (await btn.count()) { await btn.click(); await page.waitForTimeout(850); }
   }
   ok(await page.evaluate(() => /1 of 7/.test(document.body.innerText)), 'gem collected, back on star map');
+  ok(await page.locator('.w-card').count() === 9, 'More Wonders: 9 game cards');
+  ok(await page.evaluate(() => /wonders/i.test(document.getElementById('wcount').textContent)), 'wonders counter renders');
+  await ctx.close();
+}
+
+/* 8b. nine game pages smoke */
+console.log('\n[8b] nine little games');
+{
+  const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo']) {
+    errors.length = 0;
+    await page.goto(BASE + '/kids/' + g + '.html', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(900);
+    const ov = await page.evaluate(() => document.body.scrollWidth > innerWidth + 1);
+    const dash = await page.evaluate(() => /[—–]/.test(document.body.innerText));
+    ok(errors.length === 0 && !ov && !dash, `${g}: loads clean, no overflow, no dashes` + (errors.length ? ' → ' + errors.join('|') : ''));
+    ok(await page.locator('a[href="../kids.html"]').count() >= 1, `${g}: links back to Little Codex`);
+  }
   await ctx.close();
 }
 

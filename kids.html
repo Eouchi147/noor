@@ -207,6 +207,12 @@ main{max-width:660px}
 </div>
 <div class="arc" id="arc"></div>
 <p class="found" id="found"></p>
+<div class="wonders">
+<p class="w-kick">✦ More wonders ✦</p>
+<h2 class="w-title">Nine Little Games</h2>
+<div class="w-grid" id="wgrid"></div>
+<p class="w-count" id="wcount"></p>
+</div>
 </section>
 
 <section class="screen" id="scr-round">
@@ -233,6 +239,63 @@ main{max-width:660px}
 </main>
 
 <footer>☾ A little garden of wonder from the Codex of Light · <button class="reset" id="reset" aria-label="Clear your gems and start over">start over</button></footer>
+
+<style>
+.wonders{max-width:720px;margin:38px auto 0;padding:0 4px;text-align:center}
+.w-kick{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi);font-weight:700}
+.w-title{font-family:Amiri,serif;font-size:clamp(24px,5.4vw,34px);color:var(--parchment);margin:.25rem 0 1rem;text-shadow:0 0 30px rgba(233,200,106,.35)}
+.w-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;text-align:left}
+.w-card{position:relative;display:flex;flex-direction:column;gap:.45rem;background:linear-gradient(165deg,rgba(255,254,247,.08),rgba(255,254,247,.03));border:1px solid rgba(233,200,106,.26);border-radius:16px;padding:.8rem .85rem;color:var(--parchment);text-decoration:none;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,background .25s;min-height:104px}
+.w-card:hover{transform:translateY(-3px);border-color:rgba(233,200,106,.6);background:linear-gradient(165deg,rgba(255,254,247,.12),rgba(255,254,247,.05))}
+.w-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--wa) 16%,transparent);border:1.5px solid var(--wa)}
+.w-ic svg{width:19px;height:19px;stroke:var(--wa);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.w-nm{font-weight:800;font-size:.86rem;line-height:1.2}
+.w-ln{font-size:.7rem;color:rgba(255,254,247,.58);line-height:1.35}
+.w-done{position:absolute;top:.55rem;right:.6rem;font-size:.66rem;font-weight:800;color:#0d1b45;background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-radius:999px;padding:.15rem .5rem}
+.w-count{margin-top:1rem;font-size:.8rem;color:var(--gold-hi);font-weight:700;letter-spacing:.04em}
+@media(prefers-reduced-motion:reduce){.w-card{transition:none}}
+</style>
+<script>
+(function(){
+"use strict";
+var I={
+ steps:'<svg viewBox="0 0 24 24"><path d="M7 4c1.6 0 2.6 1.2 2.6 2.8S8.6 10 7.4 10 5 8.8 5 7.2 5.4 4 7 4Z"/><path d="M6 12h3v2.6c0 1-.6 1.6-1.5 1.6S6 15.6 6 14.6Z"/><path d="M16 9c1.6 0 2.6 1.2 2.6 2.8S17.6 15 16.4 15 14 13.8 14 12.2 14.4 9 16 9Z"/><path d="M15 17h3v2.4c0 1-.6 1.6-1.5 1.6s-1.5-.6-1.5-1.6Z"/></svg>',
+ ark:'<svg viewBox="0 0 24 24"><path d="M3 13h18l-2.5 5.2a2 2 0 0 1-1.8 1.1H7.3a2 2 0 0 1-1.8-1.1Z"/><path d="M8 13V9.5A1.5 1.5 0 0 1 9.5 8h5A1.5 1.5 0 0 1 16 9.5V13"/><path d="M12 8V5.5"/><path d="M10 5.5h4"/></svg>',
+ star:'<svg viewBox="0 0 24 24"><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9Z"/></svg>',
+ cube:'<svg viewBox="0 0 24 24"><path d="M5 9h14v10H5Z"/><path d="M5 12.5h14"/><path d="M5 9l7-4.5L19 9"/></svg>',
+ drop:'<svg viewBox="0 0 24 24"><path d="M12 3.5C15 8 18 10.8 18 14a6 6 0 0 1-12 0c0-3.2 3-6 6-10.5Z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2 2.4"/></svg>',
+ whale:'<svg viewBox="0 0 24 24"><path d="M3 13c2-4.5 6.5-6.5 10.5-5.5S20 12 20.5 9.5c1 4-1 8-6.5 8.5S5 16 3 13Z"/><path d="M18.5 6.5c.4-1.4 1.6-2.2 2.9-2.2-.3 1.4-1.4 2.4-2.9 2.2Z"/></svg>',
+ sprout:'<svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12c0-3.5-2.4-5.5-6-5.5C6 10 8.4 12 12 12Z"/><path d="M12 10c0-3 2-4.8 5.5-4.8C17.5 8.2 15.5 10 12 10Z"/><path d="M8 20h8"/></svg>',
+ lantern:'<svg viewBox="0 0 24 24"><path d="M9 7h6l1 9a4 4 0 0 1-8 0Z"/><path d="M10.5 7V5.2A1.2 1.2 0 0 1 11.7 4h.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M12 20v1.5"/></svg>',
+ med:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/></svg>'
+};
+var G=[
+ {f:"kids/story-steps.html",k:"nk-story-steps",a:"#34d399",i:"steps",n:"Story Steps",l:"Put six great stories in order"},
+ {f:"kids/ark-pairs.html",k:"nk-ark",a:"#38bdf8",i:"ark",n:"Two by Two",l:"Match the pairs, load the ark"},
+ {f:"kids/star-catcher.html",k:"nk-stars",a:"#a78bfa",i:"star",n:"Catch the Name",l:"Falling stars, Beautiful Names"},
+ {f:"kids/kaaba-builder.html",k:"nk-kaaba",a:"#f97316",i:"cube",n:"Build with Ibrahim",l:"Stack the House, stone by stone"},
+ {f:"kids/zamzam.html",k:"nk-zamzam",a:"#22d3ee",i:"drop",n:"Hajar’s Search",l:"Run, dig, and find the spring"},
+ {f:"kids/yunus.html",k:"nk-yunus",a:"#4ade80",i:"whale",n:"Three Words in the Dark",l:"Light the sea from inside the whale"},
+ {f:"kids/orchard.html",k:"nk-orchard",a:"#fbbf24",i:"sprout",n:"The 700 Seed",l:"Plant one, harvest seven hundred"},
+ {f:"kids/lanterns.html",k:"nk-lanterns",a:"#fb7185",i:"lantern",n:"Five Lanterns",l:"Light the whole day with prayer"},
+ {f:"kids/echo.html",k:"nk-echo",a:"#e879f9",i:"med",n:"Echo of Light",l:"Repeat the shining dhikr"}
+];
+function isDone(k){try{var v=JSON.parse(localStorage.getItem(k)||"null");return !!(v&&v.done)}catch(e){return false}}
+function gemsDone(){try{var v=JSON.parse(localStorage.getItem("noor-kids-gems")||"null");if(!v)return false;var n=Array.isArray(v)?v.length:Object.keys(v).length;return n>=7}catch(e){return false}}
+function render(){
+ var g=document.getElementById("wgrid"),c=document.getElementById("wcount");
+ if(!g)return;
+ g.innerHTML=G.map(function(x){
+  return '<a class="w-card" href="'+x.f+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
+   '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
+ }).join("");
+ var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0);
+ c.textContent=total===0?"Ten wonders are waiting for you ✦":total===10?"All ten wonders are yours! ✦":"You have finished "+total+" of 10 wonders ✦";
+}
+render();
+window.addEventListener("pageshow",render);
+})();
+</script>
 <div id="fx" aria-hidden="true"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <defs>
