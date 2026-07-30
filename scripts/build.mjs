@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CLARITY_FIXES } from './patches/clarity-v5.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
@@ -308,9 +309,32 @@ nodes.forEach(n => { n.titleEn = String(n.titleEn).replace(/\s+—\s+/, ': '); }
 const pipeline = s => scrubDashes(applyFixes(s));
 nodes = nodes.map(n => walk(n, pipeline));
 for (const k of Object.keys(chars)) chars[k] = chars[k].map(c => walk(c, pipeline));
-const placesClean = walk(places, pipeline);
-const wordsClean = walk(words, pipeline);
+let placesClean = walk(places, pipeline);
+let wordsClean = walk(words, pipeline);
 if (fixHits['fulfilment'] === 0) console.warn('note: fulfilment fix found nothing (may already be fixed)');
+
+// ---------- v5 clarity pass (owner audit: bureaucratic metaphors, garbled lines) ----------
+// CLARITY_FIXES is pre-sorted longest-find-first; every entry MUST apply at least once.
+const clarityHits = new Map(CLARITY_FIXES.map(f => [f.find, 0]));
+const applyClarity = s => {
+  if (typeof s !== 'string') return s;
+  for (const f of CLARITY_FIXES) if (s.includes(f.find)) {
+    clarityHits.set(f.find, clarityHits.get(f.find) + s.split(f.find).length - 1);
+    s = s.split(f.find).join(f.replace);
+  }
+  return s;
+};
+nodes = nodes.map(n => walk(n, applyClarity));
+for (const k of Object.keys(chars)) chars[k] = chars[k].map(c => walk(c, applyClarity));
+placesClean = walk(placesClean, applyClarity);
+wordsClean = walk(wordsClean, applyClarity);
+const clarityMisses = [...clarityHits].filter(([, n]) => n === 0).map(([f]) => f.slice(0, 80));
+if (clarityMisses.length) {
+  console.error(`CLARITY PASS: ${clarityMisses.length} fix(es) matched nothing:\n` + clarityMisses.join('\n'));
+  process.exit(1);
+}
+const clarityTotal = [...clarityHits.values()].reduce((a, b) => a + b, 0);
+console.log(`clarity pass: ${CLARITY_FIXES.length} fixes, ${clarityTotal} application(s)`);
 
 // ---------- validation ----------
 const nodeIds = new Set(nodes.map(n => n.id));

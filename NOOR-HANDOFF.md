@@ -165,3 +165,13 @@ git fetch ~/Downloads/noor-v4.bundle noor-v2-illuminated:noor-v4
 git merge noor-v4
 git push origin main
 ```
+
+## v5 — "Clarity" (owner-requested audit)
+
+Owner flagged sentences that were "not very english... not clear enough" (Khinzab's "personnel file", Dhul-Suwayqatayn's "appointment in its file"). Root cause: a recurring authorial tic of bureaucratic/corporate metaphors (file, ledger, dossier, audit, logistics, inventory, checklist...) plus a handful of garbled or over-compressed sentences.
+
+- Full-corpus proofread of all 221 articles (71 nodes, 98 characters, 34 places, 18 words) + index.html prose: 5 parallel reviewer passes over ~433K chars, findings verified verbatim against the generated files.
+- **205 sentence-level fixes** compiled into `scripts/patches/clarity-v5.mjs`, applied by a new post-scrub clarity pass in `build.mjs` that **fails the build if any fix stops matching** (same discipline as the dash guard). Compiler: `scripts/compile-clarity.mjs` (validates marker targets are preserved; no dashes introduced).
+- Also fixed: stale "Path node 48/50/52" labels left from the v4 renumbering; two mid-sentence "·" artifacts; node 69 retitled "Hisab & Mizan: The Records and the Scale"; three mizan strings in index.html + UI_EN ("the life that lasts", "turns back at the grave", "The son of Adam says").
+- Vocabulary sweep now returns **zero** hits for the whole metaphor family across all content.
+- i18n/en.json regenerated. All 55 e2e assertions pass.
