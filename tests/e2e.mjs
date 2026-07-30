@@ -25,21 +25,22 @@ console.log('\n[1] index.html');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(700);
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.locator('.tile').count() === 64, '64 tiles');
-  ok(await page.locator('.gate').count() === 4, '4 period gates');
+  ok(await page.locator('.tile').count() === 71, '71 tiles');
+  ok(await page.locator('.gate').count() === 7, '7 period gates (all books open)');
+  ok(await page.locator('.filter-btn').count() === 8, '8 filter chips');
   ok(await page.locator('#hero-stats .hero-stat').count() === 6, '6 hero stats');
   ok(await page.locator('.crescent').count() === 1, 'crescent rendered');
   await page.waitForTimeout(1300);
   const statVal = await page.locator('#hero-stats [data-count]').first().textContent();
-  ok(statVal === '64', `count-up completed (${statVal})`);
+  ok(statVal === '71', `count-up completed (${statVal})`);
   await page.screenshot({ path: 'tests/shots/v3-01-hero.png' });
   await noDash(page, 'index surface');
 
-  await page.locator('.tile[data-id="37"]').scrollIntoViewIfNeeded();
+  await page.locator('.tile[data-id="38"]').scrollIntoViewIfNeeded();
   await page.waitForTimeout(600);
-  await page.locator('.tile[data-id="37"]').click();
+  await page.locator('.tile[data-id="38"]').click();
   await page.waitForTimeout(700);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Badr modal opens');
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Badr modal opens (id 38)');
   await noDash(page, 'Badr modal');
   ok(await page.locator('#modal-body .entity-link[data-etype="place"]').count() >= 1, 'place link woven into Badr');
   await page.screenshot({ path: 'tests/shots/v3-02-modal-badr.png' });
@@ -52,6 +53,35 @@ console.log('\n[1] index.html');
   ok(page.url().includes('open=' + pid), `node→place lands on places.html?open=${pid}`);
   await page.waitForTimeout(900);
   ok(await page.locator('#modal-backdrop.open').count() === 1, 'place modal auto-opens');
+  await ctx.close();
+}
+
+
+/* 1b. books open + mizan */
+console.log('\n[1b] seven books · mizan section');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  ok(await page.evaluate(() => !document.body.innerText.includes('COMING')), 'no book marked COMING');
+  await page.locator('.book-card[data-period="khulafa"]').click();
+  await page.waitForTimeout(700);
+  ok(await page.locator('.tile').count() === 4 && await page.locator('.gate').count() === 1, 'book card click filters Path (Khulafa: 4 tiles)');
+  await page.locator('.tile[data-id="47"]').click();
+  await page.waitForTimeout(600);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Abu Bakr caliphate chapter opens');
+  await noDash(page, 'khulafa modal');
+  await page.keyboard.press('Escape');
+  await page.locator('a[href="#mizan"]').first().click();
+  await page.waitForTimeout(2600);
+  ok(await page.locator('.mz-card').count() >= 6, 'mizan: 6 infographic cards');
+  const c = await page.locator('#mizan [data-mcount="50000"]').textContent();
+  ok(c.replace(/\D/g,'') === '50000', `mizan counters animate (day = ${c})`);
+  await noDash(page, 'mizan section');
+  await page.screenshot({ path: 'tests/shots/v4-mizan.png' });
+  await page.locator('[data-mgo="node:71"]').click();
+  await page.waitForTimeout(700);
+  ok(await page.locator('#modal-backdrop.open').count() === 1, 'mizan CTA opens Jannah chapter');
   await ctx.close();
 }
 
@@ -94,7 +124,7 @@ console.log('\n[3] places.html');
   await page.locator('.tile[data-id="p-kaaba"]').click();
   await page.waitForTimeout(600);
   ok(await page.locator('#modal-backdrop.open').count() === 1, 'Kaaba modal opens');
-  ok(await page.locator('#modal-body .entity-link').count() >= 3, 'Kaaba modal richly linked');
+  ok(await page.locator('#modal-body .entity-link').count() >= 5, 'Kaaba modal richly autolinked');
   await page.screenshot({ path: 'tests/shots/v3-05-place-kaaba.png' });
   await ctx.close();
 }
@@ -125,9 +155,9 @@ console.log('\n[4] words.html');
 console.log('\n[5] deep links · nihaya · RTL');
 {
   const { ctx, page } = await newPage();
-  await page.goto(BASE + '/index.html?node=48', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/index.html?node=55', { waitUntil: 'networkidle' });
   await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, '?node=48 auto-opens');
+  ok(await page.locator('#modal-backdrop.open').count() === 1, '?node=55 auto-opens (Dajjal)');
   ok(await page.locator('.seq-strip').count() === 1 && await page.locator('.mtimeline li').count() >= 6 && await page.locator('.shield-box li').count() >= 3, 'sequence + timeline + shield intact');
   await noDash(page, 'Dajjal modal');
   await page.keyboard.press('Escape');
@@ -160,7 +190,7 @@ console.log('\n[7] reduced motion · search');
   const { ctx, page, errors } = await newPage({ reducedMotion: 'reduce' });
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
-  ok(errors.length === 0 && await page.locator('.tile').count() === 64, 'reduced motion healthy');
+  ok(errors.length === 0 && await page.locator('.tile').count() === 71, 'reduced motion healthy');
   await page.click('#search-toggle');
   await page.fill('#search-input', 'kawthar');
   await page.waitForTimeout(300);

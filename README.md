@@ -2,7 +2,7 @@
 
 A chronological Islamic educational Codex from **Kun Fayakun** to **Jannah**.
 
-**64 chapters • 98 character seals • 34 places • 18 words of the Path** • Qur’an (107 ayat, with tilawah) • authentic Hadith (161, with sources) • classical sirah  
+**71 chapters (all seven Books open) • 98 character seals • 34 places • 18 words of the Path • the Two Lives infographic** • Qur’an (107 ayat, with tilawah) • authentic Hadith (161, with sources) • classical sirah  
 Prophets and Companions represented by **light and abstract seals only**, never faces.
 
 ## Live

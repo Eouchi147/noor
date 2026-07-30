@@ -133,3 +133,35 @@ git add -A
 git commit -m "NOOR v3: Places + Words hubs, 98-seal Characters, copy audit, em-dash purge, hero v2"
 git push origin main
 ```
+
+
+---
+
+# v4 "Seven Open Books" (this delivery)
+
+## What changed
+1. **All seven Books are now IN THE PATH** (64 → 71 chapters, renumbered with scripted remap and validation):
+   Book 3 Al-Jahiliyyah (24 Jahiliyya · 25 The Hunafa, new · 26 Year of the Elephant), Book 5 Al-Khulafa
+   (47 Abu Bakr: The Ummah Holds · 48 Umar: Justice Opens the Lands · 49 Uthman: One Book for the Ummah ·
+   50 Ali: Wisdom in the Storm), Book 6 Al-Umam (51 The Preservation: Book, Sunnah, Chain · 52 Light across
+   the Nations). Seven period gates, seven filters, and every Book card now clickable, filtering the Path.
+2. **Auto-linked graph**: a build-time dictionary linker (longest-match, word-boundary, first-occurrence,
+   self-skip, validated targets) now weaves every recognizable name, prophet, battle, and place across all
+   221 entries: node links grew ~250 → 451, character links to 348. Click anything, land on its article.
+3. **NEW "Two Lives in True Scale" (#mizan)**: a sourced dunya-vs-akhirah infographic band on the index:
+   the Finger and the Sea (Muslim 2858) with animated droplet; the Timeline bar (~70 years · the 50,000-year
+   Day (70:4) · eternity); Exchange Rates (Laylat al-Qadr 97:3, ×700 charity 2:261, Arafah, Fajr sunnah,
+   whip-length Bukhari 6415, two words Bukhari 7563); the Dip That Resets Memory (Muslim 2807); What
+   Actually Follows You (Bukhari 6514, Muslim 2958); the Rider and the Tree (Tirmidhi 2377, Bukhari 6416,
+   mosquito's wing Tirmidhi 2320). Animated counters, every figure carrying its source chip, fully i18n-keyed,
+   with CTAs into Jannah (71), Words, and the Path. "Two Lives" added to the nav.
+4. e2e suite now 55 assertions, all green; i18n pack 137 UI keys + 71 chapters.
+
+## Push
+Same flow; this bundle contains v3 + v4 together (supersedes noor-v3.bundle if not yet pushed):
+```bash
+cd ~/Desktop/noor
+git fetch ~/Downloads/noor-v4.bundle noor-v2-illuminated:noor-v4
+git merge noor-v4
+git push origin main
+```

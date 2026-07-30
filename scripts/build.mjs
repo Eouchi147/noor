@@ -125,38 +125,142 @@ for (const f of charPatchFiles) {
 const places = (await import(path.join(ROOT,'scripts/patches/places.mjs'))).default;
 const words = (await import(path.join(ROOT,'scripts/patches/words.mjs'))).default;
 
-// ---------- weave place/word links into node prose (first plain occurrence) ----------
+// ---------- v4: 64 → 71 shift (open Books 3, 5, 6) ----------
+// ids 25-45 shift +1 (Hunafa inserted at 25); ids 46-64 shift +7 (4 Khulafa + 2 Umam + the +1)
+const shiftId = id => (id >= 46 ? id + 7 : id >= 25 ? id + 1 : id);
+const shiftText = t => String(t).replace(/\{\{n:(\d+)\|/g, (_, d) => `{{n:${shiftId(+d)}|`);
+nodes.forEach(n => {
+  n.id = shiftId(n.id);
+  if (n.details) n.details = shiftText(n.details);
+  if (Array.isArray(n.connections)) n.connections = n.connections.map(shiftId);
+});
+const shiftDataset = obj => { for (const k of Object.keys(obj)) obj[k] = obj[k].map(e => walkText(e, shiftText)); };
+function walkText(obj, fn) {
+  if (Array.isArray(obj)) return obj.map(v => walkText(v, fn));
+  if (obj && typeof obj === 'object') { const o = {}; for (const [k,v] of Object.entries(obj)) o[k] = k==='ar'||k==='titleAr' ? v : walkText(v, fn); return o; }
+  return typeof obj === 'string' ? fn(obj) : obj;
+}
+for (const k of Object.keys(chars)) chars[k] = chars[k].map(e => walkText(e, shiftText));
+shiftDataset(places); shiftDataset(words);
+
+const v4 = (await import(path.join(ROOT,'scripts/patches/books-v4.mjs'))).default;
+const byId2 = new Map(nodes.map(n => [n.id, n]));
+for (const [nid, period] of Object.entries(v4.periodMoves)) {
+  const n = byId2.get(+nid); if (!n) throw new Error(`periodMove: no node ${nid}`);
+  n.period = period;
+}
+for (const p of v4.nodes) {
+  if (byId2.has(p.id)) throw new Error(`v4 insert collision ${p.id}`);
+  const n = { id: p.id, ...p.insert };
+  nodes.push(n); byId2.set(p.id, n);
+}
+nodes.sort((a,b) => a.id - b.id);
+nodes.forEach(n => { if (Array.isArray(n.hadith)) n.hadith = n.hadith.map(normHadith).filter(Boolean); });
+
+// ---------- weave place/word links into node prose (final 71-id space) ----------
 const NODE_WEAVE = {
   9:  {"Allah is sufficient for us, and the best Disposer of affairs":"w-hasbunallah"},
   11: {"Zamzam":"p-zamzam"},
   17: {"Tuwa":"p-tuwa"},
   20: {"the Mount":"p-tur"},
   22: {"Saba":"p-saba"},
-  25: {"the Kaaba":"p-kaaba"},
-  27: {"Zamzam":"p-zamzam"},
-  28: {"cave of Hira":"p-hira"},
-  29: {"Hira":"p-hira"},
-  30: {"Ta'if":"p-taif"},
-  33: {"cave of Thawr":"p-thawr","Do not grieve; indeed Allah is with us":"w-la-tahzan"},
-  35: {"Quba":"p-quba"},
-  37: {"Badr":"p-badr"},
-  40: {"Hudaybiyyah":"p-hudaybiyyah"},
-  41: {"Makkah":"p-makkah"},
-  42: {"Hunayn":"p-hunayn"},
-  43: {"Tabuk":"p-tabuk"},
-  44: {"Arafat":"p-arafat"},
-  59: {"Arafat":"p-arafat"},
-  60: {"praised station":"w-adhan-dua"},
-  61: {"traces of wudu":"w-subhan"},
-  62: {"Subhan Allah wa bi-hamdih":"w-subhan"},
-  63: {"Allahumma sallim, sallim":"w-sallim"}
+  26: {"the Kaaba":"p-kaaba"},
+  28: {"Zamzam":"p-zamzam"},
+  29: {"cave of Hira":"p-hira"},
+  30: {"Hira":"p-hira"},
+  31: {"Ta'if":"p-taif"},
+  34: {"cave of Thawr":"p-thawr","Do not grieve; indeed Allah is with us":"w-la-tahzan"},
+  36: {"Quba":"p-quba"},
+  38: {"Badr":"p-badr"},
+  41: {"Hudaybiyyah":"p-hudaybiyyah"},
+  42: {"Makkah":"p-makkah"},
+  43: {"Hunayn":"p-hunayn"},
+  44: {"Tabuk":"p-tabuk"},
+  45: {"Arafat":"p-arafat"},
+  66: {"Arafat":"p-arafat"},
+  67: {"praised station":"w-adhan-dua"},
+  68: {"traces of wudu":"w-subhan"},
+  69: {"Subhan Allah wa bi-hamdih":"w-subhan"},
+  70: {"Allahumma sallim, sallim":"w-sallim"}
 };
 for (const [nid, map] of Object.entries(NODE_WEAVE)) {
-  const n = byId.get(+nid); if (!n) continue;
+  const n = byId2.get(+nid); if (!n) continue;
   for (const [name, tgt] of Object.entries(map))
-    if (!n.details.includes(`|${name}}}`) && !n.details.includes(`{{p:${tgt}`) || !n.details.includes(tgt))
-      n.details = linkFirst(n.details, name, tgt);
+    if (!n.details.includes(`|${name}}}`)) n.details = linkFirst(n.details, name, tgt);
 }
+
+// ---------- AUTOLINK: every recognizable name becomes a click (first occurrence, details only) ----------
+// Longest-first; word-boundary aware (apostrophes allowed inside names); skips self and existing markers.
+const AUTOLINK = {
+  // full-form people first (protects the short forms below)
+  "Uthman ibn Talha":"c-uthman-talha","Khalid ibn al-Walid":"c-khalid","Talha ibn Ubaydillah":"c-talha",
+  "Sa'd ibn Abi Waqqas":"c-saad","Sa'd ibn Mu'adh":"c-saad-muadh","Sa'id ibn Zayd":"c-said-zayd",
+  "Abdullah ibn Salam":"c-ibnsalam","Amr ibn al-As":"c-amr","Mu'adh ibn Jabal":"c-muadh",
+  "Zayd ibn Thabit":"c-zaydthabit","Ubayy ibn Ka'b":"c-ubayy","Ka'b ibn Malik":"c-kab",
+  "Abd ar-Rahman ibn Awf":"c-abdurrahman","Hind bint Utbah":"c-hind","Zaynab bint Jahsh":"c-zaynab",
+  "Safiyyah bint Huyayy":"c-safiyyah","Abu Ubaydah":"c-abu-ubaydah","Abu Sufyan":"c-abusufyan",
+  "Umm Salamah":"c-umm-salamah","Umm Ayman":"c-ummayman","Abu Hurayrah":"c-abuhurayrah",
+  "Ibn Abbas":"c-ibnabbas","Ibn Mas'ud":"c-ibnmasud","Ibn Umar":"c-ibnumar","Abu Dharr":"c-abudharr",
+  "Abu Ayyub":"c-abuayyub","al-Hasan":"c-hasan","al-Husayn":"c-husayn","az-Zubayr":"c-zubayr",
+  "Abu Bakr":"c-abubakr","Nu'aym ibn Mas'ud":"c-nuaym",
+  // short-form people
+  "Khadijah":"c-khadijah","Aisha":"c-aisha","Hamza":"c-hamza","Bilal":"c-bilal","Salman":"c-salman",
+  "Umar":"c-umar","Uthman":"c-uthman","Ali":"c-ali","Fatimah":"c-fatimah","Zubayr":"c-zubayr",
+  "Mus'ab":"c-musab","Hudhayfah":"c-hudhayfah","Usama":"c-usama","Hafsah":"c-hafsah","Ikrimah":"c-ikrimah",
+  "Waraqah":"c-waraqah","Wahshi":"c-wahshi","Suhayl":"c-suhayl","Ja'far":"c-jafar","Ammar":"c-ammar",
+  "Sumayyah":"c-sumayyah","Hanzala":"c-hanzala","Asma":"c-asma","Khalid":"c-khalid",
+  // unseen & end-time
+  "Jibril":"a-jibril","Israfil":"a-israfil","Iblis":"j-iblis","Buraq":"an-buraq",
+  "Dajjal":"e-dajjal","al-Mahdi":"e-mahdi","Jassasah":"e-jassasa",
+  // prophets → their chapters
+  "Adam":"2","Hawwa":"3","Idris":"5","Nuh":"6","Ibrahim":"9","Yusuf":"12","Musa":"15","Dawud":"21",
+  "Sulayman":"22","Isa":"23","Yunus":"an-yunus",
+  // events → chapters (final ids)
+  "Isra":"32","Hijrah":"34","Badr":"38","Uhud":"39","Khandaq":"40","Hudaybiyyah":"41","Hunayn":"43","Tabuk":"44",
+  // places
+  "Makkah":"p-makkah","Madinah":"p-madinah","Ta'if":"p-taif","Zamzam":"p-zamzam","Kaaba":"p-kaaba",
+  "al-Aqsa":"p-aqsa","al-Quds":"p-jerusalem","Jerusalem":"p-jerusalem","Arafat":"p-arafat","Mina":"p-mina",
+  "Tuwa":"p-tuwa","at-Tur":"p-tur","Madyan":"p-madyan","Babylon":"p-babylon","Egypt":"p-egypt",
+  "Nile":"p-nile","Tiberias":"p-tiberias","Euphrates":"p-euphrates","Ludd":"p-ludd","Quba":"p-quba",
+  "Hira":"p-hira","Thawr":"p-thawr","Khaybar":"p-khaybar","Hudaybiyyah camp":"p-hudaybiyyah"
+};
+const AUTOKEYS = Object.keys(AUTOLINK).sort((a,b) => b.length - a.length);
+const isWordChar = ch => /[A-Za-z'’-]/.test(ch || "");
+function autolink(details, selfId) {
+  if (!details) return details;
+  const linked = new Set([...details.matchAll(/\{\{(?:n|c|p|w):([^|}]+)\|/g)].map(m => m[1]));
+  for (const name of AUTOKEYS) {
+    const target = AUTOLINK[name];
+    const normT = /^\d+$/.test(target) ? target : target;
+    if (target === selfId || String(target) === String(selfId)) continue;
+    if (linked.has(String(target))) continue;
+    // search outside existing markers
+    const parts = details.split(/(\{\{[^}]*\}\})/);
+    let done = false;
+    for (let i = 0; i < parts.length && !done; i++) {
+      if (parts[i].startsWith('{{')) continue;
+      let idx = -1, from = 0;
+      while ((idx = parts[i].indexOf(name, from)) !== -1) {
+        const before = parts[i][idx-1], after = parts[i][idx+name.length];
+        if (!isWordChar(before) && !isWordChar(after)) {
+          const marker = /^\d+$/.test(target) ? `{{n:${target}|${name}}}`
+            : target.startsWith('p-') ? `{{p:${target}|${name}}}`
+            : target.startsWith('w-') ? `{{w:${target}|${name}}}`
+            : `{{c:${target}|${name}}}`;
+          parts[i] = parts[i].slice(0, idx) + marker + parts[i].slice(idx + name.length);
+          linked.add(String(target)); done = true; break;
+        }
+        from = idx + 1;
+      }
+    }
+    if (done) details = parts.join('');
+  }
+  return details;
+}
+nodes.forEach(n => { n.details = autolink(n.details, String(n.id)); });
+for (const k of Object.keys(chars)) chars[k].forEach(c => { c.details = autolink(c.details, c.id); });
+for (const k of Object.keys(places)) places[k].forEach(p => { p.details = autolink(p.details, p.id); });
+for (const k of Object.keys(words)) words[k].forEach(w => { w.details = autolink(w.details, w.id); });
 
 // ---------- targeted text fixes (kept legacy content) ----------
 const TEXT_FIXES = [
@@ -200,6 +304,7 @@ function walk(obj, fn) {
   }
   return typeof obj === 'string' ? fn(obj) : obj;
 }
+nodes.forEach(n => { n.titleEn = String(n.titleEn).replace(/\s+—\s+/, ': '); });   // titles read as "Name: subtitle"
 const pipeline = s => scrubDashes(applyFixes(s));
 nodes = nodes.map(n => walk(n, pipeline));
 for (const k of Object.keys(chars)) chars[k] = chars[k].map(c => walk(c, pipeline));
@@ -213,9 +318,9 @@ const charIds = new Set(Object.values(chars).flat().map(c => c.id));
 const placeIds = new Set(Object.values(placesClean).flat().map(p => p.id));
 const wordIds = new Set(Object.values(wordsClean).flat().map(w => w.id));
 const errs = [];
-if (nodes.length !== 64) errs.push(`expected 64 nodes, got ${nodes.length}`);
-for (let i = 1; i <= 64; i++) if (!nodeIds.has(i)) errs.push(`missing node id ${i}`);
-const order = ['bidaya','qisas','seerah','nihaya'];
+if (nodes.length !== 71) errs.push(`expected 71 nodes, got ${nodes.length}`);
+for (let i = 1; i <= 71; i++) if (!nodeIds.has(i)) errs.push(`missing node id ${i}`);
+const order = ['bidaya','qisas','jahiliyyah','seerah','khulafa','umam','nihaya'];
 let last = 0;
 for (const n of nodes) {
   const oi = order.indexOf(n.period);

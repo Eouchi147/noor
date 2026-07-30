@@ -82,7 +82,15 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .gate-qisas{background:radial-gradient(120% 130% at 82% 0%,rgba(139,168,136,.4),transparent 55%),linear-gradient(140deg,#1F241C,#2C3A28 60%,#1F241C)}
 .gate-seerah{background:radial-gradient(120% 140% at 50% -10%,rgba(96,132,214,.35),transparent 55%),linear-gradient(140deg,#141B2E,#1E3A8A 130%)}
 .gate-nihaya{background:radial-gradient(1.4px 1.4px at 12% 30%,rgba(255,253,242,.8),transparent 55%),radial-gradient(1.2px 1.2px at 34% 14%,rgba(255,253,242,.7),transparent 55%),radial-gradient(1.6px 1.6px at 58% 38%,rgba(255,253,242,.62),transparent 55%),radial-gradient(1.2px 1.2px at 78% 18%,rgba(255,253,242,.75),transparent 55%),radial-gradient(1.5px 1.5px at 92% 44%,rgba(255,253,242,.55),transparent 55%),radial-gradient(130% 150% at 50% -18%,rgba(124,58,237,.3),transparent 58%),linear-gradient(150deg,#0B0912,#1A1030 70%,#0B0912)}
+.gate-jahiliyyah{background:radial-gradient(120% 130% at 30% 0%,rgba(146,64,14,.4),transparent 55%),radial-gradient(90% 90% at 80% 100%,rgba(120,113,108,.25),transparent 60%),linear-gradient(140deg,#1C1917,#292019 60%,#1C1917)}
+.gate-khulafa{background:radial-gradient(120% 130% at 70% 0%,rgba(5,150,105,.28),transparent 55%),radial-gradient(90% 110% at 15% 20%,rgba(201,162,39,.22),transparent 55%),linear-gradient(140deg,#0F1D18,#1B3A2E 65%,#0F1D18)}
+.gate-umam{background:radial-gradient(1.3px 1.3px at 18% 40%,rgba(255,253,242,.65),transparent 55%),radial-gradient(1.3px 1.3px at 46% 22%,rgba(255,253,242,.55),transparent 55%),radial-gradient(1.3px 1.3px at 72% 48%,rgba(255,253,242,.6),transparent 55%),radial-gradient(120% 140% at 50% -12%,rgba(14,116,144,.34),transparent 58%),linear-gradient(140deg,#0C1A20,#14303C 65%,#0C1A20)}
 .gate-count{background:rgba(255,254,247,.12);border:1px solid rgba(255,254,247,.24)}
+.chip-jahiliyyah{background:rgba(146,64,14,.22);color:#E7B688;border:1px solid rgba(146,64,14,.45)}
+.chip-khulafa{background:rgba(5,150,105,.18);color:#9BE3C7;border:1px solid rgba(5,150,105,.4)}
+.chip-umam{background:rgba(14,116,144,.2);color:#9AD8E8;border:1px solid rgba(14,116,144,.42)}
+.pattern-khulafa{background:radial-gradient(circle at 40% 30%,rgba(5,150,105,.25) 0%,transparent 52%),radial-gradient(circle at 70% 75%,rgba(201,162,39,.18) 0%,transparent 50%),linear-gradient(150deg,#0F1D18,#1B3A2E)}
+.pattern-umam{background:radial-gradient(1.4px 1.4px at 22% 34%,rgba(255,253,242,.6),transparent 55%),radial-gradient(1.3px 1.3px at 68% 20%,rgba(255,253,242,.5),transparent 55%),radial-gradient(circle at 50% 80%,rgba(14,116,144,.3) 0%,transparent 55%),linear-gradient(160deg,#0C1A20,#17414F)}
 
 /* period rail */
 @media(min-width:1100px){.period-section{position:relative}
@@ -193,6 +201,51 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .conn-chip{padding:.3rem .75rem;border-radius:9999px;font-size:.73rem;font-weight:600;background:rgba(44,36,22,.05);color:rgba(44,36,22,.75);transition:background .2s,color .2s,transform .2s;border:1px solid transparent}
 .conn-chip:hover{background:rgba(201,162,39,.14);color:var(--ink);border-color:rgba(201,162,39,.4);transform:translateY(-1px)}
 
+/* ============ MIZAN section ============ */
+#mizan{position:relative;overflow:hidden;background:linear-gradient(180deg,#0B0912 0%,#120F20 55%,#0B0912 100%);isolation:isolate}
+#mizan::before{content:"";position:absolute;inset:0;background:radial-gradient(1.3px 1.3px at 12% 22%,rgba(255,253,242,.5),transparent 55%),radial-gradient(1.2px 1.2px at 38% 12%,rgba(255,253,242,.42),transparent 55%),radial-gradient(1.4px 1.4px at 64% 28%,rgba(255,253,242,.46),transparent 55%),radial-gradient(1.2px 1.2px at 86% 16%,rgba(255,253,242,.5),transparent 55%),radial-gradient(120% 90% at 50% 0%,rgba(30,58,138,.22),transparent 60%);pointer-events:none}
+.mz-card{background:linear-gradient(150deg,rgba(255,254,247,.05),rgba(255,254,247,.02));border:1px solid rgba(233,200,106,.24);border-radius:20px;padding:1.5rem 1.6rem;color:#FFFEF7;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.mz-card:hover{border-color:rgba(233,200,106,.5);transform:translateY(-2px)}
+.mz-card::after{content:"";position:absolute;inset:9px;border:1px solid rgba(255,254,247,.07);border-radius:14px;pointer-events:none}
+.mz-h{font-weight:700;font-size:1.05rem;color:#F4E3A1;letter-spacing:.01em}
+.mz-quote{font-size:.9rem;line-height:1.7;color:rgba(255,254,247,.82);margin-top:.6rem;font-style:italic}
+.mz-src{display:inline-block;margin-top:.45rem;font-size:.64rem;font-weight:700;letter-spacing:.06em;color:#E9C86A;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.3);padding:.12rem .55rem;border-radius:999px}
+.mz-note{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.6)}
+.mz-big{font-family:Amiri,serif;font-size:1.5rem;color:#E9C86A;text-shadow:0 0 24px rgba(233,200,106,.35)}
+.mz-row{display:flex;justify-content:space-between;align-items:baseline;font-size:.8rem;color:rgba(255,254,247,.75);margin-bottom:.35rem}
+.mz-row b{color:#F4E3A1;font-variant-numeric:tabular-nums}
+.mz-bar{height:10px;border-radius:999px;background:rgba(255,254,247,.08);overflow:hidden}
+.mz-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#E9C86A);transform-origin:left;transform:scaleX(0);transition:transform 1.4s cubic-bezier(.22,1,.36,1)}
+.mz-bar.mz-inf i{background:linear-gradient(90deg,#C9A227,#E9C86A 30%,#8BA888 65%,#5EA0B4)}
+.reveal.visible .mz-bar i{transform:scaleX(1)}
+.mz-mini{background:rgba(255,254,247,.045);border:1px solid rgba(233,200,106,.2);border-radius:12px;padding:.7rem .75rem;display:flex;flex-direction:column;gap:.15rem}
+.mz-mini b{color:#F4E3A1;font-size:1rem;font-variant-numeric:tabular-nums}
+.mz-mini span{font-size:.68rem;color:rgba(255,254,247,.7);line-height:1.4}
+.mz-mini i{font-style:normal;font-size:.6rem;font-weight:700;color:#E9C86A;opacity:.85;margin-top:.15rem}
+.mz-dip{border-radius:14px;padding:.85rem .9rem;font-size:.76rem;line-height:1.55}
+.mz-dip p{color:rgba(255,254,247,.85);font-style:italic;margin-top:.4rem}
+.mz-dip-k{display:block;font-size:.66rem;color:rgba(255,254,247,.55)}
+.mz-dip-v{display:block;font-weight:700;margin-top:.2rem}
+.mz-dip-fire{background:linear-gradient(160deg,rgba(153,27,27,.28),rgba(153,27,27,.08));border:1px solid rgba(239,68,68,.4)}
+.mz-dip-fire .mz-dip-v{color:#F5A9A9}
+.mz-dip-jannah{background:linear-gradient(160deg,rgba(5,150,105,.25),rgba(5,150,105,.06));border:1px solid rgba(52,211,153,.4)}
+.mz-dip-jannah .mz-dip-v{color:#9BE3C7}
+.mz-follow{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.mz-f{display:flex;flex-direction:column;align-items:center;gap:.2rem;background:rgba(255,254,247,.045);border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.75rem .4rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.8)}
+.mz-f em{font-style:normal;font-size:.6rem;color:rgba(255,254,247,.45)}
+.mz-f .mz-fi{font-size:1.15rem;color:rgba(255,254,247,.6)}
+.mz-f-stay{background:rgba(201,162,39,.12);border-color:rgba(233,200,106,.45)}
+.mz-f-stay .mz-fi,.mz-f-stay em{color:#F4E3A1}
+.mz-cta{display:block;text-align:center;padding:.65rem .9rem;border-radius:999px;font-size:.78rem;font-weight:700;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;transition:transform .25s,box-shadow .25s;border:none;cursor:pointer}
+.mz-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(201,162,39,.35)}
+.mz-cta-ghost{background:transparent;border:1px solid rgba(233,200,106,.4);color:#F4E3A1}
+.mz-sea{position:relative}
+.mz-wave{animation:mzWave 7s ease-in-out infinite alternate;will-change:transform}
+.mz-wave.w2{animation-duration:9s;animation-delay:-2s}
+@keyframes mzWave{from{transform:translate3d(-6px,0,0)}to{transform:translate3d(6px,0,0)}}
+.mz-drop{animation:mzDrop 3.4s cubic-bezier(.5,0,.8,1) infinite;transform-origin:center}
+@keyframes mzDrop{0%,55%{transform:translateY(0);opacity:0}60%{opacity:1}88%{transform:translateY(26px);opacity:1}92%,100%{transform:translateY(28px);opacity:0}}
+
 /* toasts */
 .noor-toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .noor-toast{background:rgba(26,22,15,.94);color:#FFFEF7;font-size:.8rem;padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(201,162,39,.4);opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;max-width:88vw;text-align:center}
@@ -221,6 +274,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
 <a href="places.html" class="hover:text-ink transition-colors" data-i18n="nav.places">Places</a>
 <a href="words.html" class="hover:text-ink transition-colors" data-i18n="nav.words">Words</a>
+<a href="#mizan" class="hover:text-ink transition-colors" data-i18n="nav.mizan">Two Lives</a>
 <a href="#about" class="hover:text-ink transition-colors" data-i18n="nav.about">About</a>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
 <option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
@@ -301,7 +355,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="ornament mb-3 text-xl">۞</div>
 <div class="text-center mb-9">
 <h2 class="text-2xl sm:text-3xl font-bold text-ink mb-1.5" data-i18n="books.title">Seven Books</h2>
-<p class="text-ink/55 text-sm" data-i18n="books.sub">The architecture of the Codex. Four books are open on the Path today.</p>
+<p class="text-ink/55 text-sm" data-i18n="books.sub">The architecture of the Codex. All seven books are open on the Path.</p>
 </div>
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="book-cards"></div>
 </section>
@@ -317,11 +371,146 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <button data-period="all" class="filter-btn active px-3 py-1.5 rounded-full text-xs font-semibold bg-ink text-parchment" data-i18n="filter.all">All</button>
 <button data-period="bidaya" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.bidaya">Al-Bidaya</button>
 <button data-period="qisas" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.qisas">Qisas al-Anbiya</button>
+<button data-period="jahiliyyah" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.jahiliyyah">Al-Jahiliyyah</button>
 <button data-period="seerah" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.seerah">Al-Seerah</button>
+<button data-period="khulafa" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.khulafa">Al-Khulafa</button>
+<button data-period="umam" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.umam">Al-Umam</button>
 <button data-period="nihaya" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.nihaya">Al-Nihaya</button>
 </div>
 </div>
 <div id="path-flow" class="space-y-14"></div>
+</section>
+
+<!-- ============ MIZAN · TWO LIVES IN TRUE SCALE ============ -->
+<section id="mizan">
+<div class="mz-wrap max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative z-10">
+<div class="text-center mb-10">
+<p class="font-amiri text-gold text-2xl sm:text-3xl mb-2">الدُّنْيَا وَالآخِرَة</p>
+<h2 class="text-2xl sm:text-4xl font-bold text-parchment mb-2" data-i18n="mizan.title">Two Lives in True Scale</h2>
+<p class="text-parchment/65 text-sm max-w-2xl mx-auto leading-relaxed" data-i18n="mizan.sub">Not poetry: measurements. What the Qur'an and the authentic Sunnah state, in numbers, about the life you are in and the one you are heading to.</p>
+</div>
+
+<div class="grid md:grid-cols-2 gap-5">
+
+<!-- 1 · The drop and the sea -->
+<div class="mz-card md:col-span-2 reveal">
+<div class="grid md:grid-cols-2 gap-6 items-center">
+<div>
+<h3 class="mz-h" data-i18n="mizan.drop.title">The Finger and the Sea</h3>
+<p class="mz-quote">"By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back."</p>
+<span class="mz-src">Muslim 2858</span>
+<div class="mt-4 flex items-center gap-3">
+<div class="mz-big" data-i18n="mizan.drop.ratio">the drop : the sea</div>
+</div>
+<p class="mz-note mt-3" data-i18n="mizan.drop.note">Everything ever owned, built, or won by every human in history fits in the droplet. The sea is what remains.</p>
+</div>
+<div class="mz-sea" aria-hidden="true">
+<svg viewBox="0 0 400 230" class="w-full h-auto">
+<defs><linearGradient id="seag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#123047"/><stop offset="100%" stop-color="#071620"/></linearGradient></defs>
+<path class="mz-wave w1" d="M0,120 C60,108 120,132 200,120 C280,108 340,132 400,120 L400,230 L0,230 Z" fill="url(#seag)"/>
+<path class="mz-wave w2" d="M0,132 C70,122 140,142 210,132 C290,122 350,142 400,132 L400,230 L0,230 Z" fill="rgba(18,48,71,.65)"/>
+<g class="mz-hand" opacity=".92">
+<path d="M170,0 L230,0 L230,26 C230,40 224,48 216,52 L212,54 L212,64 C212,74 205,80 198,80 C191,80 185,74 185,64 L185,52 C176,48 170,40 170,26 Z" fill="#C9A227"/>
+<path d="M185,52 L212,54" stroke="rgba(20,16,10,.25)" stroke-width="2"/>
+<ellipse cx="198" cy="70" rx="5.5" ry="8" fill="#E9C86A" opacity=".55"/>
+</g>
+<circle class="mz-drop" cx="198" cy="92" r="4" fill="#E9C86A"/>
+<g fill="rgba(233,200,106,.5)"><circle cx="60" cy="150" r="1.4"/><circle cx="330" cy="160" r="1.2"/><circle cx="250" cy="145" r="1.1"/></g>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- 2 · The timeline you are on -->
+<div class="mz-card reveal">
+<h3 class="mz-h" data-i18n="mizan.time.title">The Timeline You Are On</h3>
+<div class="space-y-4 mt-4">
+<div>
+<div class="mz-row"><span data-i18n="mizan.time.you">This life, the ummah's span</span><b>~<span data-mcount="70">0</span> <span data-i18n="mizan.years">years</span></b></div>
+<div class="mz-bar"><i style="width:2.2%"></i></div>
+<span class="mz-src">Tirmidhi 3550</span>
+</div>
+<div>
+<div class="mz-row"><span data-i18n="mizan.time.day">One Day of the Rising</span><b><span data-mcount="50000">0</span> <span data-i18n="mizan.years">years</span></b></div>
+<div class="mz-bar"><i style="width:64%"></i></div>
+<span class="mz-src">Qur'an 70:4 · lightened for the believer (Ahmad)</span>
+</div>
+<div>
+<div class="mz-row"><span data-i18n="mizan.time.forever">Then the abode that does not end</span><b>∞</b></div>
+<div class="mz-bar mz-inf"><i style="width:100%"></i></div>
+<span class="mz-src">Khulud · 2:25, 98:8</span>
+</div>
+</div>
+<p class="mz-note mt-4" data-i18n="mizan.time.note">On the Day itself, the deniers will estimate this whole life as "an hour of a day" (10:45). Divide seventy by forever: this life rounds to zero, except in what it purchases.</p>
+</div>
+
+<!-- 3 · Exchange rates -->
+<div class="mz-card reveal">
+<h3 class="mz-h" data-i18n="mizan.fx.title">Exchange Rates of the Next World</h3>
+<div class="grid grid-cols-2 gap-2.5 mt-4">
+<div class="mz-mini"><b><span data-mcount="83">0</span>+ <span data-i18n="mizan.years">years</span></b><span data-i18n="mizan.fx.qadr">one night, Laylat al-Qadr</span><i>97:3</i></div>
+<div class="mz-mini"><b>×<span data-mcount="700">0</span>+</b><span data-i18n="mizan.fx.grain">one grain given in charity</span><i>2:261</i></div>
+<div class="mz-mini"><b>2 <span data-i18n="mizan.years">years</span></b><span data-i18n="mizan.fx.arafah">one fast on Arafah</span><i>Muslim 1162</i></div>
+<div class="mz-mini"><b>&gt; <span data-i18n="mizan.fx.dunya">the dunya</span></b><span data-i18n="mizan.fx.fajr">two rak'ahs before Fajr</span><i>Muslim 725</i></div>
+<div class="mz-mini"><b data-i18n="mizan.fx.whipb">a whip's length</b><span data-i18n="mizan.fx.whip">of Jannah outweighs it all</span><i>Bukhari 6415</i></div>
+<div class="mz-mini"><b data-i18n="mizan.fx.wordsb">two words</b><span data-i18n="mizan.fx.words">heavy on the Scale</span><i>Bukhari 7563</i></div>
+</div>
+<p class="mz-note mt-4" data-i18n="mizan.fx.note">No market on earth posts rates like these. They are posted, in writing, for the one that lasts.</p>
+</div>
+
+<!-- 4 · One dip -->
+<div class="mz-card reveal">
+<h3 class="mz-h" data-i18n="mizan.dip.title">The Dip That Resets Memory</h3>
+<div class="grid grid-cols-2 gap-3 mt-4">
+<div class="mz-dip mz-dip-fire">
+<span class="mz-dip-k" data-i18n="mizan.dip.k1">The most comfortable denier who ever lived</span>
+<span class="mz-dip-v" data-i18n="mizan.dip.v1">one dip in the Fire:</span>
+<p>"O son of Adam, have you ever seen any good? He says: No, by Allah, my Lord."</p>
+</div>
+<div class="mz-dip mz-dip-jannah">
+<span class="mz-dip-k" data-i18n="mizan.dip.k2">The most afflicted believer who ever lived</span>
+<span class="mz-dip-v" data-i18n="mizan.dip.v2">one dip in Jannah:</span>
+<p>"O son of Adam, have you ever seen any hardship? He says: No, by Allah, my Lord."</p>
+</div>
+</div>
+<span class="mz-src">Muslim 2807</span>
+<p class="mz-note mt-3" data-i18n="mizan.dip.note">One immersion erases the entire memory of seventy years. That is the actual weight of every luxury envied and every hardship feared here.</p>
+</div>
+
+<!-- 5 · What follows you -->
+<div class="mz-card reveal">
+<h3 class="mz-h" data-i18n="mizan.follow.title">What Actually Follows You</h3>
+<div class="mz-follow mt-4">
+<div class="mz-f"><span class="mz-fi">⌂</span><span data-i18n="mizan.follow.family">Family</span><em data-i18n="mizan.follow.returns">returns from the grave</em></div>
+<div class="mz-f"><span class="mz-fi">◈</span><span data-i18n="mizan.follow.wealth">Wealth</span><em data-i18n="mizan.follow.returns2">returns from the grave</em></div>
+<div class="mz-f mz-f-stay"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.deeds">Deeds</span><em data-i18n="mizan.follow.stays">stay with you</em></div>
+</div>
+<span class="mz-src">Bukhari 6514 · Muslim 2960</span>
+<p class="mz-quote mt-3">"Son of Adam says: my wealth, my wealth. And is anything yours except what you ate and finished, wore and wore out, or gave and sent ahead?"</p>
+<span class="mz-src">Muslim 2958 · and 18:46: "the enduring good deeds are better"</span>
+</div>
+
+<!-- 6 · The traveler · close -->
+<div class="mz-card md:col-span-2 reveal">
+<div class="grid md:grid-cols-3 gap-5 items-center">
+<div class="md:col-span-2">
+<h3 class="mz-h" data-i18n="mizan.trav.title">The Rider and the Tree</h3>
+<p class="mz-quote">"What have I to do with this world? I and this world are but as a rider who shades himself under a tree, then moves on and leaves it."</p>
+<span class="mz-src">Tirmidhi 2377</span>
+<p class="mz-quote mt-2">"Be in this world as if you were a stranger, or a traveler on the road."</p>
+<span class="mz-src">Bukhari 6416</span>
+<p class="mz-note mt-3" data-i18n="mizan.trav.note">If this world weighed as much as a mosquito's wing with Allah, He would not have given a denier a sip of its water (Tirmidhi 2320). It weighs less; so travel light, and load the mount with what the next country accepts.</p>
+</div>
+<div class="flex flex-col gap-2.5">
+<button class="mz-cta" data-mgo="node:71" data-i18n="mizan.cta.jannah">See the destination · Jannah</button>
+<a class="mz-cta" href="words.html" data-i18n="mizan.cta.words">Carry words that last</a>
+<a class="mz-cta mz-cta-ghost" href="#timeline" data-i18n="mizan.cta.path">Walk the Path again</a>
+</div>
+</div>
+</div>
+
+</div>
+</div>
 </section>
 
 <!-- ============ ABOUT ============ -->
@@ -355,17 +544,20 @@ const $ = id => document.getElementById(id);
 const PERIODS = {
   bidaya:{ar:"البداية", nameKey:"period.bidaya", descKey:"period.bidaya.desc", gate:"gate-bidaya"},
   qisas:{ar:"قصص الأنبياء", nameKey:"period.qisas", descKey:"period.qisas.desc", gate:"gate-qisas"},
+  jahiliyyah:{ar:"الجاهلية", nameKey:"period.jahiliyyah", descKey:"period.jahiliyyah.desc", gate:"gate-jahiliyyah"},
   seerah:{ar:"السيرة", nameKey:"period.seerah", descKey:"period.seerah.desc", gate:"gate-seerah"},
+  khulafa:{ar:"الخلفاء", nameKey:"period.khulafa", descKey:"period.khulafa.desc", gate:"gate-khulafa"},
+  umam:{ar:"الأمم", nameKey:"period.umam", descKey:"period.umam.desc", gate:"gate-umam"},
   nihaya:{ar:"النهاية", nameKey:"period.nihaya", descKey:"period.nihaya.desc", gate:"gate-nihaya"}
 };
 const BOOKS = [
-  {n:1,name:"Al-Bidaya",ar:"البداية",dk:"book.1.desc",active:true,range:"1-8"},
-  {n:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",dk:"book.2.desc",active:true,range:"9-23"},
-  {n:3,name:"Al-Jahiliyyah",ar:"الجاهلية",dk:"book.3.desc",active:false},
-  {n:4,name:"An-Noor",ar:"النور",dk:"book.4.desc",active:true,range:"24-45"},
-  {n:5,name:"Al-Khulafa",ar:"الخلفاء",dk:"book.5.desc",active:false},
-  {n:6,name:"Al-Umam",ar:"الأمم",dk:"book.6.desc",active:false},
-  {n:7,name:"Al-Nihaya",ar:"النهاية",dk:"book.7.desc",active:true,range:"46-64"}
+  {n:1,name:"Al-Bidaya",ar:"البداية",dk:"book.1.desc",period:"bidaya",range:"1-8"},
+  {n:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",dk:"book.2.desc",period:"qisas",range:"9-23"},
+  {n:3,name:"Al-Jahiliyyah",ar:"الجاهلية",dk:"book.3.desc",period:"jahiliyyah",range:"24-26"},
+  {n:4,name:"An-Noor",ar:"النور",dk:"book.4.desc",period:"seerah",range:"27-46"},
+  {n:5,name:"Al-Khulafa",ar:"الخلفاء",dk:"book.5.desc",period:"khulafa",range:"47-50"},
+  {n:6,name:"Al-Umam",ar:"الأمم",dk:"book.6.desc",period:"umam",range:"51-52"},
+  {n:7,name:"Al-Nihaya",ar:"النهاية",dk:"book.7.desc",period:"nihaya",range:"53-71"}
 ];
 let currentFilter = "all";
 let lastFocus = null;
@@ -384,7 +576,7 @@ function renderStats(){
 /* ---------- books ---------- */
 function renderBooks(){
   $("book-cards").innerHTML = BOOKS.map((b,i) => `
-    <div class="book-card reveal p-4" style="--d:${i*45}ms">
+    <div class="book-card reveal p-4 cursor-pointer" style="--d:${i*45}ms" data-period="${b.period}" role="button" tabindex="0" aria-label="${b.name}">
       <div class="corner"></div>
       <div class="flex items-start justify-between">
         <div class="font-amiri text-xl text-ink mb-0.5">${b.ar}</div>
@@ -393,10 +585,19 @@ function renderBooks(){
       <div class="font-semibold text-sm text-ink mb-0.5">${b.name}</div>
       <div class="text-xs text-ink/50 mb-2.5">${t(b.dk)}</div>
       <div class="flex items-center justify-between">
-        <span class="text-[10px] font-bold uppercase tracking-wider ${b.active?"text-gold":"text-ink/30"}">${b.active?t("books.inpath"):t("books.coming")}</span>
-        ${b.range?`<span class="text-[10px] text-ink/35 font-mono">${b.range}</span>`:""}
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gold">${t("books.inpath")}</span>
+        <span class="text-[10px] text-ink/35 font-mono">${b.range}</span>
       </div>
     </div>`).join("");
+  $("book-cards").querySelectorAll(".book-card").forEach(card => {
+    const go = () => {
+      const btn = document.querySelector(`.filter-btn[data-period="${card.dataset.period}"]`);
+      if (btn) btn.click();
+      document.getElementById("timeline").scrollIntoView({behavior: NoorFX.REDUCED ? "auto" : "smooth"});
+    };
+    card.addEventListener("click", go);
+    card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
 }
 
 /* ---------- tiles ---------- */
@@ -579,6 +780,21 @@ NoorFX.initReveal(); NoorFX.initProgress($("progress"));
 NoorFX.initHeroCanvas($("hero-canvas"));
 NoorFX.initParallax($("hero"));
 NoorFX.initTileDrift();
+
+/* mizan: counters on first reveal + CTA */
+const mz = $("mizan");
+if (mz) {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    mz.querySelectorAll("[data-mcount]").forEach((el,i) => setTimeout(() => NoorFX.countUp(el, +el.dataset.mcount, 1400), 200 + i*160));
+  }), { threshold: 0.15 });
+  io.observe(mz);
+  mz.querySelectorAll("[data-mgo]").forEach(b => b.addEventListener("click", () => {
+    const [kind, id] = b.dataset.mgo.split(":");
+    if (kind === "node") openModal(+id);
+  }));
+}
 
 /* deep links: ?node=ID or #node-ID */
 const sp = new URLSearchParams(location.search);
