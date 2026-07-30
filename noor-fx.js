@@ -13,7 +13,8 @@ const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 /* ---------------- i18n (Phase A: EN master inline; packs fetched per-language) ---------------- */
 const UI_EN = {
-  "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids",
+  "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids","nav.health":"Health",
+  "health.ar":"الطِّبُّ النَّبَوِيّ","health.title":"The Prophetic Pattern of Health","health.sub":"How he ﷺ ate, moved, slept, washed, fasted, and carried his heart: the authentic record on one side, what modern research keeps finding on the other. A portrait of a life, not a prescription.",
   "hero.kicker":"نُورٌ عَلَىٰ نُورٍ","hero.title":"Codex of Light",
   "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
   "hero.cta.enter":"Enter the Path","hero.cta.characters":"Characters","hero.cta.kids":"✦ Little Codex",

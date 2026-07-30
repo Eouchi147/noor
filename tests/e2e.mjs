@@ -273,6 +273,37 @@ console.log('\n[9] guide');
   await ctx.close();
 }
 
+/* 10. health page */
+console.log('\n[10] health.html');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/health.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1400);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.locator('.th-sec').count() === 8, '8 sections render');
+  ok(await page.locator('.duo').count() >= 6, 'sunnah|science duo cards');
+  ok(await page.locator('.food').count() === 6, 'six plate medallions');
+  ok(await page.locator('#rail a').count() === 8, 'scrollspy rail');
+  const cnt = await page.locator('#th-hero [data-count]').first().textContent();
+  ok(cnt === '5', `hero counters animate (${cnt})`);
+  await page.locator('#measure').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1800);
+  ok(await page.locator('.v-band').count() === 3, 'vessel of thirds present');
+  await noDash(page, 'health surface');
+  await page.screenshot({ path: 'tests/shots/v8-health-e2e.png' });
+  await ctx.close();
+}
+{
+  const { ctx, page } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  await page.goto(BASE + '/health.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(900);
+  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'health mobile: no overflow');
+  await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  ok(await page.locator('a[href="health.html"]').count() >= 2, 'Health linked from index nav + pills');
+  await ctx.close();
+}
+
 await browser.close();
 console.log(failures === 0 ? '\nALL TESTS PASSED ✅' : `\n${failures} TEST(S) FAILED ❌`);
 process.exit(failures ? 1 : 0);
