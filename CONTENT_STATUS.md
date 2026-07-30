@@ -11,8 +11,8 @@
 | Hudaybiyyah | **1004** | 1000–2000 |
 | Opening of Makkah | **1002** | 1000–2000 |
 
-**Six flagships** in the approved band.
-THIN: 0 · Facts: 53+ · Mini-boxes: active
+Nihaya strengthened: Descent of Isa, Yajuj, Hashr, Shafa'a, Jannah, Dajjal, Sirat.
+Tabuk refreshed. THIN: 0 · Facts: 53+
 
 ## Checklist
 | # | Item | Status |
@@ -22,4 +22,4 @@ THIN: 0 · Facts: 53+ · Mini-boxes: active
 | **16** | Narrative depth | **6 in target band** |
 | 17 | Merge + data boxes | **Done** |
 | 18–19 | Images + i18n | Remaining |
-| 20 | Deploy | **Tomorrow** |
+| 20 | Deploy | **Tomorrow** (local index ready to push) |
