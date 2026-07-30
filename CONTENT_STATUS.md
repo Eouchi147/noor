@@ -9,9 +9,9 @@
 | Khandaq | **1018** | 1000–2000 |
 | Uhud | **1012** | 1000–2000 |
 | Hudaybiyyah | **1004** | 1000–2000 |
-| Opening of Makkah | 607 | DEEP |
+| Opening of Makkah | **1002** | 1000–2000 |
 
-**Five flagships** in the approved band (full Batch A + Isra).
+**Six flagships** in the approved band.
 THIN: 0 · Facts: 53+ · Mini-boxes: active
 
 ## Checklist
@@ -19,7 +19,7 @@ THIN: 0 · Facts: 53+ · Mini-boxes: active
 |---|------|--------|
 | 1–13 | Core build | **Done** |
 | 14–15 | Images + Afasy | Partial |
-| **16** | Narrative depth | **5 in target band** |
+| **16** | Narrative depth | **6 in target band** |
 | 17 | Merge + data boxes | **Done** |
 | 18–19 | Images + i18n | Remaining |
 | 20 | Deploy | **Tomorrow** |
