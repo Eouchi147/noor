@@ -175,3 +175,18 @@ Owner flagged sentences that were "not very english... not clear enough" (Khinza
 - Also fixed: stale "Path node 48/50/52" labels left from the v4 renumbering; two mid-sentence "·" artifacts; node 69 retitled "Hisab & Mizan: The Records and the Scale"; three mizan strings in index.html + UI_EN ("the life that lasts", "turns back at the grave", "The son of Adam says").
 - Vocabulary sweep now returns **zero** hits for the whole metaphor family across all content.
 - i18n/en.json regenerated. All 55 e2e assertions pass.
+
+## v6 — "The Rose of Light" (hero, deeper mizan, Little Codex, Guide)
+
+**Hero rebuilt as a living illuminated composition.** On load, a point of light blooms ("Kun") and a great eightfold sacred-geometry rose draws itself stroke by stroke around the crescent: outer ring, tick ring, two interlocked squares, octagon, eight petal rings, star finials, plus a counter-rotating inner order. Then the whole rose turns imperceptibly (260s/190s), the halo breathes, نور ghost-glows with a light sweep, a conic ray-wheel turns behind it on desktop, and mist drifts over the dunes. All transform/opacity GPU animation; the draw is CSS stroke transitions (no JS animation loop added). Mobile gets its own tuning: 55% faster draw, tighter rose, no ray-wheel, existing DPR-capped canvas. Reduced motion: everything renders in final state.
+
+**Two Lives, deepened (6 → 9 infographic cards + the owner's correction):**
+- What Follows You now carries the debt strip: martyr forgiven all but debt (Muslim 1886); the believer's soul attached to his debt until settled (Tirmidhi 1078, hasan).
+- New: Two Capitals, Spent Blind (Bukhari 6412) · Nothing Here Hurts for Free with falling gold leaves (Bukhari 5641; 5660 · Muslim 2571) · Shade on the Day There Is None, the seven shaded as chips (Bukhari 660 · Muslim 1031).
+
+**kids.html — "The Greatest Game" (Little Codex).** Seven tap-through superlative rounds (Fastest, Strongest, Biggest, Sees the Most, Most Giving, Most Loving, Lasts Longest): champions with hand-drawn flat SVGs each beaten by the next, ending every round at an ayah/sahih hadith and one of the Beautiful Names collected as a gem (54:50, 35:41, 2:255, 6:59, 14:34, Bukhari 5999, 57:3). Seven gems form the constellation finale ("Allahu Akbar"). Self-contained 63KB, zero deps, localStorage progress, no human figures anywhere. Linked from nav, mobile pills, and a hero CTA.
+
+**The Guide — a quiet clarifier, not a chatbot to chat with.** A small "؟ Unclear? Ask" pill appears ONLY on 33 sensitive chapters (Iblis's refusal, 4:157, the fitnah of the Companions, every major Sign, Hisab fairness, etc. + Iblis/Qarin/Harut-Marut seals). It opens three curated questions per topic (99 authored answers, all cited, mainstream, no fatwas: rulings are pointed to a scholar) plus free-text matching against the Q&As and a 43-term glossary. Data: noor-guide-data.js · UI: noor-guide.js (self-styling, i18n-ready keys).
+**Optional live mode:** api/guide.js is a dormant Vercel function. Set `ANTHROPIC_API_KEY` in Vercel → the free-text box silently upgrades to real Claude answers, constrained to the open article, 2-3 sentences, no rulings. Without the key the site is 100% static and the curated layer answers alone. Nothing to configure otherwise.
+
+Tests: suite grown to 68 assertions (rose draw, 9 mizan cards, debt strip, seven chips, kids full round on mobile, guide pill gating on/off, glossary free-text). All pass. i18n/en.json regenerated (165 UI keys).

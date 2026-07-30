@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="assets/tw.css"/>
 <script src="nodes.js" defer></script>
 <script src="noor-fx.js" defer></script>
+<script src="noor-guide-data.js" defer></script>
+<script src="noor-guide.js" defer></script>
 <style>
 /* ============ NOOR base ============ */
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--sage:#8BA888;--lapis:#1E3A8A;--deep:#14100A}
@@ -34,22 +36,48 @@ a:hover .logo-seal{transform:rotate(12deg)}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
 .aurora{position:absolute;top:-30%;left:-25%;width:150%;height:90%;z-index:1;pointer-events:none;background:radial-gradient(55% 42% at 30% 55%,rgba(30,58,138,.4),transparent 70%),radial-gradient(45% 38% at 68% 40%,rgba(124,58,237,.20),transparent 70%),radial-gradient(38% 30% at 52% 68%,rgba(201,162,39,.13),transparent 70%);animation:auroraDrift 26s ease-in-out infinite alternate;will-change:transform}
 @keyframes auroraDrift{from{transform:translate3d(-2.5%,0,0) scale(1)}to{transform:translate3d(2.5%,3%,0) scale(1.06)}}
-.ray{position:absolute;top:-22%;left:50%;width:190px;height:130%;z-index:2;pointer-events:none;transform-origin:top center;background:linear-gradient(180deg,rgba(233,200,106,.15),rgba(233,200,106,.05) 55%,transparent 82%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);animation:rayPulse 9s ease-in-out infinite alternate;will-change:opacity}
-.ray.r2{transform:translateX(-50%) rotate(-16deg);animation-duration:12s;opacity:.6}
-.ray.r3{transform:translateX(-50%) rotate(15deg);animation-duration:14s;opacity:.5}
-.ray.r1{transform:translateX(-50%)}
-@keyframes rayPulse{from{opacity:.22}to{opacity:.66}}
-.crescent{position:absolute;top:8%;inset-inline-end:9%;width:170px;height:170px;z-index:2;pointer-events:none;animation:moonFloat 12s ease-in-out infinite alternate;will-change:transform;filter:drop-shadow(0 0 26px rgba(244,227,161,.4))}
-@keyframes moonFloat{from{transform:translate3d(0,0,0) rotate(-14deg)}to{transform:translate3d(-9px,13px,0) rotate(-11deg)}}
-.ghost-noor{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:1;pointer-events:none;font-family:Amiri,serif;font-size:min(46vw,430px);line-height:1;color:rgba(233,200,106,.045);text-shadow:0 0 90px rgba(233,200,106,.06);user-select:none}
-.arch{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2;pointer-events:none;opacity:.5}
+/* ---- v6 hero: The Rose of Light (Kun Fayakun) ---- */
+.milky{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 34% at 50% 30%,rgba(126,148,222,.10),transparent 68%)}
+.rays-wheel{position:absolute;top:38%;left:50%;width:min(150vw,1180px);aspect-ratio:1;transform:translate(-50%,-50%);z-index:2;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 9%,rgba(233,200,106,.045) 11.5%,transparent 14% 21.5%,rgba(233,200,106,.045) 24%,transparent 26.5% 34%,rgba(233,200,106,.045) 36.5%,transparent 39% 46.5%,rgba(233,200,106,.045) 49%,transparent 51.5% 59%,rgba(233,200,106,.045) 61.5%,transparent 64% 71.5%,rgba(233,200,106,.045) 74%,transparent 76.5% 84%,rgba(233,200,106,.045) 86.5%,transparent 89% 100%);mix-blend-mode:screen;animation:wheelSpin 140s linear infinite;will-change:transform;display:none}
+@keyframes wheelSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.ghost-pos{position:absolute;inset:0 0 12% 0;z-index:1;pointer-events:none;display:grid;place-items:center}
+.ghost-noor{grid-area:1/1;font-family:Amiri,serif;font-size:min(46vw,430px);line-height:1;color:rgba(233,200,106,.045);text-shadow:0 0 90px rgba(233,200,106,.06);user-select:none}
+.ghost-noor.glow{color:transparent;text-shadow:none;background:linear-gradient(115deg,transparent 30%,rgba(244,227,161,.16) 50%,transparent 70%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;animation:ghostSweep 11s ease-in-out infinite}
+@keyframes ghostSweep{0%,100%{background-position:130% 0;opacity:.4}50%{background-position:-30% 0;opacity:1}}
+.geo-pos{position:absolute;top:38%;left:50%;width:min(86vw,560px);aspect-ratio:1;margin-left:calc(min(86vw,560px)/-2);margin-top:calc(min(86vw,560px)/-2);z-index:2;pointer-events:none}
+#geo{position:absolute;inset:0}
+.geo-halo{position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(233,200,106,.14) 0%,rgba(233,200,106,.05) 34%,transparent 62%);animation:haloBreath 12s ease-in-out infinite alternate;will-change:transform,opacity}
+@keyframes haloBreath{from{transform:scale(.97);opacity:.8}to{transform:scale(1.05);opacity:1}}
+.geo-spin{position:absolute;inset:0;animation:geoSpin 260s linear infinite;will-change:transform}
+.geo-spin.rev{animation:geoSpinRev 190s linear infinite}
+@keyframes geoSpin{to{transform:rotate(360deg)}}
+@keyframes geoSpinRev{to{transform:rotate(-360deg)}}
+.geo-spin>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#geo .gp{fill:none;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 2s cubic-bezier(.4,0,.2,1);transition-delay:calc(var(--pd,0)*var(--geo-sp,1s))}
+#hero.drawn #geo .gp{stroke-dashoffset:0}
+#geo .gpt{opacity:0;transition:opacity 1.6s ease;transition-delay:calc(2.4*var(--geo-sp,1s))}
+#hero.drawn #geo .gpt{opacity:.5}
+#geo .gpf{opacity:0;transition:opacity 1.4s ease;transition-delay:calc(2.7*var(--geo-sp,1s))}
+#hero.drawn #geo .gpf{opacity:1}
+#geo-core{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.crescent{width:26%;height:26%;margin-bottom:54%;pointer-events:none;animation:moonFloat 12s ease-in-out infinite alternate;will-change:transform;filter:drop-shadow(0 0 26px rgba(244,227,161,.4));opacity:0;transition:opacity 1.6s ease .9s;transform:translate3d(0,0,0)}
+#hero.drawn .crescent{opacity:1}
+@keyframes moonFloat{from{transform:translate3d(0,0,0) rotate(-13deg) scale(1)}to{transform:translate3d(0,7px,0) rotate(-10deg) scale(1.02)}}
+.kun-seed{position:absolute;top:38%;left:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#FFFDF2;box-shadow:0 0 18px 6px rgba(244,227,161,.85),0 0 60px 24px rgba(201,162,39,.4);z-index:3;opacity:0;pointer-events:none}
+#hero.drawn .kun-seed{animation:kunBloom 1.15s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes kunBloom{0%{opacity:0;transform:scale(.2)}18%{opacity:1}100%{opacity:0;transform:scale(30)}}
+.mist{position:absolute;left:-6%;right:-6%;bottom:8%;height:22%;z-index:3;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(126,148,222,.07) 45%,transparent);animation:mistDrift 38s ease-in-out infinite alternate;will-change:transform}
+@keyframes mistDrift{from{transform:translate3d(-2%,0,0)}to{transform:translate3d(2%,0,0)}}
+@media(min-width:1024px){.rays-wheel{display:block}}
+@media(max-width:767px){.geo-pos{width:min(92vw,420px);margin-left:calc(min(92vw,420px)/-2);margin-top:calc(min(92vw,420px)/-2);top:36%}:root{--geo-sp:.55s}.geo-halo{inset:-12%}}
 .dune{position:absolute;left:-4%;right:-4%;bottom:-2px;z-index:3;pointer-events:none;will-change:transform}
 .dune svg{display:block;width:100%;height:auto}
 .hero-fade{position:absolute;inset:auto 0 0 0;height:30%;z-index:4;background:linear-gradient(180deg,transparent,var(--parchment));pointer-events:none}
 .hero-content{position:relative;z-index:5}
 .shimmer-gold{background:linear-gradient(100deg,#8a7020 8%,#C9A227 26%,#F4E3A1 42%,#C9A227 58%,#8a7020 92%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5.5s linear infinite}
 @keyframes shimmer{to{background-position:-220% center}}
-.hero-kicker{letter-spacing:.06em;text-shadow:0 0 26px rgba(233,200,106,.4)}
+.hero-kicker{letter-spacing:.06em;text-shadow:0 0 26px rgba(233,200,106,.4),0 1px 10px rgba(4,6,15,.7)}
+.hero-sub{text-shadow:0 1px 14px rgba(4,6,15,.85)}
 .hero-stat{background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .hero-stat .v{font-variant-numeric:tabular-nums}
 .btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 6px 22px rgba(201,162,39,.35);transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
@@ -239,6 +267,33 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .mz-cta{display:block;text-align:center;padding:.65rem .9rem;border-radius:999px;font-size:.78rem;font-weight:700;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;transition:transform .25s,box-shadow .25s;border:none;cursor:pointer}
 .mz-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(201,162,39,.35)}
 .mz-cta-ghost{background:transparent;border:1px solid rgba(233,200,106,.4);color:#F4E3A1}
+/* v6 mizan additions */
+.mz-debt{display:flex;gap:.65rem;align-items:flex-start;background:rgba(178,64,40,.12);border:1px solid rgba(236,146,96,.3);border-radius:14px;padding:.7rem .8rem}
+.mz-debt-i{color:#F2BE93;font-size:1.05rem;line-height:1.3}
+.mz-debt b{display:block;font-size:.8rem;color:#F4C9A1;margin-bottom:.15rem}
+.mz-debt em{display:block;font-style:normal;font-size:.72rem;color:rgba(255,254,247,.66);line-height:1.55}
+.mz-debt .mz-src{margin-top:.3rem}
+.mz-cap{background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:14px;padding:.85rem .6rem;text-align:center;transition:border-color .3s}
+.mz-cap:hover{border-color:rgba(233,200,106,.5)}
+.mz-cap .mzc-i{display:block;font-size:1.3rem;color:#E9C86A;margin-bottom:.25rem}
+.mz-cap b{display:block;font-size:.85rem;color:#FFFEF7}
+.mz-cap em{display:block;font-style:normal;font-size:.68rem;color:rgba(255,254,247,.55);margin-top:.15rem}
+.mz-leafcard{overflow:hidden}
+.mz-leaves{position:absolute;inset:0;pointer-events:none}
+.mz-leaves i{position:absolute;top:-8%;left:var(--lx);width:9px;height:13px;border-radius:0 11px 0 11px;background:linear-gradient(135deg,#E9C86A,#C9A227);opacity:0;transform:translate3d(0,0,0)}
+.mz-leafcard.visible .mz-leaves i{animation:leafFall var(--ld,12s) linear var(--ls,0s) infinite}
+.mz-leaves i:nth-child(1){--lx:12%;--ld:11s;--ls:.2s}
+.mz-leaves i:nth-child(2){--lx:30%;--ld:14s;--ls:3.4s}
+.mz-leaves i:nth-child(3){--lx:48%;--ld:12.5s;--ls:6.1s}
+.mz-leaves i:nth-child(4){--lx:64%;--ld:15s;--ls:1.6s}
+.mz-leaves i:nth-child(5){--lx:78%;--ld:11.5s;--ls:4.8s}
+.mz-leaves i:nth-child(6){--lx:90%;--ld:13.5s;--ls:8s}
+@keyframes leafFall{0%{opacity:0;transform:translate3d(0,0,0) rotate(0)}8%{opacity:.4}82%{opacity:.32}100%{opacity:0;transform:translate3d(26px,118%,0) rotate(300deg)}}
+.mz-leafcard>*{position:relative}
+.mz-seven{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.mz-s7{display:flex;align-items:center;gap:.5rem;background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:999px;padding:.4rem .8rem .4rem .45rem;font-size:.74rem;color:rgba(255,254,247,.85);transition:border-color .3s,background .3s}
+.mz-s7:hover{border-color:rgba(233,200,106,.55);background:rgba(233,200,106,.08)}
+.mz-s7 i{font-style:normal;font-family:Amiri,serif;width:1.5rem;height:1.5rem;border-radius:50%;background:rgba(233,200,106,.14);border:1px solid rgba(233,200,106,.35);color:#F4E3A1;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
 .mz-sea{position:relative}
 .mz-wave{animation:mzWave 7s ease-in-out infinite alternate;will-change:transform}
 .mz-wave.w2{animation-duration:9s;animation-delay:-2s}
@@ -275,6 +330,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a href="places.html" class="hover:text-ink transition-colors" data-i18n="nav.places">Places</a>
 <a href="words.html" class="hover:text-ink transition-colors" data-i18n="nav.words">Words</a>
 <a href="#mizan" class="hover:text-ink transition-colors" data-i18n="nav.mizan">Two Lives</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
 <a href="#about" class="hover:text-ink transition-colors" data-i18n="nav.about">About</a>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
 <option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
@@ -290,6 +346,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
 <a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
 <a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
 <a href="#books" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.books">Books</a>
 </div>
 </div>
@@ -304,20 +361,52 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <!-- ============ HERO v2 ============ -->
 <section id="hero">
 <div class="aurora" aria-hidden="true"></div>
-<div class="ghost-noor" data-depth="0.06" aria-hidden="true">نُور</div>
+<div class="milky" aria-hidden="true"></div>
+<div class="ghost-pos" data-depth="0.06" aria-hidden="true"><div class="ghost-noor">نُور</div><div class="ghost-noor glow">نُور</div></div>
 <canvas id="hero-canvas" aria-hidden="true"></canvas>
-<div class="ray r1" aria-hidden="true"></div><div class="ray r2" aria-hidden="true"></div><div class="ray r3" aria-hidden="true"></div>
-<svg class="crescent" data-depth="0.3" viewBox="0 0 100 100" aria-hidden="true">
+<div class="rays-wheel" aria-hidden="true"></div>
+<div class="geo-pos" data-depth="0.13" aria-hidden="true">
+<div id="geo">
+<div class="geo-halo"></div>
+<div class="geo-spin">
+<svg viewBox="0 0 200 200" fill="none">
+<circle class="gp" cx="100" cy="100" r="94" pathLength="100" stroke="rgba(233,200,106,.34)" stroke-width="1" style="--pd:0"/>
+<circle class="gpt" cx="100" cy="100" r="88" pathLength="300" stroke="rgba(233,200,106,.45)" stroke-width="0.8" stroke-dasharray="0.6 2.4"/>
+<path class="gp" d="M100,14 L186,100 L100,186 L14,100 Z" pathLength="100" stroke="rgba(233,200,106,.5)" stroke-width="1.1" style="--pd:0.4"/>
+<path class="gp" d="M39,39 H161 V161 H39 Z" pathLength="100" stroke="rgba(233,200,106,.42)" stroke-width="1.1" style="--pd:0.7"/>
+<path class="gp" d="M119.9,52 L148,80.1 L148,119.9 L119.9,148 L80.1,148 L52,119.9 L52,80.1 L80.1,52 Z" pathLength="100" stroke="rgba(233,200,106,.30)" stroke-width="0.9" style="--pd:1.1"/>
+<circle class="gp" cx="100" cy="28" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.4"/>
+<circle class="gp" cx="150.9" cy="49.1" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.5"/>
+<circle class="gp" cx="172" cy="100" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.6"/>
+<circle class="gp" cx="150.9" cy="150.9" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.7"/>
+<circle class="gp" cx="100" cy="172" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.8"/>
+<circle class="gp" cx="49.1" cy="150.9" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.9"/>
+<circle class="gp" cx="28" cy="100" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:2"/>
+<circle class="gp" cx="49.1" cy="49.1" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:2.1"/>
+<g class="gpf" fill="rgba(233,200,106,.55)">
+<path d="M100,3 l1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 -3.4,-1.8 3.4,-1.8 Z"/>
+<path d="M100,186.6 l1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 -3.4,-1.8 3.4,-1.8 Z"/>
+<path d="M3,100 l3.4,-1.8 1.8,-3.4 1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 Z"/>
+<path d="M186.6,100 l3.4,-1.8 1.8,-3.4 1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 Z"/>
+</g>
+</svg>
+</div>
+<div class="geo-spin rev">
+<svg viewBox="0 0 200 200" fill="none">
+<path class="gp" d="M100,60 L140,100 L100,140 L60,100 Z" pathLength="100" stroke="rgba(233,200,106,.38)" stroke-width="0.9" style="--pd:2.3"/>
+<circle class="gp" cx="100" cy="100" r="33" pathLength="100" stroke="rgba(233,200,106,.30)" stroke-width="0.8" style="--pd:2.6"/>
+</svg>
+</div>
+<div id="geo-core">
+<svg class="crescent" viewBox="0 0 100 100">
 <defs><radialGradient id="mg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="mm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
 <circle cx="50" cy="50" r="36" fill="url(#mg)" mask="url(#mm)"/>
 <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(244,227,161,.16)" stroke-width="0.8"/>
 </svg>
-<svg class="arch" width="620" height="360" viewBox="0 0 620 360" fill="none" aria-hidden="true">
-<path d="M60 360 V190 C60 95 170 30 310 30 C450 30 560 95 560 190 V360" stroke="rgba(233,200,106,.42)" stroke-width="1.2"/>
-<path d="M74 360 V194 C74 105 178 44 310 44 C442 44 546 105 546 194 V360" stroke="rgba(233,200,106,.18)" stroke-width="1"/>
-<path d="M310 6 l7 12 12 2 -8 10 2 13 -13 -6 -13 6 2 -13 -8 -10 12 -2 Z" fill="rgba(233,200,106,.5)"/>
-<circle cx="60" cy="188" r="3" fill="rgba(233,200,106,.5)"/><circle cx="560" cy="188" r="3" fill="rgba(233,200,106,.5)"/>
-</svg>
+</div>
+</div>
+</div>
+<div class="kun-seed" aria-hidden="true"></div>
 <div class="dune" data-depth="0.1" aria-hidden="true" style="opacity:.6">
 <svg viewBox="0 0 1440 230" preserveAspectRatio="none" style="height:230px">
 <path d="M0,150 C200,105 340,160 540,132 C720,108 830,64 980,96 C1130,126 1330,102 1440,122 L1440,230 L0,230 Z" fill="#0E1224"/>
@@ -335,15 +424,17 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="dune" data-depth="0.4" aria-hidden="true">
 <svg viewBox="0 0 1440 130" preserveAspectRatio="none" style="height:130px"><path d="M0,84 C320,130 560,54 860,92 C1120,124 1300,74 1440,98 L1440,130 L0,130 Z" fill="#070910"/></svg>
 </div>
+<div class="mist" aria-hidden="true"></div>
 <div class="hero-fade" aria-hidden="true"></div>
 
 <div class="hero-content max-w-4xl mx-auto px-4 pt-20 pb-24 sm:pt-24 sm:pb-28 text-center">
 <p class="hero-kicker font-amiri text-gold text-2xl sm:text-3xl mb-4" data-i18n="hero.kicker">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-4"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
+<p class="hero-sub text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
 <div class="flex flex-wrap justify-center gap-3 mb-10">
 <a href="#timeline" class="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm" data-i18n="hero.cta.enter">Enter the Path</a>
 <a href="characters.html" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.characters">Characters</a>
+<a href="kids.html" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.kids">✦ Little Codex</a>
 </div>
 <div id="hero-stats" class="flex flex-wrap justify-center gap-2.5"></div>
 <div class="mt-10 flex justify-center"><svg class="scroll-cue w-5 h-5 text-parchment/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
@@ -486,8 +577,56 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="mz-f mz-f-stay"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.deeds">Deeds</span><em data-i18n="mizan.follow.stays">stay with you</em></div>
 </div>
 <span class="mz-src">Bukhari 6514 · Muslim 2960</span>
+<div class="mz-debt mt-3">
+<span class="mz-debt-i">⚖</span>
+<div>
+<b data-i18n="mizan.follow.debt">And one thing waits ahead: debt</b>
+<em data-i18n="mizan.follow.debtNote">Death does not erase it. The martyr is forgiven everything except his debt, and the believer's soul stays attached to what he owes until it is settled. Pay it, or arrange it, while arranging is still yours.</em>
+<span class="mz-src">Muslim 1886 · Tirmidhi 1078 (hasan)</span>
+</div>
+</div>
 <p class="mz-quote mt-3">"The son of Adam says: my wealth, my wealth. And is anything yours except what you ate and finished, wore and wore out, or gave and sent ahead?"</p>
 <span class="mz-src">Muslim 2958 · and 18:46: "the enduring good deeds are better"</span>
+</div>
+
+<!-- 7 · Two capitals -->
+<div class="mz-card reveal">
+<h3 class="mz-h" data-i18n="mizan.cap.title">Two Capitals, Spent Blind</h3>
+<div class="grid grid-cols-2 gap-3 mt-4">
+<div class="mz-cap"><span class="mzc-i">✚</span><b data-i18n="mizan.cap.health">Health</b><em data-i18n="mizan.cap.healthNote">works only while it lasts</em></div>
+<div class="mz-cap"><span class="mzc-i">◷</span><b data-i18n="mizan.cap.time">Free time</b><em data-i18n="mizan.cap.timeNote">leaves without notice</em></div>
+</div>
+<p class="mz-quote mt-3">"Two blessings about which many people are cheated: health and free time."</p>
+<span class="mz-src">Bukhari 6412</span>
+<p class="mz-note mt-3" data-i18n="mizan.cap.note">The only two currencies any deed is ever bought with. Both are draining while you read this sentence, and the next life pays out exactly what they purchased.</p>
+</div>
+
+<!-- 8 · Pain is not wasted -->
+<div class="mz-card reveal mz-leafcard">
+<div class="mz-leaves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h3 class="mz-h" data-i18n="mizan.leaf.title">Nothing Here Hurts for Free</h3>
+<p class="mz-quote">"No fatigue, nor disease, nor sorrow, nor sadness, nor hurt, nor distress befalls a Muslim, even the prick he receives from a thorn, but Allah expiates some of his sins for it."</p>
+<span class="mz-src">Bukhari 5641</span>
+<p class="mz-quote mt-2">"No Muslim is afflicted by any harm but Allah sheds his sins as a tree sheds its leaves."</p>
+<span class="mz-src">Bukhari 5660 · Muslim 2571</span>
+<p class="mz-note mt-3" data-i18n="mizan.leaf.note">Here, pain subtracts from what stands against you: every fever, worry, and thorn quietly lightens the load. That exchange runs only on this side of the grave.</p>
+</div>
+
+<!-- 9 · Seven shaded -->
+<div class="mz-card md:col-span-2 reveal">
+<h3 class="mz-h" data-i18n="mizan.shade.title">Shade, on the Day There Is None</h3>
+<p class="mz-quote">"Seven, Allah will shade them in His shade on the Day when there is no shade but His."</p>
+<span class="mz-src">Bukhari 660 · Muslim 1031</span>
+<div class="mz-seven mt-4">
+<div class="mz-s7"><i>١</i><span data-i18n="mizan.shade.s1">A just leader</span></div>
+<div class="mz-s7"><i>٢</i><span data-i18n="mizan.shade.s2">A youth raised in worship</span></div>
+<div class="mz-s7"><i>٣</i><span data-i18n="mizan.shade.s3">A heart hung on the mosques</span></div>
+<div class="mz-s7"><i>٤</i><span data-i18n="mizan.shade.s4">Two who love each other for Allah alone</span></div>
+<div class="mz-s7"><i>٥</i><span data-i18n="mizan.shade.s5">One who is called by beauty and answers: I fear Allah</span></div>
+<div class="mz-s7"><i>٦</i><span data-i18n="mizan.shade.s6">A hand that gives so secretly the left does not know</span></div>
+<div class="mz-s7"><i>٧</i><span data-i18n="mizan.shade.s7">Eyes that weep alone, remembering Allah</span></div>
+</div>
+<p class="mz-note mt-4" data-i18n="mizan.shade.note">Fifty thousand years of sun, and shade is bought here, now, mostly for free: none of the seven requires wealth, and every one of them is available today.</p>
 </div>
 
 <!-- 6 · The traveler · close -->
@@ -714,6 +853,7 @@ function openModal(id, push = true){
   body.querySelectorAll("[data-conn]").forEach(b => b.onclick = () => openModal(+b.dataset.conn));
   const c2 = $("modal-close-2"); if (c2) c2.onclick = closeModal;
   bindEntityLinks(body, { node: nid => openModal(nid) });
+  if (window.NoorGuide) NoorGuide.attach(body, "n:" + n.id, n.titleEn);
 
   $("modal-backdrop").classList.add("open");
   $("modal-backdrop").scrollTop = 0;
@@ -779,6 +919,7 @@ renderStats(); renderBooks(); renderPath("all");
 NoorFX.initReveal(); NoorFX.initProgress($("progress"));
 NoorFX.initHeroCanvas($("hero-canvas"));
 NoorFX.initParallax($("hero"));
+requestAnimationFrame(() => requestAnimationFrame(() => $("hero").classList.add("drawn")));   // Kun: the Rose draws itself
 NoorFX.initTileDrift();
 
 /* mizan: counters on first reveal + CTA */

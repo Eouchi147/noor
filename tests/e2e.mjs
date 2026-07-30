@@ -30,6 +30,8 @@ console.log('\n[1] index.html');
   ok(await page.locator('.filter-btn').count() === 8, '8 filter chips');
   ok(await page.locator('#hero-stats .hero-stat').count() === 6, '6 hero stats');
   ok(await page.locator('.crescent').count() === 1, 'crescent rendered');
+  ok(await page.locator('#geo .gp').count() >= 12, 'sacred-geometry rose paths present');
+  ok(await page.evaluate(() => document.getElementById('hero').classList.contains('drawn')), 'Kun draw sequence triggered');
   await page.waitForTimeout(1300);
   const statVal = await page.locator('#hero-stats [data-count]').first().textContent();
   ok(statVal === '71', `count-up completed (${statVal})`);
@@ -74,7 +76,9 @@ console.log('\n[1b] seven books · mizan section');
   await page.keyboard.press('Escape');
   await page.locator('a[href="#mizan"]').first().click();
   await page.waitForTimeout(2600);
-  ok(await page.locator('.mz-card').count() >= 6, 'mizan: 6 infographic cards');
+  ok(await page.locator('.mz-card').count() === 9, 'mizan: 9 infographic cards');
+  ok(await page.locator('.mz-debt').count() === 1, 'debt strip in follow card');
+  ok(await page.locator('.mz-s7').count() === 7, 'seven shaded chips render');
   const c = await page.locator('#mizan [data-mcount="50000"]').textContent();
   ok(c.replace(/\D/g,'') === '50000', `mizan counters animate (day = ${c})`);
   await noDash(page, 'mizan section');
@@ -198,6 +202,56 @@ console.log('\n[7] reduced motion · search');
   await page.locator('#search-results button').first().click();
   await page.waitForTimeout(400);
   ok(await page.locator('#modal-backdrop.open').count() === 1, 'search opens modal');
+  await ctx.close();
+}
+
+/* 8. kids: The Greatest Game */
+console.log('\n[8] kids.html');
+{
+  const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  await page.goto(BASE + '/kids.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(800);
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
+  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
+  ok(await page.locator('button:has-text("Fastest")').count() >= 1, 'star map shows rounds');
+  await noDash(page, 'kids map');
+  await page.locator('button:has-text("Fastest")').first().click();
+  await page.waitForTimeout(700);
+  ok(await page.evaluate(() => document.body.innerText.includes('FASTEST')), 'round question shown');
+  for (let i = 0; i < 6; i++) {
+    const btn = page.locator('main button:visible').last();
+    if (await btn.count()) { await btn.click(); await page.waitForTimeout(850); }
+  }
+  ok(await page.evaluate(() => /1 of 7/.test(document.body.innerText)), 'gem collected, back on star map');
+  await ctx.close();
+}
+
+/* 9. guide: quiet clarifier */
+console.log('\n[9] guide');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/index.html?node=55', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1000);
+  ok(await page.locator('.ng-pill').count() === 1, 'guide pill on sensitive chapter (Dajjal)');
+  await page.locator('.ng-pill').click();
+  await page.waitForTimeout(400);
+  ok(await page.locator('.ng-chip').count() === 3, 'three suggested questions');
+  await page.locator('.ng-chip').first().click();
+  await page.waitForTimeout(300);
+  ok(await page.locator('.ng-a').count() === 1, 'curated answer renders');
+  await page.fill('.ng-in', 'what is isnad');
+  await page.locator('.ng-go').click();
+  await page.waitForTimeout(600);
+  ok(await page.evaluate(() => document.querySelector('.ng-a')?.innerText.toLowerCase().includes('isnad')), 'free text hits glossary');
+  await noDash(page, 'guide sheet');
+  await page.keyboard.press('Escape');
+  await page.goto(BASE + '/index.html?node=38', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(900);
+  ok(await page.locator('.ng-pill').count() === 0, 'no pill on non-sensitive chapter (Badr)');
+  await page.goto(BASE + '/characters.html?open=j-iblis', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1000);
+  ok(await page.locator('.ng-pill').count() === 1, 'guide pill on Iblis seal');
+  ok(errors.length === 0, 'no JS errors in guide flows' + (errors.length ? ' → ' + errors.join(' | ') : ''));
   await ctx.close();
 }
 

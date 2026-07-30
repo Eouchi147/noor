@@ -121,6 +121,7 @@ function openEntry(key, id){
   const c2 = $("modal-close-2"); if (c2) c2.onclick = closeModal;
   const handlers = {}; handlers[HUB.type] = eid => openFromId(eid);
   bindEntityLinks(body, handlers);
+  if (window.NoorGuide && HUB.type === "char") NoorGuide.attach(body, "c:" + id, c.titleEn);
 
   $("modal-backdrop").classList.add("open");
   $("modal-backdrop").scrollTop = 0;

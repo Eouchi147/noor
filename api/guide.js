@@ -1,0 +1,43 @@
+// NOOR Guide: optional live clarifier. Dormant until the owner sets
+// ANTHROPIC_API_KEY in Vercel project settings; the site works fully without it.
+export default async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) return res.status(501).json({ error: "guide API not enabled" });
+
+  let body = req.body;
+  if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
+  const question = String((body && body.question) || "").slice(0, 400).trim();
+  const title = String((body && body.title) || "").slice(0, 160);
+  const excerpt = String((body && body.excerpt) || "").slice(0, 6000);
+  if (!question || !excerpt) return res.status(400).json({ error: "question and excerpt required" });
+
+  const system = [
+    "You are the quiet reading guide of NOOR, an Islamic chronological history site.",
+    "Answer ONLY from the article excerpt provided. If the excerpt does not settle the question, say so plainly and suggest asking a trusted scholar or local imam.",
+    "Never give religious rulings (fatwa), never speculate beyond the text, never cite sources not present in the excerpt.",
+    "Tone: warm, plain, reverent. Length: 2 to 3 sentences. Use ﷺ after the Prophet's name. Do not use em dashes."
+  ].join(" ");
+
+  try {
+    const r = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5",
+        max_tokens: 250,
+        temperature: 0.2,
+        system,
+        messages: [{ role: "user", content: `Chapter: ${title}\n\nArticle excerpt:\n${excerpt}\n\nReader's question: ${question}` }]
+      })
+    });
+    if (!r.ok) return res.status(502).json({ error: "upstream error" });
+    const j = await r.json();
+    const answer = (j.content || []).map(c => c.text || "").join(" ").trim();
+    if (!answer) return res.status(502).json({ error: "empty answer" });
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json({ answer });
+  } catch {
+    return res.status(502).json({ error: "guide unavailable" });
+  }
+}
