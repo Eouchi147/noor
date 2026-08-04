@@ -248,3 +248,15 @@ All 101 e2e assertions green. Note for the owner: after deploying, close and reo
 **Places mobile submenu fix (expansion item 9):** on phones the hub section-nav is no longer sticky (it scrolls away instead of stacking under the tall header) and is a compact single-row swipe strip with edge fade. hub.css bumped to ?v=10.
 
 Tests: 105 assertions green (hero cards, counter 12, adam/isla smoke in the games loop).
+
+## v11 — "Arcade Souls" (hero games rebuilt, nav unified)
+
+Owner feedback: swipe broken, art too plain, wanted Clash-Royale-grade compulsion. Both hero games fully rebuilt:
+- **Art:** chunky outlined toy-arcade style (thick #241a3d linework, soft 3D bevels, drop shadows, glare-capped 3D buttons with pressed states). Adam and Isla redrawn as proper chibi characters (big expressive eyes with highlights, blush, kufi/buns, outlined limbs); poses still evolve with confidence.
+- **Compulsion systems:** Hasanat coin counter with floaty "+10 ✦" numbers; combo multipliers with slam-in banners; screen shake on misses; haptic buzz (Android); 3-star victory overlay after every day/discovery (stars slam in CR-style); and the centerpiece: **collectible cards with foil-flip mint animations**: 5 Strength Cards in Adam (Bucket Bearer → Heart Lifter, COMMON→LEGENDARY rarity frames, stat chips) shown as a mystery deck on the title screen; 12 Wonder Cards in Isla with an Album viewer. Replays keep best stars.
+- **Swipe fixed properly:** pointermove-accumulation + setPointerCapture + pointercancel handling (iOS scroll no longer eats the gesture); applies to Adam's rope/kite and Isla's bird.
+- Storage keys unchanged (nk-adam/nk-isla, resume works); zero dashes; reduced-motion safe.
+
+**Navigation unified (owner bug):** every main page (index, characters, places, words, health, companions) now renders the identical canonical menu: desktop Books·Path·Characters·Places·Words·Health·Two Lives·Kids·About + language select; mobile pills Path·Characters·Places·Words·Health·Kids·Books. Active page highlighted; no more items appearing/disappearing between pages. Verified programmatically identical across pages.
+
+All e2e assertions green.
