@@ -209,7 +209,9 @@ main{max-width:660px}
 <div class="arc" id="arc"></div>
 <p class="found" id="found"></p>
 <div class="wonders">
-<p class="w-kick">✦ More wonders ✦</p>
+<p class="w-kick">✦ Hero stories ✦</p>
+<div class="w-feat" id="wfeat"></div>
+<p class="w-kick" style="margin-top:26px">✦ More wonders ✦</p>
 <h2 class="w-title">Nine Little Games</h2>
 <div class="w-grid" id="wgrid"></div>
 <p class="w-count" id="wcount"></p>
@@ -254,6 +256,17 @@ main{max-width:660px}
 .w-ln{font-size:.7rem;color:rgba(255,254,247,.58);line-height:1.35}
 .w-done{position:absolute;top:.55rem;right:.6rem;font-size:.66rem;font-weight:800;color:#0d1b45;background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-radius:999px;padding:.15rem .5rem}
 .w-count{margin-top:1rem;font-size:.8rem;color:var(--gold-hi);font-weight:700;letter-spacing:.04em}
+.w-feat{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;text-align:left}
+@media(min-width:560px){.w-feat{grid-template-columns:1fr 1fr}}
+.w-hero{position:relative;display:flex;gap:.9rem;align-items:center;background:linear-gradient(160deg,rgba(233,200,106,.16),rgba(233,200,106,.05));border:1.5px solid rgba(233,200,106,.6);border-radius:20px;padding:1rem;color:var(--parchment);text-decoration:none;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;overflow:hidden}
+.w-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(244,227,161,.14) 50%,transparent 70%);background-size:250% 100%;animation:wsheen 5.5s ease-in-out infinite}
+@keyframes wsheen{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
+.w-hero:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(201,162,39,.25)}
+.w-hero .fig{flex:none;width:66px;height:84px}
+.w-hero .nm{font-family:Amiri,serif;font-weight:700;font-size:1.15rem;color:var(--gold-hi)}
+.w-hero .ln{font-size:.74rem;color:rgba(255,254,247,.7);line-height:1.4;margin-top:.15rem}
+.w-hero .rb{position:absolute;top:.6rem;right:.65rem;font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#0d1b45;background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-radius:999px;padding:.18rem .55rem}
+@media(prefers-reduced-motion:reduce){.w-hero::before{animation:none}}
 @media(prefers-reduced-motion:reduce){.w-card{transition:none}}
 </style>
 <script>
@@ -283,15 +296,23 @@ var G=[
 ];
 function isDone(k){try{var v=JSON.parse(localStorage.getItem(k)||"null");return !!(v&&v.done)}catch(e){return false}}
 function gemsDone(){try{var v=JSON.parse(localStorage.getItem("noor-kids-gems")||"null");if(!v)return false;var n=Array.isArray(v)?v.length:Object.keys(v).length;return n>=7}catch(e){return false}}
+var HEROES=[
+ {f:"kids/adam.html",k:"nk-adam",n:"Adam and the Upper Hand",l:"Five brave days to his sixth birthday... and a secret title waiting.",
+  fig:'<svg viewBox="0 0 74 96"><circle cx="37" cy="26" r="17" fill="#EDBE96"/><path d="M20 22 a17 17 0 0 1 34 0 l-1.4 -6 a17 13 0 0 0 -31 0 Z" fill="#FFFDF4" stroke="#C9A227"/><circle cx="31" cy="27" r="2" fill="#2C2416"/><circle cx="43" cy="27" r="2" fill="#2C2416"/><path d="M32 33 q5 4 10 0" stroke="#2C2416" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M22 44 h30 l5 42 h-40 Z" fill="#FFFDF4"/><path d="M26 44 l11 14 11 -14 3 18 -14 5 -14 -5 Z" fill="#8BA888"/><circle cx="58" cy="58" r="7" fill="rgba(233,200,106,.6)"/></svg>'},
+ {f:"kids/isla.html",k:"nk-isla",n:"Isla and the Growing Sky",l:"Every answer opens two new questions. How big can wonder grow?",
+  fig:'<svg viewBox="0 0 74 96"><circle cx="37" cy="28" r="17" fill="#EDBE96"/><circle cx="23" cy="15" r="7" fill="#5a4632"/><circle cx="51" cy="15" r="7" fill="#5a4632"/><path d="M20 28 a17 17 0 0 1 34 0 l0 -6 a17 11 0 0 0 -34 0 Z" fill="#5a4632"/><path d="M37 8 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2 Z" fill="#E9C86A"/><circle cx="30" cy="29" r="2.6" fill="#2C2416"/><circle cx="44" cy="29" r="2.6" fill="#2C2416"/><path d="M33 36 q4 3 8 0" stroke="#2C2416" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M26 46 h22 l5 30 h-32 Z" fill="#a78bfa"/><circle cx="56" cy="60" r="8" fill="none" stroke="#C9A227" stroke-width="2.6"/><path d="M50 66 l-5 7" stroke="#C9A227" stroke-width="3" stroke-linecap="round"/></svg>'}
+];
 function render(){
- var g=document.getElementById("wgrid"),c=document.getElementById("wcount");
+ var g=document.getElementById("wgrid"),c=document.getElementById("wcount"),fe=document.getElementById("wfeat");
  if(!g)return;
+ if(fe)fe.innerHTML=HEROES.map(function(x){
+  return '<a class="w-hero" href="'+x.f+'"><span class="rb">'+(isDone(x.k)?'✓ finished':'Hero story')+'</span><span class="fig">'+x.fig+'</span><span><span class="nm">'+x.n+'</span><span class="ln" style="display:block">'+x.l+'</span></span></a>'}).join("");
  g.innerHTML=G.map(function(x){
   return '<a class="w-card" href="'+x.f+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
    '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
  }).join("");
- var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0);
- c.textContent=total===0?"Ten wonders are waiting for you ✦":total===10?"All ten wonders are yours! ✦":"You have finished "+total+" of 10 wonders ✦";
+ var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
+ c.textContent=total===0?"Twelve wonders are waiting for you ✦":total===12?"All twelve wonders are yours! ✦":"You have finished "+total+" of 12 wonders ✦";
 }
 render();
 window.addEventListener("pageshow",render);

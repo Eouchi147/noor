@@ -233,3 +233,18 @@ Owner's second iPhone screenshot: page still auto-shrunk (white right gutter) an
 - Root causes: (1) `minimum-scale` was unset, so iOS could still shrink-to-fit; now `minimum-scale=1.0` locks scale at exactly 1 on every page. (2) The mobile pill nav was a horizontal scroll strip; it is now a centered two-row wrap on all pages (nothing cut, no scroll container, Health pill added to hub strips). (3) vercel.json serves /assets immutable for a year with an unchanged filename, so phones held old tw.css (hence the stacked counters, `grid-cols-3` missing): all `tw.css`/`hub.css` links now carry `?v=9`; bump this query on any future CSS rebuild.
 - `overflow-x: clip` extended to html as well as body. Decorative hero layers that exceed the viewport are all inside `#hero{overflow:hidden}` (verified by element scan; document scrollWidth = 390 at 390).
 All 101 e2e assertions green. Note for the owner: after deploying, close and reopen the tab on the phone once so Safari drops the old cached CSS.
+
+## v10 — "Two Heroes" (Adam & Isla story games, dedication, sponsor seal, Places mobile fix)
+
+**Two flagship story games** in kids/, highlighted at the top of the Little Codex as gold "Hero Story" cards (sheen animation, character portraits):
+- **Adam and the Upper Hand** (adam.html, nk-adam): shy, strong Adam, five days before turning six. Each day: a training mini-game (pulse-hold bucket, rhythm lifts, L/R hill run, timing stone, rope swipes) then a choice moment where helping someone spends that strength (kitten, spilled dates, goose+kite, thirsty garden, and the peak: standing beside a laughed-at friend, no mechanics, just courage). Confidence meter physically straightens his posture pose by pose. Finale: light six candles, the وَلِيُّ اللّٰه badge, and exactly 10:62, Bukhari 1429 (the upper hand = the giving hand), Muslim 2664. Resumable by day.
+- **Isla and the Growing Sky** (isla.html, nk-isla): almost-two genius with a giant magnifier. A wonder-tree where every answered question sprouts TWO new question-buds; the camera pulls back stage by stage (room → garden → sky → sea and stars) because knowing more makes the world bigger. Two racing counters: "I know: N" vs "New questions: 2N". Twelve micro-discoveries (seed, moon phases, Alif, color mixing, counting, bees, constellation, air, rain, float/sink, sea scale, the final zoom-out to "Allah made all of it"). Finale: طَالِبَةُ الْعِلْم badge + 20:114 + Muslim 2699 + Abu Dawud 3641.
+- Both: cartoon paper-cut fictional children (the sacred no-depiction rule for prophets/companions is untouched), self-contained, resumable, reduced-motion safe. Wonders counter now "X of 12".
+
+**Dedication (owner request):** the About section now carries صَدَقَةٌ جَارِيَة, dedicating the Codex as sadaqah jariyah in honor of **Ziba**, with homage to her Afghan ancestry (Dari meaning of her name; Balkh and Herat as lantern cities) + Muslim 1631. i18n key about.dedication.
+
+**Sponsor system (expansion item 1):** sponsor.js: single-patron config `{active,name,url,line}`; when active, an understated "Guardian of this Codex" seal renders in About (#sponsor-slot). Change sponsor = edit 3 fields, no rebuild. Ships dormant.
+
+**Places mobile submenu fix (expansion item 9):** on phones the hub section-nav is no longer sticky (it scrolls away instead of stacking under the tall header) and is a compact single-row swipe strip with edge fade. hub.css bumped to ?v=10.
+
+Tests: 105 assertions green (hero cards, counter 12, adam/isla smoke in the games loop).

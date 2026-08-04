@@ -133,3 +133,11 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
   .reveal{opacity:1;transform:none}
   .mset{opacity:1;transform:none;animation:none}
 }
+
+/* v10: mobile section-nav rethink (Places submenu obstruction fix) */
+@media(max-width:767px){
+.section-nav{position:static !important;top:auto !important}
+.section-nav>div{flex-wrap:nowrap !important;justify-content:flex-start !important;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding-top:.45rem;padding-bottom:.45rem;mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.section-nav>div::-webkit-scrollbar{display:none}
+.section-nav>div a{flex:none;font-size:.68rem;padding:.28rem .7rem}
+}

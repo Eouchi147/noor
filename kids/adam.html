@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="theme-color" content="#0d1b45"/>
+<title>Adam and the Upper Hand · NOOR Little Codex</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--lapis:#1E3A8A;--acc:#ef6c35}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{min-height:100vh;background:linear-gradient(180deg,#0a1638 0%,#16295f 55%,#2d4fb3 130%);color:var(--parchment)}
+.amiri{font-family:Amiri,serif}
+button{border:none;background:none;color:inherit;cursor:pointer;font-family:inherit}
+.tw{position:fixed;width:2px;height:2px;border-radius:50%;background:#FFFDF2;opacity:.4;animation:tw 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.65}}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:relative;z-index:5}
+header a{color:var(--gold-hi);text-decoration:none;font-weight:800;font-size:.95rem;padding:8px 10px}
+header .gt{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800}
+main{position:relative;z-index:2;max-width:560px;margin:0 auto;padding:4px 14px 30px}
+.scr{display:none}.scr.on{display:block;animation:in .45s cubic-bezier(.22,1,.36,1)}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1}}
+.card{background:linear-gradient(178deg,#FFFDF4,#FAF3DE);border:3px solid var(--gold);border-radius:22px;box-shadow:0 0 0 1px rgba(201,162,39,.35) inset,0 18px 44px rgba(4,6,15,.35);color:var(--ink);padding:18px 16px;position:relative}
+.card::after{content:"";position:absolute;inset:8px;border:1px solid rgba(201,162,39,.25);border-radius:15px;pointer-events:none}
+.card>*{position:relative;z-index:1}
+.k{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:#8a6d1a;font-weight:800;text-align:center}
+h1,h2{font-family:Amiri,serif;text-align:center}
+h1{font-size:clamp(28px,7vw,40px);color:#8a6d1a}
+h2{font-size:clamp(21px,5.4vw,27px);color:#8a6d1a;margin:.2rem 0 .4rem}
+.sub{text-align:center;font-size:.86rem;color:rgba(44,36,22,.72);line-height:1.6;max-width:26rem;margin:0 auto}
+.cta{display:block;width:100%;min-height:58px;margin-top:14px;border-radius:999px;font-weight:800;font-size:1.02rem;background:linear-gradient(135deg,var(--acc),#f79a63);color:#fff;box-shadow:0 8px 22px rgba(239,108,53,.4);transition:transform .2s}
+.cta:active{transform:scale(.97)}
+.cta.gold{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#1A160F;box-shadow:0 8px 22px rgba(201,162,39,.4)}
+.cta.ghost{background:rgba(44,36,22,.06);color:#6d5514;box-shadow:none;border:1.5px solid rgba(201,162,39,.5)}
+.hud{display:flex;gap:8px;justify-content:center;margin:8px 0 12px;position:relative;z-index:4}
+.chip{background:rgba(255,254,247,.1);border:1px solid rgba(233,200,106,.4);border-radius:999px;padding:6px 12px;font-size:.72rem;font-weight:800;color:var(--parchment)}
+.chip b{color:var(--gold-hi)}
+.conf{display:flex;gap:4px;align-items:center}
+.conf i{width:12px;height:12px;border-radius:50%;background:rgba(255,254,247,.15);border:1px solid rgba(233,200,106,.4);transition:background .5s,box-shadow .5s}
+.conf i.on{background:var(--gold-hi);box-shadow:0 0 8px rgba(233,200,106,.8)}
+.stage{min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;margin:8px 0}
+.adam .head{transition:transform .6s}
+.adam.p0 .head{transform:rotate(7deg) translateY(3px)}
+.adam.p2 .head{transform:rotate(-3deg) translateY(-2px)}
+.adam .armR{transition:transform .6s;transform-origin:98px 80px}
+.adam.p2 .armR{transform:rotate(-140deg)}
+.adam .glowhand{opacity:0;transition:opacity .8s}
+.adam.p2 .glowhand{opacity:1}
+.bob{animation:bob 3.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.mini{margin-top:10px}
+.bar{position:relative;height:26px;border-radius:999px;background:rgba(44,36,22,.08);border:1px solid rgba(201,162,39,.4);overflow:hidden}
+.zone{position:absolute;top:0;bottom:0;background:rgba(201,162,39,.35);border-inline:2px solid var(--gold)}
+.mark{position:absolute;top:2px;bottom:2px;width:12px;border-radius:8px;background:var(--acc);box-shadow:0 0 8px rgba(239,108,53,.7)}
+.pulse{width:120px;height:120px;margin:6px auto;border-radius:50%;border:3px solid rgba(201,162,39,.4);display:flex;align-items:center;justify-content:center;position:relative}
+.pring{position:absolute;inset:-3px;border-radius:50%;border:3px solid var(--acc);animation:pr .9s linear infinite}
+@keyframes pr{from{transform:scale(1.35);opacity:0}60%{opacity:1}to{transform:scale(1);opacity:1}}
+.lr{display:flex;gap:10px;margin-top:10px}
+.lr button{flex:1;min-height:64px;border-radius:18px;font-weight:800;font-size:1rem;background:rgba(201,162,39,.14);border:2px solid rgba(201,162,39,.5);color:#6d5514}
+.lr button.hot{background:linear-gradient(135deg,var(--acc),#f79a63);color:#fff;border-color:transparent}
+.meter{height:12px;border-radius:999px;background:rgba(44,36,22,.08);border:1px solid rgba(201,162,39,.35);overflow:hidden;margin-top:10px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-hi));transition:width .25s}
+.msg{text-align:center;font-size:.8rem;font-weight:700;color:#8a6d1a;min-height:1.3em;margin-top:8px}
+.perfect{position:absolute;left:50%;top:30%;font-family:Amiri,serif;font-weight:700;font-size:1.4rem;color:var(--gold);text-shadow:0 2px 10px rgba(201,162,39,.5);animation:pf 1s cubic-bezier(.22,1,.36,1) forwards;pointer-events:none;z-index:3}
+@keyframes pf{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(-50%,-140%) scale(1.15)}}
+.choice{display:grid;gap:10px;margin-top:12px}
+.choice .shy{background:rgba(44,36,22,.06);color:rgba(44,36,22,.6);border:1.5px dashed rgba(44,36,22,.3);box-shadow:none}
+.spark{position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;animation:spk 1s ease-out forwards;z-index:60}
+@keyframes spk{to{transform:translate(var(--dx),var(--dy)) rotate(220deg);opacity:0}}
+.hearts{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.hearts i{width:22px;height:22px;opacity:.25;transition:opacity .4s,transform .4s;background:var(--acc);clip-path:path("M11 20 C4 14 1 10 1 6.5 A4.6 4.6 0 0 1 11 4.4 A4.6 4.6 0 0 1 21 6.5 C21 10 18 14 11 20 Z")}
+.hearts i.on{opacity:1;transform:scale(1.12)}
+.tapdate{position:absolute;width:44px;height:44px;border:none;background:none;animation:roll 5.5s linear forwards;padding:0}
+@keyframes roll{from{transform:translateX(0) rotate(0)}to{transform:translateX(var(--rx)) rotate(340deg)}}
+.badge{width:150px;height:150px;margin:6px auto;position:relative;animation:stamp .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes stamp{0%{transform:scale(2.2);opacity:0}60%{opacity:1}100%{transform:scale(1)}}
+.cite{border-inline-start:3px solid var(--gold);background:rgba(201,162,39,.08);border-radius:0 12px 12px 0;padding:8px 11px;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.85);margin-top:8px;font-style:italic;text-align:start}
+.cite b{display:block;font-style:normal;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8a6d1a;margin-top:3px}
+.rays{position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 12%,rgba(233,200,106,.12) 15%,transparent 18% 30%,rgba(233,200,106,.12) 33%,transparent 36% 48%,rgba(233,200,106,.12) 51%,transparent 54% 66%,rgba(233,200,106,.12) 69%,transparent 72% 84%,rgba(233,200,106,.12) 87%,transparent 90%);animation:ray 60s linear infinite;pointer-events:none;z-index:0}
+@keyframes ray{to{transform:rotate(360deg)}}
+footer{position:relative;z-index:2;text-align:center;padding:10px 16px 30px;font-size:.78rem;color:rgba(255,254,247,.6)}
+footer a{color:var(--gold-hi)}
+footer .reset{color:rgba(233,200,106,.75);text-decoration:underline;font-size:.72rem;padding:6px}
+.done-note{text-align:center;font-size:.74rem;color:#4c6b49;font-weight:800;margin-top:6px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}.pring,.rays,.bob,.tw{animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="../kids.html">☾ Little Codex</a>
+<span class="gt">Adam · The Upper Hand</span>
+</header>
+<main>
+<div class="hud" id="hud" style="display:none">
+<span class="chip">Day <b id="hDay">1</b>/5</span>
+<span class="chip conf" id="hConf" aria-label="Confidence"><i></i><i></i><i></i><i></i><i></i></span>
+<span class="chip">⚡ <b id="hStr">0</b></span>
+</div>
+
+<section class="scr on" id="s-title">
+<div class="card">
+<p class="k">✦ A hero story ✦</p>
+<h1>Adam and the Upper Hand</h1>
+<div class="stage"><svg class="adam p0 bob" id="titleAdam" viewBox="0 0 150 190" width="140" aria-label="Adam, a shy little boy"></svg></div>
+<p class="sub">Adam is strong. Adam is shy. In five days he turns SIX, and this week everything changes.</p>
+<p class="done-note" id="doneNote" hidden>✓ You finished this story! Play it again?</p>
+<button class="cta" id="btnStart">Begin the story</button>
+</div>
+</section>
+
+<section class="scr" id="s-story">
+<div class="card">
+<p class="k" id="stK">The story · 1 of 3</p>
+<div class="stage" id="stArt"></div>
+<p class="sub" id="stTx"></p>
+<button class="cta gold" id="stNext">Next ➜</button>
+</div>
+</section>
+
+<section class="scr" id="s-train">
+<div class="card">
+<p class="k" id="trK">Morning training</p>
+<h2 id="trH"></h2>
+<p class="sub" id="trSub"></p>
+<div class="stage" id="trStage" style="min-height:150px"></div>
+<div class="mini" id="trUI"></div>
+<p class="msg" id="trMsg"></p>
+</div>
+</section>
+
+<section class="scr" id="s-help">
+<div class="card">
+<p class="k">In the village</p>
+<h2 id="hpH"></h2>
+<div class="stage" id="hpStage" style="min-height:150px"></div>
+<p class="sub" id="hpTx"></p>
+<div id="hpUI"></div>
+<p class="msg" id="hpMsg"></p>
+</div>
+</section>
+
+<section class="scr" id="s-night">
+<div class="card" style="background:linear-gradient(178deg,#1a2c63,#0f1c46);border-color:rgba(233,200,106,.6)">
+<p class="k" style="color:var(--gold-hi)">Night falls</p>
+<div class="stage" style="min-height:110px"><svg viewBox="0 0 100 60" width="130"><circle cx="70" cy="22" r="14" fill="#F4E3A1"/><circle cx="76" cy="18" r="12" fill="#16295f"/><circle cx="30" cy="14" r="1.6" fill="#FFFDF2"/><circle cx="45" cy="34" r="1.2" fill="#FFFDF2"/><circle cx="18" cy="28" r="1.2" fill="#FFFDF2"/></svg></div>
+<p class="sub" id="ntTx" style="color:rgba(255,254,247,.85)"></p>
+<div class="hearts" id="ntHearts" aria-label="Hearts earned"><i></i><i></i><i></i><i></i><i></i></div>
+<button class="cta gold" id="ntNext"></button>
+</div>
+</section>
+
+<section class="scr" id="s-final">
+<div class="card" style="overflow:hidden">
+<div class="rays" aria-hidden="true"></div>
+<p class="k">✦ The sixth birthday ✦</p>
+<h2 id="fnH">Light the six candles!</h2>
+<div class="stage" id="fnStage" style="min-height:180px"></div>
+<div id="fnBody" hidden>
+<div class="badge"><svg viewBox="0 0 150 150"><path d="M75 4 96 25 125 25 125 54 146 75 125 96 125 125 96 125 75 146 54 125 25 125 25 96 4 75 25 54 25 25 54 25 Z" fill="#C9A227"/><path d="M75 16 92 33 116 33 116 57 133 75 116 92 116 116 92 116 75 133 58 116 34 116 34 92 17 75 34 57 34 33 58 33 Z" fill="#E9C86A"/><circle cx="75" cy="75" r="40" fill="#FFFDF4"/><text x="75" y="70" text-anchor="middle" font-family="Amiri,serif" font-size="22" fill="#8a6d1a">وَلِيُّ</text><text x="75" y="94" text-anchor="middle" font-family="Amiri,serif" font-size="22" fill="#8a6d1a">اللّٰه</text></svg></div>
+<h2>Friend of Allah</h2>
+<p class="sub">Adam turned six today. He was strong all along; now he knows what strength is FOR.</p>
+<div class="cite">"The friends of Allah: no fear will touch them, and no sadness."<b>Qur'an 10:62</b></div>
+<div class="cite">"The upper hand is better than the lower hand: the hand that gives is the upper one."<b>Bukhari 1429</b></div>
+<div class="cite">"The strong believer is better and more beloved to Allah than the weak believer."<b>Muslim 2664</b></div>
+<button class="cta" id="fnAgain">Play again</button>
+<a class="cta ghost" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="../kids.html">☾ Little Codex</a>
+</div>
+</div>
+</section>
+</main>
+<footer>☾ A hero story from the Codex of Light · <button class="reset" id="reset">start over</button></footer>
+
+<script>
+(function(){
+"use strict";
+var KEY="nk-adam";
+var S={day:1,conf:0,hearts:0,str:0,done:false};
+try{var sv=JSON.parse(localStorage.getItem(KEY)||"null");if(sv){S.day=Math.min(sv.day||1,5);S.conf=sv.confidence||0;S.hearts=sv.hearts||0;S.done=!!sv.done}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({done:S.done,day:S.day,hearts:S.hearts,confidence:S.conf}))}catch(e){}}
+var $=function(id){return document.getElementById(id)};
+for(var i=0;i<30;i++){var t=document.createElement("i");t.className="tw";t.style.left=Math.random()*100+"%";t.style.top=Math.random()*100+"%";t.style.animationDelay=Math.random()*4.6+"s";document.body.appendChild(t)}
+
+function adamSVG(pose){
+ return '<g class="head"><circle cx="75" cy="44" r="26" fill="#EDBE96"/>'+
+ '<path d="M49 38 A26 26 0 0 1 101 38 L99 30 A26 20 0 0 0 51 30 Z" fill="#FFFDF4" stroke="#C9A227" stroke-width="1.4"/>'+
+ '<circle cx="66" cy="44" r="2.6" fill="#2C2416"/><circle cx="84" cy="44" r="2.6" fill="#2C2416"/>'+
+ '<path d="M68 54 Q75 '+(pose===0?'56':'60')+' 82 54" stroke="#2C2416" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+ '<circle cx="60" cy="51" r="3" fill="#f2a48a" opacity=".55"/><circle cx="90" cy="51" r="3" fill="#f2a48a" opacity=".55"/></g>'+
+ '<path d="M52 72 L98 72 L106 158 A8 8 0 0 1 98 166 L52 166 A8 8 0 0 1 44 158 Z" fill="#FFFDF4" stroke="#e8dcc0" stroke-width="1.5"/>'+
+ '<path d="M58 72 L75 96 L92 72 L96 104 L75 112 L54 104 Z" fill="#8BA888" opacity=".85"/>'+
+ '<path d="M52 76 q-12 20 -8 34" stroke="#EDBE96" stroke-width="9" fill="none" stroke-linecap="round"/>'+
+ '<g class="armR"><path d="M98 76 q12 20 8 34" stroke="#EDBE96" stroke-width="9" fill="none" stroke-linecap="round"/>'+
+ '<circle class="glowhand" cx="106" cy="112" r="12" fill="rgba(233,200,106,.55)"/></g>'+
+ '<rect x="56" y="164" width="16" height="9" rx="4" fill="#8a5a2b"/><rect x="78" y="164" width="16" height="9" rx="4" fill="#8a5a2b"/>';
+}
+function drawAdam(el,pose){if(!el)return;el.innerHTML=adamSVG(pose);el.setAttribute("class","adam bob p"+pose)}
+function poseNow(){return S.conf>=4?2:(S.conf>=2?1:0)}
+drawAdam($("titleAdam"),poseNow());
+if(S.done)$("doneNote").hidden=false;
+
+function show(id){document.querySelectorAll(".scr").forEach(function(s){s.classList.remove("on")});$(id).classList.add("on");$("hud").style.display=(id==="s-train"||id==="s-help"||id==="s-night")?"flex":"none";window.scrollTo(0,0)}
+function hud(){$("hDay").textContent=S.day;$("hStr").textContent=S.str;
+ $("hConf").querySelectorAll("i").forEach(function(d,i){d.classList.toggle("on",i<S.conf)})}
+function burst(host,n,color){if(!host)return;var r=host.getBoundingClientRect();for(var i=0;i<(n||14);i++){var s=document.createElement("i");s.className="spark";s.style.background=i%2?"#E9C86A":(color||"#ef6c35");s.style.left=r.left+r.width/2+(Math.random()*40-20)+"px";s.style.top=r.top+r.height/2+(Math.random()*30-15)+"px";s.style.setProperty("--dx",(Math.random()*160-80)+"px");s.style.setProperty("--dy",(Math.random()*-140-20)+"px");document.body.appendChild(s);setTimeout(function(x){return function(){x.remove()}}(s),1050)}}
+function perfect(host,txt){var p=document.createElement("span");p.className="perfect";p.textContent=txt||"Quwwa!";host.appendChild(p);setTimeout(function(){p.remove()},1000)}
+
+var STORY=[
+ {a:'<svg class="adam p0 bob" viewBox="0 0 150 190" width="130" id="stA"></svg>',t:"This is Adam. He can lift the big water bucket ALL BY HIMSELF. But when people look at him... he looks at his shoes."},
+ {a:'<svg viewBox="0 0 160 120" width="220"><rect x="10" y="60" width="140" height="6" rx="3" fill="#C9A227" opacity=".5"/><circle cx="40" cy="40" r="16" fill="#E9C86A"/><path d="M20 100 q60 -30 120 0" stroke="#8BA888" stroke-width="3" fill="none"/><text x="80" y="30" text-anchor="middle" font-size="13" fill="#8a6d1a" font-weight="800">5 days to his birthday</text></svg>',t:'Grandma says: "Strong hands were made for helping, habibi. Try one brave kindness a day."'},
+ {a:'<svg viewBox="0 0 160 120" width="220"><circle cx="80" cy="55" r="34" fill="none" stroke="#C9A227" stroke-width="2" stroke-dasharray="4 5"/><path d="M80 30 84 46 100 50 84 54 80 70 76 54 60 50 76 46 Z" fill="#E9C86A"/></svg>',t:"Five mornings of training. Five people who need him. And at the end, a secret waiting: the most special title a heart can carry."}
+];
+var stI=0;
+function stShow(){$("stK").textContent="The story · "+(stI+1)+" of 3";$("stArt").innerHTML=STORY[stI].a;drawAdam($("stA"),0);$("stTx").textContent=STORY[stI].t;$("stNext").textContent=stI<2?"Next ➜":"Start Day 1 ⚡"}
+$("btnStart").addEventListener("click",function(){stI=0;stShow();show("s-story")});
+$("stNext").addEventListener("click",function(){stI++;if(stI<3)stShow();else{hud();startTrain()}});
+
+var TRAIN=[
+ {h:"The Water Bucket",s:"HOLD the button. Keep the orange marker inside the gold zone until the meter fills!",type:"hold"},
+ {h:"Date-Basket Lifts",s:"TAP exactly when the ring lands. Six strong lifts!",type:"rhythm"},
+ {h:"The Hill Run",s:"Tap LEFT, RIGHT, LEFT, RIGHT... twelve quick steps up the hill!",type:"lr"},
+ {h:"The Big Stone",s:"Tap when the marker crosses the gold window. Three perfect lifts!",type:"timing"},
+ {h:"The Rope Climb",s:"SWIPE UP on the rope, five strong pulls!",type:"swipe"}
+];
+function startTrain(){
+ var T=TRAIN[S.day-1];show("s-train");hud();
+ $("trK").textContent="Day "+S.day+" · morning training";
+ $("trH").textContent=T.h;$("trSub").textContent=T.s;$("trMsg").textContent="";
+ $("trStage").innerHTML='<svg class="adam bob" viewBox="0 0 150 190" width="110" id="trA"></svg>';
+ drawAdam($("trA"),poseNow());
+ var ui=$("trUI");ui.innerHTML="";
+ function doneTrain(bonus){S.str+=2+(bonus?1:0);hud();$("trMsg").textContent=bonus?"PERFECT training! ⚡+3":"Good training! ⚡+2";burst($("trStage"),16,"#E9C86A");
+  setTimeout(function(){startHelp()},1150)}
+ if(T.type==="hold"){
+  ui.innerHTML='<div class="bar"><div class="zone" id="zone" style="left:40%;width:26%"></div><div class="mark" id="mark" style="left:4%"></div></div><div class="meter"><i id="fill"></i></div><button class="cta" id="holdB">HOLD to lift</button>';
+  var held=false,prog=0,mp=4,t0=performance.now();
+  var iv=setInterval(function(){var t=(performance.now()-t0)/1000;var zp=40+Math.sin(t*1.1)*22;$("zone").style.left=zp+"%";
+   mp+=(held?2.2:-2.6);mp=Math.max(2,Math.min(92,mp));$("mark").style.left=mp+"%";
+   if(held&&mp>zp-2&&mp<zp+24){prog+=1.6;$("fill").style.width=Math.min(100,prog)+"%"}
+   if(prog>=100){clearInterval(iv);doneTrain(true)}},50);
+  var b=$("holdB");
+  b.addEventListener("pointerdown",function(e){e.preventDefault();held=true});
+  ["pointerup","pointerleave","pointercancel"].forEach(function(ev){b.addEventListener(ev,function(){held=false})});
+ }else if(T.type==="rhythm"){
+  ui.innerHTML='<div class="pulse"><span style="font-weight:800;color:#8a6d1a" id="pc">0/6</span><div class="pring"></div></div><button class="cta" id="tapB">TAP on the beat</button>';
+  var beats=0,perf=0,last=performance.now();
+  var beatIv=setInterval(function(){last=performance.now()},900);
+  $("tapB").addEventListener("click",function(){var d=(performance.now()-last)%900;var hit=d<220||d>720;beats++;if(hit){perf++;perfect($("trStage"))}burst(this,8);$("pc").textContent=beats+"/6";
+   if(beats>=6){clearInterval(beatIv);doneTrain(perf>=3)}});
+ }else if(T.type==="lr"){
+  ui.innerHTML='<div class="meter"><i id="fill"></i></div><div class="lr"><button id="L">👣 LEFT</button><button id="R">RIGHT 👣</button></div>';
+  var need="L",steps=0;$("L").classList.add("hot");
+  function step(side){if(side!==need)return;steps++;$("fill").style.width=(steps/12*100)+"%";burst($(side),6);need=side==="L"?"R":"L";$("L").classList.toggle("hot",need==="L");$("R").classList.toggle("hot",need==="R");
+   if(steps>=12)doneTrain(true)}
+  $("L").addEventListener("click",function(){step("L")});$("R").addEventListener("click",function(){step("R")});
+ }else if(T.type==="timing"){
+  ui.innerHTML='<div class="bar"><div class="zone" id="zone" style="left:42%;width:22%"></div><div class="mark" id="mark" style="left:0"></div></div><div class="meter"><i id="fill"></i></div><button class="cta" id="tapB">LIFT!</button>';
+  var pos=0,dir=1,hits=0,zw=22;
+  var iv2=setInterval(function(){pos+=dir*2.6;if(pos>92||pos<2)dir*=-1;$("mark").style.left=pos+"%"},30);
+  $("tapB").addEventListener("click",function(){var zl=parseFloat($("zone").style.left);if(pos>zl-3&&pos<zl+zw+3){hits++;perfect($("trStage"));burst(this,10);zw=Math.max(12,zw-4);$("zone").style.width=zw+"%";$("zone").style.left=(30+Math.random()*30)+"%";$("fill").style.width=(hits/3*100)+"%";
+    if(hits>=3){clearInterval(iv2);doneTrain(true)}}else{$("trMsg").textContent="Almost! Watch the gold window."}});
+ }else{
+  ui.innerHTML='<div class="meter"><i id="fill"></i></div><div id="ropeZone" style="height:140px;border:2px dashed rgba(201,162,39,.5);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#8a6d1a;margin-top:10px;user-select:none;touch-action:none">SWIPE UP here ⬆ (5 pulls)</div>';
+  var pulls=0,y0=null,z=$("ropeZone");
+  z.addEventListener("pointerdown",function(e){y0=e.clientY;e.preventDefault()});
+  z.addEventListener("pointerup",function(e){if(y0!==null&&y0-e.clientY>40){pulls++;$("fill").style.width=(pulls/5*100)+"%";perfect($("trStage"),"Pull!");burst(z,8);if(pulls>=5)doneTrain(true)}y0=null});
+ }
+}
+
+var HELP=[
+ {h:"A tiny meow...",tx:"A kitten is stuck on the high wall! It is shaking.",art:'<svg viewBox="0 0 200 120" width="230"><rect x="10" y="70" width="180" height="40" fill="#b99b5e" rx="4"/><g><ellipse cx="100" cy="60" rx="16" ry="12" fill="#9aa5b8"/><circle cx="100" cy="46" r="10" fill="#9aa5b8"/><path d="M93 39 l3 -7 4 5 Z M107 39 l-3 -7 -4 5 Z" fill="#9aa5b8"/><circle cx="96" cy="45" r="1.6" fill="#2C2416"/><circle cx="104" cy="45" r="1.6" fill="#2C2416"/><path d="M113 62 q10 -2 8 -10" stroke="#9aa5b8" stroke-width="4" fill="none" stroke-linecap="round"/></g></svg>',
+  shy:"Look away... someone taller will come",brave:"Help! Lift it down gently",
+  ui:"hold",uiTx:"HOLD steady... gently... until the meter fills.",doneTx:"The kitten rides down on Adam's shoulder, purring. First heart earned!"},
+ {h:"Oh no, the dates!",tx:"Grandma's basket tipped! Dates are rolling to the ditch!",art:'<svg viewBox="0 0 200 120" width="230"><path d="M30 50 a22 26 0 0 0 44 0 Z" fill="#b06a2a"/><circle cx="52" cy="34" r="9" fill="#EDBE96"/><path d="M43 28 a10 7 0 0 1 18 0 l1 6 -20 0 Z" fill="#8BA888"/><circle cx="49" cy="34" r="1.4" fill="#2C2416"/><circle cx="55" cy="34" r="1.4" fill="#2C2416"/><path d="M50 39 q2 2 4 0" stroke="#2C2416" stroke-width="1.4" fill="none"/></svg>',
+  shy:"Pretend not to see...",brave:"Catch them all!",
+  ui:"dates",uiTx:"TAP all 8 dates before they roll away!",doneTx:'Every date saved! Grandma pats his kufi: "Strong AND quick, mashallah."'},
+ {h:"The kite and the goose",tx:"A little kid's kite is stuck in the tree. A big grumpy goose guards the path, honking!",art:'<svg viewBox="0 0 200 120" width="230"><path d="M150 20 l16 12 -16 12 -6 -12 Z" fill="#a78bfa"/><path d="M150 44 q-4 16 -14 22" stroke="#a78bfa" stroke-width="2" fill="none" stroke-dasharray="3 3"/><rect x="160" y="44" width="8" height="60" fill="#8a5a2b"/><circle cx="164" cy="34" r="22" fill="#8BA888"/><g id="goose"><ellipse cx="60" cy="86" rx="24" ry="16" fill="#FFFDF4"/><path d="M78 76 q10 -14 4 -24 q10 4 8 18" fill="#FFFDF4"/><circle cx="88" cy="58" r="8" fill="#FFFDF4"/><path d="M95 58 l12 3 -12 4 Z" fill="#ef9b35"/><circle cx="88" cy="56" r="1.6" fill="#2C2416"/></g></svg>',
+  shy:"That goose is TOO honky...",brave:"Take three brave steps!",
+  ui:"goose",uiTx:"TAP three big brave steps... then SWIPE UP to free the kite!",doneTx:'The goose waddles off, impressed. The kite flies again. "Thank you, Adam!"'},
+ {h:"The thirsty garden",tx:"The mosque garden seedlings are drooping in the heat. Two full buckets needed!",art:'<svg viewBox="0 0 200 120" width="230"><rect x="20" y="90" width="160" height="18" rx="4" fill="#7a5c33"/><g stroke="#8BA888" stroke-width="3" fill="none" stroke-linecap="round"><path d="M50 90 v-14 m0 6 q-8 -4 -8 -12 m8 6 q8 -4 8 -12"/><path d="M100 90 v-14 m0 6 q-8 -4 -8 -12 m8 6 q8 -4 8 -12"/><path d="M150 90 v-14 m0 6 q-8 -4 -8 -12 m8 6 q8 -4 8 -12"/></g></svg>',
+  shy:"It might rain... someday...",brave:"Carry the water!",
+  ui:"hold2",uiTx:"Two buckets! HOLD steady, twice.",doneTx:"The seedlings stand up straight, shining. So does Adam."},
+ {h:"The hardest one",tx:"Adam's friend trips in the square. Some kids start laughing. His friend's eyes fill up.",art:'<svg viewBox="0 0 200 120" width="230"><g id="friend"><circle cx="100" cy="62" r="16" fill="#d9a06b"/><circle cx="95" cy="60" r="2" fill="#2C2416"/><circle cx="105" cy="60" r="2" fill="#2C2416"/><path d="M95 70 q5 -3 10 0" stroke="#2C2416" stroke-width="1.6" fill="none"/><path d="M86 78 h28 l4 26 h-36 Z" fill="#7ea0c9"/></g></svg>',
+  shy:"Laugh a little too...?",brave:"Walk over. Stand beside him.",
+  ui:"stand",uiTx:"",doneTx:"Adam walked over slowly, helped him up, gave him a date, and said: Assalamu alaykum. The square went quiet, then warm. The strongest thing he lifted all week was his friend's heart."}
+];
+function startHelp(){
+ var H=HELP[S.day-1];show("s-help");hud();
+ $("hpH").textContent=H.h;$("hpTx").textContent=H.tx;$("hpMsg").textContent="";
+ $("hpStage").innerHTML=H.art;
+ $("hpUI").innerHTML='<div class="choice"><button class="cta" id="cBrave">'+H.brave+'</button><button class="cta shy" id="cShy">'+H.shy+'</button></div>';
+ $("cShy").addEventListener("click",function(){$("hpMsg").textContent="Adam's strong hands itch to help... try the brave one?";var b=this;b.style.transform="translateX(6px)";setTimeout(function(){b.style.transform=""},200)});
+ $("cBrave").addEventListener("click",function(){runHelp(H)});
+}
+function finishHelp(H){
+ S.hearts=Math.min(5,S.hearts+1);S.conf=Math.min(5,S.conf+1);save();
+ $("hpUI").innerHTML="";$("hpMsg").textContent="";$("hpTx").textContent=H.doneTx;
+ burst($("hpStage"),22,"#E9C86A");hud();
+ setTimeout(function(){night()},1900);
+}
+function runHelp(H){
+ var ui=$("hpUI");
+ if(H.ui==="hold"||H.ui==="hold2"){
+  var rounds=H.ui==="hold2"?2:1,r=0;
+  var round=function(){ui.innerHTML='<p class="msg">'+H.uiTx+(rounds>1?" ("+(r+1)+"/2)":"")+'</p><div class="bar"><div class="zone" id="hz" style="left:38%;width:28%"></div><div class="mark" id="hm" style="left:4%"></div></div><div class="meter"><i id="hf"></i></div><button class="cta" id="hb">HOLD gently</button>';
+   var held=false,prog=0,mp=4,t0=performance.now();
+   var iv=setInterval(function(){var t=(performance.now()-t0)/1000;var zp=38+Math.sin(t*0.9)*16;$("hz").style.left=zp+"%";mp+=(held?2.1:-2.4);mp=Math.max(2,Math.min(92,mp));$("hm").style.left=mp+"%";
+    if(held&&mp>zp-2&&mp<zp+26){prog+=1.7;$("hf").style.width=Math.min(100,prog)+"%"}
+    if(prog>=100){clearInterval(iv);r++;burst($("hpStage"),12);if(r<rounds)round();else finishHelp(H)}},50);
+   var b=$("hb");b.addEventListener("pointerdown",function(e){e.preventDefault();held=true});
+   ["pointerup","pointerleave","pointercancel"].forEach(function(ev){b.addEventListener(ev,function(){held=false})});};
+  round();
+ }else if(H.ui==="dates"){
+  ui.innerHTML='<p class="msg">'+H.uiTx+'</p><div id="dz" style="position:relative;height:150px;border:2px dashed rgba(201,162,39,.4);border-radius:16px;overflow:hidden;margin-top:8px"></div><div class="meter"><i id="df"></i></div>';
+  var got=0,z=$("dz");
+  for(var i=0;i<8;i++)(function(i){setTimeout(function(){var d=document.createElement("button");d.className="tapdate";d.setAttribute("aria-label","catch the date");d.style.top=(8+Math.random()*96)+"px";d.style.left="-30px";d.style.setProperty("--rx",(z.clientWidth+70)+"px");d.style.animationDuration=(4.5+Math.random()*2)+"s";
+   d.innerHTML='<svg viewBox="0 0 30 30" width="42"><ellipse cx="15" cy="16" rx="9" ry="12" fill="#8a5a2b"/><ellipse cx="12" cy="12" rx="3" ry="5" fill="#a06a33"/></svg>';
+   d.addEventListener("click",function(){d.remove();got++;$("df").style.width=(got/8*100)+"%";burst(z,6);if(got>=8)finishHelp(H)});
+   z.appendChild(d);setTimeout(function(){if(d.parentNode){d.style.animation="none";d.style.left="8px"}},6400)},i*620)})(i);
+ }else if(H.ui==="goose"){
+  ui.innerHTML='<p class="msg">'+H.uiTx+'</p><button class="cta" id="stepB">STEP! (1/3)</button>';
+  var steps=0,g=document.getElementById("goose");
+  $("stepB").addEventListener("click",function(){steps++;burst(this,10);if(g){g.style.transition="transform .5s";g.style.transformOrigin="60px 90px";g.style.transform="scale("+(1-steps*0.22)+") translateX("+(-steps*14)+"px)"}
+   if(steps<3)this.textContent="STEP! ("+(steps+1)+"/3)";
+   else{ui.innerHTML='<div id="kz" style="height:110px;border:2px dashed rgba(201,162,39,.5);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#8a6d1a;touch-action:none;user-select:none">SWIPE UP to free the kite ⬆</div>';
+    var y0=null,kz=$("kz");kz.addEventListener("pointerdown",function(e){y0=e.clientY;e.preventDefault()});
+    kz.addEventListener("pointerup",function(e){if(y0!==null&&y0-e.clientY>40){burst(kz,16,"#a78bfa");finishHelp(H)}y0=null})}});
+ }else{
+  ui.innerHTML="";$("hpMsg").textContent="...";
+  var f=document.getElementById("friend");
+  setTimeout(function(){$("hpMsg").textContent="Adam walks over. Slowly. Everyone watches."},600);
+  setTimeout(function(){if(f){f.style.transition="transform .8s";f.style.transform="translateY(-6px)"}$("hpMsg").textContent='He helps him up. "Assalamu alaykum."';burst($("hpStage"),18)},2300);
+  setTimeout(function(){finishHelp(H)},3800);
+ }
+}
+
+var NIGHT=[
+ "Day 1 done. Tonight Adam's arms are tired and his heart is LOUD, in a good way.",
+ "Day 2 done. Grandma's du'a follows him to sleep like a warm blanket.",
+ "Day 3 done. Funny thing: the goose was never as big as it honked.",
+ "Day 4 done. Watered seedlings, watered heart. Both grew today.",
+ "Day 5 done. Tomorrow he turns six. But he already turned into something else."
+];
+function night(){
+ show("s-night");hud();
+ $("ntTx").textContent=NIGHT[S.day-1];
+ $("ntHearts").querySelectorAll("i").forEach(function(h,i){h.classList.toggle("on",i<S.hearts)});
+ var btn=$("ntNext"),fresh=btn.cloneNode(true);btn.parentNode.replaceChild(fresh,btn);
+ fresh.textContent=S.day<5?"Sleep... then Day "+(S.day+1)+" ➜":"Wake up... it is THE DAY ✦";
+ fresh.addEventListener("click",function(){if(S.day<5){S.day++;save();startTrain()}else finale()});
+}
+
+function finale(){
+ show("s-final");
+ var st=$("fnStage");
+ st.innerHTML='<svg viewBox="0 0 220 150" width="260"><rect x="45" y="80" width="130" height="46" rx="10" fill="#FFFDF4" stroke="#C9A227" stroke-width="2"/><rect x="45" y="98" width="130" height="8" fill="rgba(201,162,39,.35)"/><g id="candles"></g></svg><p class="msg" id="fnMsg">Tap each candle to light it!</p>';
+ var g=st.querySelector("#candles"),lit=0;
+ var cols=["#ef6c35","#38bdf8","#a78bfa","#4ade80","#fb7185","#E9C86A"];
+ for(var i=0;i<6;i++)(function(i){
+  var x=58+i*19;
+  var c=document.createElementNS("http://www.w3.org/2000/svg","g");
+  c.innerHTML='<rect x="'+x+'" y="58" width="7" height="24" rx="3" fill="'+cols[i]+'"/><path id="fl'+i+'" d="M'+(x+3.5)+' 48 q4 5 0 10 q-4 -5 0 -10 Z" fill="#E9C86A" opacity="0"/><rect x="'+(x-3)+'" y="44" width="13" height="40" fill="transparent"/>';
+  c.style.cursor="pointer";
+  c.setAttribute("role","button");
+  c.addEventListener("click",function(){var f=document.getElementById("fl"+i);if(f&&f.getAttribute("opacity")==="0"){f.setAttribute("opacity","1");lit++;burst(st,8,"#E9C86A");
+   if(lit>=6){S.done=true;save();$("fnMsg").textContent="";$("fnH").textContent="✦ Six years old ✦";setTimeout(function(){$("fnBody").hidden=false;burst(st,26,"#E9C86A");window.scrollTo(0,0)},550)}}});
+  g.appendChild(c)})(i);
+}
+$("fnAgain").addEventListener("click",function(){S={day:1,conf:0,hearts:0,str:0,done:true};save();stI=0;stShow();show("s-story")});
+$("reset").addEventListener("click",function(){try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+if(S.day>1&&!S.done){hud();startTrain()}
+})();
+</script>
+</body>
+</html>

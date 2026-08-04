@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="theme-color" content="#0d1b45"/>
+<title>Isla and the Growing Sky · NOOR Little Codex</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--acc:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{min-height:100vh;background:linear-gradient(180deg,#0a1638 0%,#1b2f6b 60%,#3b2f80 130%);color:var(--parchment)}
+button{border:none;background:none;color:inherit;cursor:pointer;font-family:inherit}
+.tw{position:fixed;width:2px;height:2px;border-radius:50%;background:#FFFDF2;opacity:.4;animation:tw 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.65}}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:relative;z-index:6}
+header a{color:var(--gold-hi);text-decoration:none;font-weight:800;font-size:.95rem;padding:8px 10px}
+header .gt{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.counters{display:flex;gap:8px;justify-content:center;position:relative;z-index:6;padding:0 14px}
+.cchip{background:rgba(255,254,247,.1);border:1px solid rgba(233,200,106,.4);border-radius:999px;padding:6px 13px;font-size:.74rem;font-weight:800}
+.cchip b{color:var(--gold-hi)}
+.cchip.q b{color:var(--acc)}
+/* world */
+#viewport{position:relative;height:min(74vh,620px);overflow:hidden;margin-top:8px}
+#world{position:absolute;left:50%;top:0;width:640px;height:600px;margin-left:-320px;transform-origin:50% 46%;transition:transform 1.2s cubic-bezier(.4,0,.2,1)}
+#branches{position:absolute;inset:0;overflow:visible}
+#branches path{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;opacity:.6;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1s ease}
+#branches path.grown{stroke-dashoffset:0}
+.bud{position:absolute;width:58px;height:58px;margin:-29px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1.5rem;font-weight:700;color:#FFFDF4;background:radial-gradient(circle at 35% 30%,#c4b0f7,#7c5fd4);border:2.5px solid var(--gold-hi);box-shadow:0 0 18px rgba(167,139,250,.6);animation:budIn .6s cubic-bezier(.34,1.56,.64,1),budPulse 2.8s ease-in-out 1s infinite;z-index:3}
+@keyframes budIn{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes budPulse{50%{box-shadow:0 0 28px rgba(167,139,250,.9)}}
+.bud:disabled{animation:none;background:radial-gradient(circle at 35% 30%,#F4E3A1,#C9A227);box-shadow:0 0 10px rgba(201,162,39,.5);font-size:1.15rem;cursor:default}
+.bud.locked{filter:grayscale(.7);opacity:.45;animation:budIn .6s cubic-bezier(.34,1.56,.64,1)}
+#isla{position:absolute;width:74px;height:96px;margin:-48px -37px;z-index:4;transition:left 1s cubic-bezier(.4,0,.2,1),top 1s cubic-bezier(.4,0,.2,1);pointer-events:none}
+#isla svg{animation:toddle 2.6s ease-in-out infinite}
+@keyframes toddle{50%{transform:translateY(-4px) rotate(1.6deg)}}
+.stagecap{position:absolute;left:0;right:0;bottom:8px;text-align:center;z-index:5;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);font-weight:800;text-shadow:0 1px 8px rgba(4,6,15,.8)}
+/* overlay discovery */
+#ov{position:fixed;inset:0;background:rgba(6,10,28,.78);display:none;align-items:flex-start;justify-content:center;z-index:20;padding:4vh 14px;overflow-y:auto}
+#ov.on{display:flex}
+.ovc{width:100%;max-width:480px;background:linear-gradient(178deg,#FFFDF4,#FAF3DE);border:3px solid var(--gold);border-radius:22px;color:var(--ink);padding:18px 16px;position:relative;animation:pop .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.ovc .k{font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800;text-align:center}
+.ovc h2{font-family:Amiri,serif;font-size:clamp(20px,5.4vw,26px);color:#8a6d1a;text-align:center;margin:.2rem 0 .5rem}
+.play{min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;touch-action:none}
+.hint{text-align:center;font-size:.8rem;font-weight:700;color:#8a6d1a;min-height:1.2em}
+.know{border-inline-start:3px solid var(--gold);background:rgba(201,162,39,.08);border-radius:0 12px 12px 0;padding:10px 12px;font-size:.86rem;line-height:1.6;color:rgba(44,36,22,.85);font-style:italic}
+.cta{display:block;width:100%;min-height:56px;margin-top:12px;border-radius:999px;font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--acc),#c4b0f7);color:#2a1a5e;box-shadow:0 8px 22px rgba(167,139,250,.4)}
+.cta.gold{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#1A160F}
+.cta.ghost{background:rgba(44,36,22,.06);color:#6d5514;border:1.5px solid rgba(201,162,39,.5);box-shadow:none}
+.big{font-size:2.4rem;font-family:Amiri,serif}
+.tapper{width:150px;height:150px;border-radius:24px;background:rgba(167,139,250,.12);border:2px dashed rgba(167,139,250,.6);display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.tapper:active{transform:scale(.94)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tile{min-width:64px;min-height:64px;border-radius:16px;background:#fff;border:2px solid rgba(201,162,39,.45);display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1.7rem;color:#6d5514;transition:transform .2s,border-color .2s}
+.tile.ok{border-color:#4ade80;background:rgba(74,222,128,.12);transform:scale(1.08)}
+.tile.no{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+input[type=range]{width:88%;accent-color:#a78bfa;height:34px}
+.spark{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;animation:spk 1s ease-out forwards;z-index:60}
+@keyframes spk{to{transform:translate(var(--dx),var(--dy));opacity:0}}
+.dragit{position:absolute;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:2px solid rgba(201,162,39,.5);font-size:1.5rem;touch-action:none;cursor:grab;z-index:3;user-select:none}
+.water{position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(180deg,rgba(59,130,166,.75),rgba(18,48,71,.9));border-radius:0 0 14px 14px}
+/* finale */
+#fin{position:fixed;inset:0;background:linear-gradient(180deg,#0a1638,#1b2f6b);display:none;z-index:30;overflow-y:auto;padding:20px 14px 40px}
+#fin.on{display:block}
+.finc{max-width:520px;margin:0 auto;background:linear-gradient(178deg,#FFFDF4,#FAF3DE);border:3px solid var(--gold);border-radius:22px;color:var(--ink);padding:18px 16px;position:relative;overflow:hidden}
+.rays{position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 12%,rgba(233,200,106,.12) 15%,transparent 18% 30%,rgba(233,200,106,.12) 33%,transparent 36% 48%,rgba(233,200,106,.12) 51%,transparent 54% 66%,rgba(233,200,106,.12) 69%,transparent 72% 84%,rgba(233,200,106,.12) 87%,transparent 90%);animation:ray 60s linear infinite;pointer-events:none}
+@keyframes ray{to{transform:rotate(360deg)}}
+.finc>*{position:relative}
+.badge{width:150px;height:150px;margin:8px auto;animation:stamp .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes stamp{0%{transform:scale(2.1);opacity:0}100%{transform:scale(1)}}
+.cite{border-inline-start:3px solid var(--gold);background:rgba(201,162,39,.08);border-radius:0 12px 12px 0;padding:8px 11px;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.85);margin-top:8px;font-style:italic}
+.cite b{display:block;font-style:normal;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8a6d1a;margin-top:3px}
+footer{position:relative;z-index:2;text-align:center;padding:12px 16px 30px;font-size:.78rem;color:rgba(255,254,247,.6)}
+footer .reset{color:rgba(233,200,106,.75);text-decoration:underline;font-size:.72rem;padding:6px}
+.done-note{text-align:center;font-size:.74rem;color:var(--gold-hi);font-weight:800;padding:2px 0 6px;position:relative;z-index:6}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}.tw,.rays{animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="../kids.html">☾ Little Codex</a>
+<span class="gt">Isla · The Growing Sky</span>
+</header>
+<div class="counters">
+<span class="cchip">I know: <b id="cKnow">0</b> ✦</span>
+<span class="cchip q">New questions: <b id="cQ">1</b> ؟</span>
+</div>
+<p class="done-note" id="doneNote" hidden>✓ Seeker of Knowledge! Keep wondering, Isla.</p>
+<div id="viewport">
+<div id="world">
+<svg id="branches" width="640" height="600"></svg>
+<div id="isla"><svg viewBox="0 0 74 96" width="74" aria-label="Isla, a curious little girl">
+<circle cx="37" cy="30" r="19" fill="#EDBE96"/>
+<circle cx="22" cy="16" r="8" fill="#5a4632"/><circle cx="52" cy="16" r="8" fill="#5a4632"/>
+<path d="M18 30 a19 19 0 0 1 38 0 l0 -6 a19 13 0 0 0 -38 0 Z" fill="#5a4632"/>
+<path d="M37 8 l2.4 4.6 4.6 2.4 -4.6 2.4 -2.4 4.6 -2.4 -4.6 -4.6 -2.4 4.6 -2.4 Z" fill="#E9C86A"/>
+<circle cx="30" cy="31" r="3.1" fill="#2C2416"/><circle cx="44" cy="31" r="3.1" fill="#2C2416"/>
+<circle cx="31" cy="30" r="1" fill="#fff"/><circle cx="45" cy="30" r="1" fill="#fff"/>
+<path d="M33 39 q4 3.5 8 0" stroke="#2C2416" stroke-width="2" fill="none" stroke-linecap="round"/>
+<circle cx="25" cy="37" r="2.6" fill="#f2a48a" opacity=".6"/><circle cx="49" cy="37" r="2.6" fill="#f2a48a" opacity=".6"/>
+<path d="M26 50 h22 l5 32 h-32 Z" fill="#a78bfa"/>
+<path d="M31 50 h12 v14 h-12 Z" fill="#FFFDF4"/>
+<path d="M24 54 q-7 8 -5 16" stroke="#EDBE96" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g><circle cx="59" cy="64" r="9" fill="none" stroke="#C9A227" stroke-width="3"/><path d="M52 71 L46 79" stroke="#C9A227" stroke-width="3.6" stroke-linecap="round"/><circle cx="59" cy="64" r="6" fill="rgba(233,200,106,.25)"/></g>
+<path d="M50 54 q8 5 8 12" stroke="#EDBE96" stroke-width="6" fill="none" stroke-linecap="round"/>
+<rect x="27" y="82" width="9" height="8" rx="3.5" fill="#7c5fd4"/><rect x="38" y="82" width="9" height="8" rx="3.5" fill="#7c5fd4"/>
+</svg></div>
+</div>
+<p class="stagecap" id="cap">✦ Isla's room ✦</p>
+</div>
+
+<div id="ov" role="dialog" aria-modal="true">
+<div class="ovc">
+<p class="k" id="ovK">Question</p>
+<h2 id="ovQ"></h2>
+<div class="play" id="ovPlay"></div>
+<p class="hint" id="ovHint"></p>
+<div id="ovDone" hidden>
+<div class="know" id="ovA"></div>
+<button class="cta gold" id="ovNext">I know it now! ✦</button>
+</div>
+</div>
+</div>
+
+<div id="fin">
+<div class="finc">
+<div class="rays" aria-hidden="true"></div>
+<p class="k" style="text-align:center">✦ The sky kept growing ✦</p>
+<div class="badge"><svg viewBox="0 0 150 150"><path d="M75 4 96 25 125 25 125 54 146 75 125 96 125 125 96 125 75 146 54 125 25 125 25 96 4 75 25 54 25 25 54 25 Z" fill="#C9A227"/><path d="M75 16 92 33 116 33 116 57 133 75 116 92 116 116 92 116 75 133 58 116 34 116 34 92 17 75 34 57 34 33 58 33 Z" fill="#E9C86A"/><circle cx="75" cy="75" r="40" fill="#FFFDF4"/><text x="75" y="68" text-anchor="middle" font-family="Amiri,serif" font-size="17" fill="#8a6d1a">طَالِبَةُ</text><text x="75" y="92" text-anchor="middle" font-family="Amiri,serif" font-size="17" fill="#8a6d1a">الْعِلْم</text></svg></div>
+<h2 style="font-family:Amiri,serif;text-align:center;color:#8a6d1a;font-size:1.5rem">Seeker of Knowledge</h2>
+<p style="text-align:center;font-size:.86rem;color:rgba(44,36,22,.75);line-height:1.65;margin-top:6px">Isla is almost two. She knows <b>12</b> things, and she has <b>24</b> new questions. That is exactly how the wise stay young.</p>
+<div class="cite"><span class="amiri" style="font-family:Amiri,serif;font-size:1.2rem;display:block;text-align:center" dir="rtl" lang="ar">رَبِّ زِدْنِي عِلْمًا</span>"My Lord, increase me in knowledge."<b>Qur'an 20:114</b></div>
+<div class="cite">"Whoever travels a path seeking knowledge, Allah makes easy for him a path to Jannah."<b>Muslim 2699</b></div>
+<div class="cite">"The angels lower their wings for the seeker of knowledge, pleased with what he seeks."<b>Abu Dawud 3641</b></div>
+<button class="cta" id="finAgain">Play again</button>
+<a class="cta ghost" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="../kids.html">☾ Little Codex</a>
+</div>
+</div>
+<footer>☾ A hero story from the Codex of Light · <button class="reset" id="reset">start over</button></footer>
+
+<script>
+(function(){
+"use strict";
+var KEY="nk-isla";
+var known=0,done=false;
+try{var sv=JSON.parse(localStorage.getItem(KEY)||"null");if(sv){known=Math.min(sv.known||0,12);done=!!sv.done}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({done:done,known:known}))}catch(e){}}
+var $=function(id){return document.getElementById(id)};
+for(var i=0;i<28;i++){var t=document.createElement("i");t.className="tw";t.style.left=Math.random()*100+"%";t.style.top=Math.random()*100+"%";t.style.animationDelay=Math.random()*4.6+"s";document.body.appendChild(t)}
+function burst(x,y,color,n){for(var i=0;i<(n||12);i++){var s=document.createElement("i");s.className="spark";s.style.background=i%2?"#E9C86A":(color||"#a78bfa");s.style.left=x+(Math.random()*30-15)+"px";s.style.top=y+(Math.random()*20-10)+"px";s.style.setProperty("--dx",(Math.random()*150-75)+"px");s.style.setProperty("--dy",(Math.random()*-130-20)+"px");document.body.appendChild(s);setTimeout(function(q){return function(){q.remove()}}(s),1050)}}
+
+/* tree layout: 12 nodes, 4 stages, positions in world coords (640x600, root bottom center) */
+var NODES=[
+ {x:320,y:470,st:0,q:"What sleeps inside a seed?",a:"A whole tree, folded small. Bismillah, grow!"},
+ {x:225,y:392,st:0,q:"Why does the moon change?",a:"It is the same moon, wearing light differently each night."},
+ {x:415,y:392,st:0,q:"What sound does Alif make?",a:"Alif says 'aa', the first letter of Iqra: Read!"},
+ {x:150,y:312,st:1,q:"Where does green come from?",a:"Blue and yellow hold hands, and green is born."},
+ {x:295,y:300,st:1,q:"How many ducklings?",a:"Five! Counting makes the row make sense."},
+ {x:445,y:308,st:1,q:"What do bees build?",a:"Six-sided honey rooms. Tiny builders, perfect math."},
+ {x:95,y:222,st:2,q:"Why do stars make pictures?",a:"Eyes love joining dots. The sky is a page of them."},
+ {x:255,y:205,st:2,q:"What holds a bird up?",a:"Air is not empty. It carries wings like water carries boats."},
+ {x:415,y:212,st:2,q:"Where does rain live?",a:"Inside the cloud, waiting to be poured on the thirsty earth."},
+ {x:150,y:128,st:3,q:"What floats, what sinks?",a:"Trying is how you find out. That is called an experiment!"},
+ {x:320,y:110,st:3,q:"How big is the sea?",a:"Bigger than the biggest question so far. And whales live in it like little fish."},
+ {x:490,y:122,st:3,q:"What is bigger than everything?",a:"The sea, the earth, the moon, the stars... and Allah made ALL of it. Allahu Akbar."}
+];
+var ZOOM=[{s:1,y:0},{s:.84,y:60},{s:.68,y:120},{s:.56,y:170}];
+var CAPS=["✦ Isla's room ✦","✦ The garden ✦","✦ The open sky ✦","✦ The sea and the stars ✦"];
+var world=$("world"),br=$("branches");
+
+function branchPath(i){
+ var from=i===0?{x:320,y:560}:NODES[(i-1)>>0>=1?Math.max(0,Math.floor((i-1)/1)-0):0];
+ return null}
+/* simple branch: connect each node to its "parent": node0 root; children pairs: parent p spawns 2p+1,2p+2 */
+function parentOf(i){return i===0?null:Math.floor((i-1)/2)>=0&&(i-1)>=1?Math.floor((i-1)/2):0}
+function drawBranch(i){
+ var p=i===0?{x:320,y:560}:NODES[parentOf(i)===null?0:Math.min(parentOf(i),NODES.length-1)];
+ if(i===0)p={x:320,y:560};
+ var n=NODES[i];
+ var el=document.createElementNS("http://www.w3.org/2000/svg","path");
+ var mx=(p.x+n.x)/2,my=(p.y+n.y)/2-26;
+ el.setAttribute("d","M"+p.x+" "+p.y+" Q"+mx+" "+my+" "+n.x+" "+n.y);
+ br.appendChild(el);
+ requestAnimationFrame(function(){requestAnimationFrame(function(){el.classList.add("grown")})});
+}
+function nodeBtn(i,state){ /* state: 'open'|'done'|'locked' */
+ var n=NODES[i];
+ var b=document.createElement("button");
+ b.className="bud"+(state==="locked"?" locked":"");
+ b.style.left=n.x+"px";b.style.top=n.y+"px";
+ b.id="bud"+i;
+ b.setAttribute("aria-label",n.q);
+ if(state==="done"){b.disabled=true;b.textContent="✦"}
+ else if(state==="locked"){b.disabled=true;b.textContent="؟"}
+ else{b.textContent="؟";b.addEventListener("click",function(){openQ(i)})}
+ world.appendChild(b);
+ return b;
+}
+function camera(){
+ var st=known>=12?3:NODES[Math.min(known,11)].st;
+ var z=ZOOM[st];
+ world.style.transform="scale("+z.s+") translateY("+z.y+"px)";
+ $("cap").textContent=CAPS[st];
+}
+function counters(){$("cKnow").textContent=known;$("cQ").textContent=known===0?1:known*2}
+function islaTo(i){var n=NODES[Math.min(i,11)];var isla=$("isla");isla.style.left=(n.x-8)+"px";isla.style.top=(n.y+52)+"px"}
+function renderTree(){
+ br.innerHTML="";world.querySelectorAll(".bud").forEach(function(b){b.remove()});
+ for(var i=0;i<=Math.min(known,11);i++){drawBranch(i)}
+ for(var i=0;i<known&&i<12;i++)nodeBtn(i,"done");
+ if(known<12){nodeBtn(known,"open");
+  /* the two "new questions" spawned by the last answer appear as locked buds */
+  if(known>=1&&known+1<12)nodeBtn(known+1,"locked");
+ }
+ counters();camera();islaTo(known);
+}
+
+/* ---------- discovery interactions ---------- */
+var ov=$("ov"),play=$("ovPlay"),hint=$("ovHint");
+var current=0;
+function openQ(i){
+ current=i;ov.classList.add("on");
+ $("ovK").textContent="Question "+(i+1)+" of 12";
+ $("ovQ").textContent=NODES[i].q;
+ $("ovDone").hidden=true;hint.textContent="";
+ build(i);
+}
+function solved(){
+ var n=NODES[current];
+ play.innerHTML='<div class="big">✦</div>';
+ hint.textContent="";
+ $("ovA").textContent=n.a;
+ $("ovDone").hidden=false;
+ burst(innerWidth/2,innerHeight/2,"#E9C86A",20);
+}
+$("ovNext").addEventListener("click",function(){
+ ov.classList.remove("on");
+ known++;if(known>=12){done=true}save();
+ renderTree();
+ if(known>=12)setTimeout(function(){$("fin").classList.add("on")},1400);
+});
+function build(i){
+ play.innerHTML="";
+ switch(i){
+ case 0:{ /* seed: tap 3 */
+  var st=0,arts=["🌰","🌱","🌿"],labels=["Tap the seed!","A root! Tap again!","It sprouts! One more!"];
+  var b=document.createElement("button");b.className="tapper";b.innerHTML='<span class="big">🌰</span>';
+  hint.textContent=labels[0];
+  b.addEventListener("click",function(){st++;burst(innerWidth/2,innerHeight/2);if(st<3){b.innerHTML='<span class="big">'+arts[st]+'</span>';hint.textContent=labels[st]}else solved()});
+  play.appendChild(b);break}
+ case 1:{ /* moon slider */
+  hint.textContent="Slide until the moon matches the window!";
+  play.innerHTML='<div style="display:flex;gap:16px;align-items:center"><div class="tapper" style="width:90px;height:90px"><span class="big" id="mNow">🌑</span></div><span style="font-weight:800;color:#8a6d1a">match ➜</span><div class="tapper" style="width:90px;height:90px;border-style:solid"><span class="big">🌕</span></div></div><input type="range" min="0" max="3" value="0" id="mSl" aria-label="moon phase">';
+  var ph=["🌑","🌓","🌖","🌕"];
+  $("mSl").addEventListener("input",function(){$("mNow").textContent=ph[+this.value];if(+this.value===3){burst(innerWidth/2,innerHeight/2);setTimeout(solved,350)}});
+  break}
+ case 2:{ /* alif match: tap ا among 3 */
+  hint.textContent="Which one is Alif? (the tall straight one!)";
+  play.innerHTML='<div class="row"><button class="tile" data-l="ب">ب</button><button class="tile" data-l="ا">ا</button><button class="tile" data-l="ت">ت</button></div>';
+  play.querySelectorAll(".tile").forEach(function(t){t.addEventListener("click",function(){
+   if(t.dataset.l==="ا"){t.classList.add("ok");burst(innerWidth/2,innerHeight/2);setTimeout(solved,420)}else{t.classList.remove("no");void t.offsetWidth;t.classList.add("no");hint.textContent="Not that one... Alif stands TALL like a 1!"}})});
+  break}
+ case 3:{ /* color drag */
+  hint.textContent="Drag the BLUE drop onto the YELLOW splash!";
+  play.style.minHeight="220px";
+  play.innerHTML='<div id="ysplash" style="position:absolute;right:14%;top:50%;width:84px;height:84px;margin-top:-42px;border-radius:50%;background:#f6d34b;display:flex;align-items:center;justify-content:center;font-size:1.7rem">🟡</div><div class="dragit" id="bdrop" style="left:12%;top:50%;margin-top:-28px;background:#bcd9f2">💧</div>';
+  dragTo($("bdrop"),$("ysplash"),function(){$("ysplash").style.background="#4ade80";$("ysplash").textContent="💚";burst(innerWidth/2,innerHeight/2,"#4ade80");setTimeout(solved,480)});
+  break}
+ case 4:{ /* count ducklings */
+  hint.textContent="Tap the ducklings, count them ALL!";
+  play.innerHTML='<div class="row" id="ducks"></div>';
+  var got=0;
+  for(var d=0;d<5;d++)(function(d){var b=document.createElement("button");b.className="tile";b.style.fontSize="1.7rem";b.textContent="🐥";
+   b.addEventListener("click",function(){if(b.dataset.c)return;b.dataset.c="1";got++;b.textContent=got;b.classList.add("ok");burst(innerWidth/2,innerHeight/2,"#fbbf24",6);hint.textContent=got<5?got+"...":"FIVE!";if(got>=5)setTimeout(solved,480)});
+   $("ducks").appendChild(b)})(d);
+  break}
+ case 5:{ /* bees order */
+  hint.textContent="Tap in order: flower ➜ bee ➜ honeycomb!";
+  play.innerHTML='<div class="row"><button class="tile" data-o="2" style="font-size:1.7rem">🐝</button><button class="tile" data-o="1" style="font-size:1.7rem">🌸</button><button class="tile" data-o="3" style="font-size:1.7rem">⬡</button></div>';
+  var need=1;
+  play.querySelectorAll(".tile").forEach(function(t){t.addEventListener("click",function(){
+   if(+t.dataset.o===need){t.classList.add("ok");need++;burst(innerWidth/2,innerHeight/2,"#fbbf24",8);if(need>3)setTimeout(solved,420)}
+   else{t.classList.remove("no");void t.offsetWidth;t.classList.add("no")}})});
+  break}
+ case 6:{ /* connect 5 stars */
+  hint.textContent="Tap all five stars to join them!";
+  play.style.minHeight="220px";
+  play.innerHTML='<svg id="cons" width="100%" height="200" viewBox="0 0 300 200"><g id="clines"></g></svg>';
+  var pts=[[60,150],[110,70],[170,40],[230,70],[262,140]],litn=0,prev=null;
+  var svg=$("cons");
+  pts.forEach(function(p){
+   var c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+   c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",14);c.setAttribute("fill","rgba(167,139,250,.35)");c.setAttribute("stroke","#a78bfa");c.setAttribute("stroke-width","2");c.style.cursor="pointer";
+   c.addEventListener("click",function(){if(c.dataset.on)return;c.dataset.on="1";c.setAttribute("fill","#E9C86A");litn++;
+    if(prev){var l=document.createElementNS("http://www.w3.org/2000/svg","line");l.setAttribute("x1",prev[0]);l.setAttribute("y1",prev[1]);l.setAttribute("x2",p[0]);l.setAttribute("y2",p[1]);l.setAttribute("stroke","#E9C86A");l.setAttribute("stroke-width","2.5");document.getElementById("clines").appendChild(l)}
+    prev=p;burst(innerWidth/2,innerHeight/2,"#E9C86A",6);
+    if(litn>=5)setTimeout(solved,480)});
+   svg.appendChild(c)});
+  break}
+ case 7:{ /* bird swipes */
+  hint.textContent="SWIPE UP under the wing, three times!";
+  play.innerHTML='<div class="big" id="bird" style="transition:transform .5s">🕊</div><div class="tapper" id="airzone" style="width:200px;height:110px">⬆ swipe here ⬆</div>';
+  var lifts=0,y0=null,z=$("airzone");
+  z.addEventListener("pointerdown",function(e){y0=e.clientY;e.preventDefault()});
+  z.addEventListener("pointerup",function(e){if(y0!==null&&y0-e.clientY>36){lifts++;$("bird").style.transform="translateY("+(-lifts*22)+"px)";burst(innerWidth/2,innerHeight/2-60,"#38bdf8",8);if(lifts>=3)setTimeout(solved,500)}y0=null});
+  break}
+ case 8:{ /* cloud taps */
+  hint.textContent="Tap the cloud five times, wake the rain!";
+  var taps=0;
+  play.innerHTML='<button class="tapper" id="cl"><span class="big">☁️</span></button><div id="rainrow" style="min-height:30px;font-size:1.2rem"></div>';
+  $("cl").addEventListener("click",function(){taps++;burst(innerWidth/2,innerHeight/2,"#38bdf8",6);$("rainrow").textContent="💧".repeat(taps);
+   if(taps>=5){$("cl").innerHTML='<span class="big">🌈</span>';setTimeout(solved,600)}});
+  break}
+ case 9:{ /* float or sink drag */
+  hint.textContent="Drag each thing to the water. What floats?";
+  play.style.minHeight="240px";
+  play.innerHTML='<div class="water" id="water"></div><div class="dragit" id="o0" style="left:6%;top:8px">🍃</div><div class="dragit" id="o1" style="left:30%;top:8px">🪨</div><div class="dragit" id="o2" style="left:54%;top:8px">🦆</div><div class="dragit" id="o3" style="left:78%;top:8px">🥄</div>';
+  var floats={o0:true,o1:false,o2:true,o3:false},doneCt=0;
+  ["o0","o1","o2","o3"].forEach(function(id){
+   dragTo($(id),$("water"),function(){var f=floats[id];var el=$(id);el.style.pointerEvents="none";el.style.transition="top .7s";el.style.top=f?"calc(100% - 92px)":"calc(100% - 46px)";el.style.opacity=f?"1":".55";doneCt++;burst(innerWidth/2,innerHeight/2+40,"#38bdf8",6);
+    hint.textContent=f?"It floats!":"It sinks! Now you know!";
+    if(doneCt>=4)setTimeout(solved,700)})});
+  break}
+ case 10:{ /* sea zoom slider */
+  hint.textContent="Pull the slider: see how big the sea really is...";
+  play.innerHTML='<div style="position:relative;width:100%;height:150px;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#38bdf8,#123047)"><div id="boat" style="position:absolute;left:50%;top:36%;transform:translate(-50%,-50%) scale(1);transition:transform .3s;font-size:2rem">⛵</div><div id="whale" style="position:absolute;left:-40%;bottom:6%;font-size:3.4rem;transition:left 1.6s">🐋</div></div><input type="range" min="0" max="100" value="0" id="zSl" aria-label="zoom out">';
+  $("zSl").addEventListener("input",function(){var v=+this.value;$("boat").style.transform="translate(-50%,-50%) scale("+(1-v/120)+")";
+   if(v>85){$("whale").style.left="30%";hint.textContent="The boat became tiny... and a whale passes like a mountain!";setTimeout(solved,1400);this.disabled=true}});
+  break}
+ case 11:{ /* final zoom out cinematic */
+  hint.textContent="Tap to zoom out... and out... and OUT!";
+  var steps=["🌊","🌍","🌙","✨"],cap=["The sea...","The whole Earth...","Past the moon...","All the stars..."],sIdx=0;
+  play.innerHTML='<button class="tapper" id="zz"><span class="big">🌊</span></button><p style="font-weight:800;color:#8a6d1a" id="zc">The sea...</p>';
+  $("zz").addEventListener("click",function(){sIdx++;burst(innerWidth/2,innerHeight/2,"#E9C86A",10);
+   if(sIdx<4){this.innerHTML='<span class="big">'+steps[sIdx]+'</span>';$("zc").textContent=cap[sIdx]}
+   else{$("zc").textContent="And Allah made all of it. Allahu Akbar!";setTimeout(solved,900)}});
+  break}
+ }
+}
+/* generic pointer drag helper */
+function dragTo(el,target,cb){
+ var sx,sy,ox,oy,drag=false;
+ el.addEventListener("pointerdown",function(e){drag=true;el.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;el.style.zIndex=9;e.preventDefault()});
+ el.addEventListener("pointermove",function(e){if(!drag)return;el.style.left=ox+(e.clientX-sx)+"px";el.style.top=oy+(e.clientY-sy)+"px"});
+ el.addEventListener("pointerup",function(e){if(!drag)return;drag=false;
+  var r1=el.getBoundingClientRect(),r2=target.getBoundingClientRect();
+  var hit=r1.left<r2.right&&r1.right>r2.left&&r1.top<r2.bottom&&r1.bottom>r2.top;
+  if(hit)cb();else{el.style.left=ox+"px";el.style.top=oy+"px"}});
+}
+
+$("finAgain").addEventListener("click",function(){known=0;save();$("fin").classList.remove("on");renderTree()});
+$("reset").addEventListener("click",function(){try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+if(done&&known>=12)$("doneNote").hidden=false;
+if(known>=12)known=12;
+renderTree();
+if(known>=12){$("doneNote").hidden=false}
+})();
+</script>
+</body>
+</html>

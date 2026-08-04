@@ -224,7 +224,8 @@ console.log('\n[8] kids.html');
   }
   ok(await page.evaluate(() => /1 of 7/.test(document.body.innerText)), 'gem collected, back on star map');
   ok(await page.locator('.w-card').count() === 9, 'More Wonders: 9 game cards');
-  ok(await page.evaluate(() => /wonders/i.test(document.getElementById('wcount').textContent)), 'wonders counter renders');
+  ok(await page.locator('.w-hero').count() === 2, 'Hero Stories: 2 highlighted cards');
+  ok(await page.evaluate(() => /12|Twelve/i.test(document.getElementById('wcount').textContent)), 'wonders counter counts 12');
   await ctx.close();
 }
 
@@ -232,7 +233,7 @@ console.log('\n[8] kids.html');
 console.log('\n[8b] nine little games');
 {
   const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
-  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo']) {
+  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo','adam','isla']) {
     errors.length = 0;
     await page.goto(BASE + '/kids/' + g + '.html', { waitUntil: 'networkidle' });
     await page.waitForTimeout(900);
