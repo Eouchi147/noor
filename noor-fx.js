@@ -418,20 +418,20 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var d = shell();
     var wrap = document.createElement("div");
     wrap.style.cssText = "display:flex;align-items:center;gap:.7rem;flex-wrap:wrap";
-    wrap.innerHTML = '<span style="color:#E9C86A">🌐</span><span style="font-weight:600">' + lang[2] + "</span>" +
+    wrap.innerHTML = '<span style="color:#E9C86A" data-ic=globe></span><span style="font-weight:600">' + lang[2] + "</span>" +
       '<a href="/' + lang[0] + '" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem;white-space:nowrap">' + lang[3] + " →</a>";
     d.appendChild(wrap);
     closeBtn(d, true);
     document.body.appendChild(d);
     setTimeout(function () { if (d.parentNode) d.remove(); }, 22000);
   }
-  /* The chooser: the 🌐 button opens every door. */
+  /* The chooser: the  button opens every door. */
   function showChooser() {
     var d = shell();
     var det = detected();
     var head = det ? det[2] : "Choose your language";
     d.insertAdjacentHTML("beforeend",
-      '<div style="font-weight:700;margin-bottom:.45rem"><span style="color:#E9C86A;margin-right:.45rem">🌐</span>' + head + "</div>" +
+      '<div style="font-weight:700;margin-bottom:.45rem"><span style="color:#E9C86A;margin-right:.45rem"></span>' + head + "</div>" +
       '<div style="font-size:.74rem;line-height:2">' + langRow() + "</div>");
     if (det) {
       d.insertAdjacentHTML("beforeend",
@@ -578,4 +578,68 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
+})();
+
+/* ================= v36 · the iconography of the house =================
+   No emoji anywhere: every pictograph is a hand-drawn line icon in the
+   Codex's own ink. One registry; any element with data-ic="name" is
+   rendered; window.NOOR_IC(name) serves dynamic HTML builders. */
+(function () {
+  "use strict";
+  var W = "<svg class='isvg' viewBox='0 0 24 24' aria-hidden='true'>";
+  var E = "</svg>";
+  var I = {
+    globe: W + "<circle cx='12' cy='12' r='9'/><path d='M3 12h18M12 3c2.8 2.6 4 5.6 4 9s-1.2 6.4-4 9c-2.8-2.6-4-5.6-4-9s1.2-6.4 4-9Z'/>" + E,
+    school: W + "<path d='M4 20V11l4-2.5V20M20 20V11l-4-2.5V20M8 20h8M8 13h8'/><path d='M12 3c1.8 1.1 2.8 2.6 2.8 4.4H9.2C9.2 5.6 10.2 4.1 12 3Z'/><path d='M12 20v-4'/>" + E,
+    book: W + "<path d='M12 6c-1.8-1.6-4.4-2-8-1.4V19c3.6-.6 6.2-.2 8 1.4 1.8-1.6 4.4-2 8-1.4V4.6C16.4 4 13.8 4.4 12 6Z'/><path d='M12 6v14.4'/>" + E,
+    lamp: W + "<path d='M9 7h6l1.2 8.5a4.2 4.2 0 0 1-8.4 0Z'/><path d='M10.4 7V5.4A1.4 1.4 0 0 1 11.8 4h.4a1.4 1.4 0 0 1 1.4 1.4V7M12 19.6V21.5M12 10.2v2.6'/>" + E,
+    dove: W + "<path d='M20.5 6.5c-4.2-.4-6.9 1-8.6 3.3C10.3 8 8.4 7.2 5.5 7.4c1 1.6 1.6 3 1.7 4.6L3.5 14c2.6 1.6 5.4 2.2 8 1.6 3.8-.9 6.9-3.9 9-9.1Z'/><path d='M17.2 6.9c.2-1 .8-1.8 1.9-2.2'/>" + E,
+    nib: W + "<path d='M13 5.5 18.5 11l-6.8 6.8c-2.2 2.2-4.9 2.1-8.2 1.7.4-3.3.5-6 2.7-8.2Z'/><path d='M13 5.5 15.8 2.7a1.5 1.5 0 0 1 2.1 0l3.4 3.4a1.5 1.5 0 0 1 0 2.1L18.5 11M9.5 14.5l1.2 1.2'/>" + E,
+    columns: W + "<path d='M3.5 8.5 12 4l8.5 4.5M5 8.5V18M9.7 8.5V18M14.3 8.5V18M19 8.5V18M3.5 18h17M3.5 21h17'/>" + E,
+    kite: W + "<path d='M12 3 19 10l-7 8-7-8Z'/><path d='M12 3v15M5 10h14M12 18c-.5 2-2 3-4 3'/>" + E,
+    seed: W + "<path d='M12 21v-8'/><path d='M12 13C12 9 9.5 7 5.5 7c0 4 2.5 6 6.5 6ZM12 11c0-3 2-4.8 5.5-4.8 0 3.4-2 5.1-5.5 4.8Z'/><path d='M8 21h8'/>" + E,
+    scroll: W + "<path d='M7 4h11a2 2 0 0 1 2 2v1H9M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1'/><path d='M9 10h7M9 13.5h7M9 17h4'/>" + E,
+    lock: W + "<rect x='5.5' y='10.5' width='13' height='9' rx='2'/><path d='M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14v2.2'/>" + E,
+    play: "<svg class='isvg' viewBox='0 0 24 24' aria-hidden='true'><path d='M8 5.8v12.4c0 .9 1 1.4 1.7 1L19 13a1.2 1.2 0 0 0 0-2L9.7 4.9c-.8-.5-1.7 0-1.7.9Z' fill='currentColor' stroke='none'/></svg>",
+    star: "<svg class='isvg' viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5c.9 4.6 2.4 6.6 7 7.5-4.6.9-6.1 2.9-7 7.5-.9-4.6-2.4-6.6-7-7.5 4.6-.9 6.1-2.9 7-7.5Z' fill='currentColor' stroke='none'/></svg>",
+    moon: W + "<path d='M19.5 14.5A8.5 8.5 0 0 1 9.5 4.5 8.5 8.5 0 1 0 19.5 14.5Z'/>" + E,
+    sun: W + "<circle cx='12' cy='12' r='4'/><path d='M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6'/>" + E,
+    drop: W + "<path d='M12 3.5c3.2 4.6 6 7.4 6 10.7a6 6 0 0 1-12 0c0-3.3 2.8-6.1 6-10.7Z'/><path d='M9.3 14.5a2.7 2.7 0 0 0 2.1 2.5'/>" + E,
+    heart: W + "<path d='M12 20c-5.2-3.4-8.5-6.6-8.5-10A4.6 4.6 0 0 1 8.1 5.4c1.6 0 3 .8 3.9 2.1a4.8 4.8 0 0 1 3.9-2.1 4.6 4.6 0 0 1 4.6 4.6c0 3.4-3.3 6.6-8.5 10Z'/>" + E,
+    scope: W + "<path d='M4 9.5 17.5 4l2 4.5L6.5 14Z'/><path d='M13 12.5 10 21M13.8 10.6 17 19M8 21h8'/><circle cx='19.8' cy='5.5' r='1.2'/>" + E,
+    gear: W + "<circle cx='12' cy='12' r='3.2'/><path d='M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M18.5 5.5l-1.8 1.8M7.3 16.7l-1.8 1.8'/>" + E,
+    compass: W + "<circle cx='12' cy='12' r='9'/><path d='M15.5 8.5 13.6 13.6 8.5 15.5l1.9-5.1Z'/>" + E,
+    camera: W + "<rect x='3' y='7' width='18' height='13' rx='2.5'/><path d='M8.5 7 10 4h4l1.5 3'/><circle cx='12' cy='13.3' r='3.6'/>" + E,
+    calc: W + "<rect x='5' y='3' width='14' height='18' rx='2'/><path d='M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01'/>" + E,
+    clock: W + "<circle cx='12' cy='12' r='9'/><path d='M12 6.5V12l3.5 2'/>" + E,
+    hand: W + "<path d='M7 11V5.8a1.5 1.5 0 0 1 3 0V10M10 10V4.5a1.5 1.5 0 0 1 3 0V10M13 10V5.6a1.5 1.5 0 0 1 3 0V12'/><path d='M16 12l1.8-2.4a1.5 1.5 0 0 1 2.5 1.6L17 17.5a6 6 0 0 1-5.4 3.5c-3.3 0-4.9-1.8-5.8-4.6L4.5 12.2A1.4 1.4 0 0 1 7 11Z'/>" + E,
+    leaf: W + "<path d='M19.5 4.5C11 4.5 5.5 9 4.5 19.5 15 18.5 19.5 13 19.5 4.5Z'/><path d='M4.5 19.5C8 13 12 9.5 17 7'/>" + E,
+    kaaba: W + "<path d='M4 8.5 12 4l8 4.5v7L12 20l-8-4.5Z'/><path d='M4 8.5 12 13l8-4.5M12 13v7M4 11.5c2.7 1.5 13.3 1.5 16 0' stroke-dasharray='2 1.6'/>" + E,
+    eye: W + "<path d='M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z'/><circle cx='12' cy='12' r='2.8'/>" + E,
+    bulb: W + "<path d='M12 3a6 6 0 0 1 3.4 10.9c-.8.6-1.4 1.5-1.4 2.6h-4c0-1.1-.6-2-1.4-2.6A6 6 0 0 1 12 3Z'/><path d='M10 19.5h4M10.8 22h2.4'/>" + E,
+    flask: W + "<path d='M9.5 3h5M10.5 3v5.2L5.2 17.5A2.4 2.4 0 0 0 7.3 21h9.4a2.4 2.4 0 0 0 2.1-3.5L13.5 8.2V3'/><path d='M7.8 15h8.4'/>" + E,
+    note: W + "<rect x='5' y='3.5' width='14' height='17' rx='2'/><path d='M8.5 8h7M8.5 12h7M8.5 16h4.5'/>" + E,
+    hands: W + "<path d='M11.5 20.5 5 15.2c-1.2-1-1.3-2.7-.2-3.7l.2-.2c1-.9 2.4-.8 3.4 0l3.1 2.7 3.1-2.7c1-.8 2.4-.9 3.4 0l.2.2c1.1 1 1 2.7-.2 3.7Z'/><path d='M7 8.5c1.3-2 3-3 5-3s3.7 1 5 3'/>" + E,
+    shield: W + "<path d='M12 3 19.5 6v5c0 4.8-3 8.4-7.5 10-4.5-1.6-7.5-5.2-7.5-10V6Z'/><path d='M9 11.8l2.1 2.2 3.9-4'/>" + E,
+    tools: W + "<path d='M14.5 6.5a4 4 0 0 1 5-5l-3 3 .7 2.3 2.3.7 3-3a4 4 0 0 1-5 5L7 20a2 2 0 0 1-2.8-2.8Z' transform='scale(0.92) translate(1 1)'/>" + E,
+    key: W + "<circle cx='8' cy='15.5' r='4.5'/><path d='M11.5 12 20 3.5M16 7.5l3 3M13.5 10l2 2'/>" + E,
+    home: W + "<path d='M4.5 11 12 4l7.5 7M6.5 9.5V20h11V9.5'/><path d='M10 20v-5.5h4V20'/>" + E,
+    minaret: W + "<path d='M10 21V8.5a2 2 0 0 1 4 0V21M10 21h4M9 21h6'/><path d='M12 6.5V4.8M11 4.8h2M10 12h4'/>" + E,
+    question: W + "<circle cx='12' cy='12' r='9'/><path d='M9.4 9.2A2.7 2.7 0 0 1 12 7.4c1.5 0 2.7 1 2.7 2.4 0 1.9-2.7 2.1-2.7 3.9'/><path d='M12 17h.01'/>" + E,
+    trophy: W + "<path d='M8 4h8v5a4 4 0 0 1-8 0Z'/><path d='M8 5.5H5a3 3 0 0 0 3 4M16 5.5h3a3 3 0 0 1-3 4M12 13v3.5M9 20h6M10 16.5h4V20h-4Z'/>" + E
+  };
+  window.NOOR_IC = function (name) { return I[name] || ""; };
+  function render(root) {
+    (root || document).querySelectorAll("[data-ic]").forEach(function (el) {
+      var n = el.getAttribute("data-ic");
+      if (I[n] && !el.querySelector("svg")) el.innerHTML = I[n];
+    });
+  }
+  window.NOOR_IC_RENDER = render;
+  var css = document.createElement("style");
+  css.textContent = ".isvg{display:inline-block;width:1.22em;height:1.22em;vertical-align:-0.24em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}[data-ic]{line-height:1}";
+  document.head.appendChild(css);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { render(); });
+  else render();
+  try { new MutationObserver(function (m) { m.forEach(function (x) { x.addedNodes && x.addedNodes.forEach(function (n) { if (n.nodeType === 1) render(n); }); }); }).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
 })();

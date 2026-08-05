@@ -97,7 +97,7 @@ details.mgrid summary{cursor:pointer;font-size:.74rem;color:var(--gold-hi);font-
 
 <!-- LOGIN GATE -->
 <div class="gate" id="gate">
-<div class="lock">🗝️</div>
+<div class="lock"><span data-ic=key></span></div>
 <h1>Owner's key required</h1>
 <p>This console holds the readers, the gifts, the Guardians, and the money. One key exists.</p>
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password"/>
@@ -119,9 +119,9 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <div class="tabs" role="tablist">
 <button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
-<button class="tab" data-pane="giving" role="tab">🕯 Giving</button>
-<button class="tab" data-pane="guardians" role="tab">🛡 Guardians</button>
-<button class="tab" data-pane="system" role="tab">⚙ System</button>
+<button class="tab" data-pane="giving" role="tab"><span data-ic=lamp></span> Giving</button>
+<button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Guardians</button>
+<button class="tab" data-pane="system" role="tab"><span data-ic=gear></span> System</button>
 </div>
 
 <!-- ===================== PULSE ===================== -->
@@ -258,7 +258,7 @@ var $=function(id){return document.getElementById(id)};
 function api(path,body){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(body||{})}).then(function(r){return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j}})})}
 function money(n){return "$"+(Math.round(n*100)/100).toLocaleString()}
 function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
-function flag(cc){if(!/^[A-Z]{2}$/.test(cc))return "🌐";return String.fromCodePoint(0x1F1E6+cc.charCodeAt(0)-65,0x1F1E6+cc.charCodeAt(1)-65)}
+function flag(cc){if(!/^[A-Z]{2}$/.test(cc))return "<span data-ic=globe></span>";return String.fromCodePoint(0x1F1E6+cc.charCodeAt(0)-65,0x1F1E6+cc.charCodeAt(1)-65)}
 var COUNTRY={CA:"Canada",US:"United States",GB:"United Kingdom",FR:"France",DE:"Germany",AE:"UAE",SA:"Saudi Arabia",QA:"Qatar",KW:"Kuwait",PK:"Pakistan",IN:"India",BD:"Bangladesh",ID:"Indonesia",MY:"Malaysia",SG:"Singapore",TR:"Türkiye",EG:"Egypt",MA:"Morocco",DZ:"Algeria",TN:"Tunisia",NG:"Nigeria",ZA:"South Africa",AU:"Australia",NL:"Netherlands",BE:"Belgium",SE:"Sweden",NO:"Norway",ES:"Spain",IT:"Italy",BR:"Brazil",MX:"Mexico","??":"Unknown"};
 var GS=[];
 

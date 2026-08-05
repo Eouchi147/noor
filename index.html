@@ -424,12 +424,12 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a role="menuitem" href="index.html#about">About the Codex</a>
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
 <a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · our halal app ↗</a>
-<a role="menuitem" href="license.html">🏫 For Schools &amp; Organizations</a>
+<a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
 <a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
 </div>
 </div></div></div>
 <a href="donate.html" class="give-pill">✦ Give</a>
-<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
+<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors"><span data-ic=globe></span></button>
 </nav>
 <button id="search-toggle" class="p-2 rounded-lg hover:bg-ink/5 transition-colors" aria-label="Search">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -647,7 +647,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 <!-- Friday Light · appears only on Jumu'ah -->
 <div id="friday-light" hidden style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.3)">
 <div style="max-width:48rem;margin:0 auto;padding:.85rem 1rem;display:flex;gap:.7rem;align-items:flex-start;font-family:Inter,system-ui,sans-serif">
-<span aria-hidden="true" style="color:#F4D46A;font-size:1.1rem;flex:none">🕌</span>
+<span aria-hidden="true" style="color:#F4D46A;font-size:1.1rem;flex:none"><span data-ic=minaret></span></span>
 <div style="min-width:0">
 <p id="fl-text" style="font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.85);margin:0"></p>
 <a href="quran.html?surah=18" style="display:inline-block;margin-top:.35rem;font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none">Open Surah Al-Kahf →</a>
@@ -901,13 +901,13 @@ if((new Date()).getDay()===5){
 <div class="mz-card reveal">
 <h3 class="mz-h" data-i18n="mizan.follow.title">What Actually Follows You</h3>
 <div class="mz-follow mt-4">
-<div class="mz-f"><span class="mz-fi">⌂</span><span data-i18n="mizan.follow.family">Family</span><em data-i18n="mizan.follow.returns">turns back at the grave</em></div>
-<div class="mz-f"><span class="mz-fi">◈</span><span data-i18n="mizan.follow.wealth">Wealth</span><em data-i18n="mizan.follow.returns2">turns back at the grave</em></div>
+<div class="mz-f"><span class="mz-fi"><span data-ic=home></span></span><span data-i18n="mizan.follow.family">Family</span><em data-i18n="mizan.follow.returns">turns back at the grave</em></div>
+<div class="mz-f"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.wealth">Wealth</span><em data-i18n="mizan.follow.returns2">turns back at the grave</em></div>
 <div class="mz-f mz-f-stay"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.deeds">Deeds</span><em data-i18n="mizan.follow.stays">stay with you</em></div>
 </div>
 <span class="mz-src">Bukhari 6514 · Muslim 2960</span>
 <div class="mz-debt mt-3">
-<span class="mz-debt-i">⚖</span>
+<span class="mz-debt-i"><span data-ic=calc></span></span>
 <div>
 <b data-i18n="mizan.follow.debt">And one thing waits ahead: debt</b>
 <em data-i18n="mizan.follow.debtNote">Death does not erase it. The martyr is forgiven everything except his debt, and the believer's soul stays attached to what he owes until it is settled. Pay it, or arrange it, while arranging is still yours.</em>
@@ -922,8 +922,8 @@ if((new Date()).getDay()===5){
 <div class="mz-card reveal">
 <h3 class="mz-h" data-i18n="mizan.cap.title">Two Capitals, Spent Blind</h3>
 <div class="grid grid-cols-2 gap-3 mt-4">
-<div class="mz-cap"><span class="mzc-i">✚</span><b data-i18n="mizan.cap.health">Health</b><em data-i18n="mizan.cap.healthNote">works only while it lasts</em></div>
-<div class="mz-cap"><span class="mzc-i">◷</span><b data-i18n="mizan.cap.time">Free time</b><em data-i18n="mizan.cap.timeNote">leaves without notice</em></div>
+<div class="mz-cap"><span class="mzc-i">+</span><b data-i18n="mizan.cap.health">Health</b><em data-i18n="mizan.cap.healthNote">works only while it lasts</em></div>
+<div class="mz-cap"><span class="mzc-i"><span data-ic=clock></span></span><b data-i18n="mizan.cap.time">Free time</b><em data-i18n="mizan.cap.timeNote">leaves without notice</em></div>
 </div>
 <p class="mz-quote mt-3">"Two blessings about which many people are cheated: health and free time."</p>
 <span class="mz-src">Bukhari 6412</span>
@@ -1001,10 +1001,10 @@ if((new Date()).getDay()===5){
 <a href="/ar" class="hover:text-gold" lang="ar">العربية</a> · <a href="/fr" class="hover:text-gold" lang="fr">Français</a> · <a href="/es" class="hover:text-gold" lang="es">Español</a> · <a href="/de" class="hover:text-gold" lang="de">Deutsch</a> · <a href="/ru" class="hover:text-gold" lang="ru">Русский</a> · <a href="/tr" class="hover:text-gold" lang="tr">Türkçe</a> · <a href="/ur" class="hover:text-gold" lang="ur">اردو</a> · <a href="/hi" class="hover:text-gold" lang="hi">हिन्दी</a> · <a href="/bn" class="hover:text-gold" lang="bn">বাংলা</a> · <a href="/id" class="hover:text-gold" lang="id">Bahasa Indonesia</a>
 <div class="mt-6 max-w-xl mx-auto rounded-2xl px-5 py-4 text-left" style="background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.35)">
 <div class="flex items-center gap-4 flex-wrap">
-<span style="font-size:1.6rem">🏫</span>
+<span style="font-size:1.6rem"><span data-ic=school></span></span>
 <div style="flex:1;min-width:14rem">
 <p class="text-sm font-bold text-parchment">Run a masjid, Islamic school, or app?</p>
-<p class="text-xs text-parchment/60 leading-relaxed mt-0.5">Embed the whole Codex in your own website: the Mushaf, the 28-lesson Classroom, the Kids' Codex, all of it, ad-free under your name. From $19/month, cancel anytime.</p>
+<p class="text-xs text-parchment/60 leading-relaxed mt-0.5">Embed the whole Codex in your own website: the Mushaf, the 47-lesson Classroom, the Kids' Codex, all of it, ad-free under your name. From $19/month, cancel anytime.</p>
 </div>
 <a href="license.html" class="font-bold text-xs rounded-full px-4 py-2" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;white-space:nowrap">See licensing →</a>
 </div>
@@ -1171,7 +1171,7 @@ function openModal(id, push = true){
   if (n.timeline && n.timeline.length) html += sect(t("modal.order"),
     `<ol class="mtimeline">${n.timeline.map((s,i)=>`<li><span class="dot">${i+1}</span><div class="tl-l">${linkify(s.label)}</div>${s.detail?`<div class="tl-d">${linkify(s.detail)}</div>`:""}</li>`).join("")}</ol>`);
   if (n.protection && n.protection.length) html += sect(t("modal.shield"),
-    `<div class="shield-box"><ul>${n.protection.map(p=>`<li><span class="s">✚</span><span>${linkify(p)}</span></li>`).join("")}</ul></div>`);
+    `<div class="shield-box"><ul>${n.protection.map(p=>`<li><span class="s">+</span><span>${linkify(p)}</span></li>`).join("")}</ul></div>`);
   if (n.quran && n.quran.length) html += sect(t("modal.quran"),
     n.quran.map(q=>`<div class="quran-card">
       <div class="flex items-start justify-between gap-2 mb-2">

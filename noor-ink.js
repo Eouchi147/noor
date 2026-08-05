@@ -13,8 +13,9 @@
 (function () {
   "use strict";
   var REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var hero = document.getElementById("hero");
+  var hero = document.getElementById("hero") || document.querySelector("[data-ink]");
   if (!hero) return;
+  var SOFT = hero.getAttribute && hero.getAttribute("data-ink") === "soft";
 
   /* ---------- device tier ---------- */
   var w = Math.min(screen.width, innerWidth) || innerWidth;
@@ -25,6 +26,7 @@
     tablet:  { size: 384, wisps: 2, paperOp: .06, edgeOp: .5,  wispOp: .2,  dpr: 1.25 },
     desktop: { size: 512, wisps: 3, paperOp: .07, edgeOp: .55, wispOp: .24, dpr: Math.min(devicePixelRatio || 1, 1.5) }
   }[TIER];
+  if (SOFT) { CFG.wisps = Math.max(1, CFG.wisps - 1); CFG.paperOp *= .8; CFG.edgeOp *= .7; CFG.wispOp *= .65; }
   document.documentElement.classList.add("ink-" + TIER);
 
   /* ---------- noise synthesis (once) ----------

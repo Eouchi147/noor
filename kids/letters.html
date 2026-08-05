@@ -109,14 +109,14 @@ main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
 </header>
 <main>
 <div class="hero">
-<span class="moon" aria-hidden="true">🌷</span>
+<span class="moon" aria-hidden="true"><span data-ic=seed></span></span>
 <h1>The Letter Garden</h1>
 <p>Twenty-eight Arabic letters live in this garden. Tap a letter to meet its animal or treasure, collect them all, then play Find the Letter!</p>
 </div>
 
 <div class="tabs">
-<button id="tab-meet" class="sel">🌱 Meet the letters</button>
-<button id="tab-play">🎈 Play!</button>
+<button id="tab-meet" class="sel">Meet the letters</button>
+<button id="tab-play">Play!</button>
 </div>
 
 <div id="meet">
@@ -129,14 +129,14 @@ main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
 <div id="gprompt"><span class="find">Find the letter</span><div class="target"><span id="gt-name">…</span><span class="te" id="gt-e"></span></div></div>
 <div id="gbubbles"></div>
 <div id="gend">
-<span class="cup">🏆</span>
+<span class="cup"><span data-ic=trophy></span></span>
 <h3 id="gend-t">Star gardener!</h3>
 <p id="gend-p"></p>
 <button id="gagain">Play again</button>
 </div>
 </div>
 
-<p class="grownup">For grown-ups and big kids: the full <a href="/arabic.html">Letters of Light</a> room teaches the shapes, the vowel marks and your first ayah, with real recitation. 🏮</p>
+<p class="grownup">For grown-ups and big kids: the full <a href="/arabic.html">Letters of Light</a> room teaches the shapes, the vowel marks and your first ayah, with real recitation. <span data-ic=lamp></span></p>
 </main>
 
 <div id="bigcard" role="dialog" aria-modal="true">
@@ -178,7 +178,7 @@ var L=[
 ["غ","Ghayn","gh (gargle!)","غَيْم","ghaym · clouds","☁️"],
 ["ف","Fā’","f","فِيل","fīl · elephant","🐘"],
 ["ق","Qāf","deep k","قَمَر","qamar · moon","🌕"],
-["ك","Kāf","k","كِتَاب","kitāb · book","📖"],
+["ك","Kāf","k","كِتَاب","kitāb · book","<span data-ic=book></span>"],
 ["ل","Lām","l","لَيْل","layl · night","🌃"],
 ["م","Mīm","m","مَسْجِد","masjid · mosque","🕌"],
 ["ن","Nūn","n","نَجْم","najm · star","⭐"],
@@ -205,7 +205,7 @@ L.forEach(function(o,i){
     $("bigcard").classList.add("open");
     $("bc-yay").onclick=function(){
       if(!got[o[0]]){got[o[0]]=1;save();d.classList.add("got");paintCount();
-        if(Object.keys(got).length===28)rain(["🌟","🌷","⭐","🏮"],26);
+        if(Object.keys(got).length===28)rain(["🌟","<span data-ic=seed></span>","⭐","<span data-ic=lamp></span>"],26);
         else rain([o[5],"⭐"],7);
       }
       $("bigcard").classList.remove("open");
@@ -290,7 +290,7 @@ function gFinish(){
   $("gprompt").style.display="none";$("gbubbles").style.display="none";
   $("gend").style.display="block";
   var t,p;
-  if(gStarsN===ROUNDS){t="Perfect! Star gardener! 🌟";p="Every letter found on the first try! The whole garden is glowing because of you.";rain(["🌟","🏆","⭐","🌷"],30);}
+  if(gStarsN===ROUNDS){t="Perfect! Star gardener! 🌟";p="Every letter found on the first try! The whole garden is glowing because of you.";rain(["🌟","<span data-ic=trophy></span>","⭐","<span data-ic=seed></span>"],30);}
   else if(gStarsN>=5){t="Wonderful! "+gStarsN+" stars!";p="The garden is so bright! Play again and see if you can catch them all first try.";}
   else{t="You found them all!";p="You won "+gStarsN+" first-try stars. Visit the letters in the garden, then come back for more!";}
   $("gend-t").textContent=t;$("gend-p").textContent=p;

@@ -7,7 +7,7 @@ window.NOOR_CURRICULUM = {
 tracks: [
 
 /* ============ TRACK 1 · READING ARABIC ============ */
-{ id:"huruf", icon:"🔤", ar:"الْقِرَاءَة", name:"Reading Arabic",
+{ id:"huruf", icon:"nib", ar:"الْقِرَاءَة", name:"Reading Arabic",
   stage:"Garden → Workshop", color:"#C9A227",
   desc:"From zero to reading the Bismillah with your own eyes: the 28 letters, the vowel marks, and your first ayah.",
   lessons:[
@@ -108,11 +108,39 @@ tracks: [
    {q:"Why is الرَّحْمَٰنِ pronounced “ar-Raḥmān”, not “al-Raḥmān”?", a:["The Alif is silent","Rā is a sun letter: the L melts and Rā doubles","It is an exception with no rule","The Lām is missing"], c:1},
    {q:"Which word of the Bismillah contains a long ī stretched by Yā?", a:["بِسْمِ","اللَّهِ","الرَّحْمَٰنِ","الرَّحِيمِ"], c:3},
    {q:"The first word ever revealed of the Qur’an was:", a:["Bismillah","Iqra’ · Read","Alhamdulillah","Qul"], c:1}
+  ]},
+
+{ id:"h8", name:"Sun and moon · reading the-", mins:9,
+  cards:[
+   {t:"read", h:"One word, two voices", p:"Arabic says the with الـ (al-). Before 14 moon letters the L is heard plainly: الْقَمَر, al-qamar. Before the 14 sun letters the L melts and the next letter doubles: الشَّمْس, ash-shams. You write al- every time; the letters decide what your tongue does."},
+   {t:"pairs", rows:[["Sun letters ت ث د ذ ر ز س ش ص ض ط ظ ل ن","the L melts, the letter doubles"],["Moon letters ا ب ج ح خ ع غ ف ق ك م ه و ي","the L stands and is spoken"],["النُّور → an-nūr","sun: you never hear the L"],["الْكِتَاب → al-kitāb","moon: the L rings clear"]]},
+   {t:"tip", p:"The trick to remember: sun letters are made near the tongue-tip, exactly where L lives, so L surrenders to its neighbors. Moon letters live far from L, so they leave it alone."},
+   {t:"read", h:"Hear it in the Fatiha", p:"You already know this rule by ear: الرَّحْمَٰنِ الرَّحِيمِ is ar-Rahman ar-Rahim, never al-Rahman. Ra is a sun letter. Your tongue has been doing tajwid since your first Bismillah."}
+  ],
+  quiz:[
+   {q:"In الشَّمْس (the sun), the L of al- is:", a:["spoken clearly","silent, and shin doubles","turned into N","dropped with nothing doubled"], c:1},
+   {q:"الْقَمَر is pronounced:", a:["aq-qamar","al-qamar","a-qamar","ash-qamar"], c:1},
+   {q:"How many sun letters are there?", a:["7","14","21","28"], c:1},
+   {q:"Why is it ar-Rahman and not al-Rahman?", a:["An exception with no rule","Ra is a sun letter","The Alif is missing","Old dialect"], c:1}
+  ]},
+
+{ id:"h9", name:"Tajwid starter · making it beautiful", mins:10,
+  cards:[
+   {t:"read", h:"Recite with tartil", p:"And recite the Quran with measured recitation (73:4). Tajwid is not decoration for experts; it is simply pronouncing revelation the way it came down. Four beginner rules carry you a long way, and your ear already knows them from listening."},
+   {t:"pairs", rows:[["Madd · stretching","ا و ي after a vowel stretch the sound; some stretches are held 4 to 6 counts: الضَّالِّين"],["Ghunnah · the hum","نّ and مّ with shadda hum through the nose for two counts: إِنَّ inna"],["Qalqalah · the echo","ق ط ب ج د with sukun bounce lightly: أَحَدْ at the end of Al-Ikhlas"],["Stopping","when you stop on a word, its last vowel rests: الرَّحِيمِ read alone ends Rahim"]]},
+   {t:"tip", p:"Method of the house: listen to the reciter, echo the ayah, and exaggerate the rule once so your mouth learns its shape. The rules were written down centuries after believers simply imitated beautiful recitation. Imitation is still the royal road."},
+   {t:"ayah", ref:"73:4", ar:"وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا", en:"...and recite the Quran with measured recitation. (Al-Muzzammil 73:4). Listen for the stretch inside tartila itself."}
+  ],
+  quiz:[
+   {q:"Tajwid is best described as:", a:["optional decoration","pronouncing the Quran as it was revealed","a modern invention","speed reading"], c:1},
+   {q:"Ghunnah is:", a:["a long stretch","a nasal hum on نّ and مّ","a silent letter","an echo on ق"], c:1},
+   {q:"The qalqalah letters are:", a:["ا و ي","ق ط ب ج د","ت ث د ذ","م ن ل ر"], c:1},
+   {q:"The fastest way for a beginner to learn tajwid is:", a:["memorizing rule books first","listening and echoing a good reciter","reading silently","writing essays"], c:1}
   ]}
 ]},
 
 /* ============ TRACK 2 · THE FIVE PILLARS ============ */
-{ id:"arkan", icon:"🏛", ar:"الأَرْكَان", name:"The Five Pillars",
+{ id:"arkan", icon:"columns", ar:"الأَرْكَان", name:"The Five Pillars",
   stage:"Workshop 6-9 · and every newcomer", color:"#33507C",
   desc:"The architecture of a Muslim life: what each pillar is, why it stands, and where the Book and the Prophet ﷺ said it.",
   lessons:[
@@ -189,7 +217,7 @@ tracks: [
 ]},
 
 /* ============ TRACK 3 · THE CHAIN OF PROPHETS ============ */
-{ id:"anbiya", icon:"🕊", ar:"الأَنْبِيَاء", name:"The Chain of Prophets",
+{ id:"anbiya", icon:"dove", ar:"الأَنْبِيَاء", name:"The Chain of Prophets",
   stage:"Workshop → Observatory", color:"#8A9B6E",
   desc:"One message, many messengers: six great lives from the chain of 124,000, told from the Qur'an itself.",
   lessons:[
@@ -277,11 +305,53 @@ tracks: [
    {q:"The first revealed word was:", a:["Pray","Read","Fast","Give"], c:1},
    {q:"“Seal of the Prophets” means:", a:["the best writer","the final prophet, none after him","the leader of Makkah","a royal title"], c:1},
    {q:"At the conquest of Makkah, he ﷺ treated his former persecutors with:", a:["exile","imprisonment","a general amnesty: “you are free”","heavy taxes"], c:2}
+  ]},
+
+{ id:"n7", name:"Yusuf · the best of stories", mins:11,
+  cards:[
+   {t:"read", h:"A dream in the night", p:"The Quran itself calls Surah Yusuf the best of stories (12:3). A boy dreams of eleven stars, the sun and the moon bowing to him. His father Yaqub, a prophet, understands, and warns him: do not tell your brothers. Jealousy was already circling the house of a prophet; no family is immune."},
+   {t:"ayah", ref:"12:4", ar:"إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالشَّمْسَ وَالْقَمَرَ رَأَيْتُهُمْ لِي سَاجِدِينَ", en:"I saw eleven stars and the sun and the moon: I saw them prostrating to me. (12:4)"},
+   {t:"read", h:"The well, the palace, the prison", p:"His brothers threw him in a well; traders sold him into Egypt; the ministers wife tried to seduce him and he chose prison over sin: My Lord, prison is more beloved to me (12:33). In prison he interpreted dreams and preached tawhid. Years later, the kings dream of seven fat and seven lean cows brought him out, cleared his name publicly, and made him treasurer of Egypt: the boy from the well now fed nations through famine."},
+   {t:"read", h:"No blame upon you today", p:"When his brothers, starving, stood unknowingly before him, he revealed himself and spoke one of the Qurans most healing lines: No blame upon you today; Allah will forgive you (12:92). The dream came true: his family bowed. He held power, held his tears, and held no grudge. Every wounded family reads this surah and finds a road home."}
+  ],
+  quiz:[
+   {q:"Surah Yusuf is called in its own opening:", a:["the hardest story","the best of stories","a short story","a parable only"], c:1},
+   {q:"Yusuf preferred prison over:", a:["work","sin","Egypt","travel"], c:1},
+   {q:"The kings dream that freed Yusuf involved:", a:["eleven stars","seven cows, fat and lean","a burning tree","a flooded river"], c:1},
+   {q:"To his brothers, Yusuf finally said:", a:["Leave Egypt","No blame upon you today","Return the money","Nothing"], c:1}
+  ]},
+
+{ id:"n8", name:"Ayyub & Yunus · two schools of patience", mins:10,
+  cards:[
+   {t:"read", h:"Ayyub · patience that keeps praising", p:"Ayyub had wealth, family and health, and lost all three. Years of illness took everything but his tongues gratitude. His dua is studied for its manners: he did not list demands; he described his state and praised his Lord: Indeed, harm has touched me, and You are the Most Merciful of the merciful (21:83). Allah restored him and doubled what he had lost. The Qurans verdict: How excellent a servant! He was ever turning back to Allah (38:44)."},
+   {t:"ayah", ref:"21:87", ar:"لَّا إِلَـٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ", en:"There is no god but You; glory be to You; indeed I was among the wrongdoers. Yunus, from the belly of the whale (21:87)."},
+   {t:"read", h:"Yunus · patience that returns", p:"Yunus left his city in anger before Allahs permission. Swallowed by the whale, wrapped in three darknesses of night, sea and belly, he prayed the words above, admitting fault with no excuse attached. Allah says: had he not been of those who glorify, he would have remained inside it until the Day of Resurrection (37:143-144). The Prophet ﷺ taught that no Muslim prays with the dua of Yunus except that Allah answers (Tirmidhi 3505)."},
+   {t:"tip", p:"Two schools, one lesson: Ayyub shows patience when the harm is not your fault; Yunus shows the return when it is. Between the two of them, every hard day you will ever have is covered."}
+  ],
+  quiz:[
+   {q:"Ayyubs dua is loved for its:", a:["length","demands","gentle manners: describing, not demanding","poetry"], c:2},
+   {q:"The three darknesses around Yunus were:", a:["fear, doubt, anger","night, sea, and the whales belly","three nights","caves"], c:1},
+   {q:"The dua of Yunus begins:", a:["Rabbi zidni ilma","La ilaha illa anta subhanak...","Alhamdulillah","Astaghfirullah"], c:1},
+   {q:"What saved Yunus, per 37:143?", a:["swimming","his being of those who glorify Allah","a passing ship","the whales mercy"], c:1}
+  ]},
+
+{ id:"n9", name:"Dawud & Sulayman · kingdom as worship", mins:10,
+  cards:[
+   {t:"read", h:"Dawud · the iron and the voice", p:"Dawud was given the Zabur, a voice so beautiful that mountains and birds echoed his praise (34:10), and a kingdom he never let corrupt him: he ate from the work of his own hands (Bukhari 2072). Allah softened iron in his hands; he was a judge who feared misjudging, and as a youth he had felled Jalut (Goliath) with a sling and certainty (2:251)."},
+   {t:"ayah", ref:"27:19", ar:"رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ", en:"Sulaymans dua after smiling at the ant: My Lord, enable me to be grateful for Your favor upon me and upon my parents... (27:19)"},
+   {t:"read", h:"Sulayman · power that stayed humble", p:"His son Sulayman was given what no king before or after held: the wind to ride, jinn in service, and the speech of birds and ants (27:16). Marching with an army, he heard one ant warn her colony to hide, and the mightiest man alive smiled, and asked Allah for gratitude, not for more power. He tested and then guided the Queen of Saba (Bilqis) to Islam with wisdom, not conquest (27:44)."},
+   {t:"tip", p:"The lesson pair: power did not spoil the father, and unimaginable power did not spoil the son. In this Madrasa, that is the definition of strength: what you can carry without it changing your sujud."}
+  ],
+  quiz:[
+   {q:"What was softened for Dawud?", a:["stone","iron","gold","wood"], c:1},
+   {q:"As a youth, Dawud felled:", a:["a lion","Jalut (Goliath)","a fortress","Pharaoh"], c:1},
+   {q:"Sulayman smiled because:", a:["he won a battle","he heard an ant warning her colony","the wind obeyed","gold arrived"], c:1},
+   {q:"After hearing the ant, Sulayman asked Allah for:", a:["a bigger army","gratitude","longer life","more kingdoms"], c:1}
   ]}
 ]},
 
 /* ============ TRACK 4 · WORSHIP IN PRACTICE ============ */
-{ id:"ibada", icon:"💧", ar:"الْعِبَادَة", name:"Worship in Practice",
+{ id:"ibada", icon:"drop", ar:"الْعِبَادَة", name:"Worship in Practice",
   stage:"Garden → Workshop · and every newcomer", color:"#7FA3D8",
   desc:"The how-to track: wudu step by step, the salah movement by movement, the day's adhkar, and the manners of the masjid.",
   lessons:[
@@ -340,11 +410,39 @@ tracks: [
    {q:"During the khutbah one should:", a:["chat quietly","listen in complete silence","scroll the phone","sleep"], c:1},
    {q:"On entering the masjid, pray:", a:["nothing","two rak‘ahs of greeting","four rak‘ahs loudly","only on Fridays"], c:1},
    {q:"Friday contains:", a:["an hour of answered du‘a","a forbidden hour","no special virtue","only rest"], c:0}
+  ]},
+
+{ id:"w5", name:"Ramadan in practice · the how-to", mins:10,
+  cards:[
+   {t:"read", h:"The night before, the dawn of", p:"Intend the fast each night; it lives in the heart, no formula required. Rise for suhur even if only water and a date: there is blessing in the pre-dawn meal (Bukhari 1923), and delaying suhur toward dawn is sunnah. Stop eating at true dawn, when Fajr enters, not at some cautious minute of your own invention."},
+   {t:"pairs", rows:[["Iftar","hasten it at sunset: the people remain upon good so long as they hasten the breaking of the fast (Bukhari 1957)"],["How to break it","fresh or dried dates, else water, as he ﷺ did (Abu Dawud 2356)"],["The nights","extra night prayer in congregation or alone: whoever stands Ramadan in prayer out of faith is forgiven past sins (Bukhari 37)"],["Last ten nights","seek Laylat al-Qadr in the odd nights; some retreat in itikaf as he ﷺ did every year (Bukhari 2025)"]]},
+   {t:"read", h:"What does not break the fast", p:"Forgetting and eating: it is food Allah fed you; complete your fast (Bukhari 1933). Tasting nothing, swallowing accidental dust, a toothbrush, a shower, an injection that is not nourishment (per broad scholarly positions): the fast is not made of glass. What truly breaks it besides food, drink and marital relations by day: deliberate vomiting, and scholars details differ; ask yours."},
+   {t:"read", h:"Before the Eid prayer", p:"Zakat al-Fitr, a small fixed gift of food or its value for every member of the household, must reach the poor before the Eid prayer (Bukhari 1503): it purifies the fast and makes sure no one is hungry on the morning of celebration. The month ends the way it lived: with someone else fed."}
+  ],
+  quiz:[
+   {q:"The sunnah timing of iftar is:", a:["delay it after Maghrib","hasten it at sunset","midnight","any time"], c:1},
+   {q:"Eating out of pure forgetfulness while fasting:", a:["breaks the fast","requires a penalty","does not break the fast: complete it","ends Ramadan"], c:2},
+   {q:"Laylat al-Qadr is sought:", a:["the first night","the 15th","in the odd last-ten nights","after Eid"], c:2},
+   {q:"Zakat al-Fitr must be given:", a:["anytime that year","before the Eid prayer","only by the rich","after Eid"], c:1}
+  ]},
+
+{ id:"w6", name:"The two Eids & the ten best days", mins:9,
+  cards:[
+   {t:"read", h:"Eid al-Fitr · the morning of gratitude", p:"Ghusl, your best clothes, and an odd number of dates before leaving for Eid al-Fitr prayer (Bukhari 953). The takbir rings from the night before: Allahu Akbar, Allahu Akbar, la ilaha illallah. The prayer is two rakah with extra takbirs, then a khutbah; the sunnah is to return home by a different road (Bukhari 986), spreading salam through more of the town."},
+   {t:"pairs", rows:[["Dhul-Hijjah 1-10","no days in which good deeds are more beloved to Allah than these (Bukhari 969)"],["The Day of Arafah (9th)","fasting it, for non-pilgrims, expiates the year before and the year after (Muslim 1162)"],["Eid al-Adha (10th)","the prayer, then the udhiyah sacrifice, echoing Ibrahims obedience; meat shared with family, neighbors and the poor"],["The takbir days","takbir continues through the days of tashriq (11th-13th)"]]},
+   {t:"read", h:"What the Eids teach", p:"Fitr celebrates a month of restraint; Adha celebrates a lifetime of surrender compressed into one fathers test. Neither is about the food: both begin with prayer, both are engineered so the poor celebrate too, and both are days when sadness is told firmly to wait."},
+   {t:"tip", p:"Practical: learn the takbir now, teach it to the household, and decide before Dhul-Hijjah arrives who your udhiyah will reach. The best deeds of the best days go to the prepared."}
+  ],
+  quiz:[
+   {q:"Before Eid al-Fitr prayer, the sunnah is to:", a:["fast until noon","eat an odd number of dates","skip breakfast","sleep in"], c:1},
+   {q:"The best days for good deeds are:", a:["the last ten of Ramadan","the first ten of Dhul-Hijjah","Fridays only","the 15th of Shaban"], c:1},
+   {q:"Fasting the Day of Arafah (for non-pilgrims):", a:["is forbidden","expiates two years","replaces Ramadan","is only for scholars"], c:1},
+   {q:"After Eid prayer the sunnah road home is:", a:["the same road","a different road","running","by night"], c:1}
   ]}
 ]},
 
 /* ============ TRACK 5 · WHAT WE BELIEVE ============ */
-{ id:"iman", icon:"💛", ar:"الْإِيمَان", name:"What We Believe",
+{ id:"iman", icon:"heart", ar:"الْإِيمَان", name:"What We Believe",
   stage:"Workshop → Observatory", color:"#E9C86A",
   desc:"The six pillars of iman, the Names of Allah to live with, and the unseen world of angels and revealed books.",
   lessons:[
@@ -389,11 +487,25 @@ tracks: [
    {q:"Which angel brought revelation to the prophets?", a:["Mika'il","Jibril","Israfil","Malik"], c:1},
    {q:"The Kiraman Katibin are:", a:["ancient kings","the recording angels at your shoulders","two mountains","prayer times"], c:1},
    {q:"Which book did Allah promise to guard Himself?", a:["The Torah","The Injil","The Zabur","The Qur'an"], c:3}
+  ]},
+
+{ id:"i4", name:"The Last Day · the honest map", mins:10,
+  cards:[
+   {t:"read", h:"Why a Last Day at all", p:"Without a final accounting, the oppressor who dies comfortable wins forever, and the wronged who die unheard lose forever. The Last Day is Allahs promise that no atom of good or evil goes unweighed: Whoever does an atoms weight of good will see it, and whoever does an atoms weight of evil will see it (99:7-8). Belief in it is not fear-mongering; it is the deepest justice claim ever made."},
+   {t:"ayah", ref:"99:7", ar:"فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ", en:"Whoever does an atoms weight of good will see it. (Az-Zalzalah 99:7)"},
+   {t:"pairs", rows:[["The Trumpet & Resurrection","all raised as easily as first created: He will revive them Who produced them the first time (36:79)"],["The Book & the Scales","deeds recorded and weighed; We place the scales of justice, and no soul is wronged at all (21:47)"],["The Hawd & the Sirat","the Prophets ﷺ pool for his ummah, and the crossing over the Fire, both from authentic hadith"],["Shafaah","intercession by his ﷺ permission-given plea for the believers (Bukhari 7410)"]]},
+   {t:"read", h:"Living with it, not paralyzed by it", p:"The Quran pairs every warning with a door: mercy outruns wrath, one good deed counts tenfold, and repentance erases what came before. The believer holds fear and hope like two wings: enough fear to avoid the sin, enough hope to never despair of the Forgiver. That balance, not terror, is what belief in the Last Day builds."}
+  ],
+  quiz:[
+   {q:"The Last Day is, at its heart, a promise of:", a:["fear","perfect justice for every atom","endings only","mystery"], c:1},
+   {q:"Per 21:47, the scales of justice wrong:", a:["some souls","no soul at all","only the rich","only nations"], c:1},
+   {q:"The believers attitude to the Last Day is:", a:["terror only","denial","fear and hope held together","indifference"], c:2},
+   {q:"A single good deed is rewarded:", a:["once exactly","tenfold or more","only if public","only in Ramadan"], c:1}
   ]}
 ]},
 
 /* ============ TRACK 6 · THE GOLDEN INHERITANCE ============ */
-{ id:"hikma", icon:"🔭", ar:"الْحِكْمَة", name:"The Golden Inheritance",
+{ id:"hikma", icon:"scope", ar:"الْحِكْمَة", name:"The Golden Inheritance",
   stage:"Observatory 9-12", color:"#8a6d1a",
   desc:"STEM as heritage: the method, the numbers, and the builders who made Muslims the teachers of the world.",
   lessons:[
@@ -438,7 +550,177 @@ tracks: [
    {q:"Al-Jazari's crank mechanism converts:", a:["water into light","rotation into push and pull","heat into sound","nothing"], c:1},
    {q:"Ibn Battuta's journey lasted about:", a:["2 years","10 years","29 years","50 years"], c:2},
    {q:"What did al-Jazari do with his engineering knowledge?", a:["kept it secret","sold it to kings only","published it with build instructions for all","burned it"], c:2}
+  ]},
+
+{ id:"g4", name:"The healers · Ibn Sina & al-Zahrawi", mins:9,
+  cards:[
+   {t:"read", h:"Medicine as amanah", p:"Islam made healing a sacred trust early: for every disease there is a cure (Muslim 2204) was an invitation to go and find them. Two men answered it so thoroughly that Europe studied their books for half a millennium."},
+   {t:"pairs", rows:[["Ibn Sina (980-1037)","the Canon of Medicine: five books ordering all known medicine; a standard European textbook into the 1600s"],["al-Zahrawi (936-1013)","al-Tasrif: 30 volumes; the last illustrated ~200 surgical instruments, many recognizable on modern trays"],["Catgut sutures","al-Zahrawis absorbable internal stitches: still the principle used today"],["The clinical method","observe the patient, record the case, doubt the ancients when the body disagrees"]]},
+   {t:"read", h:"What the child takes from them", p:"Ibn Sina memorized the Quran by ten and treated a king as a teenager; his asked-for payment was a library. Al-Zahrawi insisted the surgeon must know anatomy before daring to cut. Between them: mastery begins with the Book, knowledge is the best wage, and competence is a form of mercy."},
+   {t:"tip", p:"Their full illustrated lives, with animated infographics, open with one tap in the Teachers of the World gallery on the school page."}
+  ],
+  quiz:[
+   {q:"The Canon of Medicine was written by:", a:["al-Zahrawi","Ibn Sina","al-Biruni","Ibn Battuta"], c:1},
+   {q:"Al-Tasrifs famous final volume illustrated:", a:["maps","~200 surgical instruments","stars","coins"], c:1},
+   {q:"Catgut sutures matter because they:", a:["look good","are absorbed by the body","are cheap","never existed"], c:1},
+   {q:"For every disease, the hadith says, there is:", a:["a season","a cure","a price","a story"], c:1}
   ]}
 ]}
 
+,
+
+/* ============ TRACK 7 · TREASURES OF THE QURAN ============ */
+{ id:"kitab", icon:"book", ar:"الْكِتَاب", name:"Treasures of the Quran",
+  stage:"every age, forever", color:"#33507C",
+  desc:"Five close readings of the surahs and ayat every Muslim lives inside: what they say, when they came, and how to carry them.",
+  lessons:[
+
+{ id:"q1", name:"Al-Fatiha · the conversation", mins:10,
+  cards:[
+   {t:"read", h:"The Mother of the Book", p:"Seven ayat recited at least seventeen times a day by every praying Muslim: no words in history are said more often. The Prophet ﷺ called it the greatest surah in the Quran (Bukhari 4474). It is at once praise, creed, plea and map: the whole Book folded into one page."},
+   {t:"pairs", rows:[["Ayat 1-3 · praise","all praise to the Lord of the worlds, the Merciful, Master of the Day of Judgment"],["Ayah 4 · the pivot","You alone we worship, You alone we ask for help: the exact center, where praise turns to plea"],["Ayat 5-7 · the plea","guide us to the straight path: the path of those You favored"],["The answer","amin: O Allah, respond"]]},
+   {t:"ayah", ref:"1:5", ar:"إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", en:"You alone we worship and You alone we ask for help. (1:5) The hinge of the whole surah, and of the whole religion."},
+   {t:"read", h:"A divided conversation", p:"In a hadith qudsi, Allah says: I have divided the prayer between Myself and My servant... when he says all praise belongs to Allah, Allah says My servant has praised Me (Muslim 395), line by line to the end. The Fatiha is not recited AT Allah. It is answered, live, every single time. Pray tonight knowing each line gets a reply."}
+  ],
+  quiz:[
+   {q:"A praying Muslim recites Al-Fatiha at least how often daily?", a:["5 times","17 times","3 times","70 times"], c:1},
+   {q:"The pivot ayah at the surahs center is:", a:["Alhamdulillah","Iyyaka nabudu wa iyyaka nastain","Amin","Bismillah"], c:1},
+   {q:"The hadith qudsi says the Fatiha is:", a:["too long","divided between Allah and His servant, answered line by line","only for scholars","optional"], c:1},
+   {q:"Al-Fatiha is called:", a:["the Mother of the Book","the last surah","the hidden surah","the night surah"], c:0}
+  ]},
+
+{ id:"q2", name:"Ayat al-Kursi · the greatest ayah", mins:9,
+  cards:[
+   {t:"read", h:"One ayah above all", p:"The Prophet ﷺ asked Ubayy ibn Kab which ayah in Allahs Book is greatest. Ubayy answered: Ayat al-Kursi. The Prophet ﷺ struck his chest gently and said: congratulations on your knowledge (Muslim 810). One ayah, 2:255, and it holds the whole theology of Islam."},
+   {t:"ayah", ref:"2:255", ar:"اللَّهُ لَا إِلَـٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ", en:"Allah: there is no god but Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep... (2:255, opening)"},
+   {t:"pairs", rows:[["The Living, the Sustainer","needs nothing, sustains everything"],["No drowsiness, no sleep","the watch over you has no night shift"],["His Kursi embraces the heavens and the earth","and guarding them does not tire Him"],["Who can intercede except by His permission","no back doors, no rivals, no secrets from Him"]]},
+   {t:"read", h:"How the believers use it", p:"After every obligatory prayer (its reciter has nothing between him and Paradise except death, an-Nasai, sahih), and before sleep, where it posts a guard from Allah until morning (Bukhari 2311). Memorize it this week: ten lines of Arabic that turn every bedtime into a fortress."}
+  ],
+  quiz:[
+   {q:"Ayat al-Kursi is which ayah?", a:["1:1","2:255","36:1","112:1"], c:1},
+   {q:"Al-Hayy al-Qayyum means:", a:["the First and Last","the Living, the Sustainer","the Merciful","the Judge"], c:1},
+   {q:"Recited before sleep, it:", a:["does nothing","posts a guard until morning (Bukhari 2311)","replaces prayer","must be whispered"], c:1},
+   {q:"Who named it the greatest ayah in the exchange with the Prophet ﷺ?", a:["Abu Bakr","Ubayy ibn Kab","Aisha","Umar"], c:1}
+  ]},
+
+{ id:"q3", name:"The three Quls · the refuge surahs", mins:9,
+  cards:[
+   {t:"read", h:"Three that begin with Say", p:"Al-Ikhlas (112), Al-Falaq (113) and An-Nas (114): the Quran closes with three commands to speak. The first states who Allah is; the last two place you in His refuge from every darkness outside you and inside you. Together they are the believers nightly armor and the easiest treasure to memorize first."},
+   {t:"ayah", ref:"112:1", ar:"قُلْ هُوَ اللَّهُ أَحَدٌ", en:"Say: He is Allah, One. (112:1) The Prophet ﷺ swore it equals a third of the Quran (Bukhari 5013)."},
+   {t:"pairs", rows:[["Al-Ikhlas","pure tawhid: One, Eternal, unbegotten, unequaled: a third of the Qurans meaning in four ayat"],["Al-Falaq","refuge with the Lord of daybreak from outer harms: darkness, envy, hidden evil"],["An-Nas","refuge with the Lord of mankind from the inner whisperer in the chests of men"],["The nightly sunnah","recite all three into cupped hands, blow gently, wipe over the body: three times (Bukhari 5017)"]]},
+   {t:"read", h:"Why they are enough", p:"When the Prophet ﷺ was asked what to recite, he said: Say Qul huwa Allahu ahad and the two of refuge when you enter evening and morning, three times: they will suffice you against everything (Abu Dawud 5082, hasan sahih). Suffice: his word. Learn them with your children this month; they are eleven short ayat in total."}
+  ],
+  quiz:[
+   {q:"Al-Ikhlas equals what portion of the Quran, by the Prophets ﷺ oath?", a:["a tenth","a half","a third","all of it"], c:2},
+   {q:"Al-Falaq seeks refuge mainly from:", a:["inner whispers","outer harms like envy and darkness","hunger","travel"], c:1},
+   {q:"An-Nas names the whisperer located:", a:["in the sky","in the chests of mankind","in the sea","in books"], c:1},
+   {q:"The nightly sunnah with the three Quls involves:", a:["writing them","cupped hands, a gentle blow, wiping the body","shouting them","one recitation yearly"], c:1}
+  ]},
+
+{ id:"q4", name:"Ad-Duha & Ash-Sharh · the comfort surahs", mins:9,
+  cards:[
+   {t:"read", h:"When revelation went quiet", p:"Early in prophethood, revelation paused. The mockers sneered that Muhammads ﷺ Lord had abandoned him, and the pause pressed on his heart. Then dawn broke twice: two surahs, back to back, that read like a hand on a grieving shoulder. They were sent to one man in one sorrow, and they have been medicine for every sorrow since."},
+   {t:"ayah", ref:"93:3", ar:"مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ", en:"Your Lord has not abandoned you, nor does He hate you. (93:3)"},
+   {t:"pairs", rows:[["By the morning light (93:1)","the oath itself is the message: after every night, duha comes"],["Did He not find you an orphan and shelter you? (93:6)","your own past is the evidence of His care"],["So the orphan: do not oppress. The asker: do not repel. (93:9-10)","healed people heal people: comfort turns immediately into duty"],["With hardship comes ease: twice (94:5-6)","one hardship, two eases: the scholars noted the Arabic makes the ease outnumber the pain"]]},
+   {t:"ayah", ref:"94:5", ar:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا", en:"So truly with hardship comes ease. (94:5) With it: not after it. The ease is already inside the hard day."},
+   {t:"read", h:"How to use them", p:"These are the surahs for the heavy night: read slowly, in Arabic and your own tongue. Notice the method of divine comfort: an oath by light, proof from your own story, and then a task, because purpose is part of the cure. This is also the Madrasas model for consoling anyone: light, memory, duty."}
+  ],
+  quiz:[
+   {q:"Ad-Duha answered:", a:["a battle","the pause in revelation and the mockery around it","a famine","a treaty"], c:1},
+   {q:"93:3 promises:", a:["wealth","your Lord has not abandoned you nor hates you","long life","victory"], c:1},
+   {q:"With hardship comes ease appears:", a:["once","twice in a row","seven times","never"], c:1},
+   {q:"The comfort of Ad-Duha ends by turning into:", a:["silence","duty toward the orphan and the asker","celebration","poetry"], c:1}
+  ]},
+
+{ id:"q5", name:"Al-Asr & Al-Kawthar · the shortest, the deepest", mins:8,
+  cards:[
+   {t:"read", h:"Three ayat that grade every life", p:"Imam ash-Shafii said of Al-Asr: were people to reflect on this surah, it would suffice them. One oath, one verdict, one exception: by time itself, every human is in loss, except those with four things: iman, righteous deeds, counseling one another to truth, and counseling one another to patience. Four columns; a life missing one is leaking."},
+   {t:"ayah", ref:"103:1", ar:"وَالْعَصْرِ ۝ إِنَّ الْإِنسَانَ لَفِي خُسْرٍ", en:"By time: indeed mankind is in loss... (103:1-2)"},
+   {t:"read", h:"Al-Kawthar · abundance for the mocked", p:"The shortest surah in the Quran, three ayat, was sent when enemies called the Prophet ﷺ cut off after his sons died. Allahs answer: We have given you al-Kawthar, the abundance, including the river of Paradise he ﷺ described to his companions. So pray and sacrifice for your Lord: the one who mocks you is the one cut off (108:3). History complied: billions bless his name every day; his mockers survive only as footnotes inside his story."},
+   {t:"ayah", ref:"108:1", ar:"إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ", en:"We have surely given you the Abundance. (108:1)"}
+  ],
+  quiz:[
+   {q:"Al-Asr says every human is in loss except those with how many qualities?", a:["two","three","four","ten"], c:2},
+   {q:"Which pair completes iman and good deeds in Al-Asr?", a:["wealth and health","counseling truth and counseling patience","travel and trade","fasting and hajj"], c:1},
+   {q:"The shortest surah of the Quran is:", a:["Al-Asr","Al-Ikhlas","Al-Kawthar","An-Nas"], c:2},
+   {q:"Al-Kawthar answered those who called the Prophet ﷺ:", a:["poor","cut off","foreign","young"], c:1}
+  ]}
+]},
+
+/* ============ TRACK 8 · THE SEERAH ============ */
+{ id:"seerah", icon:"lamp", ar:"السِّيرَة", name:"The Seerah",
+  stage:"Observatory → Academy", color:"#8a6d1a",
+  desc:"The life of the Messenger ﷺ in five movements: the world he entered, the call, the trial, the city, and the completion.",
+  lessons:[
+
+{ id:"s1", name:"Before the light · Makkah and the trustworthy youth", mins:10,
+  cards:[
+   {t:"read", h:"The world he ﷺ was born into", p:"Sixth-century Arabia: tribal war as a pastime, daughters buried alive, 360 idols crowding the House that Ibrahim built for One. Yet Makkah kept two treasures it did not deserve: the Kaaba, and a memory that Ibrahims religion had once been pure. Into this, in the Year of the Elephant (when Allah destroyed Abrahas army marching on the Kaaba: Surah 105), Muhammad ﷺ was born."},
+   {t:"pairs", rows:[["Orphaned early","father before birth, mother at six, grandfather at eight: raised then by his uncle Abu Talib"],["The shepherd years","every prophet kept sheep: patience school for keeping people"],["The merchant","traded for the noblewoman Khadijah with such honesty that she proposed; their marriage lasted 25 years until her death"],["Al-Amin","the whole city called him the Trustworthy; when the tribes nearly fought over resetting the Black Stone, his cloak solution let every chief share the honor"]]},
+   {t:"ayah", ref:"105:1", ar:"أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ", en:"Have you not seen how your Lord dealt with the army of the elephant? (105:1) The year of his birth carried its own sign."},
+   {t:"read", h:"The retreat to Hira", p:"Wealthy enough to be idle, honored enough to be political, he ﷺ chose neither. He climbed to a cave called Hira to think about the One behind the idols nonsense. He was forty. He did not know he was about to meet an angel. The best preparation for revelation, it turns out, is an honest life and a thinking heart."}
+  ],
+  quiz:[
+   {q:"The Prophet ﷺ was born in the year of:", a:["the flood","the Elephant","the drought","the eclipse"], c:1},
+   {q:"Makkah called him al-Amin, meaning:", a:["the wealthy","the trustworthy","the poet","the chief"], c:1},
+   {q:"The Black Stone dispute was solved by:", a:["a duel","his cloak carried by all chiefs together","a vote","abandoning the stone"], c:1},
+   {q:"At forty he regularly retreated to:", a:["Taif","the cave of Hira","Yemen","the sea"], c:1}
+  ]},
+
+{ id:"s2", name:"Iqra · the cave and the first believers", mins:10,
+  cards:[
+   {t:"read", h:"The embrace of the angel", p:"In Ramadan, in the cave, Jibril came and said: Iqra, Read. I cannot read, he ﷺ answered. Three embraces, each tighter, and then the first five ayat of Surah al-Alaq descended: Read, in the name of your Lord who created (96:1). He ran home trembling: Cover me, cover me. Khadijah wrapped him and spoke words every anxious soul should memorize: Never. Allah will never disgrace you: you keep ties, carry the weak, host the guest, help the victims of calamity (Bukhari 3)."},
+   {t:"ayah", ref:"96:1", ar:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ", en:"Read, in the name of your Lord who created. (96:1) The first revealed words: a command to learn, before any command to fight, fast or even pray."},
+   {t:"pairs", rows:[["First believer","Khadijah, without a moments pause"],["First child","Ali, ten years old, raised in his house"],["First freed slave","Zayd ibn Harithah, who chose him over his own father"],["First outside the house","Abu Bakr, who never once called it impossible; through him came Uthman, Talha, Zubayr, Sad..."]]},
+   {t:"read", h:"Three quiet years", p:"For about three years the call stayed private: hearts gathered one by one, prayer taught, the small community welded in secret. Then came the command to warn openly, beginning with his own clan (26:214). He stood on Safa and asked: if I told you an army waited behind this hill, would you believe me? Yes: they had never heard him lie. Then his uncle Abu Lahab cursed him publicly. The age of comfort was over."}
+  ],
+  quiz:[
+   {q:"The first revealed word was:", a:["Pray","Read","Fast","Flee"], c:1},
+   {q:"Khadijahs response to his fear was:", a:["doubt","Allah will never disgrace you, and she listed his character","silence","fear"], c:1},
+   {q:"The private phase of the call lasted about:", a:["three months","three years","ten years","one week"], c:1},
+   {q:"Makkah believed his warning claim on Safa because:", a:["he was armed","they had never heard him lie","he paid them","the chiefs ordered it"], c:1}
+  ]},
+
+{ id:"s3", name:"The trial years · boycott, Taif, and the night journey", mins:11,
+  cards:[
+   {t:"read", h:"When mockery became machinery", p:"Persecution escalated from insults to torture: Bilal under the boulder, Sumayyah the first martyr of Islam, killed for one word: Ahad. Some companions were sent to the just Christian king of Abyssinia: the first hijra. Then Makkah boycotted the Prophets ﷺ whole clan: three years in a barren valley, eating leaves, hearing children cry from hunger, until even the pagans grew ashamed and tore the pact."},
+   {t:"read", h:"The Year of Sorrow and the stones of Taif", p:"Around the tenth year, Khadijah died and Abu Talib died: the shelter of the heart and the shelter of the tribe, gone in one year. He ﷺ walked to Taif to invite its people; they set street boys on him until his sandals ran with blood. The angel of the mountains offered to crush the city. His answer, bleeding: No: perhaps from their descendants will come those who worship Allah alone (Bukhari 3231). Every Muslim from Taif since is his answer still arriving."},
+   {t:"ayah", ref:"17:1", ar:"سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى", en:"Glory to Him who took His servant by night from the Sacred Mosque to the Farthest Mosque... (17:1)"},
+   {t:"read", h:"Isra and Miraj · the gift after the grief", p:"After the hardest year came the highest honor: the night journey to Jerusalem, leading the prophets in prayer, then the ascent through the heavens to a nearness no creature had reached. From that night he ﷺ brought back the ummahs daily appointment: the five prayers. Note the order Allah teaches: the deepest consolations come after the emptiest years, and the gift he returned with was not comfort for himself but connection for us."}
+  ],
+  quiz:[
+   {q:"The first martyr of Islam was:", a:["Bilal","Sumayyah","Hamza","Yasir"], c:1},
+   {q:"The boycott of the Prophets clan lasted about:", a:["three weeks","three years","ten years","one year"], c:1},
+   {q:"At Taif, offered the citys destruction, he ﷺ chose:", a:["revenge","hope for their descendants","exile for them","silence"], c:1},
+   {q:"The five daily prayers were given during:", a:["Badr","the Miraj (the ascension)","the Hijra","the Farewell Hajj"], c:1}
+  ]},
+
+{ id:"s4", name:"The city of light · Hijra and building Madinah", mins:11,
+  cards:[
+   {t:"read", h:"The emigration", p:"When Yathribs tribes pledged protection, the believers slipped away in pairs until Makkah plotted to kill the Prophet ﷺ in his bed. Ali took the bed; the Prophet and Abu Bakr took the southern road, hid three days in the cave of Thawr: Do not grieve, Allah is with us (9:40), and arrived to a city singing. Yathrib became al-Madinah, and the calendar of Islam starts not from a birth or a victory, but from this migration: the day the community began."},
+   {t:"pairs", rows:[["First deeds in Madinah","a masjid built (he ﷺ carried bricks himself), and the muakhah: each emigrant paired with a helper as brothers"],["The Sahifa","a written charter binding Muslim tribes and Jewish tribes into one defensive city: among historys earliest constitutions"],["Badr · Ramadan 2AH","313 ill-equipped believers against ~1000; victory that stunned Arabia (3:123)"],["Uhud · 3AH","archers left their post; near-defeat, 70 martyrs including Hamza: the ummahs permanent lesson that obedience outranks enthusiasm"]]},
+   {t:"read", h:"The trench and the truce", p:"5AH: ten thousand besiegers ringed Madinah; on Salman al-Farisis counsel the Muslims dug a trench, and wind and division broke the siege without pitched battle (33:9). Then Hudaybiyyah: a truce that read like surrender and worked like victory: in the two calm years that followed, Islam roughly doubled: proof that the message wins wherever swords go quiet."},
+   {t:"read", h:"The Prophet ﷺ at home", p:"Between these headlines lived the man: mending his own sandals, racing Aisha, stopping sermons when a child cried, teaching that the best of you are those best to their families (Tirmidhi 3895). The state he built never swallowed the gentleness he was. In this Madrasa, that is the leadership syllabus."}
+  ],
+  quiz:[
+   {q:"The Islamic calendar begins from:", a:["the Prophets birth","the first revelation","the Hijra to Madinah","the conquest of Makkah"], c:2},
+   {q:"In the cave of Thawr he ﷺ said:", a:["We are lost","Do not grieve, Allah is with us","Fight them","Turn back"], c:1},
+   {q:"Uhuds lasting lesson came from:", a:["bad weather","archers leaving their assigned post","numbers","geography"], c:1},
+   {q:"The trench strategy came from:", a:["Abu Bakr","Salman al-Farisi","Khalid","Bilal"], c:1}
+  ]},
+
+{ id:"s5", name:"Completion · the opening, the farewell, the passing", mins:11,
+  cards:[
+   {t:"read", h:"The bloodless opening", p:"8AH: Makkah broke the truce, and ten thousand believers marched. The city that tortured them lay at his ﷺ feet. Entering with his head bowed low on his camel, reciting Surah al-Fath, he asked the Quraysh: What do you suppose I will do with you? Then: Go, for you are free. Bilal, once tortured on this ground, climbed the Kaaba and called the adhan. The idols fell that day; almost no blood did."},
+   {t:"ayah", ref:"110:1", ar:"إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ ۝ وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا", en:"When Allahs help comes, and the opening, and you see the people entering Allahs religion in crowds... (110:1-2)"},
+   {t:"read", h:"The Farewell Sermon", p:"10AH, Arafah, before over a hundred thousand: your lives and property are sacred as this day; usury abolished; women a trust from Allah; no Arab above a non-Arab, no white above black, except by taqwa; I leave among you the Book of Allah. Then the ayah descended: This day I have perfected for you your religion (5:3), and strong men wept, understanding what completion implied."},
+   {t:"read", h:"The heaviest morning", p:"In Rabi al-Awwal 11AH, with his head in Aishas lap, he ﷺ whispered: rather, the Highest Companion, and the light of the world went out. Umar drew his sword against the very news; Abu Bakr kissed the Prophets forehead, then spoke the sentence that steadied Islam forever: Whoever worshipped Muhammad, Muhammad has died. Whoever worships Allah, Allah is Ever-Living and never dies (Bukhari 3667), and recited 3:144. The Seerah ends; the sunnah, the Book, and the ummah he built carry the light from there: now including you."}
+  ],
+  quiz:[
+   {q:"At the conquest of Makkah, the Quraysh received:", a:["exile","imprisonment","Go, for you are free","fines"], c:2},
+   {q:"The Farewell Sermon declared superiority comes only by:", a:["lineage","wealth","taqwa","language"], c:2},
+   {q:"This day I have perfected your religion is ayah:", a:["2:255","5:3","9:40","110:1"], c:1},
+   {q:"Abu Bakrs steadying words taught the ummah to worship:", a:["no one","the Ever-Living Allah, not any man","the community","the past"], c:1}
+  ]}
+]}
 ]};

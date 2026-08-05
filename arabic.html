@@ -29,6 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css?v=16"/>
 <script src="noor-fx.js" defer></script>
+<script src="noor-ink.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"The Letters of Light · Learn the Arabic Alphabet","url":"https://noorcodex.com/arabic","inLanguage":["en","ar"],"educationalLevel":"Beginner","teaches":"Arabic alphabet, vowel marks (harakat), sun and moon letters, reading the Bismillah","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"}}</script>
@@ -225,12 +226,12 @@ section.blk{padding:2.6rem 0 1rem}
 <a role="menuitem" href="index.html#about">About the Codex</a>
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
 <a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · our halal app ↗</a>
-<a role="menuitem" href="license.html">🏫 For Schools &amp; Organizations</a>
+<a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
 <a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
 </div>
 </div></div></div>
 <a href="donate.html" class="give-pill">✦ Give</a>
-<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
+<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors"><span data-ic=globe></span></button>
 </nav>
 </div>
 <div class="md:hidden border-t border-ink/5">
@@ -275,7 +276,7 @@ section.blk{padding:2.6rem 0 1rem}
 </header>
 
 <!-- ============ HERO ============ -->
-<section id="ahero">
+<section data-ink=soft id="ahero">
 <div class="rays" aria-hidden="true"></div>
 <span class="floatL" style="top:12%;left:6%;font-size:3.2rem;animation-delay:0s" aria-hidden="true">ق</span>
 <span class="floatL" style="top:58%;left:12%;font-size:2.3rem;animation-delay:-3s" aria-hidden="true">ن</span>
@@ -343,11 +344,11 @@ section.blk{padding:2.6rem 0 1rem}
 <div id="bgloss">
 <div id="bg-tr">Touch a word above</div>
 <div id="bg-m">Each one you can now sound out, letter by letter.</div>
-<button class="hearbtn mt-3" id="bismillah-play" style="margin-left:0">▶ Hear the full ayah · Al-Fatiha 1:1</button>
+<button class="hearbtn mt-3" id="bismillah-play" style="margin-left:0"><span data-ic=play></span> Hear the full ayah · Al-Fatiha 1:1</button>
 </div>
 <div class="ctaband mt-4">
-<span>🌟</span><span style="flex:1;min-width:12rem"><b>You just read Qur'an.</b> The word <span class="font-amiri text-base" translate="no">اقْرَأْ</span> · Iqra' · “Read!” was the very first word ever revealed.</span>
-<button class="hearbtn" id="iqra-play" style="margin-left:0">▶ Hear it · 96:1</button>
+<span><span data-ic=star></span></span><span style="flex:1;min-width:12rem"><b>You just read Qur'an.</b> The word <span class="font-amiri text-base" translate="no">اقْرَأْ</span> · Iqra' · “Read!” was the very first word ever revealed.</span>
+<button class="hearbtn" id="iqra-play" style="margin-left:0"><span data-ic=play></span> Hear it · 96:1</button>
 </div>
 </section>
 
@@ -363,7 +364,7 @@ section.blk{padding:2.6rem 0 1rem}
 <div class="qtop">
 <div id="qbar"><div id="qfill"></div></div>
 <span id="qstreak"></span>
-<span id="qhearts">🏮🏮🏮</span>
+<span id="qhearts"><span data-ic=lamp></span><span data-ic=lamp></span><span data-ic=lamp></span></span>
 </div>
 <div id="qplay">
 <div id="qglyph" class="notranslate" translate="no">?</div>
@@ -382,12 +383,12 @@ section.blk{padding:2.6rem 0 1rem}
 <!-- ============ CTA ============ -->
 <section class="blk reveal">
 <div class="ctaband">
-<span style="font-size:1.3rem">🏮</span>
+<span style="font-size:1.3rem"><span data-ic=lamp></span></span>
 <span style="flex:1;min-width:14rem"><b>Little learners?</b> The Letter Garden in the Kids' Codex teaches the same 28 letters with animals, stars and stickers.</span>
 <a class="gold" href="kids/letters.html">Open the Letter Garden →</a>
 </div>
 <div class="ctaband mt-3" style="background:linear-gradient(90deg,rgba(51,80,124,.1),rgba(51,80,124,.03));border-color:rgba(51,80,124,.3)">
-<span style="font-size:1.3rem">📖</span>
+<span style="font-size:1.3rem"><span data-ic=book></span></span>
 <span style="flex:1;min-width:14rem"><b>Ready for more?</b> Open the Mushaf of Light and follow the letters you now know across the whole Qur'an, with recitation on every ayah.</span>
 <a class="gold" href="quran.html" style="background:linear-gradient(135deg,#33507C,#5b7cad);color:#fff">Open the Mushaf →</a>
 </div>
@@ -502,7 +503,7 @@ function selectLetter(i,cell){
     '<div class="lens-glyph notranslate" translate="no">'+o.g+'</div>'+
     '<div><div class="lens-name"><b>'+o.n+'</b><span class="tr">· '+o.t+' · '+(o.sun?'<span class="badge-sun">sun letter</span>':'<span class="badge-moon">moon letter</span>')+"</span></div>"+
     '<p class="lens-sound">'+o.s+"</p>"+
-    (o.j?"":'<span class="nojoin">✋ never joins to the letter after it</span>')+
+    (o.j?"":'<span class="nojoin"><span data-ic=hand></span> never joins to the letter after it</span>')+
   "</div></div>"+
   '<div class="forms">'+
     '<div class="fcell"><div class="fg notranslate" translate="no">'+f.alone+'</div><div class="fl">alone</div></div>'+
@@ -513,7 +514,7 @@ function selectLetter(i,cell){
   '<div class="lens-word">'+
     '<span class="war notranslate" translate="no">'+o.w+'</span>'+
     '<span><div class="wtr">'+o.wt+'</div><div class="wm">'+o.wm+"</div></span>"+
-    '<button class="hearbtn" data-ref="'+o.ref+'">▶ Hear it</button>'+
+    '<button class="hearbtn" data-ref="'+o.ref+'"><span data-ic=play></span> Hear it</button>'+
   "</div>"+
   '<p class="lens-note">'+(o.named
     ?("✦ "+o.n+" is one of the mysterious opening letters of the Qur'an: in Surah "+o.ref.split(":")[0]+", the reciter pronounces the letter by its very name.")
@@ -627,8 +628,8 @@ function qStart(){
 }
 function qPaint(){
   $("qfill").style.width=(qRound/ROUNDS*100)+"%";
-  $("qhearts").textContent="🏮".repeat(qHearts)+"🕯".repeat(3-qHearts);
-  $("qstreak").textContent=qStreak>=2?"🔥 "+qStreak+" streak":"";
+  $("qhearts").textContent="<span data-ic=lamp></span>".repeat(qHearts)+"<span data-ic=lamp></span>".repeat(3-qHearts);
+  $("qstreak").textContent=qStreak>=2?"<span data-ic=star></span> "+qStreak+" streak":"";
 }
 function qNext(){
   if(qRound>=ROUNDS||qHearts<=0){qFinish();return}
