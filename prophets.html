@@ -353,6 +353,19 @@ chain.addEventListener("click",function(e){
   openArt(i);
 });
 
+/* the reveal animation: the observer that was lost in the rebuild.
+   Without it the whole section stays at opacity 0. Never again: if the
+   observer is unavailable for any reason, everything becomes visible. */
+try{
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}})},{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
+}catch(e){document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in")});}
+/* absolute safety net: whatever happens, nothing stays invisible */
+setTimeout(function(){document.querySelectorAll(".reveal:not(.in)").forEach(function(el){el.classList.add("in")})},1600);
+
+/* graceful note if the data file ever fails to arrive */
+if(!P.length){chain.innerHTML='<p style="text-align:center;font-size:.85rem;color:rgba(44,36,22,.6);padding:2rem 1rem">The chain is being lit. Pull to refresh, or walk the stories on <a href="index.html#timeline" style="color:#8a6d13;font-weight:700">the Path</a>.</p>';}
+
 /* deep link: prophets.html#musa opens the article */
 var want=(location.hash||"").replace("#","");
 if(want){for(var k=0;k<P.length;k++)if(P[k].id===want){setTimeout(function(idx){return function(){openArt(idx)}}(k),350);break}}

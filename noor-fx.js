@@ -416,3 +416,22 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+/* ================= reveal safety net =================
+   Scroll-reveal sections start invisible and wait for an observer.
+   If any page's observer is missing or broken (the blank-prophets bug),
+   this net force-lights anything near the viewport that stayed dark.
+   The animation still plays normally; this only catches strays. */
+(function () {
+  "use strict";
+  function unveil() {
+    document.querySelectorAll(".reveal").forEach(function (el) {
+      if (el.classList.contains("in") && el.classList.contains("visible")) return;
+      var r = el.getBoundingClientRect();
+      /* anything the reader has reached or passed must be lit */
+      if (r.top < innerHeight + 120) { el.classList.add("in"); el.classList.add("visible"); }
+    });
+  }
+  setInterval(unveil, 1700);
+  window.addEventListener("scroll", function () { setTimeout(unveil, 900); }, { passive: true });
+})();
