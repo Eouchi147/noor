@@ -37,12 +37,13 @@ export default async function handler(req, res) {
       "line_items[0][quantity]": "1",
       "line_items[0][price_data][currency]": cur,
       "line_items[0][price_data][unit_amount]": String(amount),
-      "line_items[0][price_data][product_data][name]": monthly ? "Monthly light for the Codex (sadaqa jariyah)" : "A light for the Codex (sadaqa)",
+      "line_items[0][price_data][product_data][name]": monthly ? "A monthly gift of light (sadaqa jariyah)" : "A gift of light for the Codex (sadaqa)",
       "line_items[0][price_data][product_data][description]": "Keeps NOOR Codex of Light free, ad-free and tracker-free for every reader.",
-      /* optional dedication, shown to the owner in Stripe */
-      "custom_fields[0][key]": "dedication",
+      /* optional du'a, shown anonymously so the community prays with the giver.
+         Stripe caps custom-field labels at 50 characters; keep it under. */
+      "custom_fields[0][key]": "dua",
       "custom_fields[0][label][type]": "custom",
-      "custom_fields[0][label][custom]": "Dedication (optional) · may be shown on the site, anonymously",
+      "custom_fields[0][label][custom]": "Your du'a · shown anonymously for the community",
       "custom_fields[0][type]": "text",
       "custom_fields[0][optional]": "true",
       "custom_fields[0][text][maximum_length]": "80",

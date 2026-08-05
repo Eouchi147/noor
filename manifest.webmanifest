@@ -1,0 +1,24 @@
+{
+  "name": "NOOR · Codex of Light",
+  "short_name": "NOOR",
+  "description": "A free illuminated library of Islam: the Qur'an with recitation, the 25 prophets, learn Arabic, the Five Pillars, and a codex for kids. No ads, no trackers, free forever.",
+  "start_url": "/?app=1",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#04060F",
+  "theme_color": "#04060F",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "books", "lifestyle"],
+  "icons": [
+    { "src": "/assets/brand/mark-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/mark-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/mark-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "The Mushaf of Light", "url": "/quran", "icons": [{ "src": "/assets/brand/mark-192.png", "sizes": "192x192" }] },
+    { "name": "Learn Arabic", "url": "/arabic", "icons": [{ "src": "/assets/brand/mark-192.png", "sizes": "192x192" }] },
+    { "name": "The Kids' Codex", "url": "/kids", "icons": [{ "src": "/assets/brand/mark-192.png", "sizes": "192x192" }] }
+  ]
+}

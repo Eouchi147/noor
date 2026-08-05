@@ -17,6 +17,11 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>NOOR · نُور | Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -333,6 +338,19 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </style>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <link rel="canonical" href="https://noorcodex.com/"/>
+<link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+<link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+<link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+<link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+<link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+<link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+<link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+<link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+<link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+<link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+<link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+<link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": []}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -367,30 +385,46 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
 <nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
-<a href="#timeline" class="text-ink font-semibold transition-colors" data-i18n="nav.path">Path</a>
-<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="quran.html" class="hover:text-ink transition-colors">Qur'an</a>
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
-<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
-<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
-<div class="dd-menu" role="menu" aria-label="Explore">
-<p class="dd-h">Journey</p>
-<a role="menuitem" href="#books" data-i18n="nav.books">Books</a>
-<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
-<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
-<a role="menuitem" href="#mizan" data-i18n="nav.mizan">Two Lives</a>
-<p class="dd-h">Live it</p>
-<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
-<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
-<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a href="arabic.html" class="hover:text-ink transition-colors">Arabic</a>
+<a href="pillars.html" class="hover:text-ink transition-colors">Pillars</a>
+<a href="kids.html" class="hover:text-ink transition-colors">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h">The Word</p>
+<a role="menuitem" href="quran.html">The Mushaf of Light</a>
+<a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
+<a role="menuitem" href="words.html">The Words</a>
+</div>
+<div class="mg">
+<p class="dd-h">The Story</p>
+<a role="menuitem" href="index.html#timeline">The Path of Creation</a>
+<a role="menuitem" href="prophets.html">The 25 Prophets</a>
+<a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="places.html">Places</a>
+<a role="menuitem" href="index.html#books">The Books</a>
+<a role="menuitem" href="index.html#mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h">Live It</p>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="pillars.html">The Five Pillars</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
-<p class="dd-h">The Codex</p>
-<a role="menuitem" href="#about" data-i18n="nav.about">About</a>
-<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+</div>
+<div class="mg">
+<p class="dd-h">The House</p>
+<a role="menuitem" href="kids.html">The Kids' Codex</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="index.html#about">About the Codex</a>
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
 </div>
-</div>
-<button id="translate-btn" type="button" aria-label="Translate this page" title="Translate the Codex into your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
+</div></div></div>
+<a href="donate.html" class="give-pill">✦ Give</a>
+<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
 </nav>
 <button id="search-toggle" class="p-2 rounded-lg hover:bg-ink/5 transition-colors" aria-label="Search">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -398,17 +432,19 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
-<a href="#timeline" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active" data-i18n="nav.path">Path</a>
-<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
-<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
-<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
-<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
-<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="pillars.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Pillars</a>
+<a href="arabic.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Arabic</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Kids</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Begin</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Health</a>
 <a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
 <a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
-<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
-<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
 <a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
 </div>
 </div>
@@ -418,6 +454,26 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div id="search-results" class="hidden absolute left-4 right-4 top-full mt-1 bg-parchment border border-ink/8 rounded-xl max-h-72 overflow-y-auto z-50 p-1"></div>
 </div>
 </div>
+<style id="nav25">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(44rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1100px){.dd-mega{width:min(30rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
 </header>
 
 <!-- ============ HERO v2 ============ -->
@@ -517,8 +573,8 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div id="dedic-strip" hidden style="background:#FFFDF0;border-bottom:1px solid rgba(201,162,39,.2)">
 <div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.5rem;font-size:.7rem;color:rgba(44,36,22,.6);font-family:Inter,system-ui,sans-serif">
 <span aria-hidden="true" style="color:#C9A227;flex:none">✦</span>
-<span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><i id="dedic-strip-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.38)">· a light lit by a giver</span></span>
-<a href="donate.html" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;font-size:.68rem">Add yours →</a>
+<span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><i id="dedic-strip-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.38)">· a giver’s du’a · say amin</span></span>
+<a href="donate.html" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;font-size:.68rem">Leave yours →</a>
 </div>
 </div>
 <script>
@@ -533,6 +589,17 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 }).catch(function(){});
 })();
 </script>
+
+<!-- Friday Light · appears only on Jumu'ah -->
+<div id="friday-light" hidden style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.3)">
+<div style="max-width:48rem;margin:0 auto;padding:.85rem 1rem;display:flex;gap:.7rem;align-items:flex-start;font-family:Inter,system-ui,sans-serif">
+<span aria-hidden="true" style="color:#F4D46A;font-size:1.1rem;flex:none">🕌</span>
+<div style="min-width:0">
+<p id="fl-text" style="font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.85);margin:0"></p>
+<a href="quran.html?surah=18" style="display:inline-block;margin-top:.35rem;font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none">Open Surah Al-Kahf →</a>
+</div>
+</div>
+</div>
 
 <!-- ============ TODAY'S LIGHT · daily illumination ============ -->
 <section id="daily-light" style="background:linear-gradient(180deg,#FFFDF4,#FFFEF7);border-bottom:1px solid rgba(201,162,39,.18)">
@@ -579,7 +646,7 @@ function show(n,dir){
   busy=true; off=n;
   var b=g("dl-body");
   b.style.opacity="0"; b.style.transform="translateX("+(dir<0?"14px":"-14px")+")";
-  var url=n===0?"/api/daily-light":"/api/daily-light?date="+dstr(n);
+  var url=n===0?"/api/illuminations?kind=light":"/api/illuminations?kind=light&date="+dstr(n);
   var done=function(d){
     setTimeout(function(){
       paint(d,n);
@@ -603,7 +670,42 @@ g("dl-card").addEventListener("touchend",function(e){
   if(dx<0)show(off+1,-1); else show(off-1,1);
 },{passive:true});
 paint(null,0);
-fetch("/api/daily-light").then(function(r){return r.ok?r.json():null}).then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
+fetch("/api/illuminations?kind=light").then(function(r){return r.ok?r.json():null}).then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
+})();
+</script>
+</section>
+
+<!-- The Hidden Thread · one true connection a day -->
+<section id="thread" style="background:#FFFEF7;border-bottom:1px solid rgba(201,162,39,.15)">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 pb-8">
+<div style="background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);border-radius:20px;padding:1.05rem 1.2rem;color:#FFFEF7">
+<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+<span aria-hidden="true" style="color:#F4D46A">✦</span>
+<span style="font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800">The Hidden Thread</span>
+</div>
+<p id="th-text" style="font-size:.84rem;line-height:1.75;color:rgba(255,254,247,.85);margin:0">Yusuf was thrown into a well by his brothers; Yunus was swallowed by a whale after leaving his. Two darknesses, two prisons no one could open, and one exit: honest words spoken to Allah from the bottom.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem">
+<a id="th-a" href="/prophets#yusuf" style="font-size:.68rem;font-weight:700;color:#F4D46A;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.3rem .75rem;text-decoration:none">Yusuf · the well →</a>
+<a id="th-b" href="/prophets#yunus" style="font-size:.68rem;font-weight:700;color:#F4D46A;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.3rem .75rem;text-decoration:none">Yunus · the whale →</a>
+</div>
+</div>
+</div>
+<script>
+(function(){
+fetch("/api/illuminations?kind=thread").then(function(r){return r.ok?r.json():null}).then(function(t){
+  if(!t||!t.text)return;
+  document.getElementById("th-text").textContent=t.text;
+  var a=document.getElementById("th-a"),b=document.getElementById("th-b");
+  if(t.a&&t.a.href){a.href=t.a.href;a.textContent=t.a.label+" →"}
+  if(t.b&&t.b.href){b.href=t.b.href;b.textContent=t.b.label+" →"}
+}).catch(function(){});
+if((new Date()).getDay()===5){
+  fetch("/api/illuminations?kind=friday").then(function(r){return r.ok?r.json():null}).then(function(f){
+    if(!f||!f.text)return;
+    document.getElementById("fl-text").textContent=f.text;
+    document.getElementById("friday-light").hidden=false;
+  }).catch(function(){});
+}
 })();
 </script>
 </section>
@@ -835,12 +937,16 @@ fetch("/api/daily-light").then(function(r){return r.ok?r.json():null}).then(func
 <p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
 <div class="mt-8 pt-6 border-t border-parchment/10 max-w-md mx-auto">
 <p class="font-amiri text-gold text-lg mb-1.5">صَدَقَةٌ جَارِيَة</p>
-<p class="text-xs text-parchment/55 leading-relaxed" data-i18n="about.dedication">This Codex is offered as sadaqah jariyah, an ongoing gift, in honor of my beautiful wife: a daughter of Afghan lands, heir of the lantern cities of Balkh and Herat, where knowledge was kept alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her.</p>
+<p class="text-xs text-parchment/55 leading-relaxed" data-i18n="about.dedication">This Codex is offered as sadaqah jariyah, an ongoing gift, kept burning for one heart in particular: an heir of the lantern cities of Balkh and Herat, where knowledge stayed alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her first.</p>
 <p class="mt-2 text-[10px] text-parchment/35">"When the child of Adam dies, his works end except three, and the first is a charity that keeps flowing." · Muslim 1631</p>
 </div>
 <div id="sponsor-slot"></div>
 <p class="mt-3 text-[10px] tracking-[.14em] uppercase"><a href="sponsor.html" class="text-gold/55 hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 <p class="mt-6 text-[11px] tracking-[.18em] uppercase text-gold/70" data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
+<nav aria-label="Languages" class="mt-4 text-[11px] leading-loose text-parchment/45">
+<a href="/ar" class="hover:text-gold" lang="ar">العربية</a> · <a href="/fr" class="hover:text-gold" lang="fr">Français</a> · <a href="/es" class="hover:text-gold" lang="es">Español</a> · <a href="/de" class="hover:text-gold" lang="de">Deutsch</a> · <a href="/ru" class="hover:text-gold" lang="ru">Русский</a> · <a href="/tr" class="hover:text-gold" lang="tr">Türkçe</a> · <a href="/ur" class="hover:text-gold" lang="ur">اردو</a> · <a href="/hi" class="hover:text-gold" lang="hi">हिन्दी</a> · <a href="/bn" class="hover:text-gold" lang="bn">বাংলা</a> · <a href="/id" class="hover:text-gold" lang="id">Bahasa Indonesia</a>
+<p class="mt-3 text-[10px] text-parchment/30"><a href="license.html" class="hover:text-gold/60">For masjids, schools & apps · embed the Codex</a></p>
+</nav>
 </div>
 </section>
 

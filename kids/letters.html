@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="The Letter Garden · NOOR Little Codex. Meet all 28 Arabic letters with animals, stars and treasures, collect them in your garden, then play Find the Letter and win stars."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="The Letter Garden · NOOR Little Codex"/>
+<meta property="og:description" content="Meet all 28 Arabic letters with animals, stars and treasures, collect them in your garden, then play Find the Letter and win stars."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#0d1633"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<title>The Letter Garden · NOOR Little Codex</title>
+<link rel="canonical" href="https://noorcodex.com/kids/letters"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="/noor-fx.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
+<style>
+:root{--night:#0d1633;--night2:#1e3a8a;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416}
+body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+.font-amiri{font-family:Amiri,serif}
+header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
+.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
+.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
+.backlink:hover{color:var(--gold)}
+main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
+.hero{text-align:center;padding:1.4rem 0 1rem}
+.hero .moon{font-size:2.6rem;display:block;margin-bottom:.4rem;filter:drop-shadow(0 0 14px rgba(233,200,106,.6))}
+.hero h1{margin:.2rem 0;font-size:1.65rem;font-weight:800;color:var(--gold)}
+.hero p{color:rgba(255,254,247,.75);font-size:.88rem;line-height:1.6;max-width:26rem;margin:.5rem auto 0}
+.tabs{display:flex;justify-content:center;gap:.5rem;margin:1.1rem 0 1.2rem}
+.tabs button{background:rgba(255,254,247,.07);border:1.5px solid rgba(233,200,106,.3);color:rgba(255,254,247,.8);border-radius:999px;padding:.5rem 1.15rem;font-size:.8rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s}
+.tabs button.sel{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-color:transparent;transform:scale(1.04)}
+.count{ text-align:center;font-size:.78rem;color:rgba(255,254,247,.6);margin-bottom:.8rem}
+.count b{color:var(--gold)}
+/* garden grid */
+#garden{display:grid;grid-template-columns:repeat(auto-fill,minmax(4.2rem,1fr));gap:.55rem;direction:rtl}
+.bud{position:relative;background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.28);border-radius:18px;text-align:center;padding:.55rem .1rem .45rem;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s,background .2s}
+.bud:hover{transform:translateY(-4px) scale(1.04)}
+.bud .g{font-family:Amiri,serif;font-size:2.1rem;line-height:1.25;color:#FFF7DF}
+.bud .e{font-size:.95rem;display:block;margin-top:.05rem;filter:grayscale(1);opacity:.4;transition:filter .3s,opacity .3s}
+.bud.got{border-color:var(--gold);background:rgba(233,200,106,.13)}
+.bud.got .e{filter:none;opacity:1}
+.bud.got::after{content:"⭐";position:absolute;top:-.45rem;left:-.3rem;font-size:.8rem;filter:drop-shadow(0 0 6px rgba(233,200,106,.8))}
+/* big card */
+#bigcard{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,.8);backdrop-filter:blur(6px);padding:1rem}
+#bigcard.open{display:flex}
+.bc{background:linear-gradient(170deg,#FFFEF7,#FFF3D1);color:var(--ink);border-radius:26px;border:3px solid var(--goldd);max-width:22rem;width:100%;text-align:center;padding:1.6rem 1.2rem 1.4rem;position:relative;animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.bc{animation:none}}
+.bc .big-e{font-size:3.4rem;display:block}
+.bc .big-g{font-family:Amiri,serif;font-size:4.6rem;line-height:1.2;color:#7a5c10;text-shadow:0 2px 14px rgba(201,162,39,.35)}
+.bc .nm{font-size:1.25rem;font-weight:800;margin-top:.15rem}
+.bc .say{font-size:.85rem;color:rgba(44,36,22,.6);margin-top:.15rem}
+.bc .word{margin-top:.75rem;background:#fff;border:2px dashed rgba(201,162,39,.5);border-radius:16px;padding:.6rem .7rem}
+.bc .war{font-family:Amiri,serif;font-size:2rem;color:#241D12;direction:rtl}
+.bc .wsay{font-size:.82rem;color:rgba(44,36,22,.7);font-weight:700;margin-top:.15rem}
+.bc .close{position:absolute;top:.6rem;right:.7rem;background:rgba(44,36,22,.08);border:0;width:2.1rem;height:2.1rem;border-radius:999px;font-size:1rem;cursor:pointer;color:rgba(44,36,22,.6)}
+.bc .yay{margin-top:.9rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.6rem 1.5rem;font-size:.88rem;cursor:pointer;font-family:inherit}
+/* game */
+#game{display:none}
+.gtop{display:flex;align-items:center;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.gstars{font-size:1rem;letter-spacing:.12em}
+#gprompt{text-align:center;background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.3);border-radius:20px;padding:1rem;margin-bottom:1rem}
+#gprompt .find{font-size:.8rem;color:rgba(255,254,247,.65);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+#gprompt .target{font-size:1.5rem;font-weight:800;color:var(--gold);margin-top:.2rem}
+#gprompt .te{font-size:1.6rem;margin-left:.3rem}
+#gbubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;max-width:22rem;margin:0 auto}
+.gb{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(233,200,106,.25),transparent 58%),rgba(30,58,138,.55);border:2.5px solid rgba(233,200,106,.4);display:grid;place-items:center;font-family:Amiri,serif;font-size:2.5rem;color:#FFF7DF;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s;animation:bob 4s ease-in-out infinite}
+.gb:nth-child(2n){animation-delay:-1.3s}.gb:nth-child(3n){animation-delay:-2.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@media (prefers-reduced-motion:reduce){.gb{animation:none}}
+.gb:hover{transform:scale(1.07)}
+.gb.right{background:radial-gradient(circle at 32% 26%,rgba(127,216,138,.4),transparent 58%),rgba(30,90,50,.65);border-color:#7fd88a;animation:none;transform:scale(1.12)}
+.gb.wrong{animation:wob .45s;border-color:#d87f7f}
+@keyframes wob{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#gend{display:none;text-align:center;background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.35);border-radius:24px;padding:1.6rem 1rem}
+#gend .cup{font-size:3.2rem;display:block;filter:drop-shadow(0 0 18px rgba(233,200,106,.7))}
+#gend h3{color:var(--gold);font-size:1.3rem;margin:.4rem 0 .2rem}
+#gend p{font-size:.84rem;color:rgba(255,254,247,.75);line-height:1.6}
+#gend button{margin-top:.8rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.6rem 1.5rem;font-size:.88rem;cursor:pointer;font-family:inherit}
+.rain{position:fixed;top:-2rem;z-index:70;font-size:1.5rem;animation:fall 2.2s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(240deg)}}
+.grownup{margin-top:2rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.45);line-height:1.7}
+.grownup a{color:var(--gold);text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+<div class="hwrap">
+<a class="wordmark" href="/index.html">نُور · LITTLE CODEX</a>
+<a class="backlink" href="/kids.html">← All games</a>
+</div>
+</header>
+<main>
+<div class="hero">
+<span class="moon" aria-hidden="true">🌷</span>
+<h1>The Letter Garden</h1>
+<p>Twenty-eight Arabic letters live in this garden. Tap a letter to meet its animal or treasure, collect them all, then play Find the Letter!</p>
+</div>
+
+<div class="tabs">
+<button id="tab-meet" class="sel">🌱 Meet the letters</button>
+<button id="tab-play">🎈 Play!</button>
+</div>
+
+<div id="meet">
+<p class="count">Letters in your garden: <b id="gcount">0</b> / 28</p>
+<div id="garden"></div>
+</div>
+
+<div id="game">
+<div class="gtop"><span class="gstars" id="gstars"></span></div>
+<div id="gprompt"><span class="find">Find the letter</span><div class="target"><span id="gt-name">…</span><span class="te" id="gt-e"></span></div></div>
+<div id="gbubbles"></div>
+<div id="gend">
+<span class="cup">🏆</span>
+<h3 id="gend-t">Star gardener!</h3>
+<p id="gend-p"></p>
+<button id="gagain">Play again</button>
+</div>
+</div>
+
+<p class="grownup">For grown-ups and big kids: the full <a href="/arabic.html">Letters of Light</a> room teaches the shapes, the vowel marks and your first ayah, with real recitation. 🏮</p>
+</main>
+
+<div id="bigcard" role="dialog" aria-modal="true">
+<div class="bc">
+<button class="close" id="bc-close" aria-label="Close">✕</button>
+<span class="big-e" id="bc-e">🦁</span>
+<div class="big-g notranslate" translate="no" id="bc-g">ا</div>
+<div class="nm" id="bc-n">Alif</div>
+<div class="say" id="bc-s">say: “a”</div>
+<div class="word"><div class="war notranslate" translate="no" id="bc-war">أَسَد</div><div class="wsay" id="bc-wsay">asad · lion</div></div>
+<button class="yay" id="bc-yay">⭐ Got it!</button>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+/* letter · name · sound · word ar · word say · emoji */
+var L=[
+["ا","Alif","aa","أَسَد","asad · lion","🦁"],
+["ب","Bā’","b","بَاب","bāb · door","🚪"],
+["ت","Tā’","t","تَمْر","tamr · sweet dates","🌴"],
+["ث","Thā’","th (three)","ثَعْلَب","thaʿlab · fox","🦊"],
+["ج","Jīm","j","جَمَل","jamal · camel","🐪"],
+["ح","Ḥā’","deep soft h","حُوت","ḥūt · whale","🐋"],
+["خ","Khā’","kh","خَرُوف","kharūf · sheep","🐑"],
+["د","Dāl","d","دُبّ","dubb · bear","🐻"],
+["ذ","Dhāl","th (this)","ذَهَب","dhahab · gold","✨"],
+["ر","Rā’","rolled r","رَعْد","raʿd · thunder","⚡"],
+["ز","Zāy","z","زَيْتُون","zaytūn · olives","🫒"],
+["س","Sīn","s","سَمَك","samak · fish","🐟"],
+["ش","Shīn","sh","شَمْس","shams · sun","☀️"],
+["ص","Ṣād","strong s","صَقْر","ṣaqr · falcon","🦅"],
+["ض","Ḍād","strong d","ضِفْدَع","ḍifdaʿ · frog","🐸"],
+["ط","Ṭā’","strong t","طَائِر","ṭā’ir · bird","🐦"],
+["ظ","Ẓā’","strong th","ظَبْي","ẓaby · gazelle","🦌"],
+["ع","ʿAyn","from the throat","عَسَل","ʿasal · honey","🍯"],
+["غ","Ghayn","gh (gargle!)","غَيْم","ghaym · clouds","☁️"],
+["ف","Fā’","f","فِيل","fīl · elephant","🐘"],
+["ق","Qāf","deep k","قَمَر","qamar · moon","🌕"],
+["ك","Kāf","k","كِتَاب","kitāb · book","📖"],
+["ل","Lām","l","لَيْل","layl · night","🌃"],
+["م","Mīm","m","مَسْجِد","masjid · mosque","🕌"],
+["ن","Nūn","n","نَجْم","najm · star","⭐"],
+["ه","Hā’","h","هِلَال","hilāl · new moon","🌙"],
+["و","Wāw","w","وَرْدَة","wardah · flower","🌹"],
+["ي","Yā’","y","يَد","yad · hand","✋"]
+];
+var got={};
+try{got=JSON.parse(localStorage.getItem("noor_kids_letters")||"{}")||{}}catch(e){}
+function save(){try{localStorage.setItem("noor_kids_letters",JSON.stringify(got))}catch(e){}}
+function paintCount(){$("gcount").textContent=Object.keys(got).length}
+
+/* garden */
+var garden=$("garden");
+L.forEach(function(o,i){
+  var d=document.createElement("div");
+  d.className="bud"+(got[o[0]]?" got":"");
+  d.setAttribute("role","button");d.setAttribute("tabindex","0");
+  d.innerHTML='<div class="g notranslate" translate="no">'+o[0]+'</div><span class="e">'+o[5]+"</span>";
+  function open(){
+    $("bc-e").textContent=o[5];$("bc-g").textContent=o[0];
+    $("bc-n").textContent=o[1];$("bc-s").textContent="say: “"+o[2]+"”";
+    $("bc-war").textContent=o[3];$("bc-wsay").textContent=o[4];
+    $("bigcard").classList.add("open");
+    $("bc-yay").onclick=function(){
+      if(!got[o[0]]){got[o[0]]=1;save();d.classList.add("got");paintCount();
+        if(Object.keys(got).length===28)rain(["🌟","🌷","⭐","🏮"],26);
+        else rain([o[5],"⭐"],7);
+      }
+      $("bigcard").classList.remove("open");
+    };
+  }
+  d.addEventListener("click",open);
+  d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});
+  garden.appendChild(d);
+});
+$("bc-close").addEventListener("click",function(){$("bigcard").classList.remove("open")});
+$("bigcard").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")});
+paintCount();
+
+function rain(set,n){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  for(var i=0;i<n;i++){
+    var s=document.createElement("span");
+    s.className="rain";s.textContent=set[i%set.length];
+    s.style.left=(Math.random()*94)+"vw";
+    s.style.animationDelay=(Math.random()*.9)+"s";
+    document.body.appendChild(s);
+    setTimeout(function(x){return function(){x.remove()}}(s),3300);
+  }
+}
+
+/* tabs */
+$("tab-meet").addEventListener("click",function(){
+  this.classList.add("sel");$("tab-play").classList.remove("sel");
+  $("meet").style.display="block";$("game").style.display="none";
+});
+$("tab-play").addEventListener("click",function(){
+  this.classList.add("sel");$("tab-meet").classList.remove("sel");
+  $("meet").style.display="none";$("game").style.display="block";
+  gStart();
+});
+
+/* find-the-letter game */
+var ROUNDS=8,gRound=0,gStarsN=0,gCur=null,gLock=false,gFirstTry=true;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function gPaint(){
+  var s="";for(var i=0;i<ROUNDS;i++)s+=i<gStarsN?"⭐":"☆";
+  $("gstars").textContent=s;
+}
+function gStart(){
+  gRound=0;gStarsN=0;
+  $("gend").style.display="none";$("gprompt").style.display="block";$("gbubbles").style.display="grid";
+  gNext();
+}
+function gNext(){
+  if(gRound>=ROUNDS){gFinish();return}
+  gLock=false;gFirstTry=true;
+  gCur=L[Math.floor(Math.random()*L.length)];
+  $("gt-name").textContent=gCur[1]+" · "+gCur[0];
+  $("gt-e").textContent=gCur[5];
+  var opts=[gCur];
+  while(opts.length<6){
+    var c=L[Math.floor(Math.random()*L.length)];
+    if(opts.indexOf(c)===-1)opts.push(c);
+  }
+  shuffle(opts);
+  var box=$("gbubbles");box.innerHTML="";
+  opts.forEach(function(o){
+    var b=document.createElement("button");
+    b.className="gb";b.setAttribute("translate","no");b.textContent=o[0];
+    b.addEventListener("click",function(){
+      if(gLock)return;
+      if(o===gCur){
+        gLock=true;b.classList.add("right");
+        if(gFirstTry){gStarsN++;rain([gCur[5],"⭐"],5)}
+        gRound++;gPaint();
+        setTimeout(gNext,850);
+      }else{
+        gFirstTry=false;b.classList.add("wrong");
+        setTimeout(function(){b.classList.remove("wrong")},500);
+      }
+    });
+    box.appendChild(b);
+  });
+  gPaint();
+}
+function gFinish(){
+  $("gprompt").style.display="none";$("gbubbles").style.display="none";
+  $("gend").style.display="block";
+  var t,p;
+  if(gStarsN===ROUNDS){t="Perfect! Star gardener! 🌟";p="Every letter found on the first try! The whole garden is glowing because of you.";rain(["🌟","🏆","⭐","🌷"],30);}
+  else if(gStarsN>=5){t="Wonderful! "+gStarsN+" stars!";p="The garden is so bright! Play again and see if you can catch them all first try.";}
+  else{t="You found them all!";p="You won "+gStarsN+" first-try stars. Visit the letters in the garden, then come back for more!";}
+  $("gend-t").textContent=t;$("gend-p").textContent=p;
+}
+$("gagain").addEventListener("click",gStart);
+})();
+</script>
+</body>
+</html>

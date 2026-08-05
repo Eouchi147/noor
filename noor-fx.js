@@ -40,7 +40,7 @@ const UI_EN = {
   "mizan.cap.title":"Two Capitals, Spent Blind","mizan.cap.health":"Health","mizan.cap.healthNote":"works only while it lasts","mizan.cap.time":"Free time","mizan.cap.timeNote":"leaves without notice","mizan.cap.note":"The only two currencies any deed is ever bought with. Both are draining while you read this sentence, and the next life pays out exactly what they purchased.",
   "mizan.leaf.title":"Nothing Here Hurts for Free","mizan.leaf.note":"Here, pain subtracts from what stands against you: every fever, worry, and thorn quietly lightens the load. That exchange runs only on this side of the grave.",
   "mizan.shade.title":"Shade, on the Day There Is None","mizan.shade.s1":"A just leader","mizan.shade.s2":"A youth raised in worship","mizan.shade.s3":"A heart hung on the mosques","mizan.shade.s4":"Two who love each other for Allah alone","mizan.shade.s5":"One who is called by beauty and answers: I fear Allah","mizan.shade.s6":"A hand that gives so secretly the left does not know","mizan.shade.s7":"Eyes that weep alone, remembering Allah","mizan.shade.note":"Fifty thousand years of sun, and shade is bought here, now, mostly for free: none of the seven requires wealth, and every one of them is available today.",
-  "about.dedication":"This Codex is offered as sadaqah jariyah, an ongoing gift, in honor of my beautiful wife: a daughter of Afghan lands, heir of the lantern cities of Balkh and Herat, where knowledge was kept alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her.",
+  "about.dedication":"This Codex is offered as sadaqah jariyah, an ongoing gift, kept burning for one heart in particular: an heir of the lantern cities of Balkh and Herat, where knowledge stayed alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her first.",
   "guide.ask":"Unclear? Ask","guide.title":"A quiet guide","guide.hint":"Short answers from the sources, for this chapter only.","guide.placeholder":"Ask in your own words...","guide.send":"Ask","guide.fallback":"That question deserves better than a quick answer. The chapter above carries what the sources state; for anything beyond it, a trusted scholar or your local imam is the right door.","guide.close":"Close guide",
   "mizan.cta.jannah":"See the destination · Jannah","mizan.cta.words":"Carry words that last","mizan.cta.path":"Walk the Path again",
   "search.placeholder":"Search the Codex…","search.none":"No matches in the Codex",
@@ -351,11 +351,12 @@ window.bindEntityLinks = bindEntityLinks;
 (function(){function c(){var a=document.querySelector(".mnav .active");if(a&&a.scrollIntoView)try{a.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c();})();
 
-/* ================= v17 · the translation bridge =================
-   Real translations arrive per TRANSLATION-PLAN.md. Until then the
-   Codex leans on the reader's own browser translation, and shields
-   what must never be machine-translated: the Qur'an's Arabic, the
-   Bismillah, and the house marks. */
+/* ================= v24 · the language doors =================
+   NOOR speaks ten languages through its own gateway pages. When a
+   reader's language is detected, the Codex offers its own door instead
+   of browser-translate instructions. Sacred text stays shielded:
+   the Qur'an's Arabic, the Bismillah, and the house marks are never
+   machine-translated anywhere. */
 (function () {
   "use strict";
   function protectSacred(root) {
@@ -364,38 +365,80 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       el.classList.add("notranslate");
     });
   }
-  var HINTS = {
-    ar: "يمكن لمتصفحك ترجمة هذه المكتبة إلى العربية: انقر بزر الفأرة الأيمن على الصفحة واختر \"ترجمة\"، أو من قائمة المتصفح. آيات القرآن تبقى بالعربية دائماً.",
-    fr: "Votre navigateur peut traduire le Codex en français : clic droit sur la page puis « Traduire », ou via le menu du navigateur. Les versets restent en arabe.",
-    ur: "آپ کا براؤزر اس کتب خانے کا اردو میں ترجمہ کر سکتا ہے: صفحے پر رائٹ کلک کر کے Translate منتخب کریں، یا براؤزر مینیو سے۔ قرآنی آیات عربی میں ہی رہتی ہیں۔",
-    tr: "Tarayıcınız bu kütüphaneyi Türkçeye çevirebilir: sayfaya sağ tıklayıp \"Çevir\"i seçin veya tarayıcı menüsünü kullanın. Ayetler Arapça kalır.",
-    id: "Browser Anda dapat menerjemahkan pustaka ini ke Bahasa Indonesia: klik kanan halaman lalu pilih \"Terjemahkan\", atau lewat menu browser. Ayat tetap dalam bahasa Arab.",
-    es: "Tu navegador puede traducir el Códice al español: clic derecho en la página y elige \"Traducir\", o desde el menú del navegador. Los versículos permanecen en árabe.",
-    de: "Dein Browser kann den Codex ins Deutsche übersetzen: Rechtsklick auf die Seite und \"Übersetzen\" wählen, oder über das Browsermenü. Die Verse bleiben auf Arabisch.",
-    bn: "আপনার ব্রাউজার এই গ্রন্থাগারটি বাংলায় অনুবাদ করতে পারে: পৃষ্ঠায় রাইট-ক্লিক করে Translate বেছে নিন, অথবা ব্রাউজার মেনু ব্যবহার করুন। আয়াত আরবিতেই থাকে।",
-    generic: "Your browser can translate the Codex into your language: right-click the page and choose Translate, or use your browser's menu. The verses stay in Arabic."
-  };
-  function hintFor() {
+  var LANGS = [
+    ["ar", "العربية", "اقرأ نُور بالعربية", "ادخل"],
+    ["fr", "Français", "Lire NOOR en français", "Entrer"],
+    ["es", "Español", "Lee NOOR en español", "Entrar"],
+    ["de", "Deutsch", "NOOR auf Deutsch lesen", "Eintreten"],
+    ["ru", "Русский", "Читайте NOOR на русском", "Войти"],
+    ["tr", "Türkçe", "NOOR'u Türkçe okuyun", "Girin"],
+    ["ur", "اردو", "نُور اردو میں پڑھیں", "داخل ہوں"],
+    ["hi", "हिन्दी", "NOOR हिन्दी में पढ़ें", "प्रवेश करें"],
+    ["bn", "বাংলা", "বাংলায় NOOR পড়ুন", "প্রবেশ করুন"],
+    ["id", "Bahasa Indonesia", "Baca NOOR dalam Bahasa Indonesia", "Masuk"]
+  ];
+  function detected() {
     var l = ((navigator.language || "en").slice(0, 2) || "en").toLowerCase();
-    if (l === "en") return null;
-    return HINTS[l] || HINTS.generic;
+    for (var i = 0; i < LANGS.length; i++) if (LANGS[i][0] === l) return LANGS[i];
+    return null;
   }
-  function showHint(manual) {
+  function onGateway() {
+    var p = location.pathname.replace(/\/+$/, "");
+    for (var i = 0; i < LANGS.length; i++) if (p === "/" + LANGS[i][0]) return true;
+    return false;
+  }
+  function langRow() {
+    return LANGS.map(function (p) {
+      return '<a href="/' + p[0] + '" style="color:#E9C86A;text-decoration:none;font-weight:600;white-space:nowrap">' + p[1] + "</a>";
+    }).join('<span style="color:rgba(255,254,247,.35)"> · </span>') +
+    '<span style="color:rgba(255,254,247,.35)"> · </span><a href="/" style="color:#E9C86A;text-decoration:none;font-weight:600">English</a>';
+  }
+  function shell() {
     var old = document.getElementById("noor-translate-hint");
     if (old) old.remove();
-    var txt = hintFor() || HINTS.generic;
     var d = document.createElement("div");
     d.id = "noor-translate-hint";
     d.setAttribute("role", "status");
     d.style.cssText = "position:fixed;left:50%;transform:translateX(-50%);bottom:1rem;z-index:90;max-width:min(30rem,calc(100vw - 2rem));background:#0B1230;color:#FFFEF7;border:1px solid rgba(233,200,106,.55);border-radius:14px;box-shadow:0 14px 40px rgba(4,6,15,.55);padding:.85rem 2.5rem .85rem 1rem;font-size:.78rem;line-height:1.65;font-family:Inter,system-ui,sans-serif";
-    d.innerHTML = '<span style="color:#E9C86A;margin-right:.45rem">🌐</span>' + txt +
-      '<button aria-label="Close" style="position:absolute;top:.35rem;right:.45rem;background:none;border:0;color:rgba(255,254,247,.6);font-size:1rem;cursor:pointer;padding:.25rem;line-height:1">✕</button>';
-    d.querySelector("button").addEventListener("click", function () {
+    return d;
+  }
+  function closeBtn(d, remember) {
+    var b = document.createElement("button");
+    b.setAttribute("aria-label", "Close");
+    b.style.cssText = "position:absolute;top:.35rem;right:.45rem;background:none;border:0;color:rgba(255,254,247,.6);font-size:1rem;cursor:pointer;padding:.25rem;line-height:1";
+    b.textContent = "✕";
+    b.addEventListener("click", function () {
       d.remove();
-      try { localStorage.setItem("noor_thint", "1"); } catch (e) {}
+      if (remember) try { localStorage.setItem("noor_door", "1"); } catch (e) {}
     });
+    d.appendChild(b);
+  }
+  /* The door: your language detected, your gateway offered. */
+  function showDoor(lang) {
+    var d = shell();
+    var wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;align-items:center;gap:.7rem;flex-wrap:wrap";
+    wrap.innerHTML = '<span style="color:#E9C86A">🌐</span><span style="font-weight:600">' + lang[2] + "</span>" +
+      '<a href="/' + lang[0] + '" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem;white-space:nowrap">' + lang[3] + " →</a>";
+    d.appendChild(wrap);
+    closeBtn(d, true);
     document.body.appendChild(d);
-    if (!manual) setTimeout(function () { if (d.parentNode) d.remove(); }, 16000);
+    setTimeout(function () { if (d.parentNode) d.remove(); }, 22000);
+  }
+  /* The chooser: the 🌐 button opens every door. */
+  function showChooser() {
+    var d = shell();
+    var det = detected();
+    var head = det ? det[2] : "Choose your language";
+    d.insertAdjacentHTML("beforeend",
+      '<div style="font-weight:700;margin-bottom:.45rem"><span style="color:#E9C86A;margin-right:.45rem">🌐</span>' + head + "</div>" +
+      '<div style="font-size:.74rem;line-height:2">' + langRow() + "</div>");
+    if (det) {
+      d.insertAdjacentHTML("beforeend",
+        '<a href="/' + det[0] + '" style="display:inline-block;margin-top:.55rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem">' + det[3] + " →</a>");
+    }
+    closeBtn(d, false);
+    document.body.appendChild(d);
   }
   function init() {
     protectSacred();
@@ -408,10 +451,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       }).observe(document.body, { childList: true, subtree: true });
     } catch (e) {}
     var b = document.getElementById("translate-btn");
-    if (b) b.addEventListener("click", function () { showHint(true); });
-    var dismissed = false;
-    try { dismissed = localStorage.getItem("noor_thint") === "1"; } catch (e) {}
-    if (!dismissed && hintFor()) setTimeout(function () { showHint(false); }, 2600);
+    if (b) b.addEventListener("click", function () { showChooser(); });
+    var lang = detected();
+    if (!lang || onGateway()) return;
+    var dismissed = false, shown = false;
+    try {
+      dismissed = localStorage.getItem("noor_door") === "1" || localStorage.getItem("noor_thint") === "1";
+      shown = sessionStorage.getItem("noor_door_s") === "1";
+    } catch (e) {}
+    if (!dismissed && !shown) {
+      try { sessionStorage.setItem("noor_door_s", "1"); } catch (e) {}
+      setTimeout(function () { showDoor(lang); }, 2200);
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
@@ -434,4 +485,97 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   setInterval(unveil, 1700);
   window.addEventListener("scroll", function () { setTimeout(unveil, 900); }, { passive: true });
+})();
+
+/* ================= the lamp counter =================
+   One tiny anonymous ping per page view: day, country (added by the
+   host, never the IP), room. First ping of the day marks one person.
+   No cookies, no IDs, no fingerprints, ever. Off on the admin page. */
+(function () {
+  "use strict";
+  if (/(^|\/)admin(\.html)?$/.test(location.pathname)) return;
+  try {
+    var today = new Date().toISOString().slice(0, 10);
+    var first = 0;
+    try { if (localStorage.getItem("noor_seen") !== today) { localStorage.setItem("noor_seen", today); first = 1; } } catch (e) {}
+    var payload = JSON.stringify({ p: location.pathname, n: first });
+    if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([payload], { type: "application/json" }));
+    else fetch("/api/beacon", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
+  } catch (e) {}
+})();
+
+/* ================= v25 · the embed lantern =================
+   Any room of the Codex can live inside another site or app.
+   In an iframe (or with ?embed=1) the room sheds its chrome:
+   no header, no footer, no giving bands, nothing commercial,
+   only the content and a small quiet NOOR mark. Hosts receive
+   the content height by postMessage for auto-sizing. */
+(function () {
+  "use strict";
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var forced = /[?&]embed=1/.test(location.search);
+  if (!inFrame && !forced) return;
+  document.documentElement.setAttribute("data-noor-embed", "1");
+  function init() {
+    var css = document.createElement("style");
+    css.textContent = "header,footer,#sponsor-slot,#noor-translate-hint,.mnav,[data-embed-hide]{display:none!important}body{padding-top:0!important}";
+    document.head.appendChild(css);
+    /* the quiet mark: every embedded room says where the light comes from */
+    var mark = document.createElement("a");
+    mark.href = "https://noorcodex.com/?ref=embed";
+    mark.target = "_blank"; mark.rel = "noopener";
+    mark.textContent = "✦ NOOR";
+    mark.title = "NOOR · Codex of Light · noorcodex.com";
+    mark.style.cssText = "position:fixed;right:.55rem;bottom:.55rem;z-index:95;font:700 10px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;color:#C9A227;background:rgba(20,16,10,.78);border:1px solid rgba(201,162,39,.45);border-radius:999px;padding:.32rem .6rem;text-decoration:none;opacity:.85";
+    document.body.appendChild(mark);
+    /* height reports for host auto-sizing */
+    function report() {
+      try { parent.postMessage({ noorEmbedHeight: document.documentElement.scrollHeight }, "*"); } catch (e) {}
+    }
+    report();
+    try { new ResizeObserver(report).observe(document.documentElement); } catch (e) { setInterval(report, 1200); }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+/* ================= v27 · touch menus & the installable lamp =================
+   (1) The Library panel opens on tap, not only hover: phones and iPads
+   get a real click-toggle with outside-tap and Escape to close.
+   (2) The Codex registers its service worker and becomes installable:
+   add to home screen and the library opens like an app, shell offline. */
+(function () {
+  "use strict";
+  function init() {
+    /* touch-friendly dropdowns */
+    var style = document.createElement("style");
+    style.textContent = ".dd.open .dd-mega,.dd.open .dd-menu{display:block!important}";
+    document.head.appendChild(style);
+    document.querySelectorAll(".dd").forEach(function (dd) {
+      var btn = dd.querySelector(".dd-btn");
+      if (!btn) return;
+      btn.addEventListener("click", function (ev) {
+        ev.preventDefault(); ev.stopPropagation();
+        var was = dd.classList.contains("open");
+        document.querySelectorAll(".dd.open").forEach(function (x) { x.classList.remove("open"); });
+        if (!was) dd.classList.add("open");
+      });
+    });
+    document.addEventListener("click", function (ev) {
+      if (!ev.target.closest || !ev.target.closest(".dd")) {
+        document.querySelectorAll(".dd.open").forEach(function (x) { x.classList.remove("open"); });
+      }
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape") document.querySelectorAll(".dd.open").forEach(function (x) { x.classList.remove("open"); });
+    });
+    /* the installable lamp (skipped inside embeds) */
+    var embedded = document.documentElement.hasAttribute("data-noor-embed");
+    if (!embedded && "serviceWorker" in navigator && location.protocol === "https:") {
+      navigator.serviceWorker.register("/sw.js").catch(function () {});
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();

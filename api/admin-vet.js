@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         "X-Title": "NOOR Codex of Light · vetting"
       },
       body: JSON.stringify({
-        model: process.env.OPENROUTER_MODEL || "openrouter/auto",
+        model: process.env.OPENROUTER_MODEL || "nvidia/nemotron-3-ultra-550b-a55b:free",
         max_tokens: 500,
         temperature: 0.1,
         messages: [{ role: "system", content: RUBRIC }, { role: "user", content: sponsor }]

@@ -17,6 +17,11 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>Al-Latif · The Story of Beauty · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -107,48 +112,86 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
 <nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
-<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
-<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="quran.html" class="hover:text-ink transition-colors">Qur'an</a>
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
-<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
-<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
-<div class="dd-menu" role="menu" aria-label="Explore">
-<p class="dd-h">Journey</p>
-<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
-<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
-<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
-<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
-<p class="dd-h">Live it</p>
-<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
-<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
-<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a href="arabic.html" class="hover:text-ink transition-colors">Arabic</a>
+<a href="pillars.html" class="hover:text-ink transition-colors">Pillars</a>
+<a href="kids.html" class="hover:text-ink transition-colors">Kids</a>
+<div class="dd"><button class="dd-btn text-ink font-bold" aria-haspopup="menu">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h">The Word</p>
+<a role="menuitem" href="quran.html">The Mushaf of Light</a>
+<a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
+<a role="menuitem" href="words.html">The Words</a>
+</div>
+<div class="mg">
+<p class="dd-h">The Story</p>
+<a role="menuitem" href="index.html#timeline">The Path of Creation</a>
+<a role="menuitem" href="prophets.html">The 25 Prophets</a>
+<a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="places.html">Places</a>
+<a role="menuitem" href="index.html#books">The Books</a>
+<a role="menuitem" href="index.html#mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h">Live It</p>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="pillars.html">The Five Pillars</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
-<p class="dd-h">The Codex</p>
-<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
-<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+</div>
+<div class="mg">
+<p class="dd-h">The House</p>
+<a role="menuitem" href="kids.html">The Kids' Codex</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="index.html#about">About the Codex</a>
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
 </div>
-</div>
-<button id="translate-btn" type="button" aria-label="Translate this page" title="Translate the Codex into your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
+</div></div></div>
+<a href="donate.html" class="give-pill">✦ Give</a>
+<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
 </nav>
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
-<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
-<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
-<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
-<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
-<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
-<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="pillars.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Pillars</a>
+<a href="arabic.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Arabic</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Kids</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Begin</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Health</a>
 <a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
 <a href="latif.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Al-Latif</a>
-<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
-<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
 <a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
 </div>
 </div>
+<style id="nav25">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(44rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1100px){.dd-mega{width:min(30rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
 </header>
 
 <!-- HERO -->
@@ -307,7 +350,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
-<p class="text-xs text-parchment/50 leading-relaxed">Al-Latif appears in the Qur'an seven times, always where power moves unseen: provision, the raising of Yusuf, the knowledge of the hidden. This story is dedicated to every heart that thought it wasn't enough.</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Al-Latif appears in the Qur'an seven times, always where power moves unseen: provision, the raising of Yusuf, the knowledge of the hidden. This story is dedicated to every heart that thought it wasn't enough. First among them, the one whose name it carries.</p>
 <a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
 <p class="mt-3 text-[10px] text-parchment/35"><a href="sponsor.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 </div>

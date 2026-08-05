@@ -8,6 +8,11 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>Guardian Console · NOOR Codex of Light</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="markets.js" defer></script>
@@ -58,12 +63,35 @@ td{padding:.5rem;border-bottom:1px solid rgba(255,254,247,.05);color:rgba(255,25
 .linkrow a:hover{background:rgba(233,200,106,.1)}
 .muted{font-size:.7rem;color:rgba(255,254,247,.4);line-height:1.6}
 button.ghost{background:none;border:1px solid rgba(255,254,247,.2);color:rgba(255,254,247,.6);border-radius:999px;padding:.3rem .8rem;font-size:.72rem;cursor:pointer;font-family:inherit}
+
+/* ===== v21 · tabbed console ===== */
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.2rem 0 1.2rem;position:sticky;top:0;background:linear-gradient(178deg,#0a0f24,rgba(10,15,36,.96));padding:.6rem 0;z-index:30}
+.tab{border:1px solid rgba(255,254,247,.16);background:rgba(255,254,247,.04);color:rgba(255,254,247,.6);border-radius:999px;padding:.45rem 1rem;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.tab:hover{color:var(--parchment)}
+.tab.on{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#241D12;border-color:transparent}
+.pane{display:none}
+.pane.on{display:block;animation:pin .3s ease}
+@keyframes pin{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.hbar{display:flex;align-items:center;gap:.6rem;padding:.32rem 0;font-size:.74rem}
+.hbar .lb{flex:none;width:8.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,254,247,.8)}
+.hbar .tr{flex:1;height:8px;background:rgba(255,254,247,.07);border-radius:999px;overflow:hidden}
+.hbar .fl{height:100%;background:linear-gradient(90deg,#C9A227,#F4D46A);border-radius:999px}
+.hbar .n{flex:none;width:3.2rem;text-align:right;color:var(--gold-hi);font-weight:700;font-size:.7rem}
+#vchart{width:100%;height:150px;display:block}
+.setupcard{border:1.5px dashed rgba(233,200,106,.45);border-radius:16px;padding:1rem 1.1rem;font-size:.78rem;line-height:1.8;color:rgba(255,254,247,.7)}
+.setupcard b{color:var(--gold-hi)}
+.setupcard ol{padding-left:1.2rem;margin:.4rem 0}
+.mode-banner{border-radius:14px;padding:.8rem 1rem;font-size:.76rem;line-height:1.65;margin-bottom:1rem;border:1px solid rgba(233,200,106,.4);background:rgba(233,200,106,.07);color:rgba(255,254,247,.8)}
+.dua-line{border-left:3px solid rgba(233,200,106,.5);background:rgba(255,254,247,.04);border-radius:0 10px 10px 0;padding:.5rem .8rem;margin:.4rem 0;font-size:.76rem;font-style:italic;color:rgba(255,254,247,.85)}
+details.mgrid summary{cursor:pointer;font-size:.74rem;color:var(--gold-hi);font-weight:700;padding:.3rem 0}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="bar">
-<a class="logo" href="index.html"><span class="n">ن</span> Guardian Console</a>
+<a class="logo" href="index.html"><span class="n">ن</span> The Owner's Console</a>
 <a class="site" href="index.html">← noorcodex.com</a>
 </header>
 
@@ -71,7 +99,7 @@ button.ghost{background:none;border:1px solid rgba(255,254,247,.2);color:rgba(25
 <div class="gate" id="gate">
 <div class="lock">🗝️</div>
 <h1>Owner's key required</h1>
-<p>This console controls the Guardians, the regions, and the money. One key exists.</p>
+<p>This console holds the readers, the gifts, the Guardians, and the money. One key exists.</p>
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password"/>
 <button id="enter">Unlock the Codex</button>
 <p class="err" id="err"></p>
@@ -88,6 +116,81 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <!-- DASHBOARD -->
 <div id="dash" hidden>
+
+<div class="tabs" role="tablist">
+<button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
+<button class="tab" data-pane="giving" role="tab">🕯 Giving</button>
+<button class="tab" data-pane="guardians" role="tab">🛡 Guardians</button>
+<button class="tab" data-pane="system" role="tab">⚙ System</button>
+</div>
+
+<!-- ===================== PULSE ===================== -->
+<div class="pane on" id="pane-pulse">
+<div class="stats">
+<div class="stat"><div class="v" id="p-today">·</div><div class="l">People today</div></div>
+<div class="stat"><div class="v" id="p-views">·</div><div class="l">Views today</div></div>
+<div class="stat"><div class="v" id="p-30">·</div><div class="l">People · 30 days</div></div>
+<div class="stat"><div class="v" id="p-gifts">·</div><div class="l">Gifts · 30 days</div></div>
+</div>
+
+<h2 class="sec">Readers · last 30 days</h2>
+<div class="panel">
+<div id="vsetup" class="setupcard" hidden>
+<b>Turn on the lamp counter (5 minutes, free, one time):</b>
+<ol>
+<li>Vercel dashboard → your <b>noor</b> project → <b>Storage</b> tab</li>
+<li><b>Create Database</b> → choose <b>KV</b> (Upstash) → name it <code>noor-lamps</code> → Create</li>
+<li>Click <b>Connect Project</b> → pick your noor project → Connect (env keys add themselves)</li>
+<li>Deployments → ⋯ on the latest → <b>Redeploy</b></li>
+<li>Reload this console. Counting starts from that moment, cookie-free, no reader is ever identified</li>
+</ol>
+</div>
+<div id="vwrap" hidden>
+<svg id="vchart" viewBox="0 0 600 150" preserveAspectRatio="none" aria-label="Daily readers chart"></svg>
+<div style="display:flex;justify-content:space-between;font-size:.62rem;color:rgba(255,254,247,.4);margin-top:.3rem"><span id="v-start"></span><span style="color:var(--gold-hi)" id="v-peak"></span><span id="v-end"></span></div>
+<p class="muted" id="v-note" style="margin-top:.4rem"></p>
+</div>
+</div>
+
+<div class="two" style="margin-top:.8rem">
+<div>
+<h2 class="sec">From where · 30 days</h2>
+<div class="panel" id="vcountries"><p class="muted">·</p></div>
+</div>
+<div>
+<h2 class="sec">Which rooms · 30 days</h2>
+<div class="panel" id="vrooms"><p class="muted">·</p></div>
+</div>
+</div>
+</div>
+
+<!-- ===================== GIVING ===================== -->
+<div class="pane" id="pane-giving">
+<div class="stats">
+<div class="stat"><div class="v" id="g-30">·</div><div class="l">Gifts · last 30 days</div></div>
+<div class="stat"><div class="v" id="g-count">·</div><div class="l">Givers · last 30 days</div></div>
+<div class="stat"><div class="v" id="g-monthly">·</div><div class="l">Monthly sadaqa / mo</div></div>
+</div>
+
+<h2 class="sec">Recent gifts</h2>
+<div class="panel">
+<table id="gifttable"><thead><tr><th>When</th><th>Amount</th><th>Giver</th></tr></thead><tbody></tbody></table>
+<p class="muted" id="giftempty" hidden>No gifts yet. The giving page is live at <b>/donate</b>; every page carries its quiet golden line.</p>
+</div>
+
+<h2 class="sec">Du'as now shining on the wall</h2>
+<div class="panel" id="duawall"><p class="muted">·</p></div>
+
+<div class="linkrow">
+<a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe · payments ↗</a>
+<a href="https://dashboard.stripe.com/subscriptions" target="_blank" rel="noopener">Stripe · monthly gifts ↗</a>
+<a href="donate.html" target="_blank">Open the giving page ↗</a>
+</div>
+</div>
+
+<!-- ===================== GUARDIANS ===================== -->
+<div class="pane" id="pane-guardians">
+<div class="mode-banner" id="modebanner">·</div>
 <div class="stats">
 <div class="stat"><div class="v" id="s-week">·</div><div class="l">This week's revenue</div></div>
 <div class="stat"><div class="v" id="s-month">·</div><div class="l">Monthly pace</div></div>
@@ -95,31 +198,11 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="stat"><div class="v" id="s-open">·</div><div class="l">Regions open</div></div>
 </div>
 
-<h2 class="sec">System</h2>
-<div class="panel" id="syschecks"></div>
-<div class="linkrow">
-<a href="https://dashboard.stripe.com/subscriptions" target="_blank" rel="noopener">Stripe · subscriptions ↗</a>
-<a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe · payments ↗</a>
-<a href="https://dashboard.stripe.com/products/prod_V0xxFgmX793e9L" target="_blank" rel="noopener">Stripe · Guardian product ↗</a>
-<a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Vercel ↗</a>
-</div>
-
-<h2 class="sec">Gifts (donations)</h2>
-<div class="panel">
-<div class="stats" style="margin:.2rem 0 .6rem">
-<div class="stat"><div class="v" id="g-30">·</div><div class="l">Gifts · last 30 days</div></div>
-<div class="stat"><div class="v" id="g-count">·</div><div class="l">Givers · last 30 days</div></div>
-<div class="stat"><div class="v" id="g-monthly">·</div><div class="l">Monthly sadaqa / mo</div></div>
-</div>
-<table id="gifttable"><thead><tr><th>When</th><th>Amount</th><th>Giver</th></tr></thead><tbody></tbody></table>
-<p class="muted" id="giftempty" hidden>No gifts yet. The donate page is live at <b>/donate</b>; every page carries its quiet golden line.</p>
-</div>
-
 <h2 class="sec">Guardians & money</h2>
 <div class="panel" style="overflow-x:auto">
 <table id="gtable"><thead><tr><th>Region</th><th>Sponsor</th><th>Status</th><th>Per week</th><th>Renews</th><th>Lamp</th><th></th></tr></thead><tbody></tbody></table>
-<p class="muted" id="gempty" hidden>No paid Guardians yet. When someone completes checkout, they appear here automatically with their region attached, waiting for your approval.</p>
-<p class="muted" style="margin-top:.6rem">A new payment arrives as <b>pending</b>: press <b>Vet</b> to have The Lantern check them against the charter, then <b>Approve</b> to light their lamp on the site (takes effect within about 5 minutes). <b>Unlight</b> hides the lamp again; <b>Release</b> ends the Guardianship when the paid week finishes; refunds live in the Stripe dashboard.</p>
+<p class="muted" id="gempty" hidden>No paid Guardians yet. When someone completes checkout they appear here, waiting for your approval.</p>
+<p class="muted" style="margin-top:.6rem">A new payment arrives as <b>pending</b>: press <b>Vet</b> so The Lantern checks them against the charter, then <b>Approve</b> to light their lamp (live within about 5 minutes). <b>Unlight</b> hides it; <b>Release</b> ends the week gracefully; refunds live in Stripe.</p>
 <div id="vetout" hidden style="margin-top:.8rem;border:1px solid rgba(233,200,106,.35);border-radius:12px;padding:.8rem 1rem;font-size:.78rem;line-height:1.7"></div>
 </div>
 
@@ -138,11 +221,34 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div id="vetout2" hidden style="margin-top:.8rem;border:1px solid rgba(233,200,106,.35);border-radius:12px;padding:.8rem 1rem;font-size:.78rem;line-height:1.7"></div>
 </div>
 
-<h2 class="sec">All regions <span style="color:rgba(255,254,247,.4);text-transform:none;letter-spacing:0" id="mcount"></span></h2>
-<div class="panel"><div class="mkts" id="mkts"></div>
-<p class="muted" style="margin-top:.8rem">Preview any region's view of the site: its link opens the homepage exactly as that region sees it. Add or re-tier regions by editing <code>markets.js</code>, one line each.</p></div>
+<details class="mgrid" style="margin-top:1.2rem">
+<summary>All regions <span id="mcount" style="color:rgba(255,254,247,.4)"></span> · open the map</summary>
+<div class="panel" style="margin-top:.6rem"><div class="mkts" id="mkts"></div>
+<p class="muted" style="margin-top:.8rem">Each link previews the homepage exactly as that region sees it. Regions are edited in <code>markets.js</code>, one line each.</p></div>
+</details>
+</div>
+
+<!-- ===================== SYSTEM ===================== -->
+<div class="pane" id="pane-system">
+<h2 class="sec">Health of the house</h2>
+<div class="panel" id="syschecks"></div>
+
+<h2 class="sec">Quick doors</h2>
+<div class="linkrow">
+<a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe ↗</a>
+<a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Vercel ↗</a>
+<a href="https://openrouter.ai/activity" target="_blank" rel="noopener">OpenRouter usage ↗</a>
+<a href="index.html?noor-preview=GLOBAL" target="_blank">Site as the world sees it ↗</a>
+</div>
+
+<h2 class="sec">The keys this house runs on</h2>
+<div class="panel muted" style="line-height:2">
+<code>ADMIN_PASSWORD</code> + <code>ADMIN_SECRET</code> · your lock &nbsp;|&nbsp; <code>STRIPE_SECRET_KEY</code> · money flows &nbsp;|&nbsp; <code>OPENROUTER_API_KEY</code> · the Lantern AI &nbsp;|&nbsp; <code>KV_REST_API_URL</code> + <code>KV_REST_API_TOKEN</code> · the lamp counter (auto-added by Vercel KV) &nbsp;|&nbsp; <code>NOOR_MONEY_MODE=guardian</code> · flips regional sponsors on
+</div>
 
 <p style="margin-top:1.6rem"><button class="ghost" id="logout">Lock the console</button></p>
+</div>
+
 </div>
 </div>
 
@@ -150,12 +256,77 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 (function(){
 var $=function(id){return document.getElementById(id)};
 function api(path,body){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(body||{})}).then(function(r){return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j}})})}
-
-function showDash(){$("gate").hidden=true;$("dash").hidden=false;load()}
 function money(n){return "$"+(Math.round(n*100)/100).toLocaleString()}
 function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+function flag(cc){if(!/^[A-Z]{2}$/.test(cc))return "🌐";return String.fromCodePoint(0x1F1E6+cc.charCodeAt(0)-65,0x1F1E6+cc.charCodeAt(1)-65)}
+var COUNTRY={CA:"Canada",US:"United States",GB:"United Kingdom",FR:"France",DE:"Germany",AE:"UAE",SA:"Saudi Arabia",QA:"Qatar",KW:"Kuwait",PK:"Pakistan",IN:"India",BD:"Bangladesh",ID:"Indonesia",MY:"Malaysia",SG:"Singapore",TR:"Türkiye",EG:"Egypt",MA:"Morocco",DZ:"Algeria",TN:"Tunisia",NG:"Nigeria",ZA:"South Africa",AU:"Australia",NL:"Netherlands",BE:"Belgium",SE:"Sweden",NO:"Norway",ES:"Spain",IT:"Italy",BR:"Brazil",MX:"Mexico","??":"Unknown"};
 var GS=[];
 
+/* ---- tabs ---- */
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});
+    document.querySelectorAll(".pane").forEach(function(x){x.classList.remove("on")});
+    t.classList.add("on");$("pane-"+t.dataset.pane).classList.add("on");
+    try{history.replaceState(null,"","#"+t.dataset.pane)}catch(e){}
+  });
+});
+function openTabFromHash(){var h=(location.hash||"").replace("#","");var t=document.querySelector('.tab[data-pane="'+h+'"]');if(t)t.click()}
+
+function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();openTabFromHash()}
+
+/* ---- pulse: visitors ---- */
+function bars(el,rows,nameFn){
+  if(!rows.length){el.innerHTML='<p class="muted">Nothing counted yet.</p>';return}
+  var max=rows[0].n||1;
+  el.innerHTML=rows.map(function(r){
+    return '<div class="hbar"><span class="lb">'+nameFn(r)+'</span><div class="tr"><div class="fl" style="width:'+Math.max(3,Math.round(100*r.n/max))+'%"></div></div><span class="n">'+r.n.toLocaleString()+"</span></div>";
+  }).join("");
+}
+function drawChart(days){
+  var svg=$("vchart");
+  var W=600,H=150,P=6;
+  var vmax=Math.max(1,Math.max.apply(null,days.map(function(d){return d.views})));
+  function pt(i,v){var x=P+(W-2*P)*i/(days.length-1);var y=H-P-(H-2*P)*v/vmax;return x+","+y}
+  var area="M"+pt(0,0).split(",")[0]+","+(H-P)+" L"+days.map(function(d,i){return pt(i,d.views)}).join(" L")+" L"+pt(days.length-1,0).split(",")[0]+","+(H-P)+" Z";
+  var line="M"+days.map(function(d,i){return pt(i,d.people)}).join(" L");
+  svg.innerHTML='<defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F4D46A" stop-opacity=".55"/><stop offset="100%" stop-color="#C9A227" stop-opacity=".05"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#gg)" stroke="#E9C86A" stroke-width="1.6" stroke-linejoin="round"/>'+
+    '<path d="'+line+'" fill="none" stroke="#8BA888" stroke-width="1.3" stroke-dasharray="3 3"/>';
+}
+function loadVisitors(){
+  fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){
+    if(!v)return;
+    if(!v.enabled){$("vsetup").hidden=false;$("vwrap").hidden=true;
+      $("p-today").textContent="·";$("p-views").textContent="·";$("p-30").textContent="·";
+      $("vcountries").innerHTML='<p class="muted">Counting begins once the lamp counter is on (see above).</p>';
+      $("vrooms").innerHTML='<p class="muted">·</p>';return}
+    $("vsetup").hidden=true;$("vwrap").hidden=false;
+    var days=v.days||[],last=days[days.length-1]||{views:0,people:0};
+    $("p-today").textContent=(last.people||0).toLocaleString();
+    $("p-views").textContent=(last.views||0).toLocaleString();
+    $("p-30").textContent=(v.totals.people30||0).toLocaleString();
+    drawChart(days);
+    var peak=days.reduce(function(a,d){return d.views>a.views?d:a},{views:0});
+    $("v-start").textContent=days.length?days[0].date.slice(5):"";
+    $("v-end").textContent="today";
+    $("v-peak").textContent=peak.views?("peak "+peak.views.toLocaleString()+" views · "+peak.date.slice(5)):"";
+    $("v-note").textContent=v.totals.views30?("Gold area: page views · dotted green: distinct people (first visit of their day). "+v.totals.views30.toLocaleString()+" views in 30 days."):"The counter is on. Numbers appear with the first visitors.";
+    bars($("vcountries"),v.countries.map(function(c){return{n:c.n,c:c.c}}),function(r){return flag(r.c)+" "+(COUNTRY[r.c]||r.c)});
+    bars($("vrooms"),v.rooms.map(function(r){return{n:r.n,r:r.r}}),function(r){return r.r});
+  }).catch(function(){});
+}
+/* ---- giving: du'a wall preview ---- */
+function loadWall(){
+  fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
+    var items=(j&&j.items)||[];
+    $("duawall").innerHTML=items.length
+      ? items.map(function(d){return '<div class="dua-line">“'+esc(d)+'”</div>'}).join("")+'<p class="muted" style="margin-top:.5rem">These lines are live on the site right now. To take one down, ask in the build chat or refund the gift in Stripe; the wall refreshes itself every 6 hours.</p>'
+      : '<p class="muted">No du’as shining yet. They appear here (and on the site) once givers leave them at checkout and the gate approves them.</p>';
+  }).catch(function(){});
+}
+
+/* ---- main data ---- */
 function load(){
   fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.status===401){$("dash").hidden=true;$("gate").hidden=false;return null}return r.json()}).then(function(d){
     if(!d)return;
@@ -165,27 +336,25 @@ function load(){
     var ML=(window.NOOR_MARKETS&&NOOR_MARKETS.list)||[];
     var taken={};(d.guardians||[]).forEach(function(g){if(g.status==="active"||g.status==="trialing"||g.status==="past_due")taken[g.market]=1});
     $("s-open").textContent=ML.length-Object.keys(taken).length;
-    /* system checks */
-    var modeRow = d.moneyMode==="guardian"
-      ? ["Money mode: GUARDIAN · regional weekly sponsors live sitewide",true,""]
-      : ["Money mode: DONATIONS · gift line sitewide; Guardian lamps armed in background (to activate: Vercel env NOOR_MONEY_MODE=guardian + redeploy)",true,""];
-    var sys=[
-      ["Stripe key (payments can flow)",d.stripeConfigured,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
-      modeRow,
-      ["The Lantern AI core (sponsor vetting + Today's Light tile; public chat off by design)",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
-      ["Weekly lamps · one Guardian per region, auto-locked",true,""],
-      ["Owner lock (you are inside it)",true,""]
-    ];
-    $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">'+c[2]+"</b>")+"</span></div>"}).join("");
-    /* gifts */
+    $("modebanner").innerHTML = d.moneyMode==="guardian"
+      ? "<b style='color:var(--gold-hi)'>GUARDIAN MODE IS LIVE.</b> Regional weekly sponsors run sitewide. To return to the gifts era: remove <code>NOOR_MONEY_MODE</code> in Vercel env and redeploy."
+      : "<b style='color:var(--gold-hi)'>DORMANT · the gifts era is live.</b> This whole system (93 regions, weekly lamps, locking, vetting) is built and armed. When the site reaches about 2,000 readers a day: Vercel → Settings → Environment Variables → add <code>NOOR_MONEY_MODE</code> = <code>guardian</code> → redeploy. It wakes in one switch.";
     var G2=d.gifts||{total30d:0,count30d:0,monthly:0,recent:[]};
+    $("p-gifts").textContent=money(G2.total30d||0);
     $("g-30").textContent=money(G2.total30d||0);
     $("g-count").textContent=G2.count30d||0;
     $("g-monthly").textContent=money(G2.monthly||0);
     var gtb=$("gifttable").querySelector("tbody");
     gtb.innerHTML=(G2.recent||[]).map(function(x){return "<tr><td>"+esc(x.when)+"</td><td>"+money(x.amount)+" "+esc(x.currency)+"</td><td>"+esc(x.email||"·")+"</td></tr>"}).join("");
     $("giftempty").hidden=(G2.recent||[]).length>0;
-    /* guardians table */
+    var sys=[
+      ["Stripe key · money can flow",d.stripeConfigured,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
+      ["The Lantern AI core · Daily Light, Verse Lamp, Thread, Seeker's Question, Friday Light, du'a gate, vetting",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
+      ["Lamp counter · readers and countries",window.__kvOn===true,"create a KV store (Pulse tab has the 5 steps)"],
+      [d.moneyMode==="guardian"?"Money mode: GUARDIAN · sponsors live":"Money mode: GIFTS · Guardian system armed behind its switch",true,""],
+      ["Owner lock · you are inside it",true,""]
+    ];
+    $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">'+c[2]+"</b>")+"</span></div>"}).join("");
     var tb=$("gtable").querySelector("tbody");
     GS=d.guardians||[];
     tb.innerHTML=GS.map(function(g,i){
@@ -197,7 +366,6 @@ function load(){
         " "+(g.endsAfterWeek?'<button class="ghost" data-act="relight" data-i="'+i+'">Keep</button>':'<button class="ghost" data-act="release" data-i="'+i+'">Release</button>')):"";
       return "<tr><td><b>"+esc(g.market)+"</b></td><td>"+esc(g.gname||g.name||g.email||"·")+"</td><td><span class='pill "+cls+"'>"+esc(g.status)+(g.endsAfterWeek?" · ends":"")+"</span></td><td>"+money(g.amount)+" "+esc(g.currency)+"</td><td>"+(g.renews||"·")+"</td><td>"+lamp+"</td><td style='white-space:nowrap'>"+acts+"</td></tr>"}).join("");
     $("gempty").hidden=GS.length>0;
-    /* market grid */
     var tp=(window.NOOR_MARKETS&&NOOR_MARKETS.tierPrices)||{};
     $("mcount").textContent="· "+ML.length+" lamps";
     $("mkts").innerHTML=ML.map(function(m){
@@ -206,6 +374,7 @@ function load(){
   })
 }
 
+/* ---- vetting ---- */
 function vetHTML(v){
   var col=v.verdict==="approve"?"#a7d3a2":(v.verdict==="decline"?"#f8a3a3":"#E9C86A");
   return "<b style='color:"+col+";text-transform:uppercase;letter-spacing:.08em'>"+esc(v.verdict)+"</b> · confidence "+(v.score||0)+"/100"+
@@ -250,6 +419,7 @@ $("v-go").addEventListener("click",function(){
   runVet({name:$("v-name").value,url:$("v-url").value,line:$("v-line").value,notes:$("v-notes").value},$("vetout2"));
 });
 
+/* ---- gate ---- */
 $("enter").addEventListener("click",function(){
   $("err").textContent="";
   api("/api/admin-auth",{password:$("pw").value}).then(function(r){
@@ -260,6 +430,10 @@ $("enter").addEventListener("click",function(){
 });
 $("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("enter").click()});
 $("logout").addEventListener("click",function(){api("/api/admin-auth",{logout:true}).then(function(){location.reload()})});
+
+/* remember whether the counter is on, for the System checks */
+window.__kvOn=false;
+fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){if(v&&v.enabled)window.__kvOn=true}).catch(function(){});
 
 /* If a valid cookie already exists, go straight in */
 fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)showDash();else api("/api/admin-auth",{probe:true}).then(function(p){if(p.ok&&p.j&&p.j.configured===false)$("setupHint").hidden=false}).catch(function(){})}).catch(function(){});

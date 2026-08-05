@@ -17,6 +17,11 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>The Greatest Game · NOOR Little Codex</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -288,6 +293,7 @@ main{max-width:660px}
 (function(){
 "use strict";
 var I={
+ abjad:'<svg viewBox="0 0 24 24"><path d="M4 14.5c3.2 0 3.2-5.5 8-5.5 4.2 0 4.2 3.8 8 3.8"/><circle cx="12" cy="17.6" r="1.25"/><path d="M5 20h14"/></svg>',
  steps:'<svg viewBox="0 0 24 24"><path d="M7 4c1.6 0 2.6 1.2 2.6 2.8S8.6 10 7.4 10 5 8.8 5 7.2 5.4 4 7 4Z"/><path d="M6 12h3v2.6c0 1-.6 1.6-1.5 1.6S6 15.6 6 14.6Z"/><path d="M16 9c1.6 0 2.6 1.2 2.6 2.8S17.6 15 16.4 15 14 13.8 14 12.2 14.4 9 16 9Z"/><path d="M15 17h3v2.4c0 1-.6 1.6-1.5 1.6s-1.5-.6-1.5-1.6Z"/></svg>',
  ark:'<svg viewBox="0 0 24 24"><path d="M3 13h18l-2.5 5.2a2 2 0 0 1-1.8 1.1H7.3a2 2 0 0 1-1.8-1.1Z"/><path d="M8 13V9.5A1.5 1.5 0 0 1 9.5 8h5A1.5 1.5 0 0 1 16 9.5V13"/><path d="M12 8V5.5"/><path d="M10 5.5h4"/></svg>',
  star:'<svg viewBox="0 0 24 24"><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9Z"/></svg>',
@@ -299,6 +305,7 @@ var I={
  med:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/></svg>'
 };
 var G=[
+ {f:"kids/letters.html",k:"nk-letters",a:"#F4D46A",i:"abjad",n:"The Letter Garden",l:"Meet all 28 Arabic letters & win stars"},
  {f:"kids/story-steps.html",k:"nk-story-steps",a:"#34d399",i:"steps",n:"Story Steps",l:"Put six great stories in order"},
  {f:"kids/ark-pairs.html",k:"nk-ark",a:"#38bdf8",i:"ark",n:"Two by Two",l:"Match the pairs, load the ark"},
  {f:"kids/star-catcher.html",k:"nk-stars",a:"#a78bfa",i:"star",n:"Catch the Name",l:"Falling stars, Beautiful Names"},

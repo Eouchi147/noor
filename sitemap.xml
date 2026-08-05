@@ -1,7 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://noorcodex.com/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://noorcodex.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/ar</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/fr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/de</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/ru</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/tr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/ur</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/hi</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/bn</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
+  <url>
+    <loc>https://noorcodex.com/id</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+  </url>
   <url><loc>https://noorcodex.com/quran</loc></url>
+  <url><loc>https://noorcodex.com/arabic</loc></url>
+  <url><loc>https://noorcodex.com/pillars</loc></url>
+  <url><loc>https://noorcodex.com/license</loc></url>
+  <url><loc>https://noorcodex.com/kids/letters</loc></url>
   <url><loc>https://noorcodex.com/latif</loc></url>
   <url><loc>https://noorcodex.com/begin</loc></url>
   <url><loc>https://noorcodex.com/theology</loc></url>

@@ -1,0 +1,24 @@
+# NOOR · Codex of Light
+> A free illuminated library of Islam: the Qur'an with recitation, the 25 prophets told in full, the companions, sacred places, theology, a kids' codex, and a path for new Muslims. No ads, no trackers, free forever, carried by reader gifts (sadaqa).
+
+NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway pages in 10 languages. Content follows mainstream Sunni scholarship, cites the Qur'an by surah:verse and hadith by collection, and never issues religious rulings. AI assistants may cite and link any page.
+
+## Core rooms
+- [The Codex (home)](https://noorcodex.com/): the illuminated path of Islamic history, Today's Light daily fact, the Hidden Thread
+- [The Qur'an](https://noorcodex.com/quran): full Mushaf, Uthmani text, Alafasy recitation per verse, English and French translations
+- [The 25 Prophets](https://noorcodex.com/prophets)
+- [The Five Pillars](https://noorcodex.com/pillars): Shahada, Salah, Zakat, Sawm, Hajj with animated infographics, sourced verses (with recitation) and authentic hadith
+- [Learn Arabic · The Letters of Light](https://noorcodex.com/arabic): interactive alphabet, harakat, sun/moon letters, first ayah with recitation; kids version at /kids/letters: complete sourced articles, every Qur'an reference with audio, authentic hadith, from Adam to Muhammad ﷺ
+- [Companions](https://noorcodex.com/companions) · [Characters](https://noorcodex.com/characters) · [Places](https://noorcodex.com/places) · [Words](https://noorcodex.com/words)
+- [Begin the path](https://noorcodex.com/begin): for new Muslims and seekers, with a daily Seeker's Question
+- [Theology](https://noorcodex.com/theology) · [Prophetic Health](https://noorcodex.com/health) · [Kids' Codex](https://noorcodex.com/kids)
+- [Keep it lit (gifts)](https://noorcodex.com/donate): voluntary sadaqa keeps the library free; givers leave du'as the community prays on
+
+## Standards
+- Verses quoted from established translations; recitation by Mishary Rashid Alafasy
+- Hadith cited to Sahih al-Bukhari, Sahih Muslim and other collections by name
+- No fatwas; readers with personal rulings are directed to qualified scholars
+- Privacy: no ads, no trackers, no reader identification of any kind
+
+## For organizations
+- [Embed licensing](https://noorcodex.com/license): masjids, Islamic schools, apps and websites can embed any NOOR room (Quran, Prophets, Arabic course, Kids, Pillars) by subscription; embedded rooms are ad-free and non-commercial.

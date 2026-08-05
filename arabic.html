@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="Learn the Arabic alphabet the beautiful way: 28 interactive letters with their shapes, sounds and Qur'anic words, real recitation for every letter, the vowel marks, sun and moon letters, and your first ayah read word by word."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="The Letters of Light · Learn Arabic · NOOR Codex of Light"/>
+<meta property="og:description" content="28 interactive letters, real Qur'anic recitation, the vowel marks, sun and moon letters, and your first ayah, read word by word. Free forever."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<title>The Letters of Light · Learn Arabic · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/arabic"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
+<script src="noor-fx.js" defer></script>
+<script src="markets.js" defer></script>
+<script src="sponsor.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"The Letters of Light · Learn the Arabic Alphabet","url":"https://noorcodex.com/arabic","inLanguage":["en","ar"],"educationalLevel":"Beginner","teaches":"Arabic alphabet, vowel marks (harakat), sun and moon letters, reading the Bismillah","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"}}</script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E;--lapis:#33507C}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+/* ---------- hero ---------- */
+#ahero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7}
+#ahero .rays{position:absolute;inset:-15%;background:radial-gradient(ellipse 55% 42% at 50% 0%,rgba(201,162,39,.28),transparent 65%),radial-gradient(ellipse 40% 30% at 82% 12%,rgba(51,80,124,.35),transparent 70%);pointer-events:none}
+.floatL{position:absolute;font-family:Amiri,serif;color:rgba(244,212,106,.14);user-select:none;pointer-events:none;animation:floaty 9s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){.floatL{animation:none}}
+.shimmer{background:linear-gradient(100deg,#E9C86A 15%,#FFF7DF 50%,#E9C86A 85%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 7s linear infinite}
+@keyframes shim{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.shimmer{animation:none}}
+/* ---------- rings & chrome ---------- */
+.ring{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(255,254,247,.12) 0);position:relative}
+.ring::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#171d31}
+.ring b{position:relative;z-index:1;font-size:.78rem;color:#F4D46A}
+h2.sect{font-weight:800;font-size:1.32rem;margin:0 0 .3rem;display:flex;align-items:center;gap:.65rem}
+h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.55rem}
+.sub{font-size:.84rem;color:rgba(44,36,22,.6);margin:0 0 1.1rem;line-height:1.6}
+.wrap{max-width:64rem;margin:0 auto;padding:0 1rem}
+section.blk{padding:2.6rem 0 1rem}
+/* ---------- letter grid ---------- */
+#lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(4.4rem,1fr));gap:.5rem;direction:rtl}
+.lt{position:relative;background:#fff;border:1.5px solid rgba(44,36,22,.1);border-radius:14px;padding:.55rem .2rem .45rem;text-align:center;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.lt:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 24px rgba(201,162,39,.18)}
+.lt.sel{border-color:var(--gold);background:#FFF9E8;box-shadow:0 10px 24px rgba(201,162,39,.22)}
+.lt .g{font-family:Amiri,serif;font-size:2rem;line-height:1.25;color:#241D12}
+.lt .n{font-size:.6rem;font-weight:700;color:rgba(44,36,22,.55);letter-spacing:.04em}
+.lt .met{position:absolute;top:.28rem;left:.34rem;font-size:.6rem;color:var(--gold);opacity:0;transition:opacity .3s}
+.lt.is-met .met{opacity:1}
+/* ---------- lens ---------- */
+#lens{background:linear-gradient(165deg,#171d31,#1d2a45);color:#FFFEF7;border-radius:22px;padding:1.35rem 1.3rem 1.25rem;margin:0 0 1.1rem;border:1px solid rgba(233,200,106,.3);box-shadow:0 18px 44px rgba(20,16,10,.25)}
+#lens .empty{color:rgba(255,254,247,.55);font-size:.86rem;text-align:center;padding:1.1rem 0}
+.lens-top{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+.lens-glyph{font-family:Amiri,serif;font-size:4.6rem;line-height:1.15;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));min-width:5.2rem;text-align:center}
+.lens-name b{font-size:1.25rem;font-weight:800}
+.lens-name .tr{color:rgba(255,254,247,.6);font-size:.8rem;margin-left:.4rem}
+.lens-sound{margin-top:.3rem;font-size:.82rem;color:rgba(255,254,247,.8);line-height:1.6;max-width:26rem}
+.forms{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:1rem;direction:rtl}
+.fcell{background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.25);border-radius:12px;text-align:center;padding:.5rem .2rem}
+.fcell .fg{font-family:Amiri,serif;font-size:1.9rem;color:#FFF7DF;line-height:1.3}
+.fcell .fl{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.5);font-weight:700}
+.lens-word{margin-top:1rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;background:rgba(233,200,106,.1);border:1px solid rgba(233,200,106,.3);border-radius:14px;padding:.7rem .9rem}
+.lens-word .war{font-family:Amiri,serif;font-size:1.9rem;color:#F4D46A;direction:rtl}
+.lens-word .wtr{font-size:.8rem;color:rgba(255,254,247,.85)}
+.lens-word .wm{font-size:.74rem;color:rgba(255,254,247,.55)}
+.hearbtn{margin-left:auto;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.5rem 1.05rem;font-size:.78rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem;transition:transform .15s}
+.hearbtn:hover{transform:scale(1.04)}
+.hearbtn.playing{background:#1A160F;color:#F4D46A;outline:1px solid rgba(244,212,106,.6)}
+.lens-note{margin-top:.7rem;font-size:.7rem;color:rgba(255,254,247,.45)}
+.nojoin{display:inline-block;margin-top:.55rem;font-size:.68rem;color:#F4D46A;background:rgba(244,212,106,.12);border:1px dashed rgba(244,212,106,.4);border-radius:999px;padding:.22rem .7rem}
+/* ---------- harakat ---------- */
+.hkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.6rem,1fr));gap:.5rem}
+.hk{background:#fff;border:1.5px solid rgba(44,36,22,.1);border-radius:14px;text-align:center;padding:.6rem .3rem;cursor:pointer;transition:transform .18s,border-color .18s}
+.hk:hover{transform:translateY(-3px);border-color:var(--gold)}
+.hk.sel{border-color:var(--gold);background:#FFF9E8}
+.hk .hg{font-family:Amiri,serif;font-size:1.9rem;line-height:1.3;color:#241D12}
+.hk .hn{font-size:.62rem;font-weight:800;color:rgba(44,36,22,.6)}
+#hkstage{background:linear-gradient(165deg,#171d31,#1d2a45);border-radius:22px;border:1px solid rgba(233,200,106,.3);color:#FFFEF7;text-align:center;padding:1.5rem 1rem;margin-top:.9rem}
+#hk-big{font-family:Amiri,serif;font-size:5rem;line-height:1.2;color:#F4D46A;filter:drop-shadow(0 0 20px rgba(244,212,106,.4));transition:opacity .25s}
+#hk-say{font-size:1.05rem;font-weight:800;color:#FFF7DF;margin-top:.2rem}
+#hk-tip{font-size:.78rem;color:rgba(255,254,247,.6);margin-top:.35rem;line-height:1.6}
+.hkbase{display:flex;justify-content:center;gap:.4rem;margin-top:1rem}
+.hkbase button{background:rgba(255,254,247,.08);border:1px solid rgba(233,200,106,.3);color:#FFF7DF;font-family:Amiri,serif;font-size:1.25rem;width:2.7rem;height:2.7rem;border-radius:12px;cursor:pointer;transition:all .18s}
+.hkbase button.sel{background:rgba(233,200,106,.25);border-color:#F4D46A}
+.stretch{display:flex;justify-content:center;gap:1.6rem;margin-top:1.1rem;flex-wrap:wrap}
+.stretch div{text-align:center}
+.stretch .sg{font-family:Amiri,serif;font-size:2.1rem;color:#FFF7DF}
+.stretch .sl{font-size:.68rem;color:rgba(255,254,247,.55);font-weight:700}
+/* ---------- sun & moon ---------- */
+.smhero{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+@media (max-width:640px){.smhero{grid-template-columns:1fr}}
+.smcard{border-radius:18px;padding:1.05rem 1.1rem;color:#FFFEF7}
+.smcard.sun{background:linear-gradient(150deg,#7a5c10,#C9A227)}
+.smcard.moon{background:linear-gradient(150deg,#1c2a4d,#33507C)}
+.smcard .big{font-family:Amiri,serif;font-size:2.1rem;direction:rtl}
+.smcard .say{font-weight:800;font-size:.95rem;margin-top:.15rem}
+.smcard .why{font-size:.74rem;line-height:1.6;opacity:.85;margin-top:.35rem}
+#smgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(3.4rem,1fr));gap:.4rem;direction:rtl}
+.sm{background:#fff;border:1.5px solid rgba(44,36,22,.1);border-radius:12px;text-align:center;font-family:Amiri,serif;font-size:1.55rem;padding:.35rem 0 .3rem;cursor:pointer;transition:all .18s;color:#241D12}
+.sm:hover{transform:translateY(-2px)}
+.sm.sunlit{background:#FFF3D1;border-color:#C9A227}
+.sm.moonlit{background:#E8EEF9;border-color:#33507C}
+#smshow{margin-top:.9rem;border-radius:18px;padding:1rem 1.1rem;background:#fff;border:1.5px solid rgba(44,36,22,.1);display:none;align-items:center;gap:1rem;flex-wrap:wrap}
+#smshow .eq{font-family:Amiri,serif;font-size:2rem;direction:rtl;color:#241D12}
+#smshow .lab{font-size:.78rem;color:rgba(44,36,22,.65);line-height:1.6}
+.badge-sun{display:inline-block;background:#FFF3D1;color:#7a5c10;border-radius:999px;padding:.15rem .6rem;font-size:.66rem;font-weight:800}
+.badge-moon{display:inline-block;background:#E8EEF9;color:#33507C;border-radius:999px;padding:.15rem .6rem;font-size:.66rem;font-weight:800}
+/* ---------- bismillah ---------- */
+#bwords{display:flex;gap:.55rem;flex-wrap:wrap;direction:rtl;justify-content:center}
+.bw{background:#fff;border:1.5px solid rgba(44,36,22,.12);border-radius:16px;padding:.75rem 1rem;text-align:center;cursor:pointer;transition:all .18s;flex:1 1 8rem;max-width:11rem}
+.bw:hover{transform:translateY(-3px);border-color:var(--gold)}
+.bw.sel{border-color:var(--gold);background:#FFF9E8}
+.bw .ar{font-family:Amiri,serif;font-size:1.75rem;color:#241D12;line-height:1.5}
+#bgloss{margin-top:.9rem;background:linear-gradient(165deg,#171d31,#1d2a45);border:1px solid rgba(233,200,106,.3);color:#FFFEF7;border-radius:18px;padding:1rem 1.15rem;text-align:center}
+#bg-tr{font-weight:800;font-size:1.02rem;color:#F4D46A}
+#bg-m{font-size:.82rem;color:rgba(255,254,247,.75);margin-top:.25rem;line-height:1.65}
+/* ---------- quest ---------- */
+#quest{background:linear-gradient(165deg,#14100A,#171d31 60%,#1d2a45);border-radius:26px;color:#FFFEF7;padding:1.5rem 1.2rem 1.6rem;border:1px solid rgba(233,200,106,.3)}
+.qtop{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+#qbar{flex:1;height:.55rem;border-radius:999px;background:rgba(255,254,247,.1);overflow:hidden;min-width:8rem}
+#qfill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:width .35s}
+#qhearts{font-size:.95rem;letter-spacing:.1em}
+#qstreak{font-size:.78rem;font-weight:800;color:#F4D46A}
+#qglyph{font-family:Amiri,serif;font-size:5.4rem;line-height:1.2;text-align:center;color:#F4D46A;filter:drop-shadow(0 0 22px rgba(244,212,106,.45));margin:.6rem 0 .2rem;transition:transform .2s}
+#qglyph.shake{animation:qshake .4s}
+@keyframes qshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+#qprompt{text-align:center;font-size:.8rem;color:rgba(255,254,247,.6)}
+#qopts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:1rem;max-width:26rem;margin-left:auto;margin-right:auto}
+.qopt{background:rgba(255,254,247,.07);border:1.5px solid rgba(233,200,106,.3);color:#FFF7DF;font-weight:700;font-size:.88rem;border-radius:14px;padding:.75rem .5rem;cursor:pointer;font-family:inherit;transition:all .16s}
+.qopt:hover{border-color:#F4D46A;background:rgba(233,200,106,.14)}
+.qopt.good{background:#2c5c31;border-color:#7fd88a}
+.qopt.bad{background:#5c2c2c;border-color:#d87f7f}
+.qmode{display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.qmode button{background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.3);color:rgba(255,254,247,.75);border-radius:999px;padding:.4rem 1rem;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit}
+.qmode button.sel{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-color:transparent}
+#qend{text-align:center;display:none}
+#qend .score{font-size:2.4rem;font-weight:800;color:#F4D46A}
+#qend .title{font-size:1rem;font-weight:800;margin-top:.2rem}
+#qend .line{font-size:.8rem;color:rgba(255,254,247,.6);margin-top:.4rem;line-height:1.6}
+.qrestart{margin-top:1rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.6rem 1.5rem;font-size:.85rem;cursor:pointer;font-family:inherit}
+.spark{position:absolute;pointer-events:none;font-size:1rem;animation:sparkfly 1s ease-out forwards}
+@keyframes sparkfly{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+/* ---------- cta ---------- */
+.ctaband{background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.04));border:1px solid rgba(201,162,39,.35);border-radius:18px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;font-size:.84rem}
+.ctaband a.gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.5rem 1.1rem;font-size:.78rem;white-space:nowrap}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal.in,.reveal.visible{opacity:1;transform:none}
+.dd{position:relative}.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>*{background:#fff;border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem;border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem;border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none;display:block}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-40 bg-parchment/90 backdrop-blur border-b border-ink/8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="quran.html" class="hover:text-ink transition-colors">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="arabic.html" class="text-ink font-bold">Arabic</a>
+<a href="pillars.html" class="hover:text-ink transition-colors">Pillars</a>
+<a href="kids.html" class="hover:text-ink transition-colors">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h">The Word</p>
+<a role="menuitem" href="quran.html">The Mushaf of Light</a>
+<a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
+<a role="menuitem" href="words.html">The Words</a>
+</div>
+<div class="mg">
+<p class="dd-h">The Story</p>
+<a role="menuitem" href="index.html#timeline">The Path of Creation</a>
+<a role="menuitem" href="prophets.html">The 25 Prophets</a>
+<a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="places.html">Places</a>
+<a role="menuitem" href="index.html#books">The Books</a>
+<a role="menuitem" href="index.html#mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h">Live It</p>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="pillars.html">The Five Pillars</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+</div>
+<div class="mg">
+<p class="dd-h">The House</p>
+<a role="menuitem" href="kids.html">The Kids' Codex</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="index.html#about">About the Codex</a>
+<a role="menuitem" href="legal.html">Terms & Privacy</a>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
+</div>
+</div></div></div>
+<a href="donate.html" class="give-pill">✦ Give</a>
+<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="pillars.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Pillars</a>
+<a href="arabic.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Arabic</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Kids</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Begin</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
+</div>
+</div>
+<style id="nav25">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(44rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1100px){.dd-mega{width:min(30rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="ahero">
+<div class="rays" aria-hidden="true"></div>
+<span class="floatL" style="top:12%;left:6%;font-size:3.2rem;animation-delay:0s" aria-hidden="true">ق</span>
+<span class="floatL" style="top:58%;left:12%;font-size:2.3rem;animation-delay:-3s" aria-hidden="true">ن</span>
+<span class="floatL" style="top:20%;right:8%;font-size:2.8rem;animation-delay:-5s" aria-hidden="true">ع</span>
+<span class="floatL" style="top:64%;right:14%;font-size:3.6rem;animation-delay:-7s" aria-hidden="true">ح</span>
+<div class="wrap relative py-14 sm:py-16 text-center">
+<p class="font-amiri text-3xl sm:text-4xl text-gold" style="filter:drop-shadow(0 0 18px rgba(244,212,106,.5))" translate="no">الْحُرُوف</p>
+<h1 class="shimmer font-extrabold text-2xl sm:text-4xl mt-2">The Letters of Light</h1>
+<p class="text-parchment/70 text-sm sm:text-base max-w-xl mx-auto mt-3 leading-relaxed">Twenty-eight letters carry the entire Qur'an. Meet each one, hear it recited in the Book itself, learn the marks that make them sing, and read your first ayah today.</p>
+<div class="flex items-center justify-center gap-5 mt-7 flex-wrap">
+<div class="ring" id="progress-ring" style="--p:0"><b id="progress-num">0/28</b></div>
+<div class="text-left text-parchment/60 text-xs leading-relaxed">letters met<br/><span class="text-parchment/40">touch a letter below to begin</span></div>
+</div>
+</div>
+</section>
+
+<main class="wrap pb-16">
+
+<!-- ============ 1 · THE LETTERS ============ -->
+<section class="blk reveal" id="letters">
+<h2 class="sect"><span class="amiri" translate="no">١</span> Meet the twenty-eight</h2>
+<p class="sub">Touch any letter. Arabic reads right to left, and most letters change shape depending on where they sit in a word: alone, at the start, in the middle, or at the end.</p>
+<div id="lens"><p class="empty">✦ Touch a letter to meet it</p></div>
+<div id="lgrid" role="list"></div>
+<p class="text-xs text-ink/45 mt-3">✦ Six letters never hold the hand of the letter after them: <span class="font-amiri text-base" translate="no">ا د ذ ر ز و</span>. Words break after these, even in the middle.</p>
+</section>
+
+<!-- ============ 2 · HARAKAT ============ -->
+<section class="blk reveal" id="harakat">
+<h2 class="sect"><span class="amiri" translate="no">٢</span> The marks that make them sing</h2>
+<p class="sub">Letters are consonants; small marks called harakat give them their vowels. Touch a mark to hear how it changes the letter.</p>
+<div class="hkgrid" id="hkgrid"></div>
+<div id="hkstage">
+<div id="hk-big" class="notranslate" translate="no">بَ</div>
+<div id="hk-say">ba</div>
+<div id="hk-tip">Fatha · a small stroke above · opens the sound into “a”</div>
+<div class="hkbase" id="hkbase" aria-label="Choose a base letter"></div>
+<div class="stretch">
+<div><div class="sg" translate="no">بَا</div><div class="sl">bā · alif stretches “a”</div></div>
+<div><div class="sg" translate="no">بِي</div><div class="sl">bī · yā stretches “i”</div></div>
+<div><div class="sg" translate="no">بُو</div><div class="sl">bū · wāw stretches “u”</div></div>
+</div>
+<p class="text-[11px] mt-3" style="color:rgba(255,254,247,.4)">The three stretchers <span class="font-amiri" translate="no">ا و ي</span> make short vowels long: twice the breath.</p>
+</div>
+</section>
+
+<!-- ============ 3 · SUN & MOON ============ -->
+<section class="blk reveal" id="sunmoon">
+<h2 class="sect"><span class="amiri" translate="no">٣</span> Sun letters, moon letters</h2>
+<p class="sub">Arabic says “the” with <span class="font-amiri text-base" translate="no">الـ</span> (al-). Before 14 “sun letters” the L falls silent and the letter doubles; before the 14 “moon letters” the L is heard. Touch any letter to see “the” happen to a real Qur'anic word.</p>
+<div class="smhero">
+<div class="smcard sun"><span class="big" translate="no">الشَّمْس</span><div class="say">ash-shams · the sun</div><div class="why">ش is a sun letter: the L melts away and the shīn doubles. You write “al”, you say “ash-sh”.</div></div>
+<div class="smcard moon"><span class="big" translate="no">الْقَمَر</span><div class="say">al-qamar · the moon</div><div class="why">ق is a moon letter: the L stands and is spoken plainly. You write “al”, you say “al”.</div></div>
+</div>
+<div id="smgrid" role="list"></div>
+<div id="smshow"></div>
+</section>
+
+<!-- ============ 4 · FIRST AYAH ============ -->
+<section class="blk reveal" id="firstayah">
+<h2 class="sect"><span class="amiri" translate="no">٤</span> Read your first ayah</h2>
+<p class="sub">The sentence that opens the Qur'an, and nearly every surah in it. Touch each word, then hear the whole ayah recited.</p>
+<p class="text-center font-amiri text-3xl sm:text-4xl leading-loose text-ink mb-4 notranslate" translate="no" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
+<div id="bwords"></div>
+<div id="bgloss">
+<div id="bg-tr">Touch a word above</div>
+<div id="bg-m">Each one you can now sound out, letter by letter.</div>
+<button class="hearbtn mt-3" id="bismillah-play" style="margin-left:0">▶ Hear the full ayah · Al-Fatiha 1:1</button>
+</div>
+<div class="ctaband mt-4">
+<span>🌟</span><span style="flex:1;min-width:12rem"><b>You just read Qur'an.</b> The word <span class="font-amiri text-base" translate="no">اقْرَأْ</span> · Iqra' · “Read!” was the very first word ever revealed.</span>
+<button class="hearbtn" id="iqra-play" style="margin-left:0">▶ Hear it · 96:1</button>
+</div>
+</section>
+
+<!-- ============ 5 · LETTER QUEST ============ -->
+<section class="blk reveal" id="quest-sec">
+<h2 class="sect"><span class="amiri" translate="no">٥</span> The Letter Quest</h2>
+<p class="sub">Ten rounds. Three lamps. Can you name them all?</p>
+<div id="quest">
+<div class="qmode" id="qmode">
+<button class="sel" data-mode="name">Name the letter</button>
+<button data-mode="shape">Shape shifter</button>
+</div>
+<div class="qtop">
+<div id="qbar"><div id="qfill"></div></div>
+<span id="qstreak"></span>
+<span id="qhearts">🏮🏮🏮</span>
+</div>
+<div id="qplay">
+<div id="qglyph" class="notranslate" translate="no">?</div>
+<p id="qprompt">Which letter is this?</p>
+<div id="qopts"></div>
+</div>
+<div id="qend">
+<div class="score" id="qscore">0/10</div>
+<div class="title" id="qtitle"></div>
+<div class="line" id="qline"></div>
+<button class="qrestart" id="qrestart">Play again</button>
+</div>
+</div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="blk reveal">
+<div class="ctaband">
+<span style="font-size:1.3rem">🏮</span>
+<span style="flex:1;min-width:14rem"><b>Little learners?</b> The Letter Garden in the Kids' Codex teaches the same 28 letters with animals, stars and stickers.</span>
+<a class="gold" href="kids/letters.html">Open the Letter Garden →</a>
+</div>
+<div class="ctaband mt-3" style="background:linear-gradient(90deg,rgba(51,80,124,.1),rgba(51,80,124,.03));border-color:rgba(51,80,124,.3)">
+<span style="font-size:1.3rem">📖</span>
+<span style="flex:1;min-width:14rem"><b>Ready for more?</b> Open the Mushaf of Light and follow the letters you now know across the whole Qur'an, with recitation on every ayah.</span>
+<a class="gold" href="quran.html" style="background:linear-gradient(135deg,#33507C,#5b7cad);color:#fff">Open the Mushaf →</a>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-ink/10 py-8 text-center">
+<p class="text-xs text-ink/40">This room is free forever, like every room in the Codex · <a class="underline" href="donate.html">keep it lit ✦</a> · <a class="underline" href="index.html">return to the Codex</a></p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+
+/* ============ the 28 letters ============
+   name · glyph · translit · sound · joins-forward · sun letter ·
+   Qur'anic word (ar, translit, meaning) · ayah where you HEAR it:
+   the 14 muqatta'at letters are named aloud in recitation; the rest
+   open the first word of the chosen ayah. */
+var L=[
+{g:"ا",n:"Alif",t:"ā",t2:"ā",s:"A long open “aa”, as in “far”. As a seat for hamza it carries the quick catch of breath that starts “apple”.",j:false,sun:false,w:"اللَّه",wt:"Allāh",wm:"God, the One",ref:"2:1",named:true},
+{g:"ب",n:"Bā’",t:"b",t2:"b",s:"“b” as in “book”. One dot below.",j:true,sun:false,w:"بِسْم",wt:"bism",wm:"in the name",ref:"1:1",named:false},
+{g:"ت",n:"Tā’",t:"t",t2:"t",s:"“t” as in “tea”. Two dots above.",j:true,sun:true,w:"تَوْبَة",wt:"tawbah",wm:"repentance, returning",ref:"67:1",named:false},
+{g:"ث",n:"Thā’",t:"th",t2:"th",s:"Soft “th” as in “three”. Three dots above.",j:true,sun:true,w:"ثُمَّ",wt:"thumma",wm:"then, after that",ref:"80:21",named:false},
+{g:"ج",n:"Jīm",t:"j",t2:"j",s:"“j” as in “jam”.",j:true,sun:false,w:"جَنَّة",wt:"jannah",wm:"garden · Paradise",ref:"98:8",named:false},
+{g:"ح",n:"Ḥā’",t:"ḥ",t2:"ḥ",s:"A deep breathy “h” from the middle of the throat, like fogging a mirror. No English twin.",j:true,sun:false,w:"حَمْد",wt:"ḥamd",wm:"praise",ref:"41:1",named:true},
+{g:"خ",n:"Khā’",t:"kh",t2:"kh",s:"“ch” as in Scottish “loch”: a soft gargle at the back.",j:true,sun:false,w:"خَيْر",wt:"khayr",wm:"good, goodness",ref:"7:199",named:false},
+{g:"د",n:"Dāl",t:"d",t2:"d",s:"“d” as in “door”.",j:false,sun:true,w:"دِين",wt:"dīn",wm:"religion · the Judgment",ref:"10:10",named:false},
+{g:"ذ",n:"Dhāl",t:"dh",t2:"dh",s:"Voiced “th” as in “this”.",j:false,sun:true,w:"ذِكْر",wt:"dhikr",wm:"remembrance",ref:"2:2",named:false},
+{g:"ر",n:"Rā’",t:"r",t2:"r",s:"A rolled “r”, tapped on the tip of the tongue.",j:false,sun:true,w:"رَحْمَة",wt:"raḥmah",wm:"mercy",ref:"13:1",named:true},
+{g:"ز",n:"Zāy",t:"z",t2:"z",s:"“z” as in “zoo”.",j:false,sun:true,w:"زَكَاة",wt:"zakāh",wm:"the purifying alms",ref:"3:14",named:false},
+{g:"س",n:"Sīn",t:"s",t2:"s",s:"“s” as in “sun”.",j:true,sun:true,w:"سَلَام",wt:"salām",wm:"peace",ref:"36:1",named:true},
+{g:"ش",n:"Shīn",t:"sh",t2:"sh",s:"“sh” as in “shade”.",j:true,sun:true,w:"شَمْس",wt:"shams",wm:"sun",ref:"2:185",named:false},
+{g:"ص",n:"Ṣād",t:"ṣ",t2:"ṣ",s:"A heavy, full-mouthed “s”: same tongue as sīn, but the mouth makes a dome.",j:true,sun:true,w:"صَلَاة",wt:"ṣalāh",wm:"the prayer",ref:"38:1",named:true},
+{g:"ض",n:"Ḍād",t:"ḍ",t2:"ḍ",s:"A heavy “d” pressed from the side of the tongue. So unique that Arabic is called “the language of the Ḍād”.",j:true,sun:true,w:"ضِيَاء",wt:"ḍiyā’",wm:"radiance",ref:"16:75",named:false},
+{g:"ط",n:"Ṭā’",t:"ṭ",t2:"ṭ",s:"A heavy “t” with a full mouth.",j:true,sun:true,w:"طَيِّبَة",wt:"ṭayyibah",wm:"good and pure",ref:"20:1",named:true},
+{g:"ظ",n:"Ẓā’",t:"ẓ",t2:"ẓ",s:"The heavy twin of dhāl: “th” of “this” with a full mouth.",j:true,sun:true,w:"ظِلّ",wt:"ẓill",wm:"shade",ref:"30:41",named:false},
+{g:"ع",n:"ʿAyn",t:"ʿ",t2:"ʿ",s:"A gentle squeeze of the throat with the voice on. The most Arabic of sounds; be patient with it.",j:true,sun:false,w:"عِلْم",wt:"ʿilm",wm:"knowledge",ref:"19:1",named:true},
+{g:"غ",n:"Ghayn",t:"gh",t2:"gh",s:"Like a soft French “r”: a gentle gargle with the voice on.",j:true,sun:false,w:"غَفُور",wt:"ghafūr",wm:"All-Forgiving",ref:"30:2",named:false},
+{g:"ف",n:"Fā’",t:"f",t2:"f",s:"“f” as in “fine”.",j:true,sun:false,w:"فَجْر",wt:"fajr",wm:"dawn",ref:"108:2",named:false},
+{g:"ق",n:"Qāf",t:"q",t2:"q",s:"A deep “k” from the very back of the throat, like a raven's “caw”.",j:true,sun:false,w:"قُرْآن",wt:"qur’ān",wm:"the Recitation",ref:"50:1",named:true},
+{g:"ك",n:"Kāf",t:"k",t2:"k",s:"“k” as in “kind”.",j:true,sun:false,w:"كِتَاب",wt:"kitāb",wm:"book",ref:"19:1",named:true},
+{g:"ل",n:"Lām",t:"l",t2:"l",s:"“l” as in “lamp”.",j:true,sun:true,w:"لَيْل",wt:"layl",wm:"night",ref:"2:1",named:true},
+{g:"م",n:"Mīm",t:"m",t2:"m",s:"“m” as in “moon”.",j:true,sun:false,w:"مَسْجِد",wt:"masjid",wm:"mosque, place of sujud",ref:"2:1",named:true},
+{g:"ن",n:"Nūn",t:"n",t2:"n",s:"“n” as in “noon”.",j:true,sun:true,w:"نُور",wt:"nūr",wm:"light",ref:"68:1",named:true},
+{g:"ه",n:"Hā’",t:"h",t2:"h",s:"A light open “h” as in “hello”.",j:true,sun:false,w:"هُدًى",wt:"hudā",wm:"guidance",ref:"19:1",named:true},
+{g:"و",n:"Wāw",t:"w",t2:"w",s:"“w” as in “water”; also stretches “u” into “oo”.",j:false,sun:false,w:"وَاحِد",wt:"wāḥid",wm:"one",ref:"103:1",named:false},
+{g:"ي",n:"Yā’",t:"y",t2:"y",s:"“y” as in “yes”; also stretches “i” into “ee”.",j:true,sun:false,w:"يَوْم",wt:"yawm",wm:"day",ref:"36:1",named:true}
+];
+
+/* “the” + a real Qur'anic word for every letter (sun/moon game) */
+var DEF={
+"ا":["آخِرَة","الْآخِرَة","al-ākhirah","the Hereafter"],"ب":["بَيْت","الْبَيْت","al-bayt","the House"],
+"ت":["تَوْبَة","التَّوْبَة","at-tawbah","the repentance"],"ث":["ثَمَرَات","الثَّمَرَات","ath-thamarāt","the fruits"],
+"ج":["جَنَّة","الْجَنَّة","al-jannah","the Garden"],"ح":["حَمْد","الْحَمْد","al-ḥamd","the praise"],
+"خ":["خَيْر","الْخَيْر","al-khayr","the good"],"د":["دِين","الدِّين","ad-dīn","the religion"],
+"ذ":["ذِكْر","الذِّكْر","adh-dhikr","the remembrance"],"ر":["رَحْمَـٰن","الرَّحْمَـٰن","ar-Raḥmān","the Most Merciful"],
+"ز":["زَكَاة","الزَّكَاة","az-zakāh","the alms"],"س":["سَلَام","السَّلَام","as-salām","the peace"],
+"ش":["شَمْس","الشَّمْس","ash-shams","the sun"],"ص":["صَلَاة","الصَّلَاة","aṣ-ṣalāh","the prayer"],
+"ض":["ضَالِّين","الضَّالِّين","aḍ-ḍāllīn","those astray"],"ط":["طَيِّبَات","الطَّيِّبَات","aṭ-ṭayyibāt","the good things"],
+"ظ":["ظُلُمَات","الظُّلُمَات","aẓ-ẓulumāt","the darknesses"],"ع":["عِلْم","الْعِلْم","al-ʿilm","the knowledge"],
+"غ":["غَفُور","الْغَفُور","al-ghafūr","the All-Forgiving"],"ف":["فَجْر","الْفَجْر","al-fajr","the dawn"],
+"ق":["قَمَر","الْقَمَر","al-qamar","the moon"],"ك":["كِتَاب","الْكِتَاب","al-kitāb","the Book"],
+"ل":["لَيْل","اللَّيْل","al-layl","the night"],"م":["مَسْجِد","الْمَسْجِد","al-masjid","the mosque"],
+"ن":["نُور","النُّور","an-nūr","the light"],"ه":["هُدَى","الْهُدَى","al-hudā","the guidance"],
+"و":["وَدُود","الْوَدُود","al-wadūd","the Most Loving"],"ي":["يَوْم","الْيَوْم","al-yawm","the day"]};
+
+var TAT="ـ";
+function forms(o){
+  return {
+    alone:o.g,
+    start:o.j?o.g+TAT:o.g,
+    mid:o.j?TAT+o.g+TAT:TAT+o.g,
+    end:TAT+o.g
+  };
+}
+
+/* ---------- progress ---------- */
+var met={};
+try{met=JSON.parse(localStorage.getItem("noor_arabic_met")||"{}")||{}}catch(e){}
+function saveMet(){try{localStorage.setItem("noor_arabic_met",JSON.stringify(met))}catch(e){}}
+function metCount(){return Object.keys(met).length}
+function paintProgress(){
+  var c=metCount();
+  $("progress-num").textContent=c+"/28";
+  $("progress-ring").style.setProperty("--p",Math.round(c/28*100));
+}
+
+/* ---------- letter grid + lens ---------- */
+var grid=$("lgrid");
+L.forEach(function(o,i){
+  var d=document.createElement("div");
+  d.className="lt"+(met[o.g]?" is-met":"");
+  d.setAttribute("role","listitem");
+  d.setAttribute("tabindex","0");
+  d.innerHTML='<span class="met">✦</span><div class="g notranslate" translate="no">'+o.g+'</div><div class="n">'+o.n+"</div>";
+  function pick(){selectLetter(i,d)}
+  d.addEventListener("click",pick);
+  d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
+  grid.appendChild(d);
+});
+function selectLetter(i,cell){
+  var o=L[i],f=forms(o);
+  document.querySelectorAll("#lgrid .lt").forEach(function(x){x.classList.remove("sel")});
+  cell.classList.add("sel");
+  if(!met[o.g]){met[o.g]=1;saveMet();cell.classList.add("is-met");paintProgress()}
+  var lens=$("lens");
+  lens.innerHTML=
+  '<div class="lens-top">'+
+    '<div class="lens-glyph notranslate" translate="no">'+o.g+'</div>'+
+    '<div><div class="lens-name"><b>'+o.n+'</b><span class="tr">· '+o.t+' · '+(o.sun?'<span class="badge-sun">sun letter</span>':'<span class="badge-moon">moon letter</span>')+"</span></div>"+
+    '<p class="lens-sound">'+o.s+"</p>"+
+    (o.j?"":'<span class="nojoin">✋ never joins to the letter after it</span>')+
+  "</div></div>"+
+  '<div class="forms">'+
+    '<div class="fcell"><div class="fg notranslate" translate="no">'+f.alone+'</div><div class="fl">alone</div></div>'+
+    '<div class="fcell"><div class="fg notranslate" translate="no">'+f.start+'</div><div class="fl">start</div></div>'+
+    '<div class="fcell"><div class="fg notranslate" translate="no">'+f.mid+'</div><div class="fl">middle</div></div>'+
+    '<div class="fcell"><div class="fg notranslate" translate="no">'+f.end+'</div><div class="fl">end</div></div>'+
+  "</div>"+
+  '<div class="lens-word">'+
+    '<span class="war notranslate" translate="no">'+o.w+'</span>'+
+    '<span><div class="wtr">'+o.wt+'</div><div class="wm">'+o.wm+"</div></span>"+
+    '<button class="hearbtn" data-ref="'+o.ref+'">▶ Hear it</button>'+
+  "</div>"+
+  '<p class="lens-note">'+(o.named
+    ?("✦ "+o.n+" is one of the mysterious opening letters of the Qur'an: in Surah "+o.ref.split(":")[0]+", the reciter pronounces the letter by its very name.")
+    :("✦ The recitation of "+o.ref+" opens with a word that begins with "+o.n+". Listen for it in the first breath."))+"</p>";
+  lens.querySelector(".hearbtn").addEventListener("click",function(){
+    if(window.playAyah)window.playAyah(o.ref,this);
+  });
+  if(window.innerWidth<720)lens.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+/* ---------- harakat ---------- */
+var HK=[
+["َ","Fatha","a","a small stroke above · opens the sound into “a”"],
+["ِ","Kasra","i","a small stroke below · leans the sound into “i”"],
+["ُ","Damma","u","a tiny wāw above · rounds the lips into “u”"],
+["ْ","Sukun","(rest)","a small circle · no vowel; the letter closes and rests"],
+["َّ","Shadda","(double)","a small w-shape · the letter is pressed twice: once resting, once sounding"],
+["ً","Fathatan","an","two fathas · the “-an” ending heard at the end of words"],
+["ِِ","Kasratan","in","two kasras · the “-in” ending","ٍ"],
+["ٌ","Dammatan","un","two dammas · the “-un” ending"]
+];
+HK[6][0]="ٍ"; /* proper kasratan mark */
+var hkBase="ب", hkBaseTr={"ب":"b","ت":"t","ن":"n","م":"m","ل":"l"}, hkSel=0;
+var hkVowel=["a","i","u","","","an","in","un"];
+function hkRender(){
+  var mark=HK[hkSel][0], name=HK[hkSel][1];
+  var glyph=hkBase+mark;
+  if(name==="Fathatan")glyph=hkBase+"ًا"; /* -an usually carries a silent alif */
+  $("hk-big").textContent=glyph;
+  var c=hkBaseTr[hkBase];
+  var say= name==="Sukun"?c
+    : name==="Shadda"?c+c+"a"
+    : c+hkVowel[hkSel];
+  $("hk-say").textContent=say;
+  $("hk-tip").textContent=HK[hkSel][1]+" · "+HK[hkSel][3];
+}
+var hkg=$("hkgrid");
+HK.forEach(function(h,i){
+  var d=document.createElement("div");
+  d.className="hk"+(i===0?" sel":"");
+  d.innerHTML='<div class="hg notranslate" translate="no">'+("ب"+(h[1]==="Fathatan"?"ًا":h[0]))+'</div><div class="hn">'+h[1]+"</div>";
+  d.addEventListener("click",function(){
+    hkSel=i;
+    document.querySelectorAll("#hkgrid .hk").forEach(function(x){x.classList.remove("sel")});
+    d.classList.add("sel");hkRender();
+  });
+  hkg.appendChild(d);
+});
+["ب","ت","ن","م","ل"].forEach(function(b,i){
+  var x=document.createElement("button");
+  x.textContent=b;x.className=i===0?"sel":"";x.setAttribute("translate","no");
+  x.addEventListener("click",function(){
+    hkBase=b;
+    document.querySelectorAll("#hkbase button").forEach(function(y){y.classList.remove("sel")});
+    x.classList.add("sel");hkRender();
+  });
+  $("hkbase").appendChild(x);
+});
+hkRender();
+
+/* ---------- sun & moon ---------- */
+var smg=$("smgrid");
+L.forEach(function(o){
+  var d=document.createElement("div");
+  d.className="sm";d.textContent=o.g;d.setAttribute("translate","no");
+  d.addEventListener("click",function(){
+    document.querySelectorAll("#smgrid .sm").forEach(function(x){x.classList.remove("sunlit","moonlit")});
+    d.classList.add(o.sun?"sunlit":"moonlit");
+    var w=DEF[o.g], show=$("smshow");
+    show.style.display="flex";
+    show.innerHTML='<span class="eq notranslate" translate="no">الـ + '+w[0]+' ← '+w[1]+'</span>'+
+      '<span class="lab"><b>'+w[2]+"</b> · "+w[3]+"<br/>"+
+      (o.sun
+        ? o.n+' is a <span class="badge-sun">sun letter</span>: the L of “al-” melts and '+o.n+" doubles."
+        : o.n+' is a <span class="badge-moon">moon letter</span>: the L of “al-” stands and is heard.')+"</span>";
+  });
+  smg.appendChild(d);
+});
+
+/* ---------- bismillah ---------- */
+var BW=[
+["بِسْمِ","bismi","“In the name” · bā + sīn + mīm: the word ism, name, carried by the letter bā, “in”."],
+["اللَّهِ","llāhi","Allah · the One God. Alif, two lāms pressed together with shadda, and hā. The most spoken word in the Codex."],
+["الرَّحْمَـٰنِ","ar-Raḥmāni","The Most Merciful · rā is a sun letter, so “al-” becomes “ar-r”. Mercy as wide as everything that exists."],
+["الرَّحِيمِ","ar-Raḥīmi","The Especially Merciful · the same root, raḥima, turned toward the believers with tenderness. Two mercies open the Book."]
+];
+var bw=$("bwords");
+BW.forEach(function(w,i){
+  var d=document.createElement("div");
+  d.className="bw";
+  d.innerHTML='<div class="ar notranslate" translate="no">'+w[0]+"</div>";
+  d.addEventListener("click",function(){
+    document.querySelectorAll("#bwords .bw").forEach(function(x){x.classList.remove("sel")});
+    d.classList.add("sel");
+    $("bg-tr").textContent=w[1];
+    $("bg-m").textContent=w[2];
+  });
+  bw.appendChild(d);
+});
+$("bismillah-play").addEventListener("click",function(){if(window.playAyah)window.playAyah("1:1",this)});
+$("iqra-play").addEventListener("click",function(){if(window.playAyah)window.playAyah("96:1",this)});
+
+/* ---------- letter quest ---------- */
+var qMode="name",qRound=0,qScore=0,qHearts=3,qStreak=0,qCur=null,qLock=false;
+var ROUNDS=10;
+function qShuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function qStart(){
+  qRound=0;qScore=0;qHearts=3;qStreak=0;
+  $("qend").style.display="none";$("qplay").style.display="block";
+  qNext();
+}
+function qPaint(){
+  $("qfill").style.width=(qRound/ROUNDS*100)+"%";
+  $("qhearts").textContent="🏮".repeat(qHearts)+"🕯".repeat(3-qHearts);
+  $("qstreak").textContent=qStreak>=2?"🔥 "+qStreak+" streak":"";
+}
+function qNext(){
+  if(qRound>=ROUNDS||qHearts<=0){qFinish();return}
+  qLock=false;
+  qCur=L[Math.floor(Math.random()*L.length)];
+  var f=forms(qCur),shapes=[f.start,f.mid,f.end],label;
+  if(qMode==="name"){
+    $("qglyph").textContent=qCur.g;
+    $("qprompt").textContent="Which letter is this?";
+  }else{
+    var pickForm=Math.floor(Math.random()*3);
+    $("qglyph").textContent=shapes[pickForm];
+    label=["at the start","in the middle","at the end"][pickForm];
+    $("qprompt").textContent="Shape shifter: which letter is this, written "+label+" of a word?";
+  }
+  var opts=[qCur];
+  while(opts.length<4){
+    var c=L[Math.floor(Math.random()*L.length)];
+    if(opts.indexOf(c)===-1)opts.push(c);
+  }
+  qShuffle(opts);
+  var box=$("qopts");box.innerHTML="";
+  opts.forEach(function(o){
+    var b=document.createElement("button");
+    b.className="qopt";b.textContent=o.n+" · "+o.t;
+    b.addEventListener("click",function(){qAnswer(o,b)});
+    box.appendChild(b);
+  });
+  qPaint();
+}
+function qAnswer(o,btn){
+  if(qLock)return;qLock=true;qRound++;
+  var good=o===qCur;
+  if(good){
+    qScore++;qStreak++;btn.classList.add("good");qSpark(btn);
+  }else{
+    qStreak=0;qHearts--;btn.classList.add("bad");
+    $("qglyph").classList.add("shake");
+    setTimeout(function(){$("qglyph").classList.remove("shake")},450);
+    var all=document.querySelectorAll("#qopts .qopt");
+    all.forEach(function(x){if(x.textContent.indexOf(qCur.n+" · ")===0)x.classList.add("good")});
+  }
+  qPaint();
+  setTimeout(qNext,good?650:1250);
+}
+function qSpark(el){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<6;i++){
+    var s=document.createElement("span");
+    s.className="spark";s.textContent="✦";
+    s.style.left=(r.left+r.width/2)+"px";s.style.top=(r.top+window.scrollY-4)+"px";
+    s.style.position="absolute";s.style.color="#F4D46A";
+    s.style.setProperty("--dx",(Math.random()*120-60)+"px");
+    s.style.setProperty("--dy",(-40-Math.random()*70)+"px");
+    document.body.appendChild(s);
+    setTimeout(function(x){return function(){x.remove()}}(s),1000);
+  }
+}
+function qFinish(){
+  $("qplay").style.display="none";$("qend").style.display="block";
+  $("qscore").textContent=qScore+"/"+ROUNDS;
+  var t,l;
+  if(qHearts<=0){t="The lamps went out";l="Every reciter began exactly here. Meet a few more letters above, then try again.";}
+  else if(qScore===ROUNDS){t="✦ Hafiz of Shapes ✦";l="A perfect quest. The letters know your name now. Try the Shape shifter mode, or open the Mushaf and read.";}
+  else if(qScore>=7){t="Keeper of the Letters";l="Strong. A round or two more and the alphabet is yours.";}
+  else{t="Seeker of the Letters";l="Good start. Touch the letters you missed in the constellation above; they will stay with you.";}
+  $("qtitle").textContent=t;$("qline").textContent=l;
+}
+document.querySelectorAll("#qmode button").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.querySelectorAll("#qmode button").forEach(function(x){x.classList.remove("sel")});
+    b.classList.add("sel");qMode=b.getAttribute("data-mode");qStart();
+  });
+});
+$("qrestart").addEventListener("click",qStart);
+qStart();
+paintProgress();
+
+/* reveal */
+try{
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.08});
+  document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
+}catch(e){document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in")})}
+})();
+</script>
+</body>
+</html>
