@@ -35,6 +35,37 @@
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}[hidden]{display:none!important}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#171d31;--lapis:#33507C}
+/* v37 · the professional atelier */
+body{background:linear-gradient(180deg,#FBF8EC,#FFFEF7 20rem)}
+.trk{background:linear-gradient(175deg,#FFFEFA,#FDFAF0);border:1px solid rgba(160,130,50,.28);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 14px 34px rgba(60,48,20,.07);position:relative;overflow:hidden}
+.trk::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.7),transparent)}
+.trk-head{border-bottom:1px solid rgba(160,130,50,.14)}
+.trk-head .tt b{letter-spacing:.01em}
+.trk-head .tt span{letter-spacing:.14em;text-transform:uppercase;font-size:.58rem;font-weight:700;color:rgba(107,85,16,.6)}
+.les{transition:background .18s,padding-left .18s}
+.les:hover{background:#FFF9E6;padding-left:1.35rem}
+.les .st{transition:transform .25s,box-shadow .25s}
+.les:hover .st{transform:scale(1.08)}
+.les.done .st{box-shadow:0 0 12px rgba(201,162,39,.45)}
+.ringm{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(60,48,20,.07) 0);transition:none}
+.ringm b{font-variant-numeric:tabular-nums}
+/* staggered arrival */
+.trk{opacity:0;transform:translateY(16px)}
+.trk.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+@media (prefers-reduced-motion:reduce){.trk{opacity:1;transform:none}.trk.in{transition:none}}
+/* lesson player refinement */
+.card{background:linear-gradient(175deg,#FFFEFA,#FDF9EE);border:1px solid rgba(160,130,50,.32);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 18px 44px rgba(60,48,20,.08);position:relative}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;border-radius:22px 22px 0 0;background:linear-gradient(90deg,transparent,rgba(201,162,39,.75),transparent)}
+.lbar{background:rgba(60,48,20,.08)}
+.lbar i{position:relative;overflow:hidden}
+.lbar i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);width:36%;animation:lshine 2.6s linear infinite}
+@keyframes lshine{from{transform:translateX(-130%)}to{transform:translateX(380%)}}
+@media (prefers-reduced-motion:reduce){.lbar i::after{animation:none}}
+.qo{transition:border-color .16s,transform .16s,box-shadow .16s}
+.qo:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(60,48,20,.08)}
+.nbtn{box-shadow:0 8px 22px rgba(201,162,39,.35)}
+.trust-row{display:flex;justify-content:center;gap:.4rem 1.3rem;flex-wrap:wrap;margin-top:1rem;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.75)}
+.trust-row span{display:inline-flex;align-items:center;gap:.4rem}
 body{margin:0;background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
 .font-amiri{font-family:Amiri,serif}
 .wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
@@ -156,6 +187,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 <p>Eight tracks, forty-seven lessons: read Arabic, know the pillars, walk with the prophets, pray with certainty, believe with understanding, inherit the golden age. Your progress is remembered on this device.</p>
 <div class="tot"><span id="tot-label">0 of 28 lessons complete</span></div>
 <div class="tbar"><i id="tot-bar" style="width:0%"></i></div>
+<div class="trust-row"><span><span data-ic=scroll></span> ijazah on completion</span><span><span data-ic=book></span> every source cited</span><span><span data-ic=shield></span> free for individuals, forever</span></div>
 </section>
 
 <main class="wrap">
@@ -218,6 +250,24 @@ function catalog(){
   });
   box.querySelectorAll("[data-cert]").forEach(function(b){
     b.addEventListener("click",function(){showCert(b.getAttribute("data-cert"))});
+  });
+  /* staggered arrival + rings that count up */
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  box.querySelectorAll(".trk").forEach(function(t, i){
+    if (reduce) { t.classList.add("in"); return; }
+    setTimeout(function(){ t.classList.add("in"); }, 70 * i);
+  });
+  box.querySelectorAll(".ringm").forEach(function(r){
+    var target = parseFloat(r.style.getPropertyValue("--p")) || 0;
+    if (reduce || !target) return;
+    var n = 0, lbl = r.querySelector("b");
+    r.style.setProperty("--p", 0);
+    var t = setInterval(function(){
+      n += Math.max(1, target / 22);
+      if (n >= target) { n = target; clearInterval(t); }
+      r.style.setProperty("--p", n);
+      if (lbl) lbl.textContent = Math.round(n) + "%";
+    }, 26);
   });
   totals();
 }
