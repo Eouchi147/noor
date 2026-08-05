@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="New to Islam? The NOOR guide for converts and reverts: what your shahada meant, your first 24 hours, your first 40 days, learning the prayer step by step, handling family and loneliness, and the mistakes every new Muslim makes."/>
+<meta name="theme-color" content="#14100A"/>
+<title>New Muslim · Begin · NOOR Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=13"/>
+<script src="noor-fx.js" defer></script>
+<script src="sponsor.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+#bhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#1A2016 60%,#22301f 100%);color:#FFFEF7}
+#bhero .dawn{position:absolute;inset:-15%;background:radial-gradient(ellipse 55% 42% at 50% 0%,rgba(138,155,110,.28),transparent 65%),radial-gradient(ellipse 40% 30% at 78% 10%,rgba(201,162,39,.16),transparent 70%);pointer-events:none}
+.shimmer-sage{background:linear-gradient(100deg,#8A9B6E 15%,#F4D46A 50%,#8A9B6E 85%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimb 7s linear infinite}
+@keyframes shimb{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.shimmer-sage{animation:none}}
+.card{background:#fff;border:1px solid rgba(44,36,22,.09);border-radius:1.1rem;padding:1.25rem 1.35rem}
+.card h3{font-weight:700;font-size:1.02rem;margin-bottom:.4rem}
+.card p, .card li{font-size:.88rem;line-height:1.7;color:rgba(44,36,22,.78)}
+.step{display:flex;gap:.9rem;align-items:flex-start;padding:.85rem 0;border-bottom:1px dashed rgba(44,36,22,.1)}
+.step:last-child{border-bottom:0}
+.step .n{flex:0 0 auto;width:1.8rem;height:1.8rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(201,162,39,.4)}
+.step p{font-size:.87rem;line-height:1.65;color:rgba(44,36,22,.78);margin:0}
+.step b{color:var(--ink)}
+.sage-box{border-left:3px solid var(--sage);background:linear-gradient(120deg,rgba(138,155,110,.12),rgba(138,155,110,.03));border-radius:0 1rem 1rem 0;padding:1rem 1.2rem;margin:1.1rem 0}
+.sage-box b{color:#5f7046;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+.sage-box p{font-size:.85rem;line-height:1.65;color:rgba(44,36,22,.78);margin:0}
+.ladder{display:grid;gap:.5rem;margin:1rem 0}
+.rung{display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:.85rem;padding:.7rem .9rem}
+.rung .wk{flex:0 0 auto;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,162,39,.4);border-radius:999px;padding:.2rem .55rem}
+.rung p{font-size:.82rem;color:rgba(44,36,22,.78);margin:0;line-height:1.55}
+details.faq{background:#fff;border:1px solid rgba(44,36,22,.09);border-radius:.9rem;padding:.9rem 1.1rem;margin-bottom:.6rem}
+details.faq summary{cursor:pointer;font-weight:600;font-size:.9rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.faq summary::after{content:"+";color:var(--gold);font-weight:700;font-size:1.1rem}
+details.faq[open] summary::after{content:"–"}
+details.faq p{font-size:.85rem;line-height:1.7;color:rgba(44,36,22,.75);margin-top:.6rem}
+.aya-card{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.14),transparent 70%),linear-gradient(160deg,#1A160F,#241D12);border-radius:1.1rem;padding:1.3rem 1.4rem;text-align:center;margin:1.4rem 0}
+.aya-card .ar{font-family:Amiri,serif;font-size:1.45rem;line-height:2.1;color:#F4D46A;direction:rtl}
+.aya-card .tr{font-size:.82rem;color:rgba(255,254,247,.75);margin-top:.5rem;line-height:1.6}
+.aya-card .src{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.42);margin-top:.5rem}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+h2.sect{font-weight:800;font-size:1.35rem;margin:2.6rem 0 1rem;display:flex;align-items:center;gap:.7rem}
+h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
+</style>
+<link rel="canonical" href="https://noorcodex.com/begin"/>
+</head>
+<body class="antialiased">
+<div id="progress"></div>
+
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">New Muslim</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="bhero">
+<div class="dawn" aria-hidden="true"></div>
+<div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
+<p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">أَسْلَمْتُ لِرَبِّ الْعَالَمِينَ</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-sage">You Just Became New</span></h1>
+<p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">For converts and reverts: what actually just happened, what to do in your first day and your first forty, and how to survive the wobbles — without pretending you grew up with this.</p>
+<p class="mt-5 text-[11px] tracking-[.18em] uppercase text-white/40">You are not a beginner at being loved by Allah</p>
+</div>
+</section>
+
+<main class="max-w-2xl mx-auto px-5 py-10">
+
+<!-- WHAT HAPPENED -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">١</span> What your shahada actually did</h2>
+<div class="card">
+<p>You said two sentences — <em>ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan rasul Allah</em> — and according to the Messenger of Allah ﷺ himself, everything before them was wiped from your record. Not archived. Wiped. When Amr ibn al-As came to pledge allegiance and hesitated over his past, the Prophet ﷺ told him: <b>"Do you not know that Islam demolishes what came before it?"</b> (Muslim 121).</p>
+<p>So the person your old mistakes belonged to no longer exists in the ledger. You are, in the most literal bookkeeping sense, the cleanest adult you know. Many lifelong Muslims will tell you, with a little envy, that they wish they had your page.</p>
+</div>
+<div class="aya-card">
+<p class="ar">قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ</p>
+<p class="tr">"Say: O My servants who have transgressed against themselves — do not despair of the mercy of Allah."</p>
+<p class="src">Qur'an · Az-Zumar 39:53</p>
+</div>
+</section>
+
+<!-- FIRST 24 HOURS -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">٢</span> Your first 24 hours</h2>
+<div class="card">
+<div class="step"><div class="n">1</div><p><b>Breathe. Nothing is due yet.</b> There is no exam tonight. The obligations enter your life the way dawn enters a room — gradually and on schedule, not all at once.</p></div>
+<div class="step"><div class="n">2</div><p><b>Learn one sentence:</b> <em>Bismillah</em> ("in the name of Allah") — say it before you eat, drink, or begin anything. That's a complete act of worship. You're already practicing.</p></div>
+<div class="step"><div class="n">3</div><p><b>Take a full wash (ghusl)</b> if you haven't — a simple full-body rinse with the intention of purification. A shower with intention counts.</p></div>
+<div class="step"><div class="n">4</div><p><b>Tell one safe person, or no one.</b> There is no obligation to announce. Your safety and stability matter in Islamic law; scholars across the schools permit a new Muslim to keep their Islam private while they find their feet.</p></div>
+<div class="step"><div class="n">5</div><p><b>Sleep like someone forgiven</b> — because that is the technical status of your account.</p></div>
+</div>
+</section>
+
+<!-- FIRST 40 DAYS -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">٣</span> Your first forty days — a gentle ladder</h2>
+<p class="text-sm text-ink/60 mb-3">The minimum is smaller than you fear; the maximum is larger than you need. Here is a humane pace — not a legal schedule, just a proven one:</p>
+<div class="ladder">
+<div class="rung"><span class="wk">Wk 1</span><p><b>Wudu + the motions.</b> Learn ablution and physically walk through the prayer positions with a video or a friend — no Arabic required yet. Pray along in English while you learn; understanding precedes recitation.</p></div>
+<div class="rung"><span class="wk">Wk 2</span><p><b>Al-Fatiha, one line a day.</b> Seven short lines — learn one per day with <a href="quran.html?surah=1" class="text-gold underline underline-offset-2">the Mushaf's recitation</a> on repeat. By Friday you own the spine of the prayer for life.</p></div>
+<div class="rung"><span class="wk">Wk 3</span><p><b>Anchor two prayers</b> — most people start with Fajr and Isha (home prayers). Two anchored beats five attempted-and-collapsed. Add the others one at a time as they stick.</p></div>
+<div class="rung"><span class="wk">Wk 4–5</span><p><b>Add Surah al-Ikhlas + the two refuges</b> (112, 113, 114 — twelve short verses total) and the closing tashahhud. Your prayer is now fully self-sufficient.</p></div>
+<div class="rung"><span class="wk">Wk 6</span><p><b>Enter a masjid on a Friday.</b> Stand at the back, copy the room. Nobody is grading you; half the room is worried about their own khushu'.</p></div>
+</div>
+<div class="sage-box"><b>The minimum & the reasonable maximum</b><p><b>Minimum required:</b> the five prayers (learned progressively), Ramadan's fast when it arrives (exemptions apply), honesty, and avoiding the clearly forbidden. That's the floor, and the floor is enough. <b>Reasonable maximum:</b> add the Sunnah gradually — extra prayers, Monday/Thursday fasts, nightly Qur'an — <em>only</em> at a pace you can keep for years. The Prophet ﷺ warned against burning bright and burning out: "This religion is ease, and no one makes it severe except that it defeats him" (Bukhari 39).</p></div>
+</section>
+
+<!-- THE WOBBLES -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">٤</span> The wobbles — every convert has them</h2>
+<div class="grid sm:grid-cols-2 gap-3">
+<div class="card"><h3>"The spark faded"</h3><p>Around month two or three, the honeymoon light dims. This is so universal the Prophet ﷺ named it: every deed has an initial zeal (<em>shirrah</em>) then a lull (<em>fatrah</em>) — and "whoever's lull stays within my Sunnah has succeeded" (Ahmad 6764 · sahih). The lull is not apostasy. It's the second stage of faith.</p></div>
+<div class="card"><h3>"I'm alone in this"</h3><p>Loneliness is the convert's heaviest weight — old circle drifting, new circle not yet grown. Go where Muslims are, even silently: Jumu'ah, a weekly class, one WhatsApp group. Community is not a luxury in this religion; the prayer itself was designed in rows.</p></div>
+<div class="card"><h3>"My family is grieving me"</h3><p>Parents may mourn, mock, or rage. The Qur'an's instruction is surgical: even if they strive to pull you back to shirk, <em>do not obey them — and keep their company in this world with kindness</em> (Luqman 31:15). Firm faith, soft hands. Decades of convert experience say: let your character argue for you; it's the only da'wah most families can hear.</p></div>
+<div class="card"><h3>"I keep sinning"</h3><p>You didn't leave sin behind at the shahada; you left despair. "All the children of Adam constantly err, and the best of those who err are the constant repenters" (Tirmidhi 2499 · hasan). Repentance is not the emergency exit of this religion. It's the front door, used daily, by everyone.</p></div>
+</div>
+</section>
+
+<!-- QUESTIONS -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">٥</span> The questions everyone actually asks</h2>
+<details class="faq"><summary>Do I have to change my name?</summary><p>No — not unless your name carries a meaning that contradicts Islam (rare). The companions kept their pre-Islamic names in almost every case; the Prophet ﷺ changed only names with bad meanings. Your name, your family, your face: all still yours.</p></details>
+<details class="faq"><summary>What about my non-Muslim family — can I still love them, visit, care for them?</summary><p>You must. Kindness to parents is commanded <em>in the same verses</em> that command tawhid (Al-Isra 17:23) — and Luqman 31:15 commands beautiful companionship even to parents who oppose your Islam. Being Muslim makes you a better child, not a stranger.</p></details>
+<details class="faq"><summary>I can't read Arabic. Am I a second-class Muslim?</summary><p>Bilal, the first mu'adhdhin, was Abyssinian; Salman was Persian; Suhayb was Roman. The Qur'an calls itself Arabic; it never calls its people that. Learn Al-Fatiha by sound (everyone did, including native speakers as children), and read meaning in your own language without guilt — <a href="quran.html" class="text-gold underline underline-offset-2">the Mushaf here</a> keeps translation one tap away.</p></details>
+<details class="faq"><summary>What if I converted for someone — marriage, a friend?</summary><p>The door you came through matters less than the house you're in. Many of the ummah's brightest lights entered for one reason and stayed for another. Renew the intention now, in one breath, and it's yours alone.</p></details>
+<details class="faq"><summary>Do I have to be perfect at halal food / dress immediately?</summary><p>The Qur'an itself descended over 23 years; the prohibition of wine alone came in stages. Fix the prayer first — it's the spine that straightens everything else. Then move one thing at a time. Gradualism isn't weakness; it's the revealed method.</p></details>
+<details class="faq"><summary>Where do I learn without getting radicalized or overwhelmed online?</summary><p>Three rules: prefer teachers with real-world mosques and classical training over anonymous accounts; prefer the middle voice over the loudest one; and measure any teaching against the Prophet's ﷺ actual character — "I was only sent to perfect noble character" (Ahmad 8952 · sahih). Start local: your nearest masjid's new-Muslim class outweighs a thousand debate videos.</p></details>
+</section>
+
+<!-- WHERE NEXT -->
+<section class="reveal">
+<h2 class="sect"><span class="amiri">٦</span> Your rooms in this Codex</h2>
+<div class="grid sm:grid-cols-2 gap-3">
+<a href="quran.html" class="card hover:border-gold transition-colors block"><h3>The Mushaf of Light →</h3><p>Read, listen and understand — surah by surah, with translation beside recitation.</p></a>
+<a href="index.html#timeline" class="card hover:border-gold transition-colors block"><h3>The Path →</h3><p>The whole story you just joined — creation to the Seerah to the end of days, 64 illuminated chapters.</p></a>
+<a href="latif.html" class="card hover:border-gold transition-colors block"><h3>The Story of Beauty →</h3><p>For the days you feel not-good-enough: the five pillars, learned the gentle way.</p></a>
+<a href="health.html" class="card hover:border-gold transition-colors block"><h3>Prophetic Health →</h3><p>How the Prophet ﷺ ate, slept and moved — sunnah and science side by side.</p></a>
+</div>
+<div class="aya-card mt-6">
+<p class="ar">الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا</p>
+<p class="tr">"This day I have perfected for you your religion, completed My favour upon you, and am pleased with Islam as your religion." — The religion is complete. You don't have to build it; you only have to walk in.</p>
+<p class="src">Qur'an · Al-Ma'idah 5:3</p>
+</div>
+</section>
+
+</main>
+
+<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
+<div class="relative max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Written for the ones who walked in alone. May every threshold you cross after this one feel lighter.</p>
+<a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="sponsor.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

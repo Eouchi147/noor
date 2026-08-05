@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="The 25 prophets named in the Qur'an, in one interactive chain of light — from Adam to Muhammad ﷺ. Tap any link in the chain: his people, his trial, his mention in the Book. No faces, only light."/>
+<meta name="theme-color" content="#14100A"/>
+<title>The 25 Prophets · Chain of Light · NOOR Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=13"/>
+<script src="noor-fx.js" defer></script>
+<script src="sponsor.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+#phero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#1A160F 55%,#2a2110 100%);color:#FFFEF7}
+#phero .rays{position:absolute;inset:-15%;background:radial-gradient(ellipse 60% 45% at 50% 0%,rgba(201,162,39,.26),transparent 62%),radial-gradient(ellipse 35% 28% at 15% 12%,rgba(244,212,106,.1),transparent 70%);pointer-events:none}
+.shimmer-gold{background:linear-gradient(100deg,#C9A227 20%,#F8E8A6 40%,#C9A227 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimp 6s linear infinite}
+@keyframes shimp{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.shimmer-gold{animation:none}}
+/* chain grid */
+#chain{position:relative}
+#chain::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,162,39,.35) 6%,rgba(201,162,39,.35) 94%,transparent)}
+.ptile{position:relative;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.1rem;padding:1rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;z-index:1}
+.ptile:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(44,36,22,.12);border-color:rgba(201,162,39,.5)}
+.ptile.open{border-color:var(--gold);background:linear-gradient(165deg,#FFFDF4,#FFF7DF)}
+.ptile .ar{font-family:Amiri,serif;font-size:1.7rem;color:var(--gold);line-height:1.3}
+.ptile .en{font-weight:700;font-size:.92rem;margin-top:.15rem}
+.ptile .meta{font-size:.64rem;color:rgba(44,36,22,.5);margin-top:.2rem}
+.ptile .azm{position:absolute;top:.5rem;right:.6rem;font-size:.55rem;font-weight:800;letter-spacing:.08em;color:#8A9B6E;border:1px solid rgba(138,155,110,.4);border-radius:999px;padding:.1rem .4rem}
+.pdetail{grid-column:1/-1;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s ease,opacity .4s ease;z-index:1;position:relative}
+.pdetail.open{max-height:520px;opacity:1}
+.pdetail .inner{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.16),transparent 65%),linear-gradient(160deg,#1A160F,#241D12);border-radius:1.1rem;padding:1.3rem 1.4rem;margin:.15rem .1rem .8rem;color:#FFFEF7}
+.pdetail h3{font-weight:800;font-size:1.05rem;color:#F4D46A}
+.pdetail .line{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.15rem 0 .55rem}
+.pdetail p{font-size:.86rem;line-height:1.7;color:rgba(255,254,247,.82)}
+.pdetail .mention{display:inline-block;margin-top:.7rem;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);border:1px solid rgba(244,212,106,.35);border-radius:999px;padding:.18rem .6rem}
+/* the final tile */
+.ptile.rasul{grid-column:1/-1;padding:1.6rem 1rem;background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.30),transparent 62%),linear-gradient(165deg,#14100A,#241D12);border-color:rgba(201,162,39,.55)}
+.ptile.rasul .ar{font-size:2.6rem;color:#F4D46A;position:relative;display:inline-block}
+.ptile.rasul .en{color:#FFFEF7;font-size:1.15rem}
+.ptile.rasul .meta{color:rgba(255,254,247,.55)}
+.aura{position:absolute;left:50%;top:42%;width:190px;height:190px;transform:translate(-50%,-50%);border-radius:999px;background:radial-gradient(circle,rgba(244,212,106,.30) 0%,rgba(201,162,39,.12) 45%,transparent 70%);animation:aura 4.5s ease-in-out infinite;pointer-events:none}
+.aura.a2{width:260px;height:260px;animation-delay:2.2s;opacity:.7}
+@keyframes aura{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.18);opacity:.45}}
+@media (prefers-reduced-motion:reduce){.aura{animation:none}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+<link rel="canonical" href="https://noorcodex.com/prophets"/>
+</head>
+<body class="antialiased">
+<div id="progress"></div>
+
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="text-ink font-semibold transition-colors">Prophets</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="phero">
+<div class="rays" aria-hidden="true"></div>
+<div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
+<p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">تِلْكَ الرُّسُلُ فَضَّلْنَا بَعْضَهُمْ عَلَىٰ بَعْضٍ</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-gold">The Chain of Light</span></h1>
+<p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">Twenty-five prophets are named in the Qur'an — one unbroken message handed from Adam to Muhammad ﷺ. Tap any link in the chain. No faces, ever: each is a seal of light.</p>
+<div class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-white/60">
+<span class="px-3 py-1 rounded-full border border-white/15">25 named in the Book</span>
+<span class="px-3 py-1 rounded-full border border-white/15">5 of firm resolve · أولو العزم</span>
+<span class="px-3 py-1 rounded-full border border-white/15">One message · La ilaha illa Allah</span>
+</div>
+</div>
+</section>
+
+<main class="max-w-3xl mx-auto px-5 py-10">
+<section class="reveal">
+<div id="chain" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+</section>
+
+<section class="reveal mt-10 text-center">
+<div class="rounded-2xl overflow-hidden" style="background:radial-gradient(circle at 50% 20%,rgba(201,162,39,.25),transparent 60%),linear-gradient(165deg,#14100A,#241D12)">
+<div class="px-6 py-9">
+<p class="font-amiri text-2xl mb-3" style="color:#F4D46A">مَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ</p>
+<p class="text-sm max-w-md mx-auto leading-relaxed" style="color:rgba(255,254,247,.8)">"We make no distinction between any of His messengers" (Al-Baqarah 2:285) — one chain, one Light. Their full stories live on the Path, told in order with every source.</p>
+<a href="index.html#timeline" class="inline-block mt-5 px-4 py-2 rounded-full font-semibold text-sm" style="background:#C9A227;color:#241D12">Walk their stories on the Path →</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
+<div class="relative max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Mention counts are by explicit name in the Qur'an; several prophets are also addressed by title. Chronology follows the Codex Path.</p>
+<a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="sponsor.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+</div>
+</footer>
+
+<script>
+const PROPHETS=[
+["Adam","آدم","The first man, the first prophet","Created by Allah's two hands; taught the names of all things; father of humanity. He slipped, he repented, he was chosen — the pattern of every child of his.","named 25 times",0],
+["Idris","إدريس","Raised to a high station","Of the earliest generations, praised as steadfastly truthful; 'We raised him to a lofty place' (19:57).","named 2 times",0],
+["Nuh","نوح","950 years of calling","The first messenger to a nation drowning in idols. An ark built on dry land, a flood that reset the world, and patience that became proverbial.","named 43 times",1],
+["Hud","هود","Sent to towering 'Ad","To a people proud of their pillars and power: worship Allah alone. A barren wind ended what arrogance built.","named 7 times",0],
+["Salih","صالح","The she-camel of Thamud","To rock-carvers of the valley: a living miracle-camel, a test of restraint — and the cry that followed its killing.","named 9 times",0],
+["Ibrahim","إبراهيم","The intimate friend · Khalilullah","Smasher of idols, survivor of the fire, builder of the Kaaba with his son. Father of prophets: nearly every link after him is his line.","named 69 times",1],
+["Lut","لوط","Sent to the cities of the plain","Ibrahim's nephew, sent to a people of open transgression; saved with his believers at dawn while the cities were overturned.","named 27 times",0],
+["Ismail","إسماعيل","The sacrifice ransomed","Left as an infant by the well of Zamzam; offered himself when his father dreamed the command; co-builder of the House. Ancestor of the final Prophet ﷺ.","named 12 times",0],
+["Ishaq","إسحاق","The laughing promise","Announced to Ibrahim and Sarah in their old age by angel guests. Through him: Yaqub and the prophets of Bani Israil.","named 17 times",0],
+["Yaqub","يعقوب","Israil · father of the twelve","Patriarch whose patience over a lost son became scripture's definition of 'beautiful patience' (sabrun jamil).","named 16 times",0],
+["Yusuf","يوسف","The most beautiful of stories","From the well to the prison to the treasury of Egypt; the dream that took decades to come true and the forgiveness that outshone it.","named 27 times",0],
+["Ayyub","أيوب","Patience under ruin","Wealth, children, health — all stripped away; the tongue never once complained of its Lord. 'Excellent servant! Ever turning back' (38:44).","named 4 times",0],
+["Shuayb","شعيب","Preacher to the cheating scales","To Madyan, the merchants who shaved the measure: honesty in the marketplace is worship, and fraud is a nation-breaking sin.","named 11 times",0],
+["Musa","موسى","Spoken to directly · Kalimullah","Drawn from the river to be raised by his enemy; the staff, the sea, the Sinai. No name is repeated in the Qur'an more often.","named 136 times",1],
+["Harun","هارون","The eloquent brother","Given as answer to Musa's own prayer — a prophet requested and granted, partner in the confrontation with Pharaoh.","named 20 times",0],
+["Dhul-Kifl","ذو الكفل","Of the patient ones","Named among the steadfast and righteous (21:85); many scholars place him among the prophets of Bani Israil.","named 2 times",0],
+["Dawud","داود","The iron-softening king","Slayer of Jalut, given the Zabur and a voice the mountains echoed; a kingdom held with a worshipper's heart.","named 16 times",0],
+["Sulayman","سليمان","The kingdom like no other after","Wind at his command, jinn in his workforce, the speech of birds and ants understood — and the prayer that it all be a trial he passes.","named 17 times",0],
+["Ilyas","إلياس","Against the cult of Baal","Sent to a people worshipping Baal: 'Do you call upon Baal and abandon the best of creators?' (37:125).","named 3 times",0],
+["Alyasa","اليسع","Of the excellent ones","Successor in the line of Bani Israil's prophets, counted 'among the excellent' (38:48).","named 2 times",0],
+["Yunus","يونس","The companion of the whale","He left his city before permission came; three darknesses — night, sea, whale — and the du'a that every distressed soul has borrowed since (21:87).","named 4 times",0],
+["Zakariyya","زكريا","The whispered prayer","Guardian of Maryam; an old man who prayed in secret for an heir and was answered with Yahya.","named 7 times",0],
+["Yahya","يحيى","A name never given before","Announced by angels, wise while still a boy, 'compassion from Us and purity' (19:13) — and a martyr's end.","named 5 times",0],
+["Isa","عيسى","Word of Allah, son of Maryam","Born of no father, speaking from the cradle, healing by Allah's leave; neither more than a servant nor less than a miracle — and he will return.","named 25 times",1],
+];
+const chain=document.getElementById("chain");
+chain.innerHTML = PROPHETS.map((p,i)=>`
+<button class="ptile" data-i="${i}" aria-expanded="false">
+  ${p[5]?'<span class="azm">ULUL-AZM</span>':''}
+  <div class="ar">${p[1]}</div>
+  <div class="en">${p[0]}</div>
+  <div class="meta">${p[2]}</div>
+</button>
+<div class="pdetail" id="pd-${i}"><div class="inner">
+  <h3>${p[0]} · ${p[1]}</h3>
+  <div class="line">${p[2]}${p[5]?" · one of the five of firm resolve":""}</div>
+  <p>${p[3]}</p>
+  <span class="mention">${p[4]} in the Qur'an</span>
+</div></div>`).join("")+`
+<button class="ptile rasul" data-i="24" aria-expanded="false">
+  <span class="aura" aria-hidden="true"></span><span class="aura a2" aria-hidden="true"></span>
+  <span class="azm">ULUL-AZM · THE SEAL</span>
+  <div class="ar">مُحَمَّد ﷺ</div>
+  <div class="en">Muhammad ﷺ</div>
+  <div class="meta">The Seal of the Prophets · Mercy to the worlds · Makkah & Madinah</div>
+</button>
+<div class="pdetail" id="pd-24"><div class="inner">
+  <h3>Muhammad ﷺ · مُحَمَّد</h3>
+  <div class="line">Khatam an-Nabiyyin — the Seal of the Prophets (33:40)</div>
+  <p>Orphan of Makkah, trusted before he was believed, and at forty the cave of Hira filled with the first word: Iqra. Twenty-three years of revelation completed the one message every name above him carried — and sealed it. "We have not sent you except as a mercy to the worlds" (21:107). His life is this Codex's entire Seerah, told chapter by chapter on the Path.</p>
+  <span class="mention">named 4 times as Muhammad · once as Ahmad (61:6)</span>
+</div></div>`;
+
+chain.addEventListener("click",e=>{
+  const t=e.target.closest(".ptile"); if(!t)return;
+  const i=t.dataset.i, d=document.getElementById("pd-"+i);
+  const wasOpen=d.classList.contains("open");
+  document.querySelectorAll(".pdetail.open").forEach(x=>x.classList.remove("open"));
+  document.querySelectorAll(".ptile.open").forEach(x=>{x.classList.remove("open");x.setAttribute("aria-expanded","false");});
+  if(!wasOpen){ d.classList.add("open"); t.classList.add("open"); t.setAttribute("aria-expanded","true");
+    setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"nearest"}),120); }
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

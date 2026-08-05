@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="My First Steps — the NOOR Little Codex guide for kids learning to practice Islam: the big sentence, wudu step by step, the five prayers with their skies, and little golden words for every day."/>
+<meta name="theme-color" content="#0d1633"/>
+<title>My First Steps · NOOR Little Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
+<style>
+:root{--night:#0d1633;--night2:#1e3a8a;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416}
+body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+.font-amiri{font-family:Amiri,serif}
+header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
+.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
+.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
+.backlink:hover{color:var(--gold)}
+main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
+.hero{text-align:center;padding:1.6rem 0 1.2rem}
+.hero .moon{font-size:2.6rem;display:block;margin-bottom:.4rem;filter:drop-shadow(0 0 14px rgba(233,200,106,.6))}
+.hero h1{margin:.2rem 0;font-size:1.7rem;font-weight:800;color:var(--gold)}
+.hero p{color:rgba(255,254,247,.75);font-size:.9rem;line-height:1.6;max-width:26rem;margin:.5rem auto 0}
+.progress-row{display:flex;justify-content:center;gap:.35rem;margin-top:1rem;flex-wrap:wrap}
+.pstar{font-size:1.3rem;opacity:.25;transition:opacity .3s,transform .3s}
+.pstar.lit{opacity:1;transform:scale(1.15);filter:drop-shadow(0 0 8px rgba(233,200,106,.8))}
+section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,106,.22);border-radius:20px;padding:1.2rem 1.15rem;margin:1.1rem 0}
+.lesson h2{margin:0 0 .25rem;font-size:1.15rem;color:var(--gold);display:flex;align-items:center;gap:.55rem}
+.lesson h2 .big{font-size:1.5rem}
+.lesson .sub{font-size:.78rem;color:rgba(255,254,247,.55);margin:0 0 .8rem}
+.lesson p{font-size:.86rem;line-height:1.65;color:rgba(255,254,247,.82)}
+.card{background:var(--parchment);color:var(--ink);border-radius:16px;border:2px solid var(--goldd);padding:1rem 1.1rem;margin:.8rem 0}
+.card .ar{font-family:Amiri,serif;font-size:1.5rem;text-align:center;color:#241D12;line-height:1.9;direction:rtl}
+.card .say{text-align:center;font-size:.8rem;color:rgba(44,36,22,.65);font-style:italic;margin-top:.3rem}
+.card .mean{text-align:center;font-size:.84rem;color:rgba(44,36,22,.85);font-weight:600;margin-top:.4rem}
+.wsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:.8rem}
+.wstep{background:rgba(255,254,247,.06);border:1.5px dashed rgba(233,200,106,.35);border-radius:14px;padding:.7rem .4rem;text-align:center}
+.wstep .ic{font-size:1.5rem;display:block}
+.wstep .t{font-size:.68rem;font-weight:700;color:var(--gold);display:block;margin-top:.3rem}
+.wstep .d{font-size:.62rem;color:rgba(255,254,247,.6);display:block;margin-top:.15rem;line-height:1.4}
+.wstep .x{font-size:.6rem;color:rgba(255,254,247,.45)}
+.prayers{display:grid;gap:.5rem;margin-top:.8rem}
+.prayer{display:flex;align-items:center;gap:.75rem;background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.25);border-radius:14px;padding:.6rem .8rem}
+.sky{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:999px;border:2px solid rgba(233,200,106,.5)}
+.sky.fajr{background:linear-gradient(180deg,#1e3a8a 40%,#f9a8d4)}
+.sky.dhuhr{background:radial-gradient(circle at 50% 40%,#fde68a,#60a5fa)}
+.sky.asr{background:linear-gradient(180deg,#93c5fd,#fbbf24)}
+.sky.maghrib{background:linear-gradient(180deg,#f97316,#7c2d12)}
+.sky.isha{background:radial-gradient(circle at 65% 30%,#e9c86a 6%,transparent 7%),linear-gradient(180deg,#0d1633,#1e1b4b)}
+.prayer .nm{font-weight:800;font-size:.9rem;color:var(--parchment)}
+.prayer .tm{font-size:.66rem;color:rgba(255,254,247,.55)}
+.prayer .rk{margin-left:auto;font-size:.8rem;color:var(--gold);letter-spacing:.12em;white-space:nowrap}
+.donebtn{display:block;width:100%;margin-top:1rem;background:linear-gradient(160deg,#E9C86A,#C9A227);color:#241D12;border:0;border-radius:999px;padding:.7rem;font-weight:800;font-size:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:inherit}
+.donebtn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(233,200,106,.3)}
+.donebtn.done{background:rgba(233,200,106,.15);color:var(--gold);border:1.5px solid rgba(233,200,106,.5)}
+.parents{border:1.5px solid rgba(139,168,136,.4);background:rgba(139,168,136,.08);border-radius:20px;padding:1.1rem 1.15rem;margin:1.6rem 0 0}
+.parents h3{margin:0 0 .4rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#8BA888}
+.parents p{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.75);margin:.4rem 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion:reduce){.pstar{transition:none}}
+</style>
+<link rel="canonical" href="https://noorcodex.com/kids/practice"/>
+</head>
+<body>
+<header>
+<div class="hwrap">
+<a class="wordmark" href="../kids.html">☾ NOOR · Little Codex</a>
+<a class="backlink" href="../kids.html">← All wonders</a>
+</div>
+</header>
+
+<main>
+<div class="hero">
+<span class="moon">🌙</span>
+<h1>My First Steps</h1>
+<p>Being Muslim is made of little steps that anyone can learn — even grown-ups. Finish a lesson, tap the button, and light your star.</p>
+<div class="progress-row" id="stars">
+<span class="pstar" data-s="0">⭐</span><span class="pstar" data-s="1">⭐</span><span class="pstar" data-s="2">⭐</span><span class="pstar" data-s="3">⭐</span><span class="pstar" data-s="4">⭐</span>
+</div>
+</div>
+
+<!-- 1 SHAHADA -->
+<section class="lesson" id="l0">
+<h2><span class="big">١</span> The Big Sentence</h2>
+<p class="sub">The whole religion fits in one breath</p>
+<p>Every Muslim in the world — every grandmother in Makkah, every kid in Canada — agrees on one sentence. It's the first thing whispered to babies and the password of the whole ummah:</p>
+<div class="card">
+<p class="ar">لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ</p>
+<p class="say">La ilaha illa Allah, Muhammadun rasul Allah</p>
+<p class="mean">There is no god but Allah, and Muhammad ﷺ is His Messenger.</p>
+</div>
+<p>That's it. That's the key to the whole house. If you can say it and mean it, you're in the family.</p>
+<button class="donebtn" data-l="0">I learned the Big Sentence ⭐</button>
+</section>
+
+<!-- 2 WUDU -->
+<section class="lesson" id="l1">
+<h2><span class="big">٢</span> Wudu — Getting Sparkly</h2>
+<p class="sub">Before we pray, we wash — like getting ready to meet Someone important. Because we are.</p>
+<div class="wsteps">
+<div class="wstep"><span class="ic">🤲</span><span class="t">Hands</span><span class="d">wash them</span><span class="x">×3</span></div>
+<div class="wstep"><span class="ic">👄</span><span class="t">Mouth</span><span class="d">swish water</span><span class="x">×3</span></div>
+<div class="wstep"><span class="ic">👃</span><span class="t">Nose</span><span class="d">sniff & blow</span><span class="x">×3</span></div>
+<div class="wstep"><span class="ic">😊</span><span class="t">Face</span><span class="d">forehead to chin</span><span class="x">×3</span></div>
+<div class="wstep"><span class="ic">💪</span><span class="t">Arms</span><span class="d">to the elbows</span><span class="x">×3</span></div>
+<div class="wstep"><span class="ic">💆</span><span class="t">Head & ears</span><span class="d">wipe once</span><span class="x">×1</span></div>
+</div>
+<div class="wsteps" style="grid-template-columns:1fr">
+<div class="wstep"><span class="ic">🦶</span><span class="t">Feet</span><span class="d">up to the ankles — and you're sparkly clean</span><span class="x">×3</span></div>
+</div>
+<p style="margin-top:.7rem">Start with <b>Bismillah</b>, and remember: wudu isn't a race. Water is precious — the Prophet ﷺ used only a little, even beside a river.</p>
+<button class="donebtn" data-l="1">I can do wudu ⭐</button>
+</section>
+
+<!-- 3 PRAYERS -->
+<section class="lesson" id="l2">
+<h2><span class="big">٣</span> The Five Prayers & Their Skies</h2>
+<p class="sub">Each prayer has its own sky. Watch the window and you'll always know which one it is.</p>
+<div class="prayers">
+<div class="prayer"><span class="sky fajr"></span><span><span class="nm">Fajr</span><br/><span class="tm">before the sun wakes up</span></span><span class="rk">★★</span></div>
+<div class="prayer"><span class="sky dhuhr"></span><span><span class="nm">Dhuhr</span><br/><span class="tm">when the sun is highest</span></span><span class="rk">★★★★</span></div>
+<div class="prayer"><span class="sky asr"></span><span><span class="nm">Asr</span><br/><span class="tm">golden afternoon</span></span><span class="rk">★★★★</span></div>
+<div class="prayer"><span class="sky maghrib"></span><span><span class="nm">Maghrib</span><br/><span class="tm">just after sunset</span></span><span class="rk">★★★</span></div>
+<div class="prayer"><span class="sky isha"></span><span><span class="nm">Isha</span><br/><span class="tm">when the stars come out</span></span><span class="rk">★★★★</span></div>
+</div>
+<p style="margin-top:.7rem">Each ★ is one <b>rak'ah</b> — a round of standing, bowing, and touching your forehead to the floor (the closest place to Allah you can be!). Learn them slowly, one prayer at a time. Try <a href="lanterns.html" style="color:var(--gold)">Five Lanterns</a> to practice!</p>
+<button class="donebtn" data-l="2">I know the five prayers ⭐</button>
+</section>
+
+<!-- 4 LITTLE WORDS -->
+<section class="lesson" id="l3">
+<h2><span class="big">٤</span> Little Golden Words</h2>
+<p class="sub">Tiny sentences that turn ordinary moments into treasure</p>
+<div class="card">
+<p class="ar">بِسْمِ اللَّهِ</p>
+<p class="say">Bismillah</p>
+<p class="mean">"In Allah's name" — before eating, drinking, or starting anything</p>
+</div>
+<div class="card">
+<p class="ar">الْحَمْدُ لِلَّهِ</p>
+<p class="say">Alhamdulillah</p>
+<p class="mean">"All thanks belong to Allah" — after eating, after sneezing, after anything good</p>
+</div>
+<div class="card">
+<p class="ar">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</p>
+<p class="say">Bismika Allahumma amutu wa ahya</p>
+<p class="mean">"In Your name, O Allah, I sleep and I wake" — the goodnight du'a (Bukhari 6324)</p>
+</div>
+<button class="donebtn" data-l="3">I know my golden words ⭐</button>
+</section>
+
+<!-- 5 KINDNESS -->
+<section class="lesson" id="l4">
+<h2><span class="big">٥</span> The Secret Level: Kindness</h2>
+<p class="sub">Worship isn't only on the prayer mat</p>
+<p>The Prophet ﷺ taught that <b>smiling at someone is charity</b> (Tirmidhi 1956), that Allah loves gentle hands, and that the best Muslims are the best to their families. So:</p>
+<p>🌟 Say salam when you come home · 🌟 Help without being asked twice · 🌟 Don't waste water or food · 🌟 Be soft with animals · 🌟 Tell the truth even when it's squeaky-hard</p>
+<p>Every one of these counts on your scale. That's the secret level most grown-ups forget.</p>
+<button class="donebtn" data-l="4">I'm playing the secret level ⭐</button>
+</section>
+
+<!-- PARENTS -->
+<section class="parents">
+<h3>For parents · the minimum & the reasonable maximum</h3>
+<p><b>The floor:</b> children are invited to pray from around seven and expected to keep the habit from around ten (Abu Dawud 495 · hasan) — but accountability before Allah begins only at maturity. Before then, everything is practice, and practice is meant to be praised, not policed.</p>
+<p><b>The reasonable ceiling:</b> a child who loves five short prayers will outgrow a child who was forced through fifty. Add Qur'an in verses, fasting in half-days, and let them see <em>you</em> loving it — the sunnah of teaching is patience: "Allah is gentle and loves gentleness in all things" (Bukhari 6927).</p>
+<p>The Big Codex has the whole story when they're ready: <a href="../index.html" style="color:var(--gold)">the Path</a> · <a href="../quran.html" style="color:var(--gold)">the Mushaf</a> · <a href="../prophets.html" style="color:var(--gold)">the 25 Prophets</a>.</p>
+</section>
+</main>
+
+<script>
+(function(){
+var done=[false,false,false,false,false];
+function paint(){
+  document.querySelectorAll(".pstar").forEach(function(s,i){s.classList.toggle("lit",done[i]);});
+  document.querySelectorAll(".donebtn").forEach(function(b){
+    var i=+b.dataset.l;
+    if(done[i]){b.classList.add("done");b.textContent="⭐ Star earned!";}
+  });
+}
+document.querySelectorAll(".donebtn").forEach(function(b){
+  b.addEventListener("click",function(){
+    var i=+b.dataset.l;
+    done[i]=!done[i];
+    if(!done[i]){b.classList.remove("done");b.textContent=b.getAttribute("data-orig")||b.textContent;paint();return;}
+    b.setAttribute("data-orig",b.textContent);
+    paint();
+    if(done.every(Boolean)){
+      var c=document.createElement("div");c.className="confetti";
+      for(var k=0;k<26;k++){var s=document.createElement("span");s.textContent=["⭐","🌙","✨"][k%3];
+        s.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-5%;font-size:"+(14+Math.random()*18)+"px;transition:transform 2.6s ease-in,opacity 2.6s;";
+        c.appendChild(s);}
+      document.body.appendChild(c);
+      requestAnimationFrame(function(){[].forEach.call(c.children,function(s){s.style.transform="translateY("+(110+Math.random()*30)+"vh) rotate("+(Math.random()*360)+"deg)";s.style.opacity="0";});});
+      setTimeout(function(){c.remove();},3000);
+    }
+  });
+});
+paint();
+})();
+</script>
+</body>
+</html>

@@ -294,7 +294,8 @@ var G=[
  {f:"kids/yunus.html",k:"nk-yunus",a:"#4ade80",i:"whale",n:"Three Words in the Dark",l:"Light the sea from inside the whale"},
  {f:"kids/orchard.html",k:"nk-orchard",a:"#fbbf24",i:"sprout",n:"The 700 Seed",l:"Plant one, harvest seven hundred"},
  {f:"kids/lanterns.html",k:"nk-lanterns",a:"#fb7185",i:"lantern",n:"Five Lanterns",l:"Light the whole day with prayer"},
- {f:"kids/echo.html",k:"nk-echo",a:"#e879f9",i:"med",n:"Echo of Light",l:"Repeat the shining dhikr"}
+ {f:"kids/echo.html",k:"nk-echo",a:"#e879f9",i:"med",n:"Echo of Light",l:"Repeat the shining dhikr"},
+ {f:"kids/practice.html",k:"nk-practice",a:"#E9C86A",i:"lantern",n:"My First Steps",l:"Wudu, the five prayers & golden words"}
 ];
 function isDone(k){try{var v=JSON.parse(localStorage.getItem(k)||"null");return !!(v&&v.done)}catch(e){return false}}
 function gemsDone(){try{var v=JSON.parse(localStorage.getItem("noor-kids-gems")||"null");if(!v)return false;var n=Array.isArray(v)?v.length:Object.keys(v).length;return n>=7}catch(e){return false}}
@@ -314,7 +315,7 @@ function render(){
    '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
  }).join("");
  var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
- c.textContent=total===0?"Twelve wonders are waiting for you ✦":total===12?"All twelve wonders are yours! ✦":"You have finished "+total+" of 12 wonders ✦";
+ c.textContent=total===0?"Thirteen wonders are waiting for you ✦":total===13?"All thirteen wonders are yours! ✦":"You have finished "+total+" of 13 wonders ✦";
 }
 render();
 window.addEventListener("pageshow",render);

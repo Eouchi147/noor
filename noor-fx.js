@@ -53,7 +53,7 @@ const UI_EN = {
   "chars.title":"Characters","chars.sub":"Named beings across the Codex: companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
   "chars.companions":"Companions","chars.angels":"Angels","chars.jinn":"Jinn","chars.animals":"Animals of the Signs","chars.endtime":"End of Time",
   "chars.companions.desc":"Those who saw the Prophet ﷺ, believed, and died upon Islam.","chars.angels.desc":"Created from light. They do not disobey.","chars.jinn.desc":"Created from smokeless fire: believers and rebels.","chars.animals.desc":"Creatures tied to a prophetic story or a clear ayah. Nothing invented.","chars.endtime.desc":"Named figures and forces of the final trials.",
-  "chars.fullpage":"Full companions page →","lang.label":"Language","lang.fallback":"English shown until this language pack is installed.",
+  "nav.quran":"Qur'an","chars.fullpage":"Full companions page →","lang.label":"Language","lang.fallback":"English shown until this language pack is installed.",
   "places.title":"Places","places.sub":"The geography of the Codex: sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end.",
   "places.sanctuaries":"Sanctuaries","places.mountains":"Mountains & Heights","places.cities":"Cities & Lands","places.waters":"Waters & Valleys","places.endtimes":"Stations of the End",
   "places.sanctuaries.desc":"The three mosques of journeys, and the first mosque of this ummah.","places.mountains.desc":"Where revelation landed, armies learned, and pilgrims stand.","places.cities.desc":"The cities and lands that carried the story, from Babylon to Tabuk.","places.waters.desc":"Wells, rivers, seas and valleys that heaven used as instruments.","places.endtimes.desc":"Addresses fixed in prophecy: the minaret, the gate, the plain, the gathering.",
@@ -346,3 +346,7 @@ window.stopAyah = stopAyah;
 window.linkify = linkify;
 window.bindEntityLinks = bindEntityLinks;
 })();
+
+/* v13 nav: center the active chip in the mobile rail */
+(function(){function c(){var a=document.querySelector(".mnav .active");if(a&&a.scrollIntoView)try{a.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c();})();

@@ -325,21 +325,57 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div id="progress"></div>
 
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-<a href="#" class="flex items-center gap-2.5">
-<div class="logo-seal w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<a href="#top" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
 <nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
-<a href="#books" class="hover:text-ink transition-colors" data-i18n="nav.books">Books</a>
-<a href="#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="#timeline" class="text-ink font-semibold transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
-<a href="places.html" class="hover:text-ink transition-colors" data-i18n="nav.places">Places</a>
-<a href="words.html" class="hover:text-ink transition-colors" data-i18n="nav.words">Words</a>
-<a href="health.html" class="hover:text-ink transition-colors" data-i18n="nav.health">Health</a>
-<a href="#mizan" class="hover:text-ink transition-colors" data-i18n="nav.mizan">Two Lives</a>
 <a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<a href="#about" class="hover:text-ink transition-colors" data-i18n="nav.about">About</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
 <option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
 </select>
@@ -349,14 +385,18 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </button>
 </div>
 <div class="md:hidden border-t border-ink/5">
-<div class="flex flex-wrap justify-center gap-2 px-4 py-2 text-xs font-semibold">
-<a href="#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<div class="mnav text-xs font-semibold">
+<a href="#timeline" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
 <a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
 <a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
 <a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
 <a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
 <a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
-<a href="#books" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.books">Books</a>
 </div>
 </div>
 <div id="search-bar" class="hidden border-t border-ink/5 bg-parchment">

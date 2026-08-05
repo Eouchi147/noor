@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://noorcodex.com/</loc></url>
+  <url><loc>https://noorcodex.com/quran</loc></url>
+  <url><loc>https://noorcodex.com/latif</loc></url>
+  <url><loc>https://noorcodex.com/begin</loc></url>
+  <url><loc>https://noorcodex.com/theology</loc></url>
+  <url><loc>https://noorcodex.com/prophets</loc></url>
   <url><loc>https://noorcodex.com/characters</loc></url>
   <url><loc>https://noorcodex.com/companions</loc></url>
   <url><loc>https://noorcodex.com/health</loc></url>
@@ -8,6 +13,7 @@
   <url><loc>https://noorcodex.com/places</loc></url>
   <url><loc>https://noorcodex.com/sponsor</loc></url>
   <url><loc>https://noorcodex.com/words</loc></url>
+  <url><loc>https://noorcodex.com/kids/practice</loc></url>
   <url><loc>https://noorcodex.com/kids/island</loc></url>
   <url><loc>https://noorcodex.com/kids/echo</loc></url>
   <url><loc>https://noorcodex.com/kids/kaaba-builder</loc></url>

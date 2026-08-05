@@ -1,191 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<title>Companions, NOOR Codex of Light</title>
+<meta name="description" content="NOOR Companions: every companion of the Prophet ﷺ in the Codex — caliphs, mothers of the believers, martyrs and standard-bearers. Seals of light, never faces. Tap any seal to open the full account."/>
+<meta name="theme-color" content="#14100A"/>
+<title>Companions · NOOR Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css?v=10"/>
-<style>
-body{background:#FFFEF7;color:#2C2416;font-family:Inter,system-ui,sans-serif}
-.font-amiri{font-family:Amiri,serif}
-.seal{transition:transform .3s,box-shadow .3s}
-.seal:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(44,36,22,.14)}
-</style>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<link rel="stylesheet" href="assets/hub.css?v=10"/>
+<script src="characters.js" defer></script>
+<script src="noor-fx.js" defer></script>
+<script src="noor-guide-data.js" defer></script>
+<script src="noor-guide.js" defer></script>
+<script src="noor-hub.js" defer></script>
 <script src="sponsor.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <link rel="canonical" href="https://noorcodex.com/companions"/>
 </head>
 <body class="antialiased">
-<header id="site-header" class="sticky top-0 z-40 bg-parchment/92 backdrop-blur border-b border-ink/5">
-<div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-<a href="index.html" class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri font-bold text-lg">ن</div>
-<span class="font-amiri text-lg text-ink">نُور</span>
+<div id="progress"></div>
+
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
-<nav class="text-sm text-ink/60 flex gap-5">
-<a href="index.html" class="hover:text-ink">Path</a>
-<a href="index.html#books" class="hover:text-ink">Books</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="characters.html" class="text-ink font-semibold transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
 </nav>
 </div>
 <div class="md:hidden border-t border-ink/5">
-<div class="flex flex-wrap justify-center gap-2 px-4 py-2 text-xs font-semibold">
+<div class="mnav text-xs font-semibold">
 <a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
-<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active" data-i18n="nav.characters">Characters</a>
 <a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
 <a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
 <a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
 <a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
-<a href="index.html#books" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.books">Books</a>
 </div>
 </div>
 </header>
 
-<section class="max-w-5xl mx-auto px-4 py-12">
-<div class="text-center mb-12">
-<p class="font-amiri text-gold text-2xl mb-2">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
-<h1 class="text-3xl sm:text-4xl font-bold text-ink mb-3">Companions of the Messenger</h1>
-<p class="text-ink/60 max-w-xl mx-auto text-sm leading-relaxed">Abstract seals only. No faces. Each seal represents a virtue or title. Full biographies expand as Book 5 (Al-Khulafa) is illuminated.</p>
+<section id="chero">
+<canvas id="chero-canvas" aria-hidden="true"></canvas>
+<svg class="hub-crescent" viewBox="0 0 100 100" aria-hidden="true">
+<defs><radialGradient id="hmg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="hmm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
+<circle cx="50" cy="50" r="36" fill="url(#hmg)" mask="url(#hmm)"/>
+</svg>
+<div class="hero-fade" aria-hidden="true"></div>
+<div class="relative z-[3] max-w-4xl mx-auto px-4 pt-14 pb-16 text-center">
+<p class="font-amiri text-gold text-xl sm:text-2xl mb-3">أَصْحَابُ رَسُولِ اللَّهِ ﷺ</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold" data-i18n="chars.companions">Companions</span></h1>
+<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed" data-i18n="chars.companions.desc"></p>
+<div id="chero-stats" class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-parchment/60"></div>
 </div>
-
-<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 flex items-center justify-center" style="background:radial-gradient(circle at 50% 40%,#C9A22744 0%,transparent 60%),linear-gradient(160deg,#1A160F,#2C2416)"><span class="font-amiri text-5xl text-gold/80">أسد</span></div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Asadullah</div>
-<h2 class="font-semibold text-lg text-ink">Hamza ibn Abd al-Muttalib</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">حمزة بن عبد المطلب</p>
-<p class="text-sm text-ink/65 leading-relaxed">Lion of Allah and of His Messenger. Uncle of the Prophet. Early convert. Martyred at Uhud while defending the Messenger.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">أَبُو بَكْرٍ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">As-Siddiq</div>
-<h2 class="font-semibold text-lg text-ink">Abu Bakr as-Siddiq</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">أبو بكر الصديق</p>
-<p class="text-sm text-ink/65 leading-relaxed">The first adult male to believe. Companion of the Cave. First Caliph. His truthfulness never wavered.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">عُمَرُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Al-Faruq</div>
-<h2 class="font-semibold text-lg text-ink">Umar ibn al-Khattab</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">عمر بن الخطاب</p>
-<p class="text-sm text-ink/65 leading-relaxed">The one who distinguished truth from falsehood. Second Caliph. Justice was his hallmark. The lands of the empires began to open under him.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">عُثْمَانُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Dhun-Nurayn</div>
-<h2 class="font-semibold text-lg text-ink">Uthman ibn Affan</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">عثمان بن عفان</p>
-<p class="text-sm text-ink/65 leading-relaxed">Possessor of the Two Lights. Third Caliph. Compiled the Qur’an into a single official mushaf. Known for extreme modesty and generosity.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">عَلِيٌّ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Abu Turab</div>
-<h2 class="font-semibold text-lg text-ink">Ali ibn Abi Talib</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">علي بن أبي طالب</p>
-<p class="text-sm text-ink/65 leading-relaxed">Cousin and son-in-law of the Prophet. First child to believe. Fourth Caliph. Gate of the city of knowledge. Courage and knowledge combined.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">بِلَالٌ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Mu’adhdhin</div>
-<h2 class="font-semibold text-lg text-ink">Bilal ibn Rabah</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">بلال بن رباح</p>
-<p class="text-sm text-ink/65 leading-relaxed">First mu’adhdhin of Islam. Former slave tortured for his faith. His voice called the adhan from the Kaaba on the day of the Conquest of Makkah.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">سَلْمَانُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Al-Farisi</div>
-<h2 class="font-semibold text-lg text-ink">Salman al-Farisi</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">سلمان الفارسي</p>
-<p class="text-sm text-ink/65 leading-relaxed">The seeker who crossed empires looking for the true prophet. Suggested the trench at Khandaq. The Prophet said of him: “Salman is one of us, the Ahl al-Bayt.”</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-3xl text-gold">خَالِدٌ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Sayfullah</div>
-<h2 class="font-semibold text-lg text-ink">Khalid ibn al-Walid</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">خالد بن الوليد</p>
-<p class="text-sm text-ink/65 leading-relaxed">The Sword of Allah. Never defeated in battle after accepting Islam. Instrumental at Mu’tah, the Conquest, and the wars of apostasy.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-2xl text-gold">خَدِيجَةُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
-<h2 class="font-semibold text-lg text-ink">Khadijah bint Khuwaylid</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">خديجة بنت خويلد</p>
-<p class="text-sm text-ink/65 leading-relaxed">First to believe. The Prophet’s first wife and strongest supporter. Mother of Fatimah. When the first revelation came, she was the one who covered him and believed without hesitation.</p>
-</div>
-</article>
-
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-2xl text-gold">فَاطِمَةُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Sayyidat Nisa al-Alamin</div>
-<h2 class="font-semibold text-lg text-ink">Fatimah bint Muhammad</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">فاطمة بنت محمد</p>
-<p class="text-sm text-ink/65 leading-relaxed">The daughter of the Prophet, wife of Ali, mother of Hasan and Husayn. Part of the Prophet, the one whose pleasure is the pleasure of Allah.</p>
-</div>
-</article>
-
-<article class="seal bg-white rounded-2xl border border-ink/8 overflow-hidden">
-<div class="h-44 bg-gradient-to-br from-ink to-deep flex items-center justify-center">
-<span class="font-amiri text-2xl text-gold">عَائِشَةُ</span>
-</div>
-<div class="p-5">
-<div class="text-[10px] font-semibold uppercase tracking-wider text-gold mb-1">Umm al-Mu’minin</div>
-<h2 class="font-semibold text-lg text-ink">Aisha bint Abi Bakr</h2>
-<p class="font-amiri text-ink/70 text-sm mb-2">عائشة بنت أبي بكر</p>
-<p class="text-sm text-ink/65 leading-relaxed">Mother of the Believers. The most knowledgeable of the women of the ummah. Many of the rulings and details of the Sunnah were preserved through her.</p>
-</div>
-</article>
-
-</div>
-
-<p class="text-center text-xs text-ink/40 mt-14 leading-relaxed max-w-md mx-auto">
-More seals will be added as Book 5 expands. Prophets remain represented only by light, seals, and calligraphy, never faces.
-</p>
 </section>
+
+<nav class="section-nav sticky top-[94px] md:top-14 z-30 bg-parchment/94 backdrop-blur border-b border-ink/5">
+<div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap gap-2 justify-center text-xs font-semibold" id="section-nav-links"></div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16" id="hub-main"></main>
+
+<p class="text-center text-xs text-ink/40 pb-10 leading-relaxed max-w-md mx-auto">
+Seals of light only — no faces, ever. Tap any seal to open the full account.<br/>
+<a href="characters.html" class="text-gold hover:underline">← All Characters: angels, jinn, animals & the end of time</a>
+</p>
+
+<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
+<div class="absolute inset-0 opacity-40 pattern-sahaba" aria-hidden="true"></div>
+<div class="relative max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed" data-i18n="about.text"></p>
+<a href="characters.html" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to Characters</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="sponsor.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+</div>
+</footer>
+
+<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Companions">
+<div class="modal">
+<div class="modal-girih" aria-hidden="true"></div>
+<div class="modal-hero" id="modal-hero"></div>
+<div class="modal-body" id="modal-body"></div>
+<button id="modal-close" class="absolute top-4 right-3.5 w-9 h-9 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-gold hover:text-ink transition-colors z-10" aria-label="Close">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+</button>
+</div>
+</div>
+
+<script>
+window.NOOR_HUB = {
+  data: () => CHARACTERS,
+  type: "char",
+  sections: [
+    {key:"companions", chip:"chip-sahaba", gate:"sg-sahaba", ar:"الصحابة", tk:"chars.companions", dk:"chars.companions.desc"}
+  ]
+};
+</script>
 </body>
 </html>

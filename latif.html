@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="Al-Latif — the story of a girl whose name meant Beauty, who learned the five pillars the gentle way: through failure, return, and the Name that works unseen. For women and every sensitive heart."/>
+<meta name="theme-color" content="#14100A"/>
+<title>Al-Latif · The Story of Beauty · NOOR Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=13"/>
+<script src="noor-fx.js" defer></script>
+<script src="sponsor.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E;--rose:#C4899B}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+#lhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A 0%,#241a1e 60%,#3a2530 100%);color:#FFFEF7}
+#lhero .veil{position:absolute;inset:-15%;background:
+ radial-gradient(ellipse 55% 40% at 50% 0%,rgba(196,137,155,.20),transparent 65%),
+ radial-gradient(ellipse 40% 30% at 20% 15%,rgba(201,162,39,.14),transparent 70%),
+ radial-gradient(ellipse 40% 30% at 80% 12%,rgba(244,212,106,.10),transparent 70%);pointer-events:none}
+.shimmer-rose{background:linear-gradient(100deg,#C4899B 20%,#F4D46A 50%,#C4899B 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimr 7s linear infinite}
+@keyframes shimr{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.shimmer-rose{animation:none}}
+.chapter{scroll-margin-top:90px}
+.ch-gate{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+.ch-gate .orn{flex:0 0 auto;width:3.2rem;height:3.2rem;border-radius:999px;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1.35rem;color:var(--gold);background:radial-gradient(circle at 40% 35%,#2e2129,#14100A);position:relative}
+.ch-gate .orn::after{content:"";position:absolute;inset:-4px;border-radius:999px;border:1px solid rgba(196,137,155,.5);transform:rotate(45deg)}
+.ch-gate .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.5),transparent)}
+.story p{font-size:.95rem;line-height:1.85;color:rgba(44,36,22,.82);margin-bottom:1rem}
+.story p:first-of-type::first-letter{font-family:Amiri,serif;font-size:2.6rem;line-height:1;color:var(--gold);float:left;padding:.18rem .5rem 0 0}
+.heart-box{border-left:3px solid var(--rose);background:linear-gradient(120deg,rgba(196,137,155,.10),rgba(196,137,155,.03));border-radius:0 1rem 1rem 0;padding:1rem 1.2rem;margin:1.2rem 0}
+.heart-box b{color:#9d6377;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.35rem}
+.heart-box p{font-size:.87rem;line-height:1.7;color:rgba(44,36,22,.78);margin:0}
+.aya-card{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.14),transparent 70%),linear-gradient(160deg,#1A160F,#241D12);border-radius:1.1rem;padding:1.3rem 1.4rem;text-align:center;margin:1.2rem 0}
+.aya-card .ar{font-family:Amiri,serif;font-size:1.5rem;line-height:2.1;color:#F4D46A;direction:rtl}
+.aya-card .tr{font-size:.82rem;color:rgba(255,254,247,.75);margin-top:.5rem;line-height:1.65}
+.aya-card .src{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.42);margin-top:.55rem}
+.hadith-chip{display:block;border:1px solid rgba(44,36,22,.1);background:#fff;border-radius:1rem;padding:1rem 1.2rem;margin:1.2rem 0}
+.hadith-chip p{font-size:.87rem;line-height:1.7;color:rgba(44,36,22,.8);margin:0}
+.hadith-chip .src{display:inline-block;margin-top:.5rem;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,162,39,.35);border-radius:999px;padding:.15rem .6rem}
+.latif-thread{text-align:center;font-family:Amiri,serif;color:var(--rose);font-size:1.25rem;margin:2.2rem 0;opacity:.85}
+.latif-thread small{display:block;font-family:Inter;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(44,36,22,.45);margin-top:.3rem}
+/* five doors */
+.doors{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin:1.2rem 0}
+.door{background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:.9rem .9rem .35rem .35rem;padding:.75rem .3rem .6rem;text-align:center;position:relative;overflow:hidden}
+.door::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,162,39,.12),transparent 55%);opacity:0;transition:opacity .3s}
+.door:hover::before{opacity:1}
+.door .a{font-family:Amiri,serif;color:var(--gold);font-size:1.05rem}
+.door .n{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:rgba(44,36,22,.6);margin-top:.2rem}
+.door .t{font-size:.6rem;color:rgba(44,36,22,.45)}
+/* moon strip */
+.moons{display:flex;justify-content:center;gap:.45rem;margin:1.1rem 0;flex-wrap:wrap}
+.moon{width:1.35rem;height:1.35rem;border-radius:999px;background:conic-gradient(from 180deg,#F4D46A var(--f,50%),rgba(44,36,22,.12) 0)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+<link rel="canonical" href="https://noorcodex.com/latif"/>
+</head>
+<body class="antialiased">
+<div id="progress"></div>
+
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="lhero">
+<div class="veil" aria-hidden="true"></div>
+<div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
+<p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">اللَّطِيف</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-rose">The Story of Beauty</span></h1>
+<p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">A semi-fictional love story — not between a girl and a man, but between a struggling heart and the Lord who is <em>Al-Latif</em>: the Subtle, the Gentle, the One whose kindness arrives so quietly you only see it looking back.</p>
+<p class="mt-5 text-[11px] tracking-[.18em] uppercase text-white/40">For women, and for every sensitive heart · Seven chapters</p>
+</div>
+</section>
+
+<main class="max-w-2xl mx-auto px-5 py-12">
+
+<!-- CH 1 -->
+<section class="chapter reveal" id="ch1">
+<div class="ch-gate"><div class="orn">١</div><div><h2 class="font-bold text-xl">The Name She Carried</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Herat · a girl called Beauty</p></div><div class="line"></div></div>
+<div class="story">
+<p>In a house in Herat with a pomegranate tree in the courtyard, there lived a girl whose name meant <em>Beauty</em>. Her grandmother had chosen it the hour she was born, saying every child arrives carrying one of Allah's gifts, and hers was loveliness. But by nineteen, Beauty had privately concluded that her grandmother was wrong about her. She kept a ledger in her chest where she recorded only her failures, and she was its most faithful accountant.</p>
+<p>She believed in Allah the way you believe in a mountain — enormous, distant, unmoved. What she could not believe was that the mountain would ever lean toward <em>her</em>. Her prayers were patchy. Her patience was thin. Her heart, she was sure, was a house too messy to invite anyone into, let alone the King.</p>
+<p>She did not know yet that of all His names, there is one that specializes in people exactly like her. <span class="font-amiri" style="color:#9d6377">اللطيف</span> — Al-Latif. The Gentle. The Subtle. The One who does not break down the door of a messy house, but slips light under it.</p>
+</div>
+<div class="aya-card">
+<p class="ar">اللَّهُ لَطِيفٌ بِعِبَادِهِ يَرْزُقُ مَن يَشَاءُ</p>
+<p class="tr">"Allah is Gentle with His servants; He provides for whom He wills."</p>
+<p class="src">Qur'an · Ash-Shura 42:19</p>
+</div>
+<div class="latif-thread">لطيف<small>The thread begins · gentleness you cannot see yet</small></div>
+</section>
+
+<!-- CH 2 -->
+<section class="chapter reveal" id="ch2">
+<div class="ch-gate"><div class="orn">٢</div><div><h2 class="font-bold text-xl">The Whisper She Already Knew</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Shahada · the first pillar</p></div><div class="line"></div></div>
+<div class="story">
+<p>"My faith feels too small," she told her grandmother one evening, ashamed. "Some days it is a candle in the wind. What kind of Muslim is that?"</p>
+<p>Her grandmother was folding laundry and did not even look up. "Say the words," she said. Beauty blinked. "Which words?" — "The ones you think you have lost." And so, feeling foolish, she whispered: <em>la ilaha illa Allah, Muhammadun rasul Allah</em>. There is no god but Allah; Muhammad is His Messenger. "There," said her grandmother. "Did the wind blow it out? You are still standing. The shahada is not a trophy for the strong. It is a rope for the drowning. It was made the length of a whisper on purpose — so the weakest voice on its weakest day could still reach it."</p>
+</div>
+<div class="heart-box"><b>What the heart learns</b><p>The first pillar is not a feeling; it is a fact you keep declaring until the feeling catches up. Faith increases and decreases — the scholars of Ahl as-Sunnah wrote this into the very definition of iman — and a candle in the wind is still <em>lit</em>.</p></div>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Renew your faith." He was asked, "How do we renew our faith, O Messenger of Allah?" He said: "Say often: la ilaha illa Allah."</p><span class="src">Musnad Ahmad 8695 · hasan</span></div>
+<div class="latif-thread">لطيف<small>He made the door the size of a whisper</small></div>
+</section>
+
+<!-- CH 3 -->
+<section class="chapter reveal" id="ch3">
+<div class="ch-gate"><div class="orn">٣</div><div><h2 class="font-bold text-xl">Five Doors, Not Five Judgments</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Salah · the second pillar</p></div><div class="line"></div></div>
+<div class="story">
+<p>It was the prayers that hurt most. She would miss Fajr and spend the whole day convinced she was a horrible human being — so convinced, in fact, that she would skip Dhuhr too, the way a person who breaks one plate throws the whole stack. "I miss prayers," she finally confessed, expecting her grandmother's face to fall. "Then you are the person the adhan was invented for," the old woman said. "It calls five times because Allah knew we would wander five hundred."</p>
+<p>Her grandmother taught her the secret arithmetic of mercy: that a missed prayer is not a door slammed forever but a door standing open behind you — you turn around and pray it. That the five daily prayers erase what passes between them. That shame which drives you <em>away</em> from the prayer mat is not humility; it is the whisperer wearing humility's clothes.</p>
+</div>
+<div class="doors" aria-hidden="true">
+<div class="door"><div class="a">فجر</div><div class="n">Fajr</div><div class="t">before dawn</div></div>
+<div class="door"><div class="a">ظهر</div><div class="n">Dhuhr</div><div class="t">midday</div></div>
+<div class="door"><div class="a">عصر</div><div class="n">Asr</div><div class="t">afternoon</div></div>
+<div class="door"><div class="a">مغرب</div><div class="n">Maghrib</div><div class="t">sunset</div></div>
+<div class="door"><div class="a">عشاء</div><div class="n">Isha</div><div class="t">night</div></div>
+</div>
+<p class="text-center text-[11px] text-ink/45 -mt-2 mb-4">Five doors. Miss one — the next is already opening. None of them locks behind you.</p>
+<div class="aya-card">
+<p class="ar">إِنَّ الْحَسَنَاتِ يُذْهِبْنَ السَّيِّئَاتِ</p>
+<p class="tr">"Indeed, good deeds wash away misdeeds."</p>
+<p class="src">Qur'an · Hud 11:114 — revealed about the prayers</p>
+</div>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Take on only as much as you can do, for Allah does not weary until you weary. The most beloved deeds to Allah are the most consistent, even if small."</p><span class="src">Bukhari 43 · Muslim 785</span></div>
+<div class="latif-thread">لطيف<small>He counts the returning, not the falling</small></div>
+</section>
+
+<!-- CH 4 -->
+<section class="chapter reveal" id="ch4">
+<div class="ch-gate"><div class="orn">٤</div><div><h2 class="font-bold text-xl">The Hand That Gives Shakes Too</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Zakat · the third pillar</p></div><div class="line"></div></div>
+<div class="story">
+<p>Money was thin in the house with the pomegranate tree. When the lesson came to zakat, Beauty laughed for the first time in the telling — a small bitter laugh. "The purifying of wealth? Grandmother, what wealth? I have a sewing machine and a headache."</p>
+<p>"Zakat is owed by those whose wealth reaches the threshold and rests a year," her grandmother said. "That is law, and law is gentle: if you have little, nothing is asked of you. But sadaqah —" she held up one wrinkled finger, "— sadaqah has no threshold. The Prophet ﷺ said a good word is charity. Your smile is charity. Half a date is charity. Gentleness put generosity within reach of the poor, so that no one would be too poor to be generous."</p>
+<p>That week Beauty hemmed a neighbour's dress and would not take the coins. She walked home lighter than the payment would have made her.</p>
+</div>
+<div class="heart-box"><b>What the heart learns</b><p>The third pillar scales to what you hold: 2.5% of stored wealth for those above the nisab — and for everyone else, a door called sadaqah with no minimum. No one is too broke, too broken, or too small to purify something.</p></div>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Protect yourself from the Fire even with half a date, and if you cannot find that, then with a good word."</p><span class="src">Bukhari 1417 · Muslim 1016</span></div>
+<div class="latif-thread">لطيف<small>He made mercy affordable</small></div>
+</section>
+
+<!-- CH 5 -->
+<section class="chapter reveal" id="ch5">
+<div class="ch-gate"><div class="orn">٥</div><div><h2 class="font-bold text-xl">The Fast That Kept Breaking</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Sawm · the fourth pillar</p></div><div class="line"></div></div>
+<div class="story">
+<p>Ramadan exposed her, or so she believed. "My fast is not good," she said, eyes down. "I think about food all day. Once I ate — I truly forgot, and then I remembered, and then I cried and ate more, because what was the point? I am not made for this."</p>
+<p>Her grandmother put down the teapot. "You forgot and ate? Child, that is not your failure — that is Allah's hospitality. The Prophet ﷺ said whoever eats forgetfully while fasting should complete the fast, <em>for it is Allah who fed him.</em>" Beauty stared. "Fed him?" — "Fed him. While the whole world says 'you ruined it,' the Gentle One says 'I was being kind to you and you didn't notice.' And the crying-then-eating-more — that is the whisperer's oldest trick: convincing you that one stumble cancels the road. The fast is not a test of your stomach. It is a training of your returning."</p>
+</div>
+<div class="moons" aria-hidden="true">
+<span class="moon" style="--f:15%"></span><span class="moon" style="--f:30%"></span><span class="moon" style="--f:45%"></span><span class="moon" style="--f:60%"></span><span class="moon" style="--f:75%"></span><span class="moon" style="--f:90%"></span><span class="moon" style="--f:100%"></span>
+</div>
+<p class="text-center text-[11px] text-ink/45 -mt-1 mb-4">The moon is not ashamed of its phases. It is still called the moon on its thinnest night.</p>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Whoever forgets while fasting and eats or drinks, let him complete his fast, for it is only Allah who fed him and gave him drink."</p><span class="src">Bukhari 1933 · Muslim 1155</span></div>
+<div class="aya-card">
+<p class="ar">يُرِيدُ اللَّهُ بِكُمُ الْيُسْرَ وَلَا يُرِيدُ بِكُمُ الْعُسْرَ</p>
+<p class="tr">"Allah intends ease for you; He does not intend hardship for you." — said in the very verses that command the fast.</p>
+<p class="src">Qur'an · Al-Baqarah 2:185</p>
+</div>
+<div class="latif-thread">لطيف<small>Even her forgetting was catered</small></div>
+</section>
+
+<!-- CH 6 -->
+<section class="chapter reveal" id="ch6">
+<div class="ch-gate"><div class="orn">٦</div><div><h2 class="font-bold text-xl">The Journey She Couldn't Afford</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Hajj · the fifth pillar</p></div><div class="line"></div></div>
+<div class="story">
+<p>Of the fifth pillar she said nothing for a long time, and then, very quietly: "I will never see the Kaaba. We could never afford it. So there is a whole pillar of my religion I simply... cannot have." It was the softest of her griefs, and the oldest.</p>
+<p>"Read the verse," said her grandmother. "Hajj is owed to Allah by the people — <em>those who are able to find a way.</em> Able. The pillar bends down to exempt you the moment the way is closed, and it is not held against you for a single day. And listen —" her voice dropped to the register she saved for secrets, "— the Prophet ﷺ said that whoever prays Fajr in congregation, then sits remembering Allah until the sun rises, then prays two rak'ah, has the reward of a complete Hajj and Umrah. The Kaaba is a direction, child, and you have faced it five times a day your whole life. Some people circle the House. Some people the House circles, gently, all their lives, and they never know."</p>
+</div>
+<div class="heart-box"><b>What the heart learns</b><p>Every pillar carries a built-in mercy clause: shahada fits in a whisper, prayer forgives the forgetter, zakat exempts the poor, the sick do not fast, and Hajj is owed only by the able (Aal Imran 3:97). The obligations were engineered by Someone who knew your limits before you met them. And the excused are not left behind: returning from Tabuk, the Prophet ﷺ said there were people in Madinah who shared the army's reward in every march and every valley — "they were held back by a valid excuse" (Bukhari 4423).</p></div>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Whoever prays Fajr in congregation, then sits remembering Allah until the sun rises, then prays two rak'ah, has the reward of a Hajj and an Umrah — complete, complete, complete."</p><span class="src">Tirmidhi 586 · graded hasan</span></div>
+<div class="aya-card">
+<p class="ar">وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا</p>
+<p class="tr">"Pilgrimage to the House is a duty owed to Allah by all who can find a way to it."</p>
+<p class="src">Qur'an · Aal Imran 3:97</p>
+</div>
+<div class="latif-thread">لطيف<small>The pillar bowed so she would not break</small></div>
+</section>
+
+<!-- CH 7 -->
+<section class="chapter reveal" id="ch7">
+<div class="ch-gate"><div class="orn">٧</div><div><h2 class="font-bold text-xl">The Love Letter</h2><p class="text-[11px] uppercase tracking-widest text-ink/40">Al-Latif · the thread revealed</p></div><div class="line"></div></div>
+<div class="story">
+<p>Years later — after her grandmother had been folded into the earth like clean laundry, after Beauty had missed more prayers and prayed them, broken more fasts and completed them, given away more hemmed dresses than she could count — she was teaching her own daughter the Names of Allah. The girl asked which one was her favourite, and Beauty did not have to think.</p>
+<p>"Al-Latif," she said. "The Gentle. Yusuf عليه السلام said it at the end of his story, when the well and the prison had turned into a throne: <em>my Lord is Latif in what He wills.</em> It means He was working the whole time — in the well, in the dark, in the years that looked like abandonment. Subtle. Unseen. Kind in ways you only understand at the end."</p>
+<p>"I spent my girlhood keeping a ledger of my failures," she told her daughter. "I thought it proved I was not good enough for Him. I never once caught Him keeping it with me. He kept a different book — of every time I turned around. That is the whole love story, my soul: I kept falling out of love with myself, and He never once fell out of gentleness with me. I never became perfect." She kissed her daughter's hair. "I became His. It turned out that was the assignment."</p>
+</div>
+<div class="aya-card">
+<p class="ar">إِنَّ رَبِّي لَطِيفٌ لِّمَا يَشَاءُ ۚ إِنَّهُ هُوَ الْعَلِيمُ الْحَكِيمُ</p>
+<p class="tr">"Indeed, my Lord is Subtle and Gentle in what He wills. He is the Knowing, the Wise." — Yusuf, when the long story finally made sense.</p>
+<p class="src">Qur'an · Yusuf 12:100</p>
+</div>
+<div class="aya-card">
+<p class="ar">أَلَا يَعْلَمُ مَنْ خَلَقَ وَهُوَ اللَّطِيفُ الْخَبِيرُ</p>
+<p class="tr">"Does He who created not know — while He is the Subtle, the All-Aware?"</p>
+<p class="src">Qur'an · Al-Mulk 67:14</p>
+</div>
+<div class="hadith-chip"><p>The Prophet ﷺ said: "Allah is Gentle (Rafiq) and loves gentleness, and He grants through gentleness what He does not grant through harshness."</p><span class="src">Muslim 2593</span></div>
+</section>
+
+<!-- CLOSING -->
+<section class="reveal mt-14 text-center">
+<div class="rounded-2xl overflow-hidden" style="background:radial-gradient(circle at 50% 20%,rgba(196,137,155,.28),transparent 60%),linear-gradient(165deg,#14100A,#2e2129)">
+<div class="px-6 py-10">
+<p class="font-amiri text-3xl mb-3" style="color:#F4D46A">لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ</p>
+<p class="text-sm max-w-md mx-auto leading-relaxed" style="color:rgba(255,254,247,.8)">"Do not despair of the mercy of Allah." (Az-Zumar 39:53) — If you saw yourself in Beauty's ledger, this page was written for you. Start with one whisper, one prayer, one half-date. The Gentle One has been waiting the whole time — quietly, the way He does everything.</p>
+<div class="mt-6 flex flex-wrap justify-center gap-3 text-sm">
+<a href="quran.html?surah=12" class="px-4 py-2 rounded-full bg-gold text-ink font-semibold hover:bg-gold-hi transition-colors" style="background:#C9A227">Read Surah Yusuf →</a>
+<a href="index.html#timeline" class="px-4 py-2 rounded-full border border-white/25 font-semibold transition-colors" style="color:#FFFEF7">Walk the Path →</a>
+</div>
+</div>
+</div>
+<p class="text-[10px] text-ink/35 mt-6 leading-relaxed max-w-md mx-auto">A semi-fictional story: Beauty and her grandmother are imagined; every verse, hadith and ruling cited is real and sourced. Written for the ones who keep ledgers against themselves.</p>
+</section>
+
+</main>
+
+<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
+<div class="relative max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Al-Latif appears in the Qur'an seven times — always where power moves unseen: provision, the raising of Yusuf, the knowledge of the hidden. This story is dedicated to every heart that thought it wasn't enough.</p>
+<a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="sponsor.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
