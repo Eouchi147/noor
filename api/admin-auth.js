@@ -1,7 +1,7 @@
-// NOOR owner gate — password login for the Guardian Console.
+// NOOR owner gate · password login for the Guardian Console.
 // Requires two Vercel env vars, known only to the owner:
-//   ADMIN_PASSWORD  — the owner's password (choose something long)
-//   ADMIN_SECRET    — random string used to sign the session cookie
+//   ADMIN_PASSWORD  · the owner's password (choose something long)
+//   ADMIN_SECRET    · random string used to sign the session cookie
 // Issues an HttpOnly, Secure, SameSite=Strict cookie valid 24h.
 // No password ever stored client-side; no session survives the secret changing.
 

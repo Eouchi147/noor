@@ -1,16 +1,19 @@
-// NOOR Guardian checkout v2 — micro-region edition, Stripe live.
-// Dormant until the owner sets STRIPE_SECRET_KEY in Vercel env vars.
+// NOOR Guardian checkout v3, weekly lamps edition. Stripe live.
+// One Guardian per region at a time. Lamps are held by the week: weekly
+// billing, weekly rotation, so a taken region opens again within days.
 // The server owns the market→price mapping; the client can only name a
-// market id, never a price. Amounts: tier0 $299 · t1 $199 · t2 $99 · t3 $49 · t4 $19 (USD/mo).
-// Payment NEVER precedes the owner's written approval — the owner sends the
-// approved Guardian to sponsor.html, which calls this endpoint.
+// market id, never a price. Weekly USD: t0 $89 · t1 $59 · t2 $29 · t3 $15 · t4 $6.
+// If a region already has a paying Guardian, checkout REFUSES (409) and
+// tells the caller when the current week of light ends.
+
+const GUARDIAN_PRODUCT = "prod_V0xxFgmX793e9L";
 
 const PRICE_BY_TIER = {
-  0: "price_1U0w2tA8jBUhkhi73hFJusZr",  // $299 Worldwide
-  1: "price_1U0w2wA8jBUhkhi7KvuC2ot2",  // $199
-  2: "price_1U0w30A8jBUhkhi7492cquyJ",  // $99
-  3: "price_1U0w35A8jBUhkhi7riBhD5xS",  // $49
-  4: "price_1U0w39A8jBUhkhi7rbkgrnvs"   // $19
+  0: "price_1U12lYA8jBUhkhi7BZWYj7Ud",  // $89/week Worldwide + capitals
+  1: "price_1U12m7A8jBUhkhi7ELu7WiFG",  // $59/week
+  2: "price_1U12mMA8jBUhkhi7Dr6SZFhd",  // $29/week
+  3: "price_1U12mbA8jBUhkhi7igLMTRW1",  // $15/week
+  4: "price_1U12mjA8jBUhkhi7PsB9EcU3"   // $6/week
 };
 
 const MARKET_TIER = {
@@ -37,6 +40,26 @@ const MARKET_CURRENCY = {
   AE:"aed",SA:"sar",QA:"qar",SG:"sgd",MY:"myr",TR:"try",EG:"egp",MA:"mad",PK:"pkr",IN:"inr",ID:"idr",NG:"ngn"
 };
 
+const OCCUPYING = ["active", "trialing", "past_due"];
+
+/* Is this market's lamp already held? Returns null (free) or the epoch
+   seconds when the current week ends. */
+async function occupiedUntil(key, market) {
+  const q = "metadata['noor_market']:'" + market.replace(/'/g, "") + "'";
+  const r = await fetch("https://api.stripe.com/v1/subscriptions/search?limit=20&query=" + encodeURIComponent(q), {
+    headers: { Authorization: "Bearer " + key }
+  });
+  if (!r.ok) return null;   /* fail open rather than block a sale on a hiccup */
+  const j = await r.json();
+  let until = null;
+  (j.data || []).forEach(s => {
+    if (OCCUPYING.indexOf(s.status) === -1) return;
+    const end = s.current_period_end || 0;
+    if (!until || end > until) until = end;
+  });
+  return until;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const key = process.env.STRIPE_SECRET_KEY;
@@ -56,12 +79,41 @@ export default async function handler(req, res) {
   if (body.probe) return res.status(200).json({ enabled: true, market, tier });
 
   try {
+    /* One lamp per region: refuse while another Guardian's week still burns. */
+    const until = await occupiedUntil(key, market);
+    if (until) {
+      return res.status(409).json({
+        taken: true,
+        market,
+        until: new Date(until * 1000).toISOString().slice(0, 10),
+        message: "This region's lamp is lit by another Guardian. It opens again on " +
+                 new Date(until * 1000).toISOString().slice(0, 10) + ", usually within a week."
+      });
+    }
+
     const params = new URLSearchParams({
       mode: "subscription",
       "line_items[0][price]": price,
       "line_items[0][quantity]": "1",
       "subscription_data[metadata][noor_market]": market,
       "metadata[noor_market]": market,
+      /* Guardian intake, right inside checkout: name, link, one line. */
+      "custom_fields[0][key]": "business_name",
+      "custom_fields[0][label][type]": "custom",
+      "custom_fields[0][label][custom]": "Business or brand name (shown on the site)",
+      "custom_fields[0][type]": "text",
+      "custom_fields[0][text][maximum_length]": "60",
+      "custom_fields[1][key]": "website",
+      "custom_fields[1][label][type]": "custom",
+      "custom_fields[1][label][custom]": "Your website or link",
+      "custom_fields[1][type]": "text",
+      "custom_fields[1][text][maximum_length]": "120",
+      "custom_fields[2][key]": "tagline",
+      "custom_fields[2][label][type]": "custom",
+      "custom_fields[2][label][custom]": "One short line about you (optional)",
+      "custom_fields[2][type]": "text",
+      "custom_fields[2][optional]": "true",
+      "custom_fields[2][text][maximum_length]": "80",
       success_url: "https://" + (req.headers.host || "noorcodex.com") + "/sponsor.html?paid=1&market=" + encodeURIComponent(market),
       cancel_url: "https://" + (req.headers.host || "noorcodex.com") + "/sponsor.html?market=" + encodeURIComponent(market)
     });

@@ -1,4 +1,4 @@
-// NOOR Guardian Console data — owner-only (valid noor_admin cookie required).
+// NOOR Guardian Console data · owner-only (valid noor_admin cookie required).
 // Reads live Stripe subscriptions for the Guardian product and returns the
 // money map: MRR, every region's subscriber, status, renewal date.
 
@@ -25,7 +25,8 @@ export default async function handler(req, res) {
   const out = {
     stripeConfigured: !!KEY,
     checkoutEnabled: !!KEY,
-    mrr: 0, activeCount: 0, guardians: [], fetchedAt: new Date().toISOString()
+    lanternConfigured: !!process.env.OPENROUTER_API_KEY,
+    weekly: 0, mrr: 0, activeCount: 0, guardians: [], fetchedAt: new Date().toISOString()
   };
   if (!KEY) return res.status(200).json(out);
 
@@ -44,16 +45,28 @@ export default async function handler(req, res) {
       if (!isGuardian) return;
       const live = s.status === "active" || s.status === "trialing";
       const amount = (price.unit_amount || 0) / 100;
-      if (live) { out.mrr += amount; out.activeCount += 1; }
+      const isWeekly = price.recurring && price.recurring.interval === "week";
+      if (live) {
+        out.weekly += isWeekly ? amount : amount / 4.33;
+        out.mrr += isWeekly ? amount * 4.33 : amount;
+        out.activeCount += 1;
+      }
+      const md = s.metadata || {};
       out.guardians.push({
-        market: (s.metadata && s.metadata.noor_market) || "?",
+        market: md.noor_market || "?",
         status: s.status,
         amount: amount,
+        cadence: isWeekly ? "week" : "month",
         currency: (price.currency || "usd").toUpperCase(),
         email: (s.customer && s.customer.email) || "",
         name: (s.customer && s.customer.name) || "",
         started: s.start_date ? new Date(s.start_date * 1000).toISOString().slice(0, 10) : "",
         renews: s.current_period_end ? new Date(s.current_period_end * 1000).toISOString().slice(0, 10) : "",
+        endsAfterWeek: !!s.cancel_at_period_end,
+        approved: md.noor_approved === "yes",
+        gname: md.noor_name || "",
+        gurl: md.noor_url || "",
+        gline: md.noor_line || "",
         subscription: s.id
       });
     });

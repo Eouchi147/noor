@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="theme-color" content="#04060F"/>
+<title>Ask the Lantern · NOOR Codex of Light</title>
+<meta name="description" content="Ask anything about Islam. The Lantern answers from the Qur'an and authenticated hadith, with the Codex's standards: honest, sourced, warm, never a fatwa."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=15"/>
+<script src="noor-fx.js" defer></script>
+<script src="markets.js" defer></script>
+<script src="sponsor.js" defer></script>
+<style>[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+#gh{position:relative;overflow:hidden;background:linear-gradient(180deg,#04060F 0%,#0B1230 44%,#17224e 78%,#2c3a6e 100%)}
+.gh-fade{position:absolute;inset:auto 0 0 0;height:24%;background:linear-gradient(180deg,transparent,var(--parchment))}
+.lamp-glow{display:inline-block;font-size:2.4rem;color:#E9C86A;filter:drop-shadow(0 0 18px rgba(233,200,106,.65));animation:flick 3.4s ease-in-out infinite}
+@keyframes flick{0%,100%{filter:drop-shadow(0 0 18px rgba(233,200,106,.65))}50%{filter:drop-shadow(0 0 30px rgba(233,200,106,.9))}}
+.room{max-width:46rem;margin:0 auto;padding:1.6rem 1rem 4rem}
+#chat{background:#fff;border:1px solid rgba(201,162,39,.35);border-radius:20px;box-shadow:0 10px 34px rgba(44,36,22,.08);display:flex;flex-direction:column;min-height:24rem}
+#msgs{flex:1;padding:1.1rem 1.15rem;font-size:.86rem;line-height:1.7;overflow-y:auto;max-height:56vh}
+.m{margin:.5rem 0;max-width:88%}
+.m.you{margin-left:auto;background:rgba(201,162,39,.13);border:1px solid rgba(201,162,39,.3);border-radius:16px 16px 5px 16px;padding:.6rem .85rem}
+.m.lamp{background:#FFFDF6;border:1px solid rgba(44,36,22,.08);border-radius:16px 16px 16px 5px;padding:.6rem .85rem;box-shadow:0 2px 8px rgba(44,36,22,.05)}
+.m.lamp a{color:#8a6d13;font-weight:600}
+#chips{display:flex;flex-wrap:wrap;gap:.45rem;padding:0 1.15rem .6rem}
+.chip{border:1px solid rgba(201,162,39,.45);background:#FFFDF0;color:#6b5510;border-radius:999px;padding:.4rem .85rem;font-size:.72rem;font-weight:600;cursor:pointer}
+.chip:hover{background:#FFF7DF}
+#inrow{display:flex;gap:.55rem;padding:.75rem .9rem;border-top:1px solid rgba(44,36,22,.08);background:#FFFDF6;border-radius:0 0 20px 20px}
+#q{flex:1;border:1.5px solid rgba(44,36,22,.18);border-radius:999px;padding:.65rem 1rem;font-size:16px;background:#fff;color:var(--ink);outline:none}
+#q:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.14)}
+#send{border:0;border-radius:999px;width:46px;height:46px;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-size:1.1rem;cursor:pointer;font-weight:800;flex:none}
+.note{font-size:.7rem;color:rgba(44,36,22,.5);line-height:1.7;text-align:center;margin-top:.9rem}
+.std{max-width:46rem;margin:0 auto;padding:0 1rem 3rem}
+.std .card{background:#fff;border:1px solid rgba(201,162,39,.3);border-radius:18px;padding:1rem 1.2rem;font-size:.8rem;line-height:1.7;color:rgba(44,36,22,.8)}
+.std b{color:#6b5510}
+</style>
+<link rel="canonical" href="https://noorcodex.com/ask"/>
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<a href="ask.html" class="hover:text-ink transition-colors text-ink font-semibold">Ask ✦</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<a role="menuitem" href="ask.html">✦ Ask the Lantern</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="ask.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Ask</a>
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+</div>
+</div>
+</header>
+
+<section id="gh">
+<div class="relative z-10 max-w-3xl mx-auto px-4 pt-12 pb-14 text-center">
+<span class="lamp-glow" aria-hidden="true">✦</span>
+<h1 class="text-3xl sm:text-4xl font-bold text-parchment mt-2 mb-3">Ask the Lantern</h1>
+<p class="text-parchment/70 text-sm max-w-xl mx-auto leading-relaxed">The Codex's resident guide. Ask anything about Islam: a verse, a story, a practice, a doubt. It answers from the Qur'an and authenticated hadith, tells you plainly when it is unsure, and points you to a scholar when a question deserves one.</p>
+</div>
+<div class="gh-fade"></div>
+</section>
+
+<div class="room">
+<div id="chat">
+<div id="msgs" aria-live="polite"></div>
+<div id="chips"></div>
+<div id="inrow">
+<input id="q" type="text" maxlength="700" placeholder="Ask anything about Islam…" aria-label="Your question"/>
+<button id="send" aria-label="Send">↑</button>
+</div>
+</div>
+<p class="note">The Lantern is a guide, not a mufti, and it can err. For personal rulings, ask a qualified scholar or your local imam. Questions are sent only to the Codex's own server to be answered, never sold, never used to track you.</p>
+</div>
+
+<div class="std">
+<div class="card">
+<b>The Lantern's standards</b> · answers grounded in the Qur'an and authenticated hadith, cited precisely · the mainstream of Sunni scholarship first, honest about where the schools differ · no fatwas, ever: personal rulings belong with qualified scholars · uncertainty admitted plainly · and on matters of interpretation, Allah knows best.
+</div>
+</div>
+
+<footer class="border-t border-ink/10 py-8 text-center">
+<p class="text-xs text-ink/40">NOOR · Codex of Light · <a class="underline" href="index.html">return to the Codex</a></p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var HKEY="noor_lantern_hist", busy=false;
+function hist(){try{return JSON.parse(sessionStorage.getItem(HKEY)||"[]")}catch(e){return[]}}
+function saveHist(h){try{sessionStorage.setItem(HKEY,JSON.stringify(h.slice(-12)))}catch(e){}}
+function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+function md(x){var s=esc(x);
+  s=s.replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
+  s=s.replace(/\[([^\]]+)\]\((\/[a-z0-9\-\/\.]*|https?:\/\/[^\s)]+)\)/gi,'<a href="$2">$1</a>');
+  return s.split(/\n\n+/).map(function(p){return "<p style='margin:.45em 0'>"+p.replace(/\n/g,"<br/>")+"</p>"}).join("")}
+function add(role,html){var d=document.createElement("div");d.className="m "+(role==="you"?"you":"lamp");d.innerHTML=html;$("msgs").appendChild(d);$("msgs").scrollTop=$("msgs").scrollHeight;return d}
+function send(){
+  if(busy)return;
+  var q=($("q").value||"").trim(); if(!q)return;
+  $("q").value=""; $("chips").innerHTML="";
+  add("you",md(q));
+  var h=hist(); h.push({role:"user",content:q}); saveHist(h);
+  var wait=add("lamp","<span style='color:rgba(44,36,22,.45)'>✦ the Lantern is thinking…</span>");
+  busy=true;
+  fetch("/api/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:q,history:h.slice(0,-1)})})
+    .then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})})
+    .then(function(o){busy=false;
+      var a=(o.j&&o.j.answer)||(o.j&&o.j.error)||"The Lantern flickered. Try again in a moment.";
+      wait.innerHTML=md(a); $("msgs").scrollTop=$("msgs").scrollHeight;
+      if(o.j&&o.j.answer){var h2=hist();h2.push({role:"assistant",content:o.j.answer});saveHist(h2)}
+    })
+    .catch(function(){busy=false;wait.innerHTML=md("The Lantern flickered. Try again in a moment.")});
+}
+$("send").addEventListener("click",send);
+$("q").addEventListener("keydown",function(e){if(e.key==="Enter")send()});
+var h=hist();
+if(h.length){h.forEach(function(m){add(m.role==="assistant"?"lamp":"you",md(m.content))})}
+else{
+  add("lamp",md("Peace be upon you. I am the Lantern, this library's guide. Ask me anything about Islam. I answer from the Qur'an and authenticated hadith, I say so when I am unsure, and I will tell you when a question belongs with a scholar."));
+  [ "What are the five pillars of Islam?","How do I start praying?","What happens in Ramadan?","Who was the Prophet Muhammad ﷺ?" ].forEach(function(q){
+    var c=document.createElement("button");c.className="chip";c.type="button";c.textContent=q;
+    c.addEventListener("click",function(){$("q").value=q;send()});
+    $("chips").appendChild(c);
+  });
+}
+})();
+</script>
+</body>
+</html>

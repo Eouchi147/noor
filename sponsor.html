@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <meta name="theme-color" content="#04060F"/>
 <title>Become a Guardian · NOOR Codex of Light</title>
-<meta name="description" content="One sponsor at a time, vetted against strict halal criteria, supporting a free illuminated chronicle of Islam."/>
+<meta name="description" content="Support the Codex so it stays free for everyone. One halal-vetted sponsor per region, one week at a time, seen by every reader there."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=14"/>
+<link rel="stylesheet" href="assets/tw.css?v=15"/>
 <script src="noor-fx.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
+<script src="lantern.js" defer></script>
 <style>[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A}
@@ -76,6 +77,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
 <a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<a href="ask.html" class="hover:text-ink transition-colors">Ask ✦</a>
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
 <div class="dd-menu" role="menu" aria-label="Explore">
 <p class="dd-h">Journey</p>
@@ -88,6 +90,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
 <a role="menuitem" href="begin.html">New Muslim · Begin</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
+<a role="menuitem" href="ask.html">✦ Ask the Lantern</a>
 <p class="dd-h">The Codex</p>
 <a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
 <a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
@@ -100,6 +103,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
+<a href="ask.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Ask</a>
 <a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
 <a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
@@ -118,28 +122,49 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <section id="gh">
 <div class="relative z-10 max-w-3xl mx-auto px-4 pt-14 pb-16 text-center">
 <p class="font-amiri text-gold text-2xl mb-2">☙ ❧</p>
-<h1 class="text-3xl sm:text-4xl font-bold text-parchment mb-3">Become the Guardian of the Codex</h1>
-<p class="text-parchment/70 text-sm max-w-xl mx-auto leading-relaxed">One Guardian per market. One month at a time. A presence woven quietly through a work read for the sake of Allah, and vetted to the same standard.</p>
+<h1 class="text-3xl sm:text-4xl font-bold text-parchment mb-3">Support the Codex. Keep it free for everyone.</h1>
+<p class="text-parchment/70 text-sm max-w-xl mx-auto leading-relaxed">Your support does two things at once: it keeps this library free, ad-free and tracker-free for every reader, and it places your name before every reader in your region for a full week. One Guardian per region. One line of light. Nothing else.</p>
 </div>
 <div class="gh-fade"></div>
+</section>
+
+<section class="sec" id="claim" style="padding-top:1.9rem">
+<p class="kick">Claim your region</p>
+<h2>Two minutes, three steps</h2>
+<p class="lead">Pick your region, leave your email, pay for your week. At checkout you will type your business name, your link and one short line. The founder reviews every Guardian before the lamp lights, usually within a day; if he cannot approve you under the charter below, your payment is returned in full.</p>
+<div class="card">
+<div id="paid-note" hidden style="background:#f2f9f1;border:1px solid #57b26a;border-radius:12px;padding:.7rem .9rem;font-size:.82rem;line-height:1.6;color:#2d5c38;margin-bottom:.7rem"><b>Your week of light is reserved.</b> The founder is reviewing your details now; the lamp lights after his approval, usually within a day. Your receipt is in your email.</div>
+<label for="f-market">1 · Your region</label>
+<select id="f-market" style="width:100%;border:1.5px solid rgba(44,36,22,.2);border-radius:12px;padding:.6rem .8rem;font-size:16px;background:#FFFDF6;color:var(--ink)">
+<option value="GLOBAL">Worldwide</option>
+</select>
+<p id="price-hint" style="font-size:.78rem;color:#8a6d13;font-weight:600;margin:.4rem 0 0"></p>
+<div id="taken-note" hidden style="background:#FFF7DF;border:1px solid rgba(201,162,39,.5);border-radius:12px;padding:.7rem .9rem;font-size:.8rem;line-height:1.6;color:#6b5510;margin-top:.6rem"></div>
+<label for="f-email">2 · Your email</label>
+<input id="f-email" type="email" maxlength="120" placeholder="you@example.com" autocomplete="email"/>
+<div class="chk"><input type="checkbox" id="a1"/><label for="a1" style="all:unset;font-size:.8rem;line-height:1.55;color:rgba(44,36,22,.8)">Our earnings are lawful (halal), and I accept the charter below and the founder's final review.</label></div>
+<button class="cta" id="payBtn" disabled style="width:100%;margin-top:1.1rem">3 · Become the Guardian</button>
+<p class="note">Secure checkout by Stripe, billed in your own currency. Your week renews automatically; cancel anytime, no questions. Prefer to talk first? Write to <a class="underline" href="mailto:hello@noorcodex.com">hello@noorcodex.com</a>.</p>
+</div>
 </section>
 
 <section class="sec">
 <p class="kick">The model</p>
 <h2>Understated by design</h2>
-<p class="lead">NOOR carries one Guardian per market at a time: Canada, Worldwide, and further markets as they open. Readers in your market see your name on a slim line of honor beneath the header of every page, and on the Guardian seal in the About section. The market is detected on the reader's own device (the domain they typed, their browser language, their clock); nothing is sent or stored. No banners, no popups, no tracking of readers, ever. The restraint is the value: you are not an advertisement here, you are the patron of the room.</p>
+<p class="lead">NOOR carries one Guardian per region at a time, held one week at a time: from single cities to whole countries, about ninety lamps across the earth. Readers in your region see your name on a slim line of honor beneath the header of every page. The region is detected on the reader's own device (the domain they typed, their browser language, their clock); nothing is sent or stored about them. No banners, no popups, no tracking of readers, ever. The restraint is the value: you are not an advertisement here, you are the one keeping this room lit.</p>
 <div class="card">
 <div class="no yes"><span class="m">✦</span><span><b>Site-wide line of honor</b> · beneath the header on every page (Path, Characters, Places, Words, Health, Little Codex hub)</span></div>
 <div class="no yes"><span class="m">✦</span><span><b>The Guardian seal</b> · in the About section, with your one-line message</span></div>
-<div class="no yes"><span class="m">✦</span><span><b>Exclusivity</b> · your market is never shared with a second sponsor</span></div>
-<div class="no yes"><span class="m">✦</span><span><b>A clean conscience</b> · your support keeps the Codex free, ad-free and tracker-free for every reader</span></div>
+<div class="no yes"><span class="m">✦</span><span><b>Exclusivity</b> · while your week burns, your region is yours alone; no second sponsor, ever</span></div>
+<div class="no yes"><span class="m">✦</span><span><b>Weekly rotation</b> · lamps are held by the week, so a taken region opens again within days; keep renewing and it stays yours</span></div>
+<div class="no yes"><span class="m">✦</span><span><b>A clean conscience</b> · your support is what keeps the Codex free, ad-free and tracker-free for every reader</span></div>
 </div>
 </section>
 
 <section class="sec" id="charter">
 <p class="kick">The halal charter</p>
 <h2>What we will never publish</h2>
-<p class="lead">Every application is reviewed personally, word by word, by the founder. Approval is his alone, and it is withheld from any business built on:</p>
+<p class="lead">Every Guardian is reviewed personally, word by word, by the founder before the lamp lights. Approval is his alone, and it is withheld (with a full refund) from any business built on:</p>
 <div class="card">
 <div class="no"><span class="m">✕</span><span><b>Riba</b> · interest-based lending, conventional credit products, predatory finance</span></div>
 <div class="no"><span class="m">✕</span><span><b>Gambling</b> · betting, lotteries, games of chance, speculative schemes</span></div>
@@ -172,37 +197,6 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <p class="note">Assumptions: continued weekly content releases, normal search indexing, organic sharing within Muslim communities worldwide; no paid advertising included. Optimistic scenario. Traffic projections are estimates, not a guarantee of results; Guardianship is priced for patronage first, reach second.</p>
 </section>
 
-<section class="sec" id="apply">
-<p class="kick">Apply</p>
-<h2>Guardian application</h2>
-<p class="lead">Terms and rate are arranged directly with the founder after review. Nothing is published, and nothing is owed, until he approves in writing.</p>
-<div class="card">
-<label for="f-market">Market you are applying for</label>
-<select id="f-market" style="width:100%;border:1.5px solid rgba(44,36,22,.2);border-radius:12px;padding:.6rem .8rem;font-size:16px;background:#FFFDF6;color:var(--ink)">
-<option value="CA">Canada · readers in Canada and on noorcodex.ca</option>
-<option value="GLOBAL">Worldwide · every reader outside a sold market</option>
-<option value="OTHER">Another market (describe below)</option>
-</select>
-<label for="f-org">Organization name</label>
-<input id="f-org" type="text" maxlength="80" placeholder="Your organization"/>
-<label for="f-url">Website</label>
-<input id="f-url" type="url" maxlength="200" placeholder="https://..."/>
-<label for="f-line">Proposed one-line message (max 90 characters)</label>
-<input id="f-line" type="text" maxlength="90" placeholder="e.g. Halal groceries delivered across Ontario"/>
-<label for="f-email">Contact email</label>
-<input id="f-email" type="email" maxlength="120" placeholder="you@example.com"/>
-<label for="f-note">Anything the reviewer should know</label>
-<textarea id="f-note" rows="3" maxlength="600"></textarea>
-<div class="chk"><input type="checkbox" id="a1"/><label for="a1" style="all:unset;font-size:.8rem;line-height:1.55;color:rgba(44,36,22,.8)">I attest that our products, services and revenue comply with the charter above, and that our earnings are lawful (halal).</label></div>
-<div class="chk"><input type="checkbox" id="a2"/><label for="a2" style="all:unset;font-size:.8rem;line-height:1.55;color:rgba(44,36,22,.8)">I understand the founder's review is final, the Codex content never changes for sponsors, and readers are never tracked.</label></div>
-<div style="margin-top:1.1rem;display:flex;gap:.7rem;flex-wrap:wrap">
-<button class="cta" id="sendApp" disabled>Send application ✉</button>
-<button class="cta" id="payBtn" hidden style="background:linear-gradient(135deg,#3f7a4d,#57b26a);color:#fff">Proceed to payment</button>
-</div>
-<p class="note">The button opens a pre-filled email to the founder. Payment happens only after written approval; if online payment is enabled, an approved Guardian receives a secure checkout link.</p>
-</div>
-</section>
-
 <footer class="border-t border-ink/10 py-8 text-center">
 <p class="text-xs text-ink/40">NOOR · Codex of Light · one Guardian, strictly vetted · <a class="underline" href="index.html">return to the Codex</a></p>
 </footer>
@@ -211,53 +205,72 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 (function(){
 "use strict";
 var $=function(id){return document.getElementById(id)};
-/* Populate the region list from the market registry (~90 lamps) with live prices.
-   Runs on DOMContentLoaded so the deferred markets.js registry is loaded first. */
+var TAKEN={};
+function marketOf(id){ return (window.NOOR_MARKETS?NOOR_MARKETS.list:[]).filter(function(x){return x.id===id})[0]||null; }
+function weekly(m){
+  var cur=(NOOR_MARKETS.currencyOf||{})[m.id], lp=cur&&(NOOR_MARKETS.localPrices||{})[cur], sym=cur&&(NOOR_MARKETS.curSymbol||{})[cur];
+  return lp ? { txt: sym+lp[m.tier].toLocaleString()+"/week", cur: cur.toUpperCase() } : { txt: "$"+(NOOR_MARKETS.tierPrices||{})[m.tier]+"/week", cur: "USD" };
+}
 document.addEventListener("DOMContentLoaded",function(){
   var sel=$("f-market"); if(!sel||!window.NOOR_MARKETS) return;
-  var tp=NOOR_MARKETS.tierPrices||{};
   var groups={metro:"Regions & metros",country:"Countries",lang:"Language communities",global:"Worldwide"};
   var frag=document.createDocumentFragment(), og={};
   NOOR_MARKETS.list.forEach(function(m){
     var g=og[m.kind]||(og[m.kind]=(function(){var o=document.createElement("optgroup");o.label=groups[m.kind]||m.kind;frag.appendChild(o);return o})());
-    var o=document.createElement("option"); o.value=m.id; o.textContent=m.label+", $"+tp[m.tier]+"/mo"; g.appendChild(o);
+    var o=document.createElement("option"); o.value=m.id; o.textContent=m.label+" · "+weekly(m).txt; g.appendChild(o);
   });
   sel.innerHTML=""; sel.appendChild(frag);
   var want=null; try{want=new URLSearchParams(location.search).get("market")}catch(e){}
   if(!want&&window.NOOR_SPONSOR_API){var mm=NOOR_SPONSOR_API.resolveMarket(NOOR_SPONSOR_API.signals());if(mm)want=mm.id}
   if(want&&sel.querySelector('option[value="'+want+'"]')) sel.value=want;
-  var hint=document.createElement("p"); hint.id="price-hint"; hint.style.cssText="font-size:.78rem;color:#8a6d13;font-weight:600;margin:.4rem 0 0";
-  sel.parentNode.insertBefore(hint,sel.nextSibling);
-  function ph(){ var m=NOOR_MARKETS.list.filter(function(x){return x.id===sel.value})[0]; if(!m)return;
-    var cur=(NOOR_MARKETS.currencyOf||{})[m.id], lp=cur&&(NOOR_MARKETS.localPrices||{})[cur], sym=cur&&(NOOR_MARKETS.curSymbol||{})[cur];
-    var priceTxt = lp ? sym+lp[m.tier].toLocaleString()+"/month (billed in "+cur.toUpperCase()+", your own currency)" : "$"+tp[m.tier]+"/month (USD)";
-    hint.textContent="Exclusive Guardianship of “"+m.label+"”: "+priceTxt+", cancel anytime. One sponsor. Only readers there ever see your seal."; }
-  sel.addEventListener("change",ph); ph();
+
+  try{ if(new URLSearchParams(location.search).get("paid")==="1") $("paid-note").hidden=false; }catch(e){}
+
+  function refresh(){
+    var m=marketOf(sel.value); if(!m) return;
+    var w=weekly(m), t=TAKEN[m.id];
+    var curNote = (NOOR_MARKETS.currencyOf||{})[m.id] ? ", billed in "+w.cur+", your own currency" : ", billed in USD";
+    $("price-hint").textContent="Guardianship of “"+m.label+"”: "+w.txt+curNote+". Cancel anytime. Only readers there ever see your seal.";
+    if(t){
+      $("taken-note").hidden=false;
+      $("taken-note").innerHTML="<b>This region's lamp is already lit this week.</b> It opens again on <b>"+t.until+"</b> · at most a few days away. Come back then, pick a nearby region, or <a class=\"underline\" href=\"mailto:hello@noorcodex.com?subject="+encodeURIComponent("Waitlist: "+m.label)+"\">ask us to hold your place</a>.";
+    } else { $("taken-note").hidden=true; }
+    gate();
+  }
+  function gate(){
+    var m=marketOf(sel.value), t=m&&TAKEN[m.id];
+    var ok=$("a1").checked && !t && m;
+    $("payBtn").disabled=!ok;
+    $("payBtn").textContent = t ? ("Opens "+t.until) : ("3 · Become the Guardian · "+(m?weekly(m).txt:""));
+  }
+  sel.addEventListener("change",refresh);
+  $("a1").addEventListener("change",gate);
+
+  /* Mark regions whose lamp is already lit this week. */
+  if(window.NOOR_SPONSOR_API&&NOOR_SPONSOR_API.loadLamps){
+    NOOR_SPONSOR_API.loadLamps(function(){
+      var L=NOOR_SPONSOR_API.lamps()||{}; TAKEN=L.taken||{};
+      Object.keys(TAKEN).forEach(function(id){
+        var o=sel.querySelector('option[value="'+id+'"]');
+        if(o) o.textContent=o.textContent.split(" · lit")[0]+" · lit until "+TAKEN[id].until;
+      });
+      refresh();
+    });
+  }
+  refresh();
+
+  $("payBtn").addEventListener("click", function(){
+    var btn=$("payBtn"); btn.disabled=true; btn.textContent="Opening secure checkout…";
+    fetch("/api/sponsor-checkout", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ email: $("f-email").value, market: sel.value }) })
+      .then(function(r){ return r.json().then(function(x){ return { s:r.status, x:x }; }); })
+      .then(function(o){
+        if(o.x && o.x.url){ location.href=o.x.url; return; }
+        if(o.s===409 && o.x && o.x.taken){ TAKEN[sel.value]={until:o.x.until}; refresh(); return; }
+        btn.textContent="Checkout is resting · write to hello@noorcodex.com"; btn.disabled=true;
+      })
+      .catch(function(){ btn.textContent="Checkout is resting · write to hello@noorcodex.com"; btn.disabled=true; });
+  });
 });
-function gate(){ $("sendApp").disabled = !($("a1").checked && $("a2").checked); }
-["a1","a2"].forEach(function(id){ $(id).addEventListener("change", gate); });
-$("sendApp").addEventListener("click", function(){
-  var body = [
-    "GUARDIAN APPLICATION · NOOR Codex of Light","",
-    "Market: " + $("f-market").value,
-    "Organization: " + $("f-org").value,
-    "Website: " + $("f-url").value,
-    "Proposed line: " + $("f-line").value,
-    "Contact: " + $("f-email").value,
-    "Notes: " + $("f-note").value,"",
-    "Attestations: charter compliance ✔ · founder's final review accepted ✔"
-  ].join("\n");
-  location.href = "mailto:samkeamy@gmail.com?subject=" + encodeURIComponent("Guardian application: " + ($("f-org").value || "unnamed")) + "&body=" + encodeURIComponent(body);
-});
-/* optional online payment: appears only if the owner has enabled the checkout API */
-fetch("/api/sponsor-checkout", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ probe: true }) })
-  .then(function(r){ if (r.ok) return r.json(); throw 0; })
-  .then(function(j){ if (j && j.enabled) { var b=$("payBtn"); b.hidden=false;
-    b.addEventListener("click", function(){
-      fetch("/api/sponsor-checkout", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ email: $("f-email").value, market: $("f-market").value }) })
-        .then(function(r){ return r.json(); }).then(function(x){ if (x && x.url) location.href = x.url; });
-    }); } })
-  .catch(function(){});
 })();
 </script>
 </body>

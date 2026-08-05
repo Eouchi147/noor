@@ -5,11 +5,13 @@
    Detection uses ONLY: the hostname, the device timezone, the browser
    language tags. Nothing is sent anywhere. Zero tracking, as chartered.
 
-   tier prices (USD/month): 0=$299 · 1=$199 · 2=$99 · 3=$49 · 4=$19
-   To add a region: add one line. To change a tier: change one digit. */
+   tier prices (USD/week): 0=$89 · 1=$59 · 2=$29 · 3=$15 · 4=$6
+   Lamps are held one week at a time and renew weekly, so regions
+   rotate and open often. To add a region: add one line. */
 window.NOOR_MARKETS = {
-  version: 2,
-  tierPrices: { 0: 299, 1: 199, 2: 99, 3: 49, 4: 19 },
+  version: 3,
+  cadence: "week",
+  tierPrices: { 0: 89, 1: 59, 2: 29, 3: 15, 4: 6 },
   /* kind: metro (timezone match) · country (language-region / domain) · lang (language) · global */
   list: [
     /* ---------- domains (strongest signal) ---------- */
@@ -137,13 +139,13 @@ window.NOOR_MARKETS.currencyOf = {
   AE:"aed",SA:"sar",QA:"qar",SG:"sgd",MY:"myr",TR:"try",EG:"egp",MA:"mad",PK:"pkr",IN:"inr",ID:"idr",NG:"ngn"
 };
 window.NOOR_MARKETS.localPrices = {
-  cad:{0:415,1:275,2:137,3:68,4:26},  gbp:{0:235,1:155,2:78,3:38,4:15},
-  eur:{0:279,1:185,2:92,3:46,4:18},   aud:{0:449,1:299,2:149,3:74,4:29},
-  aed:{0:1099,1:730,2:365,3:180,4:70}, sar:{0:1120,1:749,2:375,3:185,4:71},
-  qar:{0:1089,1:725,2:360,3:178,4:69}, sgd:{0:399,1:265,2:132,3:65,4:25},
-  myr:{0:1320,1:880,2:435,3:215,4:84}, try:{0:12500,1:8400,2:4200,3:2060,4:800},
-  egp:{0:14900,1:9950,2:4950,3:2450,4:950}, mad:{0:2930,1:1950,2:970,3:480,4:186},
-  pkr:{0:83500,1:55900,2:27700,3:13700,4:5300}, inr:{0:25000,1:16700,2:8300,3:4100,4:1600},
-  idr:{0:4790000,1:3190000,2:1590000,3:785000,4:305000}, ngn:{0:465000,1:309000,2:154000,3:76000,4:29500}
+  cad:{0:124,1:82,2:40,3:21,4:8},   gbp:{0:70,1:46,2:23,3:12,4:5},
+  eur:{0:83,1:55,2:27,3:14,4:6},    aud:{0:134,1:89,2:44,3:23,4:9},
+  aed:{0:327,1:217,2:107,3:55,4:22}, sar:{0:333,1:221,2:109,3:56,4:22},
+  qar:{0:324,1:215,2:106,3:55,4:22}, sgd:{0:119,1:79,2:39,3:20,4:8},
+  myr:{0:393,1:260,2:128,3:66,4:26}, try:{0:3720,1:2470,2:1210,3:627,4:251},
+  egp:{0:4440,1:2940,2:1450,3:747,4:299}, mad:{0:872,1:578,2:284,3:147,4:59},
+  pkr:{0:24900,1:16500,2:8100,3:4190,4:1680}, inr:{0:7440,1:4930,2:2420,3:1250,4:502},
+  idr:{0:1430000,1:945000,2:465000,3:240000,4:96100}, ngn:{0:138000,1:91800,2:45100,3:23300,4:9330}
 };
 window.NOOR_MARKETS.curSymbol = { cad:"C$", gbp:"£", eur:"€", aud:"A$", aed:"AED ", sar:"SAR ", qar:"QAR ", sgd:"S$", myr:"RM ", try:"₺", egp:"E£", mad:"MAD ", pkr:"₨", inr:"₹", idr:"Rp ", ngn:"₦" };

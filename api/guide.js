@@ -1,9 +1,11 @@
-// NOOR Guide: optional live clarifier. Dormant until the owner sets
-// ANTHROPIC_API_KEY in Vercel project settings; the site works fully without it.
+// NOOR Guide: optional live clarifier for a passage being read.
+// Runs on OPENROUTER_API_KEY (same key as The Lantern); falls back to
+// ANTHROPIC_API_KEY if that is set instead. Site works fully without either.
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  const orKey = process.env.OPENROUTER_API_KEY;
   const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return res.status(501).json({ error: "guide API not enabled" });
+  if (!orKey && !key) return res.status(501).json({ error: "guide API not enabled" });
 
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
@@ -20,20 +22,39 @@ export default async function handler(req, res) {
   ].join(" ");
 
   try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5",
-        max_tokens: 250,
-        temperature: 0.2,
-        system,
-        messages: [{ role: "user", content: `Chapter: ${title}\n\nArticle excerpt:\n${excerpt}\n\nReader's question: ${question}` }]
-      })
-    });
-    if (!r.ok) return res.status(502).json({ error: "upstream error" });
-    const j = await r.json();
-    const answer = (j.content || []).map(c => c.text || "").join(" ").trim();
+    const userMsg = `Chapter: ${title}\n\nArticle excerpt:\n${excerpt}\n\nReader's question: ${question}`;
+    let answer = "";
+    if (orKey) {
+      const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", Authorization: "Bearer " + orKey, "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR Codex of Light" },
+        body: JSON.stringify({
+          model: process.env.OPENROUTER_MODEL || "openrouter/auto",
+          max_tokens: 250,
+          temperature: 0.2,
+          messages: [{ role: "system", content: system }, { role: "user", content: userMsg }]
+        })
+      });
+      if (!r.ok) return res.status(502).json({ error: "upstream error" });
+      const j = await r.json();
+      answer = ((((j.choices || [])[0] || {}).message || {}).content || "").trim();
+    } else {
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5",
+          max_tokens: 250,
+          temperature: 0.2,
+          system,
+          messages: [{ role: "user", content: userMsg }]
+        })
+      });
+      if (!r.ok) return res.status(502).json({ error: "upstream error" });
+      const j = await r.json();
+      answer = (j.content || []).map(c => c.text || "").join(" ").trim();
+    }
+    answer = answer.replace(/—|–/g, "·");
     if (!answer) return res.status(502).json({ error: "empty answer" });
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({ answer });

@@ -78,6 +78,7 @@ In Vercel → your project → Settings → <b>Environment Variables</b>, add:<b
 1. <code>ADMIN_PASSWORD</code>, your chosen password (long!)<br/>
 2. <code>ADMIN_SECRET</code>, any random 40+ characters<br/>
 3. <code>STRIPE_SECRET_KEY</code>, from your Stripe dashboard (starts <code>sk_live_</code>)<br/>
+4. <code>OPENROUTER_API_KEY</code>, from openrouter.ai (starts <code>sk-or-</code>), lights The Lantern AI<br/>
 Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 </div>
 </div>
@@ -85,10 +86,10 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <!-- DASHBOARD -->
 <div id="dash" hidden>
 <div class="stats">
-<div class="stat"><div class="v" id="s-mrr">·</div><div class="l">Monthly revenue</div></div>
+<div class="stat"><div class="v" id="s-week">·</div><div class="l">This week's revenue</div></div>
+<div class="stat"><div class="v" id="s-month">·</div><div class="l">Monthly pace</div></div>
 <div class="stat"><div class="v" id="s-active">·</div><div class="l">Active Guardians</div></div>
 <div class="stat"><div class="v" id="s-open">·</div><div class="l">Regions open</div></div>
-<div class="stat"><div class="v" id="s-yearly">·</div><div class="l">Yearly run-rate</div></div>
 </div>
 
 <h2 class="sec">System</h2>
@@ -101,10 +102,26 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 </div>
 
 <h2 class="sec">Guardians & money</h2>
+<div class="panel" style="overflow-x:auto">
+<table id="gtable"><thead><tr><th>Region</th><th>Sponsor</th><th>Status</th><th>Per week</th><th>Renews</th><th>Lamp</th><th></th></tr></thead><tbody></tbody></table>
+<p class="muted" id="gempty" hidden>No paid Guardians yet. When someone completes checkout, they appear here automatically with their region attached, waiting for your approval.</p>
+<p class="muted" style="margin-top:.6rem">A new payment arrives as <b>pending</b>: press <b>Vet</b> to have The Lantern check them against the charter, then <b>Approve</b> to light their lamp on the site (takes effect within about 5 minutes). <b>Unlight</b> hides the lamp again; <b>Release</b> ends the Guardianship when the paid week finishes; refunds live in the Stripe dashboard.</p>
+<div id="vetout" hidden style="margin-top:.8rem;border:1px solid rgba(233,200,106,.35);border-radius:12px;padding:.8rem 1rem;font-size:.78rem;line-height:1.7"></div>
+</div>
+
+<h2 class="sec">Vet a sponsor by hand</h2>
 <div class="panel">
-<table id="gtable"><thead><tr><th>Region</th><th>Sponsor</th><th>Status</th><th>$/mo</th><th>Renews</th></tr></thead><tbody></tbody></table>
-<p class="muted" id="gempty" hidden>No paid Guardians yet. Every region below is an open lamp, when someone completes checkout, they appear here automatically with their region attached.</p>
-<p class="muted" style="margin-top:.6rem">To put an approved Guardian's seal on the site: edit <code>sponsor.js</code> → <code>NOOR_GUARDIANS</code> (one entry: name, url, line, dates, halalAttested) and deploy. Cancellations/refunds: Stripe dashboard.</p>
+<p class="muted" style="margin-bottom:.6rem">For someone who wrote to you before paying. The Lantern checks them against the halal charter.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.5rem">
+<input id="v-name" placeholder="Business name" style="background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:10px;padding:.55rem .7rem;font-size:.8rem;color:var(--parchment);outline:none"/>
+<input id="v-url" placeholder="Website" style="background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:10px;padding:.55rem .7rem;font-size:.8rem;color:var(--parchment);outline:none"/>
+<input id="v-line" placeholder="Their tagline" style="background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:10px;padding:.55rem .7rem;font-size:.8rem;color:var(--parchment);outline:none"/>
+</div>
+<div style="display:flex;gap:.6rem;align-items:center;margin-top:.6rem;flex-wrap:wrap">
+<input id="v-notes" placeholder="Notes (optional)" style="flex:1;min-width:12rem;background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:10px;padding:.55rem .7rem;font-size:.8rem;color:var(--parchment);outline:none"/>
+<button class="ghost" id="v-go" style="border-color:rgba(233,200,106,.5);color:var(--gold-hi)">Vet with The Lantern ✦</button>
+</div>
+<div id="vetout2" hidden style="margin-top:.8rem;border:1px solid rgba(233,200,106,.35);border-radius:12px;padding:.8rem 1rem;font-size:.78rem;line-height:1.7"></div>
 </div>
 
 <h2 class="sec">All regions <span style="color:rgba(255,254,247,.4);text-transform:none;letter-spacing:0" id="mcount"></span></h2>
@@ -122,34 +139,91 @@ function api(path,body){return fetch(path,{method:"POST",headers:{"Content-Type"
 
 function showDash(){$("gate").hidden=true;$("dash").hidden=false;load()}
 function money(n){return "$"+(Math.round(n*100)/100).toLocaleString()}
+function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+var GS=[];
 
 function load(){
   fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.status===401){$("dash").hidden=true;$("gate").hidden=false;return null}return r.json()}).then(function(d){
     if(!d)return;
-    $("s-mrr").textContent=money(d.mrr||0);
+    $("s-week").textContent=money(d.weekly||0);
+    $("s-month").textContent=money(d.mrr||0);
     $("s-active").textContent=d.activeCount||0;
-    $("s-yearly").textContent=money((d.mrr||0)*12);
     var ML=(window.NOOR_MARKETS&&NOOR_MARKETS.list)||[];
-    var taken={};(d.guardians||[]).forEach(function(g){if(g.status==="active"||g.status==="trialing")taken[g.market]=1});
+    var taken={};(d.guardians||[]).forEach(function(g){if(g.status==="active"||g.status==="trialing"||g.status==="past_due")taken[g.market]=1});
     $("s-open").textContent=ML.length-Object.keys(taken).length;
     /* system checks */
-    var sys=[["Stripe key (payments can flow)",d.stripeConfigured],["Checkout endpoint live",d.checkoutEnabled],["Guardian product & 5 tier prices",true],["Owner lock (you are inside it)",true]];
-    $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">add STRIPE_SECRET_KEY in Vercel env & redeploy</b>')+"</span></div>"}).join("");
+    var sys=[
+      ["Stripe key (payments can flow)",d.stripeConfigured,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
+      ["Checkout endpoint live",d.checkoutEnabled,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
+      ["The Lantern AI (answers + vetting)",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
+      ["Weekly lamps · one Guardian per region, auto-locked",true,""],
+      ["Owner lock (you are inside it)",true,""]
+    ];
+    $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">'+c[2]+"</b>")+"</span></div>"}).join("");
     /* guardians table */
     var tb=$("gtable").querySelector("tbody");
-    var gs=d.guardians||[];
-    tb.innerHTML=gs.map(function(g){
+    GS=d.guardians||[];
+    tb.innerHTML=GS.map(function(g,i){
       var cls=g.status==="active"||g.status==="trialing"?"on":(g.status==="past_due"?"wait":"off");
-      return "<tr><td><b>"+g.market+"</b></td><td>"+(g.name||g.email||"·")+"</td><td><span class='pill "+cls+"'>"+g.status+"</span></td><td>"+money(g.amount)+"</td><td>"+(g.renews||"·")+"</td></tr>"}).join("");
-    $("gempty").hidden=gs.length>0;
+      var live=g.status==="active"||g.status==="trialing"||g.status==="past_due";
+      var lamp=live?(g.approved?'<span class="pill on">lit ✦</span>':'<span class="pill wait">pending</span>'):'<span class="pill off">out</span>';
+      var acts=live?('<button class="ghost" data-act="vet" data-i="'+i+'">Vet</button> '+
+        (g.approved?'<button class="ghost" data-act="unlight" data-i="'+i+'">Unlight</button>':'<button class="ghost" data-act="approve" data-i="'+i+'" style="border-color:rgba(233,200,106,.6);color:var(--gold-hi)">Approve</button>')+
+        " "+(g.endsAfterWeek?'<button class="ghost" data-act="relight" data-i="'+i+'">Keep</button>':'<button class="ghost" data-act="release" data-i="'+i+'">Release</button>')):"";
+      return "<tr><td><b>"+esc(g.market)+"</b></td><td>"+esc(g.gname||g.name||g.email||"·")+"</td><td><span class='pill "+cls+"'>"+esc(g.status)+(g.endsAfterWeek?" · ends":"")+"</span></td><td>"+money(g.amount)+" "+esc(g.currency)+"</td><td>"+(g.renews||"·")+"</td><td>"+lamp+"</td><td style='white-space:nowrap'>"+acts+"</td></tr>"}).join("");
+    $("gempty").hidden=GS.length>0;
     /* market grid */
     var tp=(window.NOOR_MARKETS&&NOOR_MARKETS.tierPrices)||{};
     $("mcount").textContent="· "+ML.length+" lamps";
     $("mkts").innerHTML=ML.map(function(m){
       var lit=taken[m.id];
-      return '<div class="mkt"><span>'+(lit?"✦ ":"")+'<b>'+m.label+'</b></span><span class="t">$'+tp[m.tier]+'</span><a href="index.html?noor-preview='+m.id+'" target="_blank">view</a></div>'}).join("");
+      return '<div class="mkt"><span>'+(lit?"✦ ":"")+'<b>'+m.label+'</b></span><span class="t">$'+tp[m.tier]+'/wk</span><a href="index.html?noor-preview='+m.id+'" target="_blank">view</a></div>'}).join("");
   })
 }
+
+function vetHTML(v){
+  var col=v.verdict==="approve"?"#a7d3a2":(v.verdict==="decline"?"#f8a3a3":"#E9C86A");
+  return "<b style='color:"+col+";text-transform:uppercase;letter-spacing:.08em'>"+esc(v.verdict)+"</b> · confidence "+(v.score||0)+"/100"+
+    ((v.reasons||[]).length?"<br/>"+v.reasons.map(function(r){return "· "+esc(r)}).join("<br/>"):"")+
+    ((v.questions||[]).length?"<br/><b>Ask them:</b><br/>"+v.questions.map(function(r){return "· "+esc(r)}).join("<br/>"):"");
+}
+function runVet(payload,box){
+  box.hidden=false;box.innerHTML="The Lantern is reading them…";
+  api("/api/admin-vet",payload).then(function(r){
+    box.innerHTML=r.ok?vetHTML(r.j):("<b style='color:#f8a3a3'>"+esc((r.j&&r.j.error)||"vetting unavailable")+"</b>");
+  }).catch(function(){box.innerHTML="<b style='color:#f8a3a3'>vetting unavailable</b>"});
+}
+
+$("gtable").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-act]"); if(!b)return;
+  var g=GS[parseInt(b.dataset.i,10)]; if(!g)return;
+  var act=b.dataset.act;
+  if(act==="vet"){
+    api("/api/admin-guardians",{action:"intake",subscription:g.subscription}).then(function(r){
+      var d=(r.ok&&r.j)||{};
+      runVet({name:d.name||g.gname||g.name,url:d.url||g.gurl,line:d.line||g.gline,market:g.market,notes:""},$("vetout"));
+    });
+    return;
+  }
+  if(act==="approve"){
+    b.textContent="…";
+    api("/api/admin-guardians",{action:"intake",subscription:g.subscription}).then(function(r){
+      var d=(r.ok&&r.j)||{};
+      var name=prompt("Name to show on the site:",d.name||g.gname||g.name||""); if(name===null)return load();
+      var url=prompt("Their link (https://…), empty for none:",d.url||g.gurl||""); if(url===null)return load();
+      var line=prompt("One line under their name (optional):",d.line||g.gline||""); if(line===null)return load();
+      api("/api/admin-guardians",{action:"approve",subscription:g.subscription,name:name,url:url,line:line}).then(load);
+    });
+    return;
+  }
+  if(act==="unlight"){api("/api/admin-guardians",{action:"extinguish",subscription:g.subscription}).then(load);return}
+  if(act==="release"){if(confirm("End this Guardianship when the paid week finishes? The region opens again after that."))api("/api/admin-guardians",{action:"release",subscription:g.subscription}).then(load);return}
+  if(act==="relight"){api("/api/admin-guardians",{action:"relight",subscription:g.subscription}).then(load);return}
+});
+
+$("v-go").addEventListener("click",function(){
+  runVet({name:$("v-name").value,url:$("v-url").value,line:$("v-line").value,notes:$("v-notes").value},$("vetout2"));
+});
 
 $("enter").addEventListener("click",function(){
   $("err").textContent="";
