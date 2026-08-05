@@ -183,7 +183,9 @@ main{max-width:660px}
 .cline{stroke-dashoffset:0;animation:none}
 }
 </style>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}img,svg{-webkit-user-drag:none}a,button,[role="button"]{touch-action:manipulation}</style>
+<script src="sponsor.js" defer></script>
+<link rel="canonical" href="https://noorcodex.com/kids"/>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"></div>
@@ -192,7 +194,7 @@ main{max-width:660px}
 <div class="side r" aria-hidden="true"></div>
 <svg class="crescent" viewBox="0 0 80 80" aria-hidden="true"><path d="M56 6A34 34 0 1 0 56 74 28 28 0 1 1 56 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
 
-<header>
+<header id="site-header">
 <a class="wordmark" href="index.html" aria-label="NOOR Little Codex, back to the Big Codex"><span class="wm-top"><span class="moon">☾</span> NOOR · Little Codex</span><span class="wm-sub">The Greatest Game</span></a>
 <a class="backlink" href="index.html" aria-label="Back to the Big Codex"><span class="bl-full">Big Codex →</span><span class="bl-min">☾ NOOR</span></a>
 </header>
@@ -297,9 +299,9 @@ var G=[
 function isDone(k){try{var v=JSON.parse(localStorage.getItem(k)||"null");return !!(v&&v.done)}catch(e){return false}}
 function gemsDone(){try{var v=JSON.parse(localStorage.getItem("noor-kids-gems")||"null");if(!v)return false;var n=Array.isArray(v)?v.length:Object.keys(v).length;return n>=7}catch(e){return false}}
 var HEROES=[
- {f:"kids/adam.html",k:"nk-adam",n:"Adam and the Upper Hand",l:"Five brave days to his sixth birthday... and a secret title waiting.",
+ {f:"kids/strong.html",k:"nk-strong",n:"The Strong Boy and the Upper Hand",l:"Five brave days to his sixth birthday... and a secret title waiting.",
   fig:'<svg viewBox="0 0 74 96"><circle cx="37" cy="26" r="17" fill="#EDBE96"/><path d="M20 22 a17 17 0 0 1 34 0 l-1.4 -6 a17 13 0 0 0 -31 0 Z" fill="#FFFDF4" stroke="#C9A227"/><circle cx="31" cy="27" r="2" fill="#2C2416"/><circle cx="43" cy="27" r="2" fill="#2C2416"/><path d="M32 33 q5 4 10 0" stroke="#2C2416" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M22 44 h30 l5 42 h-40 Z" fill="#FFFDF4"/><path d="M26 44 l11 14 11 -14 3 18 -14 5 -14 -5 Z" fill="#8BA888"/><circle cx="58" cy="58" r="7" fill="rgba(233,200,106,.6)"/></svg>'},
- {f:"kids/isla.html",k:"nk-isla",n:"Isla and the Growing Sky",l:"Every answer opens two new questions. How big can wonder grow?",
+ {f:"kids/island.html",k:"nk-island",n:"The Island Girl and the Growing Sky",l:"Every answer opens two new questions. How big can wonder grow?",
   fig:'<svg viewBox="0 0 74 96"><circle cx="37" cy="28" r="17" fill="#EDBE96"/><circle cx="23" cy="15" r="7" fill="#5a4632"/><circle cx="51" cy="15" r="7" fill="#5a4632"/><path d="M20 28 a17 17 0 0 1 34 0 l0 -6 a17 11 0 0 0 -34 0 Z" fill="#5a4632"/><path d="M37 8 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2 Z" fill="#E9C86A"/><circle cx="30" cy="29" r="2.6" fill="#2C2416"/><circle cx="44" cy="29" r="2.6" fill="#2C2416"/><path d="M33 36 q4 3 8 0" stroke="#2C2416" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M26 46 h22 l5 30 h-32 Z" fill="#a78bfa"/><circle cx="56" cy="60" r="8" fill="none" stroke="#C9A227" stroke-width="2.6"/><path d="M50 66 l-5 7" stroke="#C9A227" stroke-width="3" stroke-linecap="round"/></svg>'}
 ];
 function render(){
