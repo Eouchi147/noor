@@ -4,8 +4,8 @@
    APIs and other origins are never intercepted. */
 var V = "noor-v36";
 var CORE = [
-  "/", "/quran", "/prophets", "/arabic", "/pillars", "/kids", "/begin", "/donate",
-  "/assets/tw.css?v=16", "/noor-fx.js", "/markets.js", "/sponsor.js", "/prophets-data.js",
+  "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate",
+  "/assets/tw.css?v=16", "/noor-fx.js", "/noor-ink.js", "/markets.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
   "/assets/brand/mark.svg", "/assets/brand/mark-192.png", "/assets/brand/mark-512.png",
   "/manifest.webmanifest"
 ];

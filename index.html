@@ -1349,7 +1349,7 @@ function setWC(on){
   plan.forEach(function(p){ p[0].style.willChange = on ? "transform" : "auto"; });
 }
 
-var px = 0, py = 0;
+var px = 0, py = 0, forceP = null;
 function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
 function seg(p, a, b){ return clamp((p - a) / (b - a)); }
 var ease = function(t){ return t * t * (3 - 2 * t); };
@@ -1359,7 +1359,7 @@ function frame(){
   ticking = false;
   var vh = innerHeight;
   var travel = wrap.offsetHeight - vh;
-  var p = clamp(-wrap.getBoundingClientRect().top / Math.max(travel, 1));
+  var p = forceP !== null ? forceP : clamp(-wrap.getBoundingClientRect().top / Math.max(travel, 1));
   if (p === lastP) return;
   setWC(p > 0.001 && p < 0.999);
   var z = ease(p);
@@ -1408,6 +1408,64 @@ function frame(){
 }
 function queue(){ if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
 addEventListener("scroll", queue, { passive: true });
+
+/* ---- Enter the Path: play the dolly as a timed cinematic, not a scroll sprint ---- */
+var playing = false;
+function abortPlay(land){
+  if (!playing) return;
+  playing = false;
+  var atP = forceP === null ? 0 : forceP;
+  forceP = null;
+  var wt = wrap.getBoundingClientRect().top + (window.pageYOffset || scrollY);
+  scrollTo({ top: wt + Math.round(travelNow() * atP), behavior: "instant" });
+  lastP = -1; queue();
+  if (land) {
+    var t = document.getElementById("timeline");
+    if (t) setTimeout(function(){ t.scrollIntoView({ behavior: "smooth", block: "start" }); }, 40);
+  }
+}
+function travelNow(){ return wrap.offsetHeight - innerHeight; }
+function playDolly(){
+  if (playing) return;
+  var startP = clamp(-wrap.getBoundingClientRect().top / Math.max(travelNow(), 1));
+  if (startP > 0.5) { abortStub(); return false; }
+  playing = true;
+  var DUR = 5200 * (1 - startP);
+  var t0 = performance.now();
+  function ease(t){ return t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2; }
+  function tick(now){
+    if (!playing) return;
+    var k = clamp((now - t0) / DUR);
+    forceP = startP + (1 - startP) * ease(k);
+    lastP = -1; frame();
+    if (k < 1) { requestAnimationFrame(tick); }
+    else { playing = false; abortPlayEnd(); }
+  }
+  requestAnimationFrame(tick);
+  return true;
+}
+function abortStub(){}
+function abortPlayEnd(){
+  var wt = wrap.getBoundingClientRect().top + (window.pageYOffset || scrollY);
+  forceP = null;
+  scrollTo({ top: wt + travelNow(), behavior: "instant" });
+  lastP = -1; queue();
+  var t = document.getElementById("timeline");
+  if (t) setTimeout(function(){ t.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
+}
+/* a human touch or wheel mid-film hands the camera back instantly */
+["wheel", "touchstart", "keydown"].forEach(function(ev){
+  addEventListener(ev, function(){ if (playing) abortPlay(false); }, { passive: true });
+});
+document.querySelectorAll('a[href$="#timeline"]').forEach(function(a){
+  a.addEventListener("click", function(e){
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var startP = clamp(-wrap.getBoundingClientRect().top / Math.max(travelNow(), 1));
+    if (startP > 0.5) return;              /* nearly there: let the browser take it */
+    e.preventDefault();
+    playDolly();
+  });
+});
 addEventListener("resize", queue, { passive: true });
 if (matchMedia("(pointer: fine)").matches) {
   hero.addEventListener("pointermove", function(e){
