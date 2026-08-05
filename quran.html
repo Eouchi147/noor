@@ -4,12 +4,24 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <meta name="description" content="The NOOR Mushaf: read, listen, translate and understand the Qur'an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="Qur&#x27;an · NOOR Codex of Light"/>
+<meta property="og:description" content="The NOOR Mushaf: read, listen, translate and understand the Qur&#x27;an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
 <title>Qur'an · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=15"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
 <script src="noor-fx.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
@@ -129,9 +141,7 @@ body.has-player{padding-bottom:74px}
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
 </div>
 </div>
-<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
-<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
-</select>
+<button id="translate-btn" type="button" aria-label="Translate this page" title="Translate the Codex into your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
 </nav>
 </div>
 <div class="md:hidden border-t border-ink/5">
@@ -255,7 +265,7 @@ function gateHTML(s){const[n,en,ar,meaning,count,place]=s;
   <span class="num">${n}</span>
   <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold text-ink truncate">${en}</span>
   <span class="block text-[10px] text-ink/45">${meaning} · ${count} ayat · ${place==="M"?"Meccan":"Medinan"}</span></span>
-  <span class="font-quran text-xl text-gold/90 flex-none">${ar}</span></button>`;}
+  <span class="font-quran text-xl text-gold/90 flex-none" translate="no">${ar}</span></button>`;}
 function renderGates(filter){const q=(filter||"").trim().toLowerCase();
  gatesWrap.innerHTML=SURAHS.filter(s=>!q||String(s[0])===q||s[1].toLowerCase().includes(q)||s[3].toLowerCase().includes(q)).map(gateHTML).join("")||`<p class="text-xs text-ink/40 px-2 py-4">No surah matches "${filter}".</p>`;
  if(cur)gatesWrap.querySelector(`[data-n="${cur}"]`)?.classList.add("active");}
@@ -277,7 +287,7 @@ async function openSurah(n,gotoAyah,user){
   roomHead.innerHTML=`
    <div class="rounded-2xl overflow-hidden border border-ink/8" style="background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)">
      <div class="px-5 py-6 text-center">
-       <p class="font-quran text-4xl text-gold mb-1">${ar}</p>
+       <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
        <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:rgba(255,254,247,.55)">, ${meaning}</span></h2>
        <p class="text-[11px] mt-1" style="color:rgba(255,254,247,.5)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
        <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:rgba(255,254,247,.75)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
@@ -305,10 +315,10 @@ async function openSurah(n,gotoAyah,user){
 
 function renderAyahs(n){
   const showBismillah=n!==1&&n!==9;
-  let html=showBismillah?`<div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<small>In the name of Allah, the Entirely Merciful, the Especially Merciful</small></div>`:"";
+  let html=showBismillah?`<div class="bismillah" translate="no">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<small>In the name of Allah, the Entirely Merciful, the Especially Merciful</small></div>`:"";
   html+=ayahs.map((a,i)=>{let text=a.text;if(i===0&&showBismillah)text=text.replace(BISMILLAH,"");
    return `<article class="ayah" id="a-${a.numberInSurah}" data-i="${i}">
-    <p class="ar">${text}<span class="medallion">${a.numberInSurah}</span></p>
+    <p class="ar" translate="no">${text}<span class="medallion" translate="no">${a.numberInSurah}</span></p>
     <div class="mt-2.5 flex items-start gap-3">
       <button class="playbtn flex-none" data-play="${i}" aria-label="Play ayah ${a.numberInSurah}"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       <p class="trans text-[13.5px] leading-relaxed text-ink/70 ${transOn?"":"hidden"}">${trans[i]?.text||""}</p>

@@ -4,12 +4,24 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <meta name="description" content="NOOR · Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur'an with tilawah, authentic Hadith, classical sources."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="NOOR · نُور | Codex of Light"/>
+<meta property="og:description" content="NOOR · Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur&#x27;an with tilawah, authentic Hadith, classical sources."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
 <title>NOOR · نُور | Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=15"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
 <script src="nodes.js" defer></script>
 <script src="noor-fx.js" defer></script>
 <script src="noor-guide-data.js" defer></script>
@@ -378,9 +390,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a role="menuitem" href="legal.html">Terms & Privacy</a>
 </div>
 </div>
-<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
-<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
-</select>
+<button id="translate-btn" type="button" aria-label="Translate this page" title="Translate the Codex into your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1 hover:text-ink hover:border-gold/50 transition-colors">🌐</button>
 </nav>
 <button id="search-toggle" class="p-2 rounded-lg hover:bg-ink/5 transition-colors" aria-label="Search">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -1018,8 +1028,7 @@ $("search-input").addEventListener("input", e => {
 addEventListener("scroll", () => $("site-header").classList.toggle("scrolled", scrollY > 8), {passive:true});
 
 /* ---------- language ---------- */
-$("lang-switch").value = NOOR_I18N.lang;
-$("lang-switch").addEventListener("change", e => NOOR_I18N.setLang(e.target.value));
+var _ls=$("lang-switch"); if(_ls){_ls.value=NOOR_I18N.lang;_ls.addEventListener("change",e=>NOOR_I18N.setLang(e.target.value));}
 window.NoorPage = { rerender(){ renderStats(); renderBooks(); renderPath(currentFilter); } };
 
 /* ---------- boot ---------- */

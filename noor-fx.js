@@ -350,3 +350,69 @@ window.bindEntityLinks = bindEntityLinks;
 /* v13 nav: center the active chip in the mobile rail */
 (function(){function c(){var a=document.querySelector(".mnav .active");if(a&&a.scrollIntoView)try{a.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c();})();
+
+/* ================= v17 · the translation bridge =================
+   Real translations arrive per TRANSLATION-PLAN.md. Until then the
+   Codex leans on the reader's own browser translation, and shields
+   what must never be machine-translated: the Qur'an's Arabic, the
+   Bismillah, and the house marks. */
+(function () {
+  "use strict";
+  function protectSacred(root) {
+    (root || document).querySelectorAll(".font-quran,.font-amiri,.ar,.bismillah,[data-ar]").forEach(function (el) {
+      el.setAttribute("translate", "no");
+      el.classList.add("notranslate");
+    });
+  }
+  var HINTS = {
+    ar: "يمكن لمتصفحك ترجمة هذه المكتبة إلى العربية: انقر بزر الفأرة الأيمن على الصفحة واختر \"ترجمة\"، أو من قائمة المتصفح. آيات القرآن تبقى بالعربية دائماً.",
+    fr: "Votre navigateur peut traduire le Codex en français : clic droit sur la page puis « Traduire », ou via le menu du navigateur. Les versets restent en arabe.",
+    ur: "آپ کا براؤزر اس کتب خانے کا اردو میں ترجمہ کر سکتا ہے: صفحے پر رائٹ کلک کر کے Translate منتخب کریں، یا براؤزر مینیو سے۔ قرآنی آیات عربی میں ہی رہتی ہیں۔",
+    tr: "Tarayıcınız bu kütüphaneyi Türkçeye çevirebilir: sayfaya sağ tıklayıp \"Çevir\"i seçin veya tarayıcı menüsünü kullanın. Ayetler Arapça kalır.",
+    id: "Browser Anda dapat menerjemahkan pustaka ini ke Bahasa Indonesia: klik kanan halaman lalu pilih \"Terjemahkan\", atau lewat menu browser. Ayat tetap dalam bahasa Arab.",
+    es: "Tu navegador puede traducir el Códice al español: clic derecho en la página y elige \"Traducir\", o desde el menú del navegador. Los versículos permanecen en árabe.",
+    de: "Dein Browser kann den Codex ins Deutsche übersetzen: Rechtsklick auf die Seite und \"Übersetzen\" wählen, oder über das Browsermenü. Die Verse bleiben auf Arabisch.",
+    bn: "আপনার ব্রাউজার এই গ্রন্থাগারটি বাংলায় অনুবাদ করতে পারে: পৃষ্ঠায় রাইট-ক্লিক করে Translate বেছে নিন, অথবা ব্রাউজার মেনু ব্যবহার করুন। আয়াত আরবিতেই থাকে।",
+    generic: "Your browser can translate the Codex into your language: right-click the page and choose Translate, or use your browser's menu. The verses stay in Arabic."
+  };
+  function hintFor() {
+    var l = ((navigator.language || "en").slice(0, 2) || "en").toLowerCase();
+    if (l === "en") return null;
+    return HINTS[l] || HINTS.generic;
+  }
+  function showHint(manual) {
+    var old = document.getElementById("noor-translate-hint");
+    if (old) old.remove();
+    var txt = hintFor() || HINTS.generic;
+    var d = document.createElement("div");
+    d.id = "noor-translate-hint";
+    d.setAttribute("role", "status");
+    d.style.cssText = "position:fixed;left:50%;transform:translateX(-50%);bottom:1rem;z-index:90;max-width:min(30rem,calc(100vw - 2rem));background:#0B1230;color:#FFFEF7;border:1px solid rgba(233,200,106,.55);border-radius:14px;box-shadow:0 14px 40px rgba(4,6,15,.55);padding:.85rem 2.5rem .85rem 1rem;font-size:.78rem;line-height:1.65;font-family:Inter,system-ui,sans-serif";
+    d.innerHTML = '<span style="color:#E9C86A;margin-right:.45rem">🌐</span>' + txt +
+      '<button aria-label="Close" style="position:absolute;top:.35rem;right:.45rem;background:none;border:0;color:rgba(255,254,247,.6);font-size:1rem;cursor:pointer;padding:.25rem;line-height:1">✕</button>';
+    d.querySelector("button").addEventListener("click", function () {
+      d.remove();
+      try { localStorage.setItem("noor_thint", "1"); } catch (e) {}
+    });
+    document.body.appendChild(d);
+    if (!manual) setTimeout(function () { if (d.parentNode) d.remove(); }, 16000);
+  }
+  function init() {
+    protectSacred();
+    /* re-shield content rendered after load (the Mushaf, the hubs) */
+    try {
+      new MutationObserver(function (muts) {
+        muts.forEach(function (m) {
+          m.addedNodes && m.addedNodes.forEach(function (n) { if (n.nodeType === 1) protectSacred(n); });
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    } catch (e) {}
+    var b = document.getElementById("translate-btn");
+    if (b) b.addEventListener("click", function () { showHint(true); });
+    var dismissed = false;
+    try { dismissed = localStorage.getItem("noor_thint") === "1"; } catch (e) {}
+    if (!dismissed && hintFor()) setTimeout(function () { showHint(false); }, 2600);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();

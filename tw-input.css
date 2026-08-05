@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== v17 premium base ===== */
+@layer base {
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  ::selection { background: rgba(201,162,39,.3); color: #1A160F; }
+  :focus-visible { outline: 2px solid rgba(201,162,39,.85); outline-offset: 2px; border-radius: 4px; }
+  * { scrollbar-width: thin; scrollbar-color: rgba(201,162,39,.45) transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: rgba(201,162,39,.38); border-radius: 999px; border: 3px solid #FFFEF7; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(201,162,39,.6); }
+  ::-webkit-scrollbar-track { background: transparent; }
+  img { image-rendering: auto; }
+}
