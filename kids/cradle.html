@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="The Cradle · NOOR for babies and toddlers, 0 to 3: first sounds of the Qur'an with real recitation, first Arabic words, a peek-a-boo sky game, the daily rhythm of adhkar around a baby, and honest Montessori guidance for parents."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="The Cradle · 0 to 3 · NOOR Little Codex"/>
+<meta property="og:description" content="First sounds of the Qur'an, first Arabic words, a peek-a-boo sky game, and the daily rhythm of a Muslim baby's home. For parents and their littlest."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#0d1633"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<title>The Cradle · 0 to 3 · NOOR Little Codex</title>
+<link rel="canonical" href="https://noorcodex.com/kids/cradle"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="/noor-fx.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
+<style>
+:root{--night:#0d1633;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416;--rose:#f9a8d4}
+body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+.font-amiri{font-family:Amiri,serif}
+header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
+.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
+.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
+.backlink:hover{color:var(--gold)}
+main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
+.hero{text-align:center;padding:1.5rem 0 1rem}
+.hero .moon{font-size:2.8rem;display:block;margin-bottom:.4rem;filter:drop-shadow(0 0 16px rgba(233,200,106,.6));animation:rock 5s ease-in-out infinite}
+@keyframes rock{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.hero .moon{animation:none}}
+.hero h1{margin:.2rem 0;font-size:1.7rem;font-weight:800;color:var(--gold)}
+.hero .ar{font-family:Amiri,serif;font-size:1.3rem;color:rgba(244,212,106,.8)}
+.hero p{color:rgba(255,254,247,.75);font-size:.88rem;line-height:1.65;max-width:28rem;margin:.6rem auto 0}
+section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,106,.22);border-radius:22px;padding:1.25rem 1.15rem;margin:1.15rem 0}
+.lesson h2{margin:0 0 .2rem;font-size:1.12rem;color:var(--gold);display:flex;align-items:center;gap:.55rem}
+.lesson .sub{font-size:.76rem;color:rgba(255,254,247,.55);margin:0 0 .9rem;line-height:1.6}
+/* honest note */
+.honest{background:linear-gradient(90deg,rgba(249,168,212,.12),rgba(249,168,212,.04));border:1.5px dashed rgba(249,168,212,.45);border-radius:18px;padding:.95rem 1.05rem;font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.85);margin:1.1rem 0}
+.honest b{color:var(--rose)}
+/* first sounds */
+.sounds{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+@media(max-width:480px){.sounds{grid-template-columns:1fr}}
+.snd{background:linear-gradient(165deg,rgba(233,200,106,.14),rgba(233,200,106,.05));border:2px solid rgba(233,200,106,.4);border-radius:20px;padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s;font-family:inherit;color:var(--parchment);text-align:left;width:100%}
+.snd:hover{transform:scale(1.02);border-color:var(--gold)}
+.snd .pb{width:3rem;height:3rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);display:grid;place-items:center;font-size:1.1rem;color:#1A160F;flex:none;box-shadow:0 0 18px rgba(233,200,106,.4)}
+.snd.playing .pb{background:#1A160F;color:#F4D46A;outline:2px solid rgba(244,212,106,.6)}
+.snd b{display:block;font-size:.88rem}
+.snd span{display:block;font-size:.68rem;color:rgba(255,254,247,.6);margin-top:.1rem;line-height:1.5}
+/* first words */
+#words{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.2rem,1fr));gap:.6rem}
+.word{background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.3);border-radius:20px;text-align:center;padding:1rem .5rem .85rem;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .25s,border-color .25s}
+.word:hover{transform:translateY(-4px)}
+.word.glow{background:rgba(233,200,106,.18);border-color:var(--gold);transform:scale(1.05)}
+.word .we{font-size:2rem;display:block}
+.word .wa{font-family:Amiri,serif;font-size:1.7rem;color:#FFF7DF;display:block;margin-top:.2rem}
+.word .wt{font-size:.7rem;font-weight:800;color:var(--gold);display:block;margin-top:.15rem}
+.word .wm{font-size:.62rem;color:rgba(255,254,247,.55);display:block}
+/* peek game */
+#sky{position:relative;background:linear-gradient(180deg,#0a1128,#1e3a8a);border-radius:20px;border:2px solid rgba(233,200,106,.3);min-height:15rem;overflow:hidden;padding:1rem}
+.cloud{position:absolute;font-size:3.6rem;cursor:pointer;transition:transform .3s,opacity .5s;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));user-select:none}
+.cloud:hover{transform:scale(1.08)}
+.behind{position:absolute;font-size:2.6rem;opacity:0;transition:opacity .5s,transform .5s;transform:scale(.4);pointer-events:none;filter:drop-shadow(0 0 18px rgba(244,212,106,.8))}
+.behind.shown{opacity:1;transform:scale(1)}
+#sky .cap{position:absolute;left:0;right:0;bottom:.6rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.6)}
+/* rhythm */
+.rhy{display:grid;gap:.55rem}
+.rmoment{display:flex;gap:.75rem;align-items:flex-start;background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.25);border-radius:16px;padding:.75rem .85rem}
+.rmoment .re{font-size:1.5rem;flex:none;margin-top:.1rem}
+.rmoment b{font-size:.82rem;color:var(--gold);display:block}
+.rmoment .ar{font-family:Amiri,serif;font-size:1.25rem;color:#FFF7DF;direction:rtl;text-align:right;display:block;margin:.25rem 0;line-height:1.9}
+.rmoment p{font-size:.7rem;color:rgba(255,254,247,.65);margin:.15rem 0 0;line-height:1.6}
+.rmoment .src{font-size:.6rem;color:rgba(233,200,106,.7);font-weight:700}
+/* milestones */
+.mtable{display:grid;gap:.5rem}
+.mrow{background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.22);border-radius:16px;padding:.75rem .9rem}
+.mrow b{font-size:.78rem;color:var(--gold)}
+.mrow p{font-size:.7rem;color:rgba(255,254,247,.7);margin:.25rem 0 0;line-height:1.65}
+/* offline ideas */
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+@media(max-width:520px){.ideas{grid-template-columns:1fr}}
+.idea{background:rgba(255,254,247,.05);border:1.5px dashed rgba(233,200,106,.35);border-radius:16px;padding:.7rem .8rem}
+.idea b{font-size:.74rem;color:#FFF7DF;display:flex;gap:.4rem}
+.idea p{font-size:.66rem;color:rgba(255,254,247,.6);margin:.25rem 0 0;line-height:1.6}
+.grownup{margin-top:2rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.45);line-height:1.7}
+.grownup a{color:var(--gold);text-decoration:none;font-weight:700}
+.rain{position:fixed;top:-2rem;z-index:70;font-size:1.4rem;animation:fall 2.4s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(200deg)}}
+</style>
+</head>
+<body>
+<header>
+<div class="hwrap">
+<a class="wordmark" href="/index.html">نُور · LITTLE CODEX</a>
+<a class="backlink" href="/kids.html">← All games</a>
+</div>
+</header>
+<main>
+<div class="hero">
+<span class="moon" aria-hidden="true">🌙</span>
+<h1>The Cradle</h1>
+<p class="ar" translate="no">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
+<p>For the newest Muslims of all: babies and toddlers, 0 to 3, and the tired, wonderful parents holding them. First sounds, first words, one sky game, and the gentle rhythm of a home that remembers Allah.</p>
+</div>
+
+<div class="honest">
+<b>An honest word before anything else.</b> Babies learn from faces, arms, and voices, not from screens; every child-health body says so and we agree. This room is a companion for <b>you</b>: play the recitations while you hold them, learn the words to say around them, steal the game for giggles on your lap. The screen is the songbook. You are the singer.
+</div>
+
+<!-- FIRST SOUNDS -->
+<section class="lesson">
+<h2>🎵 First sounds · the surahs of the cradle</h2>
+<p class="sub">Real recitation (Mishary Alafasy), one ayah at a time. Play them at waking, feeding, and the drift into sleep. These four are short enough to become the furniture of a baby's world.</p>
+<div class="sounds">
+<button class="snd" data-ref="1:1"><span class="pb">▶</span><span><b>Bismillah · Al-Fatiha 1:1</b><span>The opening of everything. Play it before feeds: it becomes their signal of good things coming.</span></span></button>
+<button class="snd" data-ref="112:1"><span class="pb">▶</span><span><b>Al-Ikhlas 112</b><span>“Say: He is Allah, One.” A third of the Qur'an in four short ayat; a favorite first memorization years later.</span></span></button>
+<button class="snd" data-ref="113:1"><span class="pb">▶</span><span><b>Al-Falaq 113</b><span>The dawn refuge. Part of the sleep ritual the Prophet ﷺ kept every night.</span></span></button>
+<button class="snd" data-ref="114:1"><span class="pb">▶</span><span><b>An-Nas 114</b><span>The refuge of mankind. The last words of the Book, and many families' last words of the day.</span></span></button>
+</div>
+<p class="sub" style="margin-top:.8rem;margin-bottom:0">✦ A beloved tradition welcomes a newborn with the adhan whispered in the right ear; families have carried it for centuries. The sunnah of tahnik and du'a for the newborn is in Bukhari 5467.</p>
+</section>
+
+<!-- FIRST WORDS -->
+<section class="lesson">
+<h2>💬 First words · the golden eight</h2>
+<p class="sub">Tap a card together: it glows, you say the word, baby watches your mouth. Repeat forever. These eight are the vocabulary of a Muslim home; children absorb them before any lesson.</p>
+<div id="words"></div>
+</section>
+
+<!-- PEEK GAME -->
+<section class="lesson">
+<h2>☁️ Peek! What is behind the cloud?</h2>
+<p class="sub">A lap game for chubby fingers: tap a cloud, something of the sky peeks out, you name it in Arabic, together. That is the whole game. It is enough.</p>
+<div id="sky">
+<span class="cap">tap the clouds ✦ they always come back</span>
+</div>
+</section>
+
+<!-- DAILY RHYTHM -->
+<section class="lesson">
+<h2>🕰 The rhythm of the day · said around the baby</h2>
+<p class="sub">Not lessons: atmosphere. Say these aloud at their moments and the child will one day say them with you, no flashcards required. Every line is sourced.</p>
+<div class="rhy">
+<div class="rmoment"><span class="re">🌅</span><div><b>On waking</b><span class="ar" translate="no">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ</span><p>Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur · “Praise to Allah who gave us life after taking it, and to Him is the return.”</p><span class="src">· Bukhari 6312</span></div></div>
+<div class="rmoment"><span class="re">🍽</span><div><b>Before food (and before nursing, quietly)</b><span class="ar" translate="no">بِسْمِ اللَّهِ</span><p>Bismillah · and if forgotten mid-meal: Bismillahi fi awwalihi wa akhirihi.</p><span class="src">· Abu Dawud 3767</span></div></div>
+<div class="rmoment"><span class="re">🤧</span><div><b>When baby sneezes (yes, really: start now)</b><span class="ar" translate="no">يَرْحَمُكَ اللَّهُ</span><p>Yarhamuk Allah · “Allah have mercy on you.” Said to them a thousand times, it becomes theirs.</p><span class="src">· Bukhari 6224</span></div></div>
+<div class="rmoment"><span class="re">🛡</span><div><b>Morning & evening shield</b><span class="ar" translate="no">أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</span><p>The Prophet's ﷺ own protection for his grandsons Hasan and Husayn: “I seek refuge for you both in Allah's perfect words, from every devil and creature, and from every envious eye.”</p><span class="src">· Bukhari 3371</span></div></div>
+<div class="rmoment"><span class="re">🌙</span><div><b>The sleep ritual</b><span class="ar" translate="no">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ قُلْ أَعُوذُ بِرَبِّ النَّاسِ</span><p>The three Quls, blown gently over cupped hands and wiped over the little body, as the Prophet ﷺ did nightly; Ayat al-Kursi for the older ones who can hear it through.</p><span class="src">· Bukhari 5017 · 2311</span></div></div>
+</div>
+</section>
+
+<!-- MILESTONES -->
+<section class="lesson">
+<h2>🌱 What is growing in there · 0 to 3, honestly</h2>
+<p class="sub">Montessori called this the absorbent mind: the child does not study the world, they become it. Here is what that means for a Muslim home, without pressure and without myths.</p>
+<div class="mtable">
+<div class="mrow"><b>0-12 months · the listening year</b><p>Everything is soundscape. A home where the Qur'an is recited calmly, where salam is exchanged and Bismillah is said, is already teaching. There is nothing to test. There is only atmosphere to keep beautiful.</p></div>
+<div class="mrow"><b>12-24 months · the naming year</b><p>First words arrive; order matters intensely (same mat, same corner, same routine calms them). Point and name: qamar, najm, ma'. Let them watch wudu from your hip and slap the water once, it is theirs too.</p></div>
+<div class="mrow"><b>24-36 months · the “I do it!” year</b><p>Practical life begins: carrying their own little mat, pouring water at wudu with a tiny cup, putting a coin in the sadaqa jar every Friday. Movements first, meanings later; that is the fitrah's own order.</p></div>
+</div>
+</section>
+
+<!-- OFFLINE IDEAS -->
+<section class="lesson">
+<h2>🧺 Off-screen shelf · six things to do this week</h2>
+<p class="sub">Montessori trays, Muslim soul, zero preparation beyond your kitchen.</p>
+<div class="ideas">
+<div class="idea"><b>🧺 The treasure basket</b><p>A basket of safe real things to mouth and grip (wooden spoon, fabric square, big misbaha beads knotted tight, always supervised). Swap one thing weekly.</p></div>
+<div class="idea"><b>🌙 The Maghrib walk</b><p>Step outside after sunset, find the moon or first star, say “Allahu Akbar” softly together. First astronomy, first awe.</p></div>
+<div class="idea"><b>💧 Wudu splash</b><p>At your wudu, give them a cup of water and one hand to wash. Soaked sleeves are the tuition fee.</p></div>
+<div class="idea"><b>🪙 The Friday coin</b><p>Every Jumu'ah, their fingers drop the coin in the sadaqa jar. By three, giving feels like something Fridays are for.</p></div>
+<div class="idea"><b>📿 Sound jars</b><p>Rice, beans, and one bell in sealed jars: shake to the rhythm of “Sub-han-Allah.” Loudest worship in the house.</p></div>
+<div class="idea"><b>🕌 The tiny mat</b><p>A small mat beside yours, never forced. They will sit, roll, wander, return. The returning is the lesson.</p></div>
+</div>
+</section>
+
+<p class="grownup">Next room when they're ready: the <a href="/kids/letters.html">Letter Garden</a> (3+) · the whole path is drawn in <a href="/school.html">the Madrasa of Light</a> 🏮</p>
+</main>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+
+/* first sounds: shared house recitation, one playing at a time */
+document.querySelectorAll(".snd").forEach(function(b){
+  b.addEventListener("click",function(){
+    if(window.playAyah){
+      document.querySelectorAll(".snd.playing").forEach(function(x){if(x!==b)x.classList.remove("playing")});
+      window.playAyah(b.getAttribute("data-ref"),b);
+    }
+  });
+});
+
+/* first words */
+var W=[
+["اللَّه","Allah","our Lord","💛"],
+["بِسْمِ اللَّه","Bismillah","we begin with Allah","🌟"],
+["الْحَمْدُ لِلَّه","Alhamdulillah","thank You, Allah","🌈"],
+["سَلَام","Salam","peace · hello","🕊"],
+["قَمَر","Qamar","moon","🌙"],
+["نَجْم","Najm","star","⭐"],
+["مَاء","Ma'","water","💧"],
+["نُور","Nur","light","💡"]
+];
+var wbox=$("words");
+W.forEach(function(w){
+  var d=document.createElement("div");
+  d.className="word";d.setAttribute("role","button");d.setAttribute("tabindex","0");
+  d.innerHTML='<span class="we">'+w[3]+'</span><span class="wa notranslate" translate="no">'+w[0]+'</span><span class="wt">'+w[1]+'</span><span class="wm">'+w[2]+"</span>";
+  function glow(){
+    d.classList.add("glow");
+    setTimeout(function(){d.classList.remove("glow")},900);
+  }
+  d.addEventListener("click",glow);
+  d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();glow()}});
+  wbox.appendChild(d);
+});
+
+/* peek sky */
+var sky=$("sky");
+var SPOTS=[[8,12],[52,8],[26,48],[66,52]];
+var PEEK=[["🌙","Qamar"],["⭐","Najm"],["☀️","Shams"],["🌈","after the rain"]];
+SPOTS.forEach(function(pos,i){
+  var behind=document.createElement("span");
+  behind.className="behind";behind.textContent=PEEK[i][0];
+  behind.style.left=(pos[0]+3)+"%";behind.style.top=(pos[1]+6)+"%";
+  var cloud=document.createElement("span");
+  cloud.className="cloud";cloud.textContent="☁️";
+  cloud.style.left=pos[0]+"%";cloud.style.top=pos[1]+"%";
+  cloud.setAttribute("role","button");
+  cloud.addEventListener("click",function(){
+    cloud.style.opacity="0";cloud.style.pointerEvents="none";
+    behind.classList.add("shown");
+    for(var k=0;k<4;k++){
+      var s=document.createElement("span");
+      s.className="rain";s.textContent=["✨","⭐"][k%2];
+      s.style.left=(Math.random()*90+2)+"vw";
+      s.style.animationDelay=(Math.random()*.5)+"s";
+      document.body.appendChild(s);
+      setTimeout(function(x){return function(){x.remove()}}(s),3000);
+    }
+    setTimeout(function(){
+      behind.classList.remove("shown");
+      setTimeout(function(){cloud.style.opacity="1";cloud.style.pointerEvents="auto"},600);
+    },2600);
+  });
+  sky.appendChild(behind);sky.appendChild(cloud);
+});
+})();
+</script>
+</body>
+</html>

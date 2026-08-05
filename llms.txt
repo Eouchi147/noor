@@ -7,6 +7,7 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 - [The Codex (home)](https://noorcodex.com/): the illuminated path of Islamic history, Today's Light daily fact, the Hidden Thread
 - [The Qur'an](https://noorcodex.com/quran): full Mushaf, Uthmani text, Alafasy recitation per verse, English and French translations
 - [The 25 Prophets](https://noorcodex.com/prophets)
+- [The Madrasa of Light](https://noorcodex.com/school): a complete Islamic school curriculum 0-18, Montessori-informed, with STEM through golden-age Muslim science and ijazah milestones; baby/toddler room at /kids/cradle
 - [The Five Pillars](https://noorcodex.com/pillars): Shahada, Salah, Zakat, Sawm, Hajj with animated infographics, sourced verses (with recitation) and authentic hadith
 - [Learn Arabic · The Letters of Light](https://noorcodex.com/arabic): interactive alphabet, harakat, sun/moon letters, first ayah with recitation; kids version at /kids/letters: complete sourced articles, every Qur'an reference with audio, authentic hadith, from Adam to Muhammad ﷺ
 - [Companions](https://noorcodex.com/companions) · [Characters](https://noorcodex.com/characters) · [Places](https://noorcodex.com/places) · [Words](https://noorcodex.com/words)

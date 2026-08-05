@@ -9,7 +9,7 @@ const TIERS = {
   codex: { m: 4900,  y: 49000,  name: "NOOR Embed · The Whole Codex",
            desc: "License to embed every room of NOOR Codex of Light in one website or app, with all future rooms included." },
   org:   { m: 14900, y: 149000, name: "NOOR Embed · Schools & Apps",
-           desc: "License to embed every room of NOOR Codex of Light across up to five domains or apps of one organization, with priority email support." }
+           desc: "License to embed every room of NOOR Codex of Light, including the complete Madrasa curriculum (ages 0 to 18), across up to five domains or apps of one organization, with priority email support." }
 };
 
 export default async function handler(req, res) {

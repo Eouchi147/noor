@@ -8,7 +8,7 @@ const ROOMS = {
   "": "home", "index": "home", "quran": "quran", "prophets": "prophets",
   "characters": "characters", "companions": "companions", "places": "places",
   "words": "words", "health": "health", "theology": "theology",
-  "latif": "latif", "begin": "begin", "kids": "kids", "arabic": "arabic", "pillars": "pillars", "license": "license",
+  "latif": "latif", "begin": "begin", "kids": "kids", "arabic": "arabic", "pillars": "pillars", "license": "license", "school": "school", "kids/cradle": "kids",
   "kids/letters": "kids", "donate": "give",
   "sponsor": "sponsor", "legal": "legal"
 };
