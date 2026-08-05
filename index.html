@@ -513,35 +513,97 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </div>
 </section>
 
+<!-- lights already lit · tiny dedication line (AI-gated) -->
+<div id="dedic-strip" hidden style="background:#FFFDF0;border-bottom:1px solid rgba(201,162,39,.2)">
+<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.5rem;font-size:.7rem;color:rgba(44,36,22,.6);font-family:Inter,system-ui,sans-serif">
+<span aria-hidden="true" style="color:#C9A227;flex:none">✦</span>
+<span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><i id="dedic-strip-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.38)">· a light lit by a giver</span></span>
+<a href="donate.html" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;font-size:.68rem">Add yours →</a>
+</div>
+</div>
+<script>
+(function(){
+fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
+  var items=(j&&j.items)||[]; if(!items.length)return;
+  var box=document.getElementById("dedic-strip"), t=document.getElementById("dedic-strip-text"), i=0;
+  function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+  function showItem(){ t.style.opacity="0"; setTimeout(function(){ t.innerHTML="\u201C"+esc(items[i%items.length])+"\u201D"; t.style.opacity="1"; i++; },500); }
+  box.hidden=false; showItem();
+  if(items.length>1) setInterval(showItem, 9000);
+}).catch(function(){});
+})();
+</script>
+
 <!-- ============ TODAY'S LIGHT · daily illumination ============ -->
 <section id="daily-light" style="background:linear-gradient(180deg,#FFFDF4,#FFFEF7);border-bottom:1px solid rgba(201,162,39,.18)">
 <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-<div style="background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:20px;box-shadow:0 10px 34px rgba(44,36,22,.07);overflow:hidden">
-<div style="display:flex;align-items:center;gap:.6rem;padding:.7rem 1.15rem;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border-bottom:1px solid rgba(201,162,39,.2)">
+<div id="dl-card" style="background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:20px;box-shadow:0 10px 34px rgba(44,36,22,.07);overflow:hidden;touch-action:pan-y">
+<div style="display:flex;align-items:center;gap:.6rem;padding:.7rem .9rem .7rem 1.15rem;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border-bottom:1px solid rgba(201,162,39,.2)">
 <span aria-hidden="true" style="color:#C9A227;font-size:1.05rem">✦</span>
 <span style="font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800">Today's Light</span>
-<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45)"></span>
+<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45);text-align:right"></span>
+<button id="dl-prev" type="button" aria-label="Previous day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">‹</button>
+<button id="dl-next" type="button" aria-label="Next day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">›</button>
 </div>
-<div style="padding:1.05rem 1.2rem 1.15rem">
+<div id="dl-body" style="padding:1.05rem 1.2rem 1.15rem;transition:opacity .22s ease,transform .22s ease">
 <span id="dl-cat" style="display:inline-block;border:1px solid rgba(201,162,39,.45);background:#FFFDF0;color:#6b5510;border-radius:999px;padding:.16rem .65rem;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase">History</span>
 <h3 id="dl-title" style="font-size:1.18rem;font-weight:800;margin:.55rem 0 .35rem;color:#2C2416">A woman founded the world's oldest university</h3>
 <p id="dl-story" style="font-size:.85rem;line-height:1.75;color:rgba(44,36,22,.75);margin:0">In 859 CE, Fatima al-Fihri, a Muslim woman in Fez, spent her inheritance to found al-Qarawiyyin, recognized as the oldest continuously operating degree-granting university on earth. It still teaches today.</p>
 <p id="dl-detail" style="font-size:.7rem;color:#8a6d1a;font-weight:600;margin:.6rem 0 0">Fez, Morocco · 859 CE</p>
 </div>
 </div>
-<p style="text-align:center;font-size:.64rem;color:rgba(44,36,22,.4);margin-top:.6rem">One small illumination, renewed every day.</p>
+<p style="text-align:center;font-size:.64rem;color:rgba(44,36,22,.4);margin-top:.6rem">One small illumination, renewed every day · swipe or use the arrows for the days before</p>
 </div>
 <script>
 (function(){
-fetch("/api/daily-light").then(function(r){return r.ok?r.json():null}).then(function(d){
-  if(!d||!d.title)return;
-  var g=function(id){return document.getElementById(id)};
-  g("dl-cat").textContent=d.category||"History";
-  g("dl-title").textContent=d.title;
-  g("dl-story").textContent=d.story||"";
-  g("dl-detail").textContent=d.detail||"";
-  g("dl-date").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
-}).catch(function(){});
+"use strict";
+var g=function(id){return document.getElementById(id)};
+var MAXBACK=30, off=0, seen={}, busy=false;
+function dstr(n){ return new Date(Date.now()-n*86400000).toISOString().slice(0,10); }
+function labelFor(n){
+  var d=new Date(dstr(n)+"T12:00:00Z");
+  var txt=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+  if(n===0)return "Today · "+txt;
+  if(n===1)return "Yesterday · "+txt;
+  return txt;
+}
+function paint(d,n){
+  g("dl-cat").textContent=(d&&d.category)||"History";
+  if(d&&d.title){ g("dl-title").textContent=d.title; g("dl-story").textContent=d.story||""; g("dl-detail").textContent=d.detail||""; }
+  g("dl-date").textContent=labelFor(n);
+  g("dl-prev").disabled=n>=MAXBACK; g("dl-prev").style.opacity=n>=MAXBACK?".35":"1";
+  g("dl-next").disabled=n<=0; g("dl-next").style.opacity=n<=0?".35":"1";
+}
+function show(n,dir){
+  if(busy||n<0||n>MAXBACK)return;
+  busy=true; off=n;
+  var b=g("dl-body");
+  b.style.opacity="0"; b.style.transform="translateX("+(dir<0?"14px":"-14px")+")";
+  var url=n===0?"/api/daily-light":"/api/daily-light?date="+dstr(n);
+  var done=function(d){
+    setTimeout(function(){
+      paint(d,n);
+      b.style.transform="translateX("+(dir<0?"-14px":"14px")+")";
+      requestAnimationFrame(function(){ b.style.opacity="1"; b.style.transform="translateX(0)"; });
+      busy=false;
+    },170);
+  };
+  if(seen[n])return done(seen[n]);
+  fetch(url).then(function(r){return r.ok?r.json():null}).then(function(d){ if(d)seen[n]=d; done(d); }).catch(function(){ done(null); });
+}
+g("dl-prev").addEventListener("click",function(){show(off+1,-1)});
+g("dl-next").addEventListener("click",function(){show(off-1,1)});
+/* swipe: left for the day before, right for the day after */
+var tx=null;
+g("dl-card").addEventListener("touchstart",function(e){ tx=e.touches[0].clientX; },{passive:true});
+g("dl-card").addEventListener("touchend",function(e){
+  if(tx===null)return;
+  var dx=e.changedTouches[0].clientX-tx; tx=null;
+  if(Math.abs(dx)<48)return;
+  if(dx<0)show(off+1,-1); else show(off-1,1);
+},{passive:true});
+paint(null,0);
+fetch("/api/daily-light").then(function(r){return r.ok?r.json():null}).then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
 })();
 </script>
 </section>

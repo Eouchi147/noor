@@ -21,33 +21,57 @@ const TREASURY = [
   { category: "Language", title: "Dozens of English words came through Arabic", story: "Sugar, cotton, sofa, tariff, magazine, zenith, nadir, alchemy, alkali, algebra: everyday English carries dozens of words that traveled through Arabic scholarship and trade into Europe's tongues.", detail: "A shared inheritance", link: "/words" }
 ];
 
-function dayIndex() {
-  const now = new Date();
-  const start = Date.UTC(now.getUTCFullYear(), 0, 0);
-  return Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) - start) / 86400000);
+const THEMES = [
+  "a Muslim scientific or medical breakthrough, classical golden age",
+  "a moment from the life of a companion of the Prophet ﷺ",
+  "an on-this-day event of Islamic history near this date",
+  "a wonder of Islamic architecture or a sacred place",
+  "a modern discovery, invention or achievement by a Muslim",
+  "the story behind a word, practice or tradition of the ummah",
+  "libraries, books and the preservation of knowledge in Islam"
+];
+
+function dayIndexOf(dateStr) {
+  const d = new Date(dateStr + "T12:00:00Z");
+  const start = Date.UTC(d.getUTCFullYear(), 0, 0);
+  return Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - start) / 86400000);
 }
-function fallback() {
-  const f = TREASURY[dayIndex() % TREASURY.length];
-  return Object.assign({ date: new Date().toISOString().slice(0, 10), source: "treasury" }, f);
+function fallback(dateStr) {
+  const f = TREASURY[dayIndexOf(dateStr) % TREASURY.length];
+  return Object.assign({ date: dateStr, source: "treasury" }, f);
 }
 
-/* warm-instance memory: at most one generation per day per instance */
-let cache = { date: "", data: null };
+/* warm-instance memory: one generation per date, capped */
+const cache = new Map();
+function remember(dateStr, data) {
+  cache.set(dateStr, data);
+  if (cache.size > 64) cache.delete(cache.keys().next().value);
+  return data;
+}
 
 export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=172800");
   const today = new Date().toISOString().slice(0, 10);
-  if (cache.date === today && cache.data) return res.status(200).json(cache.data);
+  /* ?date=YYYY-MM-DD reaches back through the lamp's memory, 30 days deep.
+     Past days freeze at the CDN for a month; today refreshes daily. */
+  let want = String((req.query && req.query.date) || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(want)) want = today;
+  const age = Math.floor((Date.parse(today) - Date.parse(want)) / 86400000);
+  if (!(age >= 0 && age <= 30)) want = today;
+  const isToday = want === today;
+  res.setHeader("Cache-Control", isToday
+    ? "public, s-maxage=86400, stale-while-revalidate=172800"
+    : "public, s-maxage=2592000, stale-while-revalidate=2592000");
+  if (cache.has(want)) return res.status(200).json(cache.get(want));
 
   const key = process.env.OPENROUTER_API_KEY;
-  if (!key) { const f = fallback(); cache = { date: today, data: f }; return res.status(200).json(f); }
+  if (!key) return res.status(200).json(remember(want, fallback(want)));
 
   const SYSTEM = [
     "You write one small daily illumination for NOOR Codex of Light, a free Islamic library. Reply with JSON ONLY, exactly:",
     '{"category":"...","title":"...","story":"...","detail":"..."}',
     "category: one or two words (History, Medicine, Astronomy, Companions, Architecture, On this day...).",
     "title: a striking, truthful headline under 60 characters.",
-    "story: 55 to 90 words, vivid and precise, for a general audience. A well-established fact of Islamic history, civilization, science by Muslims (classical or modern), a companion's moment, or an on-this-day event near " + today + ".",
+    "story: 55 to 90 words, vivid and precise, for a general audience. Theme for this day: " + THEMES[dayIndexOf(want) % THEMES.length] + ". A well-established fact only.",
     "detail: one short line: who / where / when.",
     "Accuracy is sacred: choose only well-documented facts; never invent dates, numbers or quotes; avoid miracle-science claims and disputed attributions. Never use the em dash character; use commas or · instead."
   ].join("\n");
@@ -59,8 +83,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: process.env.OPENROUTER_MODEL || "anthropic/claude-sonnet-4.5",
         max_tokens: 350,
-        temperature: 0.6,
-        messages: [{ role: "system", content: SYSTEM }, { role: "user", content: "Today's light for " + today + ". Vary the theme from recent days." }]
+        temperature: isToday ? 0.5 : 0.2,
+        messages: [{ role: "system", content: SYSTEM }, { role: "user", content: "The light for " + want + ". Choose the single best-documented fact fitting the theme." }]
       })
     });
     if (!r.ok) throw 0;
@@ -71,16 +95,14 @@ export default async function handler(req, res) {
     if (!p || !p.title || !p.story) throw 0;
     const clean = x => String(x || "").replace(/—|–/g, "·").trim();
     const data = {
-      date: today, source: "lantern",
+      date: want, source: "lantern",
       category: clean(p.category).slice(0, 24) || "History",
       title: clean(p.title).slice(0, 90),
       story: clean(p.story).slice(0, 700),
       detail: clean(p.detail).slice(0, 90)
     };
-    cache = { date: today, data };
-    return res.status(200).json(data);
+    return res.status(200).json(remember(want, data));
   } catch {
-    const f = fallback(); cache = { date: today, data: f };
-    return res.status(200).json(f);
+    return res.status(200).json(remember(want, fallback(want)));
   }
 }

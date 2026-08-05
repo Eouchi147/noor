@@ -78,9 +78,13 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #player .label{min-width:0;flex:1}
 #player .label b{display:block;color:#F4D46A;font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #player .label span{color:rgba(255,254,247,.55);font-size:.64rem}
-.pbtn{flex:none;width:2.3rem;height:2.3rem;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:transparent;color:#F4D46A;font-size:.95rem;cursor:pointer;display:grid;place-items:center;transition:all .2s}
-.pbtn:hover{background:rgba(244,212,106,.12)}
-.pbtn.main{width:2.8rem;height:2.8rem;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;border:0;font-size:1.05rem}
+.pbtn{flex:none;width:2.3rem;height:2.3rem;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.04);color:#F4D46A;cursor:pointer;display:grid;place-items:center;transition:all .18s;padding:0}
+.pbtn svg{width:.92rem;height:.92rem;display:block}
+.pbtn:hover{background:rgba(244,212,106,.14);border-color:rgba(244,212,106,.7);transform:translateY(-1px)}
+.pbtn:active{transform:translateY(0) scale(.96)}
+.pbtn.main{width:2.85rem;height:2.85rem;background:radial-gradient(circle at 40% 32%,#F4D46A,#C9A227);color:#241D12;border:0;box-shadow:0 4px 16px rgba(201,162,39,.45),inset 0 1px 0 rgba(255,255,255,.35)}
+.pbtn.main svg{width:1.12rem;height:1.12rem}
+.pbtn.main:hover{box-shadow:0 6px 22px rgba(201,162,39,.6),inset 0 1px 0 rgba(255,255,255,.35)}
 body.has-player{padding-bottom:74px}
 </style>
 <link rel="canonical" href="https://noorcodex.com/quran"/>
@@ -183,7 +187,7 @@ body.has-player{padding-bottom:74px}
 <option value="en.sahih">EN · Saheeh Intl</option>
 <option value="fr.hamidullah">FR · Hamidullah</option>
 </select>
-<button class="tool" id="t-listen">▶ Listen to surah</button>
+<button class="tool" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
 <span id="t-status" class="text-[11px] text-ink/40"></span>
 </div>
 </nav>
@@ -221,10 +225,10 @@ body.has-player{padding-bottom:74px}
 <div id="player" role="region" aria-label="Recitation player">
 <div class="inner">
 <div class="label"><b id="p-title">·</b><span id="p-sub">Alafasy</span></div>
-<button class="pbtn" id="p-prev" aria-label="Previous verse">⏮</button>
-<button class="pbtn main" id="p-toggle" aria-label="Play or pause">▶</button>
-<button class="pbtn" id="p-next" aria-label="Next verse">⏭</button>
-<button class="pbtn" id="p-stop" aria-label="Stop">✕</button>
+<button class="pbtn" id="p-prev" aria-label="Previous verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2.4v14H6zM19.5 5v14L9.6 12z"/></svg></button>
+<button class="pbtn main" id="p-toggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+<button class="pbtn" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
+<button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
 </div>
 </div>
 
@@ -347,6 +351,12 @@ function playerLabel(extra){if(playingIdx<0||!ayahs[playingIdx])return;
  $("p-title").textContent=SURAHS[cur-1][1]+" · verse "+ayahs[playingIdx].numberInSurah+" / "+SURAHS[cur-1][4];
  $("p-sub").textContent=extra||((continuous?"Continuous · ":"")+"Alafasy");}
 const EQ=`<span class="eq"><i></i><i></i><i></i></span>`;
+const ICO_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
+function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;}
+function listenLabel(on){$("t-listen").innerHTML=on
+ ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
+ :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah`;}
 const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
 function setPlaying(i,loading){playingIdx=i;
  document.querySelectorAll(".ayah").forEach(el=>el.classList.remove("playing"));
@@ -364,7 +374,7 @@ function killAudio(){clearWatch();
   try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
 function stopAudio(){killAudio();
  setPlaying(-1);continuous=false;paused=false;playerShow(false);
- $("t-listen").textContent="▶ Listen to surah";$("t-listen").classList.remove("on");$("p-toggle").textContent="▶";}
+ listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);}
 function ayahFailed(i){
  if(continuous&&failStreak<2&&i+1<ayahs.length){failStreak++;
   $("t-status").textContent="A verse could not load, continuing…";setTimeout(()=>$("t-status").textContent="",2500);
@@ -378,7 +388,7 @@ function playAyah(i,srcIdx){srcIdx=srcIdx||0;
  killAudio();
  const me=new Audio();audio=me;
  me.preload="auto";me.src=srcs[srcIdx];
- paused=false;$("p-toggle").textContent="⏸";playerShow(true);setPlaying(i,true);
+ paused=false;setToggle(true);playerShow(true);setPlaying(i,true);
  const next=()=>{if(audio!==me)return;clearWatch();playAyah(i,srcIdx+1);};
  watchdog=setTimeout(next,srcIdx===srcs.length-1?8000:5000);   /* hang rescue */
  me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);};
@@ -393,16 +403,16 @@ function playAyah(i,srcIdx){srcIdx=srcIdx||0;
 roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
  const i=+b.dataset.play;
  if(playingIdx===i&&audio){$("p-toggle").click();return;}
- continuous=false;$("t-listen").textContent="▶ Listen to surah";$("t-listen").classList.remove("on");
+ continuous=false;listenLabel(false);$("t-listen").classList.remove("on");
  playAyah(i);});
 $("t-listen").addEventListener("click",()=>{
  if(continuous){stopAudio();return;}
  if(!ayahs.length)return;
- continuous=true;$("t-listen").textContent="■ Stop";$("t-listen").classList.add("on");
+ continuous=true;listenLabel(true);$("t-listen").classList.add("on");
  playAyah(playingIdx>=0?playingIdx:0);});
 $("p-toggle").addEventListener("click",()=>{if(!audio)return;
- if(paused){audio.play().catch(()=>{});paused=false;$("p-toggle").textContent="⏸";}
- else{clearWatch();audio.pause();paused=true;$("p-toggle").textContent="▶";}});
+ if(paused){audio.play().catch(()=>{});paused=false;setToggle(true);}
+ else{clearWatch();audio.pause();paused=true;setToggle(false);}});
 $("p-next").addEventListener("click",()=>{if(playingIdx>=0&&playingIdx+1<ayahs.length)playAyah(playingIdx+1);});
 $("p-prev").addEventListener("click",()=>{if(playingIdx>0)playAyah(playingIdx-1);});
 $("p-stop").addEventListener("click",stopAudio);

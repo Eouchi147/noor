@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       /* optional dedication, shown to the owner in Stripe */
       "custom_fields[0][key]": "dedication",
       "custom_fields[0][label][type]": "custom",
-      "custom_fields[0][label][custom]": "Dedicate this light to someone (optional)",
+      "custom_fields[0][label][custom]": "Dedication (optional) · may be shown on the site, anonymously",
       "custom_fields[0][type]": "text",
       "custom_fields[0][optional]": "true",
       "custom_fields[0][text][maximum_length]": "80",

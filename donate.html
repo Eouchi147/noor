@@ -160,16 +160,22 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 </div>
 <div class="mrow"><input type="checkbox" id="monthly"/><label for="monthly" style="all:unset;cursor:pointer">Make it a monthly light · a sadaqa jariyah that keeps giving every month. Cancel anytime with one click from your receipt.</label></div>
 <button class="cta" id="give">✦ <span id="give-label">Give</span></button>
-<div class="trust"><span>Secure checkout by Stripe</span><span>·</span><span>Your own currency</span><span>·</span><span>No account needed</span><span>·</span><span>At checkout: dedicate your light to someone, if you wish</span></div>
+<div class="trust"><span>Secure checkout by Stripe</span><span>·</span><span>Your own currency</span><span>·</span><span>No account needed</span><span>·</span><span>At checkout: dedicate your light to someone · dedications may shine below, anonymously</span></div>
+</div>
+
+<div id="dedic" hidden style="margin-top:1.5rem;background:linear-gradient(90deg,rgba(201,162,39,.1),rgba(201,162,39,.03));border:1px solid rgba(201,162,39,.35);border-radius:14px;padding:.6rem .95rem;display:flex;align-items:center;gap:.55rem;font-size:.76rem;color:rgba(44,36,22,.7);line-height:1.55">
+<span aria-hidden="true" style="color:#C9A227;flex:none">✦</span>
+<span style="min-width:0"><i id="dedic-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.4);font-size:.66rem;white-space:nowrap">· a light lit by a giver</span></span>
 </div>
 
 <div style="margin-top:1.6rem">
 <div class="imp"><span class="s">✦</span><span><b>Keeps the doors open.</b> Servers, the Qur'an text and recitation services, and the daily light, paid for, so no reader ever pays.</span></div>
 <div class="imp"><span class="s">✦</span><span><b>Builds new rooms.</b> The Mushaf, the 25 Prophets, the Kids' Codex, the companions: every room was built free. Your gift builds the next one.</span></div>
 <div class="imp"><span class="s">✦</span><span><b>Carries the light further.</b> The Codex is preparing to speak every major language of the ummah. Gifts bring that day closer.</span></div>
+<div class="imp"><span class="s">✦</span><span><b>Gives onward.</b> 2.5% of every gift is set aside and passed on to zakat-eligible causes, the eight categories named in the Qur'an (9:60). The Codex keeps nothing it does not purify.</span></div>
 </div>
 
-<p class="qa" style="margin-top:1.4rem"><b>Is this zakat?</b> No. Gifts to the Codex are sadaqa, voluntary charity, not zakat, and we are not a registered charity, so no tax receipt is issued. Your zakat belongs with the eight categories named in the Qur'an (9:60). Details in <a href="legal.html" style="color:#8a6d13">Terms & Privacy</a>.</p>
+<p class="qa" style="margin-top:1.4rem"><b>Is this zakat?</b> Your gift itself is sadaqa, voluntary charity, not zakat, and we are not a registered charity, so no tax receipt is issued. Direct your own zakat to the eight categories named in the Qur'an (9:60). And know that from every gift received here, <b>2.5% is set aside and given onward to zakat-eligible causes</b>. Details in <a href="legal.html" style="color:#8a6d13">Terms & Privacy</a>.</p>
 <p class="qa" style="margin-top:.5rem;padding-bottom:2.6rem"><b>Why not ads?</b> Because a place of remembrance should be quiet. We chose no ads and no trackers on purpose, which leaves the Codex with one honest lifeline: you.</p>
 </div>
 
@@ -229,6 +235,16 @@ document.addEventListener("DOMContentLoaded",function(){
   renderAmts(); label();
   $("monthly").addEventListener("change",label);
   $("custom").addEventListener("input",label);
+  /* lights already lit: rotating, AI-gated dedications */
+  fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
+    var items=(j&&j.items)||[]; if(!items.length)return;
+    var box=$("dedic"), t=$("dedic-text"), i=0;
+    function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+    function showItem(){ t.style.opacity="0"; setTimeout(function(){ t.innerHTML="\u201C"+esc(items[i%items.length])+"\u201D"; t.style.opacity="1"; i++; },500); }
+    box.hidden=false; showItem();
+    if(items.length>1) setInterval(showItem, 8000);
+  }).catch(function(){});
+
   $("give").addEventListener("click",function(){
     var a=currentAmount(); if(!a){ $("custom").focus(); return; }
     var btn=$("give"); btn.disabled=true; $("give-label").textContent="Opening secure checkout…";
