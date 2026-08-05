@@ -1,0 +1,444 @@
+/* ================= The Madrasa of Light · the living curriculum =================
+   Six tracks, twenty-eight lessons, every claim sourced. Free for every
+   person forever; organizations embed it under license (/license).
+   Card types: read (h,p) · letters (set) · pairs (rows) · steps (list) ·
+   ayah (ref, ar, en) · tip (p). Quizzes pass at 70%. */
+window.NOOR_CURRICULUM = {
+tracks: [
+
+/* ============ TRACK 1 · READING ARABIC ============ */
+{ id:"huruf", icon:"🔤", ar:"الْقِرَاءَة", name:"Reading Arabic",
+  stage:"Garden → Workshop", color:"#C9A227",
+  desc:"From zero to reading the Bismillah with your own eyes: the 28 letters, the vowel marks, and your first ayah.",
+  lessons:[
+
+{ id:"h1", name:"Letters I · the first seven", mins:8,
+  cards:[
+   {t:"read", h:"Twenty-eight keys", p:"Arabic reads right to left, and its whole world is written with 28 letters. You will meet them seven at a time. Do not rush: greet each one, say its sound out loud, and it will stay with you."},
+   {t:"letters", set:[["ا","Alif","a long open aa, as in far"],["ب","Bā’","b as in book · one dot below"],["ت","Tā’","t as in tea · two dots above"],["ث","Thā’","th as in three · three dots above"],["ج","Jīm","j as in jam"],["ح","Ḥā’","a deep breathy h from the throat"],["خ","Khā’","kh, like the ch in Scottish loch"]]},
+   {t:"tip", p:"See the family resemblance? ب ت ث share one body and differ only by dots. Dots are not decoration: they are the letter's name tag."},
+   {t:"read", h:"Say them like a chain", p:"Alif, Bā, Tā, Thā, Jīm, Ḥā, Khā. Say the chain three times out loud. The Prophet ﷺ taught by kind repetition, three times, so it could be truly grasped (Bukhari 95)."}
+  ],
+  quiz:[
+   {q:"Which letter is Bā’?", a:["ت","ب","ث","ج"], c:1},
+   {q:"How many dots does Thā’ ث carry?", a:["One","Two","Three","None"], c:2},
+   {q:"Which direction does Arabic read?", a:["Left to right","Right to left","Top to bottom","Either way"], c:1},
+   {q:"The deep breathy H from the throat is:", a:["ه","ح","خ","ج"], c:1}
+  ]},
+
+{ id:"h2", name:"Letters II · the second seven", mins:8,
+  cards:[
+   {t:"read", h:"Seven more lights", p:"This group holds the six famous loners of Arabic. Four of them are here: د ذ ر ز never hold the hand of the letter that comes after them. Words simply break after these letters, even in the middle."},
+   {t:"letters", set:[["د","Dāl","d as in door"],["ذ","Dhāl","th as in this (voiced)"],["ر","Rā’","a rolled r, tapped on the tongue"],["ز","Zāy","z as in zamzam"],["س","Sīn","s as in sun"],["ش","Shīn","sh as in shade"],["ص","Ṣād","a heavy, full-mouthed s"]]},
+   {t:"tip", p:"Ṣād ص is Sīn's big sibling: same hiss, but the mouth makes a dome and the sound gets heavy. Arabic loves these light/heavy pairs; your ear will learn to hear the difference before your mouth masters it."},
+   {t:"pairs", rows:[["س → ص","light s → heavy s"],["Connectors","letters that join both ways"],["Non-connectors ا د ذ ر ز و","never join to the NEXT letter"]]}
+  ],
+  quiz:[
+   {q:"Which of these letters never connects to the letter after it?", a:["س","ش","ر","ص"], c:2},
+   {q:"Shīn ش sounds like:", a:["s in sun","sh in shade","z in zoo","th in three"], c:1},
+   {q:"The heavy S with a full mouth is:", a:["س","ص","ز","ذ"], c:1},
+   {q:"Dhāl ذ sounds like the th in:", a:["three","this","thin","math"], c:1}
+  ]},
+
+{ id:"h3", name:"Letters III · the third seven", mins:9,
+  cards:[
+   {t:"read", h:"The proudest sounds", p:"This group holds sounds most languages do not have, including the letter Arabic itself is nicknamed after: Ḍād. Be patient here. Every reciter on earth once struggled with ع."},
+   {t:"letters", set:[["ض","Ḍād","a heavy d from the side of the tongue · Arabic is called the language of the Ḍād"],["ط","Ṭā’","a heavy t"],["ظ","Ẓā’","heavy th of “this”"],["ع","ʿAyn","a gentle squeeze of the throat, voice on"],["غ","Ghayn","a soft gargle, like a French r"],["ف","Fā’","f as in fine"],["ق","Qāf","a deep k from the very back"]]},
+   {t:"tip", p:"For ʿAyn ع: say “ah” and, without stopping, gently squeeze the sound at the bottom of your throat. It is a hug, not a choke. The word عِلْم (ʿilm, knowledge) begins with it."},
+   {t:"read", h:"Qāf vs Kāf", p:"ق is deep, from where you gargle: قُرْآن Qur’ān. Next lesson you meet ك, its lighter cousin from the middle of the mouth: كِتَاب kitāb, book. Deep then light. The Book holds both."}
+  ],
+  quiz:[
+   {q:"Arabic is nicknamed the language of which letter?", a:["ع","ض","ق","ظ"], c:1},
+   {q:"ʿAyn ع is made with:", a:["the lips","the teeth","a gentle throat squeeze","the nose"], c:2},
+   {q:"The word قُرْآن begins with:", a:["Kāf","Qāf","Ghayn","Fā’"], c:1},
+   {q:"Ghayn غ sounds closest to:", a:["a rolled r","a soft gargled r","g in go","h in hello"], c:1}
+  ]},
+
+{ id:"h4", name:"Letters IV · the final seven", mins:9,
+  cards:[
+   {t:"read", h:"Completing the circle", p:"Seven more and the alphabet is yours. Two of these, و and ي, live double lives: consonants at the front of a word, stretchers of sound inside it. And one of them ends the most beautiful word in this library: نُور, light."},
+   {t:"letters", set:[["ك","Kāf","k as in kind"],["ل","Lām","l as in lamp"],["م","Mīm","m as in moon"],["ن","Nūn","n as in noon"],["ه","Hā’","a light h as in hello"],["و","Wāw","w as in water · stretches u into oo"],["ي","Yā’","y as in yes · stretches i into ee"]]},
+   {t:"tip", p:"You now know every letter in لا إِلَٰهَ إِلَّا اللَّهُ. Look: Lām, Alif, Hamza-Alif, Lām, Hā... The sentence that opens Islam is built from letters you have met."},
+   {t:"read", h:"The full chain", p:"Recite the whole alphabet slowly, touching each sound: ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي. Twenty-eight lamps, all lit. Now we teach them to sing."}
+  ],
+  quiz:[
+   {q:"Which letter ends the word نُور (light)?", a:["ن","و","ر","ل"], c:2},
+   {q:"Which two letters also stretch vowels long?", a:["ك and ل","و and ي","م and ن","ه and ء"], c:1},
+   {q:"Mīm م sounds like:", a:["n in noon","m in moon","b in book","w in water"], c:1},
+   {q:"How many letters are in the Arabic alphabet?", a:["26","28","29","32"], c:1}
+  ]},
+
+{ id:"h5", name:"The marks that make them sing", mins:10,
+  cards:[
+   {t:"read", h:"Letters are consonants", p:"By themselves, Arabic letters are all consonant and no vowel: ب is just “b”. The vowels are small marks, harakat, written above or below. Three little marks turn every silent letter into a singer."},
+   {t:"pairs", rows:[["بَ · Fatha, a stroke ABOVE","ba · opens the sound into “a”"],["بِ · Kasra, a stroke BELOW","bi · leans the sound into “i”"],["بُ · Damma, a tiny و above","bu · rounds the lips into “u”"],["بْ · Sukun, a small circle","b · no vowel: the letter closes and rests"]]},
+   {t:"tip", p:"Test yourself out loud: تَ ta, تِ ti, تُ tu, تْ t. Then with Nūn: نَ na, نِ ni, نُ nu. You are reading. This is actual reading."},
+   {t:"read", h:"Why the Qur’an is fully marked", p:"Everyday Arabic hides most harakat and readers guess from experience. The Mushaf marks every single one, so that no reader anywhere, in any century, mispronounces revelation. Precision as mercy."}
+  ],
+  quiz:[
+   {q:"The mark that makes بِ say “bi” is written:", a:["above the letter","below the letter","inside the letter","after the letter"], c:1},
+   {q:"Sukun بْ means:", a:["double the letter","a long aa","no vowel, the letter rests","the letter is silent forever"], c:2},
+   {q:"دُ reads as:", a:["da","di","du","d"], c:2},
+   {q:"Damma looks like a tiny:", a:["circle","wāw و","dot","yā ي"], c:1}
+  ]},
+
+{ id:"h6", name:"Doubling, endings & stretchers", mins:10,
+  cards:[
+   {t:"read", h:"Shadda · the press", p:"A small w-shaped mark ّ doubles its letter: you press it twice, once resting, once sounding. In رَبّ (rabb, Lord) the bā is pressed. In اللَّه itself, the lām carries a shadda. The most spoken word in the world holds one."},
+   {t:"pairs", rows:[["بّ · Shadda","bb · the letter pressed twice"],["بًا · Fathatan","ban · the -an ending"],["بٍ · Kasratan","bin · the -in ending"],["بٌ · Dammatan","bun · the -un ending"]]},
+   {t:"read", h:"The three stretchers", p:"Alif, Wāw and Yā stretch short vowels long: بَا bā, بُو bū, بِي bī. Twice the breath, same sound. Listen to any reciter and you will hear the stretchers carrying the melody of the Qur’an."},
+   {t:"tip", p:"The double-ending marks (tanwin) live at the ends of words: كِتَابٌ kitābun, a book. You will meet them constantly in recitation; now they can never surprise you."}
+  ],
+  quiz:[
+   {q:"Shadda ّ tells you to:", a:["skip the letter","whisper the letter","press the letter twice","stretch the letter"], c:2},
+   {q:"بٌ with dammatan reads:", a:["ban","bin","bun","bu"], c:2},
+   {q:"Which three letters stretch vowels long?", a:["ا و ي","ب ت ث","ك ل م","ح خ ه"], c:0},
+   {q:"In اللَّه, which letter carries the shadda?", a:["Alif","Lām","Hā","none"], c:1}
+  ]},
+
+{ id:"h7", name:"Your first reading · the Bismillah", mins:12,
+  cards:[
+   {t:"read", h:"Everything you need, you have", p:"Four words open the Qur’an, and you now hold every tool needed to read them: the letters, the marks, the stretchers, the shadda. Read each word slowly, right to left, sound by sound."},
+   {t:"pairs", rows:[["بِسْمِ","bi-s-mi · “In the name”: Bā with kasra, Sīn resting, Mīm with kasra"],["اللَّهِ","Allāhi · Alif-Lām, Lām pressed with shadda, Hā"],["الرَّحْمَٰنِ","ar-Raḥmāni · the Rā is pressed: the L of “al” melts into it"],["الرَّحِيمِ","ar-Raḥīmi · spot the Yā stretching the ḥī long"]]},
+   {t:"ayah", ref:"1:1", ar:"بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ", en:"In the name of Allah, the Most Merciful, the Especially Merciful. Read along with the reciter, finger under each word."},
+   {t:"read", h:"You just read Qur’an", p:"Letter by letter, mark by mark, with your own eyes. The very first revealed word was اقْرَأْ, Iqra’: Read. Today you obeyed it in Arabic. Continue in the Mushaf of Light, where every ayah will recite itself to you."}
+  ],
+  quiz:[
+   {q:"In بِسْمِ, the Sīn carries:", a:["fatha","kasra","sukun (rest)","shadda"], c:2},
+   {q:"Why is الرَّحْمَٰنِ pronounced “ar-Raḥmān”, not “al-Raḥmān”?", a:["The Alif is silent","Rā is a sun letter: the L melts and Rā doubles","It is an exception with no rule","The Lām is missing"], c:1},
+   {q:"Which word of the Bismillah contains a long ī stretched by Yā?", a:["بِسْمِ","اللَّهِ","الرَّحْمَٰنِ","الرَّحِيمِ"], c:3},
+   {q:"The first word ever revealed of the Qur’an was:", a:["Bismillah","Iqra’ · Read","Alhamdulillah","Qul"], c:1}
+  ]}
+]},
+
+/* ============ TRACK 2 · THE FIVE PILLARS ============ */
+{ id:"arkan", icon:"🏛", ar:"الأَرْكَان", name:"The Five Pillars",
+  stage:"Workshop 6-9 · and every newcomer", color:"#33507C",
+  desc:"The architecture of a Muslim life: what each pillar is, why it stands, and where the Book and the Prophet ﷺ said it.",
+  lessons:[
+
+{ id:"k1", name:"Shahada · the door", mins:8,
+  cards:[
+   {t:"read", h:"One sentence opens everything", p:"Lā ilāha illa-llāh, Muḥammadun rasūlu-llāh: there is no god but Allah; Muhammad is His Messenger. Said sincerely, this sentence makes a person Muslim. No ceremony, no intermediary, no fee. It is the door, and the door is never locked."},
+   {t:"pairs", rows:[["First half · لا إله إلا الله","clears the heart of every false object of worship"],["Second half · محمد رسول الله","binds the heart to the final guidance"]]},
+   {t:"ayah", ref:"3:18", ar:"شَهِدَ اللَّهُ أَنَّهُ لَا إِلَـٰهَ إِلَّا هُوَ", en:"“Allah bears witness that there is no god but Him,” and so do the angels and the people of knowledge (3:18)."},
+   {t:"read", h:"Islam is built upon five", p:"The Prophet ﷺ said: “Islam is built upon five: the testimony that there is no god but Allah and that Muhammad is the Messenger of Allah, establishing the prayer, giving the zakat, pilgrimage to the House, and the fast of Ramadan.” (Bukhari 8, Muslim 16). This track walks each one."}
+  ],
+  quiz:[
+   {q:"What makes a person Muslim?", a:["A ceremony at a mosque","Sincerely declaring the shahada","Being born in a Muslim land","Memorizing the Qur'an"], c:1},
+   {q:"The first half of the shahada rejects:", a:["bad manners","every false object of worship","other languages","the previous prophets"], c:1},
+   {q:"“Islam is built upon five” is a hadith found in:", a:["Bukhari and Muslim","only weak collections","the Qur'an","no source"], c:0},
+   {q:"How many intermediaries does a person need to enter Islam?", a:["One imam","Two witnesses and a fee","None","A scholar's certificate"], c:2}
+  ]},
+
+{ id:"k2", name:"Salah · five meetings a day", mins:10,
+  cards:[
+   {t:"read", h:"The appointed times", p:"Five prayers anchor the day: Fajr before sunrise (2 rak‘ah), Dhuhr after the sun's peak (4), Asr in the afternoon (4), Maghrib just after sunset (3), Isha at night (4). Seventeen obligatory rak‘ahs, each one a reset of the heart."},
+   {t:"pairs", rows:[["Fajr · dawn","2 rak‘ah"],["Dhuhr · midday","4 rak‘ah"],["Asr · afternoon","4 rak‘ah"],["Maghrib · sunset","3 rak‘ah"],["Isha · night","4 rak‘ah"]]},
+   {t:"ayah", ref:"4:103", ar:"إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", en:"“The prayer has been decreed upon the believers at appointed times.” (An-Nisa 4:103)"},
+   {t:"read", h:"A river at your door", p:"The Prophet ﷺ asked: if a river ran by your door and you bathed in it five times daily, would any dirt remain? None, they said. “That is the likeness of the five prayers: Allah wipes away sins with them.” (Bukhari 528). The first thing asked about on the Day of Judgment is the prayer (Tirmidhi 413)."}
+  ],
+  quiz:[
+   {q:"How many obligatory rak‘ahs are prayed daily in total?", a:["15","17","19","20"], c:1},
+   {q:"Which prayer has 3 rak‘ah?", a:["Fajr","Asr","Maghrib","Isha"], c:2},
+   {q:"The five prayers are likened in the hadith to:", a:["a mountain","a river bathed in five times a day","a ladder","a lamp"], c:1},
+   {q:"Prayer times are set by:", a:["the clock only","the positions of the sun","local custom","personal choice"], c:1}
+  ]},
+
+{ id:"k3", name:"Zakat · the coin in forty", mins:9,
+  cards:[
+   {t:"read", h:"Wealth that purifies itself", p:"Zakat is 2.5% of qualifying wealth (savings, gold, trade goods) that has stayed above the nisab threshold for one lunar year. The nisab is the value of 85g of gold or 595g of silver. It is not charity from generosity; it is a duty owed by the wealth itself."},
+   {t:"pairs", rows:[["Rate","2.5% · one coin in every forty"],["Nisab","85g gold / 595g silver equivalent"],["Held for","one lunar year above nisab"],["Differs from sadaqa","zakat is obligatory and fixed; sadaqa is voluntary and unlimited"]]},
+   {t:"ayah", ref:"2:110", ar:"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ", en:"“Establish the prayer and give the zakat: whatever good you send ahead for yourselves, you will find it with Allah.” (2:110)"},
+   {t:"read", h:"Eight doors it may enter", p:"Qur'an 9:60 names exactly who may receive it: the poor, the needy, its administrators, hearts to be reconciled, freeing captives, those in debt, in the cause of Allah, and the stranded traveler. Math with a soul: to compute 2.5%, simply divide by 40."}
+  ],
+  quiz:[
+   {q:"The zakat rate on qualifying wealth is:", a:["10%","5%","2.5%","1%"], c:2},
+   {q:"To find 2.5% of an amount, divide it by:", a:["25","40","50","100"], c:1},
+   {q:"How many categories of recipient does Qur'an 9:60 name?", a:["Three","Five","Eight","Twelve"], c:2},
+   {q:"Zakat differs from sadaqa because zakat is:", a:["secret","obligatory and fixed","only for Ramadan","only for the rich to decide"], c:1}
+  ]},
+
+{ id:"k4", name:"Sawm · the month of light", mins:9,
+  cards:[
+   {t:"read", h:"Dawn to sunset, moon to moon", p:"Ramadan is the ninth month, beginning and ending with the sighting of the new moon. From true dawn to sunset: no food, no drink, no marital relations, and a tightened watch on tongue and temper. The fast trains taqwa: living awareness of Allah."},
+   {t:"ayah", ref:"2:183", ar:"يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ", en:"“O you who believe, fasting is prescribed for you as it was prescribed for those before you, so that you may attain taqwa.” (2:183)"},
+   {t:"pairs", rows:[["Suhur","the pre-dawn meal · a blessed sunnah (Bukhari 1923)"],["Iftar","breaking fast at sunset, traditionally with dates"],["Excused","the sick, travelers, elderly, pregnant and nursing: they make up days or feed the poor (2:184-185)"],["Laylat al-Qadr","one hidden night worth more than a thousand months (97:3)"]]},
+   {t:"read", h:"The promise", p:"“Whoever fasts Ramadan out of faith and seeking reward, his past sins are forgiven.” (Bukhari 38, Muslim 760). The month closes with Eid al-Fitr and a small obligatory gift, zakat al-fitr, so that no one is hungry on the day of celebration."}
+  ],
+  quiz:[
+   {q:"Ramadan is which month of the Islamic calendar?", a:["The first","The ninth","The tenth","The twelfth"], c:1},
+   {q:"The fast runs from:", a:["sunrise to sunset","true dawn to sunset","midnight to sunset","dawn to midnight"], c:1},
+   {q:"Laylat al-Qadr is worth more than:", a:["a hundred nights","a year","a thousand months","ten Ramadans"], c:2},
+   {q:"Who is excused from fasting?", a:["No one, ever","Anyone who is busy","The sick, travelers, and similar cases, with make-up or feeding","Only children under 5"], c:2}
+  ]},
+
+{ id:"k5", name:"Hajj · the journey of a lifetime", mins:10,
+  cards:[
+   {t:"read", h:"Once, if you are able", p:"Hajj is owed once in a lifetime by every Muslim whose body and wealth can carry them (3:97). For five or six days in Dhul-Hijjah, millions dress in two plain white cloths, and no one can tell a king from a shepherd. It is the dress rehearsal for the Day everyone stands equal."},
+   {t:"steps", list:["Ihram at the boundary: two white cloths and the cry “Labbayk Allahumma labbayk”","Tawaf: seven circuits around the Kaaba","Sa‘i: seven passages between Safa and Marwah, in Hajar's footsteps","Arafah, the 9th day: standing in du‘a until sunset · “Hajj is Arafah” (Tirmidhi 889)","Muzdalifah: a night under the open sky","Jamarat: stoning the pillars where Ibrahim refused Shaytan, then the sacrifice of Eid al-Adha","Tawaf al-Ifadah, hair cut, ihram released, and the farewell circuit"]},
+   {t:"ayah", ref:"3:97", ar:"وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا", en:"“Pilgrimage to the House is a duty owed to Allah by all who can find a way.” (3:97)"},
+   {t:"read", h:"The return", p:"“Whoever performs Hajj without obscenity or transgression returns as the day his mother bore him.” (Bukhari 1521). And: “An accepted Hajj has no reward other than Paradise.” (Bukhari 1773, Muslim 1349)."}
+  ],
+  quiz:[
+   {q:"Hajj is obligatory:", a:["every year","once in a lifetime, if able","only for men","only for Arabs"], c:1},
+   {q:"“Hajj is ___,” said the Prophet ﷺ:", a:["Tawaf","Arafah","Muzdalifah","Safa"], c:1},
+   {q:"How many circuits make one tawaf?", a:["Three","Five","Seven","Ten"], c:2},
+   {q:"The pilgrim's two white cloths teach:", a:["fashion","equality of all before Allah","wealth","tribal identity"], c:1}
+  ]}
+]},
+
+/* ============ TRACK 3 · THE CHAIN OF PROPHETS ============ */
+{ id:"anbiya", icon:"🕊", ar:"الأَنْبِيَاء", name:"The Chain of Prophets",
+  stage:"Workshop → Observatory", color:"#8A9B6E",
+  desc:"One message, many messengers: six great lives from the chain of 124,000, told from the Qur'an itself.",
+  lessons:[
+
+{ id:"n1", name:"Adam · the first", mins:9,
+  cards:[
+   {t:"read", h:"Made by two Hands, taught all the names", p:"Allah created Adam from earth, breathed into him of His spirit, and taught him the names of all things: knowledge itself was humanity's first gift. The angels were commanded to prostrate in respect; Iblis refused out of arrogance: “I am better than him.” Arrogance, not ignorance, was the first sin in the story."},
+   {t:"ayah", ref:"2:31", ar:"وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا", en:"“And He taught Adam the names, all of them.” (2:31) · Learning is older than sin in the human story."},
+   {t:"read", h:"The slip and the turning", p:"Adam and Hawwa were given the Garden and one prohibition. Shaytan whispered; they ate; and then came the sentence that separates Islam's story of humanity from every tale of permanent fallenness: Adam received words from his Lord, and He turned to him in mercy (2:37). We are not children of an unforgivable crime. We are children of the first tawba."},
+   {t:"tip", p:"Adam is the first of the chain: the first human, the first prophet, the first to learn, the first to repent, the first to be forgiven."}
+  ],
+  quiz:[
+   {q:"What did Allah teach Adam?", a:["Only farming","The names of all things","One language","Nothing"], c:1},
+   {q:"Why did Iblis refuse to prostrate?", a:["Fear","Forgetfulness","Arrogance: “I am better”","He was not commanded"], c:2},
+   {q:"After the slip, Adam:", a:["was cast away forever","received words and was forgiven","blamed Hawwa and was punished alone","hid from Allah successfully"], c:1},
+   {q:"In Islam, humans are children of:", a:["an unforgivable original sin","the first repentance, accepted","random chance","the angels"], c:1}
+  ]},
+
+{ id:"n2", name:"Nuh · the patient builder", mins:9,
+  cards:[
+   {t:"read", h:"Nine hundred and fifty years", p:"Nuh called his people to Allah for 950 years (29:14): by night and day, in secret and in public. Most mocked him. His reward was not measured in converts but in faithfulness. When the command came, he built the ark on dry land while the chiefs laughed at a ship far from any sea."},
+   {t:"ayah", ref:"11:38", ar:"وَيَصْنَعُ الْفُلْكَ وَكُلَّمَا مَرَّ عَلَيْهِ مَلَأٌ مِّن قَوْمِهِ سَخِرُوا مِنْهُ", en:"“He built the ark, and whenever the chiefs of his people passed by, they mocked him.” (11:38)"},
+   {t:"read", h:"The flood and the lesson of the son", p:"The flood came from sky and earth together. Pairs of every creature boarded; the believers boarded; and Nuh's own son refused, saying he would climb a mountain. “There is no protector today from Allah's command.” Even a prophet's son must choose for himself: guidance is not inherited like eye color."},
+   {t:"tip", p:"Nuh teaches the long game: 950 years without quitting. Results belong to Allah; the calling belongs to us."}
+  ],
+  quiz:[
+   {q:"How long did Nuh call his people?", a:["40 years","100 years","950 years","300 years"], c:2},
+   {q:"Where did Nuh build the ark?", a:["On the coast","On dry land, far from the sea","On a mountain","On a river"], c:1},
+   {q:"Nuh's son was lost because:", a:["the ark was full","he chose to refuse and trust a mountain","Nuh forgot him","he was too young"], c:1},
+   {q:"Nuh's story chiefly teaches:", a:["shipbuilding","patient faithfulness regardless of results","that floods are common","family guarantees salvation"], c:1}
+  ]},
+
+{ id:"n3", name:"Ibrahim · the friend of Allah", mins:10,
+  cards:[
+   {t:"read", h:"The boy who out-argued the sky", p:"Young Ibrahim watched a star set, then the moon, then the sun, and concluded: I do not love things that set (6:76-79). He smashed his people's idols and left the axe on the biggest one: “Ask him!” Thrown into a fire for it, he heard the fire commanded: “Be coolness and peace upon Ibrahim” (21:69)."},
+   {t:"ayah", ref:"21:69", ar:"قُلْنَا يَا نَارُ كُونِي بَرْدًا وَسَلَامًا عَلَىٰ إِبْرَاهِيمَ", en:"“We said: O fire, be coolness and peace upon Ibrahim.” (21:69)"},
+   {t:"read", h:"The House and the sacrifice", p:"With his son Isma‘il, Ibrahim raised the foundations of the Kaaba, praying “Our Lord, accept from us” (2:127). Tested with the command to sacrifice that same beloved son, both submitted fully; and the ransom came, and the test's point was proven: nothing, not even a son, sits above Allah in a believing heart. Hajj retells his family's story every single year."},
+   {t:"tip", p:"Ibrahim is called Khalilullah, the intimate friend of Allah (4:125), and the father of prophets: Isma‘il, Ishaq, and through them the chains to Muhammad ﷺ and to Musa and Isa."}
+  ],
+  quiz:[
+   {q:"Why did Ibrahim reject the star, moon and sun as lords?", a:["They were too small","They set and vanish","They were too far","His people told him to"], c:1},
+   {q:"What did the fire become for Ibrahim?", a:["Ash","A wall","Coolness and peace","A storm"], c:2},
+   {q:"Who raised the foundations of the Kaaba with Ibrahim?", a:["Ishaq","Isma‘il","Lut","Nuh"], c:1},
+   {q:"Ibrahim's special title is:", a:["Kalimullah","Khalilullah · the friend of Allah","Ruhullah","Habibullah"], c:1}
+  ]},
+
+{ id:"n4", name:"Musa · spoken to directly", mins:10,
+  cards:[
+   {t:"read", h:"From the river to the palace", p:"Born under Pharaoh's decree that Israelite boys be killed, Musa was set afloat by his mother on Allah's instruction, and raised in Pharaoh's own palace: the tyrant fed the child who would end him. Grown, and having fled to Madyan, Musa was called at the burning bush in the sacred valley of Tuwa, and Allah spoke to him directly: his title is Kalimullah."},
+   {t:"ayah", ref:"20:13", ar:"وَأَنَا اخْتَرْتُكَ فَاسْتَمِعْ لِمَا يُوحَىٰ", en:"“And I have chosen you, so listen to what is revealed.” (Ta-Ha 20:13)"},
+   {t:"read", h:"The sea splits", p:"Nine signs did not soften Pharaoh. At the Red Sea, trapped between army and water, Musa's people despaired; Musa did not: “Never! My Lord is with me; He will guide me” (26:62). The sea split into walls, the believers crossed, and the tyrant drowned mid-claim of a last-second faith that came too late. On Sinai, Musa received the Torah."},
+   {t:"tip", p:"Musa is the most-mentioned prophet in the Qur'an, named around 136 times: the great story of standing before power with nothing but truth and a staff."}
+  ],
+  quiz:[
+   {q:"Musa's title Kalimullah means:", a:["Friend of Allah","The one Allah spoke to directly","Spirit of Allah","Servant of Allah"], c:1},
+   {q:"Where was Musa raised?", a:["In Madyan","In Pharaoh's own palace","In Sinai","In Jerusalem"], c:1},
+   {q:"At the sea, Musa said:", a:["“We are finished”","“Never! My Lord is with me; He will guide me”","“Swim!”","Nothing"], c:1},
+   {q:"Which scripture was given to Musa?", a:["The Zabur","The Injil","The Torah","The Scrolls of Ibrahim"], c:2}
+  ]},
+
+{ id:"n5", name:"Isa · the word and the sign", mins:10,
+  cards:[
+   {t:"read", h:"A miracle from the first breath", p:"Isa was born of the virgin Maryam, the purest woman of creation, by Allah's word “Be”: a creation like Adam's, who had neither father nor mother (3:59). As an infant in the cradle he spoke, defending his mother's honor: “I am the servant of Allah; He gave me the Book and made me a prophet” (19:30). His first sentence defined him: servant, not son."},
+   {t:"ayah", ref:"19:30", ar:"قَالَ إِنِّي عَبْدُ اللَّهِ آتَانِيَ الْكِتَابَ وَجَعَلَنِي نَبِيًّا", en:"“He said: I am indeed the servant of Allah; He has given me the Book and made me a prophet.” (Maryam 19:30)"},
+   {t:"read", h:"By Allah's permission", p:"He healed the born-blind and the leper, and raised the dead: each time, the Qur'an adds, bi-idhnillah, by Allah's permission (3:49): the miracles were Allah's power flowing through His messenger. He brought the Injil, confirmed the Torah, and gave glad tidings of a messenger to come. He was neither killed nor crucified: Allah raised him to Himself (4:157-158), and Muslims await his return."},
+   {t:"tip", p:"No Muslim is Muslim without loving and believing in Isa: a mighty messenger honored in the Qur'an, where Maryam has an entire surah bearing her name."}
+  ],
+  quiz:[
+   {q:"Isa's birth is compared in the Qur'an to the creation of:", a:["Musa","Adam","Nuh","the angels"], c:1},
+   {q:"His first recorded words, in the cradle, were:", a:["“I am the son of Allah”","“I am the servant of Allah”","“Worship my mother”","He did not speak"], c:1},
+   {q:"Isa's miracles happened:", a:["by his own independent power","by Allah's permission","only in stories","by medicine"], c:1},
+   {q:"Regarding the crucifixion, the Qur'an says:", a:["he was killed","he was crucified and then revived","he was neither killed nor crucified; Allah raised him","nothing at all"], c:2}
+  ]},
+
+{ id:"n6", name:"Muhammad ﷺ · the seal", mins:12,
+  cards:[
+   {t:"read", h:"Al-Amin before the revelation", p:"Born in Makkah in the Year of the Elephant, orphaned young, he was so known for honesty that his people titled him al-Amin, the Trustworthy, decades before prophethood. At forty, in the cave of Hira, the angel Jibril came with one word: Iqra'. Read. The final revelation had begun, and it would descend for twenty-three years."},
+   {t:"ayah", ref:"33:40", ar:"مَّا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِّن رِّجَالِكُمْ وَلَـٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ", en:"“Muhammad is not the father of any of your men, but the Messenger of Allah and the Seal of the Prophets.” (33:40)"},
+   {t:"read", h:"Makkah's patience, Madinah's building", p:"Thirteen years in Makkah: mockery, boycott, and gentleness under persecution. Then the Hijra to Madinah, where the first community was built on brotherhood, and the message completed: worship, law, mercy to neighbors, rights of women and orphans, freeing of slaves. At the Farewell Sermon he ﷺ declared no Arab superior to a non-Arab, nor white to black, except by taqwa."},
+   {t:"read", h:"Mercy to the worlds", p:"“We have not sent you except as a mercy to the worlds” (21:107). He mended his own sandals, stopped sermons to let his grandsons climb him, stood in prayer until his feet swelled, and at the conquest of Makkah, facing those who had tortured his companions for twenty years, said: Go, for you are free. He ﷺ is the seal: after him, no prophet; with him, the chain of 124,000 is complete."},
+   {t:"tip", p:"To study his life in full depth, open the final chapter of the Prophets room: the complete Seerah with sources awaits there."}
+  ],
+  quiz:[
+   {q:"Before prophethood, Makkah called Muhammad ﷺ:", a:["al-Amin, the Trustworthy","al-Qawi, the Strong","al-Ghani, the Rich","nothing special"], c:0},
+   {q:"The first revealed word was:", a:["Pray","Read","Fast","Give"], c:1},
+   {q:"“Seal of the Prophets” means:", a:["the best writer","the final prophet, none after him","the leader of Makkah","a royal title"], c:1},
+   {q:"At the conquest of Makkah, he ﷺ treated his former persecutors with:", a:["exile","imprisonment","a general amnesty: “you are free”","heavy taxes"], c:2}
+  ]}
+]},
+
+/* ============ TRACK 4 · WORSHIP IN PRACTICE ============ */
+{ id:"ibada", icon:"💧", ar:"الْعِبَادَة", name:"Worship in Practice",
+  stage:"Garden → Workshop · and every newcomer", color:"#7FA3D8",
+  desc:"The how-to track: wudu step by step, the salah movement by movement, the day's adhkar, and the manners of the masjid.",
+  lessons:[
+
+{ id:"w1", name:"Wudu · the washing of light", mins:9,
+  cards:[
+   {t:"read", h:"Purification is half of faith", p:"Before standing in prayer, a Muslim washes: not merely hygiene, but a switching of state. The Prophet ﷺ said purification is half of faith (Muslim 223), and that on the Day of Judgment his people will be called with faces and limbs glowing from the traces of wudu (Bukhari 136)."},
+   {t:"steps", list:["Intention in the heart, and Bismillah","Wash the hands to the wrists, three times","Rinse the mouth three times","Sniff water gently into the nose and out, three times","Wash the face three times, hairline to chin, ear to ear","Wash the right arm to the elbow three times, then the left","Wipe the wet hands once over the head, then the ears","Wash the right foot to the ankle three times, then the left"]},
+   {t:"pairs", rows:[["Wudu is broken by","using the toilet, passing wind, deep sleep, loss of consciousness"],["Then simply","repeat wudu before the next prayer"],["Right before left","the sunnah order in washing (Bukhari 168)"]]},
+   {t:"tip", p:"After wudu, the shahada is said, and the Prophet ﷺ promised that the eight gates of Paradise open for the one who says it (Muslim 234). A tap, a towel, and gates."}
+  ],
+  quiz:[
+   {q:"“Purification is ___ of faith,” said the Prophet ﷺ:", a:["a tenth","a third","half","all"], c:2},
+   {q:"Which is washed first?", a:["Left arm before right","Right arm before left","Feet before face","Ears before mouth"], c:1},
+   {q:"The head is wiped:", a:["three times","twice","once","never"], c:2},
+   {q:"Which of these breaks wudu?", a:["Eating dates","Deep sleep","Reading aloud","Smiling"], c:1}
+  ]},
+
+{ id:"w2", name:"The Salah · movement by movement", mins:12,
+  cards:[
+   {t:"read", h:"One rak‘ah, the building block", p:"Every prayer is built from rak‘ahs, and every rak‘ah has the same skeleton. Learn one deeply and you have learned them all. Face the qibla, raise your hands, and say Allahu Akbar: the world is now behind you."},
+   {t:"steps", list:["Qiyam · standing: recite Al-Fatiha (and a surah after it in the first two rak‘ahs)","Ruku · bowing, back straight: “Subhana Rabbiyal-Adhim” three times","Stand again: “Sami‘Allahu liman hamidah, Rabbana wa lakal-hamd”","Sujud · forehead, nose, palms, knees and toes on the ground: “Subhana Rabbiyal-A‘la” three times","Sit briefly, then a second sujud: one rak‘ah is complete","Every second rak‘ah, remain sitting for the tashahhud","At the end: salam to the right, salam to the left"]},
+   {t:"pairs", rows:[["Sujud","the closest a servant is to their Lord (Muslim 482)"],["Tashahhud","the sitting testimony, greeting Allah, His Prophet, and the righteous"],["The two salams","closing the meeting by greeting those on either side"]]},
+   {t:"tip", p:"Khushu, presence of heart, is the soul of it all. The limbs learn in a week; the heart trains for a lifetime, and that training is the point."}
+  ],
+  quiz:[
+   {q:"What is recited standing in every rak‘ah?", a:["Ayat al-Kursi","Al-Fatiha","The tashahhud","Any du‘a"], c:1},
+   {q:"In sujud, a servant is:", a:["farthest from Allah","closest to Allah","asleep","finished"], c:1},
+   {q:"“Subhana Rabbiyal-Adhim” is said in:", a:["sujud","ruku (bowing)","tashahhud","the salam"], c:1},
+   {q:"The prayer ends with:", a:["clapping","salam to the right and left","a bow","silence only"], c:1}
+  ]},
+
+{ id:"w3", name:"The day's adhkar · a garland of words", mins:9,
+  cards:[
+   {t:"read", h:"Words worn through the day", p:"The sunnah wraps the whole day in short remembrances: waking, dressing, eating, leaving, returning, sleeping. None takes ten seconds; together they keep the heart's compass pointed home all day long."},
+   {t:"pairs", rows:[["On waking","Alhamdu lillahil-ladhi ahyana ba‘da ma amatana wa ilayhin-nushur (Bukhari 6312)"],["Before eating","Bismillah · and if forgotten: Bismillahi fi awwalihi wa akhirihi (Abu Dawud 3767)"],["Leaving home","Bismillah, tawakkaltu ‘alallah, la hawla wa la quwwata illa billah (Abu Dawud 5095)"],["Any moment","SubhanAllah · Alhamdulillah · Allahu Akbar: heavy on the scale, light on the tongue (Bukhari 6682)"]]},
+   {t:"read", h:"The armor of the night", p:"Before sleep: recite Ayat al-Kursi, and no devil approaches until morning (Bukhari 2311). Cup the hands, recite the three Quls, blow gently, and wipe over the body, as the Prophet ﷺ did every night (Bukhari 5017). Sleep itself becomes worship when entered with remembrance."},
+   {t:"tip", p:"Start with just two: the waking line and the sleeping ritual. Bookend the day, then fill the middle as the habit grows."}
+  ],
+  quiz:[
+   {q:"Ayat al-Kursi before sleep protects until:", a:["midnight","Fajr time","morning","the next prayer"], c:2},
+   {q:"If you forget Bismillah before eating, you say:", a:["nothing can be done","Bismillahi fi awwalihi wa akhirihi","the meal is invalid","Alhamdulillah twice"], c:1},
+   {q:"The three Quls at night are recited into:", a:["the pillow","cupped hands, then wiped over the body","a glass of water","the air"], c:1},
+   {q:"“Two words light on the tongue, heavy on the scale” refers to:", a:["long speeches","SubhanAllahi wa bihamdih, SubhanAllahil-Adhim","secret words","any poetry"], c:1}
+  ]},
+
+{ id:"w4", name:"Jumu‘ah & the manners of the masjid", mins:8,
+  cards:[
+   {t:"read", h:"The weekly Eid", p:"Friday is the best day the sun rises upon (Muslim 854). The Dhuhr prayer becomes Jumu‘ah: a congregation with a khutbah, obligatory for men and open to all. Ghusl, best clothes, early arrival, and listening silently to the khutbah are its adab: even saying “listen!” to a neighbor during the khutbah is discouraged (Bukhari 934)."},
+   {t:"pairs", rows:[["Entering the masjid","right foot first: “Allahummaftah li abwaba rahmatik”"],["Before sitting","two light rak‘ahs of greeting, tahiyyat al-masjid (Bukhari 444)"],["During khutbah","complete, attentive silence"],["Leaving","left foot first: asking of Allah's bounty"]]},
+   {t:"read", h:"An hour of answered du‘a", p:"Within Friday hides an hour in which no Muslim asks Allah for good except that He grants it (Bukhari 935). Many scholars hold it is the last hour before Maghrib. A weekly appointment with a guaranteed audience: the believer does not miss it."},
+   {t:"tip", p:"And send abundant salawat on the Prophet ﷺ on Fridays: it is presented to him (Abu Dawud 1047)."}
+  ],
+  quiz:[
+   {q:"Jumu‘ah replaces which daily prayer on Friday?", a:["Fajr","Dhuhr","Asr","Isha"], c:1},
+   {q:"During the khutbah one should:", a:["chat quietly","listen in complete silence","scroll the phone","sleep"], c:1},
+   {q:"On entering the masjid, pray:", a:["nothing","two rak‘ahs of greeting","four rak‘ahs loudly","only on Fridays"], c:1},
+   {q:"Friday contains:", a:["an hour of answered du‘a","a forbidden hour","no special virtue","only rest"], c:0}
+  ]}
+]},
+
+/* ============ TRACK 5 · WHAT WE BELIEVE ============ */
+{ id:"iman", icon:"💛", ar:"الْإِيمَان", name:"What We Believe",
+  stage:"Workshop → Observatory", color:"#E9C86A",
+  desc:"The six pillars of iman, the Names of Allah to live with, and the unseen world of angels and revealed books.",
+  lessons:[
+
+{ id:"i1", name:"The six pillars of iman", mins:9,
+  cards:[
+   {t:"read", h:"What faith stands on", p:"When Jibril came in human form and asked the Prophet ﷺ “What is iman?”, the answer drew the map of Muslim belief: to believe in Allah, His angels, His books, His messengers, the Last Day, and the decree, its good and its hard (Muslim 8, the hadith of Jibril)."},
+   {t:"pairs", rows:[["1 · Allah","One, without partner, unlike anything (112:4)"],["2 · The angels","made of light, never disobeying"],["3 · The books","Suhuf, Torah, Zabur, Injil, and the Qur'an, the final and guarded"],["4 · The messengers","from Adam to Muhammad ﷺ, one chain"],["5 · The Last Day","resurrection, account, mizan, Paradise and Fire"],["6 · The decree (qadr)","nothing escapes Allah's knowledge and will"]]},
+   {t:"read", h:"Belief in qadr, lived", p:"The decree is not fatalism: we act with full effort, then rest in the outcome. The Prophet ﷺ taught: “Strive for what benefits you, seek Allah's help, and do not say ‘if only’: say ‘Allah decreed, and what He willed, He did.’” (Muslim 2664). Full effort, full trust: both hands on the plough, heart in the sky."},
+   {t:"tip", p:"Islam is what the limbs do (the five pillars); iman is what the heart holds (these six); ihsan, the third level in the same hadith, is to worship Allah as if you see Him."}
+  ],
+  quiz:[
+   {q:"How many pillars of iman are there?", a:["Four","Five","Six","Seven"], c:2},
+   {q:"The famous hadith listing them is known as the hadith of:", a:["the mountain","Jibril","the cave","the sea"], c:1},
+   {q:"Belief in qadr means:", a:["do nothing, all is written","strive fully, then trust the outcome to Allah","only good is decreed","luck rules"], c:1},
+   {q:"Ihsan is:", a:["extra charity","worshipping Allah as if you see Him","a type of fasting","a pilgrimage"], c:1}
+  ]},
+
+{ id:"i2", name:"Five Names to live with", mins:9,
+  cards:[
+   {t:"read", h:"The most beautiful Names", p:"“To Allah belong the most beautiful Names, so call on Him by them” (7:180). The famous narration counts ninety-nine; each is a window onto how Allah deals with creation, and a way to call on Him. Here are five to carry this month: one for each kind of day."},
+   {t:"pairs", rows:[["الرَّحْمَٰن Ar-Rahman","The Most Merciful: mercy wide as everything that exists · for every day"],["اللَّطِيف Al-Latif","The Subtle-Kind: arranging good invisibly, gently · for confusing days"],["الْغَفُور Al-Ghafur","The All-Forgiving: again, and again, and again · for heavy days"],["الرَّزَّاق Ar-Razzaq","The Provider: no soul's provision is forgotten · for anxious days"],["النُّور An-Nur","The Light: of the heavens and the earth (24:35) · for dark days"]]},
+   {t:"read", h:"How to use a Name", p:"Not as trivia but as address. Overwhelmed? “Ya Latif, be gentle with my affairs.” Ashamed? “Ya Ghafur, forgive me again.” The Names turn theology into conversation, which is exactly what du‘a is."},
+   {t:"tip", p:"This library is named from An-Nur. Every time you open it, you are inside one of the Names."}
+  ],
+  quiz:[
+   {q:"The Qur'an says to do what with the beautiful Names?", a:["memorize them only","call on Allah by them","debate them","write them on walls"], c:1},
+   {q:"Al-Latif means:", a:["The Strong","The Subtle-Kind, gently arranging good","The Judge","The First"], c:1},
+   {q:"For anxiety about provision, one calls on:", a:["An-Nur","Ar-Razzaq","Al-Ghafur","none"], c:1},
+   {q:"An-Nur means:", a:["The Fire","The Light","The Star","The Moon"], c:1}
+  ]},
+
+{ id:"i3", name:"Angels & the revealed books", mins:9,
+  cards:[
+   {t:"read", h:"An unseen civil service of light", p:"Created from light, angels neither eat, tire, nor disobey. Jibril carries revelation; Mika'il is associated with provision and rain; Israfil awaits the Trumpet; the Angel of Death fulfills every appointment. Two recorders sit at every person's shoulders (50:17-18), and angels crowd every gathering where Allah is remembered (Muslim 2689)."},
+   {t:"pairs", rows:[["Jibril","brought every revelation to every prophet"],["Kiraman Katibin","the noble scribes on your right and left"],["Guardians in relays","angels take turns keeping watch over you (13:11)"],["The Trumpet-bearer","Israfil, waiting for the command"]]},
+   {t:"read", h:"One library, many volumes", p:"Allah sent scriptures throughout the chain: the Scrolls of Ibrahim, the Torah to Musa, the Zabur to Dawud, the Injil to Isa, and finally the Qur'an, which confirms what came before it and is the only one Allah Himself guaranteed to guard from corruption: “We sent down the Reminder, and We are surely its Guardians” (15:9)."},
+   {t:"tip", p:"Fourteen centuries of manuscripts agree letter for letter with the Mushaf in your hand. The promise of 15:9 is checkable, and it checks out."}
+  ],
+  quiz:[
+   {q:"Angels are created from:", a:["fire","clay","light","water"], c:2},
+   {q:"Which angel brought revelation to the prophets?", a:["Mika'il","Jibril","Israfil","Malik"], c:1},
+   {q:"The Kiraman Katibin are:", a:["ancient kings","the recording angels at your shoulders","two mountains","prayer times"], c:1},
+   {q:"Which book did Allah promise to guard Himself?", a:["The Torah","The Injil","The Zabur","The Qur'an"], c:3}
+  ]}
+]},
+
+/* ============ TRACK 6 · THE GOLDEN INHERITANCE ============ */
+{ id:"hikma", icon:"🔭", ar:"الْحِكْمَة", name:"The Golden Inheritance",
+  stage:"Observatory 9-12", color:"#8a6d1a",
+  desc:"STEM as heritage: the method, the numbers, and the builders who made Muslims the teachers of the world.",
+  lessons:[
+
+{ id:"g1", name:"The method of Ibn al-Haytham", mins:9,
+  cards:[
+   {t:"read", h:"Doubt as a duty", p:"A thousand years ago in Cairo, Ibn al-Haytham wrote that the seeker of truth must question even the great ancients and accept only what demonstration proves. Then he lived it: darkened rooms, pinholes, screens, one variable changed at a time, until he had proven that light travels in straight lines into the eye. The scientific method has a birth certificate, and it is written in Arabic."},
+   {t:"steps", list:["Observe something carefully and honestly","Ask one precise question about it","Guess an answer (the hypothesis)","Test the guess fairly, changing only one thing","Record what actually happened, even if the guess dies","Share it so others can check and build"]},
+   {t:"ayah", ref:"3:190", ar:"إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ", en:"“In the creation of the heavens and the earth and the alternation of night and day are signs for people of understanding.” (3:190) · Observation is commanded, not just permitted."},
+   {t:"tip", p:"Try it this week: the shoebox camera. Instructions live in the Madrasa's project shelf on the school page. When the image lands upside down, you will ask his exact question."}
+  ],
+  quiz:[
+   {q:"Ibn al-Haytham proved that sight works by:", a:["rays leaving the eyes","light entering the eyes","sound waves","imagination"], c:1},
+   {q:"A fair test changes:", a:["everything at once","nothing","only one thing at a time","the results"], c:2},
+   {q:"When an experiment kills your guess, you:", a:["hide the result","record it honestly","change the data","stop science"], c:1},
+   {q:"The Qur'an's attitude to observing creation is:", a:["forbidden","discouraged","commanded as a sign-reading","irrelevant"], c:2}
+  ]},
+
+{ id:"g2", name:"The numbers of al-Khwarizmi", mins:9,
+  cards:[
+   {t:"read", h:"Algebra was born for justice", p:"In Baghdad's House of Wisdom, al-Khwarizmi wrote the book that named algebra (al-jabr, restoration): its purpose was dividing inheritances and computing zakat exactly as revelation required. Faith demanded precision; precision produced mathematics. His name, Latinized, became “algorithm”: every app you use runs on his name."},
+   {t:"pairs", rows:[["x + 5 = 12","subtract 5 from both sides: restoration"],["x = 7","the unknown surrenders"],["Zakat shortcut","2.5% of anything = that amount ÷ 40"],["The digits 0-9","carried by his book from India to the world"]]},
+   {t:"read", h:"Try the zakat sum", p:"A family has 8,000 in savings held a year, above nisab. Divide by 40: the zakat is 200. Now their own numbers: this is the actual computation performed in millions of Muslim homes every year, exactly as his book intended twelve centuries ago."},
+   {t:"tip", p:"When you divide by 40 for zakat, you are using al-jabr for its original purpose: worship, dressed as arithmetic."}
+  ],
+  quiz:[
+   {q:"The word “algebra” comes from:", a:["a Greek city","al-jabr, restoration","a Latin poet","nowhere known"], c:1},
+   {q:"“Algorithm” is named after:", a:["a machine","al-Khwarizmi","a Greek letter","logic"], c:1},
+   {q:"Zakat of 8,000 (÷40) is:", a:["80","150","200","400"], c:2},
+   {q:"Al-Khwarizmi's algebra book was written to serve:", a:["war","inheritance and zakat justice","astronomy only","banking"], c:1}
+  ]},
+
+{ id:"g3", name:"Builders & travelers", mins:10,
+  cards:[
+   {t:"read", h:"A woman built the first university", p:"Fez, 859 CE: Fatima al-Fihri spent her inheritance to endow al-Qarawiyyin, recognized today as the oldest continuously operating degree-granting university on earth. It has been teaching for about 1,167 years without closing. Every campus in the world stands downstream of a Muslim woman's sadaqa jariyah."},
+   {t:"read", h:"The engineer who shared everything", p:"Al-Jazari (d. 1206) wrote fifty machines into one illustrated book: water clocks, pumps, automata, with measurements and assembly steps so others could build them. His crank-and-connecting-rod, which turns rotation into push and pull, sits inside every engine ever made. He kept no secrets: knowledge, for him, was a water-wheel that exists to be turned for others."},
+   {t:"read", h:"The man who walked the ummah", p:"Ibn Battuta left Tangier in 1325, aged 21, for Hajj, and kept going for about 29 years and roughly 117,000 km: West Africa to China, employed as a judge in Delhi, shipwrecked, robbed, honored, across a single connected civilization of caravanserais and masjids. His Rihla proved with footsteps how wide the ummah had grown."},
+   {t:"tip", p:"Nine such lives are told in full, each with its own animated infographic, in the Teachers of the World gallery on the school page. Tap any tile there and meet them properly."}
+  ],
+  quiz:[
+   {q:"Al-Qarawiyyin university was founded by:", a:["a sultan","Fatima al-Fihri, from her inheritance","a committee","Ibn Battuta"], c:1},
+   {q:"Al-Jazari's crank mechanism converts:", a:["water into light","rotation into push and pull","heat into sound","nothing"], c:1},
+   {q:"Ibn Battuta's journey lasted about:", a:["2 years","10 years","29 years","50 years"], c:2},
+   {q:"What did al-Jazari do with his engineering knowledge?", a:["kept it secret","sold it to kings only","published it with build instructions for all","burned it"], c:2}
+  ]}
+]}
+
+]};

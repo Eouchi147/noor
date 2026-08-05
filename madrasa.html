@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="The Madrasa classroom: study Islam properly, free forever. Six tracks and twenty-eight interactive lessons with quizzes, recitation, progress that remembers you, and a printable ijazah for every completed track."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="The Classroom · Study at the Madrasa of Light"/>
+<meta property="og:description" content="Six tracks, twenty-eight real lessons: reading Arabic, the Five Pillars, the prophets, worship in practice, belief, and the golden inheritance. Free for every person, forever."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<title>The Classroom · Study at the Madrasa · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/madrasa"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
+<script src="noor-fx.js" defer></script>
+<script src="madrasa-data.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Madrasa of Light · Interactive Curriculum","url":"https://noorcodex.com/madrasa","description":"Six tracks and twenty-eight interactive lessons: reading Arabic, the Five Pillars, the prophets, worship in practice, belief, and golden-age Muslim science. Quizzes, progress and completion ijazahs.","provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT4H"}}</script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}[hidden]{display:none!important}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#171d31;--lapis:#33507C}
+body{margin:0;background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(44,36,22,.08)}
+.hrow{max-width:46rem;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+.brand .n{width:2rem;height:2rem;border-radius:999px;background:#2C2416;color:#F4D46A;display:grid;place-items:center;font-family:Amiri,serif;font-weight:700}
+.brand b{color:var(--ink);font-size:.85rem}
+.brand span{display:block;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(44,36,22,.45)}
+.backbtn{font-size:.72rem;font-weight:800;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.35rem .85rem;text-decoration:none;background:none;cursor:pointer;font-family:inherit}
+/* hero */
+#mhero{background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:2.2rem 1rem 2.4rem}
+#mhero .ar{font-family:Amiri,serif;font-size:2rem;color:#F4D46A;filter:drop-shadow(0 0 16px rgba(244,212,106,.5))}
+#mhero h1{font-size:1.5rem;font-weight:800;margin:.3rem 0 0}
+#mhero p{font-size:.82rem;color:rgba(255,254,247,.7);max-width:28rem;margin:.5rem auto 0;line-height:1.65}
+#mhero .tot{margin-top:1rem;font-size:.72rem;color:#F4D46A;font-weight:800}
+#mhero .tbar{max-width:16rem;margin:.4rem auto 0;height:.5rem;border-radius:999px;background:rgba(255,254,247,.12);overflow:hidden}
+#mhero .tbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:width .6s}
+/* catalog */
+.tracks{display:grid;gap:.8rem;padding:1.4rem 0 3rem}
+.trk{background:#fff;border:1.5px solid rgba(44,36,22,.1);border-radius:20px;overflow:hidden}
+.trk-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.1rem;cursor:pointer}
+.trk-head .ic{width:3rem;height:3rem;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;background:linear-gradient(150deg,#171d31,#1d2a45);flex:none}
+.trk-head .tt{flex:1;min-width:0}
+.trk-head .tt b{font-size:.98rem;display:block}
+.trk-head .tt span{font-size:.68rem;color:rgba(44,36,22,.5)}
+.ringm{width:2.9rem;height:2.9rem;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(44,36,22,.08) 0);position:relative;flex:none}
+.ringm::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#fff}
+.ringm b{position:relative;z-index:1;font-size:.6rem;color:#6b5510}
+.trk-desc{padding:0 1.1rem .6rem;font-size:.76rem;color:rgba(44,36,22,.6);line-height:1.6}
+.lessons{border-top:1px solid rgba(44,36,22,.07)}
+.les{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(44,36,22,.05);padding:.7rem 1.1rem;cursor:pointer;font-family:inherit;transition:background .15s}
+.les:last-child{border-bottom:0}
+.les:hover{background:#FFFDF0}
+.les .st{width:1.7rem;height:1.7rem;border-radius:999px;display:grid;place-items:center;font-size:.72rem;flex:none;border:1.5px solid rgba(44,36,22,.15);color:rgba(44,36,22,.4)}
+.les.done .st{background:linear-gradient(135deg,#C9A227,#E9C86A);border-color:transparent;color:#1A160F;font-weight:800}
+.les.locked{opacity:.45;cursor:not-allowed}
+.les .nm{flex:1;font-size:.82rem;font-weight:600;color:var(--ink)}
+.les .mn{font-size:.62rem;color:rgba(44,36,22,.4);white-space:nowrap}
+.cert-row{padding:.75rem 1.1rem;background:linear-gradient(90deg,rgba(201,162,39,.1),rgba(201,162,39,.02))}
+.cert-row button{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.5rem 1.1rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.cert-row span{font-size:.7rem;color:#6b5510;font-weight:700}
+/* lesson view */
+#lesson{padding:1.2rem 0 4rem}
+.lbar{height:.5rem;border-radius:999px;background:rgba(44,36,22,.08);overflow:hidden;margin-bottom:1rem}
+.lbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:width .35s}
+.card{background:#fff;border:1.5px solid rgba(201,162,39,.35);border-radius:22px;padding:1.4rem 1.3rem;box-shadow:0 14px 40px rgba(44,36,22,.08);animation:cardin .3s ease}
+@keyframes cardin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.card{animation:none}}
+.card h2{font-size:1.15rem;font-weight:800;margin:0 0 .5rem}
+.card p.body{font-size:.88rem;line-height:1.8;color:rgba(44,36,22,.8);margin:.4rem 0}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.6rem,1fr));gap:.5rem;direction:rtl}
+.lg{background:#FFFDF6;border:1.5px solid rgba(44,36,22,.1);border-radius:14px;text-align:center;padding:.6rem .3rem}
+.lg .g{font-family:Amiri,serif;font-size:2.2rem;line-height:1.3;color:#241D12}
+.lg .n{font-size:.66rem;font-weight:800;color:#6b5510}
+.lg .s{font-size:.58rem;color:rgba(44,36,22,.55);line-height:1.4;direction:ltr}
+.prow{display:grid;gap:.45rem}
+.pr{display:grid;grid-template-columns:auto 1fr;gap:.7rem;background:#FFFDF6;border:1px solid rgba(44,36,22,.1);border-radius:12px;padding:.6rem .8rem;align-items:center}
+.pr .a{font-family:Amiri,serif;font-size:1.05rem;color:#241D12;font-weight:700;direction:rtl;text-align:right;min-width:5.5rem}
+.pr .b{font-size:.75rem;color:rgba(44,36,22,.7);line-height:1.55}
+.stepsl{list-style:none;counter-reset:ms;padding:0;margin:.3rem 0}
+.stepsl li{counter-increment:ms;position:relative;padding:.4rem 0 .4rem 2.4rem;font-size:.82rem;line-height:1.65;color:rgba(44,36,22,.78)}
+.stepsl li::before{content:counter(ms);position:absolute;left:0;top:.42rem;width:1.7rem;height:1.7rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;font-size:.72rem;display:grid;place-items:center}
+.ayah{background:linear-gradient(165deg,#171d31,#1d2a45);color:#FFFEF7;border-radius:16px;padding:1rem 1.1rem;border:1px solid rgba(233,200,106,.35)}
+.ayah .ar{font-family:Amiri,serif;font-size:1.5rem;line-height:2.15;color:#F4D46A;direction:rtl;text-align:right}
+.ayah .en{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.7;margin-top:.5rem}
+.vplay{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.45rem 1rem;font-size:.74rem;cursor:pointer;font-family:inherit;margin-top:.6rem}
+.vplay.playing{background:#1A160F;color:#F4D46A;outline:1px solid rgba(244,212,106,.6)}
+.tipc{background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border:1px dashed rgba(201,162,39,.5);border-radius:14px;padding:.8rem 1rem;font-size:.8rem;line-height:1.7;color:rgba(44,36,22,.78)}
+.navrow{display:flex;justify-content:space-between;gap:.6rem;margin-top:1rem}
+.nbtn{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.65rem 1.5rem;font-size:.85rem;cursor:pointer;font-family:inherit;transition:transform .15s}
+.nbtn:hover{transform:translateY(-1px)}
+.nbtn.ghost{background:transparent;color:#6b5510;border:1.5px solid rgba(201,162,39,.5)}
+/* quiz */
+.qq{font-size:1rem;font-weight:800;margin:.2rem 0 .8rem}
+.qopts{display:grid;gap:.5rem}
+.qo{background:#FFFDF6;border:1.5px solid rgba(44,36,22,.14);border-radius:14px;padding:.75rem .9rem;font-size:.85rem;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);transition:all .15s}
+.qo:hover{border-color:var(--gold)}
+.qo.good{background:#e8f5e0;border-color:#7fae6a;font-weight:700}
+.qo.bad{background:#fbe4e0;border-color:#d88a7f}
+.qfb{margin-top:.7rem;font-size:.78rem;font-weight:700}
+.qfb.ok{color:#4a7a38}.qfb.no{color:#8a2c1d}
+/* completion */
+.done-card{text-align:center}
+.done-card .big{font-size:3rem;filter:drop-shadow(0 0 18px rgba(233,200,106,.7))}
+.done-card h2{margin-top:.4rem}
+.score{font-size:1.9rem;font-weight:800;color:#8a6d13}
+/* ijazah */
+#cert{background:linear-gradient(170deg,#FFFEF7,#FFF3D1);border:3px double #C9A227;border-radius:6px;padding:2rem 1.6rem;text-align:center;color:#2C2416;position:relative}
+#cert .bism{font-family:Amiri,serif;font-size:1.4rem;color:#8a6d13}
+#cert h2{font-size:1.3rem;letter-spacing:.08em;margin:.6rem 0 .2rem}
+#cert .tname{font-size:1.05rem;font-weight:800;color:#6b5510}
+#cert .who{font-family:Amiri,serif;font-size:1.6rem;margin:.8rem 0 .2rem;min-height:2rem;border-bottom:1px solid rgba(201,162,39,.5);display:inline-block;padding:0 1.5rem .2rem}
+#cert .date{font-size:.7rem;color:rgba(44,36,22,.5);margin-top:.8rem}
+#cert .sealn{width:3.4rem;height:3.4rem;border-radius:999px;background:#2C2416;color:#F4D46A;display:grid;place-items:center;font-family:Amiri,serif;font-size:1.4rem;margin:1rem auto 0;box-shadow:0 0 0 4px rgba(201,162,39,.35)}
+#cert-name{border:1.5px solid rgba(44,36,22,.2);border-radius:10px;padding:.55rem .8rem;font-size:16px;width:100%;max-width:18rem;margin:.6rem auto 0;display:block;text-align:center;background:#fff;font-family:inherit}
+@media print{ body *{visibility:hidden} #certwrap,#certwrap *{visibility:visible} #certwrap{position:absolute;inset:0;padding:2rem} .noprint{display:none!important} }
+.spark{position:fixed;top:-2rem;z-index:70;font-size:1.4rem;animation:sfall 2.4s linear forwards;pointer-events:none}
+@keyframes sfall{to{transform:translateY(110vh) rotate(220deg)}}
+.freeline{text-align:center;font-size:.68rem;color:rgba(44,36,22,.45);padding:0 1rem 2.5rem;line-height:1.7}
+.freeline a{color:#8a6d13;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+<div class="hrow">
+<a class="brand" href="index.html"><span class="n">ن</span><span><b>The Classroom</b><span>Madrasa of Light</span></span></a>
+<div style="display:flex;gap:.45rem">
+<a class="backbtn" href="school.html">The curriculum ↗</a>
+<button class="backbtn" id="home-btn" hidden>← All tracks</button>
+</div>
+</div>
+</header>
+
+<section id="mhero">
+<p class="ar" translate="no">اِقْرَأْ</p>
+<h1>Study, properly. Free, forever.</h1>
+<p>Six tracks, twenty-eight lessons: read Arabic, know the pillars, walk with the prophets, pray with certainty, believe with understanding, inherit the golden age. Your progress is remembered on this device.</p>
+<div class="tot"><span id="tot-label">0 of 28 lessons complete</span></div>
+<div class="tbar"><i id="tot-bar" style="width:0%"></i></div>
+</section>
+
+<main class="wrap">
+<div class="tracks" id="catalog"></div>
+<div id="lesson" hidden></div>
+</main>
+
+<p class="freeline">The Classroom is free for every person, forever, like all of NOOR · schools & apps embed it under <a href="license.html">license</a> · built on the Qur'an, Bukhari, Muslim and the classical sources cited inside each lesson</p>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var store={};
+try{store=JSON.parse(localStorage.getItem("noor_madrasa_v1")||"{}")||{}}catch(e){}
+function save(){try{localStorage.setItem("noor_madrasa_v1",JSON.stringify(store))}catch(e){}}
+function C(){return (window.NOOR_CURRICULUM&&window.NOOR_CURRICULUM.tracks)||[]}
+function isDone(id){return !!(store[id]&&store[id].s>=70)}
+function esc(x){return String(x==null?"":x).replace(/[<>&]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;"}[c]})}
+
+/* ---------- totals ---------- */
+function totals(){
+  var all=0,done=0;
+  C().forEach(function(t){t.lessons.forEach(function(l){all++;if(isDone(l.id))done++})});
+  $("tot-label").textContent=done+" of "+all+" lessons complete";
+  $("tot-bar").style.width=(all?Math.round(done/all*100):0)+"%";
+}
+
+/* ---------- catalog ---------- */
+function catalog(){
+  $("lesson").hidden=true;$("catalog").parentNode.querySelector(".tracks").hidden=false;
+  $("home-btn").hidden=true;$("mhero").style.display="";
+  var box=$("catalog");box.innerHTML="";
+  C().forEach(function(t){
+    var done=t.lessons.filter(function(l){return isDone(l.id)}).length;
+    var pct=Math.round(done/t.lessons.length*100);
+    var d=document.createElement("div");d.className="trk";
+    var h='<div class="trk-head"><span class="ic">'+t.icon+'</span><span class="tt"><b>'+esc(t.name)+' <span class="font-amiri notranslate" translate="no" style="color:#8a6d13">'+t.ar+'</span></b><span>'+esc(t.stage)+" · "+t.lessons.length+' lessons</span></span><span class="ringm" style="--p:'+pct+'"><b>'+pct+'%</b></span></div>';
+    h+='<p class="trk-desc">'+esc(t.desc)+"</p>";
+    h+='<div class="lessons">';
+    t.lessons.forEach(function(l,i){
+      var unlocked=i===0||isDone(t.lessons[i-1].id);
+      var cls="les"+(isDone(l.id)?" done":"")+(!unlocked?" locked":"");
+      var mark=isDone(l.id)?"✓":(unlocked?(i+1):"🔒");
+      h+='<button class="'+cls+'" data-t="'+t.id+'" data-l="'+l.id+'" '+(!unlocked?"disabled":"")+'><span class="st">'+mark+'</span><span class="nm">'+esc(l.name)+'</span><span class="mn">~'+l.mins+' min'+(isDone(l.id)&&store[l.id].s?' · '+store[l.id].s+'%':'')+"</span></button>";
+    });
+    h+="</div>";
+    if(pct===100){
+      h+='<div class="cert-row" style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap"><span>✦ Track complete, mashaAllah</span><button data-cert="'+t.id+'">View your ijazah 📜</button></div>';
+    }
+    d.innerHTML=h;box.appendChild(d);
+  });
+  box.querySelectorAll(".les:not(.locked)").forEach(function(b){
+    b.addEventListener("click",function(){openLesson(b.getAttribute("data-t"),b.getAttribute("data-l"))});
+  });
+  box.querySelectorAll("[data-cert]").forEach(function(b){
+    b.addEventListener("click",function(){showCert(b.getAttribute("data-cert"))});
+  });
+  totals();
+}
+
+/* ---------- lesson player ---------- */
+var cur=null;
+function openLesson(tid,lid){
+  var t=C().filter(function(x){return x.id===tid})[0];
+  var l=t.lessons.filter(function(x){return x.id===lid})[0];
+  cur={t:t,l:l,step:0,qi:0,correct:0,answered:false};
+  $("catalog").hidden=true;$("mhero").style.display="none";
+  $("home-btn").hidden=false;
+  $("lesson").hidden=false;
+  paint();
+  window.scrollTo(0,0);
+}
+function cardHTML(c){
+  if(c.t==="read")return "<h2>"+esc(c.h)+'</h2><p class="body">'+esc(c.p)+"</p>";
+  if(c.t==="tip")return '<div class="tipc">💡 '+esc(c.p)+"</div>";
+  if(c.t==="letters")return "<h2>Meet them</h2><div class='lgrid'>"+c.set.map(function(x){return '<div class="lg"><div class="g notranslate" translate="no">'+x[0]+'</div><div class="n">'+esc(x[1])+'</div><div class="s">'+esc(x[2])+"</div></div>"}).join("")+"</div>";
+  if(c.t==="pairs")return '<div class="prow">'+c.rows.map(function(r){return '<div class="pr"><span class="a notranslate" translate="no">'+r[0]+'</span><span class="b">'+esc(r[1])+"</span></div>"}).join("")+"</div>";
+  if(c.t==="steps")return '<ol class="stepsl">'+c.list.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ol>";
+  if(c.t==="ayah")return '<div class="ayah"><p class="ar notranslate" translate="no">'+c.ar+'</p><p class="en">'+esc(c.en)+'</p><button class="vplay" data-ref="'+c.ref+'">▶ Listen · '+c.ref+"</button></div>";
+  return "";
+}
+function paint(){
+  var L=cur.l, total=L.cards.length+L.quiz.length;
+  var at=cur.step<=L.cards.length?cur.step:L.cards.length+cur.qi;
+  var box=$("lesson");
+  var h='<div class="lbar"><i style="width:'+Math.round(at/total*100)+'%"></i></div>';
+  h+='<p style="font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:#8a6d1a;font-weight:800;margin:0 0 .5rem">'+esc(cur.t.name)+" · "+esc(L.name)+"</p>";
+  if(cur.step<L.cards.length){
+    h+='<div class="card">'+cardHTML(L.cards[cur.step])+'</div>';
+    h+='<div class="navrow">'+(cur.step>0?'<button class="nbtn ghost" id="prev">← Back</button>':"<span></span>")+'<button class="nbtn" id="next">'+(cur.step===L.cards.length-1?"To the questions →":"Next →")+"</button></div>";
+  } else if(cur.qi<L.quiz.length){
+    var q=L.quiz[cur.qi];
+    h+='<div class="card"><p style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6d1a;font-weight:800;margin:0">Question '+(cur.qi+1)+" of "+L.quiz.length+'</p><p class="qq">'+esc(q.q)+'</p><div class="qopts">'+
+      q.a.map(function(o,i){return '<button class="qo" data-i="'+i+'"><span class="notranslate">'+o+"</span></button>"}).join("")+
+      '</div><p class="qfb" id="qfb" hidden></p></div>';
+    h+='<div class="navrow"><span></span><button class="nbtn" id="qnext" hidden>'+(cur.qi===L.quiz.length-1?"Finish →":"Next question →")+"</button></div>";
+  } else {
+    var score=Math.round(cur.correct/L.quiz.length*100);
+    var passed=score>=70;
+    if(passed){
+      var prev=store[L.id]&&store[L.id].s||0;
+      store[L.id]={s:Math.max(prev,score)};save();
+      rain(["✦","⭐","🏮"],14);
+    }
+    h+='<div class="card done-card"><span class="big">'+(passed?"🏮":"🕯")+'</span><h2>'+(passed?"Lesson complete, mashaAllah":"Almost there")+'</h2><p class="score">'+score+"%</p>"+
+       '<p class="body" style="text-align:center">'+(passed?"This light is yours now; it stays lit in your progress.":"You need 70% to pass. Walk the cards once more; the letters and the answers will meet you halfway.")+"</p></div>";
+    h+='<div class="navrow"><button class="nbtn ghost" id="redo">'+(passed?"Review lesson":"Try again")+'</button><button class="nbtn" id="back-cat">'+(passed?"Continue →":"All tracks")+"</button></div>";
+  }
+  box.innerHTML=h;
+  var n=$("next");if(n)n.addEventListener("click",function(){cur.step++;paint();window.scrollTo(0,0)});
+  var p=$("prev");if(p)p.addEventListener("click",function(){cur.step--;paint()});
+  box.querySelectorAll(".vplay").forEach(function(b){b.addEventListener("click",function(){if(window.playAyah)window.playAyah(b.getAttribute("data-ref"),b)})});
+  box.querySelectorAll(".qo").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(cur.answered)return;cur.answered=true;
+      var i=+b.getAttribute("data-i"),q=cur.l.quiz[cur.qi],fb=$("qfb");
+      if(i===q.c){cur.correct++;b.classList.add("good");fb.textContent="✦ Exactly right.";fb.className="qfb ok"}
+      else{b.classList.add("bad");
+        box.querySelectorAll(".qo")[q.c].classList.add("good");
+        fb.textContent="The lit answer is the one to keep.";fb.className="qfb no"}
+      fb.hidden=false;$("qnext").hidden=false;
+    });
+  });
+  var qn=$("qnext");if(qn)qn.addEventListener("click",function(){cur.qi++;cur.answered=false;paint();window.scrollTo(0,0)});
+  var rd=$("redo");if(rd)rd.addEventListener("click",function(){openLesson(cur.t.id,cur.l.id)});
+  var bc=$("back-cat");if(bc)bc.addEventListener("click",catalog);
+}
+function rain(set,n){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  for(var i=0;i<n;i++){
+    var s=document.createElement("span");
+    s.className="spark";s.textContent=set[i%set.length];
+    s.style.left=(Math.random()*92+2)+"vw";s.style.animationDelay=(Math.random()*.7)+"s";s.style.color="#C9A227";
+    document.body.appendChild(s);
+    setTimeout(function(x){return function(){x.remove()}}(s),3200);
+  }
+}
+
+/* ---------- ijazah ---------- */
+function showCert(tid){
+  var t=C().filter(function(x){return x.id===tid})[0];
+  $("catalog").hidden=true;$("mhero").style.display="none";$("home-btn").hidden=false;
+  var box=$("lesson");box.hidden=false;
+  var today=new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+  box.innerHTML='<div id="certwrap"><div id="cert">'+
+   '<p class="bism" translate="no">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>'+
+   '<h2>IJAZAH OF COMPLETION</h2>'+
+   '<p style="font-size:.72rem;color:rgba(44,36,22,.55)">The Madrasa of Light bears witness that</p>'+
+   '<div class="who" id="cert-who">'+esc((store["name"]||""))+'</div>'+
+   '<p style="font-size:.72rem;color:rgba(44,36,22,.55);margin-top:.4rem">has completed, with understanding, the track</p>'+
+   '<p class="tname">'+t.icon+" "+esc(t.name)+' · <span class="font-amiri notranslate" translate="no">'+t.ar+"</span></p>"+
+   '<p style="font-size:.68rem;color:rgba(44,36,22,.5);margin-top:.5rem">'+t.lessons.length+" lessons · every source cited · knowledge carried in the old way</p>"+
+   '<div class="sealn" translate="no">ن</div>'+
+   '<p class="date">'+today+" · noorcodex.com/madrasa · free for every person, forever</p>"+
+   "</div></div>"+
+   '<div class="noprint" style="text-align:center;margin-top:1rem">'+
+   '<input id="cert-name" placeholder="Write the student\'s name" value="'+esc(store["name"]||"")+'"/>'+
+   '<div class="navrow" style="justify-content:center;margin-top:.9rem"><button class="nbtn ghost" id="back-cat2">← All tracks</button><button class="nbtn" id="printc">Print / save the ijazah</button></div></div>';
+  $("cert-name").addEventListener("input",function(){
+    store["name"]=this.value.slice(0,60);save();
+    $("cert-who").textContent=store["name"];
+  });
+  $("printc").addEventListener("click",function(){window.print()});
+  $("back-cat2").addEventListener("click",catalog);
+  window.scrollTo(0,0);
+}
+
+$("home-btn").addEventListener("click",catalog);
+function boot(){ if(window.NOOR_CURRICULUM){catalog()} else {setTimeout(boot,60)} }
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
+})();
+</script>
+</body>
+</html>

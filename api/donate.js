@@ -3,15 +3,17 @@
 // Gifts are sadaqa for a free library: no goods, no perks, no influence.
 
 const CURRENCIES = {
-  usd: { min: 200, max: 2000000 },
-  cad: { min: 300, max: 2800000 },   gbp: { min: 200, max: 1600000 },
-  eur: { min: 200, max: 1900000 },   aud: { min: 300, max: 3100000 },
-  aed: { min: 800, max: 7400000 },   sar: { min: 800, max: 7500000 },
-  qar: { min: 800, max: 7300000 },   sgd: { min: 300, max: 2700000 },
-  myr: { min: 900, max: 8900000 },   try: { min: 8000, max: 84000000 },
-  egp: { min: 10000, max: 99000000 }, mad: { min: 2000, max: 20000000 },
-  pkr: { min: 56000, max: 560000000 }, inr: { min: 17000, max: 168000000 },
-  idr: { min: 3200000, max: 32000000000 }, ngn: { min: 310000, max: 3100000000 }
+  /* one US dollar to one thousand US dollars, in each currency's own
+     minor units, rounded to kind numbers */
+  usd: { min: 100, max: 100000 },
+  cad: { min: 150, max: 140000 },    gbp: { min: 100, max: 80000 },
+  eur: { min: 100, max: 95000 },     aud: { min: 150, max: 155000 },
+  aed: { min: 400, max: 365000 },    sar: { min: 400, max: 375000 },
+  qar: { min: 400, max: 365000 },    sgd: { min: 150, max: 135000 },
+  myr: { min: 500, max: 445000 },    try: { min: 4500, max: 4200000 },
+  egp: { min: 5000, max: 4950000 },  mad: { min: 1000, max: 1000000 },
+  pkr: { min: 30000, max: 28000000 }, inr: { min: 10000, max: 8400000 },
+  idr: { min: 1600000, max: 1600000000 }, ngn: { min: 150000, max: 155000000 }
 };
 
 export default async function handler(req, res) {

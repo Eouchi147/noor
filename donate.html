@@ -121,6 +121,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <div class="mg">
 <p class="dd-h">Live It</p>
 <a role="menuitem" href="school.html">The Madrasa · School</a>
+<a role="menuitem" href="madrasa.html">The Classroom · Study</a>
 <a role="menuitem" href="begin.html">Begin · New Muslim</a>
 <a role="menuitem" href="pillars.html">The Five Pillars</a>
 <a role="menuitem" href="health.html">Prophetic Health</a>
@@ -209,6 +210,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <div class="amts" id="amts" role="radiogroup" aria-label="Gift amount"></div>
 <div id="custom-wrap" hidden>
 <input id="custom" type="number" inputmode="decimal" min="1" placeholder="Your amount"/>
+<p id="custom-range" style="margin:.35rem 0 0;font-size:.66rem;color:rgba(44,36,22,.5);text-align:center"></p>
 </div>
 <div class="mrow"><input type="checkbox" id="monthly"/><label for="monthly" style="all:unset;cursor:pointer">Make it a monthly light · a sadaqa jariyah that keeps giving every month. Cancel anytime with one click from your receipt.</label></div>
 <button class="cta" id="give">✦ <span id="give-label">Give</span></button>
@@ -247,7 +249,20 @@ var $=function(id){return document.getElementById(id)};
 var USD=[250,100,50,20], DEFAULT_IDX=2;
 var cur="usd", sym="$", localAmts=USD.slice(), chosen=DEFAULT_IDX, customMode=false;
 
-function clean(n){ if(n<10) return Math.round(n); var p=Math.pow(10,Math.max(0,Math.floor(Math.log10(n))-1)); if(n<1000)p=Math.min(p,5); return Math.round(n/p)*p; }
+var fxRate=1, minLocal=1, maxLocal=1000;
+/* marketing-round: snap to the numbers hearts actually give */
+function clean(n){
+  if(!(n>0)) return 1;
+  if(n<10) return Math.max(1,Math.round(n));
+  var L=[1,1.25,1.5,2,2.5,3,3.5,4,5,6,7.5,8,10];
+  var p=Math.pow(10,Math.floor(Math.log10(n)));
+  var best=p, bd=Infinity;
+  [p/10,p].forEach(function(pp){
+    L.forEach(function(st){ var v=st*pp, d=Math.abs(v-n);
+      if(d<bd || (d===bd && v>best)){ bd=d; best=v; } });
+  });
+  return best;
+}
 function fmt(n){ return sym+Number(n).toLocaleString(); }
 
 function currentAmount(){
@@ -285,10 +300,20 @@ document.addEventListener("DOMContentLoaded",function(){
       if(c&&M.localPrices&&M.localPrices[c]){
         cur=c; sym=(M.curSymbol||{})[c]||"";
         var fx=M.localPrices[c][1]/59;   /* same fx table as everything else */
+        fxRate=fx;
+        /* one US dollar and one thousand, each rounded to kind numbers */
+        if(fx<=8){ minLocal=Math.max(1,Math.ceil(fx)); }
+        else { var pm=Math.pow(10,Math.floor(Math.log10(fx))), LM=[1,1.5,2,2.5,3,4,5,7.5,10];
+               minLocal=10*pm; for(var q=LM.length-1;q>=0;q--){ if(LM[q]*pm>=fx) minLocal=LM[q]*pm; } }
+        var mx=1000*fx, px=Math.pow(10,Math.floor(Math.log10(mx)))/20;
+        maxLocal=Math.round(mx/px)*px;
         localAmts=USD.map(function(u){return clean(u*fx)});
+        localAmts=localAmts.filter(function(v,i,a){return a.indexOf(v)===i});
       } }
   }catch(e){}
   renderAmts(); label();
+  try{ $("custom").min=String(minLocal); $("custom").max=String(maxLocal);
+       $("custom-range").textContent="Anything from "+fmt(minLocal)+" to "+fmt(maxLocal); }catch(e){}
   $("monthly").addEventListener("change",label);
   $("custom").addEventListener("input",label);
   /* lights already lit: rotating, AI-gated dedications */
@@ -303,6 +328,11 @@ document.addEventListener("DOMContentLoaded",function(){
 
   $("give").addEventListener("click",function(){
     var a=currentAmount(); if(!a){ $("custom").focus(); return; }
+    if(a<minLocal||a>maxLocal){
+      a=Math.min(maxLocal,Math.max(minLocal,a));
+      if(customMode){ $("custom").value=String(a); }
+      label();
+    }
     var btn=$("give"); btn.disabled=true; $("give-label").textContent="Opening secure checkout…";
     $("give-err").hidden=true;
     fetch("/api/donate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ amountMinor: Math.round(a*100), currency: cur, monthly: $("monthly").checked })})
