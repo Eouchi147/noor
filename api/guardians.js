@@ -9,7 +9,9 @@ const OCCUPYING = ["active", "trialing", "past_due"];
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=900");
   const KEY = process.env.STRIPE_SECRET_KEY;
-  const out = { enabled: !!KEY, taken: {}, lit: {} };
+  /* money mode: "donate" (default, gifts sitewide) or "guardian"
+     (regional sponsors). Flip with NOOR_MONEY_MODE=guardian in Vercel env. */
+  const out = { enabled: !!KEY, mode: process.env.NOOR_MONEY_MODE === "guardian" ? "guardian" : "donate", taken: {}, lit: {} };
   if (!KEY) return res.status(200).json(out);
 
   try {

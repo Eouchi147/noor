@@ -26,7 +26,10 @@ export default async function handler(req, res) {
     stripeConfigured: !!KEY,
     checkoutEnabled: !!KEY,
     lanternConfigured: !!process.env.OPENROUTER_API_KEY,
-    weekly: 0, mrr: 0, activeCount: 0, guardians: [], fetchedAt: new Date().toISOString()
+    moneyMode: process.env.NOOR_MONEY_MODE === "guardian" ? "guardian" : "donate",
+    weekly: 0, mrr: 0, activeCount: 0, guardians: [],
+    gifts: { total30d: 0, count30d: 0, monthly: 0, recent: [] },
+    fetchedAt: new Date().toISOString()
   };
   if (!KEY) return res.status(200).json(out);
 
@@ -39,6 +42,11 @@ export default async function handler(req, res) {
       const items = (s.items && s.items.data) || [];
       const item = items[0] || {};
       const price = item.price || {};
+      /* monthly sadaqa subscriptions */
+      if (s.metadata && s.metadata.noor_donation === "1") {
+        if (s.status === "active" || s.status === "trialing") out.gifts.monthly += (price.unit_amount || 0) / 100;
+        return;
+      }
       const isGuardian = price.product === GUARDIAN_PRODUCT ||
         (price.product && price.product.id === GUARDIAN_PRODUCT) ||
         (s.metadata && s.metadata.noor_market);
@@ -70,6 +78,29 @@ export default async function handler(req, res) {
         subscription: s.id
       });
     });
+
+    /* one-time gifts, last 30 days */
+    try {
+      const since = Math.floor(Date.now() / 1000) - 30 * 86400;
+      const cr = await fetch("https://api.stripe.com/v1/charges?limit=100&created[gte]=" + since, { headers: { Authorization: "Bearer " + KEY } });
+      if (cr.ok) {
+        const cj = await cr.json();
+        (cj.data || []).forEach(c => {
+          if (!c.paid || c.refunded) return;
+          if (!(c.metadata && c.metadata.noor_donation === "1")) return;
+          const amt = (c.amount || 0) / 100;
+          out.gifts.total30d += amt;
+          out.gifts.count30d += 1;
+          if (out.gifts.recent.length < 10) out.gifts.recent.push({
+            amount: amt,
+            currency: (c.currency || "usd").toUpperCase(),
+            when: c.created ? new Date(c.created * 1000).toISOString().slice(0, 10) : "",
+            email: (c.billing_details && c.billing_details.email) || ""
+          });
+        });
+      }
+    } catch {}
+
     return res.status(200).json(out);
   } catch (e) {
     out.error = "unreachable";

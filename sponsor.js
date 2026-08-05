@@ -58,19 +58,21 @@ window.NOOR_GUARDIANS = {
     return null;
   }
 
-  /* Live lamp map from the server (5 min memory via sessionStorage). */
-  var SERVER = { lit: {}, taken: {} };
+  /* Live lamp map + money mode from the server (5 min memory via sessionStorage).
+     mode "donate": the sitewide line invites gifts. mode "guardian": it invites
+     regional sponsors. A paid, approved Guardian is always honored either way. */
+  var SERVER = { mode: "donate", lit: {}, taken: {} };
   function loadLamps(done) {
     var cached = null;
-    try { cached = JSON.parse(sessionStorage.getItem("noor_lamps") || "null"); } catch (e) {}
+    try { cached = JSON.parse(sessionStorage.getItem("noor_lamps2") || "null"); } catch (e) {}
     if (cached && Date.now() - cached.t < 300000) { SERVER = cached.d || SERVER; return done(); }
     var finished = false;
     var timer = setTimeout(function () { if (!finished) { finished = true; done(); } }, 1800);
     try {
       fetch("/api/guardians").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
         if (j) {
-          SERVER = { lit: j.lit || {}, taken: j.taken || {} };
-          try { sessionStorage.setItem("noor_lamps", JSON.stringify({ t: Date.now(), d: SERVER })); } catch (e) {}
+          SERVER = { mode: j.mode === "guardian" ? "guardian" : "donate", lit: j.lit || {}, taken: j.taken || {} };
+          try { sessionStorage.setItem("noor_lamps2", JSON.stringify({ t: Date.now(), d: SERVER })); } catch (e) {}
         }
         if (!finished) { finished = true; clearTimeout(timer); done(); }
       }).catch(function () { if (!finished) { finished = true; clearTimeout(timer); done(); } });
@@ -112,7 +114,8 @@ window.NOOR_GUARDIANS = {
     if (!m) return;
     var isAdmin = /(^|\/)admin(\.html)?$/.test(location.pathname);
     var isSponsorPage = /(^|\/)sponsor(\.html)?$/.test(location.pathname);
-    if (isAdmin || isSponsorPage) return;
+    var isDonatePage = /(^|\/)donate(\.html)?$/.test(location.pathname);
+    if (isAdmin || isSponsorPage || isDonatePage) return;
     var g = liveGuardian(m);
     var hdr = document.getElementById("site-header");
     if (!hdr || !hdr.parentNode) return;
@@ -131,7 +134,7 @@ window.NOOR_GUARDIANS = {
         '<a href="sponsor.html" style="margin-left:auto;flex:none;color:rgba(44,36,22,.4);text-decoration:none;font-size:.66rem" title="About Guardianship">what is this?</a>' +
         "</div></div>");
       hdr.parentNode.insertBefore(bar, hdr.nextSibling);
-    } else {
+    } else if (SERVER.mode === "guardian") {
       /* The quiet invitation: visible, dignified, one line of support. */
       var inv = el('<div data-noor-sponsor style="position:relative;z-index:35;background:linear-gradient(90deg,rgba(44,36,22,.035),transparent 70%);border-bottom:1px solid rgba(44,36,22,.06)">' +
         '<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.55rem;font-size:.71rem;color:rgba(44,36,22,.55);font-family:Inter,system-ui,sans-serif">' +
@@ -141,6 +144,15 @@ window.NOOR_GUARDIANS = {
         '<a href="sponsor.html?market=' + encodeURIComponent(m.id) + '" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none">Become the Guardian →</a>' +
         "</div></div>");
       hdr.parentNode.insertBefore(inv, hdr.nextSibling);
+    } else {
+      /* Donations era: one gentle line, everywhere. */
+      var don = el('<div data-noor-sponsor style="position:relative;z-index:35;background:linear-gradient(90deg,rgba(44,36,22,.035),transparent 70%);border-bottom:1px solid rgba(44,36,22,.06)">' +
+        '<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.55rem;font-size:.71rem;color:rgba(44,36,22,.55);font-family:Inter,system-ui,sans-serif">' +
+        '<span aria-hidden="true" style="color:rgba(201,162,39,.75)">✦</span>' +
+        "<span>This library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers</span>" +
+        '<a href="donate.html" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none">Keep it lit →</a>' +
+        "</div></div>");
+      hdr.parentNode.insertBefore(don, hdr.nextSibling);
     }
   }
 

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="theme-color" content="#04060F"/>
+<title>Keep the Codex lit · NOOR Codex of Light</title>
+<meta name="description" content="NOOR is free for everyone, forever: no ads, no trackers. It runs on the gifts of its readers. Light it with a sadaqa in your own currency."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=15"/>
+<script src="noor-fx.js" defer></script>
+<script src="markets.js" defer></script>
+<script src="sponsor.js" defer></script>
+<style>[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+#gh{position:relative;overflow:hidden;background:linear-gradient(180deg,#04060F 0%,#0B1230 44%,#17224e 78%,#2c3a6e 100%)}
+.gh-fade{position:absolute;inset:auto 0 0 0;height:22%;background:linear-gradient(180deg,transparent,var(--parchment))}
+.lamp-glow{display:inline-block;font-size:2.2rem;color:#E9C86A;filter:drop-shadow(0 0 18px rgba(233,200,106,.65));animation:flick 3.4s ease-in-out infinite}
+@keyframes flick{0%,100%{filter:drop-shadow(0 0 18px rgba(233,200,106,.65))}50%{filter:drop-shadow(0 0 30px rgba(233,200,106,.9))}}
+.sec{max-width:34rem;margin:0 auto;padding:1.6rem 1rem 0}
+.lead{font-size:.88rem;color:rgba(44,36,22,.72);line-height:1.8}
+.gcard{background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:22px;box-shadow:0 14px 44px rgba(44,36,22,.1);padding:1.4rem 1.4rem 1.2rem;margin-top:-2.6rem;position:relative;z-index:20}
+.amts{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.9rem}
+.amt{border:1.5px solid rgba(44,36,22,.16);background:#FFFDF6;border-radius:14px;padding:.75rem .2rem;text-align:center;cursor:pointer;transition:all .15s;font-family:inherit}
+.amt .v{display:block;font-weight:800;font-size:1.02rem;color:#2C2416}
+.amt .u{display:block;font-size:.58rem;color:rgba(44,36,22,.45);margin-top:.1rem;letter-spacing:.04em}
+.amt.on{border-color:#C9A227;background:#FFF7DF;box-shadow:0 0 0 3px rgba(201,162,39,.18)}
+.amt:hover{border-color:rgba(201,162,39,.6)}
+#custom-wrap{margin-top:.6rem}
+#custom{width:100%;border:1.5px solid rgba(44,36,22,.18);border-radius:12px;padding:.65rem .9rem;font-size:16px;background:#FFFDF6;color:var(--ink);outline:none}
+#custom:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.14)}
+.mrow{display:flex;align-items:flex-start;gap:.6rem;margin-top:.95rem;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.75)}
+.mrow input{width:1.1rem;height:1.1rem;margin-top:.12rem;accent-color:#C9A227;flex:none}
+.cta{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;min-height:56px;margin-top:1.05rem;border-radius:999px;font-weight:800;font-size:1rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border:none;cursor:pointer;box-shadow:0 8px 26px rgba(201,162,39,.4);transition:transform .18s;font-family:inherit}
+.cta:hover{transform:translateY(-2px)}
+.cta[disabled]{opacity:.55;cursor:wait;transform:none}
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem .9rem;margin-top:.7rem;font-size:.64rem;color:rgba(44,36,22,.45)}
+.imp{display:flex;gap:.65rem;align-items:flex-start;font-size:.82rem;line-height:1.65;color:rgba(44,36,22,.78);padding:.42rem 0}
+.imp .s{flex:none;color:#C9A227}
+.qa{font-size:.74rem;color:rgba(44,36,22,.55);line-height:1.7}
+#thanks{background:linear-gradient(160deg,#FFF9E8,#FFFDF6);border:1px solid rgba(201,162,39,.55);border-radius:22px;padding:1.5rem 1.4rem;text-align:center;margin-top:-2.6rem;position:relative;z-index:20;box-shadow:0 14px 44px rgba(201,162,39,.22)}
+.dua{font-family:Amiri,serif;font-size:1.15rem;color:#6b5510;line-height:1.9}
+</style>
+<link rel="canonical" href="https://noorcodex.com/donate"/>
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav13">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
+.dd-menu>p,.dd-menu>a{display:block}
+.dd-inner,.dd-menu{outline:none}
+.dd-menu{background:transparent}
+.dd-menu>*{background:#fff}
+.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
+.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
+.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
+.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
+.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
+.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
+.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
+.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
+.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.mnav::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
+<a href="index.html#timeline" class="hover:text-ink transition-colors" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
+<a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
+<div class="dd-menu" role="menu" aria-label="Explore">
+<p class="dd-h">Journey</p>
+<a role="menuitem" href="index.html#books" data-i18n="nav.books">Books</a>
+<a role="menuitem" href="places.html" data-i18n="nav.places">Places</a>
+<a role="menuitem" href="words.html" data-i18n="nav.words">Words</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="nav.mizan">Two Lives</a>
+<p class="dd-h">Live it</p>
+<a role="menuitem" href="health.html" data-i18n="nav.health">Prophetic Health</a>
+<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
+<a role="menuitem" href="begin.html">New Muslim · Begin</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h">The Codex</p>
+<a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
+<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+<a role="menuitem" href="legal.html">Terms & Privacy</a>
+</div>
+</div>
+<select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
+<option value="en">EN</option><option value="ar">AR</option><option value="fr">FR</option>
+</select>
+</nav>
+</div>
+<div class="md:hidden border-t border-ink/5">
+<div class="mnav text-xs font-semibold">
+<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
+<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
+<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.characters">Characters</a>
+<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.places">Places</a>
+<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.words">Words</a>
+<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.health">Health</a>
+<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
+<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
+<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
+<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
+</div>
+</div>
+</header>
+
+<section id="gh">
+<div class="relative z-10 max-w-2xl mx-auto px-4 pt-12 pb-20 text-center">
+<span class="lamp-glow" aria-hidden="true">✦</span>
+<h1 class="text-3xl sm:text-4xl font-bold text-parchment mt-2 mb-3">Every verse read here is a lamp.<br/>You can be the oil.</h1>
+<p class="text-parchment/70 text-sm max-w-lg mx-auto leading-relaxed">The Codex is free for everyone, forever: no ads, no paywalls, no trackers. It stays that way through one thing only, the quiet gifts of readers like you.</p>
+<p class="text-parchment/50 text-xs max-w-md mx-auto leading-relaxed mt-3">"When a person dies, their deeds end except three: an ongoing charity, knowledge that benefits, and a righteous child who prays for them." · Sahih Muslim</p>
+</div>
+<div class="gh-fade"></div>
+</section>
+
+<div class="sec">
+<div id="thanks" hidden>
+<span class="lamp-glow" aria-hidden="true" style="font-size:1.8rem">✦</span>
+<p class="dua" style="margin-top:.5rem">May Allah put light in your scale.</p>
+<p class="lead" style="margin-top:.4rem">Your gift is received. From this moment, every verse read here, every child who learns a prophet's name, every seeker who finds the path carries a share of your light. Your receipt is in your email.</p>
+<p style="margin-top:1rem"><a href="index.html" style="color:#8a6d13;font-weight:700;text-decoration:none">Return to the Codex →</a></p>
+</div>
+
+<div class="gcard" id="givebox">
+<p style="font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800;text-align:center">Light the Codex</p>
+<div class="amts" id="amts" role="radiogroup" aria-label="Gift amount"></div>
+<div id="custom-wrap" hidden>
+<input id="custom" type="number" inputmode="decimal" min="1" placeholder="Your amount"/>
+</div>
+<div class="mrow"><input type="checkbox" id="monthly"/><label for="monthly" style="all:unset;cursor:pointer">Make it a monthly light · a sadaqa jariyah that keeps giving every month. Cancel anytime with one click from your receipt.</label></div>
+<button class="cta" id="give">✦ <span id="give-label">Give</span></button>
+<div class="trust"><span>Secure checkout by Stripe</span><span>·</span><span>Your own currency</span><span>·</span><span>No account needed</span><span>·</span><span>At checkout: dedicate your light to someone, if you wish</span></div>
+</div>
+
+<div style="margin-top:1.6rem">
+<div class="imp"><span class="s">✦</span><span><b>Keeps the doors open.</b> Servers, the Qur'an text and recitation services, and the daily light, paid for, so no reader ever pays.</span></div>
+<div class="imp"><span class="s">✦</span><span><b>Builds new rooms.</b> The Mushaf, the 25 Prophets, the Kids' Codex, the companions: every room was built free. Your gift builds the next one.</span></div>
+<div class="imp"><span class="s">✦</span><span><b>Carries the light further.</b> The Codex is preparing to speak every major language of the ummah. Gifts bring that day closer.</span></div>
+</div>
+
+<p class="qa" style="margin-top:1.4rem"><b>Is this zakat?</b> No. Gifts to the Codex are sadaqa, voluntary charity, not zakat, and we are not a registered charity, so no tax receipt is issued. Your zakat belongs with the eight categories named in the Qur'an (9:60). Details in <a href="legal.html" style="color:#8a6d13">Terms & Privacy</a>.</p>
+<p class="qa" style="margin-top:.5rem;padding-bottom:2.6rem"><b>Why not ads?</b> Because a place of remembrance should be quiet. We chose no ads and no trackers on purpose, which leaves the Codex with one honest lifeline: you.</p>
+</div>
+
+<footer class="border-t border-ink/10 py-8 text-center">
+<p class="text-xs text-ink/40"><a class="underline" href="legal.html">Terms & Privacy</a> · NOOR · Codex of Light · <a class="underline" href="index.html">return to the Codex</a></p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+/* USD anchor ladder, converted to the reader's own currency. */
+var USD=[500,150,75,25], DEFAULT_IDX=1;
+var cur="usd", sym="$", localAmts=USD.slice(), chosen=DEFAULT_IDX, customMode=false;
+
+function clean(n){ if(n<10) return Math.round(n); var p=Math.pow(10,Math.max(0,Math.floor(Math.log10(n))-1)); if(n<1000)p=Math.min(p,5); return Math.round(n/p)*p; }
+function fmt(n){ return sym+Number(n).toLocaleString(); }
+
+function currentAmount(){
+  if(customMode){ var v=parseFloat($("custom").value); return isFinite(v)&&v>0?v:null; }
+  return localAmts[chosen];
+}
+function label(){
+  var a=currentAmount(), monthly=$("monthly").checked;
+  $("give-label").textContent = a? ("Give "+fmt(a)+(monthly?" every month":"")) : "Give";
+}
+function renderAmts(){
+  var box=$("amts"); box.innerHTML="";
+  localAmts.forEach(function(a,i){
+    var b=document.createElement("button");
+    b.type="button"; b.className="amt"+(!customMode&&i===chosen?" on":""); b.setAttribute("role","radio");
+    b.setAttribute("aria-checked",(!customMode&&i===chosen)?"true":"false");
+    b.innerHTML='<span class="v">'+fmt(a)+'</span><span class="u">'+(i===0?"founder's gift":i===1?"a strong lamp":i===2?"a steady lamp":"a candle")+'</span>';
+    b.addEventListener("click",function(){ chosen=i; customMode=false; $("custom-wrap").hidden=true; renderAmts(); label(); });
+    box.appendChild(b);
+  });
+  var c=document.createElement("button");
+  c.type="button"; c.className="amt"+(customMode?" on":""); c.style.gridColumn="1 / -1";
+  c.innerHTML='<span class="v" style="font-size:.85rem">Another amount</span><span class="u">whatever your heart settles on</span>';
+  c.addEventListener("click",function(){ customMode=true; $("custom-wrap").hidden=false; $("custom").focus(); renderAmts(); label(); });
+  box.appendChild(c);
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  try{ if(new URLSearchParams(location.search).get("lit")==="1"){ $("thanks").hidden=false; $("givebox").style.display="none"; } }catch(e){}
+  /* localize via the same on-device resolution the whole site uses */
+  try{
+    var M=window.NOOR_MARKETS, api=window.NOOR_SPONSOR_API;
+    if(M&&api){ var m=api.resolveMarket(api.signals());
+      var c=m&&(M.currencyOf||{})[m.id];
+      if(c&&M.localPrices&&M.localPrices[c]){
+        cur=c; sym=(M.curSymbol||{})[c]||"";
+        var fx=M.localPrices[c][1]/59;   /* same fx table as everything else */
+        localAmts=USD.map(function(u){return clean(u*fx)});
+      } }
+  }catch(e){}
+  renderAmts(); label();
+  $("monthly").addEventListener("change",label);
+  $("custom").addEventListener("input",label);
+  $("give").addEventListener("click",function(){
+    var a=currentAmount(); if(!a){ $("custom").focus(); return; }
+    var btn=$("give"); btn.disabled=true; $("give-label").textContent="Opening secure checkout…";
+    fetch("/api/donate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ amountMinor: Math.round(a*100), currency: cur, monthly: $("monthly").checked })})
+      .then(function(r){return r.json()})
+      .then(function(x){ if(x&&x.url){ location.href=x.url; return; } btn.disabled=false; label(); })
+      .catch(function(){ btn.disabled=false; label(); });
+  });
+});
+})();
+</script>
+</body>
+</html>

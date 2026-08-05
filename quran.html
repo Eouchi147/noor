@@ -13,7 +13,6 @@
 <script src="noor-fx.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
-<script src="lantern.js" defer></script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
@@ -112,7 +111,6 @@ body.has-player{padding-bottom:74px}
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
 <a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<a href="ask.html" class="hover:text-ink transition-colors">Ask ✦</a>
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
 <div class="dd-menu" role="menu" aria-label="Explore">
 <p class="dd-h">Journey</p>
@@ -125,10 +123,10 @@ body.has-player{padding-bottom:74px}
 <a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
 <a role="menuitem" href="begin.html">New Muslim · Begin</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
-<a role="menuitem" href="ask.html">✦ Ask the Lantern</a>
 <p class="dd-h">The Codex</p>
 <a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
-<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+<a role="menuitem" href="legal.html">Terms & Privacy</a>
 </div>
 </div>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
@@ -138,7 +136,6 @@ body.has-player{padding-bottom:74px}
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
-<a href="ask.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Ask</a>
 <a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
 <a href="quran.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active" data-i18n="nav.quran">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
@@ -150,6 +147,7 @@ body.has-player{padding-bottom:74px}
 <a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
 <a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
 <a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
 </div>
 </div>
 </header>
@@ -230,7 +228,10 @@ body.has-player{padding-bottom:74px}
 </footer>
 
 <script>
-/* ================= NOOR Mushaf v2 ================= */
+/* ================= NOOR Mushaf v2 =================
+   Sealed in its own scope so shared page scripts (noor-fx.js also has a
+   playAyah for other rooms) can never clobber the Mushaf's player again. */
+(function(){
 const SURAHS=[[1,"Al-Fatiha","الفاتحة","The Opening",7,"M"],[2,"Al-Baqarah","البقرة","The Cow",286,"D"],[3,"Aal Imran","آل عمران","Family of Imran",200,"D"],[4,"An-Nisa","النساء","The Women",176,"D"],[5,"Al-Ma'idah","المائدة","The Table Spread",120,"D"],[6,"Al-An'am","الأنعام","The Cattle",165,"M"],[7,"Al-A'raf","الأعراف","The Heights",206,"M"],[8,"Al-Anfal","الأنفال","The Spoils of War",75,"D"],[9,"At-Tawbah","التوبة","The Repentance",129,"D"],[10,"Yunus","يونس","Jonah",109,"M"],[11,"Hud","هود","Hud",123,"M"],[12,"Yusuf","يوسف","Joseph",111,"M"],[13,"Ar-Ra'd","الرعد","The Thunder",43,"D"],[14,"Ibrahim","إبراهيم","Abraham",52,"M"],[15,"Al-Hijr","الحجر","The Rocky Tract",99,"M"],[16,"An-Nahl","النحل","The Bee",128,"M"],[17,"Al-Isra","الإسراء","The Night Journey",111,"M"],[18,"Al-Kahf","الكهف","The Cave",110,"M"],[19,"Maryam","مريم","Mary",98,"M"],[20,"Ta-Ha","طه","Ta-Ha",135,"M"],[21,"Al-Anbiya","الأنبياء","The Prophets",112,"M"],[22,"Al-Hajj","الحج","The Pilgrimage",78,"D"],[23,"Al-Mu'minun","المؤمنون","The Believers",118,"M"],[24,"An-Nur","النور","The Light",64,"D"],[25,"Al-Furqan","الفرقان","The Criterion",77,"M"],[26,"Ash-Shu'ara","الشعراء","The Poets",227,"M"],[27,"An-Naml","النمل","The Ant",93,"M"],[28,"Al-Qasas","القصص","The Stories",88,"M"],[29,"Al-Ankabut","العنكبوت","The Spider",69,"M"],[30,"Ar-Rum","الروم","The Romans",60,"M"],[31,"Luqman","لقمان","Luqman",34,"M"],[32,"As-Sajdah","السجدة","The Prostration",30,"M"],[33,"Al-Ahzab","الأحزاب","The Confederates",73,"D"],[34,"Saba","سبأ","Sheba",54,"M"],[35,"Fatir","فاطر","The Originator",45,"M"],[36,"Ya-Sin","يس","Ya-Sin",83,"M"],[37,"As-Saffat","الصافات","Those Ranged in Ranks",182,"M"],[38,"Sad","ص","Sad",88,"M"],[39,"Az-Zumar","الزمر","The Groups",75,"M"],[40,"Ghafir","غافر","The Forgiver",85,"M"],[41,"Fussilat","فصلت","Explained in Detail",54,"M"],[42,"Ash-Shura","الشورى","The Consultation",53,"M"],[43,"Az-Zukhruf","الزخرف","The Gold Adornments",89,"M"],[44,"Ad-Dukhan","الدخان","The Smoke",59,"M"],[45,"Al-Jathiyah","الجاثية","The Kneeling",37,"M"],[46,"Al-Ahqaf","الأحقاف","The Wind-Curved Sandhills",35,"M"],[47,"Muhammad","محمد","Muhammad",38,"D"],[48,"Al-Fath","الفتح","The Victory",29,"D"],[49,"Al-Hujurat","الحجرات","The Rooms",18,"D"],[50,"Qaf","ق","Qaf",45,"M"],[51,"Adh-Dhariyat","الذاريات","The Winnowing Winds",60,"M"],[52,"At-Tur","الطور","The Mount",49,"M"],[53,"An-Najm","النجم","The Star",62,"M"],[54,"Al-Qamar","القمر","The Moon",55,"M"],[55,"Ar-Rahman","الرحمن","The Most Merciful",78,"D"],[56,"Al-Waqi'ah","الواقعة","The Inevitable",96,"M"],[57,"Al-Hadid","الحديد","The Iron",29,"D"],[58,"Al-Mujadilah","المجادلة","The Pleading Woman",22,"D"],[59,"Al-Hashr","الحشر","The Exile",24,"D"],[60,"Al-Mumtahanah","الممتحنة","She Who is Examined",13,"D"],[61,"As-Saff","الصف","The Ranks",14,"D"],[62,"Al-Jumu'ah","الجمعة","Friday",11,"D"],[63,"Al-Munafiqun","المنافقون","The Hypocrites",11,"D"],[64,"At-Taghabun","التغابن","Mutual Loss and Gain",18,"D"],[65,"At-Talaq","الطلاق","The Divorce",12,"D"],[66,"At-Tahrim","التحريم","The Prohibition",12,"D"],[67,"Al-Mulk","الملك","The Sovereignty",30,"M"],[68,"Al-Qalam","القلم","The Pen",52,"M"],[69,"Al-Haqqah","الحاقة","The Reality",52,"M"],[70,"Al-Ma'arij","المعارج","The Ascending Stairways",44,"M"],[71,"Nuh","نوح","Noah",28,"M"],[72,"Al-Jinn","الجن","The Jinn",28,"M"],[73,"Al-Muzzammil","المزمل","The Enshrouded One",20,"M"],[74,"Al-Muddaththir","المدثر","The Cloaked One",56,"M"],[75,"Al-Qiyamah","القيامة","The Resurrection",40,"M"],[76,"Al-Insan","الإنسان","Man",31,"D"],[77,"Al-Mursalat","المرسلات","Those Sent Forth",50,"M"],[78,"An-Naba","النبأ","The Great News",40,"M"],[79,"An-Nazi'at","النازعات","Those Who Pull Out",46,"M"],[80,"Abasa","عبس","He Frowned",42,"M"],[81,"At-Takwir","التكوير","The Folding Up",29,"M"],[82,"Al-Infitar","الانفطار","The Cleaving",19,"M"],[83,"Al-Mutaffifin","المطففين","The Defrauders",36,"M"],[84,"Al-Inshiqaq","الانشقاق","The Splitting Open",25,"M"],[85,"Al-Buruj","البروج","The Constellations",22,"M"],[86,"At-Tariq","الطارق","The Night-Comer",17,"M"],[87,"Al-A'la","الأعلى","The Most High",19,"M"],[88,"Al-Ghashiyah","الغاشية","The Overwhelming",26,"M"],[89,"Al-Fajr","الفجر","The Dawn",30,"M"],[90,"Al-Balad","البلد","The City",20,"M"],[91,"Ash-Shams","الشمس","The Sun",15,"M"],[92,"Al-Layl","الليل","The Night",21,"M"],[93,"Ad-Duha","الضحى","The Morning Brightness",11,"M"],[94,"Ash-Sharh","الشرح","The Opening of the Breast",8,"M"],[95,"At-Tin","التين","The Fig",8,"M"],[96,"Al-Alaq","العلق","The Clot",19,"M"],[97,"Al-Qadr","القدر","The Night of Decree",5,"M"],[98,"Al-Bayyinah","البينة","The Clear Evidence",8,"D"],[99,"Az-Zalzalah","الزلزلة","The Earthquake",8,"D"],[100,"Al-Adiyat","العاديات","The Coursers",11,"M"],[101,"Al-Qari'ah","القارعة","The Calamity",11,"M"],[102,"At-Takathur","التكاثر","The Rivalry in Increase",8,"M"],[103,"Al-Asr","العصر","The Declining Day",3,"M"],[104,"Al-Humazah","الهمزة","The Slanderer",9,"M"],[105,"Al-Fil","الفيل","The Elephant",5,"M"],[106,"Quraysh","قريش","Quraysh",4,"M"],[107,"Al-Ma'un","الماعون","The Small Kindnesses",7,"M"],[108,"Al-Kawthar","الكوثر","The Abundance",3,"M"],[109,"Al-Kafirun","الكافرون","The Disbelievers",6,"M"],[110,"An-Nasr","النصر","The Divine Support",3,"D"],[111,"Al-Masad","المسد","The Palm Fiber",5,"M"],[112,"Al-Ikhlas","الإخلاص","The Sincerity",4,"M"],[113,"Al-Falaq","الفلق","The Daybreak",5,"M"],[114,"An-Nas","الناس","Mankind",6,"M"]];
 const INTROS={1:"The Mother of the Book. Seven verses that are themselves a conversation: you praise, you ask, He answers. Recited in every unit of every prayer, no Muslim ever graduates from it.",2:"The longest surah: law, memory and mercy woven together in Madinah. It holds Ayat al-Kursi (255) and closes with two verses the Prophet ﷺ said suffice whoever recites them at night.",12:"The most beautiful of stories, revealed whole in the Year of Sorrow: betrayal, patience, temptation resisted, and a family restored. Yusuf forgives before he is asked.",18:"The Friday surah. Four stories, the sleepers, the two gardens, Musa and al-Khadir, Dhul-Qarnayn, each answering a trial: faith, wealth, knowledge, power.",19:"Maryam: a surah named for a woman, carried by the letter-sounds Kaf-Ha-Ya-Ayn-Sad. Zakariyya's whisper, Maryam's labour, and Isa speaking from the cradle.",36:"Often called the heart of the Qur'an. Resurrection argued from a dead earth brought to life, and one man from the far side of the city who ran to warn his people.",55:"Ar-Rahman: a refrain: 'so which of the favours of your Lord will you both deny?', returning thirty-one times, addressed to humans and jinn together.",56:"Al-Waqi'ah sorts humanity into three companies on the Day: the foremost, the right, the left. The Prophet's ﷺ companions recited it against poverty of heart.",67:"Al-Mulk: sovereignty argued from the flight of birds and the seven heavens without flaw. A protector in the grave for those who kept its company.",93:"Revealed when revelation paused and the Prophet ﷺ feared abandonment: 'Your Lord has not forsaken you, nor does He hate you.' The morning light after night.",94:"Ash-Sharh: 'Did We not expand for you your breast?', with the promise stated twice so it cannot be missed: with hardship comes ease.",97:"Laylat al-Qadr, the night the Qur'an descended, better than a thousand months. Peace it is, until the rising of dawn.",112:"A third of the Qur'an in four verses: Allah, One, Eternal, unbegotten and unbegetting, without equal. The creed at its purest.",113:"First of the two refuges. From the evil of what He created, of darkness gathering, of knots blown upon, of the envier, you flee to the Lord of the daybreak.",114:"The last word of the Book is refuge in its Lord from the whisperer, and the reminder that the quietest enemy is the one inside the chest."};
 
@@ -319,35 +320,65 @@ function renderAyahs(n){
    </div>`;
 }
 
-/* ---------- audio engine: 3-source fallback + bottom player ---------- */
-function srcsFor(i){const a=ayahs[i];const g=a.number,s3=String(cur).padStart(3,"0"),a3=String(a.numberInSurah).padStart(3,"0");
+/* ---------- audio engine v2: 4-source fallback, stall watchdog, honest UI ----------
+   The equalizer only dances when sound is actually coming out. While a server
+   is answering, the verse shows a quiet "…" and the player says loading.
+   If a server hangs (no sound, no error: the silent-forever bug), a watchdog
+   moves to the next source after a few seconds. A stale-audio guard makes
+   sure callbacks from a replaced audio object can never resurrect playback. */
+function srcsFor(i){if(window.NOOR_QURAN_TEST&&NOOR_QURAN_TEST.srcs)return NOOR_QURAN_TEST.srcs(i);
+ const a=ayahs[i];const g=a.number,s3=String(cur).padStart(3,"0"),a3=String(a.numberInSurah).padStart(3,"0");
  return[`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${g}.mp3`,
+        `https://everyayah.com/data/Alafasy_128kbps/${s3}${a3}.mp3`,
         `https://cdn.islamic.network/quran/audio/64/ar.alafasy/${g}.mp3`,
-        `https://everyayah.com/data/Alafasy_128kbps/${s3}${a3}.mp3`];}
+        `https://verses.quran.com/Alafasy/mp3/${s3}${a3}.mp3`];}
 function playerShow(on){$("player").classList.toggle("show",on);document.body.classList.toggle("has-player",on);}
-function playerLabel(){if(playingIdx<0||!ayahs[playingIdx])return;
+function playerLabel(extra){if(playingIdx<0||!ayahs[playingIdx])return;
  $("p-title").textContent=SURAHS[cur-1][1]+" · verse "+ayahs[playingIdx].numberInSurah+" / "+SURAHS[cur-1][4];
- $("p-sub").textContent=(continuous?"Continuous · ":"")+"Alafasy";}
-function setPlaying(i){playingIdx=i;
+ $("p-sub").textContent=extra||((continuous?"Continuous · ":"")+"Alafasy");}
+const EQ=`<span class="eq"><i></i><i></i><i></i></span>`;
+const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+function setPlaying(i,loading){playingIdx=i;
  document.querySelectorAll(".ayah").forEach(el=>el.classList.remove("playing"));
- document.querySelectorAll(".playbtn").forEach(b=>{b.classList.remove("on");b.innerHTML=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;});
+ document.querySelectorAll(".playbtn").forEach(b=>{b.classList.remove("on");b.innerHTML=TRI;});
  if(i>=0){const el=document.querySelector(`.ayah[data-i="${i}"]`),b=document.querySelector(`[data-play="${i}"]`);
   if(el){el.classList.add("playing");el.scrollIntoView({behavior:"smooth",block:"center"});}
-  if(b){b.classList.add("on");b.innerHTML=`<span class="eq"><i></i><i></i><i></i></span>`;}
-  playerLabel();}}
-function stopAudio(){if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio=null;}
+  if(b){b.classList.add("on");b.innerHTML=loading?`<span style="font-weight:800;letter-spacing:1px">…</span>`:EQ;}
+  playerLabel(loading?"loading recitation…":null);}}
+function markSounding(i){const b=document.querySelector(`[data-play="${i}"]`);
+ if(b){b.classList.add("on");b.innerHTML=EQ;}playerLabel();}
+let watchdog=null,failStreak=0;
+function clearWatch(){if(watchdog){clearTimeout(watchdog);watchdog=null;}}
+function killAudio(){clearWatch();
+ if(audio){audio.onended=null;audio.onerror=null;audio.onplaying=null;audio.pause();
+  try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
+function stopAudio(){killAudio();
  setPlaying(-1);continuous=false;paused=false;playerShow(false);
  $("t-listen").textContent="▶ Listen to surah";$("t-listen").classList.remove("on");$("p-toggle").textContent="▶";}
+function ayahFailed(i){
+ if(continuous&&failStreak<2&&i+1<ayahs.length){failStreak++;
+  $("t-status").textContent="A verse could not load, continuing…";setTimeout(()=>$("t-status").textContent="",2500);
+  playAyah(i+1);return;}
+ $("t-status").textContent="Recitation servers are unreachable right now. Try again in a minute.";
+ setTimeout(()=>$("t-status").textContent="",4500);stopAudio();}
 function playAyah(i,srcIdx){srcIdx=srcIdx||0;
  if(!ayahs[i]){stopAudio();return;}
  const srcs=srcsFor(i);
- if(srcIdx>=srcs.length){$("t-status").textContent="Recitation servers unreachable";setTimeout(()=>$("t-status").textContent="",3000);stopAudio();return;}
- if(audio){audio.onended=null;audio.onerror=null;audio.pause();}
- audio=new Audio(srcs[srcIdx]);
- paused=false;$("p-toggle").textContent="⏸";playerShow(true);setPlaying(i);
- audio.onended=()=>{if(continuous&&i+1<ayahs.length)playAyah(i+1);else stopAudio();};
- audio.onerror=()=>playAyah(i,srcIdx+1);                      /* silent fallback: next server */
- audio.play().catch(()=>playAyah(i,srcIdx+1));
+ if(srcIdx>=srcs.length){ayahFailed(i);return;}
+ killAudio();
+ const me=new Audio();audio=me;
+ me.preload="auto";me.src=srcs[srcIdx];
+ paused=false;$("p-toggle").textContent="⏸";playerShow(true);setPlaying(i,true);
+ const next=()=>{if(audio!==me)return;clearWatch();playAyah(i,srcIdx+1);};
+ watchdog=setTimeout(next,srcIdx===srcs.length-1?8000:5000);   /* hang rescue */
+ me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);};
+ me.onended=()=>{if(audio!==me)return;clearWatch();if(continuous&&i+1<ayahs.length)playAyah(i+1);else stopAudio();};
+ me.onerror=()=>next();
+ me.play().catch(err=>{if(audio!==me)return;
+  if(err&&err.name==="NotAllowedError"){clearWatch();
+   $("t-status").textContent="Your browser blocked sound. Tap the ▶ beside a verse once.";
+   setTimeout(()=>$("t-status").textContent="",4500);stopAudio();return;}
+  next();});
 }
 roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
  const i=+b.dataset.play;
@@ -360,8 +391,8 @@ $("t-listen").addEventListener("click",()=>{
  continuous=true;$("t-listen").textContent="■ Stop";$("t-listen").classList.add("on");
  playAyah(playingIdx>=0?playingIdx:0);});
 $("p-toggle").addEventListener("click",()=>{if(!audio)return;
- if(paused){audio.play();paused=false;$("p-toggle").textContent="⏸";}
- else{audio.pause();paused=true;$("p-toggle").textContent="▶";}});
+ if(paused){audio.play().catch(()=>{});paused=false;$("p-toggle").textContent="⏸";}
+ else{clearWatch();audio.pause();paused=true;$("p-toggle").textContent="▶";}});
 $("p-next").addEventListener("click",()=>{if(playingIdx>=0&&playingIdx+1<ayahs.length)playAyah(playingIdx+1);});
 $("p-prev").addEventListener("click",()=>{if(playingIdx>0)playAyah(playingIdx-1);});
 $("p-stop").addEventListener("click",stopAudio);
@@ -374,6 +405,9 @@ renderGates("");
 const usp=new URLSearchParams(location.search);
 const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
 if(s0>=1&&s0<=114)openSurah(s0,a0,false);
+/* the only global the page markup needs (inline onclick on gate buttons) */
+window.openSurah=openSurah;
+})();
 </script>
 </body>
 </html>

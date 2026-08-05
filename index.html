@@ -16,7 +16,6 @@
 <script src="noor-guide.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
-<script src="lantern.js" defer></script>
 <style>
 /* ============ NOOR base ============ */
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--sage:#8BA888;--lapis:#1E3A8A;--deep:#14100A}
@@ -361,7 +360,6 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
 <a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<a href="ask.html" class="hover:text-ink transition-colors">Ask ✦</a>
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
 <div class="dd-menu" role="menu" aria-label="Explore">
 <p class="dd-h">Journey</p>
@@ -374,10 +372,10 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
 <a role="menuitem" href="begin.html">New Muslim · Begin</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
-<a role="menuitem" href="ask.html">✦ Ask the Lantern</a>
 <p class="dd-h">The Codex</p>
 <a role="menuitem" href="#about" data-i18n="nav.about">About</a>
-<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+<a role="menuitem" href="legal.html">Terms & Privacy</a>
 </div>
 </div>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
@@ -390,7 +388,6 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
-<a href="ask.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Ask</a>
 <a href="#timeline" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active" data-i18n="nav.path">Path</a>
 <a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
@@ -402,6 +399,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
 <a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
 <a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
 </div>
 </div>
 <div id="search-bar" class="hidden border-t border-ink/5 bg-parchment">
@@ -494,15 +492,48 @@ a:hover .logo-seal{transform:rotate(12deg)}
 </section>
 
 <!-- GUARDIANS BAND -->
-<section id="guardians-band" style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.25)">
+<section id="giving-band" style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.25)">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-wrap items-center gap-x-6 gap-y-3">
 <p class="font-amiri text-2xl" style="color:#F4D46A">✦</p>
 <div class="flex-1 min-w-[16rem]">
-<p class="text-sm font-bold" style="color:#FFFEF7">Guardians of the Codex, every region of the earth is one lamp</p>
-<p class="text-[12px] leading-relaxed" style="color:rgba(255,254,247,.6)">One halal sponsor per region, seen only by its own readers. No ads, no tracking, ever, a single golden seal keeping this library free for their people. 90+ regions, from whole countries to single cities.</p>
+<p class="text-sm font-bold" style="color:#FFFEF7">Free for everyone, forever. No ads. No trackers.</p>
+<p class="text-[12px] leading-relaxed" style="color:rgba(255,254,247,.6)">The Codex runs on one thing alone: the quiet gifts of its readers. A sadaqa jariyah that keeps shining in every verse read here after you.</p>
 </div>
-<a href="sponsor.html" class="flex-none px-5 py-2.5 rounded-full font-bold text-sm" style="background:linear-gradient(160deg,#F4D46A,#C9A227);color:#241D12">Claim your region →</a>
+<a href="donate.html" class="flex-none px-5 py-2.5 rounded-full font-bold text-sm" style="background:linear-gradient(160deg,#F4D46A,#C9A227);color:#241D12">✦ Keep it lit</a>
 </div>
+</section>
+
+<!-- ============ TODAY'S LIGHT · daily illumination ============ -->
+<section id="daily-light" style="background:linear-gradient(180deg,#FFFDF4,#FFFEF7);border-bottom:1px solid rgba(201,162,39,.18)">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+<div style="background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:20px;box-shadow:0 10px 34px rgba(44,36,22,.07);overflow:hidden">
+<div style="display:flex;align-items:center;gap:.6rem;padding:.7rem 1.15rem;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border-bottom:1px solid rgba(201,162,39,.2)">
+<span aria-hidden="true" style="color:#C9A227;font-size:1.05rem">✦</span>
+<span style="font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800">Today's Light</span>
+<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45)"></span>
+</div>
+<div style="padding:1.05rem 1.2rem 1.15rem">
+<span id="dl-cat" style="display:inline-block;border:1px solid rgba(201,162,39,.45);background:#FFFDF0;color:#6b5510;border-radius:999px;padding:.16rem .65rem;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase">History</span>
+<h3 id="dl-title" style="font-size:1.18rem;font-weight:800;margin:.55rem 0 .35rem;color:#2C2416">A woman founded the world's oldest university</h3>
+<p id="dl-story" style="font-size:.85rem;line-height:1.75;color:rgba(44,36,22,.75);margin:0">In 859 CE, Fatima al-Fihri, a Muslim woman in Fez, spent her inheritance to found al-Qarawiyyin, recognized as the oldest continuously operating degree-granting university on earth. It still teaches today.</p>
+<p id="dl-detail" style="font-size:.7rem;color:#8a6d1a;font-weight:600;margin:.6rem 0 0">Fez, Morocco · 859 CE</p>
+</div>
+</div>
+<p style="text-align:center;font-size:.64rem;color:rgba(44,36,22,.4);margin-top:.6rem">One small illumination, renewed every day.</p>
+</div>
+<script>
+(function(){
+fetch("/api/daily-light").then(function(r){return r.ok?r.json():null}).then(function(d){
+  if(!d||!d.title)return;
+  var g=function(id){return document.getElementById(id)};
+  g("dl-cat").textContent=d.category||"History";
+  g("dl-title").textContent=d.title;
+  g("dl-story").textContent=d.story||"";
+  g("dl-detail").textContent=d.detail||"";
+  g("dl-date").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+}).catch(function(){});
+})();
+</script>
 </section>
 
 

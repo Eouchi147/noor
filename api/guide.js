@@ -3,6 +3,9 @@
 // ANTHROPIC_API_KEY if that is set instead. Site works fully without either.
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  /* Public per-article AI is off by default to keep usage disciplined.
+     Set GUIDE_PUBLIC=1 in Vercel env to light it. */
+  if (process.env.GUIDE_PUBLIC !== "1") return res.status(501).json({ error: "guide API not enabled" });
   const orKey = process.env.OPENROUTER_API_KEY;
   const key = process.env.ANTHROPIC_API_KEY;
   if (!orKey && !key) return res.status(501).json({ error: "guide API not enabled" });

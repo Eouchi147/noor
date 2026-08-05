@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "language": "English",
+    "code": "en",
+    "direction": "ltr",
+    "status": "master",
+    "note": "Master string file for the NOOR interface. Every future language file mirrors these keys exactly. Long-form room content is translated separately, per TRANSLATION-PLAN.md."
+  },
+  "nav": {
+    "path": "Path", "quran": "Qur'an", "prophets": "Prophets", "characters": "Characters",
+    "kids": "Kids", "books": "Books", "places": "Places", "words": "Words", "mizan": "Two Lives",
+    "health": "Prophetic Health", "latif": "Al-Latif · Story of Beauty", "begin": "New Muslim · Begin",
+    "theology": "Theology · The Branches", "about": "About", "give": "Keep it lit · Give",
+    "legal": "Terms & Privacy", "explore": "Explore", "journey": "Journey", "liveit": "Live it", "codex": "The Codex"
+  },
+  "give": {
+    "line": "This library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    "cta": "Keep it lit",
+    "monthly": "Make it a monthly light · a sadaqa jariyah that keeps giving every month. Cancel anytime with one click from your receipt.",
+    "button": "Give",
+    "thanks": "May Allah put light in your scale."
+  },
+  "daily": { "kicker": "Today's Light", "footer": "One small illumination, renewed every day." },
+  "quran": { "listen": "Listen to surah", "stop": "Stop", "translation": "Translation", "browse": "Browse the 114 gates", "verse": "verse", "loading": "loading recitation…", "unreachable": "Recitation servers are unreachable right now. Try again in a minute." },
+  "common": { "return": "return to the Codex", "tryagain": "Try again", "opening": "Opening…" }
+}

@@ -12,7 +12,6 @@
 <script src="noor-fx.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
-<script src="lantern.js" defer></script>
 <style>[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A}
@@ -77,7 +76,6 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
 <a href="characters.html" class="hover:text-ink transition-colors" data-i18n="nav.characters">Characters</a>
 <a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<a href="ask.html" class="hover:text-ink transition-colors">Ask ✦</a>
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Explore</button>
 <div class="dd-menu" role="menu" aria-label="Explore">
 <p class="dd-h">Journey</p>
@@ -90,10 +88,10 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
 <a role="menuitem" href="begin.html">New Muslim · Begin</a>
 <a role="menuitem" href="theology.html">Theology · The Branches</a>
-<a role="menuitem" href="ask.html">✦ Ask the Lantern</a>
 <p class="dd-h">The Codex</p>
 <a role="menuitem" href="index.html#about" data-i18n="nav.about">About</a>
-<a role="menuitem" href="sponsor.html">✦ Become a Guardian</a>
+<a role="menuitem" href="donate.html">✦ Keep it lit · Give</a>
+<a role="menuitem" href="legal.html">Terms & Privacy</a>
 </div>
 </div>
 <select id="lang-switch" aria-label="Language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 ml-1">
@@ -103,7 +101,6 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 </div>
 <div class="md:hidden border-t border-ink/5">
 <div class="mnav text-xs font-semibold">
-<a href="ask.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Ask</a>
 <a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.path">Path</a>
 <a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.quran">Qur'an</a>
 <a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
@@ -115,6 +112,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
 <a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">New Muslim</a>
 <a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70" data-i18n="nav.kids">Kids</a>
+<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
 </div>
 </div>
 </header>
@@ -122,8 +120,8 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <section id="gh">
 <div class="relative z-10 max-w-3xl mx-auto px-4 pt-14 pb-16 text-center">
 <p class="font-amiri text-gold text-2xl mb-2">☙ ❧</p>
-<h1 class="text-3xl sm:text-4xl font-bold text-parchment mb-3">Support the Codex. Keep it free for everyone.</h1>
-<p class="text-parchment/70 text-sm max-w-xl mx-auto leading-relaxed">Your support does two things at once: it keeps this library free, ad-free and tracker-free for every reader, and it places your name before every reader in your region for a full week. One Guardian per region. One line of light. Nothing else.</p>
+<h1 class="text-3xl sm:text-4xl font-bold text-parchment mb-3">One region. One name. Yours.</h1>
+<p class="text-parchment/70 text-sm max-w-xl mx-auto leading-relaxed">Your support keeps this library free for every reader. In return, for a full week, every reader in your region sees exactly one name above every page of the Codex: yours. No other ads exist here. There is nothing to compete with.</p>
 </div>
 <div class="gh-fade"></div>
 </section>
@@ -151,7 +149,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <section class="sec">
 <p class="kick">The model</p>
 <h2>Understated by design</h2>
-<p class="lead">NOOR carries one Guardian per region at a time, held one week at a time: from single cities to whole countries, about ninety lamps across the earth. Readers in your region see your name on a slim line of honor beneath the header of every page. The region is detected on the reader's own device (the domain they typed, their browser language, their clock); nothing is sent or stored about them. No banners, no popups, no tracking of readers, ever. The restraint is the value: you are not an advertisement here, you are the one keeping this room lit.</p>
+<p class="lead">NOOR carries one Guardian per region at a time, held one week at a time: from single cities to whole countries. Readers in your region see your name on a slim line of honor beneath the header of every page. The region is detected on the reader's own device (the domain they typed, their browser language, their clock); nothing is sent or stored about them. No banners, no popups, no tracking of readers, ever. The restraint is the value: you are not an advertisement here, you are the one keeping this room lit.</p>
 <div class="card">
 <div class="no yes"><span class="m">✦</span><span><b>Site-wide line of honor</b> · beneath the header on every page (Path, Characters, Places, Words, Health, Little Codex hub)</span></div>
 <div class="no yes"><span class="m">✦</span><span><b>The Guardian seal</b> · in the About section, with your one-line message</span></div>
@@ -176,29 +174,9 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <p class="lead" style="margin-top:1rem">Two more rules protect the Codex itself: the content of NOOR never changes for a sponsor, and the sponsorship is a gift of support, not a purchase of influence. If either rule is unacceptable to you, this is not your room.</p>
 </section>
 
-<section class="sec" id="reach">
-<p class="kick">The Reach</p>
-<h2>How many eyes will see your seal?</h2>
-<p class="lead">The Codex opened its doors on its own domain in <b>August 2026</b>, a Guardian today is ground-floor. Below is our <b>optimistic organic-growth projection</b> for daily readers as the library deepens (new rooms ship constantly: the Mushaf, the 25 Prophets, the Little Codex, Beauty's story…). These are <b>projections, not promises</b>, no one can guarantee traffic, and as real history accumulates, live counts will replace this chart.</p>
-<div class="card" aria-label="Projected daily readers, optimistic organic scenario">
-<div style="display:flex;align-items:flex-end;gap:6%;height:150px;padding:0 .3rem">
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:3%"></div></div>
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:7%"></div></div>
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:16%"></div></div>
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:40%"></div></div>
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:68%"></div></div>
-<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#F4D46A,#C9A227);border-radius:6px 6px 0 0;height:100%;box-shadow:0 0 18px rgba(233,200,106,.5)"></div></div>
-</div>
-<div style="display:flex;gap:6%;padding:.45rem .3rem 0;font-size:.6rem;color:rgba(44,36,22,.55);text-align:center;font-weight:600">
-<div style="flex:1">Launch<br/>~100/day</div><div style="flex:1">Month 3<br/>~800</div><div style="flex:1">Month 6<br/>~2,500</div><div style="flex:1">Year 1<br/>~8,000</div><div style="flex:1">18 months<br/>~18,000</div><div style="flex:1"><b style="color:#8a6d1a">Year 2<br/>~40,000/day</b></div>
-</div>
-</div>
-<p class="lead" style="margin-top:.9rem;font-size:.82rem">What that means for a Guardian: your region's readers see <b>only your seal</b>, on every page, every visit. A tier-1 region like the UK at the year-one mark would represent roughly <b>400-800 of those daily readers</b>, yours exclusively, in the calmest advertising environment on the internet: no competing ads, no banners, one line of light.</p>
-<p class="note">Assumptions: continued weekly content releases, normal search indexing, organic sharing within Muslim communities worldwide; no paid advertising included. Optimistic scenario. Traffic projections are estimates, not a guarantee of results; Guardianship is priced for patronage first, reach second.</p>
-</section>
 
 <footer class="border-t border-ink/10 py-8 text-center">
-<p class="text-xs text-ink/40">NOOR · Codex of Light · one Guardian, strictly vetted · <a class="underline" href="index.html">return to the Codex</a></p>
+<p class="text-xs text-ink/40"><a class="underline" href="legal.html">Terms & Privacy</a> · NOOR · Codex of Light · one Guardian, strictly vetted · <a class="underline" href="index.html">return to the Codex</a></p>
 </footer>
 
 <script>
@@ -217,7 +195,7 @@ document.addEventListener("DOMContentLoaded",function(){
   var frag=document.createDocumentFragment(), og={};
   NOOR_MARKETS.list.forEach(function(m){
     var g=og[m.kind]||(og[m.kind]=(function(){var o=document.createElement("optgroup");o.label=groups[m.kind]||m.kind;frag.appendChild(o);return o})());
-    var o=document.createElement("option"); o.value=m.id; o.textContent=m.label+" · "+weekly(m).txt; g.appendChild(o);
+    var o=document.createElement("option"); o.value=m.id; o.textContent=m.label; g.appendChild(o);
   });
   sel.innerHTML=""; sel.appendChild(frag);
   var want=null; try{want=new URLSearchParams(location.search).get("market")}catch(e){}

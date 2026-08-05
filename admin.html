@@ -101,6 +101,17 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Vercel ↗</a>
 </div>
 
+<h2 class="sec">Gifts (donations)</h2>
+<div class="panel">
+<div class="stats" style="margin:.2rem 0 .6rem">
+<div class="stat"><div class="v" id="g-30">·</div><div class="l">Gifts · last 30 days</div></div>
+<div class="stat"><div class="v" id="g-count">·</div><div class="l">Givers · last 30 days</div></div>
+<div class="stat"><div class="v" id="g-monthly">·</div><div class="l">Monthly sadaqa / mo</div></div>
+</div>
+<table id="gifttable"><thead><tr><th>When</th><th>Amount</th><th>Giver</th></tr></thead><tbody></tbody></table>
+<p class="muted" id="giftempty" hidden>No gifts yet. The donate page is live at <b>/donate</b>; every page carries its quiet golden line.</p>
+</div>
+
 <h2 class="sec">Guardians & money</h2>
 <div class="panel" style="overflow-x:auto">
 <table id="gtable"><thead><tr><th>Region</th><th>Sponsor</th><th>Status</th><th>Per week</th><th>Renews</th><th>Lamp</th><th></th></tr></thead><tbody></tbody></table>
@@ -152,14 +163,25 @@ function load(){
     var taken={};(d.guardians||[]).forEach(function(g){if(g.status==="active"||g.status==="trialing"||g.status==="past_due")taken[g.market]=1});
     $("s-open").textContent=ML.length-Object.keys(taken).length;
     /* system checks */
+    var modeRow = d.moneyMode==="guardian"
+      ? ["Money mode: GUARDIAN · regional weekly sponsors live sitewide",true,""]
+      : ["Money mode: DONATIONS · gift line sitewide; Guardian lamps armed in background (to activate: Vercel env NOOR_MONEY_MODE=guardian + redeploy)",true,""];
     var sys=[
       ["Stripe key (payments can flow)",d.stripeConfigured,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
-      ["Checkout endpoint live",d.checkoutEnabled,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
-      ["The Lantern AI (answers + vetting)",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
+      modeRow,
+      ["The Lantern AI core (sponsor vetting + Today's Light tile; public chat off by design)",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
       ["Weekly lamps · one Guardian per region, auto-locked",true,""],
       ["Owner lock (you are inside it)",true,""]
     ];
     $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">'+c[2]+"</b>")+"</span></div>"}).join("");
+    /* gifts */
+    var G2=d.gifts||{total30d:0,count30d:0,monthly:0,recent:[]};
+    $("g-30").textContent=money(G2.total30d||0);
+    $("g-count").textContent=G2.count30d||0;
+    $("g-monthly").textContent=money(G2.monthly||0);
+    var gtb=$("gifttable").querySelector("tbody");
+    gtb.innerHTML=(G2.recent||[]).map(function(x){return "<tr><td>"+esc(x.when)+"</td><td>"+money(x.amount)+" "+esc(x.currency)+"</td><td>"+esc(x.email||"·")+"</td></tr>"}).join("");
+    $("giftempty").hidden=(G2.recent||[]).length>0;
     /* guardians table */
     var tb=$("gtable").querySelector("tbody");
     GS=d.guardians||[];
