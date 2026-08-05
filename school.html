@@ -133,6 +133,66 @@ section.blk{padding:2.7rem 0 .8rem}
 .mnav::-webkit-scrollbar{display:none}
 .mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
 </style>
+<style id="enc-css">
+/* every tile is a door */
+.enc{cursor:pointer;position:relative;transition:transform .18s,box-shadow .18s,border-color .18s}
+.enc:hover{transform:translateY(-3px)}
+.enc::after{content:"✦ open";position:absolute;top:.5rem;right:.6rem;font-size:.54rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:.16rem .5rem;pointer-events:none}
+.pcard.enc::after,.proj.enc::after{background:rgba(201,162,39,.12);color:#8a6d1a;border:1px solid rgba(201,162,39,.35)}
+.sci.enc::after{background:rgba(244,212,106,.14);color:#F4D46A;border:1px solid rgba(244,212,106,.4)}
+.pcard.enc:hover{border-color:var(--gold);box-shadow:0 12px 30px rgba(201,162,39,.16)}
+.proj.enc:hover{border-color:var(--gold);box-shadow:0 12px 30px rgba(201,162,39,.16)}
+.sci.enc:hover{border-color:#F4D46A;box-shadow:0 14px 34px rgba(4,6,15,.5)}
+/* the codex entry modal */
+#encx{position:fixed;inset:0;z-index:80;display:none;align-items:flex-start;justify-content:center;background:rgba(6,10,26,.82);backdrop-filter:blur(7px);padding:1rem;overflow-y:auto}
+#encx.open{display:flex}
+.encx-card{background:linear-gradient(170deg,#171d31,#1d2a45 60%,#14100A);color:#FFFEF7;border:1.5px solid rgba(233,200,106,.45);border-radius:24px;max-width:44rem;width:100%;margin:1.2rem 0 2rem;position:relative;box-shadow:0 30px 80px rgba(4,6,15,.6);animation:encin .35s cubic-bezier(.3,1.2,.5,1)}
+@keyframes encin{from{transform:translateY(24px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.encx-card{animation:none}}
+.encx-in{padding:1.5rem 1.4rem 1.6rem}
+.encx-close{position:absolute;top:.8rem;right:.9rem;background:rgba(255,254,247,.08);border:1px solid rgba(233,200,106,.3);width:2.3rem;height:2.3rem;border-radius:999px;color:rgba(255,254,247,.75);font-size:1rem;cursor:pointer;z-index:2}
+.encx-kick{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:#F4D46A;font-weight:900}
+.encx-title{font-size:1.5rem;font-weight:800;margin-top:.2rem}
+.encx-ar{font-family:Amiri,serif;font-size:1.5rem;color:rgba(244,212,106,.85);margin-left:.4rem}
+.encx-sub{font-size:.74rem;color:rgba(255,254,247,.55);margin-top:.2rem}
+.encx-badges{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
+.encx-badges span{background:rgba(244,212,106,.13);border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.2rem .65rem;font-size:.6rem;font-weight:800;color:#F4D46A}
+.encx-info{margin:1.1rem 0;background:rgba(4,6,15,.45);border:1px solid rgba(233,200,106,.3);border-radius:16px;padding:1rem;overflow:hidden}
+.encx-info .cap{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,212,106,.7);font-weight:800;text-align:center;margin-top:.6rem}
+.encx-story p{font-size:.84rem;line-height:1.8;color:rgba(255,254,247,.85);margin:.6rem 0}
+.encx-h{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:#F4D46A;font-weight:900;margin:1.2rem 0 .4rem}
+.encx-gifts{list-style:none;padding:0;margin:0}
+.encx-gifts li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding:.22rem 0 .22rem 1.3rem;position:relative}
+.encx-gifts li::before{content:"✦";position:absolute;left:.15rem;color:#F4D46A;font-size:.7rem}
+.encx-steps{list-style:none;padding:0;margin:0;counter-reset:es}
+.encx-steps li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding:.3rem 0 .3rem 2.2rem;position:relative;counter-increment:es}
+.encx-steps li::before{content:counter(es);position:absolute;left:0;top:.3rem;width:1.5rem;height:1.5rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;font-size:.68rem;display:grid;place-items:center}
+.encx-today{margin-top:1rem;background:rgba(244,212,106,.1);border:1px dashed rgba(244,212,106,.45);border-radius:12px;padding:.7rem .85rem;font-size:.75rem;line-height:1.65;color:#FFF7DF}
+.encx-today b{color:#F4D46A}
+.encx-src{margin-top:.9rem;font-size:.64rem;color:rgba(255,254,247,.45);line-height:1.6}
+/* --- animated infographic primitives --- */
+.enc-draw{stroke-dasharray:340;stroke-dashoffset:340;animation:encdraw 1.6s ease forwards}
+.enc-draw.d2{animation-delay:.5s}.enc-draw.d3{animation-delay:1s}.enc-draw.d4{animation-delay:1.4s}
+@keyframes encdraw{to{stroke-dashoffset:0}}
+.enc-fade{opacity:0;animation:encfade .8s ease forwards}
+.enc-fade.d1{animation-delay:.4s}.enc-fade.d2{animation-delay:.9s}.enc-fade.d3{animation-delay:1.5s}.enc-fade.d4{animation-delay:2.1s}
+@keyframes encfade{to{opacity:1}}
+.enc-flame{animation:encflick 1.6s ease-in-out infinite}
+@keyframes encflick{0%,100%{opacity:.9}50%{opacity:.55}}
+.enc-spinA{animation:encspin 14s linear infinite;transform-origin:center}
+.enc-spinB{animation:encspin 9s linear infinite reverse;transform-origin:center}
+@keyframes encspin{to{transform:rotate(360deg)}}
+.enc-crank{animation:encspin 3.2s linear infinite;transform-origin:60px 60px}
+.enc-piston{animation:encpist 3.2s ease-in-out infinite}
+@keyframes encpist{0%,100%{transform:translateY(0)}50%{transform:translateY(26px)}}
+.enc-rise{transform-origin:bottom;transform:scaleY(0);animation:encrise .7s cubic-bezier(.34,1.3,.5,1) forwards}
+.enc-rise.d1{animation-delay:.25s}.enc-rise.d2{animation-delay:.5s}.enc-rise.d3{animation-delay:.75s}.enc-rise.d4{animation-delay:1s}
+@keyframes encrise{to{transform:scaleY(1)}}
+.enc-fill{height:.55rem;border-radius:999px;background:rgba(255,254,247,.12);overflow:hidden}
+.enc-fill i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);animation:encfill 2.2s ease forwards}
+@keyframes encfill{to{width:100%}}
+@media (prefers-reduced-motion:reduce){.enc-draw,.enc-fade,.enc-rise,.enc-fill i{animation-duration:.001s}.enc-spinA,.enc-spinB,.enc-crank,.enc-piston,.enc-flame{animation:none}}
+</style>
 </head>
 <body>
 
@@ -224,9 +284,9 @@ section.blk{padding:2.7rem 0 .8rem}
 <h2 class="sect"><span class="amiri" translate="no">١</span> Three springs, one river</h2>
 <p class="sub">Every lesson in this Madrasa drinks from three springs at once. None contradicts the others; together they make a child who loves Allah, loves learning, and can do things with their own two hands.</p>
 <div class="peda">
-<div class="pcard"><span class="ic">🕌</span><b>The Prophetic Way</b><p>The Prophet ﷺ taught with gentleness, stories, questions, and perfect timing: prayer is invited at seven, expected at ten; mercy for the young is a condition of the community, not a decoration.</p><span class="cite">“Make things easy and do not make them difficult; give glad tidings and do not repel.” · Bukhari 69</span></div>
-<div class="pcard"><span class="ic">🌱</span><b>The Montessori Respect</b><p>“Help me do it myself.” The child is not an empty cup but a builder. Prepared environment, freedom within limits, concrete before abstract, self-correcting materials, and long unhurried work cycles.</p><span class="cite">Planes of development · sensitive periods · practical life</span></div>
-<div class="pcard"><span class="ic">🔭</span><b>The Scientific Spirit</b><p>Observe, question, test, record: the method written down by Ibn al-Haytham a thousand years ago. STEM here is not imported; it is inherited. The Qur'an commands looking at camels, skies, and seeds.</p><span class="cite">Observe → ask → test → record → share</span></div>
+<div class="pcard enc" data-enc="spring-prophet" role="button" tabindex="0"><span class="ic">🕌</span><b>The Prophetic Way</b><p>The Prophet ﷺ taught with gentleness, stories, questions, and perfect timing: prayer is invited at seven, expected at ten; mercy for the young is a condition of the community, not a decoration.</p><span class="cite">“Make things easy and do not make them difficult; give glad tidings and do not repel.” · Bukhari 69</span></div>
+<div class="pcard enc" data-enc="spring-montessori" role="button" tabindex="0"><span class="ic">🌱</span><b>The Montessori Respect</b><p>“Help me do it myself.” The child is not an empty cup but a builder. Prepared environment, freedom within limits, concrete before abstract, self-correcting materials, and long unhurried work cycles.</p><span class="cite">Planes of development · sensitive periods · practical life</span></div>
+<div class="pcard enc" data-enc="spring-science" role="button" tabindex="0"><span class="ic">🔭</span><b>The Scientific Spirit</b><p>Observe, question, test, record: the method written down by Ibn al-Haytham a thousand years ago. STEM here is not imported; it is inherited. The Qur'an commands looking at camels, skies, and seeds.</p><span class="cite">Observe → ask → test → record → share</span></div>
 </div>
 <div class="grid md:grid-cols-2 gap-3 mt-4">
 <div class="verse">
@@ -426,29 +486,29 @@ section.blk{padding:2.7rem 0 .8rem}
 <h3 class="font-extrabold text-lg mt-8 mb-1">The teachers of the world · study one, become one</h3>
 <p class="sub">Nine real people, no legends added. In the Observatory stage each learner adopts one, reads their life, rebuilds a piece of their work, and presents them to the class in first person.</p>
 <div class="scis">
-<div class="sci"><span class="yrs">965 to 1040 · Basra & Cairo</span><b>Ibn al-Haytham</b><p>Wrote the Book of Optics; proved sight is light entering the eye; tested claims with controlled experiments and darkened rooms: the camera obscura. Called the father of the scientific method.</p><span class="field">OPTICS · METHOD</span></div>
-<div class="sci"><span class="yrs">~780 to 850 · Baghdad</span><b>Al-Khwarizmi</b><p>His book al-Jabr named algebra; his name, Latinized, became “algorithm.” Brought the Hindu-Arabic numerals westward: the digits the whole world now writes.</p><span class="field">MATH · ALGORITHMS</span></div>
-<div class="sci"><span class="yrs">d. 880 · Fez</span><b>Fatima al-Fihri</b><p>Spent her inheritance to found al-Qarawiyyin in 859 CE, recognized as the oldest continuously operating degree-granting university on earth. A woman built the world's first university, and it still teaches.</p><span class="field">EDUCATION</span></div>
-<div class="sci"><span class="yrs">980 to 1037 · Bukhara & Persia</span><b>Ibn Sina</b><p>His Canon of Medicine organized all known medicine into one system and taught European universities for some six centuries. Philosopher, physician, polymath.</p><span class="field">MEDICINE</span></div>
-<div class="sci"><span class="yrs">936 to 1013 · Cordoba</span><b>Al-Zahrawi</b><p>Wrote al-Tasrif, thirty volumes of medicine and surgery; illustrated some 200 surgical instruments, many of which he devised; used catgut for internal stitches, still used today.</p><span class="field">SURGERY</span></div>
-<div class="sci"><span class="yrs">10th century · Aleppo</span><b>Mariam al-Astrulabi</b><p>Renowned maker of astrolabes, the pocket universe that found the qibla, the time, and the stars. Precision engineering in a woman's hands, a thousand years ago.</p><span class="field">ASTRONOMY · CRAFT</span></div>
-<div class="sci"><span class="yrs">973 to 1048 · Khwarazm & Ghazni</span><b>Al-Biruni</b><p>Measured the Earth's radius from a mountain and a horizon with astonishing accuracy; compared calendars and cultures like a modern anthropologist.</p><span class="field">GEODESY</span></div>
-<div class="sci"><span class="yrs">1136 to 1206 · Diyarbakir</span><b>Al-Jazari</b><p>His Book of Ingenious Mechanical Devices described water clocks, pumps, and automata, with the crank-connecting rod system later at the heart of every engine.</p><span class="field">ENGINEERING</span></div>
-<div class="sci"><span class="yrs">1304 to 1369 · Tangier to China</span><b>Ibn Battuta</b><p>Left for Hajj at 21 and kept going: some 29 years and around 117,000 km across Africa and Asia, dictated as the Rihla. Geography learned with the feet.</p><span class="field">GEOGRAPHY</span></div>
+<div class="sci enc" data-enc="haytham" role="button" tabindex="0"><span class="yrs">965 to 1040 · Basra & Cairo</span><b>Ibn al-Haytham</b><p>Wrote the Book of Optics; proved sight is light entering the eye; tested claims with controlled experiments and darkened rooms: the camera obscura. Called the father of the scientific method.</p><span class="field">OPTICS · METHOD</span></div>
+<div class="sci enc" data-enc="khwarizmi" role="button" tabindex="0"><span class="yrs">~780 to 850 · Baghdad</span><b>Al-Khwarizmi</b><p>His book al-Jabr named algebra; his name, Latinized, became “algorithm.” Brought the Hindu-Arabic numerals westward: the digits the whole world now writes.</p><span class="field">MATH · ALGORITHMS</span></div>
+<div class="sci enc" data-enc="fihri" role="button" tabindex="0"><span class="yrs">d. 880 · Fez</span><b>Fatima al-Fihri</b><p>Spent her inheritance to found al-Qarawiyyin in 859 CE, recognized as the oldest continuously operating degree-granting university on earth. A woman built the world's first university, and it still teaches.</p><span class="field">EDUCATION</span></div>
+<div class="sci enc" data-enc="sina" role="button" tabindex="0"><span class="yrs">980 to 1037 · Bukhara & Persia</span><b>Ibn Sina</b><p>His Canon of Medicine organized all known medicine into one system and taught European universities for some six centuries. Philosopher, physician, polymath.</p><span class="field">MEDICINE</span></div>
+<div class="sci enc" data-enc="zahrawi" role="button" tabindex="0"><span class="yrs">936 to 1013 · Cordoba</span><b>Al-Zahrawi</b><p>Wrote al-Tasrif, thirty volumes of medicine and surgery; illustrated some 200 surgical instruments, many of which he devised; used catgut for internal stitches, still used today.</p><span class="field">SURGERY</span></div>
+<div class="sci enc" data-enc="mariam" role="button" tabindex="0"><span class="yrs">10th century · Aleppo</span><b>Mariam al-Astrulabi</b><p>Renowned maker of astrolabes, the pocket universe that found the qibla, the time, and the stars. Precision engineering in a woman's hands, a thousand years ago.</p><span class="field">ASTRONOMY · CRAFT</span></div>
+<div class="sci enc" data-enc="biruni" role="button" tabindex="0"><span class="yrs">973 to 1048 · Khwarazm & Ghazni</span><b>Al-Biruni</b><p>Measured the Earth's radius from a mountain and a horizon with astonishing accuracy; compared calendars and cultures like a modern anthropologist.</p><span class="field">GEODESY</span></div>
+<div class="sci enc" data-enc="jazari" role="button" tabindex="0"><span class="yrs">1136 to 1206 · Diyarbakir</span><b>Al-Jazari</b><p>His Book of Ingenious Mechanical Devices described water clocks, pumps, and automata, with the crank-connecting rod system later at the heart of every engine.</p><span class="field">ENGINEERING</span></div>
+<div class="sci enc" data-enc="battuta" role="button" tabindex="0"><span class="yrs">1304 to 1369 · Tangier to China</span><b>Ibn Battuta</b><p>Left for Hajj at 21 and kept going: some 29 years and around 117,000 km across Africa and Asia, dictated as the Rihla. Geography learned with the feet.</p><span class="field">GEOGRAPHY</span></div>
 </div>
 
 <h3 class="font-extrabold text-lg mt-8 mb-1">The project shelf · hands before textbooks</h3>
 <p class="sub">Every project is cheap, safe, and self-correcting: the Montessori control of error is built in, because the sky does not lie and the shadow does not flatter.</p>
 <div class="projs">
-<div class="proj"><span class="pe">🌙</span><b>The Moon Journal</b><p>Draw the moon every clear night for a month. Discover the 29/30-day rhythm and why Ramadan moves through the seasons.</p><span class="lvl">Workshop 6-9</span></div>
-<div class="proj"><span class="pe">🌞</span><b>The Shadow Clock</b><p>A stick, chalk, and a sunny day: mark the shadow at each prayer. Watch Dhuhr shrink it and Asr stretch it: prayer times made visible.</p><span class="lvl">Workshop 6-9</span></div>
-<div class="proj"><span class="pe">📷</span><b>Ibn al-Haytham's Box</b><p>A shoebox, foil, a pinhole, tracing paper: the camera obscura. The image lands upside down; ask why, then read how he answered.</p><span class="lvl">Workshop → Observatory</span></div>
-<div class="proj"><span class="pe">✴️</span><b>Girih Star Lab</b><p>Compass and straightedge to an eight-fold star like the mosque tiles. Geometry, symmetry, and why the pattern never ends.</p><span class="lvl">Observatory 9-12</span></div>
-<div class="proj"><span class="pe">⚙️</span><b>Al-Jazari's Wheel</b><p>Cardboard, skewers, cups and string: a water-lifting wheel with a working crank. The part every engine still uses.</p><span class="lvl">Observatory 9-12</span></div>
-<div class="proj"><span class="pe">🧭</span><b>Qibla Two Ways</b><p>Find Makkah by the sun's shadow at solar noon, then by the stars; check with a compass last. Trust, verify, understand.</p><span class="lvl">Observatory 9-12</span></div>
-<div class="proj"><span class="pe">🌱</span><b>The Seed Ledger</b><p>Plant seven beans, give charity-water to some and none to others (then rescue all). Chart growth: a fair test, and 2:261's seven ears remembered.</p><span class="lvl">Garden → Workshop</span></div>
-<div class="proj"><span class="pe">🧮</span><b>Zakat of the Toy Shelf</b><p>Count, value, compute 2.5%, and actually give it. Percentages with a soul.</p><span class="lvl">Workshop 6-9</span></div>
-<div class="proj"><span class="pe">⏰</span><b>Compute Fajr</b><p>Academy capstone: from latitude, longitude and solar equations to a real prayer timetable, verified against the local masjid.</p><span class="lvl">Academy 12-18</span></div>
+<div class="proj enc" data-enc="p-moon" role="button" tabindex="0"><span class="pe">🌙</span><b>The Moon Journal</b><p>Draw the moon every clear night for a month. Discover the 29/30-day rhythm and why Ramadan moves through the seasons.</p><span class="lvl">Workshop 6-9</span></div>
+<div class="proj enc" data-enc="p-shadow" role="button" tabindex="0"><span class="pe">🌞</span><b>The Shadow Clock</b><p>A stick, chalk, and a sunny day: mark the shadow at each prayer. Watch Dhuhr shrink it and Asr stretch it: prayer times made visible.</p><span class="lvl">Workshop 6-9</span></div>
+<div class="proj enc" data-enc="p-camera" role="button" tabindex="0"><span class="pe">📷</span><b>Ibn al-Haytham's Box</b><p>A shoebox, foil, a pinhole, tracing paper: the camera obscura. The image lands upside down; ask why, then read how he answered.</p><span class="lvl">Workshop → Observatory</span></div>
+<div class="proj enc" data-enc="p-girih" role="button" tabindex="0"><span class="pe">✴️</span><b>Girih Star Lab</b><p>Compass and straightedge to an eight-fold star like the mosque tiles. Geometry, symmetry, and why the pattern never ends.</p><span class="lvl">Observatory 9-12</span></div>
+<div class="proj enc" data-enc="p-wheel" role="button" tabindex="0"><span class="pe">⚙️</span><b>Al-Jazari's Wheel</b><p>Cardboard, skewers, cups and string: a water-lifting wheel with a working crank. The part every engine still uses.</p><span class="lvl">Observatory 9-12</span></div>
+<div class="proj enc" data-enc="p-qibla" role="button" tabindex="0"><span class="pe">🧭</span><b>Qibla Two Ways</b><p>Find Makkah by the sun's shadow at solar noon, then by the stars; check with a compass last. Trust, verify, understand.</p><span class="lvl">Observatory 9-12</span></div>
+<div class="proj enc" data-enc="p-seed" role="button" tabindex="0"><span class="pe">🌱</span><b>The Seed Ledger</b><p>Plant seven beans, give charity-water to some and none to others (then rescue all). Chart growth: a fair test, and 2:261's seven ears remembered.</p><span class="lvl">Garden → Workshop</span></div>
+<div class="proj enc" data-enc="p-zakat" role="button" tabindex="0"><span class="pe">🧮</span><b>Zakat of the Toy Shelf</b><p>Count, value, compute 2.5%, and actually give it. Percentages with a soul.</p><span class="lvl">Workshop 6-9</span></div>
+<div class="proj enc" data-enc="p-fajr" role="button" tabindex="0"><span class="pe">⏰</span><b>Compute Fajr</b><p>Academy capstone: from latitude, longitude and solar equations to a real prayer timetable, verified against the local masjid.</p><span class="lvl">Academy 12-18</span></div>
 </div>
 </section>
 
@@ -457,10 +517,10 @@ section.blk{padding:2.7rem 0 .8rem}
 <h2 class="sect"><span class="amiri" translate="no">٤</span> Practical life is worship</h2>
 <p class="sub">Montessori's deepest shelf, and Islam's oldest one. The sunnah is a practical-life curriculum: how to eat, greet, wash, dress, sleep, and serve. Mastery here is mastery of the day itself.</p>
 <div class="peda">
-<div class="pcard"><span class="ic">💧</span><b>Care of self</b><p>Wudu in order · miswak or brushing · right shoe first · sleeping on the right side with the sleep adhkar · dressing with the du'a of clothing.</p><span class="cite">each skill: shown slowly, practiced freely, never rushed</span></div>
-<div class="pcard"><span class="ic">🏠</span><b>Care of the home</b><p>Fold the prayer mats · straighten the shoes at the door · water the plants · return the Mushaf to the highest shelf · help set and clear the sufra.</p><span class="cite">“He ﷺ was in the service of his family” · Bukhari 676</span></div>
-<div class="pcard"><span class="ic">🕊</span><b>Grace & courtesy</b><p>Salam first · stand for elders lightly · pass with the right hand · knock and wait three times · the guest's plate is filled first.</p><span class="cite">adab lessons given as tiny theater, then lived</span></div>
-<div class="pcard"><span class="ic">🤲</span><b>Care of others</b><p>The sadaqa jar with a family ledger · a plate to the neighbor while it is warm · visiting the sick as a family outing · feeding birds in winter.</p><span class="cite">service scheduled weekly, like mathematics</span></div>
+<div class="pcard enc" data-enc="pl-self" role="button" tabindex="0"><span class="ic">💧</span><b>Care of self</b><p>Wudu in order · miswak or brushing · right shoe first · sleeping on the right side with the sleep adhkar · dressing with the du'a of clothing.</p><span class="cite">each skill: shown slowly, practiced freely, never rushed</span></div>
+<div class="pcard enc" data-enc="pl-home" role="button" tabindex="0"><span class="ic">🏠</span><b>Care of the home</b><p>Fold the prayer mats · straighten the shoes at the door · water the plants · return the Mushaf to the highest shelf · help set and clear the sufra.</p><span class="cite">“He ﷺ was in the service of his family” · Bukhari 676</span></div>
+<div class="pcard enc" data-enc="pl-grace" role="button" tabindex="0"><span class="ic">🕊</span><b>Grace & courtesy</b><p>Salam first · stand for elders lightly · pass with the right hand · knock and wait three times · the guest's plate is filled first.</p><span class="cite">adab lessons given as tiny theater, then lived</span></div>
+<div class="pcard enc" data-enc="pl-others" role="button" tabindex="0"><span class="ic">🤲</span><b>Care of others</b><p>The sadaqa jar with a family ledger · a plate to the neighbor while it is warm · visiting the sick as a family outing · feeding birds in winter.</p><span class="cite">service scheduled weekly, like mathematics</span></div>
 </div>
 </section>
 
@@ -484,6 +544,12 @@ section.blk{padding:2.7rem 0 .8rem}
 <p class="text-xs text-ink/40">The Madrasa is free forever, like every room in the Codex · <a class="underline" href="donate.html">keep it lit ✦</a> · <a class="underline" href="index.html">return to the Codex</a></p>
 </footer>
 
+<div id="encx" role="dialog" aria-modal="true" aria-label="Codex entry">
+<div class="encx-card">
+<button class="encx-close" id="encx-close" aria-label="Close">✕</button>
+<div class="encx-in" id="encx-in"></div>
+</div>
+</div>
 <script>
 (function(){
 "use strict";
@@ -494,6 +560,294 @@ try{
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.05});
   document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
 }catch(e){document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in")})}
+})();
+</script>
+
+<script>
+/* ================= the Madrasa encyclopedia =================
+   Every tile is a door. Tap it: a codex entry opens, with its own
+   animated infographic, full detail, and sources. */
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+
+/* ---------- animated infographics ---------- */
+var INFO={
+haytham:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<rect x="150" y="30" width="130" height="90" rx="8" fill="rgba(255,254,247,.05)" stroke="rgba(233,200,106,.5)"/>'+
+ '<circle cx="150" cy="75" r="3.5" fill="#F4D46A"/>'+
+ '<rect x="58" y="72" width="10" height="40" rx="3" fill="#d9d2c0"/>'+
+ '<path d="M63 60 C58 52 68 50 63 42 C70 50 58 52 63 60" fill="#F4D46A" class="enc-flame"/>'+
+ '<line x1="66" y1="52" x2="150" y2="75" stroke="#F4D46A" stroke-width="1.6" class="enc-draw"/>'+
+ '<line x1="63" y1="108" x2="150" y2="75" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw d2"/>'+
+ '<line x1="150" y1="75" x2="252" y2="108" stroke="#F4D46A" stroke-width="1.6" class="enc-draw d2"/>'+
+ '<line x1="150" y1="75" x2="252" y2="44" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw d3"/>'+
+ '<g class="enc-fade d3"><rect x="248" y="96" width="8" height="26" rx="2" fill="#d9d2c0"/><path d="M252 96 C247 90 257 88 252 82 C259 88 247 90 252 96" fill="#F4D46A" transform="rotate(180 252 89)"/></g>'+
+ '<text x="205" y="140" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">the image lands upside down</text></svg>'+
+ '<p class="cap">the camera obscura: light travels in straight lines through the pinhole</p>';},
+khwarizmi:function(){return '<div style="text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;line-height:2.4;color:#FFF7DF">'+
+ '<div class="enc-fade">x + 5 = 12</div>'+
+ '<div class="enc-fade d2" style="color:#F4D46A">x + 5 <b style="background:rgba(244,212,106,.2);border-radius:6px;padding:0 .3rem">- 5</b> = 12 <b style="background:rgba(244,212,106,.2);border-radius:6px;padding:0 .3rem">- 5</b></div>'+
+ '<div class="enc-fade d3" style="font-size:1.5rem;font-weight:800;color:#F4D46A">x = 7</div></div>'+
+ '<p class="cap">al-jabr: "restoration" · balance both sides and the unknown surrenders</p>';},
+fihri:function(){return '<div style="padding:.4rem 0">'+
+ '<div style="display:flex;justify-content:space-between;font-size:.66rem;color:rgba(255,254,247,.6);font-weight:700"><span>859 CE · founded</span><span>today · still teaching</span></div>'+
+ '<div class="enc-fill" style="margin-top:.4rem"><i></i></div>'+
+ '<div class="enc-fade d3" style="text-align:center;font-size:1.7rem;font-weight:900;color:#F4D46A;margin-top:.7rem">~1,167 <span style="font-size:.75rem;font-weight:700;color:rgba(255,254,247,.6)">years of continuous teaching</span></div></div>'+
+ '<p class="cap">al-Qarawiyyin, Fez: the longest-running university on earth</p>';},
+sina:function(){return '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem;align-items:end;padding:.3rem 0">'+
+ ['I · principles of medicine','II · simple medicines','III · organ diseases','IV · fevers & surgery','V · compound remedies'].map(function(t,i){
+   return '<div class="enc-rise d'+i+'" style="background:linear-gradient(180deg,rgba(244,212,106,.85),rgba(201,162,39,.7));border-radius:8px 8px 4px 4px;height:'+(52+i*14)+'px;display:flex;align-items:flex-end;justify-content:center;padding:.3rem"><span style="font-size:.5rem;font-weight:800;color:#1A160F;text-align:center;line-height:1.3">'+t+'</span></div>';
+ }).join('')+'</div>'+
+ '<p class="cap">the Canon of Medicine: five books that taught two civilizations</p>';},
+zahrawi:function(){return '<svg viewBox="0 0 360 120" style="width:100%;height:auto">'+
+ '<path d="M40 60 L150 60 L170 52 L150 44 L40 44 Z" fill="none" stroke="#F4D46A" stroke-width="2" class="enc-draw"/>'+
+ '<path d="M210 30 C240 30 240 55 210 55 M210 30 L200 30 M210 55 L200 55" fill="none" stroke="#7FA3D8" stroke-width="2" class="enc-draw d2"/>'+
+ '<path d="M250 95 L330 95 M330 95 C345 95 345 75 330 75" fill="none" stroke="#F4D46A" stroke-width="2" class="enc-draw d3"/>'+
+ '<text x="180" y="112" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">scalpel · forceps · surgical hook, from al-Tasrif</text></svg>'+
+ '<p class="cap">some 200 instruments drawn a thousand years ago; many still recognizable</p>';},
+mariam:function(){return '<svg viewBox="0 0 200 160" style="width:min(100%,15rem);height:auto;display:block;margin:0 auto">'+
+ '<circle cx="100" cy="80" r="66" fill="none" stroke="rgba(244,212,106,.5)" stroke-width="2" stroke-dasharray="6 5" class="enc-spinA"/>'+
+ '<circle cx="100" cy="80" r="44" fill="none" stroke="rgba(127,163,216,.6)" stroke-width="2" stroke-dasharray="4 6" class="enc-spinB"/>'+
+ '<g class="enc-spinA"><line x1="100" y1="14" x2="100" y2="146" stroke="#F4D46A" stroke-width="2"/><circle cx="100" cy="14" r="4" fill="#F4D46A"/></g>'+
+ '<circle cx="100" cy="80" r="5" fill="#F4D46A"/></svg>'+
+ '<p class="cap">the astrolabe: sky, time and qibla folded into brass rings</p>';},
+biruni:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<path d="M20 120 L110 40 L200 120 Z" fill="rgba(255,254,247,.06)" stroke="rgba(233,200,106,.5)" stroke-width="1.5"/>'+
+ '<line x1="110" y1="40" x2="330" y2="120" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw"/>'+
+ '<path d="M20 120 Q 180 108 330 120" fill="none" stroke="#F4D46A" stroke-width="2" class="enc-draw d2"/>'+
+ '<path d="M150 55 A 26 26 0 0 1 158 74" fill="none" stroke="#F4D46A" stroke-width="1.5" class="enc-fade d2"/>'+
+ '<text x="168" y="66" fill="#F4D46A" font-size="11" font-family="Inter,sans-serif" class="enc-fade d3">θ · the dip</text>'+
+ '<text x="180" y="142" fill="rgba(255,254,247,.65)" font-size="10.5" text-anchor="middle" font-family="ui-monospace,monospace" class="enc-fade d4">R = h·cosθ / (1 − cosθ)</text></svg>'+
+ '<p class="cap">one mountain, one angle, one formula: the size of the Earth</p>';},
+jazari:function(){return '<svg viewBox="0 0 300 150" style="width:min(100%,18rem);height:auto;display:block;margin:0 auto">'+
+ '<circle cx="60" cy="60" r="34" fill="none" stroke="#F4D46A" stroke-width="3"/>'+
+ '<g class="enc-crank"><line x1="60" y1="60" x2="60" y2="26" stroke="#F4D46A" stroke-width="3"/><circle cx="60" cy="26" r="6" fill="#F4D46A"/></g>'+
+ '<line x1="66" y1="30" x2="190" y2="55" stroke="rgba(255,254,247,.6)" stroke-width="3" class="enc-fade d1"/>'+
+ '<g class="enc-piston"><rect x="185" y="38" width="34" height="34" rx="6" fill="rgba(127,163,216,.3)" stroke="#7FA3D8" stroke-width="2"/></g>'+
+ '<rect x="178" y="20" width="48" height="96" rx="8" fill="none" stroke="rgba(255,254,247,.25)" stroke-width="1.5"/>'+
+ '<path d="M250 40 v55 q0 10 10 10 h20" fill="none" stroke="#7FA3D8" stroke-width="2.5" class="enc-draw d2"/>'+
+ '<text x="150" y="140" fill="rgba(255,254,247,.55)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">rotation becomes push and pull: the crank at the heart of every engine</text></svg>'+
+ '<p class="cap">from his twin-cylinder pump, 1206 CE</p>';},
+battuta:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<path id="bt" d="M30 60 C 70 95 110 100 140 88 C 175 74 185 60 215 66 C 250 74 260 95 300 80 C 320 74 330 62 338 55" fill="none" stroke="#F4D46A" stroke-width="2.4" stroke-dasharray="6 5" class="enc-draw" style="stroke-dasharray:420;stroke-dashoffset:420;animation-duration:2.6s"/>'+
+ '<circle cx="30" cy="60" r="5" fill="#F4D46A"/><text x="30" y="46" fill="rgba(255,254,247,.7)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif">Tangier</text>'+
+ '<circle cx="140" cy="88" r="4" fill="#7FA3D8" class="enc-fade d1"/><text x="140" y="106" fill="rgba(255,254,247,.6)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d1">Makkah</text>'+
+ '<circle cx="215" cy="66" r="4" fill="#7FA3D8" class="enc-fade d2"/><text x="215" y="52" fill="rgba(255,254,247,.6)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d2">Delhi</text>'+
+ '<circle cx="338" cy="55" r="5" fill="#F4D46A" class="enc-fade d3"/><text x="330" y="41" fill="rgba(255,254,247,.7)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">China</text>'+
+ '</svg><div style="text-align:center;font-size:1.5rem;font-weight:900;color:#F4D46A"><span id="bt-km">0</span> km</div>'+
+ '<p class="cap">twenty-nine years of road, sea and desert, dictated as the Rihla</p>';},
+method:function(){return '<div style="display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;padding:.3rem 0">'+
+ ['👁 observe','❓ question','💡 guess','🧪 test','📓 record','🤝 share'].map(function(t,i){
+  return '<span class="enc-fade d'+Math.min(i,4)+'" style="background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.35rem .7rem;font-size:.68rem;font-weight:800;color:#F4D46A">'+t+'</span>'+(i<5?'<span class="enc-fade d'+Math.min(i,4)+'" style="color:rgba(255,254,247,.4);align-self:center">→</span>':'');
+ }).join('')+'</div><p class="cap">the loop never ends: sharing invites new observation</p>';}
+};
+
+/* ---------- the encyclopedia ---------- */
+var ENC={
+"spring-prophet":{kick:"The first spring",title:"The Prophetic Way of Teaching",ar:"ﷺ",badges:["pedagogy","sunnah"],info:"method",
+ story:["Before any modern school of education existed, the Prophet ﷺ ran the most successful classroom in history: a generation of shepherds and merchants who became scholars, judges and founders of sciences. His methods are documented hadith by hadith, and they read like a modern teacher-training manual written with more mercy.",
+ "He taught by question: \"Do you know who the bankrupt truly is?\" and waited for wrong answers before correcting them gently (Muslim 2581). He drew diagrams: a straight line in the sand for the path of Allah, branching lines for the byways (an image preserved in the books of tafsir and musnad collections). He repeated important words three times so they could be memorized (Bukhari 95). He chose his moments, teaching in short sittings so no one grew weary, as Ibn Mas'ud describes (Bukhari 68)."],
+ gifts:["Questions before answers: the learner's mind is switched on first","Stories and parables as the main vehicle of meaning","Repetition times three for anything that must be kept","Timing and brevity: stop while hearts are still leaning in","Hands-on correction with mercy, never humiliation, in public"],
+ today:"<b>In the Madrasa:</b> every stage of this school begins lessons with a question, keeps sittings short, and corrects the way he ﷺ corrected: quietly, kindly, and once.",
+ src:"Sources: Sahih Muslim 2581 · Sahih al-Bukhari 95, 68, 69 · Abu Dawud 495 · Tirmidhi 1919"},
+"spring-montessori":{kick:"The second spring",title:"Maria Montessori & the Absorbent Mind",badges:["pedagogy","child development"],info:"fihri2",
+ story:["Maria Montessori (1870 to 1952) was one of Italy's first women physicians before she was an educator. Watching children in Rome's poorest quarter, she noticed what centuries of schooling had missed: children do not need to be filled; they need to be freed to build themselves. Her first Casa dei Bambini opened in 1907, and within years her method had circled the world. She was nominated for the Nobel Peace Prize three times.",
+ "Her map of childhood, the four planes of development, matches the stages of this Madrasa: the absorbent mind from birth to six, the reasoning mind from six to twelve, the social self from twelve to eighteen. Inside the first plane she identified sensitive periods: windows when language, order, movement and the senses are learned almost without effort. Miss the window and the learning costs ten times more; honor it and the child seems to teach themselves.",
+ "Her deepest tools are all here: the prepared environment where everything is child-sized and findable; freedom within limits; concrete materials before abstract ideas; the control of error, where the material itself shows the mistake so no adult has to; and practical life, real work with real objects, which she considered the foundation of concentration and dignity."],
+ gifts:["The four planes of development, the skeleton of this school","Sensitive periods: teach the right thing at its golden hour","Prepared environment: the room itself is a teacher","Control of error: materials that correct without shaming","Practical life: real work builds real minds"],
+ today:"<b>In the Madrasa:</b> our stages follow her planes; our wudu trays, letter tiles and sadaqa jars are her practical life, filled with sunnah.",
+ src:"On Montessori's life and method: her own works (The Absorbent Mind, The Discovery of the Child) and standard biographies."},
+"spring-science":{kick:"The third spring",title:"The Scientific Spirit",ar:"الْمَنْهَج",badges:["method","heritage"],info:"method",
+ story:["A thousand years before laboratories had that name, Ibn al-Haytham wrote that the seeker of truth must not simply trust the writings of the ancients, but must question them, test them, and submit only to demonstration. That sentence, paraphrased from his critique of Ptolemy, is the seed of everything now called the scientific method.",
+ "The Qur'an does not merely permit this spirit; it commands it. Look at the camel, the sky, the mountains. Travel the earth and observe how creation began. The sun and the moon run by calculation. In this Madrasa, science class is not a secular hour between sacred ones: it is an act of reading Allah's other book, the created world, with the care it deserves.",
+ "So the children learn the loop above as a habit of worshipful attention: observe, question, guess, test, record, share. The shadow stick does not lie; the moon keeps its own ledger. A child raised this way does not fear hard questions. They have been taught that truth belongs to Allah, and honest asking is a road to Him."],
+ gifts:["Observation as ibadah: attention to creation is attention to its Maker","Testing claims: the sunnah of Ibn al-Haytham's darkened room","Recording honestly, including failed guesses","Sharing findings: knowledge withheld is a lamp under a basket"],
+ today:"<b>In the Madrasa:</b> every project on the shelf runs this exact loop, and the ayat of observation are recited before lab work begins.",
+ src:"Qur'an 3:190, 88:17-20, 29:20, 55:5 · Ibn al-Haytham, al-Shukuk 'ala Batlamyus (paraphrased)"},
+haytham:{kick:"Teacher of the world · optics",title:"Ibn al-Haytham",ar:"ابن الهيثم",sub:"Abu Ali al-Hasan ibn al-Haytham · Basra 965 to Cairo 1040 · known to Europe as Alhazen",badges:["optics","scientific method","mathematics"],info:"haytham",
+ story:["Born in Basra in 965, al-Hasan ibn al-Haytham came to Cairo in the service of the ruler al-Hakim, having claimed he could regulate the flooding of the Nile. Finding the task impossible with the engineering of his age, accounts tell that he withdrew from public life for years, and in that long quiet produced the work that changed how humanity knows anything at all.",
+ "His Kitab al-Manazir, the Book of Optics, in seven volumes, demolished the ancient idea that eyes send out rays to touch the world. Light, he showed, travels in straight lines from objects into the eye. He proved it not by argument but by experiment: darkened rooms, screens, tiny apertures, the camera obscura you see above. He varied one condition at a time and accepted only what demonstration forced him to accept: the first fully modern experimental method on record.",
+ "Translated into Latin as Alhazen, his Optics shaped Roger Bacon, the perspective painters of the Renaissance, and Kepler's theory of vision. A crater on the moon carries his name. So does an asteroid. So, in truth, does every laboratory."],
+ gifts:["The experimental method: test, vary, verify, submit to evidence","Correct theory of vision: light enters the eye","The camera obscura, ancestor of every camera in every pocket","Seven-volume Book of Optics, studied in Europe for 600 years"],
+ today:"<b>Still with us:</b> every photograph ever taken uses his geometry, and every science fair repeats his method.",
+ seed:"Classroom seed: build the shoebox camera from the project shelf, then ask his question: why is the image upside down?",
+ src:"Kitab al-Manazir (Book of Optics) · standard histories of science; lunar crater \"Alhazen\" (IAU)"},
+khwarizmi:{kick:"Teacher of the world · mathematics",title:"Al-Khwarizmi",ar:"الخوارزمي",sub:"Muhammad ibn Musa al-Khwarizmi · c. 780 to 850 · Bayt al-Hikma, Baghdad",badges:["algebra","algorithms","astronomy"],info:"khwarizmi",
+ story:["In the Baghdad of Caliph al-Ma'mun, at the House of Wisdom, Muhammad ibn Musa al-Khwarizmi wrote a modest-sounding manual: al-Kitab al-Mukhtasar fi Hisab al-Jabr wa-l-Muqabala, the Compendious Book on Calculation by Restoration and Balancing. Its purpose was practical piety: solving problems of inheritance, trade and zakat. Its method, moving terms across the equals sign to restore balance, was al-jabr. Europe would pronounce it algebra.",
+ "His second gift was the digits. His treatise on calculating with the nine Indian numerals and a small circle for the empty place traveled to Europe in Latin, where his name on the title page, Algoritmi, became the word for any step-by-step procedure: algorithm. Every line of code on earth is named after a man who wanted inheritance shares divided justly.",
+ "He also produced astronomical tables and a corrected geography of Ptolemy, re-measuring the length of the Mediterranean. He worked where this Madrasa works: at the joint where faith requires precision."],
+ gifts:["Algebra as a discipline, born from inheritance law","The Hindu-Arabic numerals carried to the world","His name itself: the algorithm","Astronomical tables and corrected world geography"],
+ today:"<b>Still with us:</b> the word algorithm is his name; the digits on your screen took his road to reach you.",
+ seed:"Classroom seed: solve x + 5 = 12 the al-jabr way, then divide a pretend inheritance exactly as his book intended.",
+ src:"al-Kitab al-Mukhtasar fi Hisab al-Jabr wa-l-Muqabala · Latin Dixit Algorizmi tradition"},
+fihri:{kick:"Teacher of the world · institutions",title:"Fatima al-Fihri",ar:"فاطمة الفهرية",sub:"Fatima bint Muhammad al-Fihriyya · died c. 880 · founder of al-Qarawiyyin, Fez, 859 CE",badges:["education","endowment","859 CE"],info:"fihri",
+ story:["Fatima al-Fihri's family came from Qayrawan, in today's Tunisia, and settled in Fez. When her father died, he left her wealth, and she chose the most permanent purchase in history: she endowed a mosque with a school attached, and tradition holds that she fasted through the years of its construction in gratitude, and vowed to spend only what was lawfully hers.",
+ "That school, al-Qarawiyyin, founded in 859 CE, is recognized by UNESCO and Guinness World Records as the oldest continuously operating, degree-granting university in the world. Her sister Maryam endowed the great al-Andalusiyyin mosque across the river: two sisters, two lighthouses.",
+ "Across eleven centuries, al-Qarawiyyin's circles have hosted and shaped minds from Ibn Khaldun to, by long scholarly tradition, the young Gerbert of Aurillac who became Pope Sylvester II and helped carry Arabic numerals into Europe. It still teaches today. A woman built the world's first university, and it has never once closed its doors."],
+ gifts:["The university itself, as a continuously living institution","Waqf: the endowment model that funds knowledge forever","Proof, eleven centuries old, that a Muslim woman's wealth can outlive empires"],
+ today:"<b>Still with us:</b> ~1,167 years of classes and counting; every campus on earth stands downstream of hers.",
+ seed:"Classroom seed: the class designs its own tiny waqf: what gift could keep giving after we leave this room?",
+ src:"UNESCO & Guinness records on al-Qarawiyyin · classical Fez chronicles (Ibn Abi Zar')"},
+sina:{kick:"Teacher of the world · medicine",title:"Ibn Sina",ar:"ابن سينا",sub:"Abu Ali al-Husayn ibn Sina · Bukhara 980 to Hamadan 1037 · Latin: Avicenna",badges:["medicine","philosophy","polymath"],info:"sina",
+ story:["Born near Bukhara in 980, Ibn Sina had memorized the Qur'an by ten and outgrown his teachers soon after. At about eighteen, he treated the Samanid ruler where court physicians had failed; his asked-for payment was access to the royal library, and he later wrote that when its doors opened to him, the sciences opened with them.",
+ "His al-Qanun fi al-Tibb, the Canon of Medicine, gathered Greek, Persian, Indian and Arab medicine into one ordered system: five books, from the principles of health to compound remedies, with clinical observation threaded through. Translated into Latin, the Canon was a standard medical textbook in European universities into the seventeenth century: perhaps the longest classroom run of any book beside scripture.",
+ "He wrote through a turbulent life of courts and flights, often at night, often from memory, producing some 450 works of which around 240 survive: medicine, logic, astronomy, and the philosophical encyclopedia Kitab al-Shifa, the Book of Healing, aimed at the soul's ailments as the Canon aimed at the body's."],
+ gifts:["The Canon of Medicine: 600 years as the world's textbook","Clinical method: observation and case description","The Book of Healing: philosophy in service of certainty","Proof that curiosity and iman can share one heart at full strength"],
+ today:"<b>Still with us:</b> the word \"medicine\" in half of Europe's old universities was, in practice, his book.",
+ seed:"Classroom seed: keep a one-week \"canon\" of your own health: sleep, water, movement, mood, and read what the data says.",
+ src:"al-Qanun fi al-Tibb · Kitab al-Shifa · his autobiographical fragment (via al-Juzjani)"},
+zahrawi:{kick:"Teacher of the world · surgery",title:"Al-Zahrawi",ar:"الزهراوي",sub:"Abu al-Qasim Khalaf ibn Abbas al-Zahrawi · c. 936 to 1013 · Madinat al-Zahra, Cordoba · Latin: Abulcasis",badges:["surgery","instruments","al-Tasrif"],info:"zahrawi",
+ story:["In the palace city of Madinat al-Zahra outside Cordoba, al-Zahrawi practiced and taught medicine for some fifty years, and near the end of his life gathered everything into al-Tasrif: thirty volumes running from diet and drugs to the book that made him immortal, the final volume on surgery.",
+ "That last volume was the first illustrated surgical text in history: around two hundred instruments drawn plainly so any competent smith could make them and any trained hand could use them: scalpels, forceps, hooks, specula, a concealed knife for opening abscesses without terrifying the patient. Many of his designs are recognizably the ancestors of instruments on today's trays.",
+ "He used catgut, which the body absorbs, for internal stitching: still the principle behind absorbable sutures. He described operations with the caution of a man who had done them, insisting the surgeon know anatomy first and operate only when certain. Translated into Latin, al-Tasrif trained European surgeons for centuries, under the name Abulcasis."],
+ gifts:["The first illustrated surgical manual","~200 instruments, many still recognizable on modern trays","Absorbable catgut sutures for internal wounds","A surgeon's ethic: knowledge first, certainty before the knife"],
+ today:"<b>Still with us:</b> absorbable stitches close wounds tonight, on every continent, on his principle.",
+ seed:"Classroom seed: design an instrument for a task around the school, drawn so clearly another child could build it.",
+ src:"Kitab al-Tasrif, vol. 30 · standard histories of surgery"},
+mariam:{kick:"Teacher of the world · precision craft",title:"Mariam al-Astrulabi",ar:"مريم الأسطرلابية",sub:"al-'Ijliyya bint al-'Ijli al-Astrulabi · 10th century · Aleppo, court of Sayf al-Dawla",badges:["astrolabes","astronomy","engineering"],info:"mariam",
+ story:["In tenth-century Aleppo, at the court of the Hamdanid prince Sayf al-Dawla, worked a woman remembered as al-'Ijliyya, daughter of an astrolabe-maker of Baghdad, and herself a renowned maker of astrolabes. The notice of her comes to us through Ibn al-Nadim's great catalogue of the age's makers and books; history kept her trade, her city and her patron, and let the rest fall quiet, so this entry honors exactly what is known and no more.",
+ "What is an astrolabe? A universe folded into brass: rotating rings and a pierced star-map that, held to the sky, gave the time, the date, the qibla, the prayer hours, and the altitude of any star. Building one required astronomy, geometry and metalwork accurate to a hair, all at once. It was the smartphone of its millennium, and she made them well enough for a warrior-prince's court.",
+ "Her memory matters in this Madrasa for a plain reason: precision was never a men's inheritance. A girl at the geometry tray sits in a lineage a thousand years old."],
+ gifts:["Court-grade astrolabes: timekeeping, qibla and star altitude in one instrument","A documented woman's mastery in the age's highest technology","A lineage for every girl who loves exactness"],
+ today:"<b>Still with us:</b> every prayer-times app performs, in silicon, the calculation her rings performed in brass.",
+ seed:"Classroom seed: with the paper astrolabe pattern, measure the altitude of the sun (never looking at it directly) and find Asr.",
+ src:"Ibn al-Nadim, al-Fihrist (notice of the astrolabists) · histories of Islamic instruments"},
+biruni:{kick:"Teacher of the world · measurement",title:"Al-Biruni",ar:"البيروني",sub:"Abu Rayhan al-Biruni · Khwarazm 973 to Ghazni 1048",badges:["geodesy","astronomy","anthropology"],info:"biruni",
+ story:["Abu Rayhan al-Biruni measured everything he could reach and respected everything he could not. From a fort at Nandana, in today's Pakistan, he climbed a mountain of known height, measured the tiny angle by which the horizon dipped below level, and with one line of trigonometry, the formula above, computed the radius of the Earth: a result astonishingly close to the modern value, achieved with an astrolabe and patience.",
+ "Carried to India in the wake of Mahmud of Ghazni's campaigns, he did something almost unheard of in any age: he learned Sanskrit and wrote the Kitab al-Hind, a calm, precise account of Indian science, religion and custom, insisting that a scholar must report a people's beliefs as they themselves hold them. He compared calendars, weighed gemstones, catalogued drugs, and computed eclipses.",
+ "He wrote around 146 works. He quarreled by letter with Ibn Sina about physics, translated between five languages, and once remarked that his tongue knew Khwarazmian, but science spoke Arabic. His hunger was simple: to measure the world honestly, as an act of respect for the One who measured it first."],
+ gifts:["Earth's radius from one mountain and one angle","Kitab al-Hind: fair, careful study of another civilization","Comparative calendars, gem densities, eclipse computation","The scholar's oath: report others as they report themselves"],
+ today:"<b>Still with us:</b> geodesy and honest anthropology both count him an ancestor.",
+ seed:"Classroom seed: measure the height of the school building with a shadow and one proportion, Biruni-style.",
+ src:"al-Qanun al-Mas'udi · Kitab al-Hind · Tahdid al-Amakin (determination of coordinates)"},
+jazari:{kick:"Teacher of the world · engineering",title:"Al-Jazari",ar:"الجزري",sub:"Badi' al-Zaman Isma'il ibn al-Razzaz al-Jazari · 1136 to 1206 · Artuqid court, Diyarbakir",badges:["machines","automata","1206"],info:"jazari",
+ story:["For twenty-five years, Isma'il al-Jazari served the Artuqid princes of Diyarbakir as chief engineer, and in 1206 he wrote down everything: al-Jami' bayn al-'Ilm wa-l-'Amal, the Compendium of Theory and Practice, better known as the Book of Ingenious Mechanical Devices: fifty machines, drawn in color, explained step by step so that others could build them. It is the greatest engineering manual of the medieval world.",
+ "Inside it: the Elephant Clock, a water-powered timepiece celebrating the breadth of the ummah with an Indian elephant, Chinese dragon and Egyptian phoenix; musical automata; hand-washing machines that offered soap and towel; and, most consequentially, water-raising pumps using the crank and connecting rod, the mechanism animated above, which converts rotation into push and pull. That linkage sits today inside every car engine on earth.",
+ "He wrote like a teacher, not a keeper of secrets: measurements, materials, assembly order. In that openness he is this Madrasa's patron engineer: knowledge is a water-wheel; it exists to be turned for others."],
+ gifts:["The crank-connecting rod in a working machine: the heart of the engine","Fifty documented devices with build instructions: open-source, 1206 CE","Automata and clocks that made mechanics beautiful","The engineer-as-teacher ethic"],
+ today:"<b>Still with us:</b> start any car and the first motion inside is al-Jazari's linkage.",
+ seed:"Classroom seed: build the cardboard water-wheel from the project shelf and find the crank hiding in a bicycle.",
+ src:"The Book of Knowledge of Ingenious Mechanical Devices (1206), tr. D. Hill"},
+battuta:{kick:"Teacher of the world · geography",title:"Ibn Battuta",ar:"ابن بطوطة",sub:"Shams al-Din Abu Abdallah ibn Battuta · Tangier 1304 to Marrakesh 1369",badges:["travel","geography","the Rihla"],info:"battuta",
+ story:["In 1325, a twenty-one-year-old scholar of law left Tangier to perform Hajj, weeping, he says, as he turned from his parents. He would not stop traveling for about twenty-nine years. Makkah, then Iraq and Persia; the Swahili coast to Kilwa; Anatolia and the Golden Horde; Delhi, where the Sultan made him a judge for eight years; the Maldives; Sumatra; and by his account the ports of China.",
+ "Modern reckonings put his road at roughly 117,000 kilometers: about three times Marco Polo. He traveled as the ummah's guest, moving along a civilization of caravanserais, sufi lodges, and judges' letters, proving with his feet how wide and connected the Muslim world had become: a single traveler could be employed, married, robbed, shipwrecked and honored across three continents without leaving the lands of the adhan.",
+ "Home at last, he dictated his journey to the scholar Ibn Juzayy at the Marinid court: the Rihla, part geography, part memoir, part inventory of wonders. Historians debate details of the farthest legs, as honest geography must; the whole remains among the greatest travel accounts ever made."],
+ gifts:["~117,000 km of documented road: the medieval world mapped by memory","The Rihla: geography, ethnography and adab in one book","Living proof of the ummah as one connected civilization"],
+ today:"<b>Still with us:</b> every geography lesson that begins with a person instead of a map owes him the idea.",
+ seed:"Classroom seed: trace one leg of his journey on a modern map and compute its length; then plan your own rihla to the masjid, documented like his.",
+ src:"The Rihla of Ibn Battuta (dictated to Ibn Juzayy, 1355)"},
+"p-moon":{kick:"Project shelf · astronomy",title:"The Moon Journal",badges:["Workshop 6-9","1 month","free"],info:"fihri2",
+ story:["One page per night, one drawn circle, shaded as the sky shows it. That is the whole apparatus. What the child discovers, unprompted, by night twelve or so, is that the moon is keeping a schedule: growing from the right (in the northern hemisphere), filling, then emptying, and vanishing for a night or two before a new sliver returns."],
+ mats:["A small notebook, one circle pre-drawn per page","A pencil","A window or doorstep, and patience with clouds"],
+ steps:["Each clear night after Maghrib, find the moon and shade the circle to match it","Write the date and one word for the weather","On cloudy nights, draw a cloud: honest data includes gaps","After 30 nights, lay the pages in a row and look","Count the nights from full to full: the child has measured the lunar month (about 29.5 days)","Connect it: this is why Ramadan and the Eids move through the seasons (55:5)"],
+ today:"<b>What is really being learned:</b> periodic phenomena, data collection with missing values, and the calendar of worship read straight off the sky.",
+ src:"Qur'an 55:5, 2:189 (the new moons as appointed times)"},
+"p-shadow":{kick:"Project shelf · solar time",title:"The Shadow Clock",badges:["Workshop 6-9","1 sunny day","free"],info:"method",
+ story:["A stick stands in a can of sand in a sunny spot. Its shadow is a clock older than clocks. Through one day the child marks the shadow's tip and watches it shorten toward midday, swing, and lengthen: and discovers that Dhuhr and Asr were never arbitrary times but positions of the sun, readable by anyone, anywhere, forever."],
+ mats:["A straight stick or dowel, about 40 cm","A can or bottle filled with sand","Chalk or pebbles to mark shadow tips","A sunny open spot left undisturbed all day"],
+ steps:["Set the stick vertical in the open by mid-morning","Every 30 to 60 minutes, mark the shadow's tip and note the time","Notice the shortest shadow: that is solar noon; Dhuhr enters just after","Keep marking: when the shadow grows by the stick's own length past its noon mark, the Asr of the schools has arrived","Compare with the family prayer app and discuss any small differences (madhhab and location)","Leave the marks overnight and check the next day: the clock repeats"],
+ today:"<b>What is really being learned:</b> solar altitude, why prayer times drift daily, and that the deen is woven into the turning of the planet.",
+ src:"Fiqh of prayer times (classical Asr definitions) · basic gnomonics"},
+"p-camera":{kick:"Project shelf · optics",title:"Ibn al-Haytham's Box",badges:["Workshop → Observatory","1 afternoon","household"],info:"haytham",
+ story:["The camera obscura is the fastest wonder in this school: a sealed box, a pinhole, a translucent screen, and the world walks in upside down. The gasp is guaranteed. The question that follows, why upside down?, is the same question Cairo's quiet scholar answered a thousand years ago: because light travels in straight lines, and lines through a point must cross."],
+ mats:["A shoebox","Aluminium foil, a pin","Tracing paper or baking paper","Tape, scissors, a dark blanket"],
+ steps:["Cut a large window in one end of the box; tape tracing paper over it: the screen","Cut a small hole in the opposite end; tape foil over it; prick the foil once with the pin","Seal every other light leak with tape","Under the blanket, aim the pinhole at a bright window or lamp and watch the screen","See the image: upside down and reversed; ask why before telling","Draw the two crossing rays (like the diagram above) and let the child explain it back"],
+ today:"<b>What is really being learned:</b> rectilinear light, image formation, and that a Muslim wrote the book on it: literally.",
+ src:"Ibn al-Haytham, Book of Optics, Book I"},
+"p-girih":{kick:"Project shelf · geometry",title:"Girih Star Lab",badges:["Observatory 9-12","2 sessions","compass & ruler"],info:"mariam",
+ story:["The star patterns on mosque walls are not drawings; they are constructions: every line earned with compass and straightedge, the same tools of Euclid, perfected by Muslim craftsmen into infinite tessellation. Building one eight-fold star by hand teaches more geometry than a term of worksheets, and ends with something beautiful enough to gift."],
+ mats:["Compass, ruler, sharp pencil","Plain paper, then colored pens or gold marker","Optional: a photo of girih tile from any masjid for inspiration"],
+ steps:["Draw a circle; keep the same radius and step it around the circumference: exactly six arcs (discover why)","Construct perpendicular diameters to get eight equal points (bisect two arcs)","Join every second point: one square; join the other four: a second square","The overlap is the eight-fold star; ink the star, erase construction lines","Repeat the star on a grid and watch tessellation appear","Color in two alternating schemes and compare with real masjid tilework"],
+ today:"<b>What is really being learned:</b> constructions, symmetry groups in disguise, and why Islamic art chose geometry: pattern without images, pointing to order without end.",
+ src:"Classical girih construction methods"},
+"p-wheel":{kick:"Project shelf · engineering",title:"Al-Jazari's Wheel",badges:["Observatory 9-12","2 sessions","cardboard"],info:"jazari",
+ story:["Rotation is easy to make; useful push-and-pull is what machines need. Al-Jazari's pumps solved this with the crank and connecting rod, and a child can rebuild the idea in cardboard in an afternoon: turn the wheel, watch the rod convert circles into strokes, and understand, in the hands, the mechanism inside every engine that will ever drive them to school."],
+ mats:["Corrugated cardboard, wooden skewers","A paper cup, string, tape and glue","Scissors, a pencil for axles"],
+ steps:["Cut a cardboard disk (the crank wheel) and mount it on a skewer axle through a box frame","Push a second short skewer through the disk near its edge: the crank pin","Cut a long cardboard strip (the connecting rod); pierce one end onto the crank pin","Guide the rod's other end through a slot so it can only slide, not swing","Turn the wheel: the rod strokes back and forth; attach the cup and string to lift a small weight","Find the same linkage in a bicycle pedal and, in pictures, inside a car engine"],
+ today:"<b>What is really being learned:</b> conversion of motion, mechanical advantage, and heritage: the child's machine is 800 years old and brand new.",
+ src:"Al-Jazari, Ingenious Mechanical Devices (1206), category V (water-raising)"},
+"p-qibla":{kick:"Project shelf · astronomy & navigation",title:"Qibla Two Ways",badges:["Observatory 9-12","2 sessions","free"],info:"biruni",
+ story:["Finding the direction of one building from anywhere on a spinning sphere is a real problem in spherical geometry, and Muslims have solved it daily for fourteen centuries. The child solves it twice: once by the sun, once by the stars, and only then checks the phone: trust, verify, understand."],
+ mats:["The shadow stick from the Shadow Clock","A clear night and (northern hemisphere) the Big Dipper to find Polaris","A printed world map or globe","The family prayer app, used LAST"],
+ steps:["By sun: at solar noon (shortest shadow) the shadow points true north (northern latitudes); mark the line","On the map, draw the great-circle direction from your city to Makkah and measure its angle from north","Turn that angle from your marked north line: the qibla, by daylight","By stars: find Polaris at night: that is north again; repeat the turn: the qibla, by starlight","Now open the app and compare all three answers","Discuss why they agree (or differ by a little): projection, magnetic vs true north"],
+ today:"<b>What is really being learned:</b> cardinal directions from the sky, bearings, great circles, and the deep confidence that the deen's requirements are computable by a child.",
+ src:"Classical qibla determination · basic celestial navigation"},
+"p-seed":{kick:"Project shelf · biology & fair testing",title:"The Seed Ledger",badges:["Garden → Workshop","3 weeks","kitchen"],info:"method",
+ story:["Seven beans, seven cups, one question: what does a seed need? Some get water, some get light, some get neither (all get rescued after the data is in). The child runs their first controlled experiment and meets 2:261's image with their own eyes: one grain, when conditions are right, multiplying beyond itself."],
+ mats:["7 dried beans or date seeds","7 cups with cotton or soil, labeled","Water, a sunny sill, a dark cupboard","A ledger page: one row per day"],
+ steps:["Plant all seven identically; label: light+water, light only, water only, dark+water, dark only, cold+water (fridge), and one child's-choice","Every day, water only the water groups; log every cup in the ledger honestly","Predict on day 1 which will grow; seal the predictions in an envelope","After 14 days, measure every sprout (or absence) and open the envelope","Conclude: what does a seed truly need? Then rescue the deprived cups: mercy after data","Recite 2:261 over the tallest sprout and talk about sadaqa multiplying"],
+ today:"<b>What is really being learned:</b> variables, controls, honest record-keeping, and an ayah made visible.",
+ src:"Qur'an 2:261 (the seven ears) · 6:95 (the splitter of seed)"},
+"p-zakat":{kick:"Project shelf · mathematics with a soul",title:"Zakat of the Toy Shelf",badges:["Workshop 6-9","1 afternoon","free"],info:"khwarizmi",
+ story:["Percentages usually arrive as abstract torture. Here they arrive as generosity: the child counts and values their own toys, computes 2.5% the way al-Khwarizmi computed inheritances, and then, and this is the entire secret of the lesson, actually gives that value away, in toys or saved coins, to a child who has less."],
+ mats:["The child's own toy shelf","Paper for an inventory ledger","Play money or real saved coins","A chosen destination for the giving (family decision)"],
+ steps:["Inventory: list every toy and agree a fair \"price\" for each; sum the total wealth","Teach the nisab idea simply: zakat is for wealth above a threshold, held a year","Compute 2.5%: divide the total by 40 (discover why dividing by 40 IS 2.5%)","Choose toys or coins matching that value","Deliver the gift together, quietly: secret sadaqa, like the house teaches","Repeat yearly on the same date: the child's own zakat anniversary"],
+ today:"<b>What is really being learned:</b> percentages, division, inventory honesty, and that math's first job in Islam was justice.",
+ src:"Qur'an 9:103 · fiqh of zakat (simplified for education; real rulings belong to scholars)"},
+"p-fajr":{kick:"Project shelf · capstone",title:"Compute Fajr",badges:["Academy 12-18","1 week","spreadsheet or code"],info:"biruni",
+ story:["The Academy capstone: from first principles to a real prayer timetable. The student learns what the apps hide: solar declination through the year, the equation of time, hour angles, and the twilight-angle definitions of Fajr and Isha, then computes a month's timetable for their own city and verifies it against the local masjid. When the numbers match, something permanent happens to their confidence."],
+ mats:["Latitude and longitude of home","A spreadsheet or any programming language","The standard solar position equations (provided by the teacher)","The local masjid timetable for verification"],
+ steps:["Compute the sun's declination and the equation of time for each day of one month","Compute solar noon for your longitude: Dhuhr follows just after","Compute sunrise and Maghrib from the sunset hour angle","Add the Asr shadow condition (shadow = object + noon shadow) and solve for its hour angle","Apply the twilight angles for Fajr and Isha (e.g. 18°/17° conventions; compare conventions)","Print the month, tape it beside the masjid's timetable, and account for every minute of difference"],
+ today:"<b>What is really being learned:</b> spherical astronomy, numerical method, conventions vs truth, and mastery of the day's sacred architecture.",
+ src:"Standard solar position algorithms · classical fiqh definitions of the five times"},
+"pl-self":{kick:"Practical life · the person",title:"Care of Self",badges:["all stages","sunnah"],info:"method",
+ story:["Montessori found that a child who can care for their own body stands differently in the world. The sunnah found it first, and made it worship: purification is half of faith (Muslim 223). In the Madrasa, self-care is taught as slow, dignified sequences on real trays with real water, presented once, silently, then practiced freely."],
+ gifts:["Wudu as an eight-step tray work: right before left, each limb named","Miswak or brushing: \"were it not hardship, I would have commanded it at every prayer\" (Bukhari 887)","Right shoe first on, left first off (Bukhari 5856 tradition of beginning with the right, 168)","Sleeping on the right side with the sleep du'a (Bukhari 6311, 5017)","Dressing with the du'a of clothing, and clothes folded, not flung"],
+ today:"<b>Control of error:</b> water spills show themselves; the mirror shows the miswak's work; no adult needs to nag. The material corrects; the adult only loves.",
+ src:"Muslim 223 · Bukhari 887, 168, 6311, 5017"},
+"pl-home":{kick:"Practical life · the nest",title:"Care of the Home",badges:["all stages","khidma"],info:"method",
+ story:["Asked what the Prophet ﷺ did at home, Aisha answered: he was in the service of his family, and when prayer was called, he went out to it (Bukhari 676). He mended sandals and patched garments. In this Madrasa no child is above a broom, because the best of creation was not."],
+ gifts:["Fold the prayer mats after salah: the room resets for the next meeting with Allah","Straighten all shoes at the door, hearts and heels both facing out","Water the plants and feed any animals before your own snack","The Mushaf returns to the highest shelf, carried with two hands","Set and clear the family sufra; the youngest carries something unbreakable"],
+ today:"<b>The hidden curriculum:</b> sequencing, gross motor control, and the end of entitlement. A child who serves the home never learns that love is a one-way service.",
+ src:"Bukhari 676 · Ahmad (his ﷺ mending of garments)"},
+"pl-grace":{kick:"Practical life · the meeting",title:"Grace & Courtesy",badges:["all stages","adab"],info:"method",
+ story:["Montessori taught manners as tiny theater: rehearse the knock, the greeting, the apology, in play, so they are ready in life. The sunnah supplies the script: salam before speech, the right hand for giving, three knocks and then withdraw, the young greeting the old and the walker greeting the sitter (Bukhari 6234)."],
+ gifts:["Salam first, loudly enough to be a gift (Muslim 54: spread salam and you will love one another)","Eat and give with the right hand (Bukhari 5376: \"Say Bismillah, eat with your right, eat what is near you\")","Ask permission three times, then leave graciously (Bukhari 6245)","Guests served first, elders served first, the guest's side of the plate untouched","Interrupting bodies at rest or prayer: never; waiting beautifully: always"],
+ today:"<b>Rehearsed as games:</b> the knocking game, the salam relay, the right-hand tray pass. Laughed at in practice, flawless at the door.",
+ src:"Muslim 54 · Bukhari 5376, 6245, 6234"},
+"pl-others":{kick:"Practical life · the ummah",title:"Care of Others",badges:["all stages","rahma"],info:"method",
+ story:["The Prophet ﷺ told Abu Dharr: when you cook broth, add water, and look to your neighbors (Muslim 2625). Care of others is scheduled in this Madrasa like mathematics, weekly and non-negotiable, because compassion is a muscle and muscles need training days."],
+ gifts:["The family sadaqa jar with its own ledger: counted monthly, given quietly","A warm plate to a neighbor while it is still warm: the child carries it","Visiting the sick as a family outing, with a drawn card (the sunnah of 'iyada)","Feeding birds and animals in winter: mercy to every wet liver (Bukhari 2363)","The best of Islam recited and lived: feed food, and greet those you know and those you do not (Bukhari 12)"],
+ today:"<b>The measure of the term:</b> not grades, but the jar's ledger, the neighbors' faces and the child's unprompted noticing of need.",
+ src:"Muslim 2625 · Bukhari 2363, 12"}
+};
+ENC["spring-montessori"].info="sina";
+INFO.fihri2=INFO.fihri;
+
+/* ---------- renderer ---------- */
+function openEnc(id){
+  var e=ENC[id]; if(!e) return;
+  var h='<p class="encx-kick">'+e.kick+'</p>'+
+  '<h3 class="encx-title">'+e.title+(e.ar?'<span class="encx-ar notranslate" translate="no">'+e.ar+"</span>":"")+"</h3>"+
+  (e.sub?'<p class="encx-sub">'+e.sub+"</p>":"")+
+  '<div class="encx-badges">'+e.badges.map(function(b){return "<span>"+b+"</span>"}).join("")+"</div>"+
+  '<div class="encx-info">'+(INFO[e.info]?INFO[e.info]():"")+"</div>"+
+  '<div class="encx-story">'+e.story.map(function(p){return "<p>"+p+"</p>"}).join("")+"</div>";
+  if(e.mats)h+='<p class="encx-h">You will need</p><ul class="encx-gifts">'+e.mats.map(function(m){return "<li>"+m+"</li>"}).join("")+"</ul>";
+  if(e.steps)h+='<p class="encx-h">The way</p><ol class="encx-steps">'+e.steps.map(function(m){return "<li>"+m+"</li>"}).join("")+"</ol>";
+  if(e.gifts&&!e.mats)h+='<p class="encx-h">'+(id.indexOf("pl-")===0?"The shelf":"Gifts to the world")+'</p><ul class="encx-gifts">'+e.gifts.map(function(g){return "<li>"+g+"</li>"}).join("")+"</ul>";
+  if(e.today)h+='<div class="encx-today">'+e.today+"</div>";
+  if(e.seed)h+='<div class="encx-today" style="background:rgba(127,163,216,.1);border-color:rgba(127,163,216,.45)"><b style="color:#9db9e8">🌱 '+e.seed.split(":")[0]+":</b>"+e.seed.substring(e.seed.indexOf(":")+1)+"</div>";
+  if(e.src)h+='<p class="encx-src">'+e.src+"</p>";
+  $("encx-in").innerHTML=h;
+  $("encx").classList.add("open");
+  document.body.style.overflow="hidden";
+  $("encx").scrollTop=0;
+  if(id==="battuta"){
+    var n=0,el=$("bt-km");
+    var t=setInterval(function(){n+=3900;if(n>=117000){n=117000;clearInterval(t)}if(el)el.textContent=n.toLocaleString()},40);
+  }
+}
+function closeEnc(){$("encx").classList.remove("open");document.body.style.overflow=""}
+document.querySelectorAll(".enc").forEach(function(c){
+  var id=c.getAttribute("data-enc");
+  c.addEventListener("click",function(ev){if(ev.target.closest("a"))return;openEnc(id)});
+  c.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();openEnc(id)}});
+});
+$("encx-close").addEventListener("click",closeEnc);
+$("encx").addEventListener("click",function(ev){if(ev.target===this)closeEnc()});
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape")closeEnc()});
 })();
 </script>
 </body>
