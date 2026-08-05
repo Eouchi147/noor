@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="The 25 prophets named in the Qur'an, in one interactive chain of light, from Adam to Muhammad ﷺ. Tap any link in the chain: his people, his trial, his mention in the Book. No faces, only light."/>
+<meta name="description" content="The 25 prophets of the Qur'an in one illuminated chain: complete stories, every verse with recitation, authentic hadith, and the life of Muhammad ﷺ told in full. No faces, only light."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
 <meta property="og:title" content="The 25 Prophets · Chain of Light · NOOR Codex of Light"/>
-<meta property="og:description" content="The 25 prophets named in the Qur&#x27;an, in one interactive chain of light, from Adam to Muhammad ﷺ. Tap any link in the chain: his people, his trial, his mention in the Book. No faces, only light."/>
+<meta property="og:description" content="The 25 prophets of the Qur&#x27;an in one illuminated chain: complete stories, every verse with recitation, authentic hadith, and the life of Muhammad ﷺ told in full. No faces, only light."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
@@ -25,6 +25,7 @@
 <script src="noor-fx.js" defer></script>
 <script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
+<script src="prophets-data.js" defer></script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
@@ -35,28 +36,82 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .shimmer-gold{background:linear-gradient(100deg,#C9A227 20%,#F8E8A6 40%,#C9A227 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimp 6s linear infinite}
 @keyframes shimp{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.shimmer-gold{animation:none}}
-/* chain grid */
-#chain{position:relative}
-#chain::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,162,39,.35) 6%,rgba(201,162,39,.35) 94%,transparent)}
-.ptile{position:relative;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.1rem;padding:1rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;z-index:1}
+/* ===== the chain, alternating timeline ===== */
+#chain{position:relative;padding:.4rem 0 0}
+#chain::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,162,39,.4) 4%,rgba(201,162,39,.4) 96%,transparent)}
+.trow{position:relative;display:flex;margin:0 0 1.15rem;z-index:1}
+.trow.R{justify-content:flex-end}
+.trow.full{justify-content:center;margin-top:1.6rem}
+.trow::before{content:"";position:absolute;left:50%;top:1.5rem;width:11px;height:11px;transform:translate(-50%,0);border-radius:999px;background:#F4D46A;box-shadow:0 0 0 3px rgba(201,162,39,.22),0 0 12px rgba(244,212,106,.8);z-index:2}
+.trow.full::before{display:none}
+.ptile{position:relative;width:calc(50% - 1.15rem);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.1rem;padding:.95rem .6rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;font-family:inherit}
+.trow.L .ptile::after,.trow.R .ptile::after{content:"";position:absolute;top:1.78rem;width:1.15rem;height:1.5px;background:rgba(201,162,39,.45)}
+.trow.L .ptile::after{right:-1.15rem}
+.trow.R .ptile::after{left:-1.15rem}
 .ptile:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(44,36,22,.12);border-color:rgba(201,162,39,.5)}
-.ptile.open{border-color:var(--gold);background:linear-gradient(165deg,#FFFDF4,#FFF7DF)}
-.ptile .ar{font-family:Amiri,serif;font-size:1.7rem;color:var(--gold);line-height:1.3}
-.ptile .en{font-weight:700;font-size:.92rem;margin-top:.15rem}
-.ptile .meta{font-size:.64rem;color:rgba(44,36,22,.5);margin-top:.2rem}
-.ptile .azm{position:absolute;top:.5rem;right:.6rem;font-size:.55rem;font-weight:800;letter-spacing:.08em;color:#8A9B6E;border:1px solid rgba(138,155,110,.4);border-radius:999px;padding:.1rem .4rem}
-.pdetail{grid-column:1/-1;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s ease,opacity .4s ease;z-index:1;position:relative}
-.pdetail.open{max-height:520px;opacity:1}
-.pdetail .inner{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.16),transparent 65%),linear-gradient(160deg,#1A160F,#241D12);border-radius:1.1rem;padding:1.3rem 1.4rem;margin:.15rem .1rem .8rem;color:#FFFEF7}
-.pdetail h3{font-weight:800;font-size:1.05rem;color:#F4D46A}
-.pdetail .line{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.15rem 0 .55rem}
-.pdetail p{font-size:.86rem;line-height:1.7;color:rgba(255,254,247,.82)}
-.pdetail .mention{display:inline-block;margin-top:.7rem;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);border:1px solid rgba(244,212,106,.35);border-radius:999px;padding:.18rem .6rem}
+.ptile.open{border-color:var(--gold);background:linear-gradient(165deg,#FFFDF4,#FFF7DF);box-shadow:0 10px 30px rgba(201,162,39,.2)}
+.ptile .ar{font-family:Amiri,serif;font-size:1.55rem;color:var(--gold);line-height:1.35}
+.ptile .en{font-weight:700;font-size:.88rem;margin-top:.1rem}
+.ptile .meta{font-size:.62rem;color:rgba(44,36,22,.5);margin-top:.2rem;line-height:1.45}
+.ptile .mns{display:inline-block;margin-top:.4rem;font-size:.56rem;font-weight:700;letter-spacing:.06em;color:#8a6d13;background:#FFF7DF;border:1px solid rgba(201,162,39,.35);border-radius:999px;padding:.12rem .5rem}
+.ptile .hint{display:block;margin-top:.4rem;font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,162,39,.85)}
+.ptile .azm{position:absolute;top:.45rem;right:.55rem;font-size:.5rem;font-weight:800;letter-spacing:.08em;color:#8A9B6E;border:1px solid rgba(138,155,110,.4);border-radius:999px;padding:.1rem .35rem}
+@media (min-width:640px){.ptile{padding:1.15rem .9rem}.ptile .ar{font-size:1.9rem}.ptile .en{font-size:.95rem}.ptile .meta{font-size:.66rem}}
+/* ===== the article ===== */
+.art{display:none;position:relative;z-index:3;margin:.1rem 0 1.5rem}
+.art.open{display:block;animation:artin .45s ease}
+@keyframes artin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.art.open{animation:none}}
+.art .inner{max-width:44rem;margin:0 auto;background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.18),transparent 60%),linear-gradient(160deg,#1A160F,#241D12);border:1px solid rgba(201,162,39,.4);border-radius:1.3rem;padding:1.5rem 1.35rem 1.6rem;color:#FFFEF7;box-shadow:0 24px 60px rgba(20,16,10,.35)}
+.art h3{font-weight:800;font-size:1.3rem;color:#F4D46A}
+.art h3 .amiri{font-family:Amiri,serif;font-weight:400;margin-left:.4rem}
+.art .line{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.25rem 0 .9rem}
+.art .story p{font-size:.87rem;line-height:1.8;color:rgba(255,254,247,.85);margin:.65rem 0}
+.kick2{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.35rem 0 .5rem;display:flex;align-items:center;gap:.5rem}
+.kick2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
+.vc{display:flex;gap:.75rem;align-items:flex-start;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.22);border-radius:14px;padding:.75rem .85rem;margin:.5rem 0}
+.vplay{flex:none;width:2.35rem;height:2.35rem;border-radius:999px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.08);color:#F4D46A;display:grid;place-items:center;cursor:pointer;transition:all .18s;padding:0}
+.vplay svg{width:.85rem;height:.85rem}
+.vplay:hover{background:rgba(244,212,106,.18)}
+.vplay.playing{background:linear-gradient(135deg,#C9A227,#F4D46A);color:#241D12;border-color:transparent;animation:vpulse 1.5s ease-in-out infinite}
+@keyframes vpulse{50%{box-shadow:0 0 0 7px rgba(244,212,106,.16)}}
+.vc .vb{min-width:0}
+.vc b{font-size:.74rem;color:#F4D46A;letter-spacing:.04em}
+.vc p{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.8);margin:.15rem 0 .2rem}
+.vc a{font-size:.66rem;color:rgba(244,212,106,.75);text-decoration:none;font-weight:700}
+.vc a:hover{color:#F4D46A}
+.hc{border-left:3px solid rgba(244,212,106,.5);background:rgba(255,254,247,.045);border-radius:0 14px 14px 0;padding:.75rem .95rem;margin:.55rem 0}
+.hc p{font-size:.82rem;line-height:1.7;color:rgba(255,254,247,.85);font-style:italic;margin:0}
+.hc .src{display:inline-block;margin-top:.45rem;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8A9B6E;border:1px solid rgba(138,155,110,.4);border-radius:999px;padding:.12rem .5rem;font-style:normal}
+.fig{margin:.55rem 0}
+.fig .fl{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;margin-bottom:.28rem}
+.fig .fl b{color:rgba(255,254,247,.85);font-weight:600}
+.fig .fl span{color:#F4D46A;text-align:right}
+.fig .bar{height:6px;background:rgba(255,254,247,.08);border-radius:999px;overflow:hidden}
+.fig .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);width:0;transition:width 1.1s cubic-bezier(.2,.7,.3,1)}
+.cpos{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:.7rem 0 .1rem}
+.cdot{width:7px;height:7px;border-radius:999px;background:rgba(255,254,247,.14)}
+.cdot.on{background:#F4D46A;box-shadow:0 0 8px rgba(244,212,106,.9)}
+.cpos-l{text-align:center;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,254,247,.4);margin-top:.3rem}
+.steps{display:flex;flex-wrap:wrap;gap:.32rem;align-items:center}
+.step{font-size:.63rem;border:1px solid rgba(244,212,106,.3);color:rgba(255,254,247,.78);border-radius:999px;padding:.24rem .6rem}
+.sarr{color:rgba(244,212,106,.55);font-size:.6rem}
+.se{display:flex;gap:.85rem}
+.se .y{flex:none;width:2.6rem;text-align:right;color:#F4D46A;font-weight:800;font-size:.76rem;padding-top:.05rem}
+.se .t{font-size:.79rem;line-height:1.6;color:rgba(255,254,247,.82);border-left:2px solid rgba(244,212,106,.3);padding:0 0 .8rem .85rem}
+.se:last-child .t{padding-bottom:.1rem}
+.split{display:flex;height:26px;border-radius:999px;overflow:hidden;margin:.55rem 0 .25rem;border:1px solid rgba(244,212,106,.3)}
+.split .sa{background:linear-gradient(90deg,#8a6d13,#C9A227);display:grid;place-items:center;font-size:.6rem;font-weight:800;color:#1A160F;letter-spacing:.04em}
+.split .sb{background:linear-gradient(90deg,rgba(138,155,110,.85),rgba(138,155,110,.55));display:grid;place-items:center;font-size:.6rem;font-weight:800;color:#0f130c;letter-spacing:.04em}
+.aclose{margin-top:1.3rem;width:100%;border:1px solid rgba(244,212,106,.35);background:none;color:rgba(244,212,106,.8);border-radius:999px;padding:.55rem;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit}
+.aclose:hover{background:rgba(244,212,106,.08)}
 /* the final tile */
-.ptile.rasul{grid-column:1/-1;padding:1.6rem 1rem;background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.30),transparent 62%),linear-gradient(165deg,#14100A,#241D12);border-color:rgba(201,162,39,.55)}
+.ptile.rasul{width:min(100%,30rem);padding:1.7rem 1rem;background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.30),transparent 62%),linear-gradient(165deg,#14100A,#241D12);border-color:rgba(201,162,39,.55)}
+.ptile.rasul::after{display:none}
 .ptile.rasul .ar{font-size:2.6rem;color:#F4D46A;position:relative;display:inline-block}
 .ptile.rasul .en{color:#FFFEF7;font-size:1.15rem}
 .ptile.rasul .meta{color:rgba(255,254,247,.55)}
+.ptile.rasul .mns{background:rgba(244,212,106,.12);color:#F4D46A;border-color:rgba(244,212,106,.4)}
 .aura{position:absolute;left:50%;top:42%;width:190px;height:190px;transform:translate(-50%,-50%);border-radius:999px;background:radial-gradient(circle,rgba(244,212,106,.30) 0%,rgba(201,162,39,.12) 45%,transparent 70%);animation:aura 4.5s ease-in-out infinite;pointer-events:none}
 .aura.a2{width:260px;height:260px;animation-delay:2.2s;opacity:.7}
 @keyframes aura{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.18);opacity:.45}}
@@ -155,13 +210,14 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <span class="px-3 py-1 rounded-full border border-white/15">25 named in the Book</span>
 <span class="px-3 py-1 rounded-full border border-white/15">5 of firm resolve · أولو العزم</span>
 <span class="px-3 py-1 rounded-full border border-white/15">One message · La ilaha illa Allah</span>
+<span class="px-3 py-1 rounded-full border border-white/15">Full stories inside · with recitation ▷</span>
 </div>
 </div>
 </section>
 
 <main class="max-w-3xl mx-auto px-5 py-10">
 <section class="reveal">
-<div id="chain" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+<div id="chain"></div>
 </section>
 
 <section class="reveal mt-10 text-center">
@@ -185,71 +241,122 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 </footer>
 
 <script>
-const PROPHETS=[
-["Adam","آدم","The first man, the first prophet","Created by Allah's two hands; taught the names of all things; father of humanity. He slipped, he repented, he was chosen, the pattern of every child of his.","named 25 times",0],
-["Idris","إدريس","Raised to a high station","Of the earliest generations, praised as steadfastly truthful; 'We raised him to a lofty place' (19:57).","named 2 times",0],
-["Nuh","نوح","950 years of calling","The first messenger to a nation drowning in idols. An ark built on dry land, a flood that reset the world, and patience that became proverbial.","named 43 times",1],
-["Hud","هود","Sent to towering 'Ad","To a people proud of their pillars and power: worship Allah alone. A barren wind ended what arrogance built.","named 7 times",0],
-["Salih","صالح","The she-camel of Thamud","To rock-carvers of the valley: a living miracle-camel, a test of restraint, and the cry that followed its killing.","named 9 times",0],
-["Ibrahim","إبراهيم","The intimate friend · Khalilullah","Smasher of idols, survivor of the fire, builder of the Kaaba with his son. Father of prophets: nearly every link after him is his line.","named 69 times",1],
-["Lut","لوط","Sent to the cities of the plain","Ibrahim's nephew, sent to a people of open transgression; saved with his believers at dawn while the cities were overturned.","named 27 times",0],
-["Ismail","إسماعيل","The sacrifice ransomed","Left as an infant by the well of Zamzam; offered himself when his father dreamed the command; co-builder of the House. Ancestor of the final Prophet ﷺ.","named 12 times",0],
-["Ishaq","إسحاق","The laughing promise","Announced to Ibrahim and Sarah in their old age by angel guests. Through him: Yaqub and the prophets of Bani Israil.","named 17 times",0],
-["Yaqub","يعقوب","Israil · father of the twelve","Patriarch whose patience over a lost son became scripture's definition of 'beautiful patience' (sabrun jamil).","named 16 times",0],
-["Yusuf","يوسف","The most beautiful of stories","From the well to the prison to the treasury of Egypt; the dream that took decades to come true and the forgiveness that outshone it.","named 27 times",0],
-["Ayyub","أيوب","Patience under ruin","Wealth, children, health, all stripped away; the tongue never once complained of its Lord. 'Excellent servant! Ever turning back' (38:44).","named 4 times",0],
-["Shuayb","شعيب","Preacher to the cheating scales","To Madyan, the merchants who shaved the measure: honesty in the marketplace is worship, and fraud is a nation-breaking sin.","named 11 times",0],
-["Musa","موسى","Spoken to directly · Kalimullah","Drawn from the river to be raised by his enemy; the staff, the sea, the Sinai. No name is repeated in the Qur'an more often.","named 136 times",1],
-["Harun","هارون","The eloquent brother","Given as answer to Musa's own prayer, a prophet requested and granted, partner in the confrontation with Pharaoh.","named 20 times",0],
-["Dhul-Kifl","ذو الكفل","Of the patient ones","Named among the steadfast and righteous (21:85); many scholars place him among the prophets of Bani Israil.","named 2 times",0],
-["Dawud","داود","The iron-softening king","Slayer of Jalut, given the Zabur and a voice the mountains echoed; a kingdom held with a worshipper's heart.","named 16 times",0],
-["Sulayman","سليمان","The kingdom like no other after","Wind at his command, jinn in his workforce, the speech of birds and ants understood, and the prayer that it all be a trial he passes.","named 17 times",0],
-["Ilyas","إلياس","Against the cult of Baal","Sent to a people worshipping Baal: 'Do you call upon Baal and abandon the best of creators?' (37:125).","named 3 times",0],
-["Alyasa","اليسع","Of the excellent ones","Successor in the line of Bani Israil's prophets, counted 'among the excellent' (38:48).","named 2 times",0],
-["Yunus","يونس","The companion of the whale","He left his city before permission came; three darknesses, night, sea, whale, and the du'a that every distressed soul has borrowed since (21:87).","named 4 times",0],
-["Zakariyya","زكريا","The whispered prayer","Guardian of Maryam; an old man who prayed in secret for an heir and was answered with Yahya.","named 7 times",0],
-["Yahya","يحيى","A name never given before","Announced by angels, wise while still a boy, 'compassion from Us and purity' (19:13), and a martyr's end.","named 5 times",0],
-["Isa","عيسى","Word of Allah, son of Maryam","Born of no father, speaking from the cradle, healing by Allah's leave; neither more than a servant nor less than a miracle, and he will return.","named 25 times",1],
-];
-const chain=document.getElementById("chain");
-chain.innerHTML = PROPHETS.map((p,i)=>`
-<button class="ptile" data-i="${i}" aria-expanded="false">
-  ${p[5]?'<span class="azm">ULUL-AZM</span>':''}
-  <div class="ar">${p[1]}</div>
-  <div class="en">${p[0]}</div>
-  <div class="meta">${p[2]}</div>
-</button>
-<div class="pdetail" id="pd-${i}"><div class="inner">
-  <h3>${p[0]} · ${p[1]}</h3>
-  <div class="line">${p[2]}${p[5]?" · one of the five of firm resolve":""}</div>
-  <p>${p[3]}</p>
-  <span class="mention">${p[4]} in the Qur'an</span>
-</div></div>`).join("")+`
-<button class="ptile rasul" data-i="24" aria-expanded="false">
-  <span class="aura" aria-hidden="true"></span><span class="aura a2" aria-hidden="true"></span>
-  <span class="azm">ULUL-AZM · THE SEAL</span>
-  <div class="ar">مُحَمَّد ﷺ</div>
-  <div class="en">Muhammad ﷺ</div>
-  <div class="meta">The Seal of the Prophets · Mercy to the worlds · Makkah & Madinah</div>
-</button>
-<div class="pdetail" id="pd-24"><div class="inner">
-  <h3>Muhammad ﷺ · مُحَمَّد</h3>
-  <div class="line">Khatam an-Nabiyyin, the Seal of the Prophets (33:40)</div>
-  <p>Orphan of Makkah, trusted before he was believed, and at forty the cave of Hira filled with the first word: Iqra. Twenty-three years of revelation completed the one message every name above him carried, and sealed it. "We have not sent you except as a mercy to the worlds" (21:107). His life is this Codex's entire Seerah, told chapter by chapter on the Path.</p>
-  <span class="mention">named 4 times as Muhammad · once as Ahmad (61:6)</span>
-</div></div>`;
+document.addEventListener("DOMContentLoaded",function(){
+"use strict";
+var P=window.NOOR_PROPHETS||[];
+var chain=document.getElementById("chain");
+var PLAY='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 
-chain.addEventListener("click",e=>{
-  const t=e.target.closest(".ptile"); if(!t)return;
-  const i=t.dataset.i, d=document.getElementById("pd-"+i);
-  const wasOpen=d.classList.contains("open");
-  document.querySelectorAll(".pdetail.open").forEach(x=>x.classList.remove("open"));
-  document.querySelectorAll(".ptile.open").forEach(x=>{x.classList.remove("open");x.setAttribute("aria-expanded","false");});
-  if(!wasOpen){ d.classList.add("open"); t.classList.add("open"); t.setAttribute("aria-expanded","true");
-    setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"nearest"}),120); }
+function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+function refLink(ref){var m=String(ref).match(/^(\d+):(\d+)/);return m?("quran.html?surah="+m[1]+"&ayah="+m[2]):"quran.html"}
+
+function verseHTML(v){
+  return '<div class="vc">'+
+    '<button class="vplay" type="button" data-ref="'+esc(v.ref)+'" aria-label="Play recitation of verse '+esc(v.ref)+'">'+PLAY+'</button>'+
+    '<div class="vb"><b>Qur’an '+esc(v.ref)+'</b><p>'+esc(v.note)+'</p>'+
+    '<a href="'+refLink(v.ref)+'">Read it in the Mushaf →</a></div></div>';
+}
+function hadithHTML(h){
+  return '<div class="hc"><p>“'+esc(h.text)+'”</p><span class="src">'+esc(h.src)+'</span></div>';
+}
+function figHTML(f){
+  return '<div class="fig"><div class="fl"><b>'+esc(f.label)+'</b><span>'+esc(f.value)+'</span></div>'+
+    (f.pct?'<div class="bar"><div class="fill" data-w="'+f.pct+'"></div></div>':'')+'</div>';
+}
+function stepsHTML(j){
+  return '<div class="steps">'+j.map(function(x){return '<span class="step">'+esc(x)+'</span>'}).join('<span class="sarr">→</span>')+'</div>';
+}
+function cposHTML(i){
+  var d='';for(var k=0;k<P.length;k++)d+='<span class="cdot'+(k===i?' on':'')+'"></span>';
+  return '<div class="cpos">'+d+'</div><div class="cpos-l">Link '+(i+1)+' of '+P.length+' in the chain</div>';
+}
+function artHTML(p,i){
+  var h='<div class="inner">';
+  h+='<h3>'+esc(p.en)+'<span class="amiri" translate="no">'+p.ar+'</span></h3>';
+  h+='<div class="line">'+esc(p.epithet)+(p.azm?' · one of the five of firm resolve':'')+' · '+esc(p.era)+'</div>';
+  h+='<div class="story">'+p.story.map(function(t){return '<p>'+esc(t)+'</p>'}).join('')+'</div>';
+  if(p.split){
+    h+='<div class="kick2">Twenty-three years, two cities</div>';
+    var tot=p.split.a.years+p.split.b.years;
+    h+='<div class="split"><div class="sa" style="width:'+(100*p.split.a.years/tot)+'%">'+esc(p.split.a.label)+' · '+p.split.a.years+'y</div><div class="sb" style="width:'+(100*p.split.b.years/tot)+'%">'+esc(p.split.b.label)+' · '+p.split.b.years+'y</div></div>';
+  }
+  if(p.seerah){
+    h+='<div class="kick2">The Seerah at a glance</div>';
+    h+=p.seerah.map(function(e){return '<div class="se"><div class="y">'+esc(e.y)+'</div><div class="t">'+esc(e.t)+'</div></div>'}).join('');
+  }
+  if(p.verses&&p.verses.length){
+    h+='<div class="kick2">From the Qur’an · tap ▷ to hear each verse</div>';
+    h+=p.verses.map(verseHTML).join('');
+  }
+  if(p.hadith&&p.hadith.length){
+    h+='<div class="kick2">From the Sunnah</div>';
+    h+=p.hadith.map(hadithHTML).join('');
+  }
+  if(p.figures&&p.figures.length){
+    h+='<div class="kick2">In numbers</div>';
+    h+=p.figures.map(figHTML).join('');
+  }
+  if(p.journey&&p.journey.length){
+    h+='<div class="kick2">The journey</div>'+stepsHTML(p.journey);
+  }
+  h+=cposHTML(i);
+  h+='<button class="aclose" type="button" data-close="'+i+'">Close the story ✕</button>';
+  h+='</div>';
+  return h;
+}
+
+chain.innerHTML=P.map(function(p,i){
+  var last=!!p.rasul;
+  var side=last?'full':(i%2===0?'L':'R');
+  var tile='<div class="trow '+side+'" id="row-'+p.id+'">'+
+    '<button class="ptile'+(last?' rasul':'')+'" type="button" data-i="'+i+'" aria-expanded="false" aria-controls="art-'+i+'">'+
+    (last?'<span class="aura" aria-hidden="true"></span><span class="aura a2" aria-hidden="true"></span>':'')+
+    (p.azm?'<span class="azm">'+(last?'ULUL-AZM · THE SEAL':'ULUL-AZM')+'</span>':'')+
+    '<div class="ar" translate="no">'+p.ar+'</div>'+
+    '<div class="en">'+esc(p.en)+'</div>'+
+    '<div class="meta">'+esc(p.epithet)+'</div>'+
+    '<span class="mns">named '+p.mentions+(p.id==="muhammad"?" times · once as Ahmad":" times")+'</span>'+
+    '<span class="hint">Open the story ✦</span>'+
+    '</button></div>';
+  return tile+'<div class="art" id="art-'+i+'" data-id="'+p.id+'">'+artHTML(p,i)+'</div>';
+}).join('');
+
+function closeAll(){
+  document.querySelectorAll(".art.open").forEach(function(a){a.classList.remove("open")});
+  document.querySelectorAll(".ptile.open").forEach(function(t){t.classList.remove("open");t.setAttribute("aria-expanded","false")});
+  if(window.stopAyah)stopAyah();
+}
+function openArt(i,scroll){
+  var art=document.getElementById("art-"+i);
+  var tile=document.querySelector('.ptile[data-i="'+i+'"]');
+  if(!art)return;
+  closeAll();
+  art.classList.add("open");
+  if(tile){tile.classList.add("open");tile.setAttribute("aria-expanded","true")}
+  try{history.replaceState(null,"","#"+art.dataset.id)}catch(e){}
+  requestAnimationFrame(function(){
+    art.querySelectorAll(".fill").forEach(function(f){setTimeout(function(){f.style.width=f.dataset.w+"%"},120)});
+  });
+  if(scroll!==false)setTimeout(function(){art.scrollIntoView({behavior:"smooth",block:"start"})},140);
+}
+
+chain.addEventListener("click",function(e){
+  var vp=e.target.closest(".vplay");
+  if(vp){e.stopPropagation();if(window.playAyah)playAyah(vp.dataset.ref,vp);return}
+  var cl=e.target.closest(".aclose");
+  if(cl){closeAll();var row=document.querySelector('.ptile[data-i="'+cl.dataset.close+'"]');if(row)row.scrollIntoView({behavior:"smooth",block:"center"});try{history.replaceState(null,"",location.pathname)}catch(e2){}return}
+  var t=e.target.closest(".ptile");
+  if(!t)return;
+  var i=+t.dataset.i;
+  var art=document.getElementById("art-"+i);
+  if(art&&art.classList.contains("open")){closeAll();try{history.replaceState(null,"",location.pathname)}catch(e3){}return}
+  openArt(i);
 });
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* deep link: prophets.html#musa opens the article */
+var want=(location.hash||"").replace("#","");
+if(want){for(var k=0;k<P.length;k++)if(P[k].id===want){setTimeout(function(idx){return function(){openArt(idx)}}(k),350);break}}
+});
 </script>
 </body>
 </html>
