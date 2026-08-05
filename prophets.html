@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="The 25 prophets named in the Qur'an, in one interactive chain of light — from Adam to Muhammad ﷺ. Tap any link in the chain: his people, his trial, his mention in the Book. No faces, only light."/>
+<meta name="description" content="The 25 prophets named in the Qur'an, in one interactive chain of light, from Adam to Muhammad ﷺ. Tap any link in the chain: his people, his trial, his mention in the Book. No faces, only light."/>
 <meta name="theme-color" content="#14100A"/>
 <title>The 25 Prophets · Chain of Light · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=13"/>
+<link rel="stylesheet" href="assets/tw.css?v=14"/>
 <script src="noor-fx.js" defer></script>
+<script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
@@ -137,7 +138,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
 <p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">تِلْكَ الرُّسُلُ فَضَّلْنَا بَعْضَهُمْ عَلَىٰ بَعْضٍ</p>
 <h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-gold">The Chain of Light</span></h1>
-<p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">Twenty-five prophets are named in the Qur'an — one unbroken message handed from Adam to Muhammad ﷺ. Tap any link in the chain. No faces, ever: each is a seal of light.</p>
+<p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">Twenty-five prophets are named in the Qur'an, one unbroken message handed from Adam to Muhammad ﷺ. Tap any link in the chain. No faces, ever: each is a seal of light.</p>
 <div class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-white/60">
 <span class="px-3 py-1 rounded-full border border-white/15">25 named in the Book</span>
 <span class="px-3 py-1 rounded-full border border-white/15">5 of firm resolve · أولو العزم</span>
@@ -155,7 +156,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <div class="rounded-2xl overflow-hidden" style="background:radial-gradient(circle at 50% 20%,rgba(201,162,39,.25),transparent 60%),linear-gradient(165deg,#14100A,#241D12)">
 <div class="px-6 py-9">
 <p class="font-amiri text-2xl mb-3" style="color:#F4D46A">مَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ</p>
-<p class="text-sm max-w-md mx-auto leading-relaxed" style="color:rgba(255,254,247,.8)">"We make no distinction between any of His messengers" (Al-Baqarah 2:285) — one chain, one Light. Their full stories live on the Path, told in order with every source.</p>
+<p class="text-sm max-w-md mx-auto leading-relaxed" style="color:rgba(255,254,247,.8)">"We make no distinction between any of His messengers" (Al-Baqarah 2:285), one chain, one Light. Their full stories live on the Path, told in order with every source.</p>
 <a href="index.html#timeline" class="inline-block mt-5 px-4 py-2 rounded-full font-semibold text-sm" style="background:#C9A227;color:#241D12">Walk their stories on the Path →</a>
 </div>
 </div>
@@ -173,30 +174,30 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 
 <script>
 const PROPHETS=[
-["Adam","آدم","The first man, the first prophet","Created by Allah's two hands; taught the names of all things; father of humanity. He slipped, he repented, he was chosen — the pattern of every child of his.","named 25 times",0],
+["Adam","آدم","The first man, the first prophet","Created by Allah's two hands; taught the names of all things; father of humanity. He slipped, he repented, he was chosen, the pattern of every child of his.","named 25 times",0],
 ["Idris","إدريس","Raised to a high station","Of the earliest generations, praised as steadfastly truthful; 'We raised him to a lofty place' (19:57).","named 2 times",0],
 ["Nuh","نوح","950 years of calling","The first messenger to a nation drowning in idols. An ark built on dry land, a flood that reset the world, and patience that became proverbial.","named 43 times",1],
 ["Hud","هود","Sent to towering 'Ad","To a people proud of their pillars and power: worship Allah alone. A barren wind ended what arrogance built.","named 7 times",0],
-["Salih","صالح","The she-camel of Thamud","To rock-carvers of the valley: a living miracle-camel, a test of restraint — and the cry that followed its killing.","named 9 times",0],
+["Salih","صالح","The she-camel of Thamud","To rock-carvers of the valley: a living miracle-camel, a test of restraint, and the cry that followed its killing.","named 9 times",0],
 ["Ibrahim","إبراهيم","The intimate friend · Khalilullah","Smasher of idols, survivor of the fire, builder of the Kaaba with his son. Father of prophets: nearly every link after him is his line.","named 69 times",1],
 ["Lut","لوط","Sent to the cities of the plain","Ibrahim's nephew, sent to a people of open transgression; saved with his believers at dawn while the cities were overturned.","named 27 times",0],
 ["Ismail","إسماعيل","The sacrifice ransomed","Left as an infant by the well of Zamzam; offered himself when his father dreamed the command; co-builder of the House. Ancestor of the final Prophet ﷺ.","named 12 times",0],
 ["Ishaq","إسحاق","The laughing promise","Announced to Ibrahim and Sarah in their old age by angel guests. Through him: Yaqub and the prophets of Bani Israil.","named 17 times",0],
 ["Yaqub","يعقوب","Israil · father of the twelve","Patriarch whose patience over a lost son became scripture's definition of 'beautiful patience' (sabrun jamil).","named 16 times",0],
 ["Yusuf","يوسف","The most beautiful of stories","From the well to the prison to the treasury of Egypt; the dream that took decades to come true and the forgiveness that outshone it.","named 27 times",0],
-["Ayyub","أيوب","Patience under ruin","Wealth, children, health — all stripped away; the tongue never once complained of its Lord. 'Excellent servant! Ever turning back' (38:44).","named 4 times",0],
+["Ayyub","أيوب","Patience under ruin","Wealth, children, health, all stripped away; the tongue never once complained of its Lord. 'Excellent servant! Ever turning back' (38:44).","named 4 times",0],
 ["Shuayb","شعيب","Preacher to the cheating scales","To Madyan, the merchants who shaved the measure: honesty in the marketplace is worship, and fraud is a nation-breaking sin.","named 11 times",0],
 ["Musa","موسى","Spoken to directly · Kalimullah","Drawn from the river to be raised by his enemy; the staff, the sea, the Sinai. No name is repeated in the Qur'an more often.","named 136 times",1],
-["Harun","هارون","The eloquent brother","Given as answer to Musa's own prayer — a prophet requested and granted, partner in the confrontation with Pharaoh.","named 20 times",0],
+["Harun","هارون","The eloquent brother","Given as answer to Musa's own prayer, a prophet requested and granted, partner in the confrontation with Pharaoh.","named 20 times",0],
 ["Dhul-Kifl","ذو الكفل","Of the patient ones","Named among the steadfast and righteous (21:85); many scholars place him among the prophets of Bani Israil.","named 2 times",0],
 ["Dawud","داود","The iron-softening king","Slayer of Jalut, given the Zabur and a voice the mountains echoed; a kingdom held with a worshipper's heart.","named 16 times",0],
-["Sulayman","سليمان","The kingdom like no other after","Wind at his command, jinn in his workforce, the speech of birds and ants understood — and the prayer that it all be a trial he passes.","named 17 times",0],
+["Sulayman","سليمان","The kingdom like no other after","Wind at his command, jinn in his workforce, the speech of birds and ants understood, and the prayer that it all be a trial he passes.","named 17 times",0],
 ["Ilyas","إلياس","Against the cult of Baal","Sent to a people worshipping Baal: 'Do you call upon Baal and abandon the best of creators?' (37:125).","named 3 times",0],
 ["Alyasa","اليسع","Of the excellent ones","Successor in the line of Bani Israil's prophets, counted 'among the excellent' (38:48).","named 2 times",0],
-["Yunus","يونس","The companion of the whale","He left his city before permission came; three darknesses — night, sea, whale — and the du'a that every distressed soul has borrowed since (21:87).","named 4 times",0],
+["Yunus","يونس","The companion of the whale","He left his city before permission came; three darknesses, night, sea, whale, and the du'a that every distressed soul has borrowed since (21:87).","named 4 times",0],
 ["Zakariyya","زكريا","The whispered prayer","Guardian of Maryam; an old man who prayed in secret for an heir and was answered with Yahya.","named 7 times",0],
-["Yahya","يحيى","A name never given before","Announced by angels, wise while still a boy, 'compassion from Us and purity' (19:13) — and a martyr's end.","named 5 times",0],
-["Isa","عيسى","Word of Allah, son of Maryam","Born of no father, speaking from the cradle, healing by Allah's leave; neither more than a servant nor less than a miracle — and he will return.","named 25 times",1],
+["Yahya","يحيى","A name never given before","Announced by angels, wise while still a boy, 'compassion from Us and purity' (19:13), and a martyr's end.","named 5 times",0],
+["Isa","عيسى","Word of Allah, son of Maryam","Born of no father, speaking from the cradle, healing by Allah's leave; neither more than a servant nor less than a miracle, and he will return.","named 25 times",1],
 ];
 const chain=document.getElementById("chain");
 chain.innerHTML = PROPHETS.map((p,i)=>`
@@ -221,8 +222,8 @@ chain.innerHTML = PROPHETS.map((p,i)=>`
 </button>
 <div class="pdetail" id="pd-24"><div class="inner">
   <h3>Muhammad ﷺ · مُحَمَّد</h3>
-  <div class="line">Khatam an-Nabiyyin — the Seal of the Prophets (33:40)</div>
-  <p>Orphan of Makkah, trusted before he was believed, and at forty the cave of Hira filled with the first word: Iqra. Twenty-three years of revelation completed the one message every name above him carried — and sealed it. "We have not sent you except as a mercy to the worlds" (21:107). His life is this Codex's entire Seerah, told chapter by chapter on the Path.</p>
+  <div class="line">Khatam an-Nabiyyin, the Seal of the Prophets (33:40)</div>
+  <p>Orphan of Makkah, trusted before he was believed, and at forty the cave of Hira filled with the first word: Iqra. Twenty-three years of revelation completed the one message every name above him carried, and sealed it. "We have not sent you except as a mercy to the worlds" (21:107). His life is this Codex's entire Seerah, told chapter by chapter on the Path.</p>
   <span class="mention">named 4 times as Muhammad · once as Ahmad (61:6)</span>
 </div></div>`;
 

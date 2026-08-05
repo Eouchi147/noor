@@ -306,11 +306,11 @@ var FAST=/[?&]fast=1/.test(location.search);
 var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 var BASE=FAST?4200:56000;
 var P=[
- {n:"Fajr",  a:"الفجر",  s:.005,e:.115},
- {n:"Dhuhr", a:"الظهر",  s:.30, e:.41},
- {n:"Asr",   a:"العصر",  s:.445,e:.555},
+ {n:"Fajr", a:"الفجر", s:.005,e:.115},
+ {n:"Dhuhr", a:"الظهر", s:.30, e:.41},
+ {n:"Asr",  a:"العصر", s:.445,e:.555},
  {n:"Maghrib",a:"المغرب",s:.60, e:.71},
- {n:"Isha",  a:"العشاء", s:.80, e:.93}
+ {n:"Isha", a:"العشاء", s:.80, e:.93}
 ];
 var scene=qs("#scene"),fx=qs("#fx"),flashEl=qs("#flash"),sun=qs("#sun"),moon=qs("#moon"),
  sAmb=qs(".sAmb"),sHalo=qs(".sHalo"),Ldawn=qs("#Ldawn"),Lday=qs("#Lday"),Ldusk=qs("#Ldusk"),

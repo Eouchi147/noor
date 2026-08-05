@@ -2,402 +2,168 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="robots" content="noindex, nofollow"/>
 <meta name="theme-color" content="#04060F"/>
 <title>Guardian Console · NOOR Codex of Light</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<script src="sponsor.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="markets.js" defer></script>
 <style>
-[hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}
-:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--night:#0B1230}
-*{box-sizing:border-box}
-body{margin:0;background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--night:#0B1230;--sage:#8BA888}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:linear-gradient(178deg,#0a0f24,#0B1230 45%,#131c3f);min-height:100vh;color:var(--parchment);font-family:Inter,system-ui,sans-serif}
 .amiri{font-family:Amiri,serif}
-#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(44,36,22,.07)}
-.hwrap{max-width:66rem;margin:0 auto;padding:0 1rem;height:56px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
-.nmark{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4)}
-.ltag{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
-.owner{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8a6d1a;border:1px solid rgba(201,162,39,.45);border-radius:999px;padding:.28rem .7rem;background:rgba(201,162,39,.07)}
-main{max-width:66rem;margin:0 auto;padding:1.6rem 1rem 4rem}
-h1{font-size:1.55rem;margin:.6rem 0 .2rem}
-.sub{font-size:.82rem;color:rgba(44,36,22,.62);line-height:1.7;max-width:46rem}
-.grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.4rem}
-@media(min-width:960px){.grid{grid-template-columns:1.3fr .8fr}}
-.card{background:#fff;border:1px solid rgba(201,162,39,.3);border-radius:16px;padding:1.05rem 1.15rem}
-.k{font-size:.66rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8a6d1a}
-label{display:block;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a6d1a;margin:.7rem 0 .2rem}
-input[type=text],input[type=url],input[type=date],select,textarea.tzs{width:100%;border:1.5px solid rgba(44,36,22,.18);border-radius:10px;padding:.5rem .7rem;font-size:16px;background:#FFFDF6;color:var(--ink);font-family:inherit}
-textarea.tzs{font-size:.72rem;font-family:ui-monospace,Menlo,monospace;line-height:1.5}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.14)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-.sw{display:flex;align-items:center;gap:.55rem;margin-top:.6rem;font-size:.78rem;font-weight:600}
-.sw input{width:1.1rem;height:1.1rem;accent-color:#C9A227;margin:0;flex:none}
-.hint{font-size:.68rem;color:rgba(44,36,22,.5);line-height:1.6;margin-top:.3rem}
-.count{font-size:.64rem;color:rgba(44,36,22,.45);text-align:right;margin-top:.12rem}
-.count.over{color:#8a2c1d;font-weight:700}
-#status{display:flex;gap:.6rem;align-items:flex-start;border-radius:12px;padding:.65rem .8rem;font-size:.76rem;line-height:1.6;margin-top:1rem}
-#status.live{background:rgba(63,122,77,.1);border:1px solid rgba(63,122,77,.35);color:#2c5a38}
-#status.dark{background:rgba(44,36,22,.05);border:1px solid rgba(44,36,22,.15);color:rgba(44,36,22,.65)}
-.mcard{border:1.5px solid rgba(201,162,39,.35);border-radius:14px;padding:.9rem 1rem;margin-top:.9rem;background:linear-gradient(180deg,#fff,#FFFDF4)}
-.mcard.live-m{border-color:rgba(63,122,77,.5);box-shadow:0 0 0 3px rgba(63,122,77,.08)}
-.mhead{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.mtag{font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.4);color:#8a6d1a;border-radius:999px;padding:.2rem .6rem}
-.mlbl{font-weight:800;font-size:.92rem}
-.mstate{font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-left:auto}
-.mstate.on{color:#2c5a38}.mstate.off{color:rgba(44,36,22,.4)}
-.ico{border:1.5px solid rgba(44,36,22,.22);background:#fff;border-radius:8px;width:28px;height:28px;font-size:.8rem;cursor:pointer;color:rgba(44,36,22,.6)}
-.ico:hover{border-color:var(--gold);color:var(--ink)}
-.ico.del:hover{border-color:#8a2c1d;color:#8a2c1d}
-.chk{display:flex;gap:.55rem;align-items:flex-start;font-size:.76rem;line-height:1.5;color:rgba(44,36,22,.82);padding:.28rem 0}
-.chk input{flex:none;width:1.05rem;height:1.05rem;margin-top:.1rem;accent-color:#C9A227}
-.chk b{color:#8a2c1d}
-details.vetbox{margin-top:.7rem;border:1px dashed rgba(201,162,39,.5);border-radius:10px;padding:.5rem .7rem;background:rgba(201,162,39,.04)}
-details.vetbox summary{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6d1a;cursor:pointer}
-details.mtch{margin-top:.6rem;border:1px solid rgba(44,36,22,.12);border-radius:10px;padding:.5rem .7rem}
-details.mtch summary{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(44,36,22,.55);cursor:pointer}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px;padding:.5rem 1.2rem;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;font-family:inherit;transition:transform .15s}
-.btn.gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 5px 16px rgba(201,162,39,.32)}
-.btn.ghost{background:transparent;border:1.5px solid rgba(44,36,22,.25);color:var(--ink)}
-.btn.small{min-height:34px;padding:.3rem .8rem;font-size:.72rem}
-.btn:hover{transform:translateY(-1px)}
-.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.nightpane{margin-top:.6rem;border-radius:14px;background:linear-gradient(160deg,#04060F,#0B1230 55%,#17224e);padding:1rem;min-height:64px}
-.pvlabel{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(44,36,22,.4);font-weight:800;margin-top:1rem}
-ol.flow{margin:.5rem 0 0;padding-left:1.15rem;font-size:.78rem;line-height:1.75;color:rgba(44,36,22,.75)}
-ol.flow b{color:var(--ink)}
-code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem}
-pre{background:#1A160F;color:#F4E3A1;border-radius:10px;padding:.7rem .8rem;overflow-x:auto;line-height:1.6;user-select:all;-webkit-user-select:all}
-textarea#out{width:100%;height:230px;border:1.5px solid rgba(44,36,22,.18);border-radius:10px;background:#FFFDF6;font-family:ui-monospace,Menlo,monospace;font-size:.66rem;line-height:1.5;padding:.6rem;color:var(--ink)}
-.warnline{font-size:.72rem;color:#8a2c1d;font-weight:600;margin-top:.4rem;min-height:1em;line-height:1.6}
-hr{border:none;border-top:1px solid rgba(201,162,39,.25);margin:1rem 0}
-.addrow{display:flex;gap:.6rem;margin-top:.8rem;align-items:center}
-.addrow select{flex:1}
+.wrap{max-width:64rem;margin:0 auto;padding:1.2rem 1rem 5rem}
+header.bar{display:flex;align-items:center;justify-content:space-between;padding:.4rem 0 1.2rem}
+.logo{display:flex;gap:.6rem;align-items:center;color:var(--gold);font-weight:800;text-decoration:none}
+.logo .n{width:34px;height:34px;border-radius:999px;background:#0a0f24;border:1.5px solid rgba(233,200,106,.5);display:grid;place-items:center;font-family:Amiri,serif;font-size:1.1rem}
+a.site{color:rgba(255,254,247,.55);font-size:.75rem;text-decoration:none;border:1px solid rgba(255,254,247,.2);border-radius:999px;padding:.3rem .8rem}
+/* login */
+.gate{max-width:22rem;margin:9vh auto 0;text-align:center}
+.gate .lock{font-size:2.2rem;filter:drop-shadow(0 0 16px rgba(233,200,106,.5))}
+.gate h1{font-size:1.25rem;margin:.6rem 0 .2rem}
+.gate p{font-size:.8rem;color:rgba(255,254,247,.55);line-height:1.6}
+.gate input{width:100%;margin-top:1rem;background:rgba(255,254,247,.06);border:1.5px solid rgba(233,200,106,.3);border-radius:12px;padding:.75rem .9rem;font-size:16px;color:var(--parchment);outline:none;text-align:center}
+.gate input:focus{border-color:var(--gold)}
+.gate button{width:100%;margin-top:.7rem;background:linear-gradient(160deg,#E9C86A,#C9A227);border:0;border-radius:12px;padding:.75rem;font-weight:800;font-size:.9rem;color:#241D12;cursor:pointer;font-family:inherit}
+.gate .err{color:#f87171;font-size:.75rem;margin-top:.6rem;min-height:1em}
+.gate .setup{margin-top:1.4rem;text-align:left;font-size:.72rem;color:rgba(255,254,247,.5);border:1px dashed rgba(233,200,106,.3);border-radius:12px;padding:.9rem 1rem;line-height:1.7}
+.gate .setup b{color:var(--gold-hi)}
+code{background:rgba(255,254,247,.08);padding:.1rem .35rem;border-radius:6px;font-size:.92em}
+/* dashboard */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.7rem;margin:.4rem 0 1.4rem}
+.stat{background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:16px;padding:.9rem 1rem}
+.stat .v{font-size:1.5rem;font-weight:800;color:var(--gold-hi)}
+.stat .l{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.5);margin-top:.15rem}
+h2.sec{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:1.6rem 0 .7rem}
+.panel{background:rgba(255,254,247,.04);border:1px solid rgba(255,254,247,.1);border-radius:16px;padding:1rem 1.1rem}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th{text-align:left;color:rgba(255,254,247,.45);font-weight:600;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .5rem;border-bottom:1px solid rgba(255,254,247,.1)}
+td{padding:.5rem;border-bottom:1px solid rgba(255,254,247,.05);color:rgba(255,254,247,.8)}
+.pill{display:inline-block;border-radius:999px;padding:.1rem .5rem;font-size:.62rem;font-weight:700}
+.pill.on{background:rgba(139,168,136,.2);color:#a7d3a2}.pill.off{background:rgba(248,113,113,.15);color:#f8a3a3}.pill.wait{background:rgba(233,200,106,.15);color:var(--gold-hi)}
+.mkts{display:grid;grid-template-columns:repeat(auto-fill,minmax(11.5rem,1fr));gap:.5rem}
+.mkt{border:1px solid rgba(255,254,247,.1);border-radius:12px;padding:.55rem .7rem;font-size:.72rem;display:flex;justify-content:space-between;gap:.4rem;align-items:center}
+.mkt b{font-weight:600;color:rgba(255,254,247,.85)}
+.mkt .t{color:var(--gold-hi);font-weight:700;white-space:nowrap}
+.mkt a{color:rgba(255,254,247,.4);text-decoration:none;font-size:.62rem}
+.mkt a:hover{color:var(--gold)}
+.check{display:flex;gap:.6rem;align-items:flex-start;font-size:.78rem;color:rgba(255,254,247,.75);padding:.35rem 0;line-height:1.55}
+.check .ok{color:#a7d3a2}.check .no{color:#f8a3a3}
+.linkrow{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.8rem}
+.linkrow a{border:1px solid rgba(233,200,106,.35);color:var(--gold-hi);border-radius:999px;padding:.4rem .9rem;font-size:.74rem;font-weight:700;text-decoration:none}
+.linkrow a:hover{background:rgba(233,200,106,.1)}
+.muted{font-size:.7rem;color:rgba(255,254,247,.4);line-height:1.6}
+button.ghost{background:none;border:1px solid rgba(255,254,247,.2);color:rgba(255,254,247,.6);border-radius:999px;padding:.3rem .8rem;font-size:.72rem;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
-<header id="site-header">
-<div class="hwrap">
-<a class="logo" href="index.html"><span class="nmark">ن</span><span><span class="amiri" style="font-size:1.1rem;display:block;line-height:1">نُور</span><span class="ltag">Guardian Console</span></span></a>
-<span class="owner">Owner only · not linked anywhere</span>
-</div>
+<div class="wrap">
+<header class="bar">
+<a class="logo" href="index.html"><span class="n">ن</span> Guardian Console</a>
+<a class="site" href="index.html">← noorcodex.com</a>
 </header>
 
-<main>
-<p class="k">The Codex of Light · control room</p>
-<h1>Guardian Console</h1>
-<p class="sub">One slot, several markets, several revenues: each market carries its own Guardian, vetted separately, priced separately. A reader's market is detected on their own device (typed domain, browser language, clock); nothing is sent or stored, so readers stay untracked. This page holds no keys and publishes nothing by itself; nothing changes on the Codex until <b>you</b> commit the generated <code>sponsor.js</code> and push. Your push is the final word.</p>
-
-<div id="status" class="dark"><span>◈</span><span id="statusTx">Loading current configuration...</span></div>
-
-<div class="grid">
-<div>
-
-<div class="card">
-<p class="k">1 · Markets · first match wins, top to bottom</p>
-<div id="mkts"></div>
-<div class="addrow">
-<select id="addSel">
-<option value="CA">Canada · noorcodex.ca + Canadian readers</option>
-<option value="US">United States</option>
-<option value="GB">United Kingdom</option>
-<option value="EU">Europe</option>
-<option value="MENA">Gulf & MENA</option>
-<option value="GLOBAL">Worldwide · catch-all for everyone else</option>
-<option value="CUSTOM">Custom market (empty matchers)</option>
-</select>
-<button class="btn ghost small" id="addBtn">+ Add market</button>
-</div>
-<p class="hint">Keep a Worldwide catch-all last so every reader outside your sold markets can still be monetized. A market with no active Guardian simply shows nothing.</p>
-</div>
-
-<div class="card" style="margin-top:1rem">
-<p class="k">2 · Generate and publish</p>
-<p class="warnline" id="why"></p>
-<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">
-<button class="btn gold" id="gen" disabled>Generate sponsor.js</button>
-<button class="btn ghost" id="dl" disabled>Download</button>
-<button class="btn ghost" id="cp" disabled>Copy</button>
-</div>
-<div id="pubSteps" hidden>
-<hr/>
-<p class="hint" style="font-size:.76rem;color:rgba(44,36,22,.75)">Replace <code>sponsor.js</code> at the root of your repo with the downloaded file, then in Terminal:</p>
-<pre id="pubCmd"></pre>
-<p class="hint">Vercel redeploys on push; Guardians appear within about a minute. To take one down: uncheck its Active box, generate again, push again.</p>
-<details style="margin-top:.6rem"><summary style="font-size:.72rem;font-weight:700;cursor:pointer">Inspect the generated file</summary>
-<textarea id="out" readonly spellcheck="false"></textarea></details>
+<!-- LOGIN GATE -->
+<div class="gate" id="gate">
+<div class="lock">🗝️</div>
+<h1>Owner's key required</h1>
+<p>This console controls the Guardians, the regions, and the money. One key exists.</p>
+<input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password"/>
+<button id="enter">Unlock the Codex</button>
+<p class="err" id="err"></p>
+<div class="setup" id="setupHint" hidden>
+<b>First-time setup (one time, 2 minutes):</b><br/>
+In Vercel → your project → Settings → <b>Environment Variables</b>, add:<br/>
+1. <code>ADMIN_PASSWORD</code>, your chosen password (long!)<br/>
+2. <code>ADMIN_SECRET</code>, any random 40+ characters<br/>
+3. <code>STRIPE_SECRET_KEY</code>, from your Stripe dashboard (starts <code>sk_live_</code>)<br/>
+Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 </div>
 </div>
 
-</div>
-<div>
-
-<div class="card">
-<p class="k">Live preview · exactly as readers see it</p>
-<label for="pvSel">Preview as a reader in</label>
-<select id="pvSel"></select>
-<p class="pvlabel" style="margin-top:.7rem">Line of honor · appears under the header of this very page ↑</p>
-<p class="pvlabel">The About seal</p>
-<div class="nightpane"><div id="sponsor-slot"></div></div>
-<p class="hint">Both previews use the real renderer from <code>sponsor.js</code>, not a copy.</p>
+<!-- DASHBOARD -->
+<div id="dash" hidden>
+<div class="stats">
+<div class="stat"><div class="v" id="s-mrr">·</div><div class="l">Monthly revenue</div></div>
+<div class="stat"><div class="v" id="s-active">·</div><div class="l">Active Guardians</div></div>
+<div class="stat"><div class="v" id="s-open">·</div><div class="l">Regions open</div></div>
+<div class="stat"><div class="v" id="s-yearly">·</div><div class="l">Yearly run-rate</div></div>
 </div>
 
-<div class="card" style="margin-top:1rem">
-<p class="k">How a Guardian happens</p>
-<ol class="flow">
-<li>Application arrives at <b>samkeamy@gmail.com</b> from the <a href="sponsor.html">Become a Guardian</a> page, naming its market.</li>
-<li>You vet it against the charter. Your review, your judgment, your final word.</li>
-<li>You agree on the month and the rate for that market directly with them.</li>
-<li>Walk that market's checklist here, generate, replace the file, push.</li>
-<li>Several markets can be live at once: one Guardian each, one revenue each.</li>
-</ol>
+<h2 class="sec">System</h2>
+<div class="panel" id="syschecks"></div>
+<div class="linkrow">
+<a href="https://dashboard.stripe.com/subscriptions" target="_blank" rel="noopener">Stripe · subscriptions ↗</a>
+<a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe · payments ↗</a>
+<a href="https://dashboard.stripe.com/products/prod_V0xxFgmX793e9L" target="_blank" rel="noopener">Stripe · Guardian product ↗</a>
+<a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Vercel ↗</a>
 </div>
 
-<div class="card" style="margin-top:1rem">
-<p class="k">Online payment (optional, off until you enable it)</p>
-<ol class="flow">
-<li>In <b>Stripe</b>: create a monthly recurring Price per market (they can differ: Canada premium, Worldwide standard). Copy each <code>price_...</code> id.</li>
-<li>In <b>Vercel</b>: Project → Settings → Environment Variables. Add <code>STRIPE_SECRET_KEY</code>, then <code>SPONSOR_PRICE_ID_CA</code>, <code>SPONSOR_PRICE_ID_GLOBAL</code>, ... (or a single <code>SPONSOR_PRICE_ID</code> fallback). Redeploy.</li>
-<li>The payment button on the application page turns on by itself and charges the applicant's chosen market. Until then, invoice or e-transfer works fine.</li>
-</ol>
-<p class="hint">Keys live only in Vercel env vars, never in the repo, never in this page.</p>
+<h2 class="sec">Guardians & money</h2>
+<div class="panel">
+<table id="gtable"><thead><tr><th>Region</th><th>Sponsor</th><th>Status</th><th>$/mo</th><th>Renews</th></tr></thead><tbody></tbody></table>
+<p class="muted" id="gempty" hidden>No paid Guardians yet. Every region below is an open lamp, when someone completes checkout, they appear here automatically with their region attached.</p>
+<p class="muted" style="margin-top:.6rem">To put an approved Guardian's seal on the site: edit <code>sponsor.js</code> → <code>NOOR_GUARDIANS</code> (one entry: name, url, line, dates, halalAttested) and deploy. Cancellations/refunds: Stripe dashboard.</p>
 </div>
 
+<h2 class="sec">All regions <span style="color:rgba(255,254,247,.4);text-transform:none;letter-spacing:0" id="mcount"></span></h2>
+<div class="panel"><div class="mkts" id="mkts"></div>
+<p class="muted" style="margin-top:.8rem">Preview any region's view of the site: its link opens the homepage exactly as that region sees it. Add or re-tier regions by editing <code>markets.js</code>, one line each.</p></div>
+
+<p style="margin-top:1.6rem"><button class="ghost" id="logout">Lock the console</button></p>
 </div>
 </div>
-</main>
 
 <script>
 (function(){
-"use strict";
 var $=function(id){return document.getElementById(id)};
-var MARK_A="/* ===== GUARDIAN CONFIG : do not edit by hand, use admin.html ===== */";
-var MARK_B="/* ===== END GUARDIAN CONFIG ===== */";
-var VET_TEXTS=[
- ["No <b>riba</b>","not an interest-based lender, conventional credit product, or predatory financier."],
- ["No <b>gambling</b>","no betting, lotteries, games of chance, speculative schemes."],
- ["No <b>intoxicants</b>","no alcohol, recreational drugs, tobacco or vaping."],
- ["No <b>haram food</b>","no pork or non-halal meat products."],
- ["No <b>indecency</b>","no adult content, immodest imagery, dating products."],
- ["No <b>deception</b>","honest claims, no dark patterns, no harvesting of reader data."],
- ["Exact words approved","I read this market's name and one-line message above, word by word, and approve this precise text."],
- ["Support, not influence","the content of the Codex changes for no one, and readers are never tracked."]
-];
-var PRESETS={
- CA:{id:"CA",label:"Canada",match:{domains:["noorcodex.ca","www.noorcodex.ca"],regions:["CA"],timezones:["America/St_Johns","America/Halifax","America/Moncton","America/Goose_Bay","America/Toronto","America/Montreal","America/Winnipeg","America/Regina","America/Edmonton","America/Vancouver","America/Whitehorse","America/Yellowknife","America/Iqaluit"],catchAll:false}},
- US:{id:"US",label:"United States",match:{domains:[],regions:["US"],timezones:["America/New_York","America/Detroit","America/Chicago","America/Denver","America/Phoenix","America/Los_Angeles","America/Anchorage","Pacific/Honolulu"],catchAll:false}},
- GB:{id:"GB",label:"United Kingdom",match:{domains:[],regions:["GB"],timezones:["Europe/London"],catchAll:false}},
- EU:{id:"EU",label:"Europe",match:{domains:[],regions:["FR","DE","NL","BE","ES","IT","SE","NO","DK","IE","AT","CH","PT","FI","PL"],timezones:["Europe/Paris","Europe/Berlin","Europe/Amsterdam","Europe/Brussels","Europe/Madrid","Europe/Rome","Europe/Stockholm","Europe/Oslo","Europe/Copenhagen","Europe/Dublin","Europe/Vienna","Europe/Zurich","Europe/Lisbon","Europe/Helsinki","Europe/Warsaw"],catchAll:false}},
- MENA:{id:"MENA",label:"Gulf & MENA",match:{domains:[],regions:["AE","SA","QA","KW","BH","OM","EG","JO","LB","MA","DZ","TN"],timezones:["Asia/Dubai","Asia/Riyadh","Asia/Qatar","Asia/Kuwait","Asia/Bahrain","Asia/Muscat","Africa/Cairo","Asia/Amman","Asia/Beirut","Africa/Casablanca","Africa/Algiers","Africa/Tunis"],catchAll:false}},
- GLOBAL:{id:"GLOBAL",label:"Worldwide",match:{domains:[],regions:[],timezones:[],catchAll:true}},
- CUSTOM:{id:"MKT",label:"Custom market",match:{domains:[],regions:[],timezones:[],catchAll:false}}
-};
-var MKTS=[];        /* state: market objects + vets:[8 bools] */
-var generated="";
+function api(path,body){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(body||{})}).then(function(r){return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j}})})}
 
-function blank(preset){
-  var p=JSON.parse(JSON.stringify(preset));
-  return { id:p.id,label:p.label,match:p.match,active:false,name:"",url:"",line:"",start:"",end:"",
-           placements:{bar:true,aboutSeal:true},halalAttested:false,approvedBy:"",vets:[false,false,false,false,false,false,false,false] };
-}
-function uniqueId(base){
-  var id=base,n=2,taken=MKTS.map(function(m){return m.id});
-  while(taken.indexOf(id)>=0){id=base+n;n++}
-  return id;
-}
-function noDashStr(s){return String(s||"").replace(/[\u2014\u2013]/g,"-")}
-function csv(a){return (a||[]).join(", ")}
-function unCsv(s){return String(s||"").split(",").map(function(x){return x.trim()}).filter(Boolean)}
-function vetsAll(m){return m.vets.every(Boolean)}
-function isLive(m){
-  if(!m.active||!m.name||!vetsAll(m))return false;
-  var t=new Date().toISOString().slice(0,10);
-  if(m.start&&t<m.start)return false;
-  if(m.end&&t>=m.end)return false;
-  return true;
-}
-function problems(m){
-  var p=[];
-  if(!m.active)return p;
-  if(!m.name)p.push("name required");
-  if(m.url&&!/^https:\/\//.test(m.url))p.push("website must start with https://");
-  if(m.line.length>90)p.push("line over 90 characters");
-  if(m.start&&m.end&&m.end<=m.start)p.push("end date must be after start");
-  if(!vetsAll(m))p.push("halal checklist incomplete");
-  if(!m.approvedBy)p.push("approval unsigned");
-  return p;
-}
+function showDash(){$("gate").hidden=true;$("dash").hidden=false;load()}
+function money(n){return "$"+(Math.round(n*100)/100).toLocaleString()}
 
-/* ---------- render market cards ---------- */
-function cardHtml(m,i){
-  var live=isLive(m);
-  var h='<div class="mcard'+(live?' live-m':'')+'" data-idx="'+i+'">';
-  h+='<div class="mhead"><span class="mtag">'+m.id+'</span><span class="mlbl">'+m.label+'</span>';
-  h+='<span class="mstate '+(live?'on':'off')+'">'+(live?'● live once pushed':'○ dark')+'</span>';
-  h+='<button class="ico" data-act="up" title="Match earlier">↑</button><button class="ico" data-act="down" title="Match later">↓</button><button class="ico del" data-act="del" title="Remove market">✕</button></div>';
-  h+='<div class="sw"><input type="checkbox" data-f="active" '+(m.active?'checked':'')+' id="ac'+i+'"/><label for="ac'+i+'" style="all:unset;font-size:.78rem;font-weight:700">Active (uncheck to take this Guardian down)</label></div>';
-  h+='<label>Guardian name</label><input type="text" data-f="name" maxlength="60" value="'+esca(m.name)+'" placeholder="Al-Amanah Halal Foods"/>';
-  h+='<label>Website (https only, or empty for unlinked)</label><input type="url" data-f="url" maxlength="200" value="'+esca(m.url)+'" placeholder="https://..."/>';
-  h+='<label>One-line message</label><input type="text" data-f="line" maxlength="90" value="'+esca(m.line)+'"/>';
-  h+='<div class="count'+(m.line.length>90?' over':'')+'">'+m.line.length+' / 90</div>';
-  h+='<div class="row2"><div><label>Starts (inclusive)</label><input type="date" data-f="start" value="'+m.start+'"/></div><div><label>Ends (exclusive)</label><input type="date" data-f="end" value="'+m.end+'"/></div></div>';
-  h+='<div class="hint">Leave dates empty for no limit. <button class="btn ghost small" data-act="month">Fill: this month</button></div>';
-  h+='<div class="sw"><input type="checkbox" data-f="bar" '+(m.placements.bar?'checked':'')+' id="pb'+i+'"/><label for="pb'+i+'" style="all:unset;font-size:.76rem;font-weight:600">Line of honor under every header</label></div>';
-  h+='<div class="sw"><input type="checkbox" data-f="seal" '+(m.placements.aboutSeal?'checked':'')+' id="ps'+i+'"/><label for="ps'+i+'" style="all:unset;font-size:.76rem;font-weight:600">Guardian seal in About</label></div>';
-  h+='<label>Approved by (your name, recorded in the file)</label><input type="text" data-f="approvedBy" maxlength="40" value="'+esca(m.approvedBy)+'" placeholder="Sam"/>';
-  h+='<details class="mtch"><summary>Who is in this market (matchers)</summary>';
-  h+='<label>Domains (exact hostnames, comma separated)</label><input type="text" data-f="domains" value="'+esca(csv(m.match.domains))+'" placeholder="noorcodex.ca, www.noorcodex.ca"/>';
-  h+='<label>Region codes from browser language (comma separated)</label><input type="text" data-f="regions" value="'+esca(csv(m.match.regions))+'" placeholder="CA"/>';
-  h+='<label>Timezones (IANA, comma separated)</label><textarea class="tzs" data-f="timezones" rows="2">'+esca(csv(m.match.timezones))+'</textarea>';
-  h+='<div class="sw"><input type="checkbox" data-f="catchAll" '+(m.match.catchAll?'checked':'')+' id="cA'+i+'"/><label for="cA'+i+'" style="all:unset;font-size:.76rem;font-weight:600">Catch-all: matches every reader no earlier market claimed</label></div>';
-  h+='</details>';
-  h+='<details class="vetbox"'+(m.active&&!vetsAll(m)?' open':'')+'><summary>Halal checklist · '+m.vets.filter(Boolean).length+'/8 · required before this market can go live</summary>';
-  for(var v=0;v<8;v++){
-    h+='<div class="chk"><input type="checkbox" class="vet" data-f="vet'+v+'" '+(m.vets[v]?'checked':'')+' id="v'+i+'x'+v+'"/><label for="v'+i+'x'+v+'" style="all:unset">'+VET_TEXTS[v][0]+': '+VET_TEXTS[v][1]+'</label></div>';
-  }
-  h+='<p class="hint">Walked per Guardian, per market, every time. Deliberately never saved.</p></details>';
-  h+='</div>';
-  return h;
-}
-function esca(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
-function renderCards(){
-  $("mkts").innerHTML=MKTS.map(cardHtml).join("");
-  var pv=$("pvSel"),cur=pv.value;
-  pv.innerHTML=MKTS.map(function(m){return '<option value="'+m.id+'">'+m.label+' ('+m.id+')</option>'}).join("");
-  if(MKTS.some(function(m){return m.id===cur}))pv.value=cur;
-}
-
-/* ---------- sync: state -> status, preview, gating ---------- */
-function pushToRenderer(){
-  if(!window.NOOR_SPONSORS)return;
-  NOOR_SPONSORS.markets=MKTS.map(function(m){
-    return { id:m.id,label:m.label,match:m.match,active:m.active,name:m.name,url:m.url,line:m.line,
-             start:m.start,end:m.end,placements:m.placements,halalAttested:vetsAll(m),approvedBy:m.approvedBy };
-  });
-}
-function sync(structural){
-  if(structural)renderCards();
-  pushToRenderer();
-  var liveList=MKTS.filter(isLive);
-  var st=$("status");
-  st.className=liveList.length?"live":"dark";
-  $("statusTx").innerHTML=MKTS.map(function(m){
-    var pr=problems(m);
-    if(isLive(m))return "<b>"+m.id+"</b>: LIVE once pushed, as \""+esca(m.name)+"\"";
-    if(m.active)return "<b>"+m.id+"</b>: dark ("+(pr.join("; ")||"outside its date window")+")";
-    return "<b>"+m.id+"</b>: off";
-  }).join(" · ")||"No markets configured.";
-  if(window.NOOR_SPONSOR_RENDER)NOOR_SPONSOR_RENDER(true,$("pvSel").value||undefined);
-  var bad=[];
-  MKTS.forEach(function(m){var pr=problems(m);if(pr.length)bad.push(m.id+": "+pr.join(", "))});
-  $("gen").disabled=bad.length>0;
-  $("why").textContent=bad.length?("Before generating · "+bad.join(" · ")):"";
-  $("dl").disabled=$("cp").disabled=!generated;
-}
-
-/* ---------- events (delegation) ---------- */
-$("mkts").addEventListener("input",function(e){
-  var card=e.target.closest(".mcard");if(!card)return;
-  var m=MKTS[+card.getAttribute("data-idx")],f=e.target.getAttribute("data-f");if(!m||!f)return;
-  var v=e.target.type==="checkbox"?e.target.checked:noDashStr(e.target.value);
-  if(e.target.type!=="checkbox")e.target.value=v;
-  if(f==="bar"||f==="seal"){m.placements[f==="bar"?"bar":"aboutSeal"]=v}
-  else if(f==="catchAll"){m.match.catchAll=v}
-  else if(f==="domains"||f==="regions"||f==="timezones"){m.match[f]=unCsv(v);if(f==="regions")m.match[f]=m.match[f].map(function(x){return x.toUpperCase()})}
-  else if(/^vet\d$/.test(f)){m.vets[+f.slice(3)]=v}
-  else{m[f]=v}
-  generated="";$("pubSteps").hidden=true;$("gen").textContent="Generate sponsor.js";
-  var structural=(e.target.type==="checkbox");
-  sync(structural);
-});
-$("mkts").addEventListener("click",function(e){
-  var b=e.target.closest("button[data-act]");if(!b)return;
-  e.preventDefault();
-  var card=b.closest(".mcard"),i=+card.getAttribute("data-idx"),act=b.getAttribute("data-act");
-  if(act==="month"){
-    var d=new Date(),y=d.getFullYear(),mo=d.getMonth(),p=function(n){return (n<10?"0":"")+n};
-    MKTS[i].start=y+"-"+p(mo+1)+"-01";
-    MKTS[i].end=(mo===11?y+1:y)+"-"+p((mo===11?0:mo+1)+1)+"-01";
-  }
-  else if(act==="up"&&i>0){var t=MKTS[i-1];MKTS[i-1]=MKTS[i];MKTS[i]=t}
-  else if(act==="down"&&i<MKTS.length-1){var t2=MKTS[i+1];MKTS[i+1]=MKTS[i];MKTS[i]=t2}
-  else if(act==="del"){
-    if(b.getAttribute("data-armed")){MKTS.splice(i,1)}
-    else{b.setAttribute("data-armed","1");b.textContent="✕?";setTimeout(function(){b.removeAttribute("data-armed");b.textContent="✕"},2500);sync(false);return}
-  }
-  generated="";$("pubSteps").hidden=true;$("gen").textContent="Generate sponsor.js";
-  sync(true);
-});
-$("addBtn").addEventListener("click",function(){
-  var m=blank(PRESETS[$("addSel").value]);
-  m.id=uniqueId(m.id);
-  MKTS.push(m);
-  generated="";sync(true);
-});
-$("pvSel").addEventListener("change",function(){sync(false)});
-
-/* ---------- generate ---------- */
-function j(s){return JSON.stringify(String(s==null?"":s))}
-function jarr(a){return JSON.stringify(a||[])}
-function buildBlock(){
-  var today=new Date().toISOString().slice(0,10);
-  var rows=MKTS.map(function(m){
-    var att=m.active&&vetsAll(m);
-    return "    {\n"+
-    "      id: "+j(m.id)+", label: "+j(m.label)+",\n"+
-    "      match: { domains: "+jarr(m.match.domains)+", regions: "+jarr(m.match.regions)+", timezones: "+jarr(m.match.timezones)+", catchAll: "+!!m.match.catchAll+" },\n"+
-    "      active: "+!!m.active+", name: "+j(m.name)+", url: "+j(m.url)+", line: "+j(m.line)+",\n"+
-    "      start: "+j(m.start)+", end: "+j(m.end)+",\n"+
-    "      placements: { bar: "+!!m.placements.bar+", aboutSeal: "+!!m.placements.aboutSeal+" },\n"+
-    "      halalAttested: "+att+(att?",  /* checklist walked "+today+(m.approvedBy?" by "+m.approvedBy.replace(/\*/g,""):"")+" */":",")+"\n"+
-    "      approvedBy: "+j(m.approvedBy)+"\n"+
-    "    }";
-  });
-  return MARK_A+"\nvar NOOR_SPONSORS = {\n  markets: [\n"+rows.join(",\n")+"\n  ]\n};\n"+MARK_B;
-}
-$("gen").addEventListener("click",function(){
-  fetch("sponsor.js",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
-  .then(function(src){
-    var a=src.indexOf(MARK_A),b=src.indexOf(MARK_B);
-    if(a<0||b<0)throw 0;
-    generated=src.slice(0,a)+buildBlock()+src.slice(b+MARK_B.length);
-    $("out").value=generated;
-    $("pubSteps").hidden=false;
-    var liveNames=MKTS.filter(isLive).map(function(m){return m.id+" "+m.name.replace(/"/g,"")});
-    $("pubCmd").textContent="cd ~/Desktop/noor && git add sponsor.js && git commit -m \"Guardians: "+(liveNames.join(", ")||"update")+"\" && git push origin main";
-    $("dl").disabled=$("cp").disabled=false;
-    $("gen").textContent="Generated ✓ (regenerate any time)";
+function load(){
+  fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.status===401){$("dash").hidden=true;$("gate").hidden=false;return null}return r.json()}).then(function(d){
+    if(!d)return;
+    $("s-mrr").textContent=money(d.mrr||0);
+    $("s-active").textContent=d.activeCount||0;
+    $("s-yearly").textContent=money((d.mrr||0)*12);
+    var ML=(window.NOOR_MARKETS&&NOOR_MARKETS.list)||[];
+    var taken={};(d.guardians||[]).forEach(function(g){if(g.status==="active"||g.status==="trialing")taken[g.market]=1});
+    $("s-open").textContent=ML.length-Object.keys(taken).length;
+    /* system checks */
+    var sys=[["Stripe key (payments can flow)",d.stripeConfigured],["Checkout endpoint live",d.checkoutEnabled],["Guardian product & 5 tier prices",true],["Owner lock (you are inside it)",true]];
+    $("syschecks").innerHTML=sys.map(function(c){return '<div class="check"><span class="'+(c[1]?"ok":"no")+'">'+(c[1]?"●":"○")+'</span><span>'+c[0]+(c[1]?"":', <b style="color:#f8a3a3">add STRIPE_SECRET_KEY in Vercel env & redeploy</b>')+"</span></div>"}).join("");
+    /* guardians table */
+    var tb=$("gtable").querySelector("tbody");
+    var gs=d.guardians||[];
+    tb.innerHTML=gs.map(function(g){
+      var cls=g.status==="active"||g.status==="trialing"?"on":(g.status==="past_due"?"wait":"off");
+      return "<tr><td><b>"+g.market+"</b></td><td>"+(g.name||g.email||"·")+"</td><td><span class='pill "+cls+"'>"+g.status+"</span></td><td>"+money(g.amount)+"</td><td>"+(g.renews||"·")+"</td></tr>"}).join("");
+    $("gempty").hidden=gs.length>0;
+    /* market grid */
+    var tp=(window.NOOR_MARKETS&&NOOR_MARKETS.tierPrices)||{};
+    $("mcount").textContent="· "+ML.length+" lamps";
+    $("mkts").innerHTML=ML.map(function(m){
+      var lit=taken[m.id];
+      return '<div class="mkt"><span>'+(lit?"✦ ":"")+'<b>'+m.label+'</b></span><span class="t">$'+tp[m.tier]+'</span><a href="index.html?noor-preview='+m.id+'" target="_blank">view</a></div>'}).join("");
   })
-  .catch(function(){$("why").textContent="Could not read sponsor.js from the server. Open this console from the deployed site (or a local server), not from a file:// path."});
-});
-$("dl").addEventListener("click",function(){
-  var b=new Blob([generated],{type:"text/javascript"});
-  var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="sponsor.js";
-  document.body.appendChild(a);a.click();a.remove();
-});
-$("cp").addEventListener("click",function(){
-  var done=function(){$("cp").textContent="Copied ✓";setTimeout(function(){$("cp").textContent="Copy"},1500)};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(generated).then(done)}
-  else{var t=$("out");$("pubSteps").hidden=false;t.select();document.execCommand("copy");done()}
-});
-
-/* ---------- boot ---------- */
-function boot(){
-  var src=(window.NOOR_SPONSORS&&NOOR_SPONSORS.markets)?NOOR_SPONSORS.markets:[];
-  MKTS=src.map(function(m){
-    var c=JSON.parse(JSON.stringify(m));
-    c.vets=[false,false,false,false,false,false,false,false];
-    c.placements=c.placements||{bar:true,aboutSeal:true};
-    c.match=c.match||{domains:[],regions:[],timezones:[],catchAll:false};
-    return c;
-  });
-  if(!MKTS.length){MKTS=[blank(PRESETS.CA),blank(PRESETS.GLOBAL)]}
-  sync(true);
 }
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
+
+$("enter").addEventListener("click",function(){
+  $("err").textContent="";
+  api("/api/admin-auth",{password:$("pw").value}).then(function(r){
+    if(r.ok&&r.j.ok){showDash()}
+    else if(r.status===501){$("err").textContent="Console not configured yet, see setup below.";$("setupHint").hidden=false}
+    else{$("err").textContent="That is not the key."}
+  }).catch(function(){$("err").textContent="Cannot reach the gate, deploy the api/ folder first."})
+});
+$("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("enter").click()});
+$("logout").addEventListener("click",function(){api("/api/admin-auth",{logout:true}).then(function(){location.reload()})});
+
+/* If a valid cookie already exists, go straight in */
+fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)showDash();else api("/api/admin-auth",{probe:true}).then(function(p){if(p.ok&&p.j&&p.j.configured===false)$("setupHint").hidden=false}).catch(function(){})}).catch(function(){});
 })();
 </script>
 </body>

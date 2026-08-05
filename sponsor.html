@@ -8,8 +8,9 @@
 <meta name="description" content="One sponsor at a time, vetted against strict halal criteria, supporting a free illuminated chronicle of Islam."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=10"/>
+<link rel="stylesheet" href="assets/tw.css?v=14"/>
 <script src="noor-fx.js" defer></script>
+<script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
 <style>[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
@@ -150,6 +151,27 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 <p class="lead" style="margin-top:1rem">Two more rules protect the Codex itself: the content of NOOR never changes for a sponsor, and the sponsorship is a gift of support, not a purchase of influence. If either rule is unacceptable to you, this is not your room.</p>
 </section>
 
+<section class="sec" id="reach">
+<p class="kick">The Reach</p>
+<h2>How many eyes will see your seal?</h2>
+<p class="lead">The Codex opened its doors on its own domain in <b>August 2026</b>, a Guardian today is ground-floor. Below is our <b>optimistic organic-growth projection</b> for daily readers as the library deepens (new rooms ship constantly: the Mushaf, the 25 Prophets, the Little Codex, Beauty's story…). These are <b>projections, not promises</b>, no one can guarantee traffic, and as real history accumulates, live counts will replace this chart.</p>
+<div class="card" aria-label="Projected daily readers, optimistic organic scenario">
+<div style="display:flex;align-items:flex-end;gap:6%;height:150px;padding:0 .3rem">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:3%"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:7%"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:16%"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:40%"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#E9C86A,#C9A227);border-radius:6px 6px 0 0;height:68%"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="background:linear-gradient(180deg,#F4D46A,#C9A227);border-radius:6px 6px 0 0;height:100%;box-shadow:0 0 18px rgba(233,200,106,.5)"></div></div>
+</div>
+<div style="display:flex;gap:6%;padding:.45rem .3rem 0;font-size:.6rem;color:rgba(44,36,22,.55);text-align:center;font-weight:600">
+<div style="flex:1">Launch<br/>~100/day</div><div style="flex:1">Month 3<br/>~800</div><div style="flex:1">Month 6<br/>~2,500</div><div style="flex:1">Year 1<br/>~8,000</div><div style="flex:1">18 months<br/>~18,000</div><div style="flex:1"><b style="color:#8a6d1a">Year 2<br/>~40,000/day</b></div>
+</div>
+</div>
+<p class="lead" style="margin-top:.9rem;font-size:.82rem">What that means for a Guardian: your region's readers see <b>only your seal</b>, on every page, every visit. A tier-1 region like the UK at the year-one mark would represent roughly <b>400-800 of those daily readers</b>, yours exclusively, in the calmest advertising environment on the internet: no competing ads, no banners, one line of light.</p>
+<p class="note">Assumptions: continued weekly content releases, normal search indexing, organic sharing within Muslim communities worldwide; no paid advertising included. Optimistic scenario. Traffic projections are estimates, not a guarantee of results; Guardianship is priced for patronage first, reach second.</p>
+</section>
+
 <section class="sec" id="apply">
 <p class="kick">Apply</p>
 <h2>Guardian application</h2>
@@ -189,6 +211,29 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 (function(){
 "use strict";
 var $=function(id){return document.getElementById(id)};
+/* Populate the region list from the market registry (~90 lamps) with live prices.
+   Runs on DOMContentLoaded so the deferred markets.js registry is loaded first. */
+document.addEventListener("DOMContentLoaded",function(){
+  var sel=$("f-market"); if(!sel||!window.NOOR_MARKETS) return;
+  var tp=NOOR_MARKETS.tierPrices||{};
+  var groups={metro:"Regions & metros",country:"Countries",lang:"Language communities",global:"Worldwide"};
+  var frag=document.createDocumentFragment(), og={};
+  NOOR_MARKETS.list.forEach(function(m){
+    var g=og[m.kind]||(og[m.kind]=(function(){var o=document.createElement("optgroup");o.label=groups[m.kind]||m.kind;frag.appendChild(o);return o})());
+    var o=document.createElement("option"); o.value=m.id; o.textContent=m.label+", $"+tp[m.tier]+"/mo"; g.appendChild(o);
+  });
+  sel.innerHTML=""; sel.appendChild(frag);
+  var want=null; try{want=new URLSearchParams(location.search).get("market")}catch(e){}
+  if(!want&&window.NOOR_SPONSOR_API){var mm=NOOR_SPONSOR_API.resolveMarket(NOOR_SPONSOR_API.signals());if(mm)want=mm.id}
+  if(want&&sel.querySelector('option[value="'+want+'"]')) sel.value=want;
+  var hint=document.createElement("p"); hint.id="price-hint"; hint.style.cssText="font-size:.78rem;color:#8a6d13;font-weight:600;margin:.4rem 0 0";
+  sel.parentNode.insertBefore(hint,sel.nextSibling);
+  function ph(){ var m=NOOR_MARKETS.list.filter(function(x){return x.id===sel.value})[0]; if(!m)return;
+    var cur=(NOOR_MARKETS.currencyOf||{})[m.id], lp=cur&&(NOOR_MARKETS.localPrices||{})[cur], sym=cur&&(NOOR_MARKETS.curSymbol||{})[cur];
+    var priceTxt = lp ? sym+lp[m.tier].toLocaleString()+"/month (billed in "+cur.toUpperCase()+", your own currency)" : "$"+tp[m.tier]+"/month (USD)";
+    hint.textContent="Exclusive Guardianship of “"+m.label+"”: "+priceTxt+", cancel anytime. One sponsor. Only readers there ever see your seal."; }
+  sel.addEventListener("change",ph); ph();
+});
 function gate(){ $("sendApp").disabled = !($("a1").checked && $("a2").checked); }
 ["a1","a2"].forEach(function(id){ $(id).addEventListener("change", gate); });
 $("sendApp").addEventListener("click", function(){
