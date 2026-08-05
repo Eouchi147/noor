@@ -24,3 +24,6 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 
 ## For organizations
 - [Embed licensing](https://noorcodex.com/license): masjids, Islamic schools, apps and websites can embed any NOOR room (Quran, Prophets, Arabic course, Kids, Pillars) by subscription; embedded rooms are ad-free and non-commercial.
+
+## Sister project
+- [NOOR Halal](https://noorhalal.ca): halal companion app from the same maker; the Codex and NOOR Halal share one house and one standard of care.
