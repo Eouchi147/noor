@@ -498,7 +498,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var today = new Date().toISOString().slice(0, 10);
     var first = 0;
     try { if (localStorage.getItem("noor_seen") !== today) { localStorage.setItem("noor_seen", today); first = 1; } } catch (e) {}
-    var payload = JSON.stringify({ p: location.pathname, n: first });
+    /* where this reader came from, as a coarse source name only:
+       never the full URL, never a query string, never an ID. */
+    var src = "";
+    try {
+      var q = (location.search.match(/[?&]s=([a-z0-9_-]{1,16})/i) || [])[1];
+      if (q) src = q.toLowerCase();
+      else if (document.referrer) {
+        var h = new URL(document.referrer).hostname.replace(/^www\./, "").toLowerCase();
+        src = h === location.hostname ? "" : h;
+      } else src = "direct";
+    } catch (e) {}
+    var payload = JSON.stringify({ p: location.pathname, n: first, s: src });
     if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([payload], { type: "application/json" }));
     else fetch("/api/beacon", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
   } catch (e) {}

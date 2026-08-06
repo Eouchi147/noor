@@ -23,9 +23,13 @@
   var TIER = w < 768 ? "mobile" : (coarse && w < 1200 ? "tablet" : "desktop");
   var CFG = {
     mobile:  { size: 256, wisps: 1, paperOp: .05, edgeOp: .42, wispOp: .16, dpr: 1 },
-    tablet:  { size: 384, wisps: 2, paperOp: .06, edgeOp: .5,  wispOp: .2,  dpr: 1.25 },
-    desktop: { size: 512, wisps: 3, paperOp: .07, edgeOp: .55, wispOp: .24, dpr: Math.min(devicePixelRatio || 1, 1.5) }
+    tablet:  { size: 384, wisps: 2, paperOp: .06, edgeOp: .46, wispOp: .15, dpr: 1.25 },
+    /* desktop screens are wide: the same wisp count reads as fog, not ink.
+       Fewer, fainter wisps keep the scene legible on 1280 to 2560 glass. */
+    desktop: { size: 512, wisps: 2, paperOp: .06, edgeOp: .40, wispOp: .12, dpr: Math.min(devicePixelRatio || 1, 1.5) }
   }[TIER];
+  /* short laptop windows: the smoke sits right on the art. Thin it further. */
+  if (TIER !== "mobile" && innerHeight < 820) { CFG.wispOp *= .8; CFG.edgeOp *= .88; }
   if (SOFT) { CFG.wisps = Math.max(1, CFG.wisps - 1); CFG.paperOp *= .8; CFG.edgeOp *= .7; CFG.wispOp *= .65; }
   document.documentElement.classList.add("ink-" + TIER);
 
@@ -141,6 +145,12 @@
   for (var i = 1; i <= CFG.wisps; i++) h += '<div class="ink-wisp w' + i + '"></div>';
   h += '<div class="ink-edge"></div>';
   stage.innerHTML = h;
+  /* the stage is absolute: if its host is not a positioning context the ink
+     escapes and paints down the page. Guarantee the anchor, always. */
+  var hcs = getComputedStyle(hero);
+  if (hcs.position === "static") hero.style.position = "relative";
+  if (hcs.overflow === "visible") hero.style.overflow = "hidden";
+
   /* under the UI captions, above the scene: before .hero-content */
   var content = hero.querySelector(".hero-content");
   hero.insertBefore(stage, content || null);

@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="The Madrasa classroom: study Islam properly, free forever. Eight tracks and forty-seven interactive lessons with quizzes, recitation, progress that remembers you, and a printable ijazah for every completed track."/>
+<meta name="description" content="The Madrasa classroom: study Islam properly, free forever. Sixteen tracks and one hundred and six interactive lessons, from the cradle to the academy, with quizzes, recitation, progress that remembers you, and a printable ijazah for every completed track."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
 <meta property="og:title" content="The Classroom · Study at the Madrasa of Light"/>
-<meta property="og:description" content="Eight tracks, forty-seven real lessons: reading Arabic, the Five Pillars, the prophets, worship in practice, belief, and the golden inheritance. Free for every person, forever."/>
+<meta property="og:description" content="Sixteen tracks, one hundred and six real lessons: the cradle years, reading Arabic, tajwid in full, the pillars, the prophets, character, fiqh, Arabic grammar, the sciences of Qur'an and hadith, and the history of the ummah. Free for every person, forever."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
@@ -31,7 +31,7 @@
 <script src="noor-fx.js" defer></script>
 <script src="noor-ink.js" defer></script>
 <script src="madrasa-data.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Madrasa of Light · Interactive Curriculum","url":"https://noorcodex.com/madrasa","description":"Eight tracks and forty-seven interactive lessons: reading Arabic, the Five Pillars, the prophets, worship in practice, belief, and golden-age Muslim science. Quizzes, progress and completion ijazahs.","provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT4H"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Madrasa of Light · Interactive Curriculum","url":"https://noorcodex.com/madrasa","description":"Sixteen tracks and one hundred and six interactive lessons for ages 0 to 18: the cradle years, reading Arabic, the complete science of tajwid, the pillars, the prophets, character, belief, fiqh, Arabic grammar, the sciences of Qur'an and hadith, and Islamic history. Quizzes, progress and completion ijazahs.","provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT19H"}}</script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}[hidden]{display:none!important}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#171d31;--lapis:#33507C}
@@ -52,6 +52,8 @@ body{background:linear-gradient(180deg,#FBF8EC,#FFFEF7 20rem)}
 /* staggered arrival */
 .trk{opacity:0;transform:translateY(16px)}
 .trk.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.trk.hit{box-shadow:0 0 0 2px rgba(201,162,39,.55),0 18px 44px rgba(60,48,20,.14)}
+.trk{scroll-margin-top:5.5rem}
 @media (prefers-reduced-motion:reduce){.trk{opacity:1;transform:none}.trk.in{transition:none}}
 /* lesson player refinement */
 .card{background:linear-gradient(175deg,#FFFEFA,#FDF9EE);border:1px solid rgba(160,130,50,.32);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 18px 44px rgba(60,48,20,.08);position:relative}
@@ -77,7 +79,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 .brand span{display:block;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(44,36,22,.45)}
 .backbtn{font-size:.72rem;font-weight:800;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.35rem .85rem;text-decoration:none;background:none;cursor:pointer;font-family:inherit}
 /* hero */
-#mhero{background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:2.2rem 1rem 2.4rem}
+#mhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:2.2rem 1rem 2.4rem}
 #mhero .ar{font-family:Amiri,serif;font-size:2rem;color:#F4D46A;filter:drop-shadow(0 0 16px rgba(244,212,106,.5))}
 #mhero h1{font-size:1.5rem;font-weight:800;margin:.3rem 0 0}
 #mhero p{font-size:.82rem;color:rgba(255,254,247,.7);max-width:28rem;margin:.5rem auto 0;line-height:1.65}
@@ -184,7 +186,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 <section data-ink=soft id="mhero">
 <p class="ar" translate="no">اِقْرَأْ</p>
 <h1>Study, properly. Free, forever.</h1>
-<p>Eight tracks, forty-seven lessons: read Arabic, know the pillars, walk with the prophets, pray with certainty, believe with understanding, inherit the golden age. Your progress is remembered on this device.</p>
+<p>Sixteen tracks, one hundred and six lessons, ages 0 to 18: the cradle years for parents, reading Arabic, the full science of tajwid, the pillars, the prophets, character, belief, the golden age, then the Academy tier of fiqh, Arabic grammar, the sciences of Qur'an and hadith, and the story of the ummah. Your progress is remembered on this device.</p>
 <div class="tot"><span id="tot-label">0 of 28 lessons complete</span></div>
 <div class="tbar"><i id="tot-bar" style="width:0%"></i></div>
 <div class="trust-row"><span><span data-ic=scroll></span> ijazah on completion</span><span><span data-ic=book></span> every source cited</span><span><span data-ic=shield></span> free for individuals, forever</span></div>
@@ -197,7 +199,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 
 <div class="wrap" style="padding-bottom:1rem"><div style="background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.04));border:1.5px solid rgba(201,162,39,.4);border-radius:18px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap">
 <span style="font-size:1.5rem"><span data-ic=school></span></span>
-<span style="flex:1;min-width:14rem;font-size:.82rem;line-height:1.6"><b>Teaching at a school or madrasa?</b> Put this exact Classroom, all 47 lessons, quizzes and ijazahs, inside your own website. Licensed, supported, always current.</span>
+<span style="flex:1;min-width:14rem;font-size:.82rem;line-height:1.6"><b>Teaching at a school or madrasa?</b> Put this exact Classroom, all 106 lessons across the full 0 to 18 curriculum, quizzes and ijazahs, inside your own website. Licensed, supported, always current.</span>
 <a href="license.html" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.55rem 1.2rem;font-size:.78rem;white-space:nowrap">For schools →</a>
 </div></div>
 <p class="freeline">The Classroom is free for every person, forever, like all of NOOR · schools & apps embed it under <a href="license.html">license</a> · built on the Qur'an, Bukhari, Muslim and the classical sources cited inside each lesson</p>
@@ -229,7 +231,7 @@ function catalog(){
   C().forEach(function(t){
     var done=t.lessons.filter(function(l){return isDone(l.id)}).length;
     var pct=Math.round(done/t.lessons.length*100);
-    var d=document.createElement("div");d.className="trk";
+    var d=document.createElement("div");d.className="trk";d.id="t-"+t.id;
     var h='<div class="trk-head"><span class="ic" style="color:#F4D46A">'+(window.NOOR_IC?window.NOOR_IC(t.icon):'')+'</span><span class="tt"><b>'+esc(t.name)+' <span class="font-amiri notranslate" translate="no" style="color:#8a6d13">'+t.ar+'</span></b><span>'+esc(t.stage)+" · "+t.lessons.length+' lessons</span></span><span class="ringm" style="--p:'+pct+'"><b>'+pct+'%</b></span></div>';
     h+='<p class="trk-desc">'+esc(t.desc)+"</p>";
     h+='<div class="lessons">';
@@ -270,7 +272,22 @@ function catalog(){
     }, 26);
   });
   totals();
+  jumpToHash();
 }
+
+/* deep link from the prospectus: /madrasa#t-fiqh lands on that track */
+function jumpToHash(){
+  var m=(location.hash||"").match(/^#t-([a-z]+)$/);
+  if(!m) return;
+  var el=document.getElementById("t-"+m[1]);
+  if(!el) return;
+  setTimeout(function(){
+    el.scrollIntoView({behavior:"smooth",block:"start"});
+    el.classList.add("hit");
+    setTimeout(function(){el.classList.remove("hit")},2400);
+  },220);
+}
+addEventListener("hashchange",jumpToHash);
 
 /* ---------- lesson player ---------- */
 var cur=null;
@@ -322,7 +339,7 @@ function paint(){
         '<p style="font-size:.72rem;color:rgba(44,36,22,.55);line-height:1.65;margin:0 0 .6rem">This lesson reached you free because someone before you kept the lamp lit. Pass the light on:</p>'+
         '<div style="display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap">'+
         '<a href="https://wa.me/?text='+encodeURIComponent("I am studying Islam properly on this free madrasa, 28 lessons with quizzes and an ijazah at the end. Completely free: https://noorcodex.com/madrasa")+'" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:800;color:#1A160F;background:linear-gradient(135deg,#C9A227,#E9C86A);border-radius:999px;padding:.45rem 1rem;text-decoration:none">Share on WhatsApp</a>'+
-        '<a href="https://t.me/share/url?url=https%3A%2F%2Fnoorcodex.com%2Fmadrasa&text='+encodeURIComponent("A free madrasa: 47 interactive lessons on Islam, with an ijazah ✦")+'" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:700;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.45rem 1rem;text-decoration:none">Telegram</a>'+
+        '<a href="https://t.me/share/url?url=https%3A%2F%2Fnoorcodex.com%2Fmadrasa&text='+encodeURIComponent("A free madrasa: 106 interactive lessons on Islam, ages 0 to 18, with an ijazah ✦")+'" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:700;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.45rem 1rem;text-decoration:none">Telegram</a>'+
         '<a href="donate.html" style="font-size:.72rem;font-weight:700;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.45rem 1rem;text-decoration:none">✦ Keep it lit</a>'+
         "</div></div>"):"")+"</div>";
     h+='<div class="navrow"><button class="nbtn ghost" id="redo">'+(passed?"Review lesson":"Try again")+'</button><button class="nbtn" id="back-cat">'+(passed?"Continue →":"All tracks")+"</button></div>";

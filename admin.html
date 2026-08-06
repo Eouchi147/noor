@@ -65,6 +65,64 @@ td{padding:.5rem;border-bottom:1px solid rgba(255,254,247,.05);color:rgba(255,25
 button.ghost{background:none;border:1px solid rgba(255,254,247,.2);color:rgba(255,254,247,.6);border-radius:999px;padding:.3rem .8rem;font-size:.72rem;cursor:pointer;font-family:inherit}
 
 /* ===== v21 · tabbed console ===== */
+/* ---- marketing room ---- */
+.law{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.2rem 0 1rem}
+@media(max-width:760px){.law{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.law{grid-template-columns:1fr}}
+.law div{background:rgba(233,200,106,.07);border:1px solid rgba(233,200,106,.3);border-radius:12px;padding:.6rem .7rem}
+.law b{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi)}
+.law span{display:block;font-size:.7rem;line-height:1.5;color:rgba(255,254,247,.72);margin-top:.25rem}
+.mkform{display:grid;gap:.5rem;grid-template-columns:1fr 1fr}
+@media(max-width:640px){.mkform{grid-template-columns:1fr}}
+.mkform .full{grid-column:1/-1}
+.fi{width:100%;background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:10px;padding:.55rem .7rem;font-size:.8rem;color:var(--parchment);outline:none;font-family:inherit}
+.fi:focus{border-color:var(--gold)}
+select.fi option{background:#14100A;color:var(--parchment)}
+.out{margin-top:.9rem;display:grid;gap:.7rem}
+.vcard{background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.32);border-radius:14px;padding:.85rem 1rem}
+.vcard .vl{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.vcard .vs{font-weight:700;font-size:.85rem;margin:.3rem 0 .35rem}
+.vcard pre{white-space:pre-wrap;font-family:inherit;font-size:.79rem;line-height:1.72;color:rgba(255,254,247,.88);margin:0}
+.vcard .cp{margin-top:.6rem}
+.tenrow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.tenbig{font-size:2rem;font-weight:900;color:var(--gold-hi);line-height:1;font-variant-numeric:tabular-nums}
+.pipe{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:.5rem}
+.pipe th,.pipe td{border:1px solid rgba(233,200,106,.22);padding:.35rem .45rem;text-align:left}
+.pipe th{background:rgba(233,200,106,.12);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi)}
+.pipe td input{width:100%;background:none;border:0;color:var(--parchment);font-size:.72rem;outline:none;font-family:inherit}
+.pipe td.c{text-align:center;cursor:pointer;user-select:none}
+.armor label{display:flex;gap:.55rem;align-items:flex-start;font-size:.76rem;line-height:1.55;padding:.3rem 0;color:rgba(255,254,247,.82);cursor:pointer}
+.armor input{margin-top:.2rem;accent-color:#C9A227}
+/* ---- traffic room ---- */
+.tstat{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+@media(max-width:740px){.tstat{grid-template-columns:1fr 1fr}}
+.tc{background:linear-gradient(150deg,rgba(233,200,106,.13),rgba(255,254,247,.04));border:1px solid rgba(233,200,106,.34);border-radius:16px;padding:.8rem .9rem}
+.tc .v{font-size:1.7rem;font-weight:900;color:var(--gold-hi);line-height:1;font-variant-numeric:tabular-nums}
+.tc .l{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,254,247,.55);margin-top:.3rem}
+.tc .d{font-size:.64rem;margin-top:.25rem;color:rgba(255,254,247,.5)}
+.tc .d.up{color:#a7d3a2}.tc .d.dn{color:#f0b0b0}
+#tchart{width:100%;height:170px;display:block;overflow:visible}
+#tchart .ar{fill:url(#tg);opacity:0}
+#tchart.go .ar{opacity:1;transition:opacity .9s ease .2s}
+#tchart .ln{fill:none;stroke:#F4D46A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+#tchart.go .ln{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s cubic-bezier(.3,.8,.3,1)}
+#tchart .dot{fill:#FFFEF7;opacity:0}
+#tchart.go .dot{opacity:1;transition:opacity .4s ease 1.3s}
+.brow{display:grid;grid-template-columns:7.5rem 1fr 3.2rem;gap:.5rem;align-items:center;font-size:.74rem;padding:.24rem 0}
+.brow .nm{color:rgba(255,254,247,.86);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brow .tr{height:.62rem;border-radius:999px;background:rgba(255,254,247,.09);overflow:hidden}
+.brow .tr i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:width 1s cubic-bezier(.3,.8,.3,1)}
+.brow .vv{text-align:right;color:var(--gold-hi);font-weight:800;font-variant-numeric:tabular-nums}
+.brow.blue .tr i{background:linear-gradient(90deg,#33507C,#7FA3D8)}
+.brow.green .tr i{background:linear-gradient(90deg,#4d7a52,#8fc296)}
+.readout{background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.32);border-radius:16px;padding:.9rem 1rem;margin-top:.7rem}
+.readout h4{font-size:.95rem;color:var(--gold-hi);margin:0 0 .3rem}
+.readout p{font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.86);margin:0 0 .5rem}
+.readout .grp{margin-top:.6rem}
+.readout .grp b{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi)}
+.readout li{font-size:.76rem;line-height:1.6;margin:.3rem 0;color:rgba(255,254,247,.82)}
+.readout ul{margin:.25rem 0 0 1rem;padding:0}
+.readout .nx{margin-top:.7rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-radius:12px;padding:.6rem .8rem;font-size:.8rem;font-weight:700;line-height:1.55}
 .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.2rem 0 1.2rem;position:sticky;top:0;background:linear-gradient(178deg,#0a0f24,rgba(10,15,36,.96));padding:.6rem 0;z-index:30}
 .tab{border:1px solid rgba(255,254,247,.16);background:rgba(255,254,247,.04);color:rgba(255,254,247,.6);border-radius:999px;padding:.45rem 1rem;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
 .tab:hover{color:var(--parchment)}
@@ -121,6 +179,8 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
 <button class="tab" data-pane="giving" role="tab"><span data-ic=lamp></span> Giving</button>
 <button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Guardians</button>
+<button class="tab" data-pane="traffic" role="tab"><span data-ic=scope></span> Traffic</button>
+<button class="tab" data-pane="market" role="tab"><span data-ic=globe></span> Marketing</button>
 <button class="tab" data-pane="system" role="tab"><span data-ic=gear></span> System</button>
 </div>
 
@@ -226,6 +286,102 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="panel" style="margin-top:.6rem"><div class="mkts" id="mkts"></div>
 <p class="muted" style="margin-top:.8rem">Each link previews the homepage exactly as that region sees it. Regions are edited in <code>markets.js</code>, one line each.</p></div>
 </details>
+</div>
+
+<!-- ===================== TRAFFIC ===================== -->
+<div class="pane" id="pane-traffic">
+
+<div class="tstat">
+<div class="tc"><div class="v" data-t="p30">·</div><div class="l">Readers · 30 days</div><div class="d" data-d="p30"></div></div>
+<div class="tc"><div class="v" data-t="v30">·</div><div class="l">Page views · 30 days</div><div class="d" data-d="v30"></div></div>
+<div class="tc"><div class="v" data-t="today">·</div><div class="l">Readers today</div><div class="d" data-d="today"></div></div>
+<div class="tc"><div class="v" data-t="pp">·</div><div class="l">Pages per reader</div><div class="d" data-d="pp"></div></div>
+</div>
+
+<h2 class="sec">The last 30 days</h2>
+<div class="panel">
+<svg id="tchart" viewBox="0 0 600 170" preserveAspectRatio="none" aria-label="Readers over the last 30 days"></svg>
+<div style="display:flex;justify-content:space-between;font-size:.62rem;color:rgba(255,254,247,.42);margin-top:.35rem"><span id="t-a"></span><span id="t-peak" style="color:var(--gold-hi)"></span><span id="t-b"></span></div>
+</div>
+
+<div class="two" style="margin-top:.9rem">
+<div>
+<h2 class="sec">What brought them</h2>
+<div class="panel" id="t-src"><p class="muted">No sources counted yet.</p></div>
+</div>
+<div>
+<h2 class="sec">From where</h2>
+<div class="panel" id="t-cty"><p class="muted">No countries counted yet.</p></div>
+</div>
+</div>
+
+<h2 class="sec">Most read rooms</h2>
+<div class="panel" id="t-room"><p class="muted">No rooms counted yet.</p></div>
+
+<h2 class="sec">The Lantern reads the numbers</h2>
+<div class="panel">
+<p class="muted" style="margin-bottom:.6rem">It sees exactly what is above, and answers in the house voice: what is working and should be doubled, what is weak, and the one thing to do tomorrow. It will say plainly when the numbers are still too small to mean anything.</p>
+<button class="ghost" id="t-read">Read the numbers</button> <span class="muted" id="t-rstate"></span>
+<div id="t-rout"></div>
+</div>
+
+<p class="muted" style="margin-top:1rem">Counting is first-party and cookieless: the day, the country the host attaches, the room, and a coarse source name such as reddit or google. Never an IP, never an ID, never a full URL. A source is counted once per reader per day.</p>
+
+</div>
+
+<!-- ===================== MARKETING ===================== -->
+<div class="pane" id="pane-market">
+
+<h2 class="sec">The four laws every message obeys</h2>
+<div class="law">
+<div><b>Unseen</b><span>No name, no face, no personal story. The project speaks: hello@noorcodex.com, signed The NOOR Codex team.</span></div>
+<div><b>Useful first</b><span>Every message hands over something real before it asks anything, and is worth reading by someone who never gives a penny.</span></div>
+<div><b>Never pushy</b><span>No urgency, no guilt, no hype, no emoji. One light ask, placed late, with a graceful way to say no.</span></div>
+<div><b>Pure</b><span>Only what truly exists on the site today. No invented numbers, endorsements or claims. Nothing that would embarrass the house.</span></div>
+</div>
+<p class="muted" style="margin:-.4rem 0 1.2rem">The Lantern is bound to these four before it writes a single word. It cannot sign your name, cannot invent a testimonial, and cannot manufacture a deadline.</p>
+
+<h2 class="sec">Today's ten</h2>
+<div class="panel">
+<div class="tenrow">
+<span class="tenbig" id="ten-n">0</span><span style="font-size:.74rem;line-height:1.5;flex:1;min-width:11rem">outreaches sent today · the only number that decides revenue. Ten a day, six days a week.</span>
+<button class="ghost" id="ten-add">+1 sent</button><button class="ghost" id="ten-reset">reset</button>
+</div>
+<div style="height:.5rem;border-radius:999px;background:rgba(255,254,247,.12);overflow:hidden;margin-top:.7rem"><i id="ten-bar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:width .35s"></i></div>
+<p class="muted" id="ten-streak" style="margin-top:.5rem"></p>
+</div>
+
+<h2 class="sec">Write something</h2>
+<div class="panel">
+<div class="mkform">
+<select class="fi" id="mk-kind">
+<option value="outreach">Email · school, masjid, organization, halal business</option>
+<option value="post">Post · Reddit, Facebook group, Telegram, X, forum</option>
+<option value="reply">Reply · a comment, a question, an objection</option>
+<option value="thanks">Thank a giver, or follow up on silence</option>
+<option value="angle">Campaign angles · what to lead with</option>
+</select>
+<input class="fi" id="mk-channel" placeholder="Channel or format (r/islam, Facebook group, cold email)"/>
+<input class="fi" id="mk-target" placeholder="Who exactly (Al-Huda Islamic School, Toronto)"/>
+<input class="fi" id="mk-audience" placeholder="Who is reading (a principal choosing curriculum)"/>
+<input class="fi" id="mk-room" placeholder="Room to lead with (the Madrasa, the Cradle, Letters of Light)"/>
+<input class="fi" id="mk-lang" placeholder="Language (English, Arabic, Urdu, Indonesian...)"/>
+<textarea class="fi full" id="mk-message" rows="3" placeholder="Paste the message you are answering, or leave empty"></textarea>
+<textarea class="fi full" id="mk-notes" rows="2" placeholder="Anything the Lantern must obey (mention the yearly invoice, keep it under 80 words...)"></textarea>
+</div>
+<p style="margin-top:.7rem"><button class="ghost" id="mk-go">Write it</button> <span class="muted" id="mk-state"></span></p>
+<div class="out" id="mk-out"></div>
+</div>
+
+<h2 class="sec">The pipeline · ten rows a day</h2>
+<div class="panel">
+<table class="pipe"><thead><tr><th>Masjid / school / business</th><th>Sent</th><th>Replied</th><th>Tried demo</th><th>Follow-up</th><th>YES</th><th></th></tr></thead><tbody id="pipe-b"></tbody></table>
+<p style="margin-top:.6rem"><button class="ghost" id="pipe-add">+ row</button> <span class="muted">Saved on this device only. Tap a cell to mark it.</span></p>
+</div>
+
+<h2 class="sec">Anonymity armor · do these once</h2>
+<div class="panel armor" id="armor"></div>
+
 </div>
 
 <!-- ===================== SYSTEM ===================== -->
@@ -418,6 +574,254 @@ $("gtable").addEventListener("click",function(e){
 $("v-go").addEventListener("click",function(){
   runVet({name:$("v-name").value,url:$("v-url").value,line:$("v-line").value,notes:$("v-notes").value},$("vetout2"));
 });
+
+/* ================= THE TRAFFIC ROOM ================= */
+(function(){
+  var DATA=null, drawn=false;
+
+  function countUp(el,target,suffix){
+    var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce||!target){el.textContent=(target||0)+(suffix||"");return}
+    var n=0, step=Math.max(1,target/28), t=setInterval(function(){
+      n+=step; if(n>=target){n=target;clearInterval(t)}
+      el.textContent=(target>=100?Math.round(n):(Math.round(n*10)/10))+(suffix||"");
+    },26);
+  }
+  function bars(box,rows,total,cls,label){
+    if(!rows.length){box.innerHTML='<p class="muted">Nothing counted yet.</p>';return}
+    var max=rows[0].n||1;
+    box.innerHTML=rows.map(function(r){
+      var pc=total?Math.round(r.n/total*100):0;
+      return '<div class="brow '+(cls||"")+'"><span class="nm">'+esc(label(r))+'</span><span class="tr"><i data-w="'+Math.round(r.n/max*100)+'"></i></span><span class="vv">'+r.n+'</span></div>';
+    }).join("");
+    setTimeout(function(){box.querySelectorAll(".tr i").forEach(function(i,k){setTimeout(function(){i.style.width=i.getAttribute("data-w")+"%"},k*55)})},60);
+  }
+  var FLAG={reddit:"Reddit",facebook:"Facebook",instagram:"Instagram",x:"X",telegram:"Telegram",whatsapp:"WhatsApp",youtube:"YouTube",tiktok:"TikTok",google:"Google search",search:"Other search",ai:"AI assistants",noorhalal:"NOOR Halal",linkedin:"LinkedIn",pinterest:"Pinterest",forum:"Islamic forums",email:"Email",direct:"Typed or saved"};
+  var ROOMN={home:"Home",quran:"Qur'an",prophets:"Prophets",madrasa:"Madrasa",school:"For schools",kids:"Kids' Codex",arabic:"Letters of Light",pillars:"Five Pillars",give:"Give page",license:"Licensing",sponsor:"Sponsor",health:"Health",begin:"Begin",theology:"Theology",legal:"Legal",other:"Other"};
+
+  function chart(days){
+    var svg=$("tchart"); if(!days.length){svg.innerHTML="";return}
+    var W=600,H=170,pad=8;
+    var vals=days.map(function(d){return d.people||0});
+    var max=Math.max.apply(null,vals.concat([1]));
+    var pts=vals.map(function(v,i){
+      return [pad+i*((W-pad*2)/Math.max(1,vals.length-1)), H-pad-(v/max)*(H-pad*2)];
+    });
+    var line=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)}).join(" ");
+    var area=line+" L"+pts[pts.length-1][0].toFixed(1)+" "+(H-pad)+" L"+pts[0][0].toFixed(1)+" "+(H-pad)+" Z";
+    var peakI=vals.indexOf(max);
+    svg.innerHTML='<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D46A" stop-opacity=".38"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></linearGradient></defs>'+
+      '<path class="ar" d="'+area+'"/><path class="ln" d="'+line+'"/>'+
+      '<circle class="dot" cx="'+pts[peakI][0].toFixed(1)+'" cy="'+pts[peakI][1].toFixed(1)+'" r="3.5"/>';
+    var ln=svg.querySelector(".ln");
+    try{ln.style.setProperty("--len",Math.ceil(ln.getTotalLength()))}catch(e){ln.style.setProperty("--len","2000")}
+    requestAnimationFrame(function(){svg.classList.add("go")});
+    $("t-a").textContent=days[0].date;
+    $("t-b").textContent=days[days.length-1].date;
+    $("t-peak").textContent="peak "+max+" on "+days[peakI].date;
+  }
+
+  function render(v){
+    DATA=v;
+    var days=v.days||[], people=days.reduce(function(a,d){return a+(d.people||0)},0);
+    var views=v.totals?v.totals.views30:0;
+    var today=days.length?days[days.length-1].people:0;
+    var prev7=days.slice(-14,-7).reduce(function(a,d){return a+(d.people||0)},0);
+    var last7=days.slice(-7).reduce(function(a,d){return a+(d.people||0)},0);
+    countUp(document.querySelector('[data-t=p30]'),people);
+    countUp(document.querySelector('[data-t=v30]'),views);
+    countUp(document.querySelector('[data-t=today]'),today);
+    var pp=people?Math.round(views/people*10)/10:0;
+    countUp(document.querySelector('[data-t=pp]'),pp);
+    var d=document.querySelector('[data-d=p30]');
+    if(prev7||last7){
+      var pct=prev7?Math.round((last7-prev7)/prev7*100):100;
+      d.textContent=(pct>=0?"+":"")+pct+"% vs the week before";
+      d.className="d "+(pct>=0?"up":"dn");
+    }
+    document.querySelector('[data-d=today]').textContent=days.length?("counting since "+days[0].date):"";
+    document.querySelector('[data-d=pp]').textContent=pp>=2?"they are exploring":"most read one page";
+    chart(days);
+    bars($("t-src"),v.sources||[],people,"green",function(r){return FLAG[r.s]||r.s});
+    bars($("t-cty"),v.countries||[],people,"blue",function(r){return r.c});
+    bars($("t-room"),v.rooms||[],views,"",function(r){return ROOMN[r.r]||r.r});
+  }
+
+  function load(){
+    fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){
+      if(!v){return}
+      if(!v.enabled){
+        $("t-src").innerHTML='<p class="muted">The lamp counter is not on yet. Vercel → your project → Storage → Create Database → Upstash for Redis, name it noor-lamps, Connect Project keeping the KV prefix, then Redeploy. Counting starts from that moment.</p>';
+        return;
+      }
+      render(v);
+    }).catch(function(){});
+  }
+
+  /* draw only when the tab is first opened, so the animations play */
+  document.querySelectorAll('.tab[data-pane=traffic]').forEach(function(b){
+    b.addEventListener("click",function(){ if(!drawn){drawn=true;load()} else if(DATA){ $("tchart").classList.remove("go"); render(DATA); } });
+  });
+
+  /* ---- the Lantern reads it ---- */
+  $("t-read").addEventListener("click",function(){
+    var st=$("t-rstate"), out=$("t-rout");
+    if(!DATA){st.textContent="Nothing to read yet.";return}
+    st.textContent="Reading...";out.innerHTML="";
+    var slim={
+      days:(DATA.days||[]).map(function(d){return {d:d.date,p:d.people,v:d.views}}),
+      totals:DATA.totals, sources:DATA.sources, countries:DATA.countries, rooms:DATA.rooms
+    };
+    api("/api/marketing",{kind:"read",stats:slim}).then(function(r){
+      st.textContent="";
+      if(!r.ok){out.innerHTML='<div class="readout"><p>'+esc((r.j&&r.j.error)||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.")+'</p></div>';return}
+      var j=r.j;
+      function list(t,arr){
+        if(!arr||!arr.length)return "";
+        return '<div class="grp"><b>'+t+'</b><ul>'+arr.map(function(x){return "<li><b>"+esc(x.what)+"</b> · "+esc(x.why)+"</li>"}).join("")+"</ul></div>";
+      }
+      out.innerHTML='<div class="readout"><h4>'+esc(j.headline||"The read")+'</h4><p>'+esc(j.verdict||"")+'</p>'+
+        list("Double this",j.push)+list("Fix this",j.fix)+
+        (j.next?'<div class="nx">Tomorrow: '+esc(j.next)+'</div>':'')+'</div>';
+    }).catch(function(){st.textContent="";out.innerHTML='<div class="readout"><p>Cannot reach the Lantern.</p></div>'});
+  });
+})();
+
+/* ================= THE MARKETING ROOM ================= */
+(function(){
+  var LSK="noor_mk_v1";
+  function load(){try{return JSON.parse(localStorage.getItem(LSK)||"{}")}catch(e){return {}}}
+  function save(d){try{localStorage.setItem(LSK,JSON.stringify(d))}catch(e){}}
+  var M=load();
+  if(!M.pipe) M.pipe=[];
+  if(!M.armor) M.armor={};
+  if(!M.days) M.days={};
+  function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+
+  /* ---- today's ten ---- */
+  function streak(){
+    var n=0,d=new Date();
+    for(var i=0;i<400;i++){
+      var k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+      if((M.days[k]||0)>=10) n++; else if(i>0) break; else if((M.days[k]||0)<10&&i===0){ /* today may still be in progress */ }
+      d.setDate(d.getDate()-1);
+    }
+    return n;
+  }
+  function renderTen(){
+    var n=M.days[today()]||0;
+    $("ten-n").textContent=n;
+    $("ten-bar").style.width=Math.min(100,n*10)+"%";
+    var s=streak();
+    $("ten-streak").textContent = n>=10
+      ? ("Ten sent. The day is done, and the field is planted." + (s>1?" Days at ten in a row: "+s+".":""))
+      : ((10-n)+" to go. Each one is a row in the pipeline below.");
+  }
+  $("ten-add").addEventListener("click",function(){var k=today();M.days[k]=(M.days[k]||0)+1;save(M);renderTen()});
+  $("ten-reset").addEventListener("click",function(){M.days[today()]=0;save(M);renderTen()});
+
+  /* ---- pipeline ---- */
+  var COLS=["sent","replied","demo","follow","yes"];
+  function renderPipe(){
+    var b=$("pipe-b");b.innerHTML="";
+    if(!M.pipe.length) M.pipe.push({name:"",sent:0,replied:0,demo:0,follow:0,yes:0});
+    M.pipe.forEach(function(row,i){
+      var tr=document.createElement("tr");
+      var h='<td><input value="'+esc(row.name||"")+'" data-i="'+i+'" data-f="name" placeholder="name"/></td>';
+      COLS.forEach(function(c){
+        h+='<td class="c" data-i="'+i+'" data-c="'+c+'">'+(row[c]?(c==="yes"?"✦":"✓"):"·")+'</td>';
+      });
+      h+='<td class="c" data-i="'+i+'" data-x="1" title="remove">×</td>';
+      tr.innerHTML=h;b.appendChild(tr);
+    });
+    b.querySelectorAll("input").forEach(function(inp){
+      inp.addEventListener("input",function(){M.pipe[+inp.getAttribute("data-i")].name=inp.value;save(M)});
+    });
+    b.querySelectorAll("td.c").forEach(function(td){
+      td.addEventListener("click",function(){
+        var i=+td.getAttribute("data-i");
+        if(td.getAttribute("data-x")){ M.pipe.splice(i,1); }
+        else { var c=td.getAttribute("data-c"); M.pipe[i][c]=M.pipe[i][c]?0:1; }
+        save(M);renderPipe();
+      });
+    });
+  }
+  $("pipe-add").addEventListener("click",function(){M.pipe.push({name:"",sent:0,replied:0,demo:0,follow:0,yes:0});save(M);renderPipe()});
+
+  /* ---- anonymity armor ---- */
+  var ARMOR=[
+    ["gh","GitHub: repository set to Private, and your real name and photo removed from the profile."],
+    ["stripe","Stripe: public business name NOOR Codex of Light, statement descriptor NOORCODEX, support email hello@noorcodex.com. This is what every giver sees on their bank statement."],
+    ["who","Domains: WHOIS privacy on for noorcodex.com, and the .ca names confirmed hidden."],
+    ["mail","Gmail: send-as hello@noorcodex.com set, display name NOOR Codex of Light, used for every reply."],
+    ["halal","NOOR Halal: checked what developer name its app listing shows. The two sites say companion, never our."],
+    ["voices","The project's voices exist and are named NOOR: Reddit account, Facebook Page, Telegram channel with the phone number hidden, X or TikTok."],
+    ["never","Standing rule: nothing is ever sent from a personal account, and no message ever goes to a relative or a friend."]
+  ];
+  function renderArmor(){
+    var box=$("armor");box.innerHTML="";
+    ARMOR.forEach(function(a){
+      var id="ar-"+a[0];
+      var l=document.createElement("label");
+      l.innerHTML='<input type="checkbox" id="'+id+'"'+(M.armor[a[0]]?" checked":"")+'/><span>'+esc(a[1])+'</span>';
+      box.appendChild(l);
+      l.querySelector("input").addEventListener("change",function(e){M.armor[a[0]]=e.target.checked?1:0;save(M);renderArmor()});
+    });
+    var done=ARMOR.filter(function(a){return M.armor[a[0]]}).length;
+    var p=document.createElement("p");p.className="muted";p.style.marginTop=".6rem";
+    p.textContent=done===ARMOR.length?"Armor complete. Nothing on the money trail points at you.":(done+" of "+ARMOR.length+" closed. Every open one is a door with your name on it.");
+    box.appendChild(p);
+  }
+
+  /* ---- the writer ---- */
+  function card(v){
+    var head=v.subject?("Subject: "+v.subject):(v.title||"");
+    return '<div class="vcard"><div class="vl">'+esc(v.label)+'</div>'+
+      (head?'<div class="vs">'+esc(head)+'</div>':'')+
+      '<pre>'+esc(v.body)+'</pre>'+
+      '<div class="cp"><button class="ghost" data-copy="'+encodeURIComponent((head?head+"\n\n":"")+v.body)+'">Copy</button></div></div>';
+  }
+  function angleCard(a){
+    return '<div class="vcard"><div class="vl">'+esc(a.who)+'</div>'+
+      '<div class="vs">'+esc(a.angle)+'</div>'+
+      '<pre>'+esc(a.line)+'</pre>'+
+      '<p class="muted" style="margin-top:.4rem">Where: '+esc(a.where)+'</p>'+
+      '<div class="cp"><button class="ghost" data-copy="'+encodeURIComponent(a.line)+'">Copy the line</button></div></div>';
+  }
+  function bindCopy(){
+    $("mk-out").querySelectorAll("[data-copy]").forEach(function(b){
+      b.addEventListener("click",function(){
+        var t=decodeURIComponent(b.getAttribute("data-copy"));
+        (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+          var o=b.textContent;b.textContent="Copied";setTimeout(function(){b.textContent=o},1400);
+        }).catch(function(){
+          var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();
+          try{document.execCommand("copy")}catch(e){}
+          document.body.removeChild(ta);b.textContent="Copied";
+        });
+      });
+    });
+  }
+  $("mk-go").addEventListener("click",function(){
+    var st=$("mk-state"), out=$("mk-out");
+    st.textContent="The Lantern is writing...";out.innerHTML="";
+    api("/api/marketing",{
+      kind:$("mk-kind").value, channel:$("mk-channel").value, target:$("mk-target").value,
+      audience:$("mk-audience").value, room:$("mk-room").value, lang:$("mk-lang").value,
+      message:$("mk-message").value, notes:$("mk-notes").value
+    }).then(function(r){
+      if(!r.ok){ st.textContent=""; out.innerHTML='<div class="vcard"><pre>'+esc((r.j&&r.j.error)||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.")+'</pre></div>'; return; }
+      st.textContent="";
+      var j=r.j;
+      if(j.angles&&j.angles.length){ out.innerHTML=j.angles.map(angleCard).join(""); }
+      else if(j.variants&&j.variants.length){ out.innerHTML=j.variants.map(card).join(""); }
+      else { out.innerHTML='<div class="vcard"><pre>Nothing came back. Try again.</pre></div>'; }
+      bindCopy();
+    }).catch(function(){ st.textContent=""; out.innerHTML='<div class="vcard"><pre>Cannot reach the Lantern.</pre></div>'; });
+  });
+
+  renderTen();renderPipe();renderArmor();
+})();
 
 /* ---- gate ---- */
 $("enter").addEventListener("click",function(){
