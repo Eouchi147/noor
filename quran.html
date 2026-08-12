@@ -26,11 +26,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=16"/>
+<link rel="stylesheet" href="assets/tw.css?v=49"/>
 <script src="noor-fx.js" defer></script>
 <script src="noor-ink.js" defer></script>
-<script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/ScrollTrigger.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
+<script src="assets/noor-motion.js" defer></script>
+<script src="quran-study.js" defer></script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
@@ -42,13 +46,46 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .shimmer-gold{background:linear-gradient(100deg,#C9A227 20%,#F8E8A6 40%,#C9A227 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimq 6s linear infinite}
 @keyframes shimq{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.shimmer-gold{animation:none}}
-/* surah gates */
-.gate{border:1px solid rgba(44,36,22,.09);background:#fff;border-radius:1rem;padding:.7rem .85rem;display:flex;align-items:center;gap:.7rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:left;width:100%}
-.gate:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(44,36,22,.10);border-color:rgba(201,162,39,.45)}
-.gate.active{border-color:var(--gold);box-shadow:0 6px 18px rgba(201,162,39,.18);background:linear-gradient(160deg,#FFFDF4,#FFF8E1)}
-.gate .num{flex:0 0 auto;width:2.1rem;height:2.1rem;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--gold);background:radial-gradient(circle at 40% 35%,#241D12,#14100A);position:relative}
-.gate .num::after{content:"";position:absolute;inset:-3px;border-radius:999px;border:1px solid rgba(201,162,39,.4);transform:rotate(45deg)}
-.gate.meccan .num::after{border-style:solid}.gate.medinan .num::after{border-style:dashed}
+/* surah gates, 114 illuminated tiles */
+#gates-aside{margin-bottom:1.7rem}
+#gates-aside.folded{display:none}
+.gbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.6rem}
+.gbar .gsearch{flex:1 1 15rem;min-width:0}
+.gview{border:1px solid rgba(44,36,22,.14);background:#fff;color:rgba(44,36,22,.6);border-radius:999px;padding:.3rem .75rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s}
+.gview:hover{border-color:var(--gold);color:var(--ink)}
+.gview.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.glegend{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;font-size:.66rem;color:rgba(44,36,22,.5);margin:0 .15rem .7rem}
+.glegend b{font-weight:600;color:rgba(44,36,22,.55)}
+#gate-count{margin-left:auto;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,36,22,.4)}
+#gates-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.6rem,1fr));gap:.55rem}
+@media (min-width:640px){#gates-wrap{grid-template-columns:repeat(auto-fill,minmax(11.6rem,1fr));gap:.7rem}}
+.gate{position:relative;display:flex;flex-direction:column;align-items:center;gap:.1rem;width:100%;padding:.9rem .6rem .8rem;text-align:center;font-family:inherit;color:var(--ink);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.05rem;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease;content-visibility:auto;contain-intrinsic-size:auto 9.5rem}
+.gate:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.55);background:linear-gradient(168deg,#FFFDF4,#FFF8E4)}
+.gate:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gate.active{border-color:var(--gold);background:linear-gradient(160deg,#FFFDF4,#FFF4D2)}
+.gate .seal{position:relative;width:2.05rem;height:2.05rem;display:grid;place-items:center;border-radius:999px;background:radial-gradient(circle at 40% 32%,#2E2515,#14100A);color:var(--gold-hi);font-size:.7rem;font-weight:800;margin-bottom:.3rem;flex:none}
+.gate .seal::before{content:"";position:absolute;inset:-3px;border:1px solid rgba(201,162,39,.45);transform:rotate(45deg)}
+.gate .seal::after{content:"";position:absolute;inset:-3px;border:1px solid rgba(201,162,39,.22);border-radius:999px}
+.gate.md .seal::before{border-style:dashed;border-color:rgba(138,155,110,.6)}
+.gate .gar{font-family:Amiri,serif;font-size:1.35rem;line-height:1.5;color:var(--gold);direction:rtl}
+.gate .gen{font-size:.82rem;font-weight:700;line-height:1.3}
+.gate .gmn{font-size:.63rem;color:rgba(44,36,22,.5);line-height:1.35}
+.gate .gmeta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.28rem;margin-top:.42rem}
+.gchip{font-size:.55rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:999px;padding:.1rem .45rem;border:1px solid transparent;white-space:nowrap}
+.gchip.mk{color:#8a6d13;background:#FFF7DF;border-color:rgba(201,162,39,.35)}
+.gchip.md{color:#4d5c38;background:#F3F6EC;border-color:rgba(138,155,110,.45)}
+.gate .gct{font-size:.58rem;color:rgba(44,36,22,.45)}
+.gate .gfull{position:absolute;top:.42rem;right:.5rem;font-size:.6rem;color:var(--gold);line-height:1}
+.gate.deep{border-color:rgba(201,162,39,.3)}
+#gates-wrap.list{grid-template-columns:1fr;gap:.3rem}
+@media (min-width:640px){#gates-wrap.list{grid-template-columns:1fr 1fr;gap:.35rem}}
+#gates-wrap.list .gate{flex-direction:row;align-items:center;text-align:left;gap:.6rem;padding:.42rem .6rem;border-radius:.75rem;contain-intrinsic-size:auto 2.9rem}
+#gates-wrap.list .gate:hover{transform:none}
+#gates-wrap.list .seal{width:1.7rem;height:1.7rem;font-size:.62rem;margin-bottom:0}
+#gates-wrap.list .gar{font-size:1.05rem;order:9;margin-left:auto;padding-left:.4rem}
+#gates-wrap.list .gen{font-size:.76rem}
+#gates-wrap.list .gmn,#gates-wrap.list .gmeta{display:none}
+#gates-wrap.list .gfull{position:static;order:8}
 /* ayah cards */
 .ayah{border-bottom:1px solid rgba(44,36,22,.07);padding:1.15rem .35rem;scroll-margin-top:150px}
 .ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:right;direction:rtl}
@@ -74,9 +111,59 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #surah-select{border:1.5px solid rgba(201,162,39,.5);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF8E1);color:var(--ink);font-weight:700;font-size:.8rem;padding:.34rem .9rem;max-width:14rem;font-family:inherit}
 .skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06));background-size:200% 100%;animation:skl 1.2s linear infinite;border-radius:.5rem}
 @keyframes skl{to{background-position:-200% 0}}
-#gates-wrap{scrollbar-width:thin}
-@media (min-width:1024px){#gates-wrap{max-height:calc(100vh - 190px);overflow-y:auto;position:sticky;top:120px}}
-@media (max-width:1023px){#gates-aside.folded{display:none}}
+#room{max-width:48rem;margin-inline:auto}
+.rh-study{margin-top:.9rem;border:1px solid rgba(244,212,106,.45);background:rgba(244,212,106,.07);color:#F4D46A;border-radius:999px;padding:.34rem .95rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s}
+.rh-study:hover{background:rgba(244,212,106,.16);border-color:rgba(244,212,106,.75)}
+/* the study companion */
+#study-slot{margin-top:1.5rem}
+.sp{position:relative;background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.17),transparent 62%),linear-gradient(160deg,#1A160F,#241D12);border:1px solid rgba(201,162,39,.38);border-radius:1.3rem;padding:1.5rem 1.15rem 1.6rem;color:#FFFEF7;overflow:hidden}
+@media (min-width:640px){.sp{padding:1.7rem 1.6rem 1.8rem}}
+.sp-eye{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
+.sp-title{font-size:1.25rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
+.sp-title span{font-weight:400;font-size:.9rem;color:rgba(255,254,247,.6)}
+.sp-line{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.3rem 0 0}
+.sp-k{display:flex;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
+.sp-k::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
+.sp-p{font-size:.85rem;line-height:1.85;color:rgba(255,254,247,.84);margin:.6rem 0}
+.sp-heart{border-left:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 16px 16px 0;padding:.9rem 1.05rem;margin:.5rem 0}
+.sp-heart p{font-size:.88rem;line-height:1.85;color:rgba(255,254,247,.92);margin:.5rem 0;font-style:italic}
+.sp-heart p:first-child{margin-top:0}.sp-heart p:last-child{margin-bottom:0}
+.sp-themes{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.2rem}
+.sp-chip{font-size:.7rem;font-weight:700;color:rgba(255,254,247,.85);border:1px solid rgba(244,212,106,.32);background:rgba(244,212,106,.07);border-radius:999px;padding:.26rem .7rem}
+.sp-theme{flex:1 1 13rem;border:1px solid rgba(244,212,106,.26);background:rgba(255,254,247,.045);border-radius:14px;padding:.6rem .75rem}
+.sp-theme b{display:block;font-size:.73rem;color:#F4D46A;letter-spacing:.02em}
+.sp-theme span{display:block;font-size:.74rem;line-height:1.65;color:rgba(255,254,247,.72);margin-top:.2rem}
+.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:left;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:14px;padding:.65rem .8rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.sp-btn:hover{background:rgba(244,212,106,.11);border-color:rgba(244,212,106,.5);transform:translateY(-1px)}
+.sp-btn:focus-visible{outline:2px solid rgba(244,212,106,.8);outline-offset:2px}
+.sp-btn .ic{flex:none;width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.09);color:#F4D46A;display:grid;place-items:center}
+.sp-btn .ic svg{width:.8rem;height:.8rem;display:block}
+.sp-btn .tx{min-width:0}
+.sp-btn b{display:block;font-size:.74rem;color:#F4D46A;letter-spacing:.03em}
+.sp-btn span{display:block;font-size:.78rem;line-height:1.6;color:rgba(255,254,247,.78);margin-top:.12rem}
+.sp-links{display:grid;gap:.45rem}
+@media (min-width:640px){.sp-links{grid-template-columns:1fr 1fr}}
+.sp-virtue{border:1px solid rgba(244,212,106,.28);background:rgba(255,254,247,.045);border-radius:16px;padding:.9rem 1rem}
+.sp-virtue p{font-size:.82rem;line-height:1.75;color:rgba(255,254,247,.85);margin:0}
+.sp-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;align-items:center}
+.sp-badge{font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;border:1px solid}
+.sp-badge.ok{color:#cfe0b4;border-color:rgba(138,155,110,.55);background:rgba(138,155,110,.14)}
+.sp-badge.weak{color:#F3C9A0;border-color:rgba(214,150,90,.55);background:rgba(214,150,90,.13)}
+.sp-src{font-size:.62rem;letter-spacing:.06em;color:rgba(255,254,247,.5)}
+.sp-note{font-size:.74rem;line-height:1.7;color:rgba(255,254,247,.55);border-top:1px solid rgba(244,212,106,.18);margin-top:1.4rem;padding-top:.8rem}
+/* the movements band, the animated figure of a deep surah */
+.sp-fig{margin:.3rem 0 .2rem}
+.sp-fig svg{display:block;width:100%;height:auto;overflow:visible}
+.mvg{cursor:pointer}
+.mvseg{transform-box:fill-box;transform-origin:left center;animation:mvgrow .7s cubic-bezier(.2,.8,.25,1) both;animation-delay:calc(var(--i) * .1s);transition:opacity .18s}
+.mvg:hover .mvseg{opacity:.82}
+.mvg:focus-visible{outline:2px solid rgba(244,212,106,.9);outline-offset:3px}
+.mvnum{font-size:15px;font-weight:800;fill:#1A160F;pointer-events:none}
+.mvcap{font-size:13px;fill:rgba(255,254,247,.6);pointer-events:none}
+@keyframes mvgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.mvseg{animation:none}}
+.sp-mv{display:grid;gap:.4rem;margin-top:.7rem}
+.sp-mv .rg{font-size:.6rem;font-weight:800;letter-spacing:.08em;color:#F4D46A;background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.3);border-radius:999px;padding:.14rem .5rem;white-space:nowrap}
 /* bottom player bar */
 #player{position:fixed;left:0;right:0;bottom:-90px;z-index:60;transition:bottom .35s ease;background:linear-gradient(90deg,#14100A,#241D12);border-top:1px solid rgba(201,162,39,.35);box-shadow:0 -8px 30px rgba(20,16,10,.35)}
 #player.show{bottom:0}
@@ -100,126 +187,197 @@ body.has-player{padding-bottom:74px}
 <div id="progress"></div>
 
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
-<style id="nav13">
+<style id="nav49">
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
 .dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
-.dd-menu{position:absolute;right:-1rem;top:100%;padding-top:.6rem;display:none;z-index:70;min-width:15.5rem}
-.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}
-.dd-menu>p,.dd-menu>a{display:block}
-.dd-inner,.dd-menu{outline:none}
-.dd-menu{background:transparent}
-.dd-menu>*{background:#fff}
-.dd-menu>p:first-child{border-radius:1rem 1rem 0 0;padding-top:1rem}
-.dd-menu>a:last-child{border-radius:0 0 1rem 1rem;padding-bottom:1rem}
-.dd-menu>*{border-left:1px solid rgba(44,36,22,.1);border-right:1px solid rgba(44,36,22,.1)}
-.dd-menu>p:first-child{border-top:1px solid rgba(44,36,22,.1)}
-.dd-menu>a:last-child{border-bottom:1px solid rgba(44,36,22,.1);box-shadow:0 22px 44px rgba(44,36,22,.18)}
-.dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.55rem 1.1rem .25rem}
-.dd-menu a{padding:.42rem 1.1rem;font-size:.84rem;color:rgba(44,36,22,.75);text-decoration:none}
-.dd-menu a:hover{color:#2C2416;background:#FFF7DF!important}
-.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
-.mnav::-webkit-scrollbar{display:none}
-.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
-</style>
-<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-<a href="index.html" class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
-<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
-</a>
-<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
-<a href="quran.html" class="text-ink font-bold">Qur'an</a>
-<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
-<a href="arabic.html" class="hover:text-ink transition-colors">Arabic</a>
-<a href="pillars.html" class="hover:text-ink transition-colors">Pillars</a>
-<a href="kids.html" class="hover:text-ink transition-colors">Kids</a>
-<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
-<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
-<div class="mg">
-<p class="dd-h">Learn</p>
-<a role="menuitem" href="quran.html">The Mushaf of Light</a>
-<a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
-<a role="menuitem" href="words.html">The Words</a>
-<a role="menuitem" href="madrasa.html">The Classroom · Madrasa</a>
-<a role="menuitem" href="health.html">Prophetic Health</a>
-<a role="menuitem" href="theology.html">Theology · The Branches</a>
-</div>
-<div class="mg">
-<p class="dd-h">The Story</p>
-<a role="menuitem" href="index.html#timeline">The Path of Creation</a>
-<a role="menuitem" href="prophets.html">The 25 Prophets</a>
-<a role="menuitem" href="characters.html">Characters</a>
-<a role="menuitem" href="unseen.html">The Unseen &amp; the Mysteries</a>
-<a role="menuitem" href="places.html">Places</a>
-<a role="menuitem" href="index.html#mizan">Two Lives</a>
-</div>
-<div class="mg">
-<p class="dd-h">Worship</p>
-<a role="menuitem" href="pillars.html">The Five Pillars</a>
-<a role="menuitem" href="begin.html">Begin · New Muslim</a>
-<a role="menuitem" href="sermon.html">The Last Sermon</a>
-<a role="menuitem" href="soul.html">The Journey of the Soul</a>
-<p class="dd-h" style="margin-top:.8rem">Stories</p>
-<a role="menuitem" href="latif.html">Al-Latif · The Story of Beauty</a>
-</div>
-<div class="mg">
-<p class="dd-h">Kids</p>
-<a role="menuitem" href="kids.html">The Kids&#39; Codex</a>
-<a role="menuitem" href="kids/lanterns.html">The Lantern Sky</a>
-<p class="dd-h" style="margin-top:.8rem">Masajid &amp; Schools</p>
-<a role="menuitem" href="masjid/">Masjid Tools · Prayer Board</a>
-<a role="menuitem" href="school.html">The Madrasa · School</a>
-<a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
-<p class="dd-h" style="margin-top:.8rem">Support</p>
-<a role="menuitem" href="donate.html" class="mg-give">✦ Give a Gift</a>
-<a role="menuitem" href="legal.html">Terms &amp; Transparency</a>
-<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
-</div>
-</div></div></div>
-<a href="donate.html" class="give-pill">✦ Give</a>
-<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors"><span data-ic=globe></span></button>
-</nav>
-</div>
-<div class="md:hidden border-t border-ink/5">
-<div class="mnav text-xs font-semibold">
-<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Path</a>
-<a href="quran.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Qur'an</a>
-<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
-<a href="pillars.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Pillars</a>
-<a href="arabic.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Arabic</a>
-<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Kids</a>
-<a href="school.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Madrasa</a>
-<a href="begin.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Begin</a>
-<a href="characters.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Characters</a>
-<a href="places.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Places</a>
-<a href="words.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Words</a>
-<a href="health.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Health</a>
-<a href="theology.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Theology</a>
-<a href="latif.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Al-Latif</a>
-<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
-</div>
-</div>
-<style id="nav25">
-.dd{position:relative}
-.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
-.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
-.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(44rem,calc(100vw - 2rem))}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
 .dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
-@media (max-width:1100px){.dd-mega{width:min(30rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
 .dd-mega .mg{min-width:0}
 .dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
 .dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
 .dd-mega a:hover{background:#FFF7DF;color:#2C2416}
 .dd-mega a.mg-give{color:#8a6d13;font-weight:700}
 .give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
 .give-pill:hover{transform:translateY(-1px)}
-.mnav{display:flex;gap:.5rem;overflow-x:auto;padding:.55rem 1rem;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
-.mnav::-webkit-scrollbar{display:none}
-.mnav a{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
 </style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="quran.html" class="text-ink font-bold" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
 </header>
 
 <section data-ink=soft id="qhero">
@@ -280,18 +438,22 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 })();
 </script>
 
-<div class="grid lg:grid-cols-[290px_1fr] gap-8">
+<div>
 
-<!-- Surah gates (folds away on phones once you're reading) -->
+<!-- Surah gates (folds away once you're reading) -->
 <aside id="gates-aside">
-<div class="mb-3">
-<input id="gate-search" type="search" placeholder="Find a surah… (name or number)" class="w-full text-sm border border-ink/15 rounded-full px-4 py-2 bg-white focus:outline-none focus:border-gold"/>
+<div class="gbar">
+<div class="gsearch"><input id="gate-search" type="search" placeholder="Find a surah… (name, meaning or number)" class="w-full text-sm border border-ink/15 rounded-full px-4 py-2 bg-white focus:outline-none focus:border-gold"/></div>
+<button class="gview on" id="gv-tiles" type="button" aria-pressed="true">Tiles</button>
+<button class="gview" id="gv-list" type="button" aria-pressed="false">Compact list</button>
 </div>
-<div class="flex gap-2 mb-3 text-[10px] text-ink/50 px-1">
-<span class="inline-flex items-center gap-1"><i class="w-2 h-2 rounded-full bg-gold inline-block"></i> Meccan · solid ring</span>
-<span class="inline-flex items-center gap-1"><i class="w-2 h-2 rounded-full inline-block" style="background:#8A9B6E"></i> Medinan · dashed ring</span>
-</div>
-<div id="gates-wrap" class="grid gap-2 pr-1" role="list"></div>
+<p class="glegend">
+<span class="gchip mk">Makkan</span><b>revealed before the migration</b>
+<span class="gchip md">Madinan</span><b>revealed after it</b>
+<span style="color:#C9A227" aria-hidden="true">✦</span><b>opened in full by the study companion</b>
+<span id="gate-count"></span>
+</p>
+<div id="gates-wrap" role="list"></div>
 </aside>
 
 <!-- Reading room -->
@@ -340,7 +502,6 @@ const $=id=>document.getElementById(id);
 const gatesWrap=$("gates-wrap"), roomBody=$("room-body"), roomHead=$("room-head"), aside=$("gates-aside");
 let cur=null, ayahs=[], trans=[], transOn=true, audio=null, playingIdx=-1, continuous=false, paused=false;
 let transEdition="en.sahih";
-const isMobile=()=>window.matchMedia("(max-width:1023px)").matches;
 
 /* ---------- navigator ---------- */
 const sel=$("surah-select");
@@ -348,20 +509,36 @@ SURAHS.forEach(s=>{const o=document.createElement("option");o.value=s[0];o.textC
 sel.addEventListener("change",()=>{if(sel.value)openSurah(+sel.value,1,true);});
 $("prev-s").addEventListener("click",()=>{if(cur>1)openSurah(cur-1,1,true);});
 $("next-s").addEventListener("click",()=>{if(cur<114)openSurah(cur+1,1,true);});
-$("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");if(!aside.classList.contains("folded"))aside.scrollIntoView({behavior:"smooth",block:"start"});});
+function gatesLabel(){$("t-gates").textContent=aside.classList.contains("folded")?"☰ Browse the 114 gates":"☰ Close the gates";}
+$("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");gatesLabel();
+ if(!aside.classList.contains("folded"))aside.scrollIntoView({behavior:"smooth",block:"start"});});
 
-/* ---------- gates ---------- */
-function gateHTML(s){const[n,en,ar,meaning,count,place]=s;
- return `<button class="gate ${place==="M"?"meccan":"medinan"}" role="listitem" data-n="${n}" aria-label="Surah ${n} ${en}">
-  <span class="num">${n}</span>
-  <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold text-ink truncate">${en}</span>
-  <span class="block text-[10px] text-ink/45">${meaning} · ${count} ayat · ${place==="M"?"Meccan":"Medinan"}</span></span>
-  <span class="font-quran text-xl text-gold/90 flex-none" translate="no">${ar}</span></button>`;}
+/* ---------- gates: 114 tiles, tiles or compact list ---------- */
+const STUDY=()=>window.NOOR_STUDY||null;
+const isDeep=n=>{const D=STUDY();return !!(D&&D[n]&&D[n].depth==="deep");};
+function gateHTML(s){const[n,en,ar,meaning,count,place]=s;const mk=place==="M",deep=isDeep(n);
+ return `<button class="gate ${mk?"mk":"md"}${deep?" deep":""}" role="listitem" data-n="${n}" aria-label="Surah ${n}, ${en}, ${meaning}, ${count} ayat, ${mk?"Makkan":"Madinan"}${deep?", opened in full":""}">
+  <span class="seal" aria-hidden="true">${n}</span>
+  <span class="gar font-amiri" translate="no">${ar}</span>
+  <span class="gen">${en}</span>
+  <span class="gmn">${meaning}</span>
+  <span class="gmeta"><span class="gchip ${mk?"mk":"md"}">${mk?"Makkan":"Madinan"}</span><span class="gct">${count} ayat</span></span>
+  ${deep?`<span class="gfull" aria-hidden="true" title="Opened in full">✦</span>`:""}</button>`;}
 function renderGates(filter){const q=(filter||"").trim().toLowerCase();
- gatesWrap.innerHTML=SURAHS.filter(s=>!q||String(s[0])===q||s[1].toLowerCase().includes(q)||s[3].toLowerCase().includes(q)).map(gateHTML).join("")||`<p class="text-xs text-ink/40 px-2 py-4">No surah matches "${filter}".</p>`;
- if(cur)gatesWrap.querySelector(`[data-n="${cur}"]`)?.classList.add("active");}
+ const list=SURAHS.filter(s=>!q||String(s[0])===q||s[1].toLowerCase().includes(q)||s[3].toLowerCase().includes(q)||s[2].includes(q));
+ gatesWrap.innerHTML=list.map(gateHTML).join("")||`<p class="text-xs text-ink/40 px-2 py-4">No surah matches "${filter}".</p>`;
+ const c=$("gate-count");if(c)c.textContent=list.length===114?"114 gates":list.length+" of 114";
+ if(cur)markActive(cur);}
+function markActive(n){gatesWrap.querySelectorAll(".gate.active").forEach(g=>g.classList.remove("active"));
+ const el=gatesWrap.querySelector(`[data-n="${n}"]`);if(el)el.classList.add("active");}
 gatesWrap.addEventListener("click",e=>{const g=e.target.closest(".gate");if(g)openSurah(+g.dataset.n,1,true);});
 $("gate-search").addEventListener("input",e=>renderGates(e.target.value));
+function setView(list){gatesWrap.classList.toggle("list",list);
+ $("gv-list").classList.toggle("on",list);$("gv-list").setAttribute("aria-pressed",String(list));
+ $("gv-tiles").classList.toggle("on",!list);$("gv-tiles").setAttribute("aria-pressed",String(!list));
+ try{localStorage.setItem("noor-gates-view",list?"list":"tiles")}catch(e){}}
+$("gv-list").addEventListener("click",()=>setView(true));
+$("gv-tiles").addEventListener("click",()=>setView(false));
 
 /* ---------- fetch & render ---------- */
 async function j(url){const r=await fetch(url);if(!r.ok)throw new Error(r.status);return(await r.json()).data;}
@@ -370,10 +547,10 @@ const BISMILLAH=/^بِ?سْ?مِ.{0,45}?رّ?َ?حِ?يمِ?\s*/;
 async function openSurah(n,gotoAyah,user){
   if(!SURAHS[n-1])return;
   stopAudio();
-  cur=n; renderGates($("gate-search").value);
+  cur=n; markActive(n);
   sel.value=String(n);
   $("prev-s").disabled=n<=1; $("next-s").disabled=n>=114;
-  if(user&&isMobile())aside.classList.add("folded");   /* fold the 114 away, reading first */
+  if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
   const[num,en,ar,meaning,count,place]=SURAHS[n-1];
   roomHead.innerHTML=`
    <div class="rounded-2xl overflow-hidden border border-ink/8" style="background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)">
@@ -382,6 +559,7 @@ async function openSurah(n,gotoAyah,user){
        <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:rgba(255,254,247,.55)">, ${meaning}</span></h2>
        <p class="text-[11px] mt-1" style="color:rgba(255,254,247,.5)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
        <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:rgba(255,254,247,.75)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
+       <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>
      </div>
    </div>`;
   roomBody.innerHTML=`<div class="space-y-4 py-6">${Array.from({length:4},()=>`<div class="skel h-16"></div>`).join("")}</div>`;
@@ -399,8 +577,10 @@ async function openSurah(n,gotoAyah,user){
     roomBody.innerHTML=`<div class="text-center py-14 max-w-sm mx-auto">
       <p class="font-quran text-3xl text-gold mb-3">﷽</p>
       <p class="text-sm text-ink/60 leading-relaxed mb-4">The Mushaf could not be reached, the text service may be blocked on your network.</p>
-      <button class="tool on" onclick="openSurah(${n},1)">Try again</button></div>`;
+      <button class="tool on" onclick="openSurah(${n},1)">Try again</button></div>
+      <div id="study-slot"></div>`;
     $("t-status").textContent="";
+    mountStudy(n);   /* the companion is carried in the page, so it opens even when the text service is down */
   }
 }
 
@@ -415,11 +595,143 @@ function renderAyahs(n){
       <p class="trans text-[13.5px] leading-relaxed text-ink/70 ${transOn?"":"hidden"}">${trans[i]?.text||""}</p>
     </div></article>`;}).join("");
   roomBody.innerHTML=`<div class="bg-white rounded-2xl border border-ink/8 px-4 sm:px-7 py-2 mt-4">${html}</div>
+   <div id="study-slot"></div>
    <div class="flex justify-between items-center py-5 text-sm">
      ${cur>1?`<button class="tool" onclick="openSurah(${cur-1},1,true)">‹ ${SURAHS[cur-2][1]}</button>`:"<span></span>"}
      ${cur<114?`<button class="tool" onclick="openSurah(${cur+1},1,true)">${SURAHS[cur][1]} ›</button>`:"<span></span>"}
    </div>`;
+  mountStudy(n);
 }
+
+/* ---------- the study companion ----------
+   Built from window.NOOR_STUDY (quran-study.js, deferred). Every use is guarded:
+   if that file never arrives the room behaves exactly as it did before. */
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const arr=v=>v==null?[]:(Array.isArray(v)?v:[v]);
+const kick=t=>`<p class="sp-k">${esc(t)}</p>`;
+const PLAYICO=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+const MVC=["#C9A227","#E9C86A","#B8912A","#F4D46A","#D3AE3C","#A8842A"];
+
+function mvRange(range,count){const p=String(range).split("-");
+ let a=parseInt(p[0],10)||1,b=parseInt(p[1],10)||a;
+ a=Math.min(Math.max(a,1),count);b=Math.min(Math.max(b,a),count);return[a,b];}
+
+/* the animated figure of a deep surah: its movements, each segment true to its ayah range */
+function bandFig(rec,n,count){
+ const W=620,H=58,segs=rec.movements.map((m,i)=>{const[a,b]=mvRange(m.range,count);
+  return{a:a,b:b,x:(a-1)/count*W,w:Math.max(7,(b-a+1)/count*W-3),i:i};});
+ let bars="",ticks="",labels="",lastL=-99;
+ segs.forEach(s=>{
+  bars+=`<g class="mvg" role="button" tabindex="0" data-sp="${s.a}" data-flow="1" aria-label="Listen from verse ${s.a}, movement ${s.i+1}">
+   <title>${esc(rec.movements[s.i].h)}, verses ${s.a} to ${s.b}</title>
+   <rect class="mvseg" x="${s.x.toFixed(1)}" y="6" width="${s.w.toFixed(1)}" height="26" rx="6" fill="${MVC[s.i%MVC.length]}" style="--i:${s.i}"/>
+   ${s.w>22?`<text class="mvnum" x="${(s.x+s.w/2).toFixed(1)}" y="24" text-anchor="middle">${s.i+1}</text>`:""}</g>`;
+  ticks+=`<path d="M${s.x.toFixed(1)} 36V42"/>`;
+  if(s.x-lastL>36){labels+=`<text class="mvcap" x="${s.x.toFixed(1)}" y="54" text-anchor="${s.x<8?"start":"middle"}">${s.a}</text>`;lastL=s.x;}
+ });
+ return `<div class="sp-fig mo-pop"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="The ${segs.length} movements of this surah, drawn to the length of each">
+  <g class="mo-draw" fill="none" stroke="rgba(244,212,106,.45)" stroke-width="1.4" stroke-linecap="round"><path d="M0 42H${W}"/>${ticks}<path d="M${W} 36V42"/></g>
+  ${bars}${labels}<text class="mvcap" x="${W}" y="54" text-anchor="end">${count}</text>
+ </svg></div>`;
+}
+
+/* the figure of a surah opened in brief: its length against the longest */
+function lengthFig(n,count,place){
+ const W=620,MAX=286,w=Math.max(9,count/MAX*W),mk=place==="M";
+ const cap=n===2?"the longest surah in the Book":"against Al-Baqarah, the longest, at 286";
+ return `<div class="sp-fig mo-pop"><svg viewBox="0 0 ${W} 60" role="img" aria-label="${mk?"Makkan":"Madinan"} surah, ${count} ayat, against the longest surah at 286">
+  <text class="mvcap" x="0" y="12" fill="${mk?"#F4D46A":"#B7C795"}" style="font-weight:800;letter-spacing:1px">${mk?"MAKKAN":"MADINAN"}</text>
+  <text class="mvcap" x="${W}" y="12" text-anchor="end">${count} ${count===1?"ayah":"ayat"}</text>
+  <g class="mo-draw" fill="none" stroke="rgba(244,212,106,.4)" stroke-width="1.4"><rect x="0.7" y="20.7" width="${W-1.4}" height="20.6" rx="10"/></g>
+  <rect class="mvseg" x="1" y="21" width="${w.toFixed(1)}" height="20" rx="10" fill="${mk?"#C9A227":"#8A9B6E"}" style="--i:0"/>
+  <text class="mvcap" x="0" y="56">${cap}</text>
+ </svg></div>`;
+}
+
+function studyHTML(n){
+ const D=STUDY();if(!D||!D[n]||!SURAHS[n-1])return "";
+ const rec=D[n],s=SURAHS[n-1],count=s[4],place=s[5],deep=rec.depth==="deep";
+ let h=`<section class="sp mo" aria-label="Study companion for surah ${esc(s[1])}">
+  <p class="sp-eye">✦ The study companion</p>
+  <h3 class="sp-title">${esc(s[1])}<span>, ${esc(s[3])}</span></h3>
+  <p class="sp-line">${place==="M"?"Makkan":"Madinan"} · ${count} ayat · ${deep?"opened in full":"opened in brief"}</p>`;
+
+ const ctx=arr(rec.context);
+ if(ctx.length)h+=kick("When it came down")+ctx.map(p=>`<p class="sp-p">${esc(p)}</p>`).join("");
+
+ if(deep&&rec.name_story)h+=kick("The name")+`<p class="sp-p">${esc(rec.name_story)}</p>`;
+
+ if(deep&&rec.movements&&rec.movements.length){
+  h+=kick("The movements")+bandFig(rec,n,count)
+   +`<div class="sp-mv">`+rec.movements.map((m,i)=>{const[a,b]=mvRange(m.range,count);
+     return `<button type="button" class="sp-btn" data-sp="${a}" data-flow="1">
+      <span class="ic">${PLAYICO}</span>
+      <span class="tx"><b><span class="rg">${a===b?"Verse "+a:"Verses "+a+" to "+b}</span> ${esc(m.h)}</b><span>${esc(m.note)}</span></span></button>`;}).join("")
+   +`</div><p class="sp-note" style="border:0;margin-top:.5rem;padding-top:0">Tap any movement to hear it recited from its first verse.</p>`;
+ }else{
+  h+=kick("The shape of it")+lengthFig(n,count,place);
+ }
+
+ const th=arr(rec.themes);
+ if(th.length)h+=kick("Themes")+`<div class="sp-themes">`+th.map(t=>typeof t==="string"
+   ?`<span class="sp-chip">${esc(t)}</span>`
+   :`<span class="sp-theme"><b>${esc(t.t)}</b><span>${esc(t.d)}</span></span>`).join("")+`</div>`;
+
+ const heart=arr(rec.heart);
+ if(heart.length)h+=kick("The heart")+`<div class="sp-heart">`+heart.map(p=>`<p>${esc(p)}</p>`).join("")+`</div>`;
+
+ const stops=rec.passages?arr(rec.passages):(rec.passage?[rec.passage]:[]);
+ if(stops.length)h+=kick("Stop here")+stops.map(p=>{const a=parseInt(String(p.ref).split(":")[1],10)||1;
+   return `<button type="button" class="sp-btn" data-sp="${a}">
+    <span class="ic">${PLAYICO}</span>
+    <span class="tx"><b>Qur'an ${esc(p.ref)}</b><span>${esc(p.why)}</span></span></button>`;}).join("");
+
+ const con=arr(rec.connections);
+ if(con.length)h+=kick("It speaks with")+`<div class="sp-links">`+con.map(c=>{const t=SURAHS[c.to-1];if(!t)return "";
+   return `<button type="button" class="sp-btn" data-sg="${c.to}">
+    <span class="tx"><b>${t[0]} ${esc(t[1])}, ${esc(t[3])}</b><span>${esc(c.why)}</span></span></button>`;}).join("")+`</div>`;
+
+ if(deep&&rec.virtue&&rec.virtue.text){const sound=rec.virtue.level==="sunnah";
+  h+=kick("What is authentically reported")+`<div class="sp-virtue">
+   <p>${esc(rec.virtue.text)}</p>
+   <div class="sp-tags"><span class="sp-badge ${sound?"ok":"weak"}">${sound?"Established":"Weak or contested, so we say so"}</span>
+   ${rec.virtue.src?`<span class="sp-src">${esc(rec.virtue.src)}</span>`:""}</div></div>`;}
+
+ if(!deep)h+=`<p class="sp-note">This surah is opened in brief here. The full companion is being written.</p>`;
+ return h+`</section>`;
+}
+
+function mountStudy(n){
+ let html="";try{html=studyHTML(n)}catch(e){html=""}
+ const slot=$("study-slot");
+ if(slot){slot.innerHTML=html;
+  if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(slot)}catch(e){}}}
+ const b=roomHead.querySelector("#t-study");
+ if(b)b.style.display=(html&&slot)?"":"none";
+}
+
+/* every study button reaches the player the reader already knows */
+function playStudyAyah(num){
+ if(!ayahs.length){$("t-status").textContent="The verses are still opening, one moment.";
+  setTimeout(()=>$("t-status").textContent="",2500);return;}
+ let i=ayahs.findIndex(a=>+a.numberInSurah===+num);
+ if(i<0)i=Math.min(Math.max(num-1,0),ayahs.length-1);
+ playAyah(i);
+}
+function studyAct(el){
+ const sp=el.getAttribute("data-sp");
+ if(sp!==null){const flow=el.getAttribute("data-flow")==="1";   /* a movement plays on; a single stop plays once */
+  continuous=flow;listenLabel(continuous);$("t-listen").classList.toggle("on",continuous);
+  playStudyAyah(+sp);return true;}
+ const sg=el.getAttribute("data-sg");
+ if(sg!==null){openSurah(+sg,1,true);return true;}
+ return false;
+}
+roomBody.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-sp],[data-sg]");if(el)studyAct(el);});
+roomBody.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;
+ const el=e.target.closest&&e.target.closest(".mvg[data-sp]");if(!el)return;e.preventDefault();studyAct(el);});
+roomHead.addEventListener("click",e=>{if(!e.target.closest||!e.target.closest("#t-study"))return;
+ const el=$("study-slot");if(el&&el.firstChild)el.scrollIntoView({behavior:"smooth",block:"start"});});
 
 /* ---------- audio engine v2: 4-source fallback, stall watchdog, honest UI ----------
    The equalizer only dances when sound is actually coming out. While a server
@@ -508,10 +820,16 @@ $("t-trans").addEventListener("click",()=>{transOn=!transOn;$("t-trans").classLi
 $("t-lang").addEventListener("change",e=>{transEdition=e.target.value;if(cur)openSurah(cur,1);});
 
 /* ---------- boot ---------- */
+try{if(localStorage.getItem("noor-gates-view")==="list")setView(true);}catch(e){}
 renderGates("");
 const usp=new URLSearchParams(location.search);
 const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
-if(s0>=1&&s0<=114)openSurah(s0,a0,false);
+if(s0>=1&&s0<=114){aside.classList.add("folded");openSurah(s0,a0,false);}
+gatesLabel();
+/* quran-study.js is deferred, so it lands after this script: pick it up when it does */
+function studyReady(){if(!STUDY())return;renderGates($("gate-search").value);if(cur)mountStudy(cur);}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",studyReady,{once:true});
+else studyReady();
 /* the only global the page markup needs (inline onclick on gate buttons) */
 window.openSurah=openSurah;
 })();

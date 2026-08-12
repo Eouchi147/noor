@@ -27,11 +27,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=16"/>
+<link rel="stylesheet" href="assets/tw.css?v=49"/>
 <script src="noor-fx.js" defer></script>
 <script src="noor-ink.js" defer></script>
-<script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Madrasa of Light · Complete Islamic School Curriculum","url":"https://noorcodex.com/school","description":"A complete Islamic school curriculum from cradle to adolescence: five developmental stages, Quran and Arabic tracks, STEM through golden-age Muslim science, practical life as adab, mastery milestones.","provider":{"@type":"Organization","name":"NOOR · Codex of Light","url":"https://noorcodex.com"},"isAccessibleForFree":true,"educationalLevel":"Early childhood through adolescence","hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT5H"}}</script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
@@ -199,81 +200,210 @@ section.blk{padding:2.7rem 0 .8rem}
 .enc-fill{height:.55rem;border-radius:999px;background:rgba(255,254,247,.12);overflow:hidden}
 .enc-fill i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);animation:encfill 2.2s ease forwards}
 @keyframes encfill{to{width:100%}}
-@media (prefers-reduced-motion:reduce){.enc-draw,.enc-fade,.enc-rise,.enc-fill i{animation-duration:.001s}.enc-spinA,.enc-spinB,.enc-crank,.enc-piston,.enc-flame{animation:none}}
+.enc-steam{animation:encsteam 2.6s ease-in-out infinite}
+@keyframes encsteam{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:.8;transform:translateY(-4px)}}
+.enc-drop{animation:encdrop 2.3s cubic-bezier(.5,0,.8,.4) infinite}
+@keyframes encdrop{0%{transform:translateY(0);opacity:0}22%{opacity:1}55%{transform:translateY(38px);opacity:1}64%{transform:translateY(45px);opacity:0}100%{transform:translateY(45px);opacity:0}}
+.enc-tidy{animation:enctidy 1s cubic-bezier(.34,1.56,.64,1) both}
+.enc-tidy.d1{animation-delay:.2s}.enc-tidy.d2{animation-delay:.4s}.enc-tidy.d3{animation-delay:.6s}.enc-tidy.d4{animation-delay:.8s}
+@keyframes enctidy{from{transform:rotate(10deg) translateY(-5px)}to{transform:none}}
+#encx.gs .enc-draw,#encx.gs .enc-fade,#encx.gs .enc-rise,#encx.gs .enc-tidy,#encx.gs .enc-fill i{animation:none}
+@media (prefers-reduced-motion:reduce){.enc-draw,.enc-fade,.enc-rise,.enc-fill i,.enc-tidy{animation-duration:.001s}.enc-spinA,.enc-spinB,.enc-crank,.enc-piston,.enc-flame,.enc-steam,.enc-drop{animation:none}}
 </style>
 </head>
 <body>
 
-<header class="sticky top-0 z-40 bg-parchment/90 backdrop-blur border-b border-ink/8">
-<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
 <a href="index.html" class="flex items-center gap-2.5">
 <div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
-<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-ink/65">
-<a href="quran.html" class="hover:text-ink transition-colors">Qur'an</a>
-<a href="prophets.html" class="hover:text-ink transition-colors">Prophets</a>
-<a href="arabic.html" class="hover:text-ink transition-colors">Arabic</a>
-<a href="pillars.html" class="hover:text-ink transition-colors">Pillars</a>
-<a href="kids.html" class="hover:text-ink transition-colors">Kids</a>
-<div class="dd"><button class="dd-btn text-ink font-bold" aria-haspopup="menu">Library</button>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
-<p class="dd-h">Learn</p>
-<a role="menuitem" href="quran.html">The Mushaf of Light</a>
-<a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
-<a role="menuitem" href="words.html">The Words</a>
-<a role="menuitem" href="madrasa.html">The Classroom · Madrasa</a>
-<a role="menuitem" href="health.html">Prophetic Health</a>
-<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
 </div>
 <div class="mg">
-<p class="dd-h">The Story</p>
-<a role="menuitem" href="index.html#timeline">The Path of Creation</a>
-<a role="menuitem" href="prophets.html">The 25 Prophets</a>
-<a role="menuitem" href="characters.html">Characters</a>
-<a role="menuitem" href="unseen.html">The Unseen &amp; the Mysteries</a>
-<a role="menuitem" href="places.html">Places</a>
-<a role="menuitem" href="index.html#mizan">Two Lives</a>
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
 </div>
 <div class="mg">
-<p class="dd-h">Worship</p>
-<a role="menuitem" href="pillars.html">The Five Pillars</a>
-<a role="menuitem" href="begin.html">Begin · New Muslim</a>
-<a role="menuitem" href="sermon.html">The Last Sermon</a>
-<a role="menuitem" href="soul.html">The Journey of the Soul</a>
-<p class="dd-h" style="margin-top:.8rem">Stories</p>
-<a role="menuitem" href="latif.html">Al-Latif · The Story of Beauty</a>
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
 </div>
 <div class="mg">
-<p class="dd-h">Kids</p>
-<a role="menuitem" href="kids.html">The Kids&#39; Codex</a>
-<a role="menuitem" href="kids/lanterns.html">The Lantern Sky</a>
-<p class="dd-h" style="margin-top:.8rem">Masajid &amp; Schools</p>
-<a role="menuitem" href="masjid/">Masjid Tools · Prayer Board</a>
-<a role="menuitem" href="school.html">The Madrasa · School</a>
-<a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
-<p class="dd-h" style="margin-top:.8rem">Support</p>
-<a role="menuitem" href="donate.html" class="mg-give">✦ Give a Gift</a>
-<a role="menuitem" href="legal.html">Terms &amp; Transparency</a>
-<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
 </div>
 </div></div></div>
-<a href="donate.html" class="give-pill">✦ Give</a>
-<button id="translate-btn" type="button" aria-label="Read NOOR in your language" title="Read NOOR in your language" class="text-xs font-medium bg-transparent border border-ink/15 rounded-full px-2 py-1 text-ink/70 hover:text-ink hover:border-gold/50 transition-colors"><span data-ic=globe></span></button>
 </nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
 </div>
-<div class="md:hidden border-t border-ink/5">
-<div class="mnav text-xs font-semibold">
-<a href="index.html#timeline" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Path</a>
-<a href="quran.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Qur'an</a>
-<a href="prophets.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Prophets</a>
-<a href="school.html" class="px-3 py-1 rounded-full bg-gold/20 text-ink font-bold active">Madrasa</a>
-<a href="pillars.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Pillars</a>
-<a href="arabic.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Arabic</a>
-<a href="kids.html" class="px-3 py-1 rounded-full bg-ink/5 text-ink/70">Kids</a>
-<a href="donate.html" class="px-3 py-1 rounded-full bg-gold/15 text-ink/80">✦ Give</a>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
 </div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
 </header>
 
@@ -606,7 +736,7 @@ haytham:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:a
  '<line x1="63" y1="108" x2="150" y2="75" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw d2"/>'+
  '<line x1="150" y1="75" x2="252" y2="108" stroke="#F4D46A" stroke-width="1.6" class="enc-draw d2"/>'+
  '<line x1="150" y1="75" x2="252" y2="44" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw d3"/>'+
- '<g class="enc-fade d3"><rect x="248" y="96" width="8" height="26" rx="2" fill="#d9d2c0"/><path d="M252 96 C247 90 257 88 252 82 C259 88 247 90 252 96" fill="#F4D46A" transform="rotate(180 252 89)"/></g>'+
+ '<g class="enc-fade d3" opacity=".85"><rect x="248" y="44" width="8" height="26" rx="2" fill="#d9d2c0"/><path d="M252 74 C246 82 258 85 252 96 C258 85 246 82 252 74" fill="#F4D46A"/><circle cx="252" cy="102" r="1.7" fill="#F4D46A" opacity=".65"/></g>'+
  '<text x="205" y="140" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">the image lands upside down</text></svg>'+
  '<p class="cap">the camera obscura: light travels in straight lines through the pinhole</p>';},
 khwarizmi:function(){return '<div style="text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;line-height:2.4;color:#FFF7DF">'+
@@ -661,6 +791,126 @@ battuta:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:a
  '<circle cx="338" cy="55" r="5" fill="#F4D46A" class="enc-fade d3"/><text x="330" y="41" fill="rgba(255,254,247,.7)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">China</text>'+
  '</svg><div style="text-align:center;font-size:1.5rem;font-weight:900;color:#F4D46A"><span id="bt-km">0</span> km</div>'+
  '<p class="cap">twenty-nine years of road, sea and desert, dictated as the Rihla</p>';},
+montessori:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<line x1="28" y1="118" x2="332" y2="118" stroke="rgba(255,254,247,.3)" stroke-width="1.5" class="enc-draw"/>'+
+ [[28,'0'],[104,'6'],[180,'12'],[256,'18'],[332,'24']].map(function(t,i){return '<line x1="'+t[0]+'" y1="114" x2="'+t[0]+'" y2="122" stroke="rgba(255,254,247,.45)" stroke-width="1.5" class="enc-fade d1"/><text x="'+t[0]+'" y="136" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d1">'+t[1]+'</text>'}).join('')+
+ '<path d="M28 118 Q66 30 104 118" fill="rgba(244,212,106,.14)" stroke="#F4D46A" stroke-width="2.2" class="enc-draw d1"/>'+
+ '<path d="M104 118 Q142 74 180 118" fill="rgba(127,163,216,.12)" stroke="#7FA3D8" stroke-width="2" class="enc-draw d2"/>'+
+ '<path d="M180 118 Q218 40 256 118" fill="rgba(244,212,106,.14)" stroke="#F4D46A" stroke-width="2.2" class="enc-draw d3"/>'+
+ '<path d="M256 118 Q294 80 332 118" fill="rgba(255,254,247,.05)" stroke="rgba(255,254,247,.35)" stroke-width="2" class="enc-draw d4"/>'+
+ '<text x="66" y="58" fill="#F4D46A" font-size="9.5" text-anchor="middle" font-weight="700" font-family="Inter,sans-serif" class="enc-fade d2">absorbent mind</text>'+
+ '<text x="142" y="92" fill="#9db9e8" font-size="9" text-anchor="middle" font-weight="700" font-family="Inter,sans-serif" class="enc-fade d2">reasoning</text>'+
+ '<text x="218" y="66" fill="#F4D46A" font-size="9.5" text-anchor="middle" font-weight="700" font-family="Inter,sans-serif" class="enc-fade d3">social self</text>'+
+ '<text x="294" y="98" fill="rgba(255,254,247,.5)" font-size="9" text-anchor="middle" font-weight="700" font-family="Inter,sans-serif" class="enc-fade d4">maturity</text>'+
+ '<g class="enc-fade d3">'+[44,58,72,86].map(function(x,i){return '<circle cx="'+x+'" cy="110" r="2.3" fill="#F4D46A" opacity=".8"/>'}).join('')+'</g></svg>'+
+ '<p class="cap">her constructive rhythm: four planes, each six years, each a new child · the dots are the sensitive windows of the first plane</p>';},
+moon:function(){var cy=52,r=15;
+ function ph(i,cx){var f=Math.PI*i/4,ill=(1-Math.cos(f))/2,waxing=i<4,rx=(Math.abs(Math.cos(f))*r).toFixed(2),d='';
+  if(i===4)d='M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 1 1 '+cx+' '+(cy+r)+' A'+r+' '+r+' 0 1 1 '+cx+' '+(cy-r)+' Z';
+  else if(i!==0){var os=waxing?1:0,is=waxing?(ill<0.5?0:1):(ill<0.5?1:0);
+   d='M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+os+' '+cx+' '+(cy+r)+' A'+rx+' '+r+' 0 0 '+is+' '+cx+' '+(cy-r)+' Z';}
+  return '<g class="enc-fade d'+Math.min(i%5,4)+'"><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#131a35" stroke="rgba(244,212,106,.35)" stroke-width="1.2"/>'+(d?'<path d="'+d+'" fill="#F4D46A" opacity=".92"/>':'')+'</g>';}
+ var out='<svg viewBox="0 0 360 108" style="width:100%;height:auto">';
+ for(var i=0;i<8;i++){out+=ph(i,32+i*42);}
+ out+='<text x="180" y="98" fill="rgba(255,254,247,.55)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">growing from the right, filling, emptying, gone: then a new sliver</text></svg>'+
+ '<div style="text-align:center;font-size:1.6rem;font-weight:900;color:#F4D46A" class="enc-fade d4"><span class="enc-count" data-n="29.5">29.5</span> <span style="font-size:.75rem;font-weight:700;color:rgba(255,254,247,.6)">nights from full to full</span></div>'+
+ '<p class="cap">the lunar month, measured by a child with a pencil (55:5)</p>';return out;},
+prophetway:function(){return '<svg viewBox="0 0 360 130" style="width:100%;height:auto">'+
+ '<line x1="34" y1="65" x2="326" y2="65" stroke="#F4D46A" stroke-width="2.6" class="enc-draw"/>'+
+ '<circle cx="330" cy="65" r="3.5" fill="#F4D46A" class="enc-fade d2"/>'+
+ [[92,-1],[132,1],[172,-1],[212,1],[252,-1],[292,1]].map(function(b,i){var y2=65+b[1]*34;return '<line x1="'+b[0]+'" y1="65" x2="'+(b[0]+26)+'" y2="'+y2+'" stroke="#7FA3D8" stroke-width="1.6" stroke-dasharray="4 4" class="enc-draw d'+(1+(i%3))+'"/>'}).join('')+
+ '<text x="180" y="22" fill="#F4D46A" font-size="12" text-anchor="middle" font-weight="700" font-family="Amiri,serif" class="enc-fade d2 notranslate" translate="no">وَأَنَّ هَـٰذَا صِرَاطِي مُسْتَقِيمًا</text>'+
+ '<text x="180" y="120" fill="rgba(255,254,247,.6)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">one straight line, and byways branching: follow it (6:153)</text></svg>'+
+ '<p class="cap">the diagram he ﷺ drew in the sand for his companions (Musnad Ahmad)</p>';},
+shadow:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<line x1="20" y1="122" x2="340" y2="122" stroke="rgba(255,254,247,.3)" stroke-width="1.5" class="enc-draw"/>'+
+ '<rect x="177" y="62" width="6" height="60" rx="2" fill="#d9d2c0" class="enc-fade"/>'+
+ '<path d="M60 52 Q180 6 300 52" fill="none" stroke="rgba(244,212,106,.3)" stroke-width="1.2" stroke-dasharray="3 5" class="enc-draw d1"/>'+
+ '<g class="enc-fade d1"><circle cx="60" cy="52" r="8" fill="#F4D46A" opacity=".55"/></g>'+
+ '<g class="enc-fade d2"><circle cx="180" cy="20" r="9" fill="#F4D46A"/></g>'+
+ '<g class="enc-fade d3"><circle cx="300" cy="52" r="8" fill="#F4D46A" opacity=".55"/></g>'+
+ '<line x1="180" y1="122" x2="84" y2="122" stroke="rgba(244,212,106,.75)" stroke-width="4" stroke-linecap="round" class="enc-draw d1"/>'+
+ '<line x1="180" y1="122" x2="171" y2="122" stroke="#F4D46A" stroke-width="5" stroke-linecap="round" class="enc-draw d2"/>'+
+ '<line x1="180" y1="122" x2="272" y2="122" stroke="rgba(244,212,106,.45)" stroke-width="4" stroke-linecap="round" class="enc-draw d3"/>'+
+ '<circle cx="84" cy="130" r="2.2" fill="#7FA3D8" class="enc-fade d1"/><circle cx="171" cy="130" r="2.2" fill="#7FA3D8" class="enc-fade d2"/><circle cx="272" cy="130" r="2.2" fill="#7FA3D8" class="enc-fade d3"/>'+
+ '<text x="180" y="145" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">morning · noon · afternoon: the shadow writes the hours</text></svg>'+
+ '<p class="cap">the shortest shadow is solar noon: Dhuhr enters just after</p>';},
+seed:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<ellipse cx="52" cy="118" rx="7" ry="10" fill="#C9A227" class="enc-fade"/>'+
+ '<path d="M78 118 h28" stroke="rgba(255,254,247,.4)" stroke-width="1.6" marker-end="none" class="enc-draw d1"/><path d="M100 113 l8 5 l-8 5" fill="none" stroke="rgba(255,254,247,.4)" stroke-width="1.6" class="enc-draw d1"/>'+
+ '<path d="M200 132 C200 100 200 70 200 38" fill="none" stroke="#7fae6b" stroke-width="3" class="enc-draw d1"/>'+
+ [[-46,44,'d2'],[-32,58,'d2'],[-18,72,'d3'],[0,30,'d2'],[18,72,'d3'],[32,58,'d3'],[46,44,'d4']].map(function(e){
+   return '<g class="enc-rise '+e[2]+'" style="transform-origin:200px '+(e[1]+58)+'px"><path d="M200 '+(e[1]+58)+' Q'+(200+e[0]*0.6)+' '+(e[1]+28)+' '+(200+e[0])+' '+e[1]+'" fill="none" stroke="#7fae6b" stroke-width="2"/><ellipse cx="'+(200+e[0])+'" cy="'+(e[1]-6)+'" rx="5.5" ry="10" fill="#F4D46A"/></g>';}).join('')+
+ '<text x="298" y="70" fill="#F4D46A" font-size="17" font-weight="900" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">×700</text>'+
+ '<text x="298" y="86" fill="rgba(255,254,247,.55)" font-size="8.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">and Allah multiplies more</text></svg>'+
+ '<p class="cap">one grain, seven ears, a hundred grains in every ear (2:261)</p>';},
+wudu:function(){var steps=['hands','mouth','nose','face','arms','head','ears','feet'];
+ return '<svg viewBox="0 0 360 130" style="width:100%;height:auto">'+
+ '<path d="M20 46 C60 34 100 58 140 46 C180 34 220 58 260 46 C300 34 330 52 340 46" fill="none" stroke="#7FA3D8" stroke-width="2" opacity=".7" class="enc-draw"/>'+
+ steps.map(function(s,i){var x=34+i*42;return '<g class="enc-fade d'+Math.min(1+(i>>1),4)+'"><circle cx="'+x+'" cy="82" r="12" fill="rgba(244,212,106,.12)" stroke="#F4D46A" stroke-width="1.4"/><text x="'+x+'" y="86" fill="#F4D46A" font-size="10" font-weight="800" text-anchor="middle" font-family="Inter,sans-serif">'+(i+1)+'</text><text x="'+x+'" y="108" fill="rgba(255,254,247,.6)" font-size="7.5" text-anchor="middle" font-family="Inter,sans-serif">'+s+'</text></g>'}).join('')+
+ '<path d="M46 24 C43 29 49 30 46 34 M60 20 C57 25 63 26 60 30" stroke="#7FA3D8" stroke-width="1.5" fill="none" class="enc-fade d1"/>'+
+ '<text x="180" y="126" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">right before left, each limb named, water unwasted</text></svg>'+
+ '<p class="cap">purification is half of faith (Muslim 223): eight movements, one tray</p>';},
+home:function(){return '<svg viewBox="0 0 360 140" style="width:100%;height:auto">'+
+ '<rect x="24" y="18" width="52" height="104" rx="6" fill="rgba(255,254,247,.05)" stroke="rgba(233,200,106,.5)" stroke-width="1.5" class="enc-fade"/>'+
+ '<circle cx="66" cy="72" r="2.5" fill="#F4D46A" class="enc-fade d1"/>'+
+ '<line x1="100" y1="122" x2="340" y2="122" stroke="rgba(255,254,247,.25)" stroke-width="1.5" class="enc-draw"/>'+
+ [[118,'-14'],[168,'10'],[218,'-8'],[268,'6'],[318,'-12']].map(function(p,i){
+  return '<g class="enc-tidy d'+Math.min(i,4)+'" data-rot="'+p[1]+'" style="transform-origin:'+(p[0]+9)+'px 108px">'+
+  '<rect x="'+p[0]+'" y="96" width="8" height="24" rx="4" fill="#d9d2c0"/>'+
+  '<rect x="'+(p[0]+11)+'" y="96" width="8" height="24" rx="4" fill="#c4bca6"/></g>';}).join('')+
+ '<text x="220" y="30" fill="rgba(255,254,247,.6)" font-size="9.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">five pairs, straightened by small hands</text></svg>'+
+ '<p class="cap">he ﷺ was in the service of his family (Bukhari 676): order is a kindness to the next foot</p>';},
+salam:function(){return '<svg viewBox="0 0 360 140" style="width:100%;height:auto">'+
+ '<g class="enc-fade"><circle cx="80" cy="58" r="14" fill="none" stroke="#F4D46A" stroke-width="2"/><path d="M56 116 C56 88 104 88 104 116" fill="none" stroke="#F4D46A" stroke-width="2"/></g>'+
+ '<g class="enc-fade d1"><circle cx="280" cy="58" r="14" fill="none" stroke="#7FA3D8" stroke-width="2"/><path d="M256 116 C256 88 304 88 304 116" fill="none" stroke="#7FA3D8" stroke-width="2"/></g>'+
+ '<path d="M104 52 Q180 8 254 52" fill="none" stroke="rgba(244,212,106,.6)" stroke-width="1.6" stroke-dasharray="5 4" class="enc-draw d1"/>'+
+ '<text x="180" y="26" fill="#F4D46A" font-size="13" text-anchor="middle" font-weight="700" font-family="Amiri,serif" class="enc-fade d2 notranslate" translate="no">السَّلَامُ عَلَيْكُمْ</text>'+
+ '<path d="M110 96 h124" stroke="rgba(255,254,247,.4)" stroke-width="1.6" class="enc-draw d3"/><path d="M226 91 l10 5 l-10 5" fill="none" stroke="rgba(255,254,247,.4)" stroke-width="1.6" class="enc-draw d3"/>'+
+ '<text x="172" y="112" fill="rgba(255,254,247,.55)" font-size="8.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">the right hand gives</text></svg>'+
+ '<p class="cap">spread salam and you will love one another (Muslim 54)</p>';},
+broth:function(){return '<svg viewBox="0 0 360 140" style="width:100%;height:auto">'+
+ '<g class="enc-fade"><path d="M52 74 h84 v30 a14 14 0 0 1 -14 14 h-56 a14 14 0 0 1 -14 -14 Z" fill="rgba(255,254,247,.07)" stroke="#F4D46A" stroke-width="2"/><path d="M52 82 h-12 M136 82 h12" stroke="#F4D46A" stroke-width="2"/></g>'+
+ '<path d="M78 60 C75 52 81 50 78 42 M110 60 C107 52 113 50 110 42" stroke="rgba(255,254,247,.45)" stroke-width="1.6" fill="none" class="enc-steam"/>'+
+ '<g class="enc-drop"><path d="M94 18 C90 24 98 24 94 30 C98 24 90 24 94 18" fill="#7FA3D8"/><circle cx="94" cy="28" r="3" fill="#7FA3D8"/></g>'+
+ '<path d="M168 96 h96" stroke="rgba(255,254,247,.4)" stroke-width="1.7" class="enc-draw d2"/><path d="M256 91 l10 5 l-10 5" fill="none" stroke="rgba(255,254,247,.4)" stroke-width="1.7" class="enc-draw d2"/>'+
+ '<g class="enc-fade d3"><path d="M284 118 v-34 l24 -18 l24 18 v34 Z" fill="rgba(127,163,216,.12)" stroke="#7FA3D8" stroke-width="2"/><rect x="302" y="100" width="12" height="18" rx="2" fill="rgba(244,212,106,.6)"/></g>'+
+ '<text x="94" y="132" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">add water to the broth</text>'+
+ '<text x="308" y="132" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">the neighbor eats tonight</text></svg>'+
+ '<p class="cap">when you cook broth, add water, and look to your neighbors (Muslim 2625)</p>';},
+girih:function(){return '<svg viewBox="0 0 360 160" style="width:100%;height:auto">'+
+ '<circle cx="180" cy="78" r="56" fill="none" stroke="rgba(127,163,216,.5)" stroke-width="1.3" stroke-dasharray="3 4" class="enc-draw"/>'+
+ '<rect x="140.4" y="38.4" width="79.2" height="79.2" fill="none" stroke="rgba(244,212,106,.55)" stroke-width="1.6" class="enc-draw d1"/>'+
+ '<rect x="140.4" y="38.4" width="79.2" height="79.2" fill="none" stroke="rgba(244,212,106,.55)" stroke-width="1.6" transform="rotate(45 180 78)" class="enc-draw d2"/>'+
+ '<path d="M180 22 L196 62 L236 78 L196 94 L180 134 L164 94 L124 78 L164 62 Z" fill="rgba(244,212,106,.14)" stroke="#F4D46A" stroke-width="2.4" class="enc-draw d3"/>'+
+ '<circle cx="180" cy="78" r="3" fill="#F4D46A" class="enc-fade d3"/>'+
+ '<g class="enc-fade d4" opacity=".35"><path d="M60 22 L68 42 L88 50 L68 58 L60 78 L52 58 L32 50 L52 42 Z" fill="none" stroke="#F4D46A" stroke-width="1.2"/><path d="M300 106 L308 126 L328 134 L308 142 L300 162 L292 142 L272 134 L292 126 Z" fill="none" stroke="#F4D46A" stroke-width="1.2"/></g>'+
+ '<text x="180" y="154" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">circle · two squares · the eight-fold star, then the star repeats forever</text></svg>'+
+ '<p class="cap">every line earned with compass and straightedge, like the walls of the masajid</p>';},
+qibla:function(){return '<svg viewBox="0 0 360 160" style="width:100%;height:auto">'+
+ '<circle cx="120" cy="82" r="58" fill="none" stroke="rgba(255,254,247,.25)" stroke-width="1.4" class="enc-draw"/>'+
+ '<g class="enc-fade d1"><line x1="120" y1="24" x2="120" y2="36" stroke="#7FA3D8" stroke-width="2.4"/><text x="120" y="18" fill="#9db9e8" font-size="10" font-weight="800" text-anchor="middle" font-family="Inter,sans-serif">N</text></g>'+
+ '<circle cx="120" cy="82" r="4" fill="#F4D46A" class="enc-fade d1"/>'+
+ '<text x="120" y="102" fill="rgba(255,254,247,.6)" font-size="8.5" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d1">you</text>'+
+ '<path d="M120 82 Q 200 30 288 60" fill="none" stroke="#F4D46A" stroke-width="2.2" stroke-dasharray="6 5" class="enc-draw d2"/>'+
+ '<path d="M120 82 L120 40" stroke="rgba(127,163,216,.7)" stroke-width="1.5" class="enc-draw d1"/>'+
+ '<path d="M120 54 A 28 28 0 0 1 143 62" fill="none" stroke="#7FA3D8" stroke-width="1.5" class="enc-draw d2"/>'+
+ '<text x="148" y="52" fill="#9db9e8" font-size="9.5" font-family="Inter,sans-serif" class="enc-fade d3">the bearing</text>'+
+ '<g class="enc-fade d3"><rect x="284" y="52" width="20" height="20" fill="#1c1710" stroke="#F4D46A" stroke-width="1.6"/><rect x="284" y="57" width="20" height="3.5" fill="#F4D46A" opacity=".85"/></g>'+
+ '<text x="294" y="90" fill="rgba(255,254,247,.65)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d3">the Kaaba</text>'+
+ '<text x="180" y="150" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">a great circle on a spinning sphere: found by sun, stars, then the app</text></svg>'+
+ '<p class="cap">turn the measured angle from true north: the qibla, computable by a child</p>';},
+fajr:function(){return '<svg viewBox="0 0 360 150" style="width:100%;height:auto">'+
+ '<defs><linearGradient id="twl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33507C" stop-opacity=".0"/><stop offset="1" stop-color="#F4D46A" stop-opacity=".28"/></linearGradient></defs>'+
+ '<rect x="20" y="18" width="320" height="60" fill="url(#twl)" class="enc-fade d2"/>'+
+ '<line x1="20" y1="78" x2="340" y2="78" stroke="rgba(255,254,247,.4)" stroke-width="1.6" class="enc-draw"/>'+
+ '<g class="enc-fade d1"><path d="M52 78 v-14 a10 10 0 0 1 20 0 v14 Z" fill="rgba(255,254,247,.14)" stroke="rgba(233,200,106,.6)" stroke-width="1.3"/><line x1="62" y1="52" x2="62" y2="46" stroke="rgba(233,200,106,.7)" stroke-width="1.3"/><circle cx="62" cy="44" r="1.8" fill="#F4D46A"/></g>'+
+ '<circle cx="252" cy="122" r="11" fill="#F4D46A" opacity=".9" class="enc-fade d2"/>'+
+ '<line x1="180" y1="78" x2="252" y2="122" stroke="rgba(244,212,106,.6)" stroke-width="1.5" stroke-dasharray="4 4" class="enc-draw d2"/>'+
+ '<path d="M212 78 A 32 32 0 0 1 207 95" fill="none" stroke="#7FA3D8" stroke-width="1.6" class="enc-draw d3"/>'+
+ '<text x="226" y="94" fill="#9db9e8" font-size="10" font-weight="700" font-family="Inter,sans-serif" class="enc-fade d3">18°</text>'+
+ '<text x="180" y="144" fill="rgba(255,254,247,.55)" font-size="9" text-anchor="middle" font-family="Inter,sans-serif" class="enc-fade d4">the sun below the edge of morning: true dawn spreads wide, and Fajr enters</text></svg>'+
+ '<p class="cap">what the apps compute in silence: an angle under your horizon</p>';},
 method:function(){return '<div style="display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;padding:.3rem 0">'+
  ['<span data-ic=eye></span> observe','<span data-ic=question></span> question','<span data-ic=bulb></span> guess','<span data-ic=flask></span> test','<span data-ic=note></span> record','<span data-ic=hands></span> share'].map(function(t,i){
   return '<span class="enc-fade d'+Math.min(i,4)+'" style="background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.35rem .7rem;font-size:.68rem;font-weight:800;color:#F4D46A">'+t+'</span>'+(i<5?'<span class="enc-fade d'+Math.min(i,4)+'" style="color:rgba(255,254,247,.4);align-self:center">→</span>':'');
@@ -669,13 +919,13 @@ method:function(){return '<div style="display:flex;justify-content:center;gap:.4
 
 /* ---------- the encyclopedia ---------- */
 var ENC={
-"spring-prophet":{kick:"The first spring",title:"The Prophetic Way of Teaching",ar:"ﷺ",badges:["pedagogy","sunnah"],info:"method",
+"spring-prophet":{kick:"The first spring",title:"The Prophetic Way of Teaching",ar:"ﷺ",badges:["pedagogy","sunnah"],info:"prophetway",
  story:["Before any modern school of education existed, the Prophet ﷺ ran the most successful classroom in history: a generation of shepherds and merchants who became scholars, judges and founders of sciences. His methods are documented hadith by hadith, and they read like a modern teacher-training manual written with more mercy.",
  "He taught by question: \"Do you know who the bankrupt truly is?\" and waited for wrong answers before correcting them gently (Muslim 2581). He drew diagrams: a straight line in the sand for the path of Allah, branching lines for the byways (an image preserved in the books of tafsir and musnad collections). He repeated important words three times so they could be memorized (Bukhari 95). He chose his moments, teaching in short sittings so no one grew weary, as Ibn Mas'ud describes (Bukhari 68)."],
  gifts:["Questions before answers: the learner's mind is switched on first","Stories and parables as the main vehicle of meaning","Repetition times three for anything that must be kept","Timing and brevity: stop while hearts are still leaning in","Hands-on correction with mercy, never humiliation, in public"],
  today:"<b>In the Madrasa:</b> every stage of this school begins lessons with a question, keeps sittings short, and corrects the way he ﷺ corrected: quietly, kindly, and once.",
  src:"Sources: Sahih Muslim 2581 · Sahih al-Bukhari 95, 68, 69 · Abu Dawud 495 · Tirmidhi 1919"},
-"spring-montessori":{kick:"The second spring",title:"Maria Montessori & the Absorbent Mind",badges:["pedagogy","child development"],info:"fihri2",
+"spring-montessori":{kick:"The second spring",title:"Maria Montessori & the Absorbent Mind",badges:["pedagogy","child development"],info:"montessori",
  story:["Maria Montessori (1870 to 1952) was one of Italy's first women physicians before she was an educator. Watching children in Rome's poorest quarter, she noticed what centuries of schooling had missed: children do not need to be filled; they need to be freed to build themselves. Her first Casa dei Bambini opened in 1907, and within years her method had circled the world. She was nominated for the Nobel Peace Prize three times.",
  "Her map of childhood, the four planes of development, matches the stages of this Madrasa: the absorbent mind from birth to six, the reasoning mind from six to twelve, the social self from twelve to eighteen. Inside the first plane she identified sensitive periods: windows when language, order, movement and the senses are learned almost without effort. Miss the window and the learning costs ten times more; honor it and the child seems to teach themselves.",
  "Her deepest tools are all here: the prepared environment where everything is child-sized and findable; freedom within limits; concrete materials before abstract ideas; the control of error, where the material itself shows the mistake so no adult has to; and practical life, real work with real objects, which she considered the foundation of concentration and dignity."],
@@ -761,13 +1011,13 @@ battuta:{kick:"Teacher of the world · geography",title:"Ibn Battuta",ar:"ابن
  today:"<b>Still with us:</b> every geography lesson that begins with a person instead of a map owes him the idea.",
  seed:"Classroom seed: trace one leg of his journey on a modern map and compute its length; then plan your own rihla to the masjid, documented like his.",
  src:"The Rihla of Ibn Battuta (dictated to Ibn Juzayy, 1355)"},
-"p-moon":{kick:"Project shelf · astronomy",title:"The Moon Journal",badges:["Workshop 6-9","1 month","free"],info:"fihri2",
+"p-moon":{kick:"Project shelf · astronomy",title:"The Moon Journal",badges:["Workshop 6-9","1 month","free"],info:"moon",
  story:["One page per night, one drawn circle, shaded as the sky shows it. That is the whole apparatus. What the child discovers, unprompted, by night twelve or so, is that the moon is keeping a schedule: growing from the right (in the northern hemisphere), filling, then emptying, and vanishing for a night or two before a new sliver returns."],
  mats:["A small notebook, one circle pre-drawn per page","A pencil","A window or doorstep, and patience with clouds"],
  steps:["Each clear night after Maghrib, find the moon and shade the circle to match it","Write the date and one word for the weather","On cloudy nights, draw a cloud: honest data includes gaps","After 30 nights, lay the pages in a row and look","Count the nights from full to full: the child has measured the lunar month (about 29.5 days)","Connect it: this is why Ramadan and the Eids move through the seasons (55:5)"],
  today:"<b>What is really being learned:</b> periodic phenomena, data collection with missing values, and the calendar of worship read straight off the sky.",
  src:"Qur'an 55:5, 2:189 (the new moons as appointed times)"},
-"p-shadow":{kick:"Project shelf · solar time",title:"The Shadow Clock",badges:["Workshop 6-9","1 sunny day","free"],info:"method",
+"p-shadow":{kick:"Project shelf · solar time",title:"The Shadow Clock",badges:["Workshop 6-9","1 sunny day","free"],info:"shadow",
  story:["A stick stands in a can of sand in a sunny spot. Its shadow is a clock older than clocks. Through one day the child marks the shadow's tip and watches it shorten toward midday, swing, and lengthen: and discovers that Dhuhr and Asr were never arbitrary times but positions of the sun, readable by anyone, anywhere, forever."],
  mats:["A straight stick or dowel, about 40 cm","A can or bottle filled with sand","Chalk or pebbles to mark shadow tips","A sunny open spot left undisturbed all day"],
  steps:["Set the stick vertical in the open by mid-morning","Every 30 to 60 minutes, mark the shadow's tip and note the time","Notice the shortest shadow: that is solar noon; Dhuhr enters just after","Keep marking: when the shadow grows by the stick's own length past its noon mark, the Asr of the schools has arrived","Compare with the family prayer app and discuss any small differences (madhhab and location)","Leave the marks overnight and check the next day: the clock repeats"],
@@ -779,7 +1029,7 @@ battuta:{kick:"Teacher of the world · geography",title:"Ibn Battuta",ar:"ابن
  steps:["Cut a large window in one end of the box; tape tracing paper over it: the screen","Cut a small hole in the opposite end; tape foil over it; prick the foil once with the pin","Seal every other light leak with tape","Under the blanket, aim the pinhole at a bright window or lamp and watch the screen","See the image: upside down and reversed; ask why before telling","Draw the two crossing rays (like the diagram above) and let the child explain it back"],
  today:"<b>What is really being learned:</b> rectilinear light, image formation, and that a Muslim wrote the book on it: literally.",
  src:"Ibn al-Haytham, Book of Optics, Book I"},
-"p-girih":{kick:"Project shelf · geometry",title:"Girih Star Lab",badges:["Observatory 9-12","2 sessions","compass & ruler"],info:"mariam",
+"p-girih":{kick:"Project shelf · geometry",title:"Girih Star Lab",badges:["Observatory 9-12","2 sessions","compass & ruler"],info:"girih",
  story:["The star patterns on mosque walls are not drawings; they are constructions: every line earned with compass and straightedge, the same tools of Euclid, perfected by Muslim craftsmen into infinite tessellation. Building one eight-fold star by hand teaches more geometry than a term of worksheets, and ends with something beautiful enough to gift."],
  mats:["Compass, ruler, sharp pencil","Plain paper, then colored pens or gold marker","Optional: a photo of girih tile from any masjid for inspiration"],
  steps:["Draw a circle; keep the same radius and step it around the circumference: exactly six arcs (discover why)","Construct perpendicular diameters to get eight equal points (bisect two arcs)","Join every second point: one square; join the other four: a second square","The overlap is the eight-fold star; ink the star, erase construction lines","Repeat the star on a grid and watch tessellation appear","Color in two alternating schemes and compare with real masjid tilework"],
@@ -791,13 +1041,13 @@ battuta:{kick:"Teacher of the world · geography",title:"Ibn Battuta",ar:"ابن
  steps:["Cut a cardboard disk (the crank wheel) and mount it on a skewer axle through a box frame","Push a second short skewer through the disk near its edge: the crank pin","Cut a long cardboard strip (the connecting rod); pierce one end onto the crank pin","Guide the rod's other end through a slot so it can only slide, not swing","Turn the wheel: the rod strokes back and forth; attach the cup and string to lift a small weight","Find the same linkage in a bicycle pedal and, in pictures, inside a car engine"],
  today:"<b>What is really being learned:</b> conversion of motion, mechanical advantage, and heritage: the child's machine is 800 years old and brand new.",
  src:"Al-Jazari, Ingenious Mechanical Devices (1206), category V (water-raising)"},
-"p-qibla":{kick:"Project shelf · astronomy & navigation",title:"Qibla Two Ways",badges:["Observatory 9-12","2 sessions","free"],info:"biruni",
+"p-qibla":{kick:"Project shelf · astronomy & navigation",title:"Qibla Two Ways",badges:["Observatory 9-12","2 sessions","free"],info:"qibla",
  story:["Finding the direction of one building from anywhere on a spinning sphere is a real problem in spherical geometry, and Muslims have solved it daily for fourteen centuries. The child solves it twice: once by the sun, once by the stars, and only then checks the phone: trust, verify, understand."],
  mats:["The shadow stick from the Shadow Clock","A clear night and (northern hemisphere) the Big Dipper to find Polaris","A printed world map or globe","The family prayer app, used LAST"],
  steps:["By sun: at solar noon (shortest shadow) the shadow points true north (northern latitudes); mark the line","On the map, draw the great-circle direction from your city to Makkah and measure its angle from north","Turn that angle from your marked north line: the qibla, by daylight","By stars: find Polaris at night: that is north again; repeat the turn: the qibla, by starlight","Now open the app and compare all three answers","Discuss why they agree (or differ by a little): projection, magnetic vs true north"],
  today:"<b>What is really being learned:</b> cardinal directions from the sky, bearings, great circles, and the deep confidence that the deen's requirements are computable by a child.",
  src:"Classical qibla determination · basic celestial navigation"},
-"p-seed":{kick:"Project shelf · biology & fair testing",title:"The Seed Ledger",badges:["Garden → Workshop","3 weeks","kitchen"],info:"method",
+"p-seed":{kick:"Project shelf · biology & fair testing",title:"The Seed Ledger",badges:["Garden → Workshop","3 weeks","kitchen"],info:"seed",
  story:["Seven beans, seven cups, one question: what does a seed need? Some get water, some get light, some get neither (all get rescued after the data is in). The child runs their first controlled experiment and meets 2:261's image with their own eyes: one grain, when conditions are right, multiplying beyond itself."],
  mats:["7 dried beans or date seeds","7 cups with cotton or soil, labeled","Water, a sunny sill, a dark cupboard","A ledger page: one row per day"],
  steps:["Plant all seven identically; label: light+water, light only, water only, dark+water, dark only, cold+water (fridge), and one child's-choice","Every day, water only the water groups; log every cup in the ledger honestly","Predict on day 1 which will grow; seal the predictions in an envelope","After 14 days, measure every sprout (or absence) and open the envelope","Conclude: what does a seed truly need? Then rescue the deprived cups: mercy after data","Recite 2:261 over the tallest sprout and talk about sadaqa multiplying"],
@@ -809,35 +1059,33 @@ battuta:{kick:"Teacher of the world · geography",title:"Ibn Battuta",ar:"ابن
  steps:["Inventory: list every toy and agree a fair \"price\" for each; sum the total wealth","Teach the nisab idea simply: zakat is for wealth above a threshold, held a year","Compute 2.5%: divide the total by 40 (discover why dividing by 40 IS 2.5%)","Choose toys or coins matching that value","Deliver the gift together, quietly: secret sadaqa, like the house teaches","Repeat yearly on the same date: the child's own zakat anniversary"],
  today:"<b>What is really being learned:</b> percentages, division, inventory honesty, and that math's first job in Islam was justice.",
  src:"Qur'an 9:103 · fiqh of zakat (simplified for education; real rulings belong to scholars)"},
-"p-fajr":{kick:"Project shelf · capstone",title:"Compute Fajr",badges:["Academy 12-18","1 week","spreadsheet or code"],info:"biruni",
+"p-fajr":{kick:"Project shelf · capstone",title:"Compute Fajr",badges:["Academy 12-18","1 week","spreadsheet or code"],info:"fajr",
  story:["The Academy capstone: from first principles to a real prayer timetable. The student learns what the apps hide: solar declination through the year, the equation of time, hour angles, and the twilight-angle definitions of Fajr and Isha, then computes a month's timetable for their own city and verifies it against the local masjid. When the numbers match, something permanent happens to their confidence."],
  mats:["Latitude and longitude of home","A spreadsheet or any programming language","The standard solar position equations (provided by the teacher)","The local masjid timetable for verification"],
  steps:["Compute the sun's declination and the equation of time for each day of one month","Compute solar noon for your longitude: Dhuhr follows just after","Compute sunrise and Maghrib from the sunset hour angle","Add the Asr shadow condition (shadow = object + noon shadow) and solve for its hour angle","Apply the twilight angles for Fajr and Isha (e.g. 18°/17° conventions; compare conventions)","Print the month, tape it beside the masjid's timetable, and account for every minute of difference"],
  today:"<b>What is really being learned:</b> spherical astronomy, numerical method, conventions vs truth, and mastery of the day's sacred architecture.",
  src:"Standard solar position algorithms · classical fiqh definitions of the five times"},
-"pl-self":{kick:"Practical life · the person",title:"Care of Self",badges:["all stages","sunnah"],info:"method",
+"pl-self":{kick:"Practical life · the person",title:"Care of Self",badges:["all stages","sunnah"],info:"wudu",
  story:["Montessori found that a child who can care for their own body stands differently in the world. The sunnah found it first, and made it worship: purification is half of faith (Muslim 223). In the Madrasa, self-care is taught as slow, dignified sequences on real trays with real water, presented once, silently, then practiced freely."],
  gifts:["Wudu as an eight-step tray work: right before left, each limb named","Miswak or brushing: \"were it not hardship, I would have commanded it at every prayer\" (Bukhari 887)","Right shoe first on, left first off (Bukhari 5856 tradition of beginning with the right, 168)","Sleeping on the right side with the sleep du'a (Bukhari 6311, 5017)","Dressing with the du'a of clothing, and clothes folded, not flung"],
  today:"<b>Control of error:</b> water spills show themselves; the mirror shows the miswak's work; no adult needs to nag. The material corrects; the adult only loves.",
  src:"Muslim 223 · Bukhari 887, 168, 6311, 5017"},
-"pl-home":{kick:"Practical life · the nest",title:"Care of the Home",badges:["all stages","khidma"],info:"method",
+"pl-home":{kick:"Practical life · the nest",title:"Care of the Home",badges:["all stages","khidma"],info:"home",
  story:["Asked what the Prophet ﷺ did at home, Aisha answered: he was in the service of his family, and when prayer was called, he went out to it (Bukhari 676). He mended sandals and patched garments. In this Madrasa no child is above a broom, because the best of creation was not."],
  gifts:["Fold the prayer mats after salah: the room resets for the next meeting with Allah","Straighten all shoes at the door, hearts and heels both facing out","Water the plants and feed any animals before your own snack","The Mushaf returns to the highest shelf, carried with two hands","Set and clear the family sufra; the youngest carries something unbreakable"],
  today:"<b>The hidden curriculum:</b> sequencing, gross motor control, and the end of entitlement. A child who serves the home never learns that love is a one-way service.",
  src:"Bukhari 676 · Ahmad (his ﷺ mending of garments)"},
-"pl-grace":{kick:"Practical life · the meeting",title:"Grace & Courtesy",badges:["all stages","adab"],info:"method",
+"pl-grace":{kick:"Practical life · the meeting",title:"Grace & Courtesy",badges:["all stages","adab"],info:"salam",
  story:["Montessori taught manners as tiny theater: rehearse the knock, the greeting, the apology, in play, so they are ready in life. The sunnah supplies the script: salam before speech, the right hand for giving, three knocks and then withdraw, the young greeting the old and the walker greeting the sitter (Bukhari 6234)."],
  gifts:["Salam first, loudly enough to be a gift (Muslim 54: spread salam and you will love one another)","Eat and give with the right hand (Bukhari 5376: \"Say Bismillah, eat with your right, eat what is near you\")","Ask permission three times, then leave graciously (Bukhari 6245)","Guests served first, elders served first, the guest's side of the plate untouched","Interrupting bodies at rest or prayer: never; waiting beautifully: always"],
  today:"<b>Rehearsed as games:</b> the knocking game, the salam relay, the right-hand tray pass. Laughed at in practice, flawless at the door.",
  src:"Muslim 54 · Bukhari 5376, 6245, 6234"},
-"pl-others":{kick:"Practical life · the ummah",title:"Care of Others",badges:["all stages","rahma"],info:"method",
+"pl-others":{kick:"Practical life · the ummah",title:"Care of Others",badges:["all stages","rahma"],info:"broth",
  story:["The Prophet ﷺ told Abu Dharr: when you cook broth, add water, and look to your neighbors (Muslim 2625). Care of others is scheduled in this Madrasa like mathematics, weekly and non-negotiable, because compassion is a muscle and muscles need training days."],
  gifts:["The family sadaqa jar with its own ledger: counted monthly, given quietly","A warm plate to a neighbor while it is still warm: the child carries it","Visiting the sick as a family outing, with a drawn card (the sunnah of 'iyada)","Feeding birds and animals in winter: mercy to every wet liver (Bukhari 2363)","The best of Islam recited and lived: feed food, and greet those you know and those you do not (Bukhari 12)"],
  today:"<b>The measure of the term:</b> not grades, but the jar's ledger, the neighbors' faces and the child's unprompted noticing of need.",
  src:"Muslim 2625 · Bukhari 2363, 12"}
 };
-ENC["spring-montessori"].info="sina";
-INFO.fihri2=INFO.fihri;
 
 /* ---------- renderer ---------- */
 function openEnc(id){
@@ -858,7 +1106,25 @@ function openEnc(id){
   $("encx").classList.add("open");
   document.body.style.overflow="hidden";
   $("encx").scrollTop=0;
-  if(id==="battuta"){
+  var REDUCE=false; try{REDUCE=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e2){}
+  if(window.gsap&&!REDUCE){
+    /* the satisfying-physics driver: GSAP takes over from the CSS keyframes */
+    $("encx").classList.add("gs");
+    var box=$("encx-in");
+    var draws=box.querySelectorAll(".enc-draw"),fades=box.querySelectorAll(".enc-fade"),rises=box.querySelectorAll(".enc-rise"),tidies=box.querySelectorAll(".enc-tidy"),fills=box.querySelectorAll(".enc-fill i");
+    var tl=gsap.timeline({defaults:{ease:"power2.out"}});
+    if(draws.length){
+      if(window.DrawSVGPlugin){gsap.registerPlugin(window.DrawSVGPlugin);tl.fromTo(draws,{drawSVG:"0%"},{drawSVG:"100%",duration:1.05,ease:"power2.inOut",stagger:.14},0);}
+      else{draws.forEach(function(p,i){var len=0;try{len=p.getTotalLength?p.getTotalLength():0}catch(e3){}if(!len)return;tl.fromTo(p,{strokeDasharray:len,strokeDashoffset:len},{strokeDashoffset:0,duration:1.05,ease:"power2.inOut"},i*.14);});}
+    }
+    if(fades.length)tl.fromTo(fades,{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.6,ease:"power3.out",stagger:.13},.18);
+    if(rises.length)tl.fromTo(rises,{scaleY:0,transformOrigin:"bottom"},{scaleY:1,duration:.8,ease:"back.out(1.7)",stagger:.13},.22);
+    tidies.forEach(function(sh,i){tl.fromTo(sh,{rotation:parseFloat(sh.getAttribute("data-rot"))||9,y:-6},{rotation:0,y:0,duration:.9,ease:"back.out(2.4)"},.3+i*.16);});
+    if(fills.length)tl.fromTo(fills,{width:0},{width:"100%",duration:1.7,ease:"power2.inOut"},.2);
+    var cnt=box.querySelector(".enc-count");
+    if(cnt){var cn=parseFloat(cnt.getAttribute("data-n"))||0,co={v:0};tl.to(co,{v:cn,duration:1.5,ease:"power1.inOut",onUpdate:function(){cnt.textContent=(cn%1?co.v.toFixed(1):String(Math.round(co.v)));}},.45);}
+    if(id==="battuta"){var bel=$("bt-km"),bo={v:0};tl.to(bo,{v:117000,duration:2.4,ease:"power1.inOut",onUpdate:function(){if(bel)bel.textContent=Math.round(bo.v).toLocaleString("en-US")}},.4);}
+  }else if(id==="battuta"){
     var n=0,el=$("bt-km");
     var t=setInterval(function(){n+=3900;if(n>=117000){n=117000;clearInterval(t)}if(el)el.textContent=n.toLocaleString()},40);
   }

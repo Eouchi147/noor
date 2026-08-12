@@ -2,42 +2,91 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="NOOR Places: the geography of the Codex. Sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end of time."/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="NOOR · Codex of Light"/>
-<meta property="og:title" content="Places · NOOR Codex of Light"/>
-<meta property="og:description" content="NOOR Places: the geography of the Codex. Sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end of time."/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Found a mistake in the Codex, a broken page, or something that should exist? Send it here. Corrections about a verse or a hadith move to the front of the queue."/>
+<meta property="og:title" content="Corrections, Bugs and Ideas · NOOR Codex of Light"/>
+<meta property="og:description" content="Found a mistake in the Codex, a broken page, or something that should exist? Send it here. Corrections about a verse or a hadith move to the front of the queue."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
-<meta property="og:image:width" content="1200"/>
-<meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta name="theme-color" content="#14100A"/>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
-<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
-<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
 <link rel="manifest" href="/manifest.webmanifest"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="NOOR"/>
-<title>Places · NOOR Codex of Light</title>
+<title>Corrections, Bugs and Ideas · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/feedback"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=49"/>
-<link rel="stylesheet" href="assets/hub.css?v=10"/>
-<script src="places.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
 <script src="noor-fx.js" defer></script>
-<script src="noor-hub.js" defer></script>
-<script src="sponsor.js" defer></script>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
-<link rel="canonical" href="https://noorcodex.com/places"/>
-</head>
-<body class="antialiased">
-<div id="progress"></div>
+<script src="noor-ink.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/ScrollTrigger.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
+<script src="assets/noor-motion.js" defer></script>
 
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.fb-grid{display:grid;gap:.7rem;margin-top:1rem}
+@media(min-width:40rem){.fb-grid{grid-template-columns:1fr 1fr}}
+.fbo{display:block;text-align:start;background:#fff;border:1px solid rgba(44,36,22,.14);border-radius:16px;padding:1rem 1.05rem;cursor:pointer;font-family:inherit;transition:border-color .2s,transform .15s}
+.fbo:hover{border-color:rgba(201,162,39,.55);transform:translateY(-1px)}
+.fbo.on{border-color:#C9A227;background:#FFFBEE;box-shadow:0 0 0 1px rgba(201,162,39,.35) inset}
+.fbo b{display:block;font-size:.95rem;font-weight:800;margin-bottom:.25rem}
+.fbo span{font-size:.78rem;color:rgba(44,36,22,.62);line-height:1.65}
+.fbf{margin-top:1.3rem}
+.fbf label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.5);margin:0 0 .35rem}
+.fbf textarea,.fbf input{width:100%;border:1px solid rgba(44,36,22,.18);border-radius:12px;padding:.7rem .85rem;font-family:inherit;font-size:.9rem;background:#fff;color:#2C2416;line-height:1.7}
+.fbf textarea{min-height:9rem;resize:vertical}
+.fbf textarea:focus,.fbf input:focus{outline:none;border-color:#C9A227}
+.fbhint{font-size:.72rem;color:rgba(44,36,22,.5);margin:.35rem 0 0;line-height:1.6}
+.fbactions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:1.1rem}
+.fbnote{background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.28);border-radius:14px;padding:.9rem 1rem;font-size:.8rem;line-height:1.75;color:rgba(44,36,22,.75);margin-top:1.2rem}
+.fbok{display:none;background:#12351f;border:1px solid rgba(120,200,150,.35);color:#d9f5e4;border-radius:14px;padding:.85rem 1rem;font-size:.82rem;line-height:1.7;margin-top:.9rem}
+.fbok.show{display:block}
+.stepn{display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border-radius:999px;background:#2C2416;color:#F4D46A;font-size:.7rem;font-weight:800;margin-inline-end:.45rem}
+</style>
+
+</head>
+<body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 .dd{position:relative}
@@ -231,61 +280,139 @@ body.sheet-open{overflow:hidden}
 <a class="sh-give" href="donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
 </header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">Corrections and Ideas</p>
+<div class="ar notranslate" translate="no">التَّصْحِيح</div>
+<h1>Tell us what we got wrong</h1>
+<p class="lead">A correction is a gift, and we would rather be corrected than admired. Send a mistake, a broken page, or an idea, and it reaches the people who keep this house.</p>
+</section>
 
-<section id="chero">
-<canvas id="chero-canvas" aria-hidden="true"></canvas>
-<svg class="hub-crescent" viewBox="0 0 100 100" aria-hidden="true">
-<defs><radialGradient id="hmg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="hmm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
-<circle cx="50" cy="50" r="36" fill="url(#hmg)" mask="url(#hmm)"/>
-</svg>
-<div class="hero-fade" aria-hidden="true"></div>
-<div class="relative z-[3] max-w-4xl mx-auto px-4 pt-14 pb-16 text-center">
-<p class="font-amiri text-gold text-xl sm:text-2xl mb-3">وَهَٰذَا الْبَلَدِ الْأَمِينِ</p>
-<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold" data-i18n="places.title">Places</span></h1>
-<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed" data-i18n="places.sub"></p>
-<div id="chero-stats" class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-parchment/60"></div>
+<div class="wrap">
+
+<div class="card mo" style="margin-top:1.6rem">
+<h3>Every correction is a gift</h3>
+<p>This Codex was built by hand, and a hand can slip. If you find a verse cited wrongly, a hadith graded too kindly, a translation that misses, a date out of place, or a button that does nothing, telling us is a service to everyone who reads after you.</p>
+<p>Nothing here is written from a pedestal. If you know better, say so plainly. If you are unsure, say that too, and we will look.</p>
+</div>
+
+<section class="rsec">
+<div class="sh"><span class="ar notranslate" translate="no">مَا نَوْعُهُ</span><h2>What would you like to send?</h2></div>
+<p class="sub">Choose one, and the note below shapes itself to help you say the useful thing quickly.</p>
+
+<div class="fb-grid" data-mo-stagger>
+<button type="button" class="fbo mo" data-kind="correction" data-hint="Tell us the page, the exact sentence, what is wrong, and, if you have it, the correct reference. A screenshot is not needed; the sentence is enough."><b>A correction</b><span>Something here is inaccurate: a verse, a hadith grade, a date, a name, a translation.</span></button>
+<button type="button" class="fbo mo" data-kind="bug" data-hint="Tell us the page, what you tapped, what happened, and what you expected. Your device and browser help a great deal (for example: iPhone, Safari)."><b>Something is broken</b><span>A page will not load, a button does nothing, audio will not play, the layout looks wrong.</span></button>
+<button type="button" class="fbo mo" data-kind="idea" data-hint="Describe what you wish existed and who it would help. Concrete beats grand: one clear room is worth more than ten vague ones."><b>An idea</b><span>A room that should exist, a lesson that is missing, a way this could serve more people.</span></button>
+<button type="button" class="fbo mo" data-kind="other" data-hint="Say whatever you came to say. If you need a reply, leave a way to reach you."><b>Something else</b><span>A question, a request for your masjid or school, or a word you want to send.</span></button>
+</div>
+
+<div class="fbf">
+<label for="fb-body">Your note</label>
+<textarea id="fb-body" placeholder="Write it plainly. A few lines is enough."></textarea>
+<p class="fbhint" id="fb-hint">Pick a kind above and this line will tell you what helps most.</p>
+</div>
+
+<div class="fbf">
+<label for="fb-where">Which page? (optional)</label>
+<input id="fb-where" type="text" placeholder="For example: the Prophets room, or noorcodex.com/quran"/>
+</div>
+
+<div class="fbf">
+<label for="fb-from">Your email, only if you want an answer (optional)</label>
+<input id="fb-from" type="email" placeholder="you@example.com" autocomplete="email"/>
+<p class="fbhint">Leave it empty and your note stays anonymous. Nothing is tracked and nothing is stored on this page beyond your own device.</p>
+</div>
+
+<div class="fbactions">
+<a class="gpill" id="fb-send" href="mailto:hello@noorcodex.com">Open my mail app and send</a>
+<button type="button" class="ghost" id="fb-copy" style="cursor:pointer;font-family:inherit">Copy the note instead</button>
+</div>
+<div class="fbok" id="fb-ok">Copied. Paste it into an email to <b>hello@noorcodex.com</b> and it will reach us.</div>
+
+<div class="fbnote">
+<p style="margin:0"><b>Where it goes.</b> Straight to <b>hello@noorcodex.com</b>, read by the small team that keeps this house. There is no ticket system and no queue of departments. Corrections about a verse or a hadith are checked against the sources before anything changes, and when we are wrong we fix it and say so.</p>
 </div>
 </section>
 
-<nav class="section-nav sticky top-[94px] md:top-14 z-30 bg-parchment/94 backdrop-blur border-b border-ink/5">
-<div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap gap-2 justify-center text-xs font-semibold" id="section-nav-links"></div>
-</nav>
-
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16" id="hub-main"></main>
-
-<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
-<div class="absolute inset-0 opacity-40 pl-end" aria-hidden="true"></div>
-<div class="relative max-w-3xl mx-auto px-4 text-center">
-<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
-<p class="text-xs text-parchment/50 leading-relaxed" data-i18n="about.text"></p>
-<a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline" data-i18n="footer.back">← Back to the Path</a>
-<p class="mt-3 text-[10px] text-parchment/35"><a href="donate.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+<section class="rsec">
+<div class="sh"><span class="ar notranslate" translate="no">الرِّسَالَة</span><h2>Writing to us about a masjid, a school, or an organisation</h2></div>
+<p class="sub">Different door, same address.</p>
+<div class="card mo">
+<p><span class="stepn">1</span>If you want to put a room of the Codex inside your own website or app, everything you need is on the <a href="license.html" style="color:#8a6d13;font-weight:700">For Schools and Organizations</a> page, including the embed code, which is free to take. If your teaching is free, your use is free.</p>
+<p><span class="stepn">2</span>If you run a masjid, the <a href="masjid/" style="color:#8a6d13;font-weight:700">Masjid Toolbox</a> holds the prayer board, the khutba builder, the printable timetable and the qibla tool, all free and needing no account.</p>
+<p><span class="stepn">3</span>For anything else, write to <b>hello@noorcodex.com</b> and say what you need in one paragraph.</p>
 </div>
+</section>
+
+<section class="rsec">
+<div class="sh"><span class="ar notranslate" translate="no">الأَمَانَة</span><h2>What we promise</h2></div>
+<div class="card mo">
+<p><b>We read everything.</b> Not every note gets a reply, but every note is read.</p>
+<p><b>Corrections come first.</b> A mistake about the words of Allah or the words of His Messenger ﷺ is not a small thing, and it moves to the front of the queue.</p>
+<p><b>We say when we were wrong.</b> Where a claim was graded too generously or a reference was wrong, the page is fixed and the fix is honest, not quiet.</p>
+<p><b>Your note is not a product.</b> There is no mailing list here, no advertising, and nothing is sold. Your words are used to improve the Codex and for nothing else.</p>
+</div>
+</section>
+
+</div>
+
+</main>
+
+<footer class="rfoot">
+<p>Every correction is read. Nothing here is sold, and no list is kept.<br/>
+<a href="index.html">Return to the Codex</a> · <a href="feedback.html">Send a correction</a> · <a href="donate.html">Keep the lamp lit ✦</a></p>
 </footer>
-
-<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Places">
-<div class="modal">
-<div class="modal-girih" aria-hidden="true"></div>
-<div class="modal-hero" id="modal-hero"></div>
-<div class="modal-body" id="modal-body"></div>
-<button id="modal-close" class="absolute top-4 right-3.5 w-9 h-9 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-gold hover:text-ink transition-colors z-10" aria-label="Close">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-</button>
-</div>
-</div>
-
 <script>
-window.NOOR_HUB = {
-  data: () => PLACES,
-  type: "place",
-  sections: [
-    {key:"sanctuaries", chip:"chip-sanctuary", gate:"sg-sanctuary", ar:"المقدسات", tk:"places.sanctuaries", dk:"places.sanctuaries.desc"},
-    {key:"mountains", chip:"chip-mountain", gate:"sg-mountain", ar:"الجبال والمشاعر", tk:"places.mountains", dk:"places.mountains.desc"},
-    {key:"cities", chip:"chip-city", gate:"sg-city", ar:"المدن والديار", tk:"places.cities", dk:"places.cities.desc"},
-    {key:"waters", chip:"chip-water", gate:"sg-water", ar:"المياه والأودية", tk:"places.waters", dk:"places.waters.desc"},
-    {key:"endtimes", chip:"chip-end", gate:"sg-end", ar:"منازل النهاية", tk:"places.endtimes", dk:"places.endtimes.desc"}
-  ]
-};
+(function(){
+"use strict";
+var kind="", hint=document.getElementById("fb-hint");
+var body=document.getElementById("fb-body"), where=document.getElementById("fb-where"), from=document.getElementById("fb-from");
+var send=document.getElementById("fb-send"), copy=document.getElementById("fb-copy"), ok=document.getElementById("fb-ok");
+var LABEL={correction:"Correction",bug:"Something is broken",idea:"An idea",other:"A note"};
+document.querySelectorAll(".fbo").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.querySelectorAll(".fbo").forEach(function(x){x.classList.remove("on")});
+    b.classList.add("on"); kind=b.getAttribute("data-kind");
+    hint.textContent=b.getAttribute("data-hint");
+    build();
+    body.focus({preventScroll:true});
+  });
+});
+function text(){
+  var t=(body.value||"").trim();
+  var w=(where.value||"").trim();
+  var f=(from.value||"").trim();
+  var out=t;
+  if(w) out+="\n\nPage: "+w;
+  if(f) out+="\nReply to: "+f;
+  return out;
+}
+function build(){
+  var subj="NOOR "+(LABEL[kind]||"A note");
+  send.setAttribute("href","mailto:hello@noorcodex.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(text()));
+}
+[body,where,from].forEach(function(el){el.addEventListener("input",build)});
+build();
+copy.addEventListener("click",function(){
+  var s=(LABEL[kind]||"A note")+"\n\n"+text();
+  function done(){ok.classList.add("show");setTimeout(function(){ok.classList.remove("show")},9000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done,fallback)}else fallback();
+  function fallback(){
+    var ta=document.createElement("textarea");ta.value=s;ta.style.position="fixed";ta.style.opacity="0";
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");done()}catch(e){}
+    ta.remove();
+  }
+});
+try{
+  var p=new URLSearchParams(location.search).get("page");
+  if(p) where.value=decodeURIComponent(p);
+  var k=new URLSearchParams(location.search).get("kind");
+  if(k){var t=document.querySelector('.fbo[data-kind="'+k.replace(/[^a-z]/g,"")+'"]');if(t)t.click()}
+  build();
+}catch(e){}
+})();
 </script>
 </body>
 </html>

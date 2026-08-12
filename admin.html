@@ -15,7 +15,6 @@
 <meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>Guardian Console · NOOR Codex of Light</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="markets.js" defer></script>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--night:#0B1230;--sage:#8BA888}
 *{box-sizing:border-box}[hidden]{display:none!important}
@@ -178,7 +177,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="tabs" role="tablist">
 <button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
 <button class="tab" data-pane="giving" role="tab"><span data-ic=lamp></span> Giving</button>
-<button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Guardians</button>
+<button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Legacy</button>
 <button class="tab" data-pane="traffic" role="tab"><span data-ic=scope></span> Traffic</button>
 <button class="tab" data-pane="market" role="tab"><span data-ic=globe></span> Marketing</button>
 <button class="tab" data-pane="system" role="tab"><span data-ic=gear></span> System</button>
@@ -405,7 +404,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <h2 class="sec">The keys this house runs on</h2>
 <div class="panel muted" style="line-height:2">
-<code>ADMIN_PASSWORD</code> + <code>ADMIN_SECRET</code> · your lock &nbsp;|&nbsp; <code>STRIPE_SECRET_KEY</code> · money flows &nbsp;|&nbsp; <code>OPENROUTER_API_KEY</code> · the Lantern AI &nbsp;|&nbsp; <code>REDIS_URL</code> (any Redis) <i>or</i> <code>KV_REST_API_URL</code> + <code>KV_REST_API_TOKEN</code> · the lamp counter &nbsp;|&nbsp; <code>NOOR_MONEY_MODE=guardian</code> · flips regional sponsors on
+<code>ADMIN_PASSWORD</code> + <code>ADMIN_SECRET</code> · your lock &nbsp;|&nbsp; <code>STRIPE_SECRET_KEY</code> · money flows &nbsp;|&nbsp; <code>OPENROUTER_API_KEY</code> · the Lantern AI &nbsp;|&nbsp; <code>REDIS_URL</code> (any Redis) <i>or</i> <code>KV_REST_API_URL</code> + <code>KV_REST_API_TOKEN</code> · the lamp counter 
 </div>
 
 <p style="margin-top:1.6rem"><button class="ghost" id="logout">Lock the console</button></p>
@@ -500,7 +499,7 @@ function load(){
     $("s-open").textContent=ML.length-Object.keys(taken).length;
     $("modebanner").innerHTML = d.moneyMode==="guardian"
       ? "<b style='color:var(--gold-hi)'>GUARDIAN MODE IS LIVE.</b> Regional weekly sponsors run sitewide. To return to the gifts era: remove <code>NOOR_MONEY_MODE</code> in Vercel env and redeploy."
-      : "<b style='color:var(--gold-hi)'>DORMANT · the gifts era is live.</b> This whole system (93 regions, weekly lamps, locking, vetting) is built and armed. When the site reaches about 2,000 readers a day: Vercel → Settings → Environment Variables → add <code>NOOR_MONEY_MODE</code> = <code>guardian</code> → redeploy. It wakes in one switch.";
+      : "<b style='color:var(--gold-hi)'>RETIRED.</b> The house moved to two streams, Gifts and Licensing, and this program closed for good in August 2026. The panels below remain for the record only; the public endpoints answer 410 and nothing here can be woken.";
     var G2=d.gifts||{total30d:0,count30d:0,monthly:0,recent:[]};
     $("p-gifts").textContent=money(G2.total30d||0);
     $("g-30").textContent=money(G2.total30d||0);
@@ -602,8 +601,8 @@ $("v-go").addEventListener("click",function(){
     }).join("");
     setTimeout(function(){box.querySelectorAll(".tr i").forEach(function(i,k){setTimeout(function(){i.style.width=i.getAttribute("data-w")+"%"},k*55)})},60);
   }
-  var FLAG={reddit:"Reddit",facebook:"Facebook",instagram:"Instagram",x:"X",telegram:"Telegram",whatsapp:"WhatsApp",youtube:"YouTube",tiktok:"TikTok",google:"Google search",search:"Other search",ai:"AI assistants",noorhalal:"NOOR Halal",linkedin:"LinkedIn",pinterest:"Pinterest",forum:"Islamic forums",email:"Email",direct:"Typed or saved"};
-  var ROOMN={home:"Home",quran:"Qur'an",prophets:"Prophets",madrasa:"Madrasa",school:"For schools",kids:"Kids' Codex",arabic:"Letters of Light",pillars:"Five Pillars",give:"Give page",license:"Licensing",sponsor:"Sponsor",health:"Health",begin:"Begin",theology:"Theology",legal:"Legal",other:"Other"};
+  var FLAG={reddit:"Reddit",facebook:"Facebook",instagram:"Instagram",x:"X",telegram:"Telegram",whatsapp:"WhatsApp",youtube:"YouTube",tiktok:"TikTok",google:"Google search",search:"Other search",ai:"AI assistants",linkedin:"LinkedIn",pinterest:"Pinterest",forum:"Islamic forums",email:"Email",direct:"Typed or saved"};
+  var ROOMN={home:"Home",quran:"Qur'an",prophets:"Prophets",madrasa:"Madrasa",school:"For schools",kids:"Kids' Codex",arabic:"Letters of Light",pillars:"Five Pillars",give:"Give page",license:"Licensing",sponsor:"Sponsor",health:"Health",begin:"Begin",theology:"Theology",legal:"Legal",family:"Family Room",heroes:"Heroes of Islam",stories:"Hall of Stories",unseen:"The Unseen",sermon:"Last Sermon",soul:"Journey of the Soul",masjid:"Masjid Toolbox",lanterns:"Lantern Sky",feedback:"Corrections",other:"Other"};
 
   function chart(days){
     var svg=$("tchart"); if(!days.length){svg.innerHTML="";return}
@@ -760,7 +759,7 @@ $("v-go").addEventListener("click",function(){
     ["stripe","Stripe: public business name NOOR Codex of Light, statement descriptor NOORCODEX, support email hello@noorcodex.com. This is what every giver sees on their bank statement."],
     ["who","Domains: WHOIS privacy on for noorcodex.com, and the .ca names confirmed hidden."],
     ["mail","Gmail: send-as hello@noorcodex.com set, display name NOOR Codex of Light, used for every reply."],
-    ["halal","NOOR Halal: checked what developer name its app listing shows. The two sites say companion, never our."],
+    ["cross","Cross-links: no public page of the Codex names or links any other property of yours, and none of your other properties publicly claim the Codex."],
     ["voices","The project's voices exist and are named NOOR: Reddit account, Facebook Page, Telegram channel with the phone number hidden, X or TikTok."],
     ["never","Standing rule: nothing is ever sent from a personal account, and no message ever goes to a relative or a friend."]
   ];

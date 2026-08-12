@@ -201,7 +201,6 @@ main{max-width:660px}
 }
 </style>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}img,svg{-webkit-user-drag:none}a,button,[role="button"]{touch-action:manipulation}</style>
-<script src="markets.js" defer></script>
 <script src="sponsor.js" defer></script>
 <link rel="canonical" href="https://noorcodex.com/kids"/>
 </head>
@@ -230,10 +229,42 @@ main{max-width:660px}
 <p class="found" id="found"></p>
 <div class="wonders">
 <p class="w-kick">✦ Hero stories ✦</p>
+<a class="w-sky" href="kids/lanterns.html">
+<span class="sky-art" aria-hidden="true">
+<svg viewBox="0 0 120 74">
+<defs><radialGradient id="skg" cx="50%" cy="42%"><stop offset="0" stop-color="#F4D46A" stop-opacity=".95"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient></defs>
+<circle cx="60" cy="34" r="30" fill="url(#skg)"/>
+<g fill="none" stroke="#F4D46A" stroke-width="1.6">
+<path d="M52 24h16l4 9v16a4 4 0 0 1-4 4H52a4 4 0 0 1-4-4V33Z"/><path d="M56 20h8"/></g>
+<circle cx="60" cy="41" r="5" fill="#F4D46A"/>
+<g fill="#F4D46A" opacity=".55"><circle cx="24" cy="20" r="3"/><circle cx="98" cy="16" r="2.4"/><circle cx="18" cy="52" r="2.2"/><circle cx="104" cy="48" r="3"/><circle cx="38" cy="62" r="1.8"/><circle cx="84" cy="64" r="2.2"/></g>
+</svg>
+</span>
+<span class="sky-txt">
+<span class="sky-k">A place, not a game</span>
+<span class="sky-n">The Lantern Sky</span>
+<span class="sky-l">Every gift given to the Codex becomes a lantern carrying a du&#8217;a. Tap one, read it, and say Ameen.</span>
+<span class="sky-go">Fly up to the sky &#8594;</span>
+</span>
+</a>
 <div class="w-feat" id="wfeat"></div>
 <p class="w-kick" style="margin-top:26px">✦ More wonders ✦</p>
 <h2 class="w-title">Nine Little Games</h2>
 <div class="w-grid" id="wgrid"></div>
+<style>
+.w-sky{display:flex;align-items:center;gap:1rem;text-decoration:none;background:linear-gradient(150deg,#0d1430,#1b2450 60%,#2a2340);border:1px solid rgba(244,212,106,.4);border-radius:22px;padding:1rem 1.1rem;margin:0 0 1rem;box-shadow:0 14px 38px rgba(6,10,26,.35);position:relative;overflow:hidden}
+.w-sky::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 90% at 22% 40%,rgba(244,212,106,.12),transparent 70%);pointer-events:none}
+.w-sky .sky-art{flex:0 0 auto;width:6.2rem}
+.w-sky .sky-art svg{width:100%;height:auto;display:block;animation:skyfloat 5.5s ease-in-out infinite}
+@keyframes skyfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.w-sky .sky-txt{display:flex;flex-direction:column;gap:.15rem;position:relative;z-index:1}
+.w-sky .sky-k{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.8)}
+.w-sky .sky-n{font-size:1.15rem;font-weight:800;color:#FFFEF7;line-height:1.2}
+.w-sky .sky-l{font-size:.78rem;color:rgba(255,254,247,.72);line-height:1.6;margin-top:.15rem}
+.w-sky .sky-go{font-size:.76rem;font-weight:800;color:#F4D46A;margin-top:.4rem}
+@media(max-width:30rem){.w-sky{flex-direction:column;text-align:center;gap:.5rem}.w-sky .sky-art{width:5rem}}
+@media (prefers-reduced-motion:reduce){.w-sky .sky-art svg{animation:none}}
+</style>
 <p class="w-count" id="wcount"></p>
 </div>
 </section>
@@ -314,7 +345,6 @@ var G=[
  {f:"kids/zamzam.html",k:"nk-zamzam",a:"#22d3ee",i:"drop",n:"Hajar’s Search",l:"Run, dig, and find the spring"},
  {f:"kids/yunus.html",k:"nk-yunus",a:"#4ade80",i:"whale",n:"Three Words in the Dark",l:"Light the sea from inside the whale"},
  {f:"kids/orchard.html",k:"nk-orchard",a:"#fbbf24",i:"sprout",n:"The 700 Seed",l:"Plant one, harvest seven hundred"},
- {f:"kids/lanterns.html",k:"nk-lanterns",a:"#fb7185",i:"lantern",n:"Five Lanterns",l:"Light the whole day with prayer"},
  {f:"kids/echo.html",k:"nk-echo",a:"#e879f9",i:"med",n:"Echo of Light",l:"Repeat the shining dhikr"},
  {f:"kids/practice.html",k:"nk-practice",a:"#E9C86A",i:"lantern",n:"My First Steps",l:"Wudu, the five prayers & golden words"}
 ];
@@ -336,7 +366,7 @@ function render(){
    '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
  }).join("");
  var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
- c.textContent=total===0?"Thirteen wonders are waiting for you ✦":total===13?"All thirteen wonders are yours! ✦":"You have finished "+total+" of 13 wonders ✦";
+ c.textContent=total===0?"Twelve wonders are waiting for you ✦":total===12?"All twelve wonders are yours! ✦":"You have finished "+total+" of 12 wonders ✦";
 }
 render();
 window.addEventListener("pageshow",render);
