@@ -196,14 +196,20 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <h2 class="sec">Readers · last 30 days</h2>
 <div class="panel">
 <div id="vsetup" class="setupcard" hidden>
-<b>Turn on the lamp counter (5 minutes, free, one time):</b>
+<b>Turn on the lamp counter (5 minutes, one time). Two roads, either works:</b>
+<p style="margin:.5rem 0 .2rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)">Road A · you already have a Redis account</p>
 <ol>
-<li>Vercel dashboard → your <b>noor</b> project → <b>Storage</b> tab</li>
-<li><b>Create Database</b> → choose <b>KV</b> (Upstash) → name it <code>noor-lamps</code> → Create</li>
-<li>Click <b>Connect Project</b> → pick your noor project → Connect (env keys add themselves)</li>
+<li>In your Redis provider (Redis Cloud, Upstash, Railway, anywhere), open the database and copy its <b>connection URL</b>. It looks like <code>redis://default:PASSWORD@host:port</code>, or <code>rediss://</code> if it uses TLS</li>
+<li>Vercel → your <b>noor</b> project → <b>Settings</b> → <b>Environment Variables</b> → add <code>REDIS_URL</code> = that whole URL → Save</li>
 <li>Deployments → ⋯ on the latest → <b>Redeploy</b></li>
-<li>Reload this console. Counting starts from that moment, cookie-free, no reader is ever identified</li>
 </ol>
+<p style="margin:.6rem 0 .2rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)">Road B · you want Vercel to make one</p>
+<ol>
+<li>Vercel → your <b>noor</b> project → <b>Storage</b> tab → <b>Create Database</b>. Vercel no longer sells its own KV, so this shows marketplace providers</li>
+<li>Choose <b>Upstash</b> (Redis), name it <code>noor-lamps</code>, create it on the free plan, then <b>Connect Project</b> and pick noor. The keys add themselves</li>
+<li>Deployments → ⋯ on the latest → <b>Redeploy</b></li>
+</ol>
+<p style="margin:.6rem 0 0">Then reload this console. Counting starts from that moment, cookie-free; no reader is ever identified. The house accepts <code>REDIS_URL</code>, or <code>KV_REST_API_URL</code> with <code>KV_REST_API_TOKEN</code>, or the <code>UPSTASH_REDIS_REST_*</code> pair, whichever your provider gives.</p>
 </div>
 <div id="vwrap" hidden>
 <svg id="vchart" viewBox="0 0 600 150" preserveAspectRatio="none" aria-label="Daily readers chart"></svg>
@@ -399,7 +405,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <h2 class="sec">The keys this house runs on</h2>
 <div class="panel muted" style="line-height:2">
-<code>ADMIN_PASSWORD</code> + <code>ADMIN_SECRET</code> · your lock &nbsp;|&nbsp; <code>STRIPE_SECRET_KEY</code> · money flows &nbsp;|&nbsp; <code>OPENROUTER_API_KEY</code> · the Lantern AI &nbsp;|&nbsp; <code>KV_REST_API_URL</code> + <code>KV_REST_API_TOKEN</code> · the lamp counter (auto-added by Vercel KV) &nbsp;|&nbsp; <code>NOOR_MONEY_MODE=guardian</code> · flips regional sponsors on
+<code>ADMIN_PASSWORD</code> + <code>ADMIN_SECRET</code> · your lock &nbsp;|&nbsp; <code>STRIPE_SECRET_KEY</code> · money flows &nbsp;|&nbsp; <code>OPENROUTER_API_KEY</code> · the Lantern AI &nbsp;|&nbsp; <code>REDIS_URL</code> (any Redis) <i>or</i> <code>KV_REST_API_URL</code> + <code>KV_REST_API_TOKEN</code> · the lamp counter &nbsp;|&nbsp; <code>NOOR_MONEY_MODE=guardian</code> · flips regional sponsors on
 </div>
 
 <p style="margin-top:1.6rem"><button class="ghost" id="logout">Lock the console</button></p>
@@ -506,7 +512,7 @@ function load(){
     var sys=[
       ["Stripe key · money can flow",d.stripeConfigured,"add STRIPE_SECRET_KEY in Vercel env & redeploy"],
       ["The Lantern AI core · Daily Light, Verse Lamp, Thread, Seeker's Question, Friday Light, du'a gate, vetting",!!d.lanternConfigured,"add OPENROUTER_API_KEY in Vercel env & redeploy"],
-      ["Lamp counter · readers and countries",window.__kvOn===true,"create a KV store (Pulse tab has the 5 steps)"],
+      ["Lamp counter · readers, sources and countries",window.__kvOn===true,"add REDIS_URL in Vercel, or create an Upstash store (Pulse tab has both roads)"],
       [d.moneyMode==="guardian"?"Money mode: GUARDIAN · sponsors live":"Money mode: GIFTS · Guardian system armed behind its switch",true,""],
       ["Owner lock · you are inside it",true,""]
     ];
@@ -651,7 +657,7 @@ $("v-go").addEventListener("click",function(){
     fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){
       if(!v){return}
       if(!v.enabled){
-        $("t-src").innerHTML='<p class="muted">The lamp counter is not on yet. Vercel → your project → Storage → Create Database → Upstash for Redis, name it noor-lamps, Connect Project keeping the KV prefix, then Redeploy. Counting starts from that moment.</p>';
+        $("t-src").innerHTML='<p class="muted">The lamp counter is not on yet. Either add REDIS_URL in Vercel with the connection URL of a Redis you already have, or make one from the Storage tab (Create Database, Upstash). Then Redeploy. The Pulse tab has both roads written out.</p>';
         return;
       }
       render(v);
@@ -837,7 +843,7 @@ $("logout").addEventListener("click",function(){api("/api/admin-auth",{logout:tr
 
 /* remember whether the counter is on, for the System checks */
 window.__kvOn=false;
-fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){if(v&&v.enabled)window.__kvOn=true}).catch(function(){});
+fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){if(v&&v.enabled){window.__kvOn=true;window.__kvKind=v.store||"";}}).catch(function(){});
 
 /* If a valid cookie already exists, go straight in */
 fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)showDash();else api("/api/admin-auth",{probe:true}).then(function(p){if(p.ok&&p.j&&p.j.configured===false)$("setupHint").hidden=false}).catch(function(){})}).catch(function(){});

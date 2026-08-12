@@ -84,7 +84,7 @@ section.pillar{padding:3rem 0 .6rem}
 .fact .n{font-size:1.3rem;font-weight:800;color:var(--gold)}
 .fact .l{font-size:.62rem;color:rgba(44,36,22,.55);font-weight:700;margin-top:.15rem;line-height:1.4}
 /* ---------- salah day arc ---------- */
-.dayarc{position:relative;background:linear-gradient(180deg,#101527 0%,#1d2a45 42%,#7a5c10 76%,#F4D46A 100%);border-radius:18px;padding:1rem .9rem 1.1rem;border:1px solid rgba(233,200,106,.3);overflow:hidden}
+.dayarc{position:relative;background:linear-gradient(180deg,#F4D46A 0%,#b98a2e 30%,#1d2a45 72%,#101527 100%);border-radius:18px;padding:1rem .9rem 1.1rem;border:1px solid rgba(233,200,106,.3);overflow:hidden}
 .dayarc svg{display:block;width:100%;height:auto}
 .sunDot{animation:sunmove 14s linear infinite}
 @keyframes sunmove{from{offset-distance:0%}to{offset-distance:100%}}
@@ -171,38 +171,44 @@ section.pillar{padding:3rem 0 .6rem}
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
-<p class="dd-h">The Word</p>
+<p class="dd-h">Learn</p>
 <a role="menuitem" href="quran.html">The Mushaf of Light</a>
 <a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
 <a role="menuitem" href="words.html">The Words</a>
+<a role="menuitem" href="madrasa.html">The Classroom · Madrasa</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
 </div>
 <div class="mg">
 <p class="dd-h">The Story</p>
 <a role="menuitem" href="index.html#timeline">The Path of Creation</a>
 <a role="menuitem" href="prophets.html">The 25 Prophets</a>
 <a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="unseen.html">The Unseen &amp; the Mysteries</a>
 <a role="menuitem" href="places.html">Places</a>
-<a role="menuitem" href="index.html#books">The Books</a>
 <a role="menuitem" href="index.html#mizan">Two Lives</a>
 </div>
 <div class="mg">
-<p class="dd-h">Live It</p>
-<a role="menuitem" href="school.html">The Madrasa · School</a>
-<a role="menuitem" href="madrasa.html">The Classroom · Study</a>
-<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<p class="dd-h">Worship</p>
 <a role="menuitem" href="pillars.html">The Five Pillars</a>
-<a role="menuitem" href="health.html">Prophetic Health</a>
-<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="sermon.html">The Last Sermon</a>
+<a role="menuitem" href="soul.html">The Journey of the Soul</a>
+<p class="dd-h" style="margin-top:.8rem">Stories</p>
+<a role="menuitem" href="latif.html">Al-Latif · The Story of Beauty</a>
 </div>
 <div class="mg">
-<p class="dd-h">The House</p>
-<a role="menuitem" href="kids.html">The Kids' Codex</a>
-<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
-<a role="menuitem" href="index.html#about">About the Codex</a>
-<a role="menuitem" href="legal.html">Terms & Privacy</a>
-<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
+<p class="dd-h">Kids</p>
+<a role="menuitem" href="kids.html">The Kids&#39; Codex</a>
+<a role="menuitem" href="kids/lanterns.html">The Lantern Sky</a>
+<p class="dd-h" style="margin-top:.8rem">Masajid &amp; Schools</p>
+<a role="menuitem" href="masjid/">Masjid Tools · Prayer Board</a>
+<a role="menuitem" href="school.html">The Madrasa · School</a>
 <a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
-<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
+<p class="dd-h" style="margin-top:.8rem">Support</p>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Give a Gift</a>
+<a role="menuitem" href="legal.html">Terms &amp; Transparency</a>
+<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
 </div>
 </div></div></div>
 <a href="donate.html" class="give-pill">✦ Give</a>
@@ -325,16 +331,18 @@ section.pillar{padding:3rem 0 .6rem}
 <div>
 <div class="dayarc">
 <svg viewBox="0 0 400 150" aria-hidden="true">
-<path id="sunpath" d="M 18 138 Q 200 -55 382 138" fill="none" stroke="rgba(244,212,106,.3)" stroke-width="1.6" stroke-dasharray="5 6"/>
+<line x1="6" y1="130" x2="394" y2="130" stroke="rgba(255,254,247,.30)" stroke-width="1" stroke-dasharray="2 4"/>
+<path id="sunpath" d="M 18 138 Q 200 -55 382 138" fill="none" stroke="rgba(244,212,106,.35)" stroke-width="1.6" stroke-dasharray="5 6"/>
 <circle r="9" fill="#F4D46A" class="sunDot" style="offset-path:path('M 18 138 Q 200 -55 382 138');filter:drop-shadow(0 0 10px rgba(244,212,106,.9))"/>
 <g font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#FFF7DF" text-anchor="middle">
-<circle cx="30" cy="122" r="4.5" fill="#7FA3D8"/><text x="30" y="108">Fajr</text>
-<circle cx="200" cy="49" r="4.5" fill="#F4D46A"/><text x="200" y="36">Dhuhr</text>
-<circle cx="291" cy="83" r="4.5" fill="#E9C86A"/><text x="291" y="70">Asr</text>
+<circle cx="34" cy="137" r="4.5" fill="#7FA3D8"/><text x="34" y="122" fill="#FFF7DF">Fajr</text>
+<circle cx="200" cy="49" r="4.5" fill="#8a6a14"/><text x="200" y="36" fill="#4a3a10">Dhuhr</text>
+<circle cx="291" cy="83" r="4.5" fill="#8a6a14"/><text x="291" y="70" fill="#4a3a10">Asr</text>
 <circle cx="370" cy="122" r="4.5" fill="#f0965a"/><text x="370" y="108">Maghrib</text>
-<circle cx="345" cy="140" r="4.5" fill="#8A9BD8"/><text x="322" y="147" font-size="10">Isha</text>
+<circle cx="352" cy="141" r="4.5" fill="#8A9BD8"/><text x="330" y="147" font-size="10">Isha</text>
 </g>
 </svg>
+<p style="margin:.45rem 0 0;font-size:.62rem;color:rgba(255,254,247,.55);text-align:center;line-height:1.5">Fajr and Isha are the twilight prayers: their windows open while the sun is below the horizon line.</p>
 <div class="ptimes">
 <div class="ptime"><div class="nm">Fajr</div><div class="ra">2 rak'ah</div><div class="tm">dawn, before sunrise</div></div>
 <div class="ptime"><div class="nm">Dhuhr</div><div class="ra">4 rak'ah</div><div class="tm">after the sun's peak</div></div>

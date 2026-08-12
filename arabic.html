@@ -61,7 +61,7 @@ section.blk{padding:2.6rem 0 1rem}
 .lt{position:relative;background:#fff;border:1.5px solid rgba(44,36,22,.1);border-radius:14px;padding:.55rem .2rem .45rem;text-align:center;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
 .lt:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 24px rgba(201,162,39,.18)}
 .lt.sel{border-color:var(--gold);background:#FFF9E8;box-shadow:0 10px 24px rgba(201,162,39,.22)}
-.lt .g{font-family:Amiri,serif;font-size:2rem;line-height:1.25;color:#241D12}
+.lt .g{font-family:Amiri,serif;font-size:2rem;line-height:1.65;padding-bottom:.15rem;color:#241D12}
 .lt .n{font-size:.6rem;font-weight:700;color:rgba(44,36,22,.55);letter-spacing:.04em}
 .lt .met{position:absolute;top:.28rem;left:.34rem;font-size:.6rem;color:var(--gold);opacity:0;transition:opacity .3s}
 .lt.is-met .met{opacity:1}
@@ -69,7 +69,7 @@ section.blk{padding:2.6rem 0 1rem}
 #lens{background:linear-gradient(165deg,#171d31,#1d2a45);color:#FFFEF7;border-radius:22px;padding:1.35rem 1.3rem 1.25rem;margin:0 0 1.1rem;border:1px solid rgba(233,200,106,.3);box-shadow:0 18px 44px rgba(20,16,10,.25)}
 #lens .empty{color:rgba(255,254,247,.55);font-size:.86rem;text-align:center;padding:1.1rem 0}
 .lens-top{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
-.lens-glyph{font-family:Amiri,serif;font-size:4.6rem;line-height:1.15;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));min-width:5.2rem;text-align:center}
+.lens-glyph{font-family:Amiri,serif;font-size:4.6rem;line-height:1.5;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));min-width:5.2rem;text-align:center}
 .lens-name b{font-size:1.25rem;font-weight:800}
 .lens-name .tr{color:rgba(255,254,247,.6);font-size:.8rem;margin-left:.4rem}
 .lens-sound{margin-top:.3rem;font-size:.82rem;color:rgba(255,254,247,.8);line-height:1.6;max-width:26rem}
@@ -196,38 +196,44 @@ section.blk{padding:2.6rem 0 1rem}
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
-<p class="dd-h">The Word</p>
+<p class="dd-h">Learn</p>
 <a role="menuitem" href="quran.html">The Mushaf of Light</a>
 <a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
 <a role="menuitem" href="words.html">The Words</a>
+<a role="menuitem" href="madrasa.html">The Classroom · Madrasa</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
 </div>
 <div class="mg">
 <p class="dd-h">The Story</p>
 <a role="menuitem" href="index.html#timeline">The Path of Creation</a>
 <a role="menuitem" href="prophets.html">The 25 Prophets</a>
 <a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="unseen.html">The Unseen &amp; the Mysteries</a>
 <a role="menuitem" href="places.html">Places</a>
-<a role="menuitem" href="index.html#books">The Books</a>
 <a role="menuitem" href="index.html#mizan">Two Lives</a>
 </div>
 <div class="mg">
-<p class="dd-h">Live It</p>
-<a role="menuitem" href="school.html">The Madrasa · School</a>
-<a role="menuitem" href="madrasa.html">The Classroom · Study</a>
-<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<p class="dd-h">Worship</p>
 <a role="menuitem" href="pillars.html">The Five Pillars</a>
-<a role="menuitem" href="health.html">Prophetic Health</a>
-<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="sermon.html">The Last Sermon</a>
+<a role="menuitem" href="soul.html">The Journey of the Soul</a>
+<p class="dd-h" style="margin-top:.8rem">Stories</p>
+<a role="menuitem" href="latif.html">Al-Latif · The Story of Beauty</a>
 </div>
 <div class="mg">
-<p class="dd-h">The House</p>
-<a role="menuitem" href="kids.html">The Kids' Codex</a>
-<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
-<a role="menuitem" href="index.html#about">About the Codex</a>
-<a role="menuitem" href="legal.html">Terms & Privacy</a>
-<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
+<p class="dd-h">Kids</p>
+<a role="menuitem" href="kids.html">The Kids&#39; Codex</a>
+<a role="menuitem" href="kids/lanterns.html">The Lantern Sky</a>
+<p class="dd-h" style="margin-top:.8rem">Masajid &amp; Schools</p>
+<a role="menuitem" href="masjid/">Masjid Tools · Prayer Board</a>
+<a role="menuitem" href="school.html">The Madrasa · School</a>
 <a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
-<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
+<p class="dd-h" style="margin-top:.8rem">Support</p>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Give a Gift</a>
+<a role="menuitem" href="legal.html">Terms &amp; Transparency</a>
+<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
 </div>
 </div></div></div>
 <a href="donate.html" class="give-pill">✦ Give</a>
@@ -628,8 +634,8 @@ function qStart(){
 }
 function qPaint(){
   $("qfill").style.width=(qRound/ROUNDS*100)+"%";
-  $("qhearts").textContent="<span data-ic=lamp></span>".repeat(qHearts)+"<span data-ic=lamp></span>".repeat(3-qHearts);
-  $("qstreak").textContent=qStreak>=2?"<span data-ic=star></span> "+qStreak+" streak":"";
+  $("qhearts").innerHTML=[0,1,2].map(function(i){return '<span data-ic=lamp style="opacity:'+(i<qHearts?"1":".22")+'"></span>'}).join("");if(window.NOOR_IC_RENDER)NOOR_IC_RENDER($("qhearts"));
+  if(qStreak>=2){$("qstreak").innerHTML='<span data-ic=star></span> '+qStreak+" streak";if(window.NOOR_IC_RENDER)NOOR_IC_RENDER($("qstreak"));}else{$("qstreak").textContent="";}
 }
 function qNext(){
   if(qRound>=ROUNDS||qHearts<=0){qFinish();return}

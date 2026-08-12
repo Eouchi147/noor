@@ -357,6 +357,14 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
 <link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
 <link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
+<link rel="alternate" hreflang="fa" href="https://noorcodex.com/fa"/>
+<link rel="alternate" hreflang="prs" href="https://noorcodex.com/prs"/>
+<link rel="alternate" hreflang="pa" href="https://noorcodex.com/pa"/>
+<link rel="alternate" hreflang="ha" href="https://noorcodex.com/ha"/>
+<link rel="alternate" hreflang="ps" href="https://noorcodex.com/ps"/>
+<link rel="alternate" hreflang="so" href="https://noorcodex.com/so"/>
+<link rel="alternate" hreflang="ku" href="https://noorcodex.com/ku"/>
+<link rel="alternate" hreflang="sw" href="https://noorcodex.com/sw"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": []}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
 </head>
 <body class="antialiased">
@@ -400,38 +408,44 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
-<p class="dd-h">The Word</p>
+<p class="dd-h">Learn</p>
 <a role="menuitem" href="quran.html">The Mushaf of Light</a>
 <a role="menuitem" href="arabic.html">Learn Arabic · The Letters</a>
 <a role="menuitem" href="words.html">The Words</a>
+<a role="menuitem" href="madrasa.html">The Classroom · Madrasa</a>
+<a role="menuitem" href="health.html">Prophetic Health</a>
+<a role="menuitem" href="theology.html">Theology · The Branches</a>
 </div>
 <div class="mg">
 <p class="dd-h">The Story</p>
 <a role="menuitem" href="index.html#timeline">The Path of Creation</a>
 <a role="menuitem" href="prophets.html">The 25 Prophets</a>
 <a role="menuitem" href="characters.html">Characters</a>
+<a role="menuitem" href="unseen.html">The Unseen &amp; the Mysteries</a>
 <a role="menuitem" href="places.html">Places</a>
-<a role="menuitem" href="index.html#books">The Books</a>
 <a role="menuitem" href="index.html#mizan">Two Lives</a>
 </div>
 <div class="mg">
-<p class="dd-h">Live It</p>
-<a role="menuitem" href="school.html">The Madrasa · School</a>
-<a role="menuitem" href="madrasa.html">The Classroom · Study</a>
-<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<p class="dd-h">Worship</p>
 <a role="menuitem" href="pillars.html">The Five Pillars</a>
-<a role="menuitem" href="health.html">Prophetic Health</a>
-<a role="menuitem" href="theology.html">Theology · The Branches</a>
+<a role="menuitem" href="begin.html">Begin · New Muslim</a>
+<a role="menuitem" href="sermon.html">The Last Sermon</a>
+<a role="menuitem" href="soul.html">The Journey of the Soul</a>
+<p class="dd-h" style="margin-top:.8rem">Stories</p>
+<a role="menuitem" href="latif.html">Al-Latif · The Story of Beauty</a>
 </div>
 <div class="mg">
-<p class="dd-h">The House</p>
-<a role="menuitem" href="kids.html">The Kids' Codex</a>
-<a role="menuitem" href="latif.html">Al-Latif · Story of Beauty</a>
-<a role="menuitem" href="index.html#about">About the Codex</a>
-<a role="menuitem" href="legal.html">Terms & Privacy</a>
-<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
+<p class="dd-h">Kids</p>
+<a role="menuitem" href="kids.html">The Kids&#39; Codex</a>
+<a role="menuitem" href="kids/lanterns.html">The Lantern Sky</a>
+<p class="dd-h" style="margin-top:.8rem">Masajid &amp; Schools</p>
+<a role="menuitem" href="masjid/">Masjid Tools · Prayer Board</a>
+<a role="menuitem" href="school.html">The Madrasa · School</a>
 <a role="menuitem" href="license.html"><span data-ic=school></span> For Schools &amp; Organizations</a>
-<a role="menuitem" href="donate.html" class="mg-give">✦ Keep it lit · Give</a>
+<p class="dd-h" style="margin-top:.8rem">Support</p>
+<a role="menuitem" href="donate.html" class="mg-give">✦ Give a Gift</a>
+<a role="menuitem" href="legal.html">Terms &amp; Transparency</a>
+<a role="menuitem" href="https://noorhalal.ca" target="_blank" rel="noopener">NOOR Halal · halal companion app ↗</a>
 </div>
 </div></div></div>
 <a href="donate.html" class="give-pill">✦ Give</a>
@@ -695,8 +709,9 @@ function labelFor(n){
   return txt;
 }
 function paint(d,n){
-  g("dl-cat").textContent=(d&&d.category)||"History";
-  if(d&&d.title){ g("dl-title").textContent=d.title; g("dl-story").textContent=d.story||""; g("dl-detail").textContent=d.detail||""; }
+  if(!d||!d.title){ d={category:"History",title:"The lantern is resting",story:"That day\u2019s light could not be fetched just now. The rest of the Codex still glows; try this arrow again in a moment.",detail:""}; }
+  g("dl-cat").textContent=d.category||"History";
+  g("dl-title").textContent=d.title; g("dl-story").textContent=d.story||""; g("dl-detail").textContent=d.detail||"";
   g("dl-date").textContent=labelFor(n);
   g("dl-prev").disabled=n>=MAXBACK; g("dl-prev").style.opacity=n>=MAXBACK?".35":"1";
   g("dl-next").disabled=n<=0; g("dl-next").style.opacity=n<=0?".35":"1";
@@ -997,14 +1012,14 @@ if((new Date()).getDay()===5){
 <p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
 <div class="mt-8 pt-6 border-t border-parchment/10 max-w-md mx-auto">
 <p class="font-amiri text-gold text-lg mb-1.5">صَدَقَةٌ جَارِيَة</p>
-<p class="text-xs text-parchment/55 leading-relaxed" data-i18n="about.dedication">This Codex is offered as sadaqah jariyah, an ongoing gift, kept burning for one heart in particular: an heir of the lantern cities of Balkh and Herat, where knowledge stayed alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her first.</p>
+<p class="text-xs text-parchment/55 leading-relaxed" data-i18n="about.dedication">This Codex is offered as sadaqah jariyah, an ongoing gift, kept burning for one heart in particular: a daughter of ancient Khorasan, where knowledge stayed alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her first.</p>
 <p class="mt-2 text-[10px] text-parchment/35">"When the child of Adam dies, his works end except three, and the first is a charity that keeps flowing." · Muslim 1631</p>
 </div>
 <div id="sponsor-slot"></div>
-<p class="mt-3 text-[10px] tracking-[.14em] uppercase"><a href="sponsor.html" class="text-gold/55 hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+<p class="mt-3 text-[10px] tracking-[.14em] uppercase"><a href="donate.html" class="text-gold/55 hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 <p class="mt-6 text-[11px] tracking-[.18em] uppercase text-gold/70" data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
 <nav aria-label="Languages" class="mt-4 text-[11px] leading-loose text-parchment/45">
-<a href="/ar" class="hover:text-gold" lang="ar">العربية</a> · <a href="/fr" class="hover:text-gold" lang="fr">Français</a> · <a href="/es" class="hover:text-gold" lang="es">Español</a> · <a href="/de" class="hover:text-gold" lang="de">Deutsch</a> · <a href="/ru" class="hover:text-gold" lang="ru">Русский</a> · <a href="/tr" class="hover:text-gold" lang="tr">Türkçe</a> · <a href="/ur" class="hover:text-gold" lang="ur">اردو</a> · <a href="/hi" class="hover:text-gold" lang="hi">हिन्दी</a> · <a href="/bn" class="hover:text-gold" lang="bn">বাংলা</a> · <a href="/id" class="hover:text-gold" lang="id">Bahasa Indonesia</a>
+<a href="/ar" class="hover:text-gold" lang="ar">العربية</a> · <a href="/fr" class="hover:text-gold" lang="fr">Français</a> · <a href="/es" class="hover:text-gold" lang="es">Español</a> · <a href="/de" class="hover:text-gold" lang="de">Deutsch</a> · <a href="/ru" class="hover:text-gold" lang="ru">Русский</a> · <a href="/tr" class="hover:text-gold" lang="tr">Türkçe</a> · <a href="/ur" class="hover:text-gold" lang="ur">اردو</a> · <a href="/hi" class="hover:text-gold" lang="hi">हिन्दी</a> · <a href="/bn" class="hover:text-gold" lang="bn">বাংলা</a> · <a href="/id" class="hover:text-gold" lang="id">Bahasa Indonesia</a> · <a href="/fa" class="hover:text-gold" lang="fa">فارسی</a> · <a href="/prs" class="hover:text-gold" lang="prs">دری</a> · <a href="/pa" class="hover:text-gold" lang="pa">پنجابی</a> · <a href="/ha" class="hover:text-gold" lang="ha">Hausa</a> · <a href="/ps" class="hover:text-gold" lang="ps">پښتو</a> · <a href="/so" class="hover:text-gold" lang="so">Soomaali</a> · <a href="/ku" class="hover:text-gold" lang="ku">Kurdî</a> · <a href="/sw" class="hover:text-gold" lang="sw">Kiswahili</a>
 <div class="mt-6 max-w-xl mx-auto rounded-2xl px-5 py-4 text-left" style="background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.35)">
 <div class="flex items-center gap-4 flex-wrap">
 <span style="font-size:1.6rem"><span data-ic=school></span></span>

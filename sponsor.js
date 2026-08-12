@@ -116,6 +116,8 @@ window.NOOR_GUARDIANS = {
     var isSponsorPage = /(^|\/)sponsor(\.html)?$/.test(location.pathname);
     var isDonatePage = /(^|\/)donate(\.html)?$/.test(location.pathname);
     if (isAdmin || isSponsorPage || isDonatePage) return;
+    /* the Little Codex is a place of play: no bands of any kind near children */
+    if (/(^|\/)kids(\/|\.html|$)/.test(location.pathname)) return;
     var g = liveGuardian(m);
     var hdr = document.getElementById("site-header");
     if (!hdr || !hdr.parentNode) return;
@@ -134,16 +136,6 @@ window.NOOR_GUARDIANS = {
         '<a href="sponsor.html" style="margin-left:auto;flex:none;color:rgba(44,36,22,.4);text-decoration:none;font-size:.66rem" title="About Guardianship">what is this?</a>' +
         "</div></div>");
       hdr.parentNode.insertBefore(bar, hdr.nextSibling);
-    } else if (SERVER.mode === "guardian") {
-      /* The quiet invitation: visible, dignified, one line of support. */
-      var inv = el('<div data-noor-sponsor style="position:relative;z-index:35;background:linear-gradient(90deg,rgba(44,36,22,.035),transparent 70%);border-bottom:1px solid rgba(44,36,22,.06)">' +
-        '<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.55rem;font-size:.71rem;color:rgba(44,36,22,.55);font-family:Inter,system-ui,sans-serif">' +
-        '<span aria-hidden="true" style="color:rgba(201,162,39,.75)">✦</span>' +
-        "<span>Support the Codex so it stays free for everyone · be the one Guardian readers in <b style=\"color:rgba(44,36,22,.7);font-weight:600\">" + esc(m.label) + "</b> see this week" +
-        ' · <span style="color:#8a6d13">' + weeklyLabel(m) + "</span></span>" +
-        '<a href="sponsor.html?market=' + encodeURIComponent(m.id) + '" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none">Become the Guardian →</a>' +
-        "</div></div>");
-      hdr.parentNode.insertBefore(inv, hdr.nextSibling);
     } else {
       /* Donations era: one gentle line, everywhere. */
       var don = el('<div data-noor-sponsor style="position:relative;z-index:35;background:linear-gradient(90deg,rgba(44,36,22,.035),transparent 70%);border-bottom:1px solid rgba(44,36,22,.06)">' +

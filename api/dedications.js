@@ -64,6 +64,10 @@ export default async function handler(req, res) {
       if (s.payment_status !== "paid") return;
       if (!(s.metadata && s.metadata.noor_donation === "1")) return;
       const f = (s.custom_fields || []).find(x => x.key === "dua") || (s.custom_fields || []).find(x => x.key === "dedication");
+      if ((!f || !(f.text && f.text.value)) && s.metadata && s.metadata.noor_dua) {
+        candidates.push(String(s.metadata.noor_dua).slice(0, 90));
+        return;
+      }
       let v = f && f.text && f.text.value ? String(f.text.value) : "";
       v = v.replace(/—|–/g, "·").replace(/\s+/g, " ").trim().slice(0, 80);
       if (v.length < 3 || HARD_REJECT.test(v)) return;

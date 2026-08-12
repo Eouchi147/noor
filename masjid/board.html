@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex"/>
+<title>Prayer Board · NOOR</title>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="salat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:radial-gradient(120% 90% at 50% 0%,#141b3a 0%,#0a1128 55%,#04060F 100%);color:#FFFEF7;font-family:Inter,system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;cursor:none}
+body.mouse{cursor:auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:2.2vh 3vw 0}
+.mname{font-size:3.4vh;font-weight:800;color:#F4D46A}
+.mname span{display:block;font-size:1.5vh;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,254,247,.45)}
+.dates{text-align:right;font-size:2vh;color:rgba(255,254,247,.75);line-height:1.5}
+.dates .hijri{color:#F4D46A;font-family:Amiri,serif;font-size:2.4vh}
+.clockrow{text-align:center;margin-top:1vh}
+#clock{font-size:13vh;font-weight:900;letter-spacing:.02em;line-height:1;font-variant-numeric:tabular-nums}
+#clock small{font-size:4vh;font-weight:700;color:rgba(255,254,247,.6)}
+#next{margin-top:.8vh;font-size:2.4vh;color:rgba(255,254,247,.7)}
+#next b{color:#F4D46A}
+#next .cd{font-variant-numeric:tabular-nums;font-weight:800;color:#FFF7DF}
+.grid{flex:1;display:grid;grid-template-columns:repeat(6,1fr);gap:1.2vw;padding:2.4vh 3vw;align-content:center}
+.pt{background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.28);border-radius:2vh;text-align:center;padding:2.6vh 1vw;transition:all .4s}
+.pt .nm{font-size:2.4vh;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,254,247,.75)}
+.pt .ar{font-family:Amiri,serif;font-size:2.6vh;color:rgba(244,212,106,.75);display:block;margin-top:.2vh}
+.pt .adh{font-size:4.6vh;font-weight:900;margin-top:1.2vh;font-variant-numeric:tabular-nums}
+.pt .iq{font-size:2vh;color:rgba(255,254,247,.55);margin-top:.8vh;font-variant-numeric:tabular-nums}
+.pt .iq b{color:#E9C86A;font-weight:800}
+.pt.now{background:linear-gradient(160deg,rgba(201,162,39,.28),rgba(244,212,106,.1));border-color:#F4D46A;box-shadow:0 0 5vh rgba(244,212,106,.25);transform:scale(1.04)}
+.pt.past{opacity:.45}
+footer{display:flex;justify-content:space-between;align-items:center;padding:0 3vw 2vh;font-size:1.9vh;color:rgba(255,254,247,.6)}
+#ann{flex:1;overflow:hidden;white-space:nowrap;margin:0 2vw}
+#ann span{display:inline-block;padding-left:100%;animation:tick 28s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+.jum{color:#F4D46A;font-weight:800}
+.brand{color:rgba(255,254,247,.35);font-size:1.6vh}
+.est{position:fixed;top:1vh;left:50%;transform:translateX(-50%);font-size:1.5vh;color:rgba(244,212,106,.65)}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);overflow:auto}#clock{font-size:9vh}}
+@media (prefers-reduced-motion: reduce){#ann span{animation:none;padding-left:0}}
+</style>
+</head>
+<body>
+<header>
+<div class="mname" id="mname">Prayer Board<span>NOOR · Codex of Light</span></div>
+<div class="dates"><div id="greg"></div><div class="hijri" id="hijri"></div></div>
+</header>
+<div class="clockrow"><div id="clock">··:··</div><div id="next"></div></div>
+<div class="grid" id="grid"></div>
+<div class="est" id="est" hidden>High-latitude estimate for Fajr and Isha (seventh of the night) · verify locally</div>
+<footer>
+<span class="jum" id="jum"></span>
+<div id="ann"><span id="annt"></span></div>
+<span class="brand">✦ noorcodex.com/masjid · free forever</span>
+</footer>
+<script>
+(function(){
+"use strict";
+function cfg(){
+  try{ return JSON.parse(decodeURIComponent(escape(atob((location.hash||"#").slice(1).replace(/-/g,"+").replace(/_/g,"/"))))); }
+  catch(e){ return null; }
+}
+var C=cfg()||{n:"Set up your board at noorcodex.com/masjid",lat:45.4215,lng:-75.6972,m:"ISNA",a:"standard",iq:{fajr:20,dhuhr:10,asr:10,maghrib:5,isha:10},jumuah:"",ann:[],h24:false,lang:"en"};
+var L={
+ en:{fajr:"Fajr",sunrise:"Sunrise",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqamah",next:"Next",jumuah:"Jumu'ah",in_:"in"},
+ fr:{fajr:"Fajr",sunrise:"Lever",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqama",next:"Prochaine",jumuah:"Joumou'a",in_:"dans"},
+ ar:{fajr:"الفجر",sunrise:"الشروق",dhuhr:"الظهر",asr:"العصر",maghrib:"المغرب",isha:"العشاء",iqamah:"الإقامة",next:"التالية",jumuah:"الجمعة",in_:"بعد"},
+ ur:{fajr:"فجر",sunrise:"طلوع",dhuhr:"ظہر",asr:"عصر",maghrib:"مغرب",isha:"عشاء",iqamah:"اقامت",next:"اگلی",jumuah:"جمعہ",in_:"بعد"}
+}[C.lang||"en"]||{};
+var AR={fajr:"الْفَجْر",sunrise:"الشُّرُوق",dhuhr:"الظُّهْر",asr:"الْعَصْر",maghrib:"الْمَغْرِب",isha:"الْعِشَاء"};
+document.getElementById("mname").innerHTML=(C.n||"Prayer Board").replace(/[<>]/g,"")+'<span>NOOR · Codex of Light</span>';
+if(C.jumuah)document.getElementById("jum").textContent=(L.jumuah||"Jumu'ah")+" · "+C.jumuah;
+if(C.ann&&C.ann.length)document.getElementById("annt").textContent=C.ann.join("  ·  ");
+var ORDER=["fajr","sunrise","dhuhr","asr","maghrib","isha"];
+var TZ=C.tz||Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC";
+function zoned(d){ /* the masjid's own clock, whatever the TV thinks */
+  try{
+    var p={};new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).formatToParts(d).forEach(function(x){p[x.type]=x.value});
+    return {y:+p.year,mo:+p.month,d:+p.day,h:+p.hour%24,mi:+p.minute,s:+p.second,key:p.year+"-"+p.month+"-"+p.day};
+  }catch(e){return {y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate(),h:d.getHours(),mi:d.getMinutes(),s:d.getSeconds(),key:d.toDateString()};}
+}
+function zOffset(d){
+  try{
+    var z=new Date(d.toLocaleString("en-US",{timeZone:TZ}));
+    var u=new Date(d.toLocaleString("en-US",{timeZone:"UTC"}));
+    return Math.round((z-u)/60000)/60;
+  }catch(e){return -d.getTimezoneOffset()/60;}
+}
+var times=null,dayKey="";
+function compute(){
+  var now=new Date(), z=zoned(now);
+  var noonUTC=new Date(Date.UTC(z.y,z.mo-1,z.d,12,0,0));
+  times=window.NOOR_SALAT(noonUTC,C.lat,C.lng,{method:C.m,asr:C.a,tzOff:zOffset(now)});
+  dayKey=z.key;
+  document.getElementById("est").hidden=!times.estimated;
+  document.getElementById("greg").textContent=now.toLocaleDateString(undefined,{timeZone:TZ,weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  try{document.getElementById("hijri").textContent=new Intl.DateTimeFormat((C.lang||"en")+"-u-ca-islamic-umalqura",{timeZone:TZ,day:"numeric",month:"long",year:"numeric"}).format(now);}catch(e){}
+  var g=document.getElementById("grid");g.innerHTML="";
+  ORDER.forEach(function(k){
+    var d=document.createElement("div");d.className="pt";d.id="pt-"+k;
+    var iq=(C.iq&&C.iq[k]!=null&&k!=="sunrise")?'<div class="iq">'+(L.iqamah||"Iqamah")+' · <b>'+window.NOOR_FMT_TIME(times[k]+C.iq[k]/60,C.h24)+"</b></div>":"";
+    d.innerHTML='<div class="nm">'+(L[k]||k)+'</div><span class="ar">'+AR[k]+'</span><div class="adh">'+window.NOOR_FMT_TIME(times[k],C.h24)+"</div>"+iq;
+    g.appendChild(d);
+  });
+}
+function tick(){
+  var now=new Date(), z=zoned(now);
+  if(z.key!==dayKey)compute();
+  var h=z.h+z.mi/60+z.s/3600;
+  var hh=z.h,mm=z.mi,ss=z.s;
+  var t12=C.h24?((hh<10?"0":"")+hh):(((hh%12)||12));
+  document.getElementById("clock").innerHTML=t12+":"+(mm<10?"0":"")+mm+"<small>:"+(ss<10?"0":"")+ss+(C.h24?"":(hh>=12?" PM":" AM"))+"</small>";
+  var nextK=null,nextT=null;
+  ORDER.forEach(function(k){
+    if(k==="sunrise")return;
+    var el=document.getElementById("pt-"+k);
+    if(times[k]==null)return;
+    el.classList.remove("now","past");
+    if(times[k]<h)el.classList.add("past");
+    if(nextK===null&&times[k]>h){nextK=k;nextT=times[k];}
+  });
+  if(nextK===null){nextK="fajr";nextT=times.fajr+24;}
+  var cur=document.getElementById("pt-"+nextK);cur.classList.remove("past");cur.classList.add("now");
+  var left=(nextT-h)*3600;var HH=Math.floor(left/3600),MM=Math.floor((left%3600)/60),SS=Math.floor(left%60);
+  document.getElementById("next").innerHTML=(L.next||"Next")+": <b>"+(L[nextK]||nextK)+"</b> "+(L.in_||"in")+' <span class="cd">'+(HH>0?HH+":":"")+(MM<10?"0":"")+MM+":"+(SS<10?"0":"")+SS+"</span>";
+}
+compute();tick();setInterval(tick,1000);
+/* cursor discipline for TVs */
+var mt;addEventListener("mousemove",function(){document.body.classList.add("mouse");clearTimeout(mt);mt=setTimeout(function(){document.body.classList.remove("mouse")},2500)});
+addEventListener("dblclick",function(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){})});
+addEventListener("keydown",function(e){if(e.key==="f"||e.key==="F"){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){})}});
+})();
+</script>
+</body>
+</html>

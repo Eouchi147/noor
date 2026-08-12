@@ -27,3 +27,9 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 
 ## Sister project
 - [NOOR Halal](https://noorhalal.ca): halal companion app from the same maker; the Codex and NOOR Halal share one house and one standard of care.
+
+- /unseen: The Unseen and the Mysteries: angels, jinn, previous peoples, signs of the Hour, corrected myths, explained mysteries, the full Night Journey, and The First War (the jinn before Adam), every claim evidence-badged (Qur'an-confirmed, Sunnah-confirmed, debated, corrected).
+- /sermon: The Last Sermon (Farewell Khutbah) rendered from authentic narrations with source labels.
+- /soul: Death and the Journey of the Soul from Qur'an and authentic hadith, honestly graded.
+- /masjid/: free masjid tools: a TV prayer board with astronomical prayer times, iqama countdowns, hijri date, qibla.
+- /kids/lanterns: The Lantern Sky, where gifts' du'as float as lanterns children answer with Ameen.

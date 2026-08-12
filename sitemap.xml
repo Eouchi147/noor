@@ -182,7 +182,6 @@
   <url><loc>https://noorcodex.com/health</loc></url>
   <url><loc>https://noorcodex.com/kids</loc></url>
   <url><loc>https://noorcodex.com/places</loc></url>
-  <url><loc>https://noorcodex.com/sponsor</loc></url>
   <url><loc>https://noorcodex.com/donate</loc></url>
   <url><loc>https://noorcodex.com/legal</loc></url>
   <url><loc>https://noorcodex.com/words</loc></url>
@@ -198,4 +197,17 @@
   <url><loc>https://noorcodex.com/kids/lanterns</loc></url>
   <url><loc>https://noorcodex.com/kids/yunus</loc></url>
   <url><loc>https://noorcodex.com/kids/strong</loc></url>
+<url><loc>https://noorcodex.com/fa</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/prs</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/pa</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/ha</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/ps</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/so</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/ku</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/sw</loc><lastmod>2026-08-12</lastmod></url>
+<url><loc>https://noorcodex.com/unseen</loc><lastmod>2026-08-12</lastmod><priority>0.9</priority></url>
+<url><loc>https://noorcodex.com/sermon</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/soul</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/masjid/</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/kids/lanterns</loc><lastmod>2026-08-12</lastmod><priority>0.6</priority></url>
 </urlset>

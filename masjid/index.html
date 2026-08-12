@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Free masjid tools from NOOR Codex of Light: a beautiful TV prayer board with athan and iqama countdowns, prayer-time calculator, qibla and hijri date. Set up in two minutes, free forever, no account."/>
+<meta property="og:title" content="Masjid Tools · a free prayer board for every mosque"/>
+<meta property="og:description" content="A beautiful TV prayer board with real astronomy, iqama offsets, announcements and hijri date. Free forever from NOOR Codex of Light."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<title>Masjid Tools · Free Prayer Board · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/masjid/"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="salat.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NOOR Masjid Prayer Board","url":"https://noorcodex.com/masjid/","applicationCategory":"ReligiousApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"NOOR · Codex of Light"}}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FFFEF7;color:#2C2416;font-family:Inter,system-ui,sans-serif}
+.hero{background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3rem 1rem}
+.hero .ar{font-family:Amiri,serif;font-size:2rem;color:#F4D46A;filter:drop-shadow(0 0 14px rgba(244,212,106,.5))}
+.hero h1{font-size:1.7rem;font-weight:800;margin-top:.3rem}
+.hero p{font-size:.84rem;color:rgba(255,254,247,.72);max-width:30rem;margin:.6rem auto 0;line-height:1.7}
+.hero .free{display:inline-block;margin-top:.9rem;background:rgba(244,212,106,.15);border:1px solid rgba(244,212,106,.5);color:#F4D46A;border-radius:999px;padding:.34rem .95rem;font-size:.68rem;font-weight:800;letter-spacing:.1em}
+.wrap{max-width:40rem;margin:0 auto;padding:1.6rem 1rem 4rem}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:1rem}
+.card h2{font-size:1rem;font-weight:800}
+label{display:block;font-size:.72rem;font-weight:700;color:#4a3a10;margin-top:.8rem}
+input,select,textarea{width:100%;margin-top:.3rem;background:#FFFDF4;border:1.5px solid rgba(201,162,39,.4);border-radius:10px;padding:.55rem .7rem;font-size:16px;font-family:inherit;color:#2C2416;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#C9A227}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.row3{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
+@media(max-width:560px){.row3{grid-template-columns:repeat(3,1fr)}}
+.hint{font-size:.66rem;color:rgba(44,36,22,.5);margin-top:.3rem;line-height:1.55}
+.gold{display:inline-block;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border:0;border-radius:999px;padding:.65rem 1.4rem;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit;text-decoration:none;margin-top:1rem}
+.ghost{display:inline-block;background:none;border:1px solid rgba(201,162,39,.55);color:#6b5510;border-radius:999px;padding:.6rem 1.2rem;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:1rem;margin-left:.5rem}
+#linkbox{margin-top:.9rem;background:#14100A;color:#F4D46A;border-radius:12px;padding:.7rem .8rem;font-size:.7rem;word-break:break-all;font-family:ui-monospace,Menlo,monospace}
+.preview{margin-top:.7rem;border:1px solid rgba(44,36,22,.15);border-radius:14px;overflow:hidden}
+.preview iframe{display:block;width:100%;height:340px;border:0}
+.steps{font-size:.78rem;line-height:1.75;color:rgba(44,36,22,.78)}
+.steps li{margin-top:.4rem;margin-left:1.1rem}
+.qib{font-size:.8rem;margin-top:.6rem;color:rgba(44,36,22,.75)}
+.qib b{color:#6b5510}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="ar notranslate" translate="no">بَيْتُ اللّٰه</div>
+<h1>A prayer board for every masjid</h1>
+<p>Real astronomy on a beautiful screen: adhan times, iqama countdowns, hijri date, announcements and Jumu'ah, on any TV with a browser. Built by NOOR Codex of Light as sadaqah for the houses of Allah.</p>
+<span class="free">FREE FOREVER · NO ACCOUNT · NO ADS</span>
+</div>
+<div class="wrap">
+
+<div class="card">
+<h2>1 · Your masjid</h2>
+<label for="w-name">Masjid name (as the screen will show it)</label>
+<input id="w-name" placeholder="Masjid an-Noor"/>
+<div class="row">
+<div><label for="w-lat">Latitude</label><input id="w-lat" type="number" step="0.0001" placeholder="45.4215"/></div>
+<div><label for="w-lng">Longitude</label><input id="w-lng" type="number" step="0.0001" placeholder="-75.6972"/></div>
+</div>
+<button class="ghost" id="w-geo" style="margin-left:0">Use this device's location</button>
+<p class="hint">Tip: on Google Maps, right-click your masjid and the first line is latitude, longitude.</p>
+<p class="qib" id="w-qibla" hidden></p>
+</div>
+
+<div class="card">
+<h2>2 · Calculation</h2>
+<div class="row">
+<div><label for="w-m">Method</label><select id="w-m">
+<option value="ISNA">ISNA · North America (15 / 15)</option>
+<option value="MWL">Muslim World League (18 / 17)</option>
+<option value="Egypt">Egyptian Authority (19.5 / 17.5)</option>
+<option value="Karachi">Karachi (18 / 18)</option>
+<option value="UmmAlQura">Umm al-Qura · Makkah (18.5 / 90min)</option>
+</select></div>
+<div><label for="w-a">Asr school</label><select id="w-a">
+<option value="standard">Standard (Shafi, Maliki, Hanbali)</option>
+<option value="hanafi">Hanafi</option>
+</select></div>
+</div>
+<div class="row">
+<div><label for="w-lang">Board language</label><select id="w-lang"><option value="en">English</option><option value="ar">العربية</option><option value="fr">Français</option><option value="ur">اردو</option></select></div>
+<div><label for="w-h24">Clock</label><select id="w-h24"><option value="">12 hour</option><option value="1">24 hour</option></select></div>
+</div>
+</div>
+
+<div class="card">
+<h2>3 · Iqama minutes after adhan</h2>
+<div class="row3">
+<div><label>Fajr</label><input id="iq-fajr" type="number" value="20"/></div>
+<div><label>Dhuhr</label><input id="iq-dhuhr" type="number" value="10"/></div>
+<div><label>Asr</label><input id="iq-asr" type="number" value="10"/></div>
+<div><label>Maghrib</label><input id="iq-maghrib" type="number" value="5"/></div>
+<div><label>Isha</label><input id="iq-isha" type="number" value="10"/></div>
+</div>
+<div class="row">
+<div><label for="w-jum">Jumu'ah time (shown as text)</label><input id="w-jum" placeholder="1:30 PM"/></div>
+<div><label for="w-ann">Announcements (one per line)</label><textarea id="w-ann" rows="2" placeholder="Qur'an circle Saturdays after Maghrib"></textarea></div>
+</div>
+<p class="hint">The board computes adhan times from the sun each day; verify once against your local calendar and tune the iqama offsets. High latitudes fall back to the seventh-of-the-night convention and say so on screen.</p>
+</div>
+
+<div class="card">
+<h2>Your board</h2>
+<a class="gold" id="w-open" target="_blank" rel="noopener">Open the board →</a>
+<button class="ghost" id="w-copy">Copy the link</button>
+<div id="linkbox">…</div>
+<div class="preview"><iframe id="w-frame" title="Live preview of your prayer board"></iframe></div>
+<h2 style="margin-top:1.2rem">Put it on the TV</h2>
+<ol class="steps">
+<li>Open the copied link in the TV's browser (or a small PC or stick plugged into the TV).</li>
+<li>Press F, or double-tap, for fullscreen. The cursor hides itself.</li>
+<li>Bookmark it: the link carries all your settings. Change anything here and copy the new link.</li>
+</ol>
+<p class="hint">The board is a gift of the Codex: free for every masjid, forever, no account, nothing to renew. To place whole rooms of NOOR inside your website, see <a href="../license.html" style="color:#8a6d13">licensing</a>; masjids that teach for free embed free.</p>
+</div>
+
+</div>
+<script>
+(function(){
+"use strict";
+function $(i){return document.getElementById(i)}
+function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function build(){
+  var lat=parseFloat($("w-lat").value),lng=parseFloat($("w-lng").value);
+  var c={n:$("w-name").value.slice(0,60)||"Prayer Board",lat:isNaN(lat)?45.4215:lat,lng:isNaN(lng)?-75.6972:lng,
+    m:$("w-m").value,a:$("w-a").value,lang:$("w-lang").value,h24:!!$("w-h24").value,tz:(Intl.DateTimeFormat().resolvedOptions().timeZone||""),
+    iq:{fajr:+$("iq-fajr").value||0,dhuhr:+$("iq-dhuhr").value||0,asr:+$("iq-asr").value||0,maghrib:+$("iq-maghrib").value||0,isha:+$("iq-isha").value||0},
+    jumuah:$("w-jum").value.slice(0,20),ann:$("w-ann").value.split("\n").map(function(x){return x.trim()}).filter(Boolean).slice(0,6)};
+  var url=location.origin+location.pathname.replace(/index\.html$/,"").replace(/\/$/,"")+"/board.html#"+b64u(JSON.stringify(c));
+  $("linkbox").textContent=url;$("w-open").href=url;$("w-frame").src=url;
+  if(!isNaN(lat)&&!isNaN(lng)){$("w-qibla").hidden=false;$("w-qibla").innerHTML="Qibla from here: <b>"+window.NOOR_QIBLA(lat,lng).toFixed(1)+"° from true north</b> (great-circle bearing to the Kaaba).";}
+}
+["w-name","w-lat","w-lng","w-m","w-a","w-lang","w-h24","iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha","w-jum","w-ann"].forEach(function(i){
+  $(i).addEventListener("input",build);$(i).addEventListener("change",build);
+});
+$("w-geo").addEventListener("click",function(){
+  if(!navigator.geolocation)return;
+  $("w-geo").textContent="Finding...";
+  navigator.geolocation.getCurrentPosition(function(p){
+    $("w-lat").value=p.coords.latitude.toFixed(4);$("w-lng").value=p.coords.longitude.toFixed(4);
+    $("w-geo").textContent="Location set ✦";build();
+  },function(){$("w-geo").textContent="Not permitted · enter manually"});
+});
+$("w-copy").addEventListener("click",function(){
+  var t=$("linkbox").textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$("w-copy").textContent="Copied ✦";setTimeout(function(){$("w-copy").textContent="Copy the link"},1500)}).catch(function(){});
+});
+build();
+})();
+</script>
+</body>
+</html>

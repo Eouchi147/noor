@@ -240,7 +240,7 @@ SPOTS.forEach(function(pos,i){
   behind.className="behind";behind.textContent=PEEK[i][0];
   behind.style.left=(pos[0]+3)+"%";behind.style.top=(pos[1]+6)+"%";
   var cloud=document.createElement("span");
-  cloud.className="cloud";cloud.textContent="<span data-ic=moon></span>";
+  cloud.className="cloud";cloud.innerHTML="<span data-ic=moon></span>";if(window.NOOR_IC_RENDER)NOOR_IC_RENDER(cloud);
   cloud.style.left=pos[0]+"%";cloud.style.top=pos[1]+"%";
   cloud.setAttribute("role","button");
   cloud.addEventListener("click",function(){
@@ -248,7 +248,7 @@ SPOTS.forEach(function(pos,i){
     behind.classList.add("shown");
     for(var k=0;k<4;k++){
       var s=document.createElement("span");
-      s.className="rain";s.textContent=["✦","<span data-ic=star></span>"][k%2];
+      s.className="rain";s.innerHTML=["✦","<span data-ic=star></span>"][k%2];if(window.NOOR_IC_RENDER)NOOR_IC_RENDER(s);
       s.style.left=(Math.random()*90+2)+"vw";
       s.style.animationDelay=(Math.random()*.5)+"s";
       document.body.appendChild(s);

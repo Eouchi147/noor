@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="Bring NOOR Codex of Light into your masjid website, Islamic school portal or app: embed the Qur'an room, the 25 Prophets, Learn Arabic, the Kids' Codex and more, always up to date, by subscription."/>
+<meta name="description" content="Bring NOOR Codex of Light into your masjid website, Islamic school portal or app. Institutions that teach for free embed free; institutions that charge tuition, and commercial products, license from $19/month."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
 <meta property="og:title" content="NOOR for your website or app · Embed licensing"/>
@@ -112,6 +112,22 @@ footer a{color:#8a6d13;text-decoration:none;font-weight:600}
 </section>
 
 <div class="wrap">
+
+<!-- ============ the trust gate · who pays and who does not ============ -->
+<div id="gate-card" style="background:linear-gradient(150deg,#14100A,#1d2a45);border:1.5px solid rgba(244,212,106,.45);border-radius:20px;padding:1.3rem 1.2rem;margin:1.6rem 0 0;color:#FFFEF7">
+<p style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0 0 .5rem">Before anything else · an honest question</p>
+<h2 style="font-size:1.15rem;font-weight:800;margin:0 0 .35rem">Does your institution charge students or members for its teaching?</h2>
+<p style="font-size:.78rem;line-height:1.65;color:rgba(255,254,247,.72);margin:0 0 .9rem">This is a trust-based declaration; nobody will audit you. NOOR keeps the core experience free for institutions that teach for free. Commercial products and platforms always license.</p>
+<div style="display:flex;gap:.6rem;flex-wrap:wrap">
+<button id="gate-no" style="background:rgba(255,254,247,.1);border:1px solid rgba(244,212,106,.5);color:#FFF7DF;border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">No · we teach for free</button>
+<a href="#plans" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:800;text-decoration:none">Yes · show the license</a>
+</div>
+<div id="gate-free" hidden style="margin-top:1rem;background:rgba(255,254,247,.07);border:1px dashed rgba(244,212,106,.5);border-radius:14px;padding:.9rem 1rem">
+<b style="font-size:.9rem">Then the Codex is yours, free.</b>
+<p style="font-size:.76rem;line-height:1.7;color:rgba(255,254,247,.78);margin:.4rem 0 0">Write one line to <b>hello@noorcodex.com</b> with your institution's name and website, and the embed code arrives with a standing free license for as long as your teaching stays free. No forms, no renewals, no catch: teaching given freely is the reason this house exists.</p>
+</div>
+</div>
+<script>document.getElementById("gate-no").addEventListener("click",function(){var f=document.getElementById("gate-free");f.hidden=false;this.style.opacity=".55";f.scrollIntoView({behavior:"smooth",block:"nearest"})});</script>
 
 <div id="welcome" hidden>
 <h2><span data-ic=lamp></span> Welcome to the family of light</h2>

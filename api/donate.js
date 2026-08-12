@@ -54,6 +54,9 @@ export default async function handler(req, res) {
     });
     if (monthly) params.set("line_items[0][price_data][recurring][interval]", "month");
     params.set("metadata[noor_donation]", "1");
+    /* du'a written on the gift page itself (the lantern preview flow) */
+    const duaText = String((body && body.dua) || "").replace(/[<>]/g, "").trim().slice(0, 80);
+    if (duaText) params.set("metadata[noor_dua]", duaText);
     if (monthly) params.set("subscription_data[metadata][noor_donation]", "1");
     else params.set("payment_intent_data[metadata][noor_donation]", "1");
     if (body.email) params.set("customer_email", String(body.email).slice(0, 120));
