@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Nine stories, each carrying one Name of Allah into an ordinary life. The people are invented and said to be; the Names, the verses and the places are real."/>
+<meta property="og:title" content="The Hall of Stories · NOOR Codex of Light"/>
+<meta property="og:description" content="Nine stories, each carrying one Name of Allah into an ordinary life. The people are invented and said to be; the Names, the verses and the places are real."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>The Hall of Stories · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/stories"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<script src="../noor-fx.js" defer></script>
+<script src="../noor-ink.js" defer></script>
+<script src="../assets/gsap.min.js" defer></script>
+<script src="../assets/ScrollTrigger.min.js" defer></script>
+<script src="../assets/DrawSVGPlugin.min.js" defer></script>
+<script src="../assets/noor-motion.js" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.honest{border:1px solid rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(244,212,106,.10),rgba(244,212,106,.028));border-radius:20px;padding:1.2rem 1.3rem 1.25rem;margin:1.9rem 0 .2rem;box-shadow:0 2px 14px rgba(201,162,39,.07)}
+.honest .hh{display:flex;align-items:center;gap:.55rem;margin:0 0 .7rem}
+.honest .hh i{font-family:Amiri,serif;font-style:normal;color:var(--gold);font-size:.85rem;line-height:1}
+.honest .hh b{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#8a6d13;font-weight:800}
+.honest p{font-size:.885rem;line-height:1.92;color:rgba(44,36,22,.82);margin:0 0 .65rem}
+.honest p:last-child{margin-bottom:0}
+.honest strong{font-weight:800;color:#2C2416}
+.hallnote{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(44,36,22,.4);font-weight:800;text-align:center;margin:2.6rem 0 0}
+.hall{display:grid;grid-template-columns:repeat(auto-fill,minmax(17.5rem,1fr));gap:.9rem;margin:1.15rem 0 .3rem}
+.door{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.05rem 1.1rem 1rem;text-decoration:none;color:inherit;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(44,36,22,.04);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.door::before{content:"";position:absolute;left:1.1rem;right:1.1rem;top:0;height:2px;border-radius:0 0 2px 2px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.85),transparent);opacity:.45;transition:opacity .18s ease}
+.door:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.45);box-shadow:0 14px 30px rgba(44,36,22,.09)}
+.door:hover::before{opacity:1}
+.door .nm{font-family:Amiri,serif;font-size:1.72rem;line-height:1.5;color:var(--gold)}
+.door .tr{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:.05rem 0 0}
+.door .tr em{font-style:normal;color:rgba(44,36,22,.5);letter-spacing:.12em}
+.door h3{font-size:1.04rem;font-weight:800;line-height:1.35;margin:.55rem 0 .3rem;color:#2C2416}
+.door .set{font-size:.775rem;line-height:1.7;color:rgba(44,36,22,.63);margin:0}
+.door .note{font-size:.74rem;line-height:1.75;font-style:italic;color:rgba(44,36,22,.5);margin:.55rem 0 0}
+.door .foot{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.85rem}
+.door .wc{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.38)}
+.door .go{font-size:.68rem;font-weight:800;color:#8a6d13;opacity:.75;transition:opacity .18s ease}
+.door:hover .go{opacity:1}
+.door .pill{align-self:flex-start;margin-bottom:.45rem}
+.close{border-top:1px solid rgba(44,36,22,.1);margin-top:2.6rem;padding-top:1.7rem;text-align:center}
+.close p{font-size:.85rem;line-height:1.9;color:rgba(44,36,22,.68);margin:0 auto;max-width:34rem}
+.close .bl{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.15rem}
+</style>
+
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">The Hall of Stories</p>
+<div class="ar notranslate" translate="no">حِكَايَات</div>
+<h1>Invented lives, true Names</h1>
+<p class="lead">Nine stories, each one carrying a single Name of Allah into an ordinary life: a pearl diver, a baker in a famine, a scribe who could not undo what he had written. The people never lived, and we say so on every page; the Name they meet is real, and so is every verse they are given.</p>
+</section>
+<div class="wrap"><section class="honest"><p class="hh"><i>✦</i><b>Please read this before the stories</b></p><p>This hall is the <strong>one place in the Codex where the people are invented</strong>. Everywhere else on this site you are reading history and evidence: named narrators, dated events, verses and hadith carried with their chains and their references, and our own reasoning marked plainly wherever we add it.</p><p>These stories make no claim to have happened. There was no such diver, no such baker, no such scribe. What they carry is true: the Names of Allah, set down into lives that could have been lived, in places and centuries that really existed.</p><p>The verses inside them are real and cited. Not one word of the Qur’an here has been imagined, softened or rearranged; every ayah is given in Arabic with its meaning and its reference, and you can hear it recited on the page.</p></section></div><div class="wrapw"><p class="hallnote">Nine doors ✦ nine Names</p><div class="hall"><a class="door mo" href="../latif.html"><span class="pill">The first story</span><div class="nm notranslate" translate="no">اللَّطِيف</div><div class="tr">Al-Latif <em>· The Subtle, the Gentle</em></div><h3>The Story of Beauty</h3><p class="set">A courtyard with a pomegranate tree in ancient Khorasan</p><p class="note">The first story written for this hall, and the gentlest: for anyone who keeps a private ledger of their own failures and believes it.</p><div class="foot"><span class="wc">1,973 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="sabur.html"><div class="nm notranslate" translate="no">الصَّبُور</div><div class="tr">As-Sabur <em>· The Utterly Patient</em></div><h3>What the Sea Keeps</h3><p class="set">A pearl divers’ village on the Malabar coast of India, early 1700s</p><p class="note">This one does not end in rescue; it ends in the quieter thing that patience actually buys.</p><div class="foot"><span class="wc">3,199 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="ghaffar.html"><div class="nm notranslate" translate="no">الغَفَّار</div><div class="tr">Al-Ghaffar <em>· The Ever-Forgiving</em></div><h3>The Ink That Would Not Dry</h3><p class="set">The paper market of Cordoba, al-Andalus, the 900s</p><p class="note">For whoever is carrying a wrong that no one ever caught: this one ends forgiven, not erased.</p><div class="foot"><span class="wc">3,225 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="adl.html"><div class="nm notranslate" translate="no">العَدْل</div><div class="tr">Al-Adl <em>· The Perfectly Just</em></div><h3>The Second Record</h3><p class="set">Abbasid Baghdad, the 800s</p><p class="note">The wrong in this story is never put right in this world; read it when yours has not been either.</p><div class="foot"><span class="wc">3,207 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="wadud.html"><div class="nm notranslate" translate="no">الوَدُود</div><div class="tr">Al-Wadud <em>· The Most Loving</em></div><h3>Thread by Thread</h3><p class="set">Istanbul, the 1890s</p><p class="note">Nothing breaks and no one is the villain here; it is only a marriage gone quiet, and the slow unannounced work of warming it.</p><div class="foot"><span class="wc">3,598 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="razzaq.html"><div class="nm notranslate" translate="no">الرَّزَّاق</div><div class="tr">Ar-Razzaq <em>· The Provider</em></div><h3>The Baker of Small Loaves</h3><p class="set">Cairo, early 1200s, a famine year when the Nile failed to rise</p><p class="note">For anyone who has looked into the bottom of the jar and wondered how it could possibly stretch to the end of the month.</p><div class="foot"><span class="wc">3,457 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="shakur.html"><div class="nm notranslate" translate="no">الشَّكُور</div><div class="tr">Ash-Shakur <em>· The Most Appreciative</em></div><h3>The Calligrapher’s Last Qur’an</h3><p class="set">Samarkand, early 1400s, in the city of blue domes and paper mills</p><p class="note">For anyone whose life’s work came out smaller than the dream, and who has quietly filed that smallness under failure.</p><div class="foot"><span class="wc">3,370 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="hadi.html"><div class="nm notranslate" translate="no">الهَادِي</div><div class="tr">Al-Hadi <em>· The Guide</em></div><h3>The Du’a That Outlived Her</h3><p class="set">Timbuktu and the Sahara, 1500s, on the salt roads of the desert</p><p class="note">For the one who walked away, and for the one who never stopped asking Allah about them by name.</p><div class="foot"><span class="wc">3,589 words</span><span class="go">Read ✦</span></div></a><a class="door mo" href="jabbar.html"><div class="nm notranslate" translate="no">الجَبَّار</div><div class="tr">Al-Jabbar <em>· The Restorer of the Broken</em></div><h3>The Setting of Broken Things</h3><p class="set">Sarajevo, the 1990s siege and the long years after</p><p class="note">For anyone whose hands went on working long after something inside them went quiet.</p><div class="foot"><span class="wc">3,597 words</span><span class="go">Read ✦</span></div></a></div></div><div class="wrap"><section class="close mo"><p>More stories are coming, one Name at a time. If there is a Name you have been carrying, or a life you wish someone had written down so you could see yourself inside it, tell us and we will take it seriously. The hall is built slowly and on purpose.</p><div class="bl"><a class="ghost" href="../feedback.html">Ask for the next story</a><a class="gpill" href="../donate.html">Keep the lamp lit ✦</a></div></section></div>
+</main>
+
+<footer class="rfoot">
+<p>The Hall of Stories is free forever, like every room in the Codex.<br/>
+<a href="../index.html">Return to the Codex</a> · <a href="../feedback.html">Send a correction</a> · <a href="../donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+
+</body>
+</html>

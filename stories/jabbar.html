@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="The Setting of Broken Things: a story of Al-Jabbar, The Restorer of the Broken. Sarajevo, the 1990s siege and the long years after. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:title" content="The Setting of Broken Things · Al-Jabbar · NOOR Codex of Light"/>
+<meta property="og:description" content="The Setting of Broken Things: a story of Al-Jabbar, The Restorer of the Broken. Sarajevo, the 1990s siege and the long years after. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>The Setting of Broken Things · Al-Jabbar · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/stories/jabbar"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<script src="../noor-fx.js" defer></script>
+<script src="../noor-ink.js" defer></script>
+<script src="../assets/gsap.min.js" defer></script>
+<script src="../assets/ScrollTrigger.min.js" defer></script>
+<script src="../assets/DrawSVGPlugin.min.js" defer></script>
+<script src="../assets/noor-motion.js" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.rprog{position:fixed;left:0;right:0;top:0;height:2px;z-index:90;pointer-events:none}
+.rprog span{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#C9A227,#F4D46A);box-shadow:0 0 10px rgba(244,212,106,.6)}
+@media (prefers-reduced-motion:no-preference){.rprog span{transition:transform .1s linear}}
+.sread{padding-bottom:1rem}
+.before{max-width:34rem;margin:2rem auto 0;background:#fff;border:1px solid rgba(44,36,22,.13);border-radius:16px;padding:.95rem 1.15rem 1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.before b{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin-bottom:.42rem}
+.before p{font-size:.85rem;line-height:1.88;font-style:italic;color:rgba(44,36,22,.72);margin:0}
+.epi{max-width:29rem;margin:2.8rem auto 2.5rem;text-align:center;font-family:Amiri,serif;font-size:1.36rem;line-height:1.9;color:rgba(44,36,22,.7)}
+.epi::before{content:"✦";display:block;font-family:Inter,system-ui,sans-serif;font-size:.68rem;color:var(--gold);opacity:.85;margin-bottom:1rem}
+.prose{max-width:34rem;margin:0 auto}
+.mv h2{font-size:1.06rem;font-weight:800;line-height:1.42;color:#2C2416;margin:0 0 1.1rem}
+.mv h2::after{content:"";display:block;width:2.3rem;height:1px;margin-top:.62rem;background:linear-gradient(90deg,rgba(201,162,39,.9),rgba(201,162,39,0))}
+.mv p{font-size:1.02rem;line-height:1.95;color:rgba(44,36,22,.87);margin:0 0 1.2rem}
+.mv p:last-child{margin-bottom:0}
+.mv>p:first-of-type::first-letter{font-family:Amiri,serif;font-weight:700;font-size:3.15rem;line-height:.9;color:var(--gold);float:left;padding:.34rem .5rem 0 0}
+.orn{display:flex;align-items:center;justify-content:center;gap:.95rem;margin:2.9rem 0}
+.orn::before,.orn::after{content:"";height:1px;width:3.6rem}
+.orn::before{background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.6))}
+.orn::after{background:linear-gradient(90deg,rgba(201,162,39,.6),rgba(201,162,39,0))}
+.orn i{font-style:normal;color:var(--gold);font-size:.72rem;opacity:.9;line-height:1}
+.ayah{max-width:34rem;margin:3.2rem auto 0}
+.ayah .ar{font-family:Amiri,serif;font-size:1.42rem;line-height:2.15;color:#F4D46A;text-align:right;margin:.2rem 0 0}
+.ayah .en{font-size:.86rem;line-height:1.85;color:rgba(255,254,247,.78);margin:1rem 0 0}
+.ayah .rw{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-top:1rem;padding-top:.85rem;border-top:1px solid rgba(244,212,106,.18)}
+.ayah .rf{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.7)}
+.ayah .vplay{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.13)}
+.ayah .vplay.playing{background:#F4D46A;color:#14100A;border-color:#F4D46A}
+.snav{max-width:34rem;margin:2.6rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(44,36,22,.1);display:grid;grid-template-columns:1fr auto 1fr;gap:.6rem;align-items:stretch}
+.snav a,.snav span.off{display:flex;flex-direction:column;justify-content:center;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:14px;padding:.72rem .85rem;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.75);transition:border-color .18s ease,color .18s ease}
+.snav a:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+.snav .k{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.4);margin-bottom:.25rem}
+.snav .nx{text-align:right}
+.snav .mid{align-items:center;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em}
+.snav span.off{border-style:dashed;color:rgba(44,36,22,.45);background:transparent}
+@media (max-width:36rem){.snav{grid-template-columns:1fr}.snav .nx{text-align:left}.mv>p:first-of-type::first-letter{font-size:2.85rem}}
+</style>
+
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">Al-Jabbar · The Restorer of the Broken</p>
+<div class="ar notranslate" translate="no">الجَبَّار</div>
+<h1>The Setting of Broken Things</h1>
+<p class="lead">Sarajevo, the 1990s siege and the long years after</p>
+</section>
+<div class="rprog" aria-hidden="true"><span id="rprogbar"></span></div><div class="wrap sread"><section class="before mo"><b>Before you begin</b><p>For anyone whose hands went on working long after something inside them went quiet.</p></section><p class="epi mo">A bone set well aches before rain, and holds.</p><article class="prose"><section class="mv"><h2>The Winter of Hands</h2><p>Tarik was twenty-nine the winter the city closed, a junior orthopedic surgeon with good hands and a plan for his life that assumed, as plans do, the continued existence of ordinary things: electricity, examinations, summer. By December the ordinary things had left the city one by one, and what remained was work. The hospital ran its operating theatres on generator hours and daylight, moved beds away from the windowed walls, and learned to do modern medicine by lamplight and improvisation, the way you learn anything, which is because you must, that day, with that patient, now.</p><p>His trade was bones, and the winter was generous to his trade in the worst way. People fell running across open crossings. People were dug from stairwells that had folded on them. Old women broke hips on ice no one salted anymore, salt, like everything, having become precious. He set what could be set: traction rigged from window weights, plaster hoarded like flour and stretched with care, frames of steel rods standing scaffold over shins the winter had ruined. When the X-ray film ran out, as it did for weeks at a time, he read fractures with his fingertips, the old way, closing his eyes to see.</p><p>There is a mercy built into surgical work which surgeons do not advertise: while your hands are inside the hour, the hour is all there is. The mind narrows to the field, the bone, the angle, the next right move. Fear waits politely outside the theatre door, and so does grief, and so, Tarik would learn, does everything else you are not doing about your own life. He operated, those months, more than some surgeons do in a decade. People called it dedication and were not wrong. It was also, quietly, the only room in the city where he could not hear the hills.</p><p>Home was a flat shared with his mother, Emina, and his brother, Kenan, nineteen that winter, who had been about to begin engineering studies when history cancelled the semester. Their father was six years dead of his heart, which the brothers had privately come to speak of, that winter, as a kind of luck. The flat’s windows were skinned with the humanitarian plastic sheeting that had replaced glass all over the city; the stove burned parquet slats and the corpses of books nobody could bring themselves to name aloud. Water came by hand, in canisters, from wherever water was that week.</p><p>Kenan carried the water. It was his job in the household economy and he had elevated it into a calling. He knew which lines were shortest, which crossings the cold light favoured, the exact number of steps home with two full canisters, twenty litres a side, and he announced records the way sportsmen do. He was the kind of nineteen the siege had made in quantity: an adult by necessity with a boy still living inside him like a subtenant. In the evenings the brothers played chess by candle, an old running battle neither dominated for long, and their mother watched them over her prayer beads, thanking her Lord in a whisper for two heads bent over a board.</p><p>Emina prayed through that winter the way other people kept diaries, five times a day and in the night, unhurried, in the cellar when the shelling was bad, in the kitchen when it was not. Tarik had drifted from all that at university, without drama, the way a man’s collar loosens through a long day. He did not mock it. Once, coming home grey at dawn after a night of casualties, he stood in the doorway and watched his mother’s forehead touch the floor of a city under siege, and felt something he had no shelf for: not faith exactly, but envy of the posture. He was too tired to think about it, and then it was spring.</p><p>If you had asked him what held him together that winter, he would have said, in the city’s dry way: routine, coffee substitute, and my brother’s chess problems. Roasted barley in the coffee pot. The generator’s two hours. Kenan’s opening trap, refuted for the hundredth time. A man does not always know what his load-bearing walls are. He finds out the way buildings find out.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Water Line</h2><p>It was a Tuesday in the second spring. There had been a lull for some days, one of those silences the city had learned not to trust and could not help trusting, because hope is a habit older than shelling. Kenan went for water in the morning with both canisters and his good mood, and at the door he promised his mother fresh bread if the bakery had managed anything, and told his brother, over his shoulder, laughing, that tonight he had a new opening prepared, something unanswerable, from a book. The door closed on the laugh. It is the last fact of him the flat ever held.</p><p>The morning went. The early afternoon went. What came instead of Kenan, toward evening, was a neighbour from the lower street, carrying one canister, full, which he set down inside the doorway with a terrible courtesy, and could not manage much beyond the essential words. There had been the lull, and then, at the water line, in one instant, the lull’s end. Several families on the lower street had such words delivered that evening. The second canister was never found. Tarik was at the hospital unloading casualties when the shells came in four streets away, and did not learn for two hours that one of the names moving through the corridors was his own.</p><p>He did not see his brother; a colleague, out of a mercy Tarik spent years deciding whether to be grateful for, arranged that he did not have to. The funeral was the next dusk, quick and quiet as siege funerals had to be, in the corner of a park that had become, like other green places in that city, a field of raw new markers, the old cemeteries being unreachable. Dusk, so the light would offer the hills nothing to work with. A handful of neighbours, a hurried imam, his mother upright in a way that cost more than wailing. Tarik stood with a clod of earth in his hand and felt the whiteness come down over him like theatre lights failing.</p><p>Here is what the whiteness was like. He set a stranger’s forearm at eight the next morning, correctly. His brother had gone into the ground at six the previous evening. Both facts were true, and they would not speak to each other, then or for years. Between them a wall went up in him overnight, mortarless, perfect, and behind it lived everything he could not afford: the opening from the book, never shown; the bread, never bought; the boy subtenant in the man; the twenty litres a side. In front of the wall lived a surgeon, functioning beautifully.</p><p>His mother grieved in the open, terribly and cleanly, the way her faith had taught her: tears without protest, protest without blasphemy, to Allah we belong and to Him we return, said not as a formula but as a road walked daily on the knees. She wept; she prayed; she said her son’s name aloud at will. Tarik could do none of those things and did not try. He worked. When the neighbours praised his strength, his mother looked at her surviving son with an expression he refused to read, because reading it would have meant knowing that she had two broken children now, and could reach only one of them.</p><p>The chessboard stayed as it was, mid-game, on the shelf above the stove, Kenan’s knight deep in enemy territory on a mission now permanently classified. Neither mother nor son ever spoke of it, and neither ever moved a piece, and the pieces stood there through the rest of the war, through the strange loud peace, through repainting and new glass and the return of ordinary things, holding their positions with a discipline the whole city could have learned from. Grief, when it is not allowed to speak, will find a shelf and stand on it.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Quiet Years</h2><p>The war ended the way a fever breaks: officially, on a date, and unofficially much more slowly, block by block, nerve by nerve. Glass came back to windows. Trams came back to the streets. Cranes stood over the city for years, and floor by floor the burnt towers grew new faces, and men in cafes argued about football again at volumes once reserved for survival. The parks that had become cemeteries stayed cemeteries, white markers in the green, and the city learned to live around them, the way tissue learns to live around what cannot be removed.</p><p>Tarik stayed. He had offers, in the years when the city’s doctors were being courted abroad, good clinics in quiet countries where it rains, and he turned them down without ever articulating why, except once, drunk on one coffee too many with an old colleague, when he came near it: the bones I know best are here. He rose the way the diligent rise. Chief resident, then consultant, then, by his fifties, the professor his students called, behind his back, with the mixed feelings of the taught, the Carpenter: exact, tireless, decent, and closed, like a well-made door.</p><p>He was, in every measurable way, a success, and knew, in the unmeasurable ways, precisely what he was. He slept with a radio murmuring so that waking would never be silent. He had married once, in the peace’s first optimism, a kind woman who spent eleven years knocking gently on the wall inside him and then, with more sorrow than anger, stopped; there were no children. He walked to work by a route that avoided one street entirely, adding four minutes, a detour so old it no longer registered as a decision. On forms requiring religion he wrote Muslim, and it was true the way a birthplace is true: where he was from, not where he lived.</p><p>His mother died in the seventeenth year of the peace, in her sleep, with the unremarkable mercy that had eluded her sons’ generation. At the funeral, a proper one this time, unhurried, in daylight, Tarik stood dry-eyed behind his professional face and heard, from among her praying friends, a sentence meant kindly that went through him like a drill: now she can look after Kenan again. Sorting her flat, he found her prayer beads wound around an old photograph of two boys over a chessboard. He took the beads home. He did not pray with them; he no longer knew how, or so he told himself. They went into his coat pocket and stayed, and his hand, in cold weather, took to finding them.</p><p>The hospital of the generator winters was long rebuilt, modernized, humming with machines that would once have seemed like sorcery. He taught in it now: trauma orthopedics for residents born after the siege, bright unbroken young people to whom that history was a subject, a thing with a syllabus. He taught them reduction and fixation, the reading of fractures, the patience of bone. He was famous among them for one strictness: he would not tolerate the word hopeless in a fracture clinic. There are non-unions, he told them. There are not hopeless bones. Bone wants to heal. Your job is to remove its excuses.</p><p>He had said that sentence for thirty years. It never once occurred to him, saying it, that he was describing anything but tibias. The mind is like that: it will let a man preach his own case to a lecture hall for decades, in perfect safety, so long as nobody names the patient.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Old Word</h2><p>The patient in bed six that autumn was eighty-one, a retired professor of Oriental philology with a fractured hip, a hummingbird-boned old man who had lectured on classical Arabic in this city when the library still had its million books, and who took the indignity of a broken femur as he had apparently taken everything since, with amusement. The operation, Tarik’s ten-thousandth of its kind or near it, went cleanly. On rounds afterward the old man studied the surgeon over his glasses, the way one reads a difficult manuscript, and asked, out of nowhere, whether he knew what his profession was called in the old books.</p><p>Tarik, checking the dressing, said something dry about butchery being the usual joke. The old man paid the joke no attention. Jabr, he said. The word is jabr. In the classical dictionaries it means the setting of a broken bone: the bringing of separated parts back into one line so that they knit. From it the mathematicians of old Baghdad named their new science of completing and rejoining broken quantities: al-jabr, algebra. Half the schoolchildren of the world, he said, complain about their homework in the language of your trade: the science of restoring what is broken. He settled back on the pillow, pleased, the way teachers are pleased when the world rhymes.</p><p>Then, because philologists cannot stop, he went one word further. You will find the root in a more serious place, he said, more quietly. Among the Names of Allah there is al-Jabbar. The seminaries translate it the Compeller, He whose will nothing resists, and they are right; it is a Name with mountains in it. But the first readers heard the bonesetter inside it too. Al-Jabbar: the One who sets what is broken, whose compulsion is not a tyrant’s but a surgeon’s, the force that will not leave the shattered thing shattered. The poor He enriches, the humiliated He raises, the broken He knits. The old man’s eyes had gone elsewhere, some lecture hall with its million books intact. Sixty years I taught words, he said. Most I have returned. That one I am keeping.</p><p>Tarik finished the chart and said the polite things, and went on with his rounds, and the day closed over the conversation the way water closes. Except that it did not close. The word went home with him, riding in his chest like a swallowed stone, and at eleven that night a fifty-eight-year-old professor of surgery stood in his kitchen with his grandfather’s old dictionary, kept for no reason he could have defended, looking up a word he already knew, needing to see it with his eyes. Jabr: the setting of broken bones. Jabbar: the One who sets them. On the shelf above the stove of his childhood, a knight was still deep in enemy territory. Some part of the wall in him, mortarless all these years, chose that night to move.</p><p>He did not have what people call a religious experience. He had something slower and more orthopedic. Standing in the kitchen he performed, unwillingly, the examination he had refused for thirty years, palpating the old injury like a fracture never imaged: the Tuesday, the laugh in the doorway, the one canister, the dusk light chosen so the hills would have nothing. The stranger’s forearm at eight. The whiteness. The wall. And the finding of the examination was a surgeon’s finding, precise and pitiless: non-union. The break of that spring had never knitted. He had splinted it with work and walked on it for three decades, and it had held the way such things hold, which is almost, which is until.</p><p>There are non-unions, he heard himself telling residents all those safe years. There are not hopeless bones. Your job is to remove its excuses. And underneath that, further down, arriving the way true sentences travel: what people cannot set, He can. It was, as diagnoses go, humiliating and simple. His hands had set half this city. They had never once been able to reach the fracture he carried them around on. The instrument cannot operate on itself. He had needed, his whole adult life, a Hand that was not his own, and had been too good with his own to admit it.</p><p>In his coat, on the hook by the door, were his mother’s beads. He took them out, an owner now rather than an archivist, and sat at the kitchen table, feeling entirely foolish, a grown surgeon, midnight, alone. The long formulas were gone. What remained was what she had said between the two prostrations, all those cellar winters, gone into him as sound before he was old enough to refuse it: rabbi ighfir li, warhamni, wajburni. My Lord, forgive me, and have mercy on me, and then the third word, her favourite, the word of his own trade in the mouth of a praying woman: wajburni. Set me. Mend what is broken in me.</p><p>He said it aloud in the empty kitchen, in Arabic, in his cracked unpracticed voice, once, and then for some time could say nothing at all, and it did not matter. The wall was coming down at last, and behind it, waiting with the patience of the dead, was not the horror he had feared. It was love. It was twenty litres a side. It was a boy with an unanswerable opening, laughing at the door.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>Union</h2><p>He wept that night the way spring thaws a gutter, in surges, with long stillnesses between, and fell asleep at the table like a resident on call, and woke at dawn to the sound he had kept a radio murmuring thirty years to avoid, which was silence, and found it survivable. That morning he did a thing not done since boyhood, and did it badly: the ablution, the standing, the fumbled words, the forehead finally down. A surgeon spends his life bent over broken things. It had never once occurred to him that the posture was already most of a prostration. You need only stop holding the instruments, and admit whose patient you are.</p><p>What followed was not sudden light. The story would be easier and less true if it were. It was physiotherapy, the soul’s kind, slow and unglamorous, with setbacks. Prayer came back the way range of motion comes back, degree by degree, some mornings a gift and some a brick. He found a small mosque near the hospital, hid at the back among the pensioners, and discovered that the back row of a mosque is one of the great waiting rooms of the world: everyone there is in some stage of setting. He told an imam his story eventually, in pieces. The imam, a young man who had been four during the siege, listened the way good juniors assist: no sudden movements, hands ready.</p><p>On a Thursday in November he went to the corner of the park with the white markers, thirty years late, and stood before his brother’s name in the rain with his collar up, and found the visit did not break him, which is how he knew the bone had begun, at last, to knit. He told Kenan the things one tells: their mother’s peaceful end, the professor in bed six, the dictionary, the word. He said the du’a for the dead, the supplication for the dead, reading it clumsily from his phone, and did not care who saw. Walking out he passed other visitors at other markers, each in their own weather, and understood that he moved through a city of fellow patients, every one held together by Someone, most not yet knowing it.</p><p>The chessboard he resolved a year later, on Kenan’s birthday, and he did it in character, which is to say precisely. He sat down before the position out of the cupboard of his mother’s things, worked through his brother’s classified mission with an engine and an evening, and established, to his tearful satisfaction, that the unanswerable opening had in fact been unanswerable: the boy had him dead in eleven moves. He resigned formally, tipping his king to a player thirty years away, said alhamdulillah, all praise belongs to Allah, without noticing he had said it, and put the pieces, at last, to bed in their box. Some games are not abandoned. They are adjourned, and finished in better light.</p><p>To his residents, after that year, he taught one extra thing, off the syllabus. He would hold up a healed X-ray, some old tibia with its story written around it in white, and show them the callus, the collar of new bone the body builds around a well-set break: look, the mended place is the thickest place. Done right, bone does not merely forgive the fracture, it fortifies exactly there. Then he would say, carefully, because a lecture hall holds all kinds: your hands can set a bone, but you will meet breaks your hands cannot reach, in your patients and in yourselves, and in the oldest language of this work, the One who sets those has a Name. Look it up. It rhymes with your job.</p><p>He works still, at the hour this story lets him go: an old surgeon in a rebuilt city, walking now by the shortest route, four minutes faster, past the place where the water line was, where a low stone with names on it takes two of his fingers in passing, the way other men touch doorposts. In cold weather his hand finds the beads in his pocket. In wet weather, old patients all over the city feel their long-healed fractures whisper before rain, and so does he, in the place no film ever imaged. It aches before rain. It holds. That is what setting is. The scar is healing’s handwriting, and folded inside the hardship, like a note passed in class, arrives the ease, and again, He has promised, the ease.</p></section></article><div class="fig ayah mo"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٥﴾ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾</p><p class="en">So, indeed, with the hardship comes ease. Indeed, with the hardship comes ease.</p><div class="rw"><span class="rf">Qur’an · Ash-Sharh 94:5-6</span><button class="vplay" data-ref="94:5-6">Listen ▸</button></div></div><nav class="snav mo" aria-label="More stories"><a class="pv" href="hadi.html"><span class="k">Previous story</span>The Du’a That Outlived Her</a><a class="mid" href="index.html">The Hall of Stories</a><span class="off nx"><span class="k">Next story</span>More are coming</span></nav></div>
+</main>
+
+<footer class="rfoot">
+<p>A story from the Hall of Stories: the people are invented, the Name and the verses are not.<br/>
+<a href="../index.html">Return to the Codex</a> · <a href="../feedback.html">Send a correction</a> · <a href="../donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+<script>
+(function(){
+  /* the reading line: a thin gold rule that fills as the story is read.
+     Under prefers-reduced-motion it still updates, it simply does not glide. */
+  var bar = document.getElementById("rprogbar");
+  if (bar) {
+    var queued = false;
+    var paint = function () {
+      queued = false;
+      var d = document.documentElement;
+      var span = d.scrollHeight - d.clientHeight;
+      var p = span > 0 ? (d.scrollTop || document.body.scrollTop) / span : 0;
+      if (p < 0) { p = 0; }
+      if (p > 1) { p = 1; }
+      bar.style.transform = "scaleX(" + p + ")";
+    };
+    var ask = function () {
+      if (queued) { return; }
+      queued = true;
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(paint); } else { paint(); }
+    };
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask, { passive: true });
+    paint();
+  }
+  /* the closing verse, in the shared Mushaf voice */
+  Array.prototype.forEach.call(document.querySelectorAll(".vplay"), function (b) {
+    b.addEventListener("click", function () {
+      if (window.playAyah) { window.playAyah(b.getAttribute("data-ref"), b); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

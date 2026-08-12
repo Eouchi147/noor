@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="The Calligrapher’s Last Qur’an: a story of Ash-Shakur, The Most Appreciative. Samarkand, early 1400s, in the city of blue domes and paper mills. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:title" content="The Calligrapher’s Last Qur’an · Ash-Shakur · NOOR Codex of Light"/>
+<meta property="og:description" content="The Calligrapher’s Last Qur’an: a story of Ash-Shakur, The Most Appreciative. Samarkand, early 1400s, in the city of blue domes and paper mills. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>The Calligrapher’s Last Qur’an · Ash-Shakur · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/stories/shakur"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<script src="../noor-fx.js" defer></script>
+<script src="../noor-ink.js" defer></script>
+<script src="../assets/gsap.min.js" defer></script>
+<script src="../assets/ScrollTrigger.min.js" defer></script>
+<script src="../assets/DrawSVGPlugin.min.js" defer></script>
+<script src="../assets/noor-motion.js" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.rprog{position:fixed;left:0;right:0;top:0;height:2px;z-index:90;pointer-events:none}
+.rprog span{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#C9A227,#F4D46A);box-shadow:0 0 10px rgba(244,212,106,.6)}
+@media (prefers-reduced-motion:no-preference){.rprog span{transition:transform .1s linear}}
+.sread{padding-bottom:1rem}
+.before{max-width:34rem;margin:2rem auto 0;background:#fff;border:1px solid rgba(44,36,22,.13);border-radius:16px;padding:.95rem 1.15rem 1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.before b{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin-bottom:.42rem}
+.before p{font-size:.85rem;line-height:1.88;font-style:italic;color:rgba(44,36,22,.72);margin:0}
+.epi{max-width:29rem;margin:2.8rem auto 2.5rem;text-align:center;font-family:Amiri,serif;font-size:1.36rem;line-height:1.9;color:rgba(44,36,22,.7)}
+.epi::before{content:"✦";display:block;font-family:Inter,system-ui,sans-serif;font-size:.68rem;color:var(--gold);opacity:.85;margin-bottom:1rem}
+.prose{max-width:34rem;margin:0 auto}
+.mv h2{font-size:1.06rem;font-weight:800;line-height:1.42;color:#2C2416;margin:0 0 1.1rem}
+.mv h2::after{content:"";display:block;width:2.3rem;height:1px;margin-top:.62rem;background:linear-gradient(90deg,rgba(201,162,39,.9),rgba(201,162,39,0))}
+.mv p{font-size:1.02rem;line-height:1.95;color:rgba(44,36,22,.87);margin:0 0 1.2rem}
+.mv p:last-child{margin-bottom:0}
+.mv>p:first-of-type::first-letter{font-family:Amiri,serif;font-weight:700;font-size:3.15rem;line-height:.9;color:var(--gold);float:left;padding:.34rem .5rem 0 0}
+.orn{display:flex;align-items:center;justify-content:center;gap:.95rem;margin:2.9rem 0}
+.orn::before,.orn::after{content:"";height:1px;width:3.6rem}
+.orn::before{background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.6))}
+.orn::after{background:linear-gradient(90deg,rgba(201,162,39,.6),rgba(201,162,39,0))}
+.orn i{font-style:normal;color:var(--gold);font-size:.72rem;opacity:.9;line-height:1}
+.ayah{max-width:34rem;margin:3.2rem auto 0}
+.ayah .ar{font-family:Amiri,serif;font-size:1.42rem;line-height:2.15;color:#F4D46A;text-align:right;margin:.2rem 0 0}
+.ayah .en{font-size:.86rem;line-height:1.85;color:rgba(255,254,247,.78);margin:1rem 0 0}
+.ayah .rw{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-top:1rem;padding-top:.85rem;border-top:1px solid rgba(244,212,106,.18)}
+.ayah .rf{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.7)}
+.ayah .vplay{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.13)}
+.ayah .vplay.playing{background:#F4D46A;color:#14100A;border-color:#F4D46A}
+.snav{max-width:34rem;margin:2.6rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(44,36,22,.1);display:grid;grid-template-columns:1fr auto 1fr;gap:.6rem;align-items:stretch}
+.snav a,.snav span.off{display:flex;flex-direction:column;justify-content:center;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:14px;padding:.72rem .85rem;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.75);transition:border-color .18s ease,color .18s ease}
+.snav a:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+.snav .k{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.4);margin-bottom:.25rem}
+.snav .nx{text-align:right}
+.snav .mid{align-items:center;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em}
+.snav span.off{border-style:dashed;color:rgba(44,36,22,.45);background:transparent}
+@media (max-width:36rem){.snav{grid-template-columns:1fr}.snav .nx{text-align:left}.mv>p:first-of-type::first-letter{font-size:2.85rem}}
+</style>
+
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">Ash-Shakur · The Most Appreciative</p>
+<div class="ar notranslate" translate="no">الشَّكُور</div>
+<h1>The Calligrapher’s Last Qur’an</h1>
+<p class="lead">Samarkand, early 1400s, in the city of blue domes and paper mills</p>
+</section>
+<div class="rprog" aria-hidden="true"><span id="rprogbar"></span></div><div class="wrap sread"><section class="before mo"><b>Before you begin</b><p>For anyone whose life’s work came out smaller than the dream, and who has quietly filed that smallness under failure.</p></section><p class="epi mo">He thanked Allah for one steady hour, and the hour has outlived him by two hundred years.</p><article class="prose"><section class="mv"><h2>The City That Wrote</h2><p>Samarkand in those years was a city being written. Masons went up the ribbed domes like ants on blue fruit, setting tiles the colour of deep water, and along the canal the paper mills thumped day and night, beating mulberry bark into the finest paper in the world, sheets you could hold to the sun and read the light through. Ink came into the gates in jars, lapis came in from the mountains for the blue of headings, gold came in for the gold. A city can be famous for bread or for horses. This one was famous for the written word, and knew it.</p><p>In a narrow shop off the booksellers’ row worked Tahir ibn Mahmud, a copyist of the Qur’an for fifty of his sixty-six years. He had cut his first reed pen at nine, under his father’s eye, and had been measuring his letters ever since by the old discipline: the diamond dot the pen makes when touched once to paper, so many dots to an alif, so many to the bowl of a nun, beauty ruled like law and free inside it. His naskh, the round clear script of Qur’ans, was known as far as Herat. Students copied his pages the way archers study a master’s release.</p><p>His tools were few and old. Reed pens seasoned in his cupboard for years before he would cut them, a knife with a worn ivory handle, a burnisher of agate, soot ink he ground himself with gum and gall, mixed slow, in the old proportion. Paper he chose the way other men choose land. He worked cross-legged at a low desk with the page on his raised knee, and between the dipping of the pen and the touch of the nib there was a stillness in him that apprentices noticed and could not copy, because it cannot be taught by watching.</p><p>He had buried a wife and a daughter, years ago, in one bad summer, and had not remarried. What remained to him was the craft, an apprentice called Iskandar who had good hands and a better heart, and one desire, kept where other men keep money. He wished, before he died, to write a great mushaf, a full copy of the Qur’an, for the royal library. Vellum-sized pages, gold rosettes between the verses, a binding worth a village. Not for the fee. He wanted his best hour to stand in the best company, shelved among the masters, and be read there when he was dust.</p><p>It was not a wicked wish. Say it plainly: it was the wish of every honest craftsman, that the work should land where the work deserves. He had served it patiently. He had outlived two court calligraphers and trained the pupils of a third, and word had begun to move in the booksellers’ row, the way water moves under ice, that when the new madrasa was finished and its library endowed, the commission of commissions would at last come down the hill, and that the old man in the narrow shop had earned it twice over.</p><p>His mother, dead now fifty years, had taught him his first habit of the trade, before any master taught him the second. When the reed split clean and the ink sat well, she would tap his small wrist and whisper: say alhamdulillah, all praise belongs to Allah. Thanks is water on a seed, my son. What you thank Him for, He grows. He had said it then because she said it. Somewhere along the road of becoming excellent, the habit had worn thin, the way a coin loses its face from long handling. The words still fell from him at the right moments. They had stopped landing anywhere.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Tremor</h2><p>It began, as endings do, with almost nothing. A Thursday in early winter, cold light on the page, and the downstroke of an alif, the letter he had drawn perhaps a million times, came out with a waver in it, fine as a hair, visible to no eye in the city except his. He put down the pen and looked at his right hand as if it belonged to a stranger who had wandered into the shop. It lay quiet. He drank warm water, blamed the cold, rewrote the page, and said nothing to Iskandar.</p><p>But the waver came back, and brought relatives. Some days his hand was his own until noon and then hummed like a plucked string. Some days it woke trembling and settled by midmorning, so that he learned to bargain with it, hour by hour, the way you bargain with a moneylender. He hid it well. He was a master; he had forty tricks for steadiness, the braced little finger, the slowed breath, the letter built from shorter pulls. The tricks bought him a year. They could not buy back the thing that had left, which was certainty, the body’s silent yes on which a lifetime of beauty had stood.</p><p>The commission of commissions came down the hill that spring, as the row had said it would. It went to Ghiyas, a man of thirty-four with a hand like running silk, who had been, twenty years before, a boy grinding soot in Tahir’s shop. They said his muhaqqaq script, the tall stately script of royal Qur’ans, was the finest in a generation. They were right, which made it worse. Ghiyas came himself, out of respect, awkward at the door with the guilt of the beloved, and Tahir served him tea with a steady enough hand and praised him, and meant it, and felt, under the meaning, a floor give way.</p><p>The pen had been his tongue. Now he stammered.</p><p>That summer he began to set his affairs in the direction of silence. He sold two bolts of stored paper. He arranged for Iskandar to finish the outstanding wedding contracts and Fatiha panels, small jobs, jobs a shaking man could hand off without shame. He oiled the ivory knife and put it away in its cloth, and understood, watching his own hands fold the cloth, that he was performing a funeral, one item at a time, for a man still breathing.</p><p>In those weeks his gratitude, the worn coin, went from thin to counterfeit. He prayed as always, prostrating on the old reed mat until his forehead knew its weave, but inside the prayers he was drafting complaints. Fifty years, he told the darkness. Fifty years of Your Book, letter by letter, and at the door of the library You took my hand from me. He was too old and too honest to dress the feeling in prettier clothes. It was grievance, and he knew its name, and could not put it down.</p><p>He did not stop believing. Belief was the bone of him; you might as well ask a mountain to stop. But there is a kind of sorrow that sits down between a man and his Lord like fog between two houses. The houses do not move. The fog does not lift by wishing. And every morning the paper mills thumped along the canal, making beautiful blank pages for other men’s hands, and the blue domes went on rising over a city that wrote and wrote and no longer needed him to.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Commission of Goats</h2><p>The imam came in the month of Rajab, in from the Zarafshan hills with the wool smell of the high pastures still on his coat, an oldish man with rain-cracked hands who stood in the doorway of the shop turning his cap like a boy. His village was three days up the valley, past the last mill. It had a mosque of poplar beams, a stream, four hundred sheep, and now, at last, by the mercy of Allah and eleven years of set-aside coins, a school. Forty children. He had come down the mountain to buy what a school of the Qur’an cannot be without.</p><p>He laid his money on the desk in a knotted cloth, and it was, to be plain, the price of good paper and not much beyond. He knew it. The cap went round and round in his hands. He had been to two shops already and been quoted politely out the door. Someone in the row, perhaps in mischief, perhaps in something better dressed than mischief, had said: go to the old man near the end, his prices have become strange lately. And so he stood, asking the finest naskh hand between here and Herat for a small plain mushaf, a schoolroom copy, to be handled by forty pairs of unwashed hands until it fell apart.</p><p>Tahir heard him out and felt the insult arrive on schedule, right on the sore. A schoolbook. A goat-track Qur’an. The library on the hill was being fitted, that very season, with lamps of pierced brass for Ghiyas’s pages, and here at his desk stood sheep-smell and a knotted cloth, offering him the one commission left on earth. He opened his mouth to say what the other shops had said, gently, that his eyes were failing, that his time was sold ahead.</p><p>The imam, sensing the shape of the coming no, spoke first, not cleverly, just from his life. “They tell me the great library will have a hundred Qur’ans,” he said. “Locked, praise Allah, behind lattice doors, kept beautiful. My school has forty children and not one. Whatever you write, master, will be read to pieces. I cannot promise it a shelf. I can promise it will never once be lonely.” Then, ashamed of his own eloquence, he looked down at his cracked hands and added, “And we would pray for the writer. Up there, prayer is mostly what we have.”</p><p>Afterwards Tahir could not fully explain, even to himself, why he did not refuse; only that the words read to pieces had gone in like a splinter and would not come out. He heard himself name a fee that matched the knotted cloth, saw the imam’s face open like weather clearing, and was committed before his grievance could organize a defense. When the man had gone, Iskandar looked a question at him. “Charity,” said Tahir, gruffly, and believed it. He was wrong about that. It was not what he was giving. It was what he was about to be given.</p><p>That night he took stock of his enemy honestly, as a craftsman should. The tremor was worst when he was tired, worst of all when he was bitter, and mildest, he had noticed without ever using the knowledge, in the first hour after the dawn prayer, when the shop was cold and the street silent and the ink smelled of its beginnings. One steady hour, most days. Out of the wreck of a great career, one good hour had been left to him, the way a fire leaves one beam standing.</p><p>A younger man would have measured that hour against the library and despaired. Tahir measured it against forty children who had never held a Qur’an, and found, doing that sum, that the fog between the two houses had thinned very slightly, for the first time since Thursday in early winter. He did not yet call this by any Name. He only cut, that evening, with great slowness, a new pen.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Steady Hour</h2><p>He built his last work the way the poor build houses, out of exactly what was there. Each day began in the dark: the ablution, the dawn prayer with Iskandar at the neighbourhood mosque, then the shop, the lamp, the page tilted on his knee. Before the first dip of the pen he made himself say his mother’s words, alhamdulillah, all praise belongs to Allah, and say them slowly, landing them one by one, like a man laying coins on a table rather than throwing them. Praise for the hour. For the paper. For the black of the ink. For a hand quiet enough, this morning, to serve.</p><p>It had begun as a discipline against bitterness, a fence for his own heart. Within a month it had become the architecture of the whole book. He found that thanks, said slowly, did to his hour what the agate burnisher did to paper: pressed it smooth, closed its pores, made it take ink cleanly. On the days he began with the ledger of his losses, the tremor arrived early, feeding on the agitation like fire on draught. On the days he began with the small accounting of what remained, the hand stayed his own, sometimes clear to midmorning. His body, it turned out, had been listening to his heart all along.</p><p>So he thanked his way through the Book. He wrote the Opening, the Fatiha, in an hour so still he heard the ink dry. He learned to stop at the first hum of the tremor, mid-word if need be, without anger, setting the pen down as you set down a sleeping child, and to fill the shaking hours with the parts of the craft that shaking permits: grinding soot, ruling lines with the cord, teaching Iskandar the cutting of reeds, sitting in the doorway with tea, watching the street the way old men watch fires. The illness had shrunk his art to one hour. Gratitude was quietly teaching him how much of a life fits inside one hour.</p><p>Twice that year the hand failed badly and pages were lost, and the old grief came up the stairs of him like flood water. Both times he went out and walked the booksellers’ row to the open square and stood in the crowd’s noise until the worst passed, and both times, coming back, he did the same strange arithmetic on the doorstep: still the dawn hour, still the paper, still the boy, still the Book. Not once did the column come up empty. He began to suspect, shyly, like a man suspecting he is loved, that it never had.</p><p>He made the schoolbook plainly, as commissioned, but plainness in a master’s hand is its own wealth. Small pages, a clear open naskh a child’s finger could follow line by line without drowning, margins wide enough for forty years of teachers’ pencil marks, paper chosen to endure handling, thread sewn double. No gold. In place of gold he spent what he actually had: fifty years of knowing exactly how a letter should sit so that the eye rests on it. The great library would have its hundred glories behind lattice. This one was built the way you build a boat, for water, not for the harbour.</p><p>He finished on a night in early autumn, alone, past midnight, Iskandar asleep in the back of the shop. The last lines of the last surah, the one that begins say: He is Allah, the One, then the two surahs of refuge, and then it was done, and he sat looking at the wet ink with his heart doing something for which the only old word is gratitude, the full kind, the kind with awe in it. On the final leaf, where a master sets his name and titles, he wrote no name. He wrote only: the work of a hand that shook, for hands that are small. Alhamdulillah, wa alhamdulillah, wa alhamdulillah.</p><p>He woke Iskandar for the dawn prayer, and they went out together into the blue cold and prayed, and came back, and Tahir sat down at his desk before the finished book, saying he would rest a moment before wrapping it. The light came up over the booksellers’ row the way it does in that city, hitting the high domes first, turquoise catching fire, and then sliding down the walls into the ordinary streets. It crossed the desk. It crossed the drying page. Iskandar, grinding the morning ink, heard his master say, distinctly, contentedly, the word he now began everything with. When he turned, the old man’s eyes were closed, and the hour, the steady hour, had been left open like a door, and Tahir ibn Mahmud had gone through it.</p><p>There are worse deaths than at your desk, at dawn, past a finished Qur’an, with praise as your last word and no debts behind you. There may not be many better.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>What the Book Did</h2><p>He was washed, shrouded and prayed over that afternoon, with the booksellers’ row standing close and Ghiyas of the silken hand weeping openly at the front, and he was in the ground before sunset, as is the sunnah, the Prophet’s ﷺ way, buried in the cemetery outside the walls where the paper-mill workers are buried, which he would have liked. Iskandar closed the shop for three days. On the fourth he wrapped the small mushaf in waxed cloth and oiled leather, and walked it up the valley himself, three days past the last mill, and put it into the imam’s rain-cracked hands, and would take nothing for it except breakfast.</p><p>Now watch what Tahir never saw. The book was set on a low wooden stand in a room of poplar beams, and that winter forty children learned the shapes of the letters from its wide clear lines, their fingers moving under the words like small boats. Among them was a shepherd’s son called Sanjar, slow at everything except this, who at eleven had the Fatiha, at fourteen the last thirtieth of the Book, and at twenty had all of it, the whole Qur’an standing upright in his chest, learned entire from one plain copy with no gold in it. He became the school’s teacher when the old imam died. He taught for forty-one years.</p><p>The book was rebound the first time in Sanjar’s middle age, in goatskin, by a binder down the valley who, seeing the colophon, the closing inscription, would not take payment either: the work of a hand that shook, for hands that are small. It was rebound again in his successor’s time, and again two generations later, its first pages worn soft as cloth, the corner of the Fatiha darkened by two hundred years of small right thumbs, and mended, and darkened again. Teachers came to know its pages so well they could tell you where every water stain sat, the way you know the scars on your own family.</p><p>War came up the valley once a century, as it does, and took sheep, roofs, and twice the mosque itself. The book spent one bad year buried in a shepherd’s lambing cave, wrapped in the waxed cloth, and came out smelling of wool, unharmed. The great library on the hill was scattered in the troubles of a later age, its hundred glories sold, burned, or carried away to cities that catalogued them beautifully. Lattice doors keep out hands, it turns out, but not history. Love is the better fortress. A thing that four hundred people would die before surrendering is safer than anything behind brass.</p><p>Count it now, the way Safiyya the baker’s wife would have counted it, if you have read that story: one steady hour a day, for one year, from one shaking man, multiplied. Thousands of children, well past all numbering, learned to read the speech of their Lord from that one plain book, and taught it onward, so that on quiet mornings in that valley to this day there is a sound like bees that is actually the Qur’an, being recited by small voices, all of them downstream of an old man who thought his life had failed because it ended small. He asked to be shelved among the masters. He was granted, instead, an unpayable wage: he was made useful after death, and is being paid to this hour.</p><p>The village prays for the writer still, by his colophon, since it left them no name. And here at last is the Name that was working all along, the one his mother had watered him with, seed by seed: Ash-Shakur, the Most Appreciative, the One who does not merely accept small deeds but thanks His servants for them, and pays them out at a rate no market on earth could survive, a rate that turns one steady hour into two hundred years. People imagine He is hard to please. The whole story of the small Qur’an of the Zarafshan valley says otherwise. He is astonishingly easy to please. He is only impossible to outgive.</p></section></article><div class="fig ayah mo"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">لِيُوَفِّيَهُمْ أُجُورَهُمْ وَيَزِيدَهُم مِّن فَضْلِهِ ۚ إِنَّهُ غَفُورٌ شَكُورٌ</p><p class="en">That He may pay them their wages in full and increase them from His bounty. Indeed, He is Forgiving, Most Appreciative.</p><div class="rw"><span class="rf">Qur’an · Fatir 35:30</span><button class="vplay" data-ref="35:30">Listen ▸</button></div></div><nav class="snav mo" aria-label="More stories"><a class="pv" href="razzaq.html"><span class="k">Previous story</span>The Baker of Small Loaves</a><a class="mid" href="index.html">The Hall of Stories</a><a class="nx" href="hadi.html"><span class="k">Next story</span>The Du’a That Outlived Her</a></nav></div>
+</main>
+
+<footer class="rfoot">
+<p>A story from the Hall of Stories: the people are invented, the Name and the verses are not.<br/>
+<a href="../index.html">Return to the Codex</a> · <a href="../feedback.html">Send a correction</a> · <a href="../donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+<script>
+(function(){
+  /* the reading line: a thin gold rule that fills as the story is read.
+     Under prefers-reduced-motion it still updates, it simply does not glide. */
+  var bar = document.getElementById("rprogbar");
+  if (bar) {
+    var queued = false;
+    var paint = function () {
+      queued = false;
+      var d = document.documentElement;
+      var span = d.scrollHeight - d.clientHeight;
+      var p = span > 0 ? (d.scrollTop || document.body.scrollTop) / span : 0;
+      if (p < 0) { p = 0; }
+      if (p > 1) { p = 1; }
+      bar.style.transform = "scaleX(" + p + ")";
+    };
+    var ask = function () {
+      if (queued) { return; }
+      queued = true;
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(paint); } else { paint(); }
+    };
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask, { passive: true });
+    paint();
+  }
+  /* the closing verse, in the shared Mushaf voice */
+  Array.prototype.forEach.call(document.querySelectorAll(".vplay"), function (b) {
+    b.addEventListener("click", function () {
+      if (window.playAyah) { window.playAyah(b.getAttribute("data-ref"), b); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

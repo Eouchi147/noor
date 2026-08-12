@@ -14,6 +14,8 @@ const SECTIONS = HUB.sections;
 let lastFocus = null;
 
 const glyph = HUB.glyph || (c => (c.titleAr || "·").split(" ")[0]);
+const SECMAP = { char: "characters", place: "places", word: "words" };
+const locRec = c => NOOR_I18N.loc(SECMAP[HUB.type] || "characters", c);
 
 function renderAll(){
   $("section-nav-links").innerHTML = SECTIONS.map(s =>
@@ -39,7 +41,7 @@ function renderAll(){
         </div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
-        ${list.map((c,i)=>`
+        ${list.map((c0,i)=>{const c=locRec(c0);return `
         <article class="tile reveal" style="--d:${(i%9)*50}ms" data-key="${s.key}" data-id="${c.id}" role="button" tabindex="0" aria-label="${c.titleEn}">
           <div class="tile-inner">
             <div class="tile-bg ${c.pattern||""}"></div>
@@ -55,7 +57,7 @@ function renderAll(){
               <p class="text-xs opacity-70 mt-1 line-clamp-2">${c.summary||""}</p>
             </div>
           </div>
-        </article>`).join("")}
+        </article>`}).join("")}
       </div>
     </section>`;
   }).join("");
@@ -71,8 +73,9 @@ function sect(title, inner){ return `<div class="mset mt-6"><h3 class="sect-h"><
 
 function openEntry(key, id){
   const s = SECTIONS.find(x => x.key === key);
-  const c = (DATA[key]||[]).find(x => x.id === id);
+  let c = (DATA[key]||[]).find(x => x.id === id);
   if (!c) return;
+  c = locRec(c);
   lastFocus = document.activeElement;
   const hero = $("modal-hero"), body = $("modal-body");
   hero.className = "modal-hero " + (s.smallSeal ? "tall " : "") + (c.pattern||"");

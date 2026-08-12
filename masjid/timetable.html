@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="A free printable monthly prayer timetable for any masjid: real astronomy for adhan times and sunrise, optional iqama columns, hijri dates, and a print sheet made to be pinned on a wall. No account, no cost."/>
+<meta property="og:title" content="The printable monthly timetable · NOOR Codex of Light"/>
+<meta property="og:description" content="A full month of prayer times computed from the sun, with iqama columns and a clean sheet for the wall. Free forever from NOOR Codex of Light."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<title>The monthly timetable · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/masjid/timetable.html"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<link rel="stylesheet" href="kit.css"/>
+<script src="salat.js"></script>
+<script src="../noor-fx.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NOOR Monthly Prayer Timetable","url":"https://noorcodex.com/masjid/timetable.html","applicationCategory":"ReligiousApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"NOOR · Codex of Light"}}</script>
+<style>
+#sheet{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:1rem .9rem;margin-top:1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.sh-head{text-align:center;border-bottom:2px solid rgba(44,36,22,.8);padding-bottom:.5rem}
+.sh-head h2{font-size:1.15rem;font-weight:900;margin:0;letter-spacing:-.01em}
+.sh-head .mo{font-size:.95rem;font-weight:800;color:#6b5510;margin:.15rem 0 0}
+.sh-head .pl{font-size:.7rem;color:var(--soft);margin:.2rem 0 0;line-height:1.6}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.tt{width:100%;border-collapse:collapse;margin-top:.6rem;font-variant-numeric:tabular-nums}
+table.tt th,table.tt td{padding:.3rem .25rem;text-align:center;font-size:.72rem;
+  border-bottom:1px solid rgba(44,36,22,.1);white-space:nowrap}
+table.tt thead th{font-size:.6rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+  color:#6b5510;border-bottom:1.5px solid rgba(201,162,39,.5)}
+table.tt thead tr:first-child th{border-bottom:1px solid rgba(201,162,39,.3)}
+table.tt td.d{font-weight:800;text-align:left;padding-left:.35rem}
+table.tt td.d span{font-weight:600;color:var(--soft);margin-left:.3rem;font-size:.66rem}
+table.tt td.hj{color:var(--soft);font-size:.66rem}
+table.tt tr.fri{background:rgba(201,168,39,.09)}
+table.tt tr.fri td.d{color:#6b5510}
+table.tt .iqcol{color:#6b5510}
+table.tt .sep{border-left:1px solid rgba(44,36,22,.14)}
+.sh-notes{font-size:.68rem;line-height:1.7;color:rgba(44,36,22,.6);margin-top:.7rem}
+.sh-notes b{color:#6b5510}
+.sh-mark{text-align:center;font-size:.66rem;color:rgba(44,36,22,.45);
+  border-top:1px solid rgba(44,36,22,.15);margin-top:.7rem;padding-top:.4rem}
+@media print{
+  @page{margin:9mm 8mm}
+  .kp,.kit-top,.kmark,#site-header,.noprint{display:none !important}
+  body.kit{background:#fff;color:#000}
+  #sheet{border:0;border-radius:0;padding:0;margin:0;box-shadow:none;page-break-after:avoid}
+  .tscroll{overflow:visible}
+  .sh-head{padding-bottom:.25rem}
+  .sh-head h2{font-size:18pt}
+  .sh-head .mo{font-size:13pt;color:#000}
+  .sh-head .pl{font-size:8.5pt;color:#333}
+  table.tt{margin-top:.35rem}
+  table.tt th,table.tt td{font-size:10pt;padding:.55mm .6mm;border-bottom:1px solid #bbb;color:#000}
+  table.tt thead th{font-size:8.5pt;color:#000}
+  table.tt td.hj{font-size:9pt;color:#333}
+  table.tt td.d span{font-size:9pt;color:#333}
+  table.tt tr{page-break-inside:avoid}
+  table.tt tr.fri{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sh-notes{font-size:7.6pt;line-height:1.5;color:#333;margin-top:.35rem}
+  .sh-mark{font-size:7.6pt;color:#333;margin-top:.35rem;padding-top:.25rem}
+}
+</style>
+</head>
+<body class="kit">
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<div class="kit-top">
+<div class="in">
+<a class="crumb" href="index.html">✦ The masjid toolbox</a>
+<div class="ar notranslate" translate="no">مَوَاقِيتُ الصَّلَاة</div>
+<h1>The printable monthly timetable</h1>
+<p>A full month of prayer times computed from the sun itself, with sunrise, optional iqama columns and hijri dates, on one clean sheet made to be printed and pinned to a wall. No screen, no power, no account.</p>
+</div>
+</div>
+
+<div class="kit-wrap">
+
+<div class="kp">
+<h2><span class="n">1</span>Your place</h2>
+<label class="kf" for="t-name">Masjid name (printed at the top, optional)</label>
+<input id="t-name" placeholder="Masjid an-Noor"/>
+<div class="g2">
+<div><label class="kf" for="t-lat">Latitude</label><input id="t-lat" type="number" step="0.0001" placeholder="45.4215"/></div>
+<div><label class="kf" for="t-lng">Longitude</label><input id="t-lng" type="number" step="0.0001" placeholder="-75.6972"/></div>
+</div>
+<button class="btn btn-ghost btn-sm" id="t-geo" type="button">Use this device's location</button>
+<p class="hint">On a map, a right click on your building gives latitude then longitude. South is a negative latitude, west is a negative longitude.</p>
+</div>
+
+<div class="kp">
+<h2><span class="n">2</span>Calculation</h2>
+<div class="g2">
+<div><label class="kf" for="t-m">Method</label><select id="t-m">
+<option value="ISNA">ISNA · North America (15 / 15)</option>
+<option value="MWL">Muslim World League (18 / 17)</option>
+<option value="Egypt">Egyptian Authority (19.5 / 17.5)</option>
+<option value="Karachi">Karachi (18 / 18)</option>
+<option value="UmmAlQura">Umm al-Qura · Makkah (18.5 / 90min)</option>
+</select></div>
+<div><label class="kf" for="t-a">Asr school</label><select id="t-a">
+<option value="standard">Standard (Shafi, Maliki, Hanbali)</option>
+<option value="hanafi">Hanafi</option>
+</select></div>
+</div>
+<div class="g2">
+<div><label class="kf" for="t-mo">Month</label><select id="t-mo"></select></div>
+<div><label class="kf" for="t-yr">Year</label><input id="t-yr" type="number" min="1900" max="2200" step="1"/></div>
+</div>
+<div class="g2">
+<div><label class="kf" for="t-h24">Clock</label><select id="t-h24"><option value="">12 hour</option><option value="1">24 hour</option></select></div>
+<div><label class="kf" for="t-hj">Hijri column</label><select id="t-hj"><option value="1">Show</option><option value="">Hide</option></select></div>
+</div>
+</div>
+
+<div class="kp">
+<h2><span class="n">3</span>Iqama minutes after adhan</h2>
+<p class="sub">Leave a box empty and that prayer gets no iqama column. Leave them all empty and the sheet prints adhan times alone.</p>
+<div class="g5">
+<div><label class="kf" for="iq-fajr">Fajr</label><input id="iq-fajr" type="number" placeholder=""/></div>
+<div><label class="kf" for="iq-dhuhr">Dhuhr</label><input id="iq-dhuhr" type="number" placeholder=""/></div>
+<div><label class="kf" for="iq-asr">Asr</label><input id="iq-asr" type="number" placeholder=""/></div>
+<div><label class="kf" for="iq-maghrib">Maghrib</label><input id="iq-maghrib" type="number" placeholder=""/></div>
+<div><label class="kf" for="iq-isha">Isha</label><input id="iq-isha" type="number" placeholder=""/></div>
+</div>
+<label class="kf" for="t-jum">Jumu'ah line (printed under the table, optional)</label>
+<input id="t-jum" placeholder="Jumu'ah: khutba 1:15 PM, prayer 1:35 PM"/>
+</div>
+
+<div class="kp noprint">
+<h2><span class="n">4</span>The sheet</h2>
+<p class="sub">Print gives one month on one page. Choose portrait, A4 or Letter, and leave headers and footers off in the print dialog for the cleanest sheet.</p>
+<button class="btn btn-gold" id="t-print" type="button">Print this month</button>
+<button class="btn btn-ghost" id="t-next" type="button">Next month</button>
+<div class="note" id="t-warn" hidden></div>
+</div>
+
+</div>
+
+<div class="kit-wrap">
+<div id="sheet">
+<div class="sh-head">
+<h2 id="sh-name">Prayer times</h2>
+<div class="mo" id="sh-month"></div>
+<div class="pl" id="sh-place"></div>
+</div>
+<div class="tscroll"><table class="tt" id="tt"><thead id="tt-head"></thead><tbody id="tt-body"></tbody></table></div>
+<div class="sh-notes" id="sh-notes"></div>
+<div class="sh-mark">✦ noorcodex.com/masjid · free forever, no account</div>
+</div>
+</div>
+
+<p class="kmark">✦ <a href="index.html">The NOOR masjid toolbox</a> · free forever, no account<br/>The times are computed on your own device from the position of the sun. Nothing is sent anywhere.</p>
+
+<script>
+(function(){
+"use strict";
+function $(i){return document.getElementById(i)}
+var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var KEYS=["fajr","dhuhr","asr","maghrib","isha"];
+var LABEL={fajr:"Fajr",sunrise:"Sunrise",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha"};
+
+/* the hijri calendar only if this browser can honestly compute it */
+var HIJRI=null;
+try{
+  var f=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{day:"numeric",month:"short"});
+  if(f.resolvedOptions().calendar==="islamic-umalqura")HIJRI=f;
+}catch(e){HIJRI=null}
+var HIJRI_LONG=null;
+if(HIJRI){try{HIJRI_LONG=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{month:"long",year:"numeric"})}catch(e){}}
+
+var now=new Date();
+(function init(){
+  var sel=$("t-mo");
+  for(var i=0;i<12;i++){var o=document.createElement("option");o.value=String(i);o.textContent=MONTHS[i];sel.appendChild(o)}
+  sel.value=String(now.getMonth());
+  $("t-yr").value=String(now.getFullYear());
+})();
+
+function num(id){var v=$(id).value.trim();if(v==="")return null;var n=parseFloat(v);return isNaN(n)?null:n}
+function tz(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){return ""}}
+
+function build(){
+  var lat=num("t-lat"),lng=num("t-lng");
+  var havePlace=(lat!==null&&lng!==null);
+  if(!havePlace){lat=45.4215;lng=-75.6972}
+  var m=parseInt($("t-mo").value,10),y=parseInt($("t-yr").value,10);
+  if(isNaN(y)||y<1900||y>2200)y=now.getFullYear();
+  var method=$("t-m").value,asr=$("t-a").value,h24=!!$("t-h24").value;
+  var wantHijri=!!$("t-hj").value&&!!HIJRI;
+  var iq={};KEYS.forEach(function(k){var v=num("iq-"+k);if(v!==null)iq[k]=v});
+  var iqKeys=KEYS.filter(function(k){return iq[k]!=null});
+  var days=new Date(y,m+1,0).getDate();
+
+  /* header */
+  $("sh-name").textContent=($("t-name").value.trim()||"Prayer times");
+  $("sh-month").textContent=MONTHS[m]+" "+y;
+  var place=havePlace?(lat.toFixed(4)+", "+lng.toFixed(4)):("example place "+lat.toFixed(4)+", "+lng.toFixed(4)+" until you enter your own");
+  var methodName=$("t-m").options[$("t-m").selectedIndex].textContent.split("·")[0].split("(")[0].trim();
+  $("sh-place").textContent=place+" · "+methodName+" · Asr "+(asr==="hanafi"?"Hanafi":"standard")+(tz()?" · times in "+tz():"");
+
+  /* head row */
+  var h1="",h2="";
+  h1+='<tr><th rowspan="2">Date</th>'+(wantHijri?'<th rowspan="2">Hijri</th>':"")+'<th colspan="6">Adhan</th>';
+  if(iqKeys.length)h1+='<th colspan="'+iqKeys.length+'" class="sep">Iqama</th>';
+  h1+="</tr>";
+  h2+="<tr>";
+  ["fajr","sunrise","dhuhr","asr","maghrib","isha"].forEach(function(k){h2+="<th>"+LABEL[k]+"</th>"});
+  iqKeys.forEach(function(k,i){h2+='<th class="iqcol'+(i===0?" sep":"")+'">'+LABEL[k]+"</th>"});
+  h2+="</tr>";
+  $("tt-head").innerHTML=h1+h2;
+
+  /* rows */
+  var body="",estimated=false,missing=false,hjFirst="",hjLast="";
+  for(var d=1;d<=days;d++){
+    var date=new Date(y,m,d,12,0,0);
+    var t=window.NOOR_SALAT(date,lat,lng,{method:method,asr:asr});
+    if(t.estimated)estimated=true;
+    var fri=date.getDay()===5;
+    var row='<tr'+(fri?' class="fri"':"")+'><td class="d">'+d+" <span>"+DAYS[date.getDay()]+"</span></td>";
+    if(wantHijri){
+      var hj="";
+      try{hj=HIJRI.format(date)}catch(e){hj=""}
+      if(d===1)hjFirst=hj;if(d===days)hjLast=hj;
+      row+='<td class="hj">'+hj+"</td>";
+    }
+    ["fajr","sunrise","dhuhr","asr","maghrib","isha"].forEach(function(k){
+      if(t[k]==null)missing=true;
+      var star=(t.estimated&&(k==="fajr"||k==="isha"))?"*":"";
+      row+="<td>"+window.NOOR_FMT_TIME(t[k],h24)+star+"</td>";
+    });
+    iqKeys.forEach(function(k,i){
+      row+='<td class="iqcol'+(i===0?" sep":"")+'">'+
+        (t[k]==null?"··":window.NOOR_FMT_TIME(t[k]+iq[k]/60,h24))+"</td>";
+    });
+    body+=row+"</tr>";
+  }
+  $("tt-body").innerHTML=body;
+
+  /* the honest notes under the sheet */
+  var notes=[];
+  if($("t-jum").value.trim())notes.push("<b>"+$("t-jum").value.trim().replace(/[<>]/g,"")+"</b>");
+  if(iqKeys.length)notes.push("Iqama shown for "+iqKeys.map(function(k){return LABEL[k]+" +"+iq[k]+" min"}).join(", ")+".");
+  if(wantHijri){
+    var span=hjFirst&&hjLast?(hjFirst+" to "+hjLast):"";
+    var hy="";try{if(HIJRI_LONG)hy=HIJRI_LONG.format(new Date(y,m,15,12,0,0))}catch(e){}
+    notes.push("Hijri dates follow the Umm al-Qura calendar"+(hy?", "+hy:"")+(span?" ("+span+")":"")+
+      ". A local moon sighting can differ by a day; your community's own sighting decides.");
+  }
+  notes.push("Adhan times are computed from the position of the sun for this exact latitude and longitude"+
+    (tz()?", in the "+tz()+" time zone of the device that printed this sheet":"")+
+    ". Verify one day against a timetable you already trust before printing for the wall.");
+  if(estimated)notes.push("* At this latitude the sun does not reach the twilight angle on these days. Fajr and Isha are estimated by the seventh of the night, a convention, not an observation. Ask a scholar you trust which convention your community follows.");
+  if(missing)notes.push("Where two dots stand, the sun never reaches that position at all on that day, so no time can honestly be computed from it. Communities this far north or south follow a convention their scholars choose, most often the times of the nearest latitude where the night is ordinary, or the times of Makkah. Decide that before you print this sheet, and write the chosen times in by hand.");
+  $("sh-notes").innerHTML=notes.join("<br/>");
+
+  var w=$("t-warn");
+  if(!havePlace){w.hidden=false;w.innerHTML="This is an example sheet for Ottawa. Enter your own latitude and longitude above, or press the location button, and the whole month recomputes."}
+  else if(missing){w.hidden=false;w.innerHTML="At this latitude some prayer times cannot be computed from the sun this month: it never rises, never sets, or never sinks to the twilight angle. Those cells show two dots rather than a guess. Your community must follow a convention chosen by a scholar it trusts, and write those times in by hand."}
+  else if(estimated){w.hidden=false;w.innerHTML="High latitude: on some days this month the sun never sinks to the Fajr or Isha angle. Those times are marked with a star and estimated by the seventh of the night."}
+  else{w.hidden=true;w.innerHTML=""}
+}
+
+["t-name","t-lat","t-lng","t-m","t-a","t-mo","t-yr","t-h24","t-hj","t-jum",
+ "iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha"].forEach(function(i){
+  $(i).addEventListener("input",build);$(i).addEventListener("change",build);
+});
+$("t-geo").addEventListener("click",function(){
+  if(!navigator.geolocation){$("t-geo").textContent="This browser has no location; type it above";return}
+  $("t-geo").textContent="Finding...";
+  navigator.geolocation.getCurrentPosition(function(p){
+    $("t-lat").value=p.coords.latitude.toFixed(4);$("t-lng").value=p.coords.longitude.toFixed(4);
+    $("t-geo").textContent="Location set ✦";build();
+  },function(){$("t-geo").textContent="Not permitted · type it above"});
+});
+$("t-print").addEventListener("click",function(){window.print()});
+$("t-next").addEventListener("click",function(){
+  var m=parseInt($("t-mo").value,10),y=parseInt($("t-yr").value,10)||now.getFullYear();
+  m+=1;if(m>11){m=0;y+=1}
+  $("t-mo").value=String(m);$("t-yr").value=String(y);build();
+});
+if(!HIJRI){
+  $("t-hj").value="";$("t-hj").disabled=true;
+  $("t-hj").parentNode.appendChild(Object.assign(document.createElement("p"),
+    {className:"hint",textContent:"This browser cannot compute the hijri calendar, so the column is left out rather than guessed."}));
+}
+build();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+/* ============================================================
+   NOOR · the masjid toolbox
+   One shared skin for the tools and the two kits: calm on a
+   phone at 360px, legible on a laptop, honest on paper.
+   Screen rules first, print rules at the end of each block.
+   ============================================================ */
+
+:root{
+  --parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;
+  --night:#14100A;--line:rgba(44,36,22,.12);--soft:rgba(44,36,22,.6);
+  --ok:#2f6b46;--warn:#8a5a13
+}
+
+/* ---------- the app frame (the three tools) ---------- */
+body.kit{margin:0;background:var(--parchment);color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-text-size-adjust:100%}
+body.kit *{box-sizing:border-box}
+.kit-top{background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);
+  color:#FFFEF7;padding:1.5rem 1rem 1.7rem}
+.kit-top .in{max-width:54rem;margin:0 auto}
+.kit-top .ar{font-family:Amiri,serif;font-size:1.5rem;color:var(--gold-hi);
+  filter:drop-shadow(0 0 12px rgba(244,212,106,.4));line-height:1.6}
+.kit-top h1{font-size:1.35rem;font-weight:800;margin:.15rem 0 0;letter-spacing:-.01em}
+.kit-top p{font-size:.82rem;color:rgba(255,254,247,.72);line-height:1.7;margin:.5rem 0 0;max-width:36rem}
+.kit-top .crumb{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:800;color:rgba(244,212,106,.75);text-decoration:none;display:inline-block;margin-bottom:.35rem}
+.kit-wrap{max-width:54rem;margin:0 auto;padding:0 1rem 1rem}
+.kit-wrap:last-of-type{padding-bottom:2.4rem}
+
+/* ---------- panels ---------- */
+.kp{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:1rem 1.05rem;margin-top:1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.kp > h2{font-size:1.02rem;font-weight:800;margin:0 0 .15rem}
+.kp > h2 .n{color:var(--gold);font-weight:800;margin-right:.35rem}
+.kp .sub{font-size:.78rem;color:var(--soft);line-height:1.7;margin:.3rem 0 0}
+.kp h3{font-size:.88rem;font-weight:800;margin:.9rem 0 .3rem}
+
+/* ---------- fields ---------- */
+.kf{display:block;font-size:.68rem;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;color:#6b5510;margin-top:.85rem}
+input,select,textarea{width:100%;margin-top:.3rem;background:#FFFDF4;
+  border:1.5px solid rgba(201,162,39,.4);border-radius:10px;padding:.55rem .7rem;
+  font-size:16px;font-family:inherit;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,162,39,.14)}
+textarea{line-height:1.7;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
+@media(max-width:560px){.g5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:420px){.g2{grid-template-columns:1fr}}
+.hint{font-size:.68rem;color:rgba(44,36,22,.52);margin-top:.4rem;line-height:1.6}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;border:0;border-radius:999px;padding:.62rem 1.25rem;
+  font-size:.8rem;font-weight:800;font-family:inherit;cursor:pointer;
+  text-decoration:none;margin:.65rem .4rem 0 0;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F}
+.btn-ghost{background:none;border:1px solid rgba(201,162,39,.55);color:#6b5510}
+.btn-quiet{background:none;border:1px solid var(--line);color:rgba(44,36,22,.6);font-weight:700}
+.btn-sm{padding:.36rem .8rem;font-size:.7rem;margin:.4rem .35rem 0 0}
+
+/* ---------- choosing chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.chip{background:#FFFDF4;border:1.5px solid rgba(201,162,39,.35);border-radius:12px;
+  padding:.5rem .75rem;font-size:.78rem;font-weight:700;font-family:inherit;
+  color:rgba(44,36,22,.8);cursor:pointer;text-align:left;line-height:1.4}
+.chip small{display:block;font-size:.66rem;font-weight:600;color:var(--soft);margin-top:.15rem}
+.chip:hover{border-color:var(--gold);background:#FFF7DF}
+.chip.on{background:linear-gradient(135deg,rgba(201,162,39,.16),rgba(244,212,106,.1));
+  border-color:var(--gold);color:var(--ink);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+.chip.on::after{content:" ✦";color:var(--gold)}
+
+/* ---------- arabic ---------- */
+.ar-block{font-family:Amiri,serif;direction:rtl;text-align:right;
+  font-size:1.35rem;line-height:2.35;color:var(--ink);
+  background:#FFFDF4;border:1px solid rgba(201,162,39,.3);border-radius:14px;
+  padding:.9rem 1rem;margin-top:.6rem;white-space:pre-wrap}
+.translit{font-size:.8rem;line-height:1.9;color:rgba(44,36,22,.72);margin-top:.55rem;white-space:pre-wrap}
+.trans{font-size:.84rem;line-height:1.85;color:rgba(44,36,22,.82);margin-top:.55rem;white-space:pre-wrap}
+.src{font-size:.68rem;line-height:1.65;color:rgba(44,36,22,.5);margin-top:.5rem}
+
+/* ---------- notes, badges, marks ---------- */
+.note{font-size:.76rem;line-height:1.75;color:rgba(44,36,22,.7);
+  background:rgba(201,162,39,.07);border-left:3px solid rgba(201,162,39,.5);
+  border-radius:0 10px 10px 0;padding:.6rem .8rem;margin-top:.8rem}
+.note b{color:#6b5510}
+.warnbox{font-size:.78rem;line-height:1.75;color:#5c3f0d;
+  background:rgba(201,162,39,.13);border:1px solid rgba(201,162,39,.45);
+  border-radius:12px;padding:.7rem .85rem;margin-top:.8rem}
+.refs{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.ref{font-size:.66rem;font-weight:700;color:rgba(44,36,22,.62);
+  background:rgba(44,36,22,.05);border:1px solid rgba(44,36,22,.1);
+  border-radius:999px;padding:.24rem .58rem}
+.ref b{color:#8a6d13}
+.kmark{text-align:center;font-size:.7rem;color:rgba(44,36,22,.42);
+  line-height:1.8;padding:2rem 1rem 2.4rem}
+.kmark a{color:rgba(44,36,22,.55)}
+
+/* ---------- print, shared ---------- */
+@media print{
+  .noprint,#site-header,.kit-top,.kmark{display:none !important}
+  body.kit{background:#fff;color:#000}
+  .kit-wrap{max-width:none;padding:0}
+  .printonly{display:block !important}
+  a[href]:after{content:""}
+}
+.printonly{display:none}

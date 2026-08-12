@@ -26,10 +26,14 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 - [Embed licensing](https://noorcodex.com/license): masjids, Islamic schools, apps and websites can embed any NOOR room (Quran, Prophets, Arabic course, Kids, Pillars) by subscription; embedded rooms are ad-free and non-commercial.
 
 ## Sister project
-- [NOOR Halal](https://noorhalal.ca): halal companion app from the same maker; the Codex and NOOR Halal share one house and one standard of care.
 
 - /unseen: The Unseen and the Mysteries: angels, jinn, previous peoples, signs of the Hour, corrected myths, explained mysteries, the full Night Journey, and The First War (the jinn before Adam), every claim evidence-badged (Qur'an-confirmed, Sunnah-confirmed, debated, corrected).
 - /sermon: The Last Sermon (Farewell Khutbah) rendered from authentic narrations with source labels.
 - /soul: Death and the Journey of the Soul from Qur'an and authentic hadith, honestly graded.
 - /masjid/: free masjid tools: a TV prayer board with astronomical prayer times, iqama countdowns, hijri date, qibla.
 - /kids/lanterns: The Lantern Sky, where gifts' du'as float as lanterns children answer with Ameen.
+- /family: the Family Room. How Allah asks us to behave with spouse, child, parent, kin, friend, neighbour and stranger, evidence-graded.
+- /heroes: Heroes of Islam after the first generations until the twentieth century, plus the hall of Muslim discoveries and contributions, honestly graded.
+- /stories/: the Hall of Stories. The only invented content on this site, clearly marked: nine stories built on the Names of Allah.
+- /masjid/: the Masjid Toolbox. Two kits: for an established house and for a new house with little means. Prayer board, khutba builder, printable timetable, qibla tool, starter guide.
+- /feedback: corrections, bugs and ideas, sent to hello@noorcodex.com.

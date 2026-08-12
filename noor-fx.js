@@ -14,6 +14,14 @@ const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 /* ---------------- i18n (Phase A: EN master inline; packs fetched per-language) ---------------- */
 const UI_EN = {
   "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids","nav.health":"Health",
+  "nav.quran":"Qur'an","nav.prophets":"Prophets","nav.madrasa":"Madrasa","nav.library":"Library","nav.give":"Give",
+  "g.learn":"Learn","g.story":"The Story","g.heart":"The Heart","g.little":"Stories & Little Ones","g.houses":"Houses & Support",
+  "m.madrasa":"The Classroom \u00b7 Madrasa","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
+  "m.path":"The Path of Creation","m.prophets":"The 25 Prophets","m.companions":"The Companions","m.characters":"Characters","m.places":"Places","m.heroes":"Heroes of Islam","m.unseen":"The Unseen & the Mysteries",
+  "m.pillars":"The Five Pillars","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room","m.sermon":"The Last Sermon","m.soul":"The Journey of the Soul","m.mizan":"Two Lives",
+  "m.stories":"The Hall of Stories","m.kidscodex":"The Kids' Codex","m.lanterns":"The Lantern Sky",
+  "m.masjid":"The Masjid Toolbox","m.orgs":"For Schools & Organizations","m.give":"Give a Gift","m.feedback":"Corrections & Ideas","m.legal":"Terms & Transparency",
+  "lang.choose":"Choose your language","lang.note":"The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.","lang.fallback":"That language pack could not be loaded right now.",
   "health.ar":"الطِّبُّ النَّبَوِيّ","health.title":"The Prophetic Pattern of Health","health.sub":"How he ﷺ ate, moved, slept, washed, fasted, and carried his heart: the authentic record on one side, what modern research keeps finding on the other. A portrait of a life, not a prescription.",
   "hero.kicker":"نُورٌ عَلَىٰ نُورٍ","hero.title":"Codex of Light",
   "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
@@ -65,25 +73,55 @@ const UI_EN = {
 const NOOR_I18N = {
   lang: localStorage.getItem("noor_lang") || "en",
   packs: { en: UI_EN },
-  rtl: ["ar","ur","fa","he","ps","sd","ku"],
+  rtl: ["ar","ur","fa","he","ps","sd","prs","pa"],
   t(k){ const p=this.packs[this.lang]||UI_EN; return p[k] ?? UI_EN[k] ?? k; },
   apply(){
     document.documentElement.lang = this.lang;
     document.documentElement.dir = this.rtl.includes(this.lang) ? "rtl" : "ltr";
     document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = this.t(el.getAttribute("data-i18n")); });
     document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = this.t(el.getAttribute("data-i18n-ph")); });
+    this.syncLangUI();
   },
+  fullPacks: {},
   async setLang(code){
-    this.lang = code; localStorage.setItem("noor_lang", code);
+    this.lang = code; try { localStorage.setItem("noor_lang", code); } catch (e) {}
     if (code !== "en" && !this.packs[code]) {
       try {
-        const r = await fetch(`i18n/${code}.json`, {cache:"force-cache"});
-        if (r.ok) { const j = await r.json(); this.packs[code] = Object.assign({}, UI_EN, j.ui || j); }
+        const r = await fetch(`/i18n/${code}.json`, {cache:"force-cache"});
+        if (r.ok) { const j = await r.json(); this.packs[code] = Object.assign({}, UI_EN, j.ui || j); this.fullPacks[code] = j; }
         else toast(this.t("lang.fallback"));
       } catch (e) { toast(this.t("lang.fallback")); }
     }
     this.apply();
     if (window.NoorPage && NoorPage.rerender) NoorPage.rerender();
+  },
+  /* translate a data record (node, character, place, word) through the loaded pack */
+  loc(section, rec){
+    if (this.lang === "en" || !rec) return rec;
+    const f = this.fullPacks[this.lang];
+    const o = f && f[section] && f[section][rec.id];
+    return o ? this._overlay(rec, o) : rec;
+  },
+  _overlay(a, b){
+    const out = Object.assign({}, a);
+    for (const k in b){
+      const v = b[k]; if (v == null) continue;
+      if (Array.isArray(v) && Array.isArray(a[k])) {
+        out[k] = a[k].map(function (el, i) {
+          const w = v[i];
+          if (w == null) return el;
+          if (el && typeof el === "object" && typeof w === "object") return Object.assign({}, el, w);
+          return w;
+        });
+      } else if (v && typeof v === "object" && a[k] && typeof a[k] === "object" && !Array.isArray(a[k])) out[k] = Object.assign({}, a[k], v);
+      else out[k] = v;
+    }
+    return out;
+  },
+  syncLangUI(){
+    const code = this.lang;
+    document.querySelectorAll("#lang-cur").forEach(function (el) { el.textContent = code.toUpperCase(); });
+    document.querySelectorAll("[data-setlang]").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-setlang") === code); });
   }
 };
 const t = k => NOOR_I18N.t(k);
@@ -366,6 +404,14 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     });
   }
   var LANGS = [
+    ["fa", "فارسی", "نور را به فارسی بخوانید", "وارد شوید"],
+    ["prs", "دری", "نور را به دری بخوانید", "داخل شوید"],
+    ["pa", "پنجابی", "نور پنجابی وچ پڑھو", "اندر آؤ"],
+    ["ha", "Hausa", "Karanta NOOR da Hausa", "Shiga"],
+    ["ps", "پښتو", "نور په پښتو ولولئ", "ننوځئ"],
+    ["so", "Soomaali", "Ku akhri NOOR af-Soomaali", "Gal"],
+    ["ku", "Kurdî", "NOOR bi Kurdî bixwîne", "Bikeve"],
+    ["sw", "Kiswahili", "Soma NOOR kwa Kiswahili", "Ingia"],
     ["ar", "العربية", "اقرأ نُور بالعربية", "ادخل"],
     ["fr", "Français", "Lire NOOR en français", "Entrer"],
     ["es", "Español", "Lee NOOR en español", "Entrar"],
@@ -389,9 +435,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   function langRow() {
     return LANGS.map(function (p) {
-      return '<a href="/' + p[0] + '" style="color:#E9C86A;text-decoration:none;font-weight:600;white-space:nowrap">' + p[1] + "</a>";
+      return '<button type="button" data-doorlang="' + p[0] + '" style="background:none;border:0;cursor:pointer;font:inherit;color:#E9C86A;font-weight:600;white-space:nowrap;padding:0">' + p[1] + "</button>";
     }).join('<span style="color:rgba(255,254,247,.35)"> · </span>') +
-    '<span style="color:rgba(255,254,247,.35)"> · </span><a href="/" style="color:#E9C86A;text-decoration:none;font-weight:600">English</a>';
+    '<span style="color:rgba(255,254,247,.35)"> · </span><button type="button" data-doorlang="en" style="background:none;border:0;cursor:pointer;font:inherit;color:#E9C86A;font-weight:600;padding:0">English</button>';
+  }
+  function bindDoor(d) {
+    d.querySelectorAll("[data-doorlang]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (window.NOOR_I18N) NOOR_I18N.setLang(b.getAttribute("data-doorlang"));
+        try { localStorage.setItem("noor_door", "1"); } catch (e) {}
+        d.remove();
+      });
+    });
   }
   function shell() {
     var old = document.getElementById("noor-translate-hint");
@@ -419,9 +474,10 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var wrap = document.createElement("div");
     wrap.style.cssText = "display:flex;align-items:center;gap:.7rem;flex-wrap:wrap";
     wrap.innerHTML = '<span style="color:#E9C86A" data-ic=globe></span><span style="font-weight:600">' + lang[2] + "</span>" +
-      '<a href="/' + lang[0] + '" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem;white-space:nowrap">' + lang[3] + " →</a>";
+      '<button type="button" data-doorlang="' + lang[0] + '" style="background:linear-gradient(135deg,#C9A227,#E9C86A);border:0;cursor:pointer;font-family:inherit;color:#1A160F;font-weight:800;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem;white-space:nowrap">' + lang[3] + " →</button>";
     d.appendChild(wrap);
     closeBtn(d, true);
+    bindDoor(d);
     document.body.appendChild(d);
     setTimeout(function () { if (d.parentNode) d.remove(); }, 22000);
   }
@@ -438,6 +494,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
         '<a href="/' + det[0] + '" style="display:inline-block;margin-top:.55rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;text-decoration:none;border-radius:999px;padding:.4rem 1.05rem;font-size:.78rem">' + det[3] + " →</a>");
     }
     closeBtn(d, false);
+    bindDoor(d);
     document.body.appendChild(d);
   }
   function init() {
@@ -653,4 +710,35 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { render(); });
   else render();
   try { new MutationObserver(function (m) { m.forEach(function (x) { x.addedNodes && x.addedNodes.forEach(function (n) { if (n.nodeType === 1) render(n); }); }); }).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+})();
+
+/* ================= v49 · the calm menu =================
+   One header for the whole house: burger sheet on small screens,
+   in-place language switching everywhere. */
+(function () {
+  "use strict";
+  function init() {
+    var burger = document.getElementById("nav-burger");
+    if (burger) burger.addEventListener("click", function () {
+      var open = document.body.classList.toggle("sheet-open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") document.body.classList.remove("sheet-open"); });
+    var sheet = document.getElementById("nav-sheet");
+    if (sheet) sheet.addEventListener("click", function (e) { if (e.target.closest("a")) document.body.classList.remove("sheet-open"); });
+    document.querySelectorAll("[data-setlang]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (window.NOOR_I18N) NOOR_I18N.setLang(b.getAttribute("data-setlang"));
+        document.body.classList.remove("sheet-open");
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      });
+    });
+    var ql = null;
+    try { ql = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+    if (ql) { if (window.NOOR_I18N) NOOR_I18N.setLang(ql); }
+    else if (window.NOOR_I18N && NOOR_I18N.lang !== "en") NOOR_I18N.setLang(NOOR_I18N.lang);
+    else if (window.NOOR_I18N) NOOR_I18N.apply();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();

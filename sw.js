@@ -2,10 +2,12 @@
    Pages: network first, cached copy when the road is dark.
    Assets: cached first, refreshed quietly behind the scenes.
    APIs and other origins are never intercepted. */
-var V = "noor-v44";
+var V = "noor-v49";
 var CORE = [
   "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate", "/unseen", "/sermon", "/soul",
-  "/assets/tw.css?v=16", "/noor-fx.js", "/noor-ink.js", "/markets.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
+  "/family", "/heroes", "/stories/", "/feedback", "/masjid/",
+  "/assets/tw.css?v=49", "/noor-fx.js", "/noor-ink.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
+  "/assets/gsap.min.js", "/assets/ScrollTrigger.min.js", "/assets/noor-motion.js",
   "/assets/brand/mark.svg", "/assets/brand/mark-192.png", "/assets/brand/mark-512.png",
   "/manifest.webmanifest"
 ];

@@ -122,7 +122,14 @@ const ROOMS = {
   "words": "words", "health": "health", "theology": "theology",
   "latif": "latif", "begin": "begin", "kids": "kids", "arabic": "arabic", "pillars": "pillars", "license": "license", "school": "school", "madrasa": "madrasa", "kids/cradle": "kids",
   "kids/letters": "kids", "donate": "give",
-  "sponsor": "sponsor", "legal": "legal"
+  "sponsor": "sponsor", "legal": "legal",
+  "family": "family", "heroes": "heroes", "feedback": "feedback",
+  "stories": "stories", "stories/index": "stories",
+  "unseen": "unseen", "sermon": "sermon", "soul": "soul",
+  "masjid": "masjid", "masjid/index": "masjid", "masjid/khutba": "masjid",
+  "masjid/timetable": "masjid", "masjid/qibla": "masjid",
+  "masjid/start": "masjid", "masjid/setup": "masjid", "masjid/board": "masjid",
+  "kids/lanterns": "lanterns"
 };
 
 /* referrer hostnames folded into the handful of names that matter for
@@ -139,7 +146,6 @@ const SOURCES = [
   [/(^|\.)google\./, "google"],
   [/(^|\.)bing\.com$|(^|\.)duckduckgo\.com$|(^|\.)yahoo\./, "search"],
   [/(^|\.)chat\.openai\.com$|(^|\.)chatgpt\.com$|(^|\.)perplexity\.ai$|(^|\.)claude\.ai$|(^|\.)gemini\.google\.com$/, "ai"],
-  [/(^|\.)noorhalal\.ca$/, "noorhalal"],
   [/(^|\.)linkedin\.com$|^lnkd\.in$/, "linkedin"],
   [/(^|\.)pinterest\./, "pinterest"],
   [/(^|\.)islamicboard\.com$|(^|\.)turntoislam\.com$|(^|\.)ummah\.com$/, "forum"],

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="The Du’a That Outlived Her: a story of Al-Hadi, The Guide. Timbuktu and the Sahara, 1500s, on the salt roads of the desert. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:title" content="The Du’a That Outlived Her · Al-Hadi · NOOR Codex of Light"/>
+<meta property="og:description" content="The Du’a That Outlived Her: a story of Al-Hadi, The Guide. Timbuktu and the Sahara, 1500s, on the salt roads of the desert. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>The Du’a That Outlived Her · Al-Hadi · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/stories/hadi"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<script src="../noor-fx.js" defer></script>
+<script src="../noor-ink.js" defer></script>
+<script src="../assets/gsap.min.js" defer></script>
+<script src="../assets/ScrollTrigger.min.js" defer></script>
+<script src="../assets/DrawSVGPlugin.min.js" defer></script>
+<script src="../assets/noor-motion.js" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.rprog{position:fixed;left:0;right:0;top:0;height:2px;z-index:90;pointer-events:none}
+.rprog span{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#C9A227,#F4D46A);box-shadow:0 0 10px rgba(244,212,106,.6)}
+@media (prefers-reduced-motion:no-preference){.rprog span{transition:transform .1s linear}}
+.sread{padding-bottom:1rem}
+.before{max-width:34rem;margin:2rem auto 0;background:#fff;border:1px solid rgba(44,36,22,.13);border-radius:16px;padding:.95rem 1.15rem 1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.before b{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin-bottom:.42rem}
+.before p{font-size:.85rem;line-height:1.88;font-style:italic;color:rgba(44,36,22,.72);margin:0}
+.epi{max-width:29rem;margin:2.8rem auto 2.5rem;text-align:center;font-family:Amiri,serif;font-size:1.36rem;line-height:1.9;color:rgba(44,36,22,.7)}
+.epi::before{content:"✦";display:block;font-family:Inter,system-ui,sans-serif;font-size:.68rem;color:var(--gold);opacity:.85;margin-bottom:1rem}
+.prose{max-width:34rem;margin:0 auto}
+.mv h2{font-size:1.06rem;font-weight:800;line-height:1.42;color:#2C2416;margin:0 0 1.1rem}
+.mv h2::after{content:"";display:block;width:2.3rem;height:1px;margin-top:.62rem;background:linear-gradient(90deg,rgba(201,162,39,.9),rgba(201,162,39,0))}
+.mv p{font-size:1.02rem;line-height:1.95;color:rgba(44,36,22,.87);margin:0 0 1.2rem}
+.mv p:last-child{margin-bottom:0}
+.mv>p:first-of-type::first-letter{font-family:Amiri,serif;font-weight:700;font-size:3.15rem;line-height:.9;color:var(--gold);float:left;padding:.34rem .5rem 0 0}
+.orn{display:flex;align-items:center;justify-content:center;gap:.95rem;margin:2.9rem 0}
+.orn::before,.orn::after{content:"";height:1px;width:3.6rem}
+.orn::before{background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.6))}
+.orn::after{background:linear-gradient(90deg,rgba(201,162,39,.6),rgba(201,162,39,0))}
+.orn i{font-style:normal;color:var(--gold);font-size:.72rem;opacity:.9;line-height:1}
+.ayah{max-width:34rem;margin:3.2rem auto 0}
+.ayah .ar{font-family:Amiri,serif;font-size:1.42rem;line-height:2.15;color:#F4D46A;text-align:right;margin:.2rem 0 0}
+.ayah .en{font-size:.86rem;line-height:1.85;color:rgba(255,254,247,.78);margin:1rem 0 0}
+.ayah .rw{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-top:1rem;padding-top:.85rem;border-top:1px solid rgba(244,212,106,.18)}
+.ayah .rf{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.7)}
+.ayah .vplay{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.13)}
+.ayah .vplay.playing{background:#F4D46A;color:#14100A;border-color:#F4D46A}
+.snav{max-width:34rem;margin:2.6rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(44,36,22,.1);display:grid;grid-template-columns:1fr auto 1fr;gap:.6rem;align-items:stretch}
+.snav a,.snav span.off{display:flex;flex-direction:column;justify-content:center;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:14px;padding:.72rem .85rem;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.75);transition:border-color .18s ease,color .18s ease}
+.snav a:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+.snav .k{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.4);margin-bottom:.25rem}
+.snav .nx{text-align:right}
+.snav .mid{align-items:center;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em}
+.snav span.off{border-style:dashed;color:rgba(44,36,22,.45);background:transparent}
+@media (max-width:36rem){.snav{grid-template-columns:1fr}.snav .nx{text-align:left}.mv>p:first-of-type::first-letter{font-size:2.85rem}}
+</style>
+
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">Al-Hadi · The Guide</p>
+<div class="ar notranslate" translate="no">الهَادِي</div>
+<h1>The Du’a That Outlived Her</h1>
+<p class="lead">Timbuktu and the Sahara, 1500s, on the salt roads of the desert</p>
+</section>
+<div class="rprog" aria-hidden="true"><span id="rprogbar"></span></div><div class="wrap sread"><section class="before mo"><b>Before you begin</b><p>For the one who walked away, and for the one who never stopped asking Allah about them by name.</p></section><p class="epi mo">I am lost, said the guide, finishing his prayer. He is not.</p><article class="prose"><section class="mv"><h2>The House of Books and Salt</h2><p>Timbuktu in those years stood where the desert and the river agree to meet and trade. Out of the north came salt, cut at the flats of Taghaza in slabs like grey marble, two to a camel. Up from the river port came gold dust folded in feather quills, cloth, kola nuts, dried fish and grain. And through the middle of it, holding its own against salt and gold, moved the city’s third currency, which was books. Scholars taught in the shade of the great mud-brick mosques. Scribes copied by lamplight. A good manuscript could buy a camel. A great one could buy the herd.</p><p>Idris was born into a house that handled two of the three. His father traded salt, and his mother, Maryam, had married into the trade from a family of scribes, and could recite more of the Qur’an than many men who taught it. Their house near the Sankore mosque had a flat roof for sleeping in the hot months, a courtyard acacia, and a wooden chest of books which his mother dusted with the reverence other women in the quarter kept for gold. The call to prayer came over the rooftops five times a day like a tide, and the house rose to it, easily, as boats rise.</p><p>The boy learned as boys there learned: letters chalked on a whitewashed wooden board, verses recited until they sat firm, then the board washed and the next verses written over the ghosts of the last. He had a quick mind and quicker feet. His father would set him small sums of the trade, so many slabs at Taghaza, so many mithqals of gold at the river, and the boy would have the answer before the question ended. His mother, watching, held her praise the way careful people hold coins. She had seen quickness before. Quickness, she said once, gets a man to the wrong place early.</p><p>His father died when Idris was seventeen, on the road home from the mines, of a fever that took three days and a lifetime. The caravan brought his salt back untouched, every slab accounted for, because desert men do not steal from the dead: the sum of a man came home walking beside his camels, goods intact, owner gone. Idris stood at the grave beside his mother and understood that he was now the house. What he did not notice, being seventeen and full of the future, was that somewhere in him a quiet clerk had written, and underlined, that roads pay and prayer does not.</p><p>Maryam saw it, the way mothers see hairline cracks in cups they know. She said little. She was not a woman of lectures but of habits: the night prayer when the house slept, the dawn prayer never missed, the Book out of the chest at first light. Her voice doing its slow recitation was the sound Idris woke to all his childhood, the way other children wake to roosters. Later, in the years when he had stopped answering her letters, it was this sound, more than her face, that would come back to him at bad moments, arriving unasked across a thousand miles of sand.</p><p>For a while the young man kept the shape of his father’s religion, prayer at the edges of business, alms when the season was fat. But shapes without weight drift. Fajr, the dawn prayer, went first, traded one morning for sleep after a late arrival, then the next morning, then simply gone, the way a tent peg works loose in soft ground: no single night you could name, and then the whole corner of the roof is down. By twenty-two, the only prostration left in his life was the camel’s, kneeling to take on salt.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Weight of Salt</h2><p>He was, let it be said honestly, brilliant at the trade. He learned the roads the way he had learned sums: wells and waypoints and the politics of wells, when to buy salt cheap at the flats and when to hold it until the price stood up on its hind legs. He took his father’s middling business and in ten years made it a name. Twenty camels became sixty, then two hundred. He built a second house near the market with doors of studded wood, and men at the port began to say his name with the small pause that means money.</p><p>His mother stayed in the old house by Sankore and would not be moved into the new one. When he visited, which was often at first, she would feed him rice and river fish and ask nothing about prices. She asked other things. Whether he prayed. Whether he had eaten among the poor lately. Whether he was sleeping. He answered the last question and slid past the others with jokes, and she let him, and prayed the night prayers over his name instead. He knew she did. Everyone knew. It half touched and half chafed him, like a garment from home that no longer quite fit.</p><p>The chafing won. The year he turned thirty, drought sat on the land, and his mother fasted and prayed with the fervour of the whole quarter. Idris, meaning it kindly, said the thing he spent thirty years unable to unsay: ask your Lord for rain, mother, and leave my affairs to me. I have guides for the desert and clerks for the sums. Gold answers faster. She looked at him a long, level moment, and answered without heat, the way she said everything: gold is a good servant on the road, my son. But gold cannot find the road home. I will keep asking the One who made you.</p><p>He laughed, kissed her hands, and went back to his camels, and their two sentences stood facing each other across the next twenty years like markers on opposite banks. She did keep asking. Every Friday, the neighbours knew, and in the last third of every night: not for his wealth, never once for his wealth, but with one strange stubborn request she wore like a ring: O Allah, Guide of the lost, bring him home by any road You choose. The wording frightened her sister, who said, you do not know what you are permitting. Maryam kept the wording. Mothers who pray at night know exactly what they are permitting.</p><p>When he left that season for the mines, she gave him what she always gave, provisions and blessing, and one thing more: paper folded to the size of a thumb, sewn shut in a scrap of red leather. He turned it over, amused. A charm, mother? From you? Her mouth went firm. It is not a charm, she said. Charms are for people who think secrets do the work. It is a letter: it asks nothing of the leather and everything of Allah. Open it when you are lost. He said, smiling, I have the best guides in the desert. She said, I know. Open it when you are lost.</p><p>He carried it because refusing was more trouble than carrying. It went into the corner of his saddle bag with flint and needles, the small republic of forgotten things, and stayed there through every crossing for twenty years, sewn shut, unread, riding a hand’s width from his hip the whole length of every road he took away from her. Later he would understand that this was the truest picture of those years anyone could have drawn: her word that close, and him never once reaching for it.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>News Travels at the Speed of Camels</h2><p>The years themselves can be told quickly, because he spent them quickly. Salt north to south, gold south to north, cloth and books both ways. Two marriages, both correct, neither warm; no children living past their second year, a grief he filed under the will of God with a clerk’s efficiency and never opened again. Feasts for men he did not like. The hajj postponed decade by decade, always the year after next. His mother’s letters came by caravan, dictated to a scribe, short and unchanging: I am well. The quarter is well. I ask Allah to guide you and to let me see your face. He sent back silver and no sentences.</p><p>He was north at the flats, watching salt come white out of the ground, the year the letter arrived that was not from her. Her neighbour’s son had written it, in a careful student hand: that Maryam bint Ahmad had died in Ramadan, on a Friday, at dawn, with her Book beside her; that half the quarter had prayed over her; that she was buried by the wall of the old cemetery; and that among her last words had been his name, and these: tell him it is not too late. The letter had taken four months to find him. She was four months buried before he knew the world had changed.</p><p>He read it standing in the white glare of the flats, and what he felt was the most frightening thing he had ever felt, which was nothing. A whiteness, like the flats. He paid for mourning cloth. He sent money for the grave to be tended and a wall repaired in her name. He fed the miners lavishly that night in her honour, and the men praised his devotion, and he lay awake hearing them praise it. He could not weep. He told himself grief was for men with time, and took the next caravan, and was very brilliant for three more years, the way a spun coin is upright just before the end.</p><p>It is not too late. He decided the words were a dying woman’s tenderness and forbade them the premises. They came in anyway, at their own hours, usually at dawn, which stubbornly went on arriving every day, her hour, the hour of the voice doing its slow recitation over the rooftops of his childhood. He began to be known, those years, as a hard man to wake before mid-morning.</p><p>In his fifty-first year he assembled the largest caravan of his life, four hundred camels for the autumn salt, and rode north with it himself, which the clerks thought needless and the young men thought magnificent. He could not have told you why he went in person. The trade did not need him. Perhaps, though he would have cursed the suggestion, some part of him had begun listening for something out there in the silence between wells, and wanted to be present when it spoke.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Storm</h2><p>The guide on that road was a Tuareg of perhaps sixty called Amastan, veiled to the eyes in the indigo cloth of his people, so spare of speech that the drivers said he paid for each word out of his own water ration. He read sand the way scholars read margins: the grain of the dunes under the wind, the colour of distance, the taste of earth from a dry well. Idris hired him as he hired everyone, as an instrument, and noticed him twice in the first ten days: once when he corrected their line by three fingers against the sunset, and once at prayer.</p><p>It was the prayer that first snagged on Idris, small as a thorn. Whatever the day was doing, Amastan prayed it on time. He would swing down, sweep a place clear with his forearm, purify himself with sand in the manner the Law allows where water is life itself, the dry ablution, and stand facing across the dunes, unhurried, as if the open desert were the courtyard of his house. The caravan flowed around him; he never once looked up to see whether it waited. Idris, watching from the saddle with thirty years of unprayed prayers stacked behind his ribs, found the sight obscurely infuriating, and could not stop watching.</p><p>Nine days short of the mines, the wind changed. Amastan smelled it before the sky admitted anything; he turned his face north like a man reading bad news over another man’s shoulder, and gave quiet orders: water tight, camels coupled, cloth ready. The storm came up from the horizon in the late afternoon, a brown wall with its own weather inside it, and then there was no sky, no line, no north, only sand moving like a live thing and the world shrunk to the reach of your arm. They knelt the camels and lay against them and let it scream. It screamed for two days.</p><p>When it ended, the desert had been rewritten. Dunes were gone, dunes were new, the track was a rumour, and the stars came out that night over a country no map had met. They walked the camels slow while Amastan cast for signs, and on the second day Idris heard the words a desert man will spend anything not to say, said quietly, with the accounts exact: the storm has carried us east of the line. The forward well is lost somewhere behind the wind. Water in the skins, five days, six with mercy. The men took the news silently, each privately beginning to pray.</p><p>That evening, with the sun going down bloody over sand that belonged to no one, Amastan swung down from his camel, swept the ground clear with his forearm, and stood to pray the sunset prayer, on time, exactly as always. And something in Idris tore loose from thirty years of moorings. He heard his own voice, cracked with dust and fear and something older than both, shouting across the cooling air: at this you pray? You do not even know where the qibla is. You do not know where anything is. We are lost, old man, or has that news not reached you?</p><p>Amastan finished the prayer completely, unhurried, turning his face right and left with the salutation of peace. Then he rose, and looked at the merchant, and paid out four of his words. I am lost, he said. He is not.</p><p>He mounted and rode on, leaving the sentence standing in the open desert, and Idris sat his saddle in the red light unable to move, a rich man with four hundred camels of salt and five days of water, hearing his whole life described in one breath by a stranger. Lost, and guided, were real words, then. Conditions, not figures of speech. A man could be one and not the other. A man could be lost long before any storm, and the storm only said it aloud.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Folded Paper</h2><p>That night he could not sleep, and did not try. He sat apart from the fires with his saddle bag in his lap like a man holding an animal he fears, and some hours past midnight, in the enormous silence the desert keeps between winds, his hand went in among the flint and the needles and found the scrap of red leather, sewn shut, twenty years old, soft with riding. He cut the stitches with his thumbnail. Inside, in a fine scribe’s hand she had paid for with her cooking pots for all he knew, on paper that had crossed the Sahara at his hip forty times unread, was her letter.</p><p>It was short. It was not addressed to him. In the Name of Allah, the Merciful, the Compassionate. O Allah, Guide of the lost, You see my son, and I no longer do. He has forgotten the road, but You have never once lost sight of him. I am not asking You to make him rich; he will manage that, and it will not help him. I ask You for his heart. Bring him home by any road You choose, though it be long, though I be dead on the day he arrives. O Allah, let my boy die knowing You. And below, in the same borrowed hand, small as a seed: your mother, who is not lost, waiting.</p><p>The desert at night is the quietest room on earth, and in it a big man in his fifties made the sounds a boy makes, and no one came, because desert men know that some storms a man must stand in alone. Thirty years came down more or less at once. Dawn found him on his knees on the swept sand, doing what he had watched Amastan do, clumsily, out of practice in his very bones, forehead down on the cool ground, finding, when he reached for the Opening chapter, the Fatiha, that every word was still there. The words had waited in his mouth like a key, kept for him by Someone certain he would one day stand before the right door.</p><p>Guide us along the straight path. He had recited that line ten thousand boyhood mornings without hearing it. Now, lost in the exact and unfigurative sense, he heard it, and understood that he had been saying it all his life the way the drowned say water.</p><p>What happened next was not magic, and the story insists on this the way his mother would have. The wind had fallen in the night. The morning stood clean to the very edge of the world, one of a dozen such mornings a season, and in that hard clarity Amastan, casting west from a high dune since first light, went still, then came down at a run. Far off, a scarp of black rock whose shape he knew, a marker his grandfather’s grandfather had named. He had the line. Two days, he said. The water would be bitter and shallow and enough. The camels moaned as they rose, the caravan turned, and the man who had wept all night rode on, for the first time in thirty years, on a bearing someone trustworthy had set.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Grave by the Wall</h2><p>They watered at the bitter well, made the mines, loaded the salt, and came home by the long safe road, and the trade was profitable, and Idris found he did not care, in a new and unfrightening way. Outside the city he did what returning traders do not do: he dismounted, gave his riding camel to the youngest driver, and walked the last miles into Timbuktu on foot, through the gardens, past the port road, into the smell of dust and smoke and river that meant mother, and the men with him kept their questions, because his face was the face of a man arriving at something.</p><p>The old cemetery lies along a wall the colour of the desert it argues with. Her grave was kept, as his silver had arranged, plastered smooth, modest, right in every particular, and that correctness nearly undid him: everything paid for, nothing attended. He sat beside it in the afternoon dust like a boy outside a door and told her, in an undertone, with long pauses, about the storm, the guide, the letter, the key kept in his mouth. What the dead are given of our news, the scholars say cautiously, is Allah’s affair. He talked anyway. Some accounts want reading aloud.</p><p>It was her neighbour, ancient now, blind in one eye, who completed the ledger that evening, in the shade of the old courtyard where the acacia still stood. Every Friday, son. Every Friday of thirty years, and in the night we heard her through the wall. Never money, never even your health, strange woman, rahimaha Allah, may Allah have mercy on her. Only: Ya Hadi, O Guide, bring him home by any road You choose. She turned her seeing eye on him. You took the long one, she said, without malice, the way the old state weather. He said, yes. He had stopped defending himself against true sentences.</p><p>In the weeks after, he went to a teacher at the Sankore mosque and laid the matter before him like goods on a mat: the mother, the du’a, the thirty years, the storm, and the guilt that had ridden home with him, that she had died unanswered, his lateness having defeated her asking. The teacher listened to the end. Then he opened the Book to the chapter of the Stories, Surat al-Qasas, and read: you do not guide whom you love, but Allah guides whom He wills.</p><p>That was said, he added quietly, to the Prophet ﷺ himself, grieving a man he loved whose heart he could not turn. Understand, then, what your mother always understood. Guidance was never in her gift, nor in any created hand. She could not bring you home, and she knew it; that is exactly why she spent thirty years asking the One who can. Your return is not her defeat, merchant. It is her answer, arriving.</p><p>He lived another two decades, and the quarter came to know him the way it had known her. The big house near the market filled with other people’s children learning letters on whitewashed boards; he paid teachers the way he had once paid guides, and sat in at the back like a large late student, moving his lips. He prayed the dawn prayer in her mosque, at her hour, and was easy to wake. He went at last on the postponed hajj and wept at strange moments, at wells mostly, which the young pilgrims did not understand. And every Friday an old trader sat by a plastered grave near the wall, opening the week’s accounts aloud to the Auditor of all his roads.</p><p>They buried him there in the end, beside her, a small stone at the head. The stone gives no titles and records no camels. It says what he asked it to say, the sum of the whole ledger, four words for the caravans of the future to price if they can: lost, and then found.</p></section></article><div class="fig ayah mo"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">إِنَّكَ لَا تَهْدِي مَنْ أَحْبَبْتَ وَلَٰكِنَّ اللَّهَ يَهْدِي مَن يَشَاءُ ۚ وَهُوَ أَعْلَمُ بِالْمُهْتَدِينَ</p><p class="en">Indeed, you do not guide whom you love, but Allah guides whom He wills, and He knows best those who will accept guidance.</p><div class="rw"><span class="rf">Qur’an · Al-Qasas 28:56</span><button class="vplay" data-ref="28:56">Listen ▸</button></div></div><nav class="snav mo" aria-label="More stories"><a class="pv" href="shakur.html"><span class="k">Previous story</span>The Calligrapher’s Last Qur’an</a><a class="mid" href="index.html">The Hall of Stories</a><a class="nx" href="jabbar.html"><span class="k">Next story</span>The Setting of Broken Things</a></nav></div>
+</main>
+
+<footer class="rfoot">
+<p>A story from the Hall of Stories: the people are invented, the Name and the verses are not.<br/>
+<a href="../index.html">Return to the Codex</a> · <a href="../feedback.html">Send a correction</a> · <a href="../donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+<script>
+(function(){
+  /* the reading line: a thin gold rule that fills as the story is read.
+     Under prefers-reduced-motion it still updates, it simply does not glide. */
+  var bar = document.getElementById("rprogbar");
+  if (bar) {
+    var queued = false;
+    var paint = function () {
+      queued = false;
+      var d = document.documentElement;
+      var span = d.scrollHeight - d.clientHeight;
+      var p = span > 0 ? (d.scrollTop || document.body.scrollTop) / span : 0;
+      if (p < 0) { p = 0; }
+      if (p > 1) { p = 1; }
+      bar.style.transform = "scaleX(" + p + ")";
+    };
+    var ask = function () {
+      if (queued) { return; }
+      queued = true;
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(paint); } else { paint(); }
+    };
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask, { passive: true });
+    paint();
+  }
+  /* the closing verse, in the shared Mushaf voice */
+  Array.prototype.forEach.call(document.querySelectorAll(".vplay"), function (b) {
+    b.addEventListener("click", function () {
+      if (window.playAyah) { window.playAyah(b.getAttribute("data-ref"), b); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

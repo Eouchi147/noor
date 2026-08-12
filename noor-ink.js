@@ -121,12 +121,12 @@
   css.id = "ink-css";
   css.textContent =
   "#ink-stage{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}" +
-  ".ink-paper{position:absolute;inset:-4%;background-image:url(" + paperURL + ");background-size:" + S + "px;mix-blend-mode:overlay;opacity:" + CFG.paperOp + "}" +
-  ".ink-edge{position:absolute;inset:-6%;background-image:url(" + edgeURL + ");background-size:100% 100%;opacity:" + CFG.edgeOp + ";transform-origin:50% 46%}" +
-  ".ink-wisp{position:absolute;width:150%;height:120%;left:-25%;background-image:url(" + smokeURL + ");background-size:" + Math.round(S * 1.6) + "px;background-repeat:repeat;mix-blend-mode:soft-light;opacity:calc(" + CFG.wispOp + " * (1 - var(--dp,0) * .85))}" +
-  ".ink-wisp.w1{top:-14%;animation:inkdrift1 120s linear infinite}" +
-  ".ink-wisp.w2{top:18%;animation:inkdrift2 170s linear infinite;transform:rotate(180deg)}" +
-  ".ink-wisp.w3{top:44%;animation:inkdrift3 210s linear infinite}" +
+  ".ink-paper{position:absolute;inset:-12%;background-image:url(" + paperURL + ");background-size:" + S + "px;mix-blend-mode:overlay;opacity:" + CFG.paperOp + "}" +
+  ".ink-edge{position:absolute;inset:-14%;background-image:url(" + edgeURL + ");background-size:100% 100%;opacity:" + CFG.edgeOp + ";transform-origin:50% 46%}" +
+  ".ink-wisp{position:absolute;width:170%;height:170%;left:-35%;background-image:url(" + smokeURL + ");background-size:" + Math.round(S * 1.6) + "px;background-repeat:repeat;mix-blend-mode:soft-light;opacity:calc(" + CFG.wispOp + " * (1 - var(--dp,0) * .85));-webkit-mask-image:radial-gradient(70% 60% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(70% 60% at 50% 50%,#000 55%,transparent 100%)}" +
+  ".ink-wisp.w1{top:-42%;animation:inkdrift1 120s linear infinite}" +
+  ".ink-wisp.w2{top:-16%;animation:inkdrift2 170s linear infinite;transform:rotate(180deg)}" +
+  ".ink-wisp.w3{top:6%;animation:inkdrift3 210s linear infinite}" +
   ".ink-edge{animation:inkbreathe 11s ease-in-out infinite}" +
   "@keyframes inkdrift1{from{transform:translate3d(-4%,0,0) rotate(0.001deg)}50%{transform:translate3d(4%,1.5%,0) rotate(.6deg)}to{transform:translate3d(-4%,0,0) rotate(0.001deg)}}" +
   "@keyframes inkdrift2{from{transform:translate3d(3%,0,0) rotate(180deg)}50%{transform:translate3d(-3%,-1.2%,0) rotate(180.5deg)}to{transform:translate3d(3%,0,0) rotate(180deg)}}" +

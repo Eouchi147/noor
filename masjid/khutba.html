@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="A free khutba builder for the khatib: four structures, twelve sourced themes, the khutbat al-hajah in Arabic with translation, the second khutba with its duas, a running time against the sunnah of brevity, and a clean print sheet for the minbar."/>
+<meta property="og:title" content="The khutba builder · NOOR Codex of Light"/>
+<meta property="og:description" content="Four structures, twelve sourced themes, the khutbat al-hajah, the second khutba and its duas, a running time total, and a print sheet made for the minbar. Free, no account."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<title>The khutba builder · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/masjid/khutba.html"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<link rel="stylesheet" href="kit.css"/>
+<script src="../noor-fx.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NOOR Khutba Builder","url":"https://noorcodex.com/masjid/khutba.html","applicationCategory":"ReligiousApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"NOOR · Codex of Light"}}</script>
+<style>
+#timebar{position:sticky;top:3.5rem;z-index:20;background:rgba(255,254,247,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+#timebar .in{max-width:54rem;margin:0 auto;padding:.6rem 1rem;display:flex;
+  align-items:center;gap:.6rem;flex-wrap:wrap}
+#timebar .tot{font-size:1.25rem;font-weight:900;font-variant-numeric:tabular-nums}
+#timebar .lab{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+#timebar .state{font-size:.72rem;font-weight:800;border-radius:999px;padding:.25rem .65rem;border:1px solid}
+#timebar.ok .state{color:var(--ok);border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+#timebar.long .state{color:var(--warn);border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+#timebar.long .tot{color:var(--warn)}
+.part{border:1px solid var(--line);border-radius:14px;padding:.8rem .85rem;margin-top:.75rem;background:#FFFDF9}
+.part.flash{animation:flash 1.1s ease}
+@keyframes flash{0%{background:#FFF3CE}100%{background:#FFFDF9}}
+.part .ph{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.part .pn{font-size:.66rem;font-weight:900;color:#fff;background:var(--gold);
+  border-radius:999px;min-width:1.25rem;height:1.25rem;display:inline-flex;
+  align-items:center;justify-content:center;padding:0 .35rem}
+.part h3{font-size:.9rem;font-weight:800;margin:0;flex:1;min-width:9rem}
+.part .mins{display:flex;align-items:center;gap:.3rem;font-size:.66rem;
+  font-weight:800;text-transform:uppercase;color:var(--soft)}
+.part .mins input{width:3.6rem;margin:0;padding:.28rem .35rem;text-align:center;font-size:.9rem;font-weight:800}
+.part .guide{font-size:.76rem;line-height:1.75;color:rgba(44,36,22,.66);margin:.45rem 0 0}
+.part textarea{margin-top:.5rem}
+.check{display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;
+  line-height:1.7;color:rgba(44,36,22,.82);padding:.4rem 0;border-bottom:1px solid rgba(44,36,22,.06)}
+.check input{width:1.05rem;height:1.05rem;margin:.28rem 0 0;flex:0 0 auto;accent-color:#C9A227}
+.dua{border-top:1px solid var(--line);padding-top:.7rem;margin-top:.9rem}
+.dua:first-of-type{border-top:0;padding-top:0}
+.srule{border-top:1px solid rgba(44,36,22,.07);padding:.7rem 0}
+.srule:first-child{border-top:0;padding-top:0}
+.srule h3{margin:0;font-size:.84rem;font-weight:800}
+.srule p{font-size:.76rem;line-height:1.75;color:rgba(44,36,22,.7);margin:.25rem 0 0}
+.srule .s{font-size:.66rem;font-weight:800;color:#8a6d13;margin-top:.25rem}
+.saved{font-size:.68rem;color:var(--soft);margin-top:.6rem}
+#sheet{display:none}
+@media print{
+  @page{margin:16mm 14mm}
+  #timebar,.kp,.kit-top,.kmark,#site-header{display:none !important}
+  body.kit{background:#fff;color:#000;font-size:12pt}
+  #sheet{display:block !important}
+  #sheet .top{border-bottom:2px solid #000;padding-bottom:.4rem;margin-bottom:1rem}
+  #sheet h1{font-size:21pt;margin:0;font-weight:800}
+  #sheet .meta{font-size:10.5pt;margin:.25rem 0 0}
+  #sheet .pt{margin:0 0 1.15rem}
+  #sheet .pt h2,#sheet .pt .m{break-after:avoid;page-break-after:avoid}
+  #sheet .pt.brk{page-break-before:always;padding-top:.4rem}
+  #sheet .pt h2{font-size:15pt;margin:0 0 .15rem;font-weight:800}
+  #sheet .pt .m{font-size:10pt;font-weight:700;color:#444}
+  #sheet .pt .body{font-size:13.5pt;line-height:1.7;margin:.4rem 0 0;white-space:pre-wrap}
+  #sheet .pt .ar{font-family:Amiri,serif;font-size:19pt;line-height:2.05;
+    direction:rtl;text-align:right;display:block;margin:.5rem 0}
+  #sheet .pt .gd{font-size:11pt;color:#555;font-style:italic;line-height:1.55;margin:.35rem 0 0}
+  #sheet .pt .rf{font-size:10pt;color:#333;margin:.35rem 0 0}
+  #sheet .foot{border-top:1px solid #000;margin-top:1.2rem;padding-top:.4rem;font-size:9.5pt}
+}
+</style>
+</head>
+<body class="kit">
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<div class="kit-top">
+<div class="in">
+<a class="crumb" href="index.html">✦ The masjid toolbox</a>
+<div class="ar notranslate" translate="no">الْخُطْبَة</div>
+<h1>The khutba builder</h1>
+<p>Choose a shape, choose a theme, write in your own words, and watch the clock. The khutba, the Friday sermon, is short by sunnah and long in weight. Everything here saves in this browser alone, and prints for the minbar, the pulpit, in large type.</p>
+</div>
+</div>
+
+<div id="timebar" class="ok"><div class="in">
+<span class="lab">Running time</span>
+<span class="tot" id="tb-tot">0</span>
+<span class="lab" id="tb-target">minutes · target 17</span>
+<span class="state" id="tb-state">within the target</span>
+</div></div>
+
+<div class="kit-wrap">
+
+<div class="kp">
+<h2><span class="n">1</span>Your khutba</h2>
+<p class="sub">A topic for your own reference. Nothing you type leaves this device.</p>
+<label class="kf" for="topic">Topic or title</label>
+<input id="topic" placeholder="The right of the neighbour"/>
+</div>
+
+<div class="kp">
+<h2><span class="n">2</span>Choose a structure</h2>
+<p class="sub">Four shapes that have carried Friday sermons for a long time. Choosing one lays out its parts below, with the suggested minutes for each.</p>
+<div class="chips" id="structs"></div>
+</div>
+
+<div class="kp">
+<h2><span class="n">3</span>Choose a theme</h2>
+<p class="sub">Twelve themes, each with a seed paragraph and its sources. Choosing one writes the seed and its references into the part you name below. The seed is a starting sentence, not a script: put it in your own mouth.</p>
+<label class="kf" for="theme-target">Write the theme into</label>
+<select id="theme-target"></select>
+<div class="chips" id="themes"></div>
+<div id="theme-view"></div>
+</div>
+
+<div class="kp">
+<h2><span class="n">4</span>The outline</h2>
+<p class="sub">Each part carries its guidance and its suggested minutes. Change the minutes and the running time above changes with you. Write your own notes in the boxes; they are what prints.</p>
+<div id="outline"><p class="hint">Choose a structure above and the outline appears here.</p></div>
+</div>
+
+<div class="kp">
+<h2><span class="n">5</span>The opening: khutbat al-hajah</h2>
+<p class="sub">The sermon of need, taught by the Prophet ﷺ as an opening for address. Recite it slowly, from memory if you can.</p>
+<div class="ar-block notranslate" translate="no" dir="rtl" id="hajah-ar"></div>
+<p class="translit" id="hajah-tr"></p>
+<p class="trans" id="hajah-en"></p>
+<p class="src" id="hajah-src"></p>
+<button class="btn btn-gold btn-sm" id="ins-hajah">Insert the full opening</button>
+<h3>The shorter opening</h3>
+<p class="sub">When time or memory is short, this shorter opening is enough, and khatibs have used it for centuries.</p>
+<div class="ar-block notranslate" translate="no" dir="rtl" id="short-ar"></div>
+<p class="trans" id="short-en"></p>
+<button class="btn btn-ghost btn-sm" id="ins-short">Insert the short opening</button>
+</div>
+
+<div class="kp">
+<h2><span class="n">6</span>The second khutba</h2>
+<p class="sub">Stand again after the sitting. These are the elements the schools name, some as pillars and some as strong custom; tick them off as you place them.</p>
+<div id="second-el"></div>
+<h3>The salawat, blessings on the Prophet ﷺ</h3>
+<div class="ar-block notranslate" translate="no" dir="rtl" id="salawat-ar"></div>
+<p class="src">The Ibrahimiyya, the form that names Ibrahim, taught by the Prophet ﷺ. Bukhari 3370, Muslim 406.</p>
+<button class="btn btn-ghost btn-sm" id="ins-salawat">Insert the salawat</button>
+<h3>Three duas to close with</h3>
+<div id="duas"></div>
+</div>
+
+<div class="kp">
+<h2><span class="n">7</span>The sunnah of the khutba</h2>
+<p class="sub">Nine rules of the Friday sermon as the Prophet ﷺ gave it, each with its source. Where scholars differ, the difference is named rather than hidden.</p>
+<div id="sunnah"></div>
+</div>
+
+<div class="kp">
+<h2><span class="n">8</span>Take it to the minbar</h2>
+<p class="sub">Print gives you large type made to be read while standing, with the two khutbas on separate pages. Copy puts the whole outline on your clipboard as plain text for any notes app.</p>
+<button class="btn btn-gold" id="do-print">Print the khutba</button>
+<button class="btn btn-ghost" id="do-copy">Copy as plain text</button>
+<button class="btn btn-quiet" id="do-clear">Clear this draft</button>
+<p class="saved" id="saved">Saved in this browser only.</p>
+<div class="note">Both the print sheet and the copied text carry one line and no more: <b>Prepared with the NOOR Codex khutba builder, noorcodex.com</b>. No name, no masjid, no tracking. What you write here never leaves this device.</div>
+</div>
+
+<div class="kp" id="timing-note">
+<h2>On length</h2>
+<p class="sub" id="timing-text"></p>
+</div>
+
+</div>
+
+<div id="sheet"></div>
+
+<p class="kmark">✦ <a href="index.html">The NOOR masjid toolbox</a> · free forever, no account<br/>Prepared with the NOOR Codex khutba builder, noorcodex.com</p>
+
+<script>window.KIT={"opening":{"hajah_ar":"إِنَّ الْحَمْدَ لِلَّهِ، نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ، وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ، وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ.\n\n﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ﴾\n\n﴿يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا﴾\n\n﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَقُولُوا قَوْلًا سَدِيدًا﴾ ﴿يُصْلِحْ لَكُمْ أَعْمَالَكُمْ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ وَمَنْ يُطِعِ اللَّهَ وَرَسُولَهُ فَقَدْ فَازَ فَوْزًا عَظِيمًا﴾","hajah_translit":"Innal-ḥamda lillāhi naḥmaduhū wa nastaʿīnuhū wa nastaghfiruhū, wa naʿūdhu billāhi min shurūri anfusinā wa min sayyiʾāti aʿmālinā. Man yahdihil-lāhu fa lā muḍilla lahū, wa man yuḍlil fa lā hādiya lahū. Wa ashhadu an lā ilāha illal-lāhu waḥdahū lā sharīka lahū, wa ashhadu anna Muḥammadan ʿabduhū wa rasūluhū.\n\nYā ayyuhal-ladhīna āmanut-taqul-lāha ḥaqqa tuqātihī wa lā tamūtunna illā wa antum muslimūn.\n\nYā ayyuhan-nāsut-taqū rabbakumul-ladhī khalaqakum min nafsin wāḥidatin wa khalaqa minhā zawjahā wa baththa minhumā rijālan kathīran wa nisāʾan, wat-taqul-lāhal-ladhī tasāʾalūna bihī wal-arḥām, innal-lāha kāna ʿalaykum raqībā.\n\nYā ayyuhal-ladhīna āmanut-taqul-lāha wa qūlū qawlan sadīdā, yuṣliḥ lakum aʿmālakum wa yaghfir lakum dhunūbakum, wa man yuṭiʿil-lāha wa rasūlahū fa qad fāza fawzan ʿaẓīmā.","hajah_en":"Indeed all praise is for Allah. We praise Him, we seek His help, and we seek His forgiveness. We seek refuge in Allah from the evils of our own souls and from the wrongs of our own deeds. Whomever Allah guides, none can misguide, and whomever He leaves to stray, none can guide. I bear witness that there is no god but Allah, alone, without partner, and I bear witness that Muhammad ﷺ is His servant and His Messenger.\n\nO you who believe, be mindful of Allah as He truly deserves, and do not die except as those who submit to Him. (Quran 3:102)\n\nO mankind, be mindful of your Lord, who created you from a single soul, and created from it its mate, and spread from the two of them many men and women. Be mindful of Allah, in whose name you ask of one another, and of the ties of kinship. Surely Allah is ever watching over you. (Quran 4:1)\n\nO you who believe, be mindful of Allah and speak words that are straight and true. He will set right your deeds for you and forgive you your sins. And whoever obeys Allah and His Messenger ﷺ has won a mighty triumph. (Quran 33:70-71)","short_ar":"الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ، أَمَّا بَعْدُ.","short_en":"All praise is for Allah, Lord of the worlds. I bear witness that there is no god but Allah, alone, without partner, and I bear witness that Muhammad ﷺ is His servant and His Messenger. O Allah, send blessings and peace upon him and upon his family and all his companions. To proceed.","src":"The khutbat al-hajah, the sermon of need, is reported from Ibn Masʿud by Abu Dawud 2118, al-Tirmidhi 1105, al-Nasaʾi 1404, and Ibn Majah 1892. Al-Tirmidhi graded it hasan, sound, and al-Albani, who devoted a treatise to gathering its chains, graded it sahih, authentic. The Prophet ﷺ taught it to his Companions as an opening for marriage and for address, and the three closing ayat are 3:102, 4:1, and 33:70-71."},"structures":[{"id":"teaching","t":"The Teaching Khutba","for":"one clear lesson the community can carry home","parts":[{"h":"Opening: the khutbat al-hajah","guide":"Recite the khutbat al-hajah, the sermon of need, slowly and from memory if you can. Then state the lesson of the day in one plain sentence, for example: “Today we learn why the tongue decides a person’s fate.” If you cannot say your lesson in one sentence, you are not ready to stand yet.","mins":2},{"h":"The texts: one ayah, one hadith","guide":"Choose one ayah, a verse, and one hadith, a report of the Prophet ﷺ, that is sahih, authentic, and let them carry the whole lesson. Read the Arabic unhurried, translate it plainly, then open two or three of its words like a teacher opening a box. Resist every extra quotation: a khutba that cites everything teaches nothing.","mins":4},{"h":"The lesson walks into daily life","guide":"Paint two scenes your people were inside this very week: the checkout line, the group chat, the drive home in traffic. Show exactly where the ayah touches each scene, naming real places and real hours. A lesson without an address is forgotten by lunchtime.","mins":4},{"h":"Answer the quiet objection","guide":"Say aloud the doubt your listeners are already thinking, such as: this is too hard, or, my case is different. Answer it with mercy and one proof, not with scolding. This single minute is where a lecture becomes counsel.","mins":2},{"h":"The sitting","guide":"Sit briefly as the Prophet ﷺ sat between the two khutbas, roughly the length of Surat al-Ikhlas, the chapter of sincerity, as Shafiʿi jurists suggest. Announce nothing here. Breathe, make quiet istighfar, seeking forgiveness, and let the room settle.","mins":1},{"h":"Second khutba: seal the lesson","guide":"Stand, open with hamd, praise of Allah, and salawat, blessings on the Prophet ﷺ, then restate the lesson in the very sentence you opened with. Give one action small enough to survive the week: one page read, one call made, one apology offered. Add nothing new here.","mins":3},{"h":"Dua and descent","guide":"Close with the transmitted duas, supplications, in this kit, remembering the believers living and dead and the ummah, the community, in its trials. Keep the voice low and sincere rather than theatrical. Then the iqama, the call that starts the prayer, is given, and the prayer carries home what the words began.","mins":2}]},{"id":"story","t":"The Story Khutba","for":"a prophet’s or a companion’s story carrying the lesson","parts":[{"h":"Opening: the khutbat al-hajah","guide":"Open with the khutbat al-hajah, the sermon of need, or the short opening in this kit. Then drop one line of tension before anyone expects it, for example: “A king is about to hurl a believing boy from a mountain top.” Say nothing more about it yet.","mins":2},{"h":"Set the scene","guide":"Give the who, the where, and what hangs in the balance, each in under a minute. Let listeners smell the dust of Makkah or feel the hunger of the famine year. Do not moralize yet: a lesson announced too early kills the story.","mins":3},{"h":"Tell it straight","guide":"Narrate only what the Quran and sahih, authentic, reports actually say, and name the source aloud: this is in Muslim, or, Allah tells it in Surat al-Kahf, the chapter of the cave. Slow down at the turning point and let the hall lean in. Invent no dialogue and add no scenes the texts never mention.","mins":5},{"h":"Turn to the lesson","guide":"Now say the one lesson plainly, and connect the hardest moment of the story to your listeners’ Monday morning. One story carries one lesson: resist the urge to harvest five. End the first khutba by repeating the strongest line of the story word for word.","mins":3},{"h":"The sitting","guide":"Sit briefly as the Prophet ﷺ did between the two khutbas. Let the story hang in the silence; do not fill it. Rise before the room grows restless.","mins":1},{"h":"Second khutba: the refrain","guide":"After hamd, praise of Allah, and salawat, blessings on the Prophet ﷺ, bring back the key line of the story once more as a refrain. Give the one action the story itself points to. The first khutba planted; this one only waters.","mins":3},{"h":"Dua and descent","guide":"Ask Allah for what He gave the people of the story: their sabr, patience, their sidq, truthfulness, their yaqin, certainty. Use the transmitted duas, supplications, in this kit. Then come down for the iqama, the call that starts the prayer.","mins":2}]},{"id":"season","t":"The Season Khutba","for":"Ramadan, the two Eid seasons, the weeks of Hajj, the pilgrimage, a community moment","parts":[{"h":"Opening: the khutbat al-hajah","guide":"Open with the khutbat al-hajah, the sermon of need. Then name the moment with its actual date: Ramadan, the month of fasting, is eight nights away, or, the first ten days of Dhul-Hijjah, the month of Hajj, begin on Tuesday. Vagueness wastes a season.","mins":2},{"h":"Why this moment matters","guide":"Tell the community what the season is worth in the sight of Allah, not merely what it demands. Contrast it with ordinary time: markets have seasons of profit, and worship has seasons of multiplied mercy. Two minutes of longing here are worth ten of instruction later.","mins":2},{"h":"The season in revelation","guide":"Bring the central texts of the season itself: for Ramadan the fasting ayat, verses 2:183 to 2:185, and for Dhul-Hijjah the hadith in Bukhari 969 that in no other days are good deeds more beloved to Allah. Read the Arabic, translate plainly, and pause on one or two words. Let the season speak in its own revealed voice before you add yours.","mins":4},{"h":"One practice to champion","guide":"Choose a single practice and teach it completely: when, how, how much, and with what words. For example: witr, the closing night prayer, every night of Ramadan, or the fast of the day of ʿArafah for those not on Hajj, the pilgrimage. A community given one clear practice keeps it; given seven, it keeps none.","mins":4},{"h":"The sitting","guide":"Sit briefly as the Prophet ﷺ sat between the two khutbas. Make quiet istighfar, seeking forgiveness, and nothing more. Rise while the room is still with you.","mins":1},{"h":"Second khutba: the household plan","guide":"After hamd, praise of Allah, and salawat, blessings on the Prophet ﷺ, turn the practice into a family plan: who wakes whom, at what hour, with what on the table. Speak to fathers, mothers, and teenagers each by role. Announce the schedule of the masjid, the mosque, once and clearly, without drifting into a second topic.","mins":3},{"h":"Dua of the season","guide":"Close with dua, supplication, matched to the moment: acceptance of the fast, a safe Hajj, forgiveness before the season closes. Use the transmitted duas in this kit with an unhurried voice. Then the iqama, the call that starts the prayer, is given.","mins":2}]},{"id":"heart","t":"The Heart Khutba","for":"softening the heart: death, gratitude, tawba, repentance","parts":[{"h":"Opening: the khutbat al-hajah","guide":"Recite the khutbat al-hajah, the sermon of need, unhurried, and let your earnestness be felt more than your volume. You are a man who has seen something and must warn the people he loves. This khutba aims at the heart, and hearts open to sincerity before they open to skill.","mins":2},{"h":"Lower the noise","guide":"Begin with a single ayah, a verse, of awe, such as 57:16: has the time not come for the hearts of the believers to grow humble at the remembrance of Allah. Read it twice, Arabic then meaning, and then hold three full seconds of silence. Silence, used once and on purpose, does what no rhetoric can.","mins":3},{"h":"The reminder itself","guide":"Speak of what softens: the day each of us is lowered into the earth, the blessings never counted, the sins carried quietly for years. Use only the pictures revelation itself uses, the scenes the Quran gives of the grave and the standing, and invent no terrors of your own. Say we, not you: you are inside this reminder too.","mins":5},{"h":"The door of hope","guide":"Never leave a congregation in fear alone: open wide the door of tawba, repentance. Recall 39:53, do not despair of the mercy of Allah, and the hadith in Muslim 2759 that Allah stretches out His hand by night to forgive the sinner of the day. Send them home lighter and resolved, not crushed.","mins":3},{"h":"The sitting","guide":"Sit as the Prophet ﷺ sat between the two khutbas, and let the silence keep working. Many hearts finish their turning in exactly this minute. Neither rush it nor stretch it.","mins":1},{"h":"Second khutba: one act of return","guide":"After hamd, praise of Allah, and salawat, blessings on the Prophet ﷺ, name one act of return for tonight: two rakʿahs, units of prayer, in the dark, a debt finally repaid, a mother called before she sleeps. Keep it small and immediate, because tawba, repentance, lives on first steps. Add no new warnings here.","mins":3},{"h":"Dua of the returning","guide":"Close with the transmitted duas, supplications, in this kit, spoken low and slow, asking forgiveness for the living and the dead. Leave a breath of space after each phrase so hearts can say amin, so be it. Then the iqama, the call that starts the prayer, is given, and the prayer completes the return.","mins":2}]}],"themes":[{"t":"The Grateful Heart","seed":"Shukr, gratitude, begins as noticing: the warm bread, the working lungs, the child asleep in the next room. Allah ties increase to thanks in 14:7, not to salary, so the grateful poor man grows richer than the complaining rich one. The Prophet ﷺ stood in the night prayer until his feet swelled and answered: “Should I not be a grateful servant?” making worship itself the language of thanks. Set the congregation a house rule: every night, each person names one blessing of that day out loud before sleeping.","refs":[{"k":"quran","r":"14:7"},{"k":"quran","r":"2:152"},{"k":"hadith","src":"Bukhari 1130, Muslim 2819","note":"he ﷺ stood in thanks until his feet swelled"}]},{"t":"Tawba, the Return","seed":"Tawba, repentance, is not an apology spoken once; it is a road walked back while the heart still shakes. Allah is more joyful at the return of His servant than a desert traveler who finds his lost camel carrying all his food and water, as Muslim reports, so shame must never be allowed to outargue hope. Teach the conditions plainly: leave the sin, regret it, resolve against returning, and restore any right taken from another. Somewhere in the hall sits a man certain that his sin is too old and too heavy; build this khutba for him.","refs":[{"k":"quran","r":"39:53"},{"k":"quran","r":"66:8"},{"k":"hadith","src":"Muslim 2747","note":"happier with repentance than the lost camel’s finder"}]},{"t":"Guarding the Tongue","seed":"The tongue weighs a few grams and drags whole mountains of deeds behind it. A mocking message in the group chat is ghiba, backbiting, published to fifty homes at once, and 50:18 warns that no word leaves the lips without a ready watcher writing. The Prophet ﷺ offered a trade in Bukhari: guarantee me what is between your jaws and what is between your legs, and I guarantee you Paradise. Give the congregation one gate to install: before speaking or sending, ask, is it true, is it needed, is it kind, and let silence win every tie.","refs":[{"k":"quran","r":"50:18"},{"k":"quran","r":"49:12"},{"k":"hadith","src":"Bukhari 6474","note":"guard the tongue and Paradise is guaranteed"}]},{"t":"Honoring Parents","seed":"Allah set kindness to parents in the very verse that commands His worship, 17:23, then forbade even the smallest syllable of complaint: uff, the sound of a tired sigh. A man asked the Prophet ﷺ three times who most deserved his best company, and three times the answer was: your mother, and only then: your father. Old age reverses the roles, and the hands that once fed you begin to shake; Paradise sits inside that patience. Ask the hall plainly: when did you last kiss your mother’s hand, or call your father just to listen.","refs":[{"k":"quran","r":"17:23-24"},{"k":"hadith","src":"Bukhari 5971, Muslim 2548","note":"your mother, your mother, your mother, then your father"}]},{"t":"The Neighbor’s Right","seed":"Jibril, the angel of revelation, kept pressing the neighbor’s right until the Prophet ﷺ thought neighbors would be made heirs, as Bukhari and Muslim report. Yet many of us cannot name the family behind the shared wall. In Bukhari he ﷺ swore three times that the one whose neighbor is not safe from his harms does not believe, and harm today includes the blocked driveway, the loud midnight, the cold silence in the elevator. Charge every household with one visit this week, a plate of dates in hand and no agenda.","refs":[{"k":"quran","r":"4:36"},{"k":"hadith","src":"Bukhari 6014, Muslim 2624","note":"Jibril kept urging the neighbor’s right"},{"k":"hadith","src":"Bukhari 6016","note":"no belief while the neighbor fears his harms"}]},{"t":"Rizq and Trust","seed":"Rizq, provision, is measured out by the One who owns every storehouse, and 11:6 says no creature moves on the earth without its provision being upon Allah. Taqwa, mindfulness of Allah, is itself a supply line: 65:2 and 65:3 promise a way out and provision from a direction never expected. The birds leave the nest hungry and return full, as Tirmidhi transmits with a sound grading, yet they still fly at dawn; tawakkul, trust in Allah, beats its wings and does not sit waiting. Say it to the man dreading the layoff and the trader eyeing a shortcut: fear cannot shrink what is written for you, and haram, forbidden gain, cannot enlarge it.","refs":[{"k":"quran","r":"65:2-3"},{"k":"quran","r":"11:6"},{"k":"hadith","src":"Tirmidhi 2344","note":"the birds leave hungry and return full"}]},{"t":"Death the Advisor","seed":"Every soul tastes it, 3:185 promises, yet every one of us plans as the exception. The Prophet ﷺ said to remember often the destroyer of pleasures, a counsel in Tirmidhi that scholars grade sound, because remembering death is not morbid but clarifying: it returns the grudge, the delayed tawba, repentance, and the unwritten will to their true size. Ibn ʿUmar was told: be in this world as a stranger or a traveler crossing a road. Ask the hall one question: if the janaza, the funeral prayer, held in this masjid, this mosque, next Friday were yours, what would you repair before sunset today.","refs":[{"k":"quran","r":"3:185"},{"k":"hadith","src":"Tirmidhi 2307","note":"remember often the destroyer of pleasures"},{"k":"hadith","src":"Bukhari 6416","note":"be in the world as a stranger"}]},{"t":"The Prayer’s Weight","seed":"A river runs past the door five times a day: the Prophet ﷺ asked his Companions whether any dirt could remain on a man who bathes in it five times, in Bukhari and Muslim. Salah, the prayer, is the first deed examined on the Day of Rising, as Tirmidhi transmits in a report scholars grade sound, so it outranks every meeting on the calendar. Be honest about Fajr, the dawn prayer: the phone is obeyed when it rings for the flight, and silenced when it rings for Allah. One charge tonight: set the Fajr alarm before the work alarm, and put it across the room.","refs":[{"k":"quran","r":"29:45"},{"k":"hadith","src":"Bukhari 528, Muslim 667","note":"five daily washings in the river at the door"},{"k":"hadith","src":"Tirmidhi 413","note":"the prayer is examined first"}]},{"t":"Mercy in the Home","seed":"A man’s truest face is not the masjid face; it is the hallway voice his family hears when the front door closes. The Prophet ﷺ said the best of you is the best to his family, and I am the best of you to my family, in Tirmidhi with a sound grading. Aisha reported that he ﷺ served his own household, and Muslim records that he never once struck a servant or a woman. Tell the fathers: your children are memorizing your tone, so make 30:21, its affection and its mercy, the weather of the house and not a frame on its wall.","refs":[{"k":"quran","r":"30:21"},{"k":"hadith","src":"Tirmidhi 3895","note":"the best of you is best to family"},{"k":"hadith","src":"Muslim 2328","note":"he ﷺ never struck servant or woman"}]},{"t":"Honesty in Trade","seed":"Surat al-Mutaffifin, the chapter of those who give short measure, opens with woe upon the one who takes in full and hands back less, because the scale is where iman, faith, is weighed in public. In Bukhari and Muslim, the two traders keep their choice until they part: truthfulness and disclosure pour baraka, blessing, into the sale, and concealment strips it out. The Prophet ﷺ pushed his hand into a heap of grain, found it wet underneath, and said: whoever cheats is not of me, as Muslim records. Bring it to our streets: the padded invoice, the rolled back odometer, the listing that hides the fault, the resume that invents a year.","refs":[{"k":"quran","r":"83:1-3"},{"k":"hadith","src":"Bukhari 2079, Muslim 1532","note":"truthful trade is blessed, lying strips the blessing"},{"k":"hadith","src":"Muslim 102","note":"whoever cheats is not of me"}]},{"t":"Raising the Youth","seed":"When the Quran tells of the cave, it honors its people as fityah, young men, who believed and were increased in guidance: 18:13 makes youth a qualification, not a defect. Among the seven whom Allah shades on the Day when there is no shade but His is a young person who grew up in His worship, in Bukhari and Muslim. Our teenagers are being raised every evening: by the feed, by the game lobby, or by a masjid, a mosque, that knows their names. Hand them real keys and real tasks, seat them near the front, and forgive the sneakers.","refs":[{"k":"quran","r":"18:13"},{"k":"hadith","src":"Bukhari 660, Muslim 1031","note":"a youth raised in worship, shaded that Day"}]},{"t":"One Body, One Ummah","seed":"The ummah, the worldwide community of believers, is one body in the words of the Prophet ﷺ: when one limb complains, the rest of the body keeps its vigil in fever and sleeplessness, as Muslim reports. Allah commands in 3:103 that we grip His rope all together and not divide, then reminds us He once joined hearts that were enemies. Name the quiet splits honestly: the language circles that never mix after prayer, the committee feud nobody remembers starting. Set one assignment before the iqama, the call that starts the prayer: greet one worshipper today whose name you have never learned.","refs":[{"k":"quran","r":"3:103"},{"k":"quran","r":"49:10"},{"k":"hadith","src":"Muslim 2586","note":"one body: one fever and one sleeplessness"}]}],"second":{"elements":["Hamd, praise of Allah: open the second khutba as you opened the first, with praise, even a single line.","Salawat, blessings on the Prophet ﷺ: use the Ibrahimiyya, the form that names Ibrahim, given below from Bukhari 3370 and Muslim 406.","The counsel of taqwa, mindfulness of Allah: renew it briefly; the Shafiʿi school counts it a pillar of both khutbas.","The lesson, once: restate your single point in one sentence and add nothing new.","Dua, supplication, for the believers, living and dead: the Shafiʿi school counts it a pillar of the second khutba.","A need of the hour: one plainly named supplication for the ummah, the community, in its present trial.","Close and come down: many khatibs, preachers, end with the ayah of justice, 16:90, a practice attributed to the era of ʿUmar ibn ʿAbd al-ʿAziz, permitted but not required; then the iqama, the call that starts the prayer, is given."],"salawat_ar":"اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ.","duas":[{"ar":"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","en":"Our Lord, give us good in this world and good in the Hereafter, and shield us from the punishment of the Fire.","src":"Quran 2:201; Anas reported it as the dua the Prophet ﷺ made most often, Bukhari 6389, Muslim 2690."},{"ar":"اللَّهُمَّ أَصْلِحْ لِي دِينِي الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي، وَأَصْلِحْ لِي آخِرَتِي الَّتِي فِيهَا مَعَادِي، وَاجْعَلِ الْحَيَاةَ زِيَادَةً لِي فِي كُلِّ خَيْرٍ، وَاجْعَلِ الْمَوْتَ رَاحَةً لِي مِنْ كُلِّ شَرٍّ","en":"O Allah, set right for me my religion, which is the safeguard of my affair; set right for me my worldly life, in which is my livelihood; set right for me my Hereafter, to which is my return. Make life an increase for me in every good, and make death a rest for me from every evil.","src":"Muslim 2720; transmitted in the singular, and khatibs, preachers, commonly voice it in the plural for the congregation."},{"ar":"اللَّهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ، الْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ، إِنَّكَ سَمِيعٌ قَرِيبٌ مُجِيبُ الدَّعَوَاتِ","en":"O Allah, forgive the believing men and the believing women, the Muslim men and the Muslim women, the living among them and the dead. Surely You are Hearing, Near, the Answerer of supplications.","src":"The dua for the ummah, the community. Its root is the command of Quran 47:19, and a hadith graded hasan, sound, by al-Albani in Sahih al-Jamiʿ 6026 promises a reward for every believer included; this exact composite wording is a widespread khutba formula, not a fixed Prophetic text."}]},"sunnah":[{"t":"Shorten the khutba, lengthen the prayer","d":"The Prophet ﷺ said that a man’s long prayer and short khutba, sermon, are a sign of his fiqh, his understanding of the religion. Brevity is not a favor to the impatient; it is the sunnah, the Prophetic way, itself.","src":"Muslim 869"},{"t":"Raise the voice as a warner","d":"When he ﷺ preached, his eyes reddened, his voice rose, and his urgency grew, as if warning of an army approaching by morning. Aim for felt earnestness: neither a flat reading voice nor manufactured shouting.","src":"Muslim 867"},{"t":"A staff or a bow in hand","d":"Al-Hakam ibn Hazn reported that the Prophet ﷺ gave the khutba leaning on a staff or a bow. The report is graded hasan, sound, by al-Albani and others, and scholars differ over whether the lean is a sunnah in itself or simply steadiness for a speaker who needs it.","src":"Abu Dawud 1096"},{"t":"Sit between the two khutbas","d":"He ﷺ gave two khutbas and separated them with a short sitting in which nothing is said aloud. The pause is part of the form: it rests the khatib, the preacher, and lets the first half settle into the listeners.","src":"Bukhari 928; Muslim 861"},{"t":"Deliver the khutba standing","d":"The Quran pictures the congregation left standing with him ﷺ, 62:11, and Jabir ibn Samura said that whoever claims the Prophet ﷺ preached sitting has lied. Stand for both halves unless real inability prevents it.","src":"Quran 62:11; Muslim 862"},{"t":"Ghusl for those attending","d":"He ﷺ said that ghusl, the full bath, on Friday is due upon every adult who comes. The majority of jurists read this as an emphasized recommendation, since other sound reports accept wudu, ablution, while calling the bath better; either way, arrive at Jumuʿa, the Friday prayer, clean, scented, and early.","src":"Bukhari 879; Muslim 846; Abu Dawud 354"},{"t":"Silence while the imam speaks","d":"He ﷺ said: if you tell your companion to listen while the imam, the prayer leader, is preaching on Friday, you have fallen into laghw, idle loss. If even the word of correction spoils the listening, then phones, whispers, and side talk have no place at all.","src":"Bukhari 934; Muslim 851"},{"t":"Open with the praise of Allah","d":"Jabir described the khutba of the Prophet ﷺ as beginning with the praise of Allah and extolling Him, before all else. Let hamd, praise, be the first sound of both halves, whatever the topic.","src":"Muslim 867"},{"t":"Hands stay down, except for rain","d":"A Companion rebuked a ruler for lifting his hands in the Friday dua, supplication, saying the Prophet ﷺ would do no more than point with his forefinger. The exception is istisqa, the prayer for rain, in which he ﷺ raised his hands until the white of his underarms showed.","src":"Muslim 874; Bukhari 1031; Muslim 895"}],"timing":{"note":"The Prophet ﷺ taught that lengthening the prayer and shortening the khutba, the sermon, is a sign of a man’s fiqh, his understanding of the religion, Muslim 869. His own khutba was qasd, measured and middle sized, and so was his prayer, Muslim 866. Hold both khutbas together near fifteen to twenty minutes, keep the second clearly shorter than the first, and when time runs out, cut your words, never the prayer.","target_mins":17}};</script>
+<script>
+(function(){
+"use strict";
+var KIT=window.KIT||{},KEY="noor_khutba_v1";
+function $(i){return document.getElementById(i)}
+function mins(n){n=+n||0;return n+" minute"+(n===1?"":"s")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+var AR_LET=/[\u0600-\u06FF\u0750-\u077F\u0870-\u08FF\uFB50-\uFDEF\uFE70-\uFEFF]/g;
+function isArabicLine(l){var a=(l.match(AR_LET)||[]).length,e=(l.match(/[A-Za-z]/g)||[]).length;return a>2&&a>e}
+
+/* ---------------- state ---------------- */
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){S=null}
+if(!S||S.v!==1)S={v:1,topic:"",sid:"",theme:"",checks:{},by:{}};
+if(!S.by)S.by={};if(!S.checks)S.checks={};
+var saveT=null;
+function save(){
+  clearTimeout(saveT);
+  saveT=setTimeout(function(){
+    try{localStorage.setItem(KEY,JSON.stringify(S));$("saved").textContent="Draft saved in this browser only.";}
+    catch(e){$("saved").textContent="This browser will not save drafts (private mode). Copy your text before leaving.";}
+  },350);
+}
+function struct(){for(var i=0;i<(KIT.structures||[]).length;i++)if(KIT.structures[i].id===S.sid)return KIT.structures[i];return null}
+function bag(){
+  var st=struct();if(!st)return null;
+  var b=S.by[st.id];
+  if(!b){b={mins:[],notes:[],refs:[]};S.by[st.id]=b}
+  st.parts.forEach(function(p,i){
+    if(b.mins[i]==null)b.mins[i]=p.mins;
+    if(b.notes[i]==null)b.notes[i]="";
+    if(!b.refs[i])b.refs[i]=[];
+  });
+  return b;
+}
+function findPart(re,fb){var st=struct();if(!st)return fb;for(var i=0;i<st.parts.length;i++)if(re.test(st.parts[i].h))return i;return fb}
+function refLabel(r){
+  if(r.k==="quran")return "Quran "+r.r;
+  return (r.src||"")+(r.note?" ("+r.note+")":"");
+}
+
+/* ---------------- time ---------------- */
+function total(){
+  var b=bag();if(!b)return 0;var t=0;
+  b.mins.forEach(function(m){t+=(+m||0)});
+  return t;
+}
+function shortRule(){
+  var list=KIT.sunnah||[];
+  for(var i=0;i<list.length;i++)if(/Muslim 869/.test(list[i].src||""))return list[i];
+  return list[0]||{t:"",d:"",src:""};
+}
+function paintTime(){
+  var t=total(),target=(KIT.timing&&KIT.timing.target_mins)||17,bar=$("timebar");
+  $("tb-tot").textContent=t;
+  $("tb-target").textContent="minutes · target "+target;
+  var long=t>target;
+  bar.className=long?"long":"ok";
+  $("tb-state").textContent=t===0?"nothing chosen yet":(long?"running long":"within the target");
+  var w=$("warnrun");
+  if(long){
+    if(!w){
+      w=document.createElement("div");w.id="warnrun";w.className="warnbox";
+      $("outline").parentNode.insertBefore(w,$("outline"));
+    }
+    var r=shortRule();
+    w.innerHTML="Your outline runs <b>"+t+" minutes</b> against a target of "+target+
+      ". "+esc(r.d)+" (<b>"+esc(r.src)+"</b>) Trim a part, or lower its minutes, before you trim the prayer.";
+  }else if(w){w.parentNode.removeChild(w)}
+}
+
+/* ---------------- outline ---------------- */
+function renderStructs(){
+  var wrap=$("structs");wrap.innerHTML="";
+  (KIT.structures||[]).forEach(function(st){
+    var mins=0;st.parts.forEach(function(p){mins+=p.mins});
+    var b=document.createElement("button");
+    b.type="button";b.className="chip"+(st.id===S.sid?" on":"");
+    b.setAttribute("data-sid",st.id);
+    b.innerHTML=esc(st.t)+"<small>"+esc(st["for"])+" · "+st.parts.length+" parts · "+mins+" min</small>";
+    b.addEventListener("click",function(){S.sid=st.id;renderStructs();renderOutline();renderTargets();paintTime();save()});
+    wrap.appendChild(b);
+  });
+}
+function renderTargets(){
+  var sel=$("theme-target"),st=struct();sel.innerHTML="";
+  if(!st){sel.innerHTML='<option value="">choose a structure first</option>';return}
+  st.parts.forEach(function(p,i){
+    var o=document.createElement("option");o.value=String(i);o.textContent=(i+1)+" · "+p.h;sel.appendChild(o);
+  });
+  var d=Math.min(1,st.parts.length-1);sel.value=String(S.tt!=null&&S.tt<st.parts.length?S.tt:d);
+  sel.onchange=function(){S.tt=+sel.value;save()};
+}
+function renderOutline(){
+  var host=$("outline"),st=struct();host.innerHTML="";
+  if(!st){host.innerHTML='<p class="hint">Choose a structure above and the outline appears here.</p>';return}
+  var b=bag();
+  st.parts.forEach(function(p,i){
+    var d=document.createElement("div");d.className="part";d.id="part-"+i;
+    d.innerHTML='<div class="ph"><span class="pn">'+(i+1)+'</span><h3>'+esc(p.h)+'</h3>'+
+      '<label class="mins">min <input type="number" min="0" max="90" value="'+(+b.mins[i]||0)+'" data-mi="'+i+'"/></label></div>'+
+      '<p class="guide">'+esc(p.guide)+'</p>'+
+      '<textarea rows="4" data-ni="'+i+'" placeholder="Your own words for this part"></textarea>'+
+      '<div class="refs" id="refs-'+i+'"></div>';
+    host.appendChild(d);
+    var ta=d.querySelector("textarea");ta.value=b.notes[i]||"";
+    ta.addEventListener("input",function(){b.notes[i]=ta.value;save()});
+    ta.addEventListener("focus",function(){var sel=$("theme-target");if(sel.options.length>i){sel.value=String(i);S.tt=i}});
+    var mi=d.querySelector("input[data-mi]");
+    mi.addEventListener("input",function(){b.mins[i]=+mi.value||0;paintTime();save()});
+    paintRefs(i);
+  });
+}
+function paintRefs(i){
+  var b=bag(),host=$("refs-"+i);if(!host||!b)return;
+  host.innerHTML=(b.refs[i]||[]).map(function(t){return '<span class="ref">'+esc(t)+'</span>'}).join("");
+}
+function insertInto(i,text,refs){
+  var st=struct();
+  if(!st){alert("Choose a structure first, then the outline can receive it.");return}
+  var b=bag();
+  if(i==null||i<0||i>=st.parts.length)i=0;
+  b.notes[i]=(b.notes[i]?b.notes[i].replace(/\s+$/,"")+"\n\n":"")+text;
+  (refs||[]).forEach(function(r){if(b.refs[i].indexOf(r)<0)b.refs[i].push(r)});
+  var ta=document.querySelector('textarea[data-ni="'+i+'"]');
+  if(ta){ta.value=b.notes[i]}
+  paintRefs(i);
+  var el=$("part-"+i);
+  if(el){el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");
+    el.scrollIntoView({behavior:"smooth",block:"center"})}
+  save();
+}
+
+/* ---------------- themes ---------------- */
+function renderThemes(){
+  var wrap=$("themes");wrap.innerHTML="";
+  (KIT.themes||[]).forEach(function(th,n){
+    var b=document.createElement("button");
+    b.type="button";b.className="chip"+(th.t===S.theme?" on":"");
+    b.textContent=th.t;
+    b.addEventListener("click",function(){
+      S.theme=th.t;renderThemes();showTheme(th);
+      var i=+$("theme-target").value;if(isNaN(i))i=0;
+      var refs=(th.refs||[]).map(refLabel);
+      insertInto(i,"Theme: "+th.t+"\n"+th.seed,refs);
+      paintTime();save();
+    });
+    wrap.appendChild(b);
+  });
+  if(S.theme){var t=(KIT.themes||[]).filter(function(x){return x.t===S.theme})[0];if(t)showTheme(t)}
+}
+function showTheme(th){
+  $("theme-view").innerHTML='<div class="note"><b>'+esc(th.t)+'</b><br/>'+esc(th.seed)+
+    '<div class="refs">'+(th.refs||[]).map(function(r){return '<span class="ref">'+esc(refLabel(r))+'</span>'}).join("")+'</div></div>';
+}
+
+/* ---------------- the fixed texts ---------------- */
+function renderTexts(){
+  var o=KIT.opening||{},sec=KIT.second||{};
+  $("hajah-ar").textContent=o.hajah_ar||"";
+  $("hajah-tr").textContent=o.hajah_translit||"";
+  $("hajah-en").textContent=o.hajah_en||"";
+  $("hajah-src").textContent=o.src||"";
+  $("short-ar").textContent=o.short_ar||"";
+  $("short-en").textContent=o.short_en||"";
+  $("salawat-ar").textContent=sec.salawat_ar||"";
+  $("timing-text").textContent=(KIT.timing&&KIT.timing.note)||"";
+  $("ins-hajah").addEventListener("click",function(){
+    insertInto(findPart(/^Opening/i,0),(o.hajah_ar||"")+"\n\n"+(o.hajah_translit||""),["Khutbat al-hajah: Abu Dawud 2118, Tirmidhi 1105"]);
+  });
+  $("ins-short").addEventListener("click",function(){
+    insertInto(findPart(/^Opening/i,0),(o.short_ar||""),["The short opening"]);
+  });
+  $("ins-salawat").addEventListener("click",function(){
+    insertInto(findPart(/^Second khutba/i,1),(sec.salawat_ar||""),["Salawat Ibrahimiyya: Bukhari 3370, Muslim 406"]);
+  });
+  var el=$("second-el");el.innerHTML="";
+  (sec.elements||[]).forEach(function(t,i){
+    var row=document.createElement("label");row.className="check";
+    row.innerHTML='<input type="checkbox" data-ck="'+i+'"/><span>'+esc(t)+'</span>';
+    var cb=row.querySelector("input");cb.checked=!!S.checks[i];
+    cb.addEventListener("change",function(){S.checks[i]=cb.checked;save()});
+    el.appendChild(row);
+  });
+  var dh=$("duas");dh.innerHTML="";
+  (sec.duas||[]).forEach(function(d,i){
+    var w=document.createElement("div");w.className="dua";
+    w.innerHTML='<div class="ar-block notranslate" translate="no" dir="rtl"></div>'+
+      '<p class="trans"></p><p class="src"></p>'+
+      '<button class="btn btn-ghost btn-sm" type="button">Insert this dua</button>';
+    w.querySelector(".ar-block").textContent=d.ar||"";
+    w.querySelector(".trans").textContent=d.en||"";
+    w.querySelector(".src").textContent=d.src||"";
+    w.querySelector("button").addEventListener("click",function(){
+      insertInto(findPart(/^Dua/i,1),(d.ar||"")+"\n"+(d.en||""),[(d.src||"").split(";")[0]]);
+    });
+    dh.appendChild(w);
+  });
+  var sh=$("sunnah");sh.innerHTML="";
+  (KIT.sunnah||[]).forEach(function(r){
+    var w=document.createElement("div");w.className="srule";
+    w.innerHTML='<h3>'+esc(r.t)+'</h3><p>'+esc(r.d)+'</p><div class="s">'+esc(r.src)+'</div>';
+    sh.appendChild(w);
+  });
+}
+
+/* ---------------- output ---------------- */
+function lines(text){
+  var raw=String(text||"").split("\n");
+  var ar=raw.map(function(l){return !!l.trim()&&isArabicLine(l)});
+  var out=[];
+  for(var i=0;i<raw.length;i++){
+    if(!raw[i].trim()){ if(ar[i-1]||ar[i+1])continue; out.push(""); continue; }
+    out.push(ar[i]?'<span class="ar notranslate" translate="no" dir="rtl">'+esc(raw[i])+"</span>":esc(raw[i]));
+  }
+  return out.join("\n");
+}
+function buildSheet(){
+  var st=struct(),b=bag(),out=[];
+  var title=(S.topic||"").trim()||(st?st.t:"Khutba");
+  out.push('<div class="top"><h1>'+esc(title)+"</h1>"+
+    '<p class="meta">'+esc(st?st.t:"")+" · "+mins(total())+" planned</p></div>");
+  if(st)st.parts.forEach(function(p,i){
+    var brk=/^Second khutba/i.test(p.h)?" brk":"";
+    var body=(b.notes[i]||"").trim()?'<div class="body">'+lines(b.notes[i])+"</div>"
+      :'<div class="gd">'+esc(p.guide)+"</div>";
+    out.push('<div class="pt'+brk+'"><h2>'+(i+1)+". "+esc(p.h)+'</h2>'+
+      '<div class="m">'+mins(b.mins[i])+"</div>"+body+
+      ((b.refs[i]&&b.refs[i].length)?'<div class="rf">'+esc(b.refs[i].join(" · "))+"</div>":"")+
+      "</div>");
+  });
+  out.push('<div class="foot">Prepared with the NOOR Codex khutba builder, noorcodex.com</div>');
+  $("sheet").innerHTML=out.join("\n");
+}
+function plainText(){
+  var st=struct(),b=bag(),L=[];
+  L.push(((S.topic||"").trim()||(st?st.t:"Khutba")));
+  if(st)L.push(st.t+" · "+mins(total())+" planned");
+  L.push("");
+  if(st)st.parts.forEach(function(p,i){
+    L.push((i+1)+". "+p.h+"  ["+mins(b.mins[i])+"]");
+    if(b.notes[i])L.push(b.notes[i]);
+    if(b.refs[i]&&b.refs[i].length)L.push("Refs: "+b.refs[i].join(" · "));
+    L.push("");
+  });
+  L.push("Prepared with the NOOR Codex khutba builder, noorcodex.com");
+  return L.join("\n");
+}
+function wire(){
+  $("topic").value=S.topic||"";
+  $("topic").addEventListener("input",function(){S.topic=$("topic").value;save()});
+  $("do-print").addEventListener("click",function(){buildSheet();setTimeout(function(){window.print()},60)});
+  window.addEventListener("beforeprint",buildSheet);
+  $("do-copy").addEventListener("click",function(){
+    var t=plainText(),btn=$("do-copy");
+    function done(){btn.textContent="Copied ✦";setTimeout(function(){btn.textContent="Copy as plain text"},1600)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(fallback)}
+    else fallback();
+    function fallback(){
+      var ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand("copy");done()}catch(e){btn.textContent="Copy failed, select the text by hand"}
+      document.body.removeChild(ta);
+    }
+  });
+  $("do-clear").addEventListener("click",function(){
+    if(!window.confirm("Clear this draft? Your notes, minutes and ticks are erased from this browser and cannot be recovered."))return;
+    try{localStorage.removeItem(KEY)}catch(e){}
+    S={v:1,topic:"",sid:"",theme:"",checks:{},by:{}};
+    $("topic").value="";
+    renderStructs();renderThemes();renderOutline();renderTargets();renderTexts();paintTime();
+    $("theme-view").innerHTML="";
+    $("saved").textContent="Draft cleared.";
+  });
+}
+renderStructs();renderTexts();renderThemes();renderOutline();renderTargets();paintTime();wire();
+})();
+</script>
+</body>
+</html>

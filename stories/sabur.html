@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="What the Sea Keeps: a story of As-Sabur, The Utterly Patient. A pearl divers’ village on the Malabar coast of India, early 1700s. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:title" content="What the Sea Keeps · As-Sabur · NOOR Codex of Light"/>
+<meta property="og:description" content="What the Sea Keeps: a story of As-Sabur, The Utterly Patient. A pearl divers’ village on the Malabar coast of India, early 1700s. The people in it are invented and said to be; the Name and the verse are real."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>What the Sea Keeps · As-Sabur · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/stories/sabur"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/tw.css?v=49"/>
+<script src="../noor-fx.js" defer></script>
+<script src="../noor-ink.js" defer></script>
+<script src="../assets/gsap.min.js" defer></script>
+<script src="../assets/ScrollTrigger.min.js" defer></script>
+<script src="../assets/DrawSVGPlugin.min.js" defer></script>
+<script src="../assets/noor-motion.js" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
+.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
+.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+.rprog{position:fixed;left:0;right:0;top:0;height:2px;z-index:90;pointer-events:none}
+.rprog span{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#C9A227,#F4D46A);box-shadow:0 0 10px rgba(244,212,106,.6)}
+@media (prefers-reduced-motion:no-preference){.rprog span{transition:transform .1s linear}}
+.sread{padding-bottom:1rem}
+.before{max-width:34rem;margin:2rem auto 0;background:#fff;border:1px solid rgba(44,36,22,.13);border-radius:16px;padding:.95rem 1.15rem 1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.before b{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin-bottom:.42rem}
+.before p{font-size:.85rem;line-height:1.88;font-style:italic;color:rgba(44,36,22,.72);margin:0}
+.epi{max-width:29rem;margin:2.8rem auto 2.5rem;text-align:center;font-family:Amiri,serif;font-size:1.36rem;line-height:1.9;color:rgba(44,36,22,.7)}
+.epi::before{content:"✦";display:block;font-family:Inter,system-ui,sans-serif;font-size:.68rem;color:var(--gold);opacity:.85;margin-bottom:1rem}
+.prose{max-width:34rem;margin:0 auto}
+.mv h2{font-size:1.06rem;font-weight:800;line-height:1.42;color:#2C2416;margin:0 0 1.1rem}
+.mv h2::after{content:"";display:block;width:2.3rem;height:1px;margin-top:.62rem;background:linear-gradient(90deg,rgba(201,162,39,.9),rgba(201,162,39,0))}
+.mv p{font-size:1.02rem;line-height:1.95;color:rgba(44,36,22,.87);margin:0 0 1.2rem}
+.mv p:last-child{margin-bottom:0}
+.mv>p:first-of-type::first-letter{font-family:Amiri,serif;font-weight:700;font-size:3.15rem;line-height:.9;color:var(--gold);float:left;padding:.34rem .5rem 0 0}
+.orn{display:flex;align-items:center;justify-content:center;gap:.95rem;margin:2.9rem 0}
+.orn::before,.orn::after{content:"";height:1px;width:3.6rem}
+.orn::before{background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.6))}
+.orn::after{background:linear-gradient(90deg,rgba(201,162,39,.6),rgba(201,162,39,0))}
+.orn i{font-style:normal;color:var(--gold);font-size:.72rem;opacity:.9;line-height:1}
+.ayah{max-width:34rem;margin:3.2rem auto 0}
+.ayah .ar{font-family:Amiri,serif;font-size:1.42rem;line-height:2.15;color:#F4D46A;text-align:right;margin:.2rem 0 0}
+.ayah .en{font-size:.86rem;line-height:1.85;color:rgba(255,254,247,.78);margin:1rem 0 0}
+.ayah .rw{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-top:1rem;padding-top:.85rem;border-top:1px solid rgba(244,212,106,.18)}
+.ayah .rf{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(244,212,106,.7)}
+.ayah .vplay{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.13)}
+.ayah .vplay.playing{background:#F4D46A;color:#14100A;border-color:#F4D46A}
+.snav{max-width:34rem;margin:2.6rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(44,36,22,.1);display:grid;grid-template-columns:1fr auto 1fr;gap:.6rem;align-items:stretch}
+.snav a,.snav span.off{display:flex;flex-direction:column;justify-content:center;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:14px;padding:.72rem .85rem;font-size:.78rem;line-height:1.55;color:rgba(44,36,22,.75);transition:border-color .18s ease,color .18s ease}
+.snav a:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+.snav .k{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.4);margin-bottom:.25rem}
+.snav .nx{text-align:right}
+.snav .mid{align-items:center;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em}
+.snav span.off{border-style:dashed;color:rgba(44,36,22,.45);background:transparent}
+@media (max-width:36rem){.snav{grid-template-columns:1fr}.snav .nx{text-align:left}.mv>p:first-of-type::first-letter{font-size:2.85rem}}
+</style>
+
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="../index.html" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="../quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="../prophets.html" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="../madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="../kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="../places.html" data-i18n="m.places">Places</a>
+<a role="menuitem" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="../donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="../donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="../madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="../quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="../arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="../words.html" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="../health.html" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="../theology.html" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="../school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="../index.html#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="../prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="../companions.html" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="../characters.html" data-i18n="m.characters">Characters</a>
+<a class="shl" href="../places.html" data-i18n="m.places">Places</a>
+<a class="shl" href="../heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="../unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="../pillars.html" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="../begin.html" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="../family.html" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="../sermon.html" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="../soul.html" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="../index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="../stories/" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="../kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="../kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="../masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="../license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="../donate.html" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="../feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="../legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="../donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+</header>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">As-Sabur · The Utterly Patient</p>
+<div class="ar notranslate" translate="no">الصَّبُور</div>
+<h1>What the Sea Keeps</h1>
+<p class="lead">A pearl divers’ village on the Malabar coast of India, early 1700s</p>
+</section>
+<div class="rprog" aria-hidden="true"><span id="rprogbar"></span></div><div class="wrap sread"><section class="before mo"><b>Before you begin</b><p>This one does not end in rescue; it ends in the quieter thing that patience actually buys.</p></section><p class="epi mo">The sea is not the one keeping him.</p><article class="prose"><section class="mv"><h2>The Moon’s Wages</h2><p>On the Malabar coast, in the years when foreign companies still fought one another over pepper, there was a village where the river lost its name in the sea. The houses were thatch and red laterite stone, the lanes were sand, and everything a hand could touch smelled faintly of fish, coir and rain. Aamina was born in that village, and at seventeen she was married in it, to a diver named Musa: a broad, easy man with salt dried white in his eyebrows, who could hold his breath longer than any man between the river mouth and the point.</p><p>His trade lived far from home. When the great monsoon had spent itself and the north wind settled the water, the sewn boats went south, their hulls stitched plank to plank with coir cord and not one iron nail in them, around the cape where the seas meet, to the pearl banks. There the floor of the ocean is pale as bone, and the oysters lie upon it like dropped coins. A diver went down riding a greased stone, a rope at his wrist, a net at his chest, a clip of horn on his nose, and he had the length of one held breath to gather what he could before the pullers above hauled him back into the light.</p><p>The old men said pearls were rain: that on certain nights the oysters rose to the surface and drank the falling drops, then carried them down and grieved over them so long that they turned into small moons. Musa laughed at this and half believed it. He called pearls the moon’s wages. He never kept one. The wages went to the boat master, and to the boat master’s master, and by the time the sea’s silver had passed through every hand above his, what reached the village was rice, cloth, and a little silver of the ordinary kind.</p><p>He was not a careful man about most things. He forgot feast days, he mislaid his own sandals, he once walked into the mosque courtyard with a live crab in his waist cloth because a boy had dared him. But he never went down without wudu, the washing made before prayer. A man should be clean at a door, he said, and the sea floor is a door: rizq, provision, waits behind it, and Allah opens it for whom He wills, wide or a finger’s width, and no diver ever widened it by one shell through wanting.</p><p>Aamina kept the house and twisted coir, the coconut fibre that the backwaters soften and the women of that coast spin into rope. Her ropes were known: even, tight, patient work, a hundred small motions repeated until they became strength. Musa carried her ropes south and told the other divers that his wife’s hands were on the line, and so he feared nothing. She would remember that sentence later, for years, the way you remember a debt owed to you by someone who has died.</p><p>When their son was born they named him Yunus, after the prophet whom the sea swallowed and gave back alive, peace be upon him. Musa liked the name; he called it a treaty with the water. Aamina never liked the joke. She was a daughter of shore people, and she knew that the sea keeps its own counsel and signs nothing. But she was young, the house was loud with laughing, and fear in those days seemed like a guest who would always leave by evening.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>The Empty Rope</h2><p>The year Yunus turned six, the fleet went south as always in the clear weather after the rice harvest. Musa left the way he always left: at dawn, chewing a heel of cold rice cake, his diving stone under one arm and his rope over his shoulder. He kissed the sleeping boy, told Aamina the lie all divers tell, that the season would be short, and walked backward up the lane so that he could look at her a little longer. Afterward she kept that morning the way other women keep gold: weighed often, spent never.</p><p>News travels up a coast faster than boats do, but this news came slowly, as if ashamed of itself. A single boat returned ahead of the season carrying the fleet’s letters and the fleet’s dead, and Musa was of the second kind, except that he was not aboard, for there was nothing of him to carry. On the ninth dive of an ordinary morning he had gone down on his stone, and the rope had jerked once, the signal to raise, and the pullers had hauled with a will, and the loop at the end of the rope came up empty.</p><p>Men dove after him until the light failed, and the next day, and the day after that. They found the stone. Nothing else. Whether it was the current, or a fouled net, or the grey shadow that even the shark charmers of the banks will not name while standing on a deck, the sea did not say. The sea never says. It is the world’s oldest witness, and it has never once testified.</p><p>So there was a funeral with no one in it. The Musaliar, the old teacher of the village mosque, led the janazah of the absent, the funeral prayer that is prayed over the missing, and the men stood in rows before a strip of bare sand where a bier should have stood. Aamina stood behind them among the women and looked at that empty place, and understood that her grief would keep this shape forever: a prayer aimed at open water. There was no grave to sit beside. Grief without a grave is a bird without a branch.</p><p>They brought her his things from the boat. Nine fathoms of coir rope, her own best twisting. His knife. His spare waist cloth, folded by another man’s hands. And the diving stone, grey basalt with a smooth waist where a lifetime of rope had worn it gentle. That was all. The sea had kept the rest.</p><p>In the first weeks she went at night to the tide line and stood there with words in her mouth that frightened her. Some of the words were for the sea. Some, and she confessed this to no one living, went higher: why him, and why this way, and what was our sin, that You should reach into my one boat and take its whole cargo. The words came, and she let them come, and then she went home, washed, and prayed the dawn prayer with a chest full of stones, because the adhan, the call, does not wait for the heart to be ready. Much later she understood that this is one of its mercies.</p><p>At the funeral everyone had said the words the Qur’an gives to the struck: inna lillahi wa inna ilayhi raji’un, surely we belong to Allah, and surely to Him we are returning. She had said them too, the way you hand back a coin, because they are what is said. Then the words sat in her house for months afterward, quiet in a corner, like a guest who knows he has come too early, waiting to be understood.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>Four Months and Ten Days</h2><p>She kept the iddah, the widow’s appointed waiting, four months and ten days as the Qur’an sets it, inside her own walls. The village fed her without being asked, the way poor places do: a measure of rice on the doorstep, dried fish wrapped in a leaf, jackfruit in its season, betel from the headman’s wife. The women came with their own coir and spun beside her in the yard, so that the work made one sound between them and nobody was forced to invent sentences.</p><p>In those months she learned what her patience was going to be made of, and it was not what she had thought. She had imagined sabr, patience, as a holy stillness, a sitting quietly while Allah watched with approval. What it was instead was labor. It was soaking the husks and beating them when her arms said no. It was answering the boy’s questions about his father in a level voice, and then scrubbing the cooking pot until her knuckles opened. Patience was not the absence of the storm. Patience was the fifty-third morning, getting up again.</p><p>Some nights the prayers were water and some nights they were dust, and she prayed the dust ones too. She admitted to the Musaliar’s wife, ashamed, that half her prayers had no heart in them at all. Bring the half, the old woman said, without looking up from her spinning. He accepts halves. He is not a merchant weighing your produce at the gate. He is the One who kept your lungs breathing all last night while you slept and asked you for nothing. So Aamina brought the halves, month after month, and slowly, in no hurry, the halves grew.</p><p>One night, with Yunus asleep against her arm and the lamp burning the last of its oil, she said the funeral words again, alone, slowly, out loud, and heard them for the first time. Surely we belong to Allah. Not to the sea, then. Not to the fleet, not to the pearl trade, not even to each other. Lent, all of it, every boat and every breath and every husband, and called home whenever the Owner pleases. And the Owner is not the water.</p><p>The matchmakers came twice in the years that followed, decent offers, kindly meant, for she was still young and her ropes were the best on that shore. She was not against marriage; she knew the widows among the first Muslims had married again, and that there is no shame in it, and mercy in it even. But her heart was a house with a wet floor, and she would not ask a guest to stand in it. The matchmakers went away. The sea stayed. The boy grew. The years passed over the village like weather.</p><p>One thing the Musaliar had said in the first week she carried for the rest of her life. Daughter, he said, the Prophet ﷺ said that patience is at the first blow. She thought then, bitterly, that she had already failed, for at the first blow she had screamed into the wind like any gull. Later she understood it differently: that the first blow is only the first door of a long house, and that sabr is agreeing to walk the whole length of that house, room by room, year by year, without setting fire to any of it.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>His Father’s Stone</h2><p>Yunus grew the way his father had grown, wide in the shoulders and easy in the water. Before he was ten he was swimming out past the surf line to ride the smooth backs of the swells, and Aamina, watching from the coir pits with wet fibre in her fists, felt an old cold hand lay itself flat against her heart. The sea, which had taken from her once without explanation, now lay shining all day at the end of the lane, like a thing that also knew how to wait.</p><p>The asking came in his fifteenth year, in the clear weather after the harvest. He stood in the doorway with his father’s build and his father’s grin and said that the boat master would take him south with the fleet, that the wage was a man’s wage, that the household needed it. And when she said nothing, he laid down the sentence he had been saving: I am my father’s son, Umma. Umma, mother, in the tongue of that coast. As if she, of all the women alive, needed telling whose son he was.</p><p>She refused. Quietly the first time, less quietly the second. She spoke of the coir trade, of an uncle’s shop in the town, of letters and numbers, of any road on the whole green earth that ran along dry ground. He listened the way the tide listens to instruction. Then one evening he said, not cruelly, being fifteen: would you chain me to the coir pits because the sea owes you a debt? She left the room so he would not see her face, and stood a long time in the dark of the yard, unable to tell whether the shaking in her was anger, or fear, or the old wound laughing at her.</p><p>After that he stopped asking, which was worse. She found his waist cloth wet on the line on mornings when no fishing had been done. Then one day she saw that his father’s diving stone was gone from its place beside the threshold, where it had rested nine years like a small grey grave, and that evening the stone was back, and it was wet. She touched it, and her hand shook.</p><p>She went to the Musaliar, so old now that he received visitors lying down, a boy fanning him. Forbid him the sea, she said. One word from you would do it; he loves you. The old man was quiet so long she thought he slept. Then he said: Aamina, you have carried sabr for ten years, and I never told you the whole of what you were carrying. Patience is not gripping the rope until your hands bleed. Patience is opening the hand, and trusting the One who holds the other end. It is the longest form of trust: trust stretched over years, with not one word back, and still not letting go of Him.</p><p>You cannot keep the boy from the water, he said. You can only teach him to hate the shore, or to hate you, and then he will go anyway, for that is how sons are built. What you can do is what believing hands have always done with a beloved thing. Give him away Upward. Not to the sea, daughter, never to the sea; the sea is a servant and owns nothing, not even its own tides. Give him to the Master of the sea, willingly, with both hands open. Then whatever comes back to you, or does not come back, you will not break.</p><p>So she did the thing that cost more than the iddah, more than the empty funeral. She made his rope herself, from the finest fibre of that year, testing every strand against her own weight. And into the twisting of it she put what the women of that shore had always put into their ropes without saying so aloud: recitation, and asking, and the Names of her Lord, said over and over until the fibre had heard all of them. Then she set the rope and his father’s stone beside his sleeping mat, and went out to weep where the sound of it belonged to no one but Allah.</p><p>In the morning she gave him to the fleet with her blessing in his ears. She did not stand watching until the sail was gone. She went home, and soaked the husks, and began again the oldest work she knew.</p></section><div class="orn" aria-hidden="true"><i>✦</i></div><section class="mv"><h2>What Patience Buys</h2><p>He came home that first season lean and salt burned, with rope scars on his wrists and a man’s wage in his cloth, talking as if the sea had adopted him. He came home the next season too, and the next, and the ones after that. She never once watched the fleet leave without her stomach turning to cold iron, and she never once told him so, and this silence also was a strand in the rope she went on twisting all her life.</p><p>The sea paid him a laborer’s wage and no miracles. And the sea never gave Musa back. No bone, no plank, no ring found thirty years later in the belly of a fish, none of the endings that the night stories promise children. The pearl banks kept their dead as they kept their pearls: in the dark, in the cold, in the unanswering deep. The sea gives nothing back. It does not need to. It was never the owner of what it holds.</p><p>Her granddaughter asked her once, at the tide line, in the flat gold light of evening: Ummamma, is grandfather in the sea? And Aamina looked out at the water she had hated and made peace with, and hated again and made peace with again, the way you do with any neighbor of fifty years, and said: no, mole, little one. The sea is not the one keeping him. The One who keeps him is the One who keeps you and me and the boats and the rain, and He loses nothing that is His. Not a fish scale. Not a hair. Not a husband.</p><p>If you had asked her what her patience bought, she would have answered slowly, because the truthful answer sounds at first like poverty. It did not buy back the drowned. It did not buy the death of fear; fear arrived at every sailing like a relative who could not be turned from the door. It bought no pearl and no answer to the one question she had asked the water all her life. What it bought was this: that loss never became her lord. Grief lived in her house forty years, and in forty years it was never once allowed to sit in the seat kept for Allah.</p><p>And it bought her the thing she had not known was for sale: the peace on the far side of accepting, which is not the peace of forgetting, and not the peace of understanding, for she never forgot, and she never understood. It was the peace of a servant who has stopped demanding to audit the ledger, because she has met the Accountant, and found Him nearer in the dark than grief had ever been. When a woman of that shore lost her man to the water, they sent for Aamina before anyone. She never said: it will pass. She said: it will not pass; it will change; hold on to the One who does not.</p><p>She grew old in the lane above the tide line, upright and dry eyed and quick to laugh at small things, which surprised people who knew her story and had not yet learned what the long patience does to a person. It does not harden. It clarifies.</p><p>On a morning near the end of her life, the fleet went south with two of her grandsons aboard, and she stood on the sand among the wives while the sails filled. She said the old words over the water, not as a coin handed back this time, but as an address, a letter posted to a known House: surely we belong to Allah, and surely to Him we are returning.</p><p>The tide came in, as it had been told to. The sails went small and bright, and then went. And on the shore stood an old woman at peace, unpaid and unbroken, who had trusted her Lord longer than the sea is deep, and had received what the patient are actually promised: not the return of what was taken, but the nearness of the One who took it. Ask the patient, at the end. They will tell you it is more.</p></section></article><div class="fig ayah mo"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">وَلَنَبْلُوَنَّكُم بِشَيْءٍ مِّنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِّنَ الْأَمْوَالِ وَالْأَنفُسِ وَالثَّمَرَاتِ ۗ وَبَشِّرِ الصَّابِرِينَ الَّذِينَ إِذَا أَصَابَتْهُم مُّصِيبَةٌ قَالُوا إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ أُولَٰئِكَ عَلَيْهِمْ صَلَوَاتٌ مِّن رَّبِّهِمْ وَرَحْمَةٌ ۖ وَأُولَٰئِكَ هُمُ الْمُهْتَدُونَ</p><p class="en">We will surely test you with something of fear and hunger, and loss of wealth and lives and fruits. And give good news to the patient: those who, when a blow strikes them, say, surely we belong to Allah, and surely to Him we are returning. Upon them are blessings from their Lord, and mercy. And it is they who are guided.</p><div class="rw"><span class="rf">Qur’an · Al-Baqarah 2:155-157</span><button class="vplay" data-ref="2:155-157">Listen ▸</button></div></div><nav class="snav mo" aria-label="More stories"><a class="pv" href="../latif.html"><span class="k">Previous story</span>The Story of Beauty</a><a class="mid" href="index.html">The Hall of Stories</a><a class="nx" href="ghaffar.html"><span class="k">Next story</span>The Ink That Would Not Dry</a></nav></div>
+</main>
+
+<footer class="rfoot">
+<p>A story from the Hall of Stories: the people are invented, the Name and the verses are not.<br/>
+<a href="../index.html">Return to the Codex</a> · <a href="../feedback.html">Send a correction</a> · <a href="../donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+<script>
+(function(){
+  /* the reading line: a thin gold rule that fills as the story is read.
+     Under prefers-reduced-motion it still updates, it simply does not glide. */
+  var bar = document.getElementById("rprogbar");
+  if (bar) {
+    var queued = false;
+    var paint = function () {
+      queued = false;
+      var d = document.documentElement;
+      var span = d.scrollHeight - d.clientHeight;
+      var p = span > 0 ? (d.scrollTop || document.body.scrollTop) / span : 0;
+      if (p < 0) { p = 0; }
+      if (p > 1) { p = 1; }
+      bar.style.transform = "scaleX(" + p + ")";
+    };
+    var ask = function () {
+      if (queued) { return; }
+      queued = true;
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(paint); } else { paint(); }
+    };
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask, { passive: true });
+    paint();
+  }
+  /* the closing verse, in the shared Mushaf voice */
+  Array.prototype.forEach.call(document.querySelectorAll(".vplay"), function (b) {
+    b.addEventListener("click", function () {
+      if (window.playAyah) { window.playAyah(b.getAttribute("data-ref"), b); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
