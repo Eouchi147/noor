@@ -1,0 +1,288 @@
+/* ============================================================
+   NOOR Ramadan · the season skin
+   ------------------------------------------------------------
+   Nothing in this file does anything until noor-ramadan.js puts
+   the class `ramadan` on the html element, which it only does
+   during the month itself, on the first day of Shawwal for the
+   Eid greeting, or when the owner asks for a preview. Every rule
+   below is scoped to that class or to the injected bar, so on an
+   ordinary day in August this stylesheet is inert.
+
+   The intent is a season, not a costume: the night goes deeper,
+   the gold goes warmer, a crescent and a row of lanterns appear
+   at the edges. Body text is never touched, contrast is never
+   lowered, and every motion sits behind prefers-reduced-motion.
+   ============================================================ */
+
+/* ---- the palette shifts, warmer and deeper ------------------ */
+html.ramadan {
+  --gold: #C69A22;          /* the same weight of gold, a warmer hue */
+  --gold-hi: #F7DB86;       /* the highlight, used on dark ground only */
+  --night: #0B0913;
+  --nrb-h: 2.35rem;
+}
+
+html.ramadan body { background: #FFFDF4; }
+
+/* ============================================================
+   the season bar
+   Slim, in the normal flow directly under the site header, so it
+   can never cover a single line of anything.
+   ============================================================ */
+html.ramadan .nrb {
+  position: relative;
+  z-index: 29;
+  background: linear-gradient(100deg, #0A0812 0%, #141C33 46%, #1C2647 100%);
+  color: #FFFEF7;
+  border-bottom: 1px solid rgba(247, 219, 134, .3);
+  font-family: Inter, system-ui, sans-serif;
+  box-shadow: 0 1px 14px rgba(11, 9, 19, .16);
+}
+html.ramadan .nrb-in {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: .4rem 1rem;
+  min-height: var(--nrb-h);
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  box-sizing: border-box;
+}
+@media (min-width: 640px) { html.ramadan .nrb-in { padding-left: 1.5rem; padding-right: 1.5rem; } }
+
+html.ramadan .nrb-moon { flex: 0 0 auto; display: flex; align-items: center; }
+html.ramadan .nrb-moon svg { width: 1.05rem; height: 1.05rem; display: block; }
+html.ramadan .nrb-moon path { fill: #F7DB86; }
+
+html.ramadan .nrb-date {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  min-width: 0;
+  overflow: hidden;
+}
+html.ramadan .nrb-date b {
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  color: #F7DB86;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html.ramadan .nrb-day {
+  font-size: .68rem;
+  font-weight: 600;
+  color: rgba(255, 254, 247, .58);
+  white-space: nowrap;
+}
+
+html.ramadan .nrb-c {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: .7rem;
+  color: rgba(255, 254, 247, .72);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: .15rem;
+}
+html.ramadan .nrb-c b {
+  font-weight: 800;
+  color: #FFFEF7;
+  font-variant-numeric: tabular-nums;
+}
+html.ramadan .nrb-set {
+  font: inherit;
+  font-size: .68rem;
+  font-weight: 700;
+  color: #F7DB86;
+  background: rgba(247, 219, 134, .1);
+  border: 1px solid rgba(247, 219, 134, .3);
+  border-radius: 999px;
+  padding: .2rem .6rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+html.ramadan .nrb-set:hover { background: rgba(247, 219, 134, .22); }
+
+html.ramadan .nrb-link {
+  flex: 0 0 auto;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: #0F0C1A;
+  background: linear-gradient(135deg, #D9AE3A, #F7DB86);
+  border-radius: 999px;
+  padding: .26rem .7rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .15s;
+}
+html.ramadan .nrb-link:hover { transform: translateY(-1px); }
+
+html.ramadan .nrb-x {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: .95rem;
+  line-height: 1;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 254, 247, .45);
+  cursor: pointer;
+  transition: color .18s, background .18s;
+}
+html.ramadan .nrb-x:hover { color: #FFFEF7; background: rgba(255, 254, 247, .1); }
+
+html.ramadan .nrb-pv {
+  flex: 0 0 auto;
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 254, 247, .5);
+  border: 1px solid rgba(255, 254, 247, .22);
+  border-radius: 999px;
+  padding: .12rem .42rem;
+  white-space: nowrap;
+}
+
+/* the lantern rail: a thin row of hanging lights along the bottom edge */
+html.ramadan .nrb::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background-image: radial-gradient(circle 1.6px at 50% 55%, rgba(247, 219, 134, .8), rgba(247, 219, 134, 0) 100%);
+  background-size: 21px 3px;
+  background-repeat: repeat-x;
+  opacity: .55;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  html.ramadan .nrb-day,
+  html.ramadan .nrb-yr,
+  html.ramadan .nrb-at { display: none; }
+  html.ramadan .nrb-link .nrb-long { display: none; }
+  html.ramadan .nrb-in { gap: .5rem; }
+}
+@media (max-width: 400px) {
+  html.ramadan .nrb-pv { display: none; }
+}
+@media print { html.ramadan .nrb { display: none; } }
+
+/* ---- Eid: one day of gold, then it sleeps ------------------- */
+html.ramadan.eid .nrb {
+  background: linear-gradient(100deg, #140F06 0%, #3B2A0C 46%, #5A4110 100%);
+  border-bottom-color: rgba(247, 219, 134, .45);
+}
+html.ramadan.eid .nrb-date b { color: #FFEDBC; }
+html.ramadan.eid .nrb-c { color: rgba(255, 254, 247, .82); }
+html.ramadan.eid .nrb::after { opacity: 1; }
+
+/* ============================================================
+   the rooms: the night goes deeper and a crescent rises
+   ============================================================ */
+html.ramadan .rhero {
+  background: linear-gradient(178deg, #08060F 0%, #121a33 52%, #1b2549 100%);
+}
+/* faint stars, well behind every word */
+html.ramadan .rhero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle 1px at 12% 22%, rgba(255, 254, 247, .55), transparent 100%),
+    radial-gradient(circle 1px at 27% 64%, rgba(255, 254, 247, .32), transparent 100%),
+    radial-gradient(circle 1.4px at 46% 16%, rgba(247, 219, 134, .5), transparent 100%),
+    radial-gradient(circle 1px at 68% 48%, rgba(255, 254, 247, .38), transparent 100%),
+    radial-gradient(circle 1px at 82% 26%, rgba(255, 254, 247, .5), transparent 100%),
+    radial-gradient(circle 1.2px at 91% 70%, rgba(247, 219, 134, .38), transparent 100%),
+    radial-gradient(circle 1px at 57% 82%, rgba(255, 254, 247, .28), transparent 100%);
+}
+/* the crescent: a gold disc with a circle cut out of it */
+html.ramadan .rhero::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  right: 1.6rem;
+  width: 5.2rem;
+  height: 5.2rem;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(247, 219, 134, .95), rgba(214, 168, 58, .72));
+  -webkit-mask-image: radial-gradient(circle 2.1rem at 70% 30%, transparent 98%, #000 99%);
+  mask-image: radial-gradient(circle 2.1rem at 70% 30%, transparent 98%, #000 99%);
+  opacity: .3;
+  filter: drop-shadow(0 0 18px rgba(247, 219, 134, .35));
+}
+@media (max-width: 640px) {
+  html.ramadan .rhero::after { width: 3.6rem; height: 3.6rem; top: .9rem; right: .9rem; opacity: .24; }
+  html.ramadan .rhero::after {
+    -webkit-mask-image: radial-gradient(circle 1.45rem at 70% 30%, transparent 98%, #000 99%);
+    mask-image: radial-gradient(circle 1.45rem at 70% 30%, transparent 98%, #000 99%);
+  }
+}
+/* the front hero is a painted scene already: only the night deepens,
+   and only through an inset shadow, which cannot cover a child. */
+html.ramadan #hero { box-shadow: inset 0 0 190px 54px rgba(6, 4, 14, .5); }
+
+/* ---- the header keeps a gold hairline ---------------------- */
+html.ramadan #site-header { border-bottom-color: rgba(198, 154, 34, .3); }
+
+/* ---- the footer gets one crescent and a warmer rule --------- */
+html.ramadan .rfoot { border-top-color: rgba(198, 154, 34, .28); position: relative; }
+html.ramadan .rfoot::before {
+  content: "";
+  position: absolute;
+  top: -.62rem;
+  left: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-left: -.575rem;
+  border-radius: 50%;
+  background: #C69A22;
+  -webkit-mask-image: radial-gradient(circle .46rem at 68% 30%, transparent 98%, #000 99%);
+  mask-image: radial-gradient(circle .46rem at 68% 30%, transparent 98%, #000 99%);
+  opacity: .55;
+}
+
+/* ---- gold that carries the season, at the same darkness ----- */
+html.ramadan .gpill { background: linear-gradient(135deg, #C08F1E, #EFCC6E); }
+html.ramadan .pill { background: rgba(198, 154, 34, .14); border-color: rgba(198, 154, 34, .34); }
+
+/* ============================================================
+   motion, and the promise to switch it off
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  html.ramadan .nrb-moon svg { animation: nrb-moon 6.5s ease-in-out infinite; }
+  @keyframes nrb-moon {
+    0%, 100% { opacity: .78; transform: translateY(0); }
+    50%      { opacity: 1;   transform: translateY(-1px); }
+  }
+  html.ramadan .nrb::after { animation: nrb-lanterns 7.5s ease-in-out infinite; }
+  @keyframes nrb-lanterns {
+    0%, 100% { opacity: .45; }
+    50%      { opacity: .85; }
+  }
+  html.ramadan .rhero::after { animation: nrb-crescent 9s ease-in-out infinite; }
+  @keyframes nrb-crescent {
+    0%, 100% { opacity: .22; }
+    50%      { opacity: .34; }
+  }
+  html.ramadan.eid .nrb-link { animation: nrb-eid 3.6s ease-in-out infinite; }
+  @keyframes nrb-eid {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(247, 219, 134, 0); }
+    50%      { box-shadow: 0 0 0 4px rgba(247, 219, 134, .16); }
+  }
+}
