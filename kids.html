@@ -212,8 +212,8 @@ main{max-width:660px}
 <svg class="crescent" viewBox="0 0 80 80" aria-hidden="true"><path d="M56 6A34 34 0 1 0 56 74 28 28 0 1 1 56 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
 
 <header id="site-header">
-<a class="wordmark" href="index.html" aria-label="NOOR Little Codex, back to the Big Codex"><span class="wm-top"><span class="moon">☾</span> NOOR · Little Codex</span><span class="wm-sub">The Greatest Game</span></a>
-<a class="backlink" href="index.html" aria-label="Back to the Big Codex"><span class="bl-full">Big Codex →</span><span class="bl-min">☾ NOOR</span></a>
+<a class="wordmark" href="/" aria-label="NOOR Little Codex, back to the Big Codex"><span class="wm-top"><span class="moon">☾</span> NOOR · Little Codex</span><span class="wm-sub">The Greatest Game</span></a>
+<a class="backlink" href="/" aria-label="Back to the Big Codex"><span class="bl-full">Big Codex →</span><span class="bl-min">☾ NOOR</span></a>
 </header>
 
 <div class="necklace" aria-label="Your necklace of seven Name gems"><div class="chain" id="chain"></div></div>
@@ -229,7 +229,7 @@ main{max-width:660px}
 <p class="found" id="found"></p>
 <div class="wonders">
 <p class="w-kick">✦ Hero stories ✦</p>
-<a class="w-sky" href="kids/lanterns.html">
+<a class="w-sky" href="/kids/lanterns">
 <span class="sky-art" aria-hidden="true">
 <svg viewBox="0 0 120 74">
 <defs><radialGradient id="skg" cx="50%" cy="42%"><stop offset="0" stop-color="#F4D46A" stop-opacity=".95"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient></defs>
@@ -286,7 +286,7 @@ main{max-width:660px}
 <p class="finale-line">Whenever you see something amazing, you know Who made it. Say: Allahu Akbar!</p>
 <div class="finale-btns">
 <button class="cta" id="again">Play again</button>
-<a class="cta gold" href="index.html">Explore the Big Codex</a>
+<a class="cta gold" href="/">Explore the Big Codex</a>
 </div>
 </div>
 </section>
@@ -360,9 +360,9 @@ function render(){
  var g=document.getElementById("wgrid"),c=document.getElementById("wcount"),fe=document.getElementById("wfeat");
  if(!g)return;
  if(fe)fe.innerHTML=HEROES.map(function(x){
-  return '<a class="w-hero" href="'+x.f+'"><span class="rb">'+(isDone(x.k)?'✓ finished':'Hero story')+'</span><span class="fig">'+x.fig+'</span><span><span class="nm">'+x.n+'</span><span class="ln" style="display:block">'+x.l+'</span></span></a>'}).join("");
+  return '<a class="w-hero" href="/'+x.f.replace(/\.html$/,'')+'"><span class="rb">'+(isDone(x.k)?'✓ finished':'Hero story')+'</span><span class="fig">'+x.fig+'</span><span><span class="nm">'+x.n+'</span><span class="ln" style="display:block">'+x.l+'</span></span></a>'}).join("");
  g.innerHTML=G.map(function(x){
-  return '<a class="w-card" href="'+x.f+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
+  return '<a class="w-card" href="/'+x.f.replace(/\.html$/,'')+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
    '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
  }).join("");
  var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
@@ -950,7 +950,7 @@ $("#reset").addEventListener("click",resetAll);
 renderNecklace();renderMap();showScreen("scr-map");
 })();
 </script>
-<p style="text-align:center;font-size:.68rem;color:rgba(255,254,247,.45);padding:0 1rem 2rem;line-height:1.7">Schools &amp; madrasas: put the whole Little Codex in your own website · <a href="/license.html" style="color:#E9C86A;font-weight:700;text-decoration:none">licensing →</a></p>
+<p style="text-align:center;font-size:.68rem;color:rgba(255,254,247,.45);padding:0 1rem 2rem;line-height:1.7">Schools &amp; madrasas: put the whole Little Codex in your own website · <a href="/license" style="color:#E9C86A;font-weight:700;text-decoration:none">licensing →</a></p>
 </body>
 </html>
 

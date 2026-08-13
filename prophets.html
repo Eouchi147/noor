@@ -117,6 +117,20 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .ptile.rasul .en{color:#FFFEF7;font-size:1.15rem}
 .ptile.rasul .meta{color:rgba(255,254,247,.55)}
 .ptile.rasul .mns{background:rgba(244,212,106,.12);color:#F4D46A;border-color:rgba(244,212,106,.4)}
+.ptile.alive{border-color:rgba(127,163,216,.5);background:linear-gradient(180deg,rgba(127,163,216,.10),rgba(255,255,255,0) 58%),#fff;overflow:hidden}
+.ptile.alive::before{content:"";position:absolute;left:50%;bottom:0;width:min(78%,15rem);height:120%;transform:translateX(-50%);pointer-events:none;
+background:linear-gradient(0deg,rgba(127,163,216,.20),rgba(180,205,240,.10) 42%,transparent 78%);
+-webkit-mask-image:linear-gradient(0deg,#000,transparent 82%);mask-image:linear-gradient(0deg,#000,transparent 82%);animation:aliveRise 6.5s ease-in-out infinite}
+@keyframes aliveRise{0%,100%{opacity:.5;transform:translateX(-50%) translateY(6px)}50%{opacity:1;transform:translateX(-50%) translateY(-6px)}}
+.ptile.alive .ar{color:#33507C;position:relative;z-index:2;animation:aliveGlow 6.5s ease-in-out infinite}
+@keyframes aliveGlow{0%,100%{text-shadow:0 0 0 rgba(127,163,216,0)}50%{text-shadow:0 0 22px rgba(127,163,216,.55)}}
+.ptile.alive .en,.ptile.alive .meta,.ptile.alive .mns,.ptile.alive .hint{position:relative;z-index:2}
+.ptile.alive .azm{color:#33507C;border-color:rgba(51,80,124,.45)}
+.alive-b{position:absolute;top:.45rem;left:.55rem;z-index:3;display:inline-flex;align-items:center;gap:.22rem;font-size:.5rem;font-weight:800;letter-spacing:.08em;color:#33507C;border:1px solid rgba(51,80,124,.42);background:rgba(127,163,216,.12);border-radius:999px;padding:.1rem .38rem}
+.alive-b i{width:.3rem;height:.3rem;border-radius:999px;background:#33507C;display:inline-block;animation:alivePulse 2.4s ease-in-out infinite}
+@keyframes alivePulse{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+.alive-note{position:relative;z-index:2;display:block;margin-top:.4rem;font-size:.6rem;line-height:1.5;color:#33507C;font-weight:700}
+@media (prefers-reduced-motion:reduce){.ptile.alive::before,.ptile.alive .ar,.alive-b i{animation:none}}
 .aura{position:absolute;left:50%;top:42%;width:190px;height:190px;transform:translate(-50%,-50%);border-radius:999px;background:radial-gradient(circle,rgba(244,212,106,.30) 0%,rgba(201,162,39,.12) 45%,transparent 70%);animation:aura 4.5s ease-in-out infinite;pointer-events:none}
 .aura.a2{width:260px;height:260px;animation-delay:2.2s;opacity:.7}
 @keyframes aura{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.18);opacity:.45}}
@@ -179,57 +193,57 @@ body.sheet-open{overflow:hidden}
 #nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
 </style>
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
-<a href="index.html" class="flex items-center gap-2.5">
+<a href="/" class="flex items-center gap-2.5">
 <div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
 <div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
 </a>
 <nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
-<a href="quran.html" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
-<a href="prophets.html" class="text-ink font-bold" data-i18n="nav.prophets">Prophets</a>
-<a href="madrasa.html" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
-<a href="kids.html" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<a href="/quran" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="/prophets" class="text-ink font-bold" data-i18n="nav.prophets">Prophets</a>
+<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="/kids" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
-<a role="menuitem" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a role="menuitem" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a role="menuitem" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a role="menuitem" href="words.html" data-i18n="m.words">The Words of the Path</a>
-<a role="menuitem" href="health.html" data-i18n="m.health">Prophetic Health</a>
-<a role="menuitem" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
-<a role="menuitem" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
 </div>
 <div class="mg">
 <p class="dd-h" data-i18n="g.story">The Story</p>
-<a role="menuitem" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
-<a role="menuitem" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
-<a role="menuitem" href="companions.html" data-i18n="m.companions">The Companions</a>
-<a role="menuitem" href="characters.html" data-i18n="m.characters">Characters</a>
-<a role="menuitem" href="places.html" data-i18n="m.places">Places</a>
-<a role="menuitem" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
-<a role="menuitem" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
+<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
 </div>
 <div class="mg">
 <p class="dd-h" data-i18n="g.heart">The Heart</p>
-<a role="menuitem" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
-<a role="menuitem" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
-<a role="menuitem" href="family.html" data-i18n="m.family">The Family Room</a>
-<a role="menuitem" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
-<a role="menuitem" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
-<a role="menuitem" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
 </div>
 <div class="mg">
 <p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a role="menuitem" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
-<a role="menuitem" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a role="menuitem" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
 <p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
-<a role="menuitem" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a role="menuitem" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a role="menuitem" href="donate.html" class="mg-give" data-i18n="m.give">Give a Gift</a>
-<a role="menuitem" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a role="menuitem" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
 </div>
 </div></div></div>
 </nav>
@@ -260,44 +274,46 @@ body.sheet-open{overflow:hidden}
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
-<a href="donate.html" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
 <button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
 </div>
 </div>
+
+</header>
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="madrasa.html" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="quran.html" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="arabic.html" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="words.html" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="health.html" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="theology.html" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="school.html" data-i18n="m.school">The School · Full Curriculum</a>
+<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
 <p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="index.html#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="prophets.html" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="companions.html" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="characters.html" data-i18n="m.characters">Characters</a>
-<a class="shl" href="places.html" data-i18n="m.places">Places</a>
-<a class="shl" href="heroes.html" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="unseen.html" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
+<a class="shl" href="/places" data-i18n="m.places">Places</a>
+<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
 <p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="pillars.html" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="begin.html" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="family.html" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="sermon.html" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="soul.html" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="index.html#mizan" data-i18n="m.mizan">Two Lives</a>
+<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
 <p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="stories/" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="kids.html" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="kids/lanterns.html" data-i18n="m.lanterns">The Lantern Sky</a>
+<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
 <p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="masjid/" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="license.html" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="donate.html" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="feedback.html" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="legal.html" data-i18n="m.legal">Terms &amp; Transparency</a>
+<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
 <p class="sh-g" data-i18n="lang.choose">Choose your language</p>
 <div class="lang-grid">
 <button type="button" data-setlang="en" lang="en">English</button>
@@ -321,9 +337,8 @@ body.sheet-open{overflow:hidden}
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="donate.html">✦ <span data-i18n="m.give">Give a Gift</span></a>
+<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
-</header>
 
 <!-- HERO -->
 <section data-ink=soft id="phero">
@@ -373,7 +388,7 @@ body.sheet-open{overflow:hidden}
 <div class="px-6 py-9">
 <p class="font-amiri text-2xl mb-3" style="color:#F4D46A">مَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ</p>
 <p class="text-sm max-w-md mx-auto leading-relaxed" style="color:rgba(255,254,247,.8)">"We make no distinction between any of His messengers" (Al-Baqarah 2:285), one chain, one Light. Their full stories live on the Path, told in order with every source.</p>
-<a href="index.html#timeline" class="inline-block mt-5 px-4 py-2 rounded-full font-semibold text-sm" style="background:#C9A227;color:#241D12">Walk their stories on the Path →</a>
+<a href="/#timeline" class="inline-block mt-5 px-4 py-2 rounded-full font-semibold text-sm" style="background:#C9A227;color:#241D12">Walk their stories on the Path →</a>
 </div>
 </div>
 </section>
@@ -383,8 +398,8 @@ body.sheet-open{overflow:hidden}
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
 <p class="text-xs text-parchment/50 leading-relaxed">Mention counts are by explicit name in the Qur'an; several prophets are also addressed by title. Chronology follows the Codex Path.</p>
-<a href="index.html#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
-<p class="mt-3 text-[10px] text-parchment/35"><a href="donate.html" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+<a href="/#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 </div>
 </footer>
 
@@ -396,7 +411,7 @@ var chain=document.getElementById("chain");
 var PLAY='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 
 function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
-function refLink(ref){var m=String(ref).match(/^(\d+):(\d+)/);return m?("quran.html?surah="+m[1]+"&ayah="+m[2]):"quran.html"}
+function refLink(ref){var m=String(ref).match(/^(\d+):(\d+)/);return m?("/quran?surah="+m[1]+"&ayah="+m[2]):"/quran"}
 
 function verseHTML(v){
   return '<div class="vc">'+
@@ -455,15 +470,21 @@ function artHTML(p,i){
 
 chain.innerHTML=P.map(function(p,i){
   var last=!!p.rasul;
+  /* Isa stands apart in the chain: he was not killed and did not die.
+     He was raised, and he is awaited. The tile rises rather than radiates,
+     so the Seal keeps the brightest light. */
+  var alive=(p.id==="isa");
   var side=last?'full':(i%2===0?'L':'R');
   var tile='<div class="trow '+side+'" id="row-'+p.id+'">'+
-    '<button class="ptile'+(last?' rasul':'')+'" type="button" data-i="'+i+'" aria-expanded="false" aria-controls="art-'+i+'">'+
+    '<button class="ptile'+(last?' rasul':'')+(alive?' alive':'')+'" type="button" data-i="'+i+'" aria-expanded="false" aria-controls="art-'+i+'">'+
+    (alive?'<span class="alive-b"><i></i>RAISED · AWAITED</span>':'')+
     (last?'<span class="aura" aria-hidden="true"></span><span class="aura a2" aria-hidden="true"></span>':'')+
     (p.azm?'<span class="azm">'+(last?'ULUL-AZM · THE SEAL':'ULUL-AZM')+'</span>':'')+
     '<div class="ar" translate="no">'+p.ar+'</div>'+
     '<div class="en">'+esc(p.en)+'</div>'+
     '<div class="meta">'+esc(p.epithet)+'</div>'+
     '<span class="mns">named '+p.mentions+(p.id==="muhammad"?" times · once as Ahmad":" times")+'</span>'+
+    (alive?'<span class="alive-note">Alive, raised to Allah, and he will return: a sign of the Hour (4:157-158, 43:61)</span>':'')+
     '<span class="hint">Open the story ✦</span>'+
     '</button></div>';
   return tile+'<div class="art" id="art-'+i+'" data-id="'+p.id+'">'+artHTML(p,i)+'</div>';
@@ -512,7 +533,7 @@ try{
 setTimeout(function(){document.querySelectorAll(".reveal:not(.in)").forEach(function(el){el.classList.add("in")})},1600);
 
 /* graceful note if the data file ever fails to arrive */
-if(!P.length){chain.innerHTML='<p style="text-align:center;font-size:.85rem;color:rgba(44,36,22,.6);padding:2rem 1rem">The chain is being lit. Pull to refresh, or walk the stories on <a href="index.html#timeline" style="color:#8a6d13;font-weight:700">the Path</a>.</p>';}
+if(!P.length){chain.innerHTML='<p style="text-align:center;font-size:.85rem;color:rgba(44,36,22,.6);padding:2rem 1rem">The chain is being lit. Pull to refresh, or walk the stories on <a href="/#timeline" style="color:#8a6d13;font-weight:700">the Path</a>.</p>';}
 
 /* deep link: prophets.html#musa opens the article */
 var want=(location.hash||"").replace("#","");
