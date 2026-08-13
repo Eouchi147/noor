@@ -718,6 +718,11 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (function () {
   "use strict";
   function init() {
+    /* Safety net: a fixed sheet trapped inside an ancestor that has a filter,
+       backdrop-filter or transform is sized against that ancestor, not the
+       screen. Re-home it on the body so it always fills the viewport. */
+    var sheet = document.getElementById("nav-sheet");
+    if (sheet && sheet.parentNode !== document.body) document.body.appendChild(sheet);
     var burger = document.getElementById("nav-burger");
     if (burger) burger.addEventListener("click", function () {
       var open = document.body.classList.toggle("sheet-open");

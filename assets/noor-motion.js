@@ -142,7 +142,48 @@
     return tl;
   }
 
-  window.NOOR_MO = { animate: animate, draw: animateDraw, floats: floats, reduce: REDUCE, gsap: g };
+  /* ---- failsafe ----------------------------------------------------
+     Nothing this layer touches may ever stay invisible. If a trigger
+     never fires (stale positions after fonts or images load, a layout
+     shift, an oddity in an old browser), reveal it anyway. Content
+     always wins over choreography. */
+  function revealAll(reason) {
+    var hidden = document.querySelectorAll(".mo, .mo-pop");
+    var fixed = 0;
+    for (var i = 0; i < hidden.length; i++) {
+      var el = hidden[i], cs = window.getComputedStyle(el);
+      if (parseFloat(cs.opacity) < 0.99 || cs.visibility === "hidden") {
+        g.set(el, { autoAlpha: 1, y: 0, scale: 1, clearProps: "transform" });
+        fixed++;
+      }
+    }
+    return fixed;
+  }
+  function guard() {
+    if (window.ScrollTrigger) { try { ScrollTrigger.refresh(); } catch (e) {} }
+    /* anything already inside or above the fold must be visible now */
+    document.querySelectorAll(".mo, .mo-pop").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 1.1) {
+        var cs = window.getComputedStyle(el);
+        if (parseFloat(cs.opacity) < 0.99 || cs.visibility === "hidden") {
+          g.to(el, { autoAlpha: 1, y: 0, scale: 1, duration: 0.4 * D, overwrite: true });
+        }
+      }
+    });
+  }
+  addEventListener("load", function () {
+    guard();
+    setTimeout(guard, 600);
+    /* last resort: after eight seconds nothing stays hidden, ever */
+    setTimeout(function () { revealAll("failsafe"); }, 8000);
+  });
+  /* fonts change metrics, which moves every trigger */
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(function () { setTimeout(guard, 120); });
+  }
+
+  window.NOOR_MO = { animate: animate, draw: animateDraw, floats: floats, revealAll: revealAll, reduce: REDUCE, gsap: g };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScroll);
   else initScroll();
 })();
