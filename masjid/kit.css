@@ -99,8 +99,9 @@ textarea{line-height:1.7;resize:vertical}
 
 /* ---------- print, shared ---------- */
 @media print{
-  .noprint,#site-header,.kit-top,.kmark{display:none !important}
-  body.kit{background:#fff;color:#000}
+  .noprint,#site-header,#nav-sheet,.kit-top,.kmark{display:none !important}
+  body.kit{background:#fff;color:#000;overflow:visible;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .kit-wrap{max-width:none;padding:0}
   .printonly{display:block !important}
   a[href]:after{content:""}

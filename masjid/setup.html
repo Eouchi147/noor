@@ -45,15 +45,27 @@ input:focus,select:focus,textarea:focus{border-color:#C9A227}
 .steps li{margin-top:.4rem;margin-left:1.1rem}
 .qib{font-size:.8rem;margin-top:.6rem;color:rgba(44,36,22,.75)}
 .qib b{color:#6b5510}
+.jrow{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:.5rem;align-items:end;
+  padding:.55rem;border:1px solid rgba(201,162,39,.28);border-radius:12px;margin-top:.6rem;background:#FFFDF4}
+@media(max-width:560px){.jrow{grid-template-columns:1fr 1fr}.jrow > div:first-child{grid-column:1 / -1}}
+.jrow label{margin-top:0}
+.jnum{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8a6d13;
+  grid-column:1 / -1;margin-bottom:-.25rem}
+.prevrow{display:flex;align-items:center;gap:.45rem;margin-top:.7rem;font-size:.74rem;color:rgba(44,36,22,.75)}
+.prevrow input{width:auto;margin:0}
 </style>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
 </head>
 <body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -311,11 +323,52 @@ body.sheet-open{overflow:hidden}
 <div><label>Maghrib</label><input id="iq-maghrib" type="number" value="5"/></div>
 <div><label>Isha</label><input id="iq-isha" type="number" value="10"/></div>
 </div>
-<div class="row">
-<div><label for="w-jum">Jumu'ah time (shown as text)</label><input id="w-jum" placeholder="1:30 PM"/></div>
-<div><label for="w-ann">Announcements (one per line)</label><textarea id="w-ann" rows="2" placeholder="Qur'an circle Saturdays after Maghrib"></textarea></div>
-</div>
+<label for="w-ann">Announcements (one per line, they scroll along the foot of the board)</label>
+<textarea id="w-ann" rows="2" placeholder="Qur'an circle Saturdays after Maghrib"></textarea>
 <p class="hint">The board computes adhan times from the sun each day; verify once against your local calendar and tune the iqama offsets. High latitudes fall back to the seventh-of-the-night convention and say so on screen.</p>
+</div>
+
+<div class="card">
+<h2>4 · Jumu'ah, the Friday gathering</h2>
+<div class="row">
+<div><label for="j-on">Jumu'ah on this board</label><select id="j-on">
+<option value="1">Show it</option>
+<option value="">Do not show it</option>
+</select></div>
+<div><label for="j-rep">On Friday</label><select id="j-rep">
+<option value="1">In place of Dhuhr</option>
+<option value="">Beside Dhuhr</option>
+</select></div>
+</div>
+<div class="row">
+<div><label for="j-all">The other six days</label><select id="j-all">
+<option value="1">A quiet line of Friday's times</option>
+<option value="">Nothing until Friday</option>
+</select></div>
+<div><label for="j-prev">Preview</label><select id="j-prev">
+<option value="1">Show me the Friday screen</option>
+<option value="">Show me today's screen</option>
+</select></div>
+</div>
+<p class="hint">Many masajid hold two or three sittings. Name each one as your community says it, give the khutba time, and give the iqama time if the prayer begins at a fixed minute. A sitting with no khutba time is simply left off the board.</p>
+<div class="jrow">
+<div class="jnum">First sitting</div>
+<div><label for="j-l1">Label</label><input id="j-l1" placeholder="First jumu'ah"/></div>
+<div><label for="j-k1">Khutba</label><input id="j-k1" type="time"/></div>
+<div><label for="j-i1">Iqama (optional)</label><input id="j-i1" type="time"/></div>
+</div>
+<div class="jrow">
+<div class="jnum">Second sitting</div>
+<div><label for="j-l2">Label</label><input id="j-l2" placeholder="Second jumu'ah"/></div>
+<div><label for="j-k2">Khutba</label><input id="j-k2" type="time"/></div>
+<div><label for="j-i2">Iqama (optional)</label><input id="j-i2" type="time"/></div>
+</div>
+<div class="jrow">
+<div class="jnum">Third sitting</div>
+<div><label for="j-l3">Label</label><input id="j-l3" placeholder="English khutba"/></div>
+<div><label for="j-k3">Khutba</label><input id="j-k3" type="time"/></div>
+<div><label for="j-i3">Iqama (optional)</label><input id="j-i3" type="time"/></div>
+</div>
 </div>
 
 <div class="card">
@@ -329,6 +382,7 @@ body.sheet-open{overflow:hidden}
 <li>Open the copied link in the TV's browser (or a small PC or stick plugged into the TV).</li>
 <li>Press F, or double-tap, for fullscreen. The cursor hides itself.</li>
 <li>Bookmark it: the link carries all your settings. Change anything here and copy the new link.</li>
+<li>On Friday the board raises the Jumu'ah panel by itself, with every sitting you named above; the rest of the week it keeps a quiet line, if you asked for one.</li>
 </ol>
 <p class="hint">The board is a gift of the Codex: free for every masjid, forever, no account, nothing to renew. To place whole rooms of NOOR inside your website, see <a href="/license" style="color:#8a6d13">licensing</a>; masjids that teach for free embed free.</p>
 </div>
@@ -344,17 +398,41 @@ body.sheet-open{overflow:hidden}
 "use strict";
 function $(i){return document.getElementById(i)}
 function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+var ORD=["First jumu'ah","Second jumu'ah","Third jumu'ah"];
+/* a readable clock for the legacy line older boards still read */
+function say12(v){
+  var m=String(v||"").match(/^(\d{1,2}):(\d{2})$/);
+  if(!m)return "";
+  var h=+m[1],mi=+m[2],ap=h>=12?"PM":"AM",hh=h%12;if(hh===0)hh=12;
+  return hh+":"+(mi<10?"0":"")+mi+" "+ap;
+}
+function sittings(){
+  var out=[],i,k;
+  for(i=1;i<=3;i++){
+    k=$("j-k"+i).value.trim();
+    if(!k)continue;
+    out.push({l:$("j-l"+i).value.trim().slice(0,40),k:k,i:$("j-i"+i).value.trim(),n:i});
+  }
+  if(out.length>1)out.forEach(function(x){if(!x.l)x.l=ORD[x.n-1]});
+  return out.map(function(x){var o={l:x.l,k:x.k};if(x.i)o.i=x.i;return o});
+}
 function build(){
   var lat=parseFloat($("w-lat").value),lng=parseFloat($("w-lng").value);
+  var jon=!!$("j-on").value,sits=sittings();
   var c={n:$("w-name").value.slice(0,60)||"Prayer Board",lat:isNaN(lat)?45.4215:lat,lng:isNaN(lng)?-75.6972:lng,
     m:$("w-m").value,a:$("w-a").value,lang:$("w-lang").value,h24:!!$("w-h24").value,tz:(Intl.DateTimeFormat().resolvedOptions().timeZone||""),
     iq:{fajr:+$("iq-fajr").value||0,dhuhr:+$("iq-dhuhr").value||0,asr:+$("iq-asr").value||0,maghrib:+$("iq-maghrib").value||0,isha:+$("iq-isha").value||0},
-    jumuah:$("w-jum").value.slice(0,20),ann:$("w-ann").value.split("\n").map(function(x){return x.trim()}).filter(Boolean).slice(0,6)};
+    ju:{on:jon,rep:!!$("j-rep").value,all:!!$("j-all").value,s:sits},
+    jumuah:(jon&&sits.length)?((sits[0].l?sits[0].l+" ":"")+say12(sits[0].k)).trim().slice(0,40):"",
+    ann:$("w-ann").value.split("\n").map(function(x){return x.trim()}).filter(Boolean).slice(0,6)};
   var url=location.origin+location.pathname.replace(/[^\/]*$/,"").replace(/\/$/,"")+"/board.html#"+b64u(JSON.stringify(c));
-  $("linkbox").textContent=url;$("w-open").href=url;$("w-frame").src=url;
+  var hash=url.slice(url.indexOf("#"));
+  $("linkbox").textContent=url;$("w-open").href=url;
+  $("w-frame").src=url.slice(0,url.indexOf("#")).replace(/board\.html$/,"board.html"+((jon&&sits.length&&$("j-prev").value)?"?friday=1":""))+hash;
   if(!isNaN(lat)&&!isNaN(lng)){$("w-qibla").hidden=false;$("w-qibla").innerHTML="Qibla from here: <b>"+window.NOOR_QIBLA(lat,lng).toFixed(1)+"° from true north</b> (great-circle bearing to the Kaaba).";}
 }
-["w-name","w-lat","w-lng","w-m","w-a","w-lang","w-h24","iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha","w-jum","w-ann"].forEach(function(i){
+["w-name","w-lat","w-lng","w-m","w-a","w-lang","w-h24","iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha","w-ann",
+ "j-on","j-rep","j-all","j-prev","j-l1","j-k1","j-i1","j-l2","j-k2","j-i2","j-l3","j-k3","j-i3"].forEach(function(i){
   $(i).addEventListener("input",build);$(i).addEventListener("change",build);
 });
 $("w-geo").addEventListener("click",function(){

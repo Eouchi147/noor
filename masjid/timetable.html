@@ -20,59 +20,91 @@
 <script src="../noor-fx.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NOOR Monthly Prayer Timetable","url":"https://noorcodex.com/masjid/timetable","applicationCategory":"ReligiousApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"NOOR · Codex of Light"}}</script>
 <style>
-#sheet{background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:1rem .9rem;margin-top:1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
-.sh-head{text-align:center;border-bottom:2px solid rgba(44,36,22,.8);padding-bottom:.5rem}
-.sh-head h2{font-size:1.15rem;font-weight:900;margin:0;letter-spacing:-.01em}
-.sh-head .mo{font-size:.95rem;font-weight:800;color:#6b5510;margin:.15rem 0 0}
-.sh-head .pl{font-size:.7rem;color:var(--soft);margin:.2rem 0 0;line-height:1.6}
-.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table.tt{width:100%;border-collapse:collapse;margin-top:.6rem;font-variant-numeric:tabular-nums}
-table.tt th,table.tt td{padding:.3rem .25rem;text-align:center;font-size:.72rem;
-  border-bottom:1px solid rgba(44,36,22,.1);white-space:nowrap}
-table.tt thead th{font-size:.6rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
-  color:#6b5510;border-bottom:1.5px solid rgba(201,162,39,.5)}
-table.tt thead tr:first-child th{border-bottom:1px solid rgba(201,162,39,.3)}
-table.tt td.d{font-weight:800;text-align:left;padding-left:.35rem}
-table.tt td.d span{font-weight:600;color:var(--soft);margin-left:.3rem;font-size:.66rem}
-table.tt td.hj{color:var(--soft);font-size:.66rem}
-table.tt tr.fri{background:rgba(201,168,39,.09)}
-table.tt tr.fri td.d{color:#6b5510}
-table.tt .iqcol{color:#6b5510}
-table.tt .sep{border-left:1px solid rgba(44,36,22,.14)}
-.sh-notes{font-size:.68rem;line-height:1.7;color:rgba(44,36,22,.6);margin-top:.7rem}
+/* ================= the sheet =================
+   The sheet is laid out in millimetres at exactly the size it prints, on screen
+   and on paper alike, so what the browser measures before printing is what the
+   printer puts on the page. One page, always: the sheet is a fixed page box and
+   the type is fitted to it before it is shown.
+   ============================================= */
+#sheet{--pgw:190mm;--pgh:256mm;--fs:10pt;--rowh:5.4mm;
+  width:var(--pgw);height:var(--pgh);margin:0 auto;padding:9mm 8mm 6mm;
+  background:#fff;color:#1b1408;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--line);border-radius:2px;box-shadow:0 10px 34px rgba(44,36,22,.15);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pagewrap{margin-top:1.1rem;text-align:center}
+.pagescale{display:inline-block;transform-origin:top left;overflow:hidden}
+@media screen{#pagewrap{overflow:hidden;max-width:100%}}
+.pagenote{font-size:.68rem;color:rgba(44,36,22,.5);margin:.5rem 0 0;line-height:1.6}
+
+/* ---------- the crown ---------- */
+.sh-head{flex:none;text-align:center}
+.sh-head .shar{font-family:Amiri,serif;font-size:15pt;line-height:1.35;color:#9a7a14}
+.sh-head h2{font-size:23pt;font-weight:900;line-height:1.1;letter-spacing:-.015em;margin:.6mm 0 0;color:#14100A}
+.sh-head .mo{font-size:12.5pt;font-weight:800;color:#8a6d13;margin:1.1mm 0 0;letter-spacing:.03em}
+.sh-head .hr1{border-top:.7mm solid #14100A;margin:2.4mm 0 0}
+.sh-head .pl{font-size:8.4pt;line-height:1.5;color:#443a2a;margin:1.5mm 0 0}
+.sh-head .ayah{font-size:8.2pt;line-height:1.45;color:#8a6d13;font-style:italic;margin:1.2mm 0 0;
+  border-bottom:.25mm solid rgba(201,162,39,.6);padding-bottom:1.8mm}
+
+/* ---------- the table ---------- */
+.sh-body{flex:1 1 auto;min-height:0;padding-top:1.6mm}
+table.tt{width:100%;border-collapse:collapse;font-size:var(--fs);line-height:1.1;
+  font-variant-numeric:tabular-nums}
+table.tt th,table.tt td{padding:0 .55mm;text-align:center;white-space:nowrap;
+  height:var(--rowh);border-bottom:.18mm solid rgba(44,36,22,.28)}
+table.tt thead th{height:calc(var(--rowh) * .88);font-size:.7em;font-weight:900;
+  letter-spacing:.07em;text-transform:uppercase;color:#6b5510;
+  border-bottom:.35mm solid rgba(201,162,39,.75)}
+table.tt thead th[colspan]{font-size:.66em;color:#8a6d13;border-bottom:.2mm solid rgba(201,162,39,.35)}
+table.tt tbody tr:nth-child(even){background:#ECE5D4}
+table.tt tbody tr.fri{background:#F0DFAE}
+table.tt tbody tr.fri td{font-weight:800;color:#4a3a10}
+table.tt tbody tr:last-child td{border-bottom:.5mm solid #14100A}
+table.tt td.d{text-align:left;font-weight:800;padding-left:1.2mm}
+table.tt td.d span{font-weight:600;font-size:.8em;color:#5c5344;margin-left:.7mm}
+table.tt td.hj{font-size:.78em;color:#5c5344}
+table.tt .sep{border-left:.3mm solid rgba(44,36,22,.42)}
+table.tt .iqcol{color:#6b5510;font-size:.92em}
+table.tt .mer{font-size:.55em;font-weight:700;margin-left:.3mm;color:#5c5344}
+table.tt tbody tr.fri .mer{color:#4a3a10}
+
+/* ---------- the foot ---------- */
+.sh-foot{flex:none;padding-top:2mm}
+.sh-jum{font-size:10pt;font-weight:800;color:#4a3a10;background:#F6EFD8;
+  border:.25mm solid rgba(201,162,39,.6);border-radius:1.6mm;
+  padding:1.5mm 2mm;text-align:center;margin-bottom:1.7mm;line-height:1.35;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sh-notes{font-size:7.2pt;line-height:1.5;color:#4a4033}
 .sh-notes b{color:#6b5510}
-.sh-mark{text-align:center;font-size:.66rem;color:rgba(44,36,22,.45);
-  border-top:1px solid rgba(44,36,22,.15);margin-top:.7rem;padding-top:.4rem}
+.sh-mark{font-size:6.8pt;letter-spacing:.2em;text-transform:uppercase;color:#7d735f;
+  text-align:center;border-top:.2mm solid rgba(44,36,22,.22);margin-top:1.7mm;padding-top:1.3mm}
+
+/* ---------- paper ---------- */
 @media print{
-  @page{margin:9mm 8mm}
-  .kp,.kit-top,.kmark,#site-header,.noprint{display:none !important}
-  body.kit{background:#fff;color:#000}
-  #sheet{border:0;border-radius:0;padding:0;margin:0;box-shadow:none;page-break-after:avoid}
-  .tscroll{overflow:visible}
-  .sh-head{padding-bottom:.25rem}
-  .sh-head h2{font-size:18pt}
-  .sh-head .mo{font-size:13pt;color:#000}
-  .sh-head .pl{font-size:8.5pt;color:#333}
-  table.tt{margin-top:.35rem}
-  table.tt th,table.tt td{font-size:10pt;padding:.55mm .6mm;border-bottom:1px solid #bbb;color:#000}
-  table.tt thead th{font-size:8.5pt;color:#000}
-  table.tt td.hj{font-size:9pt;color:#333}
-  table.tt td.d span{font-size:9pt;color:#333}
-  table.tt tr{page-break-inside:avoid}
-  table.tt tr.fri{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .sh-notes{font-size:7.6pt;line-height:1.5;color:#333;margin-top:.35rem}
-  .sh-mark{font-size:7.6pt;color:#333;margin-top:.35rem;padding-top:.25rem}
+  @page{size:A4 portrait;margin:8mm}
+  html,body,body.kit{margin:0;padding:0;background:#fff}
+  #site-header,#nav-sheet,.kit-top,.kp,.kmark,.noprint,.pagenote{display:none !important}
+  .kit-wrap{max-width:none;padding:0;margin:0}
+  .pagewrap{margin:0;padding:0}
+  .pagescale{display:block;transform:none !important;height:auto !important;margin-left:0 !important}
+  #sheet{border:.45mm solid rgba(20,16,10,.8);border-radius:0;box-shadow:none;margin:0 auto;
+    page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
+  table.tt,table.tt tr{page-break-inside:avoid;break-inside:avoid}
 }
 </style>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
 </head>
 <body class="kit">
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -336,7 +368,7 @@ body.sheet-open{overflow:hidden}
 <div><label class="kf" for="iq-maghrib">Maghrib</label><input id="iq-maghrib" type="number" placeholder=""/></div>
 <div><label class="kf" for="iq-isha">Isha</label><input id="iq-isha" type="number" placeholder=""/></div>
 </div>
-<label class="kf" for="t-jum">Jumu'ah line (printed under the table, optional)</label>
+<label class="kf" for="t-jum">Jumu'ah line (printed in a band under the table, optional)</label>
 <input id="t-jum" placeholder="Jumu'ah: khutba 1:15 PM, prayer 1:35 PM"/>
 </div>
 
@@ -351,15 +383,26 @@ body.sheet-open{overflow:hidden}
 </div>
 
 <div class="kit-wrap">
+<div class="pagewrap" id="pagewrap">
+<div class="pagescale" id="pagescale">
 <div id="sheet">
 <div class="sh-head">
-<h2 id="sh-name">Prayer times</h2>
+<div class="shar notranslate" translate="no">مَوَاقِيتُ الصَّلَاة</div>
+<h2 id="sh-name">Prayer timetable</h2>
 <div class="mo" id="sh-month"></div>
+<div class="hr1"></div>
 <div class="pl" id="sh-place"></div>
+<div class="ayah">Indeed the prayer has been decreed upon the believers at appointed times  ·  Quran 4:103</div>
 </div>
-<div class="tscroll"><table class="tt" id="tt"><thead id="tt-head"></thead><tbody id="tt-body"></tbody></table></div>
+<div class="sh-body" id="sh-body"><table class="tt" id="tt"><thead id="tt-head"></thead><tbody id="tt-body"></tbody></table></div>
+<div class="sh-foot">
+<div class="sh-jum" id="sh-jum" hidden></div>
 <div class="sh-notes" id="sh-notes"></div>
-<div class="sh-mark">✦ noorcodex.com/masjid · free forever, no account</div>
+<div class="sh-mark">✦ noorcodex.com</div>
+</div>
+</div>
+</div>
+<p class="pagenote noprint">This is the page itself, at the size it prints: one sheet, A4 or Letter, portrait. The type is fitted to the month, so a shorter month prints larger.</p>
 </div>
 </div>
 
@@ -393,6 +436,47 @@ var now=new Date();
 
 function num(id){var v=$(id).value.trim();if(v==="")return null;var n=parseFloat(v);return isNaN(n)?null:n}
 function tz(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){return ""}}
+function esc(t){return String(t).replace(/[<>&]/g,function(c){return c==="&"?"&amp;":(c==="<"?"&lt;":"&gt;")})}
+/* a time for the wall: the meridiem stays, quieter and smaller, so the numerals lead */
+function fmt(h,h24){
+  var t=window.NOOR_FMT_TIME(h,h24);
+  if(h24)return t;
+  return t.replace(/ (AM|PM)$/,'<span class="mer">$1</span>');
+}
+
+/* --- fitting the month to the page ---
+   The sheet is a fixed page box. The type shrinks, in quarter points, until the
+   whole month fits it in both directions. A 28-day month therefore prints larger
+   than a 31-day one, and neither ever spills onto a second page. */
+function fitSheet(rows){
+  var sheet=$("sheet"),bd=$("sh-body"),tbl=$("tt");
+  var fs=15,availH,availW,i;
+  sheet.style.setProperty("--fs",fs+"pt");
+  sheet.style.setProperty("--rowh","0px");
+  availH=bd.clientHeight;availW=bd.clientWidth;
+  if(!availH||!availW)return;
+  var perRow=Math.floor(((availH-2)/(rows+1.9))*100)/100;
+  sheet.style.setProperty("--rowh",perRow+"px");
+  for(i=0;i<44;i++){
+    sheet.style.setProperty("--fs",fs.toFixed(2)+"pt");
+    if(tbl.offsetWidth<=availW+0.6&&tbl.offsetHeight<=availH+0.6)break;
+    fs-=0.25;
+    if(fs<6){sheet.style.setProperty("--fs","6pt");break}
+  }
+}
+/* the preview on screen is the page at true size; small screens see it scaled down */
+function scalePreview(){
+  var wrap=$("pagewrap"),sc=$("pagescale"),sheet=$("sheet");
+  if(!wrap||!sc||!sheet)return;
+  var w=wrap.clientWidth,sw=sheet.offsetWidth,sh=sheet.offsetHeight;
+  if(!sw||!sh)return;
+  var k=Math.min(1,w/sw);
+  sc.style.transform=(k<1)?"scale("+k.toFixed(4)+")":"none";
+  /* a transform does not shrink the layout box, so state the drawn size too,
+     otherwise the untransformed sheet pushes the page sideways on a phone */
+  sc.style.height=Math.ceil(sh*k)+"px";
+  sc.style.width=Math.ceil(sw*k)+"px";
+}
 
 function build(){
   var lat=num("t-lat"),lng=num("t-lng");
@@ -407,11 +491,12 @@ function build(){
   var days=new Date(y,m+1,0).getDate();
 
   /* header */
-  $("sh-name").textContent=($("t-name").value.trim()||"Prayer times");
-  $("sh-month").textContent=MONTHS[m]+" "+y;
-  var place=havePlace?(lat.toFixed(4)+", "+lng.toFixed(4)):("example place "+lat.toFixed(4)+", "+lng.toFixed(4)+" until you enter your own");
+  var mname=$("t-name").value.trim().slice(0,90);
+  $("sh-name").textContent=mname||"Prayer timetable";
+  $("sh-month").textContent=(mname?"Prayer timetable · ":"")+MONTHS[m]+" "+y;
+  var place=havePlace?(lat.toFixed(4)+", "+lng.toFixed(4)):("example place, Ottawa "+lat.toFixed(4)+", "+lng.toFixed(4));
   var methodName=$("t-m").options[$("t-m").selectedIndex].textContent.split("·")[0].split("(")[0].trim();
-  $("sh-place").textContent=place+" · "+methodName+" · Asr "+(asr==="hanafi"?"Hanafi":"standard")+(tz()?" · times in "+tz():"");
+  $("sh-place").textContent=place+"  ·  computed by the "+methodName+" method, Asr "+(asr==="hanafi"?"Hanafi":"standard")+(tz()?"  ·  times in "+tz():"");
 
   /* head row */
   var h1="",h2="";
@@ -441,19 +526,21 @@ function build(){
     ["fajr","sunrise","dhuhr","asr","maghrib","isha"].forEach(function(k){
       if(t[k]==null)missing=true;
       var star=(t.estimated&&(k==="fajr"||k==="isha"))?"*":"";
-      row+="<td>"+window.NOOR_FMT_TIME(t[k],h24)+star+"</td>";
+      row+="<td>"+fmt(t[k],h24)+star+"</td>";
     });
     iqKeys.forEach(function(k,i){
       row+='<td class="iqcol'+(i===0?" sep":"")+'">'+
-        (t[k]==null?"··":window.NOOR_FMT_TIME(t[k]+iq[k]/60,h24))+"</td>";
+        (t[k]==null?"··":fmt(t[k]+iq[k]/60,h24))+"</td>";
     });
     body+=row+"</tr>";
   }
   $("tt-body").innerHTML=body;
 
   /* the honest notes under the sheet */
+  var jumLine=$("t-jum").value.trim().slice(0,120),jumBox=$("sh-jum");
+  if(jumLine){jumBox.hidden=false;jumBox.innerHTML=esc(jumLine)}
+  else{jumBox.hidden=true;jumBox.innerHTML=""}
   var notes=[];
-  if($("t-jum").value.trim())notes.push("<b>"+$("t-jum").value.trim().replace(/[<>]/g,"")+"</b>");
   if(iqKeys.length)notes.push("Iqama shown for "+iqKeys.map(function(k){return LABEL[k]+" +"+iq[k]+" min"}).join(", ")+".");
   if(wantHijri){
     var span=hjFirst&&hjLast?(hjFirst+" to "+hjLast):"";
@@ -461,12 +548,14 @@ function build(){
     notes.push("Hijri dates follow the Umm al-Qura calendar"+(hy?", "+hy:"")+(span?" ("+span+")":"")+
       ". A local moon sighting can differ by a day; your community's own sighting decides.");
   }
-  notes.push("Adhan times are computed from the position of the sun for this exact latitude and longitude"+
-    (tz()?", in the "+tz()+" time zone of the device that printed this sheet":"")+
+  notes.push("Adhan times are computed on this device from the position of the sun for this exact latitude and longitude"+
+    (tz()?", in the "+tz()+" time zone":"")+
     ". Verify one day against a timetable you already trust before printing for the wall.");
   if(estimated)notes.push("* At this latitude the sun does not reach the twilight angle on these days. Fajr and Isha are estimated by the seventh of the night, a convention, not an observation. Ask a scholar you trust which convention your community follows.");
   if(missing)notes.push("Where two dots stand, the sun never reaches that position at all on that day, so no time can honestly be computed from it. Communities this far north or south follow a convention their scholars choose, most often the times of the nearest latitude where the night is ordinary, or the times of Makkah. Decide that before you print this sheet, and write the chosen times in by hand.");
   $("sh-notes").innerHTML=notes.join("<br/>");
+
+  fitSheet(days);scalePreview();
 
   var w=$("t-warn");
   if(!havePlace){w.hidden=false;w.innerHTML="This is an example sheet for Ottawa. Enter your own latitude and longitude above, or press the location button, and the whole month recomputes."}
@@ -488,6 +577,9 @@ $("t-geo").addEventListener("click",function(){
   },function(){$("t-geo").textContent="Not permitted · type it above"});
 });
 $("t-print").addEventListener("click",function(){window.print()});
+window.addEventListener("resize",scalePreview);
+window.addEventListener("beforeprint",function(){build()});
+try{if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){build()})}catch(e){}
 $("t-next").addEventListener("click",function(){
   var m=parseInt($("t-mo").value,10),y=parseInt($("t-yr").value,10)||now.getFullYear();
   m+=1;if(m>11){m=0;y+=1}

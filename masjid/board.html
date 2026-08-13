@@ -28,11 +28,32 @@ header{display:flex;justify-content:space-between;align-items:center;padding:2.2
 .pt{background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.28);border-radius:2vh;text-align:center;padding:2.6vh 1vw;transition:all .4s}
 .pt .nm{font-size:2.4vh;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,254,247,.75)}
 .pt .ar{font-family:Amiri,serif;font-size:2.6vh;color:rgba(244,212,106,.75);display:block;margin-top:.2vh}
-.pt .adh{font-size:4.6vh;font-weight:900;margin-top:1.2vh;font-variant-numeric:tabular-nums}
+.pt .adh{font-size:4.1vh;font-weight:900;margin-top:1.2vh;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pt .iq{font-size:2vh;color:rgba(255,254,247,.55);margin-top:.8vh;font-variant-numeric:tabular-nums}
 .pt .iq b{color:#E9C86A;font-weight:800}
+.pt.jum{border-color:rgba(244,212,106,.85);background:linear-gradient(160deg,rgba(201,162,39,.2),rgba(244,212,106,.06))}
+.pt.jum .nm{color:#F4D46A}
 .pt.now{background:linear-gradient(160deg,rgba(201,162,39,.28),rgba(244,212,106,.1));border-color:#F4D46A;box-shadow:0 0 5vh rgba(244,212,106,.25);transform:scale(1.04)}
 .pt.past{opacity:.45}
+/* ---- the Friday panel: the single most-read thing on the screen ---- */
+#jpanel[hidden]{display:none}
+#jpanel{margin:1.4vh 3vw 0;border:.28vh solid rgba(244,212,106,.6);border-radius:2.2vh;
+  background:linear-gradient(150deg,rgba(201,162,39,.26),rgba(244,212,106,.05) 70%);
+  box-shadow:0 0 6vh rgba(244,212,106,.14) inset;display:flex;align-items:center;gap:2.2vw;padding:1.5vh 2.2vw}
+#jpanel .jt{flex:none;text-align:center;padding-right:2.2vw;border-right:1px solid rgba(244,212,106,.3)}
+#jpanel .jt .jn{display:block;font-size:3vh;font-weight:900;color:#F4D46A;letter-spacing:.04em;line-height:1.1}
+#jpanel .jt .jar{display:block;font-family:Amiri,serif;font-size:2.6vh;color:rgba(244,212,106,.75);margin-top:.2vh}
+#jpanel .js{flex:1;display:flex;gap:1.4vw}
+#jpanel .sit{flex:1;text-align:center;background:rgba(255,254,247,.06);border:1px solid rgba(255,254,247,.1);
+  border-radius:1.6vh;padding:1vh .7vw}
+#jpanel .sit .lb{font-size:1.8vh;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,254,247,.6);line-height:1.3}
+#jpanel .sit .kh{font-size:4.4vh;font-weight:900;color:#FFF7DF;margin-top:.3vh;font-variant-numeric:tabular-nums;line-height:1.1}
+#jpanel .sit .kh .tg{font-size:.36em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(244,212,106,.8);margin-right:.5vw;vertical-align:.32em}
+#jpanel .sit .iq{font-size:1.9vh;color:rgba(255,254,247,.6);margin-top:.4vh;font-variant-numeric:tabular-nums}
+#jpanel .sit .iq b{color:#E9C86A;font-weight:800}
+@media (max-width:900px){#jpanel{flex-direction:column;gap:1vh}#jpanel .jt{border-right:0;padding-right:0}#jpanel .js{width:100%}}
 footer{display:flex;justify-content:space-between;align-items:center;padding:0 3vw 2vh;font-size:1.9vh;color:rgba(255,254,247,.6)}
 #ann{flex:1;overflow:hidden;white-space:nowrap;margin:0 2vw}
 #ann span{display:inline-block;padding-left:100%;animation:tick 28s linear infinite}
@@ -50,6 +71,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:0 3
 <div class="dates"><div id="greg"></div><div class="hijri" id="hijri"></div></div>
 </header>
 <div class="clockrow"><div id="clock">··:··</div><div id="next"></div></div>
+<div id="jpanel" hidden></div>
 <div class="grid" id="grid"></div>
 <div class="est" id="est" hidden>High-latitude estimate for Fajr and Isha (seventh of the night) · verify locally</div>
 <footer>
@@ -66,16 +88,51 @@ function cfg(){
 }
 var C=cfg()||{n:"Set up your board at noorcodex.com/masjid",lat:45.4215,lng:-75.6972,m:"ISNA",a:"standard",iq:{fajr:20,dhuhr:10,asr:10,maghrib:5,isha:10},jumuah:"",ann:[],h24:false,lang:"en"};
 var L={
- en:{fajr:"Fajr",sunrise:"Sunrise",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqamah",next:"Next",jumuah:"Jumu'ah",in_:"in"},
- fr:{fajr:"Fajr",sunrise:"Lever",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqama",next:"Prochaine",jumuah:"Joumou'a",in_:"dans"},
- ar:{fajr:"الفجر",sunrise:"الشروق",dhuhr:"الظهر",asr:"العصر",maghrib:"المغرب",isha:"العشاء",iqamah:"الإقامة",next:"التالية",jumuah:"الجمعة",in_:"بعد"},
- ur:{fajr:"فجر",sunrise:"طلوع",dhuhr:"ظہر",asr:"عصر",maghrib:"مغرب",isha:"عشاء",iqamah:"اقامت",next:"اگلی",jumuah:"جمعہ",in_:"بعد"}
+ en:{fajr:"Fajr",sunrise:"Sunrise",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqamah",next:"Next",jumuah:"Jumu'ah",in_:"in",khutba:"Khutba",thisfri:"This Friday"},
+ fr:{fajr:"Fajr",sunrise:"Lever",dhuhr:"Dhuhr",asr:"Asr",maghrib:"Maghrib",isha:"Isha",iqamah:"Iqama",next:"Prochaine",jumuah:"Joumou'a",in_:"dans",khutba:"Khoutba",thisfri:"Ce vendredi"},
+ ar:{fajr:"الفجر",sunrise:"الشروق",dhuhr:"الظهر",asr:"العصر",maghrib:"المغرب",isha:"العشاء",iqamah:"الإقامة",next:"التالية",jumuah:"الجمعة",in_:"بعد",khutba:"الخطبة",thisfri:"هذه الجمعة"},
+ ur:{fajr:"فجر",sunrise:"طلوع",dhuhr:"ظہر",asr:"عصر",maghrib:"مغرب",isha:"عشاء",iqamah:"اقامت",next:"اگلی",jumuah:"جمعہ",in_:"بعد",khutba:"خطبہ",thisfri:"اس جمعہ"}
 }[C.lang||"en"]||{};
 var AR={fajr:"الْفَجْر",sunrise:"الشُّرُوق",dhuhr:"الظُّهْر",asr:"الْعَصْر",maghrib:"الْمَغْرِب",isha:"الْعِشَاء"};
 document.getElementById("mname").innerHTML=(C.n||"Prayer Board").replace(/[<>]/g,"")+'<span>NOOR · Codex of Light</span>';
-if(C.jumuah)document.getElementById("jum").textContent=(L.jumuah||"Jumu'ah")+" · "+C.jumuah;
 if(C.ann&&C.ann.length)document.getElementById("annt").textContent=C.ann.join("  ·  ");
+
+/* ---- Jumu'ah, the Friday gathering ----
+   New boards carry C.ju: on/off, the sittings the masjid actually runs, whether
+   Jumu'ah stands in place of Dhuhr on Friday, and whether the other six days
+   carry a quiet notice. Boards written by the older wizard carry only the plain
+   C.jumuah line, and they keep behaving exactly as they always did. */
+function clean(t,n){return String(t==null?"":t).replace(/[<>]/g,"").slice(0,n||40)}
+function jparse(v){                       /* "13:15", "1:15 PM", or the masjid's own words */
+  var m=String(v==null?"":v).trim().match(/^(\d{1,2})[:.](\d{2})\s*([AaPp])?\.?[Mm]?\.?$/);
+  if(!m)return null;
+  var h=+m[1],mi=+m[2];
+  if(m[3]){var ap=m[3].toLowerCase();if(ap==="p"&&h<12)h+=12;if(ap==="a"&&h===12)h=0}
+  if(h>23||mi>59)return null;
+  return h+mi/60;
+}
+function jtime(v){                        /* the board's own clock format, or the words as typed */
+  var h=jparse(v);
+  if(h!==null)return window.NOOR_FMT_TIME(h,C.h24);
+  return clean(v,24);
+}
+var HASJU=!!(C.ju&&typeof C.ju==="object");
+var JU=(function(){
+  var j=C.ju;
+  if(!j||j.on===false||j.on===0)return null;
+  var raw=(j.s&&j.s.length)?j.s:[];
+  var list=[];
+  for(var i=0;i<raw.length&&list.length<6;i++){
+    var k=jtime(raw[i]&&raw[i].k);
+    if(!k)continue;
+    list.push({l:clean(raw[i].l,40),k:k,i:jtime(raw[i].i),h:jparse(raw[i]&&raw[i].k)});
+  }
+  if(!list.length)return null;
+  return {rep:j.rep!==false,all:j.all!==false,s:list};
+})();
 var ORDER=["fajr","sunrise","dhuhr","asr","maghrib","isha"];
+/* the wizard's preview asks for the Friday screen with ?friday=1; a real board never does */
+var FORCEFRI=/[?&]friday=1/.test(location.search||"");
 var TZ=C.tz||Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC";
 function zoned(d){ /* the masjid's own clock, whatever the TV thinks */
   try{
@@ -90,22 +147,63 @@ function zOffset(d){
     return Math.round((z-u)/60000)/60;
   }catch(e){return -d.getTimezoneOffset()/60;}
 }
-var times=null,dayKey="";
+/* the Friday panel, or the quiet line the rest of the week */
+function paintJumuah(){
+  var panel=document.getElementById("jpanel"),foot=document.getElementById("jum");
+  if(!JU){                                  /* a board from the older wizard: exactly as before */
+    panel.hidden=true;panel.innerHTML="";
+    foot.textContent=(!HASJU&&C.jumuah)?((L.jumuah||"Jumu'ah")+" · "+clean(C.jumuah,60)):"";
+    return;
+  }
+  if(isFri){
+    var cells="";
+    JU.s.forEach(function(x){
+      cells+='<div class="sit">'+(x.l?'<div class="lb">'+x.l+"</div>":"")+
+        '<div class="kh"><span class="tg">'+(L.khutba||"Khutba")+"</span>"+x.k+"</div>"+
+        (x.i?'<div class="iq">'+(L.iqamah||"Iqamah")+' · <b>'+x.i+"</b></div>":"")+"</div>";
+    });
+    panel.innerHTML='<div class="jt"><span class="jn">'+(L.jumuah||"Jumu'ah")+"</span>"+
+      (((C.lang||"en")==="ar")?"":'<span class="jar">الْجُمُعَة</span>')+
+      '</div><div class="js">'+cells+"</div>";
+    panel.hidden=false;
+    foot.textContent="";
+    return;
+  }
+  panel.hidden=true;panel.innerHTML="";
+  if(JU.all){
+    var line=JU.s.map(function(x){return (x.l?x.l+" ":"")+x.k}).join("  ·  ");
+    if(line.length>58)line=JU.s.map(function(x){return x.k}).join("  ·  ");
+    foot.textContent=(L.jumuah||"Jumu'ah")+" · "+(L.thisfri||"This Friday")+" · "+line;
+  }else foot.textContent="";
+}
+
+var times=null,shown=null,dayKey="",isFri=false;
 function compute(){
   var now=new Date(), z=zoned(now);
   var noonUTC=new Date(Date.UTC(z.y,z.mo-1,z.d,12,0,0));
   times=window.NOOR_SALAT(noonUTC,C.lat,C.lng,{method:C.m,asr:C.a,tzOff:zOffset(now)});
   dayKey=z.key;
+  isFri=FORCEFRI||(new Date(Date.UTC(z.y,z.mo-1,z.d)).getUTCDay()===5);   /* Friday in the masjid's own zone */
   document.getElementById("est").hidden=!times.estimated;
   document.getElementById("greg").textContent=now.toLocaleDateString(undefined,{timeZone:TZ,weekday:"long",year:"numeric",month:"long",day:"numeric"});
   try{document.getElementById("hijri").textContent=new Intl.DateTimeFormat((C.lang||"en")+"-u-ca-islamic-umalqura",{timeZone:TZ,day:"numeric",month:"long",year:"numeric"}).format(now);}catch(e){}
+  /* on Friday the first sitting may stand in the place of Dhuhr, by the masjid's choice */
+  var stands=!!(JU&&isFri&&JU.rep);
+  shown={};ORDER.forEach(function(k){shown[k]=times[k]});
+  if(stands&&JU.s[0].h!==null)shown.dhuhr=JU.s[0].h;
   var g=document.getElementById("grid");g.innerHTML="";
   ORDER.forEach(function(k){
-    var d=document.createElement("div");d.className="pt";d.id="pt-"+k;
-    var iq=(C.iq&&C.iq[k]!=null&&k!=="sunrise")?'<div class="iq">'+(L.iqamah||"Iqamah")+' · <b>'+window.NOOR_FMT_TIME(times[k]+C.iq[k]/60,C.h24)+"</b></div>":"";
-    d.innerHTML='<div class="nm">'+(L[k]||k)+'</div><span class="ar">'+AR[k]+'</span><div class="adh">'+window.NOOR_FMT_TIME(times[k],C.h24)+"</div>"+iq;
+    var j=(stands&&k==="dhuhr");
+    var d=document.createElement("div");d.className="pt"+(j?" jum":"");d.id="pt-"+k;
+    var iq="";
+    if(j){ if(JU.s[0].i)iq='<div class="iq">'+(L.iqamah||"Iqamah")+' · <b>'+JU.s[0].i+"</b></div>" }
+    else if(C.iq&&C.iq[k]!=null&&k!=="sunrise")iq='<div class="iq">'+(L.iqamah||"Iqamah")+' · <b>'+window.NOOR_FMT_TIME(times[k]+C.iq[k]/60,C.h24)+"</b></div>";
+    d.innerHTML='<div class="nm">'+(j?(L.jumuah||"Jumu'ah"):(L[k]||k))+'</div><span class="ar">'+
+      (j?"الْجُمُعَة":AR[k])+'</span><div class="adh">'+
+      (j?JU.s[0].k:window.NOOR_FMT_TIME(times[k],C.h24))+"</div>"+iq;
     g.appendChild(d);
   });
+  paintJumuah();
 }
 function tick(){
   var now=new Date(), z=zoned(now);
@@ -118,15 +216,18 @@ function tick(){
   ORDER.forEach(function(k){
     if(k==="sunrise")return;
     var el=document.getElementById("pt-"+k);
-    if(times[k]==null)return;
+    if(!el||shown[k]==null)return;
     el.classList.remove("now","past");
-    if(times[k]<h)el.classList.add("past");
-    if(nextK===null&&times[k]>h){nextK=k;nextT=times[k];}
+    if(shown[k]<h)el.classList.add("past");
+    if(nextK===null&&shown[k]>h){nextK=k;nextT=shown[k];}
   });
-  if(nextK===null){nextK="fajr";nextT=times.fajr+24;}
-  var cur=document.getElementById("pt-"+nextK);cur.classList.remove("past");cur.classList.add("now");
+  if(nextK===null){nextK="fajr";nextT=shown.fajr+24;}
+  var cur=document.getElementById("pt-"+nextK);
+  if(cur){cur.classList.remove("past");cur.classList.add("now")}
+  if(nextT==null)return;
+  var nextName=(JU&&isFri&&JU.rep&&nextK==="dhuhr")?(L.jumuah||"Jumu'ah"):(L[nextK]||nextK);
   var left=(nextT-h)*3600;var HH=Math.floor(left/3600),MM=Math.floor((left%3600)/60),SS=Math.floor(left%60);
-  document.getElementById("next").innerHTML=(L.next||"Next")+": <b>"+(L[nextK]||nextK)+"</b> "+(L.in_||"in")+' <span class="cd">'+(HH>0?HH+":":"")+(MM<10?"0":"")+MM+":"+(SS<10?"0":"")+SS+"</span>";
+  document.getElementById("next").innerHTML=(L.next||"Next")+": <b>"+nextName+"</b> "+(L.in_||"in")+' <span class="cd">'+(HH>0?HH+":":"")+(MM<10?"0":"")+MM+":"+(SS<10?"0":"")+SS+"</span>";
 }
 compute();tick();setInterval(tick,1000);
 /* cursor discipline for TVs */

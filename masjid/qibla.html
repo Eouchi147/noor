@@ -21,60 +21,79 @@
 <script src="../assets/gsap.min.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NOOR Qibla and Direction Tool","url":"https://noorcodex.com/masjid/qibla","applicationCategory":"ReligiousApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"NOOR · Codex of Light"}}</script>
 <style>
-#card{background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:1.2rem 1rem 1.4rem;margin-top:1rem;text-align:center;
-  box-shadow:0 2px 10px rgba(44,36,22,.04)}
-#card .place{font-size:1rem;font-weight:900;margin:0}
-#card .big{font-size:3.4rem;font-weight:900;line-height:1;margin:.7rem 0 0;
-  font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-#card .big .deg{font-size:1.6rem;font-weight:800;vertical-align:.55rem;margin-left:.1rem}
-#card .from{font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-  color:#6b5510;margin:.35rem 0 0}
-#card .pt16{font-size:.82rem;color:var(--soft);margin:.3rem 0 0}
-#card .dist{font-size:.8rem;color:rgba(44,36,22,.75);margin:.7rem 0 0;line-height:1.7}
-#card .dist b{color:#6b5510}
-#card .say{font-size:.86rem;line-height:1.8;color:rgba(44,36,22,.82);
-  max-width:26rem;margin:.9rem auto 0}
-#card .cmark{font-size:.66rem;color:rgba(44,36,22,.45);border-top:1px solid rgba(44,36,22,.12);
-  margin-top:1rem;padding-top:.5rem}
-.rose{width:min(19rem,86vw);height:auto;margin:1rem auto 0;display:block}
-.rose .ring{fill:none;stroke:rgba(44,36,22,.22);stroke-width:1.5}
-.rose .ring2{fill:none;stroke:rgba(201,162,39,.4);stroke-width:1}
-.rose .tick{stroke:rgba(44,36,22,.3);stroke-width:1.4}
-.rose .tick.maj{stroke:rgba(44,36,22,.6);stroke-width:2.2}
-.rose .lab{font-size:15px;font-weight:800;fill:rgba(44,36,22,.65);text-anchor:middle;
+/* ================= the card =================
+   The card is a page: laid out in millimetres at exactly the size it prints, on
+   screen and on paper alike, so the preview is the sheet. One page, always.
+   ============================================ */
+#card{--pgw:190mm;--pgh:256mm;--rose:120mm;
+  width:var(--pgw);height:var(--pgh);margin:0 auto;padding:11mm 12mm 7mm;
+  background:#fff;color:#1b1408;display:flex;flex-direction:column;align-items:center;
+  overflow:hidden;text-align:center;
+  border:1px solid var(--line);border-radius:2px;box-shadow:0 10px 34px rgba(44,36,22,.15);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pagewrap{margin-top:1.1rem;text-align:center}
+.pagescale{display:inline-block;transform-origin:top left;overflow:hidden}
+@media screen{#pagewrap{overflow:hidden;max-width:100%}}
+.pagenote{font-size:.68rem;color:rgba(44,36,22,.5);margin:.5rem 0 0;line-height:1.6}
+
+#card .qar{font-family:Amiri,serif;font-size:15pt;line-height:1.35;color:#9a7a14}
+#card .place{font-size:22pt;font-weight:900;line-height:1.12;margin:.6mm 0 0;color:#14100A}
+#card .sub{font-size:11.5pt;font-weight:700;color:#8a6d13;margin:1.2mm 0 0;letter-spacing:.02em}
+#card .hr1{width:100%;border-top:.7mm solid #14100A;margin:2.6mm 0 0}
+#card .big{font-size:74pt;font-weight:900;line-height:1;margin:5mm 0 0;
+  font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+#card .big .deg{font-size:30pt;font-weight:800;vertical-align:.3em;margin-left:.6mm;letter-spacing:0}
+#card .from{font-size:11pt;font-weight:900;letter-spacing:.24em;text-transform:uppercase;
+  color:#6b5510;margin:1.6mm 0 0}
+#card .pt16{font-size:12.5pt;color:#443a2a;margin:1.6mm 0 0;font-weight:600}
+.rose{width:var(--rose);height:var(--rose);margin:3mm auto 0;display:block}
+.rose .ring{fill:none;stroke:rgba(44,36,22,.3);stroke-width:1.5}
+.rose .ring2{fill:none;stroke:rgba(201,162,39,.55);stroke-width:1}
+.rose .tick{stroke:rgba(44,36,22,.38);stroke-width:1.4}
+.rose .tick.maj{stroke:rgba(44,36,22,.7);stroke-width:2.2}
+.rose .lab{font-size:15px;font-weight:800;fill:rgba(44,36,22,.7);text-anchor:middle;
   font-family:Inter,system-ui,sans-serif}
 .rose .lab.n{fill:#8a6d13}
-.rose .arrow{fill:#C9A227;stroke:#8a6d13;stroke-width:1}
+.rose .arrow{fill:#E3C458;stroke:#7a6010;stroke-width:1.2}
 .rose .kaaba{fill:#14100A}
 .rose .hub{fill:#14100A}
+#card .hold{font-size:10pt;line-height:1.6;color:#443a2a;margin:3mm 0 0;max-width:150mm}
+#card .dist{font-size:11pt;line-height:1.6;color:#1b1408;margin:2.4mm 0 0}
+#card .dist b{color:#6b5510}
+#card .mag{font-size:9.5pt;line-height:1.55;color:#4a3a10;background:#F6EFD8;
+  border:.25mm solid rgba(201,162,39,.6);border-radius:1.6mm;padding:1.6mm 2.4mm;
+  margin:2.6mm 0 0;max-width:158mm;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+#card .cfoot{margin-top:auto;width:100%;padding-top:2mm}
+#card .ayah{font-size:9.5pt;line-height:1.5;color:#6b5510;font-style:italic;margin:0 0 1.8mm}
+#card .how{font-size:8pt;line-height:1.55;color:#5c5344;border-top:.2mm solid rgba(44,36,22,.22);
+  padding-top:1.6mm}
+#card .cmark{font-size:6.8pt;letter-spacing:.2em;text-transform:uppercase;color:#7d735f;margin-top:1.4mm}
+
+/* ---------- paper ---------- */
 @media print{
-  @page{margin:16mm}
-  .kp,.kit-top,.kmark,#site-header,.noprint{display:none !important}
-  body.kit{background:#fff;color:#000}
-  .kit-wrap{padding:0}
-  #card{border:2px solid #000;border-radius:0;box-shadow:none;margin:0;padding:14mm 8mm}
-  #card .place{font-size:20pt}
-  #card .big{font-size:60pt}
-  #card .big .deg{font-size:26pt}
-  #card .from{font-size:11pt;color:#000}
-  #card .pt16{font-size:12pt;color:#000}
-  #card .dist{font-size:11pt;color:#000}
-  #card .say{font-size:12pt;color:#000;max-width:none}
-  #card .cmark{font-size:9pt;color:#000}
-  .rose{width:105mm}
-  .rose .lab{fill:#000}
-  .rose .arrow{fill:#999;stroke:#000}
+  @page{size:A4 portrait;margin:8mm}
+  html,body,body.kit{margin:0;padding:0;background:#fff}
+  #site-header,#nav-sheet,.kit-top,.kp,.kmark,.noprint,.pagenote{display:none !important}
+  .kit-wrap{max-width:none;padding:0;margin:0}
+  .pagewrap{margin:0;padding:0}
+  .pagescale{display:block;transform:none !important;height:auto !important;margin-left:0 !important}
+  #card{border:.45mm solid rgba(20,16,10,.8);border-radius:0;box-shadow:none;margin:0 auto;
+    page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
 }
 </style>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
 </head>
 <body class="kit">
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -309,8 +328,13 @@ body.sheet-open{overflow:hidden}
 </div>
 
 <div class="kit-wrap">
+<div class="pagewrap" id="pagewrap">
+<div class="pagescale" id="pagescale">
 <div id="card">
+<div class="qar notranslate" translate="no">الْقِبْلَة</div>
 <p class="place" id="q-place">The qibla in this room</p>
+<p class="sub" id="q-sub">The direction of prayer</p>
+<div class="hr1"></div>
 <div class="big" id="q-deg">57<span class="deg">°</span></div>
 <p class="from">from true north</p>
 <p class="pt16" id="q-pt">east north east</p>
@@ -329,13 +353,20 @@ body.sheet-open{overflow:hidden}
 </g>
 <circle class="hub" cx="120" cy="120" r="6"/>
 </svg>
-<p class="pt16" id="rose-deg">57° from true north</p>
+<p class="hold" id="rose-deg">Hold the card with N toward true north; the arrow then points the qibla.</p>
 <p class="dist" id="q-dist"></p>
-<p class="say" id="q-say"></p>
-<p class="cmark">✦ Prepared with the NOOR Codex qibla tool, noorcodex.com</p>
+<div class="mag" id="q-magcard" hidden></div>
+<div class="cfoot">
+<p class="ayah">So turn your face toward the Sacred Mosque  ·  Quran 2:144</p>
+<p class="how" id="q-say"></p>
+<p class="cmark">✦ noorcodex.com</p>
 </div>
+</div>
+</div>
+<p class="pagenote noprint">This is the card itself, at the size it prints: one sheet, A4 or Letter, portrait.</p>
 <div class="noprint" style="text-align:center">
 <button class="btn btn-gold" id="q-print" type="button">Print this card</button>
+</div>
 </div>
 </div>
 
@@ -398,6 +429,32 @@ function distKm(lat,lng){
   return 2*R*Math.asin(Math.min(1,Math.sqrt(a)));
 }
 function group(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
+/* the card is a fixed page box; if a long name or a long note ever crowded it, the
+   compass gives up room first, so the sheet stays one page and nothing is clipped */
+function fitCard(){
+  var card=$("card");
+  if(!card)return;
+  var rose=120,i;
+  for(i=0;i<16;i++){
+    card.style.setProperty("--rose",rose+"mm");
+    if(card.scrollHeight<=card.clientHeight+0.6)break;
+    rose-=4;
+    if(rose<48){card.style.setProperty("--rose","48mm");break}
+  }
+}
+/* the preview on screen is the card at true size; small screens see it scaled down */
+function scalePreview(){
+  var wrap=$("pagewrap"),sc=$("pagescale"),card=$("card");
+  if(!wrap||!sc||!card)return;
+  var w=wrap.clientWidth,sw=card.offsetWidth,sh=card.offsetHeight;
+  if(!sw||!sh)return;
+  var k=Math.min(1,w/sw);
+  sc.style.transform=(k<1)?"scale("+k.toFixed(4)+")":"none";
+  /* a transform does not shrink the layout box, so state the drawn size too,
+     otherwise the untransformed sheet pushes the page sideways on a phone */
+  sc.style.height=Math.ceil(sh*k)+"px";
+  sc.style.width=Math.ceil(sw*k)+"px";
+}
 var lastDeg=0,REDUCE=false;
 try{REDUCE=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
 function setRot(d){$("needle").setAttribute("transform","rotate("+d.toFixed(2)+" 120 120)")}
@@ -427,24 +484,28 @@ function update(){
   var b=window.NOOR_QIBLA(la,lo);
   var shown=Math.round(b*10)/10;
   $("q-deg").innerHTML=shown.toFixed(1)+'<span class="deg">°</span>';
-  $("rose-deg").textContent="Hold the card with N toward true north; the arrow then points the qibla, "+shown.toFixed(1)+"° from north.";
+  $("rose-deg").textContent="Hold the card with N toward true north, and the arrow points the qibla, "+shown.toFixed(1)+"° from north.";
   $("q-pt").textContent=P16[Math.round(((b%360)+360)%360/22.5)%16];
   var km=distKm(la,lo);
   $("q-dist").innerHTML="The Kaaba is <b>"+group(km)+" km</b>, which is <b>"+group(km*0.621371)+" miles</b>, along that line.";
-  var name=$("q-name").value.trim().replace(/[<>]/g,"");
-  $("q-place").textContent=name?name:(have?"The qibla in this room":"The qibla in this room (example: Ottawa)");
-  $("q-say").innerHTML="The qibla here is <b>"+shown.toFixed(1)+" degrees</b> measured clockwise from true north"+
-    (have?" at "+la.toFixed(4)+", "+lo.toFixed(4):" at the example point 45.4215, -75.6972")+
-    ". Set the line on the floor, and the rows stand square to it.";
-  var dec=num("q-dec"),mg=$("q-mag");
+  var name=$("q-name").value.trim().slice(0,100).replace(/[<>]/g,"");
+  $("q-place").textContent=name?name:"The qibla in this room";
+  $("q-sub").textContent="The direction of prayer  ·  "+la.toFixed(4)+", "+lo.toFixed(4)+(have?"":"  ·  example place, Ottawa");
+  $("q-say").innerHTML="Great-circle bearing to the Kaaba at 21.4225 north, 39.8262 east, computed on this device from this latitude and longitude. Set the line on the floor and the rows stand square to it.";
+  var dec=num("q-dec"),mg=$("q-mag"),mc=$("q-magcard");
   if(dec===null){
-    mg.innerHTML="Enter your magnetic declination above and this box tells you what to set on a magnetic compass. Without it, trust the sun check below rather than a phone."
+    mg.innerHTML="Enter your magnetic declination above and this box tells you what to set on a magnetic compass. Without it, trust the sun check below rather than a phone.";
+    mc.hidden=true;mc.innerHTML="";
   }else{
     var mb=((b-dec)%360+360)%360;
     mg.innerHTML="With a declination of <b>"+dec.toFixed(1)+"°</b> ("+(dec<0?"west":"east")+
       "), a magnetic compass at this place should read <b>"+mb.toFixed(1)+"°</b> for the qibla, while the true bearing stays "+
-      shown.toFixed(1)+"°. Declination drifts by a fraction of a degree each year, so check it again if the card is still on the wall in ten years."
+      shown.toFixed(1)+"°. Declination drifts by a fraction of a degree each year, so check it again if the card is still on the wall in ten years.";
+    mc.hidden=false;
+    mc.innerHTML="On a magnetic compass here, set <b>"+mb.toFixed(1)+"°</b>: the declination at this place is "+
+      dec.toFixed(1)+"° "+(dec<0?"west":"east")+". True north remains "+shown.toFixed(1)+"°.";
   }
+  fitCard();scalePreview();
   spin(b);
 }
 ["q-name","q-lat","q-lng","q-dec"].forEach(function(i){
@@ -459,8 +520,11 @@ $("q-geo").addEventListener("click",function(){
   },function(){$("q-geo").textContent="Not permitted · type it above"});
 });
 $("q-print").addEventListener("click",function(){window.print()});
+window.addEventListener("resize",scalePreview);
+window.addEventListener("beforeprint",function(){fitCard()});
+try{if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fitCard();scalePreview()})}catch(e){}
 update();
-window.addEventListener("load",function(){spin(lastDeg)});
+window.addEventListener("load",function(){spin(lastDeg);fitCard();scalePreview()});
 })();
 </script>
 </body>
