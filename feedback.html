@@ -22,6 +22,7 @@
 <script src="assets/ScrollTrigger.min.js" defer></script>
 <script src="assets/DrawSVGPlugin.min.js" defer></script>
 <script src="assets/noor-motion.js" defer></script>
+<script src="assets/noor-overrides.js?v=1" defer></script>
 
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
 <style>
@@ -54,10 +55,14 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
 .rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
 .evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
-.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
-.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
-.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
-.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.55);background:rgba(29,107,63,.13)}
+.evb.quran::before{content:"";width:.46rem;height:.46rem;border-radius:999px;background:#1d6b3f;box-shadow:0 0 0 2px rgba(29,107,63,.28);flex:none}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.evb.sunnah::before{content:"";width:.46rem;height:.46rem;background:#C9A227;flex:none;transform:rotate(45deg)}
+.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.evb.debated::before{content:"";width:.46rem;height:.46rem;border-radius:999px;border:1.5px dashed #6b4f92;flex:none}
+.evb.editorial{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.evb.editorial::before{content:"";width:.46rem;height:.1rem;background:rgba(44,36,22,.5);flex:none}
 .refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
 .ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
 .ref b{color:#8a6d13}
@@ -82,17 +87,25 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .fbnote{background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.28);border-radius:14px;padding:.9rem 1rem;font-size:.8rem;line-height:1.75;color:rgba(44,36,22,.75);margin-top:1.2rem}
 .fbok{display:none;background:#12351f;border:1px solid rgba(120,200,150,.35);color:#d9f5e4;border-radius:14px;padding:.85rem 1rem;font-size:.82rem;line-height:1.7;margin-top:.9rem}
 .fbok.show{display:block}
+button.gpill{border:0;cursor:pointer;font-family:inherit;font-size:.8rem}
+button.gpill[disabled]{opacity:.6;cursor:default}
+.fbquiet{margin:.7rem 0 0;font-size:.76rem;color:rgba(44,36,22,.55);line-height:1.7}
+.fbquiet a{color:#8a6d13;font-weight:700}
+.hp{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .stepn{display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border-radius:999px;background:#2C2416;color:#F4D46A;font-size:.7rem;font-weight:800;margin-inline-end:.45rem}
 </style>
 
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
 </head>
 <body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -342,14 +355,17 @@ body.sheet-open{overflow:hidden}
 <p class="fbhint">Leave it empty and your note stays anonymous. Nothing is tracked and nothing is stored on this page beyond your own device.</p>
 </div>
 
+<div class="hp" aria-hidden="true"><label for="fb-hp">Leave this field empty</label><input id="fb-hp" name="fb-hp" type="text" tabindex="-1" autocomplete="off"/></div>
+
 <div class="fbactions">
-<a class="gpill" id="fb-send" href="mailto:hello@noorcodex.com">Open my mail app and send</a>
+<button type="button" class="gpill" id="fb-send">Send it</button>
 <button type="button" class="ghost" id="fb-copy" style="cursor:pointer;font-family:inherit">Copy the note instead</button>
 </div>
-<div class="fbok" id="fb-ok">Copied. Paste it into an email to <b>hello@noorcodex.com</b> and it will reach us.</div>
+<p class="fbquiet">Or, if you would rather write from your own inbox: <a id="fb-mail" href="mailto:hello@noorcodex.com">open my mail app with this note ready</a>.</p>
+<div class="fbok" id="fb-ok" role="status" aria-live="polite">Copied. Paste it into an email to <b>hello@noorcodex.com</b> and it will reach us.</div>
 
 <div class="fbnote">
-<p style="margin:0"><b>Where it goes.</b> Straight to <b>hello@noorcodex.com</b>, read by the small team that keeps this house. There is no ticket system and no queue of departments. Corrections about a verse or a hadith are checked against the sources before anything changes, and when we are wrong we fix it and say so.</p>
+<p style="margin:0"><b>Where it goes.</b> Straight onto the desk of the small team that keeps this house, and nowhere else. You may also write to <b>hello@noorcodex.com</b> if you prefer; it is the same desk. There is no ticket system and no queue of departments. Corrections about a verse or a hadith are checked against the sources before anything changes, and when we are wrong we fix it and say so.</p>
 </div>
 </section>
 
@@ -387,6 +403,8 @@ body.sheet-open{overflow:hidden}
 var kind="", hint=document.getElementById("fb-hint");
 var body=document.getElementById("fb-body"), where=document.getElementById("fb-where"), from=document.getElementById("fb-from");
 var send=document.getElementById("fb-send"), copy=document.getElementById("fb-copy"), ok=document.getElementById("fb-ok");
+var mail=document.getElementById("fb-mail"), hp=document.getElementById("fb-hp");
+var sent=false;
 var LABEL={correction:"Correction",bug:"Something is broken",idea:"An idea",other:"A note"};
 document.querySelectorAll(".fbo").forEach(function(b){
   b.addEventListener("click",function(){
@@ -408,13 +426,62 @@ function text(){
 }
 function build(){
   var subj="NOOR "+(LABEL[kind]||"A note");
-  send.setAttribute("href","mailto:hello@noorcodex.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(text()));
+  mail.setAttribute("href","mailto:hello@noorcodex.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(text()));
+}
+function say(html){ ok.innerHTML=html; ok.classList.add("show"); }
+function toMail(reason){
+  /* the desk did not answer. Nothing is lost: the note goes the old road. */
+  say(reason+" Your mail app is opening with the note already written. Send it, and it reaches exactly the same desk.");
+  try{ window.location.href=mail.getAttribute("href"); }catch(e){}
 }
 [body,where,from].forEach(function(el){el.addEventListener("input",build)});
 build();
+send.addEventListener("click",function(){
+  if(sent)return;
+  var t=(body.value||"").trim();
+  if(!t){ say("Write a line first, then send it."); try{body.focus()}catch(e){} return; }
+  build();
+  send.disabled=true; send.textContent="Sending...";
+  var payload={
+    kind:(kind||"other"),
+    body:t,
+    page:(where.value||"").trim(),
+    from:(from.value||"").trim(),
+    hp:(hp&&hp.value)||""
+  };
+  var done=false;
+  var giveUp=setTimeout(function(){
+    if(done)return; done=true;
+    send.disabled=false; send.textContent="Send it";
+    toMail("The message desk is taking too long.");
+  },9000);
+  fetch("/api/inbox",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  }).then(function(r){ return r.json().then(function(j){return{ok:r.ok,j:j||{}}},function(){return{ok:false,j:{}}}) })
+   .then(function(r){
+    if(done)return; done=true; clearTimeout(giveUp);
+    if(r.ok&&r.j&&r.j.ok===true){
+      sent=true;
+      send.textContent="Sent ✦";
+      say("It reached us. Corrections about a verse or a hadith move to the front.");
+      body.value=""; build();
+      return;
+    }
+    send.disabled=false; send.textContent="Send it";
+    var why=(r.j&&r.j.reason==="email")?"That email address does not look right, so nothing was sent.":"The message desk did not take it.";
+    if(r.j&&r.j.reason==="email"){ say(why+" Correct it, or leave it empty and send again."); return; }
+    toMail(why);
+  }).catch(function(){
+    if(done)return; done=true; clearTimeout(giveUp);
+    send.disabled=false; send.textContent="Send it";
+    toMail("The message desk could not be reached.");
+  });
+});
 copy.addEventListener("click",function(){
   var s=(LABEL[kind]||"A note")+"\n\n"+text();
-  function done(){ok.classList.add("show");setTimeout(function(){ok.classList.remove("show")},9000)}
+  function done(){say("Copied. Paste it into an email to <b>hello@noorcodex.com</b> and it will reach us.")}
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done,fallback)}else fallback();
   function fallback(){
     var ta=document.createElement("textarea");ta.value=s;ta.style.position="fixed";ta.style.opacity="0";

@@ -143,7 +143,75 @@ select.fi option{background:#14100A;color:var(--parchment)}
 .mode-banner{border-radius:14px;padding:.8rem 1rem;font-size:.76rem;line-height:1.65;margin-bottom:1rem;border:1px solid rgba(233,200,106,.4);background:rgba(233,200,106,.07);color:rgba(255,254,247,.8)}
 .dua-line{border-left:3px solid rgba(233,200,106,.5);background:rgba(255,254,247,.04);border-radius:0 10px 10px 0;padding:.5rem .8rem;margin:.4rem 0;font-size:.76rem;font-style:italic;color:rgba(255,254,247,.85)}
 details.mgrid summary{cursor:pointer;font-size:.74rem;color:var(--gold-hi);font-weight:700;padding:.3rem 0}
+/* ===== v50 · the message desk, the Lantern assistant, the giving ledger ===== */
+/* ---- tab badge ---- */
+.tab .badge{display:inline-block;min-width:1.2rem;padding:0 .32rem;margin-inline-start:.4rem;border-radius:999px;background:#B4423A;color:#fff;font-size:.6rem;font-weight:800;line-height:1.2rem;text-align:center;vertical-align:1px}
+.tab.on .badge{background:#241D12;color:#F4D46A}
+/* ---- the message desk ---- */
+.fbar{display:flex;gap:.4rem;flex-wrap:wrap;margin:.1rem 0 .9rem}
+.fbar button{border:1px solid rgba(255,254,247,.16);background:rgba(255,254,247,.04);color:rgba(255,254,247,.6);border-radius:999px;padding:.32rem .85rem;font-size:.7rem;font-weight:700;cursor:pointer;font-family:inherit}
+.fbar button.on{background:rgba(233,200,106,.16);border-color:rgba(233,200,106,.5);color:var(--gold-hi)}
+.msgs{display:grid;gap:.7rem}
+.msg{background:linear-gradient(160deg,rgba(255,254,247,.06),rgba(255,254,247,.03));border:1px solid rgba(255,254,247,.12);border-radius:16px;padding:.9rem 1rem}
+.msg.is-new{border-color:rgba(233,200,106,.42);box-shadow:0 0 0 1px rgba(233,200,106,.12) inset}
+.msg.is-done{opacity:.62}
+.msgtop{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;font-size:.64rem;color:rgba(255,254,247,.45)}
+.chip{display:inline-block;border-radius:999px;padding:.16rem .6rem;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.chip.k-correction{background:rgba(233,200,106,.2);color:#F0D480}
+.chip.k-bug{background:rgba(180,66,58,.24);color:#F3AFA9}
+.chip.k-idea{background:rgba(139,168,136,.22);color:#A9D3A4}
+.chip.k-other{background:rgba(255,254,247,.1);color:rgba(255,254,247,.7)}
+.msgtop .st{margin-inline-start:auto;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(255,254,247,.4)}
+.msgbody{white-space:pre-wrap;font-size:.84rem;line-height:1.78;color:rgba(255,254,247,.9);margin:.6rem 0 0;word-break:break-word;overflow-wrap:anywhere}
+.msgfoot{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.8rem}
+.msgfoot a.reply{font-size:.72rem;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid rgba(233,200,106,.35);margin-inline-end:auto;word-break:break-all}
+.msgfoot button{border:1px solid rgba(255,254,247,.2);background:none;color:rgba(255,254,247,.65);border-radius:999px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;cursor:pointer;font-family:inherit}
+.msgfoot button:hover{color:var(--parchment);border-color:rgba(233,200,106,.5)}
+.msgfoot button.danger:hover{color:#F3AFA9;border-color:rgba(180,66,58,.6)}
+@media(max-width:520px){.msgfoot a.reply{width:100%;margin:0 0 .3rem}}
+/* ---- the Lantern assistant ---- */
+.chat{display:grid;gap:.6rem;max-height:26rem;overflow-y:auto;padding:.2rem .1rem}
+.bub{border-radius:14px;padding:.7rem .9rem;font-size:.82rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+.bub.me{background:rgba(233,200,106,.19);border:1px solid rgba(233,200,106,.42);color:rgba(255,254,247,.92);margin-inline-start:2.2rem}
+.bub.it{background:rgba(255,254,247,.05);border:1px solid rgba(255,254,247,.12);color:rgba(255,254,247,.88);margin-inline-end:2.2rem}
+.bub.warn{background:rgba(180,66,58,.14);border:1px solid rgba(180,66,58,.4);color:#F3C4C0}
+.askrow{display:flex;gap:.5rem;margin-top:.8rem;align-items:flex-end}
+.askrow textarea{flex:1;min-height:3.2rem;resize:vertical}
+.askrow button{background:linear-gradient(160deg,#E9C86A,#C9A227);border:0;border-radius:12px;padding:.6rem 1.1rem;font-weight:800;font-size:.8rem;color:#241D12;cursor:pointer;font-family:inherit;white-space:nowrap}
+.modes{display:flex;gap:.4rem;margin-bottom:.7rem;flex-wrap:wrap}
+.modes button{border:1px solid rgba(255,254,247,.16);background:rgba(255,254,247,.04);color:rgba(255,254,247,.6);border-radius:999px;padding:.32rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;font-family:inherit}
+.modes button.on{background:rgba(233,200,106,.16);border-color:rgba(233,200,106,.5);color:var(--gold-hi)}
+.strip{border:1.5px solid rgba(233,200,106,.5);border-radius:16px;padding:.9rem 1rem;background:rgba(233,200,106,.06);margin-top:.8rem}
+.strip .lbl{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.dif{margin-top:.5rem;display:grid;gap:.45rem}
+.dif div{border-radius:10px;padding:.55rem .75rem;font-size:.8rem;line-height:1.7;word-break:break-word;overflow-wrap:anywhere}
+.dif .was{background:rgba(180,66,58,.14);border:1px solid rgba(180,66,58,.32);color:#F0C9C5;text-decoration:line-through;text-decoration-color:rgba(240,201,197,.45)}
+.dif .now{background:rgba(139,168,136,.16);border:1px solid rgba(139,168,136,.4);color:#CDE6C9}
+.ovr{display:flex;gap:.6rem;align-items:flex-start;border-bottom:1px solid rgba(255,254,247,.08);padding:.6rem 0;font-size:.76rem;line-height:1.65}
+.ovr:last-child{border-bottom:0}
+.ovr .txt{flex:1;color:rgba(255,254,247,.82);word-break:break-word;overflow-wrap:anywhere}
+.ovr .pg{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.honest{border-inline-start:3px solid rgba(233,200,106,.5);background:rgba(255,254,247,.04);border-radius:0 10px 10px 0;padding:.6rem .85rem;font-size:.74rem;line-height:1.75;color:rgba(255,254,247,.72);margin-top:.7rem}
+/* ---- the giving ledger ---- */
+.funds{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:720px){.funds{grid-template-columns:1fr}}
+.fund{background:linear-gradient(150deg,rgba(233,200,106,.15),rgba(255,254,247,.04));border:1px solid rgba(233,200,106,.4);border-radius:18px;padding:1.05rem 1.15rem}
+.fund .nm{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.fund .rate{font-size:.7rem;color:rgba(255,254,247,.55);margin-top:.15rem}
+.fund .owe{font-size:2.6rem;font-weight:900;color:var(--gold-hi);line-height:1.05;margin:.6rem 0 .1rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+@media(max-width:400px){.fund .owe{font-size:2.1rem}}
+.fund .owel{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,254,247,.6);font-weight:800}
+.fund .split{display:flex;gap:1.2rem;margin-top:.85rem;padding-top:.7rem;border-top:1px solid rgba(233,200,106,.25)}
+.fund .split div{font-size:.72rem;color:rgba(255,254,247,.55)}
+.fund .split b{display:block;font-size:.95rem;color:rgba(255,254,247,.9);font-weight:800;font-variant-numeric:tabular-nums}
+.fund.clear .owe{color:#A9D3A4}
+.giveform{display:grid;grid-template-columns:9rem 8rem minmax(8rem,1fr) auto auto;gap:.5rem;align-items:center}
+@media(max-width:640px){.giveform{grid-template-columns:1fr 1fr}.giveform .wide{grid-column:1/-1}}
 </style>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -176,6 +244,8 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <div class="tabs" role="tablist">
 <button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
+<button class="tab" data-pane="inbox" role="tab"><span data-ic=note></span> Inbox<span class="badge" id="ib-badge" hidden>0</span></button>
+<button class="tab" data-pane="lantern" role="tab"><span data-ic=bulb></span> Lantern</button>
 <button class="tab" data-pane="giving" role="tab"><span data-ic=lamp></span> Giving</button>
 <button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Legacy</button>
 <button class="tab" data-pane="traffic" role="tab"><span data-ic=scope></span> Traffic</button>
@@ -229,12 +299,85 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 </div>
 </div>
 
+<!-- ===================== INBOX ===================== -->
+<div class="pane" id="pane-inbox">
+
+<div id="ib-setup" class="setupcard" hidden>
+<b>The message desk needs the same store as the lamp counter.</b>
+<p style="margin:.5rem 0 0">Notes sent from <code>/feedback</code> are kept in the same Redis the reader counts use. Turn it on once, in the <b>Pulse</b> tab, and every note from that moment lands here. Until then the feedback page falls back to opening the sender's mail app, so nothing is ever lost.</p>
+</div>
+
+<div id="ib-wrap">
+<div class="stats">
+<div class="stat"><div class="v" id="ib-new">·</div><div class="l">New</div></div>
+<div class="stat"><div class="v" id="ib-read">·</div><div class="l">Read</div></div>
+<div class="stat"><div class="v" id="ib-done">·</div><div class="l">Done</div></div>
+<div class="stat"><div class="v" id="ib-total">·</div><div class="l">All time</div></div>
+</div>
+
+<h2 class="sec">The message desk</h2>
+<div class="fbar" id="ib-filters">
+<button data-f="new" class="on">New</button>
+<button data-f="read">Read</button>
+<button data-f="done">Done</button>
+<button data-f="">Everything</button>
+<button data-f="refresh" style="margin-inline-start:auto">Refresh</button>
+</div>
+<div class="msgs" id="ib-list"></div>
+<p class="muted" id="ib-empty" hidden>Nothing here yet. Notes arrive from the door at <b>/feedback</b>.</p>
+<p class="muted" style="margin-top:1rem">A correction about a verse or a hadith moves to the front, as the feedback page promises. What is kept with each note: the kind, the words, the page it names, a reply address only if the sender chose to give one, and a two letter country code. Never an address, never an identifier.</p>
+</div>
+</div>
+
 <!-- ===================== GIVING ===================== -->
 <div class="pane" id="pane-giving">
 <div class="stats">
 <div class="stat"><div class="v" id="g-30">·</div><div class="l">Gifts · last 30 days</div></div>
 <div class="stat"><div class="v" id="g-count">·</div><div class="l">Givers · last 30 days</div></div>
 <div class="stat"><div class="v" id="g-monthly">·</div><div class="l">Monthly sadaqa / mo</div></div>
+</div>
+
+<h2 class="sec">The promise ✦ what is set aside</h2>
+<div id="lg-setup" class="setupcard" hidden><b>The ledger reads Stripe.</b><p style="margin:.5rem 0 0">Add <code>STRIPE_SECRET_KEY</code> in Vercel and redeploy, and this fills itself in. Recording what you have already given away also needs the store from the Pulse tab.</p></div>
+<div id="lg-wrap" hidden>
+<div class="funds">
+<div class="fund" id="fund-zakat">
+<div class="nm">Zakat</div>
+<div class="rate">2.5 percent of money received, for zakat-eligible causes</div>
+<div class="owe" data-owe>·</div>
+<div class="owel">Still owed</div>
+<div class="split"><div>Set aside<b data-accrued>·</b></div><div>Already given<b data-given>·</b></div></div>
+</div>
+<div class="fund" id="fund-masjid">
+<div class="nm">Masjid fund</div>
+<div class="rate">17.5 percent of money received, toward helping build masajid</div>
+<div class="owe" data-owe>·</div>
+<div class="owel">Still owed</div>
+<div class="split"><div>Set aside<b data-accrued>·</b></div><div>Already given<b data-given>·</b></div></div>
+</div>
+</div>
+
+<div class="honest" id="lg-honest">These two are set aside from money received. They are a commitment of the keeper, not a condition of any gift, and no giver was ever promised that their particular gift would go to zakat or to a masjid.</div>
+
+<h2 class="sec">Record something you have given</h2>
+<div class="panel">
+<div class="giveform">
+<select class="fi" id="lg-kind"><option value="zakat">Zakat</option><option value="masjid">Masjid fund</option></select>
+<input class="fi" id="lg-amount" type="text" inputmode="decimal" placeholder="Amount"/>
+<input class="fi wide" id="lg-note" placeholder="Who it went to (optional)"/>
+<input class="fi" id="lg-date" type="date"/>
+<button class="ghost wide" id="lg-add" style="border-color:rgba(233,200,106,.55);color:var(--gold-hi)">Record it</button>
+</div>
+<p class="muted" id="lg-addstate" style="margin-top:.6rem">Write the amount the way you would say it, for example 25 or 25.50. It lowers what is still owed above.</p>
+<div id="lg-given" style="margin-top:.9rem"></div>
+</div>
+
+<h2 class="sec">Month by month</h2>
+<div class="panel" style="overflow-x:auto">
+<table id="lg-months"><thead><tr><th>Month</th><th>Received</th><th>Fees</th><th>Net</th><th>Zakat 2.5%</th><th>Masjid 17.5%</th></tr></thead><tbody></tbody></table>
+<p class="muted" id="lg-mnote" style="margin-top:.6rem"></p>
+</div>
+
 </div>
 
 <h2 class="sec">Recent gifts</h2>
@@ -291,6 +434,46 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="panel" style="margin-top:.6rem"><div class="mkts" id="mkts"></div>
 <p class="muted" style="margin-top:.8rem">Each link previews the homepage exactly as that region sees it. Regions are edited in <code>markets.js</code>, one line each.</p></div>
 </details>
+</div>
+
+<!-- ===================== THE LANTERN ASSISTANT ===================== -->
+<div class="pane" id="pane-lantern">
+
+<h2 class="sec">The Lantern, your right hand</h2>
+<div class="panel">
+<p class="muted" style="margin-bottom:.7rem">It is handed the live numbers before it answers: the readers from the lamp counter, the message desk, and the giving ledger's own arithmetic. It obeys the same four laws as the Marketing room, it never learns who you are, and it will say plainly when the numbers are too small to mean anything.</p>
+
+<div class="modes" id="as-modes">
+<button data-mode="assist" class="on">Ask and triage</button>
+<button data-mode="edit">Propose a correction</button>
+</div>
+<p class="muted" id="as-modenote" style="margin:-.3rem 0 .7rem">Ask it anything about the house. Good openers: what should I do today, what is in the inbox, what do I owe.</p>
+
+<div class="chat" id="as-chat"></div>
+<div class="askrow">
+<textarea class="fi" id="as-in" rows="2" placeholder="What should I do today?"></textarea>
+<button id="as-go">Ask</button>
+</div>
+<p class="muted" id="as-state" style="margin-top:.5rem"></p>
+</div>
+
+<h2 class="sec">Waiting for your word</h2>
+<div class="panel">
+<div id="as-strip"><p class="muted">No change is proposed. Switch to <b>Propose a correction</b> above, describe the fix in plain words, and what comes back will appear here as before and after, for you to approve or throw away.</p></div>
+</div>
+
+<h2 class="sec">Live corrections now on the site</h2>
+<div class="panel">
+<div id="ovr-list"><p class="muted">·</p></div>
+<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem">
+<button class="ghost" id="ovr-refresh">Refresh</button>
+<button class="ghost" id="ovr-clear" style="border-color:rgba(180,66,58,.55);color:#F3AFA9">Revert everything</button>
+</div>
+<div class="honest">
+<b style="color:var(--gold-hi)">Read this once.</b> An override is a live text patch, applied in the reader's browser for urgent corrections only. It never edits a file, it never touches Arabic, a reference number, markup or a link, and it disappears the moment you remove it. The permanent fix belongs in the next release of the page itself. Keep this list short, and empty it once the real fix ships.
+</div>
+</div>
+
 </div>
 
 <!-- ===================== TRAFFIC ===================== -->
@@ -434,7 +617,7 @@ document.querySelectorAll(".tab").forEach(function(t){
 });
 function openTabFromHash(){var h=(location.hash||"").replace("#","");var t=document.querySelector('.tab[data-pane="'+h+'"]');if(t)t.click()}
 
-function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();openTabFromHash()}
+function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();(window.__noorRooms||[]).forEach(function(f){try{f()}catch(e){}});openTabFromHash()}
 
 /* ---- pulse: visitors ---- */
 function bars(el,rows,nameFn){
@@ -826,6 +1009,289 @@ $("v-go").addEventListener("click",function(){
   });
 
   renderTen();renderPipe();renderArmor();
+})();
+
+/* ================= THE MESSAGE DESK ================= */
+(function(){
+  var FILTER="new", COUNTS={new:0,read:0,done:0,total:0};
+  function req(method,path,body){
+    var opt={method:method,credentials:"same-origin"};
+    if(body!==undefined){opt.headers={"Content-Type":"application/json"};opt.body=JSON.stringify(body)}
+    return fetch(path,opt).then(function(r){
+      return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j||{}}},function(){return{ok:false,status:r.status,j:{}}});
+    });
+  }
+  var LABEL={correction:"Correction",bug:"Broken",idea:"Idea",other:"Note"};
+  function when(at){
+    if(!at)return "";
+    var d=new Date(at);
+    if(isNaN(d.getTime()))return String(at).slice(0,16);
+    try{return d.toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
+    catch(e){return String(at).slice(0,16)}
+  }
+  function badge(){
+    var b=$("ib-badge");if(!b)return;
+    if(COUNTS.new>0){b.hidden=false;b.textContent=COUNTS.new>99?"99+":COUNTS.new}
+    else b.hidden=true;
+  }
+  function counts(c){
+    COUNTS=c||COUNTS;
+    $("ib-new").textContent=COUNTS.new||0;
+    $("ib-read").textContent=COUNTS.read||0;
+    $("ib-done").textContent=COUNTS.done||0;
+    $("ib-total").textContent=COUNTS.total||0;
+    badge();
+  }
+  function card(m){
+    var k=LABEL[m.kind]?m.kind:"other";
+    var reply=m.from?'<a class="reply" href="mailto:'+esc(m.from)+'?subject='+encodeURIComponent("Re: your note to NOOR Codex of Light")+'">Reply to '+esc(m.from)+'</a>':'<span class="muted" style="margin-inline-end:auto">No reply address was left.</span>';
+    return '<article class="msg is-'+esc(m.status)+'" data-id="'+esc(m.id)+'">'+
+      '<div class="msgtop"><span class="chip k-'+k+'">'+esc(LABEL[k])+'</span>'+
+      '<span>'+esc(when(m.at))+'</span>'+
+      (m.page?'<span>· on '+esc(m.page)+'</span>':'')+
+      (m.cc?'<span>· '+esc(m.cc)+'</span>':'')+
+      '<span class="st">'+esc(m.status)+'</span></div>'+
+      '<p class="msgbody">'+esc(m.body)+'</p>'+
+      '<div class="msgfoot">'+reply+
+      (m.status==="new"?'<button data-act="read">Mark read</button>':'')+
+      (m.status!=="done"?'<button data-act="done">Mark done</button>':'<button data-act="read">Back to read</button>')+
+      '<button class="danger" data-act="del">Delete</button></div></article>';
+  }
+  function draw(items){
+    var box=$("ib-list");
+    box.innerHTML=(items||[]).map(card).join("");
+    $("ib-empty").hidden=(items||[]).length>0;
+    $("ib-empty").textContent=FILTER?("Nothing marked "+FILTER+"."):"Nothing here yet. Notes arrive from the door at /feedback.";
+  }
+  function load(){
+    var q="/api/inbox?limit=100"+(FILTER?"&status="+FILTER:"");
+    return req("GET",q).then(function(r){
+      if(r.status===401)return;
+      var j=r.j||{};
+      if(j.ok===false&&j.reason==="store"){$("ib-setup").hidden=false;$("ib-wrap").hidden=true;return}
+      $("ib-setup").hidden=true;$("ib-wrap").hidden=false;
+      counts(j.counts);draw(j.items);
+    }).catch(function(){});
+  }
+  $("ib-filters").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.getAttribute("data-f")==="refresh"){load();return}
+    FILTER=b.getAttribute("data-f")||"";
+    $("ib-filters").querySelectorAll("button").forEach(function(x){if(x.getAttribute("data-f")!=="refresh")x.classList.remove("on")});
+    b.classList.add("on");load();
+  });
+  $("ib-list").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-act]");if(!b)return;
+    var art=b.closest(".msg");if(!art)return;
+    var id=art.getAttribute("data-id"), act=b.getAttribute("data-act");
+    if(act==="del"&&!confirm("Delete this note for good? It cannot be brought back."))return;
+    b.disabled=true;
+    var body=act==="del"?{id:id,delete:true}:{id:id,status:act};
+    req("PATCH","/api/inbox",body).then(function(r){
+      if(r.j&&r.j.counts)counts(r.j.counts);
+      load();
+    }).catch(function(){b.disabled=false});
+  });
+  window.__noorRooms=(window.__noorRooms||[]);
+  window.__noorRooms.push(load);
+  document.querySelectorAll('.tab[data-pane=inbox]').forEach(function(b){b.addEventListener("click",load)});
+})();
+
+/* ================= THE LANTERN ASSISTANT ================= */
+(function(){
+  var MODE="assist", TURNS=[], PROPOSAL=null, BUSY=false;
+  function req(method,path,body){
+    var opt={method:method,credentials:"same-origin"};
+    if(body!==undefined){opt.headers={"Content-Type":"application/json"};opt.body=JSON.stringify(body)}
+    return fetch(path,opt).then(function(r){
+      return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j||{}}},function(){return{ok:false,status:r.status,j:{}}});
+    });
+  }
+  function bubble(cls,text){
+    var d=document.createElement("div");
+    d.className="bub "+cls;d.textContent=text;
+    $("as-chat").appendChild(d);
+    $("as-chat").scrollTop=$("as-chat").scrollHeight;
+    return d;
+  }
+  $("as-modes").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    MODE=b.getAttribute("data-mode");
+    $("as-modes").querySelectorAll("button").forEach(function(x){x.classList.remove("on")});
+    b.classList.add("on");
+    TURNS=[];
+    $("as-modenote").textContent=MODE==="edit"
+      ? "Describe the fix in plain words, for example: on the pillars page, the line about the nisab says grams but should say ounces. What comes back is a proposal only. Nothing changes until you press Apply."
+      : "Ask it anything about the house. Good openers: what should I do today, what is in the inbox, what do I owe.";
+    $("as-in").setAttribute("placeholder",MODE==="edit"?"On which page, and what should it say instead?":"What should I do today?");
+    $("as-go").textContent=MODE==="edit"?"Propose":"Ask";
+  });
+  function strip(pr){
+    PROPOSAL=pr;
+    if(!pr){$("as-strip").innerHTML='<p class="muted">No change is proposed. Switch to <b>Propose a correction</b> above, describe the fix in plain words, and what comes back will appear here as before and after, for you to approve or throw away.</p>';return}
+    $("as-strip").innerHTML='<div class="strip"><div class="lbl">Proposed correction · '+esc(pr.page)+'</div>'+
+      '<div class="dif"><div class="was">'+esc(pr.find)+'</div><div class="now">'+esc(pr.replace||"(removed)")+'</div></div>'+
+      (pr.why?'<p class="muted" style="margin-top:.55rem">'+esc(pr.why)+'</p>':'')+
+      '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem">'+
+      '<button class="ghost" id="as-apply" style="border-color:rgba(233,200,106,.6);color:var(--gold-hi)">Apply to the live site</button>'+
+      '<button class="ghost" id="as-discard">Discard</button>'+
+      '<span class="muted" id="as-applystate"></span></div></div>';
+    $("as-discard").addEventListener("click",function(){strip(null)});
+    $("as-apply").addEventListener("click",function(){
+      $("as-applystate").textContent="Applying...";
+      req("POST","/api/overrides",{page:pr.page,find:pr.find,replace:pr.replace,why:pr.why}).then(function(r){
+        if(r.ok&&r.j&&r.j.ok){strip(null);drawOverrides(r.j.items||[]);bubble("it","Applied. It is live on "+pr.page+" for every reader from the next minute. Remove it below once the real fix ships.")}
+        else $("as-applystate").textContent=(r.j&&r.j.reason)||"It would not apply.";
+      }).catch(function(){$("as-applystate").textContent="Cannot reach the store."});
+    });
+  }
+  function drawOverrides(items){
+    var box=$("ovr-list");
+    if(!items||!items.length){box.innerHTML='<p class="muted">None. The site is exactly as it was built, which is how it should usually be.</p>';return}
+    box.innerHTML=items.map(function(o){
+      return '<div class="ovr"><div class="txt"><span class="pg">'+esc(o.page)+'</span><br/>'+
+        '<span style="color:#F0C9C5;text-decoration:line-through">'+esc(o.find)+'</span><br/>'+
+        '<span style="color:#CDE6C9">'+esc(o.replace||"(removed)")+'</span>'+
+        (o.why?'<br/><span class="muted">'+esc(o.why)+'</span>':'')+'</div>'+
+        '<button class="ghost" data-rm="'+esc(o.id)+'">Remove</button></div>';
+    }).join("");
+  }
+  function loadOverrides(){
+    return req("GET","/api/overrides").then(function(r){
+      if(r.j&&r.j.ok===false&&r.j.reason==="store"){$("ovr-list").innerHTML='<p class="muted">The store is not connected yet, so no correction can be held. Turn it on in the Pulse tab.</p>';return}
+      drawOverrides((r.j&&r.j.items)||[]);
+    }).catch(function(){});
+  }
+  $("ovr-list").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-rm]");if(!b)return;
+    b.disabled=true;
+    req("DELETE","/api/overrides",{id:b.getAttribute("data-rm")}).then(function(r){
+      if(r.ok&&r.j&&r.j.ok)drawOverrides(r.j.items||[]);else{b.disabled=false;loadOverrides()}
+    }).catch(function(){b.disabled=false});
+  });
+  $("ovr-refresh").addEventListener("click",loadOverrides);
+  $("ovr-clear").addEventListener("click",function(){
+    if(!confirm("Remove every live correction and return the site to exactly what was built? This cannot be undone, but nothing is lost: the pages themselves were never changed."))return;
+    req("DELETE","/api/overrides",{all:true}).then(function(r){
+      if(r.ok&&r.j&&r.j.ok)drawOverrides(r.j.items||[]);else loadOverrides();
+    }).catch(function(){});
+  });
+  function send(){
+    if(BUSY)return;
+    var text=($("as-in").value||"").trim();
+    if(!text)return;
+    BUSY=true;$("as-go").disabled=true;
+    $("as-in").value="";
+    bubble("me",text);
+    TURNS.push({role:"user",content:text});
+    $("as-state").textContent=MODE==="edit"?"The Lantern is checking the wording...":"The Lantern is reading the house...";
+    req("POST","/api/assistant",{messages:TURNS.slice(-12),mode:MODE}).then(function(r){
+      BUSY=false;$("as-go").disabled=false;$("as-state").textContent="";
+      var j=r.j||{};
+      if(!r.ok||j.ok===false){bubble("warn",j.reason||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.");TURNS.pop();return}
+      if(j.mode==="edit"){
+        if(j.valid&&j.proposal){bubble("it","A correction is proposed. It is waiting for your word below.");strip(j.proposal);TURNS=[]}
+        else{bubble("warn",(j.reason||"It could not propose that safely.")+(j.proposal&&j.proposal.find?"\n\nIt wanted to change: "+j.proposal.find:""));strip(null)}
+        return;
+      }
+      var text2=j.reply||"";
+      bubble("it",text2);
+      TURNS.push({role:"assistant",content:text2});
+    }).catch(function(){
+      BUSY=false;$("as-go").disabled=false;$("as-state").textContent="";
+      bubble("warn","Cannot reach the Lantern.");TURNS.pop();
+    });
+  }
+  $("as-go").addEventListener("click",send);
+  $("as-in").addEventListener("keydown",function(e){if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))send()});
+  document.querySelectorAll('.tab[data-pane=lantern]').forEach(function(b){
+    b.addEventListener("click",function(){
+      if(!$("as-chat").childElementCount)bubble("it","Assalamu alaykum. Ask me what to do today and I will read the readers, the message desk and the ledger before I answer.");
+      loadOverrides();
+    });
+  });
+})();
+
+/* ================= THE GIVING LEDGER ================= */
+(function(){
+  var CUR="usd", DATA=null;
+  function req(method,path,body){
+    var opt={method:method,credentials:"same-origin"};
+    if(body!==undefined){opt.headers={"Content-Type":"application/json"};opt.body=JSON.stringify(body)}
+    return fetch(path,opt).then(function(r){
+      return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j||{}}},function(){return{ok:false,status:r.status,j:{}}});
+    });
+  }
+  function cash(minor,cur){
+    var n=(minor||0)/100;
+    try{return new Intl.NumberFormat(undefined,{style:"currency",currency:String(cur||CUR).toUpperCase()}).format(n)}
+    catch(e){return String(cur||CUR).toUpperCase()+" "+n.toFixed(2)}
+  }
+  function fund(id,f){
+    var el=$("fund-"+id);if(!el||!f)return;
+    el.querySelector("[data-owe]").textContent=cash(f.outstanding);
+    el.querySelector("[data-accrued]").textContent=cash(f.accrued);
+    el.querySelector("[data-given]").textContent=cash(f.given);
+    el.classList.toggle("clear",(f.outstanding||0)<=0);
+  }
+  function drawGiven(rows){
+    var box=$("lg-given");
+    if(!rows||!rows.length){box.innerHTML='<p class="muted">Nothing recorded yet. When you give something away, write it here so the number above stays true.</p>';return}
+    box.innerHTML='<table><thead><tr><th>Date</th><th>Fund</th><th>Amount</th><th>Note</th><th></th></tr></thead><tbody>'+
+      rows.map(function(g){
+        return "<tr><td>"+esc(g.date)+"</td><td>"+(g.kind==="zakat"?"Zakat":"Masjid fund")+"</td><td>"+cash(g.amountMinor,g.currency)+"</td><td>"+esc(g.note||"·")+
+          '</td><td><button class="ghost" data-rmg="'+esc(g.id)+'">remove</button></td></tr>';
+      }).join("")+"</tbody></table>";
+  }
+  function render(j){
+    DATA=j;CUR=j.currency||"usd";
+    if(j.ok===false&&j.reason==="stripe"){$("lg-setup").hidden=false;$("lg-wrap").hidden=true;return}
+    $("lg-setup").hidden=true;$("lg-wrap").hidden=false;
+    fund("zakat",j.funds&&j.funds.zakat);
+    fund("masjid",j.funds&&j.funds.masjid);
+    var tb=$("lg-months").querySelector("tbody");
+    var ms=j.months||[];
+    tb.innerHTML=ms.map(function(m){
+      return "<tr><td><b>"+esc(m.month)+"</b></td><td>"+cash(m.gross)+"</td><td>"+cash(m.fee)+"</td><td>"+cash(m.net)+"</td><td>"+cash(m.zakat)+"</td><td>"+cash(m.masjid)+"</td></tr>";
+    }).join("")||'<tr><td colspan="6" class="muted">No money has arrived yet.</td></tr>';
+    var t=j.totals||{};
+    $("lg-mnote").textContent="All time: "+cash(t.gross)+" received across "+(t.count||0)+" payments, "+cash(t.fee)+" in Stripe fees, "+cash(t.net)+" net."+
+      (t.feesPartial?" Some fees could not be read from Stripe, so the fee column is a floor, not the whole.":"")+
+      (j.store===false?" The store is not connected, so disbursements cannot be recorded yet.":"");
+    drawGiven(j.given||[]);
+    if(!$("lg-date").value)try{$("lg-date").value=new Date().toISOString().slice(0,10)}catch(e){}
+  }
+  function load(){
+    return req("GET","/api/ledger").then(function(r){
+      if(r.status===401)return;
+      render(r.j||{});
+    }).catch(function(){});
+  }
+  $("lg-add").addEventListener("click",function(){
+    var raw=String($("lg-amount").value||"").replace(/[^0-9.]/g,"");
+    var n=parseFloat(raw);
+    if(!isFinite(n)||n<=0){$("lg-addstate").textContent="Write an amount first, for example 25 or 25.50.";return}
+    var minor=Math.round(n*100);
+    $("lg-addstate").textContent="Recording...";
+    req("POST","/api/ledger",{kind:$("lg-kind").value,amountMinor:minor,note:$("lg-note").value,date:$("lg-date").value}).then(function(r){
+      var j=r.j||{};
+      if(!r.ok||j.ok===false){$("lg-addstate").textContent=(j.reason==="store")?"The store is not connected yet, so this cannot be kept. Turn it on in the Pulse tab.":(j.reason||"It would not record.");return}
+      $("lg-addstate").textContent="Recorded. What is still owed above has come down.";
+      $("lg-amount").value="";$("lg-note").value="";
+      render(j);
+    }).catch(function(){$("lg-addstate").textContent="Cannot reach the ledger."});
+  });
+  $("lg-given").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-rmg]");if(!b)return;
+    if(!confirm("Remove this record? What is still owed will go back up."))return;
+    b.disabled=true;
+    req("DELETE","/api/ledger",{id:b.getAttribute("data-rmg")}).then(function(r){
+      if(r.ok&&r.j&&r.j.ok!==false)render(r.j);else{b.disabled=false;load()}
+    }).catch(function(){b.disabled=false});
+  });
+  window.__noorRooms=(window.__noorRooms||[]);
+  window.__noorRooms.push(load);
+  document.querySelectorAll('.tab[data-pane=giving]').forEach(function(b){b.addEventListener("click",load)});
 })();
 
 /* ---- gate ---- */

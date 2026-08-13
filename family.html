@@ -54,10 +54,14 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
 .rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
 .evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
-.evb.quran{color:#2f6b46;border-color:rgba(47,107,70,.4);background:rgba(47,107,70,.08)}
-.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.42);background:rgba(201,162,39,.1)}
-.evb.debated{color:#7a5c9e;border-color:rgba(122,92,158,.4);background:rgba(122,92,158,.08)}
-.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.22);background:rgba(44,36,22,.04)}
+.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.55);background:rgba(29,107,63,.13)}
+.evb.quran::before{content:"";width:.46rem;height:.46rem;border-radius:999px;background:#1d6b3f;box-shadow:0 0 0 2px rgba(29,107,63,.28);flex:none}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.evb.sunnah::before{content:"";width:.46rem;height:.46rem;background:#C9A227;flex:none;transform:rotate(45deg)}
+.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.evb.debated::before{content:"";width:.46rem;height:.46rem;border-radius:999px;border:1.5px dashed #6b4f92;flex:none}
+.evb.editorial{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.evb.editorial::before{content:"";width:.46rem;height:.1rem;background:rgba(44,36,22,.5);flex:none}
 .refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
 .ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
 .ref b{color:#8a6d13}
@@ -139,14 +143,18 @@ html{scroll-behavior:auto}
 }
 </style>
 
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
 </head>
 <body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
