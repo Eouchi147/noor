@@ -172,6 +172,15 @@
       }
     });
   }
+  /* paper: whatever the choreography is still holding, let it go before the
+     print engine takes its snapshot. */
+  function beforePrint() { try { revealAll("print"); } catch (e) {} }
+  addEventListener("beforeprint", beforePrint);
+  try {
+    var mq = window.matchMedia("print");
+    if (mq && mq.addListener) mq.addListener(function (m) { if (m.matches) beforePrint(); });
+  } catch (e) {}
+
   addEventListener("load", function () {
     guard();
     setTimeout(guard, 600);

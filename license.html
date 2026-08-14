@@ -169,6 +169,33 @@ body.sheet-open{overflow:hidden}
 #nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
 @media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
 #nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+
+/* --- the search drawer -------------------------------------------------
+   The magnifier at top right is the only search chrome the house shows.
+   The panel is hard-hidden until it is opened, and it is a floating drawer,
+   never a band across the page. These rules live in the generator so a nav
+   rebuild can never strip them again. */
+#search-bar{display:none}
+#search-bar.open{display:block;position:fixed;top:3.5rem;right:1rem;z-index:72;width:min(26rem,calc(100vw - 2rem))}
+@media (min-width:640px){#search-bar.open{right:1.5rem}}
+body.sheet-open #search-bar{display:none}
+#search-bar .sb-in{background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:16px;box-shadow:0 20px 48px rgba(26,22,15,.18);padding:.5rem}
+#search-bar input#search-input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:.9rem;line-height:1.4;color:#2C2416;background:#fff;border:1px solid rgba(44,36,22,.15);border-radius:11px;padding:.62rem .8rem;outline:0;-webkit-appearance:none;appearance:none}
+#search-bar input#search-input::placeholder{color:rgba(44,36,22,.4)}
+#search-bar input#search-input:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
+#search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
+#search-bar #search-results.hidden{display:none}
+
+/* --- paper ---------------------------------------------------------------
+   Choreography must never cost a reader the words. Anything the motion
+   layer is holding back is forced visible before it reaches a printer. */
+@media print{
+  #site-header,#nav-sheet,#search-bar{display:none!important}
+  .mo,.mo-pop,.mo-draw,[data-mo-stagger] .mo,[data-mo-stagger] .mo-pop{
+    opacity:1!important;visibility:visible!important;transform:none!important}
+  .mo-draw path,.mo-draw line,.mo-draw circle,.mo-draw rect,.mo-draw polyline,.mo-draw ellipse{
+    stroke-dasharray:none!important;stroke-dashoffset:0!important;opacity:1!important}
+}
 </style>
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
 <a href="/" class="flex items-center gap-2.5">
@@ -326,308 +353,14 @@ body.sheet-open{overflow:hidden}
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
+
+
+
+
+
+
+
+
 
 <section data-ink=soft id="lh">
 <p class="k">For masjids · schools · apps · websites</p>
