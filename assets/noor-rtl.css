@@ -59,8 +59,12 @@
 [dir="rtl"] [translate="no"] { direction: rtl; }
 
 /* 8. Latin transliteration inside an Arabic page reads as Latin. */
+/* A transliteration is a pronunciation guide, so it is normally Latin inside an
+   Arabic page and must run left to right. But it is not always: plaintext asks
+   the browser to take the direction from the line's own first strong character,
+   which is right whichever way the line turns out. */
 [dir="rtl"] .trl,
-[dir="rtl"] .translit { direction: ltr; unicode-bidi: isolate; text-align: center; }
+[dir="rtl"] .translit { unicode-bidi: plaintext; text-align: center; }
 
 /* ============================================================
    the search overlay, which lives on every page

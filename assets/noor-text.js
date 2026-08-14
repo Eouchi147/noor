@@ -43,6 +43,9 @@
     if (!p || p.nodeType !== 1) return false;
     if (SKIP[p.tagName]) return false;
     if (p.closest && p.closest(".notranslate,[translate=no]")) return false;
+    /* a transliteration is how to SAY the Arabic; carrying it into the
+       reader's own script turns it into a copy of the line above it */
+    if (p.closest && p.closest(".trl,.translit,.pctrl")) return false;
     if (p.hasAttribute && p.hasAttribute("data-i18n")) return false;  /* the chrome owns it */
     return true;
   }
