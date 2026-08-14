@@ -16,7 +16,8 @@ const UI_EN = {
   "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids","nav.health":"Health",
   "nav.quran":"Qur'an","nav.prophets":"Prophets","nav.hajj":"Hajj","nav.madrasa":"Madrasa","nav.library":"Library","nav.give":"Give",
   "g.learn":"Learn","g.story":"The Story","g.heart":"The Heart","g.little":"Stories & Little Ones","g.houses":"Houses & Support",
-  "m.madrasa":"The Classroom \u00b7 Madrasa","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
+  "m.madrasa":"The Classroom \u00b7 Madrasa",
+  "m.dictionary": "The Encyclopedia of the Path","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
   "m.path":"The Path of Creation","m.prophets":"The 25 Prophets","m.companions":"The Companions","m.characters":"Characters","m.places":"Places","m.heroes":"Heroes of Islam","m.unseen":"The Unseen & the Mysteries",
   "m.pillars":"The Five Pillars","m.hajj":"Hajj & Umrah","m.hajjplan":"Your Pilgrim Plan","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room",
   "m.protection": "Protection & the Light","m.ramadan":"Ramadan","m.eid":"The Two Eids","m.sermon":"The Last Sermon","m.soul":"The Journey of the Soul","m.mizan":"Two Lives",
@@ -94,6 +95,7 @@ const NOOR_I18N = {
       } catch (e) { toast(this.t("lang.fallback")); }
     }
     this.apply();
+    if (window.NOOR_TEXT) NOOR_TEXT.setLang(code);
     if (window.NoorPage && NoorPage.rerender) NoorPage.rerender();
   },
   /* translate a data record (node, character, place, word) through the loaded pack */
@@ -455,7 +457,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var d = document.createElement("div");
     d.id = "noor-translate-hint";
     d.setAttribute("role", "status");
-    d.style.cssText = "position:fixed;left:50%;transform:translateX(-50%);bottom:1rem;z-index:90;max-width:min(30rem,calc(100vw - 2rem));background:#0B1230;color:#FFFEF7;border:1px solid rgba(233,200,106,.55);border-radius:14px;box-shadow:0 14px 40px rgba(4,6,15,.55);padding:.85rem 2.5rem .85rem 1rem;font-size:.78rem;line-height:1.65;font-family:Inter,system-ui,sans-serif";
+    d.style.cssText = "position:fixed;left:50%;transform:translateX(-50%);bottom:1rem;z-index:90;max-width:min(30rem,calc(100vw - 2rem));background:#0B1230;color:#FFFEF7;border:1px solid rgba(233,200,106,.55);border-radius:14px;box-shadow:0 14px 40px rgba(4,6,15,.55);padding-block:.85rem .85rem;padding-inline:1rem 2.5rem;font-size:.78rem;line-height:1.65;font-family:Inter,system-ui,sans-serif";
     return d;
   }
   function closeBtn(d, remember) {
@@ -488,7 +490,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var det = detected();
     var head = det ? det[2] : "Choose your language";
     d.insertAdjacentHTML("beforeend",
-      '<div style="font-weight:700;margin-bottom:.45rem"><span style="color:#E9C86A;margin-right:.45rem"></span>' + head + "</div>" +
+      '<div style="font-weight:700;margin-bottom:.45rem"><span style="color:#E9C86A;margin-inline-end:.45rem"></span>' + head + "</div>" +
       '<div style="font-size:.74rem;line-height:2">' + langRow() + "</div>");
     if (det) {
       d.insertAdjacentHTML("beforeend",

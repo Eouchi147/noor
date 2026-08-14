@@ -79,16 +79,16 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .gate.deep{border-color:rgba(201,162,39,.3)}
 #gates-wrap.list{grid-template-columns:1fr;gap:.3rem}
 @media (min-width:640px){#gates-wrap.list{grid-template-columns:1fr 1fr;gap:.35rem}}
-#gates-wrap.list .gate{flex-direction:row;align-items:center;text-align:left;gap:.6rem;padding:.42rem .6rem;border-radius:.75rem;contain-intrinsic-size:auto 2.9rem}
+#gates-wrap.list .gate{flex-direction:row;align-items:center;text-align:start;gap:.6rem;padding:.42rem .6rem;border-radius:.75rem;contain-intrinsic-size:auto 2.9rem}
 #gates-wrap.list .gate:hover{transform:none}
 #gates-wrap.list .seal{width:1.7rem;height:1.7rem;font-size:.62rem;margin-bottom:0}
-#gates-wrap.list .gar{font-size:1.05rem;order:9;margin-left:auto;padding-left:.4rem}
+#gates-wrap.list .gar{font-size:1.05rem;order:9;margin-left:auto;padding-inline-start:.4rem}
 #gates-wrap.list .gen{font-size:.76rem}
 #gates-wrap.list .gmn,#gates-wrap.list .gmeta{display:none}
 #gates-wrap.list .gfull{position:static;order:8}
 /* ayah cards */
 .ayah{border-bottom:1px solid rgba(44,36,22,.07);padding:1.15rem .35rem;scroll-margin-top:150px}
-.ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:right;direction:rtl}
+.ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
 .ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);border-radius:.75rem}
 .medallion{display:inline-flex;align-items:center;justify-content:center;min-width:1.9rem;height:1.9rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-size:.72rem;font-weight:800;margin-inline-start:.5rem;vertical-align:middle;box-shadow:0 1px 4px rgba(201,162,39,.5)}
 .playbtn{width:2rem;height:2rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:#fff;transition:all .2s;cursor:pointer}
@@ -125,7 +125,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sp-k{display:flex;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
 .sp-k::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
 .sp-p{font-size:.85rem;line-height:1.85;color:rgba(255,254,247,.84);margin:.6rem 0}
-.sp-heart{border-left:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 16px 16px 0;padding:.9rem 1.05rem;margin:.5rem 0}
+.sp-heart{border-inline-start:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 16px 16px 0;padding:.9rem 1.05rem;margin:.5rem 0}
 .sp-heart p{font-size:.88rem;line-height:1.85;color:rgba(255,254,247,.92);margin:.5rem 0;font-style:italic}
 .sp-heart p:first-child{margin-top:0}.sp-heart p:last-child{margin-bottom:0}
 .sp-themes{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.2rem}
@@ -133,7 +133,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sp-theme{flex:1 1 13rem;border:1px solid rgba(244,212,106,.26);background:rgba(255,254,247,.045);border-radius:14px;padding:.6rem .75rem}
 .sp-theme b{display:block;font-size:.73rem;color:#F4D46A;letter-spacing:.02em}
 .sp-theme span{display:block;font-size:.74rem;line-height:1.65;color:rgba(255,254,247,.72);margin-top:.2rem}
-.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:left;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:14px;padding:.65rem .8rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:start;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:14px;padding:.65rem .8rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
 .sp-btn:hover{background:rgba(244,212,106,.11);border-color:rgba(244,212,106,.5);transform:translateY(-1px)}
 .sp-btn:focus-visible{outline:2px solid rgba(244,212,106,.8);outline-offset:2px}
 .sp-btn .ic{flex:none;width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.09);color:#F4D46A;display:grid;place-items:center}
@@ -186,6 +186,9 @@ body.has-player{padding-bottom:74px}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -194,8 +197,8 @@ body.has-player{padding-bottom:74px}
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -211,7 +214,7 @@ body.has-player{padding-bottom:74px}
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -237,7 +240,7 @@ body.has-player{padding-bottom:74px}
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -270,6 +273,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -297,6 +306,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -366,6 +376,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -378,6 +391,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -435,10 +449,16 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 
@@ -470,7 +490,7 @@ body.sheet-open #search-bar{display:none}
 <option value="en.sahih">EN · Saheeh Intl</option>
 <option value="fr.hamidullah">FR · Hamidullah</option>
 </select>
-<button class="tool" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
+<button class="tool" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
 <span id="t-status" class="text-[11px] text-ink/40"></span>
 </div>
 </nav>
@@ -835,8 +855,8 @@ const ICO_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
 function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;}
 function listenLabel(on){$("t-listen").innerHTML=on
- ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
- :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-right:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah`;}
+ ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
+ :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah`;}
 const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
 function setPlaying(i,loading){playingIdx=i;
  document.querySelectorAll(".ayah").forEach(el=>el.classList.remove("playing"));

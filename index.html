@@ -60,13 +60,13 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .milky{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 34% at 50% 30%,rgba(126,148,222,.10),transparent 68%)}
 .crown{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(190vw,1900px);height:56%;z-index:1;pointer-events:none;background:radial-gradient(60% 100% at 50% 0%,rgba(126,148,222,.16),rgba(90,110,190,.07) 46%,transparent 78%);-webkit-mask-image:linear-gradient(180deg,#000 0 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 0 40%,transparent 100%)}
 @media(min-width:1024px){.crown{height:64%}}
-.rays-wheel{position:absolute;top:38%;left:50%;width:min(150vw,124vh,1180px);aspect-ratio:1;margin-left:calc(min(150vw,124vh,1180px) / -2);margin-top:calc(min(150vw,124vh,1180px) / -2);z-index:2;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 9%,rgba(233,200,106,.045) 11.5%,transparent 14% 21.5%,rgba(233,200,106,.045) 24%,transparent 26.5% 34%,rgba(233,200,106,.045) 36.5%,transparent 39% 46.5%,rgba(233,200,106,.045) 49%,transparent 51.5% 59%,rgba(233,200,106,.045) 61.5%,transparent 64% 71.5%,rgba(233,200,106,.045) 74%,transparent 76.5% 84%,rgba(233,200,106,.045) 86.5%,transparent 89% 100%);mix-blend-mode:screen;animation:wheelSpin 140s linear infinite;will-change:transform;display:none}
+.rays-wheel{position:absolute;top:38%;left:50%;width:min(150vw,124vh,1180px);aspect-ratio:1;margin-inline-start:calc(min(150vw,124vh,1180px) / -2);margin-top:calc(min(150vw,124vh,1180px) / -2);z-index:2;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 9%,rgba(233,200,106,.045) 11.5%,transparent 14% 21.5%,rgba(233,200,106,.045) 24%,transparent 26.5% 34%,rgba(233,200,106,.045) 36.5%,transparent 39% 46.5%,rgba(233,200,106,.045) 49%,transparent 51.5% 59%,rgba(233,200,106,.045) 61.5%,transparent 64% 71.5%,rgba(233,200,106,.045) 74%,transparent 76.5% 84%,rgba(233,200,106,.045) 86.5%,transparent 89% 100%);mix-blend-mode:screen;animation:wheelSpin 140s linear infinite;will-change:transform;display:none}
 @keyframes wheelSpin{to{transform:rotate(360deg)}}
 .ghost-pos{position:absolute;inset:0 0 12% 0;z-index:1;pointer-events:none;display:grid;place-items:center}
 .ghost-noor{grid-area:1/1;font-family:Amiri,serif;font-size:min(46vw,52vh,430px);line-height:1;color:rgba(233,200,106,.045);text-shadow:0 0 90px rgba(233,200,106,.06);user-select:none}
 .ghost-noor.glow{color:transparent;text-shadow:none;background:linear-gradient(115deg,transparent 30%,rgba(244,227,161,.16) 50%,transparent 70%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;animation:ghostSweep 11s ease-in-out infinite}
 @keyframes ghostSweep{0%,100%{background-position:130% 0;opacity:.4}50%{background-position:-30% 0;opacity:1}}
-.geo-pos{position:absolute;top:38%;left:50%;width:min(86vw,64vh,560px);aspect-ratio:1;margin-left:calc(min(86vw,64vh,560px)/-2);margin-top:calc(min(86vw,64vh,560px)/-2);z-index:2;pointer-events:none}
+.geo-pos{position:absolute;top:38%;left:50%;width:min(86vw,64vh,560px);aspect-ratio:1;margin-inline-start:calc(min(86vw,64vh,560px)/-2);margin-top:calc(min(86vw,64vh,560px)/-2);z-index:2;pointer-events:none}
 #geo{position:absolute;inset:0}
 .geo-halo{position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(233,200,106,.14) 0%,rgba(233,200,106,.05) 34%,transparent 62%);animation:haloBreath 12s ease-in-out infinite alternate;will-change:transform,opacity}
 @keyframes haloBreath{from{transform:scale(.97);opacity:.8}to{transform:scale(1.05);opacity:1}}
@@ -97,7 +97,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
   .geo-pos{top:41%}.rays-wheel{top:41%}.kun-seed{top:41%}
   .ghost-pos{inset:0 0 18% 0}
 }
-@media(max-width:767px){.geo-pos{width:min(92vw,420px);margin-left:calc(min(92vw,420px)/-2);margin-top:calc(min(92vw,420px)/-2);top:36%}:root{--geo-sp:.55s}.geo-halo{inset:-12%}}
+@media(max-width:767px){.geo-pos{width:min(92vw,420px);margin-inline-start:calc(min(92vw,420px)/-2);margin-top:calc(min(92vw,420px)/-2);top:36%}:root{--geo-sp:.55s}.geo-halo{inset:-12%}}
 .dune{position:absolute;left:-4%;right:-4%;bottom:-2px;z-index:3;pointer-events:none;will-change:transform}
 .dune svg{display:block;width:100%;height:auto}
 .hero-fade{position:absolute;inset:auto 0 0 0;height:30%;z-index:4;background:linear-gradient(180deg,transparent,var(--parchment));pointer-events:none}
@@ -154,7 +154,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 
 /* period rail */
 @media(min-width:1100px){.period-section{position:relative}
-.period-section::before{content:"";position:absolute;top:120px;bottom:26px;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.24) 12%,rgba(201,162,39,.24) 88%,transparent);pointer-events:none}}
+.period-section::before{content:"";position:absolute;top:120px;bottom:26px;inset-inline-start:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.24) 12%,rgba(201,162,39,.24) 88%,transparent);pointer-events:none}}
 
 /* ============ tiles ============ */
 .tile{position:relative;border-radius:20px;min-height:305px;cursor:pointer;-webkit-tap-highlight-color:transparent;outline-offset:3px}
@@ -323,7 +323,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 @keyframes leafFall{0%{opacity:0;transform:translate3d(0,0,0) rotate(0)}8%{opacity:.4}82%{opacity:.32}100%{opacity:0;transform:translate3d(26px,118%,0) rotate(300deg)}}
 .mz-leafcard>*{position:relative}
 .mz-seven{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-.mz-s7{display:flex;align-items:center;gap:.5rem;background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:999px;padding:.4rem .8rem .4rem .45rem;font-size:.74rem;color:rgba(255,254,247,.85);transition:border-color .3s,background .3s}
+.mz-s7{display:flex;align-items:center;gap:.5rem;background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:999px;padding-block:.4rem .4rem;padding-inline:.45rem .8rem;font-size:.74rem;color:rgba(255,254,247,.85);transition:border-color .3s,background .3s}
 .mz-s7:hover{border-color:rgba(233,200,106,.55);background:rgba(233,200,106,.08)}
 .mz-s7 i{font-style:normal;font-family:Amiri,serif;width:1.5rem;height:1.5rem;border-radius:50%;background:rgba(233,200,106,.14);border:1px solid rgba(233,200,106,.35);color:#F4E3A1;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
 .mz-sea{position:relative}
@@ -372,6 +372,9 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -380,8 +383,8 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -397,7 +400,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -423,7 +426,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -456,6 +459,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -483,6 +492,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -552,6 +562,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -564,6 +577,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -621,6 +635,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
@@ -632,12 +649,9 @@ body.sheet-open #search-bar{display:none}
 
 
 
-<div id="search-bar" role="search">
-<div class="sb-in">
-<input id="search-input" type="search" autocomplete="off" placeholder="Search the Path: a prophet, a place, a moment" aria-label="Search the Path"/>
-<div id="search-results" class="hidden"></div>
-</div>
-</div>
+
+
+
 
 
 
@@ -752,8 +766,8 @@ html.dolly-on #hero .scroll-cue{display:none}
 <div id="rv-vignette" aria-hidden="true"></div>
 <p id="rv-basmala" class="rv notranslate" translate="no" aria-hidden="true">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
 <span class="rv-label rv" id="rv-l1" style="left:6%;bottom:24%">the Path<i>every prophet walked it</i></span>
-<span class="rv-label rv" id="rv-l2" style="right:5%;bottom:34%;text-align:right">the Rooms<i>Qur'an · Prophets · Madrasa</i></span>
-<span class="rv-label rv" id="rv-l3" style="right:8%;top:14%;text-align:right">124,000 lights<i>most never named</i></span>
+<span class="rv-label rv" id="rv-l2" style="right:5%;bottom:34%;text-align:end">the Rooms<i>Qur'an · Prophets · Madrasa</i></span>
+<span class="rv-label rv" id="rv-l3" style="right:8%;top:14%;text-align:end">124,000 lights<i>most never named</i></span>
 <div id="rv-final" class="rv" role="note">
 <p class="a notranslate" translate="no">نُورٌ عَلَىٰ نُورٍ ۗ يَهْدِي اللَّهُ لِنُورِهِ مَن يَشَاءُ</p>
 <p class="e">Light upon light. Allah guides to His light whom He wills. The words that welcomed you above were never a slogan: they are the middle of this ayah, hidden in plain sight.</p>
@@ -823,7 +837,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 <div style="display:flex;align-items:center;gap:.6rem;padding:.7rem .9rem .7rem 1.15rem;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border-bottom:1px solid rgba(201,162,39,.2)">
 <span aria-hidden="true" style="color:#C9A227;font-size:1.05rem">✦</span>
 <span style="font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800">Today's Light</span>
-<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45);text-align:right"></span>
+<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45);text-align:end"></span>
 <button id="dl-prev" type="button" aria-label="Previous day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">‹</button>
 <button id="dl-next" type="button" aria-label="Next day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">›</button>
 </div>
@@ -1409,38 +1423,7 @@ $("period-filters").addEventListener("click", e => {
 });
 
 /* ---------- search ---------- */
-$("search-toggle").addEventListener("click", (e) => {
-  /* the control is an anchor to /#search everywhere, so every room can carry it.
-     Here, where the panel exists, open it instead of navigating. */
-  e.preventDefault();
-  const open = $("search-bar").classList.toggle("open");
-  if (open) $("search-input").focus();
-});
 /* arriving from another room with #search opens it too */
-if (location.hash === "#search") { $("search-bar").classList.add("open"); setTimeout(() => $("search-input").focus(), 120); }
-document.addEventListener("click", e => {
-  if (!e.target.closest("#search-bar") && !e.target.closest("#search-toggle")) $("search-bar").classList.remove("open");
-});
-document.addEventListener("keydown", e => { if (e.key === "Escape") $("search-bar").classList.remove("open"); });
-$("search-input").addEventListener("input", e => {
-  const q = e.target.value.trim().toLowerCase();
-  const results = $("search-results");
-  if (q.length < 2) { results.classList.add("hidden"); return; }
-  const hits = NODES.filter(n =>
-    n.titleEn.toLowerCase().includes(q) || (n.titleAr||"").includes(q) ||
-    (n.summary||"").toLowerCase().includes(q) || (n.details||"").toLowerCase().includes(q)
-  ).slice(0, 9);
-  results.classList.remove("hidden");
-  results.innerHTML = hits.length ? hits.map(n => `
-    <button class="search-hit w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-2.5" data-id="${n.id}">
-      <span class="text-[10px] font-mono text-ink/40 w-7">#${String(n.id).padStart(2,"0")}</span>
-      <span class="chip chip-${n.period} !text-[9px]">${t(PERIODS[n.period].nameKey)}</span>
-      <span class="font-medium text-sm text-ink/85">${n.titleEn}</span>
-    </button>`).join("") : `<div class="px-3 py-2.5 text-sm text-ink/50">${t("search.none")}</div>`;
-  results.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
-    openModal(+b.dataset.id); results.classList.add("hidden"); $("search-input").value = "";
-  }));
-});
 
 /* ---------- header shadow ---------- */
 addEventListener("scroll", () => $("site-header").classList.toggle("scrolled", scrollY > 8), {passive:true});

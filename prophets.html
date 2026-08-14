@@ -43,16 +43,16 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (prefers-reduced-motion:reduce){.shimmer-gold{animation:none}}
 /* ===== the chain, alternating timeline ===== */
 #chain{position:relative;padding:.4rem 0 0}
-#chain::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,162,39,.4) 4%,rgba(201,162,39,.4) 96%,transparent)}
+#chain::before{content:"";position:absolute;inset-inline-start:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,162,39,.4) 4%,rgba(201,162,39,.4) 96%,transparent)}
 .trow{position:relative;display:flex;margin:0 0 1.15rem;z-index:1}
 .trow.R{justify-content:flex-end}
 .trow.full{justify-content:center;margin-top:1.6rem}
-.trow::before{content:"";position:absolute;left:50%;top:1.5rem;width:11px;height:11px;transform:translate(-50%,0);border-radius:999px;background:#F4D46A;box-shadow:0 0 0 3px rgba(201,162,39,.22),0 0 12px rgba(244,212,106,.8);z-index:2}
+.trow::before{content:"";position:absolute;inset-inline-start:50%;top:1.5rem;width:11px;height:11px;transform:translate(-50%,0);border-radius:999px;background:#F4D46A;box-shadow:0 0 0 3px rgba(201,162,39,.22),0 0 12px rgba(244,212,106,.8);z-index:2}
 .trow.full::before{display:none}
 .ptile{position:relative;width:calc(50% - 1.15rem);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.1rem;padding:.95rem .6rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;font-family:inherit}
 .trow.L .ptile::after,.trow.R .ptile::after{content:"";position:absolute;top:1.78rem;width:1.15rem;height:1.5px;background:rgba(201,162,39,.45)}
-.trow.L .ptile::after{right:-1.15rem}
-.trow.R .ptile::after{left:-1.15rem}
+.trow.L .ptile::after{inset-inline-end:-1.15rem}
+.trow.R .ptile::after{inset-inline-start:-1.15rem}
 .ptile:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(44,36,22,.12);border-color:rgba(201,162,39,.5)}
 .ptile.open{border-color:var(--gold);background:linear-gradient(165deg,#FFFDF4,#FFF7DF);box-shadow:0 10px 30px rgba(201,162,39,.2)}
 .ptile .ar{font-family:Amiri,serif;font-size:1.55rem;color:var(--gold);line-height:1.35}
@@ -69,7 +69,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (prefers-reduced-motion:reduce){.art.open{animation:none}}
 .art .inner{max-width:44rem;margin:0 auto;background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.18),transparent 60%),linear-gradient(160deg,#1A160F,#241D12);border:1px solid rgba(201,162,39,.4);border-radius:1.3rem;padding:1.5rem 1.35rem 1.6rem;color:#FFFEF7;box-shadow:0 24px 60px rgba(20,16,10,.35)}
 .art h3{font-weight:800;font-size:1.3rem;color:#F4D46A}
-.art h3 .amiri{font-family:Amiri,serif;font-weight:400;margin-left:.4rem}
+.art h3 .amiri{font-family:Amiri,serif;font-weight:400;margin-inline-start:.4rem}
 .art .line{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.25rem 0 .9rem}
 .art .story p{font-size:.87rem;line-height:1.8;color:rgba(255,254,247,.85);margin:.65rem 0}
 .kick2{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.35rem 0 .5rem;display:flex;align-items:center;gap:.5rem}
@@ -85,13 +85,13 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .vc p{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.8);margin:.15rem 0 .2rem}
 .vc a{font-size:.66rem;color:rgba(244,212,106,.75);text-decoration:none;font-weight:700}
 .vc a:hover{color:#F4D46A}
-.hc{border-left:3px solid rgba(244,212,106,.5);background:rgba(255,254,247,.045);border-radius:0 14px 14px 0;padding:.75rem .95rem;margin:.55rem 0}
+.hc{border-inline-start:3px solid rgba(244,212,106,.5);background:rgba(255,254,247,.045);border-radius:0 14px 14px 0;padding:.75rem .95rem;margin:.55rem 0}
 .hc p{font-size:.82rem;line-height:1.7;color:rgba(255,254,247,.85);font-style:italic;margin:0}
 .hc .src{display:inline-block;margin-top:.45rem;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8A9B6E;border:1px solid rgba(138,155,110,.4);border-radius:999px;padding:.12rem .5rem;font-style:normal}
 .fig{margin:.55rem 0}
 .fig .fl{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;margin-bottom:.28rem}
 .fig .fl b{color:rgba(255,254,247,.85);font-weight:600}
-.fig .fl span{color:#F4D46A;text-align:right}
+.fig .fl span{color:#F4D46A;text-align:end}
 .fig .bar{height:6px;background:rgba(255,254,247,.08);border-radius:999px;overflow:hidden}
 .fig .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);width:0;transition:width 1.1s cubic-bezier(.2,.7,.3,1)}
 .cpos{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:.7rem 0 .1rem}
@@ -102,8 +102,8 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .step{font-size:.63rem;border:1px solid rgba(244,212,106,.3);color:rgba(255,254,247,.78);border-radius:999px;padding:.24rem .6rem}
 .sarr{color:rgba(244,212,106,.55);font-size:.6rem}
 .se{display:flex;gap:.85rem}
-.se .y{flex:none;width:2.6rem;text-align:right;color:#F4D46A;font-weight:800;font-size:.76rem;padding-top:.05rem}
-.se .t{font-size:.79rem;line-height:1.6;color:rgba(255,254,247,.82);border-left:2px solid rgba(244,212,106,.3);padding:0 0 .8rem .85rem}
+.se .y{flex:none;width:2.6rem;text-align:end;color:#F4D46A;font-weight:800;font-size:.76rem;padding-top:.05rem}
+.se .t{font-size:.79rem;line-height:1.6;color:rgba(255,254,247,.82);border-inline-start:2px solid rgba(244,212,106,.3);padding-block:0 .8rem;padding-inline:.85rem 0}
 .se:last-child .t{padding-bottom:.1rem}
 .split{display:flex;height:26px;border-radius:999px;overflow:hidden;margin:.55rem 0 .25rem;border:1px solid rgba(244,212,106,.3)}
 .split .sa{background:linear-gradient(90deg,#8a6d13,#C9A227);display:grid;place-items:center;font-size:.6rem;font-weight:800;color:#1A160F;letter-spacing:.04em}
@@ -163,6 +163,9 @@ color:rgba(207,224,247,.85);font-weight:600;border-top:1px solid rgba(180,210,24
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -171,8 +174,8 @@ color:rgba(207,224,247,.85);font-weight:600;border-top:1px solid rgba(180,210,24
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -188,7 +191,7 @@ color:rgba(207,224,247,.85);font-weight:600;border-top:1px solid rgba(180,210,24
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -214,7 +217,7 @@ color:rgba(207,224,247,.85);font-weight:600;border-top:1px solid rgba(180,210,24
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -247,6 +250,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -274,6 +283,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -343,6 +353,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -355,6 +368,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -412,10 +426,16 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 

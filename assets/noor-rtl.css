@@ -1,0 +1,87 @@
+/* ============================================================
+   NOOR · the right to left corrections
+   ------------------------------------------------------------
+   Most of the site is direction aware by construction: the CSS
+   uses logical properties, so padding, borders and markers flip
+   themselves. This sheet holds the handful of places where that
+   is not enough, because the geometry is computed in JavaScript
+   or the element is a fixed piece of paper rather than prose.
+   ============================================================ */
+
+/* 1. The printable cards are laid out to a paper size and scaled
+      to fit the screen. The scale is anchored to a corner, and in
+      Arabic that corner is the other one. */
+[dir="rtl"] .pagescale,
+[dir="rtl"] #pagescale,
+[dir="rtl"] #pcscale { transform-origin: top right; }
+
+/* 2. Axes that are computed, not written. A timeline, a radial
+      menu and a spiral are drawn from numbers in JavaScript; if
+      the container flips, the numbers point the wrong way. The
+      text inside them still reads right to left. */
+[dir="rtl"] .rib-scroll,
+[dir="rtl"] #rib-scroll,
+[dir="rtl"] .rib-track,
+[dir="rtl"] .arc,
+[dir="rtl"] .ring-wrap,
+[dir="rtl"] .mnav { direction: ltr; }
+[dir="rtl"] .rib-track *,
+[dir="rtl"] .arc * { direction: rtl; }
+
+/* 3. Horizontal rails should open at the reader's own edge. */
+[dir="rtl"] .secnav-in,
+[dir="rtl"] .th-nav,
+[dir="rtl"] .chips { direction: rtl; }
+
+/* 4. A few marks are drawn rather than written and must mirror:
+      the arrow that means "onward" points the other way. */
+[dir="rtl"] .wgo-c b::after { content: " \2190"; }
+[dir="rtl"] .gpill .arrow,
+[dir="rtl"] .more::after { transform: scaleX(-1); display: inline-block; }
+
+/* 5. Numbers, references and code stay left to right inside an
+      Arabic sentence, which is how Arabic typesets them anyway. */
+[dir="rtl"] .ref,
+[dir="rtl"] .th-src,
+[dir="rtl"] .rn,
+[dir="rtl"] time,
+[dir="rtl"] .num { direction: ltr; unicode-bidi: isolate; }
+
+/* 6. Quotation blocks that lean on one edge lean on the near edge. */
+[dir="rtl"] .th-quote { border-radius: 14px 0 0 14px; }
+[dir="rtl"] .claim,
+[dir="rtl"] .waynote,
+[dir="rtl"] .tl-f { text-align: start; }
+
+/* 7. The Arabic of the Qur'an and the du'a is already marked
+      notranslate; make sure it is never mirrored by a parent. */
+[dir="rtl"] .notranslate,
+[dir="rtl"] [translate="no"] { direction: rtl; }
+
+/* 8. Latin transliteration inside an Arabic page reads as Latin. */
+[dir="rtl"] .trl,
+[dir="rtl"] .translit { direction: ltr; unicode-bidi: isolate; text-align: center; }
+
+/* ============================================================
+   the search overlay, which lives on every page
+   ============================================================ */
+#noor-search{position:fixed;inset:0;z-index:90;display:none}
+#noor-search.on{display:block}
+.ns-back{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 0%,rgba(30,24,12,.5),rgba(12,10,6,.78));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.ns-panel{position:relative;max-width:40rem;margin:min(12vh,5rem) auto 0;padding:0 1rem}
+.ns-field{display:flex;align-items:center;gap:.6rem;background:#FFFEF7;border:1px solid rgba(201,162,39,.4);border-radius:16px;padding:.75rem 1rem;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.ns-field svg{width:1.05rem;height:1.05rem;color:rgba(44,36,22,.4);flex:none}
+.ns-field input{flex:1;border:0;outline:0;background:none;font:inherit;font-size:1rem;color:#2C2416;min-width:0}
+.ns-field input::-webkit-search-cancel-button{display:none}
+.ns-x{border:1px solid rgba(44,36,22,.18);background:none;border-radius:7px;font:inherit;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,36,22,.45);padding:.24rem .45rem;cursor:pointer;flex:none}
+.ns-out{margin-top:.6rem;background:#FFFEF7;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.5rem;max-height:min(62vh,32rem);overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.34)}
+.ns-g{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:.5rem .6rem .3rem}
+.ns-hit{display:block;text-decoration:none;padding:.5rem .6rem;border-radius:11px;transition:background .15s}
+.ns-hit:hover,.ns-hit:focus-visible{background:rgba(201,162,39,.13)}
+.ns-hit b{font-size:.9rem;font-weight:800;color:#2C2416;margin-inline-end:.45rem}
+.ns-ar{font-family:Amiri,serif;font-size:1rem;color:#8a6d13}
+.ns-s{display:block;font-size:.78rem;line-height:1.65;color:rgba(44,36,22,.62);margin-top:.12rem}
+.ns-hint{font-size:.83rem;line-height:1.8;color:rgba(44,36,22,.55);margin:.6rem}
+.ns-hint a{color:#8a6d13;font-weight:700}
+body.ns-open{overflow:hidden}
+@media (max-width:520px){.ns-panel{margin-top:4.2rem}}

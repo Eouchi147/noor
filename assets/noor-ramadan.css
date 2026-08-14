@@ -61,7 +61,7 @@ html.noor-season .nrb-in {
   gap: .7rem;
   box-sizing: border-box;
 }
-@media (min-width: 640px) { html.noor-season .nrb-in { padding-left: 1.5rem; padding-right: 1.5rem; } }
+@media (min-width: 640px) { html.noor-season .nrb-in { padding-inline-start: 1.5rem; padding-inline-end: 1.5rem; } }
 
 html.noor-season .nrb-moon { flex: 0 0 auto; display: flex; align-items: center; }
 html.noor-season .nrb-moon svg { width: 1.05rem; height: 1.05rem; display: block; }
@@ -97,11 +97,11 @@ html.noor-season .nrb-c {
   min-width: 0;
   font-size: .7rem;
   color: rgba(255, 254, 247, .72);
-  text-align: right;
+  text-align:end;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-right: .15rem;
+  padding-inline-end: .15rem;
 }
 html.noor-season .nrb-c b {
   font-weight: 800;
@@ -171,7 +171,7 @@ html.noor-season .nrb-pv {
 html.noor-season .nrb::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  inset-inline-start: 0; inset-inline-end: 0; bottom: 0;
   height: 3px;
   background-image: radial-gradient(circle 1.6px at 50% 55%, rgba(247, 219, 134, .8), rgba(247, 219, 134, 0) 100%);
   background-size: 21px 3px;
@@ -251,7 +251,7 @@ html.noor-ramadan .rhero::after {
   content: "";
   position: absolute;
   top: 1.5rem;
-  right: 1.6rem;
+  inset-inline-end: 1.6rem;
   width: 5.2rem;
   height: 5.2rem;
   z-index: 0;
@@ -265,7 +265,7 @@ html.noor-ramadan .rhero::after {
 }
 @media (max-width: 640px) {
   html.noor-ramadan .rhero::after {
-    width: 3.6rem; height: 3.6rem; top: .9rem; right: .9rem; opacity: .24;
+    width: 3.6rem; height: 3.6rem; top: .9rem; inset-inline-end: .9rem; opacity: .24;
     -webkit-mask-image: radial-gradient(circle 1.45rem at 70% 30%, transparent 98%, #000 99%);
     mask-image: radial-gradient(circle 1.45rem at 70% 30%, transparent 98%, #000 99%);
   }
@@ -283,10 +283,10 @@ html.noor-ramadan .rfoot::before {
   content: "";
   position: absolute;
   top: -.62rem;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 1.15rem;
   height: 1.15rem;
-  margin-left: -.575rem;
+  margin-inline-start:-.575rem;
   border-radius: 50%;
   background: #C69A22;
   -webkit-mask-image: radial-gradient(circle .46rem at 68% 30%, transparent 98%, #000 99%);
@@ -355,7 +355,7 @@ html.noor-eid .rhero::after {
   content: "";
   position: absolute;
   top: 1.4rem;
-  right: 1.5rem;
+  inset-inline-end: 1.5rem;
   width: 5.6rem;
   height: 5.6rem;
   z-index: 0;
@@ -380,7 +380,7 @@ html.noor-eid .rhero::after {
   filter: drop-shadow(0 0 16px rgba(255, 231, 176, .3));
 }
 @media (max-width: 640px) {
-  html.noor-eid .rhero::after { width: 3.9rem; height: 3.9rem; top: .85rem; right: .85rem; opacity: .26; }
+  html.noor-eid .rhero::after { width: 3.9rem; height: 3.9rem; top: .85rem; inset-inline-end: .85rem; opacity: .26; }
 }
 /* the painted front hero only warms; an inset shadow cannot cover a child */
 html.noor-eid #hero { box-shadow: inset 0 0 190px 54px rgba(58, 22, 52, .34); }
@@ -393,10 +393,10 @@ html.noor-eid .rfoot::before {
   content: "";
   position: absolute;
   top: -.6rem;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 1.1rem;
   height: 1.1rem;
-  margin-left: -.55rem;
+  margin-inline-start:-.55rem;
   background: linear-gradient(160deg, #C98A2E, #F0B7A8);
   -webkit-mask-image: conic-gradient(from 45deg, #000 0deg 90deg, transparent 90deg 180deg, #000 180deg 270deg, transparent 270deg 360deg);
   mask-image: conic-gradient(from 45deg, #000 0deg 90deg, transparent 90deg 180deg, #000 180deg 270deg, transparent 270deg 360deg);

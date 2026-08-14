@@ -62,7 +62,7 @@ section.blk{padding:2.7rem 0 .8rem}
 .pcard .cite{display:block;margin-top:.45rem;font-size:.64rem;color:#8a6d1a;font-weight:700}
 /* verse */
 .verse{background:linear-gradient(165deg,#171d31,#1d2a45);color:#FFFEF7;border-radius:18px;padding:1.05rem 1.15rem;border:1px solid rgba(233,200,106,.3)}
-.verse .ar{font-family:Amiri,serif;font-size:1.45rem;line-height:2.1;color:#F4D46A;direction:rtl;text-align:right}
+.verse .ar{font-family:Amiri,serif;font-size:1.45rem;line-height:2.1;color:#F4D46A;direction:rtl;text-align:end}
 .verse .en{font-size:.79rem;color:rgba(255,254,247,.8);line-height:1.7;margin-top:.5rem}
 .verse .ref{display:flex;align-items:center;gap:.7rem;margin-top:.6rem;font-size:.68rem;color:rgba(255,254,247,.5)}
 .vplay{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border:0;border-radius:999px;padding:.4rem .95rem;font-size:.72rem;cursor:pointer;font-family:inherit}
@@ -85,7 +85,7 @@ section.blk{padding:2.7rem 0 .8rem}
 .subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.55rem}
 .subj{background:#FFFDF6;border:1px solid rgba(44,36,22,.1);border-radius:14px;padding:.75rem .85rem}
 .subj b{font-size:.76rem;color:#6b5510;display:flex;gap:.4rem;align-items:center}
-.subj ul{margin:.4rem 0 0;padding-left:1rem;font-size:.72rem;color:rgba(44,36,22,.7);line-height:1.65}
+.subj ul{margin:.4rem 0 0;padding-inline-start:1rem;font-size:.72rem;color:rgba(44,36,22,.7);line-height:1.65}
 .subj ul li{margin:.12rem 0}
 .subj a{color:#8a6d13;font-weight:700;text-decoration:none}
 .weekline{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin-top:.9rem}
@@ -103,8 +103,8 @@ section.blk{padding:2.7rem 0 .8rem}
 .miles{margin-top:.9rem;background:linear-gradient(90deg,rgba(201,162,39,.1),rgba(201,162,39,.03));border:1px solid rgba(201,162,39,.4);border-radius:14px;padding:.8rem 1rem}
 .miles b{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6d1a}
 .miles ul{margin:.45rem 0 0;padding:0;list-style:none;font-size:.74rem;color:rgba(44,36,22,.75);line-height:1.7}
-.miles li{padding-left:1.3rem;position:relative}
-.miles li::before{content:"◻";position:absolute;left:.1rem;color:var(--gold)}
+.miles li{padding-inline-start:1.3rem;position:relative}
+.miles li::before{content:"◻";position:absolute;inset-inline-start:.1rem;color:var(--gold)}
 /* scientists */
 .scis{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.6rem}
 .sci{background:linear-gradient(165deg,#171d31,#1d2a45);color:#FFFEF7;border:1px solid rgba(233,200,106,.3);border-radius:16px;padding:.95rem 1rem}
@@ -126,7 +126,7 @@ section.blk{padding:2.7rem 0 .8rem}
 .reveal.in,.reveal.visible{opacity:1;transform:none}
 /* nav (house standard) */
 .dd{position:relative}.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(44rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -146,7 +146,7 @@ section.blk{padding:2.7rem 0 .8rem}
 /* every tile is a door */
 .enc{cursor:pointer;position:relative;transition:transform .18s,box-shadow .18s,border-color .18s}
 .enc:hover{transform:translateY(-3px)}
-.enc::after{content:"✦ open";position:absolute;top:.5rem;right:.6rem;font-size:.54rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:.16rem .5rem;pointer-events:none}
+.enc::after{content:"✦ open";position:absolute;top:.5rem;inset-inline-end:.6rem;font-size:.54rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:.16rem .5rem;pointer-events:none}
 .pcard.enc::after,.proj.enc::after{background:rgba(201,162,39,.12);color:#8a6d1a;border:1px solid rgba(201,162,39,.35)}
 .sci.enc::after{background:rgba(244,212,106,.14);color:#F4D46A;border:1px solid rgba(244,212,106,.4)}
 .pcard.enc:hover{border-color:var(--gold);box-shadow:0 12px 30px rgba(201,162,39,.16)}
@@ -162,7 +162,7 @@ section.blk{padding:2.7rem 0 .8rem}
 .encx-close{position:absolute;top:.8rem;right:.9rem;background:rgba(255,254,247,.08);border:1px solid rgba(233,200,106,.3);width:2.3rem;height:2.3rem;border-radius:999px;color:rgba(255,254,247,.75);font-size:1rem;cursor:pointer;z-index:2}
 .encx-kick{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:#F4D46A;font-weight:900}
 .encx-title{font-size:1.5rem;font-weight:800;margin-top:.2rem}
-.encx-ar{font-family:Amiri,serif;font-size:1.5rem;color:rgba(244,212,106,.85);margin-left:.4rem}
+.encx-ar{font-family:Amiri,serif;font-size:1.5rem;color:rgba(244,212,106,.85);margin-inline-start:.4rem}
 .encx-sub{font-size:.74rem;color:rgba(255,254,247,.55);margin-top:.2rem}
 .encx-badges{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
 .encx-badges span{background:rgba(244,212,106,.13);border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.2rem .65rem;font-size:.6rem;font-weight:800;color:#F4D46A}
@@ -171,11 +171,11 @@ section.blk{padding:2.7rem 0 .8rem}
 .encx-story p{font-size:.84rem;line-height:1.8;color:rgba(255,254,247,.85);margin:.6rem 0}
 .encx-h{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:#F4D46A;font-weight:900;margin:1.2rem 0 .4rem}
 .encx-gifts{list-style:none;padding:0;margin:0}
-.encx-gifts li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding:.22rem 0 .22rem 1.3rem;position:relative}
-.encx-gifts li::before{content:"✦";position:absolute;left:.15rem;color:#F4D46A;font-size:.7rem}
+.encx-gifts li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding-block:.22rem .22rem;padding-inline:1.3rem 0;position:relative}
+.encx-gifts li::before{content:"✦";position:absolute;inset-inline-start:.15rem;color:#F4D46A;font-size:.7rem}
 .encx-steps{list-style:none;padding:0;margin:0;counter-reset:es}
-.encx-steps li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding:.3rem 0 .3rem 2.2rem;position:relative;counter-increment:es}
-.encx-steps li::before{content:counter(es);position:absolute;left:0;top:.3rem;width:1.5rem;height:1.5rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;font-size:.68rem;display:grid;place-items:center}
+.encx-steps li{font-size:.78rem;color:rgba(255,254,247,.8);line-height:1.65;padding-block:.3rem .3rem;padding-inline:2.2rem 0;position:relative;counter-increment:es}
+.encx-steps li::before{content:counter(es);position:absolute;inset-inline-start:0;top:.3rem;width:1.5rem;height:1.5rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;font-size:.68rem;display:grid;place-items:center}
 .encx-today{margin-top:1rem;background:rgba(244,212,106,.1);border:1px dashed rgba(244,212,106,.45);border-radius:12px;padding:.7rem .85rem;font-size:.75rem;line-height:1.65;color:#FFF7DF}
 .encx-today b{color:#F4D46A}
 .encx-src{margin-top:.9rem;font-size:.64rem;color:rgba(255,254,247,.45);line-height:1.6}
@@ -214,6 +214,9 @@ section.blk{padding:2.7rem 0 .8rem}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 
@@ -221,8 +224,8 @@ section.blk{padding:2.7rem 0 .8rem}
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -238,7 +241,7 @@ section.blk{padding:2.7rem 0 .8rem}
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -264,7 +267,7 @@ section.blk{padding:2.7rem 0 .8rem}
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -297,6 +300,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -324,6 +333,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -393,6 +403,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -405,6 +418,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -462,10 +476,16 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 

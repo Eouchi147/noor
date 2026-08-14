@@ -43,7 +43,7 @@
   .ng-in:focus{border-color:#C9A227;box-shadow:0 0 0 3px rgba(201,162,39,.15)}
   .ng-go{border:none;border-radius:999px;padding:.5rem 1.05rem;font-size:.76rem;font-weight:700;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;cursor:pointer}
   .ng-go:hover{filter:brightness(1.05)}
-  .ng-think{display:inline-block;margin:.5rem 0 0 .2rem;color:rgba(44,36,22,.5);font-size:.75rem;animation:ngPulse 1.1s ease-in-out infinite}
+  .ng-think{display:inline-block;margin-block:.5rem 0;margin-inline:.2rem 0;color:rgba(44,36,22,.5);font-size:.75rem;animation:ngPulse 1.1s ease-in-out infinite}
   @keyframes ngPulse{0%,100%{opacity:.4}50%{opacity:1}}
   @media (max-width:640px){.ng-in{font-size:16px}}
   @media (prefers-reduced-motion: reduce){.ng-sheet,.ng-a{animation:none}}`;

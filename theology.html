@@ -47,7 +47,7 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 .card p,.card li{font-size:.86rem;line-height:1.7;color:rgba(44,36,22,.78)}
 .card .tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,162,39,.35);border-radius:999px;padding:.15rem .55rem;margin-bottom:.45rem}
 .prose p{font-size:.93rem;line-height:1.8;color:rgba(44,36,22,.8);margin-bottom:.9rem}
-.sage-box{border-left:3px solid var(--sage);background:linear-gradient(120deg,rgba(138,155,110,.12),rgba(138,155,110,.03));border-radius:0 1rem 1rem 0;padding:1rem 1.2rem;margin:1.1rem 0}
+.sage-box{border-inline-start:3px solid var(--sage);background:linear-gradient(120deg,rgba(138,155,110,.12),rgba(138,155,110,.03));border-radius:0 1rem 1rem 0;padding:1rem 1.2rem;margin:1.1rem 0}
 .sage-box b{color:#5f7046;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.3rem}
 .sage-box p{font-size:.85rem;line-height:1.68;color:rgba(44,36,22,.78);margin:0}
 .aya-card{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.14),transparent 70%),linear-gradient(160deg,#1A160F,#241D12);border-radius:1.1rem;padding:1.3rem 1.4rem;text-align:center;margin:1.4rem 0}
@@ -60,15 +60,15 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 /* shared trunk bar */
 .trunk{display:grid;gap:.45rem;margin:1.1rem 0}
 .trunk .row{display:flex;align-items:center;gap:.7rem}
-.trunk .lbl{flex:0 0 9.5rem;font-size:.72rem;font-weight:600;color:rgba(44,36,22,.65);text-align:right}
+.trunk .lbl{flex:0 0 9.5rem;font-size:.72rem;font-weight:600;color:rgba(44,36,22,.65);text-align:end}
 .trunk .bar{flex:1;height:.85rem;border-radius:999px;background:rgba(44,36,22,.08);overflow:hidden}
 .trunk .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A)}
 .trunk .pc{flex:0 0 2.6rem;font-size:.7rem;font-weight:700;color:var(--gold)}
 /* river timeline */
-.river{position:relative;margin:1.4rem 0;padding-left:1.6rem}
-.river::before{content:"";position:absolute;left:.55rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(180deg,#C9A227,#33507C)}
-.epoch{position:relative;padding:.55rem 0 .55rem .8rem}
-.epoch::before{content:"";position:absolute;left:-1.28rem;top:.95rem;width:.8rem;height:.8rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);box-shadow:0 0 0 3px rgba(201,162,39,.2)}
+.river{position:relative;margin:1.4rem 0;padding-inline-start:1.6rem}
+.river::before{content:"";position:absolute;inset-inline-start:.55rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(180deg,#C9A227,#33507C)}
+.epoch{position:relative;padding-block:.55rem .55rem;padding-inline:.8rem 0}
+.epoch::before{content:"";position:absolute;inset-inline-start:-1.28rem;top:.95rem;width:.8rem;height:.8rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);box-shadow:0 0 0 3px rgba(201,162,39,.2)}
 .epoch h4{font-size:.86rem;font-weight:700}
 .epoch .yr{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}
 .epoch p{font-size:.8rem;line-height:1.6;color:rgba(44,36,22,.7);margin-top:.15rem}
@@ -81,6 +81,9 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -89,8 +92,8 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -106,7 +109,7 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -132,7 +135,7 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -165,6 +168,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -192,6 +201,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -261,6 +271,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -273,6 +286,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -330,10 +344,16 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 

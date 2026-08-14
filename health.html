@@ -148,6 +148,39 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .reveal{opacity:1;transform:none}
 .v-band{transform:scaleY(1)}.v-lab{opacity:1}.fr-arc{stroke-dashoffset:88}.da-sun{offset-distance:100%}.drops i{opacity:1;transform:none}
 }
+
+.hj-fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:1.3rem 0}
+.hj-fig svg{width:100%;max-width:34rem;height:auto;display:block;margin:0 auto}
+.hj-fig svg text{font-family:Inter,system-ui,sans-serif}
+.hj-fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.75rem 0 0;line-height:1.65}
+.hj-fig .cap b{color:rgba(244,212,106,.85)}
+.hjg{display:grid;grid-template-columns:1fr;gap:.7rem;margin-top:1.2rem}
+@media(min-width:44rem){.hjg{grid-template-columns:1fr 1fr}}
+.hjc{background:#fff;border:1px solid rgba(201,162,39,.25);border-radius:16px;padding:.95rem 1rem}
+.hjc h3{font-size:.95rem;font-weight:800;margin:0 0 .4rem;color:var(--ink)}
+.hjc p{font-size:.83rem;line-height:1.8;color:rgba(44,36,22,.78);margin:0 0 .55rem}
+.hjc p:last-child{margin-bottom:0}
+.hjc.warn{border-color:rgba(143,45,45,.3);background:#fffafa}
+.hjc.warn h3{color:#8f2d2d}
+.hjb{display:inline-block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.22rem .55rem;border:1px solid;margin-bottom:.5rem}
+.hjb.s{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.hjb.d{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.hjb.e{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.hjsafe{margin-top:1.2rem;background:#fffafa;border:1px solid rgba(143,45,45,.28);border-radius:18px;padding:1.05rem 1.1rem 1.15rem}
+.hjsafe h3{font-size:1rem;font-weight:800;margin:0 0 .3rem;color:#8f2d2d}
+.hjsafe p.l{font-size:.83rem;line-height:1.8;color:rgba(44,36,22,.7);margin:0 0 .7rem}
+.hjsafe ul{list-style:none;margin:0;padding:0}
+.hjsafe li{position:relative;padding-block:.4rem .4rem;padding-inline:1.5rem 0;font-size:.84rem;line-height:1.75;color:rgba(44,36,22,.84)}
+.hjsafe li+li{border-top:1px solid rgba(44,36,22,.06)}
+.hjsafe li::before{content:"";position:absolute;inset-inline-start:.2rem;top:.95rem;width:.42rem;height:.42rem;border-radius:999px;background:#8f2d2d}
+
+.hj-fig .hs1{fill:none;stroke:#E9C86A;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.hj-fig .hs2{fill:none;stroke:#FFFEF7;stroke-opacity:.55;stroke-width:2;stroke-linecap:round}
+.hj-fig .hs3{fill:none;stroke:#F4D46A;stroke-opacity:.3;stroke-width:1.6}
+.hj-fig .hf2{fill:#c2564f}
+.hj-fig .hfg{fill:#F4D46A;font-size:19px;font-weight:800}
+.hj-fig .hfl{fill:#FFFEF7;fill-opacity:.85;font-size:15px;font-weight:700}
+.hj-fig .hfs{fill:#FFFEF7;fill-opacity:.5;font-size:12.5px}
 </style>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <link rel="canonical" href="https://noorcodex.com/health"/>
@@ -155,6 +188,9 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <!-- header -->
@@ -162,8 +198,8 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
 #site-header a{text-decoration:none;color:inherit}
 #site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
 #site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
@@ -179,7 +215,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (min-width:640px){#site-header .give-pill{display:inline-block}}
 .dd{position:relative}
 .dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
 .dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
 .dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
 .dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
@@ -205,7 +241,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
 .lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
 .lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
 #nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
 @media (max-width:1023.5px){#nav-burger{display:block}}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -238,6 +274,12 @@ body.sheet-open #search-bar{display:none}
 #search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
 #search-bar #search-results.hidden{display:none}
 
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
 /* --- paper ---------------------------------------------------------------
    Choreography must never cost a reader the words. Anything the motion
    layer is holding back is forced visible before it reaches a printer. */
@@ -265,6 +307,7 @@ body.sheet-open #search-bar{display:none}
 <div class="mg">
 <p class="dd-h" data-i18n="g.learn">Learn</p>
 <a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -334,6 +377,9 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
@@ -346,6 +392,7 @@ body.sheet-open #search-bar{display:none}
 <div id="nav-sheet" role="dialog" aria-label="Menu">
 <p class="sh-g" data-i18n="g.learn">Learn</p>
 <a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
 <a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
 <a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
@@ -403,10 +450,16 @@ body.sheet-open #search-bar{display:none}
 <button type="button" data-setlang="so" lang="so">Soomaali</button>
 <button type="button" data-setlang="ku" lang="ku">Kurdî</button>
 <button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 
@@ -626,9 +679,55 @@ body.sheet-open #search-bar{display:none}
 </section>
 
 <!-- S8 · FOURTEEN CENTURIES EARLY -->
+
+<!-- S8 · THE REMEDY -->
+<section class="th-sec" id="hijama">
+<p class="th-kick reveal">08 · the remedy</p>
+<h2 class="th-h reveal">Hijama, and What Can Honestly Be Said</h2>
+<p class="th-lead reveal">Cupping is the prophetic remedy people ask about most and the one most often oversold. This page used to pass over it in a line. That was not good enough, so here it is properly: what the narrations actually say, what medicine has and has not shown, and the rules that keep it from hurting you.</p>
+<div class="hj-fig reveal"><svg viewBox="0 0 520 250" role="img" aria-label="Dry cupping on the left, a cup drawing the skin upward with no break in it. Wet cupping on the right, the same cup over small superficial scratches. The narrations are about the second."><path class="hs3" d="M42 190h180M298 190h180"/><path class="hs1" d="M92 190q40 -26 80 0"/><path class="hs1" d="M104 186v-52a28 28 0 0 1 56 0v52Z"/><path class="hs2" d="M120 118v-16M132 112v-22M144 118v-16"/><text class="hfl" x="132" y="222" text-anchor="middle">dry cupping</text><text class="hfs" x="132" y="240" text-anchor="middle">suction only, no break in the skin</text><path class="hs1" d="M348 190q40 -26 80 0"/><path class="hs1" d="M360 186v-52a28 28 0 0 1 56 0v52Z"/><path class="hs2" d="M376 118v-16M388 112v-22M400 118v-16"/><path class="hf2" d="M372 182h4v6h-4ZM382 180h4v8h-4ZM392 182h4v6h-4ZM402 181h4v7h-4Z"/><text class="hfl" x="388" y="222" text-anchor="middle">wet cupping, hijama</text><text class="hfs" x="388" y="240" text-anchor="middle">small scratches, a little blood drawn</text><text class="hfg" x="260" y="40" text-anchor="middle">الحِجَامَة</text><text class="hfs" x="260" y="60" text-anchor="middle">the narrations are about the second one</text><path class="hs3" d="M260 74v96"/></svg><p class="cap"><b>Two different things, sold under one word.</b> Almost every claim made for hijama in a shop window belongs to neither of them.</p></div>
+<div class="hjg">
+<div class="hjc reveal"><span class="hjb s">Sunnah</span><h3>He ﷺ was cupped, and he paid the cupper</h3>
+<p>The practice is established beyond argument. He ﷺ had it done, and he gave the man his wages, which is why the scholars treat cupping as a lawful trade and not a favour. He was cupped on the head, and on the top of the foot, and while travelling in ihram.</p>
+<p>He was also cupped while fasting, and a separate narration says the cupper and the one cupped have both broken the fast. The four schools mostly read the first as the later practice and hold that cupping does not break a fast, though it is discouraged for anyone it would weaken.</p>
+<p class="th-src">Bukhari and Muslim · the fasting question is genuinely disputed</p></div>
+
+<div class="hjc reveal"><span class="hjb s">Sunnah</span><h3>The best of what you treat yourselves with</h3>
+<p>The narration praises hijama in the strongest terms available in the medicine of that time, alongside the qust. It is a real recommendation and it should not be explained away.</p>
+<p>It also should not be stretched. It is praise of a remedy in a seventh century medical world, from the Prophet ﷺ who in the same body of narrations told a man to bring a doctor and told the ummah that Allah sent down a cure with every disease. Nothing in it says a remedy replaces medicine.</p>
+<p class="th-src">Bukhari and Muslim</p></div>
+
+<div class="hjc reveal"><span class="hjb d">Scholars differ</span><h3>The days that are named</h3>
+<p>Reports in the Sunan name the seventeenth, nineteenth and twenty first of the lunar month, and some warn away from particular weekdays. Their chains are graded differently by different scholars, and the strongest of them are not at the level of the two Sahihs.</p>
+<p>So: if you want it on those days, that is a defensible following of a report. If it lands on another day, there is no sin in it and there is nothing to worry about. Do not build a calendar you then feel guilty about.</p>
+<p class="th-src">Tirmidhi, Abu Dawud and Ibn Majah · graded variously</p></div>
+
+<div class="hjc reveal"><span class="hjb e">Editorial</span><h3>What the research actually shows</h3>
+<p>There is a real literature and it is honest to describe it plainly. The most consistent signal is short term relief of musculoskeletal pain, particularly low back and neck pain. Systematic reviews that look at it generally rate the evidence low quality, with small trials and a high risk of bias.</p>
+<p>Part of that is a genuine difficulty rather than neglect: you cannot blind a person to a suction mark, so a properly controlled trial is hard to build. That cuts both ways. It means the weak evidence is not proof that it does nothing, and it is also not permission to claim more.</p>
+<p>What there is no good evidence for: that it treats cancer, diabetes, infertility, kidney disease, or a blockage of any kind. Anybody selling it for those is selling you something.</p>
+<p class="th-src">our own reading of the evidence, named as ours</p></div>
+</div>
+
+<div class="hjsafe reveal">
+<h3>The part that actually hurts people</h3>
+<p class="l">Hijama breaks the skin and draws blood. That makes the risk a bloodborne one, and the documented harm from it has almost never been about the theory. It has been about equipment.</p>
+<ul>
+<li>Single use, sterile, sealed blades and cups, opened in front of you. Shared equipment has transmitted hepatitis. This is the whole ballgame.</li>
+<li>A trained practitioner, licensed where you live, gloves on, a sharps bin in the room, and a clean surface.</li>
+<li>Never over broken skin, varicose veins, a clot, an area of infection, or a lump nobody has looked at.</li>
+<li>Not without a doctor’s word if you take blood thinners, have a bleeding disorder, are severely anaemic, have poorly controlled diabetes, or are pregnant.</li>
+<li>Never as a replacement for treatment of a diagnosed condition, and never as a reason to stop a medication. If a practitioner suggests either, leave.</li>
+<li>Eat and drink beforehand, expect marks for several days, and expect to feel light headed. Somebody should be able to drive you home.</li>
+<li>Not on children.</li>
+</ul>
+<p class="l" style="margin:.9rem 0 0">And the one this page cares about most: hijama is sold hardest as a cure for sihr and the evil eye, because that is where the frightened money is. <a href="/protection" style="color:#8f2d2d;font-weight:700">The room on protection</a> deals with that trade directly, and with ruqya, which is free, which you can do yourself, and which nobody may charge you for.</p>
+</div>
+</section>
+
 <section class="th-sec" id="early">
 <div class="cent reveal">
-<p class="th-kick" style="color:#F4E3A1">08 · the ledger of time</p>
+<p class="th-kick" style="color:#F4E3A1">09 · the ledger of time</p>
 <h2 class="text-2xl font-bold text-parchment mt-1">Fourteen Centuries Early</h2>
 <p class="text-sm text-parchment/70 leading-relaxed mt-2 max-w-2xl">None of this is why the sunnah is followed; it was followed for fourteen centuries before a single trial confirmed a gram of it. But it is worth noticing who was early.</p>
 <div class="cent-row">
@@ -638,7 +737,7 @@ body.sheet-open #search-bar{display:none}
 </div>
 </div>
 <div class="honest reveal mt-6">
-<b>NOOR's rule on this page:</b> authentic sources only, graded where below the Sahihayn, and measured claims only: research is cited as research, not as miracle-proof. Where a traditional practice has limited modern evidence (cupping/hijama is the honest example), this page prefers silence to stretching. And none of this is medical advice; it is the portrait of a life, offered to be studied, and loved.
+<b>NOOR's rule on this page:</b> authentic sources only, graded where below the Sahihayn, and measured claims only: research is cited as research, not as miracle-proof. Where a traditional practice has limited modern evidence, this page says so in the section itself rather than stretching the claim: hijama is dealt with directly above, with what the research does and does not support. And none of this is medical advice; it is the portrait of a life, offered to be studied, and loved.
 </div>
 <div class="cta-band reveal">
 <a class="cta-p" href="/words">Carry his words ﷺ</a>
