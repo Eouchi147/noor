@@ -39,3 +39,4 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 - /feedback: corrections, bugs and ideas, sent to hello@noorcodex.com.
 - /hajj: Hajj and Umrah, step by step. The three ways, the miqats, ihram, Umrah, then Hajj day by day from 8 to 13 Dhul Hijjah, with pillars and obligations separated, the schools' differences stated where they differ, and hadith cited by collection and wording rather than by number.
 - /ramadan: the Ramadan room. The thirty night khatm plan, the last ten nights, taraweeh, the fiqh of fasting, zakat al-fitr, and Eid.
+- /eid: the two Eids in one room, Eid al-Fitr and Eid al-Adha. The takbir, the prayer, zakat al-fitr, the sacrifice, and how to keep the day joyful for children. The room leads with whichever Eid is nearest.

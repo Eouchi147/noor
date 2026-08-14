@@ -124,7 +124,7 @@ const ROOMS = {
   "kids/letters": "kids", "donate": "give",
   "sponsor": "sponsor", "legal": "legal",
   "family": "family", "heroes": "heroes", "feedback": "feedback",
-  "hajj": "hajj", "ramadan": "ramadan",
+  "hajj": "hajj", "ramadan": "ramadan", "eid": "eid",
   "stories": "stories", "stories/index": "stories",
   "unseen": "unseen", "sermon": "sermon", "soul": "soul",
   "masjid": "masjid", "masjid/index": "masjid", "masjid/khutba": "masjid",

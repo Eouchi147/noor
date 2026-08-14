@@ -18,7 +18,7 @@ const UI_EN = {
   "g.learn":"Learn","g.story":"The Story","g.heart":"The Heart","g.little":"Stories & Little Ones","g.houses":"Houses & Support",
   "m.madrasa":"The Classroom \u00b7 Madrasa","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
   "m.path":"The Path of Creation","m.prophets":"The 25 Prophets","m.companions":"The Companions","m.characters":"Characters","m.places":"Places","m.heroes":"Heroes of Islam","m.unseen":"The Unseen & the Mysteries",
-  "m.pillars":"The Five Pillars","m.hajj":"Hajj & Umrah","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room","m.ramadan":"Ramadan","m.sermon":"The Last Sermon","m.soul":"The Journey of the Soul","m.mizan":"Two Lives",
+  "m.pillars":"The Five Pillars","m.hajj":"Hajj & Umrah","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room","m.ramadan":"Ramadan","m.eid":"The Two Eids","m.sermon":"The Last Sermon","m.soul":"The Journey of the Soul","m.mizan":"Two Lives",
   "m.stories":"The Hall of Stories","m.kidscodex":"The Kids' Codex","m.lanterns":"The Lantern Sky",
   "m.masjid":"The Masjid Toolbox","m.orgs":"For Schools & Organizations","m.give":"Give a Gift","m.feedback":"Corrections & Ideas","m.legal":"Terms & Transparency",
   "lang.choose":"Choose your language","lang.note":"The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.","lang.fallback":"That language pack could not be loaded right now.",

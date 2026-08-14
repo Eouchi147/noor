@@ -18,6 +18,14 @@
      .toGregorian(hy, hm, hd)     -> Date at local midnight
      .ramadanStart(gregorianYear) -> [Date, ...]  (one, sometimes two)
      .eidAlFitr(hijriYear)        -> Date  (1 Shawwal)
+     .dhulHijjahStart(gregYear)   -> [Date, ...]  (one, sometimes two)
+     .eidAlAdha(hijriYear)        -> Date  (10 Dhul Hijjah)
+     .arafah(hijriYear)           -> Date  (9 Dhul Hijjah)
+     .tashriqEnd(hijriYear)       -> Date  (13 Dhul Hijjah, the last of them)
+     .nextRamadan(from)           -> { hy, date } or null
+     .nextDhulHijjah(from)        -> { hy, date } or null
+     .nextEidAlFitr(from)         -> { hy, date } or null
+     .nextEidAlAdha(from)         -> { hy, date } or null
      .RAMADAN_YEARS               -> { 2026: [ {...} ], ... } 2026 to 2042
      .getOffset() / .setOffset(n) -> integer days, clamped to -3 .. +3
      .isCalculated  = true
@@ -46,8 +54,9 @@
     { en: "Dhul Hijjah",       ar: "ذُو الحِجَّة",        gloss: "the month of the pilgrimage" }
   ];
 
-  var RAMADAN = 9;   /* the ninth month */
-  var SHAWWAL = 10;  /* the tenth month, whose first day is Eid al-Fitr */
+  var RAMADAN = 9;      /* the ninth month */
+  var SHAWWAL = 10;     /* the tenth month, whose first day is Eid al-Fitr */
+  var DHUL_HIJJAH = 12; /* the twelfth, whose tenth day is Eid al-Adha */
 
   /* The epoch: 1 Muharram of year 1 as a Julian Day Number.
      1948440 is Friday 16 July 622 in the Julian reckoning, the civil
@@ -178,6 +187,17 @@
       isRamadan: r.hm === RAMADAN,
       isEidAlFitr: r.hm === SHAWWAL && r.hd === 1,
       ramadanDay: r.hm === RAMADAN ? r.hd : 0,
+      isShaban: r.hm === RAMADAN - 1,
+      isDhulHijjah: r.hm === DHUL_HIJJAH,
+      dhulHijjahDay: r.hm === DHUL_HIJJAH ? r.hd : 0,
+      /* the ten best days are 1 to 9, and the ninth is Arafah */
+      isFirstTen: r.hm === DHUL_HIJJAH && r.hd <= 9,
+      isArafah: r.hm === DHUL_HIJJAH && r.hd === 9,
+      isEidAlAdha: r.hm === DHUL_HIJJAH && r.hd === 10,
+      /* the days of Tashriq, the three that follow the tenth */
+      isTashriq: r.hm === DHUL_HIJJAH && r.hd >= 11 && r.hd <= 13,
+      /* the whole festival of the sacrifice, the tenth and the three after it */
+      isAdhaWindow: r.hm === DHUL_HIJJAH && r.hd >= 10 && r.hd <= 13,
       offset: getOffset(),
       isCalculated: true,
       jdn: jdn,
@@ -208,6 +228,21 @@
 
   function eidAlFitr(hy) {
     return toGregorian(hy, SHAWWAL, 1);
+  }
+
+  /* Eid al-Adha is the tenth of Dhul Hijjah, the morning after the pilgrims
+     have stood at Arafah, which is the ninth. The three days of Tashriq
+     follow it and the last of them is the thirteenth. */
+  function eidAlAdha(hy) {
+    return toGregorian(hy, DHUL_HIJJAH, 10);
+  }
+
+  function arafah(hy) {
+    return toGregorian(hy, DHUL_HIJJAH, 9);
+  }
+
+  function tashriqEnd(hy) {
+    return toGregorian(hy, DHUL_HIJJAH, 13);
   }
 
   function fmtISO(dt) {
@@ -254,6 +289,40 @@
     });
   }
 
+  /* the same scan for the month of the pilgrimage. A Gregorian year can hold
+     two of these as well, for the same reason it can hold two Ramadans. */
+  function dhulHijjahStart(gYear) {
+    gYear = parseInt(gYear, 10);
+    if (isNaN(gYear)) return [];
+    var approx = Math.floor((gYear - 621.5) * 33 / 32);
+    var out = [];
+    for (var hy = approx - 2; hy <= approx + 2; hy++) {
+      var dt = toGregorian(hy, DHUL_HIJJAH, 1);
+      if (dt && dt.getFullYear() === gYear) out.push({ hy: hy, date: dt });
+    }
+    out.sort(function (a, b) { return a.date - b.date; });
+    return out.map(function (r) { return r.date; });
+  }
+
+  function dhulHijjahRows(gYear) {
+    return dhulHijjahStart(gYear).map(function (dt) {
+      var h = toHijri(dt);
+      return {
+        hy: h.hy,
+        start: dt,
+        startISO: fmtISO(dt),
+        arafah: arafah(h.hy),
+        arafahISO: fmtISO(arafah(h.hy)),
+        eid: eidAlAdha(h.hy),
+        eidISO: fmtISO(eidAlAdha(h.hy)),
+        tashriqEnd: tashriqEnd(h.hy),
+        tashriqEndISO: fmtISO(tashriqEnd(h.hy)),
+        days: monthLength(h.hy, DHUL_HIJJAH),
+        isCalculated: true
+      };
+    });
+  }
+
   var RAMADAN_YEARS = {};
   var FIRST_YEAR = 2026, LAST_YEAR = 2042;
 
@@ -265,17 +334,26 @@
   }
   rebuildTable();
 
-  /* The next 1 Ramadan on or after a given day, however far ahead. */
-  function nextRamadan(from) {
+  /* The next time a given day of a given month comes round, on or after a
+     given day. Three Hijri years of look ahead is always enough for one. */
+  function nextDay(from, hm, hd) {
     var dt = (from instanceof Date && !isNaN(from.getTime())) ? from : new Date();
     var today = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
     var h = toHijri(today);
     for (var i = 0; i < 3; i++) {
-      var start = toGregorian(h.hy + i, RAMADAN, 1);
+      var start = toGregorian(h.hy + i, hm, hd);
       if (start && start >= today) return { hy: h.hy + i, date: start };
     }
     return null;
   }
+
+  /* The next 1 Ramadan on or after a given day, however far ahead. */
+  function nextRamadan(from) { return nextDay(from, RAMADAN, 1); }
+
+  /* and the same question asked of the other three doors of the year */
+  function nextDhulHijjah(from) { return nextDay(from, DHUL_HIJJAH, 1); }
+  function nextEidAlFitr(from) { return nextDay(from, SHAWWAL, 1); }
+  function nextEidAlAdha(from) { return nextDay(from, DHUL_HIJJAH, 10); }
 
   function daysBetween(a, b) {
     var ja = gregToJdn(a.getFullYear(), a.getMonth() + 1, a.getDate());
@@ -330,6 +408,7 @@
     MONTHS: MONTHS,
     RAMADAN: RAMADAN,
     SHAWWAL: SHAWWAL,
+    DHUL_HIJJAH: DHUL_HIJJAH,
     LEAP_YEARS: LEAP_YEARS,
     EPOCH: EPOCH,
     toHijri: toHijri,
@@ -341,6 +420,15 @@
     ramadanRows: ramadanRows,
     nextRamadan: nextRamadan,
     eidAlFitr: eidAlFitr,
+    dhulHijjahStart: dhulHijjahStart,
+    dhulHijjahRows: dhulHijjahRows,
+    nextDhulHijjah: nextDhulHijjah,
+    nextEidAlFitr: nextEidAlFitr,
+    nextEidAlAdha: nextEidAlAdha,
+    nextDay: nextDay,
+    eidAlAdha: eidAlAdha,
+    arafah: arafah,
+    tashriqEnd: tashriqEnd,
     daysBetween: daysBetween,
     fmtISO: fmtISO,
     RAMADAN_YEARS: RAMADAN_YEARS,

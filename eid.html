@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Both Eids in one room: the takbir with its meaning, the Eid prayer and its takbirat, zakat al-fitr with a reckoner and its deadline, the six of Shawwal, the udhiya and the days of Tashriq, and how to make the day land for children. Every claim carries its evidence."/>
+<meta property="og:title" content="The Eid Room · NOOR Codex of Light"/>
+<meta property="og:description" content="Both Eids in one room: the takbir with its meaning, the Eid prayer and its takbirat, zakat al-fitr with a reckoner and its deadline, the six of Shawwal, the udhiya and the days of Tashriq, and how to make the day land for children. Every claim carries its evidence."/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="theme-color" content="#14100A"/>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>The Eid Room · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/eid"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=16"/>
+<script src="noor-fx.js" defer></script>
+<script src="noor-ink.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/ScrollTrigger.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
+<script src="assets/noor-motion.js" defer></script>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
+
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.55);background:rgba(29,107,63,.13)}
+.evb.quran::before{content:"";width:.46rem;height:.46rem;border-radius:999px;background:#1d6b3f;box-shadow:0 0 0 2px rgba(29,107,63,.28);flex:none}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.evb.sunnah::before{content:"";width:.46rem;height:.46rem;background:#C9A227;flex:none;transform:rotate(45deg)}
+.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.evb.debated::before{content:"";width:.46rem;height:.46rem;border-radius:999px;border:1.5px dashed #6b4f92;flex:none}
+.evb.editorial{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.evb.editorial::before{content:"";width:.46rem;height:.1rem;background:rgba(44,36,22,.5);flex:none}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+
+/* an author display rule beats the browser's own [hidden], so say it once
+   and plainly: anything marked hidden on this page is hidden. */
+[hidden]{display:none!important}
+html{scroll-behavior:auto}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.secnav{position:sticky;top:3.5rem;z-index:30;background:rgba(255,254,247,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(44,36,22,.08)}
+.secnav-in{position:relative;display:flex;gap:.38rem;align-items:center;max-width:62rem;margin:0 auto;padding:.5rem 1rem;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.secnav-in::-webkit-scrollbar{display:none}
+.secnav a{flex:0 0 auto;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(44,36,22,.55);text-decoration:none;border:1px solid rgba(44,36,22,.13);border-radius:999px;padding:.3rem .68rem;background:#fff;transition:color .2s,border-color .2s,background .2s,box-shadow .2s;white-space:nowrap}
+.secnav a:hover{color:#2C2416;border-color:rgba(201,162,39,.5)}
+.secnav a.on{color:#1A160F;background:linear-gradient(135deg,#C9A227,#E9C86A);border-color:transparent;box-shadow:0 2px 12px rgba(201,162,39,.3)}
+.rsec{scroll-margin-top:6.6rem}
+.rsec .sh{gap:.7rem}
+.rsec .sh .ar{font-size:1.55rem;line-height:1.2}
+.tr{font-size:.73rem;color:rgba(44,36,22,.48);margin:.3rem 0 0;letter-spacing:.02em}
+.open{margin-top:1.7rem;border-color:rgba(201,162,39,.3);box-shadow:0 8px 30px rgba(44,36,22,.07)}
+.open .kk{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:0 0 .6rem}
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .9rem;margin-top:.95rem;padding-top:.9rem;border-top:1px solid rgba(44,36,22,.1)}
+.keys div{display:flex;align-items:center;gap:.45rem;font-size:.71rem;color:rgba(44,36,22,.55);line-height:1.5}
+.keys .evb{flex:0 0 auto}
+@media (max-width:560px){.keys{grid-template-columns:1fr}}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;gap:.7rem;margin-bottom:.5rem}
+.ch h3{margin:0}
+.ch .evb{flex:0 0 auto;margin-top:.12rem}
+.ref{display:inline-flex;align-items:center;gap:.35rem;line-height:1.4}
+.ref .rn{font-weight:600;color:rgba(44,36,22,.5)}
+.ref.q{background:rgba(201,162,39,.09);border-color:rgba(201,162,39,.26);padding-left:.28rem}
+.vplay{transition:background .18s,color .18s}
+.vplay:hover{background:rgba(244,212,106,.3)}
+
+/* the figures share the house drawing language */
+.fig svg{width:100%;max-width:33rem;height:auto;display:block;margin:0 auto}
+.fig svg text{font-family:Inter,system-ui,sans-serif}
+.fg{fill:#F4D46A;font-size:19px;font-weight:800;letter-spacing:.01em}
+.fl{fill:#FFFEF7;fill-opacity:.82;font-size:16px;font-weight:600}
+.fs{fill:#FFFEF7;fill-opacity:.5;font-size:13.5px;font-weight:500}
+.fx{fill:#FFFEF7;fill-opacity:.52;font-size:11.5px;font-weight:500}
+.fxg{fill:#F4D46A;fill-opacity:.9;font-size:11.5px;font-weight:800}
+.fm{fill:#F4D46A;font-size:15px;font-weight:800;letter-spacing:.01em}
+.fk{fill:#14100A;font-size:10px;font-weight:800}
+.s1{fill:none;stroke:#E9C86A;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.s2{fill:none;stroke:#FFFEF7;stroke-opacity:.6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.s3{fill:none;stroke:#F4D46A;stroke-opacity:.32;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.f1{fill:#F4D46A;fill-opacity:.14}
+.f2{fill:#F4D46A}
+.dsh{stroke-dasharray:5 6}
+.arc-ram{stroke-width:5;stroke-opacity:.95}
+.arc-ten{stroke-width:5;stroke:#F0B7A8;stroke-opacity:.9}
+.gr{stroke-opacity:.55}
+.leg{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.45rem}
+.leg li{position:relative;padding-left:1rem;font-size:.75rem;line-height:1.7;color:rgba(255,254,247,.66)}
+.leg li::before{content:"";position:absolute;left:0;top:.62rem;width:.36rem;height:.36rem;border-radius:50%;background:#E9C86A}
+.fig .cap b{color:rgba(244,212,106,.85);font-weight:700}
+
+/* the two Eid cards at the top */
+.ecs{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1rem}
+@media (max-width:620px){.ecs{grid-template-columns:1fr}}
+.ec{display:block;text-decoration:none;color:inherit;border-radius:20px;padding:1.05rem 1.1rem;background:linear-gradient(168deg,#FFFCEF,#FFF6DB);border:1px solid rgba(201,162,39,.28);transition:transform .18s,box-shadow .18s,border-color .18s}
+.ec:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(44,36,22,.1)}
+.ec .ar{display:block;font-family:Amiri,serif;font-size:1.6rem;line-height:1.4;color:var(--gold)}
+.ec b{display:block;font-size:1.05rem;margin:.15rem 0 .2rem}
+.ec-k{display:inline-block;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#8a6d13;border:1px solid rgba(201,162,39,.35);border-radius:999px;padding:.16rem .5rem}
+.ec-tr{display:block;font-size:.72rem;color:rgba(44,36,22,.5);line-height:1.6}
+.ec-when{display:block;font-size:.78rem;color:rgba(44,36,22,.66);line-height:1.7;margin-top:.4rem}
+.ec-cd{display:block;font-size:.75rem;font-weight:700;color:#8a6d13;margin-top:.5rem;padding-top:.5rem;border-top:1px solid rgba(201,162,39,.24);line-height:1.6}
+.ec.near{border-color:rgba(201,162,39,.62);box-shadow:0 10px 30px rgba(201,162,39,.16)}
+.ec.near .ec-k{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-color:transparent}
+.ecn{font-size:.72rem;color:rgba(44,36,22,.48);line-height:1.75;margin:.85rem 0 0}
+
+/* the two Eid sections, reordered by the calendar */
+#eids{display:flex;flex-direction:column}
+.eidsec{border-radius:24px;padding:2rem 1.15rem 1.2rem;margin-top:1.6rem}
+.eidsec.fitr{background:linear-gradient(172deg,#14100A,#161f38 62%,#1d2947);color:#FFFEF7}
+.eidsec.adha{background:linear-gradient(172deg,#1A0E22,#3C1D42 58%,#6A2F4E);color:#FFFEF7}
+.eidsec h2{color:#FFFEF7}
+.eidsec .sh .ar{color:#F4D46A}
+.eidsec .tr{color:rgba(255,254,247,.45)}
+.eidsec .sub{color:rgba(255,254,247,.74)}
+.eidsec .card{background:rgba(255,254,247,.05);border-color:rgba(244,212,106,.22);box-shadow:none}
+.eidsec .card h3{color:#FFFEF7}
+.eidsec .card p{color:rgba(255,254,247,.79)}
+.eidsec .fig{background:rgba(255,254,247,.05);border-color:rgba(244,212,106,.26)}
+.eidsec .ref{background:rgba(255,254,247,.07);border-color:rgba(255,254,247,.14);color:rgba(255,254,247,.7)}
+.eidsec .ref b{color:#F4D46A}
+.eidsec .ref .rn{color:rgba(255,254,247,.5)}
+.eidsec .ref.q{background:rgba(244,212,106,.12);border-color:rgba(244,212,106,.3)}
+.eidsec .vplay{background:rgba(244,212,106,.16);border-color:rgba(244,212,106,.4);color:#F4D46A}
+.eidsec .vplay:hover{background:rgba(244,212,106,.3)}
+.eidsec .evb.sunnah{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.12)}
+.eidsec .evb.quran{color:#8fd6ac;border-color:rgba(143,214,172,.4);background:rgba(143,214,172,.1)}
+.eidsec .evb.debated{color:#c3aae4;border-color:rgba(195,170,228,.4);background:rgba(195,170,228,.1)}
+.eidsec .evb.editorial{color:rgba(255,254,247,.6);border-color:rgba(255,254,247,.24);background:rgba(255,254,247,.06)}
+.eidsec .lead-k{display:inline-block;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.2rem .6rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;margin-bottom:.7rem}
+.eidsec.adha .lead-k{background:linear-gradient(135deg,#C98A2E,#F0B7A8)}
+
+/* du'a blocks */
+.dua{margin:.85rem 0 .2rem;border-radius:16px;padding:.95rem 1rem;background:linear-gradient(168deg,#FFFCEF,#FFF4D2);border:1px solid rgba(201,162,39,.32)}
+.eidsec .dua{background:rgba(244,212,106,.09);border-color:rgba(244,212,106,.3)}
+.dua .ar{font-family:Amiri,serif;font-size:1.5rem;line-height:2.1;color:#2C2416;margin:0;text-align:right}
+.eidsec .dua .ar{color:#F4D46A}
+.dua .tl{font-size:.82rem;font-weight:700;color:rgba(44,36,22,.72);margin:.55rem 0 0;line-height:1.7}
+.eidsec .dua .tl{color:rgba(255,254,247,.82)}
+.dua .mn{font-size:.83rem;color:rgba(44,36,22,.66);margin:.3rem 0 0;line-height:1.8}
+.eidsec .dua .mn{color:rgba(255,254,247,.7)}
+.dua .dx{font-size:.72rem;color:rgba(44,36,22,.5);margin:.55rem 0 0;line-height:1.7;padding-top:.5rem;border-top:1px solid rgba(201,162,39,.25)}
+.eidsec .dua .dx{color:rgba(255,254,247,.55);border-top-color:rgba(244,212,106,.22)}
+
+/* zakat reckoning */
+.zc{border-color:rgba(201,162,39,.3)}
+.zc-k{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:0 0 .5rem}
+.eidsec .zc-k{color:#F4D46A}
+.zc-l{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.66);margin:0 0 .85rem}
+.zc-in{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+@media (max-width:520px){.zc-in{grid-template-columns:1fr}}
+.zf{display:flex;flex-direction:column;gap:.25rem}
+.zf label{font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.45)}
+.eidsec .zf label{color:rgba(255,254,247,.55)}
+.zf input{font:inherit;font-size:.85rem;padding:.5rem .6rem;border-radius:10px;border:1px solid rgba(44,36,22,.18);background:#fff;color:#2C2416;width:100%;box-sizing:border-box}
+.zc-out{margin:.9rem 0 0;font-size:.95rem;color:rgba(44,36,22,.7);border-radius:14px;padding:.75rem .9rem;background:linear-gradient(168deg,#FFFCEF,#FFF6DB);border:1px solid rgba(201,162,39,.3)}
+.zc-out b{font-size:1.15rem;font-weight:800;color:#2C2416}
+.zc-n{font-size:.72rem;color:rgba(44,36,22,.5);line-height:1.75;margin:.7rem 0 0}
+.eidsec .zc-l,.eidsec .zc-n{color:rgba(255,254,247,.62)}
+.eidsec .zc-out{background:rgba(244,212,106,.1);border-color:rgba(244,212,106,.3);color:rgba(255,254,247,.8)}
+.eidsec .zc-out b{color:#F4D46A}
+
+/* the cards out to other rooms */
+.fam-links{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.9rem}
+@media (max-width:600px){.fam-links{grid-template-columns:1fr}}
+.fl-c{display:block;text-decoration:none;color:inherit;border-radius:18px;padding:1rem 1.05rem;background:linear-gradient(168deg,#FFFCEF,#FFF6DB);border:1px solid rgba(201,162,39,.3);transition:transform .18s,box-shadow .18s}
+.fl-c:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(44,36,22,.09)}
+.eidsec .fl-c{background:rgba(255,254,247,.06);border-color:rgba(244,212,106,.28);color:#FFFEF7}
+.fl-k{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#8a6d13;display:block}
+.eidsec .fl-k{color:#F4D46A}
+.fl-c b{display:block;font-size:.98rem;margin:.3rem 0 .35rem}
+.fl-c span:last-child{display:block;font-size:.78rem;line-height:1.75;color:rgba(44,36,22,.62)}
+.eidsec .fl-c span:last-child{color:rgba(255,254,247,.68)}
+
+/* the rooms either side */
+.rooms{margin:2.6rem 0 .5rem}
+.rk{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:0 0 .8rem;text-align:center}
+.rl{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media (max-width:680px){.rl{grid-template-columns:1fr}}
+.rc{display:flex;gap:.9rem;align-items:flex-start;text-decoration:none;color:#FFFEF7;border-radius:22px;padding:1.15rem 1.2rem;border:1px solid rgba(244,212,106,.3);transition:transform .18s,box-shadow .18s}
+.rc-ram{background:linear-gradient(166deg,#0D0A16,#182142 60%,#1F2C52)}
+.rc-hajj{background:linear-gradient(166deg,#0B120E,#17301F 58%,#22432E)}
+.rc:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(44,36,22,.18)}
+.rc-i{flex:0 0 auto;width:2.6rem;height:2.6rem;border-radius:14px;background:rgba(244,212,106,.14);display:flex;align-items:center;justify-content:center}
+.rc-i svg{width:1.35rem;height:1.35rem;fill:#F4D46A}
+.rc-t{display:block;min-width:0}
+.rc-t .ar{display:block;font-family:Amiri,serif;font-size:1.25rem;color:#F4D46A;line-height:1.5}
+.rc-t b{display:block;font-size:1rem;margin:.05rem 0 .3rem}
+.rc-t span:last-child{display:block;font-size:.78rem;line-height:1.75;color:rgba(255,254,247,.68)}
+
+.band{margin:2.6rem 0 .5rem;text-align:center;background:linear-gradient(170deg,#FFFDF3,#FFF6DB);border:1px solid rgba(201,162,39,.26);border-radius:20px;padding:1.6rem 1.2rem}
+.band p{font-size:.82rem;color:rgba(44,36,22,.62);line-height:1.85;margin:0 auto .95rem;max-width:32rem}
+.band .bl{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:no-preference){
+.eid-mark circle.f2{animation:eidpulse 4.4s ease-in-out infinite}
+@keyframes eidpulse{0%,100%{opacity:.6}50%{opacity:1}}
+.tk{animation:tkfade 5s ease-in-out infinite}
+@keyframes tkfade{0%,100%{opacity:.62}50%{opacity:1}}
+.tq{animation:tkfade 6.2s ease-in-out infinite}
+.zsa{animation:zlift 6s ease-in-out infinite}
+@keyframes zlift{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+}
+</style>
+<script src="assets/noor-hijri.js" defer></script>
+</head>
+<body>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+/* --- self-contained header layout (works with or without the shared sheet) --- */
+#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-left:1.5rem;padding-right:1.5rem}}
+#site-header a{text-decoration:none;color:inherit}
+#site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
+#site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
+#site-header>div>a:first-child>div:last-child>div:first-child{font-family:Amiri,serif;font-size:1.125rem;line-height:1;color:#2C2416}
+#site-header>div>a:first-child>div:last-child>div:last-child{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
+#site-header nav[aria-label="Primary"]{display:none;align-items:center;gap:1rem;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65)}
+@media (min-width:1024px){#site-header nav[aria-label="Primary"]{display:flex}}
+#site-header nav[aria-label="Primary"] a{color:inherit;transition:color .15s}
+#site-header nav[aria-label="Primary"] a:hover{color:#2C2416}
+#site-header nav[aria-label="Primary"] a.text-ink{color:#2C2416;font-weight:700}
+#site-header>div>div:last-child{display:flex;align-items:center;gap:.5rem}
+#site-header .give-pill{display:none}
+@media (min-width:640px){#site-header .give-pill{display:inline-block}}
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding:.45rem .2rem .45rem .45rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="/" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="/quran" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="/prophets" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="/hajj" class="hover:text-ink transition-colors" data-i18n="nav.hajj">Hajj</a>
+<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="/kids" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
+<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a role="menuitem" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+</header>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
+<a class="shl" href="/places" data-i18n="m.places">Places</a>
+<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+<main>
+<section class="rhero" data-ink=soft>
+<p class="kick">The Eid Room</p>
+<div class="ar notranslate" translate="no">العِيدَان</div>
+<h1>Two days the religion appointed</h1>
+<p class="lead">There are two Eids and no more: one at the end of a month of hunger, one on the morning after the pilgrims stand at Arafah. Almost everything they ask of you is the same, and the parts that differ are the parts people most often get wrong. This room leads with whichever is nearest and keeps the other one open beside it, all year, because the question of how the prayer works does not wait for the week it is due.</p>
+</section>
+<nav class="secnav" id="secnav" aria-label="The parts of this room"><div class="secnav-in"><a href="#near">The two Eids</a><a href="#takbir">The takbir</a><a href="#prayer">The prayer</a><a href="#manners">The morning</a><a href="#fitr">Eid al-Fitr</a><a href="#adha">Eid al-Adha</a><a href="#families">Children</a><a href="#rooms">Next door</a></div></nav><div class="wrap"><article class="card open mo"><p class="kk">How this room works</p><p>There are two Eids and only two. Everything else a Muslim community celebrates is a custom, which is not a criticism, only an accurate description. This one room holds both of them, because most of what they ask of you is identical: the same takbir, the same washing and the same best clothes, the same two rak’ahs with no call to prayer, the same sermon afterwards, the same instruction to take a different road home, the same absolute prohibition on fasting the day itself.</p><p>The page leads with whichever Eid is nearest. The other one stays exactly where it is, fully readable, all year, because the question of how the Eid prayer works does not only occur to people in the week it is due.</p><p>Every claim carries its evidence in the open: a verse you can hear recited aloud, a narration named by its collection and number, and an honest badge whenever the scholars differ or a line is our own counsel rather than revelation. Where there is a real disagreement, and on these two days there are several, both sides are given properly.</p><div class="keys"><div><span class="evb quran">Qur’an</span><span>stated in the Book itself</span></div><div><span class="evb sunnah">Sunnah</span><span>established in authentic hadith</span></div><div><span class="evb debated">Scholars differ</span><span>read differently by the scholars</span></div><div><span class="evb editorial">Editorial</span><span>our own counsel, never revelation</span></div></div></article><section class="rsec" id="near"><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">العِيدَان</span><h2>The two Eids</h2></div><p class="tr">al-eidan, the two festivals</p><p class="sub">Two days in the year, seventy days apart, that the religion itself appointed. The one that is nearest is marked below and this page leads with it.</p><div class="fig mo-pop mo-draw fig-wheel"><svg viewBox="0 0 480 412" role="img" aria-label="A wheel of the twelve Hijri months with Ramadan drawn as a lit arc, marker one at the first of Shawwal for Eid al-Fitr and marker two at the tenth of Dhul Hijjah for Eid al-Adha."><circle class="s3" cx="240" cy="172" r="96"/><path class="s1 arc-ram" d="M156.9 220.0 A96 96 0 0 1 144.0 172.0"/><path class="s1 arc-ten" d="M192.0 88.9 A96 96 0 0 1 207.2 81.8"/><line class="s3" x1="240.0" y1="83.0" x2="240.0" y2="69.0"/><line class="s3" x1="284.5" y1="94.9" x2="291.5" y2="82.8"/><line class="s3" x1="317.1" y1="127.5" x2="329.2" y2="120.5"/><line class="s3" x1="329.0" y1="172.0" x2="343.0" y2="172.0"/><line class="s3" x1="317.1" y1="216.5" x2="329.2" y2="223.5"/><line class="s3" x1="284.5" y1="249.1" x2="291.5" y2="261.2"/><line class="s3" x1="240.0" y1="261.0" x2="240.0" y2="275.0"/><line class="s3" x1="195.5" y1="249.1" x2="188.5" y2="261.2"/><line class="s3" x1="162.9" y1="216.5" x2="150.8" y2="223.5"/><line class="s3" x1="151.0" y1="172.0" x2="137.0" y2="172.0"/><line class="s3" x1="162.9" y1="127.5" x2="150.8" y2="120.5"/><line class="s3" x1="195.5" y1="94.9" x2="188.5" y2="82.8"/><text class="fx" x="270.5" y="62.0" text-anchor="start">Muharram</text><text class="fx" x="323.4" y="92.6" text-anchor="start">Safar</text><text class="fx" x="354.0" y="145.5" text-anchor="start">Rabi I</text><text class="fx" x="354.0" y="206.5" text-anchor="start">Rabi II</text><text class="fx" x="323.4" y="259.4" text-anchor="start">Jumada I</text><text class="fx" x="270.5" y="290.0" text-anchor="start">Jumada II</text><text class="fx" x="209.5" y="290.0" text-anchor="end">Rajab</text><text class="fx" x="156.6" y="259.4" text-anchor="end">Shaban</text><text class="fxg" x="126.0" y="206.5" text-anchor="end">Ramadan</text><text class="fxg" x="126.0" y="145.5" text-anchor="end">Shawwal</text><text class="fx" x="156.6" y="92.6" text-anchor="end">Dhul Qadah</text><text class="fxg" x="209.5" y="62.0" text-anchor="end">Dhul Hijjah</text><g class="eid-mark"><circle class="s1" cx="144.0" cy="172.0" r="15"/><circle class="f2" cx="144.0" cy="172.0" r="9"/><text class="fk" x="144.0" y="176.0" text-anchor="middle">1</text></g><g class="eid-mark"><circle class="s1" cx="205.6" cy="82.4" r="15"/><circle class="f2" cx="205.6" cy="82.4" r="9"/><text class="fk" x="205.6" y="86.4" text-anchor="middle">2</text></g><text class="fl" x="240" y="168" text-anchor="middle">one Hijri year</text><text class="fx" x="240" y="190" text-anchor="middle">354 days, so both move back</text><circle class="f2" cx="44" cy="295" r="7"/><text class="fk" x="44" y="299" text-anchor="middle">1</text><text class="fm" x="62" y="300" text-anchor="start">Eid al-Fitr</text><text class="fx" x="62" y="318" text-anchor="start">the first of Shawwal, the morning after the fast ends</text><circle class="f2" cx="44" cy="343" r="7"/><text class="fk" x="44" y="347" text-anchor="middle">2</text><text class="fm" x="62" y="348" text-anchor="start">Eid al-Adha</text><text class="fx" x="62" y="366" text-anchor="start">the tenth of Dhul Hijjah, the morning after Arafah</text><text class="fx" x="240" y="400" text-anchor="middle">the lit arc is Ramadan, the short one is the first ten days of Dhul Hijjah</text></svg><ul class="leg"><li>Eid al-Fitr is the very next sunrise after Ramadan, the first of Shawwal, and it is never more than one day away from the end of the fasting.</li><li>Eid al-Adha is the tenth of Dhul Hijjah, the morning after the pilgrims have stood at Arafah. The two are about seventy days apart, every year, forever.</li><li>A Hijri year is about eleven days shorter than a Gregorian one, so both Eids walk backwards through the seasons and come round to the same weather roughly every thirty three years.</li></ul><p class="cap"><b>Qur’an 9:36.</b> The number of months with Allah is twelve, in the register of Allah, from the day He created the heavens and the earth.</p></div><div class="ecs"><a class="ec" id="ec-fitr" href="#fitr"><span class="ec-k" id="ec-k-fitr">Eid</span><span class="ar notranslate" translate="no" dir="rtl" lang="ar">عِيد الفِطْر</span><b>Eid al-Fitr</b><span class="ec-tr">eid al-fitr, the festival of the breaking of the fast</span><span class="ec-when">1 Shawwal, the morning after Ramadan ends</span><span class="ec-cd" id="ec-cd-fitr">calculated from the tabular calendar</span></a><a class="ec" id="ec-adha" href="#adha"><span class="ec-k" id="ec-k-adha">Eid</span><span class="ar notranslate" translate="no" dir="rtl" lang="ar">عِيد الأَضْحَى</span><b>Eid al-Adha</b><span class="ec-tr">eid al-adha, the festival of the sacrifice</span><span class="ec-when">10 Dhul Hijjah, the morning after the pilgrims stand at Arafah</span><span class="ec-cd" id="ec-cd-adha">calculated from the tabular calendar</span></a></div><p class="ecn" id="ecn">These dates are calculated, not sighted. Your masjid’s announcement is the date, and the offset control in the Ramadan Room moves this page with it.</p></section><section class="rsec " id="takbir"><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">التَّكْبِير</span><h2>The takbir</h2></div><p class="tr">at-takbir, the declaring that Allah is greater</p><p class="sub">Both Eids are opened by the same sentence, said out loud, by everyone, on the way to the prayer. It is the one part of the day that is meant to be heard in the street.</p><article class="card mo"><div class="ch"><h3>The words themselves</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>The command to say it is in the Book, at the close of the verses on fasting: complete the number of days, and magnify Allah for having guided you. The exact wording is not in the Book, and it is not in a raised narration from the Prophet ﷺ either. What we have is the wording the companions used, and more than one wording is reported from them, all of it sound.</p><p>The form below is the one from Ibn Mas’ud, and it is the one most communities say. If your masjid says it with three takbirs at the front instead of two, they have another report behind them and neither of you is wrong.</p><div class="dua"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، وَلِلَّهِ الحَمْدُ</p><p class="tl">Allahu akbar, Allahu akbar, la ilaha illa Allah, wa Allahu akbar, Allahu akbar, wa lillahi al-hamd</p><p class="mn">Allah is greater, Allah is greater. There is no god but Allah. And Allah is greater, Allah is greater, and to Allah belongs all praise.</p><p class="dx">Greater than what? The sentence deliberately does not finish. Greater than the morning you are having, greater than what you are afraid of, greater than the thing you cannot fix. That is why it is the sentence for a festival and also the sentence for a funeral.</p></div><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="2:185" aria-label="Listen to Qur’an 2:185">2:185 ▸</button><span class="rn">complete the number, and magnify Allah for having guided you</span></span><span class="ref"><b>Ibn Abi Shaybah 5633</b><span class="rn">the wording of Ibn Mas’ud</span></span><span class="ref"><b>Bukhari chapter of the two Eids</b><span class="rn">Ibn Umar and Abu Hurayrah going out to the market saying it aloud</span></span></div></article><article class="card mo"><div class="ch"><h3>When it is said, and it differs for the two Eids</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>For Eid al-Fitr it is unrestricted: from sunset on the last night of Ramadan, once the month is confirmed over, until the imam comes out for the Eid prayer. Say it walking, say it in the car, say it while the children are being dressed. It stops when the prayer starts.</p><p>For Eid al-Adha there are two takbirs running at once. The unrestricted one runs through the whole first ten days of Dhul Hijjah, said whenever you like. The restricted one, the takbir of Tashriq, is said after every obligatory prayer from Fajr on the ninth to Asr on the thirteenth. That one has its own card further down this page.</p><p>The exact start and end of the restricted takbir is a real difference between the schools and not a small one. What every school agrees on is that the ninth and the days after the Eid are loud days. Follow your masjid and do not argue about the edges.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="22:28" aria-label="Listen to Qur’an 22:28">22:28 ▸</button><span class="rn">that they may mention the name of Allah on appointed days</span></span><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="2:203" aria-label="Listen to Qur’an 2:203">2:203 ▸</button><span class="rn">and remember Allah during numbered days</span></span></div></article></section><section class="rsec " id="prayer"><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">صَلَاة العِيد</span><h2>The Eid prayer</h2></div><p class="tr">salat al-eid, the prayer of the festival</p><p class="sub">Two units, in the open if you can, with no call to prayer and no announcement before them, and a sermon afterwards that you are allowed to sit through or to leave. Almost every part of it is deliberately unlike the five daily prayers.</p><div class="fig mo-pop mo-draw "><svg viewBox="0 0 480 306" role="img" aria-label="The extra takbirs of the Eid prayer drawn as rows of counters: seven then five in the reading of the majority, three then three in the reading of Abu Hanifah."><text class="fm" x="30" y="30" text-anchor="start">The majority</text><text class="fx" x="30" y="50" text-anchor="start">Malik, al-Shafi’i and Ahmad. All of them before the recitation.</text><text class="fl" x="30" y="93" text-anchor="start">first rak’ah</text><circle class="f2 tk" cx="200" cy="88" r="8"/><circle class="f2 tk" cx="230" cy="88" r="8"/><circle class="f2 tk" cx="260" cy="88" r="8"/><circle class="f2 tk" cx="290" cy="88" r="8"/><circle class="f2 tk" cx="320" cy="88" r="8"/><circle class="f2 tk" cx="350" cy="88" r="8"/><circle class="f2 tk" cx="380" cy="88" r="8"/><text class="fs" x="414" y="93" text-anchor="start">seven</text><text class="fl" x="30" y="137" text-anchor="start">second rak’ah</text><circle class="f2 tk" cx="200" cy="132" r="8"/><circle class="f2 tk" cx="230" cy="132" r="8"/><circle class="f2 tk" cx="260" cy="132" r="8"/><circle class="f2 tk" cx="290" cy="132" r="8"/><circle class="f2 tk" cx="320" cy="132" r="8"/><text class="fs" x="354" y="137" text-anchor="start">five</text><path class="s3" d="M30 166H450"/><text class="fm" x="30" y="196" text-anchor="start">Abu Hanifah</text><text class="fx" x="30" y="216" text-anchor="start">Three in each, and the second three come after the recitation.</text><text class="fl" x="30" y="257" text-anchor="start">first rak’ah</text><circle class="f1 s1 tk" cx="200" cy="252" r="8"/><circle class="f1 s1 tk" cx="230" cy="252" r="8"/><circle class="f1 s1 tk" cx="260" cy="252" r="8"/><text class="fs" x="294" y="257" text-anchor="start">before reciting</text><text class="fl" x="30" y="297" text-anchor="start">second rak’ah</text><circle class="f1 s1 tk" cx="200" cy="292" r="8"/><circle class="f1 s1 tk" cx="230" cy="292" r="8"/><circle class="f1 s1 tk" cx="260" cy="292" r="8"/><text class="fs" x="294" y="297" text-anchor="start">after it, before bowing</text></svg><ul class="leg"><li>Takbir here means saying Allahu akbar, Allah is greater, with the hands raised. These are the extra ones that only the Eid prayer has.</li><li>The two counts come from different narrations, both of which exist. The schools are not guessing and neither of them is a modern invention.</li><li>Nothing is invalidated by following your imam and losing count. There is no prostration of forgetfulness owed for a missed extra takbir in any school.</li></ul><p class="cap"><b>Abu Dawud 1149</b> for seven and five, <b>Ibn Abi Shaybah 5697</b> for the reports the Hanafis read. Follow the imam in front of you.</p></div><article class="card mo"><div class="ch"><h3>Its time</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>It begins once the sun has properly risen, about the height of a spear above the horizon, which in ordinary language is fifteen to twenty minutes after sunrise, and it ends at midday when the sun reaches its highest point. Most masjids pray it somewhere in the first hour and a half of that window.</p><p>The two Eids were prayed at slightly different hours by the early community: Eid al-Adha early, so people could get to the sacrifice, and Eid al-Fitr a little later, so people had time to hand over zakat al-fitr before the prayer. That is a good habit rather than a rule, and it explains why your masjid may run the two differently.</p><div class="refs"><span class="ref"><b>Abu Dawud 1135</b><span class="rn">the letter of Amr b. Hazm on praying Adha early and Fitr later</span></span><span class="ref"><b>Bukhari 964</b><span class="rn">two rak’ahs on the day of Fitr, with nothing before or after</span></span></div></article><article class="card mo"><div class="ch"><h3>How it is prayed, and where the schools part</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>It is two rak’ahs, units of prayer, prayed aloud by the imam, with extra takbirs at the start of each one that the daily prayers do not have.</p><p>The majority, meaning Malik, al-Shafi’i and Ahmad, count seven takbirs in the first rak’ah and five in the second, all before the recitation, with the opening takbir counted inside the seven by some of them and outside it by others. Abu Hanifah counts three extra in the first rak’ah before the recitation and three in the second after it, before bowing.</p><p>Both positions rest on reports that are actually narrated. Nobody invented theirs. If you are following an imam, follow him and do not count under your breath. If you find yourself doing it differently from the row next to you, that is what a school is.</p><div class="refs"><span class="ref"><b>Abu Dawud 1149</b><span class="rn">seven and five, from Amr b. Shu’ayb from his father from his grandfather</span></span><span class="ref"><b>Ibn Majah 1280</b><span class="rn">the same, in another route</span></span><span class="ref"><b>Ibn Abi Shaybah 5697</b><span class="rn">the reports the Hanafis read for four and four</span></span></div></article><article class="card mo"><div class="ch"><h3>No adhan, no iqama, and nobody calls you in</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Jabir b. Samurah said he prayed the two Eids with the Messenger of Allah ﷺ more than once and more than twice, with no call to prayer and no second call.</p><p>This is worth noticing rather than skipping. The one prayer of the year that the whole town comes to is the one prayer nobody is summoned to. You come because it is Eid.</p><div class="refs"><span class="ref"><b>Muslim 887</b><span class="rn">no adhan and no iqama for either Eid</span></span><span class="ref"><b>Bukhari 960</b><span class="rn">the prayer before the sermon, with no call</span></span></div></article><article class="card mo"><div class="ch"><h3>The sermon comes after, not before</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Ibn Abbas and Ibn Umar both reported that the Prophet ﷺ, then Abu Bakr, then Umar, prayed the two Eids before the sermon. This is the opposite of Jumu’ah, where the sermon comes first and is part of the prayer.</p><p>Because the sermon comes after, it is not a condition of the prayer, and the scholars of every school say a person who leaves before it has still prayed his Eid. Staying is better and more courteous to the imam. Leaving with a crying child is not a sin, and it was never treated as one.</p><div class="refs"><span class="ref"><b>Bukhari 963</b><span class="rn">the Prophet ﷺ, Abu Bakr and Umar all prayed before the sermon</span></span><span class="ref"><b>Muslim 889</b><span class="rn">and the reminder given to the women afterwards</span></span></div></article><article class="card mo"><div class="ch"><h3>If you miss it, may you pray it at home</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>This one comes up every year and deserves a straight answer with the disagreement left in.</p><p>Al-Shafi’i and Ahmad say yes: whoever misses the Eid prayer prays two rak’ahs, alone or with his household, and Anas b. Malik used to gather his family and his servants at his estate and have one of them lead them in two rak’ahs exactly as the town was praying. Malik says similar, as something recommended rather than required. Abu Hanifah says no: the Eid prayer has conditions of congregation that a household does not meet, so the one who missed it has missed it and owes nothing.</p><p>So a person praying two rak’ahs at home after missing the Eid prayer is following named scholars, and a person who prays nothing is also following named scholars. What nobody permits is treating either as the normal way. The Eid prayer is meant to be prayed with the town, outdoors where that is possible, because half of what it is for is that everybody sees everybody.</p><div class="refs"><span class="ref"><b>Bukhari chapter: when a man misses the Eid prayer</b><span class="rn">the practice of Anas b. Malik with his household</span></span><span class="ref"><b>Bukhari 956</b><span class="rn">going out to the prayer ground rather than the masjid</span></span></div></article><article class="card mo"><div class="ch"><h3>Women and children are brought out on purpose</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Umm Atiyya said: we were commanded to bring out the young girls and the women in seclusion, and the menstruating women, so that they might witness the good and the supplication of the Muslims, and the menstruating women kept back from the prayer itself.</p><p>A woman said, Messenger of Allah, one of us has no jilbab, meaning no outer garment fit to be seen in. He ﷺ said: let her sister clothe her with one of hers. The problem of a woman having nothing to wear was solved rather than used as a reason to leave her at home.</p><p>Read that carefully before deciding your household will go without the women. The instruction is not that they may come if they wish. The instruction is to bring them out, including the ones who cannot pray that day, because being present is the point.</p><div class="refs"><span class="ref"><b>Bukhari 974</b><span class="rn">bring out the young girls and the menstruating women</span></span><span class="ref"><b>Muslim 890</b><span class="rn">the same report, and the borrowed jilbab</span></span></div></article></section><section class="rsec " id="manners"><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">آدَاب العِيد</span><h2>The morning itself</h2></div><p class="tr">adab al-eid, the manners of the festival</p><p class="sub">Everything below is shared by both Eids, and most of it takes place before you reach the prayer ground.</p><div class="fig mo-pop mo-draw "><svg viewBox="0 0 480 312" role="img" aria-label="A house on the left and a prayer ground with a dome on the right, joined by two different curving roads, one for going and one for returning."><g class="hs"><path class="s1" d="M46 210h58v-46H46Z"/><path class="s1" d="M38 164 75 134l37 30"/><path class="s2" d="M66 210v-24h18v24"/></g><text class="fx" x="75" y="244" text-anchor="middle">your door</text><g class="ms"><path class="s1" d="M376 210h64v-56h-64Z"/><path class="s1" d="M382 154a26 26 0 0 1 52 0"/><path class="s2" d="M408 128v-9"/><path class="s2" d="M392 210v-28a16 16 0 0 1 32 0v28"/></g><text class="fx" x="408" y="244" text-anchor="middle">the prayer ground</text><path class="s1 rd-out" d="M112 164q126 -62 250 -16"/><path class="f2" d="M356 139l18 8-16 10Z"/><path class="s2 rd-back" d="M370 192q-126 62 -250 16"/><path class="f2" d="M126 201l-18 8 16 10Z"/><text class="fm" x="240" y="112" text-anchor="middle">going</text><text class="fm" x="240" y="270" text-anchor="middle">returning</text><text class="fx" x="240" y="296" text-anchor="middle">a different street on the way home, every Eid, on purpose</text></svg><ul class="leg"><li>Jabir reported it as a plain observed habit: on the day of Eid he ﷺ would come back a different way. No reason was given with it.</li><li>The reasons the scholars offer are their own reading and they say so. Both roads bearing witness, more people greeted, more houses that see a Muslim family walking to prayer.</li><li>It costs nothing and takes an extra three minutes. Children remember the route.</li></ul><p class="cap"><b>Bukhari 986.</b> When it was the day of Eid he would take a different way back.</p></div><article class="card mo"><div class="ch"><h3>Ghusl, the best clothes you own, and perfume</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>Ghusl means a full wash of the whole body. Ibn Umar used to do it on the morning of Eid al-Fitr before going out, and the practice of the companions is what this rests on rather than a raised narration, so the schools call it recommended rather than required.</p><p>For clothes, the Prophet ﷺ kept a particular cloak that he wore for the two Eids and for Jumu’ah. It does not have to be new. It has to be your best, which is a different and easier instruction, and one that does not cost anyone money.</p><p>Perfume is for the men going out. The general guidance on women and scent in public applies here as everywhere else, and the room is not going to pretend otherwise.</p><div class="refs"><span class="ref"><b>Malik, Muwatta 428</b><span class="rn">Ibn Umar bathing on the morning of Fitr</span></span><span class="ref"><b>Ibn Khuzaymah 1765</b><span class="rn">the cloak kept for the two Eids and for Jumu’ah</span></span></div></article><article class="card mo"><div class="ch"><h3>Go by one road and come back by another</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Jabir said that on the day of Eid the Prophet ﷺ would take a different way back. It is one of those small reported habits that survives because people noticed it and could not stop talking about why.</p><p>The reasons the scholars give are guesses, and they say so: that both roads will testify for you, that more people get greeted, that the religion is seen openly on more streets, that charity can be given on two routes instead of one. None of that is narrated as the reason. The act is narrated. Do it because he did it, and let the reasons be a bonus.</p><div class="refs"><span class="ref"><b>Bukhari 986</b><span class="rn">he would return by a different route on the day of Eid</span></span></div></article><article class="card mo"><div class="ch"><h3>What people say to each other</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>Jubayr b. Nufayr reported that the companions of the Prophet ﷺ, when they met one another on the day of Eid, would say the words below. Ibn Hajar cited the chain and called it good. It is a practice of the companions rather than a text from the Prophet ﷺ, and that is exactly how it should be described.</p><p>Eid Mubarak, a blessed Eid, is not narrated from anybody. It is a good sentence in ordinary language that Muslims have said to each other for centuries and there is nothing wrong with it. Use whichever you like, and do not correct someone who used the other one.</p><div class="dua"><p class="ar notranslate" translate="no" dir="rtl" lang="ar">تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ</p><p class="tl">Taqabbal Allahu minna wa minkum</p><p class="mn">May Allah accept from us and from you.</p><p class="dx">Note what it asks for. Not a good year, not health, not money. That the thing you already did would be accepted, which is the one part of it that was never in your hands.</p></div><div class="refs"><span class="ref"><b>Ibn Hajar, Fath al-Bari 2:446</b><span class="rn">the chain of Jubayr b. Nufayr judged good</span></span></div></article><article class="card mo"><div class="ch"><h3>Fasting on the two Eid days is forbidden</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Abu Sa’id al-Khudri reported that the Prophet ﷺ forbade fasting on the day of Fitr and the day of Adha. This is not disliked, it is forbidden, and it holds even for a person making up missed days and even for a person under a vow.</p><p>The three days of Tashriq after Eid al-Adha are also days of eating, drinking and the remembrance of Allah, and fasting them is forbidden too, with one narrow exception the scholars allow for a pilgrim who could not find a sacrifice.</p><p>There is a reason worth hearing in this. A religion that asks a whole month of hunger also forbids you from being hungry on the day it ends. The joy is not a break from the worship. It is part of it, and refusing it is not piety.</p><div class="refs"><span class="ref"><b>Bukhari 1991</b><span class="rn">the prohibition of fasting on the two Eids</span></span><span class="ref"><b>Muslim 1141</b><span class="rn">the days of Tashriq are days of eating and drinking and remembrance</span></span></div></article></section><div id="eids"><section class="rsec eidsec fitr" id="fitr"><span class="lead-k">the one that is next</span><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">عِيد الفِطْر</span><h2>Eid al-Fitr</h2></div><p class="tr">eid al-fitr, the festival of the breaking of the fast</p><p class="sub">The first day of Shawwal, the morning after thirty days of hunger. It has three things of its own: a mouthful of dates before you leave, a charity that has to arrive before the prayer, and six days afterwards that nobody is obliged to keep.</p><div class="fig mo-pop mo-draw "><svg viewBox="0 0 480 336" role="img" aria-label="A household on the left, a measure of grain in the middle and a neighbour on the right, the whole flow drawn inside a window that closes the moment the Eid prayer begins."><path class="s3" d="M28 56h424v104H28Z"/><text class="fx" x="40" y="44" text-anchor="start">the window: it must be in their hands before the prayer</text><g class="zg"><path class="s1" d="M56 142h56v-40H56Z"/><path class="s1" d="M48 102 84 78l36 24"/></g><path class="s2" d="M132 122h48"/><path class="f2" d="M180 116l16 6-16 6Z"/><g class="zsa"><path class="s1" d="M212 100h56l-9 42h-38Z"/><path class="s1 gr" d="M215 100q25 -13 62 0"/></g><path class="s2" d="M290 122h48"/><path class="f2" d="M338 116l16 6-16 6Z"/><g class="zn"><path class="s1" d="M370 142h56v-40h-56Z"/><path class="s1" d="M362 102 398 78l36 24"/><path class="s2" d="M390 142v-22h16v22"/></g><text class="fm" x="84" y="188" text-anchor="middle">every soul</text><text class="fx" x="84" y="206" text-anchor="middle">under your roof</text><text class="fm" x="240" y="188" text-anchor="middle">one sa’</text><text class="fx" x="240" y="206" text-anchor="middle">a volume, about 2.5 to 3 kg</text><text class="fm" x="398" y="188" text-anchor="middle">a neighbour</text><text class="fx" x="398" y="206" text-anchor="middle">who has less</text><path class="s3" d="M28 244h424"/><circle class="f2" cx="240" cy="244" r="7"/><text class="fm" x="240" y="274" text-anchor="middle">the Eid prayer</text><text class="fx" x="36" y="296" text-anchor="start">before this line: zakat al-fitr</text><text class="fx" x="444" y="296" text-anchor="end">after it: an ordinary charity</text><text class="fs" x="240" y="326" text-anchor="middle">still a good deed on either side, but only one side is the thing itself</text></svg><ul class="leg"><li>Zakat al-fitr means the charity of the breaking of the fast. It is a quantity of food, owed per person, not a percentage of wealth.</li><li>The sa’ is a measure of volume from Madinah, roughly four double handfuls of an average adult. Communities convert it to a local weight and then to a price, which is why your masjid publishes a figure and we do not.</li><li>The deadline is not decoration. Ibn Abbas reported the two outcomes in one sentence: before the prayer it is zakat al-fitr, after it is one charity among charities.</li></ul><p class="cap"><b>Bukhari 1503</b> and <b>Abu Dawud 1609.</b> A purification for the fasting person and food for the poor, given before the people go out to the prayer.</p></div><article class="card mo"><div class="ch"><h3>Eat first, and eat an odd number</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Anas said the Prophet ﷺ would not go out on the morning of Fitr until he had eaten some dates, and he would eat an odd number of them.</p><p>It is the smallest instruction in the whole day and one of the most pointed. For thirty mornings you did not eat. On the thirty first you eat before you pray, in public, on purpose, so that nobody is in any doubt that the fasting is over. Three dates, or five, or seven. If there are no dates, eat something.</p><div class="refs"><span class="ref"><b>Bukhari 953</b><span class="rn">he would not go out until he had eaten dates, an odd number of them</span></span></div></article><article class="card mo"><div class="ch"><h3>Zakat al-Fitr, and the deadline that matters</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Ibn Umar said the Messenger of Allah ﷺ made zakat al-fitr obligatory: a sa’ of dates or a sa’ of barley, upon the slave and the free, the male and the female, the young and the old among the Muslims, and he commanded that it be given before the people go out to the prayer.</p><p>A sa’ is a volume, not a weight, roughly four double handfuls of an average adult, which comes out at about two and a half to three kilograms of a staple food depending on what the staple is. Your masjid publishes a figure in money every year and that figure is the one to use, because they know the local staple and its price and we do not.</p><p>The deadline is the point of the whole thing. Ibn Abbas reported it as a purification for the fasting person from idle talk and indecency and as food for the poor: whoever gives it before the prayer, it is an accepted zakat al-fitr, and whoever gives it after the prayer, it is one charity among charities. It still counts as a good deed. It stops counting as this.</p><p>It is owed for every person under your roof, including a baby born before sunset on the night of Eid and a guest staying with you, and it is owed by almost everybody, because the threshold is having more than your own household’s food for that day and night. It was never a tax on the wealthy.</p><div class="refs"><span class="ref"><b>Bukhari 1503</b><span class="rn">a sa’ of dates or barley, for every soul, before the prayer</span></span><span class="ref"><b>Muslim 984</b><span class="rn">the same, in Muslim’s wording</span></span><span class="ref"><b>Abu Dawud 1609</b><span class="rn">before the prayer it is zakat, after it is a charity</span></span></div></article><article class="card mo"><div class="ch"><h3>Food or its value in money</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>The narration names food, and Malik, al-Shafi’i and Ahmad hold to food: a sa’ of the staple, handed over as a staple. Abu Hanifah permits giving the price of it in money, reasoning that the purpose named in the hadith is feeding the poor and money feeds them better in a city where nobody mills their own wheat.</p><p>Both are old positions held by serious people. In practice most masjids in most countries now collect money and buy food with it, which satisfies both readings at once, and that is probably the calmest thing to do.</p><div class="refs"><span class="ref"><b>Bukhari 1506</b><span class="rn">a sa’ of food, the wording that the majority hold to</span></span></div></article><article class="card mo"><div class="ch"><h3>The joy of finishing, which you are allowed to feel</h3><span class="evb quran mo-pop" title="Stated directly in the Qur’an">Qur’an</span></div><p>The verse that closes the passage on fasting does not say be careful not to become proud. It says: complete the number, and magnify Allah for having guided you, and that you may be grateful. The finishing is meant to be marked.</p><p>And the Prophet ﷺ said the fasting person has two joys he takes pleasure in: a joy when he breaks his fast, and a joy when he meets his Lord. Eid is the first of those two, written large, once a year, for a whole town at the same time.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="2:185" aria-label="Listen to Qur’an 2:185">2:185 ▸</button><span class="rn">complete the number, and magnify Allah for having guided you</span></span><span class="ref"><b>Bukhari 1904</b><span class="rn">the fasting person has two joys</span></span></div></article><article class="card mo"><div class="ch"><h3>The six days of Shawwal</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>Abu Ayyub reported that the Prophet ﷺ said: whoever fasts Ramadan then follows it with six from Shawwal, it is as though he fasted the whole year. The arithmetic behind it is the ten for one of a good deed: thirty days become three hundred, six become sixty, and the year is covered.</p><p>Must they be consecutive? The majority say no. Any six days of Shawwal, spread however you like, and the reward in the narration stands. Some of the Shafi’is preferred them straight after Eid and in a row as the better way, not as a condition. So a person fasting them on six separate Mondays has done what the hadith asked.</p><p>And if you owe make up days from Ramadan itself? The schools differ. Many say clear the debt first, since the narration says whoever fasts Ramadan and you have not finished it yet. Others allow the six first because Shawwal is short and the make up days can be paid all year. This one is a genuine difference. Pick a position, do not sit paralysed between them, and know that the make up days are the obligation and the six are the extra.</p><div class="refs"><span class="ref"><b>Muslim 1164</b><span class="rn">six from Shawwal, as though he fasted the whole year</span></span><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="6:160" aria-label="Listen to Qur’an 6:160">6:160 ▸</button><span class="rn">whoever comes with a good deed shall have ten like it</span></span></div></article><div class="zc card mo"><p class="zc-k">A quick reckoning</p><p class="zc-l">Prices differ by country and by staple, so this asks you for the figure rather than pretending to know it. Your local masjid publishes the amount every year and that amount is the one that counts. This is an estimate to help you hand over the right sum before the prayer, and it is nothing more.</p><div class="zc-in"><div class="zf"><label for="z-n">People in the household</label><input id="z-n" type="number" min="1" step="1" value="4"/></div><div class="zf"><label for="z-a">Amount per person</label><input id="z-a" type="number" min="0" step="0.5" value="12"/></div><div class="zf"><label for="z-c">Currency</label><input id="z-c" type="text" maxlength="6" value="USD"/></div></div><p class="zc-out" id="z-out">4 people at 12 USD is <b>48 USD</b></p><p class="zc-n">Count every soul who lives under your roof, including a baby born before sunset on the night of Eid and a guest staying with you. It must be in the hands of the poor before the Eid prayer. Ask your masjid for this year’s figure, because they set it and we do not.</p></div></section><section class="rsec eidsec adha" id="adha"><span class="lead-k">the one that is next</span><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">عِيد الأَضْحَى</span><h2>Eid al-Adha</h2></div><p class="tr">eid al-adha, the festival of the sacrifice</p><p class="sub">The tenth of Dhul Hijjah, the morning after two million people have stood bareheaded on a plain outside Makkah. It is the older of the two Eids, the bigger one in most of the Muslim world, and it is built on a story about a father, a son, and a knife that was never used.</p><div class="fig mo-pop mo-draw "><svg viewBox="0 0 480 306" role="img" aria-label="A circle divided into three parts by dotted lines, labelled your house, family and neighbours, and the poor, with a note that the lines are dotted because the thirds are custom and not law."><circle class="s1" cx="240" cy="120" r="78"/><path class="s2 dsh" d="M240 120 L240.0 42.0"/><path class="s2 dsh" d="M240 120 L307.5 159.0"/><path class="s2 dsh" d="M240 120 L172.5 159.0"/><text class="fm" x="332" y="86" text-anchor="start">your house</text><text class="fx" x="332" y="104" text-anchor="start">eat of it yourself</text><text class="fm" x="148" y="86" text-anchor="end">the poor</text><text class="fx" x="148" y="104" text-anchor="end">the verse names them</text><text class="fm" x="240" y="232" text-anchor="middle">family and neighbours</text><text class="fx" x="240" y="250" text-anchor="middle">a plate carried to the door</text><text class="fs" x="240" y="288" text-anchor="middle">the lines are dotted on purpose: the fractions are custom, not law</text></svg><ul class="leg"><li>Udhiya, also called qurbani, is the animal offered on the days of Eid al-Adha. One sheep or goat covers a household. A cow or a camel covers seven.</li><li>The Qur’an gives two instructions and no fractions: eat of it, and feed. The thirds are how the early community actually divided it, and the schools recommended that shape.</li><li>Nothing may be sold out of it, including the skin, and the butcher is paid in money rather than in meat.</li></ul><p class="cap"><b>Qur’an 22:28 and 22:36.</b> Eat of it and feed the hard pressed poor, and feed the one who is content and the one who asks.</p></div><article class="card mo"><div class="ch"><h3>Ibrahim, his son, and the ransom</h3><span class="evb quran mo-pop" title="Stated directly in the Qur’an">Qur’an</span></div><p>The passage is short and it is worth reading rather than summarising. Ibrahim tells his son what he has seen in the dream. The son answers: father, do what you are commanded, you will find me, if Allah wills, among the patient. They both submit. He lays him down on his forehead. And then the call comes: you have fulfilled the vision. And We ransomed him with a great sacrifice.</p><p>The Qur’an does not name the son in this passage. The majority of later scholars say Isma’il, some of the earliest said Ishaq, and the Book itself declines to settle it, which is a signal about what the story is for.</p><p>Nothing was killed that day except an animal. The test was the submission, not the blood, and the Qur’an says so directly elsewhere: their flesh does not reach Allah, nor their blood, but the God consciousness from you reaches Him. Every sacrifice since has been a re enactment of a command that was cancelled at the last second.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="37:102" aria-label="Listen to Qur’an 37:102">37:102 ▸</button><span class="rn">father, do what you are commanded</span></span><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="37:107" aria-label="Listen to Qur’an 37:107">37:107 ▸</button><span class="rn">and We ransomed him with a great sacrifice</span></span><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="22:37" aria-label="Listen to Qur’an 22:37">22:37 ▸</button><span class="rn">neither their flesh nor their blood reaches Allah</span></span></div></article><article class="card mo"><div class="ch"><h3>The udhiya, and who owes it</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>Udhiya, also called qurbani in much of the Muslim world, is the animal slaughtered on the days of Eid al-Adha. It is offered by a household, one animal for a man and those he supports, and it is not required of every individual in the house.</p><p>Abu Hanifah holds it obligatory on the resident who owns the threshold of wealth. Malik, al-Shafi’i and Ahmad hold it a confirmed practice, one that a person with the means should not leave, on the strength of a narration that whoever has the capacity and does not sacrifice should not come near the place of prayer. That narration is itself debated: some scholars stop it at Abu Hurayrah rather than raising it to the Prophet ﷺ.</p><p>A person who genuinely cannot afford it owes nothing and should not be made to feel he does. A person who can afford it and skips it every year should read the difference between the two positions again.</p><div class="refs"><span class="ref"><b>Ibn Majah 3123</b><span class="rn">whoever has the capacity and does not sacrifice, the chain is debated</span></span><span class="ref"><b>Bukhari 5553</b><span class="rn">the Prophet ﷺ sacrificing two horned rams</span></span></div></article><article class="card mo"><div class="ch"><h3>The animal, and the four faults that disqualify it</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>It must be from the grazing livestock the Qur’an names: sheep, goats, cattle, camels. A sheep or goat counts for one household. A cow or a camel counts for seven, so seven households may share one.</p><p>It must have reached the age: six months for a sheep, a year for a goat, two years for cattle, five for a camel. Below that it is meat and not a sacrifice.</p><p>Al-Bara’ b. Azib reported four that will not do, and the Prophet ﷺ counted them on his hand: the one eyed whose defect is obvious, the sick whose sickness is obvious, the lame whose limp is obvious, and the broken down animal with no marrow left in its bones. The word obvious is doing work in all four. A small nick in an ear does not disqualify an animal.</p><p>And the slaughter itself is under the general law of slaughter: a sharp blade, the name of Allah said over it, the animal not shown the knife and not slaughtered in front of another animal. Excellence was commanded in everything, including this.</p><div class="refs"><span class="ref"><b>Abu Dawud 2802</b><span class="rn">the four that will not do</span></span><span class="ref"><b>Tirmidhi 1497</b><span class="rn">the same, counted on the hand</span></span><span class="ref"><b>Muslim 1955</b><span class="rn">Allah has written excellence over everything, so sharpen the blade</span></span></div></article><article class="card mo"><div class="ch"><h3>When it may be done, and when it is too late</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>It starts after the Eid prayer on the tenth and not one minute before. The Prophet ﷺ said whoever slaughtered before the prayer has only offered meat to his family, and it is not a sacrifice at all. A man who had done exactly that was told to slaughter another.</p><p>It ends at sunset on the last of the days of Tashriq, the thirteenth, in the position of al-Shafi’i and one report from Ahmad, so four days in total. Abu Hanifah and Malik end it at sunset on the twelfth, three days. If you are giving through an organisation, this is the difference that decides whether a slaughter on the fourth day counted, so ask them which calendar they work to.</p><div class="refs"><span class="ref"><b>Bukhari 5545</b><span class="rn">whoever slaughtered before the prayer has only offered meat</span></span><span class="ref"><b>Muslim 1961</b><span class="rn">let him slaughter another in its place</span></span></div></article><article class="card mo"><div class="ch"><h3>The thirds are a custom, not a law</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>One third for the house, one third for family and neighbours, one third for the poor. Almost everybody has heard this and most people think it is binding. It is not.</p><p>What the Qur’an says is: eat of it and feed the hard pressed poor, and elsewhere, eat of it and feed the one who does not ask and the one who does. Two instructions, eat and feed, with no fractions attached. The thirds are how the early community divided it in practice, reported from Ibn Umar and others, and the schools carried it forward as the recommended shape.</p><p>So a family that gives away far more than a third has not broken a rule, and a family that keeps more than a third because they are the poor household on their own street has not broken one either. What is not allowed is selling any of it, including the skin, or paying the butcher out of the meat. Pay him in money.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="22:28" aria-label="Listen to Qur’an 22:28">22:28 ▸</button><span class="rn">eat of it and feed the hard pressed poor</span></span><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="22:36" aria-label="Listen to Qur’an 22:36">22:36 ▸</button><span class="rn">eat of it and feed the content and the beggar</span></span><span class="ref"><b>Muslim 1971</b><span class="rn">eat, store and give in charity</span></span></div></article><article class="card mo"><div class="ch"><h3>Giving through an organisation, said honestly</h3><span class="evb editorial mo-pop" title="Our own counsel, drawn from the sources named">Editorial</span></div><p>Most Muslims in Europe and North America now pay a charity to slaughter an animal somewhere else and distribute the meat there. The scholars who permit it are permitting a real thing: an agent may slaughter on your behalf, the intention is yours, and a family in a place with no meat eats for a week. That is not a loophole.</p><p>What is lost is worth naming rather than pretending away. Your children do not see where meat comes from. Your neighbour does not receive a plate at the door. The verse says eat of it, and you did not eat of it. None of that makes the sacrifice invalid, and all of it is a reason to look for a local option first if there is one at all.</p><p>If you do give through an organisation, ask two questions: is it slaughtered inside the days, and is a share actually distributed rather than banked for later. A reputable one will answer both without being defensive.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="22:28" aria-label="Listen to Qur’an 22:28">22:28 ▸</button><span class="rn">eat of it, an instruction addressed to you</span></span></div></article><article class="card mo"><div class="ch"><h3>The takbir of Tashriq</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>From Fajr on the ninth of Dhul Hijjah, the day of Arafah, until Asr on the thirteenth, the takbir is said aloud after every obligatory prayer. That is twenty three prayers of it. It is the longest stretch of collective remembrance in the calendar and most people have no idea it exists.</p><p>It is not narrated in a raised report with a sound chain. It is the practice of Ali and Ibn Abbas, which al-Bukhari mentions without a chain in his chapter on the days of Tashriq, and the schools then differed over the exact edges: some begin at Fajr on the ninth and end at Asr on the thirteenth, others begin at Zuhr on the tenth, others end at the end of the thirteenth.</p><p>Say it with your masjid. The Book itself says: remember Allah during numbered days, and the numbered days are these.</p><div class="refs"><span class="ref q"><b>Qur’an</b><button type="button" class="vplay" data-ref="2:203" aria-label="Listen to Qur’an 2:203">2:203 ▸</button><span class="rn">and remember Allah during numbered days</span></span><span class="ref"><b>Bukhari chapter of the days of Tashriq</b><span class="rn">the practice of Ali and Ibn Abbas, cited without a chain</span></span></div></article><article class="card mo"><div class="ch"><h3>Hair and nails, from the first of the month</h3><span class="evb debated mo-pop" title="The scholars read this one differently">Scholars differ</span></div><p>Umm Salamah reported: when you see the crescent of Dhul Hijjah and one of you intends to sacrifice, let him withhold from his hair and his nails until he has sacrificed.</p><p>Ahmad reads that as a prohibition. Al-Shafi’i reads it as disliked but not forbidden. Abu Hanifah and Malik read it against Aisha’s report that the Prophet ﷺ would send the sacrificial animals to Makkah and stay among his family with nothing lawful forbidden to him, and conclude it is permitted, with leaving the hair alone being merely better.</p><p>Two things people get wrong. It applies to the person whose sacrifice it is, not to the whole household, and not to the children. And if you cut something by accident or by forgetting, there is no expiation and no penalty in any school. Carry on.</p><div class="refs"><span class="ref"><b>Muslim 1977</b><span class="rn">let him withhold from his hair and his nails</span></span><span class="ref"><b>Bukhari 1698</b><span class="rn">nothing lawful to him was forbidden, in Aisha’s report</span></span></div></article><article class="card mo"><div class="ch"><h3>The day before: they are standing at Arafah</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Eid al-Adha only makes sense if you know what happened the day before it. On the ninth, everyone on Hajj stands on the plain of Arafah from midday until sunset, doing nothing but asking. Hajj is Arafah, the Prophet ﷺ said: a person who reaches that standing has made the pilgrimage.</p><p>For everyone not on Hajj, that same day is the best day of the year to fast. He ﷺ said fasting the day of Arafah expiates the year before it and the year after it. The pilgrims themselves do not fast it, because they need the strength for the standing.</p><p>So the shape of the two days is this: one day of hunger and asking, then one day of meat and greeting. The Hajj Room walks the whole journey, day by day, if you want to see where the ninth sits inside it.</p><div class="refs"><span class="ref"><b>Tirmidhi 889</b><span class="rn">Hajj is Arafah</span></span><span class="ref"><b>Muslim 1162</b><span class="rn">fasting Arafah expiates the year before and the year after</span></span></div></article><div class="fig mo-pop mo-draw "><svg viewBox="0 0 480 282" role="img" aria-label="Five days from the ninth to the thirteenth of Dhul Hijjah, with one counter for each obligatory prayer after which the takbir is said, twenty three of them in all."><text class="fm" x="40" y="34" text-anchor="start">the takbir of Tashriq</text><text class="fx" x="40" y="56" text-anchor="start">said aloud after every obligatory prayer, from Fajr on the ninth</text><text class="fx" x="40" y="74" text-anchor="start">of Dhul Hijjah to Asr on the thirteenth</text><path class="s3" d="M40 100h400v84H40Z"/><text class="fm" x="80" y="118" text-anchor="middle">9</text><text class="fx" x="80" y="136" text-anchor="middle">Arafah</text><circle class="f2 tq" cx="54.0" cy="164" r="5.5"/><circle class="f2 tq" cx="67.0" cy="164" r="5.5"/><circle class="f2 tq" cx="80.0" cy="164" r="5.5"/><circle class="f2 tq" cx="93.0" cy="164" r="5.5"/><circle class="f2 tq" cx="106.0" cy="164" r="5.5"/><text class="fm" x="160" y="118" text-anchor="middle">10</text><text class="fx" x="160" y="136" text-anchor="middle">Eid</text><circle class="f2 tq" cx="134.0" cy="164" r="5.5"/><circle class="f2 tq" cx="147.0" cy="164" r="5.5"/><circle class="f2 tq" cx="160.0" cy="164" r="5.5"/><circle class="f2 tq" cx="173.0" cy="164" r="5.5"/><circle class="f2 tq" cx="186.0" cy="164" r="5.5"/><path class="s3" d="M120 100v84"/><text class="fm" x="240" y="118" text-anchor="middle">11</text><text class="fx" x="240" y="136" text-anchor="middle">Tashriq</text><circle class="f2 tq" cx="214.0" cy="164" r="5.5"/><circle class="f2 tq" cx="227.0" cy="164" r="5.5"/><circle class="f2 tq" cx="240.0" cy="164" r="5.5"/><circle class="f2 tq" cx="253.0" cy="164" r="5.5"/><circle class="f2 tq" cx="266.0" cy="164" r="5.5"/><path class="s3" d="M200 100v84"/><text class="fm" x="320" y="118" text-anchor="middle">12</text><text class="fx" x="320" y="136" text-anchor="middle">Tashriq</text><circle class="f2 tq" cx="294.0" cy="164" r="5.5"/><circle class="f2 tq" cx="307.0" cy="164" r="5.5"/><circle class="f2 tq" cx="320.0" cy="164" r="5.5"/><circle class="f2 tq" cx="333.0" cy="164" r="5.5"/><circle class="f2 tq" cx="346.0" cy="164" r="5.5"/><path class="s3" d="M280 100v84"/><text class="fm" x="400" y="118" text-anchor="middle">13</text><text class="fx" x="400" y="136" text-anchor="middle">Tashriq</text><circle class="f2 tq" cx="387.0" cy="164" r="5.5"/><circle class="f2 tq" cx="400.0" cy="164" r="5.5"/><circle class="f2 tq" cx="413.0" cy="164" r="5.5"/><path class="s3" d="M360 100v84"/><text class="fx" x="40" y="206" text-anchor="start">starts at Fajr</text><text class="fx" x="440" y="206" text-anchor="end">ends at Asr</text><text class="fl" x="240" y="240" text-anchor="middle">23 prayers in all</text><text class="fx" x="240" y="262" text-anchor="middle">and most people have never been told that it exists</text></svg><ul class="leg"><li>Tashriq means the laying out of meat to dry in the sun, which is what the three days after the Eid were for. The name stuck.</li><li>The edges differ by school. Some begin at Zuhr on the tenth, some end at the close of the thirteenth. Every school agrees the middle of it is loud.</li><li>It is said after the obligatory prayer, once, before the usual remembrance. Say it with your masjid rather than arguing about the boundary.</li></ul><p class="cap"><b>Qur’an 2:203.</b> And remember Allah during numbered days. Al-Bukhari cites the practice of Ali and Ibn Abbas in his chapter on these days.</p></div><div class="fam-links mo"><a class="fl-c" href="/hajj#days"><span class="fl-k">The day before</span><b>The Hajj Room</b><span>What the pilgrims are doing on the ninth while you are fasting: the standing at Arafah, hour by hour, and the whole journey around it.</span></a><a class="fl-c" href="/hajj#ihram"><span class="fl-k">If you are going</span><b>Ihram and the boundary</b><span>The state a pilgrim enters, what it forbids, and where it begins. Read it before you book anything.</span></a></div></section></div><section class="rsec " id="families"><div class="sh"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">العِيد مَع الأَوْلَاد</span><h2>Making the day land for children</h2></div><p class="tr">al-eid ma’a al-awlad, Eid with the children</p><p class="sub">A child forms their picture of the whole religion out of about six Eids. It is worth being deliberate about what those six contain.</p><article class="card mo"><div class="ch"><h3>Play on this day is not a distraction from it</h3><span class="evb sunnah mo-pop" title="Established in the authentic Sunnah">Sunnah</span></div><p>Aisha said two girls were with her on the day of Eid, singing the songs the Ansar used to sing about the battle of Bu’ath, and they were not singers. Abu Bakr came in and said: the pipes of the devil, in the house of the Messenger of Allah? And he ﷺ said: leave them, Abu Bakr, every people has a festival, and this is our festival.</p><p>In the same collection, the Abyssinians played with their spears in the masjid and he stood with Aisha behind him watching until she had had enough, holding his cloak up as a screen and asking her, are you done yet.</p><p>The most cautious man in the community got corrected on this, in his own daughter’s house, in front of her. That is the level of seriousness with which joy on Eid is being defended.</p><div class="refs"><span class="ref"><b>Bukhari 952</b><span class="rn">every people has a festival, and this is our festival</span></span><span class="ref"><b>Bukhari 950</b><span class="rn">the Abyssinians playing, and Aisha watching until she was done</span></span></div></article><article class="card mo"><div class="ch"><h3>Gifts, money, and the thing children actually remember</h3><span class="evb editorial mo-pop" title="Our own counsel, drawn from the sources named">Editorial</span></div><p>Handing children money or a gift on Eid is a custom, not a sunnah, and it is a good one. Nothing needs to be spent that a household does not have. What is remembered thirty years later is almost never the size of it.</p><p>What is remembered is the shape of the morning: that everyone got up early, that everyone was dressed well, that the whole family walked somewhere together, that somebody said the takbir out loud in the car and it was not embarrassing. Build that and the presents are decoration.</p><p>One thing worth guarding: give to all of them in the same measure. Fairness between children was the subject of a whole narration, and Eid is exactly the day it gets tested.</p><div class="refs"><span class="ref"><b>Bukhari 2587</b><span class="rn">fear Allah and be just between your children</span></span></div></article><article class="card mo"><div class="ch"><h3>Do not spend the whole day at the stove</h3><span class="evb editorial mo-pop" title="Our own counsel, drawn from the sources named">Editorial</span></div><p>This is written for the households where the women cook from six in the morning until four in the afternoon, miss the prayer, miss the takbir, miss the visiting, and eat standing up. It happens every year in a great many homes and nobody planned it.</p><p>The instruction in the sources runs the other way. The women were commanded to be brought out to the prayer, including the ones excused from praying. Nobody was told to stay behind and cook. A festival that a whole half of the household experiences as a work shift has gone wrong somewhere between the text and the kitchen.</p><p>Practical, and it does work: cook what can be cooked the day before, buy what can be bought, eat something simple at lunch and properly in the evening, and put the men and the older children on the clearing up. The food is not the Eid. Everybody being in the same room is the Eid.</p><div class="refs"><span class="ref"><b>Bukhari 974</b><span class="rn">bring out the girls and the women, so they witness the good</span></span></div></article><div class="fam-links mo"><a class="fl-c" href="/kids/lanterns"><span class="fl-k">For the evening</span><b>The Lantern Sky</b><span>A child lights a lantern for something they are grateful for and watches it go up. Quiet, and made for exactly these evenings.</span></a><a class="fl-c" href="/kids"><span class="fl-k">For the whole day</span><b>The Kids’ Codex</b><span>The story of everything, told at their height: the prophets, the animals of the Qur’an, and small games that leave something behind.</span></a></div></section><section class="rooms mo" id="rooms"><p class="rk">The rooms either side of this one</p><div class="rl"><a class="rc rc-ram" href="/ramadan"><span class="rc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.3 14.7A9.2 9.2 0 0 1 9.3 2.7a9.2 9.2 0 1 0 12 12z"/></svg></span><span class="rc-t"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">رَمَضَان</span><b>The Ramadan Room</b><span>The thirty days that Eid al-Fitr is the end of: today’s fasting window, the reading plan for the whole Qur’an, the last ten nights, and zakat al-fitr in full.</span></span></a><a class="rc rc-hajj" href="/hajj"><span class="rc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16v-2H4Zm2-3h12V9l-6-5-6 5Zm4-2v-4h4v4Z"/></svg></span><span class="rc-t"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">الحَجّ</span><b>The Hajj Room</b><span>The pilgrimage that Eid al-Adha sits inside: the three ways to perform it, ihram, and the day at Arafah that the tenth of Dhul Hijjah follows.</span></span></a><!--WGOX--><style>.rc-proph{background:linear-gradient(166deg,#140F0A,#33251A 58%,#4A3524)}.rc-fam{background:linear-gradient(166deg,#120A10,#331B2A 58%,#4A2A3C)}</style><a class="rc rc-proph" href="/prophets#ibrahim"><span class="rc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2L21 9.6l-4.8 4.3L17.6 21 12 17.6 6.4 21l1.4-7.1L3 9.6l6.6-1.4z"/></svg></span><span class="rc-t"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">إِبْرَاهِيم</span><b>Ibrahim, in the Chain of Light</b><span>The father, the son and the ransom, told in full. It is the whole reason there is an udhiya at all.</span></span></a><a class="rc rc-fam" href="/family"><span class="rc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-3.3 0-8 1.7-8 5v1h16v-1c0-3.3-4.7-5-8-5Z"/></svg></span><span class="rc-t"><span class="ar notranslate" translate="no" dir="rtl" lang="ar">الأُسْرَة</span><b>The Family Room</b><span>Eid lands on a household before it lands on anyone alone: children, parents, kin and neighbours, and what is owed to each.</span></span></a><!--/WGOX--></div></section><section class="band mo"><p>This room stays open all year and leads with whichever Eid is nearest. If a date here does not match your masjid, move the offset in the Ramadan Room and every calculated date on the site follows you. If a line here is wrong, tell us and it gets fixed.</p><div class="bl"><a class="ghost" href="/feedback">Send a correction</a><a class="gpill" href="/donate">Keep the lamp lit ✦</a></div></section></div>
+</main>
+
+<footer class="rfoot">
+<p>The Eid Room is free forever, like every room in the Codex.<br/>
+<a href="index.html">Return to the Codex</a> · <a href="feedback.html">Send a correction</a> · <a href="donate.html">Keep the lamp lit ✦</a></p>
+</footer>
+<script>
+(function(){
+"use strict";
+/* The calendar is deferred in the head, which means it runs after this inline
+   script is parsed but before DOMContentLoaded. So the room waits for that
+   event and then finds it already standing. If it never arrives, the room
+   still opens, every word of it, and simply says nothing about dates. */
+function boot(){
+var H=window.NOOR_HIJRI, S=window.NOOR_RAMADAN;
+var $=function(id){return document.getElementById(id);};
+
+/* ---- verse audio through the shared Mushaf voice ------------------ */
+document.querySelectorAll(".vplay").forEach(function(b){
+  b.addEventListener("click",function(){if(window.playAyah)window.playAyah(b.getAttribute("data-ref"),b);});
+});
+
+/* ---- which Eid is near, and lead with it -------------------------- */
+var MONTHNAMES=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var WEEK=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function gregLine(d){
+  if(!d)return "";
+  return WEEK[d.getDay()]+" "+d.getDate()+" "+MONTHNAMES[d.getMonth()]+" "+d.getFullYear();
+}
+function plural(n,a,b){return n+" "+(n===1?a:b);}
+
+function paintNear(){
+  if(!H)return;
+  /* the season engine may be standing on a previewed day, and if it is, this
+     room stands on the same day so the owner can inspect either Eid */
+  var now;
+  try{now=(S&&S.today)?S.today():new Date();}catch(e){now=new Date();}
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var h=null;try{h=H.toHijri(today);}catch(e){h=null;}
+  if(!h)return;
+
+  var nf=null,na=null;
+  try{nf=H.nextEidAlFitr(today);}catch(e){}
+  try{na=H.nextEidAlAdha(today);}catch(e){}
+  var df=nf?H.daysBetween(today,nf.date):9999;
+  var da=na?H.daysBetween(today,na.date):9999;
+
+  /* a running Eid always leads, even though its next occurrence is a year off */
+  var running="";
+  if(h.hm===10&&h.hd<=3)running="fitr";
+  if(h.hm===12&&h.hd>=10&&h.hd<=13)running="adha";
+
+  var near=running||((df<=da)?"fitr":"adha");
+  var info={fitr:{n:nf,d:df,name:"Eid al-Fitr"},adha:{n:na,d:da,name:"Eid al-Adha"}};
+
+  ["fitr","adha"].forEach(function(k){
+    var sec=$(k), card=$("ec-"+k), kick=$("ec-k-"+k), cd=$("ec-cd-"+k);
+    var isNear=(k===near);
+    if(sec)sec.style.order=isNear?"1":"2";
+    if(card){if(isNear)card.classList.add("near");else card.classList.remove("near");}
+    if(kick)kick.textContent=isNear?(running===k?"today":"next"):"the other one";
+    var lk=sec?sec.querySelector(".lead-k"):null;
+    if(lk)lk.textContent=isNear?(running===k?"happening now":"the one that is next"):"and the other one, whenever you want it";
+    if(cd){
+      var it=info[k];
+      if(running===k){
+        cd.textContent="Today. Taqabbal Allahu minna wa minkum, may Allah accept from us and from you.";
+      }else if(it.n){
+        cd.textContent=gregLine(it.n.date)+" · in "+plural(it.d,"day","days")+", calculated";
+      }else{
+        cd.textContent="calculated from the tabular calendar";
+      }
+    }
+  });
+
+  var note=$("ecn");
+  if(note){
+    var lead=info[near];
+    var head=(running?("Today is "+lead.name+". "):(lead.n?(lead.name+" is "+(lead.d===0?"today":(lead.d===1?"tomorrow":"in "+plural(lead.d,"day","days")))+", on "+gregLine(lead.n.date)+". "):""));
+    note.textContent=head+"These dates are calculated, not sighted. Your masjid\u2019s announcement is the date, and the offset control in the Ramadan Room moves this page with it.";
+  }
+}
+paintNear();
+window.addEventListener("noor:hijri-offset",function(){paintNear();});
+window.addEventListener("noor:season",function(){paintNear();});
+
+/* ---- zakat al-fitr, an estimate and said so ----------------------- */
+function paintZ(){
+  if(!$("z-n"))return;
+  var n=parseInt($("z-n").value,10), a=parseFloat($("z-a").value), c=($("z-c").value||"").trim()||"units";
+  if(isNaN(n)||n<1)n=1; if(isNaN(a)||a<0)a=0;
+  var total=Math.round(n*a*100)/100;
+  $("z-out").innerHTML=n+" "+(n===1?"person":"people")+" at "+a+" "+c+" is <b>"+total+" "+c+"</b>";
+}
+["z-n","z-a","z-c"].forEach(function(id){
+  var el=$(id); if(el)el.addEventListener("input",paintZ);
+});
+if($("z-out"))paintZ();
+
+/* ---- the rail follows the section you are reading ------------------ */
+var rail=document.getElementById("secnav");
+if(rail){
+  var inn=rail.firstElementChild;
+  var chips=[].slice.call(rail.querySelectorAll("a"));
+  var secs=chips.map(function(a){return document.getElementById(a.getAttribute("href").slice(1));});
+  var cur=-2, queued=false;
+  function mark(){
+    queued=false;
+    var line=rail.getBoundingClientRect().bottom+28, i=-1;
+    for(var j=0;j<secs.length;j++){
+      if(secs[j]&&secs[j].getBoundingClientRect().top<=line)i=j;
+    }
+    if(i===cur)return;
+    cur=i;
+    chips.forEach(function(c,k){
+      if(k===i){c.classList.add("on");c.setAttribute("aria-current","true");}
+      else{c.classList.remove("on");c.removeAttribute("aria-current");}
+    });
+    var el=chips[i];
+    if(el&&inn&&inn.scrollWidth>inn.clientWidth+4){
+      var to=el.offsetLeft-(inn.clientWidth-el.offsetWidth)/2;
+      if(inn.scrollTo){inn.scrollTo({left:to,behavior:"smooth"});}else{inn.scrollLeft=to;}
+    }
+  }
+  window.addEventListener("scroll",function(){
+    if(!queued){queued=true;window.requestAnimationFrame(mark);}
+  },{passive:true});
+  window.addEventListener("resize",mark,{passive:true});
+  mark();
+}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);
+else boot();
+})();
+</script>
+</body>
+</html>
