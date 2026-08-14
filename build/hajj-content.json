@@ -1,0 +1,2306 @@
+{
+ "meta": {
+  "slug": "hajj",
+  "title": "Hajj and Umrah",
+  "ar": "الحَجّ",
+  "kick": "The Golden Room",
+  "h1": "The journey of a lifetime, explained from the beginning",
+  "lead": "Al-Hajj, the pilgrimage, is the fifth pillar of Islam and the one journey a Muslim makes once in a life if he is able. This room is written for someone who has never gone: what you do, on which day, in what order, what is a pillar and what is only better, where the schools of law differ, and what to do when something goes wrong.",
+  "desc": "Hajj and Umrah made simple: the three ways, ihram and the miqats, tawaf and sa’i, the five days from 8 to 13 Dhul Hijjah, the pillars and obligations, women’s rulings, and what to do when something goes wrong. Every ruling carries its evidence."
+ },
+ "frame": {
+  "kk": "Read this first",
+  "title": "What this room is, and what it is not",
+  "ps": [
+   "This is a guide to understand and to prepare. It is not a fatwa, and it cannot be one. A fatwa is a ruling given to a named person in a known situation by a scholar who can ask questions back. Nothing on this page knows your school, your health, your group, or what happened to you at two in the morning at the miqat, the boundary where ihram begins.",
+   "Rulings on the ground also change. Routes are moved, buses are re-timed, whole camps are shifted, and the way your group performs a rite may be shaped by the crowd around you and by decisions taken that week. Follow your group’s scholar and the guide walking with you. They can see what a page cannot.",
+   "Where the four Sunni schools differ, this room says so and gives the positions fairly, because a reader who knows there is a difference asks a question, and a reader who was told there is only one answer argues with the person beside him. Where a report is beloved but its chain is contested, that is said plainly rather than borrowed quietly. Where a number for a narration is not certain, the narration is named by its collection and its wording instead of being guessed at.",
+   "About the hadith on this page. Most are cited by their collection and by the wording of the narration rather than by number, because the numbering differs from one printing to another and a number is an easy thing to copy wrongly. Where a number is given, it is one we are confident of. Look the narration up either way, and confirm every ruling here with the scholars of your own group before you act on it.",
+   "Read it slowly, more than once, before you travel. Then take it with you, and ask a scholar on site the moment anything is unclear. Asking is not weakness. It is the whole method."
+  ],
+  "keys": [
+   [
+    "quran",
+    "Qur’an",
+    "stated in the Book itself"
+   ],
+   [
+    "sunnah",
+    "Sunnah",
+    "established in authentic hadith"
+   ],
+   [
+    "debated",
+    "Scholars differ",
+    "the four schools read this one differently"
+   ],
+   [
+    "editorial",
+    "Editorial",
+    "our own counsel, never revelation"
+   ]
+  ]
+ },
+ "sections": [
+  {
+   "id": "why",
+   "nav": "What and why",
+   "ar": "الحَجّ",
+   "gloss": "al-Hajj, the pilgrimage",
+   "title": "What Hajj is, and who it is written upon",
+   "lead": "Before the map and the days and the rulings, the shape of the thing. Hajj is a set of acts done in one place, in a fixed handful of days, once in a life, by whoever can reach it. It is worship with your legs. It is also the oldest invitation still open: a call Ibrahim was told to make, that people are still answering.",
+   "fig": "call",
+   "cards": [
+    {
+     "t": "The fifth pillar, and its verse",
+     "level": "quran",
+     "ps": [
+      "Islam is built on five things, and the fifth is Hajj to the House for whoever can find a way to it. The Qur’an states the duty in one sentence: to Allah, from the people, is a pilgrimage to the House, for whoever is able to find a way there. The verse does not say every year, and it does not say everyone. It says whoever is able, once.",
+      "The Prophet ﷺ said it plainly when a man asked whether Hajj was owed every year: had he said yes, it would have become binding every year, and Hajj is once, and whatever a person does beyond that is voluntary. So one Hajj discharges the duty of a lifetime. Everything after that is a gift you give, not a debt you pay."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "3:97",
+       "note": "the duty, and the condition of being able"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "8",
+       "note": "Islam built upon five"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1337",
+       "note": "Hajj is once; more than that is voluntary"
+      }
+     ]
+    },
+    {
+     "t": "What able actually means",
+     "level": "debated",
+     "ps": [
+      "The Qur’an’s condition is istita’ah, ability, and the scholars unpack it into four plain things. Your body can bear the journey. You have the money for the travel and the rites. That money is beyond what your dependents need while you are away, so nobody at home goes hungry so that you can stand at Arafah. And the road is safe enough to travel with your life and your property intact.",
+      "A report explaining the way as provision and a mount is narrated by Tirmidhi and Ibn Majah. Scholars have criticised its chains, and it is honest to say so, but the four schools agree on its meaning, and they built the same four conditions from the verse itself.",
+      "Debt is where most people’s question actually lives. The rule the schools work with is that a debt owed now, that a person could pay now, comes before a voluntary journey and before an obligation he is not yet able for. A long term debt like a mortgage that is being paid on schedule is treated differently by many scholars from a debt already due. This is exactly the kind of question to put to a scholar with your actual numbers in front of him."
+     ],
+     "schools": [
+      [
+       "The four schools",
+       "agree on the four conditions of ability: body, wealth beyond dependants’ needs, means of travel, and a safe road."
+      ],
+      [
+       "Hanafi and Maliki",
+       "hold that a person unable to travel because of permanent illness is not obliged in himself, though the Hanafis hold that if he had wealth and left instruction for a Hajj to be done for him, that stands."
+      ],
+      [
+       "Shafi’i and Hanbali",
+       "hold that the one who is permanently unable in body but able in wealth must have someone perform Hajj on his behalf, on the strength of the hadith of the woman of Khath’am."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "3:97",
+       "note": "whoever is able to find a way there"
+      },
+      {
+       "k": "hadith",
+       "src": "Tirmidhi",
+       "r": "",
+       "note": "the report of provision and a mount; chains criticised, meaning agreed"
+      }
+     ]
+    },
+    {
+     "t": "Hajj for someone who cannot go",
+     "level": "sunnah",
+     "ps": [
+      "A woman of the tribe of Khath’am asked the Prophet ﷺ about her father, who was old and could not sit on a mount. He told her to perform Hajj on his behalf. That is the anchor for badal al-hajj, Hajj performed on behalf of another who is permanently unable, or who has died.",
+      "One condition is well known and worth saying: the one performing it should have performed his own Hajj first. The Prophet ﷺ heard a man saying labbayk on behalf of Shubrumah, asked who Shubrumah was, and told him to perform Hajj for himself first and then for Shubrumah. The Hanafis differ, holding the Hajj still counts for the one it was intended for while the performer is blameworthy, but the safe road is the plain one."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Ibn Abbas: the woman of Khath’am whose father was old and could not sit firm on a mount, told to perform Hajj on his behalf"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "the hadith of Shubrumah: perform Hajj for yourself first"
+      }
+     ]
+    },
+    {
+     "t": "Umrah, and how the schools rank it",
+     "level": "debated",
+     "ps": [
+      "Al-Umrah, the lesser pilgrimage, is the same visit without the days. Ihram, the sacred state you enter at a fixed boundary; tawaf, circling the House seven times; sa’i, going seven times between two small hills; and then cutting the hair, and it is done. It has no fixed date: it can be performed at any time of the year, and it takes a few hours rather than five days.",
+      "Whether Umrah is obligatory once in a life is one of the oldest live disagreements in this chapter, and it is not a small one. Those who say it is obligatory read the command to complete the Hajj and the Umrah for Allah, and a narration in which the Prophet ﷺ told Aisha that the jihad of women is Hajj and Umrah. Those who say it is a confirmed sunnah point out that the famous hadith of Jibril, which listed Islam’s obligations, named Hajj and did not name Umrah."
+     ],
+     "schools": [
+      [
+       "Shafi’i and Hanbali",
+       "Umrah is obligatory once in a lifetime for whoever is able."
+      ],
+      [
+       "Hanafi and Maliki",
+       "Umrah is sunnah mu’akkadah, a confirmed sunnah, strongly encouraged and not a debt."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "and complete the Hajj and the Umrah for Allah"
+      },
+      {
+       "k": "hadith",
+       "src": "Ibn Majah",
+       "r": "",
+       "note": "Aisha asked about jihad for women: a jihad without fighting, Hajj and Umrah"
+      }
+     ]
+    },
+    {
+     "t": "A call still being answered",
+     "level": "quran",
+     "ps": [
+      "The Qur’an tells it as a scene. Allah settled Ibrahim at the place of the House and told him to purify it for those who circle it, and then to proclaim the pilgrimage to the people, and they will come to you on foot and on every lean camel, from every distant mountain pass. One man called out in an empty valley. Every crowd since has been the echo.",
+      "That is why the first thing you say when you enter ihram is not a request but an answer. Labbayk. Here I am. The word is a reply to a call, and the call is older than every person in the crowd around you.",
+      "The Qur’an also names what the journey is for, in a phrase easy to walk past: that they may witness benefits for themselves and mention the name of Allah on known days. Benefits, plural, and unspecified. Some of them arrive at Arafah. Some of them do not arrive for years."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "22:26",
+       "note": "Ibrahim settled at the place of the House"
+      },
+      {
+       "k": "quran",
+       "r": "22:27",
+       "note": "proclaim the pilgrimage, and they will come"
+      },
+      {
+       "k": "quran",
+       "r": "22:28",
+       "note": "that they may witness benefits for themselves"
+      },
+      {
+       "k": "quran",
+       "r": "22:29",
+       "note": "and let them circle the ancient House"
+      }
+     ]
+    },
+    {
+     "t": "What is promised to the one who goes",
+     "level": "sunnah",
+     "ps": [
+      "Two narrations carry the whole weight of the reward. Whoever performs Hajj for Allah and does not speak obscenely nor act corruptly returns as the day his mother bore him. And: the accepted Hajj, al-Hajj al-mabrur, has no reward except Paradise.",
+      "Notice the condition sitting inside the first one. It is not the walking that returns a person clean, it is the walking without the obscenity and the quarrelling. The Qur’an says the same in the same breath as it opens the season: no obscenity, no corruption, no arguing in the Hajj."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1521",
+       "note": "returns as the day his mother bore him"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1773",
+       "note": "the accepted Hajj has no reward but Paradise"
+      },
+      {
+       "k": "quran",
+       "r": "2:197",
+       "note": "no obscenity, no corruption, no arguing in the Hajj"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ways",
+   "nav": "Three ways",
+   "ar": "أنواع النُّسُك",
+   "gloss": "anwa’ an-nusuk, the kinds of rite",
+   "title": "The three ways to perform Hajj",
+   "lead": "There is not one Hajj, there are three shapes of it, and you choose your shape before you enter ihram, not after. The choice decides whether you owe a sacrifice, whether you get out of ihram in the middle, and how many times you perform tawaf and sa’i. Nearly every group from outside Arabia performs the first one.",
+   "fig": "ways",
+   "cards": [
+    {
+     "t": "Tamattu’: Umrah first, then out, then Hajj",
+     "level": "quran",
+     "rank": "most common",
+     "ps": [
+      "At-Tamattu’ means the enjoyment, and the name is literal. You enter ihram for Umrah at the miqat, perform the Umrah, cut your hair, and come completely out of ihram. You wear ordinary clothes, you go back to your family, everything lawful is lawful again. Then on the eighth of Dhul Hijjah you enter ihram again, from wherever you are staying in Makkah, for Hajj.",
+      "It is the Qur’an that names this way and attaches the sacrifice to it: whoever enjoys the Umrah until the Hajj, then whatever sacrifice is easy. Whoever cannot find one fasts three days during the Hajj and seven when he returns, ten complete. The verse then adds the limit: that is for whoever’s family is not present at the Sacred Mosque.",
+      "This is what most pilgrims from outside the Haram, the sanctuary around Makkah, do, and there are two honest reasons. Flights arrive days or weeks before the eighth, and nobody can stay in ihram for two weeks without hardship. And the Prophet ﷺ, at the end of his life, ordered the companions who had not brought sacrificial animals to turn their Hajj into an Umrah and come out of ihram, and said that had he known earlier what he knew then, he would not have brought the animal."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "the sacrifice for tamattu’, and the ten days of fasting"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "the long hadith of Jabir describing the Farewell Hajj"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "had I known before what I know now, I would not have brought the animal"
+      }
+     ]
+    },
+    {
+     "t": "Qiran: both together, in one ihram",
+     "level": "sunnah",
+     "ps": [
+      "Al-Qiran means the joining. You make one intention for Umrah and Hajj together at the miqat, and you do not come out of ihram at all between them. You stay in the two cloths from the miqat until the tenth of Dhul Hijjah. A sacrifice is due, as it is for tamattu’.",
+      "This is the way of one who brings a sacrificial animal with him, and it is what the Prophet ﷺ himself did in the Farewell Hajj according to the strongest reading of the reports, because he had driven the animals from Madinah.",
+      "The schools differ on the mechanics, and the difference is practical. Most schools hold that one tawaf and one sa’i serve for both the Umrah and the Hajj of the qarin. The Hanafis hold that he performs two tawafs and two sa’is, one set for each."
+     ],
+     "schools": [
+      [
+       "Hanafi",
+       "the qarin performs two tawafs and two sa’is, one for the Umrah and one for the Hajj."
+      ],
+      [
+       "Maliki, Shafi’i and Hanbali",
+       "one tawaf and one sa’i suffice for both, on the strength of Aisha’s report that those who joined the two performed one tawaf."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "the Prophet ﷺ drove the sacrificial animals and did not come out of ihram"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "Aisha: those who joined Hajj and Umrah performed one tawaf"
+      }
+     ]
+    },
+    {
+     "t": "Ifrad: Hajj alone",
+     "level": "sunnah",
+     "ps": [
+      "Al-Ifrad means the singling out. You enter ihram for Hajj only, perform the Hajj, and no sacrifice is due from you, because you have not joined an Umrah to it. If you wish to perform an Umrah afterwards, you do it after the Hajj is complete, entering ihram again from outside the sanctuary boundary.",
+      "This is the usual choice of the people of Makkah and those living inside the miqats, and of anyone who arrives close to the eighth. It is also the only one of the three with no hady, no sacrifice, attached to it, which is why it is sometimes chosen for reasons of cost. That is a real reason, and it is worth saying out loud that saving the cost of a sheep is not usually the best reason to choose a rite."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "the sacrifice is tied to tamattu’, not to Hajj performed alone"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the companions set out variously: some for Hajj alone, some joining, some for Umrah"
+      }
+     ]
+    },
+    {
+     "t": "Which is best, and why the schools split",
+     "level": "debated",
+     "ps": [
+      "This is a famous four way disagreement, and every school has an argument that is not silly. Do not let anyone tell you their answer is the only one, and do not carry the argument into the camp with you.",
+      "Whichever you choose, choose it before you enter ihram, and tell your group leader, because the sacrifice, the timing of your hair cutting, and whether you repeat the sa’i all follow from it. Changing your mind afterwards is possible in some cases and costly in others."
+     ],
+     "schools": [
+      [
+       "Hanafi",
+       "Qiran is best, because it joins two rites in one journey and the Prophet ﷺ performed it."
+      ],
+      [
+       "Maliki and Shafi’i",
+       "Ifrad is best, reading the Prophet’s ﷺ own Hajj as ifrad and noting that no sacrifice is imposed by it."
+      ],
+      [
+       "Hanbali",
+       "Tamattu’ is best, on the strength of his ﷺ final instruction to his companions to release into Umrah, and his wish that he had done so himself."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "Jabir’s long account, read differently by each school"
+      },
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "the verse names tamattu’ explicitly and legislates for it"
+      }
+     ]
+    },
+    {
+     "t": "The sacrifice is a thanksgiving, not a fine",
+     "level": "debated",
+     "ps": [
+      "The hady owed by the pilgrim of tamattu’ and qiran is called by the scholars a dam of shukr, a sacrifice of gratitude. It is not a penalty for a mistake. You are not being fined for resting between the two rites. You are giving thanks for having been given two acts of worship in one journey.",
+      "Whoever cannot find or afford one fasts three days during the Hajj and seven after returning home. The schools differ on when the three may be fasted: many allow them from the entry into ihram for Umrah, most prefer the seventh, eighth and ninth, and if they are missed the Hanafis and others discuss whether the days of Tashriq, the three days that follow the sacrifice, may be used. If you expect to fast rather than slaughter, settle this with a scholar before you travel, not on the ninth."
+     ],
+     "schools": [
+      [
+       "Hanafi",
+       "the three days may be fasted after entering ihram for Umrah and before the day of Arafah. That they may not be delayed past the day of Arafah is the well known view, and it is stated here more crisply than the madhhab holds it: Hanafi authorities differ among themselves over what is owed by one who lets those days pass, and they do not all answer the same way."
+      ],
+      [
+       "Maliki and Shafi’i",
+       "the standard summary is that they may be fasted from the entry into ihram for Hajj, and that the Shafi’is do not permit them in the days of Tashriq in the strongest view. The Maliki half of that line is thin, and their books are reported with more than one starting point, so a Maliki should settle it with a scholar of his own school."
+      ],
+      [
+       "Hanbali",
+       "permits fasting them in the days of Tashriq for one who did not fast them before, on the strength of the report of Aisha and Ibn Umar."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "three during the Hajj and seven on return, ten complete"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "Aisha and Ibn Umar: no permission was given to fast the days of Tashriq except for one who could not find a sacrifice"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ihram",
+   "nav": "Ihram",
+   "ar": "الإحرام",
+   "gloss": "al-ihram, entering the sacred state",
+   "title": "Ihram: the state, the boundary, and the prohibitions",
+   "lead": "Ihram is the most misunderstood word in this whole chapter. It is not the towels. It is a state you enter with an intention at a fixed boundary, and the cloth is only its uniform. Once you are in it, a list of ordinary lawful things becomes unlawful to you until you are released, and some of them cost you a sacrifice if you break them.",
+   "fig": "miqat",
+   "cards": [
+    {
+     "t": "The five miqats, and who enters at each",
+     "level": "sunnah",
+     "rank": "obligation",
+     "ps": [
+      "A miqat is a boundary line in space. The Prophet ﷺ appointed one for the people of each direction, and no person intending Hajj or Umrah may cross his line without being in ihram.",
+      "Dhul Hulayfah, for the people of Madinah and anyone coming through it, about four hundred and fifty kilometres out and the furthest of them, known today as Abyar Ali. Al-Juhfah, for the people of Sham, Egypt and the west, north of Makkah, with Rabigh used in its place today. Qarn al-Manazil, for the people of Najd, to the east, known today as as-Sayl al-Kabir. Yalamlam, for the people of Yemen, to the south, used also by many arriving from South and Southeast Asia. And Dhat Irq, for the people of Iraq, to the north east.",
+      "The rule he ﷺ gave with them covers everyone: they are for the people of those places, and for anyone who comes through them from other lands, for whoever intends Hajj or Umrah. Whoever lives nearer than a miqat enters ihram from where he is, until the people of Makkah enter from Makkah itself.",
+      "One honest note about the fifth, and it is a claim about grading rather than about the rite itself. On the reading of the hadith scholars, four of these are named in explicit prophetic text in Bukhari and Muslim, while Dhat Irq is reported in Bukhari as appointed by Umar for the people of Iraq when their cities were opened, with further reports raising it to the Prophet ﷺ whose chains those scholars discuss and do not all grade the same way. That assessment is theirs and we are repeating it, not making it. In practice all four schools treat Dhat Irq as the miqat of that direction."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1524",
+       "note": "the miqats named, and the rule for whoever is nearer"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1181",
+       "note": "the same, with Yalamlam and Qarn"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "Umar appointing Dhat Irq for the people of Iraq"
+      }
+     ]
+    },
+    {
+     "t": "Arriving by air, and living inside the line",
+     "level": "debated",
+     "rank": "obligation",
+     "ps": [
+      "An aircraft crosses the miqat at altitude, which the Prophet ﷺ did not describe, so the scholars applied the rule to the vertical. The overwhelming position of contemporary councils and the four schools’ own reasoning is that the boundary extends upward: you enter ihram before your aircraft passes over the line of your miqat, not after you land.",
+      "In practice this means changing into the ihram garments at home or at the airport you depart from, and making the intention and beginning the talbiyah, the pilgrim’s call, when the crew announces the miqat or roughly half an hour before landing, whichever comes first. Making the intention early is safe. Making it late is not.",
+      "Whoever crosses his miqat without ihram and then intends Hajj or Umrah must go back to the line and enter from there. If he does not go back, the four schools hold a dam, a sacrifice, is due from him, and his Hajj is still valid. Note the word intending: someone travelling to Jeddah for work, with no intention of Umrah, is not bound by the line at the moment he crosses it.",
+      "Someone already living inside the miqats, in Jeddah or Makkah, enters ihram for Hajj from where he is. For Umrah he must first go out to the boundary of the sanctuary and enter from there, which is why pilgrims are taken to at-Tan’im or al-Ji’ranah. That practice comes from the Prophet ﷺ sending Aisha out with her brother to enter ihram for Umrah from at-Tan’im."
+     ],
+     "schools": [
+      [
+       "The four schools",
+       "agree that crossing the miqat without ihram while intending the rites obliges either a return to the line or a sacrifice."
+      ],
+      [
+       "Hanafi",
+       "hold that if he returns to the miqat and enters ihram there, the sacrifice falls away; the Shafi’is hold similarly, and the difference between them lies in whether the return must be before he begins any rite."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1524",
+       "note": "whoever is nearer enters from where he begins"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Umrah, the narration of Aisha, sent with Abdur-Rahman ibn Abi Bakr to at-Tan’im to enter ihram for Umrah"
+      }
+     ]
+    },
+    {
+     "t": "What ihram actually is",
+     "level": "debated",
+     "rank": "pillar",
+     "ps": [
+      "Ihram is an intention, made in the heart, to enter the rites. The cloth is not the ihram. A man wrapped in two white sheets who has not intended anything is a man in two sheets. A man in ordinary clothes who intends Hajj at the miqat has entered ihram and is now sinning by wearing the clothes, not waiting outside the state.",
+      "The bodily preparations are sunnah, and they are these: ghusl, a full washing, which is recommended even for a woman who is menstruating or in post natal bleeding, because Asma bint Umays gave birth at Dhul Hulayfah and the Prophet ﷺ told her to wash, bind herself, and enter ihram. Then perfume on the body, not on the garments, which Aisha said she used to apply to him ﷺ before he entered ihram. Then, for a man, the two unstitched white cloths: an izar wrapped around the lower body and a rida’ over the shoulders. Then two units of prayer if it is a permitted time, then the intention as the journey begins, then the talbiyah.",
+      "For a woman there is no special garment at all. Her ihram is her ordinary modest dress, in any colour, and this needs saying because so many people assume white is required of her. What changes for her is that she does not wear the niqab, a face veil cut to the face, and does not wear gloves, because the Prophet ﷺ named those two by name.",
+      "The schools differ on whether the talbiyah is part of entering the state or a sunnah alongside it, which matters if someone forgets to say it."
+     ],
+     "schools": [
+      [
+       "Hanafi",
+       "the intention alone does not convene ihram; it must be joined to the talbiyah or to driving the sacrificial animal."
+      ],
+      [
+       "Maliki",
+       "the talbiyah is wajib, an obligation, and a sacrifice is due from one who omits it entirely."
+      ],
+      [
+       "Shafi’i and Hanbali",
+       "the intention convenes the ihram, and the talbiyah is a strong sunnah alongside it."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "Asma bint Umays gave birth and was told to wash and enter ihram"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Aisha: I used to perfume him ﷺ for his ihram before he entered it"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ibn Umar: the woman in ihram does not wear the niqab nor the gloves"
+      }
+     ]
+    },
+    {
+     "t": "The talbiyah, the words of the answer",
+     "level": "sunnah",
+     "rank": "sunnah",
+     "talbiyah": {
+      "ar": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
+      "tr": "Labbayka Allahumma labbayk, labbayka la sharika laka labbayk, inna al-hamda wa an-ni’mata laka wa al-mulk, la sharika lak.",
+      "en": "Here I am, O Allah, here I am. Here I am, You have no partner, here I am. Truly all praise and all favour are Yours, and the dominion. You have no partner."
+     },
+     "ps": [
+      "This is what Ibn Umar reported as the talbiyah of the Messenger of Allah ﷺ, and it is the sound of the whole journey. Men raise their voices with it. Women say it audibly to themselves without raising the voice.",
+      "Say it often: when you climb, when you descend, when you meet a group of people, after every prayer, in the morning, whenever it comes to you. It stops at different points depending on your rite: for Umrah, when you begin the tawaf; for Hajj, when you throw the first pebble at Jamrat al-Aqabah, the largest of the three stone pillars at Mina, on the tenth."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Ibn Umar giving the wording of the talbiyah: labbayka Allahumma labbayk"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1184",
+       "note": "the same wording"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration from al-Fadl ibn Abbas: he ﷺ kept saying the talbiyah until he stoned Jamrat al-Aqabah"
+      }
+     ]
+    },
+    {
+     "t": "The prohibitions that carry an expiation",
+     "level": "quran",
+     "ps": [
+      "These are the ones with a price attached. Removing hair from the head or body, and by agreement the cutting of nails. Applying perfume to the body or clothes, including scented soap, scented cream and scented deodorant. For a man, wearing anything stitched or shaped to a limb: shirt, trousers, underwear, socks, and covering the head with anything resting on it. For a woman, the niqab and gloves. Touching a spouse with desire. Hunting land game, or helping someone else hunt it.",
+      "The expiation for the hair, and by extension for the others in this group, is set in the Qur’an and explained by the Prophet ﷺ to Ka’b ibn Ujrah, whose head was covered in lice: fast three days, or feed six poor people, or slaughter a sheep. The one who does it out of a genuine need, an illness or an injury, pays the same expiation without sin. The one who does it deliberately without need pays it and repents.",
+      "Hunting has its own expiation, named in the Qur’an: a like animal from the livestock, judged by two just men, or the feeding of the poor, or an equivalent in fasting. Sea game stays lawful throughout. And note the boundary: buying meat that someone else lawfully slaughtered is not hunting."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "do not shave until the sacrifice reaches its place; the threefold expiation"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ka’b ibn Ujrah, whose head was covered in lice, given the three choices of fasting, feeding or a sacrifice"
+      },
+      {
+       "k": "quran",
+       "r": "5:95",
+       "note": "the expiation for hunting while in ihram"
+      },
+      {
+       "k": "quran",
+       "r": "5:96",
+       "note": "the game of the sea is lawful to you"
+      }
+     ]
+    },
+    {
+     "t": "What breaks the Hajj outright, and what only wounds it",
+     "level": "debated",
+     "ps": [
+      "There is one prohibition in a class of its own. Sexual intercourse before the first release on the tenth invalidates the Hajj itself, by the agreement of the four schools. The pilgrim must complete the rites anyway, must repeat the Hajj the following year, and owes a badanah, a camel. It is worth being honest that this ruling is built on the judgements of the Companions, chiefly Umar, Ali and Ibn Abbas, rather than on an explicit prophetic text, and that the schools accepted it as settled.",
+      "Intercourse after the first release but before tawaf al-ifadah is different: the Hajj is not invalidated, an expiation is due, and one re-enters ihram from outside the sanctuary to complete the remaining tawaf. The details differ by school and this is a scholar’s question.",
+      "At the other end of the list sit the prohibitions with no material expiation at all: arguing, quarrelling, obscene speech and sin, named in the Qur’an as the things that hollow out a Hajj from inside. There is no sheep for these. There is repentance, and there is the person you were rude to, whose forgiveness you now have to go and ask for."
+     ],
+     "schools": [
+      [
+       "The four schools",
+       "agree that intercourse before the first release invalidates the Hajj, that it must still be completed, and that it must be repeated."
+      ],
+      [
+       "Hanafi",
+       "the expiation in that case is a sheep if it occurred after standing at Arafah, and a camel if before it."
+      ],
+      [
+       "Maliki, Shafi’i and Hanbali",
+       "a camel is due, with detail on who bears it if both spouses were in ihram."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:197",
+       "note": "no obscenity, no corruption, no arguing in the Hajj"
+      },
+      {
+       "k": "quran",
+       "r": "2:187",
+       "note": "the boundary of intimacy, set by Allah and not to be approached"
+      }
+     ]
+    },
+    {
+     "t": "The famous differences inside the list",
+     "level": "debated",
+     "ps": [
+      "Three of these come up on nearly every journey, and knowing that the schools differ will save you an argument in a tent.",
+      "First, the marriage contract. The Prophet ﷺ said the one in ihram may not marry, nor give another in marriage, nor propose. Most scholars therefore hold such a contract void with no expiation. The Hanafis hold it valid though disliked, reading the report that he ﷺ married Maymunah while in ihram.",
+      "Second, footwear. Ibn Umar reported the prohibition of the khuff, a leather sock covering the ankle, unless a man finds no sandals, in which case he cuts them below the ankles. But in the sermon at Arafah, as Ibn Abbas reports, he ﷺ said that whoever finds no sandals may wear boots, without mentioning cutting. Most schools require the cutting; the Hanbalis, and some others, take the later Arafah wording and do not.",
+      "Third, and most useful of all: what happens if you break a prohibition by accident, out of forgetfulness or not knowing. This is not a small technicality. It happens to almost everyone, usually with scented soap."
+     ],
+     "schools": [
+      [
+       "Hanafi and Maliki",
+       "the standard summary is that the expiation is due even from one who forgot or did not know, because it repairs a right of the rite rather than punishing a sin. That summary flattens the Maliki position, which carries recognised exceptions and excuses in a number of these cases, so a Maliki should not read this line as the whole of his school."
+      ],
+      [
+       "Shafi’i and Hanbali",
+       "excuse the forgetful and the genuinely ignorant in several of these, notably perfume, clothing and covering the head, holding no expiation is due once the thing is removed at once."
+      ],
+      [
+       "All four",
+       "agree that the moment you realise, you stop, you remove it, and you do not carry on."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1409",
+       "note": "the one in ihram does not marry, give in marriage, or propose"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Ibn Umar on what the one in ihram may wear, and the cutting of the khuff below the ankles"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ibn Abbas: the sermon at Arafah, trousers for whoever finds no waist wrapper and boots for whoever finds no sandals"
+      }
+     ]
+    },
+    {
+     "t": "What stays lawful, and gets asked about anyway",
+     "level": "editorial",
+     "ps": [
+      "Washing, showering and swimming. Unscented soap. Changing your ihram cloths, and washing them. Wearing a watch, glasses, a ring, a hearing aid, a money belt around the waist, and a bag over the shoulder. Sheltering under an umbrella, a tent, or the roof of a bus. Covering the face for a man, in the view of the majority. Killing harmful creatures. Scratching your head gently, even if a hair or two falls without intent.",
+      "The two that trip people most often: sandals or flip flops that leave the ankle bone and the top of the foot open are fine, and a wide elastic belt with pockets is fine because it is a belt, not a garment shaped to the body. When in doubt, the test for a man is simple. Is this sewn or shaped to fit a limb, and is it being worn the way that limb’s clothing is worn."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "Ibn Abbas: he ﷺ was cupped while in ihram; and the reports of washing the head in ihram"
+      }
+     ]
+    }
+   ],
+   "fig2": "prohibitions"
+  },
+  {
+   "id": "umrah",
+   "nav": "Umrah",
+   "ar": "العُمْرَة",
+   "gloss": "al-Umrah, the lesser pilgrimage",
+   "title": "Umrah, step by step",
+   "lead": "Umrah is four steps and a few hours, and it is the best possible rehearsal for Hajj, because tawaf and sa’i return in the middle of the fifth day when you are tired. Learn them properly here, once, calmly, and the tenth of Dhul Hijjah will be far easier.",
+   "fig": "tawaf",
+   "cards": [
+    {
+     "t": "One: ihram, from the miqat",
+     "level": "sunnah",
+     "rank": "pillar",
+     "ps": [
+      "Wash, wear the two cloths if you are a man or your ordinary modest dress if you are a woman, and at the miqat intend Umrah in your heart. Then begin the talbiyah and keep saying it all the way to Makkah.",
+      "The schools count this differently in their lists, though nothing practical changes: the Hanafis call ihram a shart, a condition of the Umrah, with tawaf as its pillar. The others count ihram itself among the pillars. Either way, without it you have not begun."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1",
+       "note": "actions are only by intentions"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1524",
+       "note": "no crossing of the miqat without ihram for one intending the rites"
+      }
+     ]
+    },
+    {
+     "t": "Two: entering the Haram, and the first sight",
+     "level": "editorial",
+     "rank": "sunnah",
+     "ps": [
+      "Enter with the right foot and say the du’a for entering any mosque. Then the Kaaba comes into view, and this is the moment everyone has been told to prepare a special supplication for.",
+      "Here is the honest position: no specific du’a for the first sight of the Kaaba is established in an authentic report from the Prophet ﷺ. Some scholars transmitted words for it, and their chains are weak or cut. What is established is that du’a is answered in that place. So say your own, in your own language, for the things you actually need. That is better than reciting borrowed words while thinking about nothing."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "",
+       "note": "the narration on entering the mosque: O Allah, open for me the doors of Your mercy"
+      }
+     ]
+    },
+    {
+     "t": "Three: tawaf, seven circuits",
+     "level": "quran",
+     "rank": "pillar",
+     "ps": [
+      "Tawaf is circling the Kaaba seven times, anticlockwise, with the House on your left. It starts at the corner of al-Hajar al-Aswad, the Black Stone, and it ends there. Every circuit is one full pass from that corner back to it. Counting matters more than speed; lose count and you build on the lower number you are certain of.",
+      "The conditions are: covering what must be covered, being inside the mosque, keeping the House on your left, staying outside the Hijr, that low curved wall, because it is part of the House itself as Aisha was told, and beginning and ending at the Stone. Purity is the one condition the schools split on, and it matters enormously for women, so it has its own note below.",
+      "At the Stone, do istilam, the greeting of the Stone: kiss it if you can reach it without harming anyone, or touch it with your hand and kiss your hand, or, and this is what almost everyone will do, face it, raise your right hand toward it and say Allahu akbar, and keep walking. At the Yamani corner, touch it with the right hand if you can, and do not kiss it and do not point at it if you cannot. Between the Yamani corner and the Black Stone, say the words the Prophet ﷺ said there, which are a verse: our Lord, give us good in this world and good in the hereafter, and protect us from the punishment of the Fire.",
+      "For men only, in a tawaf that will be followed by sa’i: ramal, walking briskly with short quick steps, in the first three circuits, and idtiba’, passing the upper cloth under the right armpit so the right shoulder is bare, for the whole tawaf. Both are sunnah, both drop away in a crowd where they would harm someone, and neither applies to women.",
+      "Nothing else in the tawaf has fixed words. There is no prescribed du’a for the first circuit or the fourth. Say what you want, recite Qur’an, remember Allah, ask for your mother."
+     ],
+     "schools": [
+      [
+       "Maliki, Shafi’i and Hanbali",
+       "purity from both minor and major impurity is a condition of tawaf; a tawaf performed without wudu is not valid."
+      ],
+      [
+       "Hanafi",
+       "purity is wajib, an obligation, not a condition; a tawaf performed without wudu is valid and a sacrifice repairs it, and one performed in a state of major impurity requires a badanah and is better repeated."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "22:29",
+       "note": "and let them circle the ancient House"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1597",
+       "note": "Umar at the Stone: I know you are a stone that neither harms nor benefits"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Aisha: were your people not newly out of unbelief, the Hijr is part of the House"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "in the book of the rites, the narration of Abdullah ibn as-Sa’ib: he ﷺ said between the Yamani corner and the Black Stone, our Lord, give us good in this world and good in the Hereafter"
+      },
+      {
+       "k": "quran",
+       "r": "2:201",
+       "note": "our Lord, give us good in this world and the next"
+      }
+     ]
+    },
+    {
+     "t": "After the tawaf: two units, and Zamzam",
+     "level": "debated",
+     "rank": "obligation",
+     "ps": [
+      "Pray two units behind Maqam Ibrahim, the standing place of Ibrahim, if there is space, reciting al-Kafirun in the first and al-Ikhlas in the second, as Jabir described. If the area is packed, and it usually is, pray them anywhere in the mosque. Do not push through a tawaf to reach the Maqam. There is no requirement to be near it.",
+      "Then drink Zamzam, the water of the well beside the House. The Prophet ﷺ said of it that it is blessed, and that it is food that satisfies. The well known saying that the water of Zamzam is for whatever it is drunk for is narrated by Ibn Majah and Ahmad and graded acceptable by a number of scholars and criticised by others, and it is fair to tell you both. Drink, and ask."
+     ],
+     "schools": [
+      [
+       "Hanafi and Maliki",
+       "the two units after tawaf are wajib, and a sacrifice is due from one who leaves them. The Hanafi side of this is settled. The Maliki side is grouped with it here because that is the standard summary, and it is one to verify for yourself with a Maliki scholar before you rely on it."
+      ],
+      [
+       "Shafi’i and Hanbali",
+       "they are a strong sunnah; leaving them costs nothing material."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:125",
+       "note": "take from the standing place of Ibrahim a place of prayer"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "he ﷺ prayed two units at the Maqam and then returned to the Stone"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "2473",
+       "note": "Zamzam is blessed, it is food that satisfies"
+      }
+     ]
+    },
+    {
+     "t": "Four: sa’i, seven between Safa and Marwah",
+     "level": "quran",
+     "rank": "pillar",
+     "ps": [
+      "Go out to as-Safa. The Prophet ﷺ recited, as he approached it, the verse that Safa and Marwah are among the symbols of Allah, and said: I begin with what Allah began with. So you begin at Safa, and because you begin there, you end at Marwah.",
+      "Count like this, and it is the single most common counting mistake: Safa to Marwah is one. Marwah back to Safa is two. Seven ends you at Marwah, not back at Safa. Going and returning are not one trip, they are two.",
+      "On Safa, face the Kaaba, raise your hands and say Allahu akbar three times, then: there is no god but Allah alone, with no partner; His is the dominion and His is the praise, and He is able to do all things; there is no god but Allah alone; He fulfilled His promise, aided His servant, and defeated the confederates alone. Then make du’a. Say the whole of it three times, making du’a between. Do the same on Marwah. Between the two green markers, men jog; women walk. Everything between is free: du’a, dhikr, Qur’an, whatever you carry.",
+      "Sa’i is the memory of a woman running. Hajar, alone with an infant in a valley with no water, went up one hill and then the other, seven times, looking for help. Allah did not merely answer her; He wrote her panic into the pilgrimage of every person who would ever come, so that no one performs this Hajj without walking her path."
+     ],
+     "schools": [
+      [
+       "Maliki, Shafi’i and Hanbali",
+       "sa’i is a pillar; without it the rite is not complete and nothing repairs it but performing it."
+      ],
+      [
+       "Hanafi",
+       "sa’i is wajib, an obligation; whoever leaves it has a valid Hajj or Umrah and owes a sacrifice."
+      ],
+      [
+       "All four",
+       "agree that purity is not a condition of sa’i, though it is better."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:158",
+       "note": "Safa and Marwah are among the symbols of Allah"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "1218",
+       "note": "I begin with what Allah began with, and the words said on Safa"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the chapters on the prophets, the long narration of Ibn Abbas on Ibrahim leaving Hajar and her infant, and her running between the two hills"
+      }
+     ]
+    },
+    {
+     "t": "Five: halq or taqsir, and it is finished",
+     "level": "quran",
+     "rank": "pillar",
+     "ps": [
+      "Al-halq is shaving the head. At-taqsir is shortening it. For men, shaving is clearly better: the Prophet ﷺ asked Allah to have mercy on those who shave, three times, and only then added those who shorten. If you are performing tamattu’ and will shave again after the Hajj, many scholars advise shortening now and shaving on the tenth, so that there is hair to shave.",
+      "For women it is taqsir only. She gathers her hair and cuts about a fingertip’s length from the end, from each braid or from the hair as a whole. Women do not shave, as the Prophet ﷺ stated.",
+      "The moment your hair is cut, the Umrah is over. Everything forbidden by ihram is lawful again, including your spouse. Take the cloths off. Rest. Drink something cold. If you are performing tamattu’, you will do all of this again in a few days."
+     ],
+     "schools": [
+      [
+       "Shafi’i",
+       "cutting the hair is a pillar of both Hajj and Umrah; the rite does not conclude without it."
+      ],
+      [
+       "Hanafi, Maliki and Hanbali",
+       "it is an obligation, not a pillar; whoever omitted it entirely owes a sacrifice."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "48:27",
+       "note": "you will enter the Sacred Mosque, heads shaved and hair shortened"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1727",
+       "note": "O Allah, have mercy on those who shave, three times"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "Ibn Abbas: women do not shave, women only shorten"
+      }
+     ]
+    }
+   ],
+   "fig2": "sai"
+  },
+  {
+   "id": "days",
+   "nav": "The five days",
+   "ar": "أيّام الحَجّ",
+   "gloss": "ayyam al-Hajj, the days of the pilgrimage",
+   "title": "Hajj, day by day",
+   "lead": "Everything above was preparation. This is the Hajj itself: six dates, four places, and an order that does not move. Read the map first, then the days. If you learn nothing else on this page, learn where you are meant to be on the ninth, and why the whole thing turns on it.",
+   "fig": "map",
+   "fig2": "timeline",
+   "days": [
+    {
+     "n": "8",
+     "ar": "يوم التَّرْوِيَة",
+     "name": "Yawm at-Tarwiyah",
+     "en": "the day of watering",
+     "where": "Makkah, then Mina",
+     "lead": "The gentlest day of the five, and the one people waste. Its old name comes from the water the pilgrims used to draw here for the days ahead, when there were no taps in the valley.",
+     "cards": [
+      {
+       "t": "Enter ihram again, if you are performing tamattu’",
+       "level": "sunnah",
+       "rank": "obligation",
+       "ps": [
+        "In the morning, wash, put on the two cloths again or your modest dress, and make the intention for Hajj from wherever you are staying in Makkah. You do not go back out to a miqat. The Prophet ﷺ instructed his companions to enter ihram for Hajj from their places in Makkah on this day. Begin the talbiyah again, and this time it does not stop until you throw the first pebble on the tenth.",
+        "Pilgrims performing qiran or ifrad are already in ihram and stay in it. They change nothing today."
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "1524",
+         "note": "the people of Makkah enter ihram from Makkah"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "on the day of Tarwiyah they went to Mina in ihram for Hajj"
+        }
+       ]
+      },
+      {
+       "t": "To Mina, and five prayers there",
+       "level": "sunnah",
+       "rank": "sunnah",
+       "ps": [
+        "Go out to Mina, ideally before midday, and stay there. Pray Zuhr, Asr, Maghrib and Isha there, and Fajr of the ninth there. The four unit prayers are prayed as two units, shortened, each in its own time. They are not joined together on this day: this is shortening without joining, which is exactly what the Prophet ﷺ did.",
+        "Staying at Mina on the eighth is a sunnah, not an obligation, in the view of the four schools. Nobody owes a sacrifice for missing it. But it is the sunnah, it settles you, and it is the last quiet night you will have.",
+        "Spend it well. Sleep early. The temptation on this night is to talk until two in the morning with people you have just met. The ninth is the day of your life and you will meet it exhausted."
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of the prayers at Mina: he ﷺ prayed Zuhr, Asr, Maghrib, Isha and Fajr there"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "he ﷺ went out to Mina and prayed the five prayers there"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "9",
+     "ar": "يوم عَرَفَة",
+     "name": "Yawm Arafah",
+     "en": "the day of Arafah",
+     "where": "Arafah until sunset, then Muzdalifah",
+     "lead": "The greatest day of the year, and the one day of the Hajj that cannot be replaced by anything. Everything else here can be repaired with a sacrifice or performed late. Miss this, and there is no Hajj this year at all.",
+     "cards": [
+      {
+       "t": "The standing at Arafah is the pillar",
+       "level": "sunnah",
+       "rank": "pillar",
+       "pillar": true,
+       "ps": [
+        "The Prophet ﷺ said: al-Hajju Arafah. Hajj is Arafah. Four words, and they are the reason this day is treated differently from every other part of the journey. Whoever stands at Arafah, even for a moment, within its window, has caught the Hajj. Whoever does not, has not, and no sacrifice and no repentance and no fee replaces it.",
+        "After sunrise on the ninth you travel from Mina to Arafah. The sunnah is to stop at Namirah until midday, then to pray Zuhr and Asr joined and shortened, two units and two units, at the time of Zuhr, with one adhan and two iqamahs. Then the standing begins.",
+        "The window: from midday on the ninth, when the sun passes its highest point, until dawn on the tenth. Being at Arafah for any part of that is enough. In practice you arrive in the morning and stay until the sun has fully set, which is the sunnah and which the majority require of anyone who was there during the day."
+       ],
+       "schools": [
+        [
+         "Hanafi, Shafi’i and Hanbali",
+         "the standing is valid at any moment from midday on the ninth to dawn on the tenth; whoever stood in the daytime and left before sunset owes a sacrifice, and his Hajj stands."
+        ],
+        [
+         "Maliki",
+         "a portion of the night is itself required; one who stood only in the daytime and left before sunset has not fulfilled the standing, and his Hajj is missed."
+        ],
+        [
+         "Hanbali",
+         "in their well known view the window opens earlier, from the dawn of the ninth, on the strength of the hadith of Urwah ibn Mudarris."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Tirmidhi",
+         "r": "889",
+         "note": "Hajj is Arafah; graded sahih"
+        },
+        {
+         "k": "hadith",
+         "src": "Tirmidhi",
+         "r": "891",
+         "note": "Urwah ibn Mudarris: whoever caught the standing before dawn has caught the Hajj"
+        },
+        {
+         "k": "quran",
+         "r": "2:198",
+         "note": "when you depart from Arafat, remember Allah at the Sacred Landmark"
+        }
+       ]
+      },
+      {
+       "t": "The whole plain is a standing place",
+       "level": "sunnah",
+       "ps": [
+        "He ﷺ said, standing there: I have stood here, and all of Arafah is a standing place. This sentence exists to stop you doing something foolish.",
+        "There is no rite attached to the mountain called Jabal ar-Rahmah, the Mount of Mercy. Climbing it is not sunnah, touching it does nothing, and every year people injure themselves in the heat to reach a rock the Prophet ﷺ told them they did not need. Your tent is Arafah. The car park is Arafah. Sit in the shade and use the hours.",
+        "One boundary does matter: the valley called Batn Uranah is outside Arafah, not part of it. The camps are laid out to keep you inside the boundary, and the boundary is marked, but check where your tent is and do not wander out of the line to find a quieter place."
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "I have stood here, and all of Arafah is a standing place"
+        },
+        {
+         "k": "hadith",
+         "src": "Ibn Majah",
+         "r": "",
+         "note": "all of Arafah is a standing place, and keep away from the belly of Uranah"
+        }
+       ]
+      },
+      {
+       "t": "What to do with the hours",
+       "level": "sunnah",
+       "dua": {
+        "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+        "tr": "La ilaha illa Allahu wahdahu la sharika lah, lahu al-mulku wa lahu al-hamd, wa huwa ala kulli shay’in qadir.",
+        "en": "There is no god but Allah alone, with no partner. His is the dominion and His is the praise, and He is able to do all things."
+       },
+       "ps": [
+        "Face the qiblah, raise your hands, and ask. Do not pray voluntary prayers all afternoon, do not sightsee, do not sleep it away, and do not fast: the Prophet ﷺ stood at Arafah not fasting, and drank in full view of the people so that they would know. The fast of Arafah is for those who are not there.",
+        "He ﷺ said the best du’a is the du’a of the day of Arafah, and the best of what he and the prophets before him said is the words above. Scholars have graded that report variously, and it has been acted on for centuries. Say it, and then say your own words. Ask in your own language, out loud if you like, until you run out, and then ask again.",
+        "This is the day for the things you have never said to anyone. The dead you miss. The debt you are frightened of. The child who is not speaking to you. The sin you have repeated since you were seventeen. There is no day like it: on no day does Allah free more slaves from the Fire than the day of Arafah, and He draws near, and He boasts of the people standing there before the angels."
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1348",
+         "note": "on no day does Allah free more from the Fire than the day of Arafah"
+        },
+        {
+         "k": "hadith",
+         "src": "Tirmidhi",
+         "r": "",
+         "note": "the report that the best du’a is the du’a of the day of Arafah, and the best said by him ﷺ and by the prophets before him is la ilaha illa Allah wahdahu la sharika lah; graded variously"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "the narration of Umm al-Fadl: milk sent to him ﷺ while he stood at Arafah, and he drank it while the people looked on"
+        }
+       ]
+      },
+      {
+       "t": "Muzdalifah, after sunset",
+       "level": "quran",
+       "rank": "obligation",
+       "ps": [
+        "When the sun has set, leave for Muzdalifah, calmly. He ﷺ said, as the crowd surged: people, be calm, be calm. And here is the rule that surprises everyone: do not pray Maghrib at Arafah. You delay it until you reach Muzdalifah, and there you pray Maghrib and Isha together, with one adhan and two iqamahs, and then you sleep.",
+        "Do not spend the night praying. He ﷺ lay down and slept until Fajr. Pray Fajr early, then stand facing the qiblah at al-Mash’ar al-Haram, the Sacred Landmark named in the Qur’an, remembering Allah and asking, until the light is wide, then leave before sunrise.",
+        "Collect seven small pebbles for tomorrow, about the size of a chickpea. You can collect them at Muzdalifah or at Mina; there is nothing special about Muzdalifah stones and nothing to be gained from washing them. You need seven for tomorrow, and you can gather the rest at Mina.",
+        "The weak, the elderly, women, and those caring for them may leave Muzdalifah after the middle of the night, before the crowd. This is an explicit permission the Prophet ﷺ gave to Sawdah, who was heavy and slow, and to the families sent ahead with Umm Salamah. Use it if it is yours to use."
+       ],
+       "schools": [
+        [
+         "The four schools",
+         "hold the night at Muzdalifah an obligation whose omission is repaired by a sacrifice, and the Hajj stands."
+        ],
+        [
+         "A minority",
+         "including Ibn Hazm and one report from Ahmad, count it a pillar without which the Hajj is not valid; this is not the position acted on by the schools."
+        ],
+        [
+         "Hanafi",
+         "specify that what is obligatory is the standing there after dawn, and the sacrifice falls on one who left before dawn without an excuse."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:198",
+         "note": "remember Allah at the Sacred Landmark"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of the joining at Muzdalifah: Maghrib and Isha prayed there together with one adhan and two iqamahs"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of Aisha: Sawdah, heavy of build, asked and was given permission to leave Muzdalifah before the crowd"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "people, be calm, be calm; and he slept until Fajr"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "10",
+     "ar": "يوم النَّحْر",
+     "name": "Yawm an-Nahr",
+     "en": "the day of sacrifice",
+     "where": "Muzdalifah, Mina, Makkah, Mina",
+     "lead": "The busiest day of your life. Four acts, tens of kilometres, and the day the ihram finally comes off. It is also the day people make mistakes, because they are tired and nobody explained the order to them.",
+     "cards": [
+      {
+       "t": "One: Jamrat al-Aqabah, seven pebbles",
+       "level": "sunnah",
+       "rank": "obligation",
+       "ps": [
+        "Go from Muzdalifah to Mina and throw seven pebbles, one at a time, at the largest pillar, the one nearest Makkah. Say Allahu akbar with each one. Today you throw at this one only, not at the other two.",
+        "Stop the talbiyah at the first pebble. He ﷺ kept saying it until that moment and then stopped.",
+        "The best time is after sunrise. The schools differ on how early it may be done, which matters because groups now move in the dark to avoid the crush, and because the weak leave Muzdalifah at midnight."
+       ],
+       "schools": [
+        [
+         "Shafi’i and Hanbali",
+         "the time begins after the middle of the night of the tenth; the throw is valid from then."
+        ],
+        [
+         "Maliki",
+         "from the dawn of the tenth."
+        ],
+        [
+         "Hanafi",
+         "from the dawn of the tenth in the well known view, with recognised exceptions for the weak. Whether a throw made before dawn simply does not count and must be repeated, or stands with something owed for it, is disputed inside the madhhab itself, so a Hanafi who is moved in the dark should put it to his own scholar rather than settle it from this line."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration from al-Fadl ibn Abbas: he ﷺ did not stop the talbiyah until he threw at Jamrat al-Aqabah"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "he threw seven pebbles saying Allahu akbar with each"
+        }
+       ]
+      },
+      {
+       "t": "Two: the sacrifice",
+       "level": "quran",
+       "rank": "obligation",
+       "ps": [
+        "The pilgrim of tamattu’ and the pilgrim of qiran owe a hady, a sacrificial animal. Today is when it is slaughtered. In practice you will not hold a knife: you buy a voucher through your group or through one of the licensed banks and organisations, and the animal is slaughtered on your behalf inside the sanctuary and the meat distributed. That is valid, and it is how it has been done for decades.",
+        "The pilgrim of ifrad owes nothing. Whoever cannot afford it fasts three days during the Hajj and seven on returning, as the Qur’an sets out.",
+        "The Qur’an says something about this act that is worth carrying: it is not their meat, nor their blood, that reaches Allah, but it is your piety that reaches Him. The animal is not a payment. It is a sign, and the sign is only worth what is in the person making it."
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:196",
+         "note": "then whatever sacrifice is easy, or ten days of fasting"
+        },
+        {
+         "k": "quran",
+         "r": "22:37",
+         "note": "it is not their meat nor their blood that reaches Allah"
+        },
+        {
+         "k": "quran",
+         "r": "22:28",
+         "note": "and mention the name of Allah on known days over what He provided them"
+        }
+       ]
+      },
+      {
+       "t": "Three: halq or taqsir, and the first release",
+       "level": "quran",
+       "rank": "obligation",
+       "ps": [
+        "Shave the head, or shorten it. Men shave, and it is better. Women shorten a fingertip’s length. Use a licensed barber with a clean blade, not the man with a razor in the street, because blood borne infection is a real risk here every year.",
+        "With this comes at-tahallul al-awwal, the first release. Everything forbidden by ihram becomes lawful to you again except intimacy with your spouse. You take off the two cloths, you put on your own clothes, you use perfume, you cut your nails. It is a strange and beautiful feeling and you have earned it.",
+        "What exactly triggers the first release is a school difference worth knowing, because your group may act on one view and you may have been taught another."
+       ],
+       "schools": [
+        [
+         "Shafi’i and Hanbali",
+         "the first release comes when any two of the three are done: the stoning, the hair, and tawaf al-ifadah."
+        ],
+        [
+         "Hanafi",
+         "it comes with the shaving, once the stoning has been done."
+        ],
+        [
+         "Maliki",
+         "the standard summary is that it comes with the stoning of al-Aqabah together with the hair, with perfume in particular delayed until after tawaf al-ifadah. Of the four schools, this is the position we hold most loosely here: the Maliki texts are reported in more than one way, both on what triggers the release and on how far the perfume is delayed. Take it to a Maliki scholar before you act on it."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:196",
+         "note": "do not shave your heads until the sacrifice reaches its place"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "1727",
+         "note": "mercy on those who shave, three times, and on those who shorten"
+        }
+       ]
+      },
+      {
+       "t": "Four: tawaf al-ifadah, and its sa’i",
+       "level": "quran",
+       "rank": "pillar",
+       "pillar": true,
+       "ps": [
+        "Go down to Makkah and perform tawaf al-ifadah, seven circuits, exactly as before. This is the second pillar of the Hajj and the one every school agrees on. Without it there is no Hajj, no matter what else was done, and no sacrifice replaces it. It is also called tawaf az-ziyarah, the tawaf of the visit.",
+        "The pilgrim of tamattu’ then performs sa’i again, because his earlier sa’i belonged to his Umrah. The pilgrim of ifrad or qiran who already performed sa’i after his arrival tawaf does not repeat it, in the view of the majority; the Hanafis have the qarin perform a second sa’i.",
+        "With this tawaf, and its sa’i where it is owed, comes at-tahallul ath-thani, the second release. Now everything is lawful, including your spouse. Then return to Mina for the night.",
+        "On timing: the schools agree the day of sacrifice is best. If you cannot manage it today, in the crowds and the heat, know that the Hanafis hold it must be done within the days of sacrifice or a sacrifice becomes due, while the majority hold there is no final deadline and delay is merely disliked. Many groups deliberately send pilgrims for this tawaf on the eleventh or twelfth night, and that is a considered choice, not negligence."
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "22:29",
+         "note": "let them fulfil their vows and circle the ancient House"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1218",
+         "note": "he ﷺ went down to the House on the day of sacrifice and performed tawaf"
+        }
+       ]
+      },
+      {
+       "t": "The order, and what if you get it wrong",
+       "level": "debated",
+       "ps": [
+        "The sunnah order of the four is: stone, slaughter, shave, then tawaf. That is what he ﷺ did, and it is what you should aim for.",
+        "But the Prophet ﷺ spent that day at Mina being asked about mistakes, and answered every one the same way. A man said: I shaved before I slaughtered. He said: do it, no harm. Another: I performed tawaf before I stoned. Do it, no harm. He was not asked about anything that day, done before or after another, without saying: do it, and there is no harm.",
+        "That report is the reason most scholars are relaxed about the order. Take it seriously when your bus is late, when the crowd turns you back, when the barbers are shut. And take seriously that not every school reads it the same way."
+       ],
+       "schools": [
+        [
+         "Shafi’i and Hanbali",
+         "take the report at face value: no expiation for any reordering of the four, whether one knew or not."
+        ],
+        [
+         "Hanafi",
+         "a pilgrim of tamattu’ or qiran who shaves before slaughtering owes a sacrifice, reading the permission as given to the ignorant or as specific to the pilgrim of ifrad."
+        ],
+        [
+         "Maliki",
+         "require a sacrifice in some of these reorderings and not others; the detail is theirs to give."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of Ibn Abbas: asked all that day at Mina about doing one rite before another, he ﷺ said, do it, and there is no harm"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "1306",
+         "note": "the same, with the wording of the questions at Mina"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "11 to 13",
+     "ar": "أيّام التَّشْرِيق",
+     "name": "Ayyam at-Tashriq",
+     "en": "the days of drying the meat",
+     "where": "Mina",
+     "lead": "Three days, or two if you hurry, spent almost entirely in one place doing one thing each afternoon. After the tenth they feel slow, and that slowness is the point.",
+     "cards": [
+      {
+       "t": "Stay at Mina, and stone all three each afternoon",
+       "level": "quran",
+       "rank": "obligation",
+       "ps": [
+        "Spend the nights of the eleventh and twelfth at Mina, and the thirteenth too if you are staying. Each day, after the sun has passed its highest point, stone the three pillars in order: the small one first, then the middle one, then the large one, seven pebbles at each, saying Allahu akbar with every throw. Twenty one pebbles a day.",
+        "After the small pillar and after the middle one, move aside, face the qiblah, raise your hands and make a long du’a. After the large one, do not stop: he ﷺ threw at it and left without standing. This is a sunnah almost everyone misses, and it is one of the sweetest moments of the whole Hajj, standing there with your hands up while the crowd flows past.",
+        "You may appoint someone to throw on your behalf if you genuinely cannot, through illness, pregnancy, disability or age. He throws his own seven at each pillar first, then yours."
+       ],
+       "schools": [
+        [
+         "Maliki, Shafi’i and Hanbali",
+         "the nights at Mina during Tashriq are an obligation; whoever leaves them without excuse owes a sacrifice."
+        ],
+        [
+         "Hanafi",
+         "the nights at Mina are a sunnah; leaving them is disliked and no sacrifice is due."
+        ],
+        [
+         "Hanafi",
+         "permit stoning before midday on the thirteenth day only; the other three schools require after midday on every day of Tashriq."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:203",
+         "note": "and remember Allah during the numbered days"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of Ibn Umar: he stoned the small pillar with seven pebbles, then went forward and stood long facing the qiblah with his hands raised"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "in the book of Hajj, the narration of Ibn Umar: he threw at the large pillar with seven pebbles and did not stand after it"
+        }
+       ]
+      },
+      {
+       "t": "The takbir, and what these days are for",
+       "level": "quran",
+       "ps": [
+        "The Qur’an calls them the numbered days and commands the remembrance of Allah in them, and the Prophet ﷺ called them days of eating and drinking and remembrance of Allah. So eat. This is worship too, and people who fast these days are doing the opposite of what was asked.",
+        "Say the takbir aloud, in the camp and after every prayer: Allahu akbar, Allahu akbar, la ilaha illa Allah, wa Allahu akbar, Allahu akbar, wa lillahi al-hamd. Ibn Umar and Abu Hurayrah used to go out into the market in these days saying it, and the people would say it because they said it.",
+        "These are also, quietly, the days for the people around you. Everyone is tired and everyone smells and the tent is too small. The Hajj that is accepted is measured here as much as at Arafah."
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:203",
+         "note": "remember Allah during the numbered days"
+        },
+        {
+         "k": "hadith",
+         "src": "Muslim",
+         "r": "",
+         "note": "the narration of Nubayshah al-Hudhali: the days of Tashriq are days of eating, drinking and remembrance of Allah"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "",
+         "note": "Ibn Umar and Abu Hurayrah saying the takbir in the market during those days"
+        }
+       ]
+      },
+      {
+       "t": "Leaving after the twelfth, for whoever hurries",
+       "level": "quran",
+       "ps": [
+        "The Qur’an gives the permission itself: whoever hurries in two days, there is no sin on him, and whoever delays, there is no sin on him, for whoever is mindful. So you may stone on the twelfth after midday and leave Mina, or stay and stone again on the thirteenth. Neither is a compromise. The verse says so twice.",
+        "The condition is that you leave Mina before the sun sets on the twelfth. If sunset finds you still there, the majority hold you must stay for the thirteenth and stone again. The Hanafis are lighter: if the sun sets while he is still at Mina, he may still leave before the dawn of the thirteenth without a sacrifice, though staying is better.",
+        "This is why buses leave Mina in a rush on the twelfth afternoon, and why groups that planned to leave sometimes end up staying. If your bus is stuck in traffic and the sun goes down, you have not ruined anything. Ask your group’s scholar which view they act on."
+       ],
+       "schools": [
+        [
+         "Maliki, Shafi’i and Hanbali",
+         "whoever is still at Mina at sunset on the twelfth must remain and stone on the thirteenth."
+        ],
+        [
+         "Hanafi",
+         "leaving is still permitted until the dawn of the thirteenth, though remaining is better; after dawn the stoning of the thirteenth becomes due."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "quran",
+         "r": "2:203",
+         "note": "whoever hurries in two days, no sin; whoever delays, no sin"
+        }
+       ]
+      },
+      {
+       "t": "Tawaf al-wada, the farewell",
+       "level": "sunnah",
+       "rank": "obligation",
+       "ps": [
+        "The last thing you do in Makkah is seven circuits of the House, with no sa’i after it. Ibn Abbas said: the people were commanded that the last of their affairs should be with the House, except that it was lightened for the menstruating woman.",
+        "That exception is explicit and it is not a concession you have to argue for. A woman menstruating or bleeding after childbirth leaves without a farewell tawaf and owes nothing. When Safiyyah began her period and the Prophet ﷺ was told, he said: is she going to hold us back? He was told she had already performed tawaf al-ifadah. He said: then depart.",
+        "The people of Makkah, and those who are staying on rather than leaving, are not addressed by it. After it, leave. Do not go back to shop and then leave again, and do not spend the night; if you do, most scholars say repeat it."
+       ],
+       "schools": [
+        [
+         "Hanafi, Shafi’i and Hanbali",
+         "the farewell tawaf is an obligation; whoever leaves without it owes a sacrifice."
+        ],
+        [
+         "Maliki",
+         "it is a sunnah; nothing is owed by one who omits it, though it should not be left."
+        ],
+        [
+         "All four",
+         "excuse the menstruating woman entirely, on the explicit text."
+        ]
+       ],
+       "refs": [
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "1755",
+         "note": "let the last of your affairs be with the House, except the menstruating woman"
+        },
+        {
+         "k": "hadith",
+         "src": "Bukhari",
+         "r": "1757",
+         "note": "Safiyyah: is she going to hold us back? then depart"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "fig3": "jamarat"
+  },
+  {
+   "id": "ranks",
+   "nav": "Pillars and obligations",
+   "ar": "الأركان والواجبات",
+   "gloss": "al-arkan wa al-wajibat, the pillars and the obligations",
+   "title": "What invalidates, what costs a sacrifice, and what is merely better",
+   "lead": "Every act of the Hajj sits in one of three ranks, and the rank tells you what happens if it is missed. A rukn, a pillar, cannot be replaced by anything: leave it and there is no Hajj. A wajib, an obligation, is repaired by a dam, a sacrifice, and the Hajj stands. A sunnah is better and costs nothing. The schools do not put every act in the same rank, and the two tables below say plainly where they part.",
+   "fig": "scale",
+   "cards": [
+    {
+     "t": "The three ranks, in one breath",
+     "level": "editorial",
+     "ps": [
+      "Rukn, pillar: the act is part of the thing itself. If you omit it, you have not performed the Hajj, and you remain in ihram until you perform it or the Hajj is written off and made up. Money cannot buy it back.",
+      "Wajib, obligation: the act is commanded but is not part of the essence. Omit it and the Hajj is valid, and a dam is due: a sheep or a goat, or a seventh of a camel or a cow, slaughtered in the sanctuary and given to its poor.",
+      "Sunnah: the Prophet ﷺ did it or encouraged it. Omitting it costs nothing but loses something. Most of what makes the Hajj beautiful lives here.",
+      "One warning about the word dam. It literally means blood, and in these books it means a sacrifice, not a fine paid to anyone. It is meat for the poor of the sanctuary."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Malik",
+       "r": "",
+       "note": "the statement of Ibn Abbas: whoever forgets one of his rites, or leaves it, let him slaughter; a companion’s ruling, not a prophetic hadith"
+      }
+     ]
+    }
+   ],
+   "counts": {
+    "cap": "How each school counts the pillars of Hajj, and where the rest of the acts land",
+    "rows": [
+     [
+      "Hanafi",
+      "Two pillars: the standing at Arafah, and tawaf al-ifadah. In their view four of its seven circuits are the pillar and the remaining three are an obligation.",
+      "Ihram is a condition of validity. Sa’i, the standing at Muzdalifah, the stoning, the cutting of the hair, ihram from the miqat and the farewell tawaf are obligations repaired by a sacrifice."
+     ],
+     [
+      "Maliki",
+      "Four pillars: ihram, the standing at Arafah, tawaf al-ifadah, and sa’i.",
+      "The rest are obligations or sunnahs. The farewell tawaf is a sunnah for them, and part of the night of Arafah is required within the pillar of standing."
+     ],
+     [
+      "Shafi’i",
+      "Five pillars: ihram, the standing at Arafah, tawaf al-ifadah, sa’i, and cutting the hair. They add the keeping of the order between most of them.",
+      "The obligations are ihram from the miqat, the stoning, the night at Muzdalifah, the nights at Mina and the farewell tawaf."
+     ],
+     [
+      "Hanbali",
+      "Four pillars: ihram, the standing at Arafah, tawaf al-ifadah, and sa’i.",
+      "Seven obligations: ihram from the miqat, standing at Arafah until sunset for one who came in the day, the night at Muzdalifah, the nights at Mina, the stoning, the cutting of the hair, and the farewell tawaf."
+     ]
+    ],
+    "note": "Read across the row you were taught, not across all four at once. This table exists so that when a person in your group says the Hajj is only two things and another says it is five, you know that both of them are quoting a school and neither is inventing."
+   },
+   "table": {
+    "cap": "Act by act, through the whole journey",
+    "cols": [
+     "The act",
+     "What it counts as",
+     "If it is left out"
+    ],
+    "groups": [
+     {
+      "name": "Umrah",
+      "rows": [
+       [
+        "Ihram, with the intention, from the miqat",
+        "Pillar for most; a condition of validity for the Hanafis",
+        "There is no Umrah without it. Crossing the miqat without it and not returning costs a sacrifice."
+       ],
+       [
+        "Tawaf, seven circuits",
+        "Pillar, by agreement",
+        "Nothing replaces it. You remain in ihram until you perform it."
+       ],
+       [
+        "Sa’i, seven between Safa and Marwah",
+        "Pillar for Maliki, Shafi’i and Hanbali; obligation for Hanafi",
+        "Invalid without it in three schools; a sacrifice repairs it for the Hanafis."
+       ],
+       [
+        "Halq or taqsir, shaving or shortening",
+        "Pillar for the Shafi’is; obligation for the other three",
+        "The Shafi’is say the Umrah does not conclude; the others require a sacrifice."
+       ]
+      ]
+     },
+     {
+      "name": "Hajj, the pillars",
+      "rows": [
+       [
+        "Ihram for Hajj, with the intention",
+        "Pillar for three schools; a condition for the Hanafis",
+        "Nothing was entered, so nothing was performed."
+       ],
+       [
+        "The standing at Arafah, within its window",
+        "Pillar, by the agreement of all four",
+        "The Hajj is missed for that year. No sacrifice replaces it. See the section on what to do."
+       ],
+       [
+        "Tawaf al-ifadah",
+        "Pillar, by the agreement of all four",
+        "Nothing replaces it. You remain in ihram, and your spouse remains unlawful to you, until it is performed."
+       ],
+       [
+        "Sa’i after tawaf al-ifadah",
+        "Pillar for Maliki, Shafi’i and Hanbali; obligation for Hanafi",
+        "Invalid without it in three schools; a sacrifice repairs it for the Hanafis."
+       ]
+      ]
+     },
+     {
+      "name": "Hajj, the obligations",
+      "rows": [
+       [
+        "Entering ihram from the miqat, not after it",
+        "Obligation",
+        "A sacrifice, unless you return to the miqat and enter from there."
+       ],
+       [
+        "Remaining at Arafah until sunset, for one who stood in the day",
+        "Obligation for Hanafi, Shafi’i and Hanbali; part of the pillar for Maliki",
+        "A sacrifice in three schools. For the Malikis, one who left before sunset and did not return by night has missed the Hajj."
+       ],
+       [
+        "The night at Muzdalifah",
+        "Obligation by the four schools",
+        "A sacrifice. A minority outside the schools call it a pillar."
+       ],
+       [
+        "The nights at Mina during Tashriq",
+        "Obligation for Maliki, Shafi’i and Hanbali; sunnah for Hanafi",
+        "A sacrifice in three schools; nothing for the Hanafis."
+       ],
+       [
+        "Stoning the pillars, on their days",
+        "Obligation by the four schools",
+        "A sacrifice for leaving a whole day’s stoning; the schools have detail for a pebble or two."
+       ],
+       [
+        "The sacrifice for tamattu’ and qiran",
+        "Obligation named in the Qur’an",
+        "Fast three days during the Hajj and seven on returning."
+       ],
+       [
+        "Halq or taqsir",
+        "Pillar for Shafi’i; obligation for the other three",
+        "A sacrifice; and for the Shafi’is the Hajj does not conclude until it is done."
+       ],
+       [
+        "Tawaf al-wada, the farewell",
+        "Obligation for Hanafi, Shafi’i and Hanbali; sunnah for Maliki",
+        "A sacrifice in three schools. Excused entirely for a menstruating woman, and for residents of Makkah."
+       ]
+      ]
+     },
+     {
+      "name": "Sunnahs, worth every step",
+      "rows": [
+       [
+        "Ghusl before ihram, and the two units after tawaf",
+        "Sunnah; the two units are an obligation for the Hanafis, and for the Malikis on the standard summary, which is the reader’s to verify",
+        "Nothing, except for the two units in the Hanafi school, and in the Maliki school on the summary given here."
+       ],
+       [
+        "Staying at Mina on the eighth, and the tawaf of arrival for qarin and mufrid",
+        "Sunnah",
+        "Nothing."
+       ],
+       [
+        "Ramal and idtiba’ for men in the first tawaf, and jogging between the green markers",
+        "Sunnah, for men only",
+        "Nothing. Drop them entirely if the crowd makes them harmful."
+       ],
+       [
+        "Kissing the Black Stone, the du’a on Safa and Marwah, the long standing after the first two pillars",
+        "Sunnah",
+        "Nothing, and never at the cost of harming a person."
+       ],
+       [
+        "Drinking Zamzam, and the talbiyah said often and aloud",
+        "Sunnah",
+        "Nothing, though the Hanafis and Malikis attach weight to the talbiyah at the entry into ihram."
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "women",
+   "nav": "Women",
+   "ar": "أحكام النِّساء",
+   "gloss": "ahkam an-nisa, the rulings concerning women",
+   "title": "For women, and for the men travelling with them",
+   "lead": "Most of the fear a woman carries into this journey is about one thing, and it has a clear answer given by the Prophet ﷺ to Aisha while she was crying. The rest of this section is dress, hair, travel, and the honest state of a question the schools have never agreed on.",
+   "cards": [
+    {
+     "t": "Menstruation does not stop the Hajj",
+     "level": "sunnah",
+     "ps": [
+      "Aisha entered ihram for Umrah and began menstruating before reaching Makkah. The Prophet ﷺ came in and found her weeping. He said: this is a thing Allah has decreed upon the daughters of Adam. Do what the pilgrim does, except do not perform tawaf around the House until you become pure.",
+      "Read the exception carefully, because everything hangs on it. She does what the pilgrim does. She enters ihram, she says the talbiyah, she stands at Arafah, she stays at Muzdalifah, she stones the pillars, her sacrifice is made, she cuts her hair, she is in the Hajj entirely. One act is paused: tawaf. And with it, since sa’i follows a valid tawaf, the sa’i waits too.",
+      "So a woman who begins to bleed on the seventh of Dhul Hijjah loses nothing of the Hajj. She performs tawaf al-ifadah when she becomes pure, even if that is on the twelfth or later, and she is excused the farewell tawaf entirely.",
+      "She should still make ghusl at the miqat, as Asma bint Umays was told to do after giving birth at Dhul Hulayfah. The washing is for the state of ihram, not for purity from bleeding."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "305",
+       "note": "do what the pilgrim does, except do not perform tawaf until you are pure"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "",
+       "note": "in the book of Hajj, Aisha’s longer account of the Farewell Hajj: do what the pilgrim does, except do not circle the House until you are pure"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1757",
+       "note": "the menstruating woman leaves without the farewell tawaf"
+      }
+     ]
+    },
+    {
+     "t": "The hard case: the flight leaves and she is not pure",
+     "level": "debated",
+     "ps": [
+      "Tawaf al-ifadah is a pillar. It cannot be skipped, it cannot be bought off, and until it is performed she is still in ihram, which means her husband remains unlawful to her. And modern travel puts a fixed departure date on a body that keeps its own calendar. This is the genuinely difficult problem of this section, and it deserves an honest answer rather than a comfortable one.",
+      "The classical majority is firm: purity is a condition of tawaf, so she waits, even if it costs her the flight. Groups have historically kept a woman behind with a mahram until she became pure.",
+      "A second position, argued by Ibn Taymiyyah and adopted by a number of contemporary scholars and fatwa councils for cases of real necessity, holds that a woman in this position may perform tawaf al-ifadah while menstruating, taking precautions, because the requirement of purity for tawaf is not established by an explicit text of the same strength as the obligation itself, and because the alternative places on her a hardship the law does not impose. Some who permit it require a sacrifice with it and some do not.",
+      "Do not decide this from a page. Decide it with a scholar who can hear the actual circumstances. But go knowing that the question has an answer and that scholars have thought about you."
+     ],
+     "schools": [
+      [
+       "Maliki, Shafi’i and Hanbali",
+       "purity is a condition of tawaf; she waits until she is pure, whatever it costs in travel."
+      ],
+      [
+       "Hanafi",
+       "the tawaf is valid though sinful, and a badanah, a camel, is due for performing it in a state of major impurity, and repeating it while pure is better."
+      ],
+      [
+       "Ibn Taymiyyah and a number of contemporary councils",
+       "permit it in genuine necessity, with precautions, for a woman who cannot remain and cannot return."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Tirmidhi and Nasa’i",
+       "r": "",
+       "note": "tawaf around the House is a prayer, except that Allah has permitted speech in it; the report the majority lean on here, which is not in the two Sahihs, whose raising to the Prophet is discussed, and which a number of scholars treat as the statement of Ibn Abbas"
+      },
+      {
+       "k": "quran",
+       "r": "22:78",
+       "note": "He has not placed upon you in the religion any hardship"
+      }
+     ]
+    },
+    {
+     "t": "Dress, hair, and prayer",
+     "level": "sunnah",
+     "ps": [
+      "There is no special ihram garment for a woman. She wears her ordinary modest clothing, in any colour she likes, and there is no requirement of white. What is prohibited to her specifically is the niqab, a veil cut and fitted to the face, and gloves, because those two were named. Her face and hands are otherwise uncovered in ihram, which is the point of naming them.",
+      "She may still lower a loose cloth from her head over her face when men are passing, which is what Aisha described the women doing on the journey. The schools differ over whether that cloth may rest against the face: the Hanafis hold it should be kept off it, by a stiffened edge or a cap, and others permit contact.",
+      "For the hair, taqsir only. She takes about a fingertip’s length from the ends, gathering the hair or taking from each braid. Women do not shave.",
+      "She may not pray or fast while menstruating, and she does not make up the prayers. She may make du’a, say dhikr, say the talbiyah, recite from memory according to many scholars, carry her supplication list, and stand at Arafah for the whole afternoon with her hands raised. None of that is closed to her, and Arafah is not a prayer."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ibn Umar: a woman in ihram does not wear the niqab nor the gloves"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "in the book of the rites, the narration of Aisha: the riders would pass us while we were in ihram with him ﷺ, and we would lower a cloth over the face"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "Ibn Abbas: women do not shave, women only shorten"
+      }
+     ]
+    },
+    {
+     "t": "Travelling with a mahram",
+     "level": "debated",
+     "ps": [
+      "A mahram is a man a woman can never marry: her father, son, brother, uncle, grandfather, father in law, and her husband is counted with them. The Prophet ﷺ said a woman should not travel except with a mahram, and in one narration a man said his wife had set out for Hajj and he was enlisted for an expedition, and he was told to go and perform Hajj with his wife.",
+      "Whether that makes a mahram a condition of the obligation of Hajj on a woman is one of the genuinely old disagreements, and both sides argue from evidence.",
+      "Two honest additions. First, the rules on the ground have changed: for several years now the authorities have permitted women to register for Hajj in a group of women without a mahram, which is a visa rule and not a fatwa, and it does not settle the fiqh question either way. Second, both sides of this disagreement are asking the same thing underneath: is she safe. Answer that question first, honestly, and then ask which school you are following."
+     ],
+     "schools": [
+      [
+       "Hanafi and Hanbali",
+       "a mahram or husband is a condition of the obligation; without one, Hajj is not obligatory upon her, and travelling without one is not permitted."
+      ],
+      [
+       "Maliki and Shafi’i",
+       "for the obligatory Hajj she may travel with a trustworthy group; the Shafi’is speak of a group of trustworthy women and some of them permit less where safety is certain."
+      ],
+      [
+       "Both sides cite",
+       "Umar sending Uthman and Abdur-Rahman ibn Awf with the Prophet’s ﷺ wives on Hajj, and the report of a woman travelling from Hirah to the House fearing none but Allah."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ibn Abbas: a woman does not travel except with a mahram, and the man told to go and perform Hajj with his wife"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration that Umar permitted the wives of the Prophet ﷺ their last Hajj and sent Uthman ibn Affan and Abdur-Rahman ibn Awf with them"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Adi ibn Hatim: a woman will travel from Hirah to circle the House fearing none but Allah"
+      }
+     ]
+    },
+    {
+     "t": "Practical things nobody tells her",
+     "level": "editorial",
+     "ps": [
+      "Medication to delay a period is permitted by the great majority of contemporary scholars if a doctor says it is safe for her, and many women use it for exactly this journey. Start it well before travelling, not the week you fly, and expect it to be unreliable if you begin late.",
+      "In tawaf, stay in the outer rings. The reward is not in the metre. Umm Salamah performed tawaf riding, behind the people, on the Prophet’s ﷺ instruction, because she was unwell. There is nothing pious about being crushed.",
+      "Pack for the reality: unscented wipes, extra underwear, painkillers you already know you tolerate, a long light overhead garment that covers without heat, and shoes you have already walked twenty kilometres in.",
+      "And take this: your Hajj is not lesser. There is not a men’s Hajj and a women’s Hajj. The same standing, the same day, the same forgiveness, on a plain where nobody can tell who anyone is."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Umm Salamah, who complained of illness and was told to perform tawaf riding, behind the people"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fixing",
+   "nav": "When it goes wrong",
+   "ar": "الجُبْرَان",
+   "gloss": "al-jubran, the repairing of what was broken",
+   "title": "When something goes wrong",
+   "lead": "It will. Buses fail, crowds turn people back, bodies give out, and somebody wears scented soap on the ninth. The law has a whole chapter for this, and its temper is merciful. Most of what goes wrong costs a sheep. A little costs nothing. One thing cannot be repaired at all, and even that has a way out.",
+   "cards": [
+    {
+     "t": "The short version, before the detail",
+     "level": "editorial",
+     "ps": [
+      "Leaving an obligation costs a dam, a sacrifice: a sheep or a goat, or a seventh share of a camel or a cow, slaughtered inside the sanctuary and given to its poor. Your group can arrange it, and in Makkah so can any of the licensed offices.",
+      "Breaking a prohibition of ihram costs a fidyah: fasting three days, or feeding six poor people, or slaughtering a sheep, your choice of the three.",
+      "Sins of speech and temper cost repentance, and an apology to the person.",
+      "Missing the standing at Arafah cannot be repaired, and it is the only one.",
+      "And the instruction that outranks this whole page: ask a scholar on site. Every group has one. The Haram has fatwa desks. Do not guess, do not act on what the man in the next bunk told you, and do not let embarrassment stop you, because the people answering these questions have heard everything, every year, for their whole lives."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "the threefold expiation of fasting, charity, or sacrifice"
+      },
+      {
+       "k": "quran",
+       "r": "16:43",
+       "note": "ask the people of knowledge if you do not know"
+      }
+     ]
+    },
+    {
+     "t": "Missing Arafah",
+     "level": "debated",
+     "ps": [
+      "If dawn on the tenth arrives and you were not at Arafah at any point in the window, the Hajj is missed. The scholars call this fawat al-Hajj, and they set out what happens next rather than leaving a person stranded.",
+      "You come out of ihram by performing the acts of an Umrah: tawaf, sa’i, and cutting the hair. A sacrifice is due. And you make up the Hajj the following year. That is the position of the four schools, taken from the rulings of Umar and other companions on people this happened to.",
+      "It is worth knowing why the schools require the make up even when the Hajj was voluntary: the Qur’an commands the completion of the Hajj and the Umrah once entered, so entering voluntarily makes finishing binding."
+     ],
+     "schools": [
+      [
+       "The four schools",
+       "the missed Hajj is exited with the acts of an Umrah, a sacrifice is due, and the Hajj is made up the following year."
+      ],
+      [
+       "A minority of scholars",
+       "hold no make up is due for one who had only intended a voluntary Hajj; this is not the position of the four schools."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "and complete the Hajj and the Umrah for Allah"
+      },
+      {
+       "k": "hadith",
+       "src": "Tirmidhi",
+       "r": "891",
+       "note": "whoever caught the standing before dawn of the tenth has caught the Hajj"
+      }
+     ]
+    },
+    {
+     "t": "Being prevented from finishing",
+     "level": "quran",
+     "ps": [
+      "If you are physically stopped from completing the rites, by a closed border, an illness that makes movement impossible, an arrest, an accident, the Qur’an addresses you directly: if you are prevented, then whatever sacrifice is easy. You slaughter where you are held, cut your hair, and come out of ihram.",
+      "There is a sunnah worth using before you ever leave home. Duba’ah bint az-Zubayr was ill and afraid she could not complete the journey. The Prophet ﷺ told her to perform Hajj and to stipulate a condition: O Allah, my place of release is wherever You hold me back. Whoever makes that condition at the moment of entering ihram, and is then genuinely prevented, comes out of ihram with no sacrifice due at all.",
+      "If you are elderly, unwell, or travelling with a condition that could stop you, say those words when you enter ihram. It costs nothing and it can save you a great deal. The Shafi’is and Hanbalis act on it fully; the Hanafis and Malikis do not give the condition the same effect."
+     ],
+     "schools": [
+      [
+       "Shafi’i and Hanbali",
+       "the stipulation is valid and effective; the one prevented comes out of ihram with nothing due."
+      ],
+      [
+       "Hanafi and Maliki",
+       "the stipulation does not remove the consequences; the rules of being prevented apply as they otherwise would."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "if you are prevented, then whatever sacrifice is easy"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the hadith of Duba’ah bint az-Zubayr: my place of release is wherever You hold me back"
+      }
+     ]
+    },
+    {
+     "t": "Broke a prohibition without knowing",
+     "level": "debated",
+     "ps": [
+      "The commonest version of this: you used the hotel’s scented soap, or a scented deodorant, or put on a shirt half asleep on a bus at four in the morning. The moment you realise, stop. Wash it off, take it off. Do not carry on because you have already ruined it, because you have not.",
+      "Whether an expiation is then due depends on the school, and this is one of the differences most worth carrying with you, because it decides whether you owe anything at all.",
+      "Under all four, a prohibition broken out of genuine need, an injury requiring a bandage, an illness requiring the head to be shaved, is permitted and carries the expiation without any sin, exactly as the Qur’an says of the one with an ailment of the head."
+     ],
+     "schools": [
+      [
+       "Shafi’i and Hanbali",
+       "no expiation on the one who forgot or did not know, in perfume, clothing and covering the head, provided he stops at once."
+      ],
+      [
+       "Hanafi and Maliki",
+       "the standard summary is that the expiation is due even from the forgetful, because it repairs the rite rather than punishing the person, and the Hanafis reduce it to charity in a number of small cases. The summary flattens the Maliki position, which has recognised exceptions of its own, so ask before you assume you owe anything."
+      ],
+      [
+       "All four",
+       "hold that a prohibition done out of necessity is permitted and carries the expiation without sin."
+      ]
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:196",
+       "note": "whoever among you is ill or has an ailment of the head, then a ransom of fasting, charity or sacrifice"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "the narration of Ka’b ibn Ujrah, whose head troubled him with lice, given the three choices of fasting, feeding or a sacrifice"
+      }
+     ]
+    },
+    {
+     "t": "Lost count, missed a throw, could not get there",
+     "level": "debated",
+     "ps": [
+      "Lost count in tawaf or sa’i: build on the smaller number you are certain of, and complete. Uncertainty in worship is settled by certainty, the way it is in prayer.",
+      "Missed a whole day’s stoning: most scholars have you make it up on the following day, throwing the missed day’s pebbles first and then that day’s, in order. Missing all of it until the days are over costs a sacrifice. Missing one or two pebbles is treated more lightly and the schools differ on the amount of charity due.",
+      "Could not reach the pillars at all through illness, disability, pregnancy or crowd danger: appoint someone. He throws his own seven first, then yours, at each pillar. This is agreed and it is not a lesser Hajj.",
+      "Left Mina early, or missed a night: this is where the difference between the schools actually saves people, since the Hanafis do not attach a sacrifice to the nights at Mina at all. Ask your group’s scholar which view they act on before you pay for a sheep you may not owe."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "",
+       "note": "the narration of Abu Sa’id al-Khudri: when one of you is uncertain, let him build on what he is certain of; stated of prayer and extended by the scholars"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Ibn Abbas: do it, and there is no harm, said to every question of order that day at Mina"
+      }
+     ]
+    },
+    {
+     "t": "The mistakes that cost nothing",
+     "level": "quran",
+     "ps": [
+      "Crying. Losing your temper and regretting it. Being unable to finish a du’a. Falling asleep at Arafah. Forgetting the words on Safa. Feeling nothing at all when you first see the Kaaba, while the person next to you weeps.",
+      "None of these are in any book of expiations, because none of them are defects. The Hajj is made of acts, and the acts were performed. What you felt while performing them is between you and Allah and is not always available on demand.",
+      "The sins of the tongue are different: they cost repentance, and where a person was hurt, they cost an apology. The Qur’an names them right at the start of the season for a reason."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:197",
+       "note": "no obscenity, no corruption, no arguing in the Hajj"
+      },
+      {
+       "k": "quran",
+       "r": "2:286",
+       "note": "Allah does not burden a soul beyond its capacity"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mistakes",
+   "nav": "Common mistakes",
+   "ar": "أخطاء شائعة",
+   "gloss": "akhta shai’ah, common errors",
+   "title": "Common mistakes, said gently",
+   "lead": "None of these are written to embarrass anyone. Every one of them is done by sincere people who were never taught otherwise, and most of them come from loving the place too much rather than too little. Knowing them beforehand is the only cure, because nobody has time to explain in a crowd.",
+   "cards": [
+    {
+     "t": "Fighting to reach the Black Stone",
+     "level": "sunnah",
+     "ps": [
+      "Kissing al-Hajar al-Aswad is a sunnah. Elbowing a seventy year old woman out of the way to do it is a sin. A sunnah does not sit on top of a wrong, and no scholar in any school has ever said otherwise.",
+      "Umar walked up to the Stone and said: I know that you are a stone, you neither harm nor benefit, and were it not that I saw the Messenger of Allah ﷺ kissing you, I would not kiss you. It is reported that the Prophet ﷺ told Umar, who was strong, not to crowd at the Stone because he would harm the weak, and to face it and say the takbir if he could not reach it.",
+      "So: if there is space, kiss it. If not, raise your hand toward it, say Allahu akbar, and keep walking. You have done the sunnah. The version of this journey where you touch every stone and hurt three people is worth less than the version where you touch none."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1597",
+       "note": "Umar: I know you are a stone that neither harms nor benefits"
+      },
+      {
+       "k": "hadith",
+       "src": "Ahmad",
+       "r": "",
+       "note": "the report of Umar being told not to crowd at the Stone and to harm no one"
+      }
+     ]
+    },
+    {
+     "t": "Believing every circuit has its own du’a",
+     "level": "editorial",
+     "ps": [
+      "Books are sold at every gate with a different supplication printed for each circuit of tawaf, and for each stretch of the sa’i. Nothing of the sort is established from the Prophet ﷺ. The only fixed words inside tawaf are the takbir at the Stone and the verse said between the Yamani corner and the Black Stone.",
+      "Two things go wrong when a person reads from a card. He spends the tawaf watching the page instead of asking for anything he wants, and he is thrown into a panic when he loses his place. Say what is in you. In your own language. That is not a lesser tawaf, it is the tawaf.",
+      "There is no harm in someone reciting a printed du’a because it helps him. The mistake is believing it is required, and correcting others who do not have one."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:201",
+       "note": "the one fixed supplication in tawaf, between the two corners"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "in the book of the rites, the narration of Abdullah ibn as-Sa’ib: he ﷺ said the verse between the Yamani corner and the Black Stone"
+      }
+     ]
+    },
+    {
+     "t": "Wiping the cloth, the walls, the Maqam",
+     "level": "editorial",
+     "ps": [
+      "The kiswah, the black cloth over the Kaaba, is replaced every year. Wiping it over your face, rubbing your children against it, tying threads to it or pressing your body against the walls and the corners for blessing has no basis in what the Prophet ﷺ or his companions did. Nor does touching the Maqam of Ibrahim, or the Yamani corner with the lips, or the other two corners at all.",
+      "Two things only were touched in the House: the Black Stone, kissed or touched, and the Yamani corner, touched with the hand. His companions were precise about this because they understood that in worship, adding is not loving more.",
+      "Standing at the multazam, the space between the Stone and the door, and making du’a there is reported of Ibn Abbas and some of the early generations, and a number of scholars permit it. It is also a place where people are routinely crushed. Know that it is a matter with some room in it, and that no one is required to reach it."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Ibn Umar: he ﷺ touched only the two Yamani corners"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "",
+       "note": "in the book of Hajj, the narration of Umar kissing the Black Stone, with the touching of the two Yamani corners described"
+      }
+     ]
+    },
+    {
+     "t": "Thinking the pebbles hit devils",
+     "level": "debated",
+     "ps": [
+      "People throw with rage. They shout. They throw shoes, umbrellas, water bottles, whole sandals, and every year someone throws a large stone that opens a stranger’s head, because they have been told they are stoning devils and they mean it.",
+      "There is no devil standing at the pillars. The pillars mark places, and the throwing is an act of obedience and remembrance. A report from Aisha states that the circling of the House, the going between Safa and Marwah, and the throwing of the pebbles were only established for the remembrance of Allah. Scholars have graded that report differently, and it is honest to say so, and its meaning is what every school teaches about these rites.",
+      "Throw seven small pebbles, the size of a chickpea, one at a time, saying Allahu akbar with each. The Prophet ﷺ held up such pebbles and said: with the like of these, throw. And in the same breath he warned against exaggeration in religion, and said that exaggeration is what destroyed the peoples before us. He said that at the Jamarat, on that morning, holding stones the size of beans."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Ibn Majah",
+       "r": "",
+       "note": "in the chapters on the rites, the narration of Ibn Abbas: with the like of these throw, and beware of exaggeration in religion"
+      },
+      {
+       "k": "hadith",
+       "src": "Abu Dawud",
+       "r": "",
+       "note": "in the book of the rites, the report of Aisha that the circling of the House, the going between Safa and Marwah and the stoning were established for the remembrance of Allah; graded variously"
+      }
+     ]
+    },
+    {
+     "t": "Arriving at Arafah with nothing left",
+     "level": "editorial",
+     "ps": [
+      "The commonest way to waste a Hajj is to spend everything before the ninth. Repeated Umrahs from at-Tan’im every other day. Night prayer until Fajr for a week. Shopping until midnight. Walking twenty kilometres a day in the sun in early Dhul Hijjah. Then Arafah arrives and the person sleeps through the afternoon of his life, or sits with a migraine unable to form a sentence.",
+      "Treat the days before as training and rest, not as the event. Drink water constantly, sleep in the afternoons, take your prayers in your room when the mosque is a forty minute walk in forty five degree heat, and let the extra Umrahs go. There is no established sunnah of repeating Umrah again and again in one journey; Aisha’s Umrah from at-Tan’im was a consolation for one that her period had interrupted.",
+      "Arrive at Arafah with something left. That is the whole strategy of the Hajj."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of Umrah, the narration of Aisha, sent out to at-Tan’im for the Umrah she had been unable to complete"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "",
+       "note": "in the book of faith, the narration of Abu Hurayrah: the religion is ease, and none makes it hard but it overcomes him, so take on only what you can sustain"
+      }
+     ]
+    },
+    {
+     "t": "Guarding the rites and losing the people",
+     "level": "sunnah",
+     "ps": [
+      "A man can be meticulous about ramal in the first three circuits and shove a stranger out of a queue for water an hour later. Everyone has seen it. Some of us have been it.",
+      "The Hajj is a rare place where every single interaction is with someone tired, hot, frightened, far from home and speaking another language. Feeding people, giving up a place, carrying a bag, being gentle in speech: when the Prophet ﷺ was asked what makes a Hajj accepted, the answer reported from him is feeding others and speaking well.",
+      "And know the boundary of what the journey erases. The Hajj wipes what is between a person and his Lord. It does not wipe what is owed to people: money you took, a reputation you damaged, a family member you cut off. The bankrupt of this ummah, he ﷺ said, is the one who comes with prayers and fasting and charity, and also with having insulted this one and struck that one, and his good deeds are handed over until they run out.",
+      "Settle it before you go, if you can. And if you cannot, go, and settle it when you return."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Ahmad",
+       "r": "",
+       "note": "asked about the accepted Hajj: feeding others and good speech; graded acceptable by a number of scholars"
+      },
+      {
+       "k": "hadith",
+       "src": "Muslim",
+       "r": "2581",
+       "note": "the bankrupt one, whose good deeds are handed to those he wronged"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "prepare",
+   "nav": "Before you go",
+   "ar": "الزَّاد",
+   "gloss": "az-zad, the provision for a journey",
+   "title": "Before you go",
+   "lead": "A packing list is not a spiritual document, but an unprepared body cannot stand at Arafah for six hours and an unsettled life cannot be left behind. Tick these off over the months before you travel. Nothing here is counted against you, and the list is kept in this browser only.",
+   "checklist": {
+    "key": "noor_hajj_v1",
+    "groups": [
+     {
+      "g": "Paper and permission",
+      "items": [
+       "Passport valid well past your return date, and the visa and Hajj permit arranged through a licensed operator, not an intermediary who cannot be named.",
+       "Your operator’s full itinerary in writing: which camp at Mina, which tent number, which transport scheme, whether Muzdalifah is a full night or a shortened one.",
+       "Copies of every document in a second bag and a photograph of each on your phone.",
+       "Travel insurance, and the emergency number of your group leader saved and written on paper too."
+      ]
+     },
+     {
+      "g": "Body",
+      "items": [
+       "The meningococcal vaccination, which is required, and any others your health authority names that year; requirements change annually, so check the current list rather than an old blog.",
+       "Walking fitness built over months: work up to ten to fifteen kilometres a day, in the shoes you will actually wear, including some walking in heat.",
+       "A doctor’s appointment if you have a chronic condition, and a letter listing your diagnoses and medicines in English.",
+       "Enough of every prescription medicine for the whole trip plus two weeks, in original packaging, split across two bags.",
+       "For women, a conversation with a doctor about whether to delay a period, started early enough to be reliable."
+      ]
+     },
+     {
+      "g": "The bag",
+      "items": [
+       "Two sets of ihram cloths for a man and a wide belt with a zip pocket, or for a woman two or three loose modest outfits in light fabric with long sleeves.",
+       "Unscented soap, unscented shampoo, unscented toothpaste and unscented deodorant, bought and packed deliberately.",
+       "Sandals that leave the top of the foot and the ankle open, already worn in, plus a cheap spare pair.",
+       "A light prayer mat, a small backpack, a refillable water bottle, an umbrella for the sun, a spray fan.",
+       "Oral rehydration sachets, painkillers, blister plasters, antiseptic cream, a thermometer, and anything you personally always need.",
+       "A drawstring bag for your shoes in the mosque, and a bright ribbon or tag so your group can spot you.",
+       "A small paper notebook: batteries die and networks fail, and you will want your du’a list at Arafah."
+      ]
+     },
+     {
+      "g": "What you carry inside",
+      "items": [
+       "The talbiyah memorised, so you are not reading it at the miqat.",
+       "The words said on Safa and Marwah memorised, and the verse said between the two corners.",
+       "A written list of every person who asked you to make du’a for them, with names.",
+       "Your own list: the five things you have never asked anyone for. Write them before you fly.",
+       "Read this page again on the plane, and once more the night of the eighth."
+      ]
+     },
+     {
+      "g": "The life you leave behind",
+      "items": [
+       "Debts settled, or a written schedule agreed with whoever you owe.",
+       "A will written and witnessed, with someone trustworthy told where it is; the Prophet ﷺ said it is not right for a Muslim who has something to bequeath to pass two nights without his will written with him.",
+       "Forgiveness asked, by message or by call, of everyone you can think of who has a right against you, named specifically rather than in a general announcement.",
+       "Your family provided for while you are away, in money and in arrangements.",
+       "Any trust or deposit you are holding for someone returned or handed to someone reliable."
+      ]
+     }
+    ]
+   },
+   "cards": [
+    {
+     "t": "Provision, and the best of it",
+     "level": "quran",
+     "ps": [
+      "The Qur’an gives the packing instruction in the middle of the Hajj verses, and the whole sentence is worth memorising: take provision, and indeed the best provision is taqwa, being mindful of Allah. Commentators say it was revealed about people who set out for Hajj with no food, calling themselves reliant on Allah, and then begged from the pilgrims.",
+      "So the two halves belong together. Pack properly, because arriving as a burden on other people is not piety. And know that the sandals and the sachets are not what you are actually carrying there."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:197",
+       "note": "take provision, and the best provision is taqwa"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "2738",
+       "note": "it is not right for a Muslim with something to bequeath to pass two nights without his will written"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "heart",
+   "nav": "The heart of it",
+   "ar": "القَلْب",
+   "gloss": "al-qalb, the heart",
+   "title": "What the journey is actually for",
+   "lead": "One short section, and then the room ends. Everything above is the how. This is the why, and it is the part that has to survive the flight home.",
+   "fig": "return",
+   "cards": [
+    {
+     "t": "Two pieces of white cloth",
+     "level": "editorial",
+     "ps": [
+      "A man in ihram is dressed in two unstitched white sheets. He will be dressed in something very similar once more, and he will not be putting it on himself.",
+      "That is not a morbid thought, it is the design. In the two cloths there is no way to tell a surgeon from a driver, a citizen of one country from a refugee of another, a man with three properties from a man with three shirts. Every marker a person spends his life assembling is taken off at a line in the desert. What is left standing on the plain at Arafah is the thing that will be raised, which is all any of us ever were.",
+      "People say the Hajj is a rehearsal for the Day of Standing. It is more exact than that. It is the same posture, the same clothing, the same crowd, the same helplessness, the same asking. The difference is that this time you chose to come, and you can still ask."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "6:94",
+       "note": "you have come to Us alone, as We created you the first time"
+      }
+     ]
+    },
+    {
+     "t": "Returning as the day his mother bore him",
+     "level": "sunnah",
+     "ps": [
+      "Whoever performs Hajj for Allah and does not speak obscenely nor act corruptly returns as the day his mother bore him. Sit with that sentence. Not forgiven a little. Not improved. Returned to the state of a newborn, who has never done anything at all.",
+      "A newborn has no history. That is the gift, and it is also the difficulty: a person returns with a clean page and immediately has to decide what to write on it. The scholars said the sign of an accepted Hajj is not what you felt at Arafah but what changed afterwards, and they said it because they had watched people come back unchanged.",
+      "So the last question of this room is a plain one. If Allah has just given you a page with nothing on it, what is the first thing you intend to put there."
+     ],
+     "refs": [
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1521",
+       "note": "returns as the day his mother bore him"
+      },
+      {
+       "k": "hadith",
+       "src": "Bukhari",
+       "r": "1773",
+       "note": "the accepted Hajj has no reward but Paradise"
+      }
+     ]
+    },
+    {
+     "t": "And then the ordinary life",
+     "level": "quran",
+     "ps": [
+      "The Qur’an ends the Hajj passage by telling the pilgrims to remember Allah the way they used to remember their forefathers, or more intensely, and then it divides people by what they ask for: some say our Lord, give us in this world, and they have no share in the hereafter; and others say our Lord, give us good in this world and good in the hereafter, and protect us from the punishment of the Fire.",
+      "Then, immediately, the very next verses turn to ordinary life: the days of Tashriq, the person whose speech about worldly life impresses you while his heart is at war, the one who sells himself seeking the pleasure of Allah. The Book moves from the plain of Arafah back to the street without pausing, because that was always where this was going.",
+      "You will land at an airport. Someone will be late to collect you. Within a week there will be a queue, a bill, a rude message. That week is the Hajj too. It is where the standing gets spent, or does not."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:200",
+       "note": "remember Allah as you remember your forefathers, or more intensely"
+      },
+      {
+       "k": "quran",
+       "r": "2:201",
+       "note": "our Lord, give us good in this world and good in the hereafter"
+      },
+      {
+       "k": "quran",
+       "r": "2:203",
+       "note": "and remember Allah during the numbered days"
+      },
+      {
+       "k": "quran",
+       "r": "22:37",
+       "note": "it is not their meat nor their blood that reaches Allah, but your piety"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

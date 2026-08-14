@@ -1,0 +1,825 @@
+{
+ "meta": {
+  "slug": "protection",
+  "title": "Protection & the Light of Truth",
+  "ar": "الحِصْن",
+  "kick": "A Room of the Codex",
+  "h1": "Protection, and the light that makes fear small",
+  "lead": "Sihr is real, and it is smaller than you have been told. This room holds what the Qur’an actually says, the free protection the Prophet ﷺ taught to everyone, ruqya you can do yourself tonight, the myths that cost people their money and their marriages, and the part nobody says out loud: a trained body carries a steadier heart.",
+  "desc": "Protection in Islam, without fear and without a bill. What the Qur’an says about sihr, the morning and evening fortress, how to perform ruqya on yourself, how to recognise a charlatan, why mental illness is so often mistaken for possession, and how physical training steadies the heart. Free, sourced, and it names what it cannot prove."
+ },
+ "frame": {
+  "kk": "Read this first",
+  "title": "What this room affirms, and what it refuses",
+  "ps": [
+   "Something is wrong and you cannot name it. That is how most people arrive at a page like this one: late, tired, and shortly after reading something that frightened them. So the first thing this room does is slow down.",
+   "The Qur’an affirms that sihr is real. It is named, it is described, it is forbidden, and a whole surah was revealed against harm that is blown on knots. Nobody who reads the Book honestly can say the thing does not exist.",
+   "That is not the same claim as this is what is happening to you. Between sihr exists and you are under sihr there is a distance that only evidence crosses, and almost nobody selling a cure wants you to notice the gap.",
+   "So this room is not a diagnosis, and it is not a fatwa. It does not replace a doctor, and it will say so more than once, because the cost of getting that wrong is measured in years of somebody’s life.",
+   "It also takes no money, from you or from anyone, which is exactly why it can afford to tell you that most of what you have been sold is worthless."
+  ]
+ },
+ "sections": [
+  {
+   "id": "ground",
+   "n": "One",
+   "title": "What the Qur’an actually says",
+   "ar": "الأَصْل",
+   "tr": "al-asl, the ground you stand on",
+   "lead": "Before anybody’s opinion, the text. Four passages carry the whole subject, and read together they do something people rarely expect: they confirm that sihr is real and, in the same breath, cut it down to size.",
+   "teachings": [
+    {
+     "t": "Real, and permitted nothing on its own",
+     "ps": [
+      "The passage about Babylon is the plainest statement in the Book. It describes what was taught there, and it says that people learned from it that by which they cause separation between a man and his wife. The Qur’an does not treat this as folklore. It treats it as a real and evil craft.",
+      "Then, in the same verse, it closes the door: they do not harm anyone through it except by the permission of Allah. Every honest treatment of this subject lives inside that sentence. The thing exists. It is not sovereign. Nothing reaches you that was not allowed to reach you, and the One who allows it is the One you are already asking.",
+      "Read it once with the fear you arrived with, and once knowing the second half is there. It is the same verse and it is not the same night."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:102",
+       "note": "the passage of Babylon, and the fence at the end of it"
+      }
+     ]
+    },
+    {
+     "t": "A whole surah, and the enemy named out loud",
+     "ps": [
+      "Al-Falaq is five short lines and it is the Qur’an’s own answer to this subject. Refuge is sought with the Lord of the daybreak from the evil of what He created, from darkness when it settles, from those who blow on knots, and from an envier when he envies.",
+      "Notice that the harm is named. The Book does not leave it as a shapeless dread; it lists it, and a fear with a name is already smaller than a fear without one. Then an-Nas names the other enemy, the whisperer who retreats, and teaches you his weakness inside his own title: he withdraws the moment Allah is remembered.",
+      "These two surahs are called al-Mu’awwidhatan, the two that give refuge. They were revealed for exactly the night you are having, and they cost nothing."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "113:1-5",
+       "note": "al-Falaq, the daybreak"
+      },
+      {
+       "k": "quran",
+       "r": "114:1-6",
+       "note": "an-Nas, and the whisperer who retreats"
+      }
+     ]
+    },
+    {
+     "t": "The Book’s own verdict on the trade",
+     "ps": [
+      "When Musa stood before the sorcerers of Pharaoh, the largest gathering of that craft ever assembled, the verdict given was not that they were powerful. It was that the magician does not succeed wherever he goes.",
+      "Elsewhere the same judgement is passed on the whole business at once: Allah will not set right the work of the corrupters. That is the ceiling on it. Not one of the men who have frightened you was working outside that sentence.",
+      "It is worth sitting with how the confrontation ended. The sorcerers won nothing and lost nothing worth keeping; they saw the truth, fell into sujud, and were threatened with execution for it. The story does not end with sihr being strong. It ends with sihr being abandoned by the people who knew it best."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "20:69",
+       "note": "and the magician does not succeed wherever he goes"
+      },
+      {
+       "k": "quran",
+       "r": "10:81",
+       "note": "Allah will not set right the work of the corrupters"
+      },
+      {
+       "k": "quran",
+       "r": "20:70-71",
+       "note": "they fell in prostration, and were threatened with amputation and crucifixion"
+      }
+     ]
+    },
+    {
+     "t": "And the verse that sits over all of it",
+     "ps": [
+      "Ayat al-Kursi is the answer the Qur’an gives to fear before fear is even raised. Nothing in it argues with sihr. It simply describes the One who is awake when you are not, whose knowledge has no gap in it, and whose kursi extends over the heavens and the earth, and holding them does not tire Him.",
+      "Slumber does not overtake Him, and sleep does not. That is the whole medicine. Whatever you think is moving in the dark is moving inside the awareness of a Lord who has never once looked away."
+     ],
+     "ar": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
+     "arl": "Allah, there is no god but He, the Living, the Sustainer of all. Neither drowsiness overtakes Him, nor sleep.",
+     "refs": [
+      {
+       "k": "quran",
+       "r": "2:255",
+       "note": "Ayat al-Kursi, the verse of the Throne"
+      }
+     ]
+    }
+   ],
+   "nav": "What the Qur’an says"
+  },
+  {
+   "id": "fortress",
+   "n": "Two",
+   "title": "The fortress you already own",
+   "ar": "الحِصْن",
+   "tr": "al-hisn, the fortress",
+   "lead": "Everything in this section is free, takes minutes, was taught in public to everybody, and is older than every man who has ever charged you for a cure. If you do nothing else in this room, do these.",
+   "teachings": [
+    {
+     "t": "Tawhid, underneath all of it",
+     "ps": [
+      "This is not a preface, it is the mechanism. A heart that has settled that one Hand holds everything has nowhere left to put a second fear. Every practice below is only a way of saying that again until the body believes it.",
+      "The practical form of it is unglamorous: you stop negotiating with the dark. You do not bargain, you do not appease, you do not buy protection from a middleman. You ask the One who already decided what may reach you."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "counsel, drawn from the verse named beside it"
+      },
+      {
+       "k": "quran",
+       "r": "2:102",
+       "note": "except by the permission of Allah"
+      }
+     ]
+    },
+    {
+     "t": "Ayat al-Kursi, after every prayer and before sleep",
+     "ps": [
+      "The narration is famous because of how ordinary it is. Abu Hurayra was set to guard a store of charity and caught a thief three nights running. On the last night the thief bought his freedom by teaching him something: recite Ayat al-Kursi when you go to your bed, and a protector from Allah will stay with you and no devil will come near you until morning. The Prophet ﷺ confirmed it was true, and told him who he had been speaking to.",
+      "Five times after the prayers, once before sleep. It takes twenty seconds and it is the single most recommended protection in the whole tradition."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari",
+       "note": "the narration of Abu Hurayra and the guard of the zakat store"
+      }
+     ]
+    },
+    {
+     "t": "The last two verses of al-Baqarah, at night",
+     "ps": [
+      "Whoever recites the last two verses of Surat al-Baqarah in a night, they will suffice him. The word left in the narration is deliberately wide, and the commentators read it several ways: sufficed in place of the night prayer, sufficed in reward, or protected from harm. The widest reading is sufficed against everything that night could hold, and Ibn Hajar lists them without settling it.",
+      "If you learn one thing by heart from this page, learn these two. They are short, they are the close of the longest surah, and they end with the du’a that asks not to be burdened beyond capacity."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari and Muslim",
+       "note": "the narration of Abu Mas’ud al-Badri"
+      },
+      {
+       "k": "quran",
+       "r": "2:285-286",
+       "note": "the two verses themselves"
+      }
+     ]
+    },
+    {
+     "t": "The three surahs, three times, morning and evening",
+     "ps": [
+      "Al-Ikhlas, al-Falaq and an-Nas, three times when you wake and three times before the sun sets. The instruction given in the narration is blunt: they will suffice you against everything.",
+      "This is the daily backbone. Not an emergency measure, not something you reach for when frightened, but a thing you do on ordinary mornings when nothing is wrong, which is precisely why it works."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Abu Dawud and Tirmidhi",
+       "note": "the narration of Abdullah ibn Khubayb"
+      }
+     ]
+    },
+    {
+     "t": "The words of refuge, three times in the evening",
+     "ps": [
+      "Whoever says these words three times in the evening will not be harmed by a venomous sting that night. That is the promise as it was actually given, and it is worth having it exactly rather than inflated: this room would rather hand you a smaller true thing than a larger false one.",
+      "The same words appear in a second narration, said by a traveller when he stops somewhere for the night, and there the promise is that nothing will harm him until he leaves that place. Both are worth saying. Neither needs more than four seconds."
+     ],
+     "ar": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+     "trl": "A‘udhu bi kalimati-llahi at-tammati min sharri ma khalaq.",
+     "arl": "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Tirmidhi and Ibn Majah",
+       "note": "the narration of Abu Hurayra, three times in the evening"
+      },
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "the narration of Khawla bint Hakim, said on stopping at a place"
+      }
+     ]
+    },
+    {
+     "t": "The name over the harm, three times morning and evening",
+     "ps": [
+      "The second daily sentence, and the one people find easiest to keep because of what it claims: with this name, nothing on earth or in the heaven can do harm.",
+      "Three times in the morning, three times in the evening. Between this and the three surahs you have the daily core, and it has taken under a minute. Ayat al-Kursi and the two verses of al-Baqarah sit on top of it at night."
+     ],
+     "ar": "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+     "trl": "Bismillahi-lladhi la yadurru ma‘a ismihi shay’un fil-ardi wa la fis-sama’i wa huwa as-Sami‘u al-‘Alim.",
+     "arl": "In the name of Allah, with whose name nothing on earth or in the heaven can cause harm, and He is the All Hearing, the All Knowing.",
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Abu Dawud and Tirmidhi",
+       "note": "the narration of Uthman ibn Affan"
+      }
+     ]
+    },
+    {
+     "t": "A house that is not left empty",
+     "ps": [
+      "Do not make your houses graveyards; the devil flees from a house in which Surat al-Baqarah is recited. A house has an atmosphere, and the atmosphere is made of what is allowed to run in it all day.",
+      "The practical version of this is not a speaker playing recitation into an empty room. It is that somebody in the house actually reads, actually prays, and the sound of it is a normal sound there."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "the narration of Abu Hurayra on the house and al-Baqarah"
+      }
+     ]
+    },
+    {
+     "t": "Wudu, and the prayer at its time",
+     "ps": [
+      "The plainest protection in Islam is the one people abandon first when they are frightened, which is exactly backwards. Five prayers, at their times, in a state of purity. Nothing on this page outranks it.",
+      "If you have been going to bed unwashed, sleeping through fajr, and praying isha at one in the morning for three months, begin there before you begin anywhere else. A great deal of what people bring to a healer is a life that has quietly stopped being ordered."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "purity is half of faith"
+      }
+     ]
+    },
+    {
+     "t": "Do not sit alone inside it",
+     "ps": [
+      "Isolation is the multiplier on every fear there is. Alone, at night, on a phone, reading about symptoms, is the environment in which a small worry becomes a certainty by morning.",
+      "Tell one person you trust, out loud, in daylight. Not a forum, not a comment section, not a stranger who sells cures. One person who knows you well enough to say that you have been like this since your father died, or since you stopped sleeping, or since the job went."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "counsel, not a ruling"
+      }
+     ]
+    },
+    {
+     "t": "The seven dates, and an honest note about them",
+     "ps": [
+      "Whoever eats seven ajwa dates in the morning will not be harmed that day by poison or by sihr. The narration is in the strongest collections and it is often quoted on pages like this one with the detail removed.",
+      "Here is the detail. The report itself is agreed upon, in both Bukhari and Muslim, from Sa‘d ibn Abi Waqqas. What the scholars differ over is only its scope: in the wording of the narration these are the dates of a specific place, the ‘ajwa of the high ground of Madinah, and a large group therefore read the promise as tied to those dates and not to any packet labelled ajwa in a shop. Others read it generally.",
+      "And the obvious thing, said once: this is not a reason to delay treatment for a poisoning, a bite or a sting. Nothing on this page is."
+     ],
+     "refs": [
+      {
+       "k": "debated",
+       "r": "Bukhari and Muslim",
+       "note": "the report is agreed upon; the scholars differ only on whether it is tied to the ‘ajwa of al-‘Aliya"
+      }
+     ]
+    }
+   ],
+   "nav": "The fortress"
+  },
+  {
+   "id": "ruqya",
+   "n": "Three",
+   "title": "Ruqya, done properly",
+   "ar": "الرُّقْيَة",
+   "tr": "ar-ruqya, the recitation that heals",
+   "lead": "Ruqya was never meant to be something only a professional can do. It is a practice, it was taught openly, and it was designed so that you can do it on yourself, in your own room, tonight, for nothing.",
+   "teachings": [
+    {
+     "t": "The three conditions, agreed on",
+     "ps": [
+      "The scholars settled long ago what makes a ruqya lawful, and Ibn Hajar recorded their agreement on three conditions. First, that it is by the speech of Allah, or by His names and His attributes. Second, that it is in Arabic, or in words whose meaning is known. Third, that it is believed the words themselves do nothing, and that Allah alone acts.",
+      "Those three conditions are also the sharpest tool you have. Hold any offer of treatment against them and most of what is sold in this field falls apart in the first one, because you cannot verify what you cannot read."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "Ibn Hajar, Fath al-Bari",
+       "note": "the scholars’ three conditions, as he recorded the agreement on them"
+      }
+     ]
+    },
+    {
+     "t": "He ﷺ did it on himself, and she did it for him",
+     "ps": [
+      "When he ﷺ went to his bed he would cup his hands together, recite al-Ikhlas, al-Falaq and an-Nas into them, blow lightly into them, and wipe them over as much of his body as he could reach, beginning with his head and his face. Three times.",
+      "In his final illness, when he had grown too weak to do it, ‘A’isha did it for him with his own hands, reciting and passing his hand over him, because she said his hand carried more barakah than hers. That is the whole method, and it is a household one."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari and Muslim",
+       "note": "the narration of ‘A’isha on the nightly practice and on his final illness"
+      }
+     ]
+    },
+    {
+     "t": "Al-Fatiha, and the man who did not know it was a cure",
+     "ps": [
+      "A group of companions were travelling and stopped at an Arab settlement that refused them hospitality. The chief of the settlement was then stung, and his people came asking for anyone with a remedy. One of the companions recited al-Fatiha over him, and the man got up as if released from a rope.",
+      "Back in Madinah the Prophet ﷺ asked how he had known it was a ruqya, and did not object to what they had been given for it. Two things live in that story. Al-Fatiha is a cure. And the man who used it was not a specialist; he was a traveller who knew the opening of the Book."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari and Muslim",
+       "note": "the narration of Abu Sa‘id al-Khudri"
+      }
+     ]
+    },
+    {
+     "t": "For a pain in one place",
+     "ps": [
+      "‘Uthman ibn Abi al-‘As complained to the Prophet ﷺ of a pain in his body. He was told to put his hand on the place that hurt, say Bismillah three times, and then say seven times: I seek refuge in the might of Allah and His power from the evil of what I find and what I fear.",
+      "This is the most practical single instruction in the tradition for physical pain, and it belongs beside your treatment, not instead of it."
+     ],
+     "ar": "أَعُوذُ بِعِزَّةِ اللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ",
+     "trl": "A‘udhu bi ‘izzati-llahi wa qudratihi min sharri ma ajidu wa uhadhir.",
+     "arl": "I seek refuge in the might of Allah and His power from the evil of what I find and what I fear.",
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "the narration of ‘Uthman ibn Abi al-‘As"
+      }
+     ]
+    },
+    {
+     "t": "Water, oil, and where the certainty ends",
+     "ps": [
+      "Reciting over water and drinking it, or over olive oil and using it, is widely practised and has a basis in reports about reciting over what is then taken. It is not a prescription with a fixed method, a fixed number, or a promised outcome, and any page that gives you one has invented it.",
+      "Use it if it settles you. Do not build a system on it, do not pay for water somebody else has recited over, and notice that the moment a practice acquires a price list it has left the Sunnah and entered a market."
+     ],
+     "refs": [
+      {
+       "k": "debated",
+       "r": "the reports on reciting over what is taken",
+       "note": "practised; the detail is not fixed"
+      }
+     ]
+    },
+    {
+     "t": "How long, and how to judge it",
+     "ps": [
+      "Ten minutes a night, every night, for a week, before you conclude anything. The commonest mistake is doing it once, in a panic, and reading the fact that you still feel bad an hour later as proof that something terrible is on you.",
+      "Then judge by what changed rather than by how you feel, because how you feel at eleven at night is not evidence about anything. Did you sleep. Did you pray fajr. Did you leave the house. Those are the measurements."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "counsel, not a ruling"
+      }
+     ]
+    }
+   ],
+   "nav": "Ruqya"
+  },
+  {
+   "id": "myths",
+   "n": "Four",
+   "title": "The myths, named",
+   "ar": "الأَوْهَام",
+   "tr": "al-awham, the illusions",
+   "lead": "Every one of these costs somebody something real: money, a diagnosis, a marriage, a year. None of them is a small mistake, and none of them is named here to mock anybody. Frightened people believe frightening things. That is not stupidity, it is what fear is for.",
+   "teachings": [
+    {
+     "t": "That only a specialist can lift it",
+     "claim": "A trained sheikh has to find it and remove it, and you cannot do this yourself.",
+     "ps": [
+      "The Prophet ﷺ taught ruqya to companions, to women in their houses, to travellers, and to children. It was never a guild. It is written down in books a teenager can read and it is on this page, in full, above. Nobody holds a key to it because there is no lock.",
+      "Taking payment for ruqya is not itself forbidden; the companions accepted a flock of sheep for it and the Prophet ﷺ approved. So the scholars differ on payment, and this room will not pretend otherwise. But notice what actually goes wrong. The problem is not a fee. The problem is diagnosis for profit: a man whose income depends on finding sihr will find sihr, in you, in your mother, and in the neighbour he has never met.",
+      "Treatment that has no end point is the tell. Real medicine finishes.",
+      "The same applies to hijama, which is sold hardest as a cure for sihr because that is where the frightened money is. Cupping has its place and its narrations, and Prophetic Health sets out what can honestly be said for it. Curing sihr is not on that list."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari and Muslim",
+       "note": "he ﷺ taught ruqya openly, and did it on himself"
+      },
+      {
+       "k": "debated",
+       "r": "Bukhari and Muslim",
+       "note": "the flock accepted for al-Fatiha; the scholars differ on charging"
+      }
+     ]
+    },
+    {
+     "t": "That the amulet is doing something",
+     "claim": "A taweez, a string on the wrist, a pouch under the mattress, will keep it away.",
+     "ps": [
+      "The narrations are severe. Whoever hangs an amulet has committed shirk, and whoever hangs a tamimah, may Allah not complete anything for him. The reason for the severity is not superstition about string; it is that hanging a thing for protection quietly moves your reliance off Allah and onto an object.",
+      "Here the scholars genuinely differ, and the Codex will say so. Many forbid all of them outright, and that is the position associated with Ibn Mas‘ud and Hudhayfa and held firmly in the Hanbali line. Permission for one containing only the Qur’an is reported from ‘A’isha and from ‘Abdullah ibn ‘Amr, and was held by a large body of later jurists. That is a real disagreement between serious people and you are allowed to know about it.",
+      "But the thing sold to you is almost never the debated case. The debated case is verified Qur’an. What is sold in a plastic pouch with letters, squares of numbers and symbols that nobody will read to you aloud is not that, and you cannot verify it is not a call on other than Allah, because you cannot read it. If the man will not read it to you, that is your answer.",
+      "The Qur’an was revealed to be recited, not to be worn."
+     ],
+     "refs": [
+      {
+       "k": "debated",
+       "r": "Ahmad",
+       "note": "the narration of ‘Uqba ibn ‘Amir on hanging an amulet; the schools differ on Qur’anic ones"
+      }
+     ]
+    },
+    {
+     "t": "That the evil eye explains everything",
+     "claim": "The business, the illness, the tiredness, the argument, all of it is somebody’s eye.",
+     "ps": [
+      "The eye is real. The Prophet ﷺ said so plainly, and there is a cure with a method: when Sahl ibn Hunayf was struck after bathing and ‘Amir ibn Rabi’a admitted admiring him, the Prophet ﷺ rebuked him for not asking for barakah, told him to wash, and had the water poured over Sahl, who got up with the people, well.",
+      "So the eye is not the myth. The myth is the explanation swallowing everything. When every bad month, every dropped contract and every tired child is the eye, nothing gets examined, nobody sees a doctor, and no honest look at the business or the marriage ever happens.",
+      "What to actually do. Say masha’Allah, tabarakallah when you admire something, and ask Allah to bless it. Keep the morning and evening words. And if displaying your life to strangers frightens you, put it away, not because a page ruled it haram, but because you are allowed to have a private life."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari and Muslim",
+       "note": "the eye is real"
+      },
+      {
+       "k": "sunnah",
+       "r": "Malik, Ahmad and Ibn Majah",
+       "note": "the narration of Sahl ibn Hunayf and the washing"
+      }
+     ]
+    },
+    {
+     "t": "That the illness is possession",
+     "claim": "The heaviness, the dread, the chest, the voices, the not wanting to be alive: that is a jinn.",
+     "ps": [
+      "This is the myth that costs the most, and it is the reason this room exists. Depression, anxiety, psychosis, epilepsy, obsessive compulsive disorder, post traumatic stress, thyroid disease, anaemia, sleep apnoea and plain exhaustion all produce the exact symptoms people are told are sihr. Heaviness on the chest. Dread with no object. Sleep that will not come. Thoughts that arrive uninvited. Wanting to disappear.",
+      "Our own tradition is medical. Muslim physicians were treating mental illness in wards built for it, in Baghdad and Cairo and Fes, while Europe was still explaining it with the devil. Al-Razi and Ibn Sina wrote about melancholia as an illness of the body. The scholars distinguished waswasa, the intrusive whisper, from actual sin, precisely because they had met the man who could not stop the thought and knew he was not wicked but ill. Today that has a name and a treatment that works.",
+      "Allah has not sent down a disease without sending down a cure for it. Seeking treatment is not a lapse in tawakkul. It is tawakkul with your hands, which is the only kind the Prophet ﷺ ever taught.",
+      "So the order matters. See a doctor first for anything physical: bloods, thyroid, iron, sleep. See a professional for anything that has lasted weeks and is changing how you eat, how you sleep, or whether you want to be here. Do your ruqya alongside all of it, every night, and never instead of it. Nobody has to choose, and the tradition never asked anyone to.",
+      "And if there are thoughts of ending your life, this is the part of the page that matters. If you are in danger right now, call your local emergency number or go to the nearest emergency department. If there is nobody in the house to tell, a crisis line will answer at any hour, in most countries, and findahelpline.com lists one for wherever you are. Then tell one person who loves you, and see a doctor. Not a healer. None of this is a failure of faith, and none of it is something to be ashamed of."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "this room is not a diagnosis and does not replace care"
+      },
+      {
+       "k": "sunnah",
+       "r": "Bukhari",
+       "note": "Allah has not sent down a disease without a cure"
+      }
+     ]
+    },
+    {
+     "t": "That the stars are reading you",
+     "claim": "The birth chart, the horoscope, the app that tells you what kind of day to expect.",
+     "ps": [
+      "Whoever comes to a fortune teller and asks him about something, his prayer is not accepted for forty nights. And whoever believes what such a man says has rejected what was revealed to Muhammad ﷺ. The wording is that severe because the claim is that severe: it is a claim to know the unseen.",
+      "Astronomy is ours and the Codex has a whole room for it. Muslims measured the year, mapped the sky and named the stars that European navigators still use. The religious verdict separated the two sharply, even in centuries when the practitioners did not: the same tables served the astronomer and the court astrologer, and men like al-Biruni wrote on both while saying plainly what he thought of the second. Keep the science. Delete the app."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "the fortune teller and forty nights"
+      },
+      {
+       "k": "sunnah",
+       "r": "the Sunan",
+       "note": "whoever believes him has rejected what was revealed"
+      }
+     ]
+    },
+    {
+     "t": "That the video is evidence",
+     "claim": "The clip of the screaming, the man held down, the voice answering questions.",
+     "ps": [
+      "The ruqya of the Sunnah is quiet. There is no audience in it, no camera, no negotiation with an entity on a microphone, no crowd. What you are watching is content, and the thing being sold in it is your fear, because fear is the most reliable engagement there is.",
+      "Notice what these clips are actually for. They end with a name, a number, a clinic, a course. That is not a coincidence and it is not incidental to the format.",
+      "Unfollow. Fear grows on what you feed it, and an algorithm has no interest at all in your peace."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "counsel, not a ruling"
+      }
+     ]
+    },
+    {
+     "t": "That you can bargain with them",
+     "claim": "Slaughter something of this colour, bury this, leave this out, and it will be settled.",
+     "ps": [
+      "This is the line, and it is not a technique that failed. Slaughtering to other than Allah, leaving offerings, calling on a jinn to remove another jinn: these are acts of worship directed away from Allah, and the Qur’an says that Allah does not forgive that a partner be associated with Him, and forgives what is less than that for whom He wills, which the commentators read as dying upon it.",
+      "So whatever the problem was when you walked in, this makes it a different problem and a far larger one. It is the only move on this page that can actually make things worse than they were."
+     ],
+     "refs": [
+      {
+       "k": "quran",
+       "r": "4:48",
+       "note": "on shirk, and what is forgiven below it"
+      }
+     ]
+    },
+    {
+     "t": "That somebody in your family did this to you",
+     "claim": "A woman close to you, usually named or half named, is the reason your life is like this.",
+     "ps": [
+      "This is the most destructive sentence in the whole trade. A man walks into a room worried about his marriage and walks out certain that his aunt destroyed it. He does not check, because you cannot check. He simply stops speaking to her, and to whoever defends her, and a family comes apart over a sentence somebody was paid to say.",
+      "There is no method by which a stranger can know who. There never was one. Anybody who names a person for you has told you something true about himself and nothing at all about your family.",
+      "Hold it loosely. Suspicion has broken more homes than sihr ever has, and unlike sihr it works every single time."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "the Codex refuses to name a culprit, and so should anyone honest"
+      }
+     ]
+    }
+   ],
+   "nav": "The myths"
+  },
+  {
+   "id": "week",
+   "n": "Five",
+   "title": "What to do this week",
+   "ar": "العَمَل",
+   "tr": "al-‘amal, the doing",
+   "lead": "Seven days. Nothing here needs money, permission, or a specialist, and all of it can be started before you close this page.",
+   "items": [
+    "Day one: book the doctor if there is anything physical at all. Bloods, thyroid, iron, and tell them how you are sleeping.",
+    "Day one: tell one person you trust, out loud, in daylight.",
+    "Every morning: the three surahs three times, and the two sentences of refuge. Set an alarm for it.",
+    "Every evening: the same again, before the sun goes down.",
+    "Every night: Ayat al-Kursi and the last two verses of al-Baqarah, then ten minutes of ruqya on yourself.",
+    "Every day: ten minutes walking outside, in daylight. Ten, not thirty. Add nothing until the ten has become boring.",
+    "Every night: the phone charges across the room, and you are in bed seven hours before the alarm. Keep it within reach if you have had any thought of harming yourself.",
+    "All week: nothing about sihr, jinn or possession on any screen. Not one video.",
+    "Day seven: write down what changed. Not how you feel. What changed.",
+    "Before the walking: ask a doctor first if you are pregnant, have a heart condition, have an injury, or have not moved in years."
+   ],
+   "foot": "Most people who do this for a week find the nights easier. Some of them find a doctor was the answer. Almost nobody needs the man with the incense.",
+   "nav": "This week",
+   "refs": [
+    {
+     "k": "editorial",
+     "r": "the Codex",
+     "note": "counsel, not a ruling, and not a treatment plan"
+    }
+   ]
+  },
+  {
+   "id": "heart",
+   "n": "Six",
+   "title": "Train the heart, both of them",
+   "ar": "القَلْب",
+   "tr": "al-qalb, the heart, and it is one word for two things",
+   "lead": "Tarbiyat al-qalb, the training of the heart, was never only a metaphor. You were given one heart doing two jobs. Both of them weaken when they are neglected, both of them can be trained, and the part almost nobody says out loud is that the training for each one helps the other.",
+   "teachings": [
+    {
+     "t": "The strong believer, and the sentence people cut off",
+     "ps": [
+      "The strong believer is better and more beloved to Allah than the weak believer, and in both there is good. It is quoted constantly, and the second half is dropped almost every time.",
+      "Keep the second half. It is there to protect the sick, the injured, the old and the exhausted from being told they are lesser Muslims. Strength is a direction to move in, not a rank you are assigned. The narration then goes on to say: be eager for what benefits you, seek the help of Allah, and do not be helpless. That last word is the point of this whole section."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim 2664",
+       "note": "the narration of Abu Hurayra"
+      }
+     ]
+    },
+    {
+     "t": "He ﷺ raced his wife, and lost",
+     "ps": [
+      "‘A’isha said she raced the Prophet ﷺ on a journey and beat him. Years later, after she had put on weight, he raced her again and won, and said: this one is for that one.",
+      "Sit with how ordinary that is. The Messenger of Allah ﷺ ran, for no reason except closeness and play, lost to his wife, and remembered the score for years. Movement in this religion is not a grim duty bolted on to worship. It was part of an ordinary happy life in the best house that ever existed."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Abu Dawud",
+       "note": "the narration of ‘A’isha on the two races"
+      }
+     ]
+    },
+    {
+     "t": "Strength was defined, and it was physical",
+     "ps": [
+      "The Qur’an commands preparing against them whatever you can of strength. Standing on the minbar, the Prophet ﷺ said three times: indeed strength is shooting. Indeed strength is shooting. Indeed strength is shooting.",
+      "A general word was handed down, and the one who received the revelation defined it, three times, as a trained skill of the body. Archery, riding and swimming were the training of that community. Nobody in Madinah thought the body was a distraction from the religion."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim 1917",
+       "note": "the narration of ‘Uqba ibn ‘Amir on the minbar"
+      },
+      {
+       "k": "quran",
+       "r": "8:60",
+       "note": "prepare against them what you can of strength"
+      },
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "reading that forward to general fitness is our own step, not the text’s"
+      }
+     ]
+    },
+    {
+     "t": "Swimming, archery and riding, honestly labelled",
+     "ps": [
+      "Teach your children swimming, archery and horse riding. You have seen it a hundred times attributed to the Prophet ﷺ. No authentic chain traces it to him. It is reported instead from ‘Umar ibn al-Khattab, by al-Bayhaqi and by Ibn Abi Shayba, which makes it an athar, the word of a companion, and not a hadith. Even that chain has been questioned for a break in it.",
+      "It is still excellent counsel, from one of the best men who ever lived. It is just not what people say it is, and this room would rather hand you a smaller true thing than a larger false one. That habit, practised everywhere, would empty half of what frightens people on the internet."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "reported from ‘Umar by al-Bayhaqi and Ibn Abi Shayba",
+       "note": "an athar of a companion, widely misquoted as a hadith of the Prophet ﷺ, and its own chain is questioned"
+      }
+     ]
+    },
+    {
+     "t": "Your body has a right over you",
+     "ps": [
+      "Abdullah ibn ‘Amr was fasting every day and praying through every night, and he was young and able to do it. The Prophet ﷺ stopped him. Your body has a right over you. Your eye has a right over you. Your wife has a right over you. Fast and break your fast, pray and sleep.",
+      "This is the correction to every version of piety that treats the body as an obstacle. The body is not in the way of the worship. It is the instrument of it, it is on loan, and running it into the ground is not devotion, it is damage to something that was entrusted to you."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Bukhari",
+       "note": "the long narration of Abdullah ibn ‘Amr on fasting every day"
+      }
+     ]
+    },
+    {
+     "t": "The steps were already being counted",
+     "ps": [
+      "Whoever purifies himself in his house and walks to a house of Allah to perform one of the obligations, one step wipes out a sin and the next raises him a degree. Every step, in both directions, already counted and already rewarded.",
+      "Fourteen centuries before anybody strapped a device to their wrist to count steps, the count existed and the reward was attached to it. Walk to the masjid. It is the oldest and best designed cardiovascular programme in the world, and it comes with congregation, daylight and a fixed schedule."
+     ],
+     "refs": [
+      {
+       "k": "sunnah",
+       "r": "Muslim",
+       "note": "the narration of Abu Hurayra on walking to the prayer"
+      }
+     ]
+    },
+    {
+     "t": "What the body actually does to the heart",
+     "ps": [
+      "What follows is not scripture and is not dressed up as scripture. It is the plainest reading of the medical evidence, and it belongs here because it explains a great deal of what gets carried to a healer.",
+      "Regular aerobic exercise has one of the most consistently reproduced effects in mental health research: it reduces symptoms of depression and anxiety. It is not a cure and it does not replace treatment, and anybody who tells a seriously ill person to just go for a run is doing harm. But the effect is real, it is measurable, and it is free.",
+      "Sleep is the largest single lever on mood that exists, and the phone is the largest single thief of sleep. Daylight in the first hour of the day sets the clock that decides when you will be tired at night, and fajr already puts you awake at exactly the right hour to use it.",
+      "And deconditioning feels like dread. A body that has not moved in a year sends the heart racing on one flight of stairs, and the mind, which has to explain the racing somehow, reaches for the nearest explanation available to it. If the last thing you watched was an exorcism, that is the explanation it reaches for.",
+      "Some of what arrives at a raqi is five hours of broken sleep, no daylight since March, and nobody to talk to. That much is fixable and none of the fixes are for sale. But a resting heart rate of ninety, breathlessness, or anything happening in your chest is not a thing to explain away as being unfit. Get it checked first, as the section above says, and then come back to this one."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "our own reading of the medical evidence, named as such"
+      }
+     ]
+    },
+    {
+     "t": "Why a strong body makes a happier person",
+     "ps": [
+      "There is a kind of happiness that has very little to do with mood. It is the happiness of being capable. A body that can carry an elderly relative up a flight of stairs, walk seven circuits without fear, fast without collapsing, stand for a long night prayer, play with a child until the child gives up first.",
+      "Every one of those is a door to a good deed that a weak body quietly closes. Capability is not vanity. It is the width of the road between what you intend and what you actually manage to do, and widening that road is one of the most reliable sources of contentment a person has ever found.",
+      "So the fitness is not the point. What the fitness lets you carry is the point. Train the heart that beats, and the heart that fears will find it has less to be afraid of, because a person who can act is much harder to frighten than a person who cannot."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "counsel, not a ruling"
+      }
+     ]
+    },
+    {
+     "t": "Start absurdly small",
+     "ps": [
+      "The commonest failure is starting at a level you cannot repeat on a bad week. A plan that survives the week your child is ill and the deadline moves is worth more than a plan that is twice as good and collapses in nine days.",
+      "Ten minutes of walking after fajr. Not thirty. Ten. Add nothing for two weeks, and only add when the ten has become boring. The chart below is where this is going, not where it starts.",
+      "And the standing note: if you have a heart condition, a pregnancy, an injury, or you have not moved in years, ask a doctor before the chart, not after it."
+     ],
+     "refs": [
+      {
+       "k": "editorial",
+       "r": "the Codex",
+       "note": "general guidance, not a prescription for any individual"
+      }
+     ]
+    }
+   ],
+   "nav": "Train the heart"
+  }
+ ],
+ "tells": {
+  "kk": "Keep this",
+  "title": "Eleven tells of a charlatan",
+  "lead": "Any one of these is enough to stand up and walk out. You owe him nothing, including politeness. Print this, or keep it where you can find it at eleven at night, which is when you will need it.",
+  "items": [
+   "He asks for your name and your mother’s name.",
+   "He asks for a photograph, a piece of your clothing, or your hair.",
+   "He tells you a jinn is in love with you.",
+   "He names the person who did it to you, and it is usually a relative.",
+   "He asks you to slaughter an animal of a particular colour, or to bury something somewhere.",
+   "He writes in letters, numbers or symbols that he will not read aloud to you.",
+   "He tells you to stop praying, or to stop your medication, during the treatment.",
+   "He wants to work in a closed room, alone, with a woman.",
+   "He asks for a large sum, or a sum that keeps growing, or payment before anything happens.",
+   "He guarantees a result, or gives a treatment with no end date.",
+   "He tells you not to tell anybody."
+  ],
+  "foot": "The honest ones exist. They recite the Qur’an aloud in a language you can follow, in a room with the door open, they tell you to see a doctor, they teach you to do it yourself, and they finish.",
+  "refs": [
+   {
+    "k": "editorial",
+    "r": "the Codex",
+    "note": "counsel, drawn from what people actually report being told"
+   }
+  ]
+ },
+ "plan": {
+  "kk": "A week that fits around the prayers",
+  "title": "The shape of it, once ten minutes is easy",
+  "lead": "This is where ten minutes a day is going, not where it starts. It is the ordinary public health target arranged around a day that already has five fixed points in it.",
+  "rows": [
+   [
+    "After fajr",
+    "Twenty to thirty minutes walking, outside, in the light. This one does the most and costs the least."
+   ],
+   [
+    "Twice a week",
+    "Fifteen to twenty minutes of carrying something heavy for you. Bags, stairs, a child. Keep the back straight, lift with the legs, and stop before the last hard repetition."
+   ],
+   [
+    "Later, not at the start",
+    "Once the walking is easy, make two of the weekly walks fast enough that a full sentence is work."
+   ],
+   [
+    "Every day",
+    "Walk to at least one prayer, both directions, whatever the weather allows."
+   ],
+   [
+    "Once a week",
+    "Something that is play and not training. Swim, ride, shoot, race somebody. He ﷺ did."
+   ],
+   [
+    "Every night",
+    "Seven hours, phone across the room. This is training, not the absence of it."
+   ]
+  ],
+  "foot": "Counted properly that is around a hundred and fifty minutes of walking in the week plus two short sessions of carrying, which is the ordinary public health target and no more. Ask a doctor before you begin if you are pregnant, have a heart condition, have an injury, or have not moved in years.",
+  "refs": [
+   {
+    "k": "editorial",
+    "r": "the Codex",
+    "note": "general guidance, not a prescription for any individual"
+   }
+  ]
+ },
+ "next": {
+  "title": "Where to go from here",
+  "lead": "The rooms this one leans on, and the ones that carry it further.",
+  "cards": [
+   [
+    "/health",
+    "Prophetic Health",
+    "The third, the third and the third, the oldest eating window, and hijama dealt with properly: the narrations, what the research shows, and the safety rules."
+   ],
+   [
+    "/unseen",
+    "The Unseen & the Mysteries",
+    "The jinn, the angels and the barzakh, described from the text and no further than the text goes."
+   ],
+   [
+    "/soul",
+    "The Journey of the Soul",
+    "What is actually coming, told plainly. The best cure for a small fear is a true large one."
+   ],
+   [
+    "/pillars",
+    "The Five Pillars",
+    "The daily order that this whole room quietly depends on."
+   ],
+   [
+    "/heroes",
+    "Heroes of Islam",
+    "Al-Razi, Ibn Sina and the hospitals that treated the mind as an illness of the body."
+   ],
+   [
+    "/family",
+    "The Family Room",
+    "Because most of what gets blamed on the eye is happening at home, and can be repaired there."
+   ]
+  ]
+ }
+}

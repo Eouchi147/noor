@@ -1,0 +1,134 @@
+[
+ {
+  "id": "shahadah",
+  "term": "Shahadah",
+  "ar": "الشَّهَادَة",
+  "also": [
+   "Shahada",
+   "Shahadatain",
+   "Kalima",
+   "Kalimah",
+   "Kalima Tayyiba",
+   "Kalimat at-Tawhid",
+   "Testimony of faith",
+   "Declaration of faith",
+   "Two testimonies",
+   "La ilaha illallah",
+   "Syahadat"
+  ],
+  "cat": "aqidah",
+  "short": "The testimony that there is no god but Allah and that Muhammad is His Messenger.",
+  "long": "It is the first of the five pillars and the door into Islam: whoever says it, understanding and meaning it, is a Muslim. It has two halves, which is why it is often called the shahadatain, the two testimonies. The first half empties the heart of every other object of worship; the second names the one man whose example shows how that worship is done. It is not a formula that works by sound. The scholars set conditions for it, among them knowledge of what it means, certainty rather than doubt, sincerity, truthfulness, love, acceptance and acting on it.",
+  "see": [
+   "tawhid",
+   "iman",
+   "islam",
+   "islam",
+   "kufr",
+   "nifaq"
+  ],
+  "k": "quran"
+ },
+ {
+  "id": "laylat-al-qadr",
+  "term": "Laylat al-Qadr",
+  "ar": "لَيْلَةُ القَدْر",
+  "also": [
+   "Lailatul Qadr",
+   "Laylatul Qadr",
+   "Lailat ul Qadr",
+   "Shab e Qadr",
+   "Night of Power",
+   "Night of Decree",
+   "Night of Destiny",
+   "Qadr night",
+   "Lailat al Qadar"
+  ],
+  "cat": "ibadah",
+  "short": "The night in Ramadan that the Qur'an calls better than a thousand months.",
+  "long": "A whole surah is named for it, and it says worship in that one night is better than a thousand months, which is more than eighty years. It is sought in the last ten nights of Ramadan, and most strongly in the odd ones, with the twenty seventh most commonly named; the Prophet peace be upon him said to seek it rather than announced it, and the scholars read that hiding as mercy, so that the whole ten are revived. The du'a taught for it asks Allah, who loves to pardon, for pardon.",
+  "see": [
+   "itikaf",
+   "qiyam",
+   "sawm",
+   "dua"
+  ],
+  "k": "quran"
+ },
+ {
+  "id": "aqiqah",
+  "term": "Aqiqah",
+  "ar": "العَقِيقَة",
+  "also": [
+   "Aqeeqah",
+   "Aqiqa",
+   "Akikah",
+   "Aqeeqa",
+   "Aqiqah sacrifice",
+   "Newborn sacrifice",
+   "Naming ceremony"
+  ],
+  "cat": "ibadah",
+  "short": "The sacrifice offered for a newborn, customarily on the seventh day, with the naming and the shaving of the head.",
+  "long": "The reports name two sheep for a boy and one for a girl, and the majority treat it as a strong sunnah rather than an obligation; the Zahiris held it obligatory. It is done on the seventh day where that is possible, and it is not invalid later. The head is shaved and something is given in charity, and the child is named. Nothing in it requires expense a family does not have, and a family that cannot afford it owes nothing.",
+  "see": [
+   "udhiyah",
+   "nikah",
+   "sadaqah",
+   "walimah"
+  ],
+  "k": "sunnah"
+ },
+ {
+  "id": "udhiyah",
+  "term": "Udhiyah",
+  "ar": "الأُضْحِيَة",
+  "also": [
+   "Qurbani",
+   "Qurban",
+   "Korban",
+   "Kurban",
+   "Adahi",
+   "Dhabihah of Eid",
+   "Eid sacrifice",
+   "Sacrifice of Eid al-Adha",
+   "Udhiya",
+   "Odhiya"
+  ],
+  "cat": "ibadah",
+  "short": "The animal sacrificed on Eid al-Adha and the days after it, in remembrance of Ibrahim.",
+  "long": "It is offered after the Eid prayer on the tenth of Dhul Hijjah and through the days of tashriq. The Hanafis hold it obligatory on whoever has the means; the other three schools call it a confirmed sunnah. The meat is customarily divided in three, for the household, for relatives and neighbours, and for the poor, though that division is a practice rather than a fixed ruling. It is not the same as the hady, the sacrifice a pilgrim offers as part of Hajj.",
+  "see": [
+   "salat-al-eid",
+   "hady",
+   "dhabihah",
+   "aqiqah",
+   "hajj"
+  ],
+  "k": "sunnah"
+ },
+ {
+  "id": "kalam-allah",
+  "term": "Kalam Allah",
+  "ar": "كَلَامُ اللَّه",
+  "also": [
+   "Kalamullah",
+   "Speech of Allah",
+   "Kalam e Ilahi",
+   "Createdness of the Quran",
+   "Khalq al-Quran",
+   "Uncreated Quran",
+   "Mihna"
+  ],
+  "cat": "aqidah",
+  "short": "The speech of Allah, and the classical controversy over whether the Qur'an is created or uncreated.",
+  "long": "The Qur'an is the speech of Allah, and the question the third century argued over was whether that speech is created like everything else or an eternal attribute of the One who speaks. The Mu'tazila held it created; Ahmad ibn Hanbal was imprisoned and beaten under the mihna for refusing to say so, and the position that prevailed in Sunni Islam is that the Qur'an is the uncreated speech of Allah, though the schools word the relation between the eternal attribute and the recited letters differently. It is the clearest case in the tradition of a doctrine settled by somebody's endurance rather than by an argument.",
+  "see": [
+   "asma-wa-sifat",
+   "imam-ahmad",
+   "aqidah",
+   "ashari"
+  ],
+  "k": "debated"
+ }
+]

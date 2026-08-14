@@ -1,0 +1,476 @@
+{
+  "meta": {
+    "title": "The Ramadan Room",
+    "ar": "رَمَضَان",
+    "gloss": "the burning month, named for the heat that scorches the ground and the sins",
+    "note": "Every date on this page is calculated from the tabular Islamic calendar, which is arithmetic and cannot see the moon. Your masjid’s announcement is the date. The offset control exists for exactly that reason."
+  },
+
+  "days": [
+    { "n": 1, "k": "The gate opens", "ar": "نِيَّة", "tr": "niyya", "gloss": "intention",
+      "text": "Tonight your body learns what your soul already agreed to. Fasting was written for you as it was written for the people before you, and the reason given is not hunger. It is taqwa, the awareness that He is watching. Begin with that one sentence and the whole month has a floor under it.",
+      "refs": [{ "k": "quran", "r": "2:183", "note": "prescribed for you as for those before you" }] },
+
+    { "n": 2, "k": "Hunger is a teacher", "ar": "", "tr": "", "gloss": "",
+      "text": "By the second day the stomach has stopped negotiating and started talking. Listen to it once, honestly. This is what somebody near you feels on an ordinary Tuesday with no Eid at the end of it. A fast that does not soften you toward the hungry has only made you thinner.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "drawn from the purpose named in 2:183" }] },
+
+    { "n": 3, "k": "The mouth fasts too", "ar": "", "tr": "", "gloss": "",
+      "text": "Whoever does not abandon false speech and acting upon it, Allah has no need of him abandoning his food and drink. The tongue fasts as well, and it is far harder to hold than the jaw. If somebody picks a fight today, say I am fasting, and let the sentence end there.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1903", "note": "no need of him leaving his food" },
+               { "k": "hadith", "src": "Bukhari", "r": "1904", "note": "say I am fasting, twice" }] },
+
+    { "n": 4, "k": "Do not sleep through it", "ar": "", "tr": "", "gloss": "",
+      "text": "The month is not a long nap between two meals. Sleep enough to be kind to the people in your house, then spend the hours you saved from cooking and eating on something you will be glad to have done. The days are short and they do not come back.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "no text forbids sleep; the waste is the point" }] },
+
+    { "n": 5, "k": "Feed one person", "ar": "إِفْطَار", "tr": "iftar", "gloss": "the breaking of the fast",
+      "text": "Whoever gives a fasting person something to break his fast with has the same reward as him, and nothing is taken from the fasting person’s own reward. It does not have to be a banquet. A date and a cup of water is named in the report itself.",
+      "refs": [{ "k": "hadith", "src": "Tirmidhi", "r": "807", "note": "the same reward, nothing lessened" }] },
+
+    { "n": 6, "k": "Your body has a claim on you", "ar": "", "tr": "", "gloss": "",
+      "text": "Salman said to Abu al-Darda: your Lord has a right over you, your body has a right over you, and your family has a right over you, so give each one its right. The Prophet ﷺ heard it and said Salman has spoken the truth. Ramadan is a fast from food in daylight, not a fast from rest, from water at night, or from your family.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1968", "note": "Salman has spoken the truth" }] },
+
+    { "n": 7, "k": "The month of the Book", "ar": "قُرْآن", "tr": "Qur’an", "gloss": "the recitation",
+      "text": "The month of Ramadan is the one in which the Qur’an was sent down, guidance for the people. That is the month’s own reason for existing. Read a small amount every single day rather than a heroic amount once, because the small amount is the one that survives to the thirtieth.",
+      "refs": [{ "k": "quran", "r": "2:185", "note": "the month in which the Qur’an was sent down" }] },
+
+    { "n": 8, "k": "Ask while your hands are open", "ar": "دُعَاء", "tr": "du’a", "gloss": "calling on Allah",
+      "text": "And when My servants ask you about Me, I am near. I answer the call of the caller when he calls Me. That verse sits inside the fasting verses, not beside them. Keep a short list and read it in the last minutes before the adhan, when you are already waiting.",
+      "refs": [{ "k": "quran", "r": "2:186", "note": "placed in the middle of the fasting passage" },
+               { "k": "hadith", "src": "Tirmidhi", "r": "3598", "note": "three whose du’a is not turned back; graded hasan by Tirmidhi, weakened by others" }] },
+
+    { "n": 9, "k": "Give before you are asked", "ar": "", "tr": "", "gloss": "",
+      "text": "The Prophet ﷺ was the most generous of people, and he was at his most generous in Ramadan, when Jibril would meet him each night to go over the Qur’an with him. Generosity is not only money. It is the seat you gave up, the message you answered, the grudge you quietly put down.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "6", "note": "more generous than a sent rain" }] },
+
+    { "n": 10, "k": "A third of it is gone", "ar": "", "tr": "", "gloss": "",
+      "text": "Ten days have passed and you will not be given them back. Do not audit them with shame; shame is a poor engine and it stalls by the fifteenth. Choose one thing to do better for the next ten, write it somewhere you will actually see it, and leave the first ten alone.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "encouragement, not a graded report" }] },
+
+    { "n": 11, "k": "The prayer nobody sees", "ar": "قِيَام", "tr": "qiyam", "gloss": "standing in the night",
+      "text": "The best prayer after the obligatory ones is the night prayer. It is the one act of worship with no audience at all, which is why it tells the truth about a person. Two units are enough to begin. Two units kept for twenty nights beats twenty units abandoned on the third.",
+      "refs": [{ "k": "hadith", "src": "Muslim", "r": "1163", "note": "the best prayer after the obligatory" }] },
+
+    { "n": 12, "k": "Forgive one person today", "ar": "عَفْو", "tr": "afw", "gloss": "pardon that leaves no trace",
+      "text": "Let them pardon and overlook. Do you not love that Allah should forgive you? You are spending this month asking to be let off. Ask yourself honestly whether you are holding something over someone that is smaller than what you are asking Him to drop. Let it go today, quietly, without announcing it.",
+      "refs": [{ "k": "quran", "r": "24:22", "note": "do you not love that Allah should forgive you" }] },
+
+    { "n": 13, "k": "The white days", "ar": "الأَيَّام البِيض", "tr": "al-ayyam al-bid", "gloss": "the white days",
+      "text": "The thirteenth, fourteenth and fifteenth of every month are the white days, named for the full moon that whitens the night. You are already fasting them this month without noticing. Note them now for the eleven months that follow, when fasting will be harder and worth more because nobody else is doing it.",
+      "refs": [{ "k": "hadith", "src": "Nasa’i", "r": "2420", "note": "three days of each month, the white days" }] },
+
+    { "n": 14, "k": "Halfway, honestly", "ar": "", "tr": "", "gloss": "",
+      "text": "Half of it is behind you. Ask one question and answer it in one sentence: has anything actually changed in me, or have I only changed my meal times? If the answer is the second one, there is still half a month left, which is more than most people are given.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "a checkpoint, not a ruling" }] },
+
+    { "n": 15, "k": "The door with your parents’ name on it", "ar": "بِرّ", "tr": "birr", "gloss": "devoted goodness to parents",
+      "text": "The parent is the middle door of paradise, so lose that door or guard it. Call them today and stay on the call after the news is finished. If they have died, this is the month to give on their behalf and to ask for them by name, out loud, so your own children hear you do it.",
+      "refs": [{ "k": "hadith", "src": "Tirmidhi", "r": "1900", "note": "the parent is the middle door of paradise" }] },
+
+    { "n": 16, "k": "The strong one", "ar": "حِلْم", "tr": "hilm", "gloss": "the strength that stays calm",
+      "text": "The strong one is not the one who throws people down. The strong one is the one who holds himself together at the moment of anger. Fasting takes away your usual comforts on purpose, which means every irritation arrives undefended. That is not the month failing. That is the training.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "6114", "note": "the strong is the one who controls himself in anger" }] },
+
+    { "n": 17, "k": "Badr", "ar": "بَدْر", "tr": "Badr", "gloss": "the well where the first battle was fought",
+      "text": "On the seventeenth of Ramadan in the second year after the migration, a little over three hundred fasting men stood at Badr against three times their number, with the wrong equipment and no line of retreat. Allah had already given you victory at Badr while you were weak. Whatever you are afraid of today has been faced by someone with less.",
+      "refs": [{ "k": "quran", "r": "3:123", "note": "victory at Badr while you were weak" }] },
+
+    { "n": 18, "k": "The plate over the wall", "ar": "جَار", "tr": "jar", "gloss": "neighbour",
+      "text": "Jibril kept counselling me about the neighbour until I thought he would make him an heir. Ramadan is a loud month of cooking smells travelling along a corridor. Somewhere near you is a flat that smells of nothing. Send a plate, without a note, and do not wait to be thanked.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "6014", "note": "until I thought he would make him an heir" }] },
+
+    { "n": 19, "k": "Clear the ground", "ar": "", "tr": "", "gloss": "",
+      "text": "The last ten nights begin the night after tomorrow. Do the shopping now. Buy the gifts now. Settle the travel and the family arrangements now. It is a quiet tragedy to spend the most valuable nights of your year standing in a queue holding a basket.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "practical, drawn from the value the texts place on the last ten" }] },
+
+    { "n": 20, "k": "Tonight the last ten begin", "ar": "", "tr": "", "gloss": "",
+      "text": "When the last ten entered, the Prophet ﷺ would tighten his waist wrapper, stay awake through the night, and wake his family. Scholars have read that tightening in more than one way. However it is read, the plain meaning stands: something changes tonight, in the house as well as in the person.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "2024", "note": "he tightened his waist wrapper and woke his family" },
+               { "k": "hadith", "src": "Muslim", "r": "1174", "note": "he strove in the last ten as he did not otherwise" }] },
+
+    { "n": 21, "k": "The first odd night", "ar": "لَيْلَة القَدْر", "tr": "Laylat al-Qadr", "gloss": "the Night of Decree",
+      "text": "Seek it in the odd nights of the last ten. Tonight is the first of them. Nobody was told which night it is, and that hiding is deliberate: a person who knew the date would worship one night and sleep nine. You were made to search all ten.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "2017", "note": "seek it in the odd nights of the last ten" }] },
+
+    { "n": 22, "k": "Better than a thousand months", "ar": "", "tr": "", "gloss": "",
+      "text": "A thousand months is eighty three years and four months, which is a whole human life. One night has been placed inside your month that is worth more than all of it. Even the arithmetic alone should make a reasonable person sit up and rearrange the evening.",
+      "refs": [{ "k": "quran", "r": "97:3", "note": "better than a thousand months" }] },
+
+    { "n": 23, "k": "The night some were shown", "ar": "", "tr": "", "gloss": "",
+      "text": "Abdullah ibn Unays was shown it on the twenty third and prayed that night in water and mud. Ubayy ibn Ka’b swore by Allah that it was the twenty seventh. The reports do not agree, and the strongest reading of that disagreement is that the night moves from year to year. So come to all of them.",
+      "refs": [{ "k": "hadith", "src": "Muslim", "r": "1168", "note": "Abdullah ibn Unays and the twenty third" },
+               { "k": "hadith", "src": "Muslim", "r": "762", "note": "Ubayy ibn Ka’b swearing it is the twenty seventh" }] },
+
+    { "n": 24, "k": "What to ask for", "ar": "", "tr": "", "gloss": "",
+      "text": "Aisha asked what she should say if she found the night, and she was not taught to ask for things. She was taught to ask to be pardoned. Ask for the largest thing first. Then ask for your small ones as well, by name, because He is not troubled by the length of a list.",
+      "refs": [{ "k": "hadith", "src": "Tirmidhi", "r": "3513", "note": "O Allah, You are Pardoning and love pardon" }] },
+
+    { "n": 25, "k": "The tiredness lies", "ar": "", "tr": "", "gloss": "",
+      "text": "Around the twenty fifth the body files a convincing report saying it has done enough and the important nights are behind it. The report is wrong on both counts. Do not let tiredness make a decision that your whole year depends on.",
+      "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "encouragement, plainly labelled as ours" }] },
+
+    { "n": 26, "k": "The eve of the twenty seventh", "ar": "", "tr": "", "gloss": "",
+      "text": "Tonight is the twenty seventh night on the reckoning most communities follow, and the masjid will be fuller than it has been all year. Go early enough to get a place. Take your children. Sit where they can see something happening, and let them remember the crowd.",
+      "refs": [{ "k": "hadith", "src": "Muslim", "r": "762", "note": "the twenty seventh, in the report of Ubayy" }] },
+
+    { "n": 27, "k": "The night most sought", "ar": "قَدْر", "tr": "qadr", "gloss": "decree, and worth",
+      "text": "The word qadr carries both meanings at once: the measuring out of what will be, and sheer worth. On it every wise matter is made distinct, by a command from Us. Whatever else you do tonight, do not hand it to a screen that will give you nothing back.",
+      "refs": [{ "k": "quran", "r": "97:4", "note": "the angels and the Spirit descend by permission" },
+               { "k": "quran", "r": "44:4", "note": "every wise matter made distinct" }] },
+
+    { "n": 28, "k": "Two nights left", "ar": "", "tr": "", "gloss": "",
+      "text": "Deeds are judged by their endings. Two nights remain, and depending on whether this month runs twenty nine days or thirty, one of them is odd numbered in a reckoning you cannot see. Spend both as though the night you have been looking for is the one in front of you.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "6607", "note": "deeds are by their endings" }] },
+
+    { "n": 29, "k": "Pay it before the prayer", "ar": "زَكَاة الفِطْر", "tr": "zakat al-fitr", "gloss": "the charity of the breaking of the fast",
+      "text": "It must be in the hands of the poor before the Eid prayer, not after it. Paid after, it is an ordinary charity and no longer this obligation. Pay for every soul in your house, including the child born last week and the guest who is staying with you. If your masjid is collecting, hand it in today.",
+      "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1503", "note": "one sa’, upon every soul among the Muslims" },
+               { "k": "hadith", "src": "Abu Dawud", "r": "1609", "note": "before the prayer it is accepted zakat, after it a charity" }] },
+
+    { "n": 30, "k": "Do not put the lamp out", "ar": "", "tr": "", "gloss": "",
+      "text": "Whoever fasts Ramadan and then follows it with six days of Shawwal, it is as though he fasted the whole year. The month is ending. The person it built does not have to end with it. Keep one thing, a small one, and carry it into an ordinary week where nobody is watching.",
+      "refs": [{ "k": "hadith", "src": "Muslim", "r": "1164", "note": "six of Shawwal, as though the whole year" }] }
+  ],
+
+  "juz": [
+    { "n": 1, "range": "Al-Fatiha 1 to Al-Baqara 141", "surahs": "Al-Fatiha, Al-Baqara",
+      "note": "The Book opens with a prayer for guidance and then answers it. Adam is taught the names and Ibrahim raises the House." },
+    { "n": 2, "range": "Al-Baqara 142 to 252", "surahs": "Al-Baqara",
+      "note": "The prayer direction turns to Makkah, fasting is prescribed, and the rules of a fair society are laid down one by one." },
+    { "n": 3, "range": "Al-Baqara 253 to Al Imran 92", "surahs": "Al-Baqara, Al Imran",
+      "note": "Ayat al-Kursi, the Verse of the Throne, then the closing two verses of Al-Baqara, then the family of Imran begins." },
+    { "n": 4, "range": "Al Imran 93 to An-Nisa 23", "surahs": "Al Imran, An-Nisa",
+      "note": "Uhud is reviewed without flattery, and then the rights of orphans, women and the weak are set down in law." },
+    { "n": 5, "range": "An-Nisa 24 to 147", "surahs": "An-Nisa",
+      "note": "Marriage, inheritance, and the command to stand up for justice as witnesses for Allah even against yourselves." },
+    { "n": 6, "range": "An-Nisa 148 to Al-Ma’ida 81", "surahs": "An-Nisa, Al-Ma’ida",
+      "note": "The People of the Book are addressed at length, and wudu, the washing before prayer, is described exactly." },
+    { "n": 7, "range": "Al-Ma’ida 82 to Al-An’am 110", "surahs": "Al-Ma’ida, Al-An’am",
+      "note": "The table sent from heaven, then Ibrahim looking at the star, the moon and the sun, and turning past all three." },
+    { "n": 8, "range": "Al-An’am 111 to Al-A’raf 87", "surahs": "Al-An’am, Al-A’raf",
+      "note": "The first covenant taken from every soul, Adam and Iblis, and messengers sent to their own people one after another." },
+    { "n": 9, "range": "Al-A’raf 88 to Al-Anfal 40", "surahs": "Al-A’raf, Al-Anfal",
+      "note": "Musa before Pharaoh, the sea, the calf, and then Badr remembered from the inside in Al-Anfal." },
+    { "n": 10, "range": "Al-Anfal 41 to At-Tawba 92", "surahs": "Al-Anfal, At-Tawba",
+      "note": "The spoils, the treaties, and the hardest verses in the Qur’an about the ones who stayed behind." },
+    { "n": 11, "range": "At-Tawba 93 to Hud 5", "surahs": "At-Tawba, Yunus, Hud",
+      "note": "The three who were left behind until the earth grew narrow around them, then Yunus and the sea." },
+    { "n": 12, "range": "Hud 6 to Yusuf 52", "surahs": "Hud, Yusuf",
+      "note": "Nuh building a ship on dry ground, Hud, Salih and Shu’ayb, and then a boy is dropped down a well." },
+    { "n": 13, "range": "Yusuf 53 to Ibrahim 52", "surahs": "Yusuf, Ar-Ra’d, Ibrahim",
+      "note": "Yusuf forgives his brothers with no conditions, the thunder praises Him, and Ibrahim prays for his children." },
+    { "n": 14, "range": "Al-Hijr 1 to An-Nahl 128", "surahs": "Al-Hijr, An-Nahl",
+      "note": "The bee is given revelation, and the verse of justice and excellence that closes a khutba in every masjid on earth." },
+    { "n": 15, "range": "Al-Isra 1 to Al-Kahf 74", "surahs": "Al-Isra, Al-Kahf",
+      "note": "The night journey, the rights of parents set beside the worship of Allah, then the cave and Musa with al-Khidr." },
+    { "n": 16, "range": "Al-Kahf 75 to Ta-Ha 135", "surahs": "Al-Kahf, Maryam, Ta-Ha",
+      "note": "Dhul Qarnayn and the barrier, Maryam alone under the palm tree, and Musa told to take off his sandals." },
+    { "n": 17, "range": "Al-Anbiya 1 to Al-Hajj 78", "surahs": "Al-Anbiya, Al-Hajj",
+      "note": "Ibrahim in the fire, Ayyub’s patience, Yunus in three darknesses, and the call to the pilgrimage going out." },
+    { "n": 18, "range": "Al-Mu’minun 1 to Al-Furqan 20", "surahs": "Al-Mu’minun, An-Nur, Al-Furqan",
+      "note": "The believers have succeeded, a slander is answered from above the heavens, and the Verse of Light is given." },
+    { "n": 19, "range": "Al-Furqan 21 to An-Naml 55", "surahs": "Al-Furqan, Ash-Shu’ara, An-Naml",
+      "note": "The servants of the Most Merciful who walk gently on the earth, then the poets, then Sulayman and the ant." },
+    { "n": 20, "range": "An-Naml 56 to Al-Ankabut 45", "surahs": "An-Naml, Al-Qasas, Al-Ankabut",
+      "note": "Qarun and his treasure swallowed by the ground, and the spider’s house named the frailest of all houses." },
+    { "n": 21, "range": "Al-Ankabut 46 to Al-Ahzab 30", "surahs": "Al-Ankabut, Ar-Rum, Luqman, As-Sajda, Al-Ahzab",
+      "note": "Rome will win after losing, Luqman advises his son in five short lines, and the trench is dug around Madinah." },
+    { "n": 22, "range": "Al-Ahzab 31 to Ya-Sin 27", "surahs": "Al-Ahzab, Saba, Fatir, Ya-Sin",
+      "note": "The Prophet’s household is addressed, the dam of Sheba breaks, and a man runs from the far end of the city." },
+    { "n": 23, "range": "Ya-Sin 28 to Az-Zumar 31", "surahs": "Ya-Sin, As-Saffat, Sad, Az-Zumar",
+      "note": "Ibrahim and his son at the moment of the knife, Dawud and Sulayman, and Ayyub told to strike the ground." },
+    { "n": 24, "range": "Az-Zumar 32 to Fussilat 46", "surahs": "Az-Zumar, Ghafir, Fussilat",
+      "note": "Do not despair of the mercy of Allah, then the believer of Pharaoh’s house who spoke when nobody else would." },
+    { "n": 25, "range": "Fussilat 47 to Al-Jathiya 37", "surahs": "Fussilat, Ash-Shura, Az-Zukhruf, Ad-Dukhan, Al-Jathiya",
+      "note": "Their affair is consultation between them, the smoke, and the night in which every wise matter is made distinct." },
+    { "n": 26, "range": "Al-Ahqaf 1 to Adh-Dhariyat 30", "surahs": "Al-Ahqaf, Muhammad, Al-Fath, Al-Hujurat, Qaf, Adh-Dhariyat",
+      "note": "Kindness to parents at forty, the pledge given under the tree, and the manners of a community in Al-Hujurat." },
+    { "n": 27, "range": "Adh-Dhariyat 31 to Al-Hadid 29", "surahs": "Adh-Dhariyat, At-Tur, An-Najm, Al-Qamar, Ar-Rahman, Al-Waqi’a, Al-Hadid",
+      "note": "The star, the moon split, the Most Merciful teaching the Qur’an, and the Event that has no denying in it." },
+    { "n": 28, "range": "Al-Mujadila 1 to At-Tahrim 12", "surahs": "Al-Mujadila, Al-Hashr, Al-Mumtahana, As-Saff, Al-Jumu’a, Al-Munafiqun, At-Taghabun, At-Talaq, At-Tahrim",
+      "note": "A woman argues her case and is answered from above the seven heavens, then the Friday prayer is commanded." },
+    { "n": 29, "range": "Al-Mulk 1 to Al-Mursalat 50", "surahs": "Al-Mulk, Al-Qalam, Al-Haqqa, Al-Ma’arij, Nuh, Al-Jinn, Al-Muzzammil, Al-Muddaththir, Al-Qiyama, Al-Insan, Al-Mursalat",
+      "note": "The kingdom, the pen, the jinn who stopped to listen, and the wrapped one told to stand half the night." },
+    { "n": 30, "range": "An-Naba 1 to An-Nas 6", "surahs": "An-Naba through An-Nas, thirty seven surahs",
+      "note": "The short surahs you learned as a child, read now by an adult who understands every word of them." }
+  ],
+
+  "sections": {
+    "lastten": {
+      "id": "lastten",
+      "title": "The last ten nights",
+      "ar": "العَشْر الأَوَاخِر",
+      "tr": "al-ashr al-awakhir",
+      "lead": "The month has a summit and it is at the end. From the night that follows the twentieth day, the Prophet ﷺ changed how he lived, and so should you.",
+      "cards": [
+        { "t": "What the night is", "level": "quran",
+          "ps": ["Indeed We sent it down on the Night of Decree. And what can make you know what the Night of Decree is? The Night of Decree is better than a thousand months. The angels and the Spirit descend in it by the permission of their Lord for every matter. Peace it is, until the rise of dawn.",
+                 "Laylat al-Qadr, the Night of Decree, carries two meanings in its own name. Qadr is the measuring out of what will be, and qadr is worth. A thousand months is eighty three years and four months, longer than most lives. One night is placed inside your month that outweighs it."],
+          "refs": [{ "k": "quran", "r": "97:1", "note": "We sent it down on the Night of Decree" },
+                   { "k": "quran", "r": "97:3", "note": "better than a thousand months" },
+                   { "k": "quran", "r": "97:5", "note": "peace, until the rise of dawn" },
+                   { "k": "quran", "r": "44:3", "note": "sent down on a blessed night" }] },
+
+        { "t": "Where to look for it", "level": "sunnah",
+          "ps": ["Seek it in the odd nights of the last ten. That is the instruction, and it is the whole instruction. The Prophet ﷺ came out to tell the Companions the exact night, found two men quarrelling, and the knowledge of it was taken up. He said: perhaps that is better for you. Seek it in the ninth, the seventh and the fifth of the last ten.",
+                 "Some Companions were shown it on the twenty third. Ubayy ibn Ka’b swore by Allah, with no exception made, that it was the twenty seventh. Both reports are sound. Most scholars read the disagreement the honest way: the night moves between years, and the twenty seventh is the likeliest single night without being the certain one.",
+                 "There is a practical mercy in the odd nights being counted two ways. Nobody standing outside a masjid knows whether this month will run twenty nine days or thirty, so what is odd from the beginning may be even from the end. The safe answer, and the answer the Prophet ﷺ lived, is all ten."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "2017", "note": "seek it in the odd nights of the last ten" },
+                   { "k": "hadith", "src": "Bukhari", "r": "49", "note": "two men quarrelled and the knowledge was taken up" },
+                   { "k": "hadith", "src": "Muslim", "r": "762", "note": "Ubayy ibn Ka’b swearing it is the twenty seventh" },
+                   { "k": "hadith", "src": "Muslim", "r": "1168", "note": "Abdullah ibn Unays and the twenty third" }] },
+
+        { "t": "What it is worth to stand it", "level": "sunnah",
+          "ps": ["Whoever stands the Night of Decree in faith and seeking the reward will have what came before of his sin forgiven. The two conditions are stated and they are small: believe it is true, and want the reward from Allah rather than from anyone watching.",
+                 "Standing does not mean an unbroken night of prayer for a person who has work at seven. It means the night is given a share it did not have yesterday: the Isha prayer and the taraweeh with the congregation, then whatever you can hold of Qur’an, du’a and witr before you sleep."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1901", "note": "in faith and seeking reward, what came before is forgiven" },
+                   { "k": "hadith", "src": "Muslim", "r": "760", "note": "the same wording through a second chain" }] },
+
+        { "t": "The du’a Aisha was taught", "level": "sunnah",
+          "ps": ["Aisha asked: Messenger of Allah, if I know which night is the Night of Decree, what should I say in it? He said: say, O Allah, You are Pardoning and You love to pardon, so pardon me.",
+                 "Notice what she was not taught to ask for. Not wealth, not ease, not even paradise directly. She was taught to ask for afw, the pardon that wipes a thing away so completely that it is not even brought up. Ask for that first. Then ask for your own small list too, out loud and by name, because a long list does not tire Him."],
+          "arabic": "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+          "translit": "Allahumma innaka afuwwun tuhibbu al-afwa fa’fu anni",
+          "meaning": "O Allah, You are Pardoning, You love to pardon, so pardon me.",
+          "extra": "Some routes of the same narration add the word karim, generous, after afuwwun. Both wordings are in circulation and neither one is wrong to say. The wording above is the one in Tirmidhi’s text.",
+          "refs": [{ "k": "hadith", "src": "Tirmidhi", "r": "3513", "note": "graded sahih by Tirmidhi and by later scholars" },
+                   { "k": "hadith", "src": "Ibn Majah", "r": "3850", "note": "the same request, a second route" }] },
+
+        { "t": "I’tikaf for people who have to work", "level": "debated",
+          "ps": ["I’tikaf means keeping yourself in the masjid, cut off from ordinary business, for the sake of Allah. The Prophet ﷺ did it every year in the last ten, and in the year he died he did twenty days. Aisha reported that his wives kept it after him. It is a confirmed sunnah, not an obligation, and nobody is sinful for missing it.",
+                 "The scholars differ on the smallest amount that counts. The Hanafi school holds that the sunnah i’tikaf of the last ten requires the full ten with the nights. The Shafi’i school allows a very short stay, even part of an hour, to count as a valid i’tikaf. The Maliki and Hanbali positions sit between, with a day and a night commonly named as the least that is meaningful. If you follow a school, follow it. If you do not, know that a shorter i’tikaf is a real position held by real scholars and not a soft excuse invented last week.",
+                 "So build the ten nights around the job instead of pretending the job is not there. Pray Isha and taraweeh at the masjid and stay after it. Take the odd nights as leave if you can take leave at all, and make the twenty seventh the one you protect. Go in with your phone off and left in a bag, because a body in the masjid and a mind in a feed is not i’tikaf.",
+                 "Women may keep i’tikaf; the wives of the Prophet ﷺ did, in the masjid, with his permission. Some later jurists preferred a woman’s i’tikaf in a set place at home. That is a scholarly preference and not a text, and it should be named as what it is. Decide it with your own family, and with a scholar you actually trust."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "2026", "note": "he kept i’tikaf in the last ten until Allah took him" },
+                   { "k": "hadith", "src": "Bukhari", "r": "2041", "note": "his wives kept i’tikaf after him" },
+                   { "k": "quran", "r": "2:187", "note": "do not touch your wives while you are in retreat in the masjids" }] },
+
+        { "t": "A plan for the ten that a tired person can keep", "level": "editorial",
+          "ps": ["Decide the ten nights before the twentieth, not during. Write down which nights you will give in full, which you will give an hour, and who is covering the children on each of them. A plan made while you are rested survives a night when you are not.",
+                 "Front load the sleep. A short sleep after Isha, before you stand, is older than any productivity advice and it is what makes the last third of the night possible at all. And take the meal seriously: a heavy iftar is the most common reason a person means to stand and does not."],
+          "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "practical arrangement, not a ruling" }] }
+      ]
+    },
+
+    "taraweeh": {
+      "id": "taraweeh",
+      "title": "Taraweeh, the standing of the month",
+      "ar": "التَّرَاوِيح",
+      "tr": "at-tarawih",
+      "lead": "The night prayer of Ramadan, prayed in company. Its name comes from raha, rest, because the early people sat down to rest after every four units. What is established is clear; the number of units is an old and civil disagreement.",
+      "cards": [
+        { "t": "What is established", "level": "sunnah",
+          "ps": ["Whoever stands in Ramadan out of faith and seeking the reward will be forgiven what came before of his sin. That is the promise, and it is attached to the standing itself, not to any particular count.",
+                 "The Prophet ﷺ prayed it in the masjid on three nights and the people gathered behind him. On the fourth night the masjid could not hold them, and he did not come out. In the morning he said: I feared it would be made obligatory upon you and you would be unable to carry it. So he stopped for their sake, not because the prayer was disliked.",
+                 "After him, Umar found the people praying scattered, a man alone and a man with a few behind him, and he gathered them behind Ubayy ibn Ka’b. Walking through the masjid another night and seeing them in one row he said: what an excellent innovation this is. He meant new in its arrangement, not new in its origin, since the Prophet ﷺ had prayed it himself and only stopped for fear of it becoming compulsory."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "2009", "note": "whoever stands Ramadan in faith is forgiven" },
+                   { "k": "hadith", "src": "Bukhari", "r": "2012", "note": "Umar gathering them behind Ubayy ibn Ka’b" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1129", "note": "he feared it would be made obligatory" },
+                   { "k": "hadith", "src": "Muslim", "r": "761", "note": "the same, through Aisha" }] },
+
+        { "t": "The number of units, stated fairly", "level": "debated",
+          "ps": ["Aisha was asked how the Prophet ﷺ prayed in Ramadan. She said he did not exceed eleven units in Ramadan or outside it, and she described four, then four, then three. That report is in Bukhari and Muslim and it is the strongest single description of his own night prayer.",
+                 "The report of Umar’s gathering reaches us in more than one wording. One route in Malik’s Muwatta names eleven. Other routes, and the settled practice of Madinah and Kufa in the generation after, name twenty followed by three of witr. Twenty is what the Hanafi, Shafi’i and Hanbali schools came to, and it is what most masjids pray. The people of Madinah later prayed thirty six, adding rounds in place of the rest between the sets, and Malik saw no harm in it.",
+                 "So here are the positions without a thumb on the scale. Those who hold to eleven argue from Aisha’s report and say that a described sunnah is not improved by addition. Those who hold to twenty argue from the practice of the Companions and the generations after them, which was public, in Madinah, and uncontested at the time, and from the fact that no text limits the number of night prayer units at all.",
+                 "Ibn Taymiyya, who cannot be accused of leniency, wrote that the matter is wide: whoever prays twenty, as most do, has done well; whoever prays thirty nine has done well; whoever prays eleven or thirteen has done well. If your masjid prays twenty and you prefer eleven, pray with them and sit out the rest quietly, or pray eight and stay for the witr. Do not turn a night of mercy into an argument in the shoe rack."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1147", "note": "Aisha: he did not exceed eleven, in Ramadan or outside it" },
+                   { "k": "hadith", "src": "Muslim", "r": "738", "note": "the same report of eleven units" },
+                   { "k": "hadith", "src": "Muwatta Malik", "r": "250", "note": "the routes naming eleven and naming twenty three" },
+                   { "k": "scholar", "src": "Ibn Taymiyya", "r": "Majmu al-Fatawa 22", "note": "the matter is wide; twenty, thirty nine or eleven are all well" }] },
+
+        { "t": "Stay until the imam finishes", "level": "sunnah",
+          "ps": ["Whoever stands with the imam until he leaves, it is written for him as though he stood the whole night. That single sentence answers the question of whether to leave after eight units when the imam is praying twenty. Stay, and you are credited with a night you did not have to give.",
+                 "There is a second reason to pray it in company, and it has nothing to do with reward arithmetic. A person praying alone in a room in the twenty fourth night of a hard month will find reasons to stop. A row of shoulders will carry you when your own intention will not."],
+          "refs": [{ "k": "hadith", "src": "Tirmidhi", "r": "806", "note": "written as though he stood the whole night; graded sahih" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "1375", "note": "the same report" },
+                   { "k": "hadith", "src": "Nasa’i", "r": "1364", "note": "a third route of the same" }] },
+
+        { "t": "If the masjid is far, or shut, or not for you tonight", "level": "editorial",
+          "ps": ["The congregation is better and it is not a condition. If you are unwell, if you are alone with small children, if the only masjid is an hour away, then pray it at home. A woman praying at home has the reward of the prayer, and a man kept away by a real obstacle is not sinning.",
+                 "Pray as a household if you can. One of you leads, however plainly, and the others stand behind. Children who see a prayer begin in their own living room will remember Ramadan as something their family did, not something a building did."],
+          "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "arrangement, not a ruling" }] }
+      ]
+    },
+
+    "fasting": {
+      "id": "fasting",
+      "title": "Fasting in practice",
+      "ar": "الصِّيَام",
+      "tr": "as-siyam",
+      "lead": "The plain mechanics of the fast, the excuses Allah Himself wrote into the verses, and the small mercies people are most often surprised to learn are there.",
+      "cards": [
+        { "t": "Who fasts", "level": "quran",
+          "ps": ["O you who believe, fasting is prescribed for you as it was prescribed for those before you, that you may attain taqwa. Then: whoever among you witnesses the month, let him fast it.",
+                 "The obligation falls on the Muslim who is adult, sane, settled and able. A child is not obliged until puberty. The Companions still had their children fast and made them woollen toys, so that when one of them cried for food they gave him the toy until sunset. Train them; do not burden them."],
+          "refs": [{ "k": "quran", "r": "2:183", "note": "prescribed for you as for those before you" },
+                   { "k": "quran", "r": "2:185", "note": "whoever witnesses the month, let him fast it" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1960", "note": "the children of the Companions and the woollen toys" }] },
+
+        { "t": "Who is excused, and what they owe instead", "level": "quran",
+          "ps": ["Whoever is ill or on a journey, then a number of other days. Allah intends ease for you and does not intend hardship for you. The excuse is in the Book itself, and taking it is obedience, not weakness.",
+                 "And upon those who can fast only with hardship, a ransom of feeding a poor person. That is fidya, the ransom: for the permanently ill and the very old who will not recover a lost day, one poor person fed for each day missed.",
+                 "A woman who is menstruating or in postnatal bleeding does not fast, and she makes up the days later. That is not a deficiency in her; it is a rule given to her. She does not make up the prayers, only the fasts.",
+                 "Pregnancy and nursing are where the schools genuinely split. Some hold she makes up the days like a sick person. Some hold she pays the ransom and feeds instead. Some hold she does both if she broke the fast out of fear for the child rather than for herself. All three are held by serious scholars. Ask the one your family follows, decide once, and stop carrying the question around."],
+          "refs": [{ "k": "quran", "r": "2:184", "note": "a number of other days; a ransom of feeding a poor person" },
+                   { "k": "quran", "r": "2:185", "note": "Allah intends ease for you" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1951", "note": "making up a fast on behalf of the dead" },
+                   { "k": "hadith", "src": "Muslim", "r": "335", "note": "she makes up the fast and not the prayer" }] },
+
+        { "t": "The intention", "level": "debated",
+          "ps": ["Deeds are by intentions, and every person has what he intended. The intention of a fast is a resolve in the heart. There is no formula to recite, and the sentences printed on Ramadan calendars are a custom, not a sunnah.",
+                 "The majority hold that the obligatory fast needs its intention formed at night, before dawn. The Maliki school allows one intention at the start of the month to cover all of it, which is a real mercy for anyone who sometimes wakes late. Getting up for suhoor is itself an intention, since nobody eats at three in the morning by accident."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1", "note": "deeds are by intentions" },
+                   { "k": "hadith", "src": "Nasa’i", "r": "2333", "note": "no fast for one who did not intend it in the night; graded differently by the scholars" }] },
+
+        { "t": "What breaks the fast", "level": "sunnah",
+          "ps": ["Eating and drinking on purpose. Sexual intercourse. Making yourself vomit. The arrival of menstrual or postnatal bleeding, at any hour of the day.",
+                 "Intercourse during a day of Ramadan is the one that carries a heavy expiation: freeing a slave, or fasting two consecutive months, or feeding sixty poor people. The man who came to the Prophet ﷺ saying he was ruined was given that scale, and when he could do none of it he was given dates to feed others with, and then told to feed his own family with them when he said nobody in the city was poorer than him. Even the expiation was answered with mercy.",
+                 "Everything else is measured by that list, not added to it freely. A rule that keeps people from a fast they could have kept needs evidence, not a feeling."],
+          "refs": [{ "k": "quran", "r": "2:187", "note": "eat and drink until the white thread is distinct from the black" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1936", "note": "the man who came saying he was ruined" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "2380", "note": "whoever is overcome by vomiting owes nothing" }] },
+
+        { "t": "What does not break it, though people think it does", "level": "sunnah",
+          "ps": ["Forgetting and eating. Whoever forgets he is fasting and eats or drinks, let him complete his fast, for it was Allah who fed him and gave him drink. Do not spit it out in a panic and do not start the day again. Finish the mouthful you were already chewing, then carry on.",
+                 "Vomiting that overtakes you. Brushing your teeth, and the siwak, the tooth stick, which the Prophet ﷺ used while fasting. Rinsing the mouth and nose in wudu, though without going deep, since that instruction was given to the fasting person specifically. Swallowing your own saliva. Tasting food on the tongue and spitting it out, which Ibn Abbas saw no harm in. Blood tests. A shower, or swimming, or standing under cold water for relief, which the Prophet ﷺ did.",
+                 "Waking up in a state of major impurity does not spoil the fast; the Prophet ﷺ would reach dawn in that state and fast the day. A wet dream while fasting does not break it either, since it is not chosen.",
+                 "Injections and inhalers are modern questions and the scholars are genuinely divided. The common line drawn by contemporary councils is that what nourishes breaks the fast and what does not nourish does not, so a vaccine or an antibiotic injection is treated differently from a drip of nutrients. If you depend on an inhaler to breathe, use it, and ask a scholar afterwards rather than risking your lungs to a question you can settle in the evening."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1933", "note": "Allah fed him and gave him drink" },
+                   { "k": "hadith", "src": "Muslim", "r": "1155", "note": "the same report" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "2366", "note": "be thorough in rinsing unless you are fasting" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1926", "note": "he would reach dawn in a state of impurity and fast" }] },
+
+        { "t": "Suhoor, and hastening the iftar", "level": "sunnah",
+          "ps": ["Take suhoor, the meal before dawn, for in suhoor there is baraka, blessing. It is not merely fuel. Zayd ibn Thabit measured the gap between the Prophet’s ﷺ suhoor and the prayer at about the length of fifty verses, which is to say: eat late, close to the line, not at midnight.",
+                 "At the other end, do not hold on. The people will remain upon good as long as they hasten the breaking of the fast. He would break it before praying Maghrib, with fresh dates, or dried dates, or a few mouthfuls of water if there were none. There is no virtue in adding minutes that were never asked of you.",
+                 "The words reported at the moment of breaking are simple: dhahaba al-zama, wabtallat al-uruq, wa thabata al-ajr insha Allah. The thirst has gone, the veins are moist, and the reward is fixed, if Allah wills."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1923", "note": "take suhoor, for in it there is blessing" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1921", "note": "the gap of about fifty verses" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1957", "note": "the people remain upon good while they hasten iftar" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "2357", "note": "the thirst has gone and the veins are moist" }] },
+
+        { "t": "If you break it, or miss a day", "level": "editorial",
+          "ps": ["A day missed for a real excuse is made up later, one for one, at any time before the next Ramadan. There is no order to keep them consecutive. Aisha used to make up her days in Shaban, the month before, and nobody criticised her for the delay.",
+                 "A day broken deliberately with no excuse is a serious matter and it is not beyond repair. Make it up, ask for forgiveness plainly, and do not let one broken day become an abandoned month. The one who repents from a sin is like the one who has no sin at all."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1950", "note": "Aisha making up her days in Shaban" },
+                   { "k": "hadith", "src": "Ibn Majah", "r": "4250", "note": "the one who repents is like one with no sin; graded hasan" }] }
+      ]
+    },
+
+    "zakat": {
+      "id": "zakat",
+      "title": "Zakat al-Fitr",
+      "ar": "زَكَاة الفِطْر",
+      "tr": "zakat al-fitr",
+      "lead": "A small obligatory charity, paid in food or its value for every soul in the house, that must arrive before the Eid prayer. It is the last thing the month asks of you and the easiest to forget.",
+      "cards": [
+        { "t": "What it is for", "level": "sunnah",
+          "ps": ["The Messenger of Allah ﷺ made zakat al-fitr obligatory as a purification for the fasting person from idle talk and indecency, and as food for the poor. It has two purposes and both are stated in one sentence: it cleans up the month you just kept, and it puts food on a table that would otherwise be bare on the one morning of the year when nobody should be hungry.",
+                 "It is due from every Muslim who has more than his own household’s food for that day and night. It is not a tax on the wealthy. Almost everyone owes it."],
+          "refs": [{ "k": "hadith", "src": "Abu Dawud", "r": "1609", "note": "a purification for the fasting person and food for the poor" },
+                   { "k": "hadith", "src": "Ibn Majah", "r": "1827", "note": "the same report" }] },
+
+        { "t": "The measure", "level": "sunnah",
+          "ps": ["Ibn Umar said: the Messenger of Allah ﷺ made it obligatory, one sa’ of dates or one sa’ of barley, upon the slave and the free, the male and the female, the young and the old among the Muslims, and ordered that it be paid before the people went out to the prayer.",
+                 "A sa’ is a volume, not a weight: four cupped handfuls of an average adult. In weight it works out at roughly two and a half to three kilograms depending on what is being measured, which is why masjids quote a slightly different figure for wheat than for rice. Abu Sa’id al-Khudri listed what they used to give: a sa’ of food, or barley, or dates, or dried yoghurt, or raisins. The principle is the staple food of the place, not a particular grain."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1503", "note": "one sa’, upon every soul among the Muslims" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1506", "note": "Abu Sa’id listing what they gave" },
+                   { "k": "hadith", "src": "Muslim", "r": "985", "note": "the same list through a second route" }] },
+
+        { "t": "Food or its value in money", "level": "debated",
+          "ps": ["This is the live disagreement and it deserves to be stated straight. The Hanafi school permits paying the value in cash, arguing that the aim named in the text is feeding the poor, and money buys what a household actually needs. The Maliki, Shafi’i and Hanbali schools hold to food itself, arguing that the Prophet ﷺ specified food while money existed in Madinah, and a specified act of worship is not swapped for a convenience.",
+                 "Neither side is careless. In practice, most masjids outside the Muslim world collect cash and buy staples in bulk, which satisfies both readings at once: you hand over money, food arrives at a door. If that is what your masjid does, give through them and the question does not arise for you."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1503", "note": "the text names food by measure" },
+                   { "k": "scholar", "src": "The four schools", "r": "", "note": "Hanafi permits value; Maliki, Shafi’i and Hanbali hold to food" }] },
+
+        { "t": "Who pays for whom", "level": "sunnah",
+          "ps": ["The head of a household pays for himself and for everyone he is responsible for: his wife, his children including one born before dawn on the night of Eid, and any dependent living under his roof. It is one sa’ per person, not one per family.",
+                 "It is given to the poor and the needy. The classic advice is to keep it near: the poor of your own city have the first claim, and a relative in need is both a charity and a keeping of the ties of kinship. Where you cannot find need locally, giving through a trustworthy body that moves it quickly is fine, as long as it moves before the prayer."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1503", "note": "upon the young and the old, the male and the female" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "1609", "note": "food for the poor" }] },
+
+        { "t": "When it must arrive", "level": "sunnah",
+          "ps": ["Before the Eid prayer. That is the deadline in the text and it is not decorative: whoever pays it before the prayer, it is an accepted zakat, and whoever pays it after the prayer, it is a charity among charities. The obligation itself is missed.",
+                 "Paying early is fine and was done. Ibn Umar used to give it a day or two before Eid, and the Companions would pay it one or two days ahead. If your masjid collects from the twentieth night, pay then and stop carrying it. The commonest failure is a person who fully intended to pay and was still intending it while the imam said the takbir."],
+          "refs": [{ "k": "hadith", "src": "Abu Dawud", "r": "1609", "note": "before the prayer accepted zakat, after it a charity" },
+                   { "k": "hadith", "src": "Bukhari", "r": "1511", "note": "they used to give it a day or two before" }] }
+      ]
+    },
+
+    "eid": {
+      "id": "eid",
+      "title": "Eid al-Fitr",
+      "ar": "عِيد الفِطْر",
+      "tr": "Eid al-Fitr",
+      "lead": "The festival of the breaking of the fast, on the first day of Shawwal. A day of thanks with a shape to it, and the shape is worth keeping.",
+      "cards": [
+        { "t": "The morning", "level": "sunnah",
+          "ps": ["Wash. Ibn Umar would perform ghusl, a full bath, on the morning of Eid before going out to the prayer place, and the practice is reported from a number of the Companions. Then wear the best clothes you own. They do not have to be new, and nothing in the sunnah asks you to buy anything.",
+                 "Eat before you leave, and only on this Eid. The Prophet ﷺ would not go out on the morning of Eid al-Fitr until he had eaten some dates, and he would eat them in an odd number. On Eid al-Adha the order is reversed: he would not eat until he returned. The eating before the prayer on this day is a small public statement that the fast is genuinely over.",
+                 "Go by one road and come back by another. He did that, and the scholars have read it every way from greeting more people to letting two streets witness for you. Take the children the long way round and let it be the strange thing they remember."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "953", "note": "he would not go out until he ate dates, an odd number" },
+                   { "k": "hadith", "src": "Bukhari", "r": "986", "note": "he would return by a different road" },
+                   { "k": "hadith", "src": "Muwatta Malik", "r": "428", "note": "Ibn Umar bathing on the morning of Eid" }] },
+
+        { "t": "The takbir", "level": "quran",
+          "ps": ["He wants for you ease and does not want for you hardship, and so that you may complete the number and magnify Allah for having guided you, and so that you may be thankful. The takbir on the way to the prayer is that verse being obeyed out loud.",
+                 "Say it from the night the moon of Shawwal is announced until the imam comes out for the prayer. Say it walking, in the car, on the stairs, and say it so children can hear the sound of a crowd that is not chanting for a team.",
+                 "The best known wording comes from Ibn Mas’ud and other Companions. There are several reported variants and none of them is a battleground."],
+          "arabic": "اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، وَلِلَّهِ الْحَمْدُ",
+          "translit": "Allahu akbar, Allahu akbar, la ilaha illa Allah, wa Allahu akbar, Allahu akbar, wa lillahi al-hamd",
+          "meaning": "Allah is greater, Allah is greater. There is no god but Allah. And Allah is greater, Allah is greater, and to Allah belongs all praise.",
+          "refs": [{ "k": "quran", "r": "2:185", "note": "complete the number and magnify Allah for having guided you" },
+                   { "k": "hadith", "src": "Ibn Abi Shayba", "r": "5633", "note": "the wording reported from Ibn Mas’ud" }] },
+
+        { "t": "The prayer", "level": "sunnah",
+          "ps": ["Two units, prayed in congregation, in the morning after the sun has risen and lifted clear of the horizon. There is no adhan and no iqama for it. Jabir said plainly: there was no call and no iqama on the day of Eid.",
+                 "Extra takbirs are said before the recitation: in the well known practice, seven in the first unit including the opening one, and five in the second. The counts differ a little between the schools and none of the differences invalidates anyone’s prayer. Follow the imam and do not count out loud.",
+                 "The sermon comes after the prayer, not before it, which is the opposite of Friday. Sitting for it is the strong sunnah though it is not obligatory, and walking out of it while the imam is speaking is the small rudeness that spoils a good morning.",
+                 "Everyone goes out. He commanded that the young women, the women in seclusion, and the menstruating women be brought out, so that they might witness the good and the gathering of the believers, and the menstruating women keep away from the prayer itself. A masjid that quietly leaves half its people at home on Eid morning has departed from the sunnah, not preserved it."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "960", "note": "he prayed two units with no adhan and no iqama" },
+                   { "k": "hadith", "src": "Bukhari", "r": "974", "note": "bring out the young women and those in seclusion" },
+                   { "k": "hadith", "src": "Bukhari", "r": "981", "note": "the menstruating women keep away from the prayer" },
+                   { "k": "hadith", "src": "Abu Dawud", "r": "1149", "note": "seven takbirs in the first unit and five in the second" }] },
+
+        { "t": "What to say to each other", "level": "editorial",
+          "ps": ["The Companions would say to one another, when they met on the day of Eid: taqabbal Allahu minna wa minkum. May Allah accept from us and from you. Ibn Hajar records the chain as acceptable. It is a better sentence than a generic greeting because it asks for something.",
+                 "Then do the ordinary things properly. Visit the relative you have been avoiding. Give the children money and let them keep it. Eat in daylight without flinching. And check who is alone: Eid is the loneliest morning of the year for a convert with no family in the city, and one invitation fixes it."],
+          "arabic": "تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ",
+          "translit": "Taqabbal Allahu minna wa minkum",
+          "meaning": "May Allah accept from us and from you.",
+          "refs": [{ "k": "scholar", "src": "Ibn Hajar", "r": "Fath al-Bari 2", "note": "the greeting of the Companions, with an acceptable chain" },
+                   { "k": "editorial", "src": "Our counsel", "r": "", "note": "the invitation to the lonely is ours, and we mean it" }] }
+      ]
+    },
+
+    "families": {
+      "id": "families",
+      "title": "Keeping children in it, joyfully",
+      "ar": "الأُسْرَة فِي رَمَضَان",
+      "tr": "al-usra fi Ramadan",
+      "lead": "A child’s first Ramadan memory is set young and it is almost impossible to reset. Make it light, loud and warm, and the fasting will arrive on its own.",
+      "cards": [
+        { "t": "How the Companions did it", "level": "sunnah",
+          "ps": ["Ar-Rubayyi bint Mu’awwidh described it: we would fast and we would have our little children fast, and we would make them a toy of wool. When one of them cried for food we would give him the toy until it was time for the iftar.",
+                 "Two things are in that report. They involved the children, and they distracted the children. Neither shouting nor a lecture appears anywhere in it. A half day fast, a countdown, a job to do at sunset: those are the tools, and they are eleven hundred years older than any parenting book."],
+          "refs": [{ "k": "hadith", "src": "Bukhari", "r": "1960", "note": "the woollen toy given until iftar" },
+                   { "k": "hadith", "src": "Muslim", "r": "1136", "note": "the same report" }] },
+
+        { "t": "Things that actually work", "level": "editorial",
+          "ps": ["Decorate. Lanterns in a hallway cost very little and they tell a four year old that something important is happening. A paper chain with thirty links, one torn off each evening, does more than any explanation.",
+                 "Give every child a job at iftar: the one who pours the water, the one who counts out the dates, the one who calls everyone to the table. A job outranks a rule.",
+                 "Let them break a half day fast at noon with a small celebration, and mean it. Do not let the first fast be a test they can fail.",
+                 "Read one short surah aloud together before the food, every night, the same one for a week. By the twenty ninth they will be saying it with you without having been asked to memorise anything.",
+                 "Take them to the masjid at night at least once, even if they last twenty minutes. The noise, the shoes, the crowd and the late hour is the memory. Nobody remembers a lesson; everyone remembers being out past bedtime with their father."],
+          "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "gathered from families, not from a text" }] },
+
+        { "t": "Two rooms in this Codex built for them", "level": "editorial",
+          "ps": ["The Lantern Sky is a quiet page where a child lights a lantern for something they are grateful for and watches it rise. It is made for exactly these nights.",
+                 "The Kids’ Codex is the whole story told at their height, with the prophets, the animals of the Qur’an and small games. Open it on a phone at the table between Maghrib and Isha and see what happens."],
+          "refs": [{ "k": "editorial", "src": "Our counsel", "r": "", "note": "two rooms of this Codex, free like the rest" }] }
+      ]
+    }
+  }
+}

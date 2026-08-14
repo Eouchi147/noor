@@ -1,0 +1,454 @@
+{
+  "meta": {
+    "title": "The Eid Room",
+    "ar": "العِيدَان",
+    "gloss": "al-Eidan, the two Eids, the only two festivals the religion itself gave us",
+    "note": "Every date on this page is calculated from the tabular Islamic calendar, which is arithmetic and cannot see the moon. Your masjid's announcement is the date. The offset control in the Ramadan Room moves this page with it."
+  },
+  "lead": {
+    "fitr": {
+      "name": "Eid al-Fitr",
+      "ar": "عِيد الفِطْر",
+      "tr": "eid al-fitr, the festival of the breaking of the fast",
+      "when": "1 Shawwal, the morning after Ramadan ends"
+    },
+    "adha": {
+      "name": "Eid al-Adha",
+      "ar": "عِيد الأَضْحَى",
+      "tr": "eid al-adha, the festival of the sacrifice",
+      "when": "10 Dhul Hijjah, the morning after the pilgrims stand at Arafah"
+    }
+  },
+  "sections": {
+    "takbir": {
+      "id": "takbir",
+      "title": "The takbir",
+      "ar": "التَّكْبِير",
+      "tr": "at-takbir, the declaring that Allah is greater",
+      "lead": "Both Eids are opened by the same sentence, said out loud, by everyone, on the way to the prayer. It is the one part of the day that is meant to be heard in the street.",
+      "cards": [
+        {
+          "t": "The words themselves",
+          "level": "debated",
+          "ps": [
+            "The command to say it is in the Book, at the close of the verses on fasting: complete the number of days, and magnify Allah for having guided you. The exact wording is not in the Book, and it is not in a raised narration from the Prophet ﷺ either. What we have is the wording the companions used, and more than one wording is reported from them, all of it sound.",
+            "The form below is the one from Ibn Mas'ud, and it is the one most communities say. If your masjid says it with three takbirs at the front instead of two, they have another report behind them and neither of you is wrong."
+          ],
+          "arabic": "اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، وَلِلَّهِ الحَمْدُ",
+          "translit": "Allahu akbar, Allahu akbar, la ilaha illa Allah, wa Allahu akbar, Allahu akbar, wa lillahi al-hamd",
+          "meaning": "Allah is greater, Allah is greater. There is no god but Allah. And Allah is greater, Allah is greater, and to Allah belongs all praise.",
+          "extra": "Greater than what? The sentence deliberately does not finish. Greater than the morning you are having, greater than what you are afraid of, greater than the thing you cannot fix. That is why it is the sentence for a festival and also the sentence for a funeral.",
+          "refs": [
+            { "k": "quran", "r": "2:185", "note": "complete the number, and magnify Allah for having guided you" },
+            { "k": "hadith", "src": "Ibn Abi Shaybah", "r": "5633", "note": "the wording of Ibn Mas'ud" },
+            { "k": "hadith", "src": "Bukhari", "r": "chapter of the two Eids", "note": "Ibn Umar and Abu Hurayrah going out to the market saying it aloud" }
+          ]
+        },
+        {
+          "t": "When it is said, and it differs for the two Eids",
+          "level": "debated",
+          "ps": [
+            "For Eid al-Fitr it is unrestricted: from sunset on the last night of Ramadan, once the month is confirmed over, until the imam comes out for the Eid prayer. Say it walking, say it in the car, say it while the children are being dressed. It stops when the prayer starts.",
+            "For Eid al-Adha there are two takbirs running at once. The unrestricted one runs through the whole first ten days of Dhul Hijjah, said whenever you like. The restricted one, the takbir of Tashriq, is said after every obligatory prayer from Fajr on the ninth to Asr on the thirteenth. That one has its own card further down this page.",
+            "The exact start and end of the restricted takbir is a real difference between the schools and not a small one. What every school agrees on is that the ninth and the days after the Eid are loud days. Follow your masjid and do not argue about the edges."
+          ],
+          "refs": [
+            { "k": "quran", "r": "22:28", "note": "that they may mention the name of Allah on appointed days" },
+            { "k": "quran", "r": "2:203", "note": "and remember Allah during numbered days" }
+          ]
+        }
+      ]
+    },
+    "prayer": {
+      "id": "prayer",
+      "title": "The Eid prayer",
+      "ar": "صَلَاة العِيد",
+      "tr": "salat al-eid, the prayer of the festival",
+      "lead": "Two units, in the open if you can, with no call to prayer and no announcement before them, and a sermon afterwards that you are allowed to sit through or to leave. Almost every part of it is deliberately unlike the five daily prayers.",
+      "cards": [
+        {
+          "t": "Its time",
+          "level": "debated",
+          "ps": [
+            "It begins once the sun has properly risen, about the height of a spear above the horizon, which in ordinary language is fifteen to twenty minutes after sunrise, and it ends at midday when the sun reaches its highest point. Most masjids pray it somewhere in the first hour and a half of that window.",
+            "The two Eids were prayed at slightly different hours by the early community: Eid al-Adha early, so people could get to the sacrifice, and Eid al-Fitr a little later, so people had time to hand over zakat al-fitr before the prayer. That is a good habit rather than a rule, and it explains why your masjid may run the two differently."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Abu Dawud", "r": "1135", "note": "the letter of Amr b. Hazm on praying Adha early and Fitr later" },
+            { "k": "hadith", "src": "Bukhari", "r": "964", "note": "two rak'ahs on the day of Fitr, with nothing before or after" }
+          ]
+        },
+        {
+          "t": "How it is prayed, and where the schools part",
+          "level": "debated",
+          "ps": [
+            "It is two rak'ahs, units of prayer, prayed aloud by the imam, with extra takbirs at the start of each one that the daily prayers do not have.",
+            "The majority, meaning Malik, al-Shafi'i and Ahmad, count seven takbirs in the first rak'ah and five in the second, all before the recitation, with the opening takbir counted inside the seven by some of them and outside it by others. Abu Hanifah counts three extra in the first rak'ah before the recitation and three in the second after it, before bowing.",
+            "Both positions rest on reports that are actually narrated. Nobody invented theirs. If you are following an imam, follow him and do not count under your breath. If you find yourself doing it differently from the row next to you, that is what a school is."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Abu Dawud", "r": "1149", "note": "seven and five, from Amr b. Shu'ayb from his father from his grandfather" },
+            { "k": "hadith", "src": "Ibn Majah", "r": "1280", "note": "the same, in another route" },
+            { "k": "hadith", "src": "Ibn Abi Shaybah", "r": "5697", "note": "the reports the Hanafis read for four and four" }
+          ]
+        },
+        {
+          "t": "No adhan, no iqama, and nobody calls you in",
+          "level": "sunnah",
+          "ps": [
+            "Jabir b. Samurah said he prayed the two Eids with the Messenger of Allah ﷺ more than once and more than twice, with no call to prayer and no second call.",
+            "This is worth noticing rather than skipping. The one prayer of the year that the whole town comes to is the one prayer nobody is summoned to. You come because it is Eid."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Muslim", "r": "887", "note": "no adhan and no iqama for either Eid" },
+            { "k": "hadith", "src": "Bukhari", "r": "960", "note": "the prayer before the sermon, with no call" }
+          ]
+        },
+        {
+          "t": "The sermon comes after, not before",
+          "level": "sunnah",
+          "ps": [
+            "Ibn Abbas and Ibn Umar both reported that the Prophet ﷺ, then Abu Bakr, then Umar, prayed the two Eids before the sermon. This is the opposite of Jumu'ah, where the sermon comes first and is part of the prayer.",
+            "Because the sermon comes after, it is not a condition of the prayer, and the scholars of every school say a person who leaves before it has still prayed his Eid. Staying is better and more courteous to the imam. Leaving with a crying child is not a sin, and it was never treated as one."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "963", "note": "the Prophet ﷺ, Abu Bakr and Umar all prayed before the sermon" },
+            { "k": "hadith", "src": "Muslim", "r": "889", "note": "and the reminder given to the women afterwards" }
+          ]
+        },
+        {
+          "t": "If you miss it, may you pray it at home",
+          "level": "debated",
+          "ps": [
+            "This one comes up every year and deserves a straight answer with the disagreement left in.",
+            "Al-Shafi'i and Ahmad say yes: whoever misses the Eid prayer prays two rak'ahs, alone or with his household, and Anas b. Malik used to gather his family and his servants at his estate and have one of them lead them in two rak'ahs exactly as the town was praying. Malik says similar, as something recommended rather than required. Abu Hanifah says no: the Eid prayer has conditions of congregation that a household does not meet, so the one who missed it has missed it and owes nothing.",
+            "So a person praying two rak'ahs at home after missing the Eid prayer is following named scholars, and a person who prays nothing is also following named scholars. What nobody permits is treating either as the normal way. The Eid prayer is meant to be prayed with the town, outdoors where that is possible, because half of what it is for is that everybody sees everybody."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "chapter: when a man misses the Eid prayer", "note": "the practice of Anas b. Malik with his household" },
+            { "k": "hadith", "src": "Bukhari", "r": "956", "note": "going out to the prayer ground rather than the masjid" }
+          ]
+        },
+        {
+          "t": "Women and children are brought out on purpose",
+          "level": "sunnah",
+          "ps": [
+            "Umm Atiyya said: we were commanded to bring out the young girls and the women in seclusion, and the menstruating women, so that they might witness the good and the supplication of the Muslims, and the menstruating women kept back from the prayer itself.",
+            "A woman said, Messenger of Allah, one of us has no jilbab, meaning no outer garment fit to be seen in. He ﷺ said: let her sister clothe her with one of hers. The problem of a woman having nothing to wear was solved rather than used as a reason to leave her at home.",
+            "Read that carefully before deciding your household will go without the women. The instruction is not that they may come if they wish. The instruction is to bring them out, including the ones who cannot pray that day, because being present is the point."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "974", "note": "bring out the young girls and the menstruating women" },
+            { "k": "hadith", "src": "Muslim", "r": "890", "note": "the same report, and the borrowed jilbab" }
+          ]
+        }
+      ]
+    },
+    "manners": {
+      "id": "manners",
+      "title": "The morning itself",
+      "ar": "آدَاب العِيد",
+      "tr": "adab al-eid, the manners of the festival",
+      "lead": "Everything below is shared by both Eids, and most of it takes place before you reach the prayer ground.",
+      "cards": [
+        {
+          "t": "Ghusl, the best clothes you own, and perfume",
+          "level": "debated",
+          "ps": [
+            "Ghusl means a full wash of the whole body. Ibn Umar used to do it on the morning of Eid al-Fitr before going out, and the practice of the companions is what this rests on rather than a raised narration, so the schools call it recommended rather than required.",
+            "For clothes, the Prophet ﷺ kept a particular cloak that he wore for the two Eids and for Jumu'ah. It does not have to be new. It has to be your best, which is a different and easier instruction, and one that does not cost anyone money.",
+            "Perfume is for the men going out. The general guidance on women and scent in public applies here as everywhere else, and the room is not going to pretend otherwise."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Malik, Muwatta", "r": "428", "note": "Ibn Umar bathing on the morning of Fitr" },
+            { "k": "hadith", "src": "Ibn Khuzaymah", "r": "1765", "note": "the cloak kept for the two Eids and for Jumu'ah" }
+          ]
+        },
+        {
+          "t": "Go by one road and come back by another",
+          "level": "sunnah",
+          "ps": [
+            "Jabir said that on the day of Eid the Prophet ﷺ would take a different way back. It is one of those small reported habits that survives because people noticed it and could not stop talking about why.",
+            "The reasons the scholars give are guesses, and they say so: that both roads will testify for you, that more people get greeted, that the religion is seen openly on more streets, that charity can be given on two routes instead of one. None of that is narrated as the reason. The act is narrated. Do it because he did it, and let the reasons be a bonus."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "986", "note": "he would return by a different route on the day of Eid" }
+          ]
+        },
+        {
+          "t": "What people say to each other",
+          "level": "debated",
+          "ps": [
+            "Jubayr b. Nufayr reported that the companions of the Prophet ﷺ, when they met one another on the day of Eid, would say the words below. Ibn Hajar cited the chain and called it good. It is a practice of the companions rather than a text from the Prophet ﷺ, and that is exactly how it should be described.",
+            "Eid Mubarak, a blessed Eid, is not narrated from anybody. It is a good sentence in ordinary language that Muslims have said to each other for centuries and there is nothing wrong with it. Use whichever you like, and do not correct someone who used the other one."
+          ],
+          "arabic": "تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ",
+          "translit": "Taqabbal Allahu minna wa minkum",
+          "meaning": "May Allah accept from us and from you.",
+          "extra": "Note what it asks for. Not a good year, not health, not money. That the thing you already did would be accepted, which is the one part of it that was never in your hands.",
+          "refs": [
+            { "k": "hadith", "src": "Ibn Hajar, Fath al-Bari", "r": "2:446", "note": "the chain of Jubayr b. Nufayr judged good" }
+          ]
+        },
+        {
+          "t": "Fasting on the two Eid days is forbidden",
+          "level": "sunnah",
+          "ps": [
+            "Abu Sa'id al-Khudri reported that the Prophet ﷺ forbade fasting on the day of Fitr and the day of Adha. This is not disliked, it is forbidden, and it holds even for a person making up missed days and even for a person under a vow.",
+            "The three days of Tashriq after Eid al-Adha are also days of eating, drinking and the remembrance of Allah, and fasting them is forbidden too, with one narrow exception the scholars allow for a pilgrim who could not find a sacrifice.",
+            "There is a reason worth hearing in this. A religion that asks a whole month of hunger also forbids you from being hungry on the day it ends. The joy is not a break from the worship. It is part of it, and refusing it is not piety."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "1991", "note": "the prohibition of fasting on the two Eids" },
+            { "k": "hadith", "src": "Muslim", "r": "1141", "note": "the days of Tashriq are days of eating and drinking and remembrance" }
+          ]
+        }
+      ]
+    },
+    "fitr": {
+      "id": "fitr",
+      "title": "Eid al-Fitr",
+      "ar": "عِيد الفِطْر",
+      "tr": "eid al-fitr, the festival of the breaking of the fast",
+      "lead": "The first day of Shawwal, the morning after thirty days of hunger. It has three things of its own: a mouthful of dates before you leave, a charity that has to arrive before the prayer, and six days afterwards that nobody is obliged to keep.",
+      "cards": [
+        {
+          "t": "Eat first, and eat an odd number",
+          "level": "sunnah",
+          "ps": [
+            "Anas said the Prophet ﷺ would not go out on the morning of Fitr until he had eaten some dates, and he would eat an odd number of them.",
+            "It is the smallest instruction in the whole day and one of the most pointed. For thirty mornings you did not eat. On the thirty first you eat before you pray, in public, on purpose, so that nobody is in any doubt that the fasting is over. Three dates, or five, or seven. If there are no dates, eat something."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "953", "note": "he would not go out until he had eaten dates, an odd number of them" }
+          ]
+        },
+        {
+          "t": "Zakat al-Fitr, and the deadline that matters",
+          "level": "sunnah",
+          "ps": [
+            "Ibn Umar said the Messenger of Allah ﷺ made zakat al-fitr obligatory: a sa' of dates or a sa' of barley, upon the slave and the free, the male and the female, the young and the old among the Muslims, and he commanded that it be given before the people go out to the prayer.",
+            "A sa' is a volume, not a weight, roughly four double handfuls of an average adult, which comes out at about two and a half to three kilograms of a staple food depending on what the staple is. Your masjid publishes a figure in money every year and that figure is the one to use, because they know the local staple and its price and we do not.",
+            "The deadline is the point of the whole thing. Ibn Abbas reported it as a purification for the fasting person from idle talk and indecency and as food for the poor: whoever gives it before the prayer, it is an accepted zakat al-fitr, and whoever gives it after the prayer, it is one charity among charities. It still counts as a good deed. It stops counting as this.",
+            "It is owed for every person under your roof, including a baby born before sunset on the night of Eid and a guest staying with you, and it is owed by almost everybody, because the threshold is having more than your own household's food for that day and night. It was never a tax on the wealthy."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "1503", "note": "a sa' of dates or barley, for every soul, before the prayer" },
+            { "k": "hadith", "src": "Muslim", "r": "984", "note": "the same, in Muslim's wording" },
+            { "k": "hadith", "src": "Abu Dawud", "r": "1609", "note": "before the prayer it is zakat, after it is a charity" }
+          ]
+        },
+        {
+          "t": "Food or its value in money",
+          "level": "debated",
+          "ps": [
+            "The narration names food, and Malik, al-Shafi'i and Ahmad hold to food: a sa' of the staple, handed over as a staple. Abu Hanifah permits giving the price of it in money, reasoning that the purpose named in the hadith is feeding the poor and money feeds them better in a city where nobody mills their own wheat.",
+            "Both are old positions held by serious people. In practice most masjids in most countries now collect money and buy food with it, which satisfies both readings at once, and that is probably the calmest thing to do."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "1506", "note": "a sa' of food, the wording that the majority hold to" }
+          ]
+        },
+        {
+          "t": "The joy of finishing, which you are allowed to feel",
+          "level": "quran",
+          "ps": [
+            "The verse that closes the passage on fasting does not say be careful not to become proud. It says: complete the number, and magnify Allah for having guided you, and that you may be grateful. The finishing is meant to be marked.",
+            "And the Prophet ﷺ said the fasting person has two joys he takes pleasure in: a joy when he breaks his fast, and a joy when he meets his Lord. Eid is the first of those two, written large, once a year, for a whole town at the same time."
+          ],
+          "refs": [
+            { "k": "quran", "r": "2:185", "note": "complete the number, and magnify Allah for having guided you" },
+            { "k": "hadith", "src": "Bukhari", "r": "1904", "note": "the fasting person has two joys" }
+          ]
+        },
+        {
+          "t": "The six days of Shawwal",
+          "level": "debated",
+          "ps": [
+            "Abu Ayyub reported that the Prophet ﷺ said: whoever fasts Ramadan then follows it with six from Shawwal, it is as though he fasted the whole year. The arithmetic behind it is the ten for one of a good deed: thirty days become three hundred, six become sixty, and the year is covered.",
+            "Must they be consecutive? The majority say no. Any six days of Shawwal, spread however you like, and the reward in the narration stands. Some of the Shafi'is preferred them straight after Eid and in a row as the better way, not as a condition. So a person fasting them on six separate Mondays has done what the hadith asked.",
+            "And if you owe make up days from Ramadan itself? The schools differ. Many say clear the debt first, since the narration says whoever fasts Ramadan and you have not finished it yet. Others allow the six first because Shawwal is short and the make up days can be paid all year. This one is a genuine difference. Pick a position, do not sit paralysed between them, and know that the make up days are the obligation and the six are the extra."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Muslim", "r": "1164", "note": "six from Shawwal, as though he fasted the whole year" },
+            { "k": "quran", "r": "6:160", "note": "whoever comes with a good deed shall have ten like it" }
+          ]
+        }
+      ]
+    },
+    "adha": {
+      "id": "adha",
+      "title": "Eid al-Adha",
+      "ar": "عِيد الأَضْحَى",
+      "tr": "eid al-adha, the festival of the sacrifice",
+      "lead": "The tenth of Dhul Hijjah, the morning after two million people have stood bareheaded on a plain outside Makkah. It is the older of the two Eids, the bigger one in most of the Muslim world, and it is built on a story about a father, a son, and a knife that was never used.",
+      "cards": [
+        {
+          "t": "Ibrahim, his son, and the ransom",
+          "level": "quran",
+          "ps": [
+            "The passage is short and it is worth reading rather than summarising. Ibrahim tells his son what he has seen in the dream. The son answers: father, do what you are commanded, you will find me, if Allah wills, among the patient. They both submit. He lays him down on his forehead. And then the call comes: you have fulfilled the vision. And We ransomed him with a great sacrifice.",
+            "The Qur'an does not name the son in this passage. The majority of later scholars say Isma'il, some of the earliest said Ishaq, and the Book itself declines to settle it, which is a signal about what the story is for.",
+            "Nothing was killed that day except an animal. The test was the submission, not the blood, and the Qur'an says so directly elsewhere: their flesh does not reach Allah, nor their blood, but the God consciousness from you reaches Him. Every sacrifice since has been a re enactment of a command that was cancelled at the last second."
+          ],
+          "refs": [
+            { "k": "quran", "r": "37:102", "note": "father, do what you are commanded" },
+            { "k": "quran", "r": "37:107", "note": "and We ransomed him with a great sacrifice" },
+            { "k": "quran", "r": "22:37", "note": "neither their flesh nor their blood reaches Allah" }
+          ]
+        },
+        {
+          "t": "The udhiya, and who owes it",
+          "level": "debated",
+          "ps": [
+            "Udhiya, also called qurbani in much of the Muslim world, is the animal slaughtered on the days of Eid al-Adha. It is offered by a household, one animal for a man and those he supports, and it is not required of every individual in the house.",
+            "Abu Hanifah holds it obligatory on the resident who owns the threshold of wealth. Malik, al-Shafi'i and Ahmad hold it a confirmed practice, one that a person with the means should not leave, on the strength of a narration that whoever has the capacity and does not sacrifice should not come near the place of prayer. That narration is itself debated: some scholars stop it at Abu Hurayrah rather than raising it to the Prophet ﷺ.",
+            "A person who genuinely cannot afford it owes nothing and should not be made to feel he does. A person who can afford it and skips it every year should read the difference between the two positions again."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Ibn Majah", "r": "3123", "note": "whoever has the capacity and does not sacrifice, the chain is debated" },
+            { "k": "hadith", "src": "Bukhari", "r": "5553", "note": "the Prophet ﷺ sacrificing two horned rams" }
+          ]
+        },
+        {
+          "t": "The animal, and the four faults that disqualify it",
+          "level": "sunnah",
+          "ps": [
+            "It must be from the grazing livestock the Qur'an names: sheep, goats, cattle, camels. A sheep or goat counts for one household. A cow or a camel counts for seven, so seven households may share one.",
+            "It must have reached the age: six months for a sheep, a year for a goat, two years for cattle, five for a camel. Below that it is meat and not a sacrifice.",
+            "Al-Bara' b. Azib reported four that will not do, and the Prophet ﷺ counted them on his hand: the one eyed whose defect is obvious, the sick whose sickness is obvious, the lame whose limp is obvious, and the broken down animal with no marrow left in its bones. The word obvious is doing work in all four. A small nick in an ear does not disqualify an animal.",
+            "And the slaughter itself is under the general law of slaughter: a sharp blade, the name of Allah said over it, the animal not shown the knife and not slaughtered in front of another animal. Excellence was commanded in everything, including this."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Abu Dawud", "r": "2802", "note": "the four that will not do" },
+            { "k": "hadith", "src": "Tirmidhi", "r": "1497", "note": "the same, counted on the hand" },
+            { "k": "hadith", "src": "Muslim", "r": "1955", "note": "Allah has written excellence over everything, so sharpen the blade" }
+          ]
+        },
+        {
+          "t": "When it may be done, and when it is too late",
+          "level": "debated",
+          "ps": [
+            "It starts after the Eid prayer on the tenth and not one minute before. The Prophet ﷺ said whoever slaughtered before the prayer has only offered meat to his family, and it is not a sacrifice at all. A man who had done exactly that was told to slaughter another.",
+            "It ends at sunset on the last of the days of Tashriq, the thirteenth, in the position of al-Shafi'i and one report from Ahmad, so four days in total. Abu Hanifah and Malik end it at sunset on the twelfth, three days. If you are giving through an organisation, this is the difference that decides whether a slaughter on the fourth day counted, so ask them which calendar they work to."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "5545", "note": "whoever slaughtered before the prayer has only offered meat" },
+            { "k": "hadith", "src": "Muslim", "r": "1961", "note": "let him slaughter another in its place" }
+          ]
+        },
+        {
+          "t": "The thirds are a custom, not a law",
+          "level": "debated",
+          "ps": [
+            "One third for the house, one third for family and neighbours, one third for the poor. Almost everybody has heard this and most people think it is binding. It is not.",
+            "What the Qur'an says is: eat of it and feed the hard pressed poor, and elsewhere, eat of it and feed the one who does not ask and the one who does. Two instructions, eat and feed, with no fractions attached. The thirds are how the early community divided it in practice, reported from Ibn Umar and others, and the schools carried it forward as the recommended shape.",
+            "So a family that gives away far more than a third has not broken a rule, and a family that keeps more than a third because they are the poor household on their own street has not broken one either. What is not allowed is selling any of it, including the skin, or paying the butcher out of the meat. Pay him in money."
+          ],
+          "refs": [
+            { "k": "quran", "r": "22:28", "note": "eat of it and feed the hard pressed poor" },
+            { "k": "quran", "r": "22:36", "note": "eat of it and feed the content and the beggar" },
+            { "k": "hadith", "src": "Muslim", "r": "1971", "note": "eat, store and give in charity" }
+          ]
+        },
+        {
+          "t": "Giving through an organisation, said honestly",
+          "level": "editorial",
+          "ps": [
+            "Most Muslims in Europe and North America now pay a charity to slaughter an animal somewhere else and distribute the meat there. The scholars who permit it are permitting a real thing: an agent may slaughter on your behalf, the intention is yours, and a family in a place with no meat eats for a week. That is not a loophole.",
+            "What is lost is worth naming rather than pretending away. Your children do not see where meat comes from. Your neighbour does not receive a plate at the door. The verse says eat of it, and you did not eat of it. None of that makes the sacrifice invalid, and all of it is a reason to look for a local option first if there is one at all.",
+            "If you do give through an organisation, ask two questions: is it slaughtered inside the days, and is a share actually distributed rather than banked for later. A reputable one will answer both without being defensive."
+          ],
+          "refs": [
+            { "k": "quran", "r": "22:28", "note": "eat of it, an instruction addressed to you" }
+          ]
+        },
+        {
+          "t": "The takbir of Tashriq",
+          "level": "debated",
+          "ps": [
+            "From Fajr on the ninth of Dhul Hijjah, the day of Arafah, until Asr on the thirteenth, the takbir is said aloud after every obligatory prayer. That is twenty three prayers of it. It is the longest stretch of collective remembrance in the calendar and most people have no idea it exists.",
+            "It is not narrated in a raised report with a sound chain. It is the practice of Ali and Ibn Abbas, which al-Bukhari mentions without a chain in his chapter on the days of Tashriq, and the schools then differed over the exact edges: some begin at Fajr on the ninth and end at Asr on the thirteenth, others begin at Zuhr on the tenth, others end at the end of the thirteenth.",
+            "Say it with your masjid. The Book itself says: remember Allah during numbered days, and the numbered days are these."
+          ],
+          "refs": [
+            { "k": "quran", "r": "2:203", "note": "and remember Allah during numbered days" },
+            { "k": "hadith", "src": "Bukhari", "r": "chapter of the days of Tashriq", "note": "the practice of Ali and Ibn Abbas, cited without a chain" }
+          ]
+        },
+        {
+          "t": "Hair and nails, from the first of the month",
+          "level": "debated",
+          "ps": [
+            "Umm Salamah reported: when you see the crescent of Dhul Hijjah and one of you intends to sacrifice, let him withhold from his hair and his nails until he has sacrificed.",
+            "Ahmad reads that as a prohibition. Al-Shafi'i reads it as disliked but not forbidden. Abu Hanifah and Malik read it against Aisha's report that the Prophet ﷺ would send the sacrificial animals to Makkah and stay among his family with nothing lawful forbidden to him, and conclude it is permitted, with leaving the hair alone being merely better.",
+            "Two things people get wrong. It applies to the person whose sacrifice it is, not to the whole household, and not to the children. And if you cut something by accident or by forgetting, there is no expiation and no penalty in any school. Carry on."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Muslim", "r": "1977", "note": "let him withhold from his hair and his nails" },
+            { "k": "hadith", "src": "Bukhari", "r": "1698", "note": "nothing lawful to him was forbidden, in Aisha's report" }
+          ]
+        },
+        {
+          "t": "The day before: they are standing at Arafah",
+          "level": "sunnah",
+          "ps": [
+            "Eid al-Adha only makes sense if you know what happened the day before it. On the ninth, everyone on Hajj stands on the plain of Arafah from midday until sunset, doing nothing but asking. Hajj is Arafah, the Prophet ﷺ said: a person who reaches that standing has made the pilgrimage.",
+            "For everyone not on Hajj, that same day is the best day of the year to fast. He ﷺ said fasting the day of Arafah expiates the year before it and the year after it. The pilgrims themselves do not fast it, because they need the strength for the standing.",
+            "So the shape of the two days is this: one day of hunger and asking, then one day of meat and greeting. The Hajj Room walks the whole journey, day by day, if you want to see where the ninth sits inside it."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Tirmidhi", "r": "889", "note": "Hajj is Arafah" },
+            { "k": "hadith", "src": "Muslim", "r": "1162", "note": "fasting Arafah expiates the year before and the year after" }
+          ]
+        }
+      ]
+    },
+    "families": {
+      "id": "families",
+      "title": "Making the day land for children",
+      "ar": "العِيد مَع الأَوْلَاد",
+      "tr": "al-eid ma'a al-awlad, Eid with the children",
+      "lead": "A child forms their picture of the whole religion out of about six Eids. It is worth being deliberate about what those six contain.",
+      "cards": [
+        {
+          "t": "Play on this day is not a distraction from it",
+          "level": "sunnah",
+          "ps": [
+            "Aisha said two girls were with her on the day of Eid, singing the songs the Ansar used to sing about the battle of Bu'ath, and they were not singers. Abu Bakr came in and said: the pipes of the devil, in the house of the Messenger of Allah? And he ﷺ said: leave them, Abu Bakr, every people has a festival, and this is our festival.",
+            "In the same collection, the Abyssinians played with their spears in the masjid and he stood with Aisha behind him watching until she had had enough, holding his cloak up as a screen and asking her, are you done yet.",
+            "The most cautious man in the community got corrected on this, in his own daughter's house, in front of her. That is the level of seriousness with which joy on Eid is being defended."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "952", "note": "every people has a festival, and this is our festival" },
+            { "k": "hadith", "src": "Bukhari", "r": "950", "note": "the Abyssinians playing, and Aisha watching until she was done" }
+          ]
+        },
+        {
+          "t": "Gifts, money, and the thing children actually remember",
+          "level": "editorial",
+          "ps": [
+            "Handing children money or a gift on Eid is a custom, not a sunnah, and it is a good one. Nothing needs to be spent that a household does not have. What is remembered thirty years later is almost never the size of it.",
+            "What is remembered is the shape of the morning: that everyone got up early, that everyone was dressed well, that the whole family walked somewhere together, that somebody said the takbir out loud in the car and it was not embarrassing. Build that and the presents are decoration.",
+            "One thing worth guarding: give to all of them in the same measure. Fairness between children was the subject of a whole narration, and Eid is exactly the day it gets tested."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "2587", "note": "fear Allah and be just between your children" }
+          ]
+        },
+        {
+          "t": "Do not spend the whole day at the stove",
+          "level": "editorial",
+          "ps": [
+            "This is written for the households where the women cook from six in the morning until four in the afternoon, miss the prayer, miss the takbir, miss the visiting, and eat standing up. It happens every year in a great many homes and nobody planned it.",
+            "The instruction in the sources runs the other way. The women were commanded to be brought out to the prayer, including the ones excused from praying. Nobody was told to stay behind and cook. A festival that a whole half of the household experiences as a work shift has gone wrong somewhere between the text and the kitchen.",
+            "Practical, and it does work: cook what can be cooked the day before, buy what can be bought, eat something simple at lunch and properly in the evening, and put the men and the older children on the clearing up. The food is not the Eid. Everybody being in the same room is the Eid."
+          ],
+          "refs": [
+            { "k": "hadith", "src": "Bukhari", "r": "974", "note": "bring out the girls and the women, so they witness the good" }
+          ]
+        }
+      ]
+    }
+  }
+}

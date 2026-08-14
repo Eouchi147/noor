@@ -1,0 +1,57 @@
+{
+  "intro": {
+    "title": "The First War",
+    "ar": "الْحَرْبُ الْأُولَىٰ",
+    "lead": "Before the first human footprint, the earth was already inhabited. The Qur’an states it plainly: the jinn were created before mankind, from the fire of a scorching wind, and they dwelt upon the earth. What their age looked like, and how it ended, revelation leaves mostly in shadow; the early community did not. From Ibn Abbas and the students of the companions come reports of corruption, of blood, and of an army sent down, preserved by at-Tabari and Ibn Kathir. This room tells that story fully, and tells you, at every step, exactly how it reached us."
+  },
+  "chapters": [
+    {
+      "n": 1,
+      "title": "The Earth Before Us",
+      "body": "The Qur’an opens this story with certainty. ‘And the jinn, We created before, from the fire of the scorching wind’ (15:27); ‘He created the jinn from a smokeless flame of fire’ (55:15). Before there was a mankind to remember them, there was a creation of fire, real, willed, and accountable, and the earth knew their footsteps before it knew ours. They are near yet unseeable by design: ‘he sees you, he and his tribe, from where you do not see them’ (7:27), words revealed about Iblis and his kind, describing an order of creatures woven into the world beyond the reach of our eyes. That the jinn existed before us, that they were fashioned from fire, that they move unseen, none of this is legend or guesswork. It is revelation, and every harder question in this room stands upon it.",
+      "level": "quran",
+      "refs": ["Qur’an 15:26-27", "Qur’an 55:15", "Qur’an 7:27"],
+      "note": "Revelation names their element and their precedence, but it gives no dates and no dynasties for their age, and the Codex will not supply what it withheld."
+    },
+    {
+      "n": 2,
+      "title": "Corruption and Blood",
+      "body": "Here the register of evidence changes, and the Codex says so plainly. What follows is not a hadith of the Prophet ﷺ; it is the memory of the early community, athar related from Ibn Abbas and other early narrators, recorded by at-Tabari in his commentary on 2:30 and gathered by Ibn Kathir in al-Bidaya wan-Nihaya and in his own tafsir. They relate that the jinn dwelt upon the earth before Adam, alayhis-salam, and that their long tenancy soured: they worked corruption in the land and shed one another’s blood, until the earth they had been granted was filled with both. The chains of these reports are graded variously by the scholars, some serviceable, some weak, and none of them carries the weight of prophetic speech. We tell the story because the early community preserved it; we mark its grade because they also taught us to.",
+      "level": "debated",
+      "refs": ["Tafsir at-Tabari on 2:30", "Tafsir Ibn Kathir on 2:30", "Ibn Kathir, al-Bidaya wan-Nihaya"],
+      "note": "Later tellings pad this age with durations, dynasties, and folklore categories such as al-Hinn and al-Binn; none of that is established, and it is left aside here."
+    },
+    {
+      "n": 3,
+      "title": "The Army Sent Down",
+      "body": "The same athar continue, and the same caution travels with them. When corruption had filled the land, the reports relate, Allah sent against the jinn an army of angels, and the age of fire on the open earth was broken. The angels drove them as wind drives smoke, out of the settled lands, until the survivors clung to the islands of the seas and the fringes of the mountains, the edges of the inhabited world. So the account stands in Tafsir at-Tabari on 2:30 and in Ibn Kathir’s al-Bidaya wan-Nihaya, from Ibn Abbas and others; and in some versions Iblis, then still a devoted worshipper, marched among that host or at its head. How large the army was, how long the fighting lasted, what names the fallen bore, the established reports do not say, and the Codex will not say it for them.",
+      "level": "debated",
+      "refs": ["Tafsir at-Tabari on 2:30", "Tafsir Ibn Kathir on 2:30", "Ibn Kathir, al-Bidaya wan-Nihaya"],
+      "note": "Every scene in this chapter rests on companion and tabi’i reports recorded by the exegetes, not on any marfu’ hadith of the Prophet ﷺ."
+    },
+    {
+      "n": 4,
+      "title": "The One Who Rose",
+      "body": "One figure walks out of the debated chapters into the certain ones. The Qur’an settles his nature: ‘he was of the jinn, and he departed from the command of his Lord’ (18:50). Yet when the order to prostrate came, it was addressed to the angels, and the exception is counted from inside their ranks (2:34); the classical scholars hold the two truths in one breath, of the angels by company and worship, of the jinn by origin and fire. The athar add a quieter, unproven detail: that Iblis had risen against the corruptors of the first war, and that victory taught him to admire himself. That seed is debated. The harvest is not. When the command came, he measured himself against a creature of clay and said, ‘I am better than him; You created me from fire, and You created him from clay’ (7:12, 38:76). Whatever planted the pride, the Qur’an is witness that pride is what unmade him.",
+      "level": "mixed",
+      "refs": ["Qur’an 18:50", "Qur’an 2:34", "Qur’an 7:12", "Qur’an 38:76", "Ibn Kathir, al-Bidaya wan-Nihaya"],
+      "note": "That the first war fed his pride is an athar-level detail of varying strength; that pride destroyed him is Qur’anic text."
+    },
+    {
+      "n": 5,
+      "title": "The Question of the Angels",
+      "body": "Now the Qur’an and the athar meet in a single verse. When your Lord said to the angels, ‘I am placing upon the earth a khalifah,’ they said, ‘Will You place upon it one who will work corruption in it and shed blood, while we glorify You with Your praise and proclaim Your holiness?’ He said, ‘Surely I know what you do not know’ (2:30). The question is certain; how the angels came to ask it is not, and the commentators are honest about the gap. At-Tabari and Ibn Kathir set out three readings side by side. Perhaps the angels had watched the jinn corrupt and bleed, and feared the sequel; so say the athar of the earlier chapters. Perhaps Allah had informed them of what this new creature would do. Perhaps they deduced it from the nature of earthly creatures themselves. No single answer is binding; the verse is revelation, and its backstory is interpretation.",
+      "level": "mixed",
+      "refs": ["Qur’an 2:30", "Tafsir at-Tabari on 2:30", "Tafsir Ibn Kathir on 2:30"],
+      "note": "At-Tabari and Ibn Kathir record all three explanations without declaring any one of them binding, and the Codex keeps their restraint."
+    },
+    {
+      "n": 6,
+      "title": "What Remains",
+      "body": "The first war did not end the jinn; it unseated them. The Qur’an lets them speak for themselves, long after: ‘among us are the righteous, and among us are other than that; we were on divergent paths’ (72:11); ‘among us are those who submit, and among us are the unjust’ (72:14). They believe and rebel beside us still, unseen tenants of the earth they once held alone. And the sky some of them once approached is sealed: they found it ‘filled with mighty guards and burning flames’, and whoever steals a hearing now finds ‘a flame lying in wait’ (72:8-9). The earth itself passed to a creature of clay who can corrupt it exactly as the angels feared, and can also carry the trust that the heavens declined (33:72). Read with all its grades showing, the first war leaves one lesson: the earth is inherited by worship, not by strength, and pride after victory is how the highest fall.",
+      "level": "mixed",
+      "refs": ["Qur’an 72:8-9", "Qur’an 72:11", "Qur’an 72:14", "Qur’an 33:72"],
+      "note": "The Qur’an ties this sealing of the sky to the era of revelation, a sign that the story of the jinn runs on into our own."
+    }
+  ]
+}

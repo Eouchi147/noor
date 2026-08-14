@@ -1,0 +1,764 @@
+{
+  "surahs": [
+    {
+      "n": 92,
+      "context": [
+        "Al-Layl came down in Makkah in the early years of the message, in the same season as its sister oath-surahs, when revelation still arrived as short bursts of rhythm meant to be carried in the memory of a small, pressured community. Makkah at that hour was a city where wealth decided worth: a man was measured by what he held, and the poor believer was treated as proof against his own religion. Into that market logic the surah dropped a different accounting, two hands moving in two directions, one giving and one gripping, and two roads being smoothed under two kinds of feet.",
+        "Classical commentators, Ibn Kathir among them, record that many early authorities read its closing verses in the light of Abu Bakr, who spent his wealth buying tortured slaves like Bilal out of their chains, seeking no favor and expecting no repayment, only the face of his Lord Most High. Whether or not one insists on that occasion, the surah lived in the community as its portrait of the purified giver. The Prophet ﷺ also named it among the surahs an imam should choose when leading people, short enough for the weak, deep enough for anyone."
+      ],
+      "name_story": "The surah is named for its first oath, wal-layli idha yaghsha, by the night when it covers over. In the hadith collections and the earliest codices it is simply Al-Layl, The Night, cited by its opening words. No other name is soundly attached to it.",
+      "movements": [
+        {"range": "1-4", "h": "Oaths over a divided race", "note": "Night, day, and the creation of male and female are called as witnesses to one verdict: human striving runs in opposite directions, and no two lives are spending themselves on the same thing."},
+        {"range": "5-11", "h": "Two paths, each made easy", "note": "The one who gives, guards himself, and trusts the best promise is eased toward ease; the one who hoards, feels self-sufficient, and calls the promise a lie is eased toward hardship, and his wealth will not descend the cliff with him."},
+        {"range": "12-16", "h": "Guidance, warning, and the fire", "note": "Guidance is Allah’s to give, the last life and the first are His, and the blazing fire ahead is entered only by the most wretched, the one who denied and turned away."},
+        {"range": "17-21", "h": "Giving only for His face", "note": "The god-fearing one who gives his wealth to be purified, owing no one and collecting from no one, wanting only the face of his Lord Most High, is promised the last word of the surah: he will be satisfied."}
+      ],
+      "themes": [
+        {"t": "Giving against gripping", "d": "The surah reduces every biography to the motion of a hand. Generosity joined to faith is one road; hoarding joined to denial is the other, and each road runs downhill in its own direction."},
+        {"t": "Ease follows direction", "d": "Allah does not only judge the traveler, He smooths the road the traveler chose. Fa-sanuyassiruhu, We will ease him: obedience becomes lighter with practice, and so does refusal."},
+        {"t": "Wealth cannot ransom", "d": "At the moment of falling, ma yughni anhu maluhu, his wealth avails him nothing. The surah lets money keep every power except the one that matters."},
+        {"t": "Purity of motive", "d": "The praised giver takes no repayment and settles no debts of favor. His giving has one address, the face of his Lord, which is why it purifies him instead of purchasing people."}
+      ],
+      "heart": [
+        "Recited slowly, Al-Layl performs a quiet audit. It does not ask what you believe; it asks which way your hand was moving this week. The frightening mercy of the surah is verse seven and verse ten said together: whichever direction you lean, heaven greases the slope. Every generous act is making the next one easier, and every refusal is doing the same. A person reading this at night begins to feel his habits not as isolated choices but as a road being paved under him while he walks, and he checks, urgently, where the road is pointed.",
+        "Then the ending turns the audit into a promise. Wa lasawfa yarda, and he will surely be satisfied: the giver who wanted only His face is not told he will be rich or safe, he is told he will be content, which is the thing the hoarder was buying all along and never received. The surah closes by handing the poorest sincere giver the only prize the wealthy denier ever wanted."
+      ],
+      "passages": [
+        {"ref": "92:7", "why": "Stop on the promise that obedience is made easy for the one who begins it, and feel how mercy works on the road itself."},
+        {"ref": "92:11", "why": "One verse ends the oldest illusion: wealth stays at the top of the cliff when its owner goes over."},
+        {"ref": "92:20", "why": "The purest sentence of motive in the Quran: giving only to seek the face of his Lord, the Most High."},
+        {"ref": "92:21", "why": "The surah’s last word, satisfaction, is the wage no market in Makkah could price."}
+      ],
+      "connections": [
+        {"to": 93, "why": "The night of this surah gives way to the morning brightness of the next, and the mushaf itself moves from the two roads to the consoled traveler on the best of them."},
+        {"to": 76, "why": "Al-Insan shows the same motive in action, those who feed the poor saying they want only the face of Allah, no repayment and no thanks."}
+      ],
+      "virtue": {"text": "When Mu’adh lengthened the prayer, the Prophet ﷺ told him to lead people instead with short luminous surahs and named this one among them, so Al-Layl carries his ﷺ own recommendation as a surah for congregational prayer.", "src": "Bukhari 705, Muslim 465", "level": "sunnah"}
+    },
+    {
+      "n": 93,
+      "context": [
+        "Ad-Duha descended in Makkah after a wound. Revelation paused: in the sound account, the Prophet ﷺ was unwell and did not rise for night prayer for two or three nights, and a woman of Quraysh taunted him that his shaytan, the spirit she imagined dictated to him, had finally abandoned him. The silence of heaven, which he ﷺ felt more heavily than any mockery, was being used as evidence against him. Then this surah broke the quiet like light over a hill: your Lord has not taken leave of you, and He does not hate you.",
+        "For the early community, hunted and few, Ad-Duha became the grammar of consolation. It taught them that a pause is not an abandonment, that the story is read forward, the last better than the first, and that the proof of future care is remembered care: he ﷺ had been an orphan, sheltered; wandering, guided; poor, enriched. Then it turned comfort into command, because in this Book the consoled become consolers: do not crush the orphan, do not turn the asker away, and speak your Lord’s favor out loud."
+      ],
+      "name_story": "The surah is named for its opening oath, wad-duha, by the morning brightness, the young strengthening light of forenoon. Early sources cite it by these first words, and no other name is soundly established. The name itself is the message: the dawn after a night that was never permanent.",
+      "movements": [
+        {"range": "1-3", "h": "The oath and the answer", "note": "Morning light and the night when it stills are sworn by, and then the sentence the silence was waiting for: your Lord has not abandoned you, nor does He hate you."},
+        {"range": "4-8", "h": "Promise proven by memory", "note": "The future is pledged, the last better than the first and a giving that ends in satisfaction, and the pledge is notarized by the past: orphaned and sheltered, wandering and guided, poor and enriched."},
+        {"range": "9-11", "h": "Pass the mercy on", "note": "The rescued one is commissioned: no crushing the orphan, no repelling the one who asks, and the favor of your Lord, announce it."}
+      ],
+      "themes": [
+        {"t": "Silence is not absence", "d": "The surah separates the feeling of being left from the fact of being loved. A pause in gifts is not a withdrawal of the Giver."},
+        {"t": "The last better than the first", "d": "Time is tilted upward for the believer. Every stage ahead, in this life and beyond it, outweighs the stage being grieved."},
+        {"t": "Remembered care as proof", "d": "Three past rescues are presented as evidence for one future promise. The believer’s own biography is a document of what Allah does with him."},
+        {"t": "Comfort becomes duty", "d": "The orphan who was sheltered must now shelter; the poor man enriched must now give. Consolation in this surah is a relay, not a possession."},
+        {"t": "Speaking the favor", "d": "Gratitude is commanded out loud. Naming blessings is not boasting when the Giver is named with them."}
+      ],
+      "heart": [
+        "Ad-Duha is the surah for the season when heaven feels quiet. Read slowly, it does something almost physical: verse three lands like a hand on the shoulder of anyone who has secretly wondered whether his distance from Allah means Allah is finished with him. The surah answers the question underneath all our questions, does He still want me, and it answers with an oath by the morning. Then it does what no human comforter can do: it opens your own past as evidence. You were carried before, at moments you now forget; the memory of old rescue is summoned to stand guarantee for coming rescue.",
+        "And when the weeping has settled, the surah puts a task in your hands, because it knows that sorrow untied from service curdles. Find the orphan, receive the asker, tell of the favor. The one who walks out of this surah is not merely comforted, he is commissioned, and that is the deepest comfort of all: to be given work is to be told you are still wanted."
+      ],
+      "passages": [
+        {"ref": "93:3", "why": "This is the verse that ended the silence, and it still ends every reader’s private version of it."},
+        {"ref": "93:5", "why": "A promise with no ceiling: your Lord will give you until you are satisfied, a verse the early scholars read all the way into his ﷺ intercession."},
+        {"ref": "93:6", "why": "The first of three remembered rescues, where your own history is turned into proof of His care."},
+        {"ref": "93:9", "why": "The exact hinge where comfort becomes command, and the consoled one is sent to the orphan."}
+      ],
+      "connections": [
+        {"to": 94, "why": "Ash-Sharh continues the same consolation in the same breath, so seamlessly that some early scholars read the two surahs as one address."},
+        {"to": 92, "why": "Al-Layl ends with the sincere giver satisfied, and Ad-Duha promises the Prophet ﷺ giving until satisfaction, the same word answering across the night."},
+        {"to": 108, "why": "Al-Kawthar repeats the pattern in miniature: a taunt against the Prophet ﷺ, answered by a gift, sealed with a promise."}
+      ],
+      "virtue": {"text": "No authentic hadith promises a specific reward for reciting Ad-Duha alone, and it needs no certificate: it is the surah with which Allah Himself consoled His Messenger ﷺ, and its virtue is that consolation, open to every reader in grief.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 94,
+      "context": [
+        "Ash-Sharh came down in Makkah in the same early period as Ad-Duha, and the classical commentators treat it as the second half of one consolation, so tightly joined that the address never changes: still to the Prophet ﷺ, still counting mercies, still steadying him for the road. The pressure of those years was real weight, mockery in the streets, kin turned enemies, the responsibility of a message the world did not want, and the surah names it exactly that, a burden that was breaking the back.",
+        "Its work in his ﷺ life was to reframe the past before commanding the future. The chest had already been opened to revelation, the burden already lifted, the name already raised, joined to Allah’s own name in the shahadah, the testimony of faith, and later in every adhan, every call to prayer, until no hour passes on earth without it. On that foundation the surah laid down the law the early believers would live by in Makkah’s worst years: hardship never comes alone, ease is packed inside it."
+      ],
+      "name_story": "The surah is named from its first verb, a lam nashrah, did We not open up, so it is called Ash-Sharh, the Opening, and in many books Al-Inshirah, the Expansion of the chest. Both names point to the same gift: a heart made wide enough to carry revelation and injury at once.",
+      "movements": [
+        {"range": "1-4", "h": "What was already given", "note": "Three past-tense mercies are laid out as ground to stand on: the chest opened, the back-breaking burden lifted, and his ﷺ remembrance raised so high that his name is spoken wherever Allah’s is."},
+        {"range": "5-6", "h": "The law of hardship and ease", "note": "Twice, word for word, the promise: with the hardship is ease, one definite hardship shadowed by ease upon ease, and the preposition is with, not after."},
+        {"range": "7-8", "h": "Finish, then stand again", "note": "The response to mercy is rhythm: when you are finished, rise to the next labor, and make your Lord the single object of your longing."}
+      ],
+      "themes": [
+        {"t": "The opened chest", "d": "Sharh as-sadr is the capacity to hold hard truth without breaking. The first gift of prophethood was not ease of circumstances but width of heart."},
+        {"t": "Ease inside hardship", "d": "The verse says ma’a, with, not after. Relief is not waiting at the end of the tunnel; it is woven into the tunnel itself, in strength, company, and nearness."},
+        {"t": "A name raised forever", "d": "Wa rafa’na laka dhikrak: every adhan, every tashahhud, every salawat on earth is this verse still coming true about the Prophet ﷺ."},
+        {"t": "Rest is a change of labor", "d": "Fa-idha faraghta fansab: emptiness invites collapse, so one finished work is answered with another begun, and worship absorbs the hours grief would claim."},
+        {"t": "One direction of desire", "d": "Wa ila rabbika farghab: longing is gathered from its scattered objects and aimed at a single target, the Lord who lifted the last burden."}
+      ],
+      "heart": [
+        "Read slowly, Ash-Sharh works like weight lifted off a carrier who had stopped noticing how bent he was. Its questions are gentle cross-examination: has He not already opened, already lifted, already raised? The reader is made to admit relief that actually happened, because despair survives on forgetting. Then comes the verse people have carried through hospitals and prisons and quiet private ruin: inna ma’a al-usri yusra, truly with the hardship is ease, repeated so the heart hears it twice, once as information and once as oath. The scholars noticed the Arabic holds one hardship between two eases, and the early Muslims said it aloud like a wager: one hardship will never defeat two eases.",
+        "The last two verses keep the comfort from going soft. They hand the consoled person a schedule: finish, then stand; work, then worship; and want Him. This surah does not promise an easy life. It promises a carried one."
+      ],
+      "passages": [
+        {"ref": "94:4", "why": "Pause here during any adhan and realize you are hearing this verse being fulfilled in real time."},
+        {"ref": "94:5", "why": "The first saying of the law of ease, worth hearing alone before its echo arrives."},
+        {"ref": "94:6", "why": "The repetition that turns a comfort into a certainty, one hardship held between two eases."},
+        {"ref": "94:8", "why": "The surah’s final aim: all longing gathered and pointed at your Lord alone."}
+      ],
+      "connections": [
+        {"to": 93, "why": "Ad-Duha and Ash-Sharh are twin consolations, the first answering abandonment, the second answering exhaustion."},
+        {"to": 65, "why": "At-Talaq carries the same law for later, harder years: whoever fears Allah is given a way out, and after difficulty Allah brings ease."}
+      ],
+      "virtue": {"text": "No authentic hadith assigns a specific reward to reciting Ash-Sharh, and honesty keeps the record clean: its standing is its content, the surah of the opened chest and the doubled ease, needing no certificate beyond its own eight verses.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 95,
+      "context": [
+        "At-Tin is Makkan, from the period when Quraysh treated resurrection and judgment as fantasies and treated the believers, many of them poor and unprotected, as worthless. Against that contempt the surah opens with a strange, beautiful map: the fig and the olive, the produce of the lands where Isa, Jesus, peace be upon him, walked; Tur Sinin, the mount where Musa, Moses, peace be upon him, was addressed; and this secure city, Makkah of Muhammad ﷺ. Many classical commentators, Ibn Kathir among them, read the three oaths as three geographies of revelation called to witness one claim about the human being.",
+        "The claim is dignity and danger in one line: man is created in the finest mold, and can fall to the lowest of the low, and only faith joined to righteous work holds the height. The Prophet ﷺ loved to recite this surah aloud: al-Bara ibn Azib heard him recite At-Tin in the night prayer on a journey and said he never heard anyone with a more beautiful voice or recitation than his ﷺ."
+      ],
+      "name_story": "The surah is named for the fig of its opening oath, wat-tini waz-zaytun, by the fig and the olive, and is cited in the early sources by that first phrase. The homely fruit at the head of a surah about human grandeur is its own lesson: Allah swears by small nourishing things on the way to naming the finest of His creations.",
+      "movements": [
+        {"range": "1-3", "h": "Three lands under oath", "note": "Fig and olive, Sinai, and the secure city: the landscape of prophethood itself, from Isa to Musa to Muhammad ﷺ, peace be upon them, is sworn by before the verdict on man is read."},
+        {"range": "4-6", "h": "Finest mold, lowest fall", "note": "The human being is created in ahsan taqwim, the best of stature, then returned to the lowest of the low, except those who believe and do righteous deeds, whose wage never runs out."},
+        {"range": "7-8", "h": "The question that ends denial", "note": "After such design, what can still call the recompense a lie, and the surah closes on a question meant to be answered: is not Allah the most just of judges."}
+      ],
+      "themes": [
+        {"t": "Dignity by design", "d": "Ahsan taqwim is a statement about every human being before it is a statement about any believer: upright form, seeing heart, entrusted mind."},
+        {"t": "Faith preserves the form", "d": "The exception clause is the whole hinge: belief and righteous work are what keep the finest mold from the lowest fall, because a gift unthanked becomes a weight."},
+        {"t": "One line of prophets", "d": "Fig, olive, Sinai, Makkah: the surah quietly asserts that the message of Muhammad ﷺ stands in the same chain as Musa and Isa, peace be upon them."},
+        {"t": "Judgment follows craftsmanship", "d": "A being made with such care will be asked what he did with himself. The final question, is not Allah the most just of judges, turns creation itself into the argument for the Day."}
+      ],
+      "heart": [
+        "At-Tin read slowly restores two things our age strips away at once: worth and accountability. First it hands you your dignity, not earned, but built in, ahsan taqwim, the finest mold, so the reader stands a little straighter. Then it shows the trapdoor, asfala safilin, the lowest of the low, and the reader understands that human beings are not fixed creatures but trajectories, and that the same person can be higher than angels or lower than instinct depending on what he does with faith. The exception clause becomes the most practical sentence in the surah: believe, and work, and the height holds.",
+        "The last verse is a question, and the sunnah of the early Muslims was to answer questions like it aloud. Is not Allah the most just of judges? The reader who says yes with his whole chest, bala, has just accepted the Day of Judgment not as a threat but as the final proof that his life, wronged or ignored by everyone else, was never unwatched."
+      ],
+      "passages": [
+        {"ref": "95:4", "why": "Hear the Creator’s own estimate of the human form and stand up straighter under it."},
+        {"ref": "95:6", "why": "The exception that saves the surah from despair: faith and work, and a wage that never diminishes."},
+        {"ref": "95:8", "why": "A closing question addressed to you, meant to be answered: is not Allah the most just of judges."}
+      ],
+      "connections": [
+        {"to": 103, "why": "Al-Asr carries the identical rescue clause, all humanity in loss except those who believe and do righteous deeds, the Quran’s repeated escape route."},
+        {"to": 96, "why": "Al-Alaq continues the story of the finest mold at its humblest beginning, man created from a clinging mass, honored by the pen."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ recited At-Tin in the Isha prayer on a journey, and al-Bara ibn Azib testified he never heard a voice or recitation more beautiful than his ﷺ that night, so the surah carries a sound memory of his own recitation in prayer.", "src": "Bukhari 769, Muslim 464", "level": "sunnah"}
+    },
+    {
+      "n": 96,
+      "context": [
+        "The first five verses of Al-Alaq are the first Quran ever revealed. In the cave of Hira, in Ramadan, the angel Jibril, Gabriel, came to Muhammad ﷺ, pressed him hard and said, iqra, read. He ﷺ answered, I am not one who reads. Three times the embrace, and then the words that began everything: read in the name of your Lord who created. He ﷺ came down the mountain with his heart pounding and said to Khadijah, zammiluni, wrap me up, and she wrapped him and steadied him with the truest character reference in history: Allah would never disgrace a man like you. The account is in Bukhari from Aishah.",
+        "The rest of the surah came later in Makkah, when prayer itself was put under threat. Abu Jahl boasted that if he saw Muhammad ﷺ pray at the Ka’bah he would trample his neck, and in the sound report in Muslim, when he tried, he recoiled from what he alone could see, a trench of fire and wings. So one surah holds both poles of the mission: the first whisper of revelation in a cave, and the open defiance of a tyrant in the sanctuary, with the command that answers every tyrant at its end: prostrate, and draw near."
+      ],
+      "name_story": "The surah is named for al-alaq, the clinging mass from which man is created, named in its second verse. It is equally known as Surat Iqra, Read, after its first command, and both names appear in early usage. One name remembers what we are made from; the other remembers what we were made for.",
+      "movements": [
+        {"range": "1-5", "h": "Read, in your Lord’s name", "note": "The first revealed words join the two ends of human existence: created from a clinging mass, and taught by the pen what he never knew, all in the name of the most generous Lord."},
+        {"range": "6-8", "h": "The root of tyranny", "note": "The diagnosis of every oppressor since: man oversteps when he sees himself as self-sufficient, and the cure is one line, to your Lord is the return."},
+        {"range": "9-14", "h": "The man who forbids prayer", "note": "A slave of Allah is blocked from praying, and the surah circles the blocker with quiet questions that tighten like a ring: does he not know that Allah sees."},
+        {"range": "15-19", "h": "The forelock and the prostration", "note": "The lying, sinful forelock will be seized, his gang cannot save him, and the believer is given the final command of the first surah: do not obey him, prostrate, and draw near."}
+      ],
+      "themes": [
+        {"t": "Knowledge as first gift", "d": "Before any law was revealed, the pen was honored. The religion opened not with a command to fight or even to fast, but to read in His name."},
+        {"t": "In His name or in vain", "d": "Iqra bismi rabbik: reading itself is not salvation; the name it is done in decides whether knowledge humbles or inflates."},
+        {"t": "Self-sufficiency breeds transgression", "d": "Istaghna, he saw himself as needing no one: the surah locates tyranny not in power but in the illusion of independence from Allah."},
+        {"t": "Allah sees", "d": "A lam ya’lam bi-anna Allaha yara: one question is the whole deterrent. Every hidden cruelty and every hidden prayer happen in full view."},
+        {"t": "Prostration as nearness", "d": "Usjud waqtarib, prostrate and draw near: the lowest posture of the body is the closest position of the soul, and no tyrant can stand between a forehead and the ground."}
+      ],
+      "heart": [
+        "To recite Al-Alaq slowly is to kneel at the source of the river. These are the syllables that broke the silence between heaven and earth after centuries, and they were addressed to an unlettered man ﷺ so that no reader could ever say the Book belongs to the credentialed. The surah tells you what you are, a clinging mass, and what you carry, taught knowledge you did not invent, and holds the two truths together so that neither despair nor arrogance survives. Then it walks you into the psychology of arrogance, istighna, the moment a person feels he no longer needs, and you recognize the moment, because you have had it, in health, in salary, in reputation.",
+        "The ending is one of the most intimate commands in the Quran. Kalla, do not obey him, and then: prostrate, and draw near. Whoever reads this surah and then places his forehead on the floor has completed its meaning with his body, and the Prophet ﷺ said the servant is nearest to his Lord while prostrating. The first surah revealed ends by showing where the whole religion was always heading: down to the ground, and therefore near."
+      ],
+      "passages": [
+        {"ref": "96:1", "why": "This is where the Quran began: hear the first verse ever revealed as if the cave were yours."},
+        {"ref": "96:14", "why": "One question to carry through every private moment: does he not know that Allah sees."},
+        {"ref": "96:19", "why": "The final verse is a verse of prostration, and the sunnah is to bow down here, completing the recitation with your forehead."}
+      ],
+      "connections": [
+        {"to": 97, "why": "Al-Qadr magnifies the very night these first verses descended, the surah of the event following the surah of the words."},
+        {"to": 68, "why": "Al-Qalam, among the earliest revelations, swears by the pen this surah honored, and defends the man ﷺ the pen was sent to."}
+      ],
+      "virtue": {"text": "The surah ends with a prostration of recitation: Abu Hurairah said, we prostrated with the Prophet ﷺ in Iqra bismi rabbika and in Al-Inshiqaq, so the reciter bows at its last verse following his ﷺ example.", "src": "Muslim 578", "level": "sunnah"}
+    },
+    {
+      "n": 97,
+      "context": [
+        "Al-Qadr is held by most scholars to be Makkan, though some said Madinan, and it descended to magnify a night the world could not see. Ibn Abbas explained in sound reports that the Quran was sent down in one descent to the lowest heaven on Laylat al-Qadr, the Night of Decree, and from there came to the Prophet ﷺ in portions across twenty three years, beginning in Hira. So this surah is the Quran telling the story of its own arrival: We sent it down in the Night of Decree.",
+        "In the life of the Prophet ﷺ and his community the surah turned one night of Ramadan into the axis of the year. He ﷺ would seek Laylat al-Qadr in the last ten nights, retreating in i’tikaf, seclusion in the mosque, tightening his waist-wrapper, waking his family, and he promised that whoever stands that night in faith and hope of reward is forgiven his past sins. An empire of devotion, millions awake before dawn every Ramadan, still runs on these five verses."
+      ],
+      "name_story": "The surah is named for Laylat al-Qadr, the Night of Decree, which it names three times in five verses. Qadr carries two meanings the scholars loved together: decree, because the year’s appointments are handed down in it, and worth, because one such night outweighs a thousand months.",
+      "movements": [
+        {"range": "1-1", "h": "The sending down", "note": "Allah Himself announces the event in the royal We: truly We sent it down in the Night of Decree, the Book and the night ennobling each other."},
+        {"range": "2-3", "h": "Worth beyond counting", "note": "The rhetorical drumbeat, what will make you grasp what that night is, then the exchange rate of heaven: better than a thousand months."},
+        {"range": "4-5", "h": "Angels until the dawn", "note": "The angels and the Ruh, the Spirit Jibril, descend with every decree by their Lord’s leave, and the night is peace itself until the rising of dawn."}
+      ],
+      "themes": [
+        {"t": "The Quran honors its night", "d": "The night is great because of what descended in it. Value in this surah flows from revelation, a quiet argument that nothing dignifies time like the presence of Allah’s word."},
+        {"t": "One night, a thousand months", "d": "More than eighty three years of worship in a single night: the surah breaks the tyranny of short lifespans and gives small communities a way to outweigh centuries."},
+        {"t": "A crowded, descending sky", "d": "Tanazzalu al-mala’ikatu war-ruh: the night is not empty quiet but heavy traffic, angels descending with every affair that the coming year will carry."},
+        {"t": "Peace until dawn", "d": "Salamun hiya: the night’s very substance is peace, safety written over the worshippers until the light rises, a taste of the greeting of Paradise."}
+      ],
+      "heart": [
+        "Al-Qadr recited slowly rearranges a person’s mathematics. We count value in years and output; the surah counts it in nearness and descent, and calmly informs us that one night can outweigh a thousand months, which is to say that a life is not measured by its length but by its moments of contact with Allah. For the reciter this is almost unbearable hope: whatever has been wasted, a single night remains capable of outweighing it. The image of the sky opening, angels and the Spirit coming down rank on rank with the decrees of the year, turns the last ten nights of Ramadan from a custom into a countdown.",
+        "And the surah ends on the word the heart was thirsty for without knowing it: salam, peace, stretched until dawn. Whoever has stood one true Laylat al-Qadr knows the verse is not a metaphor. There is a stillness in that night that feels less like silence and more like a greeting."
+      ],
+      "passages": [
+        {"ref": "97:1", "why": "The Quran narrates its own descent: hear the Book speak of the night it entered the world."},
+        {"ref": "97:3", "why": "Stop on the exchange rate that makes one night outweigh eighty three years, and let it reprice your time."},
+        {"ref": "97:5", "why": "The closing word is peace until dawn, the verse to hold in the last hour of a Ramadan night."}
+      ],
+      "connections": [
+        {"to": 96, "why": "Al-Alaq carries the first words revealed; Al-Qadr magnifies the night that carried them down."},
+        {"to": 44, "why": "Ad-Dukhan opens with the same event, a blessed night in which every wise affair is made distinct, the two surahs describing one descent."}
+      ],
+      "virtue": {"text": "No sound hadith assigns a special reward to reciting this surah a set number of times; such reports are not authentic. The established virtue belongs to the night it names: whoever stands Laylat al-Qadr in faith and hope of reward is forgiven his past sins.", "src": "for the night itself, Bukhari 1901; no sound recitation-report", "level": "debated"}
+    },
+    {
+      "n": 98,
+      "context": [
+        "Al-Bayyinah is counted Madinan by most scholars, though a minority said Makkan, and it reads like a settling of accounts at the crossroads of religions. It addresses the People of the Book, Jews and Christians, and the idolaters together, and states the hard historical fact: they would not leave what they were on until the clear proof came, a messenger from Allah ﷺ reciting purified pages. Proof arrived, and then the painful irony the surah records: the People of the Book divided not before knowledge came but after it.",
+        "The surah holds a tender place in the Prophet’s ﷺ Madinah. He called Ubayy ibn Ka’b, the master reciter of the Ansar, and said: Allah has commanded me to recite to you Lam yakun, this very surah. Ubayy asked, did He name me? He named you, said the Prophet ﷺ, and Ubayy wept. The community learned two things at once: how high a single believer can rank in the knowledge of Allah, and how weighty this surah must be, chosen by name for such a recital."
+      ],
+      "name_story": "The surah is named for al-bayyinah, the clear proof, in its first verse: the messenger ﷺ himself, reciting purified pages. It is also cited as Lam Yakun from its opening words, and some early scholars called it Surat al-Qayyimah, from the upright religion it defines, several names for one argument.",
+      "movements": [
+        {"range": "1-3", "h": "The clear proof arrives", "note": "Disbelievers of both camps would not leave off until the proof came: a messenger from Allah ﷺ reciting purified pages containing upright writings."},
+        {"range": "4-5", "h": "Splitting after the clear core", "note": "The People of the Book split only after clarity came, though all they were commanded was the simple core: worship Allah with pure sincerity, establish the prayer, give the zakah, the purifying alms, and that is the upright religion."},
+        {"range": "6-8", "h": "Worst and best of creation", "note": "Two endings stand facing each other: the fire of Jahannam forever for those who refuse after proof, and Gardens of Eden for those who believe and work, the best of creation, their Lord pleased with them and they with Him."}
+      ],
+      "themes": [
+        {"t": "Proof precedes accountability", "d": "Allah does not condemn in the dark. The surah insists that judgment falls only after bayyinah, evidence so clear it leaves refusal without excuse."},
+        {"t": "The simple core of religion", "d": "Verse five compresses the entire law into sincerity, prayer, and zakah. The commands were never complicated; hearts were."},
+        {"t": "Splitting after knowledge", "d": "The sharpest tragedy in the surah: division caused not by ignorance but by pride after clarity, a warning aimed forward at this ummah too."},
+        {"t": "Best of creation", "d": "Khayru al-bariyyah: faith joined to works raises human beings above every created thing, an astonishing title handed to ordinary believers."},
+        {"t": "Mutual pleasure", "d": "Radiya Allahu anhum wa radu anhu: the final wage is not gardens but reciprocal contentment, Allah pleased with them and they pleased with Him, for whoever feared his Lord."}
+      ],
+      "heart": [
+        "Al-Bayyinah slows the reciter down at verse five and asks an uncomfortable question: if the religion’s core is this simple, sincere worship, prayer, zakah, what is all my complication about? The surah diagnoses the disease of religious people in every age, dividing after knowledge, arguing past clarity, and it quietly relocates the problem from the head to the heart. Mukhlisina lahu ad-din, making the religion purely His: the reader begins to audit his own worship for hidden shareholders, habit, reputation, family expectation, and the surah scrubs them out one by one.",
+        "Then it lifts the ceiling. The best of creation is not a rank reserved for prophets; it is written over whoever believes and works righteousness. And the final verse names the wage above all wages, His pleasure and yours meeting, then folds it into a condition of four words: dhalika liman khashiya rabbah, that is for whoever feared his Lord. Awe, it turns out, is the door to mutual delight."
+      ],
+      "passages": [
+        {"ref": "98:5", "why": "The whole religion in one verse: sincerity, prayer, zakah, worth memorizing as a personal creed."},
+        {"ref": "98:7", "why": "Hear the title Allah gives to believers who work: the best of creation."},
+        {"ref": "98:8", "why": "Stop on the highest wage in the Book, Allah pleased with them and they with Him, and its single condition, fear of the Lord."}
+      ],
+      "connections": [
+        {"to": 109, "why": "Al-Kafirun draws in six verses the same clean line this surah draws in eight: worship purified of every mixture, with no bargaining."},
+        {"to": 99, "why": "Az-Zalzalah follows in the mushaf as the courtroom where the recompense promised here is weighed out atom by atom."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ said to Ubayy ibn Ka’b: Allah has commanded me to recite this surah to you, and when Ubayy learned that Allah had named him, he wept. A surah Allah singled out for such a recital carries its honor in that account.", "src": "Bukhari 4959, Muslim 799", "level": "sunnah"}
+    },
+    {
+      "n": 99,
+      "context": [
+        "Az-Zalzalah is commonly counted Madinan in the transmitted lists, though its short hammering cadence made others hold it Makkan, and the scholars record the difference honestly. Its subject needs no dating: the final earthquake, the earth emptying her burdens, the dead and the buried secrets together, and mankind surfacing in scattered groups to be shown, not told about, their deeds.",
+        "One sound moment ties it to the Prophet’s ﷺ teaching. Asked about donkeys, whether any revelation covered them, he ﷺ answered that nothing had come down about them except this single, all-embracing verse: whoever does an atom’s weight of good will see it, and whoever does an atom’s weight of evil will see it. He called it al-ayah al-fadhdhah al-jami’ah, the unique, comprehensive verse, a complete law of moral accounting in two lines, and the early community weighed their smallest acts against it."
+      ],
+      "name_story": "The surah is named for az-zalzalah, the violent shaking of its first verse, when the earth is convulsed with her true convulsion. Some books write the title Az-Zilzal, the Earthquake itself; both forms are early, and both name the surah after the sound of its opening.",
+      "movements": [
+        {"range": "1-3", "h": "The earth convulses and empties", "note": "The final quake is the earth’s own, long appointed, and she throws out her burdens, the buried dead and the buried truths, while man asks the last confused question: what is wrong with her."},
+        {"range": "4-5", "h": "The earth testifies", "note": "That day she tells her news, every deed done on her back, because her Lord has inspired her, the silent witness under our feet finally given speech."},
+        {"range": "6-8", "h": "Atoms on the scale", "note": "Mankind proceeds in separated crowds to be shown their deeds, and the surah closes with the comprehensive law: an atom’s weight of good is seen, an atom’s weight of evil is seen."}
+      ],
+      "themes": [
+        {"t": "The earth as witness", "d": "The ground that hosted every secret act is given a voice. Nothing was done nowhere; every deed had a floor, and the floor will speak."},
+        {"t": "Nothing is too small", "d": "Mithqala dharrah, the weight of a speck of dust: the surah abolishes the category of deeds that do not count, in both directions."},
+        {"t": "Deeds shown, not summarized", "d": "Liyuraw a’malahum, that they may be shown their deeds: the Day is not a verdict read at a distance but an exhibition each soul walks through."},
+        {"t": "The end of concealment", "d": "Burdens thrown out, news told, atoms weighed: the surah is one long unveiling, and its terror or comfort depends entirely on what was hidden."}
+      ],
+      "heart": [
+        "Az-Zalzalah recited slowly makes the floor under the reciter feel briefly alive, because it is: the surah says the ground you are sitting on is a witness scheduled to testify. What that does to a heart is very precise. Sins one had filed away as too small to matter, and kindnesses one had dismissed as too small to bother with, both walk back into the ledger, because the unit of account here is the dharrah, the atom, the dust-speck in a sunbeam. The Prophet ﷺ told the Companions to guard against the fire even with half a date given in charity, and this surah is the mathematics behind that counsel.",
+        "The mercy inside the terror is the symmetry of the last two verses. The same law that guarantees no evil is lost guarantees no good is lost either. The smile, the moved stone, the swallowed retort, the two quiet rak’ahs, prayer units, at night: all of it is seen. For the discouraged doer of small good deeds, this is one of the most consoling passages in the Quran."
+      ],
+      "passages": [
+        {"ref": "99:4", "why": "The verse where the earth herself begins to speak: hear the ground turn witness."},
+        {"ref": "99:7", "why": "The verse the Prophet ﷺ called uniquely comprehensive: an atom’s weight of good, seen."},
+        {"ref": "99:8", "why": "Its mirror and warning: an atom’s weight of evil, seen, the end of the category called minor."}
+      ],
+      "connections": [
+        {"to": 101, "why": "Al-Qari’ah continues the same Day: the atoms counted here are weighed there, and the scales decide the two homes."},
+        {"to": 100, "why": "Al-Adiyat ends where this surah lives, with graves overturned and chests unsealed before a Lord fully aware."}
+      ],
+      "virtue": {"text": "The famous report that Az-Zalzalah equals half the Quran is transmitted with a weak chain, and its grade is debated among the scholars, so it should not be taught as established. What is sound is the Prophet’s ﷺ praise of its seventh and eighth verses as the unique, comprehensive verse on recompense.", "src": "Tirmidhi 2893, graded weak; the comprehensive verse, Bukhari 2371", "level": "debated"}
+    },
+    {
+      "n": 100,
+      "context": [
+        "Al-Adiyat is Makkan in the reckoning of the majority, from the years when the Quran was training its first listeners with images their world already loved. Nothing stirred an Arab audience like horses, and the surah opens with a cavalry raid in five strokes of sound: mares panting, hooves striking sparks in the dark, the charge at dawn, the trail of dust, the plunge into the middle of the enemy. Then the oath lands its verdict somewhere no one expected: not on the enemy, but on man himself.",
+        "The word chosen is kanud, deeply ungrateful, and the classical commentators unpack it as the one who counts misfortunes and forgets gifts. In a city of traders the next line cut deeper: his love of wealth is shadid, intense, violent. The early community heard the contrast the surah paints without stating: the horse spends itself utterly for a master who only feeds it, while man withholds himself from the Master who gave him everything, and the surah walks that ingratitude forward to the morning the graves are poured out."
+      ],
+      "name_story": "The surah is named for al-adiyat, the charging steeds of its first oath, the raiding mares heard panting before they are seen. Early sources cite it by this first word, and no other name is soundly attached. Even its name gallops.",
+      "movements": [
+        {"range": "1-5", "h": "The dawn raid", "note": "Five oath-verses paint the raid in pure sound and motion, panting breath, struck sparks, dawn charge, stirred dust, the plunge into the midst, loyalty and fury spent for a human master."},
+        {"range": "6-8", "h": "The verdict on man", "note": "Against the horse’s spent devotion stands the rider: deeply ungrateful to his Lord, himself a witness to it, and fierce in his love of wealth."},
+        {"range": "9-11", "h": "Graves emptied, chests exposed", "note": "The cure for ingratitude is one question: does he not know that when what is in the graves is poured out and what is in the chests is gathered, their Lord that Day is fully aware of them."}
+      ],
+      "themes": [
+        {"t": "The loyal beast, the disloyal man", "d": "The horse gives everything for oats and a stable; man hoards himself against the Lord who made him. The surah lets an animal shame its rider."},
+        {"t": "Kanud, engrained ingratitude", "d": "The heart that tallies every hardship and files every blessing under deserved: the surah names the accounting error at the root of unbelief."},
+        {"t": "Wealth-love as diagnosis", "d": "Love of good things is not condemned as feeling but exposed as fever, shadid, strong enough to shape a whole life’s direction."},
+        {"t": "What chests conceal", "d": "The surah ends not at opened graves but at opened hearts: hussila ma fis-sudur, the harvest of what chests hid, the deeper of the two exhumations."}
+      ],
+      "heart": [
+        "Read slowly, Al-Adiyat starts in the ears and ends in the conscience. The opening verses are onomatopoeia you can feel, dabhan, qadhan, breath and sparks, and then the surah reins the whole cavalry to a halt in front of a mirror. Inna al-insana li-rabbihi la-kanud: the reader is invited to check his own ledger and finds, honestly, that he remembers his losses in detail and his gifts in general. That is kanud, and recognizing it in oneself is the surah doing its work.",
+        "The last movement quietly relocates the Day of Judgment. We imagine it as the emptying of graves, and the surah grants that, then goes further inward: the gathering of what the chests contained. Motives, grudges, hidden loves, the reasons under the deeds. The reciter who understands verse ten begins that same night to clean not just his record but his interior, because both are scheduled for daylight."
+      ],
+      "passages": [
+        {"ref": "100:6", "why": "The oath’s landing point: the verdict of ingratitude, worth hearing with your own accounts in mind."},
+        {"ref": "100:8", "why": "One verse holds the fever of wealth-love up to the light: is its grip this strong on me."},
+        {"ref": "100:10", "why": "The deeper resurrection: not the graves but the chests, when what hearts concealed is gathered out."}
+      ],
+      "connections": [
+        {"to": 99, "why": "Az-Zalzalah gives the same Day its scales: the chests unsealed here are weighed there, atom by atom."},
+        {"to": 102, "why": "At-Takathur follows the same fierce wealth-love to its terminus, the visit to the graves this surah sees poured out."}
+      ],
+      "virtue": {"text": "No authentic hadith assigns a specific reward to reciting Al-Adiyat, and it needs no certificate: its virtue is the honesty of its mirror, an oath of Allah over the state of the human heart before its Lord.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 101,
+      "context": [
+        "Al-Qari’ah is early Makkan, from the first years when the Quran’s task was to break open a closed imagination. Quraysh could not conceive of the world ending or of standing before Allah, so surahs like this one arrived as controlled detonations, short, rhythmic, unforgettable. It opens with a name of the Last Day never used before, al-qari’ah, the striking knocker, repeated like a fist on a door, then twice asks the question that humbles all claimed knowledge: what will make you know what it is.",
+        "For the Prophet’s ﷺ first listeners, the surah replaced their two anchors of permanence, crowds and mountains, with images of weightlessness: mankind like moths scattered around light, mountains like carded wool drifting apart. Then it introduced the instrument that would shape Muslim conscience forever, al-mawazin, the scales, and taught the community that eternity splits along a line as fine as a weight tipping: heavy, a pleasing life; light, a mother named the abyss."
+      ],
+      "name_story": "The surah is named for al-qari’ah, the Striker, the calamity that knocks and pounds, one of the proper names of the Day of Resurrection. The surah takes its title from the Day itself, and repeats the name three times at its head the way a knock repeats.",
+      "movements": [
+        {"range": "1-3", "h": "A name repeated like a knock", "note": "Al-Qari’ah, what is al-Qari’ah, and what will make you know what al-Qari’ah is: the Day is introduced by name, question, and awed refusal to be summarized."},
+        {"range": "4-5", "h": "The world comes apart", "note": "The two symbols of solidity dissolve: mankind like scattered moths around a flame, and the mountains like loosened, carded wool."},
+        {"range": "6-9", "h": "Two weights, two homes", "note": "The scales decide everything: whoever’s weights are heavy enters a well-pleasing life, and whoever’s are light, his mother is hawiyah, the abyss that receives him."},
+        {"range": "10-11", "h": "The abyss named", "note": "The surah’s question returns one last time, what will make you know what she is, and answers with two words: a raging fire."}
+      ],
+      "themes": [
+        {"t": "The Day has names", "d": "Al-Qari’ah joins al-Haqqah and al-Ghashiyah in the Quran’s roll of names for the Day, each name a different sound of its arrival; this one is the knock."},
+        {"t": "Solidity is temporary", "d": "Crowds scatter like moths, mountains drift like wool. Everything that looks permanent is on loan, including the ground under the proud."},
+        {"t": "The scales decide", "d": "Mawazin, weighings: deeds have mass, and eternity turns on which pan drops, a physics of justice no one escapes and no one can bribe."},
+        {"t": "A mother called the abyss", "d": "Ummuhu hawiyah: the fire is named his mother, the terrible tenderness of a refuge that consumes, for the one who made nothing else his refuge."}
+      ],
+      "heart": [
+        "Al-Qari’ah works on the reciter through sound before sense: the knocking name, the rhymes that fall like strokes, the question repeated until the listener admits he does not know. Slowly read, it performs a strange reversal of scale. The things that dominate your week, crowds of people and immovable circumstances, are shown scattering like moths and drifting like wool, while the things you dismiss as weightless, a small sincerity, a private sin, are revealed as the only objects with mass. The surah is a recalibration of what is heavy.",
+        "Its most piercing line is the gentlest-sounding one: fa-ummuhu hawiyah, his mother is the abyss. The scholars heard in it the image of a child running to be held, and finding that the only embrace left is the fall. Whoever recites that verse slowly finds himself checking, honestly, what he runs to when he is afraid, because that, in the end, is his mother or his abyss."
+      ],
+      "passages": [
+        {"ref": "101:4", "why": "The Day’s first image: all of mankind, every rank and tribe, scattered like moths around light."},
+        {"ref": "101:6", "why": "The verse of the heavy scale: hear the only wealth that keeps its weight on that Day."},
+        {"ref": "101:9", "why": "The most quietly devastating verse in the surah: the abyss as a mother’s lap for the one whose weights were light."}
+      ],
+      "connections": [
+        {"to": 99, "why": "Az-Zalzalah supplies the atoms, this surah supplies the scales: two halves of one courtroom."},
+        {"to": 69, "why": "Al-Haqqah opens with the same architecture, a name of the Day, the question, and the refrain, what will make you know."}
+      ],
+      "virtue": {"text": "No authentic hadith singles out Al-Qari’ah with a recitation reward, and it asks for none: it is one of the surahs that made the early Muslims’ hair grey with the vividness of the Day, and that vividness is its gift to the reciter.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 102,
+      "context": [
+        "At-Takathur is Makkan, revealed into a culture that kept score. Tribes boasted in numbers, of men, camels, gold, and the commentators relate that clans would even count their dead to win an argument, walking to the graveyard to finish the tally. The surah’s first verse seizes that whole way of being alive in one word, alhakum, it has distracted you, and its second verse follows the distraction to the only place it ever ends: hatta zurtum al-maqabir, until you visit the graves.",
+        "The Prophet ﷺ himself gave the surah its sharpest commentary. He recited Alhakum at-takathur and said: the son of Adam says, my wealth, my wealth, and do you own of your wealth anything except what you ate and used up, what you wore and wore out, and what you gave in charity and sent ahead? Everything else, he ﷺ taught, is left for others. The early community heard this surah as an intervention, a hand on the shoulder of a man running a race in the wrong direction."
+      ],
+      "name_story": "The surah is named for at-takathur, rivalry in accumulation, the competition to have more that its first verse indicts. Some early sources cite it as Alhakum, after its opening word, so that even its titles remember the two poles: the pile, and the distraction.",
+      "movements": [
+        {"range": "1-2", "h": "Distraction unto the graves", "note": "The race for more consumes life until the grave visit, and the word visit is its own sermon: the grave too is a stop, not a home, with a journey after it."},
+        {"range": "3-4", "h": "The doubled warning", "note": "Kalla, no indeed, you will come to know, then again, kalla, you will come to know: certainty postponed is announced twice, like two tolls of one bell."},
+        {"range": "5-7", "h": "From knowing to seeing", "note": "If only you knew with the knowledge of certainty; you will surely see the blaze, then see it with the very eye of certainty, knowledge ripening into sight."},
+        {"range": "8-8", "h": "The audit of delights", "note": "Then, on that Day, you will surely be asked about an-na’im, the delights: cool water, safety, health, every comfort itemized and questioned."}
+      ],
+      "themes": [
+        {"t": "More as anesthesia", "d": "Takathur numbs: the pursuit of increase is not condemned here for greed alone but for what it prevents, attention to why we are alive."},
+        {"t": "Graves are visited, not kept", "d": "Zurtum, you visited: the mildest word in the surah carries its heaviest news, that death is a doorway with something on the other side."},
+        {"t": "Degrees of certainty", "d": "Ilm al-yaqin, knowledge of certainty, becomes ayn al-yaqin, the eye of certainty: what is doubted now will be seen then, and the surah counts down between them."},
+        {"t": "Delights will be itemized", "d": "An-na’im is not a vague word: shade, water, health, safety. The comforts we never counted are counted, and gratitude is the only answer sheet."}
+      ],
+      "heart": [
+        "At-Takathur read slowly is an interruption, and it is meant to be. Its first word walks into the middle of your scrolling, your comparing, your quiet tallying of what others have, and names the whole activity: alhakum, it has distracted you. The reciter feels the aim of the verse move from seventh-century camels to his own screens without a single word needing translation. Then comes the surah’s masterstroke, the word visit. You will not live in the grave, you will pass through it, and everything you piled stays on this side of the door while everything you sent ahead waits on the other.",
+        "The final verse changes the reciter’s relationship with ordinary comfort. You will be asked about the delights: so the cold water becomes a question, the safe street becomes a question, the healthy child becomes a question. The honest reader leaves this surah doing the only sane thing its logic allows, turning delights into gratitude and gratitude into giving, converting the pile into provision for the road."
+      ],
+      "passages": [
+        {"ref": "102:1", "why": "One word, alhakum, names the disease of every acquisitive age including ours."},
+        {"ref": "102:2", "why": "Stop on the word visit and hear the grave demoted from destination to doorway."},
+        {"ref": "102:8", "why": "The last verse turns every comfort you own into a question you will answer."}
+      ],
+      "connections": [
+        {"to": 104, "why": "Al-Humazah shows the counter at his worst, wealth counted and recounted as if counting could make him last."},
+        {"to": 103, "why": "Al-Asr is the cure sheet that follows in the mushaf: time is the capital being wasted, and the four rescues spend it rightly."}
+      ],
+      "virtue": {"text": "Reports promising a set reward for reciting At-Takathur are not authentic and should not be relied on. What is sound is the Prophet’s ﷺ own commentary upon reciting it: the son of Adam claims, my wealth, my wealth, yet truly owns only what he ate, wore out, or gave in charity and sent ahead.", "src": "the commentary, Muslim 2958; no sound recitation-report", "level": "debated"}
+    },
+    {
+      "n": 103,
+      "context": [
+        "Al-Asr is Makkan, three verses long, and the tradition remembers it as the surah whose size is inverse to its weight. Imam ash-Shafi’i said that if people reflected deeply on this surah alone, it would suffice them, because it holds a complete map of salvation: the asset, time; the default, loss; and the four-part rescue, faith, righteous work, counseling one another to truth, counseling one another to patience.",
+        "It shaped the daily manners of the first generations in a way almost no other surah did. It is soundly related that when two of the Companions of the Prophet ﷺ met, they would not part until one had recited Surat al-Asr to the other, and then one would give the greeting of peace. Farewell itself became a reminder: time is draining, hold to the four ropes. A community that says goodbye with this surah has agreed, twice a day, on what life is for."
+      ],
+      "name_story": "The surah is named for its oath, wal-asr, by time, the pressing ages through which every life drains, and the word also names the late afternoon, when the day’s remainder is visibly short. Both senses serve the surah’s point: the light is going, and the account is open.",
+      "movements": [
+        {"range": "1-1", "h": "The oath of time", "note": "Allah swears by time itself, the one asset every human is spending at the same rate, the very thing running out while the verse is heard."},
+        {"range": "2-2", "h": "The verdict of loss", "note": "Mankind, all of it, is in khusr, loss, capital draining like a merchant selling below cost, the default state of every unexamined life."},
+        {"range": "3-3", "h": "The four ropes of rescue", "note": "One exception, four strands: those who believe, do righteous deeds, counsel one another to truth, and counsel one another to patience, a rescue no one completes alone."}
+      ],
+      "themes": [
+        {"t": "Time as draining capital", "d": "The surah frames life as a merchant’s stock being sold every hour whether or not anything is earned; the only question is what the hours are exchanged for."},
+        {"t": "Loss is the default", "d": "Not neutrality: loss. Without deliberate faith and work, simply existing costs more than it returns, and the surah says so with an oath."},
+        {"t": "Rescue has four parts", "d": "Belief, work, mutual counsel in truth, mutual counsel in patience: inner conviction, outer action, and a community that keeps both alive."},
+        {"t": "Salvation is plural", "d": "Tawasaw, they counsel one another: the verbs of rescue are reciprocal. The surah does not describe a saved individual; it describes a saving fellowship."}
+      ],
+      "heart": [
+        "Al-Asr is short enough to say in one breath and severe enough to reorder a decade. Recited slowly, its structure closes on the reader like an audit: an oath, a verdict, and one narrow exit. The verdict is the hard part to sit with, because it includes everyone by default, the busy, the successful, the well-liked, all in loss, since the asset being spent is time and most of it buys nothing that survives the grave. The reader checks his own ledger against the four conditions and usually finds the first two present in some form and the last two, counseling truth and counseling patience, thin, because they require other people and cost social comfort.",
+        "That is the surah’s deepest work: it makes isolation itself feel like a risk. The early Muslims recited it at parting because rescue, in its grammar, is something companions do for each other. Whoever takes these three verses seriously leaves with two resolutions: waste less of the draining asset, and find the people who will tell him the truth and steady his patience until the end."
+      ],
+      "passages": [
+        {"ref": "103:1", "why": "A one-word oath by the thing you are spending right now, worth a full pause."},
+        {"ref": "103:2", "why": "The verdict that includes everyone by default: hear yourself inside the word loss."},
+        {"ref": "103:3", "why": "The four ropes of rescue in a single verse, the shortest complete map of salvation in the Quran."}
+      ],
+      "connections": [
+        {"to": 102, "why": "At-Takathur shows the distraction; Al-Asr prices it: the pile costs time, and time is the capital of the loss."},
+        {"to": 95, "why": "At-Tin carries the same exception clause, faith and righteous work, the pair the Quran repeats wherever mankind’s fall is announced."}
+      ],
+      "virtue": {"text": "It is soundly related of the Companions that when two of them met, they would not part until one recited Surat al-Asr to the other, then gave the greeting of peace, so the surah carries an authentic practice of the Prophet’s ﷺ community as a seal upon meetings.", "src": "at-Tabarani, graded sound by al-Albani, as-Sahihah 2648", "level": "sunnah"}
+    },
+    {
+      "n": 104,
+      "context": [
+        "Al-Humazah is Makkan, from the years when mockery was Quraysh’s cheapest and most constant weapon against the believers. Some commentators name individuals behind the revelation, al-Akhnas ibn Shariq, Umayyah ibn Khalaf, al-Walid ibn al-Mughirah, but the chains for a specific occasion are not firm, and the surah itself refuses to narrow: waylun li-kulli, woe to every humazah lumazah, every gesture-mocker and word-slanderer, whoever fits the description in any age.",
+        "The surah drew the anatomy of a familiar Makkan figure: rich enough to sneer, counting and recounting his wealth, half-believing the pile made him permanent. For the mocked believers, many of them enslaved or poor, it reframed their humiliation completely: the laughter aimed at them was evidence in a case being prepared, and the fire waiting for unrepentant contempt was described with a precision found nowhere else, a fire that climbs to the hearts, the very organ the mockery came from."
+      ],
+      "name_story": "The surah is named for al-humazah, the habitual fault-finder who wounds with gesture and glance, paired in its first verse with lumazah, the tongue-slanderer. Some early books also cite it by the fire it unveils, al-Hutamah, the Crusher, so its names hold both the crime and the sentence.",
+      "movements": [
+        {"range": "1-2", "h": "The mocker and his ledger", "note": "Woe is pronounced on every needling mocker and slanderer, and the source of his confidence is named at once: wealth gathered and counted, counted again."},
+        {"range": "3-3", "h": "The illusion of permanence", "note": "Yahsabu anna malahu akhladah: he half-believes his wealth has made him immortal, the quiet creed underneath every sneer."},
+        {"range": "4-6", "h": "Flung into the Crusher", "note": "Kalla, by no means: he will be hurled into al-hutamah, and to the question, what will make you know what it is, comes the answer: the kindled fire of Allah."},
+        {"range": "7-9", "h": "The fire that reaches hearts", "note": "A fire that mounts to the hearts, closing over its people in stretched-out columns: the sentence fitted exactly to the organ where contempt lived."}
+      ],
+      "themes": [
+        {"t": "Contempt as a habit", "d": "Humazah and lumazah are intensive forms: not a man who once mocked, but a man whose mockery has become his craft and comfort."},
+        {"t": "Counting as false immortality", "d": "The recounted pile is a liturgy of self-reassurance. The surah exposes the arithmetic underneath arrogance: he thinks the total is a lifespan."},
+        {"t": "The fire that finds the heart", "d": "Tattali’u ala al-af’idah: uniquely in the Quran, this fire is described reaching the hearts, justice tracing the crime to its source."},
+        {"t": "Wealth buys no exemption", "d": "Ma aghna anhu maluhu: the currency he trusted is not accepted at the one gate that matters, a refrain this surah shares with its neighbors."}
+      ],
+      "heart": [
+        "Al-Humazah read slowly forces a double honesty. The first is social: the reciter checks himself for the small tools of the humazah, the raised eyebrow, the imitation of someone’s accent, the message forwarded with a laughing remark, because the surah’s woe is written on the habit, not the century. The second honesty is financial: yahsabu anna malahu akhladah, he supposes his wealth has made him last. Almost no one says that sentence aloud, and almost everyone has felt its warmth, the sense that enough saved, enough owned, is a wall against death. The surah calls the wall a supposition and knocks it through in one syllable, kalla.",
+        "Then the fire, and the detail that stays with every attentive reciter: it climbs to the hearts. The heart that looked down on Allah’s servants, the heart that leaned on the pile, is the address the punishment knows. The reader closes this surah gentler with people and looser with money, which is exactly the repentance it was sent to produce."
+      ],
+      "passages": [
+        {"ref": "104:1", "why": "Hear the woe pronounced on a habit our age has made effortless, mockery at a distance."},
+        {"ref": "104:3", "why": "The unspoken creed of accumulation, said aloud once in the Quran so you can recognize it in yourself."},
+        {"ref": "104:7", "why": "The most precise sentence in the surah: the fire that knows the way to the hearts."}
+      ],
+      "connections": [
+        {"to": 102, "why": "At-Takathur diagnoses the counting sickness in a whole society; Al-Humazah shows it concentrated in one condemned figure."},
+        {"to": 111, "why": "Al-Masad is the named case study: a real mocker of the Prophet ﷺ whose wealth and earnings availed him nothing."}
+      ],
+      "virtue": {"text": "No authentic hadith attaches a specific recitation reward to Al-Humazah, and it needs no certificate: it stands as the Quran’s permanent verdict on wealthy contempt, and its recital is its own admonition.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 105,
+      "context": [
+        "Al-Fil looks back at the most famous event in living Makkan memory: the Year of the Elephant, around 570 CE, when Abrahah marched from Yemen with an army led by an elephant to demolish the Ka’bah and redirect Arabia’s pilgrimage to his cathedral in San’a. At the edge of the sanctuary the elephant knelt and would not advance, and Allah sent birds in flights, pelting the army with stones of baked clay until it lay like devoured stalks. The Prophet ﷺ was born in that same year by the well-known accounts, and elders who had witnessed the event still walked Makkah when this surah was recited to them.",
+        "That is why the surah opens with a question, a lam tara, have you not seen: it argues from evidence the audience itself owned. Quraysh built prestige on the miracle, calling themselves the people of the House Allah defended, while refusing the Messenger ﷺ sent from that House. Decades later at Hudaybiyyah, when his ﷺ camel knelt and would not advance, he said: the One who restrained the elephant has restrained her, a sound word in Bukhari that shows the event living on in his ﷺ own reading of history."
+      ],
+      "name_story": "The surah is named for ashab al-fil, the fellows of the elephant, the invading army remembered by its beast. Arabs dated years by the event itself, Am al-Fil, the Year of the Elephant, so the surah’s name plugs directly into the calendar of its first listeners.",
+      "movements": [
+        {"range": "1-2", "h": "Have you not seen", "note": "The question is addressed to people with living witnesses among them: did your Lord not deal with the elephant’s men, did He not turn their plot into wandering waste."},
+        {"range": "3-5", "h": "Birds, stones, straw", "note": "Flights of birds, stones of sijjil, baked clay, and an army of conquest left like the chewed stalks of a devoured field: the whole battle in three verses, with no Muslim army on it."}
+      ],
+      "themes": [
+        {"t": "The House has a Lord", "d": "Abrahah fell to no human defender; Quraysh themselves had fled to the hills. The event proved the Ka’bah’s protection comes from its Lord, not its custodians."},
+        {"t": "Plots turned to waste", "d": "Tadlil, sending astray: the scheme was not merely defeated but bewildered, unraveled from inside, the signature of Allah’s dealing with arrogant plans."},
+        {"t": "Small agents, total defeat", "d": "Birds against an imperial army: Allah’s deliverance ignores proportion, and the surah trains the weak to stop measuring threats by size."},
+        {"t": "Memory as proof", "d": "The surah presents no argument, only a reminder, because the evidence was walking around Makkah: history itself, honestly remembered, testifies for Allah."}
+      ],
+      "heart": [
+        "Al-Fil recited slowly is a surah for the outnumbered. Its five verses reenact the moment every believer eventually faces in miniature, a force too big to resist advancing on what is sacred, and it answers with the calmest question in the Quran: have you not seen what your Lord did? The reciter is invited to consult his own memory the way Makkah was made to consult its own, and every honest heart finds elephants that knelt, disasters that arrived and inexplicably dissolved. The surah converts remembered rescue into present courage.",
+        "It also quietly warns. Quraysh loved this miracle and still refused its meaning, proof that a person can be proud of Allah’s past favors while resisting His present call. The reciter asks himself the harder question: which mercy am I celebrating, and which command am I avoiding?"
+      ],
+      "passages": [
+        {"ref": "105:1", "why": "The question that turns memory into evidence: have you not seen what your Lord did."},
+        {"ref": "105:3", "why": "The moment the sky takes the field: birds in flights against an imperial army."},
+        {"ref": "105:5", "why": "The end of all arrogant force in one image, a field of chewed and scattered stalks."}
+      ],
+      "connections": [
+        {"to": 106, "why": "Quraysh continues the argument so directly that some early authorities read the two surahs as one breath: the rescue of the House obliges worship of its Lord."},
+        {"to": 48, "why": "Al-Fath belongs to the day the Prophet ﷺ invoked this event at Hudaybiyyah: the One who restrained the elephant restrained his camel, and a conquest of peace followed."}
+      ],
+      "virtue": {"text": "No authentic hadith assigns a recitation reward to Al-Fil, and it needs no certificate: it is a standing monument of Allah’s defense of His House, sound in the community’s memory and cited by the Prophet ﷺ himself at Hudaybiyyah.", "src": "no established report; the Hudaybiyyah citation, Bukhari 2731", "level": "debated"}
+    },
+    {
+      "n": 106,
+      "context": [
+        "Quraysh is Makkan and reads like an invoice presented to a tribe. The ilaf of Quraysh, their knitted-together security and covenanted trade, rested on their custodianship of the Ka’bah: because Arabia revered the House, the tribe of the House traveled unrobbed where others needed armed escort. On that safety ran the two great caravans, winter south to Yemen, summer north to Sham, greater Syria, and on those caravans ran Makkah’s food, wealth, and pride.",
+        "The surah names the whole arrangement and then presents the bill: fal-ya’budu rabba hadha al-bayt, so let them worship the Lord of this House, who fed them against hunger and secured them against fear. Quraysh were consuming the House’s blessings while rejecting the House’s Lord and persecuting His Messenger ﷺ. For the early community the surah distilled worldly wellbeing to its two irreducible elements, food and safety, and taught that both are gifts with a Giver, and the Giver has an address they already knew."
+      ],
+      "name_story": "The surah is named for Quraysh, the Prophet’s ﷺ own tribe, the only surah in the Quran titled with a tribe’s name. It is also cited as Li-ilafi Quraysh from its opening phrase, and some reports describe early codices writing it joined closely to Al-Fil, so tightly the two arguments run as one.",
+      "movements": [
+        {"range": "1-2", "h": "Two caravans under covenant", "note": "The knitted security of Quraysh, their winter journey and summer journey, is held up as the visible miracle they lived on every year without wondering who guaranteed the roads."},
+        {"range": "3-4", "h": "The invoice of mercy", "note": "The conclusion is one command with two receipts: worship the Lord of this House, the One who fed them against hunger and made them safe from fear."}
+      ],
+      "themes": [
+        {"t": "Security is provision", "d": "The surah pairs food and safety as the twin floors of civilization: markets, journeys, and families all stand on two gifts most people never audit."},
+        {"t": "Gratitude has an address", "d": "Rabba hadha al-bayt, the Lord of this House: not the House, not the tribe, not the trade routes. Blessing traced honestly leads to One door."},
+        {"t": "Trade rests on unseen protection", "d": "Quraysh thought their treaties and reputation secured the caravans; the surah shows the guarantee was always divine, dispensed through the House they were misusing."},
+        {"t": "Worship is the owed response", "d": "Fal-ya’budu, so let them worship: the surah’s only command. Every enjoyed mercy is an unanswered summons until worship answers it."}
+      ],
+      "heart": [
+        "Quraysh is a small surah that performs a large audit on the reciter. Its method is to take the two blessings so constant they have become invisible, the meal that came without famine and the night that passed without fear, and hold them up as debts. Read slowly, verse four turns any ordinary day inside out: you ate, and you were safe, therefore two receipts are already on the table before you have done anything at all. The heart that absorbs this cannot treat worship as a favor it does Allah; worship becomes the barest honesty about how one is being carried.",
+        "There is also a tender specificity in rabba hadha al-bayt, the Lord of this House. Allah names Himself through the place He gave them, as if to say: you know where to find Me; you have circled My House your whole lives. For the reciter, the phrase gathers every qiblah-facing prayer into an answer to this surah’s command."
+      ],
+      "passages": [
+        {"ref": "106:3", "why": "The surah’s single command, worship aimed at the Lord of the House you already face five times a day."},
+        {"ref": "106:4", "why": "Two receipts that cover every ordinary day: fed against hunger, secured against fear."}
+      ],
+      "connections": [
+        {"to": 105, "why": "Al-Fil shows the rescue of the House; Quraysh presents the obligation the rescue created, two surahs forming one argument."},
+        {"to": 14, "why": "Surah Ibrahim carries the ancestor’s prayer, a secure city and provision for its people, which these four verses show fully answered."}
+      ],
+      "virtue": {"text": "No authentic hadith singles out Quraysh with a recitation reward; reports of special equivalence for it are not sound. It needs no certificate: it is the Quran’s shortest complete lesson on gratitude for food and safety.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 107,
+      "context": [
+        "Al-Ma’un is Makkan in the view of most scholars, though some held its later verses came down in Madinah around the hypocrites; the classical books record both. It opens with a question that sounds like an invitation to gossip, ara’ayta, have you seen the one who denies the din, the judgment and the religion, and then gives a description no one expected: not a man arguing philosophy, but a man shoving an orphan and never urging that the poor be fed. Denial, the surah insists, is visible at the dinner table before it is audible in debate.",
+        "Then the surah turns and does something even more unsettling for religious people: it pronounces woe upon some who pray, those heedless of their prayer, those who perform to be seen, and those who withhold al-ma’un, the small neighborly things, the pot, the bucket, the hand-tool, the salt, as Ibn Mas’ud and the early commentators explained. For the first community it fused creed, prayer, and kindness into one fabric that cannot be torn along convenient lines."
+      ],
+      "name_story": "The surah is named for al-ma’un, the small borrowed helps of neighborly life named in its final verse, the things so minor that refusing them exposes a heart with nothing in it. Some early books cite it as Ara’ayta, have you seen, after its opening word, and some as Surat ad-Din, the surah of the judgment it opens with.",
+      "movements": [
+        {"range": "1-3", "h": "Denial wears everyday clothes", "note": "The one who calls the judgment a lie is identified by conduct: he is the one who pushes the orphan away and does not urge the feeding of the poor."},
+        {"range": "4-5", "h": "Woe to some who pray", "note": "The Quran’s most feared woe for worshippers: prayer performed but unminded, sahun, hearts absent and duties slack, hollow at the center."},
+        {"range": "6-7", "h": "Display without mercy", "note": "The portrait completes: worship done for human eyes, and even the bucket and the pot refused, religion inverted into performance minus kindness."}
+      ],
+      "themes": [
+        {"t": "Creed shown in conduct", "d": "The surah tests belief in judgment not by questioning the tongue but by watching the hands: what a man does with orphans and food is his real theology."},
+        {"t": "The orphan test", "d": "Yadu’u al-yatim, he shoves the orphan: the treatment of the person who can repay nothing is the Quran’s recurring measure of a heart."},
+        {"t": "Heedless prayer", "d": "An salatihim sahun: not a missed prayer but an unminded one, kept as costume while its center, presence before Allah, has quietly died."},
+        {"t": "Riya, worship for eyes", "d": "Yura’un: prayer aimed at human audiences is aimed away from Allah, and the surah lists it beside cruelty, not beside devotion."},
+        {"t": "The smallest generosity as the largest sign", "d": "Al-ma’un, the borrowed pot and bucket: a soul that cannot release trifles reveals what all its display was hiding."}
+      ],
+      "heart": [
+        "Al-Ma’un may be the most uncomfortable seven verses in the Quran for a practicing person, because its woe is aimed inside the mosque. Read slowly, it dismantles the quiet bargain many of us strike, ritual in exchange for exemption from character, and it starts with a scene anyone can picture: an orphan pushed aside by a man certain of his own respectability. The reciter is forced to ask not whether he prays, but where his prayer goes and what it produces; sahun, heedless, is a word that fits comfortable routines precisely.",
+        "The surah’s genius is its final word. It does not end with a cosmic image but with kitchenware, al-ma’un, the small things neighbors lend. Heaven, it turns out, watches the smallest transactions for the truth about the largest claims. Whoever finishes this surah honestly will do two things before the day ends: return his prayer to presence, and find one small, unglamorous kindness to complete, because in this surah that is what belief in the Day actually looks like."
+      ],
+      "passages": [
+        {"ref": "107:1", "why": "The question that redefines denial as something done to orphans before it is said about God."},
+        {"ref": "107:4", "why": "The woe every praying person should hear at least once a week, aimed at hollow prayer."},
+        {"ref": "107:7", "why": "The last word is a borrowed pot: the smallest kindness as the final test of the biggest claims."}
+      ],
+      "connections": [
+        {"to": 93, "why": "Ad-Duha commands, do not crush the orphan; Al-Ma’un shows the one who does, the command and its violation facing each other."},
+        {"to": 104, "why": "Al-Humazah indicts cruelty of the tongue and the hoard; Al-Ma’un indicts cruelty of the hand and the withheld bucket, two panels of one portrait."}
+      ],
+      "virtue": {"text": "No authentic hadith attaches a recitation reward to Al-Ma’un, and it needs no certificate: it is the Quran’s standing definition of religion that has lost its mercy, and reciting it honestly is itself a correction.", "src": "no established report", "level": "debated"}
+    },
+    {
+      "n": 108,
+      "context": [
+        "Al-Kawthar, the shortest surah in the Quran, carries one of the tenderest revelation accounts. Anas relates that the Prophet ﷺ dozed lightly among his companions, then raised his head smiling. A surah has just been revealed to me, he ﷺ said, and recited Bismillah, then Inna a’taynaka al-kawthar. Do you know what al-Kawthar is? A river my Lord has promised me in Paradise, of abundant good, a basin to which my ummah will come on the Day of Rising. The account is in Muslim.",
+        "Behind the surah stands a sound and bitter backdrop: when the Prophet’s ﷺ infant son died, men of Quraysh, al-As ibn Wa’il named among them, called him abtar, cut off, a man without male heirs whose name would end with him. The surah answered the schoolyard cruelty with cosmic arithmetic: We have given you al-Kawthar, the abundance, so the loss they mocked was answered with a river, and the final verse turned the word around forever: your hater, he is the cut-off one."
+      ],
+      "name_story": "Al-Kawthar is an intensive form of kathrah, abundance: the river in Paradise, the basin of his ﷺ ummah, and every overflowing good, as the commentators gathered. The surah is named for the gift that answered the taunt, and it is also cited by its opening words, Inna a’taynak.",
+      "movements": [
+        {"range": "1-1", "h": "The gift announced", "note": "Inna a’taynaka, truly We have given you: past tense, already granted, abundance stated as fact before the wound is even mentioned."},
+        {"range": "2-2", "h": "The response of the gifted", "note": "So pray to your Lord and sacrifice: gratitude given its two oldest forms, worship and offering, aimed at Him alone."},
+        {"range": "3-3", "h": "The taunt reversed", "note": "Inna shani’aka huwa al-abtar: the one who hates you, he is the one cut off, the insult returned to its sender with the seal of eternity."}
+      ],
+      "themes": [
+        {"t": "Abundance measured by heaven", "d": "Quraysh counted sons and Muhammad ﷺ had buried his; heaven counted differently and handed him a river. The surah reprices loss with eternal currency."},
+        {"t": "Gratitude as prayer and sacrifice", "d": "Fa-salli li-rabbika wanhar: the answer to receiving is giving, worship of the heart and wealth of the hand, both facing one Lord."},
+        {"t": "Insults outlived", "d": "The men who coined the taunt survive only as footnotes inside his ﷺ story, while his name is raised in every adhan: the verse fulfilled in plain history."},
+        {"t": "The basin promise", "d": "Al-hawd, the basin where his ﷺ ummah will drink on the Day: the surah plants a meeting-place in every reciter’s future."}
+      ],
+      "heart": [
+        "Al-Kawthar is three verses of medicine for the wounded. Read slowly, its first mercy is grammatical: the gift comes in the past tense, a’taynaka, We have already given you, so the mocked and grieving man ﷺ is told that his account is already full while his critics are still counting what he lacks. Every reciter who has been diminished by others, for childlessness, poverty, failure, or faith, stands inside this verse and feels the ground steady: your worth was settled by the Giver, not the audience.",
+        "Then the surah teaches what to do with pain: fa-salli, so pray. Not answer them, not prove them wrong, but turn to your Lord with prayer and sacrifice, and let Him handle the reply. And He does, in five words that closed the argument for all time. The reciter learns the deepest lesson of the shortest surah: when you are cut, turn to Him, and what is cut off will never be you."
+      ],
+      "passages": [
+        {"ref": "108:1", "why": "The past-tense gift: abundance already granted, the verse to stand in when others count what you lack."},
+        {"ref": "108:3", "why": "Five words that reversed a taunt forever and let history verify a prophecy."}
+      ],
+      "connections": [
+        {"to": 93, "why": "Ad-Duha follows the same divine pattern: a grieved Prophet ﷺ, a gift recounted, a promise sealed against the mockers."},
+        {"to": 109, "why": "Al-Kafirun stands next in the mushaf answering the same Quraysh, the gift refused their bargaining as this surah refused their taunt."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ himself announced this surah’s descent, smiling as he woke, and unveiled its meaning: al-Kawthar is a river of abundant good his Lord granted him, with a basin where his ummah will meet him on the Day of Rising.", "src": "Muslim 400", "level": "sunnah"}
+    },
+    {
+      "n": 109,
+      "context": [
+        "Al-Kafirun is Makkan, and the books of tafsir widely relate its backdrop: leading men of Quraysh proposed a merger, worship our gods for a year and we will worship yours for a year, or at least touch our idols and we will follow your prayer. The individual chains for the story are discussed by the scholars, but the setting is accepted, and the surah’s wording is its own evidence: it is one long, structured refusal of religious barter, repeated until no loophole survives.",
+        "In the Prophet’s ﷺ own practice the surah held a fixed and honored place. He recited it with Al-Ikhlas in the two rak’ahs before Fajr and in the two after tawaf, circling the House, as Muslim relates, and he told a companion to recite it before sleeping, for it is bara’ah min ash-shirk, a declaration of innocence from worshipping anything beside Allah. Some early scholars called it al-Muqashqishah, the curer, because it shakes the disease of shirk out of the one who says it truthfully."
+      ],
+      "name_story": "The surah is named for its address, ya ayyuha al-kafirun, O disbelievers, the ones then bargaining over God. Early scholars also called it al-Muqashqishah, the curer that shakes off shirk, and it travels with Al-Ikhlas as one of the two surahs of pure creed the Prophet ﷺ paired in prayer.",
+      "movements": [
+        {"range": "1-3", "h": "The address and the refusal", "note": "Say it to their faces: I do not worship what you worship, and you are not worshippers of what I worship, the two religions stated as two facts."},
+        {"range": "4-5", "h": "No, not ever", "note": "The refusal is repeated across time, past and future closed alike: no rotation, no gradual merger, no year of yours and year of mine."},
+        {"range": "6-6", "h": "Two ways, one boundary", "note": "Lakum dinukum wa liya din: for you is your religion and for me is mine, a boundary drawn without a sword and without a concession."}
+      ],
+      "themes": [
+        {"t": "Worship is not negotiable", "d": "Everything else can be discussed; the object of worship cannot. The surah plants one flag that no diplomacy may move."},
+        {"t": "Repetition as finality", "d": "The doubled refusals answer every escape clause, now and later, form and heart, until bargaining has nowhere left to stand."},
+        {"t": "Clarity is mercy", "d": "The kindest thing said to error is a clean no: the surah ends false hope of a merger so that real choice, and real faith, become possible."},
+        {"t": "Coexistence without mixture", "d": "For you your religion, for me mine: not approval of falsehood but a boundary that leaves the disbeliever his choice and the believer his purity."}
+      ],
+      "heart": [
+        "Al-Kafirun recited slowly trains the one muscle modern life most weakens: the clean no. The surah is not angry; it is exact. Its refusals close every door softly and completely, and the reciter feels his own creed being wrung out like a washed garment, twisted until the last drops of people-pleasing leave it. This is why the Prophet ﷺ planted it at the day’s frontiers, in the sunnah of Fajr as the day opens and on the tongue before sleep as it closes: a soul that begins and ends with bara’ah, disavowal of every false object of worship, cannot drift far in the hours between.",
+        "The last verse gives the reciter his posture toward a disbelieving world: neither compromise nor cruelty, but boundary. Lakum dinukum wa liya din is not a treaty of indifference; it is the dignity of a faith that does not need to blur itself to survive. Whoever says it truthfully has decided who he is, and that decision is the surah’s gift."
+      ],
+      "passages": [
+        {"ref": "109:1", "why": "The commanded address: hear the clean no said aloud, to faces, without apology."},
+        {"ref": "109:6", "why": "The boundary verse: two religions, no mixture, the sentence that ended the bargaining forever."}
+      ],
+      "connections": [
+        {"to": 112, "why": "Al-Ikhlas is its lifelong partner in the Fajr and tawaf rak’ahs: this surah clears the ground of false gods, and that one builds the house of pure creed."},
+        {"to": 110, "why": "An-Nasr completes the account: the same Quraysh whose bargain was refused enter Allah’s religion in crowds."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ told a companion to recite it before sleeping, then sleep upon its ending, for it is a disavowal of shirk, worshipping others beside Allah; and he ﷺ recited it with Al-Ikhlas in the sunnah of Fajr and the rak’ahs of tawaf. The circulating report that it equals a quarter of the Quran is weak and should not be relied on.", "src": "Abu Dawud 5055; Muslim 726", "level": "sunnah"}
+    },
+    {
+      "n": 110,
+      "context": [
+        "An-Nasr is Madinan and stands among the very last of the Quran: Ibn Abbas related that it was the final surah revealed as a whole. Its horizon is the conquest of Makkah in the eighth year after hijrah, the emigration, and the year of delegations that followed, when tribe after tribe crossed Arabia to enter Allah’s religion in waves, afwaja, the crowds the surah names. Twenty years of refusal dissolved into processions of acceptance, and heaven marked the moment with three verses.",
+        "The Companions heard more in it than triumph. In Bukhari, Umar seated the young Ibn Abbas among the elders of Badr and asked them about this surah; they spoke of victory and praise, but Ibn Abbas said: it is the appointed end of the Messenger of Allah ﷺ, announced to him: when the work is complete, the worker is called home, so glorify and seek forgiveness. Umar agreed. And Aishah saw the surah enter his ﷺ very posture: after it came down he constantly said in his bowing and prostration, Glory to You, O Allah, our Lord, and praise; O Allah, forgive me."
+      ],
+      "name_story": "The surah is named for an-nasr, the decisive help of Allah in its first verse. Some early scholars called it Surat at-Tawdi, the Farewell, because beneath its victory they heard the gentle announcement of the Prophet’s ﷺ approaching departure, and both names are true to it at once.",
+      "movements": [
+        {"range": "1-2", "h": "Help, conquest, crowds", "note": "When Allah’s help and the opening of Makkah come, and you see people entering His religion in waves: the whole harvest of the mission gathered into two verses."},
+        {"range": "3-3", "h": "Praise and pardon at the summit", "note": "The commanded response to total victory: glorify your Lord with praise and seek His forgiveness, for He is ever accepting of return."}
+      ],
+      "themes": [
+        {"t": "Victory belongs to Allah", "d": "Nasru Allah, the help is His and the conquest is His opening: the surah files twenty years of sacrifice under one Owner, and pride finds no foothold."},
+        {"t": "Endings announced gently", "d": "The Companions who understood deepest heard farewell inside triumph: completion of the work is the signal that the worker will be called home."},
+        {"t": "Istighfar crowns achievement", "d": "At the summit, the command is to seek forgiveness, sealing every accomplishment against self-congratulation and repairing whatever the long road bruised."},
+        {"t": "He is ever-returning", "d": "Innahu kana tawwaba: the surah’s last name of Allah promises that every turner toward Him is received, the door open at the end as at the beginning."}
+      ],
+      "heart": [
+        "An-Nasr read slowly reshapes how a person stands at his own summits. The world teaches victory laps; this surah teaches that the correct posture at the peak is bowed, tasbih, glorifying, hamd, praising, istighfar, asking pardon, because achievement is His gift passing through your hands, and because no long labor is finished without stains that need washing. Whoever completes anything, a degree, a business, a book of the Quran, a lifetime of raising children, is handed this surah as the manner of finishing.",
+        "And beneath that, the tender reading of Ibn Abbas waits for every reciter who is growing older: completed work is a summons. The surah lets you hear your own endings approaching not as loss but as the call that came to the most beloved of creation ﷺ, and it fills the remaining time with the three verbs that make any ending safe: glorify, praise, seek forgiveness. He is ever-returning to the one who returns."
+      ],
+      "passages": [
+        {"ref": "110:1", "why": "The verse of the harvest: help and opening arriving together after twenty years of refusal."},
+        {"ref": "110:3", "why": "The manner of finishing everything: praise and pardon at the summit, the verse he ﷺ lived in his final bowings."}
+      ],
+      "connections": [
+        {"to": 109, "why": "Al-Kafirun refused the bargain of the idolaters; An-Nasr shows those same people entering the religion in crowds, refusal ripened into welcome."},
+        {"to": 48, "why": "Al-Fath promised the clear opening; An-Nasr stands on the far side of that promise, watching it fulfilled."}
+      ],
+      "virtue": {"text": "After this surah came down, Aishah relates, the Prophet ﷺ filled his bowing and prostration with, Glory to You, O Allah, our Lord, and praise; O Allah, forgive me, interpreting the Quran in his own limbs, so the surah carries a sound portrait of how he ﷺ received it.", "src": "Bukhari 794, Muslim 484", "level": "sunnah"}
+    },
+    {
+      "n": 111,
+      "context": [
+        "Al-Masad descends from a scene preserved in Bukhari. When the command came to warn his nearest kin, the Prophet ﷺ climbed the hill of Safa and called Quraysh clan by clan. If I told you horsemen were in the valley behind me about to attack, would you believe me? Yes, they said, we have never known you to lie. Then I warn you, he ﷺ said, of a severe punishment ahead. His own uncle Abu Lahab answered: tabban laka, ruin to you, is this what you gathered us for? And the surah came down carrying his word back to him: tabbat yada Abi Lahab, ruined are the hands of Abu Lahab.",
+        "Abu Lahab, Abd al-Uzza ibn Abd al-Muttalib, and his wife Umm Jamil, sister of Abu Sufyan, made a household of the persecution: he dogged the Prophet’s ﷺ steps crying liar, and she, the carrier of firewood, fed the fires of slander, or laid thorned branches in his path as some early commentators relate. The surah then became a standing wager the Quran placed on its own truth: it declared, while both lived, that they would die outside faith and burn. Either could have falsified the Book with one spoken shahadah, testimony of faith. Neither ever did. Abu Lahab died soon after Badr, untouched by belief, and the prophecy closed."
+      ],
+      "name_story": "The surah is named for al-masad, the rope of twisted palm-fiber around the neck of the firewood-carrier in its last verse. It is equally known as Surat Tabbat from its first word and Surat al-Lahab from the man it condemns, whose nickname, father of flame, was given for his glowing face and answered by the Flame it names.",
+      "movements": [
+        {"range": "1-3", "h": "The curse returns to sender", "note": "The ruin he pronounced falls back on his own hands; his wealth and all he earned avail him nothing, and a fire of lahab, of flame, waits to match his name."},
+        {"range": "4-5", "h": "The carrier of firewood", "note": "His wife, hauler of wood for slander’s fires, enters the scene with a rope of twisted fiber on her neck, the couple’s shared cruelty given one shared sentence."}
+      ],
+      "themes": [
+        {"t": "Kinship does not exempt", "d": "The condemned man is the Prophet’s ﷺ own uncle: nearness of blood to the best of creation saves no one who chooses enmity to his message."},
+        {"t": "A prophecy in present tense", "d": "Revealed while both targets lived free to fake a conversion and shatter it, the surah wagered the Quran’s truth on two human hearts and won."},
+        {"t": "Wealth’s limit repeated", "d": "Ma aghna anhu maluhu wa ma kasab: neither fortune nor achievements ransom a soul, the refrain of this whole final section of the mushaf."},
+        {"t": "A name become destiny", "d": "The father of flame ends in flame: the surah turns his proud nickname into his sentence, and mockery of the truth into a mirror."}
+      ],
+      "heart": [
+        "Al-Masad is the only surah that condemns a contemporary of the Prophet ﷺ by name, and reciting it slowly one feels why it was preserved for all time: it is the Quran’s demonstration that no rank, no lineage, no wealth, and no proximity to holiness substitutes for faith. Abu Lahab had every advantage a soul could hold, Hashimi blood, wealth, the Prophet ﷺ as his own nephew, and the surah shows all of it weightless against one hardened heart. The reciter quietly checks his own borrowed credentials, family piety, community, reputation, and lets the surah strip him back to the only question that counts: what does my own heart hold?",
+        "There is also a strange comfort here for anyone opposed by their own kin for their faith. The Prophet ﷺ himself was cursed by his uncle and slandered by his uncle’s wife, and heaven answered on his behalf. The surah teaches the wounded believer to leave the answering to Allah, whose replies outlast every insult."
+      ],
+      "passages": [
+        {"ref": "111:1", "why": "Hear a curse reversed in real time: the ruin he pronounced on Safa returned to his own hands."},
+        {"ref": "111:2", "why": "One verse retires the oldest false hope: wealth and earnings availing nothing at the reckoning."},
+        {"ref": "111:5", "why": "The final image, the fiber rope, where the surah’s justice reaches even the carrier of the firewood."}
+      ],
+      "connections": [
+        {"to": 108, "why": "Al-Kawthar reverses a taunt against the Prophet ﷺ, Al-Masad reverses a curse: two enemies handed the endings they designed for him."},
+        {"to": 104, "why": "Al-Humazah draws the type, the mocker rich enough to sneer; Al-Masad names the case and closes the file."}
+      ],
+      "virtue": {"text": "No hadith assigns a recitation reward to Al-Masad, and it needs no certificate: its distinction is to be a fulfilled prophecy, revealed in Bukhari’s sound account at Safa and verified by two lives that never falsified it.", "src": "the occasion, Bukhari 4971; no recitation-report", "level": "debated"}
+    },
+    {
+      "n": 112,
+      "context": [
+        "Al-Ikhlas came down as an answer. The transmitted reports, graded fair by many scholars, relate that questioners demanded of the Prophet ﷺ, unsub lana rabbaka, trace your Lord’s lineage for us, idolaters of Makkah in one report, and in another, questioners in Madinah, which is why the scholars differ over its Makkan or Madinan origin. The surah replied with a definition that refuses all lineage: He is Allah, Ahad, uniquely One; as-Samad, the self-sufficient on whom all depend; He neither begets nor is begotten, and none is equal to Him.",
+        "No surah saturated the Prophet’s ﷺ daily worship more. He paired it with Al-Kafirun in the sunnah of Fajr and the rak’ahs after tawaf, sealed his witr with it, and recited the three Quls over his palms each night. When a commander of an expedition ended every recitation with it and was asked why, he said: because it is the description of ar-Rahman, the Most Merciful, and I love to recite it. Tell him, said the Prophet ﷺ, that Allah loves him."
+      ],
+      "name_story": "Al-Ikhlas means pure sincerity, and the surah never uses the word: it earned the name by being purely about Allah, no command, no story, no other subject, and by purifying the creed of whoever holds it. It is also cited as Qul huwa Allahu Ahad from its opening, and some early books call it Surat at-Tawhid, the surah of divine oneness.",
+      "movements": [
+        {"range": "1-2", "h": "He is Allah, One, Samad", "note": "The identity is stated in two names: Ahad, One without division or series, and as-Samad, the eternal refuge whom all creation needs and who needs nothing."},
+        {"range": "3-4", "h": "What He is not", "note": "The negations that guard the affirmation: no offspring and no origin, and none in all existence is kufuwan, equal or comparable, to Him."}
+      ],
+      "themes": [
+        {"t": "Oneness without arithmetic", "d": "Ahad is not the first of a series but the One who admits no series: unique in essence, names, and deeds, beyond division and beyond counting."},
+        {"t": "As-Samad, the needed One", "d": "Every creature leans on Him for every breath while He leans on nothing: the name that turns all human dependency into an address."},
+        {"t": "Negation protects praise", "d": "Lam yalid wa lam yulad: the surah fences the truth against every mythology of divine families, and against every subtle modern idol."},
+        {"t": "A third of the message", "d": "The Quran teaches creed, law, and the accounts of nations; this surah carries the creed whole, which is how the scholars explained its equivalence to a third."}
+      ],
+      "heart": [
+        "Al-Ikhlas recited slowly is the heart returning to its one fixed point. Four verses, and every direction of human worship is corrected at once: Ahad dissolves the crowded pantheons, ancient and modern, and as-Samad quietly redirects all our leaning, on salaries, on people, on our own competence, toward the only support that does not itself need supporting. The reciter feels the surah working like a plumb line dropped through the self, truing whatever had tilted toward created things during the day.",
+        "Its shortness is its mercy and its test. Said in seconds, it can pass unweighed; said with presence, it is the heaviest speech a tongue can carry, the description of ar-Rahman by ar-Rahman. The Companion who could not stop reciting it was told that Allah loved him, and that door is not closed: love of this surah is love of the One it describes, and He answers it in kind."
+      ],
+      "passages": [
+        {"ref": "112:1", "why": "The Quran’s definition of God in His own words: hear Ahad and let it empty every false throne."},
+        {"ref": "112:2", "why": "As-Samad: the name to lean on when every created support has bent."},
+        {"ref": "112:4", "why": "The final fence: none is equal to Him, the verse that completes the creed in seven words."}
+      ],
+      "connections": [
+        {"to": 109, "why": "Al-Kafirun and Al-Ikhlas travel together in the Prophet’s ﷺ prayer: the first is disavowal of every false god, the second the description of the true One."},
+        {"to": 113, "why": "Al-Falaq begins the two refuges that follow: after the creed is pure, the believer is taught to shelter it."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ said that Qul huwa Allahu Ahad equals a third of the Quran, a sound and famous virtue, and he ﷺ told the man who loved it because it describes ar-Rahman: Allah loves him.", "src": "Bukhari 5013, Muslim 811; the love report, Bukhari 7375", "level": "sunnah"}
+    },
+    {
+      "n": 113,
+      "context": [
+        "Al-Falaq came down paired with An-Nas, and the Prophet ﷺ announced them with wonder: do you not see verses revealed this night the like of which has never been seen? Qul a’udhu bi-rabbil-falaq and Qul a’udhu bi-rabbin-nas. The account is in Muslim from Uqbah ibn Amir. The scholars differ whether the pair is Makkan or Madinan; many tafsirs connect them to the sound Bukhari account of the spell cast on the Prophet ﷺ by Labid ibn al-A’sam, though the link of their revelation to that event is a later addition, and honesty keeps the two reports distinct.",
+        "What is beyond dispute is how he ﷺ used them. Aishah relates that every night he would cup his palms, recite Al-Ikhlas, Al-Falaq, and An-Nas into them, and wipe over his body, and in his final illness she did it for him with his own hands. He taught them as the morning and evening shield, and said that nothing compares to them for the one seeking refuge. With these surahs the community learned that fear has a liturgy: darkness, sorcery, and envy are real, and the answer to all three is a Lord who splits the dark with dawn."
+      ],
+      "name_story": "The surah is named for al-falaq, the daybreak, the splitting-open: the Lord who cracks the night with dawn, the seed with the shoot, and every siege with rescue. With An-Nas it forms al-mu’awwidhatan, the two surahs of seeking refuge, a title given by the Prophet ﷺ himself.",
+      "movements": [
+        {"range": "1-2", "h": "Refuge with the Splitter of dawn", "note": "The command is to say it aloud: I take refuge with the Lord of the daybreak from the evil of what He created, all harm at once placed under the authority of its own Maker."},
+        {"range": "3-5", "h": "Three darknesses named", "note": "Then the fears are named one by one and shrunk by naming: the settling night, the blowers on knots practicing sorcery, and the envier when he envies."}
+      ],
+      "themes": [
+        {"t": "Refuge is an act", "d": "Isti’adhah, taking refuge, is said, not merely felt: qul, say it, the soul physically running to its Lord the way a child runs behind a father."},
+        {"t": "Evil is created and contained", "d": "From the evil of what He created: harm has no independent throne; it exists inside His dominion, which is exactly why refuge with Him works."},
+        {"t": "Named fears shrink", "d": "Night, sorcery, envy: the surah drags the vague dreads of the heart into the light and lists them, and a named fear is already half-disarmed."},
+        {"t": "Envy’s evil is conditional", "d": "Idha hasad, when he envies: the eye’s harm activates when envy acts, so the surah teaches both refuge from enviers and vigilance against becoming one."}
+      ],
+      "heart": [
+        "Al-Falaq recited slowly is the believer’s answer to the dark, and its first word of address is already the cure: not Lord of the night, but Lord of the daybreak. The surah makes you seek shelter from darkness with the One whose signature is splitting it, so hope is built into the grammar before any fear is named. Then the three darknesses file past, the night that hides things, the malice that works unseen, the envy that smiles to your face, and the reciter realizes the surah has covered every direction harm arrives from: circumstance, enemy craft, and the resentful heart nearby.",
+        "Whoever makes this surah a nightly habit, palms cupped as the Prophet ﷺ taught, discovers its quiet psychological gift: fear is no longer managed alone. The dark is still dark, but it has an owner, and you know Him, and the last thing your body feels before sleep is His name wiped over it."
+      ],
+      "passages": [
+        {"ref": "113:1", "why": "The address that carries the cure: refuge from darkness sought with the Lord of the daybreak."},
+        {"ref": "113:5", "why": "The last named fear, envy, the harm that arrives through a smiling face, placed under His protection."}
+      ],
+      "connections": [
+        {"to": 114, "why": "An-Nas is its inseparable twin: Al-Falaq shelters from harms outside the chest, An-Nas from the whisper inside it."},
+        {"to": 112, "why": "Al-Ikhlas states the creed and the two refuges guard it: the Prophet ﷺ recited the three together each night over his palms."}
+      ],
+      "virtue": {"text": "The Prophet ﷺ said of Al-Falaq and An-Nas: verses revealed this night the like of which has never been seen, and he made them his nightly and morning refuge, reciting them over his palms and wiping his body.", "src": "Muslim 814; the nightly practice, Bukhari 5017", "level": "sunnah"}
+    },
+    {
+      "n": 114,
+      "context": [
+        "An-Nas closes the Quran, revealed together with Al-Falaq as the two refuges the Prophet ﷺ said were without like. Where its twin lists harms of the outer world, night, sorcery, envy, this surah turns entirely inward to a single enemy, the last one standing when all others fall: al-waswas al-khannas, the whispering one who retreats, murmuring into the chests of mankind, whether that whisperer is of the jinn, the unseen beings of smokeless fire, or of people, for harmful suggestion can arrive in a friendly human voice.",
+        "There is a quiet architecture in the Quran ending here. The Book opens with Al-Fatihah, mankind asking guidance from the Lord of the worlds; it closes with mankind running to the Lord, King, and God of mankind to protect that guidance from the voice that would unpick it. The Prophet ﷺ sealed his nights with this surah among the three Quls, and taught that the whisperer shrinks and retreats, khannas, the moment Allah is remembered, so the surah is not only a prayer but a tactic."
+      ],
+      "name_story": "The surah is named for an-nas, mankind, sounded five times in six verses like a bell: named for the ones it protects rather than the enemy it exposes. With Al-Falaq it forms al-mu’awwidhatan, the two refuges, the Prophet’s ﷺ own name for the pair that ends the Book.",
+      "movements": [
+        {"range": "1-3", "h": "Three titles of one Protector", "note": "Refuge is sought in an ascending claim: Rabb, the Lord who nurtures mankind, Malik, the King who rules them, Ilah, the God they worship, care, then authority, then devotion."},
+        {"range": "4-6", "h": "The enemy described", "note": "The threat is exposed with precision: the retreating whisperer who murmurs in the chests of mankind, whether from the hidden jinn or from people."}
+      ],
+      "themes": [
+        {"t": "A triple grip of protection", "d": "Lord, King, God: three relationships, each one enough, stacked into a single refuge, because the enemy attacks the deepest room in the house, the chest."},
+        {"t": "The whisper retreats at remembrance", "d": "Khannas, the shrinking one: his entire power is suggestion, and he flees the name of Allah, so the surah carries its own victory condition inside it."},
+        {"t": "Human devils too", "d": "Min al-jinnati wan-nas: harmful whispering is not only unseen; it can come dressed as advice from people, and the surah teaches discernment about voices."},
+        {"t": "Ending the Quran on refuge", "d": "The Book’s last word of substance is mankind sheltered in its Lord: revelation ends by tucking the reader under the wing it opened."}
+      ],
+      "heart": [
+        "An-Nas recited slowly is the most intimate security the Quran offers, because it guards the one territory no lock defends: the interior murmur. Every believer knows the voice, the suggestion that arrives mid-prayer, the doubt seeded at night, the resentment dressed as reason, and the surah’s mercy is to tell you two things about it: it is real, you are not uniquely broken, and it is weak, built to retreat the instant your Lord is named. Reciting the surah is therefore not describing the battle but winning the day’s round of it.",
+        "And the three titles are the deep comfort. Against a whisper you are given a Lord who raised you, a King who outranks every power that threatens you, and a God worth all your worship, three ropes for one small enemy. The Quran ends here deliberately: after every law, story, and warning, the final gift is a hiding place. The reader closes the Book already inside it."
+      ],
+      "passages": [
+        {"ref": "114:1", "why": "The beginning of the Quran’s last prayer: refuge sought with the Lord of mankind for mankind."},
+        {"ref": "114:4", "why": "The enemy named exactly: the whisperer who retreats, so the reciter learns his weakness in his name."}
+      ],
+      "connections": [
+        {"to": 113, "why": "Al-Falaq guards the outside of the fortress and An-Nas the inside: the Prophet ﷺ recited the pair as one shield."},
+        {"to": 1, "why": "Al-Fatihah opens the Book asking guidance, An-Nas closes it guarding that guidance: the Quran begins in prayer and ends in refuge."}
+      ],
+      "virtue": {"text": "With Al-Falaq it forms the two refuges the Prophet ﷺ called verses without like, revealed in one night; he recited them in the nightly three over his palms and after every prayer, and no seeker of protection was ever given their equal.", "src": "Muslim 814; the nightly practice, Bukhari 5017", "level": "sunnah"}
+    }
+  ]
+}

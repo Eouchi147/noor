@@ -1,0 +1,1943 @@
+[
+  {
+    "id": "ulum-al-hadith",
+    "term": "Ulum al-Hadith",
+    "ar": "عُلُومُ الحَدِيث",
+    "also": [
+      "Uloom al-Hadith",
+      "Ilm al-Hadith",
+      "Mustalah al-Hadith",
+      "Mustalah",
+      "Hadith sciences",
+      "Ulum ul Hadith",
+      "Ilmul Hadeeth",
+      "Usul al-Hadith",
+      "Hadith terminology",
+      "Ulum al Hadeeth",
+      "Ilm ul Hadith"
+    ],
+    "cat": "hadith",
+    "short": "The science of testing reports about the Prophet, deciding which are sound and which are not.",
+    "long": "Every report is judged from two sides: the chain of people who passed it on, and the wording they carried. The classic handbook is the Muqaddimah of Ibn al-Salah, and Ibn Hajar's short Nukhbat al-Fikar is the summary students still memorise.",
+    "see": [
+      "hadith",
+      "isnad",
+      "matn",
+      "hukm"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hadith",
+    "term": "Hadith",
+    "ar": "الحَدِيث",
+    "also": [
+      "Hadeeth",
+      "Hadis",
+      "Hadits",
+      "Ahadith",
+      "Ahadeeth",
+      "Hadees",
+      "Hadith sharif",
+      "Hadeeth shareef",
+      "Prophetic tradition",
+      "Sayings of the Prophet",
+      "Hadidth",
+      "Hadis sharif"
+    ],
+    "cat": "hadith",
+    "short": "A report of what the Prophet Muhammad said, did, or quietly approved, passed down through named narrators.",
+    "long": "The word means speech, or something newly told. A hadith has two parts: the chain of people who carried it, and the text they carried. A hadith is a report about the Sunnah, so a weak hadith does not become Sunnah by being printed in a book.",
+    "see": [
+      "sunnah",
+      "isnad",
+      "matn",
+      "sahih",
+      "daif"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hadith-qudsi",
+    "term": "Hadith Qudsi",
+    "ar": "الحَدِيثُ القُدْسِيّ",
+    "also": [
+      "Hadis Qudsi",
+      "Qudsi hadith",
+      "Hadeeth Qudsi",
+      "Sacred hadith",
+      "Divine hadith",
+      "Hadith al-Qudsi",
+      "Qudsee",
+      "Hadith Kudsi",
+      "Ahadith Qudsiyyah"
+    ],
+    "cat": "hadith",
+    "short": "A hadith in which the Prophet reports words from Allah that are not part of the Qur'an.",
+    "long": "The usual account is that the meaning is from Allah and the wording from the Prophet, while the Qur'an is both meaning and wording from Allah. A hadith qudsi is not recited in prayer and carries no claim of inimitability. It is also not automatically authentic; like any hadith it can be sahih, hasan or weak.",
+    "see": [
+      "hadith",
+      "wahy",
+      "sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "athar",
+    "term": "Athar",
+    "ar": "الأَثَر",
+    "also": [
+      "Athaar",
+      "Aathar",
+      "Asar",
+      "Asaar",
+      "Aasar",
+      "Aathaar",
+      "Atsar",
+      "Aasaar",
+      "Traces of the Salaf",
+      "Athar hadith"
+    ],
+    "cat": "hadith",
+    "short": "A report from a Companion or a follower rather than from the Prophet himself.",
+    "long": "The word means a trace or a footprint, what is left behind after someone passes. Most scholars use athar for what stops at a Companion or a Tabi'i, and hadith for what reaches the Prophet, though some early scholars used athar for any report at all. Athar matters because Companion practice often shows what a hadith meant in the room where it was said.",
+    "see": [
+      "hadith",
+      "mawquf",
+      "maqtu",
+      "khabar"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "khabar",
+    "term": "Khabar",
+    "ar": "الخَبَر",
+    "also": [
+      "Khabr",
+      "Akhbar",
+      "Akhbaar",
+      "Khaber",
+      "Kabar",
+      "Khubr",
+      "News report",
+      "Habar",
+      "Khabar hadith"
+    ],
+    "cat": "hadith",
+    "short": "A report; scholars use the word either as a synonym for hadith or for reports not reaching the Prophet.",
+    "long": "Three usages are recorded. Some treat khabar and hadith as the same thing. Some treat khabar as the wider word, covering reports from the Prophet and from anyone else. Some reserve hadith for the Prophet and khabar for everyone else, which is why early historians were called akhbariyyun.",
+    "see": [
+      "hadith",
+      "athar",
+      "ahad"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "isnad",
+    "term": "Isnad",
+    "ar": "الإِسْنَاد",
+    "also": [
+      "Isnaad",
+      "Esnad",
+      "Isnads",
+      "Asanid",
+      "Asaneed",
+      "Chain of narration",
+      "Chain of transmission",
+      "Isnad hadith",
+      "Isnaadh"
+    ],
+    "cat": "hadith",
+    "short": "The chain of narrators who carried a hadith, listed name by name back to its source.",
+    "long": "A hadith is quoted like this: so and so told me, from so and so, from so and so, that the Prophet said. Abdullah ibn al-Mubarak said the isnad is part of the religion, and that without it anyone could say whatever he wished. Few traditions built a citation system this early, or held to it this stubbornly.",
+    "see": [
+      "sanad",
+      "matn",
+      "rawi",
+      "ilm-al-rijal"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sanad",
+    "term": "Sanad",
+    "ar": "السَّنَد",
+    "also": [
+      "Sened",
+      "Sanadd",
+      "Sanads",
+      "Asanid",
+      "Chain of narrators",
+      "Sanad hadith",
+      "Isnad",
+      "Sanad e hadith"
+    ],
+    "cat": "hadith",
+    "short": "The chain itself, the line of narrators supporting a text, used almost interchangeably with isnad.",
+    "long": "The root means to lean something against a support. Strictly, sanad is the chain and isnad is the act of citing it, but in practice scholars use each word for the other. A strong sanad does not by itself make a strong hadith, because the text can still carry a hidden defect.",
+    "see": [
+      "isnad",
+      "matn",
+      "illah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "matn",
+    "term": "Matn",
+    "ar": "المَتْن",
+    "also": [
+      "Matan",
+      "Matin",
+      "Mutun",
+      "Matoon",
+      "Text of the hadith",
+      "Hadith text",
+      "Matn hadeeth",
+      "Metin"
+    ],
+    "cat": "hadith",
+    "short": "The actual wording of a hadith, the part that comes after the chain of narrators.",
+    "long": "The word means the firm surface of the ground, or the back of something. Scholars weigh the matn as well as the chain. A text that contradicts the Qur'an, or a plain fact, or promises an enormous reward for a tiny act, is treated with suspicion even when the chain looks tidy.",
+    "see": [
+      "isnad",
+      "sanad",
+      "shadhdh",
+      "illah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "rawi",
+    "term": "Rawi",
+    "ar": "الرَّاوِي",
+    "also": [
+      "Raawi",
+      "Rawee",
+      "Ravi",
+      "Ruwat",
+      "Ruwaat",
+      "Narrator",
+      "Rawi hadith",
+      "Rawiy",
+      "Rawis"
+    ],
+    "cat": "hadith",
+    "short": "A narrator: one of the people in the chain who heard a report and passed it on.",
+    "long": "Every rawi in a chain has a file. Scholars recorded when he was born, who he studied with, how good his memory was, whether he was honest, and whether he lived long enough to have met the man he quotes. A hadith is only as strong as the weakest rawi in its chain.",
+    "see": [
+      "isnad",
+      "thiqah",
+      "majhul",
+      "jarh-wa-tadil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "riwayah",
+    "term": "Riwayah",
+    "ar": "الرِّوَايَة",
+    "also": [
+      "Riwaya",
+      "Riwaayah",
+      "Riwayat",
+      "Rivayat",
+      "Riwaayat",
+      "Narration",
+      "Dirayah",
+      "Diraya",
+      "Ilm al-riwayah",
+      "Rewayah"
+    ],
+    "cat": "hadith",
+    "short": "The act of transmitting a report, and the version transmitted; its partner science is dirayah, understanding it.",
+    "long": "Ilm al-riwayah is the work of carrying reports accurately. Ilm al-dirayah is the work of judging and understanding them. A person can be excellent at one and poor at the other, which is why some famous narrators were not jurists and some great jurists narrated little.",
+    "see": [
+      "rawi",
+      "isnad",
+      "muhaddith",
+      "riwayah-bil-mana"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "muhaddith",
+    "term": "Muhaddith",
+    "ar": "المُحَدِّث",
+    "also": [
+      "Muhaddis",
+      "Muhadith",
+      "Muhaddithun",
+      "Muhaddithin",
+      "Muhaddithoon",
+      "Mohaddis",
+      "Hadith scholar",
+      "Muhaddis sahib",
+      "Muhadis",
+      "Hujjah"
+    ],
+    "cat": "hadith",
+    "short": "A scholar of hadith who has studied the chains, the narrators and the defects, not merely read collections.",
+    "long": "The ranks are informal but real. A talib is a student, a muhaddith works in the field, a hafiz has mastered a great number of chains, and titles like hujjah were given to a handful of men. Knowing many hadiths is not the same as being a muhaddith; the skill lies in judging them.",
+    "see": [
+      "hafiz",
+      "ilm-al-rijal",
+      "jarh-wa-tadil",
+      "ulum-al-hadith"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hafiz",
+    "term": "Hafiz",
+    "ar": "الحَافِظ",
+    "also": [
+      "Haafiz",
+      "Hafidh",
+      "Hafidz",
+      "Huffaz",
+      "Huffadh",
+      "Hafez",
+      "Hafiz al-hadith",
+      "Hafiz hadith",
+      "Al-Hafiz"
+    ],
+    "cat": "hadith",
+    "short": "In hadith, a master who has memorised a very large number of reports together with their chains.",
+    "long": "In everyday speech today hafiz means someone who has memorised the Qur'an, and that use is fine. In hadith books it is a technical rank above muhaddith, given to men like Ibn Hajar al-Asqalani, who is often called simply al-Hafiz. The word means one who guards something.",
+    "see": [
+      "muhaddith",
+      "ilm-al-rijal",
+      "ulum-al-hadith"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "ilm-al-rijal",
+    "term": "Ilm al-Rijal",
+    "ar": "عِلْمُ الرِّجَال",
+    "also": [
+      "Ilm ar-Rijal",
+      "Ilmul Rijal",
+      "Rijal",
+      "Rijaal",
+      "Ilm al-Rijaal",
+      "Asma al-Rijal",
+      "Science of narrators",
+      "Biographical evaluation",
+      "Tabaqat",
+      "Ilm ur-Rijaal"
+    ],
+    "cat": "hadith",
+    "short": "The biographical science of the narrators: who they were, whom they met, and how reliable each was.",
+    "long": "Tens of thousands of narrators were catalogued by generation, or tabaqat, so a claimed meeting between two men could be checked against their lifespans. The large references include al-Bukhari's al-Tarikh al-Kabir, Ibn Abi Hatim's al-Jarh wa al-Ta'dil, and al-Mizzi's Tahdhib al-Kamal. Ibn Hajar's Taqrib al-Tahdhib condenses the verdict on each man into a line or two.",
+    "see": [
+      "jarh-wa-tadil",
+      "rawi",
+      "thiqah",
+      "majhul"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "jarh-wa-tadil",
+    "term": "Jarh wa Ta'dil",
+    "ar": "الجَرْحُ وَالتَّعْدِيل",
+    "also": [
+      "Jarh wal Tadil",
+      "Al-Jarh wa al-Tadil",
+      "Jarh and Tadil",
+      "Jarh wa Taadeel",
+      "Jarh wat-Ta'deel",
+      "Jarh",
+      "Tadil",
+      "Ta'dil",
+      "Jarah wa tadeel",
+      "Criticism and praise",
+      "Jarh o tadeel",
+      "Kadhdhab"
+    ],
+    "cat": "hadith",
+    "short": "The discipline of criticising or vouching for narrators, so that a chain can be judged fairly.",
+    "long": "Jarh means to wound, ta'dil to declare upright. Scholars used a graded vocabulary, from thiqah thiqah at the top down to kadhdhab at the bottom, and applied it to teachers, friends and family without flinching. The working rule is that a criticism which explains itself outweighs a general word of praise, and that a critic known for harshness is read with that in mind. This was not backbiting; it was quality control on what people were told God's Messenger said.",
+    "see": [
+      "ilm-al-rijal",
+      "thiqah",
+      "majhul",
+      "matruk"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "thiqah",
+    "term": "Thiqah",
+    "ar": "ثِقَة",
+    "also": [
+      "Thiqa",
+      "Siqah",
+      "Siqa",
+      "Tiqah",
+      "Thiqaat",
+      "Thiqat",
+      "Thika",
+      "Reliable narrator",
+      "Thiqah thiqah",
+      "Sika",
+      "Saduq",
+      "Layyin"
+    ],
+    "cat": "hadith",
+    "short": "A trustworthy narrator: upright in character and accurate in memory, the two conditions held together.",
+    "long": "Uprightness without accuracy gives you a sincere man who misremembers. Accuracy without uprightness gives you a sharp man who lies. Only both together make a thiqah. Ranks below it include saduq, meaning truthful but slightly less precise, and layyin, meaning soft or weak.",
+    "see": [
+      "adalah",
+      "dabt",
+      "jarh-wa-tadil",
+      "sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "adalah",
+    "term": "Adalah",
+    "ar": "العَدَالَة",
+    "also": [
+      "Adala",
+      "Adaalah",
+      "Adalat",
+      "Adaalat",
+      "Adl",
+      "Aadalah",
+      "Uprightness",
+      "Adil",
+      "Adalah of narrator"
+    ],
+    "cat": "hadith",
+    "short": "The uprightness of a narrator: sane, adult, Muslim, not openly sinful, not known for shameful habits.",
+    "long": "Adalah is about character, not perfection. A narrator does not need to be a saint, but he must not be known for lying, for open sin, or for behaviour suggesting he does not care what people think of him. It is one half of being thiqah. The other half is dabt.",
+    "see": [
+      "thiqah",
+      "dabt",
+      "jarh-wa-tadil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "dabt",
+    "term": "Dabt",
+    "ar": "الضَّبْط",
+    "also": [
+      "Dhabt",
+      "Zabt",
+      "Dabit",
+      "Daabit",
+      "Dhabit",
+      "Dabt al-sadr",
+      "Dabt al-kitab",
+      "Precision",
+      "Zabt e hadith"
+    ],
+    "cat": "hadith",
+    "short": "The accuracy of a narrator: how well he held the report, in memory or in a guarded book.",
+    "long": "Two kinds are recognised: precision of the chest, meaning memory, and precision of the book, meaning a written copy kept safely and not lent out carelessly. Light weakness here drops a hadith from sahih to hasan. Heavy weakness, where a man's errors outnumber his sound reports, drops it further.",
+    "see": [
+      "thiqah",
+      "adalah",
+      "hasan",
+      "sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "majhul",
+    "term": "Majhul",
+    "ar": "المَجْهُول",
+    "also": [
+      "Majhool",
+      "Mejhul",
+      "Majhoul",
+      "Majhool al-hal",
+      "Majhul al-ayn",
+      "Mastur",
+      "Mastoor",
+      "Unknown narrator",
+      "Majhul hadith"
+    ],
+    "cat": "hadith",
+    "short": "An unknown narrator, whose identity or whose reliability the scholars could not establish.",
+    "long": "Two kinds are distinguished. Majhul al-ayn is a man nobody names except a single student, so we do not really know who he is. Majhul al-hal, also called mastur, is a man we can identify but whose reliability nobody recorded. A chain containing either is weak, since a report is worth only what its weakest link is worth.",
+    "see": [
+      "rawi",
+      "jarh-wa-tadil",
+      "daif",
+      "ilm-al-rijal"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "matruk",
+    "term": "Matruk",
+    "ar": "المَتْرُوك",
+    "also": [
+      "Matrook",
+      "Metruk",
+      "Matrook al-hadith",
+      "Matruk al-hadith",
+      "Abandoned narrator",
+      "Daif jiddan",
+      "Da'if jiddan",
+      "Dhaeef jiddan",
+      "Very weak hadith"
+    ],
+    "cat": "hadith",
+    "short": "A report from a narrator the scholars abandoned, usually one accused of lying or of gross error.",
+    "long": "Matruk sits just above fabricated. It is described as severely weak, da'if jiddan, and unlike ordinary weakness it cannot be repaired by supporting chains. When a book says a narrator is matruk al-hadith, the discussion is effectively over.",
+    "see": [
+      "daif",
+      "mawdu",
+      "jarh-wa-tadil",
+      "hasan-li-ghayrihi"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "tadlis",
+    "term": "Tadlis",
+    "ar": "التَّدْلِيس",
+    "also": [
+      "Tadlees",
+      "Tedlis",
+      "Mudallis",
+      "Mudallas",
+      "Mudalis",
+      "Tadleese",
+      "Tadlis al-isnad",
+      "Tadlis al-shuyukh",
+      "Concealing a defect"
+    ],
+    "cat": "hadith",
+    "short": "Wording a chain so that a gap or a weak teacher is hidden, without stating an outright lie.",
+    "long": "The word comes from trading in dim light so the buyer cannot see the flaw. The classic form is a narrator saying from so and so about a man he met but did not hear this particular report from. Scholars listed the known mudallisin in ranks, and as a rule they do not accept such a narrator's report unless he says plainly that he heard it.",
+    "see": [
+      "ananah",
+      "isnad",
+      "munqati",
+      "illah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "ananah",
+    "term": "An'anah",
+    "ar": "العَنْعَنَة",
+    "also": [
+      "Ananah",
+      "An'ana",
+      "Anana",
+      "Anaana",
+      "Muan'an",
+      "Muanan",
+      "Narration by an",
+      "Chain using an",
+      "Anana hadith"
+    ],
+    "cat": "hadith",
+    "short": "A chain that says only from so and so, without stating that the narrator actually heard the report.",
+    "long": "Such a chain is accepted if the narrator is not known for tadlis and could plausibly have met his source. Al-Bukhari held that a proven meeting must be established; Muslim held that living in the same period with the possibility of meeting is enough, and argued the point in the introduction to his Sahih. The disagreement is narrow, but it changes the verdict on a good number of chains.",
+    "see": [
+      "tadlis",
+      "isnad",
+      "muttasil",
+      "munqati"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "sama",
+    "term": "Sama'",
+    "ar": "السَّمَاع",
+    "also": [
+      "Sama",
+      "Samaa",
+      "Samaah",
+      "Sima",
+      "Sema",
+      "Hearing",
+      "Tahammul al-ilm",
+      "Sama hadith",
+      "Sama al-hadith",
+      "Munawalah",
+      "Wijadah",
+      "Qiraah"
+    ],
+    "cat": "hadith",
+    "short": "Receiving a hadith by hearing it directly from a teacher, the strongest of the ways to take a report.",
+    "long": "Scholars listed several ways of receiving hadith, in descending strength: hearing the teacher recite it, reading it back to him, a written licence, being handed a manuscript, correspondence, and finding a book with no licence at all. The wording of a chain tells you which way was used, so haddathana means he narrated to us in person, while akhbarana usually signals that it was read back to him.",
+    "see": [
+      "ijazah",
+      "isnad",
+      "ananah",
+      "riwayah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "ijazah",
+    "term": "Ijazah",
+    "ar": "الإِجَازَة",
+    "also": [
+      "Ijaza",
+      "Ijazat",
+      "Icazet",
+      "Idjaza",
+      "Ejaza",
+      "Ijazah sanad",
+      "Licence to narrate",
+      "Ijazat e hadith",
+      "Ijaazah"
+    ],
+    "cat": "hadith",
+    "short": "A teacher's licence permitting a student to transmit a text or a collection onward.",
+    "long": "An ijazah is a link in a living chain: the holder can say he received this book from his teacher, who received it from his, back to the author. It is weaker than hearing every word in person, and scholars debated how much weight it carries on its own. It is still issued today, most often for the Qur'an and for the six books.",
+    "see": [
+      "sama",
+      "isnad",
+      "kutub-sittah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sahih",
+    "term": "Sahih",
+    "ar": "الصَّحِيح",
+    "also": [
+      "Saheeh",
+      "Sahi",
+      "Sahee",
+      "Sohih",
+      "Sahiih",
+      "Sahih hadith",
+      "Saheeh hadeeth",
+      "Authentic hadith",
+      "Sahih li-dhatihi",
+      "Sohih hadis"
+    ],
+    "cat": "hadith",
+    "short": "A hadith that meets all five conditions of authenticity, with nothing missing and no hidden flaw.",
+    "long": "The five conditions are an unbroken chain, every narrator upright, every narrator accurate, no contradiction of stronger narrators, and no hidden defect. Sahih is a verdict about how safely the report reached us, not a claim that its wording is revealed like the Qur'an. A lower grade, sahih li-ghayrihi, is lifted to this level by supporting chains.",
+    "see": [
+      "hasan",
+      "daif",
+      "shadhdh",
+      "illah",
+      "sahih-li-ghayrihi"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hasan",
+    "term": "Hasan",
+    "ar": "الحَسَن",
+    "also": [
+      "Hassan",
+      "Hasen",
+      "Hasan hadith",
+      "Hasan hadeeth",
+      "Hasan li-dhatihi",
+      "Hasan lidhatihi",
+      "Good hadith",
+      "Hasen hadis"
+    ],
+    "cat": "hadith",
+    "short": "A hadith meeting every condition of sahih except that one narrator's accuracy falls slightly short.",
+    "long": "Hasan means good. It is a working grade: acceptable as evidence in law, one step below sahih. Al-Tirmidhi made the term widely used, and later scholars spent great effort defining it, since the line between light weakness and real weakness is a matter of trained judgement.",
+    "see": [
+      "sahih",
+      "daif",
+      "hasan-li-ghayrihi",
+      "hasan-sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "daif",
+    "term": "Da'if",
+    "ar": "الضَّعِيف",
+    "also": [
+      "Daif",
+      "Da'eef",
+      "Daeef",
+      "Dhaif",
+      "Dhaeef",
+      "Dha'eef",
+      "Zaif",
+      "Zaeef",
+      "Zaeef hadith",
+      "Weak hadith",
+      "Daif hadith",
+      "Dhaif hadeeth"
+    ],
+    "cat": "hadith",
+    "short": "A hadith that fails one of the conditions of soundness, through a broken chain or a faulty narrator.",
+    "long": "Weak does not mean false. It means the report did not arrive with enough support to be relied upon. Weakness has degrees, from a slight gap that other chains can repair, up to a narrator accused of lying, which nothing can repair. Whether a weak hadith may be used to encourage good deeds is an old disagreement among scholars rather than a settled rule.",
+    "see": [
+      "sahih",
+      "hasan",
+      "fadail-al-amal",
+      "matruk",
+      "mawdu"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "mawdu",
+    "term": "Mawdu'",
+    "ar": "المَوْضُوع",
+    "also": [
+      "Mawdu",
+      "Mawdoo",
+      "Maudu",
+      "Maudhu",
+      "Mawzu",
+      "Mauzoo",
+      "Mawdooat",
+      "Mawduat",
+      "Fabricated hadith",
+      "Forged hadith",
+      "Fake hadith",
+      "Mawzoo"
+    ],
+    "cat": "hadith",
+    "short": "A fabricated report, invented and then attached to the Prophet; not really a hadith at all.",
+    "long": "The word means placed, or set down, as in something put there by a human hand. Fabrications were made for many motives: sectarian argument, storytelling, flattery of rulers, and misplaced zeal for encouraging worship. The Prophet's warning against deliberately lying about him is among the most widely transmitted reports in existence. Scholars wrote whole books listing fabrications so people could recognise them.",
+    "see": [
+      "daif",
+      "la-asla-lahu",
+      "matruk",
+      "jarh-wa-tadil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "la-asla-lahu",
+    "term": "La asla lahu",
+    "ar": "لَا أَصْلَ لَهُ",
+    "also": [
+      "La asl lahu",
+      "Laa asla lahu",
+      "La aslun lahu",
+      "La asla lah",
+      "No basis",
+      "No isnad",
+      "Baseless hadith",
+      "Has no basis"
+    ],
+    "cat": "hadith",
+    "short": "A verdict meaning the saying has no chain at all, so it cannot even be graded.",
+    "long": "This is stronger than calling something weak. A weak hadith has a chain that fails; a saying with no basis was never transmitted in the first place. Such sayings are usually folk wisdom, or a scholar's own phrase that drifted into quotation marks. A great deal of what circulates as hadith online belongs here.",
+    "see": [
+      "mawdu",
+      "daif",
+      "takhrij"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hasan-li-ghayrihi",
+    "term": "Hasan li-ghayrihi",
+    "ar": "الحَسَنُ لِغَيْرِهِ",
+    "also": [
+      "Hasan li ghayrihi",
+      "Hasan li ghairih",
+      "Hasan lighairihi",
+      "Hasan bi ghayrihi",
+      "Hasan due to others",
+      "Hasan li ghayrih",
+      "Hasan lighayrihi",
+      "Hasan li ghairihi",
+      "Hassan li ghayrihi"
+    ],
+    "cat": "hadith",
+    "short": "A weak hadith raised to the level of hasan because other chains carry the same meaning.",
+    "long": "This only works when the weakness is mild, such as a narrator with a poor memory, and never when a narrator is accused of lying. Two or three light chains leaning on one another can hold a report up. Scholars differ over how much support is enough, which is why the same hadith is sometimes graded hasan by one and weak by another.",
+    "see": [
+      "daif",
+      "hasan",
+      "mutabaah",
+      "shahid",
+      "itibar"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "sahih-li-ghayrihi",
+    "term": "Sahih li-ghayrihi",
+    "ar": "الصَّحِيحُ لِغَيْرِهِ",
+    "also": [
+      "Sahih li ghayrihi",
+      "Saheeh li ghairihi",
+      "Sahih lighairihi",
+      "Sahih bi ghayrihi",
+      "Sahih due to others",
+      "Saheeh li ghayrih",
+      "Sahih li ghairihi",
+      "Saheeh li ghayrihi"
+    ],
+    "cat": "hadith",
+    "short": "A hasan hadith lifted to sahih because it is reported through more than one chain.",
+    "long": "Sahih li-dhatihi is sound in itself, by a single strong chain. Sahih li-ghayrihi is sound because of what stands beside it. Both are acted upon, and books of takhrij often write only sahih without saying which of the two they mean.",
+    "see": [
+      "sahih",
+      "hasan",
+      "hasan-li-ghayrihi",
+      "mutabaah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "hasan-sahih",
+    "term": "Hasan Sahih",
+    "ar": "حَسَنٌ صَحِيح",
+    "also": [
+      "Hasan saheeh",
+      "Hasanun sahih",
+      "Hasan sahih gharib",
+      "Tirmidhi hasan sahih",
+      "Hasan-sahih",
+      "Hasan saheeh gharib",
+      "Hassan sahih",
+      "Hasanun saheeh"
+    ],
+    "cat": "hadith",
+    "short": "Al-Tirmidhi's double grading, which later scholars have explained in several different ways.",
+    "long": "Read literally it sounds like calling one thing good and excellent at once. The best known explanation, from Ibn Hajar, is that where the hadith has a single chain the phrase means some scholars judged it hasan and others sahih, and where it has several chains one is hasan and another sahih. Other scholars read it differently. It is safest to treat the phrase as meaning acceptable rather than as a precise grade.",
+    "see": [
+      "hasan",
+      "sahih",
+      "hukm",
+      "jami"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "hukm",
+    "term": "Hukm",
+    "ar": "الحُكْم",
+    "also": [
+      "Hukum",
+      "Hokm",
+      "Hukam",
+      "Hukm al-hadith",
+      "Hukum hadis",
+      "Grading",
+      "Ruling on a hadith",
+      "Hukm e hadith",
+      "Grade of hadith"
+    ],
+    "cat": "hadith",
+    "short": "The verdict placed on a hadith, such as sahih, hasan, weak or fabricated.",
+    "long": "A hukm is the end of a piece of work, not the beginning: it summarises the state of every narrator and every link in the chain. Two careful scholars can reach different verdicts on the same report, and that is normal rather than scandalous. In fiqh the same word means a legal ruling, which is a different subject.",
+    "see": [
+      "takhrij",
+      "sahih",
+      "daif",
+      "hasan"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "takhrij",
+    "term": "Takhrij",
+    "ar": "التَّخْرِيج",
+    "also": [
+      "Takhreej",
+      "Tahrij",
+      "Takhrij al-hadith",
+      "Takhreej al-hadeeth",
+      "Tracing a hadith",
+      "Referencing hadith",
+      "Takhrij hadis",
+      "Takhrijul hadith"
+    ],
+    "cat": "hadith",
+    "short": "Tracing a hadith to the books that recorded it, gathering its chains, and then grading it.",
+    "long": "The work has three steps: find where it was narrated, collect every route it came by, and weigh them together. It is the step most often skipped when a hadith is quoted online. A proper takhrij gives the source and the verdict, so a reader can check the claim instead of trusting whoever is quoting it.",
+    "see": [
+      "hukm",
+      "isnad",
+      "itibar",
+      "kutub-sittah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mutawatir",
+    "term": "Mutawatir",
+    "ar": "المُتَوَاتِر",
+    "also": [
+      "Mutawaatir",
+      "Mutewatir",
+      "Mutawatur",
+      "Mutawaatirah",
+      "Tawatur",
+      "Tawaatur",
+      "Mass transmitted",
+      "Mutawatir hadith",
+      "Mutawatir lafzi",
+      "Mutawatir manawi"
+    ],
+    "cat": "hadith",
+    "short": "A report carried at every stage by so many people that they could not all have agreed on a lie.",
+    "long": "There is no fixed minimum number; what matters is that the crowd is wide enough and independent enough to rule out collusion. Two kinds are described: mutawatir in wording, where the same phrase comes through, and mutawatir in meaning, where many different reports converge on one point. The five daily prayers and the number of their units reach us this way, by continuous practice as much as by text, which is a stronger route than any single chain.",
+    "see": [
+      "ahad",
+      "mashhur",
+      "hadith",
+      "sunnah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "ahad",
+    "term": "Ahad",
+    "ar": "الآحَاد",
+    "also": [
+      "Aahad",
+      "Ahaad",
+      "Khabar al-wahid",
+      "Khabar wahid",
+      "Khabar ahad",
+      "Akhbar al-ahad",
+      "Solitary report",
+      "Ahad hadith",
+      "Wahid",
+      "Ahaadeeth aahaad"
+    ],
+    "cat": "hadith",
+    "short": "Any hadith that does not reach the level of mutawatir, however strong its single chain may be.",
+    "long": "Most hadiths, including most of the two Sahihs, are ahad. Scholars agree that an authentic ahad report is acted upon in law. They differ about creed: hadith scholars and the Hanbalis generally accept authentic ahad reports in matters of belief, while many Ash'ari, Maturidi and Hanafi theologians held that such reports give strong probability rather than certainty, and so accepted them without building charges of unbelief on them.",
+    "see": [
+      "mutawatir",
+      "mashhur",
+      "aziz",
+      "gharib"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "mashhur",
+    "term": "Mashhur",
+    "ar": "المَشْهُور",
+    "also": [
+      "Mashoor",
+      "Mashhoor",
+      "Meshhur",
+      "Mashhour",
+      "Mustafid",
+      "Mustafeed",
+      "Famous hadith",
+      "Mashhur hadith",
+      "Mashhoor hadeeth"
+    ],
+    "cat": "hadith",
+    "short": "A hadith carried by three or more narrators at each stage, well known but short of mutawatir.",
+    "long": "The word simply means famous, and there is a trap in it. People also say mashhur for a saying famous on everybody's tongue, and many of those have weak chains or none at all. Fame among the public and fame in the chains are two different things.",
+    "see": [
+      "mutawatir",
+      "aziz",
+      "gharib",
+      "la-asla-lahu"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "aziz",
+    "term": "Aziz",
+    "ar": "العَزِيز",
+    "also": [
+      "Azeez",
+      "Aziiz",
+      "Aziz hadith",
+      "Azeez hadeeth",
+      "Two narrators",
+      "Aaziz",
+      "Azeez hadith",
+      "Aziz hadeeth",
+      "Azeez hadis"
+    ],
+    "cat": "hadith",
+    "short": "A hadith which at no stage of its chain has fewer than two narrators.",
+    "long": "The word here means scarce, hard to come by. Aziz sits between gharib, which has a single narrator somewhere in the chain, and mashhur, which has three or more. The category counts how many routes exist; it does not by itself say whether the hadith is sound.",
+    "see": [
+      "gharib",
+      "mashhur",
+      "mutawatir",
+      "ahad"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "gharib",
+    "term": "Gharib",
+    "ar": "الغَرِيب",
+    "also": [
+      "Ghareeb",
+      "Garib",
+      "Ghareib",
+      "Gharib hadith",
+      "Ghareeb hadeeth",
+      "Fard",
+      "Fard mutlaq",
+      "Strange hadith",
+      "Gharib al-hadith"
+    ],
+    "cat": "hadith",
+    "short": "A hadith narrated by only one person at some point in its chain.",
+    "long": "Gharib means strange, or lone. It is not a criticism in itself: the famous hadith that deeds are judged by intentions is gharib at its start and sits in both Sahihs. The same word has a second and unrelated use, gharib al-hadith, meaning the study of rare and difficult words inside hadith texts.",
+    "see": [
+      "aziz",
+      "mashhur",
+      "ahad",
+      "sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "marfu",
+    "term": "Marfu'",
+    "ar": "المَرْفُوع",
+    "also": [
+      "Marfu",
+      "Marfoo",
+      "Marfooa",
+      "Merfu",
+      "Marfu hadith",
+      "Marfoo hadeeth",
+      "Raised hadith",
+      "Marfoo'"
+    ],
+    "cat": "hadith",
+    "short": "A report attributed to the Prophet himself, whether or not the chain reaching him is complete.",
+    "long": "Marfu' means raised. It describes where a report ends up, not how strong it is, so a marfu' hadith may be sahih or weak. It is contrasted with mawquf, which stops at a Companion, and maqtu', which stops at a follower.",
+    "see": [
+      "mawquf",
+      "maqtu",
+      "musnad",
+      "muttasil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mawquf",
+    "term": "Mawquf",
+    "ar": "المَوْقُوف",
+    "also": [
+      "Mawqoof",
+      "Mauquf",
+      "Maukuf",
+      "Mevkuf",
+      "Mawqoof hadith",
+      "Stopped at a Companion",
+      "Mawquf report",
+      "Mawkuf"
+    ],
+    "cat": "hadith",
+    "short": "A report that stops at a Companion: his own statement or action, not attributed to the Prophet.",
+    "long": "Mawquf means halted. Such reports carry real weight, since the Companions watched the practice first hand. Some mawquf statements are treated as effectively marfu', for instance when a Companion speaks about something no one could know except through revelation.",
+    "see": [
+      "marfu",
+      "maqtu",
+      "athar",
+      "tabii"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "maqtu",
+    "term": "Maqtu'",
+    "ar": "المَقْطُوع",
+    "also": [
+      "Maqtu",
+      "Maqtoo",
+      "Maktu",
+      "Maqtoo hadeeth",
+      "Maqtu hadith",
+      "Severed report",
+      "Maqtu'",
+      "Maktoo"
+    ],
+    "cat": "hadith",
+    "short": "A statement belonging to a Tabi'i, one of the generation after the Companions, traced no further back.",
+    "long": "Maqtu' and munqati' look alike and mean different things. Maqtu' is about whose saying it is; munqati' is about a hole in the chain. Much early tafsir and early fiqh is maqtu' material, valuable for understanding but not evidence from the Prophet.",
+    "see": [
+      "munqati",
+      "mawquf",
+      "tabii",
+      "athar"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "tabii",
+    "term": "Tabi'i",
+    "ar": "التَّابِعِيّ",
+    "also": [
+      "Tabii",
+      "Tabi",
+      "Tabi'in",
+      "Tabiin",
+      "Tabi'een",
+      "Tabieen",
+      "Tabaeen",
+      "Tabaien",
+      "Successor",
+      "Follower",
+      "Tabieen generation"
+    ],
+    "cat": "hadith",
+    "short": "A Muslim of the generation after the Companions, who met a Companion but not the Prophet.",
+    "long": "The plural is tabi'un or tabi'in. They form the second layer in almost every chain, and figures like Sa'id ibn al-Musayyib, al-Hasan al-Basri and Ibn Sirin belong here. Their own statements are called maqtu', and their reports about the Prophet without naming the Companion in between are called mursal.",
+    "see": [
+      "maqtu",
+      "mursal",
+      "ilm-al-rijal",
+      "athar"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "musnad",
+    "term": "Musnad",
+    "ar": "المُسْنَد",
+    "also": [
+      "Musned",
+      "Masanid",
+      "Musnads",
+      "Musnad hadith",
+      "Musnad Ahmad",
+      "Musnad Ahmad ibn Hanbal",
+      "Musnad Imam Ahmad",
+      "Musnad Abi Yala"
+    ],
+    "cat": "hadith",
+    "short": "Either a hadith with a connected chain reaching the Prophet, or a book arranged by narrating Companion.",
+    "long": "As a grade, musnad usually means both connected and traced to the Prophet. As a book type, a musnad gathers everything narrated by each Companion under his name, which suits tracing a narrator but makes finding a topic awkward. The largest is the Musnad of Ahmad ibn Hanbal, which holds sound and weak material together and needs a critical edition to use well.",
+    "see": [
+      "muttasil",
+      "marfu",
+      "sunan",
+      "jami"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "muttasil",
+    "term": "Muttasil",
+    "ar": "المُتَّصِل",
+    "also": [
+      "Mutasil",
+      "Muttasel",
+      "Mawsul",
+      "Mawsool",
+      "Mausul",
+      "Connected chain",
+      "Muttasil hadith",
+      "Ittisal",
+      "Muttasil al-sanad"
+    ],
+    "cat": "hadith",
+    "short": "A chain in which every narrator genuinely took the report from the one named before him.",
+    "long": "Also called mawsul. Connection is the first of the five conditions of soundness, and it is checked by comparing lifetimes, travels and known teachers. A chain can be perfectly connected and still weak, if one of the connected narrators is unreliable.",
+    "see": [
+      "munqati",
+      "mursal",
+      "sahih",
+      "ananah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mursal",
+    "term": "Mursal",
+    "ar": "المُرْسَل",
+    "also": [
+      "Mursel",
+      "Morsal",
+      "Mursal hadith",
+      "Mursal hadeeth",
+      "Irsal",
+      "Mursalah",
+      "Mursalaat",
+      "Mursil",
+      "Marasil"
+    ],
+    "cat": "hadith",
+    "short": "A Tabi'i quotes the Prophet directly, leaving out the Companion who actually heard it.",
+    "long": "The missing man is almost always a Companion, and Companions are held to be trustworthy, which is why the schools differ here rather than simply calling it weak. Hadith specialists generally class mursal as weak. In law, the Hanafis and Malikis accept it, al-Shafi'i accepts it only when another route supports it, and reports from Ahmad show acceptance with conditions. Later scholars also separated the mursal of the senior followers, which is stronger, from that of the juniors.",
+    "see": [
+      "munqati",
+      "muttasil",
+      "tabii",
+      "daif"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "munqati",
+    "term": "Munqati'",
+    "ar": "المُنْقَطِع",
+    "also": [
+      "Munqati",
+      "Munqate",
+      "Munkati",
+      "Munqata",
+      "Inqita",
+      "Broken chain",
+      "Disconnected hadith",
+      "Munqati hadith",
+      "Munqati'"
+    ],
+    "cat": "hadith",
+    "short": "A chain with a break in it: a narrator missing somewhere in the middle.",
+    "long": "The word means cut. It is the general term for a gap that is not at the start of the chain, not at the Companion's place at the end, and not two names deep, since each of those carries its own label. Any break makes a report weak, because the missing man is unknown and could be anyone at all.",
+    "see": [
+      "mudal",
+      "muallaq",
+      "mursal",
+      "muttasil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mudal",
+    "term": "Mu'dal",
+    "ar": "المُعْضَل",
+    "also": [
+      "Mudal",
+      "Muadal",
+      "Mudhal",
+      "Muadhal",
+      "Mu'adal",
+      "Mudal hadith",
+      "Two narrators missing",
+      "Mu'dal hadeeth"
+    ],
+    "cat": "hadith",
+    "short": "A chain missing two or more narrators in a row, a wider break than munqati'.",
+    "long": "The word suggests something troublesome and hard to solve. It is more serious than a single missing link, since a gap that size can hide an entire generation. When a later writer quotes the Prophet with no chain at all, the result is usually mu'dal in effect.",
+    "see": [
+      "munqati",
+      "muallaq",
+      "mursal",
+      "daif"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "muallaq",
+    "term": "Mu'allaq",
+    "ar": "المُعَلَّق",
+    "also": [
+      "Muallaq",
+      "Mualaq",
+      "Muallak",
+      "Muallaqat",
+      "Mu'allaqat",
+      "Taliq",
+      "Ta'liq",
+      "Suspended hadith",
+      "Muallaqat al-Bukhari",
+      "Muallaq hadith"
+    ],
+    "cat": "hadith",
+    "short": "A chain with its beginning cut off, where the author omits the narrators nearest to himself.",
+    "long": "The word means hung, as though the chain dangles with nothing above it. Al-Bukhari includes many mu'allaq reports in his Sahih, and scholars read them by their wording: those he states firmly, in the active form, are generally reliable and usually connected elsewhere in the book, while those he introduces with a passive form such as it is narrated are weaker. Ibn Hajar traced their full chains in a separate work.",
+    "see": [
+      "munqati",
+      "mudal",
+      "sahih-al-bukhari",
+      "takhrij"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "shadhdh",
+    "term": "Shadhdh",
+    "ar": "الشَّاذّ",
+    "also": [
+      "Shadh",
+      "Shaadh",
+      "Shaz",
+      "Shazz",
+      "Shaadhdh",
+      "Shudhudh",
+      "Shuzooz",
+      "Anomalous hadith",
+      "Shadh hadith",
+      "Odd narration",
+      "Mahfuz"
+    ],
+    "cat": "hadith",
+    "short": "An acceptable narrator contradicts someone stronger, so his version is set aside as odd.",
+    "long": "The point is not that the man is weak. It is that when a reliable narrator's version cannot stand beside the version of narrators who are more reliable or more numerous, one of the two must be a mistake. The stronger version is then called mahfuz, the preserved one. Freedom from shudhudh is one of the five conditions of a sahih hadith.",
+    "see": [
+      "munkar",
+      "illah",
+      "sahih",
+      "matn"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "munkar",
+    "term": "Munkar",
+    "ar": "المُنْكَر",
+    "also": [
+      "Munker",
+      "Munkir",
+      "Munkar hadith",
+      "Nakarah",
+      "Denounced hadith",
+      "Rejected narration",
+      "Ma'ruf",
+      "Maruf",
+      "Munkar hadeeth"
+    ],
+    "cat": "hadith",
+    "short": "A weak narrator contradicts a reliable one, or reports alone something nobody else reports.",
+    "long": "The opposite is called ma'ruf, the known version. Definitions varied: earlier critics sometimes used munkar simply for a lone report from a weak narrator, with no contradiction involved. Note that munkar here is a technical grade for a report, unrelated to munkar meaning a wrong act, and unrelated to the angel of that name.",
+    "see": [
+      "shadhdh",
+      "matruk",
+      "daif",
+      "illah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "illah",
+    "term": "Illah",
+    "ar": "العِلَّة",
+    "also": [
+      "Illa",
+      "Ilat",
+      "Ilah",
+      "Ilal",
+      "Ilal al-hadith",
+      "Mu'allal",
+      "Muallal",
+      "Ma'lul",
+      "Malul",
+      "Hidden defect",
+      "Illah in hadith",
+      "Illat"
+    ],
+    "cat": "hadith",
+    "short": "A hidden flaw in a hadith that looks sound on the surface, found only by expert comparison.",
+    "long": "A hadith carrying one is called mu'allal. The defects are subtle: a report actually stopped at a Companion but raised to the Prophet by one narrator, or two chains quietly merged into one. Detecting them took men who had memorised the variants of thousands of chains, and the great books on ilal, such as those of Ibn Abi Hatim and al-Daraqutni, are among the most demanding in the field.",
+    "see": [
+      "shadhdh",
+      "sanad",
+      "matn",
+      "sahih"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mudraj",
+    "term": "Mudraj",
+    "ar": "المُدْرَج",
+    "also": [
+      "Mudrej",
+      "Idraj",
+      "Mudraj hadith",
+      "Mudraj al-matn",
+      "Mudraj al-isnad",
+      "Interpolated hadith",
+      "Inserted words",
+      "Idrag"
+    ],
+    "cat": "hadith",
+    "short": "A hadith with words inserted into it, usually a narrator's explanation that later sounded like the Prophet's speech.",
+    "long": "Insertions happen in the text and, less often, in the chain. The usual sign is a phrase that explains an unfamiliar word, or that reads like a legal clause in the middle of plain speech. Scholars caught them by finding other versions where those same words appear separately as the narrator's own comment.",
+    "see": [
+      "matn",
+      "illah",
+      "maqlub",
+      "riwayah-bil-mana"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "maqlub",
+    "term": "Maqlub",
+    "ar": "المَقْلُوب",
+    "also": [
+      "Maqloob",
+      "Maklub",
+      "Makloob",
+      "Qalb",
+      "Maqlub hadith",
+      "Maqloob hadeeth",
+      "Inverted hadith",
+      "Switched chain"
+    ],
+    "cat": "hadith",
+    "short": "A hadith in which something has been switched, such as two narrators' names or two halves of a sentence.",
+    "long": "The word means turned over. Sometimes the swap is an honest slip; sometimes it was deliberate, done to test a scholar's memory or to make a chain look more impressive. A well known account describes the scholars of Baghdad testing al-Bukhari with deliberately switched chains, and his returning each text to the chain it belonged to.",
+    "see": [
+      "mudraj",
+      "illah",
+      "sahih-al-bukhari",
+      "isnad"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mudtarib",
+    "term": "Mudtarib",
+    "ar": "المُضْطَرِب",
+    "also": [
+      "Mudhtarib",
+      "Muztarib",
+      "Mudtarab",
+      "Mudtareb",
+      "Idtirab",
+      "Iztirab",
+      "Conflicting hadith",
+      "Mudtarib hadith",
+      "Shaky narration"
+    ],
+    "cat": "hadith",
+    "short": "A hadith narrated in versions that clash, with no way to prefer one over the other.",
+    "long": "The word describes something shaking, unsteady on its feet. If one version can be shown to be stronger, the problem disappears and the weaker is simply set aside; idtirab is declared only when the versions are of equal weight and cannot be reconciled. It is a rare verdict, and it makes the hadith weak.",
+    "see": [
+      "illah",
+      "shadhdh",
+      "mukhtalif-al-hadith",
+      "daif"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mutabaah",
+    "term": "Mutaba'ah",
+    "ar": "المُتَابَعَة",
+    "also": [
+      "Mutabaah",
+      "Mutabaa",
+      "Mutaba'at",
+      "Mutabaat",
+      "Mutabi",
+      "Muttaba",
+      "Corroborating chain",
+      "Follow up narration",
+      "Mutabaah tammah"
+    ],
+    "cat": "hadith",
+    "short": "A second chain supporting the first through the same Companion, showing a narrator was not alone.",
+    "long": "If a hadith comes only through one shaky narrator, and then a second route turns up where somebody else narrates it from the same teacher, the doubt about that man's memory eases. A full mutaba'ah agrees from the narrator himself; a partial one joins the chain further up. When the support comes through a different Companion instead, it is called a shahid.",
+    "see": [
+      "shahid",
+      "itibar",
+      "hasan-li-ghayrihi",
+      "isnad"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "shahid",
+    "term": "Shahid",
+    "ar": "الشَّاهِد",
+    "also": [
+      "Shaahid",
+      "Shahed",
+      "Shawahid",
+      "Shawaahid",
+      "Shahid hadith",
+      "Witness narration",
+      "Corroborating report",
+      "Shaahid hadeeth"
+    ],
+    "cat": "hadith",
+    "short": "A supporting report of the same meaning narrated through a different Companion.",
+    "long": "The word means witness. Where a mutaba'ah props up a particular narrator, a shahid props up the content itself from another direction. Several lightly weak reports with different Companions behind them can together raise a hadith to hasan li-ghayrihi, provided none of them is severely weak.",
+    "see": [
+      "mutabaah",
+      "itibar",
+      "hasan-li-ghayrihi",
+      "daif"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "itibar",
+    "term": "I'tibar",
+    "ar": "الاعْتِبَار",
+    "also": [
+      "Itibar",
+      "I'tibaar",
+      "Itibaar",
+      "Etibar",
+      "Considering chains",
+      "Cross checking chains",
+      "Itibar hadith",
+      "Itibaar al-hadith"
+    ],
+    "cat": "hadith",
+    "short": "The search through the books for other chains of a hadith, to see whether anything supports it.",
+    "long": "I'tibar is the process; mutaba'ah and shahid are what the process finds. It is the step that decides whether a weak report can be strengthened or must be left where it is. Searchable databases have made the gathering faster without making the judgement any easier.",
+    "see": [
+      "mutabaah",
+      "shahid",
+      "takhrij",
+      "hasan-li-ghayrihi"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mukhtalif-al-hadith",
+    "term": "Mukhtalif al-Hadith",
+    "ar": "مُخْتَلِفُ الحَدِيث",
+    "also": [
+      "Mukhtalaf al-hadith",
+      "Ikhtilaf al-hadith",
+      "Mushkil al-hadith",
+      "Mukhtalif ul hadith",
+      "Contradictory hadith",
+      "Conflicting hadiths",
+      "Apparent contradiction",
+      "Ikhtilaf ul hadith",
+      "Reconciling hadith"
+    ],
+    "cat": "hadith",
+    "short": "The science of handling two sound hadiths that appear to contradict one another.",
+    "long": "The order of work, as the hadith scholars and most jurists set it out, is: reconcile them if both can be true in different situations, then check whether one came later and replaced the other, then prefer the stronger if neither of those works, and finally suspend judgement. Hanafi jurists run the same steps in a different order, looking for abrogation before reconciliation. Al-Shafi'i wrote the earliest surviving book on this, and Ibn Qutaybah wrote a well known one answering critics of hadith. Most apparent contradictions dissolve once the setting of each report is known.",
+    "see": [
+      "mudtarib",
+      "hukm",
+      "sunnah",
+      "hadith"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "fadail-al-amal",
+    "term": "Fada'il al-A'mal",
+    "ar": "فَضَائِلُ الأَعْمَال",
+    "also": [
+      "Fadail al-Amal",
+      "Fadhail e Amal",
+      "Fazail e Amal",
+      "Fada'il al-a'mal",
+      "Fadail amal",
+      "Virtues of deeds",
+      "Acting on weak hadith",
+      "Amal bil daif",
+      "Fazail al-amal"
+    ],
+    "cat": "hadith",
+    "short": "The old question of whether a weak hadith may be used to encourage deeds already known to be good.",
+    "long": "Three positions exist. Some scholars refuse it outright, holding that nothing should be attributed to the Prophet unless it is established. The majority allow it under conditions: the weakness must be light, the deed must already rest on something authentic, and nobody should believe the Prophet actually said the words. All three agree that a weak hadith does not establish a point of belief or a ruling, though some early jurists preferred a weak report to their own reasoning when a chapter held nothing else.",
+    "see": [
+      "daif",
+      "mawdu",
+      "hukm",
+      "hadith"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "riwayah-bil-mana",
+    "term": "Riwayah bi al-Ma'na",
+    "ar": "الرِّوَايَةُ بِالمَعْنَى",
+    "also": [
+      "Riwaya bil mana",
+      "Riwayah bil ma'na",
+      "Riwaya bil-mana",
+      "Riwayah bilmana",
+      "Naql bil mana",
+      "Narration by meaning",
+      "Paraphrasing hadith",
+      "Riwayat bil mana"
+    ],
+    "cat": "hadith",
+    "short": "Narrating a hadith in one's own words while keeping its meaning, rather than the exact wording.",
+    "long": "This is why the same event appears with different phrasing in different books. The majority allowed it for someone who knows Arabic precisely and understands what the words are doing, while a strict minority insisted on the wording as heard. Certain texts were held back from it, such as the supplications the Prophet taught word for word.",
+    "see": [
+      "riwayah",
+      "matn",
+      "mudraj",
+      "hadith"
+    ],
+    "k": "debated"
+  },
+  {
+    "id": "kutub-sittah",
+    "term": "Kutub Sittah",
+    "ar": "الكُتُبُ السِّتَّة",
+    "also": [
+      "Kutub al-Sittah",
+      "Kutub as-Sittah",
+      "Al-Kutub al-Sittah",
+      "Kutubus Sittah",
+      "Sihah Sittah",
+      "Sihah al-Sittah",
+      "Sihah e Sitta",
+      "Six books",
+      "The six books",
+      "Sittah",
+      "Kutub e Sitta"
+    ],
+    "cat": "hadith",
+    "short": "The six hadith collections that became the standard reference set in Sunni Islam.",
+    "long": "They are Sahih al-Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami' al-Tirmidhi, Sunan al-Nasa'i and Sunan Ibn Majah. The list settled slowly, and some earlier scholars put Malik's Muwatta or al-Darimi's Sunan in the sixth place instead of Ibn Majah. Being in these books is not itself a grade: only the two Sahihs claim soundness throughout, while the four Sunan contain weak material their authors often flagged.",
+    "see": [
+      "sahihayn",
+      "sunan",
+      "muwatta",
+      "hukm"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sahihayn",
+    "term": "Sahihayn",
+    "ar": "الصَّحِيحَان",
+    "also": [
+      "Sahihain",
+      "Saheehain",
+      "As-Sahihayn",
+      "Saheehayn",
+      "The two Sahihs",
+      "Bukhari and Muslim",
+      "Shaykhayn",
+      "Sheikhain",
+      "Sahihain hadith"
+    ],
+    "cat": "hadith",
+    "short": "The two Sahihs, of al-Bukhari and Muslim, the most rigorously screened collections in Sunni Islam.",
+    "long": "Both authors set out to include only what they judged authentic, and these two books were received by the community with an acceptance given to no others. A small number of their reports were criticised by later specialists such as al-Daraqutni, and most of those criticisms concern a particular chain rather than the meaning of the text. Saying a hadith is in the Sahihayn normally ends the argument about its authenticity.",
+    "see": [
+      "sahih-al-bukhari",
+      "sahih-muslim",
+      "muttafaq-alayh",
+      "kutub-sittah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "muttafaq-alayh",
+    "term": "Muttafaq alayh",
+    "ar": "مُتَّفَقٌ عَلَيْه",
+    "also": [
+      "Muttafaq alaih",
+      "Muttafaqun alayh",
+      "Muttafaqun alayhi",
+      "Mutafaq alaih",
+      "Muttafaq alayhi",
+      "Agreed upon",
+      "Agreed upon hadith",
+      "Muttafaqun alaih"
+    ],
+    "cat": "hadith",
+    "short": "Reported by both al-Bukhari and Muslim, which is the highest ordinary grade of authenticity.",
+    "long": "The phrase means agreed upon. In most books it refers to the two of them together, narrating through the same Companion. Some authors stretch it to include the Musnad of Ahmad as well, so it is worth checking what a particular writer means by it.",
+    "see": [
+      "sahihayn",
+      "sahih",
+      "hukm"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sahih-al-bukhari",
+    "term": "Sahih al-Bukhari",
+    "ar": "صَحِيحُ البُخَارِيّ",
+    "also": [
+      "Sahih Bukhari",
+      "Saheeh al-Bukhari",
+      "Bukhari",
+      "Bukhaari",
+      "Buhari",
+      "Al-Bukhari",
+      "Sahih ul Bukhari",
+      "Bukhari Sharif",
+      "Sahih al-Bukhaari",
+      "Shahih Bukhari"
+    ],
+    "cat": "hadith",
+    "short": "The collection of Muhammad ibn Isma'il al-Bukhari, held to be the soundest book after the Qur'an.",
+    "long": "Its full title describes it as a sifted, connected, authentic collection. Al-Bukhari arranged it by chapter, and his chapter headings carry his own legal conclusions, so the book argues as well as reports. He required proof that a narrator actually met the person he quotes, a stricter rule than Muslim's. Reports repeat across chapters because he cites one hadith in several places for several points, which is why the raw entry count is far larger than the number of distinct hadiths.",
+    "see": [
+      "sahih-muslim",
+      "sahihayn",
+      "muallaq",
+      "kutub-sittah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sahih-muslim",
+    "term": "Sahih Muslim",
+    "ar": "صَحِيحُ مُسْلِم",
+    "also": [
+      "Saheeh Muslim",
+      "Sahih ul Muslim",
+      "Muslim Sharif",
+      "Muslim ibn al-Hajjaj",
+      "Sahih al-Muslim",
+      "Shahih Muslim",
+      "Saheeh Muslim Shareef",
+      "Muslim hadith book"
+    ],
+    "cat": "hadith",
+    "short": "The collection of Muslim ibn al-Hajjaj, second of the two Sahihs and the better organised of them.",
+    "long": "Muslim gathered all the chains of a hadith in one place instead of scattering them, which makes his book easier to study. He held that narrators living in the same period with the possibility of meeting is enough, without proof of an actual meeting. His introduction is a short treatise on hadith method and is still read on its own.",
+    "see": [
+      "sahih-al-bukhari",
+      "sahihayn",
+      "ananah",
+      "kutub-sittah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "sunan",
+    "term": "Sunan",
+    "ar": "السُّنَن",
+    "also": [
+      "Sunen",
+      "As-Sunan",
+      "Sunan books",
+      "Sunan Abi Dawud",
+      "Sunan Abu Dawood",
+      "Sunan al-Nasai",
+      "Sunan an-Nasa'i",
+      "Sunan Ibn Majah",
+      "Sunan collections",
+      "Sunan al-Darimi",
+      "Sunan Abu Dawud",
+      "Sunan Nasai"
+    ],
+    "cat": "hadith",
+    "short": "A hadith book arranged by the chapters of fiqh, gathering the reports a jurist needs.",
+    "long": "The four Sunan among the six books are those of Abu Dawud, al-Nasa'i, Ibn Majah, and in its own way al-Tirmidhi. Unlike the two Sahihs they include weak reports, usually with a remark, because their purpose is to lay out the evidence on each legal question rather than to collect only what is sound. Reading them well means reading the author's comments, not only the texts.",
+    "see": [
+      "kutub-sittah",
+      "jami",
+      "musnad",
+      "musannaf"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "jami",
+    "term": "Jami'",
+    "ar": "الجَامِع",
+    "also": [
+      "Jami",
+      "Jaami",
+      "Jame",
+      "Jamia",
+      "Jamiu",
+      "Jami al-Tirmidhi",
+      "Jami at-Tirmidhi",
+      "Jami collections",
+      "Jami hadith book",
+      "Jami Tirmidhi",
+      "Tirmidhi"
+    ],
+    "cat": "hadith",
+    "short": "A hadith book that covers every subject, not only law: belief, manners, tafsir, history and more.",
+    "long": "The word means gatherer. Sahih al-Bukhari and Jami' al-Tirmidhi are both jami' works. Al-Tirmidhi's is unusual in that he comments on nearly every hadith, names who else narrated it, and records which scholars acted on it, which makes it a teaching book as much as a collection.",
+    "see": [
+      "sunan",
+      "kutub-sittah",
+      "hasan-sahih",
+      "musnad"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "muwatta",
+    "term": "Muwatta",
+    "ar": "المُوَطَّأ",
+    "also": [
+      "Al-Muwatta",
+      "Muwatta Malik",
+      "Muwatta of Imam Malik",
+      "Muwattaa",
+      "Muwatta'",
+      "Muatta",
+      "Mowatta",
+      "Mouatta",
+      "Muwatta Imam Malik",
+      "Muwatta Maalik"
+    ],
+    "cat": "hadith",
+    "short": "Malik ibn Anas's early collection, mixing hadith with Companion practice and the settled custom of Madinah.",
+    "long": "The name suggests something made smooth, or well trodden. It is the earliest of these books to survive in wide use, and it is a law book as much as a hadith book: Malik records a report, then how the people of Madinah actually acted. Al-Shafi'i is quoted as calling it the soundest book on earth after the Book of Allah, a judgement made before the two Sahihs were compiled.",
+    "see": [
+      "musannaf",
+      "amal-ahl-al-madinah",
+      "kutub-sittah",
+      "athar"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "musannaf",
+    "term": "Musannaf",
+    "ar": "المُصَنَّف",
+    "also": [
+      "Musanaf",
+      "Musannef",
+      "Musannafat",
+      "Musannaf Abd al-Razzaq",
+      "Musannaf Ibn Abi Shaybah",
+      "Musannaf Ibn Abi Shayba",
+      "Classified collection",
+      "Musannaf hadith book"
+    ],
+    "cat": "hadith",
+    "short": "A collection arranged by legal topic that includes Companion and follower statements alongside hadith.",
+    "long": "The two great examples are the Musannaf of Abd al-Razzaq al-San'ani and that of Ibn Abi Shayba. They are enormous, and they are the main window onto what the earliest generations actually practised. Unlike a musnad, arranged by narrator, a musannaf is arranged by subject.",
+    "see": [
+      "musnad",
+      "sunan",
+      "muwatta",
+      "athar"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "mustadrak",
+    "term": "Mustadrak",
+    "ar": "المُسْتَدْرَك",
+    "also": [
+      "Al-Mustadrak",
+      "Mustadrak al-Hakim",
+      "Mustadrek",
+      "Mustadrak ala al-Sahihayn",
+      "Al-Hakim",
+      "Hakim al-Naysaburi",
+      "Mustadrak Hakim",
+      "Mustadarak"
+    ],
+    "cat": "hadith",
+    "short": "Al-Hakim's supplement, gathering hadiths he judged to meet the standards of al-Bukhari and Muslim.",
+    "long": "A mustadrak is a book that makes up what an earlier author left out. Al-Hakim al-Naysaburi compiled his late in life and never finally revised it, and later scholars including al-Dhahabi found him lenient. A grading of sahih from al-Hakim alone is therefore treated as a starting point for checking rather than as a settled verdict.",
+    "see": [
+      "sahihayn",
+      "hukm",
+      "takhrij",
+      "jarh-wa-tadil"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "arbain-nawawi",
+    "term": "Al-Arba'in al-Nawawiyyah",
+    "ar": "الأَرْبَعُونَ النَّوَوِيَّة",
+    "also": [
+      "Arbaeen Nawawi",
+      "Arbain Nawawi",
+      "Nawawi's Forty",
+      "Forty Hadith",
+      "40 Hadith Nawawi",
+      "Al-Arbaun al-Nawawiyyah",
+      "Arbaoon",
+      "Arbaeen an-Nawawi",
+      "Imam Nawawi 40 hadith",
+      "Arbain al-Nawawiyyah"
+    ],
+    "cat": "hadith",
+    "short": "Al-Nawawi's short collection of foundational hadiths, the first hadith text most students memorise.",
+    "long": "It is called the Forty and usually contains forty two, since al-Nawawi added a couple beyond his original count. He chose reports that each carry a large share of the religion, opening with the hadith on intention. Ibn Rajab al-Hanbali added eight more and wrote the standard commentary, Jami' al-Ulum wa al-Hikam.",
+    "see": [
+      "riyad-al-salihin",
+      "hadith",
+      "sahihayn"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "riyad-al-salihin",
+    "term": "Riyad al-Salihin",
+    "ar": "رِيَاضُ الصَّالِحِين",
+    "also": [
+      "Riyad us Saliheen",
+      "Riyadh as-Salihin",
+      "Riyadus Salihin",
+      "Riyad as Salihin",
+      "Riyaad as-Saaliheen",
+      "Riyad al-Saliheen",
+      "Riyadhus Shalihin",
+      "Gardens of the Righteous",
+      "Riyadus Saliheen"
+    ],
+    "cat": "hadith",
+    "short": "Al-Nawawi's topical collection on character and worship, the hadith book most widely read by ordinary Muslims.",
+    "long": "The title means the gardens of the righteous. He drew almost entirely on the well known collections, opened each chapter with verses of the Qur'an, and arranged the whole book around how a person should live rather than around legal chapters. A small number of its reports are weak, and modern critical editions mark these.",
+    "see": [
+      "arbain-nawawi",
+      "hadith",
+      "sunnah"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "kutub-arbaah",
+    "term": "Al-Kutub al-Arba'ah",
+    "ar": "الكُتُبُ الأَرْبَعَة",
+    "also": [
+      "Kutub Arbaa",
+      "Kutub al-Arbaah",
+      "Kutub e Arba",
+      "The Four Books",
+      "Four books Shia",
+      "Al-Kafi",
+      "Usul al-Kafi",
+      "Shia hadith books",
+      "Kutub al-Arba'a"
+    ],
+    "cat": "hadith",
+    "short": "The four main hadith collections of Twelver Shia Islam, a separate corpus from the Sunni six books.",
+    "long": "They are al-Kafi by al-Kulayni, Man la yahduruhu al-Faqih by Ibn Babawayh, and al-Tahdhib and al-Istibsar by al-Tusi. They record reports from the Prophet and from the Imams, whose sayings carry authority in that tradition. The grading vocabulary overlaps with the Sunni one without matching it: a chain is judged partly by whether its narrators held the Imami creed, and the term muwaththaq marks a reliable narrator who did not.",
+    "see": [
+      "kutub-sittah",
+      "isnad",
+      "hukm"
+    ],
+    "k": "editorial"
+  },
+  {
+    "id": "amal-ahl-al-madinah",
+    "term": "Amal Ahl al-Madinah",
+    "ar": "عَمَلُ أَهْلِ المَدِينَة",
+    "also": [
+      "Amal ahl al-Madina",
+      "Amal ahlul Madinah",
+      "Amal e ahl e Madina",
+      "Practice of the people of Madinah",
+      "Madinan practice",
+      "Ijma ahl al-Madinah",
+      "Amal ahli Madina",
+      "Amal ahle Madina",
+      "Practice of Madinah"
+    ],
+    "cat": "hadith",
+    "short": "The living practice of Madinah, treated by Malik as evidence that can outweigh a single chain report.",
+    "long": "Malik's argument was that an act performed by a whole city in the Prophet's own town, generation after generation, reaches us by mass practice rather than by one man's memory. The Malikis therefore give it weight in law. The other three schools do not accept it as binding and give priority to the authentic report. The disagreement is about how transmission works, not about respect for the Sunnah.",
+    "see": [
+      "muwatta",
+      "mutawatir",
+      "ahad",
+      "sunnah"
+    ],
+    "k": "debated"
+  }
+]

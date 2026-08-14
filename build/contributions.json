@@ -1,0 +1,389 @@
+{
+  "fields": [
+    {
+      "id": "mathematics",
+      "title": "Mathematics: Naming the Unknown",
+      "icon": "calc",
+      "gifts": [
+        {
+          "t": "Algebra, and its very name",
+          "who": "Muhammad ibn Musa al-Khwarizmi, about 780 to 850",
+          "where": "Baghdad",
+          "ps": [
+            "In Baghdad, in the young House of Wisdom, a scholar from Khwarazm wrote a book with a modest purpose: to help ordinary people with inheritance shares, trade, canal digging, and wills. He called his method al-jabr, the restoration, the setting of a broken thing back in its place: move what is subtracted across an equation and balance is restored. Al-Khwarizmi then did something quietly enormous. He stepped back from particular puzzles and taught the general method, a way of solving every problem of a given shape rather than one problem at a time. With that step, algebra stopped being a bag of tricks and became a discipline with a name.",
+            "The book crossed into Latin in twelfth century Spain, and al-jabr became algebra. His own name traveled even further: Latin scribes rendered al-Khwarizmi as Algoritmi, and algorithm slowly came to mean any clear, step by step procedure that anyone can follow and check, which is exactly what he taught. It should be said plainly that he built on Babylonian, Greek, and Indian mathematics, and he never pretended otherwise. The glory is not that he began from nothing; it is that he gathered scattered knowledge, ordered it, and opened a road wide enough for the whole world to walk. Every student who solves for x today is somewhere on that road."
+          ],
+          "today": "Solve for x in any classroom, or say the word algorithm near any phone, and you are quoting him.",
+          "level": "solid"
+        },
+        {
+          "t": "The numerals the world counts with",
+          "who": "Many hands, 8th to 13th centuries",
+          "where": "India to Baghdad to Pisa",
+          "ps": [
+            "The ten digits on your keyboard were born in India, where mathematicians had learned to treat zero not as a blank but as a number you could calculate with. In the eighth century these numerals reached Baghdad with Indian astronomical texts, and Muslim scholars recognized what they held: any quantity written with ten signs and place value. Al-Khwarizmi wrote the handbook on reckoning with them, the book whose Latin translation carried the digits west. Al-Uqlidisi in Damascus pushed further, working out decimal fractions on paper around 952. The Arabic word sifr, meaning empty, named the zero, and later gave European languages both cipher and zero itself.",
+            "Then the road turned toward Europe. A young Italian, Leonardo of Pisa, remembered as Fibonacci, learned the digits from Arab teachers in Bugia on the North African coast, where his father kept a trading post. His Liber Abaci of 1202 showed European merchants how much faster the new arithmetic ran than Roman numerals ever could; bankers resisted for a while, then surrendered completely. This gift is transmission at its purest. India sowed it, the Muslim world tested it, completed it, and carried it, and Europe received it. Three civilizations hold one gift between them, which is exactly how the story deserves to be told."
+          ],
+          "today": "Every price tag, phone number, and line of code is written in the digits that came down this road.",
+          "level": "solid"
+        },
+        {
+          "t": "Triangles bent around a sphere",
+          "who": "al-Battani, about 858 to 929, and Abu al-Wafa, 940 to 998",
+          "where": "Raqqa and Baghdad",
+          "ps": [
+            "Islam set its scholars a daily geometry problem: from any village on a round earth, find the direction of Mecca. Answering it precisely, along with fixing prayer times and calendars by the sky, drove Muslim mathematicians deep into the trigonometry of the sphere, where the old flat rules quietly fail. Al-Battani, observing from Raqqa on the Euphrates, sharpened the sine and cosine into working tools and measured the length of the solar year to within a couple of minutes of the modern value. Abu al-Wafa in Baghdad brought the tangent into regular use and found cleaner laws for triangles drawn on curved surfaces.",
+            "The work outlived its makers by centuries. Al-Battani’s zij, his book of astronomical tables, was translated into Latin, and Copernicus cites him by name in the very book that moved the earth from the center of things. What began as a devotional question became the general mathematics of everything that curves: planets, oceans, orbits, signals. A triangle drawn on a ball behaves differently from a triangle drawn on a page, and the people who first mastered that difference did so because prayer pointed them across the curve of the world, toward a single city, five times a day."
+          ],
+          "today": "Every GPS fix and long haul flight path is computed with triangles on a sphere, their mathematics.",
+          "level": "solid"
+        }
+      ]
+    },
+    {
+      "id": "medicine",
+      "title": "Medicine: The Open Door",
+      "icon": "heart",
+      "gifts": [
+        {
+          "t": "Telling measles from smallpox",
+          "who": "Abu Bakr al-Razi, about 865 to 925",
+          "where": "Rayy and Baghdad",
+          "ps": [
+            "Al-Razi ran hospitals in Rayy and Baghdad and wrote with a clinical honesty rare in any age. His short book on smallpox and measles did something foundational: it took two fevers everyone lumped together and described, symptom by careful symptom, how they differ and what each one means for the patient. That is the ancestor of every differential diagnosis, the physician’s art of telling this illness from that one by evidence rather than habit. He kept case notes on real patients, recorded his failures alongside his cures, and even dared a book called Doubts About Galen, questioning antiquity’s greatest medical authority wherever observation disagreed with him.",
+            "A beloved story says that when Baghdad needed a new hospital, al-Razi hung pieces of fresh meat in different quarters of the city and chose the site where the meat spoiled slowest, reasoning that the air there was healthiest. The tale comes from later biographers, so we hold it lightly, but it survives because it captures the man exactly: test, compare, then decide. Beyond dispute are the books, the wards he supervised, the students he trained, and the habit of mind he taught, that a physician’s first loyalty is to what is actually happening in the patient in front of him."
+          ],
+          "today": "Every time a doctor weighs two possible diagnoses against your symptoms, al-Razi’s method is quietly at work.",
+          "level": "solid"
+        },
+        {
+          "t": "Two hundred surgical instruments",
+          "who": "Abu al-Qasim al-Zahrawi, about 936 to 1013",
+          "where": "Madinat al-Zahra, near Cordoba",
+          "ps": [
+            "In Madinat al-Zahra, the palace city outside Cordoba, al-Zahrawi spent some fifty years practicing medicine and poured it all into al-Tasrif, an encyclopedia whose final volume changed surgery. He did what almost no one before him had thought to do: he drew the instruments. Around two hundred of them, scalpels, forceps, hooks, bone saws, obstetric tools, many of his own design, illustrated precisely enough that a surgeon far away could have them made. He described operations step by step, warned honestly about when not to cut, and insisted that a surgeon who does not know anatomy has no business holding a blade.",
+            "His quietest gift may be the largest: sutures of catgut, thread made from animal intestine, which the body slowly and safely absorbs. With it he could stitch internal wounds closed without reopening the patient to remove the thread, and dissolving stitches still work on his principle today. Translated into Latin, al-Tasrif became Europe’s standard surgical reference for centuries; the great French surgeon Guy de Chauliac cited him around two hundred times. Look into a modern operating tray and the shapes of his drawings look back, refined but unmistakable, a long conversation between his hand and ours."
+          ],
+          "today": "Dissolvable stitches and many of the shapes on a surgical tray descend from his illustrated pages.",
+          "level": "solid"
+        },
+        {
+          "t": "The Canon that taught Europe",
+          "who": "Ibn Sina, 980 to 1037",
+          "where": "Bukhara to Hamadan",
+          "ps": [
+            "Ibn Sina was treating patients and outreading his teachers before he was eighteen, and in the Canon of Medicine, finished around 1025, he attempted to hold his world’s entire medical knowledge in one ordered structure: principles first, then medicines, then diseases from head to toe, then illnesses of the whole body, then treatments. What made the Canon beloved was not only its completeness but its order; a working physician could actually find things in it. Tucked inside is a small marvel: seven rules for testing a new drug properly, including trying it on more than one case and watching the timing of its effects, an early grammar of the clinical trial.",
+            "Translated into Latin in Toledo, the Canon settled into European universities and simply stayed. From the twelfth century into the seventeenth, students at Montpellier, Bologna, and Paris learned medicine from a Persian Muslim’s book, roughly six hundred years on the syllabus, one of the longest runs any textbook has ever had anywhere. In time its authority hardened, and later physicians had to argue with it to move medicine forward, which is its own strange tribute: only the books that shaped a field must be argued with to leave it. The Canon framed how half the world thought about the body."
+          ],
+          "today": "The layered structure of a modern medical textbook, principles first and then diseases, is the Canon’s skeleton.",
+          "level": "solid"
+        },
+        {
+          "t": "The heart’s path through the lungs",
+          "who": "Ibn al-Nafis, 1213 to 1288",
+          "where": "Damascus and Cairo",
+          "ps": [
+            "Ancient authority taught that blood seeps from one side of the heart to the other through invisible pores in the wall between them. Ibn al-Nafis, trained in Damascus and working in Cairo as a hospital chief, weighed that claim against anatomy and reason and rejected it flatly: the wall is solid, he wrote, and blood can reach the left side of the heart only by traveling out through the lungs, mingling with air, and returning. That is the pulmonary circulation, stated plainly in the thirteenth century, three hundred years before European anatomists arrived at the same truth and long before anyone could watch it happen.",
+            "Here honesty requires a careful sentence. His manuscripts survive, so the discovery itself is beyond dispute; what scholars still debate is whether Europe ever saw it. The Italian physician Andrea Alpago translated works of Ibn al-Nafis into Latin in the sixteenth century, shortly before Servetus and Colombo published similar ideas, but no direct borrowing has been proven, and perhaps the truth was simply found twice, which happens in science. Either way, the first person on record to trace the blood’s loop through the lungs wrote in Arabic, in Cairo, between shifts at a free hospital he would later leave his house and library to."
+          ],
+          "today": "Every diagram of the heart in a school biology book shows the loop he first put into words.",
+          "level": "solid"
+        },
+        {
+          "t": "The bimaristan, a hospital for everyone",
+          "who": "Founders and physicians across four centuries",
+          "where": "Baghdad, Damascus, Cairo",
+          "ps": [
+            "The bimaristan, a Persian word meaning place of the sick, was the Islamic world’s hospital, and it ran on a radical rule: no one is turned away. Funded by waqf, a charitable endowment set aside in perpetuity, the great hospitals of Baghdad, Damascus, and Cairo treated rich and poor, resident and stranger, of any faith, without a bill. They were organized in ways we would recognize immediately: separate wards for fevers, wounds, and illnesses of the mind, pharmacies on site, physicians on rotation, students trailing their teachers from bed to bed, and patient records kept, consulted, and taught from.",
+            "Cairo’s al-Mansuri hospital, opened in 1284, offered music for the sleepless and storytellers for the long nights, and some hospitals handed discharged patients a small sum, understanding that a person too poor to rest will only fall ill again. In Baghdad, after a patient died through error in 931, the caliph ordered physicians examined and licensed. None of this claims that Muslims invented care; every civilization tends its sick. The gift is the institution itself: care organized, endowed, taught, recorded, and owed to everyone, the ancestor of the teaching hospital and of the conviction that medicine is a public trust."
+          ],
+          "today": "The teaching hospital, the ward round, and the patient chart all have an ancestor in the bimaristan.",
+          "level": "solid"
+        }
+      ]
+    },
+    {
+      "id": "seeing",
+      "title": "Seeing: Light and Proof",
+      "icon": "scope",
+      "gifts": [
+        {
+          "t": "How light enters the eye",
+          "who": "Ibn al-Haytham, about 965 to 1040",
+          "where": "Basra, then Cairo",
+          "ps": [
+            "For over a thousand years the learned world argued about vision by argument alone, many holding that the eye sends out rays that touch the world. Ibn al-Haytham settled the question a new way: he built the test. In a darkened room in Cairo, light passing through a small hole threw an image of the bright world, upside down, onto the far wall. This was the camera obscura, Latin for dark chamber, which he called al-bayt al-muzlim, the dark house. Light, he showed, travels in straight lines from things into the eye. Vision is reception, not emission, and the eye is an instrument that light enters and the mind interprets.",
+            "The deeper gift was the method itself. In his Book of Optics he wrote that the seeker of truth must suspect every claim, including his own, and submit inherited opinion to experiment; he described his procedures so exactly that another person could repeat them, and repeatability is the hinge on which science turns. Translated into Latin, the book taught Roger Bacon and Witelo, and eventually Kepler, who completed the theory of the retinal image. A camera is his dark house with a memory added, and a laboratory is his habit of mind given a building. Few people have handed the species two such tools at once."
+          ],
+          "today": "Every photograph is taken inside his dark house, and every controlled experiment repeats his habit of mind.",
+          "level": "solid"
+        },
+        {
+          "t": "The long road to eyeglasses",
+          "who": "Ibn Sahl, Ibn al-Haytham, and unnamed Italian craftsmen",
+          "where": "Baghdad and Cairo to Pisa",
+          "ps": [
+            "Eyeglasses appear suddenly in Italy around 1286, in the hands of craftsmen whose names are lost, and within a generation preachers were praising them from the pulpit. What road led there? The science of refraction, how light bends through curved glass, had been worked out in Arabic: Ibn Sahl in Baghdad derived the bending law for lenses in 984, seven centuries before it was named for Snell, and Ibn al-Haytham’s Book of Optics, carried into Latin, taught Europe how images form. Reading stones, simple magnifiers laid flat on the page, bridged the worlds of theory and craft in the meantime.",
+            "It is tempting to say that Muslim optics produced Italian spectacles, and popular retellings often say exactly that. The honest version is quieter and still beautiful. The theory that made lenses comprehensible traveled from Basra and Cairo through translation into the same Europe where glassworkers were grinding ever finer lenses, and somewhere in that meeting, sight was handed back to aging eyes. But no document shows a spectacle maker reading Ibn al-Haytham, so the chain of evidence is thinner here, and we hold it lightly. What we claim with confidence is the understanding of light itself; the frames on your nose are Europe’s craft answering it."
+          ],
+          "today": "If you are reading this through glasses or contact lenses, two civilizations are holding the page steady.",
+          "level": "traced"
+        },
+        {
+          "t": "Measuring the Earth with a mountain",
+          "who": "Abu Rayhan al-Biruni, 973 to 1048",
+          "where": "Nandana, in today’s Pakistan",
+          "ps": [
+            "Al-Biruni wanted the size of the earth and had no wish to pace out a desert to get it, as earlier survey teams had done. At the fort of Nandana, in the salt hills of today’s Pakistan, he found his shortcut: a mountain standing beside a flat plain. He measured the mountain’s height using sightings and angles alone, taking its peak from two positions with an instrument he trusted. Then he climbed it and measured the tiny angle by which the horizon dips below true level. Height and dip, joined by trigonometry, yield the radius of the entire planet. Two sightings, one climb, one clean equation.",
+            "His answer lands within about one percent of the modern figure, give or take the exact length of his cubit, over which scholars still argue. The precision is lovely, but the confidence is the real gift: the calm assumption that one person with mathematics, an instrument, and a clear morning can take the measure of the world. Al-Biruni did this almost in passing, on the way to writing seriously about India’s religions, about minerals, calendars, and medicines, in some hundred and fifty works. He stands for a civilization at ease with measuring anything. He asked the mountain, and the mountain answered."
+          ],
+          "today": "Every satellite orbit and map projection rests on knowing the earth’s size, a number he reached with a mountain.",
+          "level": "solid"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "Engineering: Water, Wheels, Domes",
+      "icon": "gear",
+      "gifts": [
+        {
+          "t": "The crankshaft and the elephant clock",
+          "who": "Ismail al-Jazari, 1136 to 1206",
+          "where": "Diyarbakir, upper Mesopotamia",
+          "ps": [
+            "Al-Jazari served three generations of Artuqid princes as court engineer, and near the end of his life they asked him to write his machines down. The result, the Book of Knowledge of Ingenious Mechanical Devices, finished in 1206, is part engineering manual and part illuminated painting: fifty devices with instructions exact enough to build from. Inside are mechanisms the modern world still runs on: the crankshaft joined to connecting rods, turning rotation into back and forth motion in his twin cylinder water pump; camshafts timing sequences of actions; segmental gears; and float valves that regulate themselves, an early taste of feedback control.",
+            "Then there is the elephant clock, a water clock riding an Indian elephant, attended by an Egyptian phoenix, Chinese dragons, and figures in Persian and Arabian dress, a machine assembled deliberately from the whole world’s imagery, as if to say that knowledge itself is a shared inheritance. His musical automata, drummers on a boat, kept rhythm with pegs set into a turning barrel; move the pegs and the rhythm changes, a program you could touch centuries before the word existed. Historically this is level ground: his own book survives, in his own words, with his own paintings, one of engineering’s great primary documents."
+          ],
+          "today": "Your car converts motion through a crankshaft and times its valves with a camshaft, the pairing his book laid out.",
+          "level": "solid"
+        },
+        {
+          "t": "Water led kindly through dry lands",
+          "who": "Engineers of many lands, 8th century onward",
+          "where": "Iran, Syria, al-Andalus",
+          "ps": [
+            "Water engineering is a gift Muslims mostly did not invent and gloriously spread. The qanat, an underground channel that taps a distant water table and lets gravity carry water for miles without evaporation, is older than Islam, a Persian masterpiece; Muslim engineers carried it west across North Africa and into Spain, where Madrid grew up on buried channels and, many scholars think, took its very name from them. In Syria, the norias of Hama, wooden wheels up to twenty meters tall, still groan on the Orontes river, lifting water into aqueducts that once fed gardens, baths, and mosques.",
+            "The deepest mark is social as much as technical. Islamic law treats water as a shared trust, and the irrigation communities of al-Andalus governed it in open air tribunals; Valencia’s water court still meets at the cathedral door every Thursday, a living medieval institution. The Spanish word acequia, from the Arabic al-saqiya, the water channel, crossed the Atlantic and still names the community run irrigation ditches of New Mexico, governed by elected ditch bosses. A thousand years on, in an American desert, farmers share water under rules carrying an Arabic name. Transmission, improvement, and stewardship: the whole pattern of this hall in one gift."
+          ],
+          "today": "In New Mexico, farmers still share water through acequias, channels that carry an Arabic name and a shared water ethic.",
+          "level": "solid"
+        },
+        {
+          "t": "The leap of Abbas ibn Firnas",
+          "who": "Abbas ibn Firnas, about 810 to 887",
+          "where": "Cordoba",
+          "ps": [
+            "The story goes like this: in ninth century Cordoba, the inventor Abbas ibn Firnas, already famous for cut crystal and for a room that imitated the turning of the sky, built himself wings of silk and feathers, leapt from a height before a watching crowd, glided some distance, and crash landed, hurting his back, because, it was said, he had not thought to give himself a tail. If it happened, it stands among the first recorded attempts at controlled flight, six centuries before Leonardo sketched his machines. He lived on for years afterward, still inventing, which is somehow the most believable part of the tale.",
+            "Now the honesty. The full account appears in al-Maqqari, writing about seven hundred years later, though he drew on older Andalusi sources now lost. From Ibn Firnas’s own century we have one thin, wonderful thread: the court poet Mu’min ibn Said mocked him for flying “faster than the phoenix” when he dressed his body in a vulture’s feathers. A rival’s joke is not a flight log, so the chain of evidence is thinner here, and we hold the story lightly, grading it traced. Yet a crater on the moon carries his name, and the leap, whatever its true length, has traveled very far."
+          ],
+          "today": "A moon crater, a Cordoba bridge, and a Baghdad airport statue keep his name aloft over every night flight.",
+          "level": "traced"
+        },
+        {
+          "t": "Domes that ride earthquakes",
+          "who": "Mimar Sinan, about 1489 to 1588",
+          "where": "Istanbul and Edirne",
+          "ps": [
+            "Mimar Sinan, chief architect of the Ottoman Empire for fifty years, built or oversaw more than three hundred works: mosques, bridges, aqueducts, baths, schools. He worked in one of the most earthquake torn corridors on earth and designed for it. Foundations were left to rest and settle before the great weight went on. His domes do not sit on brute mass; they ride a cascade of half domes and hidden buttresses that carry load down flexible paths, so a building can shudder and shrug instead of snap. At the Süleymaniye in Istanbul, channels in the walls even gathered lamp soot, which was made into ink for calligraphers.",
+            "Past the age of eighty he finished the Selimiye in Edirne, its vast dome set on eight slender piers so the floor opens to light and the structure shows its logic honestly; he called it his masterwork. Earthquakes that cracked far younger buildings have passed through his mosques and left them standing, and modern engineers still study his joints, his iron cramps set in lead between stones, his instinct for letting a structure move a little so that it does not move all at once. He began as a Christian boy from Anatolia, taken into Ottoman service, and became the empire’s builder: a life, like his domes, carried on many supports."
+          ],
+          "today": "Skylines from Istanbul to Sarajevo still stand on his domes, and seismic engineers still study how they flex.",
+          "level": "solid"
+        }
+      ]
+    },
+    {
+      "id": "word-and-page",
+      "title": "Word and Page: The Paper Bridge",
+      "icon": "book",
+      "gifts": [
+        {
+          "t": "Paper for everyone",
+          "who": "Papermakers east to west, 751 onward",
+          "where": "Samarkand, Baghdad, Xativa",
+          "ps": [
+            "Paper was China’s secret for centuries. Tradition says the secret walked west in 751, when Chinese papermakers captured at the Battle of Talas were brought to Samarkand; the prisoner tale comes from later writers, and the craft may already have been seeping along the Silk Road, so we tell it as tradition rather than fact. What happened next is certain. Samarkand paper became famous across the world, Baghdad had mills by the 790s, and the state moved its records from parchment to paper, which drinks ink so deeply that an erasure leaves a visible scar: a medieval defense against forgery.",
+            "Cheap pages changed everything they touched. Baghdad’s stationers’ market held a hundred shops of copyists and booksellers, private libraries became ordinary, and a scholar of modest means could own the books he argued with. The craft moved with trade to Cairo and Fez, then to Muslim Spain, where the mills of Xativa supplied Europe’s first paper before Italy learned the art in the thirteenth century. When printing arrived two hundred years later, it found a continent already supplied with something to print on. Even the English word ream, a bundle of sheets, descends from the Arabic rizma, a bale."
+          ],
+          "today": "Every page you print lands at the end of the road from Samarkand, and a ream still carries its Arabic name.",
+          "level": "solid"
+        },
+        {
+          "t": "The rescue that argued back",
+          "who": "Translators of the House of Wisdom, 8th to 10th centuries",
+          "where": "Baghdad, later Toledo",
+          "ps": [
+            "Between the eighth and tenth centuries, Baghdad paid fortunes to move the mind of the ancient world into Arabic. Under the Abbasid caliphs, around the palace library tradition calls the House of Wisdom, translators rendered Aristotle and Plato, Galen’s medicine, Euclid’s geometry, and Ptolemy’s astronomy, alongside Persian statecraft and Indian mathematics. The greatest of the translators, Hunayn ibn Ishaq, was an Arab Christian who hunted manuscripts across the Near East and translated for meaning rather than word by word. The movement was Muslim led and many faithed, which is part of its beauty and part of its lesson.",
+            "Preservation alone would have earned the world’s thanks, since some ancient works survive only through Arabic. But the translators’ heirs did something better: they argued back. Ptolemy’s star positions were remeasured and corrected, Galen was challenged from the dissection room, Aristotle was annotated until commentary became original philosophy. When Europe grew hungry in the twelfth century, it came to Toledo and translated the Arabic, corrections, commentaries, and all; Gerard of Cremona alone carried some seventy works into Latin. The library of antiquity reached the modern world not as a sealed box passed hand to hand but as a working library, used hard and improved."
+          ],
+          "today": "Much of the ancient philosophy and science on any university syllabus crossed to us over this Arabic bridge.",
+          "level": "solid"
+        },
+        {
+          "t": "Arabic hiding in your English",
+          "who": "Traders, scholars, and cooks, over a thousand years",
+          "where": "From Baghdad to London",
+          "ps": [
+            "You speak a little Arabic every day. Algebra is al-jabr, the restoration. Algorithm is a Latin scribe’s stumble over the name al-Khwarizmi. Alkali is al-qali, the plant ashes of early chemistry. Zenith comes from samt al-ras, the path over your head, and nadir from nazir, the opposite point beneath your feet. Tariff descends from tarif, a notification, the posted list of a port’s fees. Coffee worked its way from qahwa through Turkish kahve to the cup beside you, and sofa began as suffa, a raised platform softened with cushions for sitting long and talking well.",
+            "The list runs on: cotton from qutn, sugar from sukkar, lemon from laymun, magazine from makhzan, a storehouse, admiral from amir, a commander. Words are receipts. A language borrows its vocabulary from the people who taught it the thing itself, and English, collecting through Spanish, Italian, and French, keeps meticulous receipts from the centuries when Arabic was the language of science, trade, and the sweeter side of life. No conquest planted most of these words in Europe’s mouth. Merchants, scholars, and cooks did, one transaction, one translation, and one shared table at a time."
+          ],
+          "today": "From the sofa, with coffee and sugar to hand, you are reading a lightly Arabized English.",
+          "level": "solid"
+        },
+        {
+          "t": "History become a science",
+          "who": "Ibn Khaldun, 1332 to 1406",
+          "where": "Tunis to Cairo",
+          "ps": [
+            "Ibn Khaldun had watched dynasties rise and rot from the inside, serving and surviving courts from Fez to Granada, before he withdrew to a castle in Algeria and asked a new question: not what happened in history, but why anything happens, and by what laws. His Muqaddimah, the Introduction, written in 1377, answers with a theory. Asabiyya, group feeling, the solidarity of people bound together, lets a hardy folk take power; comfort then dissolves that solidarity over the generations until a hungrier group replaces them. History, he insisted, is a science: a report that violates the nature of society should be doubted, whoever tells it.",
+            "Along the way he described, centuries early, ideas economists would later formalize: that labor is the true source of value, that specialized crafts make cities rich, and that when taxes climb past a certain point revenue falls, because enterprise quietly gives up. Sociology, historiography, and economics all claim him now as an ancestor, three fields that did not exist while he wrote alone by lamplight. In 1401, outside besieged Damascus, he was lowered over the city wall by rope to interview Tamerlane himself, the scholar and the world breaker studying one another. Even his life reads like his thesis."
+          ],
+          "today": "Whenever someone explains a nation’s decline through lost cohesion or overreaching taxes, they are speaking Muqaddimah.",
+          "level": "solid"
+        }
+      ]
+    },
+    {
+      "id": "sky-and-sea",
+      "title": "Sky and Sea: The Named Heavens",
+      "icon": "star",
+      "gifts": [
+        {
+          "t": "Observatories, science done together",
+          "who": "Nasir al-Din al-Tusi, 1201 to 1274, and Ulugh Beg, 1394 to 1449",
+          "where": "Maragheh and Samarkand",
+          "ps": [
+            "At Maragheh, in the hills of northwestern Iran, Nasir al-Din al-Tusi persuaded the Mongol conqueror Hulagu to fund something new in 1259: a great observatory with a library, salaried staff, and scholars drawn from across Eurasia, a Chinese astronomer working beside Muslims and others on one long program of observation. Astronomy became team science with an address. There Tusi devised the device now called the Tusi couple, a circle rolling inside a circle to turn rotation into straight line motion, repairing Ptolemy’s planetary models. A strikingly similar device, lettered almost identically, appears three centuries later in Copernicus, and whether he inherited it or reinvented it is still honestly debated.",
+            "In Samarkand in the 1420s, the astronomer was the king. Ulugh Beg, Tamerlane’s grandson, sank a sextant of some forty meters’ radius into bedrock, a stone arc so vast it read the sky to fractions of an arcminute. His team fixed the positions of about a thousand stars, the first great catalog in over a millennium built from fresh observation rather than inherited numbers, and measured the year’s length to within about a minute. Ulugh Beg was murdered in 1449 and his observatory was pulled down, but the catalog escaped, reaching Oxford’s presses by 1665. Instruments can be demolished; numbers, once true, keep traveling."
+          ],
+          "today": "The modern observatory, salaried teams on a quiet hill running one long program, began at Maragheh and Samarkand.",
+          "level": "solid"
+        },
+        {
+          "t": "The astrolabe, a sky in brass",
+          "who": "Mariam al-Ijliya, 10th century",
+          "where": "Aleppo",
+          "ps": [
+            "An astrolabe is the sky folded into a brass plate. Turn its pierced star map, the rete, against an engraved horizon and you can read the hour from sun or stars, find the times of prayer, take a latitude, survey a wall. The Greeks conceived it; Muslim instrument makers perfected it, adding interchangeable plates for different latitudes and refinements that kept it the working computer of educated people for a thousand years. In tenth century Aleppo, at the court of the prince Sayf al-Dawla, one of those makers was a woman remembered as al-Ijliya, daughter of an astrolabist, trained in the craft and employed for her skill.",
+            "Everything we securely know of her fits in one line of the Fihrist, the great tenth century catalog of Ibn al-Nadim: her father’s trade, her teacher’s name, her service at court. Modern retellings have given her the name Mariam and rich detail the sources do not contain, so the chain of evidence is thinner here, and we hold the embroidery lightly while keeping the line itself as treasure. And it is treasure: in the most demanding scientific craft of her age, a woman worked at the highest level, named, employed, and paid. The instrument is beyond dispute; the woman is a single luminous sentence."
+          ],
+          "today": "Every star map app on a phone is an astrolabe reborn, the folded sky turned from brass to glass.",
+          "level": "traced"
+        },
+        {
+          "t": "Star names on every chart",
+          "who": "Abd al-Rahman al-Sufi, 903 to 986",
+          "where": "Isfahan, then everywhere",
+          "ps": [
+            "Look up on a clear night and the sky answers in Arabic. Aldebaran is al-dabaran, the follower, forever trailing the Pleiades across the dark. Altair comes from al-nasr al-tair, the flying eagle. Deneb is dhanab, a tail; Rigel is a foot; Fomalhaut is the mouth of the fish; Algol, the winking demon star, is ras al-ghul, the head of the ghoul. Betelgeuse began as yad al-jawza, the hand of Orion’s giant, until a medieval copyist misread the first Arabic letter and a B was born, an accident now printed across every star chart on earth.",
+            "The names traveled because the books did. In 964 Abd al-Rahman al-Sufi completed his Book of the Fixed Stars, re-observing Ptolemy’s catalog star by star, correcting brightness and position, marrying Greek constellation science to the old Arab sky lore, and noting beside Andromeda a small cloud, the first surviving record of another galaxy. Latinized in Spain and spread through astronomical tables, his star names held so firmly that when the International Astronomical Union formalized proper names in our own century, it largely ratified the Arabic. Most of the bright stars’ names still carry it, unbroken, a nightly recitation the whole world performs without knowing."
+          ],
+          "today": "Learn any constellation tonight and most of the star names you say will be Arabic on your tongue.",
+          "level": "solid"
+        },
+        {
+          "t": "Reading the monsoon sea",
+          "who": "Ahmad ibn Majid, about 1432 to 1500",
+          "where": "Julfar, today’s Ras al-Khaimah",
+          "ps": [
+            "Ahmad ibn Majid, born into three generations of pilots at Julfar on the Gulf, wrote the Indian Ocean down. His Book of Useful Information on the Principles and Rules of Navigation, finished around 1490, is a master pilot’s mind on paper: monsoon calendars naming the safe sailing windows to the day, star altitudes for fixing latitude with the kamal, a knotted cord and wooden tablet, compass bearings, reefs, harbors, and the tempers of particular coasts. Sailors called him the lion of the sea, and his verses were still being consulted on dhows within living memory. It is the fullest surviving portrait of how an ocean was actually crossed.",
+            "Legend insists he personally piloted Vasco da Gama from Malindi to India in 1498. The claim surfaces in a chronicle two generations later; Portuguese eyewitnesses record a pilot from Gujarat, and the dates sit awkwardly on a man near seventy, so scholars now largely set the story aside, and we hold it lightly. The lateen sail, the triangle that lets a ship work against the wind, was long called an Arab gift to Europe, but images show it in the Mediterranean before Islam; what Arab seafaring truly gave was mastery, reach, and the written science of the monsoon sea. The book is the treasure; the legend is only its shadow."
+          ],
+          "today": "Container ships still ride the monsoon rhythms his book codified, on sea lanes his charts would recognize.",
+          "level": "traced"
+        }
+      ]
+    },
+    {
+      "id": "daily-table",
+      "title": "The Daily Table: Gifts You Can Taste",
+      "icon": "leaf",
+      "gifts": [
+        {
+          "t": "Coffee, the night prayer’s drink",
+          "who": "Sufi communities of Yemen, 15th century",
+          "where": "Yemen, then Mecca, Cairo, Istanbul",
+          "ps": [
+            "Coffee enters written history in fifteenth century Yemen, among Sufis, devotional communities whose night vigils of dhikr, the rhythmic remembrance of God, asked for wakeful hearts at difficult hours. They took the berry of a shrub native to Ethiopia across the Red Sea, roasted it, brewed it, and called the drink qahwa, an old word for wine repurposed for a wine that clarifies instead of clouding. From the port of al-Makha, which gave mocha its name, the habit sailed with pilgrims to Mecca, then to Cairo and on to Istanbul, where the world’s first great coffeehouses opened in the 1550s and were nicknamed schools of the wise.",
+            "The famous tale of Kaldi, the Ethiopian goatherd whose dancing goats revealed the berry, first appears in a European book in 1671, centuries after the fact, so we shelve it with the legends and tell it with a smile. The documented road is lovely enough. Qahwa became Turkish kahve, then Italian caffè, then coffee, the word itself tracing the route of the drink. Religious authorities argued over it, banned it briefly in Mecca in 1511, and lost decisively. Every espresso bar on earth continues an Ottoman institution: a public room where strangers meet, talk, argue, and stay awake on purpose."
+          ],
+          "today": "Your morning cup began as a Yemeni aid to midnight prayer, and its name still quietly says so.",
+          "level": "solid"
+        },
+        {
+          "t": "Ziryab sets the table",
+          "who": "Ziryab, about 789 to 857",
+          "where": "Baghdad to Cordoba",
+          "ps": [
+            "In 822 a brilliant musician from Baghdad arrived in Cordoba: Ziryab, the blackbird, singer at the court of Abd al-Rahman II. The chronicles credit him with rearranging civilized life: meals served in courses, soup before the main dish and sweet things after; fine glass on the table in place of heavy metal; tablecloths; asparagus made fashionable; wardrobes rotated by season; new hairstyles; a paste for cleaning teeth; and a fifth string added to the oud. He founded a school of music that shaped Andalusi song for centuries. If even half of this is true, he was Europe’s first celebrity tastemaker, a man whose opinions rearranged dinner.",
+            "The sources ask us to be careful. The detailed list reaches us mainly through al-Maqqari, compiling in the seventeenth century from earlier Andalusi historians whose works are partly lost, and modern scholars suspect the legend grew in the telling, one gifted musician gradually credited with a whole civilization’s refinement. So the chain of evidence is thinner here, and we hold it lightly: Ziryab the influential court musician is solid; Ziryab the inventor of dinner is a beloved amplification. What certainly stands behind the stories is Cordoba itself, whose manners, music, and table Europe envied and copied. He is the name that memory chose for that influence."
+          ],
+          "today": "Any meal that moves from starter to main course to dessert follows the order legend gives to Ziryab.",
+          "level": "traced"
+        },
+        {
+          "t": "The orchard that moved west",
+          "who": "Farmers and agronomists, 8th to 13th centuries",
+          "where": "Persia to al-Andalus",
+          "ps": [
+            "Between the eighth and thirteenth centuries, the farmers of the Muslim world moved a garden across the planet. Rice, sugarcane, cotton, citrus, eggplant, spinach, artichoke, watermelon, hard wheat: crops domesticated mostly in India and eastern Asia traveled with merchants, pilgrims, and agronomists through Persia and Iraq to Egypt, North Africa, and al-Andalus, acclimatized at each stop to new soils and seasons. With the plants came the craft: norias lifting river water, qanats leading it underground, terraces on hillsides, and manuals like the Book of Agriculture of Ibn al-Awwam of Seville, which treats hundreds of plants with patient lore on grafting, soils, and seasons.",
+            "Historians debate how large to draw this agricultural revolution, some seeing transformation, others a slower change built on older foundations, and we note the argument honestly; the movement of the crops themselves is not in doubt. Spanish still tastes of it: arroz from al-ruzz, rice; azúcar from sukkar, sugar; naranja from naranj, orange; algodón from al-qutn, cotton. When Spain later planted the Americas with sugar and citrus, it extended a chain that began in Muslim orchards. Lemon in your tea, cotton on your back, rice in the pot: the quiet gifts outnumber the loud ones, and they are eaten daily."
+          ],
+          "today": "Lemon, rice, sugar, cotton: an ordinary shopping basket is a map of routes that passed through al-Andalus.",
+          "level": "solid"
+        },
+        {
+          "t": "The oud, the guitar’s grandmother",
+          "who": "Musicians of Baghdad and al-Andalus, 8th century onward",
+          "where": "Cordoba, Seville, Sicily",
+          "ps": [
+            "The oud, from al-ud, the wood, is a pear bodied, short necked instrument with a bent back head, the beloved voice of Arab music for well over a thousand years. It crossed into Europe through al-Andalus and Sicily, and Europeans took the instrument and its Arabic article together: al-ud became laúd in Spanish, liuto in Italian, luth in French, lute in English. That much is solid; the word itself is the receipt. For centuries the lute was Europe’s most refined instrument, the one angels hold in Renaissance paintings, and every lute began, in name and in body, as an oud.",
+            "The guitar is where we slow down. Its name likely descends from the Greek kithara by a separate road, and medieval Spain knew both a guitarra latina and a guitarra morisca, the Moorish guitar, so the family tree is tangled and scholars argue over which branch bore which fruit. Call the oud the guitar’s grandmother by marriage, then: not a straight bloodline, but a shared Andalusi household in which instruments traded curves, tunings, and technique for centuries. The chain of evidence is thinner here, so we hold it lightly and grade it traced. Anyone who hears an oud taqsim, a solo improvisation, hears flamenco’s ancestors clearing their throats."
+          ],
+          "today": "Every lute in an old painting, and more distantly every strummed guitar, echoes the wood of al-Andalus.",
+          "level": "traced"
+        }
+      ]
+    },
+    {
+      "id": "our-century",
+      "title": "Our Century: The River Continues",
+      "icon": "tower",
+      "gifts": [
+        {
+          "t": "Watching molecules in the act",
+          "who": "Ahmed Zewail, 1946 to 2016",
+          "where": "Egypt and California",
+          "ps": [
+            "A chemical reaction is over in femtoseconds, millionths of a billionth of a second, and for all of chemistry’s history the actual moment of change, bonds breaking and forming, was invisible in principle: you could know the before and the after, never the during. Ahmed Zewail, born in Damanhur, Egypt, educated in Alexandria and then in America, built the camera for it. At Caltech in the 1980s his team learned to fire laser pulses brief enough to catch molecules in mid transformation, strobe lighting the instant itself. Chemistry acquired slow motion. In 1999 the Nobel committee gave him the chemistry prize alone, an undivided honor, for founding femtochemistry.",
+            "Zewail carried the recognition home with intent. He argued tirelessly that science is the modern world’s common wealth, and that the Arab and Muslim worlds must reclaim their seat at its table not by nostalgia but by laboratories, founding a city of science outside Cairo that now bears his name. He liked to say he was formed by both the Nile and the Pacific and refused to choose between them. When he died in 2016, Egypt gave him a state funeral with full honors, a scientist mourned like a head of state. His field opened the door to attosecond physics: chemistry’s camera is still speeding up."
+          ],
+          "today": "Ultrafast lasers in labs worldwide watch chemistry happen in real time, doing femtochemistry he founded.",
+          "level": "solid"
+        },
+        {
+          "t": "The skeleton of the skyline",
+          "who": "Fazlur Rahman Khan, 1929 to 1982",
+          "where": "Dhaka and Chicago",
+          "ps": [
+            "Skyscrapers before Fazlur Rahman Khan were brute force: stack a dense internal skeleton and pay for it in steel, money, and darkness. Khan, an engineer from Dhaka who joined a Chicago firm, saw that a tall building could work instead like a hollow tube, its strength moved to the perimeter, walls of closely spaced columns or great visible braces carrying the wind. The idea unfolded in stages: the framed tube, then the braced tube of the John Hancock Center, then the bundled tube of the Sears Tower, nine tubes clustered like reeds, the world’s tallest building for a quarter century, raised with far less steel than the old way would have demanded.",
+            "Khan was among the first engineers to put computers seriously to work on structures, and colleagues remembered a gentle man who quoted poetry and insisted that engineering serve people rather than ego. He kept faith with Bengal, organizing relief for Bangladesh from his Chicago living room during the 1971 war. He died at fifty two, too early to watch his ideas conquer the world’s skylines, but nearly every supertall tower since, including the Burj Khalifa, descends from his structural grammar. When a city’s glass towers catch the evening light, the quiet shape doing the work inside them is usually his."
+          ],
+          "today": "Almost every tall tower on a modern skyline, including the world’s tallest, stands on his tube idea.",
+          "level": "solid"
+        },
+        {
+          "t": "The ongoing river",
+          "who": "Unnamed, because the story is still being written",
+          "where": "Every continent",
+          "ps": [
+            "This hall ends without names, on purpose. Somewhere tonight a Muslim scientist is watching a screen fill with data, a surgeon is closing a wound with dissolving thread, an engineer is checking wind loads on a tower, and a graduate student is doubting an inherited claim exactly the way Ibn al-Haytham taught. They are millions, on every continent, and history has not yet decided which of their gifts will fill halls like this one. So we leave the last alcove open, the way builders leave a course of brick unfinished when a wall is meant to continue. The river that ran through Baghdad, Cordoba, Cairo, and Samarkand did not end. You are standing in it."
+          ],
+          "today": "The next gift in this hall may be taking shape in a laboratory tonight, unnamed for now.",
+          "level": "solid"
+        }
+      ]
+    }
+  ]
+}

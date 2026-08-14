@@ -1,0 +1,2151 @@
+{
+ "meta": {
+  "slug": "hajj-plan",
+  "title": "The Pilgrim’s Planner",
+  "ar": "خُطَّة الحَاجّ",
+  "kick": "A tool of the Golden Room",
+  "h1": "Your own plan for Umrah or Hajj, in a few quiet answers",
+  "lead": "Answer six or seven questions, one at a time, and this page writes you a plan: your days in order, what to do at every rite in steps you can follow while standing in a crowd, what to pack, what to settle before you fly, and a pocket card to print, fold and carry. Nothing is sent anywhere. Nothing needs an account. Once the page has loaded it works with no connection at all, which matters, because the network in Makkah does not.",
+  "desc": "A free planner for Umrah and Hajj: a day by day itinerary for your own journey, the rites in short imperative steps with their rank and their du’as, a packing list built from your answers, a before you go checklist with real timing, and a one page pocket card to print and carry. No account, no server, works offline."
+ },
+ "frame": {
+  "kk": "Read this first",
+  "title": "What this plan is, and what it is not",
+  "ps": [
+   "This is a preparation aid. It is not a fatwa and it cannot be one, because a fatwa is a ruling given to a named person in a known situation by a scholar who can ask questions back. This page does not know your school, your health, your group, or what happened to you at two in the morning at the miqat, the boundary where ihram begins.",
+   "Rulings on the ground change, and so do the regulations. Routes are moved, camps are shifted, permits and health requirements are rewritten from one year to the next. Your group’s scholar and the official guidance for your year decide. They can see what a page cannot.",
+   "Where the four Sunni schools differ, this plan says so and keeps the difference rather than choosing for you. Every rite below carries the same evidence badge and the same rank the Golden Room gives it, drawn from the same file, so the two pages can never drift apart.",
+   "Nothing here invents a price, a queue time, a distance or a rule. Where the honest answer is that it depends on your operator, your country or your year, the plan says confirm it, and names who to ask.",
+   "It is all kept on this device. The plan is written into the link itself, so sending the link to your family sends them the plan. There is no account, no server and nothing to renew, and once this page has loaded it needs no connection."
+  ]
+ },
+ "steps": [
+  {
+   "id": "journey",
+   "kind": "one",
+   "kick": "One",
+   "q": "Which journey are you preparing for?",
+   "help": "Umrah can be made at any time of the year. Hajj is only in the days of Dhul Hijjah, and only once in a life is required of anyone who is able.",
+   "opts": [
+    {
+     "v": "umrah",
+     "t": "Umrah only",
+     "d": "The lesser pilgrimage. Four steps and a few hours, at any time of year."
+    },
+    {
+     "v": "hajj",
+     "t": "Hajj",
+     "d": "The fifth pillar, in its fixed days from the eighth to the thirteenth of Dhul Hijjah."
+    }
+   ]
+  },
+  {
+   "id": "way",
+   "kind": "one",
+   "kick": "Two",
+   "when": [
+    "hajj"
+   ],
+   "q": "Which of the three ways will you perform?",
+   "help": "The choice is made before you enter ihram at the miqat, not afterwards, because the sacrifice, the hair cutting and the second sa’i all follow from it. If your operator has already told you, choose theirs.",
+   "opts": [
+    {
+     "v": "tamattu",
+     "t": "Tamattu’",
+     "ar": "التَّمَتُّع",
+     "d": "Umrah first, come fully out of ihram, then enter ihram again for Hajj on the eighth. A sacrifice is due.",
+     "badge": "Most common"
+    },
+    {
+     "v": "qiran",
+     "t": "Qiran",
+     "ar": "القِرَان",
+     "d": "One intention for Umrah and Hajj together, and you never leave ihram between them. A sacrifice is due."
+    },
+    {
+     "v": "ifrad",
+     "t": "Ifrad",
+     "ar": "الإِفْرَاد",
+     "d": "Hajj alone, with no Umrah joined to it and no sacrifice due for the rite itself."
+    }
+   ],
+   "default": "tamattu",
+   "note": "Tamattu’ is offered first because it is what most pilgrims from outside the Haram do, for two honest reasons: flights arrive days or weeks before the eighth, and nobody can stay in ihram that long without hardship."
+  },
+  {
+   "id": "year",
+   "kind": "year",
+   "kick": "Three",
+   "when": [
+    "hajj"
+   ],
+   "q": "Which year are you going?",
+   "help": "The Hijri years below are computed on this device from the arithmetic calendar. The Gregorian dates beside them are an estimate that waits for the moon: the announcement of your country and of Saudi Arabia is the date, and it can move by a day either way."
+  },
+  {
+   "id": "season",
+   "kind": "month",
+   "kick": "Three",
+   "when": [
+    "umrah"
+   ],
+   "q": "Roughly when will you go?",
+   "help": "An approximate month is enough for a plan. Choose the Hijri month you are aiming for, or say you have not decided and the plan will simply leave the dates open.",
+   "note": "An Umrah in Ramadan is equal in reward to a Hajj, as the Prophet ﷺ said to a woman of the Ansar, and it is also widely the fullest month of the year in the Haram. Both of those are worth knowing before you book."
+  },
+  {
+   "id": "from",
+   "kind": "one",
+   "kick": "Four",
+   "q": "Where will you travel from?",
+   "help": "This decides your miqat, the boundary you may not cross without ihram, and whether you will be entering ihram on an aircraft. If you are flying, the crew announces the miqat, and you want to be ready long before that."
+  },
+  {
+   "id": "days",
+   "kind": "days",
+   "kick": "Five",
+   "q": "How many days will you have?",
+   "help": "Many pilgrims visit both cities. Put zero for Madinah if you are not going. If you do not know yet, an estimate is fine and you can come back and change it."
+  },
+  {
+   "id": "who",
+   "kind": "many",
+   "kick": "Six",
+   "q": "Who is going?",
+   "help": "Choose everything that is true. These change the plan in real ways: the timings move, the rest is built in, and the alternatives that are permitted get named.",
+   "opts": [
+    {
+     "v": "alone",
+     "t": "I am going alone",
+     "d": "Within a group, but with nobody of my own."
+    },
+    {
+     "v": "couple",
+     "t": "A couple",
+     "d": "Two of us, travelling together."
+    },
+    {
+     "v": "children",
+     "t": "A family with children",
+     "d": "Young ones who tire, and who must never be out of sight."
+    },
+    {
+     "v": "elderly",
+     "t": "With elderly parents",
+     "d": "Someone whose pace sets the pace of the whole party."
+    },
+    {
+     "v": "first",
+     "t": "This is my first time",
+     "d": "Nothing here will be familiar, which is normal."
+    },
+    {
+     "v": "womengroup",
+     "t": "Women travelling in a group",
+     "d": "A party of women, with or without a mahram present."
+    }
+   ]
+  },
+  {
+   "id": "needs",
+   "kind": "many",
+   "kick": "Seven",
+   "q": "Is there anything the plan should work around?",
+   "help": "Say it here and the plan will name the permitted alternatives rather than leaving you to find out in the crowd. Choose nothing if none apply.",
+   "opts": [
+    {
+     "v": "mobility",
+     "t": "Reduced mobility",
+     "d": "Walking is possible but limited, or painful, or slow."
+    },
+    {
+     "v": "wheelchair",
+     "t": "A wheelchair is needed",
+     "d": "For all of it, or for the long distances."
+    },
+    {
+     "v": "chronic",
+     "t": "A chronic condition",
+     "d": "Diabetes, heart, kidney, asthma, anything needing daily medicine."
+    },
+    {
+     "v": "crowds",
+     "t": "Difficulty with crowds",
+     "d": "Panic, claustrophobia, or a sensory difficulty."
+    },
+    {
+     "v": "noarabic",
+     "t": "I do not speak Arabic",
+     "d": "Signs, announcements and officials will be hard to follow."
+    }
+   ]
+  },
+  {
+   "id": "card",
+   "kind": "card",
+   "kick": "Eight",
+   "q": "The details you will want when something goes wrong",
+   "help": "These are printed on your pocket card and on the emergency page, and they are kept on this device and inside your own link. Leave any of them empty if you do not know them yet; the card prints the empty lines so you can fill them in with a pen."
+  }
+ ],
+ "monthNote": {
+  "9": "Ramadan. The reward of an Umrah in it is equal to a Hajj, and it is widely the fullest month of the year.",
+  "12": "Dhul Hijjah. If you are travelling in the first thirteen days of this month while Hajj is being performed, expect the Haram to be at its heaviest and check what your visa permits.",
+  "10": "Shawwal. The months of Hajj begin in this month, which is why some who intend Hajj enter ihram for Umrah from here.",
+  "1": "Muharram, the quiet month that follows the Hajj season.",
+  "7": "Rajab, one of the four sacred months. There is no Umrah particular to it in the Sunnah, whatever is commonly said."
+ },
+ "miqats": {
+  "hulayfah": {
+   "n": "Dhul Hulayfah",
+   "ar": "ذُو الحُلَيْفَة",
+   "today": "known today as Abyar Ali",
+   "dir": "from Madinah, the north",
+   "deg": -90,
+   "who": "the people of Madinah and anyone who comes through it",
+   "note": "The furthest of the five, about four hundred and fifty kilometres from Makkah, so you enter ihram there and travel most of a day inside it."
+  },
+  "juhfah": {
+   "n": "Al-Juhfah",
+   "ar": "الجُحْفَة",
+   "today": "Rabigh is used in its place today",
+   "dir": "from Sham, Egypt and the west",
+   "deg": -145,
+   "who": "the people of Sham, Egypt and the west, north of Makkah",
+   "note": "Most aircraft arriving from the north and the west cross its line in the air, which is why the crew announces it."
+  },
+  "qarn": {
+   "n": "Qarn al-Manazil",
+   "ar": "قَرْن المَنَازِل",
+   "today": "known today as as-Sayl al-Kabir",
+   "dir": "from Najd, the east",
+   "deg": 15,
+   "who": "the people of Najd and whoever comes through from the east",
+   "note": "The miqat most travellers from the eastern side of the peninsula are named, whether they come by road or by air."
+  },
+  "yalamlam": {
+   "n": "Yalamlam",
+   "ar": "يَلَمْلَم",
+   "today": "",
+   "dir": "from Yemen, the south",
+   "deg": 90,
+   "who": "the people of Yemen, and many arriving from South and Southeast Asia",
+   "note": "The southern gate. Aircraft approaching Jeddah from the south and the south east are usually named this one."
+  },
+  "dhatirq": {
+   "n": "Dhat Irq",
+   "ar": "ذَاتُ عِرْق",
+   "today": "",
+   "dir": "from Iraq, the north east",
+   "deg": -35,
+   "who": "the people of Iraq and whoever comes through from the north east",
+   "note": "On the reading of the hadith scholars this is the one of the five reported in Bukhari as appointed by Umar for the people of Iraq, with further reports raising it to the Prophet ﷺ whose chains they discuss and do not all grade alike. All four schools treat it as the miqat of that direction."
+  }
+ },
+ "regions": [
+  {
+   "v": "namerica",
+   "t": "North America",
+   "d": "The United States, Canada, Mexico",
+   "m": "juhfah",
+   "plane": 1
+  },
+  {
+   "v": "europe",
+   "t": "Europe and the United Kingdom",
+   "d": "Including the Balkans and Scandinavia",
+   "m": "juhfah",
+   "plane": 1
+  },
+  {
+   "v": "latam",
+   "t": "Latin America and the Caribbean",
+   "d": "Almost always routed through Europe or the Gulf",
+   "m": "juhfah",
+   "plane": 1,
+   "alt": "If your routing takes you east through the Gulf rather than north through Europe, the miqat your crew names may be a different one. Listen for the announcement."
+  },
+  {
+   "v": "sham",
+   "t": "Turkey, the Levant and Palestine",
+   "d": "Turkey, Syria, Lebanon, Jordan, Palestine",
+   "m": "juhfah",
+   "plane": 1
+  },
+  {
+   "v": "northafrica",
+   "t": "Egypt and North Africa",
+   "d": "Egypt, Libya, Tunisia, Algeria, Morocco",
+   "m": "juhfah",
+   "plane": 1
+  },
+  {
+   "v": "wafrica",
+   "t": "West and Central Africa",
+   "d": "Nigeria, Senegal, Mali, Niger, Chad and their neighbours",
+   "m": "juhfah",
+   "plane": 1
+  },
+  {
+   "v": "eafrica",
+   "t": "East Africa and the Horn",
+   "d": "Sudan, Ethiopia, Somalia, Kenya, Tanzania",
+   "m": "yalamlam",
+   "plane": 1,
+   "alt": "Routes from this direction split. Arrivals from the south are commonly named Yalamlam, and those routed north through Egypt or Sudan are commonly named al-Juhfah. Your airline names the one on your route, so listen for it and ask your operator before you fly."
+  },
+  {
+   "v": "gulf",
+   "t": "The Gulf states",
+   "d": "Saudi Arabia’s east, the Emirates, Qatar, Bahrain, Kuwait, Oman",
+   "m": "qarn",
+   "plane": 0,
+   "alt": "Travellers coming up the southern coast are sometimes named Yalamlam instead. If you are driving, your miqat is simply the one on your road, and it is signposted."
+  },
+  {
+   "v": "iraq",
+   "t": "Iraq and Iran",
+   "d": "By air or overland",
+   "m": "dhatirq",
+   "plane": 1
+  },
+  {
+   "v": "centralasia",
+   "t": "Central Asia, the Caucasus and Russia",
+   "d": "Uzbekistan, Kazakhstan, Azerbaijan, Tatarstan and their neighbours",
+   "m": "dhatirq",
+   "plane": 1,
+   "alt": "Many parties from these countries are routed through Turkey, and a route through the north west is named al-Juhfah instead. The announcement on your own aircraft settles it."
+  },
+  {
+   "v": "southasia",
+   "t": "South Asia",
+   "d": "Pakistan, India, Bangladesh, Sri Lanka, Nepal, the Maldives",
+   "m": "yalamlam",
+   "plane": 1
+  },
+  {
+   "v": "seasia",
+   "t": "Southeast Asia",
+   "d": "Indonesia, Malaysia, Singapore, Brunei, Thailand, the Philippines",
+   "m": "yalamlam",
+   "plane": 1
+  },
+  {
+   "v": "eastasia",
+   "t": "China and East Asia",
+   "d": "China, Japan, Korea and their neighbours",
+   "m": "yalamlam",
+   "plane": 1,
+   "alt": "Parties routed through the Gulf may be named Qarn al-Manazil instead. Ask your operator which one your flight crosses."
+  },
+  {
+   "v": "oceania",
+   "t": "Australia, New Zealand and the Pacific",
+   "d": "Usually routed through Southeast Asia or the Gulf",
+   "m": "yalamlam",
+   "plane": 1
+  },
+  {
+   "v": "yemen",
+   "t": "Yemen",
+   "d": "By air or overland",
+   "m": "yalamlam",
+   "plane": 0
+  },
+  {
+   "v": "madinah",
+   "t": "Through Madinah first",
+   "d": "Whatever your country, if you land in Madinah and go on to Makkah afterwards",
+   "m": "hulayfah",
+   "plane": 0,
+   "alt": "This one overrides your country. Whoever comes through Dhul Hulayfah enters ihram there, and it is the furthest of the five, so the day of travel afterwards is spent already in ihram. Pack for that day accordingly."
+  },
+  {
+   "v": "inside",
+   "t": "I am already inside the miqat",
+   "d": "Living in Makkah, Jeddah, Taif, or already past the line",
+   "m": "inside",
+   "plane": 0
+  },
+  {
+   "v": "unknown",
+   "t": "I do not know",
+   "d": "Show me how to find out",
+   "m": "unknown",
+   "plane": 0
+  }
+ ],
+ "insideNote": {
+  "t": "You are already inside the line",
+  "ps": [
+   "Whoever lives nearer to Makkah than a miqat enters ihram from where he is, until the people of Makkah enter from Makkah itself. So for Hajj you make the intention and put on the cloths at your house or your hotel. You do not travel out to a miqat and come back.",
+   "For an Umrah it is different, because an Umrah needs a crossing from outside the sanctuary into it. Whoever is already inside goes out to the nearest boundary, at-Tan’im or al-Ji’ranah, enters ihram there and returns."
+  ]
+ },
+ "unknownNote": {
+  "t": "How to find out, in three steps",
+  "ps": [
+   "One: ask your operator which airport you land at, and whether you go to Madinah before Makkah. If you go to Madinah first, your miqat is Dhul Hulayfah, called Abyar Ali today, whatever your country, and the question is settled.",
+   "Two: if you fly straight to Jeddah or to Makkah by road, your miqat is the one of the direction you come through. The rule the Prophet ﷺ gave with the five covers everyone: they are for the people of those places, and for anyone who comes through them from other lands.",
+   "Three: on the aircraft the crew announces the miqat, usually about half an hour before, and often twice. Be changed and ready before that announcement, not during it. In practice that means changing at your departure airport and making the intention when they call it.",
+   "If you are still unsure, ask your group leader in writing before you fly, and ask again at the airport. Nobody will think less of you for asking. Crossing the line without ihram while intending the rites means going back to it, or a sacrifice."
+  ]
+ },
+ "rites": [
+  {
+   "id": "ihram",
+   "n": "Ihram, from the miqat",
+   "ar": "الإِحْرَام",
+   "gloss": "al-ihram, entering the state",
+   "src": [
+    "umrah",
+    "One: ihram, from the miqat"
+   ],
+   "for": [
+    "umrah",
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "At the miqat, or at your hotel if you are already inside it",
+   "steps": [
+    "Wash, or take a full bath if you can. It is a sunnah, and it is also the last proper wash you will get for a while.",
+    "Men: put on the two unstitched white cloths, one round the waist, one over the shoulders. Nothing underneath. Women: your ordinary modest clothing, any colour, with the face and the hands uncovered while in ihram.",
+    "No perfume from this moment. Perfume applied to the body before the intention is fine and may remain; perfume applied after it is not.",
+    "Pray two units if it is not a forbidden time. Then make the intention in your heart for the rite you have chosen. The heart is where the intention lives; saying it aloud is a habit of some scholars, not a requirement of all.",
+    "Begin the talbiyah, and keep saying it. Men raise the voice, women say it audibly to themselves.",
+    "From now until you are released: no cutting hair or nails, no perfume, no stitched clothing for men, no covering the head for men, no niqab or gloves for women, no marriage contract, no intimacy, no hunting."
+   ],
+   "dua": "talbiyah",
+   "byway": {
+    "tamattu": "Your intention is for Umrah alone. You will come fully out of ihram after it and enter it again on the eighth.",
+    "qiran": "Your intention is for Umrah and Hajj together, in one breath. You will not come out of ihram at all until the tenth.",
+    "ifrad": "Your intention is for Hajj alone. No Umrah is joined to it, and you stay in ihram until the tenth."
+   },
+   "short": "Ihram at the miqat",
+   "pcw": "before the line"
+  },
+  {
+   "id": "enter",
+   "n": "Entering the Haram, and the first sight",
+   "ar": "دُخُول الحَرَم",
+   "gloss": "dukhul al-haram, entering the sanctuary",
+   "src": [
+    "umrah",
+    "Two: entering the Haram, and the first sight"
+   ],
+   "for": [
+    "umrah",
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "On arrival at the Sacred Mosque",
+   "steps": [
+    "Enter with the right foot and say the du’a for entering any mosque.",
+    "When the House comes into view, stop walking and get out of the doorway first. People stop dead in the entrance every day and a crowd builds behind them.",
+    "Then ask. In your own language, for the things you actually need. No specific du’a for the first sight of the Kaaba is established in an authentic report, and borrowed words said while thinking about nothing are worth less than your own."
+   ],
+   "dua": "mosque",
+   "short": "Entering the Haram",
+   "pcw": "on arrival"
+  },
+  {
+   "id": "tawaf",
+   "n": "Tawaf, seven circuits",
+   "ar": "الطَّوَاف",
+   "gloss": "at-tawaf, the circling",
+   "src": [
+    "umrah",
+    "Three: tawaf, seven circuits"
+   ],
+   "for": [
+    "umrah",
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "Immediately after you enter, if the mosque is not impossible",
+   "steps": [
+    "Stand level with the corner of the Black Stone, with the House on your left.",
+    "Face the Stone, raise your right hand toward it, say Allahu akbar, and start walking. Do not fight anyone to kiss it. Kissing it is a sunnah; injuring a stranger to do it is a sin, and no school has ever said otherwise.",
+    "Walk anticlockwise, keeping the House on your left and staying outside the Hijr, the low curved wall, because it is part of the House.",
+    "Count each pass from the Stone back to the Stone as one. Seven of them. If you lose count, build on the lower number you are certain of.",
+    "Between the Yamani corner and the Black Stone, say the verse he ﷺ said there. Everywhere else, say what you like: there is no prescribed du’a for the first circuit or the fourth, whatever the booklets at the gate say.",
+    "Men, in a tawaf that will be followed by sa’i: walk briskly with short quick steps in the first three circuits, and bare the right shoulder throughout. Both drop away in a crowd where they would harm someone. Neither applies to women."
+   ],
+   "dua": "corners",
+   "count": {
+    "umrah": 1,
+    "tamattu": 3,
+    "qiran": 3,
+    "ifrad": 3
+   },
+   "short": "Tawaf, seven circuits",
+   "pcw": "from the Stone",
+   "byway": {
+    "qiran": "Most schools have one tawaf and one sa’i serve for both your Umrah and your Hajj. The Hanafis have you perform two of each, one set for the Umrah and one for the Hajj. Ask which your group follows.",
+    "ifrad": "You are not performing an Umrah, so this is your greeting tawaf on arrival, tawaf al-qudum, and then tawaf al-ifadah from the tenth, and the farewell at the end."
+   }
+  },
+  {
+   "id": "after",
+   "n": "Two units, and Zamzam",
+   "ar": "رَكْعَتَا الطَّوَاف",
+   "gloss": "rak’ata at-tawaf, the two units of the tawaf",
+   "src": [
+    "umrah",
+    "After the tawaf: two units, and Zamzam"
+   ],
+   "for": [
+    "umrah",
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "Straight after each tawaf",
+   "steps": [
+    "Pray two units behind Maqam Ibrahim if there is space, reciting al-Kafirun and then al-Ikhlas.",
+    "If it is packed, and it usually is, pray them anywhere in the mosque. Do not push through a moving tawaf to reach the Maqam. There is no requirement to be near it.",
+    "Drink Zamzam, and drink plenty. You are about to walk a great deal in heat."
+   ],
+   "short": "Two units, Zamzam",
+   "pcw": "after the tawaf"
+  },
+  {
+   "id": "sai",
+   "n": "Sa’i, seven between Safa and Marwah",
+   "ar": "السَّعْي",
+   "gloss": "as-sa’i, the going between",
+   "src": [
+    "umrah",
+    "Four: sa’i, seven between Safa and Marwah"
+   ],
+   "for": [
+    "umrah",
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "After the tawaf and its two units",
+   "steps": [
+    "Go out to as-Safa and climb until you can see the House.",
+    "Face the Kaaba, raise your hands, say Allahu akbar three times, then the words of Safa, then ask for whatever you want. Say the whole of it three times, asking in between.",
+    "Walk to Marwah. That is one.",
+    "Walk back to Safa. That is two. Going and returning are not one trip; they are two. This is the single most common counting mistake, and it is why seven ends you at Marwah and not at Safa.",
+    "Between the two green markers, men jog; women walk. Everything else in between is free: du’a, dhikr, Qur’an, whatever you carry.",
+    "Do the same on Marwah as you did on Safa. Seven traversals, ending at Marwah."
+   ],
+   "dua": "safa",
+   "count": {
+    "umrah": 1,
+    "tamattu": 2,
+    "qiran": 1,
+    "ifrad": 1
+   },
+   "short": "Sa’i, seven",
+   "pcw": "ends at Marwah",
+   "byway": {
+    "qiran": "One sa’i for both rites in most schools; two for the Hanafis.",
+    "ifrad": "Whether the sa’i performed after your arrival tawaf stands in place of the sa’i of the Hajj is handled differently by the schools. Ask your group’s scholar rather than deciding it yourself."
+   }
+  },
+  {
+   "id": "halq",
+   "n": "Halq or taqsir, and the Umrah is finished",
+   "ar": "الحَلْق أَو التَّقْصِير",
+   "gloss": "al-halq aw at-taqsir, shaving or shortening",
+   "src": [
+    "umrah",
+    "Five: halq or taqsir, and it is finished"
+   ],
+   "for": [
+    "umrah",
+    "tamattu"
+   ],
+   "when": "At the end of the Umrah, before you take the cloths off",
+   "steps": [
+    "Men: shave, or shorten. Shaving is clearly better. If you are performing tamattu’ and will shave again on the tenth, many scholars advise shortening now so that there is hair left to shave then.",
+    "Women: taqsir only. Gather the hair and cut about a fingertip’s length from the end, from each braid or from the whole.",
+    "Use a licensed barber with a clean blade. Not the man with a razor in the street. Blood borne infection is a real risk here every year.",
+    "The moment the hair is cut, the Umrah is over and everything ihram forbade is lawful again. Take the cloths off. Rest. Drink something cold."
+   ],
+   "short": "Cut the hair",
+   "pcw": "the Umrah ends"
+  },
+  {
+   "id": "hajj_ihram",
+   "n": "Ihram for Hajj, on the eighth",
+   "ar": "إِحْرَام الحَجّ",
+   "gloss": "ihram al-hajj, entering ihram for the pilgrimage",
+   "src": [
+    "days:8",
+    "Enter ihram again, if you are performing tamattu’"
+   ],
+   "for": [
+    "tamattu"
+   ],
+   "when": "The morning of 8 Dhul Hijjah, from where you are staying",
+   "steps": [
+    "Wash. Put the two cloths on again, or your modest dress.",
+    "Make the intention for Hajj from where you are staying in Makkah. You do not go back out to a miqat for this.",
+    "Begin the talbiyah again. This time it does not stop until you throw the first pebble on the tenth."
+   ],
+   "dua": "talbiyah",
+   "byway": {
+    "qiran": "You are already in ihram and stay in it. Nothing changes for you today.",
+    "ifrad": "You are already in ihram and stay in it. Nothing changes for you today."
+   },
+   "short": "Ihram for Hajj",
+   "pcw": "8 Dhul Hijjah"
+  },
+  {
+   "id": "mina8",
+   "n": "Mina, and five prayers there",
+   "ar": "مِنَى",
+   "gloss": "Mina, the valley of the tents",
+   "src": [
+    "days:8",
+    "To Mina, and five prayers there"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "8 Dhul Hijjah, ideally before midday, until dawn of the ninth",
+   "steps": [
+    "Go out to Mina before midday if your group’s transport allows it, and stay there.",
+    "Pray Zuhr, Asr, Maghrib and Isha at Mina, and Fajr of the ninth there. The four unit prayers are shortened to two, each in its own time. They are not joined today.",
+    "Find your tent number, the nearest toilets and the nearest medical point before dark, and walk the route once so you can find it again half asleep.",
+    "Sleep early. The temptation tonight is to talk until two in the morning with people you have just met. Tomorrow is the day of your life and you will meet it exhausted."
+   ],
+   "short": "Mina, the eighth",
+   "pcw": "8 Dhul Hijjah"
+  },
+  {
+   "id": "arafah",
+   "n": "The standing at Arafah",
+   "ar": "الوُقُوف بِعَرَفَة",
+   "gloss": "al-wuquf bi-Arafah, the standing at Arafah",
+   "src": [
+    "days:9",
+    "The standing at Arafah is the pillar"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "9 Dhul Hijjah, from midday until sunset",
+   "steps": [
+    "Travel from Mina to Arafah after sunrise. Check with your own eyes that you are inside the Arafah boundary; the valley of Uranah is outside it, and the boundary is marked.",
+    "At midday pray Zuhr and Asr joined and shortened, two units and two units, at the time of Zuhr, with one adhan and two iqamahs.",
+    "Then stand. Face the qiblah, raise your hands, and ask, until the sun has fully set.",
+    "Do not climb the mountain. There is no rite attached to Jabal ar-Rahmah, and every year people injure themselves in the heat to reach a rock the Prophet ﷺ told them they did not need. Your tent is Arafah. The car park is Arafah.",
+    "Do not fast today. He ﷺ stood at Arafah not fasting and drank in full view of the people so that they would know. The fast of Arafah is for those who are not there.",
+    "Do not leave before sunset if you were there in the day. Then go, calmly."
+   ],
+   "dua": "arafah",
+   "pillar": true,
+   "short": "Standing at Arafah",
+   "pcw": "9, midday to sunset"
+  },
+  {
+   "id": "muzdalifah",
+   "n": "Muzdalifah, after sunset",
+   "ar": "المُزْدَلِفَة",
+   "gloss": "al-Muzdalifah, the place of nearness",
+   "src": [
+    "days:9",
+    "Muzdalifah, after sunset"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "The night of the tenth, from after sunset until dawn",
+   "steps": [
+    "Do not pray Maghrib at Arafah. You delay it until Muzdalifah, and there you pray Maghrib and Isha together, one adhan and two iqamahs.",
+    "Then sleep. Do not spend this night in prayer. He ﷺ lay down and slept until Fajr.",
+    "Collect seven small pebbles, about the size of a chickpea, for tomorrow. Muzdalifah or Mina, it makes no difference, and there is nothing to be gained from washing them.",
+    "Pray Fajr early, stand facing the qiblah remembering Allah until the light is wide, then leave before sunrise."
+   ],
+   "short": "Muzdalifah, the night",
+   "pcw": "night of the 10th"
+  },
+  {
+   "id": "jamrah",
+   "n": "Jamrat al-Aqabah, seven pebbles",
+   "ar": "جَمْرَة العَقَبَة",
+   "gloss": "jamrat al-Aqabah, the pillar nearest Makkah",
+   "src": [
+    "days:10",
+    "One: Jamrat al-Aqabah, seven pebbles"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "10 Dhul Hijjah, in the morning or at whatever hour your group is given",
+   "steps": [
+    "Go to the largest pillar, the one nearest Makkah. Today you throw at this one only.",
+    "Throw seven pebbles, one at a time, saying Allahu akbar with each.",
+    "Stop saying the talbiyah with the first pebble.",
+    "You are not stoning devils and there is nothing in the pillar to hit. Do not throw shoes, umbrellas, bottles or large stones. Every year somebody opens a stranger’s head this way."
+   ],
+   "short": "Stone al-Aqabah",
+   "pcw": "10, seven pebbles"
+  },
+  {
+   "id": "hady",
+   "n": "The sacrifice",
+   "ar": "الهَدْي",
+   "gloss": "al-hady, the offering",
+   "src": [
+    "days:10",
+    "Two: the sacrifice"
+   ],
+   "for": [
+    "tamattu",
+    "qiran"
+   ],
+   "when": "10 Dhul Hijjah, after the stoning",
+   "steps": [
+    "You will not hold a knife. You buy a voucher through your group or through one of the licensed organisations, and the animal is slaughtered on your behalf.",
+    "Keep the receipt or the message that confirms it, and know the date and the hour it was done, because you need to know it happened before you cut your hair.",
+    "If you genuinely cannot afford it, the Qur’an gives the replacement itself: fast three days during the Hajj and seven when you return home, ten complete. Ask a scholar to check that this applies to you before you rely on it."
+   ],
+   "short": "The sacrifice",
+   "pcw": "10 Dhul Hijjah"
+  },
+  {
+   "id": "halq10",
+   "n": "Halq or taqsir, and the first release",
+   "ar": "التَّحَلُّل الأَوَّل",
+   "gloss": "at-tahallul al-awwal, the first release",
+   "src": [
+    "days:10",
+    "Three: halq or taqsir, and the first release"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "10 Dhul Hijjah, after the stoning and the sacrifice",
+   "steps": [
+    "Men: shave the head. It is better, and he ﷺ asked Allah to have mercy on those who shave three times before he added those who shorten.",
+    "Women: shorten a fingertip’s length.",
+    "Licensed barber, clean blade. Again.",
+    "After this most of ihram is lifted: ordinary clothes, perfume, cutting nails. Intimacy with a spouse is not lifted until the tawaf of the tenth is done."
+   ],
+   "short": "Shave or shorten",
+   "pcw": "10 Dhul Hijjah"
+  },
+  {
+   "id": "ifadah",
+   "n": "Tawaf al-ifadah, and its sa’i",
+   "ar": "طَوَاف الإِفَاضَة",
+   "gloss": "tawaf al-ifadah, the tawaf of the pouring forth",
+   "src": [
+    "days:10",
+    "Four: tawaf al-ifadah, and its sa’i"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "From the tenth onward, and it cannot be dropped",
+   "steps": [
+    "Go down to Makkah and perform seven circuits exactly as before.",
+    "This is the second pillar of the Hajj, agreed by all four schools. Without it there is no Hajj, whatever else was done, and no sacrifice replaces it.",
+    "If you are performing tamattu’, a sa’i follows this tawaf. If you are performing qiran or ifrad and you already performed the sa’i of your Hajj after an earlier tawaf, most schools do not have you repeat it. Ask your group’s scholar which your group follows, because the schools part here.",
+    "Until this tawaf is done you are still in ihram in the matter of your spouse, however normal the rest of the day feels."
+   ],
+   "pillar": true,
+   "short": "Tawaf al-ifadah",
+   "pcw": "from the 10th"
+  },
+  {
+   "id": "tashriq",
+   "n": "Mina, and the three pillars each afternoon",
+   "ar": "أَيَّام التَّشْرِيق",
+   "gloss": "ayyam at-tashriq, the days of drying the meat",
+   "src": [
+    "days:11",
+    "Stay at Mina, and stone all three each afternoon"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "11 and 12 Dhul Hijjah, and the 13th if you stay",
+   "steps": [
+    "Spend the nights at Mina.",
+    "Each day after the sun has passed its highest point, stone the three pillars in order: the small one first, then the middle, then the large.",
+    "Seven pebbles at each, one at a time, saying Allahu akbar with each.",
+    "Stop after the small one and after the middle one, face the qiblah, and make a long du’a. Do not stop after the large one.",
+    "Eat. These are days of eating and drinking and remembering Allah, and fasting them is the opposite of what was asked."
+   ],
+   "short": "Stone the three",
+   "pcw": "11, 12 and 13"
+  },
+  {
+   "id": "wada",
+   "n": "Tawaf al-wada, the farewell",
+   "ar": "طَوَاف الوَدَاع",
+   "gloss": "tawaf al-wada, the farewell tawaf",
+   "src": [
+    "days:11",
+    "Tawaf al-wada, the farewell"
+   ],
+   "for": [
+    "tamattu",
+    "qiran",
+    "ifrad"
+   ],
+   "when": "The last thing you do in Makkah",
+   "steps": [
+    "Seven circuits of the House, with no sa’i after it.",
+    "Make it the last of your affairs in Makkah. Shop first, pack first, then this, then the coach.",
+    "A woman who is menstruating is excused from it entirely and owes nothing."
+   ],
+   "short": "Farewell tawaf",
+   "pcw": "last of all"
+  }
+ ],
+ "duas": {
+  "mosque": {
+   "label": "Entering the mosque",
+   "ar": "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+   "tr": "Allahumma iftah li abwaba rahmatik.",
+   "en": "O Allah, open for me the doors of Your mercy.",
+   "src": "The narration in Muslim on entering the mosque."
+  },
+  "corners": {
+   "label": "Between the Yamani corner and the Black Stone",
+   "ar": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+   "tr": "Rabbana atina fi ad-dunya hasanatan wa fi al-akhirati hasanatan wa qina adhab an-nar.",
+   "en": "Our Lord, give us good in this world and good in the hereafter, and protect us from the punishment of the Fire.",
+   "src": "Qur’an 2:201, and Abu Dawud, the narration of Abdullah ibn as-Sa’ib.",
+   "ref": "2:201"
+  },
+  "safa": {
+   "label": "On Safa and on Marwah, and at Arafah",
+   "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+   "tr": "La ilaha illa Allahu wahdahu la sharika lah, lahu al-mulku wa lahu al-hamd, wa huwa ala kulli shay’in qadir.",
+   "en": "There is no god but Allah alone, with no partner. His is the dominion and His is the praise, and He is able to do all things.",
+   "src": "Muslim 1218 for the words on Safa, and the same words are the best of what he ﷺ and the prophets before him said on the day of Arafah."
+  }
+ },
+ "hajjdays": [
+  {
+   "n": "8",
+   "ar": "يَوْم التَّرْوِيَة",
+   "name": "Yawm at-Tarwiyah",
+   "en": "the day of watering",
+   "where": "Makkah in the morning, Mina by midday",
+   "lead": "The gentlest of the five, and the one people waste. Spend it slowly and sleep early.",
+   "blocks": [
+    {
+     "w": "After Fajr",
+     "t": "Wash, and enter ihram for Hajj from where you are staying. Tamattu’ pilgrims put the cloths on again; qiran and ifrad pilgrims are already in ihram and change nothing.",
+     "tag": [
+      "tamattu",
+      "qiran",
+      "ifrad"
+     ],
+     "o": 10
+    },
+    {
+     "w": "Mid morning",
+     "t": "Eat properly and drink until you are not thirsty. Fill every bottle you have. Charge everything.",
+     "o": 20
+    },
+    {
+     "w": "Before midday",
+     "t": "Travel to Mina with your group and find your tent. Walk to the toilets and to the medical point once, in daylight, so you can find them in the dark.",
+     "o": 30
+    },
+    {
+     "w": "Zuhr, Asr, Maghrib, Isha",
+     "t": "Pray all four at Mina, shortened to two units each, in their own times. They are not joined today.",
+     "o": 40
+    },
+    {
+     "w": "After Isha",
+     "t": "Write your du’a list. Then sleep. This is the last quiet night you will have.",
+     "o": 90
+    }
+   ],
+   "carry": [
+    "Water, more than you think",
+    "Two bottles you can refill",
+    "Ihram cloths and a spare set",
+    "Unscented soap and a small towel",
+    "Your medicines for two days, not one",
+    "A paper card with your tent number and your group’s number",
+    "Sandals that leave the ankle open",
+    "A small paper notebook and a pen"
+   ]
+  },
+  {
+   "n": "9",
+   "ar": "يَوْم عَرَفَة",
+   "name": "Yawm Arafah",
+   "en": "the day of Arafah",
+   "where": "Arafah until sunset, then Muzdalifah",
+   "lead": "The greatest day of the year, and the one part of the Hajj nothing replaces. Everything else can be repaired. Not this.",
+   "blocks": [
+    {
+     "w": "After sunrise",
+     "t": "Travel from Mina to Arafah. Check that your tent is inside the Arafah boundary; the valley of Uranah is outside it.",
+     "o": 10
+    },
+    {
+     "w": "Until midday",
+     "t": "Rest in the shade. Do not walk about. Do not climb anything. You are saving everything you have for the afternoon.",
+     "o": 20
+    },
+    {
+     "w": "At midday",
+     "t": "Pray Zuhr and Asr joined and shortened at the time of Zuhr, one adhan and two iqamahs.",
+     "o": 30
+    },
+    {
+     "w": "Midday to sunset",
+     "t": "Stand. Face the qiblah, raise your hands and ask, in your own language, out loud if you like. This is the whole reason you came.",
+     "o": 40
+    },
+    {
+     "w": "At sunset",
+     "t": "Leave for Muzdalifah, calmly. Do not pray Maghrib here. He ﷺ said as the crowd surged: people, be calm, be calm.",
+     "o": 50
+    },
+    {
+     "w": "On arrival at Muzdalifah",
+     "t": "Pray Maghrib and Isha together, collect seven pebbles for tomorrow, and sleep.",
+     "o": 60
+    },
+    {
+     "w": "Fajr",
+     "t": "Pray early, stand facing the qiblah remembering Allah until the light is wide, then leave before sunrise.",
+     "o": 80
+    }
+   ],
+   "carry": [
+    "Every bottle of water you can carry",
+    "Oral rehydration sachets",
+    "An umbrella for the sun, or a wide hat if you are a woman",
+    "A spray fan if you have one",
+    "Your written du’a list and the names of everyone who asked you",
+    "Your medicines for the whole day and the night",
+    "A small bag for seven pebbles",
+    "A light sheet or mat for the ground at Muzdalifah"
+   ]
+  },
+  {
+   "n": "10",
+   "ar": "يَوْم النَّحْر",
+   "name": "Yawm an-Nahr",
+   "en": "the day of sacrifice",
+   "where": "Muzdalifah, Mina, Makkah, then back to Mina",
+   "lead": "The busiest day of your life: four acts, a great many kilometres, and the day the ihram finally comes off. Most mistakes happen today, because people are tired and nobody explained the order.",
+   "blocks": [
+    {
+     "w": "After Fajr, before sunrise",
+     "t": "Leave Muzdalifah for Mina.",
+     "o": 10
+    },
+    {
+     "w": "Morning, or your group’s hour",
+     "t": "One: throw seven pebbles at Jamrat al-Aqabah, the largest pillar, the one nearest Makkah. Only that one today. Stop the talbiyah with the first pebble.",
+     "o": 20
+    },
+    {
+     "w": "After the stoning",
+     "t": "Two: the sacrifice, through your group or a licensed organisation. Keep the confirmation.",
+     "tag": [
+      "tamattu",
+      "qiran"
+     ],
+     "o": 30
+    },
+    {
+     "w": "After that",
+     "t": "Three: shave or shorten. Licensed barber, clean blade. Most of ihram lifts here.",
+     "o": 40
+    },
+    {
+     "w": "Whenever your group can get you down",
+     "t": "Four: tawaf al-ifadah in Makkah, and its sa’i. This is a pillar. It has a wide window and may be done later in these days, but it cannot be dropped.",
+     "o": 50
+    },
+    {
+     "w": "By night",
+     "t": "Back to Mina, and sleep there.",
+     "o": 90
+    }
+   ],
+   "carry": [
+    "Ordinary clothes to change into after the shaving",
+    "A bag for the ihram cloths",
+    "Your sacrifice voucher or its confirmation",
+    "The seven pebbles",
+    "Water and food for a very long day",
+    "Your group leader’s number written on paper"
+   ]
+  },
+  {
+   "n": "11",
+   "ar": "أَيَّام التَّشْرِيق",
+   "name": "Ayyam at-Tashriq",
+   "en": "the days of drying the meat",
+   "where": "Mina",
+   "lead": "After the tenth these days feel slow, and the slowness is the point.",
+   "blocks": [
+    {
+     "w": "Night",
+     "t": "Sleep at Mina. The nights here are the obligation, not the days.",
+     "o": 5
+    },
+    {
+     "w": "After midday",
+     "t": "Stone all three pillars in order: small, middle, large. Seven pebbles at each.",
+     "o": 20
+    },
+    {
+     "w": "After the small and the middle",
+     "t": "Face the qiblah and make a long du’a. Not after the large one.",
+     "o": 30
+    },
+    {
+     "w": "All day",
+     "t": "Eat, drink, say the takbir, and talk to the people around you. These are days of eating and drinking and remembering Allah.",
+     "o": 40
+    }
+   ],
+   "carry": [
+    "Twenty one pebbles for the day, gathered in the morning",
+    "Water",
+    "Sunscreen for a shaved head",
+    "Blister plasters",
+    "Your medicines"
+   ]
+  },
+  {
+   "n": "12",
+   "ar": "أَيَّام التَّشْرِيق",
+   "name": "Ayyam at-Tashriq",
+   "en": "the second of them",
+   "where": "Mina, then Makkah if you are hurrying",
+   "lead": "The day the road forks: leave after the stoning, or stay for the thirteenth. The Qur’an gives the permission itself, and neither choice is a compromise.",
+   "blocks": [
+    {
+     "w": "After midday",
+     "t": "Stone all three pillars again, in order, seven pebbles at each.",
+     "o": 20
+    },
+    {
+     "w": "Before sunset, if you are hurrying",
+     "t": "Leave Mina. You must be out of Mina before the sun sets, or the night belongs to Mina and you stay.",
+     "o": 30
+    },
+    {
+     "w": "If you are staying",
+     "t": "Sleep at Mina and stone again tomorrow after midday.",
+     "o": 40
+    }
+   ],
+   "carry": [
+    "Twenty one pebbles",
+    "Your packed bag if you are leaving today",
+    "Water"
+   ]
+  },
+  {
+   "n": "13",
+   "ar": "أَيَّام التَّشْرِيق",
+   "name": "Ayyam at-Tashriq",
+   "en": "the last of them",
+   "where": "Mina, then Makkah",
+   "lead": "For whoever delays. The Qur’an says there is no sin on him either.",
+   "blocks": [
+    {
+     "w": "After midday",
+     "t": "Stone all three pillars, in order, seven pebbles at each, for the last time.",
+     "o": 20
+    },
+    {
+     "w": "Afterwards",
+     "t": "Return to Makkah.",
+     "o": 30
+    }
+   ],
+   "carry": [
+    "Twenty one pebbles",
+    "Your packed bag",
+    "Water"
+   ]
+  }
+ ],
+ "pre": {
+  "arrive": {
+   "t": "Arrival",
+   "lead": "The day you land. Nothing is expected of you today except to get in and be still.",
+   "blocks": [
+    {
+     "w": "On the aircraft, or at the miqat",
+     "t": "Enter ihram before the miqat, not at it. The crew announces it, usually about half an hour ahead.",
+     "o": 10
+    },
+    {
+     "w": "On landing",
+     "t": "Passport, transport, hotel. Expect it to take far longer than anyone told you. Keep saying the talbiyah.",
+     "o": 20
+    },
+    {
+     "w": "Before anything else",
+     "t": "Drink. Sit down. Find out where your room is and where the mosque door nearest you is.",
+     "o": 30
+    }
+   ],
+   "carry": [
+    "Passport, visa and permit, and a photograph of each on your phone",
+    "The address of your hotel written down, in Arabic if you can",
+    "Your group leader’s number on paper",
+    "Water for the journey in"
+   ]
+  },
+  "umrah": {
+   "t": "Your Umrah",
+   "lead": "Four steps and a few hours. It is also the best possible rehearsal for the tenth of Dhul Hijjah, when tawaf and sa’i come back and you are tired.",
+   "blocks": [
+    {
+     "w": "When you are rested, not before",
+     "t": "Go to the Haram. Enter with the right foot, and get out of the doorway before you stop to look.",
+     "o": 40
+    },
+    {
+     "w": "Then",
+     "t": "Tawaf, seven circuits. Two units. Zamzam.",
+     "o": 50
+    },
+    {
+     "w": "Then",
+     "t": "Sa’i, seven between Safa and Marwah, ending at Marwah.",
+     "o": 60
+    },
+    {
+     "w": "Then",
+     "t": "Cut the hair, and it is finished. Take the cloths off and rest properly.",
+     "o": 70
+    }
+   ],
+   "carry": [
+    "Ihram cloths, or modest dress",
+    "A drawstring bag for your sandals",
+    "Water",
+    "A card with your hotel name and your room number"
+   ]
+  },
+  "settle": {
+   "t": "In Makkah",
+   "lead": "A day in the city. Use it, but do not spend everything you have.",
+   "blocks": [],
+   "carry": []
+  },
+  "madinah": {
+   "t": "In Madinah",
+   "lead": "There is no rite of Hajj or Umrah in Madinah. Nobody owes anything for not going, and nobody has an incomplete Hajj without it. It is a visit, and it is a beautiful one.",
+   "blocks": [],
+   "carry": []
+  },
+  "depart": {
+   "t": "Departure",
+   "lead": "The last of your affairs in Makkah should be with the House.",
+   "blocks": [
+    {
+     "w": "Before the coach",
+     "t": "Pack, weigh the bag, buy whatever you are buying. Do all of it first.",
+     "o": 10
+    },
+    {
+     "w": "Last",
+     "t": "Tawaf al-wada, seven circuits, no sa’i after it. Then go.",
+     "o": 90
+    }
+   ],
+   "carry": [
+    "Everything, packed",
+    "Zamzam in the container the airport allows, which changes; ask your operator",
+    "Your documents in one place"
+   ]
+  }
+ },
+ "ideas": {
+  "makkah": [
+   {
+    "t": "Pray one prayer in the first row",
+    "d": "Arrive early enough, once, to be in the first row. Then do it again.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Read the Qur’an through, or as much of it as you can",
+    "d": "Set a portion per day on the first morning. The Haram gives you long sittings you will never get at home.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Learn the routes before you need them",
+    "d": "Walk from your hotel to the mataf, and to the mas’a, and to your nearest gate, in daylight, and count the gate numbers. In a crowd at night you will be very glad you did.",
+    "k": "editorial"
+   },
+   {
+    "t": "Sit and watch the tawaf for an hour",
+    "d": "Not walking, not photographing. Just sitting where you can see it, doing nothing. Most people never do this and most people regret it.",
+    "k": "editorial"
+   },
+   {
+    "t": "Ask for other people by name",
+    "d": "Take the list you were given before you left and go through it out loud, one name at a time.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Feed someone",
+    "d": "Buy a meal for the man sitting on the floor near your gate. Do it more than once, and do not tell anyone.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Repeated Umrahs, honestly",
+    "d": "Going out to at-Tan’im every other day for another Umrah is done by very many pilgrims. If you are here for Hajj, weigh it against arriving at Arafah with nothing left, which is the commonest way to waste a Hajj.",
+    "k": "debated"
+   }
+  ],
+  "madinah": [
+   {
+    "t": "Prayer in the Prophet’s Mosque",
+    "d": "A prayer in it is better than a thousand elsewhere except the Sacred Mosque, as he ﷺ said. That is the visit, more than anything else in it.",
+    "k": "sunnah"
+   },
+   {
+    "t": "The salam upon him ﷺ, and upon Abu Bakr and Umar",
+    "d": "Quietly, facing them, without raising the voice and without crowding anyone. Then move on.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Two units at Masjid Quba",
+    "d": "Whoever purifies himself at home then comes to Quba and prays in it has the reward of an Umrah, as the report has it. Go on a Saturday if you can, which was his ﷺ practice.",
+    "k": "sunnah"
+   },
+   {
+    "t": "Uhud, and the graves of the martyrs",
+    "d": "Stand at the mountain he ﷺ said loves us and we love it, and give the salam to the people buried there. There is no rite here, and nothing to touch or tie.",
+    "k": "editorial"
+   },
+   {
+    "t": "The Rawdah",
+    "d": "Entry is managed by permit, and the way permits are issued has changed more than once. Check the official application for your year and ask your group. Do not buy a permit from anyone.",
+    "k": "editorial"
+   },
+   {
+    "t": "Baqi al-Gharqad",
+    "d": "The cemetery beside the mosque, where much of the first generation lies. Give the salam as he ﷺ taught, ask for them, and leave. Nothing is asked from the dead.",
+    "k": "sunnah"
+   }
+  ]
+ },
+ "dayadd": {
+  "8": [
+   {
+    "tag": "children",
+    "w": "Early afternoon",
+    "t": "A real rest in the tent, lying down, for the children and for whoever is with them. Two hours. Set it now, before anyone suggests something else.",
+    "o": 35
+   },
+   {
+    "tag": "children",
+    "w": "Before dark",
+    "t": "Write your tent number on the children’s wrists or on a tag inside their clothing, with your number, and photograph each child as they are dressed today.",
+    "o": 55
+   },
+   {
+    "tag": "elderly",
+    "w": "On arrival at Mina",
+    "t": "Find the shortest route from your tent to the toilets and walk it with them once. Ask your group for a tent near the edge if it is not already.",
+    "o": 32
+   },
+   {
+    "tag": "wheelchair",
+    "w": "On arrival at Mina",
+    "t": "Check the chair over: tyres, brakes, footrests, and whether it goes through your tent door. Find the wheelchair route to the jamarat before you need it in the dark.",
+    "o": 33
+   },
+   {
+    "tag": "chronic",
+    "w": "Evening",
+    "t": "Lay out tomorrow’s medicines in a separate pouch, and count them twice. Tomorrow you will be too tired to count.",
+    "o": 80
+   },
+   {
+    "tag": "crowds",
+    "w": "On arrival at Mina",
+    "t": "Pick a spot you can retreat to, and tell one person in the group that it is yours. Agree a word that means you need to leave now, so you never have to explain in the middle of it.",
+    "o": 34
+   }
+  ],
+  "9": [
+   {
+    "tag": "children",
+    "w": "Through the afternoon",
+    "t": "Take the standing in turns. One adult with the children in the shade while the other stands, then swap. Nobody has to do the whole afternoon alone, and small children are not obliged at all.",
+    "o": 41
+   },
+   {
+    "tag": "elderly",
+    "w": "Through the afternoon",
+    "t": "A chair, or a wall to lean on, faced toward the qiblah. The standing is not standing on the feet; it is being present within the boundary. Sitting is a standing.",
+    "o": 42
+   },
+   {
+    "tag": "mobility",
+    "w": "At midday",
+    "t": "Do not move about looking for a better spot. All of Arafah is a standing place, and the whole plain counts. The place you are sitting is the place.",
+    "o": 31
+   },
+   {
+    "tag": "wheelchair",
+    "w": "At sunset",
+    "t": "Ask your group now, not at sunset, how the chair gets to Muzdalifah and how long the wait for transport is. This is the hardest transfer of the whole Hajj.",
+    "o": 48
+   },
+   {
+    "tag": "chronic",
+    "w": "All day",
+    "t": "Heat, no shade and a long afternoon are exactly what makes a chronic condition dangerous. Eat and drink on your normal schedule even if everyone around you is not, and tell one person in your group what your warning signs look like.",
+    "o": 15
+   },
+   {
+    "tag": "crowds",
+    "w": "At sunset",
+    "t": "The departure from Arafah is one of the two worst crushes of the Hajj. Stay in the tent for the first part of it, deliberately, and leave late. Nothing is lost by arriving at Muzdalifah later in the night.",
+    "o": 49
+   },
+   {
+    "tag": "elderly",
+    "w": "After midnight",
+    "t": "The weak, the elderly, women and those caring for them may leave Muzdalifah after the middle of the night, before the crowd. This is an explicit permission he ﷺ gave to Sawdah. Use it if it is yours to use.",
+    "o": 70
+   }
+  ],
+  "10": [
+   {
+    "tag": "children",
+    "w": "Whole day",
+    "t": "This day is too long for young children as the adults will do it. Split it: one adult takes the children back to rest after the stoning, and the tawaf of the tenth is done later, or on the eleventh, which its window allows.",
+    "o": 60
+   },
+   {
+    "tag": "mobility",
+    "w": "At the jamarat",
+    "t": "The jamarat bridge has upper levels reached by ramp and by escalator, and they are far less crowded than the ground. Ask your group which level they are assigned and whether you may use a higher one.",
+    "o": 21
+   },
+   {
+    "tag": "mobility",
+    "w": "At the tawaf",
+    "t": "The upper floors and the roof of the mataf are open for tawaf, and the circuit is longer but calmer. Wheelchairs and mobility scooters have their own level. Count carefully: a circuit is a circuit on any floor.",
+    "o": 51
+   },
+   {
+    "tag": "wheelchair",
+    "w": "At the stoning",
+    "t": "Where a pilgrim genuinely cannot reach the jamarat, scholars permit stoning by proxy: someone else throws on your behalf after throwing for himself. The schools set conditions on who may do it and when, and some require an excuse that lasts. Ask your group’s scholar to confirm it for you before the day, not on it.",
+    "o": 22
+   },
+   {
+    "tag": "elderly",
+    "w": "At the stoning",
+    "t": "The permitted hours for stoning are wider than the crowd believes, and the schools differ on the latest and earliest. Ask your group which hours they follow and take a quiet one.",
+    "o": 23
+   },
+   {
+    "tag": "crowds",
+    "w": "At the tawaf",
+    "t": "The tawaf of the tenth has a window of days, not hours. There is no virtue in doing it in the worst crush of the year. Go on the eleventh, at night, and it is still tawaf al-ifadah.",
+    "o": 52
+   },
+   {
+    "tag": "chronic",
+    "w": "Before you set out",
+    "t": "Carry the whole day’s medicine on your body, not in a bag that can be handed to someone. You may be separated from your group for hours today.",
+    "o": 5
+   }
+  ],
+  "11": [
+   {
+    "tag": "children",
+    "w": "Afternoon",
+    "t": "The stoning in the afternoon is long and hot for children. Go late, after Asr, when the pressure has dropped, and leave the youngest in the tent with one adult.",
+    "o": 25
+   },
+   {
+    "tag": "wheelchair",
+    "w": "Afternoon",
+    "t": "Use the upper level and the wheelchair route both days. The distance between the three pillars is real and it is repeated every day.",
+    "o": 26
+   },
+   {
+    "tag": "crowds",
+    "w": "Afternoon",
+    "t": "The hours just after midday are the heaviest. Later in the afternoon is permitted by the schools and it is a different experience entirely.",
+    "o": 27
+   }
+  ]
+ },
+ "adjust": [
+  {
+   "v": "children",
+   "t": "You are travelling with children",
+   "k": "editorial",
+   "ps": [
+    "A child’s Hajj is valid and rewarded, and it does not count as the obligatory Hajj of his life. He performs what he can and his guardian does for him what he cannot: the guardian makes the intention for a very small child, carries him in the tawaf, and throws the pebbles on his behalf.",
+    "Plan the day around the smallest person, not the largest. Rest is built into every day of this plan for that reason. A tired child at the Haram at midnight is not a spiritual experience for anyone.",
+    "Never let a child hold the only copy of anything. Tags inside clothing, a photograph of each child taken every morning in the clothes they are wearing, and one agreed meeting point that never changes."
+   ]
+  },
+  {
+   "v": "elderly",
+   "t": "You are travelling with elderly parents",
+   "k": "editorial",
+   "ps": [
+    "Their pace is the pace of the party. Decide that on the first day and say it out loud, because the alternative is that it gets decided in an argument in a crowd.",
+    "The permissions given to the weak are not consolation prizes. Leaving Muzdalifah after the middle of the night was granted by the Prophet ﷺ himself to Sawdah, who was heavy and slow, and to the families sent ahead with Umm Salamah. Use what is yours.",
+    "Serving them is not time taken away from your Hajj. It is a large part of it."
+   ]
+  },
+  {
+   "v": "first",
+   "t": "This is your first time",
+   "k": "editorial",
+   "ps": [
+    "Everything will be unfamiliar, everyone will look as though they know what they are doing, and most of them do not either. Nobody is watching you.",
+    "Read the rites once on the aircraft and once the night of the eighth. Not ten times, twice, calmly.",
+    "The mistakes that cost nothing are worth knowing before the mistakes that cost a sacrifice: crying, losing your temper and regretting it, falling asleep at Arafah, forgetting the words on Safa, feeling nothing at all when you first see the House while the person beside you weeps. None of that is a fault in your Hajj."
+   ]
+  },
+  {
+   "v": "alone",
+   "t": "You are going alone",
+   "k": "editorial",
+   "ps": [
+    "Attach yourself to one family or one pair in your group in the first two days, deliberately, and tell them you have nobody. People will take you in. This is the one thing solo pilgrims say afterwards that they wish they had done sooner.",
+    "Agree a check in with somebody at home: one message a day at a fixed hour, and what they should do if it does not come.",
+    "Write your own details on paper and carry them on your body. If you are found unwell and unable to speak, that paper is what speaks for you."
+   ]
+  },
+  {
+   "v": "couple",
+   "t": "The two of you",
+   "k": "editorial",
+   "ps": [
+    "Agree one fixed meeting point in the Haram and one at Mina, by gate number, and never change them. Phones fail there constantly.",
+    "You are unlawful to each other while in ihram, and after the tenth that is lifted only when tawaf al-ifadah is done, whatever else has been performed.",
+    "Do not spend the journey managing each other. Agree in advance that either of you may go and sit down alone for an hour without it meaning anything."
+   ]
+  },
+  {
+   "v": "womengroup",
+   "t": "A party of women",
+   "k": "debated",
+   "ps": [
+    "There is no special ihram garment for a woman. Ordinary modest clothing, any colour, no requirement of white. What is specifically forbidden in ihram is the niqab cut and fitted to the face, and gloves. A loose covering let down over the face when men pass is reported from the wives of the Prophet ﷺ and is not the same thing.",
+    "On travelling without a mahram the schools genuinely differ, and the difference is old: the majority require a mahram or a husband for the journey, while the Shafi’is and some Malikis permit a woman to travel for the obligatory Hajj in a safe company of trustworthy women. This is a question for your own scholar, in your own situation, before you book.",
+    "Menstruation stops nothing but the tawaf and the prayer. She does everything the pilgrim does: ihram, Arafah, Muzdalifah, the stoning, the sa’i. Only the tawaf waits, and the farewell tawaf is dropped for her entirely.",
+    "Medication to delay a period is permitted by the great majority of contemporary scholars if a doctor says it is safe for her. It must be started well before travelling, not in the week you fly."
+   ]
+  },
+  {
+   "v": "mobility",
+   "t": "Reduced mobility",
+   "k": "debated",
+   "ps": [
+    "Name it to your operator in writing before you travel, and ask specifically: which floor of the mataf, which level of the jamarat, how far the tent is from the toilets, and what the transfer at Muzdalifah looks like.",
+    "The upper floors and the roof are open for tawaf and for sa’i. The circuit is longer and the crowd is thinner, and a circuit performed there is a circuit.",
+    "Where a pilgrim genuinely cannot perform the stoning, scholars permit a proxy to throw on his behalf, after throwing his own. The schools set conditions, and they are not identical. Confirm it with your group’s scholar in advance rather than deciding it at the pillar.",
+    "The standing at Arafah is presence within the boundary, not standing on your feet. Sit."
+   ]
+  },
+  {
+   "v": "wheelchair",
+   "t": "A wheelchair",
+   "k": "editorial",
+   "ps": [
+    "Take your own if you possibly can, and take a repair kit and a pump. Chairs can be hired on site and pushers can be arranged, and prices and availability are things we will not pretend to know: ask your operator for the current arrangement in writing.",
+    "Ask which of your routes are chair accessible and which are stairs, for every one of the five days. The answer differs by camp and by year.",
+    "Whoever pushes needs their own water, their own rest and their own Hajj. Rotate it, and say so on the first day."
+   ]
+  },
+  {
+   "v": "chronic",
+   "t": "A chronic condition",
+   "k": "editorial",
+   "ps": [
+    "See your own doctor months ahead, not weeks, and get a letter listing your diagnoses and your medicines by their generic names in English.",
+    "Carry enough for the whole trip plus two weeks, in the original packaging, split across two bags so that a lost bag is not a lost treatment.",
+    "Tell your group leader and one other person what your condition is and what an emergency looks like for you. Write it on the card you carry.",
+    "If a rite becomes genuinely dangerous for you, that is exactly the situation the fiqh of hardship exists for. Ask a scholar on site the same day. Do not improvise and do not push through."
+   ]
+  },
+  {
+   "v": "crowds",
+   "t": "Difficulty with crowds",
+   "k": "editorial",
+   "ps": [
+    "Almost every rite here has a wider window than the crowd believes. Tawaf al-ifadah has days. The stoning of the eleventh and twelfth has an afternoon and an evening. The farewell tawaf can be at four in the morning.",
+    "Choose the quiet hour every time it is offered, and do not let anyone make you feel that the harder hour is the better one. It is not.",
+    "Agree a word with one person that means I need to leave now, and agree that they will not ask you to explain."
+   ]
+  },
+  {
+   "v": "noarabic",
+   "t": "You do not speak Arabic",
+   "k": "editorial",
+   "ps": [
+    "Carry a card with your hotel name and district written in Arabic, and a photograph of the hotel front. Taxi drivers read the card; they do not read your accent.",
+    "Learn five sentences, not fifty: I do not speak Arabic. Where is my group. I am lost. I need a doctor. Please help me.",
+    "Save the number of one person in your group who speaks Arabic, and write it on paper as well as in your phone.",
+    "Announcements in the Haram and at the camps are largely in Arabic. Stay where you can see someone from your group at all times, and never rely on hearing an instruction."
+   ]
+  }
+ ],
+ "packing": [
+  {
+   "g": "Documents and paper",
+   "sub": "Two copies of everything, in two different bags, and a photograph of each on your phone.",
+   "items": [
+    {
+     "t": "Passport, valid well past your return date, with the visa and the permit arranged through a licensed operator"
+    },
+    {
+     "t": "Your operator’s full itinerary in writing: which camp at Mina, which tent number, which transport scheme, whether Muzdalifah is a full night or a shortened one"
+    },
+    {
+     "t": "Travel insurance documents, and the emergency number on paper as well as in your phone"
+    },
+    {
+     "t": "Vaccination certificates. Requirements are set for each year, so check the current list for your country rather than an old page"
+    },
+    {
+     "t": "The pocket card from this plan, printed and folded, in the pocket you never open"
+    },
+    {
+     "t": "A card with your hotel name and district written in Arabic, and a photograph of the hotel front",
+     "w": [
+      "noarabic"
+     ]
+    },
+    {
+     "t": "A letter from your doctor listing diagnoses and medicines by their generic names in English",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "A photograph of each child taken every morning in the clothes they are wearing that day",
+     "w": [
+      "children"
+     ]
+    },
+    {
+     "t": "A written note of who to call at home, and what they should do if you do not check in",
+     "w": [
+      "alone"
+     ]
+    }
+   ]
+  },
+  {
+   "g": "Ihram and clothing",
+   "sub": "Everything unscented, bought deliberately, and worn in before you fly.",
+   "items": [
+    {
+     "t": "Two sets of ihram cloths for a man, and a wide belt with a zip pocket"
+    },
+    {
+     "t": "Two or three loose modest outfits in light fabric with long sleeves for a woman, in any colour",
+     "w": [
+      "womengroup",
+      "couple",
+      "children"
+     ]
+    },
+    {
+     "t": "Sandals that leave the top of the foot and the ankle open, already worn in, plus a cheap spare pair"
+    },
+    {
+     "t": "Unscented soap, unscented shampoo, unscented toothpaste, unscented deodorant"
+    },
+    {
+     "t": "Safety pins and a plain clip or a belt for the ihram, and a small sewing kit"
+    },
+    {
+     "t": "A drawstring bag for your shoes in the mosque"
+    },
+    {
+     "t": "A bright ribbon, tag or scarf so your group can find you in a crowd of white"
+    },
+    {
+     "t": "A light long sleeved layer for the cold of a Muzdalifah night and of aggressive air conditioning"
+    },
+    {
+     "t": "Spare clothes for children in a bag you carry, not in the hold",
+     "w": [
+      "children"
+     ]
+    }
+   ]
+  },
+  {
+   "g": "Medicines and the body",
+   "sub": "Assume no pharmacy, no language and no queue you can afford to stand in.",
+   "items": [
+    {
+     "t": "Oral rehydration sachets, more than you think, and take them before you feel unwell"
+    },
+    {
+     "t": "Painkillers, blister plasters, antiseptic cream, a thermometer"
+    },
+    {
+     "t": "Sunscreen, and more of it if your head will be shaved"
+    },
+    {
+     "t": "Vaseline or an anti chafing balm. Walking many kilometres in two unstitched cloths does what you would expect"
+    },
+    {
+     "t": "A small pair of nail scissors for after the release, packed where they will not be taken at security"
+    },
+    {
+     "t": "Every prescription medicine for the whole trip plus two weeks, in original packaging, split across two bags",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "A written list of every medicine by its generic name, not its brand name, because the brand you know may not exist there",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "A cool bag and whatever your medicine needs to stay cold, and ask your hotel about a fridge before you arrive",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "A spare of any device you depend on: monitor, inhaler, sensor, charger",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "Your usual medicines for the elderly members of the party, carried by two different people",
+     "w": [
+      "elderly"
+     ]
+    },
+    {
+     "t": "Children’s paracetamol, rehydration sachets in a flavour they will accept, and plasters",
+     "w": [
+      "children"
+     ]
+    },
+    {
+     "t": "A repair kit and a pump for the chair, and a spare pair of gloves for whoever pushes",
+     "w": [
+      "wheelchair"
+     ]
+    }
+   ]
+  },
+  {
+   "g": "Comfort, and the long days",
+   "sub": "Small things that decide whether the ninth is bearable.",
+   "items": [
+    {
+     "t": "A refillable water bottle, and a second one"
+    },
+    {
+     "t": "An umbrella for the sun. It is lawful in ihram and it changes the afternoon"
+    },
+    {
+     "t": "A light prayer mat, and a thin sheet for the ground at Muzdalifah"
+    },
+    {
+     "t": "A spray fan, or a plain spray bottle"
+    },
+    {
+     "t": "A small backpack that sits high, not a shoulder bag"
+    },
+    {
+     "t": "A power bank, charged, and the right cable. Sockets at Mina are contested territory"
+    },
+    {
+     "t": "Earplugs and an eye mask. You will be sleeping in a tent with strangers"
+    },
+    {
+     "t": "A folding stick or a light folding stool, if your group permits it",
+     "w": [
+      "elderly",
+      "mobility"
+     ]
+    },
+    {
+     "t": "Something quiet for the children in long waits, that needs no battery and no signal",
+     "w": [
+      "children"
+     ]
+    },
+    {
+     "t": "Ear defenders or noise cancelling earphones, and a hat with a brim to narrow what you can see",
+     "w": [
+      "crowds"
+     ]
+    }
+   ]
+  },
+  {
+   "g": "The small things people always forget",
+   "sub": "Every one of these is on this list because somebody came home and said it.",
+   "items": [
+    {
+     "t": "A paper notebook and a pen. Batteries die, networks fail, and you will want your du’a list at Arafah"
+    },
+    {
+     "t": "The written list of everyone who asked you to make du’a for them, by name"
+    },
+    {
+     "t": "Your own list: the things you have never asked anyone for. Write them before you fly"
+    },
+    {
+     "t": "A small bag for seven pebbles, and a larger one for twenty one"
+    },
+    {
+     "t": "Wet wipes, tissues, and a small bottle of hand sanitiser"
+    },
+    {
+     "t": "A cheap watch, so that you are not taking your phone out to see the time"
+    },
+    {
+     "t": "Zip bags, several, for wet clothes, for documents, for a shaved head’s cap"
+    },
+    {
+     "t": "A laundry bag, and enough coins or small notes for a launderette"
+    },
+    {
+     "t": "Your own pillowcase. It weighs nothing and it helps more than it should"
+    }
+   ]
+  }
+ ],
+ "before": [
+  {
+   "k": "Three months out",
+   "sub": "The things that cannot be done quickly.",
+   "items": [
+    {
+     "t": "Book through a licensed operator you can name and check. Not an intermediary who cannot be named, and not a person in a group chat."
+    },
+    {
+     "t": "Start walking. Work up to ten to fifteen kilometres a day, in the shoes and the sandals you will actually wear, including some walking in the heat of the day."
+    },
+    {
+     "t": "See your doctor. Vaccinations, a review of every medicine, and the letter listing them in English."
+    },
+    {
+     "t": "Write your will, and have it witnessed, and tell someone trustworthy where it is. The Prophet ﷺ said it is not right for a Muslim who has something to bequeath to pass two nights without his will written with him."
+    },
+    {
+     "t": "Begin settling your debts. Where a debt cannot be cleared, agree a written schedule with whoever you owe and keep a copy."
+    },
+    {
+     "t": "If a period may fall across the journey, speak to a doctor now about whether delaying it is safe for you. This has to be started early to be reliable.",
+     "w": [
+      "womengroup",
+      "couple"
+     ]
+    },
+    {
+     "t": "Put the request in writing to your operator: mobility, wheelchair, chair accessible routes, tent placement, and ask for the answer in writing too.",
+     "w": [
+      "mobility",
+      "wheelchair"
+     ]
+    },
+    {
+     "t": "Ask your operator in writing what the arrangement is for a pilgrim with your condition, including refrigeration and medical cover.",
+     "w": [
+      "chronic"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "One month out",
+   "sub": "The paperwork, and the people.",
+   "items": [
+    {
+     "t": "Ask forgiveness. Message or call every person who has a right against you, naming what it was, rather than posting a general announcement."
+    },
+    {
+     "t": "Provide for your family while you are away, in money and in arrangements, and tell them where everything is."
+    },
+    {
+     "t": "Return anything you are holding for someone else, or hand it to somebody reliable."
+    },
+    {
+     "t": "Buy the unscented things and pack them. Wear the sandals every day from now."
+    },
+    {
+     "t": "Memorise the talbiyah, the words said on Safa, and the verse said between the two corners, so that you are not reading from a phone at the miqat."
+    },
+    {
+     "t": "Collect the names. Ask people what they want you to ask for, and write it down properly."
+    },
+    {
+     "t": "Learn your five Arabic sentences and practise them out loud until they are automatic.",
+     "w": [
+      "noarabic"
+     ]
+    },
+    {
+     "t": "Rehearse the rites with the children at home, at their level, so that the eighth is not the first time they hear any of it.",
+     "w": [
+      "children"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "One week out",
+   "sub": "Now it becomes real.",
+   "items": [
+    {
+     "t": "Print this plan and the pocket card. Fold the card and put it in the pocket you never open."
+    },
+    {
+     "t": "Copy every document twice and photograph each one. One copy travels in another bag, one stays at home."
+    },
+    {
+     "t": "Confirm your itinerary with your operator: camp, tent, transport, and whether Muzdalifah is a full night."
+    },
+    {
+     "t": "Set up the check in with someone at home: one message a day, at a fixed hour, and what they do if it does not come."
+    },
+    {
+     "t": "Cut your nails and trim your hair now, because you cannot after ihram begins."
+    },
+    {
+     "t": "Pack, then take a quarter of it out again. You will carry everything you brought, up stairs, in heat."
+    },
+    {
+     "t": "Split the medicines across two bags and put the day’s dose on your body.",
+     "w": [
+      "chronic"
+     ]
+    },
+    {
+     "t": "Check the chair over completely and take it to be serviced if it needs it.",
+     "w": [
+      "wheelchair"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "The night before",
+   "sub": "Do almost nothing.",
+   "items": [
+    {
+     "t": "Read the rites once, calmly. Once, not ten times."
+    },
+    {
+     "t": "Charge everything and put the chargers where you will not forget them."
+    },
+    {
+     "t": "Set out the ihram cloths, or the dress you will wear, where you can reach them in the dark."
+    },
+    {
+     "t": "Write your intention in your own words, in your own language, and put it in your bag."
+    },
+    {
+     "t": "Pray two units and ask for one thing: that it is accepted."
+    },
+    {
+     "t": "Sleep. The single most useful thing you can do the night before a journey of this length is sleep."
+    }
+   ]
+  }
+ ],
+ "money": {
+  "lead": "Prices change constantly and differ by country, by operator and by year, so this plan will not give you a number. What it can give you is the honest list of what money is actually for, and what to arrange before you leave.",
+  "groups": [
+   {
+    "g": "What you will actually need money for",
+    "items": [
+     {
+      "t": "The package itself: flights, visa, accommodation, transport and the camp at Mina, paid to your operator."
+     },
+     {
+      "t": "The hady, the sacrifice, if you are performing tamattu’ or qiran. It is bought as a voucher through your group or a licensed organisation.",
+      "w": [
+       "tamattu",
+       "qiran"
+      ]
+     },
+     {
+      "t": "Food, which is often not fully included even when a package says half board. Ask exactly which meals are included, in writing."
+     },
+     {
+      "t": "Water, constantly, and more than you expect."
+     },
+     {
+      "t": "Transport inside the cities on the days your group does not move you."
+     },
+     {
+      "t": "Laundry, a barber, a pharmacy, and the small repairs of a long trip."
+     },
+     {
+      "t": "Charity, deliberately budgeted rather than left to what is in your pocket."
+     },
+     {
+      "t": "Gifts, which cost far more than anyone plans for. Decide the number before you go."
+     },
+     {
+      "t": "A reserve you do not touch, for a taxi at three in the morning, a doctor, or a replacement of something lost."
+     },
+     {
+      "t": "A wheelchair pusher or a hired chair, if you have not brought your own. Ask your operator for the current arrangement and the current cost in writing.",
+      "w": [
+       "wheelchair",
+       "mobility"
+      ]
+     }
+    ]
+   },
+   {
+    "g": "Arrange before you leave",
+    "items": [
+     {
+      "t": "Tell your bank you are travelling, and know which of your cards work there and what each one charges."
+     },
+     {
+      "t": "Carry some cash in small notes as well as a card. Cards fail, terminals fail, and small notes are what you need at a stall."
+     },
+     {
+      "t": "Split your money: some on your body, some in the room safe, some with someone you trust. Never all of it in one place."
+     },
+     {
+      "t": "Know what your travel insurance actually covers, especially for a pre existing condition and for repatriation."
+     },
+     {
+      "t": "Agree with your family at home what happens if you need money sent, and how."
+     }
+    ]
+   },
+   {
+    "g": "The schemes that follow pilgrims",
+    "items": [
+     {
+      "t": "Anyone selling a permit, a visa or a Rawdah booking privately is selling you a problem. Permits come through licensed channels and nowhere else."
+     },
+     {
+      "t": "A package far cheaper than every other package is cheaper for a reason, and the reason is usually the distance from the Haram, the tent at Mina, or the operator’s licence."
+     },
+     {
+      "t": "Pay the operator, by traceable transfer, and keep the receipt. Not a person, not cash in an envelope, not a friend of a friend."
+     },
+     {
+      "t": "Nobody legitimate will rush you into paying today. Urgency is the oldest tool there is."
+     },
+     {
+      "t": "Blessed water, blessed thread, cloth from the Kaaba, and anything sold as carrying barakah is being sold to you, and none of it has a basis."
+     },
+     {
+      "t": "A stranger who takes your documents to help you does not give them back. Your papers stay with you."
+     },
+     {
+      "t": "Barbers with unlicensed blades in the street cost less and every year they cost somebody far more than they saved."
+     }
+    ]
+   }
+  ]
+ },
+ "wrong": [
+  {
+   "t": "You are separated from your group",
+   "ps": [
+    "Stop moving. Standing still where you are is more likely to reunite you than walking in a direction you guessed.",
+    "Go to the meeting point you agreed on the first day, and wait there. This is why you agreed it.",
+    "Look up. The gates of the Haram are numbered, and so are the levels; the number over your head is what you tell someone on a phone.",
+    "If nobody comes, go to your group’s office or your hotel, not to the next rite. The rites have wider windows than you think.",
+    "Show your card to a policeman or a Haram official. This is exactly what it is for."
+   ]
+  },
+  {
+   "t": "You think you have missed a rite",
+   "ps": [
+    "Do not guess, and do not improvise a fix from a memory of something someone said. Ask a scholar with your group, today, and describe exactly what happened.",
+    "The short version: leaving an obligation costs a dam, a sacrifice, and the Hajj stands. Leaving a pillar cannot be paid for and must be performed.",
+    "Lost count in tawaf or sa’i: build on the smaller number you are certain of, and complete it. Certainty settles uncertainty here as it does in prayer.",
+    "The one thing that cannot be repaired is missing the standing at Arafah within its window. If that has happened, the scholars have a settled path for it. Ask on the same day."
+   ]
+  },
+  {
+   "t": "You broke a rule of ihram without meaning to",
+   "ps": [
+    "The commonest version: hotel soap with a scent in it, a scented deodorant, or a shirt put on half asleep on a bus at four in the morning.",
+    "The moment you realise, stop. Wash it off, take it off. Do not carry on because you have already begun.",
+    "Then ask, and describe what happened plainly. A fidyah, where one is due, is a choice of three: fast three days, feed six poor people, or slaughter a sheep, and it is owed without sin by someone who broke the rule out of need or by mistake."
+   ]
+  },
+  {
+   "t": "You or somebody with you falls ill",
+   "ps": [
+    "Go to a medical point. They are everywhere in the Haram, at Mina and at Arafah, they are free, and using them is not weakness.",
+    "Heat exhaustion is the one that catches people: stop sweating, feeling cold in the sun, confusion. Shade, water, salts, and tell somebody immediately.",
+    "Tell them what you take, by generic name, and show the letter you were given. This is why you carry it.",
+    "If a rite has become genuinely dangerous for you, that is the situation the fiqh of hardship exists for. Ask a scholar the same day, and do not push through."
+   ]
+  },
+  {
+   "t": "You lose your documents",
+   "ps": [
+    "Go to your group leader first, and then to your operator’s office. They deal with this every single year.",
+    "Give them the copies and the photographs you made. This takes a lost passport from a catastrophe to a queue.",
+    "Your consulate or embassy has a mission during the Hajj season. Your operator knows how to reach it.",
+    "Report a theft properly, and get whatever paper they give you."
+   ]
+  },
+  {
+   "t": "You are stopped from finishing altogether",
+   "ps": [
+    "A closed road, an illness that makes movement impossible, an accident, an arrest. The Qur’an addresses this case directly rather than leaving you stranded.",
+    "There is a settled procedure, and it involves a sacrifice and a release from ihram. It is not a thing to work out yourself from a page.",
+    "Ask your group’s scholar, and ask an official at the Haram if your group is not reachable. Both exist for exactly this."
+   ]
+  },
+  {
+   "t": "When in doubt, at any point",
+   "ps": [
+    "Ask a scholar on site rather than guessing. Not the confident man in your tent, not a video, not this page: someone who can ask you questions back.",
+    "There are scholars attached to almost every group, there are offices of fatwa in the Haram, and there are officials whose whole job this is.",
+    "The worst outcome of asking is that you are told there was nothing to worry about, which is the outcome most of the time."
+   ]
+  }
+ ],
+ "pocket": {
+  "t": "Pocket card",
+  "sub": "Print it, fold it once, and put it in the pocket you never open.",
+  "note": "This card is deliberately plain. It is the thing you look at when you cannot think, and the thing you hand to somebody when you cannot speak.",
+  "fields": [
+   {
+    "k": "leader",
+    "l": "Group leader",
+    "p": "Name and number",
+    "s": "Group leader"
+   },
+   {
+    "k": "group",
+    "l": "Group or operator",
+    "p": "Name and office number",
+    "s": "Operator"
+   },
+   {
+    "k": "hotelm",
+    "l": "Hotel in Makkah",
+    "p": "Name, district, room",
+    "s": "Hotel, Makkah"
+   },
+   {
+    "k": "hotelmd",
+    "l": "Hotel in Madinah",
+    "p": "Name, district, room",
+    "for": "madinah",
+    "s": "Hotel, Madinah"
+   },
+   {
+    "k": "camp",
+    "l": "Camp and tent at Mina",
+    "p": "Camp number, tent number",
+    "for": "hajj",
+    "s": "Camp and tent"
+   },
+   {
+    "k": "home",
+    "l": "Someone at home",
+    "p": "Name and number, with the country code",
+    "s": "Home contact"
+   },
+   {
+    "k": "med",
+    "l": "Medical",
+    "p": "Condition, medicines, allergies, blood group",
+    "s": "Medical"
+   }
+  ],
+  "key": [
+   [
+    "Pillar",
+    "nothing replaces it. Leave it and the rite is not valid"
+   ],
+   [
+    "Wajib",
+    "an obligation. A sacrifice repairs it and the rite stands"
+   ],
+   [
+    "Sunnah",
+    "better, and nothing is owed for leaving it"
+   ]
+  ],
+  "fold": "fold here",
+  "dont": [
+   {
+    "t": "Do not fight to reach the Black Stone. Face it, say Allahu akbar, keep walking."
+   },
+   {
+    "t": "Lost count: build on the lower number you are sure of, and finish."
+   },
+   {
+    "t": "Separated: stand still, then go to the meeting point."
+   },
+   {
+    "t": "Broke a rule of ihram by mistake: stop at once, then ask a scholar."
+   },
+   {
+    "t": "Do not climb Jabal ar-Rahmah. All of Arafah is a standing place.",
+    "w": [
+     "hajj"
+    ]
+   },
+   {
+    "t": "Throw pebbles only, and never in anger.",
+    "w": [
+     "hajj"
+    ]
+   },
+   {
+    "t": "Do not pray Maghrib at Arafah. It waits for Muzdalifah.",
+    "w": [
+     "hajj"
+    ]
+   }
+  ]
+ }
+}
