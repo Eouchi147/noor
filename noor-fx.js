@@ -14,7 +14,7 @@ const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 /* ---------------- i18n (Phase A: EN master inline; packs fetched per-language) ---------------- */
 const UI_EN = {
   "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids","nav.health":"Health",
-  "nav.quran":"Qur'an","nav.prophets":"Prophets","nav.madrasa":"Madrasa","nav.library":"Library","nav.give":"Give",
+  "nav.quran":"Qur'an","nav.prophets":"Prophets","nav.hajj":"Hajj","nav.madrasa":"Madrasa","nav.library":"Library","nav.give":"Give",
   "g.learn":"Learn","g.story":"The Story","g.heart":"The Heart","g.little":"Stories & Little Ones","g.houses":"Houses & Support",
   "m.madrasa":"The Classroom \u00b7 Madrasa","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
   "m.path":"The Path of Creation","m.prophets":"The 25 Prophets","m.companions":"The Companions","m.characters":"Characters","m.places":"Places","m.heroes":"Heroes of Islam","m.unseen":"The Unseen & the Mysteries",
