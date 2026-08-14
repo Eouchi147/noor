@@ -27,13 +27,33 @@ header{display:flex;justify-content:space-between;align-items:center;padding:2.2
 .grid{flex:1;display:grid;grid-template-columns:repeat(6,1fr);gap:1.2vw;padding:2.4vh 3vw;align-content:center}
 .pt{background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.28);border-radius:2vh;text-align:center;padding:2.6vh 1vw;transition:all .4s}
 .pt .nm{font-size:2.4vh;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,254,247,.75)}
-.pt .ar{font-family:Amiri,serif;font-size:2.6vh;color:rgba(244,212,106,.75);display:block;margin-top:.2vh}
+.pt .ar{font-family:Amiri,serif;font-size:2.6vh;line-height:1.5;color:rgba(244,212,106,.75);display:block;margin-top:.6vh}
 .pt .adh{font-size:4.1vh;font-weight:900;margin-top:1.2vh;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pt .iq{font-size:2vh;color:rgba(255,254,247,.55);margin-top:.8vh;font-variant-numeric:tabular-nums}
 .pt .iq b{color:#E9C86A;font-weight:800}
 .pt.jum{border-color:rgba(244,212,106,.85);background:linear-gradient(160deg,rgba(201,162,39,.2),rgba(244,212,106,.06))}
 .pt.jum .nm{color:#F4D46A}
-.pt.now{background:linear-gradient(160deg,rgba(201,162,39,.28),rgba(244,212,106,.1));border-color:#F4D46A;box-shadow:0 0 5vh rgba(244,212,106,.25);transform:scale(1.04)}
+.pt.now{background:linear-gradient(160deg,rgba(201,162,39,.28),rgba(244,212,106,.1));border-color:#F4D46A;
+  box-shadow:0 0 5vh rgba(244,212,106,.25);transform:scale(1.04);
+  animation:noorBreathe 3.4s ease-in-out infinite}
+/* a slow breath, near the pace of a calm one, so the eye is drawn and not
+   nagged. A board is looked at from across a hall, often by somebody walking:
+   the glow does the work that reading a small label cannot. */
+@keyframes noorBreathe{
+  0%,100%{box-shadow:0 0 3.2vh rgba(244,212,106,.18),0 0 0 0 rgba(244,212,106,.16);border-color:rgba(244,212,106,.72);transform:scale(1.035)}
+  50%    {box-shadow:0 0 7.5vh rgba(244,212,106,.42),0 0 0 .5vh rgba(244,212,106,.09);border-color:#FFF0B8;transform:scale(1.055)}
+}
+.pt.now .adh{animation:noorGlowText 3.4s ease-in-out infinite}
+@keyframes noorGlowText{
+  0%,100%{text-shadow:0 0 0 rgba(244,212,106,0)}
+  50%    {text-shadow:0 0 2.4vh rgba(244,212,106,.55)}
+}
+/* the countdown to it breathes with it, so the two read as one thing */
+#next .cd{animation:noorGlowText 3.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){
+  .pt.now,.pt.now .adh,#next .cd{animation:none}
+  .pt.now{box-shadow:0 0 6vh rgba(244,212,106,.34);border-color:#FFF0B8}
+}
 .pt.past{opacity:.45}
 /* ---- the Friday panel: the single most-read thing on the screen ---- */
 #jpanel[hidden]{display:none}
@@ -61,7 +81,61 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:0 3
 .jum{color:#F4D46A;font-weight:800}
 .brand{color:rgba(255,254,247,.35);font-size:1.6vh}
 .est{position:fixed;top:1vh;left:50%;transform:translateX(-50%);font-size:1.5vh;color:rgba(244,212,106,.65)}
-@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);overflow:auto}#clock{font-size:9vh}}
+/* ---- the phone -------------------------------------------------------
+   The board is built for a screen on a wall: one fixed viewport, nothing
+   scrolls, everything measured in vh. A phone is none of those things. Held
+   in a hand it has a third of the width and the grid was scrolling inside a
+   locked page, which cut the labels off the top row and hid Fajr behind the
+   Friday panel. On a phone the page simply scrolls, and the type is sized in
+   rem so it stays readable instead of shrinking with the viewport. */
+@media (max-width:820px), (orientation:portrait) and (max-width:1000px){
+  html,body{height:auto;min-height:100%}
+  body{overflow-y:auto;overflow-x:hidden;cursor:auto;display:block;padding-bottom:4.5rem}
+  header{flex-direction:column;align-items:flex-start;gap:.15rem;padding:1rem 1.1rem 0}
+  header .dates{text-align:start}
+  .mname{font-size:1.5rem}
+  .mname span{font-size:.62rem;letter-spacing:.2em}
+  .dates div{font-size:.86rem}
+  .dates .hijri{font-size:1rem}
+  .clockrow{margin-top:.5rem}
+  #clock{font-size:4.4rem;line-height:1}
+  #clock small{font-size:1.5rem}
+  #next{font-size:.95rem;margin-top:.35rem}
+  #jpanel{margin:1rem 1.1rem 0;padding:.9rem 1rem;border-radius:1rem;border-width:1.5px;gap:.7rem}
+  #jpanel .jt{padding-inline-end:0;border-inline-end:0}
+  #jpanel .jt .jn{font-size:1.35rem}
+  #jpanel .jt .jar{font-size:1.15rem}
+  #jpanel .js{flex-direction:column;gap:.55rem;width:100%}
+  #jpanel .sit{border-radius:.8rem;padding:.6rem .7rem}
+  #jpanel .sit .lb{font-size:.66rem}
+  #jpanel .sit .kh{font-size:1.7rem}
+  #jpanel .sit .iq{font-size:.78rem}
+  .grid{grid-template-columns:repeat(2,1fr);gap:.6rem;padding:1rem 1.1rem .5rem;overflow:visible;flex:none;align-content:start}
+  .pt{border-radius:1rem;padding:.85rem .5rem}
+  .pt .nm{font-size:.78rem;letter-spacing:.06em}
+  .pt .ar{font-size:1rem;line-height:1.5;margin-top:.28rem}
+  .pt .adh{font-size:1.55rem;margin-top:.4rem}
+  .pt .iq{font-size:.72rem;margin-top:.3rem}
+  /* the glow is scaled to a hand, not a hall */
+  .pt.now{transform:none;box-shadow:0 0 1.6rem rgba(244,212,106,.3)}
+  @keyframes noorBreathe{
+    0%,100%{box-shadow:0 0 1rem rgba(244,212,106,.2);border-color:rgba(244,212,106,.72)}
+    50%    {box-shadow:0 0 2.2rem rgba(244,212,106,.5);border-color:#FFF0B8}
+  }
+  @keyframes noorGlowText{
+    0%,100%{text-shadow:0 0 0 rgba(244,212,106,0)}
+    50%    {text-shadow:0 0 .7rem rgba(244,212,106,.55)}
+  }
+  .est{position:static;transform:none;margin:.6rem 1.1rem 0;font-size:.72rem;text-align:center}
+  footer{flex-direction:column;gap:.4rem;padding:1rem 1.1rem 1.4rem;font-size:.78rem;text-align:center}
+  #ann{margin:0;width:100%}
+  .brand{font-size:.7rem}
+}
+/* a narrow phone gets one column rather than two cramped ones */
+@media (max-width:380px){
+  .grid{grid-template-columns:1fr}
+  #clock{font-size:3.8rem}
+}
 @media (prefers-reduced-motion: reduce){#ann span{animation:none;padding-inline-start:0}}
 </style>
 <script src="/assets/noor-text.js?v=1" defer></script>

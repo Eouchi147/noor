@@ -55,6 +55,9 @@ input:focus,select:focus,textarea:focus{border-color:#C9A227}
 .prevrow input{width:auto;margin:0}
 .jwarn{margin:.5rem 0 0;font-size:.8rem;line-height:1.7;color:#8f2d2d;background:rgba(143,45,45,.08);border:1px solid rgba(143,45,45,.3);border-radius:12px;padding:.55rem .7rem}
 .jwarn b{font-weight:800}
+.jauto{margin:.5rem 0 0;font-size:.78rem;line-height:1.7;color:#6b5510;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.32);border-radius:12px;padding:.5rem .68rem}
+.tsel,.msel{width:100%;box-sizing:border-box;font:inherit;font-size:.86rem;padding:.42rem .5rem;border:1px solid rgba(44,36,22,.2);border-radius:9px;background:#fff;color:#2C2416;cursor:pointer}
+.tsel:focus,.msel:focus{outline:0;border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
 </style>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
@@ -63,6 +66,7 @@ input:focus,select:focus,textarea:focus{border-color:#C9A227}
 <script src="/assets/noor-text.js?v=1" defer></script>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
 <script src="/assets/noor-search.js?v=1" defer></script>
+<script src="/assets/noor-lantern.js" defer></script>
 </head>
 <body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
@@ -382,11 +386,11 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="card">
 <h2>3 · Iqama minutes after adhan</h2>
 <div class="row3">
-<div><label>Fajr</label><input id="iq-fajr" type="number" value="20"/></div>
-<div><label>Dhuhr</label><input id="iq-dhuhr" type="number" value="10"/></div>
-<div><label>Asr</label><input id="iq-asr" type="number" value="10"/></div>
-<div><label>Maghrib</label><input id="iq-maghrib" type="number" value="5"/></div>
-<div><label>Isha</label><input id="iq-isha" type="number" value="10"/></div>
+<div><label>Fajr</label><select id="iq-fajr" class="msel" data-def="20"></select></div>
+<div><label>Dhuhr</label><select id="iq-dhuhr" class="msel" data-def="10"></select></div>
+<div><label>Asr</label><select id="iq-asr" class="msel" data-def="10"></select></div>
+<div><label>Maghrib</label><select id="iq-maghrib" class="msel" data-def="5"></select></div>
+<div><label>Isha</label><select id="iq-isha" class="msel" data-def="10"></select></div>
 </div>
 <label for="w-ann">Announcements (one per line, they scroll along the foot of the board)</label>
 <textarea id="w-ann" rows="2" placeholder="Qur'an circle Saturdays after Maghrib"></textarea>
@@ -415,25 +419,26 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <option value="">Show me today's screen</option>
 </select></div>
 </div>
+<p id="j-auto" class="jauto" hidden></p>
 <p id="j-warn" class="jwarn" hidden></p>
 <p class="hint">Many masajid hold two or three sittings. Name each one as your community says it, give the khutba time, and give the iqama time if the prayer begins at a fixed minute. A sitting with no khutba time is simply left off the board.</p>
 <div class="jrow">
 <div class="jnum">First sitting</div>
 <div><label for="j-l1">Label</label><input id="j-l1" placeholder="First jumu'ah"/></div>
-<div><label for="j-k1">Khutba</label><input id="j-k1" type="text" inputmode="numeric" autocomplete="off" placeholder="13:15 or 1:15 PM"/></div>
-<div><label for="j-i1">Iqama (optional)</label><input id="j-i1" type="text" inputmode="numeric" autocomplete="off" placeholder="optional"/></div>
+<div><label for="j-k1">Khutba</label><select id="j-k1" class="tsel"></select></div>
+<div><label for="j-i1">Iqama (optional)</label><select id="j-i1" class="tsel"></select></div>
 </div>
 <div class="jrow">
 <div class="jnum">Second sitting</div>
 <div><label for="j-l2">Label</label><input id="j-l2" placeholder="Second jumu'ah"/></div>
-<div><label for="j-k2">Khutba</label><input id="j-k2" type="text" inputmode="numeric" autocomplete="off" placeholder="13:15 or 1:15 PM"/></div>
-<div><label for="j-i2">Iqama (optional)</label><input id="j-i2" type="text" inputmode="numeric" autocomplete="off" placeholder="optional"/></div>
+<div><label for="j-k2">Khutba</label><select id="j-k2" class="tsel"></select></div>
+<div><label for="j-i2">Iqama (optional)</label><select id="j-i2" class="tsel"></select></div>
 </div>
 <div class="jrow">
 <div class="jnum">Third sitting</div>
 <div><label for="j-l3">Label</label><input id="j-l3" placeholder="English khutba"/></div>
-<div><label for="j-k3">Khutba</label><input id="j-k3" type="text" inputmode="numeric" autocomplete="off" placeholder="13:15 or 1:15 PM"/></div>
-<div><label for="j-i3">Iqama (optional)</label><input id="j-i3" type="text" inputmode="numeric" autocomplete="off" placeholder="optional"/></div>
+<div><label for="j-k3">Khutba</label><select id="j-k3" class="tsel"></select></div>
+<div><label for="j-i3">Iqama (optional)</label><select id="j-i3" class="tsel"></select></div>
 </div>
 </div>
 
@@ -484,10 +489,83 @@ function say12(v){
   var h=+m[1],mi=+m[2],ap=h>=12?"PM":"AM",hh=h%12;if(hh===0)hh=12;
   return hh+":"+(mi<10?"0":"")+mi+" "+ap;
 }
-/* the board's own parser, so what the wizard accepts and what the board can
+/* the board's own parser, so what the wizard offers and what the board can
    read are never two different things */
 function okTime(v){
   return /^\s*(\d{1,2})[:.](\d{2})\s*([AaPp]\.?[Mm]?\.?)?\s*$/.test(String(v||""));
+}
+
+/* ---- the lists ---------------------------------------------------------
+   Nobody should have to type a time into a form, and nobody should have to
+   remember which of thirteen fifteen and quarter past one this box wants.
+   Every time on this page is chosen from a list, in five minute steps, shown
+   in whichever clock the masjid picked. The value carried underneath is
+   always 24 hour, which is the one thing the board reads. */
+function hhmm(mins){ var h=Math.floor(mins/60),m=mins%60; return (h<10?"0":"")+h+":"+(m<10?"0":"")+m }
+function pretty(mins,h24){
+  var h=Math.floor(mins/60),m=mins%60;
+  if(h24)return hhmm(mins);
+  var ap=h>=12?"PM":"AM",hh=h%12; if(hh===0)hh=12;
+  return hh+":"+(m<10?"0":"")+m+" "+ap;
+}
+function fillTimes(){
+  var h24=!!$("w-h24").value;
+  /* khutba sittings run from late morning to late afternoon, which covers
+     every masjid from a northern winter to an equatorial noon */
+  [1,2,3].forEach(function(i){
+    ["k","i"].forEach(function(kind){
+      var el=$("j-"+kind+i), keep=el.value;
+      var out=['<option value="">'+(kind==="k"?"Not set":"None")+"</option>"];
+      for(var t=10*60;t<=18*60;t+=5) out.push('<option value="'+hhmm(t)+'">'+pretty(t,h24)+"</option>");
+      el.innerHTML=out.join("");
+      if(keep)el.value=keep;
+    });
+  });
+  /* iqama offsets: minutes after the adhan, in the steps masajid actually use */
+  ["fajr","dhuhr","asr","maghrib","isha"].forEach(function(k){
+    var el=$("iq-"+k); if(el.options.length)return;
+    var def=+el.getAttribute("data-def")||0,out=[];
+    for(var m=0;m<=45;m+=(m<20?5:5)) out.push('<option value="'+m+'">'+(m===0?"At the adhan":m+" minutes after")+"</option>");
+    el.innerHTML=out.join(""); el.value=String(def);
+  });
+}
+
+/* ---- and the automation ------------------------------------------------
+   A masjid that has given its location has already told us when Dhuhr is.
+   The first sitting is offered at the next quarter hour after it, which is
+   what most masajid actually do, and the iqama fifteen minutes later. It is
+   a suggestion placed in the box, not a lock: change it and nothing argues. */
+var AUTOK="";   /* the last time WE put in the box, so we can improve on it */
+function suggestJumuah(){
+  /* never overwrite a choice the imam made, but a value we suggested ourselves
+     is not a choice: once a location arrives we can offer a better one */
+  var cur=$("j-k1").value;
+  if(cur&&cur!==AUTOK)return false;
+  var lat=parseFloat($("w-lat").value),lng=parseFloat($("w-lng").value);
+  var mins=null,dh=null;
+  if(!isNaN(lat)&&!isNaN(lng)&&window.NOOR_SALAT){
+    var now=new Date(),noon=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0));
+    try{
+      var t=window.NOOR_SALAT(noon,lat,lng,{method:$("w-m").value,asr:$("w-a").value,tzOff:-now.getTimezoneOffset()/60});
+      if(t&&typeof t.dhuhr==="number"){ dh=t.dhuhr; mins=Math.ceil((t.dhuhr*60+1)/15)*15; }
+    }catch(e){}
+  }
+  /* with no location yet, still offer the commonest khutba time rather than an
+     empty box. An imam changing 1:15 to 1:30 is a smaller act than an imam
+     staring at a blank row wondering what the form wants. */
+  if(mins===null||mins>18*60||mins<10*60)mins=13*60+15;
+  AUTOK=hhmm(mins);
+  $("j-k1").value=AUTOK;
+  var iq=mins+15; if(iq<=18*60)$("j-i1").value=hhmm(iq);
+  var note=$("j-auto");
+  if(note){
+    note.hidden=false;
+    note.textContent=(dh!==null)
+      ? ("Suggested from your location: Dhuhr is about "+pretty(Math.round(dh*60),!!$("w-h24").value)+
+         " today, so the first sitting is offered just after it. Change it to whatever your masjid actually does.")
+      : "Offered as a starting point. Set your location above and this becomes a real suggestion, just after your own Dhuhr.";
+  }
+  return true;
 }
 function sittings(){
   var out=[],i,k;
@@ -547,9 +625,18 @@ function build(){
   PTIMER=setTimeout(function(){ $("w-frame").src=next; }, 350);
   if(!isNaN(lat)&&!isNaN(lng)){$("w-qibla").hidden=false;$("w-qibla").innerHTML="Qibla from here: <b>"+window.NOOR_QIBLA(lat,lng).toFixed(1)+"° from true north</b> (great-circle bearing to the Kaaba).";}
 }
+fillTimes();
 ["w-name","w-lat","w-lng","w-m","w-a","w-lang","w-h24","iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha","w-ann",
  "j-on","j-rep","j-all","j-prev","j-l1","j-k1","j-i1","j-l2","j-k2","j-i2","j-l3","j-k3","j-i3"].forEach(function(i){
   $(i).addEventListener("input",build);$(i).addEventListener("change",build);
+});
+/* the clock the masjid chose changes how every time READS, not what it means */
+$("w-h24").addEventListener("change",function(){fillTimes();build()});
+/* switching Jumu'ah on offers a time straight away rather than an empty row */
+$("j-on").addEventListener("change",function(){ if($("j-on").value&&suggestJumuah())build(); });
+/* and so does giving a location, if nothing has been chosen yet */
+["w-lat","w-lng","w-m"].forEach(function(i){
+  $(i).addEventListener("change",function(){ if($("j-on").value&&suggestJumuah())build(); });
 });
 $("w-geo").addEventListener("click",function(){
   if(!navigator.geolocation)return;

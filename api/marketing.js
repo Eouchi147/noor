@@ -10,6 +10,7 @@
 // Nothing here ever names the owner. The project speaks; the keeper stays unseen.
 
 import crypto from "crypto";
+import { modelChain, isFree, allowPaid } from "./_models.js";
 
 function verify(cookieHeader, secret) {
   const m = /(?:^|;\s*)noor_admin=([^;]+)/.exec(cookieHeader || "");
@@ -22,12 +23,8 @@ function verify(cookieHeader, secret) {
   return A.length === B.length && crypto.timingSafeEqual(A, B);
 }
 
-const MODEL_CHAIN = () => [
-  process.env.OPENROUTER_MODEL,
-  "nvidia/nemotron-3-ultra-550b-a55b:free",
-  "inclusionai/ling-3.0-flash:free",
-  "poolside/laguna-s-2.1:free"
-].filter(Boolean);
+/* the chain lives in api/_models.js now, free only unless paid is allowed */
+const MODEL_CHAIN = () => modelChain();
 
 /* ---------- what the house actually is (facts the AI may use) ---------- */
 const HOUSE = [

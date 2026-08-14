@@ -1,3 +1,4 @@
+import { askOpenRouter, allowPaid } from "./_models.js";
 // NOOR Guide: optional live clarifier for a passage being read.
 // Runs on OPENROUTER_API_KEY (same key as The Lantern); falls back to
 // ANTHROPIC_API_KEY if that is set instead. Site works fully without either.
@@ -8,7 +9,9 @@ export default async function handler(req, res) {
   if (process.env.GUIDE_PUBLIC !== "1") return res.status(501).json({ error: "guide API not enabled" });
   const orKey = process.env.OPENROUTER_API_KEY;
   const key = process.env.ANTHROPIC_API_KEY;
-  if (!orKey && !key) return res.status(501).json({ error: "guide API not enabled" });
+  /* the Anthropic branch bills directly, so it is only reachable when paid
+     models have been allowed in as many words */
+  if (!orKey && !(key && allowPaid())) return res.status(501).json({ error: "guide API not enabled" });
 
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
@@ -28,20 +31,15 @@ export default async function handler(req, res) {
     const userMsg = `Chapter: ${title}\n\nArticle excerpt:\n${excerpt}\n\nReader's question: ${question}`;
     let answer = "";
     if (orKey) {
-      const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: { "content-type": "application/json", Authorization: "Bearer " + orKey, "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR Codex of Light" },
-        body: JSON.stringify({
-          model: process.env.OPENROUTER_MODEL || "openrouter/auto",
-          max_tokens: 250,
-          temperature: 0.2,
-          messages: [{ role: "system", content: system }, { role: "user", content: userMsg }]
-        })
-      });
-      if (!r.ok) return res.status(502).json({ error: "upstream error" });
-      const j = await r.json();
-      answer = ((((j.choices || [])[0] || {}).message || {}).content || "").trim();
-    } else {
+      /* this used to be openrouter/auto, which routes to the BEST model rather
+         than the cheapest, and quietly billed every question a reader asked */
+      const got = await askOpenRouter(
+        [{ role: "system", content: system }, { role: "user", content: userMsg }],
+        { max_tokens: 250, temperature: 0.2 }
+      );
+      if (!got.text) return res.status(502).json({ error: "upstream error" });
+      answer = got.text;
+    } else if (allowPaid()) {
       const r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },

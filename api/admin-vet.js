@@ -4,6 +4,7 @@
 // Uses the same OPENROUTER_API_KEY as the public Lantern.
 
 import crypto from "crypto";
+import { askOpenRouter } from "./_models.js";
 
 function verify(cookieHeader, secret) {
   const m = /(?:^|;\s*)noor_admin=([^;]+)/.exec(cookieHeader || "");
@@ -46,24 +47,12 @@ export default async function handler(req, res) {
   ].join("\n");
 
   try {
-    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + KEY,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://noorcodex.com",
-        "X-Title": "NOOR Codex of Light · vetting"
-      },
-      body: JSON.stringify({
-        model: process.env.OPENROUTER_MODEL || "nvidia/nemotron-3-ultra-550b-a55b:free",
-        max_tokens: 500,
-        temperature: 0.1,
-        messages: [{ role: "system", content: RUBRIC }, { role: "user", content: sponsor }]
-      })
-    });
-    if (!r.ok) return res.status(502).json({ error: "vetting unavailable" });
-    const j = await r.json();
-    const raw = (((j.choices || [])[0] || {}).message || {}).content || "";
+    const got = await askOpenRouter(
+      [{ role: "system", content: RUBRIC }, { role: "user", content: sponsor }],
+      { max_tokens: 500, temperature: 0.1 }
+    );
+    if (!got.text) return res.status(502).json({ error: "vetting unavailable" });
+    const raw = got.text;
     let parsed = null;
     try { parsed = JSON.parse(raw); } catch {
       const m = raw.match(/\{[\s\S]*\}/);

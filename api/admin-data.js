@@ -3,6 +3,7 @@
 // money map: MRR, every region's subscriber, status, renewal date.
 
 import crypto from "crypto";
+import { modelChain, modelWarning, allowPaid } from "./_models.js";
 
 const GUARDIAN_PRODUCT = "prod_V0xxFgmX793e9L";
 
@@ -26,6 +27,9 @@ export default async function handler(req, res) {
     stripeConfigured: !!KEY,
     checkoutEnabled: !!KEY,
     lanternConfigured: !!process.env.OPENROUTER_API_KEY,
+    lanternModel: modelChain()[0],
+    lanternPaidAllowed: allowPaid(),
+    lanternWarning: modelWarning(),
     moneyMode: process.env.NOOR_MONEY_MODE === "guardian" ? "guardian" : "donate",
     weekly: 0, mrr: 0, activeCount: 0, guardians: [],
     gifts: { total30d: 0, count30d: 0, monthly: 0, recent: [] },

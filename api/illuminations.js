@@ -11,10 +11,13 @@
 // only from a whitelist; the AI writes reflection, never scripture, and
 // every kind has a hand-written fallback so no tile ever goes dark.
 
-/* The lantern's minds: the reader-set model first (env OPENROUTER_MODEL,
-   e.g. anthropic/claude-sonnet-4.5 to go premium), then the best free
+/* The lantern's minds: free models only. OPENROUTER_MODEL is honoured only if
+   it names a free one, unless ALLOW_PAID_MODELS=1 says otherwise. See
+   api/_models.js. (The reader-set model first (env OPENROUTER_MODEL,
+   which now requires ALLOW_PAID_MODELS=1 to be paid), then the best free
    lights of the day, in order. First to answer wins. */
 import net from "node:net";
+import { modelChain, isFree, allowPaid } from "./_models.js";
 import tls from "node:tls";
 
 /* ---------- the store, whoever provides it ----------
@@ -123,12 +126,8 @@ async function kv(cmds) {
   throw new Error("no store configured");
 }
 
-const MODEL_CHAIN = () => [
-  process.env.OPENROUTER_MODEL,
-  "nvidia/nemotron-3-ultra-550b-a55b:free",
-  "inclusionai/ling-3.0-flash:free",
-  "poolside/laguna-s-2.1:free"
-].filter(Boolean);
+/* the chain lives in api/_models.js now, free only unless paid is allowed */
+const MODEL_CHAIN = () => modelChain();
 
 /* ---------- Today's Light treasury (fallback) ---------- */
 const TREASURY = [

@@ -1,3 +1,4 @@
+import { askOpenRouter } from "./_models.js";
 // Today's Light · one small illumination per day, sitewide.
 // Cost discipline: the answer is CDN-cached for a full day, so the AI is
 // asked roughly once per day, not once per visitor. If the key is absent
@@ -77,19 +78,15 @@ export default async function handler(req, res) {
   ].join("\n");
 
   try {
-    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: "Bearer " + key, "Content-Type": "application/json", "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR Daily Light" },
-      body: JSON.stringify({
-        model: process.env.OPENROUTER_MODEL || "anthropic/claude-sonnet-4.5",
-        max_tokens: 350,
-        temperature: isToday ? 0.5 : 0.2,
-        messages: [{ role: "system", content: SYSTEM }, { role: "user", content: "The light for " + want + ". Choose the single best-documented fact fitting the theme." }]
-      })
-    });
-    if (!r.ok) throw 0;
-    const j = await r.json();
-    const raw = (((j.choices || [])[0] || {}).message || {}).content || "";
+    /* the whole free chain, not one model: this line used to name Claude Sonnet,
+       and a single model that is rate limited is a tile that does not appear */
+    const got = await askOpenRouter(
+      [{ role: "system", content: SYSTEM },
+       { role: "user", content: "The light for " + want + ". Choose the single best-documented fact fitting the theme." }],
+      { max_tokens: 350, temperature: isToday ? 0.5 : 0.2 }
+    );
+    if (!got.text) throw 0;
+    const raw = got.text;
     let p = null;
     try { p = JSON.parse(raw); } catch { const m = raw.match(/\{[\s\S]*\}/); if (m) { try { p = JSON.parse(m[0]); } catch {} } }
     if (!p || !p.title || !p.story) throw 0;
