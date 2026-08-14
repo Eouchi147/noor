@@ -209,7 +209,14 @@
   "words.verses": "کلمات",
   "words.verses.desc": "راہ کے اٹھارہ جملے، باحوالہ، مترجم، اور آج رات کے لیے تیار۔",
   "words.saidnow": "ابھی کہیے",
-  "atlas.open": "کھولیے"
+  "atlas.open": "کھولیے",
+  "nav.hajj": "حج",
+  "m.dictionary": "فرہنگِ راہ",
+  "m.hajj": "حج اور عمرہ",
+  "m.hajjplan": "آپ کا منصوبۂ حج",
+  "m.protection": "حفاظت اور نور",
+  "m.ramadan": "رمضان",
+  "m.eid": "عیدین"
  },
  "nodes": {
   "1": {

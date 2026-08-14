@@ -209,7 +209,14 @@
   "words.verses": "الكلمات",
   "words.verses.desc": "ثماني عشرة جملة من الدرب، موثَّقة، مبيَّنة المعنى، جاهزة لليلتك هذه.",
   "words.saidnow": "قلها الآن",
-  "atlas.open": "افتح"
+  "atlas.open": "افتح",
+  "nav.hajj": "الحج",
+  "m.hajj": "الحج والعمرة",
+  "m.hajjplan": "خطة حجك",
+  "m.ramadan": "رمضان",
+  "m.eid": "العِيدان",
+  "m.protection": "الحماية والنور",
+  "m.dictionary": "موسوعة الدرب"
  },
  "nodes": {
   "1": {

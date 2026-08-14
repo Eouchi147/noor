@@ -48,7 +48,7 @@ button{font:inherit;cursor:pointer;color:inherit;background:none;border:0;paddin
 header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px 4px;max-width:620px;margin:0 auto}
 .backlink{display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid rgba(233,200,106,.42);color:var(--gold-hi);text-decoration:none;font-weight:700;font-size:13.5px;background:rgba(20,16,10,.32)}
 .backlink:hover{background:rgba(233,200,106,.14)}
-.gtitle{margin:0;font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-hi);text-align:right}
+.gtitle{margin:0;font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-hi);text-align:end}
 footer{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px 30px;font-size:13.5px}
 footer a{color:var(--gold-hi);text-decoration:none;font-weight:700}
 footer a:hover{text-decoration:underline}
@@ -163,7 +163,7 @@ main{position:relative;z-index:1;padding:0 14px 4px}
 /* win overlay */
 .ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:16px;overflow:hidden;background:radial-gradient(120% 100% at 50% 18%,rgba(13,27,69,.9),rgba(5,7,20,.97))}
 .ov.show{display:flex}
-.rays{position:absolute;left:50%;top:50%;width:160vmax;height:160vmax;margin:-80vmax 0 0 -80vmax;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(233,200,106,.15) 0deg 8deg,rgba(233,200,106,0) 8deg 20deg);-webkit-mask:radial-gradient(closest-side,#000 6%,rgba(0,0,0,.5) 32%,transparent 66%);mask:radial-gradient(closest-side,#000 6%,rgba(0,0,0,.5) 32%,transparent 66%);animation:spin 30s linear infinite}
+.rays{position:absolute;left:50%;top:50%;width:160vmax;height:160vmax;margin-block:-80vmax 0;margin-inline:-80vmax 0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(233,200,106,.15) 0deg 8deg,rgba(233,200,106,0) 8deg 20deg);-webkit-mask:radial-gradient(closest-side,#000 6%,rgba(0,0,0,.5) 32%,transparent 66%);mask:radial-gradient(closest-side,#000 6%,rgba(0,0,0,.5) 32%,transparent 66%);animation:spin 30s linear infinite}
 @keyframes spin{to{transform:rotate(1turn)}}
 .wcard{position:relative;width:min(432px,100%);max-height:100%;overflow:auto;background:#FFFDF4;border:3px solid var(--gold);border-radius:22px;padding:20px 18px 22px;text-align:center;color:var(--ink);box-shadow:0 24px 70px rgba(0,0,0,.55)}
 .wcard::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,162,39,.55);border-radius:15px;pointer-events:none}
@@ -198,6 +198,9 @@ main{position:relative;z-index:1;padding:0 14px 4px}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"></div>

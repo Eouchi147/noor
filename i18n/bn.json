@@ -209,7 +209,14 @@
   "words.verses": "বাণীসমূহ",
   "words.verses.desc": "পথ থেকে আঠারোটি বাক্য, উৎসসহ, অনূদিত, আজ রাতের জন্যই প্রস্তুত।",
   "words.saidnow": "এখনই বলুন",
-  "atlas.open": "খুলুন"
+  "atlas.open": "খুলুন",
+  "nav.hajj": "হজ",
+  "m.hajj": "হজ ও ওমরাহ",
+  "m.hajjplan": "আপনার হজ পরিকল্পনা",
+  "m.ramadan": "রমযান",
+  "m.eid": "দুই ঈদ",
+  "m.protection": "হেফাজত ও আলো",
+  "m.dictionary": "পথের বিশ্বকোষ"
  },
  "nodes": {
   "1": {

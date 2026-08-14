@@ -209,7 +209,14 @@
   "words.verses": "Kelimeler",
   "words.verses.desc": "Yoldan on sekiz cümle: kaynaklı, çevrilmiş ve bu gece için hazır.",
   "words.saidnow": "Şimdi söyle",
-  "atlas.open": "Aç"
+  "atlas.open": "Aç",
+  "nav.hajj": "Hac",
+  "m.hajj": "Hac ve Umre",
+  "m.hajjplan": "Hac Planın",
+  "m.ramadan": "Ramazan",
+  "m.eid": "İki Bayram",
+  "m.protection": "Korunma ve Işık",
+  "m.dictionary": "Yolun Ansiklopedisi"
  },
  "nodes": {
   "1": {

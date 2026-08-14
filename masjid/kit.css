@@ -31,7 +31,7 @@ body.kit *{box-sizing:border-box}
 .kp{background:#fff;border:1px solid var(--line);border-radius:16px;
   padding:1rem 1.05rem;margin-top:1rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
 .kp > h2{font-size:1.02rem;font-weight:800;margin:0 0 .15rem}
-.kp > h2 .n{color:var(--gold);font-weight:800;margin-right:.35rem}
+.kp > h2 .n{color:var(--gold);font-weight:800;margin-inline-end:.35rem}
 .kp .sub{font-size:.78rem;color:var(--soft);line-height:1.7;margin:.3rem 0 0}
 .kp h3{font-size:.88rem;font-weight:800;margin:.9rem 0 .3rem}
 
@@ -53,18 +53,18 @@ textarea{line-height:1.7;resize:vertical}
 /* ---------- buttons ---------- */
 .btn{display:inline-block;border:0;border-radius:999px;padding:.62rem 1.25rem;
   font-size:.8rem;font-weight:800;font-family:inherit;cursor:pointer;
-  text-decoration:none;margin:.65rem .4rem 0 0;transition:transform .15s}
+  text-decoration:none;margin-block:.65rem 0;margin-inline:0 .4rem;transition:transform .15s}
 .btn:hover{transform:translateY(-1px)}
 .btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F}
 .btn-ghost{background:none;border:1px solid rgba(201,162,39,.55);color:#6b5510}
 .btn-quiet{background:none;border:1px solid var(--line);color:rgba(44,36,22,.6);font-weight:700}
-.btn-sm{padding:.36rem .8rem;font-size:.7rem;margin:.4rem .35rem 0 0}
+.btn-sm{padding:.36rem .8rem;font-size:.7rem;margin-block:.4rem 0;margin-inline:0 .35rem}
 
 /* ---------- choosing chips ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
 .chip{background:#FFFDF4;border:1.5px solid rgba(201,162,39,.35);border-radius:12px;
   padding:.5rem .75rem;font-size:.78rem;font-weight:700;font-family:inherit;
-  color:rgba(44,36,22,.8);cursor:pointer;text-align:left;line-height:1.4}
+  color:rgba(44,36,22,.8);cursor:pointer;text-align:start;line-height:1.4}
 .chip small{display:block;font-size:.66rem;font-weight:600;color:var(--soft);margin-top:.15rem}
 .chip:hover{border-color:var(--gold);background:#FFF7DF}
 .chip.on{background:linear-gradient(135deg,rgba(201,162,39,.16),rgba(244,212,106,.1));
@@ -72,7 +72,7 @@ textarea{line-height:1.7;resize:vertical}
 .chip.on::after{content:" ✦";color:var(--gold)}
 
 /* ---------- arabic ---------- */
-.ar-block{font-family:Amiri,serif;direction:rtl;text-align:right;
+.ar-block{font-family:Amiri,serif;direction:rtl;text-align:end;
   font-size:1.35rem;line-height:2.35;color:var(--ink);
   background:#FFFDF4;border:1px solid rgba(201,162,39,.3);border-radius:14px;
   padding:.9rem 1rem;margin-top:.6rem;white-space:pre-wrap}
@@ -82,7 +82,7 @@ textarea{line-height:1.7;resize:vertical}
 
 /* ---------- notes, badges, marks ---------- */
 .note{font-size:.76rem;line-height:1.75;color:rgba(44,36,22,.7);
-  background:rgba(201,162,39,.07);border-left:3px solid rgba(201,162,39,.5);
+  background:rgba(201,162,39,.07);border-inline-start:3px solid rgba(201,162,39,.5);
   border-radius:0 10px 10px 0;padding:.6rem .8rem;margin-top:.8rem}
 .note b{color:#6b5510}
 .warnbox{font-size:.78rem;line-height:1.75;color:#5c3f0d;

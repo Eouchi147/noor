@@ -209,7 +209,14 @@
   "words.verses": "Les Paroles",
   "words.verses.desc": "Dix-huit phrases de la Voie, sourcées, traduites, prêtes pour ce soir.",
   "words.saidnow": "Dites-la maintenant",
-  "atlas.open": "Ouvrir"
+  "atlas.open": "Ouvrir",
+  "nav.hajj": "Hajj",
+  "m.hajj": "Hajj et Omra",
+  "m.hajjplan": "Votre Plan de Pèlerin",
+  "m.ramadan": "Ramadan",
+  "m.eid": "Les Deux Aïds",
+  "m.protection": "Protection et Lumière",
+  "m.dictionary": "L'Encyclopédie de la Voie"
  },
  "nodes": {
   "1": {

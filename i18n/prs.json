@@ -209,7 +209,14 @@
   "words.verses": "کلمات",
   "words.verses.desc": "هجده جمله از این راه، با سند، با ترجمه، و آماده برای همین امشب.",
   "words.saidnow": "همین حالا بگویید",
-  "atlas.open": "باز کردن"
+  "atlas.open": "باز کردن",
+  "nav.hajj": "حج",
+  "m.hajj": "حج و عمره",
+  "m.hajjplan": "پلان حج شما",
+  "m.ramadan": "رمضان",
+  "m.eid": "دو عید",
+  "m.protection": "حفاظت و نور",
+  "m.dictionary": "دانشنامهٔ راه"
  },
  "_meta": {
   "language": "prs",

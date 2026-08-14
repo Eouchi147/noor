@@ -209,7 +209,14 @@
   "words.verses": "कलिमे",
   "words.verses.desc": "राह से अठारह जुमले, हवाले के साथ, तर्जुमे के साथ, और आज रात के लिए तैयार।",
   "words.saidnow": "अभी कहिए",
-  "atlas.open": "खोलिए"
+  "atlas.open": "खोलिए",
+  "nav.hajj": "हज",
+  "m.hajj": "हज और उमरा",
+  "m.hajjplan": "आपका हज मंसूबा",
+  "m.ramadan": "रमज़ान",
+  "m.eid": "दोनों ईदें",
+  "m.protection": "हिफ़ाज़त और नूर",
+  "m.dictionary": "राह की लुग़त"
  },
  "nodes": {
   "1": {

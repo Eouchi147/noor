@@ -1,0 +1,300 @@
+600|4 personnes à 12 USD, cela fait
+601|dans le sens inverse des aiguilles d'une montre, la Maison à votre gauche
+602|Vers Mina, et cinq prières là-bas
+603|invoquez Allah au Repère sacré
+604|depuis l'aube du dixième jour.
+605|Quatre : tawaf al-ifadah, et son sa'i
+606|les jours du séchage de la viande
+607|invoquez Allah pendant les jours comptés
+608|Sa'i, sept fois entre Safa et Marwah
+609|dites-le-nous et ce sera corrigé
+610|Muslim World League (18 / 17)
+611|· Le Restaurateur de ce qui est brisé
+612|· la dou'a d'un donateur · dites amin
+613|et qu'ils tournent autour de l'antique Maison
+614|Après le tawaf : deux unités, et Zamzam
+615|Quatre : sa'i, sept fois entre Safa et Marwah
+616|La station à Arafah est le pilier
+617|et invoquez Allah pendant les jours comptés
+618|Les quatre écoles lisent ce point différemment
+619|Le Garçon fort et la main haute
+620|La Fille de l'île et le ciel qui grandit
+621|ISNA · Amérique du Nord (15 / 15)
+622|Umm al-Qura · Makkah (18.5 / 90min)
+623|Allahu akbar, Allahu akbar, la ilaha illa Allah, wa Allahu akbar, Allahu akbar, wa lillahi al-hamd
+624|Qu'Allah accepte de nous et de vous.
+625|craignez Allah et soyez équitables entre vos enfants
+626|revient comme au jour où sa mère l'a mis au monde
+627|Deux : entrer dans le Haram, et le premier regard
+628|Zamzam est béni, c'est une nourriture qui rassasie
+629|Cinq : halq ou taqsir, et tout est accompli
+630|Entrez de nouveau en ihram, si vous accomplissez le tamattu'
+631|les gens de Makkah entrent en ihram depuis Makkah
+632|Trois : halq ou taqsir, et la première libération
+633|Mieux, et rien n'est dû si on l'omet
+634|pour un nouveau lieu de prière aux moyens modestes.
+635|Le marché du papier de Cordoue, al-Andalus, les années 900
+636|Voie
+637|Livres
+638|Anges
+639|Djinns
+640|Animaux
+641|Sahaba
+642|Mala'ika
+643|anges
+644|Israfil
+645|Malik
+646|Ridwan
+647|djinns
+648|animaux
+649|Nihaya
+650|Ad-Dajjal
+651|Fermer
+652|Boîte de réception
+653|Lanterne
+654|Dons
+655|Héritage
+656|Trafic
+657|Marketing
+658|Système
+659|noor
+660|Réglages
+661|Redéployer
+662|Stockage
+663|Choisir
+664|Upstash
+665|avec
+666|Pouls
+667|Nouveau
+668|Lu
+669|Terminé
+670|Actualiser
+671|Ajouter
+672|Zakat
+673|Mois
+674|Reçu
+675|Frais
+676|Net
+677|Quand
+678|Montant
+679|Donateur
+680|/donate
+681|Région
+682|Parrain
+683|Statut
+684|Renouvellement
+685|Lampe
+686|en attente
+687|Vérifier
+688|Approuver
+689|Éteindre
+690|Publier
+691|Demander
+692|L'Invisible
+693|Pur
+694|réinitialiser
+695|Envoyé
+696|Répondu
+697|Relance
+698|OUI
+699|ou
+700|Mot de passe
+701|Site web
+702|nom
+703|retirer
+704|EN
+705|Alif
+706|Bā’
+707|Tā’
+708|Thā’
+709|Jīm
+710|Khā’
+711|Dāl
+712|Dhāl
+713|Rā’
+714|Zāy
+715|Sīn
+716|Shīn
+717|Ṣād
+718|Ḍād
+719|ʿAyn
+720|Ghayn
+721|Fā’
+722|Qāf
+723|Kāf
+724|Lām
+725|Mīm
+726|Nūn
+727|Hā’
+728|Wāw
+729|Yā’
+730|Fatha
+731|Kasra
+732|Damma
+733|Sukun
+734|Shadda
+735|Fathatan
+736|Kasratan
+737|Dammatan
+738|ba
+739|Principal
+740|Menu
+741|seulement
+742|shirrah
+743|fatrah
+744|Khinzab
+745|Al-Buraq
+746|Al-Mahdi
+747|Al-Jassasah
+748|Dhul-Suwayqatayn
+749|Lieux
+750|Kinderbereich
+751|Theologie
+752|Telegram
+753|Enfants
+754|Sunna
+755|Muharram
+756|Safar
+757|Rajab
+758|Shaban
+759|Ramadan
+760|Shawwal
+761|suivant
+762|sept
+763|cinq
+764|aller
+765|Allez par un chemin et revenez par un autre
+766|et
+767|Devise
+768|Arafah
+769|Aïd
+770|Tashriq
+771|Teología
+772|Mariage
+773|Intimité
+774|Parents
+775|Liens de parenté
+776|Amitié
+777|Voisins
+778|sakina
+779|mawadda
+780|rahma
+781|miséricorde
+782|un
+783|Ahmad
+784|tenu
+785|khalil
+786|you@example.com
+787|Théologie
+788|Aƙida
+789|Un
+790|Hajj
+791|Suivant
+792|Ihram
+793|Omra
+794|Femmes
+795|Ibrahim
+796|Labbayk
+797|Tirmidhi
+798|Bukhari
+799|miqat
+800|libération
+801|Tamattu’
+802|hady
+803|Qiran
+804|Ifrad
+805|Hanafi
+806|Hanbali
+807|Makkah
+808|Yalamlam
+809|Pilier
+810|Maliki
+811|fidyah
+812|Parfum
+813|tawaf
+814|Muslim
+815|Zamzam
+816|Safa et Marwah sont parmi les symboles d'Allah
+817|Shafi’i
+818|Ibn Abbas : les femmes ne rasent pas, elles ne font que raccourcir
+819|sa’i
+820|as-Safa
+821|Mina
+822|Tarwiyah
+823|Nahr
+824|il lança sept cailloux en disant Allahu akbar à chacun
+825|Restez à Mina, et lapidez les trois chaque après-midi
+826|dispensent entièrement la femme en menstrues, sur la base du texte explicite.
+827|as-Sughra
+828|al-Wusta
+829|sunna
+830|École
+831|Rien.
+832|Corps
+833|Un wajib : l'omettre, et un sacrifice le répare
+834|nourriture
+835|boisson
+836|souffle
+837|Dattes
+838|potassium
+839|Miel
+840|Fajr
+841|Dhuhr
+842|Isha
+843|vies
+844|dons
+845|trésor
+846|Medina
+847|Ash-Shafi’i
+848|Al-Ghazali
+849|vent
+850|maintenant
+851|Documenté
+852|Retracé
+853|Bagdad
+854|Europe
+855|centaines
+856|dizaines
+857|unités
+858|variole
+859|rougeole
+860|sang
+861|rotation
+862|Cordoue
+863|reçus
+864|algèbre
+865|alcali
+866|zénith
+867|café
+868|coton
+869|magasin
+870|Alep
+871|Bételgeuse
+872|Rigel
+873|Éthiopie
+874|Yémen
+875|La Mecque
+876|Le Caire
+877|Istanbul
+878|qahwa
+879|kahve
+880|caffè
+881|al-ruzz
+882|sukkar
+883|naranj
+884|al-qutn
+885|arroz
+886|azúcar
+887|naranja
+888|algodón
+889|riz
+890|sucre
+891|orange
+892|guitare
+893|avant
+894|après
+895|Al-Qur'an
+896|Akidah
+897|Histoire
+898|Chapitres
+899|Mots

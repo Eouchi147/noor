@@ -51,7 +51,7 @@ button{font:inherit;cursor:pointer;color:inherit;background:none;border:0;paddin
 header{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 16px 4px;max-width:640px;margin:0 auto}
 .wordmark{display:inline-flex;align-items:center;gap:6px;min-height:40px;text-decoration:none;color:var(--parchment);font-weight:800;font-size:15px;letter-spacing:.04em}
 .wordmark .moon{color:var(--gold-hi)}
-.gtitle{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-hi);text-align:right}
+.gtitle{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-hi);text-align:end}
 .donenote{font-size:10px;letter-spacing:.08em;font-weight:700;color:#bff2cf;border:1px solid rgba(74,222,128,.55);background:rgba(74,222,128,.12);border-radius:999px;padding:3px 9px;white-space:nowrap}
 footer{position:relative;z-index:5;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 16px 26px;font-size:13px}
 footer a{color:var(--gold-hi);text-decoration:none;font-weight:600}
@@ -169,7 +169,7 @@ main{position:relative;z-index:1;padding:0 14px}
 
 /* win */
 .ov.win{background:rgba(5,8,20,.74)}
-.rays{position:absolute;left:50%;top:50%;width:1200px;height:1200px;margin:-600px 0 0 -600px;pointer-events:none;opacity:.45;background:repeating-conic-gradient(rgba(233,200,106,.28) 0deg 9deg,transparent 9deg 24deg);animation:spin 26s linear infinite;border-radius:50%}
+.rays{position:absolute;left:50%;top:50%;width:1200px;height:1200px;margin-block:-600px 0;margin-inline:-600px 0;pointer-events:none;opacity:.45;background:repeating-conic-gradient(rgba(233,200,106,.28) 0deg 9deg,transparent 9deg 24deg);animation:spin 26s linear infinite;border-radius:50%}
 @keyframes spin{to{transform:rotate(360deg)}}
 .windua{font-family:Amiri,serif;font-size:clamp(17px,4.6vw,23px);line-height:1.9;color:var(--lapis);margin:4px 0 2px}
 .wintr{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#8a6d16;margin-bottom:8px}
@@ -199,6 +199,9 @@ main{position:relative;z-index:1;padding:0 14px}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"></div>

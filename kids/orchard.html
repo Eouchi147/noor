@@ -38,13 +38,13 @@ button{font:inherit;cursor:pointer;color:inherit;background:none;border:0;-webki
 
 /* night sky + stars */
 .sky{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,#0d1b45 0%,#1E3A8A 58%,#2d4fb3 130%)}
-.sky::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:radial-gradient(130% 110% at 50% 128%,rgba(76,110,215,.5),transparent 70%)}
+.sky::after{content:"";position:absolute;inset-inline-start:0;inset-inline-end:0;bottom:0;height:34%;background:radial-gradient(130% 110% at 50% 128%,rgba(76,110,215,.5),transparent 70%)}
 .tw{position:absolute;border-radius:50%;background:#FFF9E3;opacity:.25;animation:twk var(--td,4s) ease-in-out var(--tl,0s) infinite alternate}
 @keyframes twk{from{opacity:.1;transform:scale(.7)}to{opacity:.95;transform:scale(1.2)}}
 .crescent{position:fixed;top:10px;right:12px;width:54px;z-index:0;pointer-events:none;filter:drop-shadow(0 0 14px rgba(233,200,106,.45))}
 
 /* header + footer */
-header{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 74px 2px 14px;max-width:640px;margin:0 auto}
+header{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:12px 2px;padding-inline:14px 74px;max-width:640px;margin:0 auto}
 .backlink{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid rgba(233,200,106,.4);background:rgba(20,16,10,.4);color:var(--gold-hi);font-weight:700;font-size:13px;text-decoration:none;transition:background .25s,transform .25s}
 .backlink:hover{background:rgba(233,200,106,.16);transform:translateY(-1px)}
 .gtitle{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-hi);white-space:nowrap}
@@ -73,7 +73,7 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 @keyframes gp{50%{transform:scale(1.28)}}
 .gcGrain{font-size:10px;font-weight:600;color:#8a6a12}
 .roundDots{display:flex;align-items:center;gap:6px}
-.rlab{font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8a6a12;margin-right:2px}
+.rlab{font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8a6a12;margin-inline-end:2px}
 .rd{width:16px;height:20px;opacity:.9}
 .rd ellipse{fill:#e8ddb8;stroke:#b99b3a;stroke-width:1.5;transition:fill .5s}
 .rd.on ellipse{fill:var(--acc)}
@@ -83,31 +83,31 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 .scene{position:relative;height:clamp(272px,84vw,330px);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#fff9e8 0%,#fdf0c8 55%,#f8e6ac 100%)}
 .sun{position:absolute;left:0;right:0;top:0;height:60%;background:radial-gradient(60% 55% at 78% 6%,rgba(251,191,36,.4),transparent 70%);pointer-events:none}
 .soil{position:absolute;left:-3%;right:-3%;bottom:0;height:68px;background:linear-gradient(180deg,#9a6a3d,#6f4a27 75%);border-radius:100% 100% 0 0/56px 56px 0 0;z-index:4}
-.soil::after{content:"";position:absolute;left:50%;top:10px;width:150px;height:32px;margin-left:-75px;background:radial-gradient(closest-side,#503418,#5f3f1f 78%,transparent);border-radius:50%}
-.tapRing{position:absolute;left:50%;bottom:66px;width:64px;height:64px;margin-left:-32px;border:3px dashed var(--acc);border-radius:50%;z-index:7;opacity:0;pointer-events:none}
+.soil::after{content:"";position:absolute;inset-inline-start:50%;top:10px;width:150px;height:32px;margin-inline-start:-75px;background:radial-gradient(closest-side,#503418,#5f3f1f 78%,transparent);border-radius:50%}
+.tapRing{position:absolute;left:50%;bottom:66px;width:64px;height:64px;margin-inline-start:-32px;border:3px dashed var(--acc);border-radius:50%;z-index:7;opacity:0;pointer-events:none}
 .scene[data-phase="plant"] .tapRing{opacity:1;animation:hint 1.5s ease-in-out infinite}
 @keyframes hint{0%,100%{transform:scale(.9)}50%{transform:scale(1.12)}}
 #plotBtn{position:absolute;left:5%;right:5%;top:24%;bottom:0;z-index:10;border-radius:16px;touch-action:none}
 .scene[data-phase="grow"] #plotBtn,.scene[data-phase="harvest"] #plotBtn,.scene[data-phase="finale"] #plotBtn{pointer-events:none}
 
 /* seed + plant */
-.plantW{--ps:1;position:absolute;left:50%;bottom:52px;width:240px;height:274px;margin-left:-120px;z-index:6;pointer-events:none;transform-origin:bottom center;transform:scale(var(--ps));transition:transform .95s ease,opacity .95s ease}
+.plantW{--ps:1;position:absolute;left:50%;bottom:52px;width:240px;height:274px;margin-inline-start:-120px;z-index:6;pointer-events:none;transform-origin:bottom center;transform:scale(var(--ps));transition:transform .95s ease,opacity .95s ease}
 .plantW.settled{opacity:.92}
 .plantW.s1{transform:translateX(calc(clamp(58px,24vw,104px) * -1)) scale(calc(var(--ps) * .55))}
 .plantW.s2{transform:translateX(clamp(58px,24vw,104px)) scale(calc(var(--ps) * .55))}
 @media(max-width:389px){.plantW{--ps:.88}}
 @media(max-width:339px){.plantW{--ps:.8}}
-.seed{position:absolute;left:50%;bottom:-4px;width:26px;height:34px;margin-left:-13px;transform:scale(0);z-index:2}
+.seed{position:absolute;left:50%;bottom:-4px;width:26px;height:34px;margin-inline-start:-13px;transform:scale(0);z-index:2}
 .seed.in{animation:seedin .7s var(--pop) forwards}
 @keyframes seedin{0%{transform:scale(0) rotate(0)}55%{transform:scale(1.25) rotate(7deg)}75%{transform:scale(.92) rotate(-6deg)}100%{transform:scale(1) rotate(0)}}
 .seed.gone{transition:opacity .5s,transform .5s;opacity:0;transform:scale(.4)!important}
-.stalkW{position:absolute;left:50%;bottom:0;width:40px;height:206px;margin-left:-20px;transform:scaleY(.03);transform-origin:bottom center;transition:transform 1.05s cubic-bezier(.3,1.35,.45,1)}
+.stalkW{position:absolute;left:50%;bottom:0;width:40px;height:206px;margin-inline-start:-20px;transform:scaleY(.03);transform-origin:bottom center;transition:transform 1.05s cubic-bezier(.3,1.35,.45,1)}
 .stalkW.grown{transform:scaleY(1)}
 .leaf{position:absolute;width:56px;height:30px;transform:scale(0);transition:transform .6s var(--pop)}
-.leaf.l1{left:50%;bottom:52px;margin-left:-52px;transform-origin:right center}
-.leaf.l2{left:50%;bottom:86px;margin-left:-4px;transform-origin:left center;scale:-1 1}
+.leaf.l1{left:50%;bottom:52px;margin-inline-start:-52px;transform-origin:right center}
+.leaf.l2{left:50%;bottom:86px;margin-inline-start:-4px;transform-origin:left center;scale:-1 1}
 .leaf.pop{transform:scale(1)}
-.ear{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;padding:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:30;transform:translate(0,0) rotate(calc(var(--r)*1deg)) scale(0);transition:transform .55s var(--pop),opacity .4s;border-radius:50%}
+.ear{position:absolute;width:56px;height:56px;margin-block:-28px 0;margin-inline:-28px 0;padding:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:30;transform:translate(0,0) rotate(calc(var(--r)*1deg)) scale(0);transition:transform .55s var(--pop),opacity .4s;border-radius:50%}
 .ear.pop{transform:rotate(calc(var(--r)*1deg)) scale(1)}
 .ear.ready{cursor:pointer}
 .ear.ready:not(.out) svg{animation:wig 2.2s ease-in-out infinite}
@@ -116,17 +116,17 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 .ear svg{width:42px;height:56px;filter:drop-shadow(0 1px 2px rgba(138,95,0,.35))}
 
 /* cloud + water */
-.cloud{position:absolute;left:50%;top:6px;width:132px;margin-left:-66px;z-index:9;transform:translateY(-150%);opacity:0;transition:transform .55s var(--pop),opacity .4s;pointer-events:none}
+.cloud{position:absolute;left:50%;top:6px;width:132px;margin-inline-start:-66px;z-index:9;transform:translateY(-150%);opacity:0;transition:transform .55s var(--pop),opacity .4s;pointer-events:none}
 .cloud.show{transform:translateY(0);opacity:1}
 .cloud.rain{animation:cwob 1s ease-in-out infinite}
 @keyframes cwob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .drip{position:fixed;width:7px;height:12px;background:#4cc3f7;border-radius:70% 70% 60% 60%/40% 40% 62% 62%;z-index:40;pointer-events:none;animation:dfall .7s ease-in forwards}
 @keyframes dfall{from{transform:translateY(0);opacity:.95}to{transform:translateY(120px);opacity:0}}
-.waterUI{position:absolute;left:50%;bottom:70px;width:132px;height:132px;margin-left:-66px;z-index:8;pointer-events:none;opacity:0;transform:scale(.6);transition:transform .5s var(--pop),opacity .35s}
+.waterUI{position:absolute;left:50%;bottom:70px;width:132px;height:132px;margin-inline-start:-66px;z-index:8;pointer-events:none;opacity:0;transform:scale(.6);transition:transform .5s var(--pop),opacity .35s}
 .waterUI.show{opacity:1;transform:scale(1)}
 .wdot{position:absolute;left:50%;top:50%;width:11px;height:11px;margin:-6px;border-radius:75% 0 55% 55%;background:#dceefb;border:1px solid #9fd4f2;transform:rotate(calc(var(--a)*1deg)) translateY(-56px) rotate(45deg) scale(.85);transition:background .25s,transform .3s var(--pop),box-shadow .25s}
 .wdot.on{background:#38bdf8;box-shadow:0 0 8px rgba(56,189,248,.8);transform:rotate(calc(var(--a)*1deg)) translateY(-56px) rotate(45deg) scale(1.15)}
-.bigDrop{position:absolute;left:50%;top:50%;width:46px;height:58px;margin:-30px 0 0 -23px}
+.bigDrop{position:absolute;left:50%;top:50%;width:46px;height:58px;margin-block:-30px 0;margin-inline:-23px 0}
 
 /* big rolling counter */
 .big{position:absolute;left:50%;top:6px;transform:translateX(-50%) scale(.5);z-index:12;font-weight:800;font-size:clamp(36px,12vw,50px);line-height:1;color:#b8860b;background:linear-gradient(180deg,var(--gold-hi),#b8860b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums;opacity:0;pointer-events:none;transition:opacity .4s,transform .5s var(--pop);filter:drop-shadow(0 2px 6px rgba(201,162,39,.4))}
@@ -168,7 +168,7 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 /* win overlay */
 .winO{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:radial-gradient(120% 100% at 50% 40%,rgba(13,20,52,.82),rgba(6,8,24,.94));overflow:hidden}
 .winO.show{display:flex}
-.rays{position:absolute;left:50%;top:50%;width:720px;height:720px;margin:-360px 0 0 -360px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(233,200,106,.2) 0 8deg,rgba(233,200,106,0) 8deg 16deg);-webkit-mask-image:radial-gradient(circle,#000 25%,transparent 68%);mask-image:radial-gradient(circle,#000 25%,transparent 68%);animation:spin 22s linear infinite}
+.rays{position:absolute;left:50%;top:50%;width:720px;height:720px;margin-block:-360px 0;margin-inline:-360px 0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(233,200,106,.2) 0 8deg,rgba(233,200,106,0) 8deg 16deg);-webkit-mask-image:radial-gradient(circle,#000 25%,transparent 68%);mask-image:radial-gradient(circle,#000 25%,transparent 68%);animation:spin 22s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .winCard{position:relative;background:#FFFDF4;color:var(--ink);border:3px solid var(--gold);border-radius:22px;padding:22px 18px;max-width:420px;width:100%;text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.6);animation:winin .6s var(--pop)}
 .winCard::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,162,39,.55);border-radius:16px;pointer-events:none}
@@ -189,7 +189,7 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 
 @media(min-width:900px){.wrap{max-width:600px}.stage{max-width:560px}}
 @media(max-width:379px){
- header{padding-right:64px}
+ header{padding-inline-end:64px}
  .gtitle{font-size:9px;letter-spacing:.16em}
  .backlink{font-size:12px;padding:6px 11px}
  .givenChip{padding:6px 10px;gap:4px}
@@ -210,6 +210,9 @@ h1{font-family:Amiri,serif;font-size:clamp(28px,8vw,36px);margin:0;color:var(--g
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"></div>

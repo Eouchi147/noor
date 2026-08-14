@@ -209,7 +209,14 @@
   "words.verses": "Las Palabras",
   "words.verses.desc": "Dieciocho frases de la Senda, con sus fuentes, traducidas y listas para esta noche.",
   "words.saidnow": "Dila ahora",
-  "atlas.open": "Abrir"
+  "atlas.open": "Abrir",
+  "nav.hajj": "Hayy",
+  "m.hajj": "Hayy y Umra",
+  "m.hajjplan": "Tu plan de peregrino",
+  "m.ramadan": "Ramadán",
+  "m.eid": "Los dos Eid",
+  "m.protection": "La protección y la Luz",
+  "m.dictionary": "La Enciclopedia de la Senda"
  },
  "_meta": {
   "language": "es",

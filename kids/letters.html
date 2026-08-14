@@ -56,7 +56,7 @@ main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
 .bud .e{font-size:.95rem;display:block;margin-top:.05rem;filter:grayscale(1);opacity:.4;transition:filter .3s,opacity .3s}
 .bud.got{border-color:var(--gold);background:rgba(233,200,106,.13)}
 .bud.got .e{filter:none;opacity:1}
-.bud.got::after{content:"⭐";position:absolute;top:-.45rem;left:-.3rem;font-size:.8rem;filter:drop-shadow(0 0 6px rgba(233,200,106,.8))}
+.bud.got::after{content:"⭐";position:absolute;top:-.45rem;inset-inline-start:-.3rem;font-size:.8rem;filter:drop-shadow(0 0 6px rgba(233,200,106,.8))}
 /* big card */
 #bigcard{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,.8);backdrop-filter:blur(6px);padding:1rem}
 #bigcard.open{display:flex}
@@ -79,7 +79,7 @@ main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
 #gprompt{text-align:center;background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.3);border-radius:20px;padding:1rem;margin-bottom:1rem}
 #gprompt .find{font-size:.8rem;color:rgba(255,254,247,.65);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 #gprompt .target{font-size:1.5rem;font-weight:800;color:var(--gold);margin-top:.2rem}
-#gprompt .te{font-size:1.6rem;margin-left:.3rem}
+#gprompt .te{font-size:1.6rem;margin-inline-start:.3rem}
 #gbubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;max-width:22rem;margin:0 auto}
 .gb{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(233,200,106,.25),transparent 58%),rgba(30,58,138,.55);border:2.5px solid rgba(233,200,106,.4);display:grid;place-items:center;font-family:Amiri,serif;font-size:2.5rem;color:#FFF7DF;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s;animation:bob 4s ease-in-out infinite}
 .gb:nth-child(2n){animation-delay:-1.3s}.gb:nth-child(3n){animation-delay:-2.6s}
@@ -103,6 +103,9 @@ main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <header>

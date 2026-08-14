@@ -209,7 +209,14 @@
   "words.verses": "Die Worte",
   "words.verses.desc": "Achtzehn Sätze vom Pfad, belegt, übersetzt und bereit für heute Nacht.",
   "words.saidnow": "Sprich es jetzt",
-  "atlas.open": "Öffnen"
+  "atlas.open": "Öffnen",
+  "nav.hajj": "Hadsch",
+  "m.hajj": "Hadsch & Umra",
+  "m.hajjplan": "Dein Pilgerplan",
+  "m.ramadan": "Ramadan",
+  "m.eid": "Die beiden Eid-Feste",
+  "m.protection": "Schutz & das Licht",
+  "m.dictionary": "Die Enzyklopädie des Pfades"
  },
  "nodes": {
   "1": {

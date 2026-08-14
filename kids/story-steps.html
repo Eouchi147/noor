@@ -47,7 +47,7 @@ button{font:inherit;cursor:pointer;color:inherit;background:none;border:0;paddin
 header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 4px;max-width:600px;margin:0 auto}
 .backlink{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 15px;border-radius:999px;border:1px solid rgba(233,200,106,.4);background:rgba(20,16,10,.4);color:var(--gold-hi);font-weight:700;font-size:13px;text-decoration:none;transition:background .25s,transform .25s}
 .backlink:hover{background:rgba(233,200,106,.16);transform:translateY(-1px)}
-.gtitle{text-align:right;font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:800;color:var(--gold-hi)}
+.gtitle{text-align:end;font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:800;color:var(--gold-hi)}
 .dn{display:block;margin-top:4px;font-size:10px;letter-spacing:.08em;font-weight:700;color:#9BE8C5}
 footer{display:flex;justify-content:center;align-items:center;gap:9px;padding:20px 12px 34px;font-size:12.5px}
 footer a{color:var(--gold-hi);text-decoration:none;font-weight:700}
@@ -59,7 +59,7 @@ footer .dot{opacity:.5}
 .deco{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px auto 12px;max-width:560px}
 .cres{width:36px;filter:drop-shadow(0 0 12px rgba(233,200,106,.45))}
 .trail{position:relative;display:flex;gap:13px;align-items:center;padding:4px 2px}
-.trail::before{content:"";position:absolute;left:4px;right:4px;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(233,200,106,.6),transparent)}
+.trail::before{content:"";position:absolute;inset-inline-start:4px;inset-inline-end:4px;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(233,200,106,.6),transparent)}
 .gem{position:relative;width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(233,200,106,.65);background:rgba(255,253,244,.12);display:grid;place-items:center;transition:background .35s,border-color .35s,transform .35s}
 .gem.on{background:linear-gradient(180deg,#7CE7BC,#34d399);border-color:#34d399;box-shadow:0 0 8px rgba(52,211,153,.55)}
 .gem.st::after{content:"✦";font-size:8px;color:#0E5A3C;line-height:1}
@@ -189,6 +189,9 @@ main{width:100%;max-width:560px;margin:0 auto;padding:0 12px}
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"></div>

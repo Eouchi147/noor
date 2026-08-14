@@ -50,7 +50,7 @@ main{position:relative;z-index:1;flex:1;display:flex;justify-content:center;alig
 .moon svg{width:100%;height:100%}
 .moon.lost{opacity:.18;transform:translateY(3px) scale(.9);filter:grayscale(1)}
 .beads{position:relative;display:flex;justify-content:center;gap:6px;padding:11px 0 5px}
-.beads::before{content:"";position:absolute;left:9%;right:9%;top:50%;height:2px;background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.4) 12%,rgba(201,162,39,.4) 88%,rgba(201,162,39,0))}
+.beads::before{content:"";position:absolute;inset-inline-start:9%;inset-inline-end:9%;top:50%;height:2px;background:linear-gradient(90deg,rgba(201,162,39,0),rgba(201,162,39,.4) 12%,rgba(201,162,39,.4) 88%,rgba(201,162,39,0))}
 .bead{position:relative;width:13px;height:13px;border-radius:50%;background:#f6eed4;border:1.5px solid #d8c48c}
 .bead.on{background:radial-gradient(circle at 35% 30%,#ffe3ff,var(--accent) 62%,#a63bbc);border-color:#cf6fdf;box-shadow:0 0 9px rgba(232,121,249,.6);animation:bpop .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes bpop{0%{transform:scale(.4)}55%{transform:scale(1.45)}100%{transform:scale(1)}}
@@ -138,6 +138,9 @@ main{position:relative;z-index:1;flex:1;display:flex;justify-content:center;alig
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<script src="/assets/noor-search.js?v=1" defer></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true">

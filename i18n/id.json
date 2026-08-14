@@ -209,7 +209,14 @@
   "words.verses": "Kalimat-Kalimatnya",
   "words.verses.desc": "Delapan belas kalimat dari Jalan ini, lengkap dengan sumber dan terjemahannya, siap diamalkan malam ini.",
   "words.saidnow": "Ucapkan sekarang",
-  "atlas.open": "Buka"
+  "atlas.open": "Buka",
+  "nav.hajj": "Haji",
+  "m.hajj": "Haji & Umrah",
+  "m.hajjplan": "Rencana Haji Anda",
+  "m.ramadan": "Ramadan",
+  "m.eid": "Dua Hari Raya Id",
+  "m.protection": "Perlindungan & Cahaya",
+  "m.dictionary": "Ensiklopedia Jalan Ini"
  },
  "_meta": {
   "language": "id",
