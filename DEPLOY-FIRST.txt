@@ -1,0 +1,32 @@
+NOOR v70 · deploy these two files first if you want to test the prayer board
+
+  masjid/setup.html      the wizard
+  masjid/board.html      the board itself
+
+Those two carry the whole Jumu'ah fix. Everything else in this zip is the rest of
+v59 to v70 and can follow.
+
+WHAT WAS WRONG, IN ORDER OF WHO IT BIT
+
+1. The preview never reloaded. Changing only the # part of an iframe's address is
+   not a navigation, so the browser kept the board it already had. The board reads
+   its settings once, at startup. The preview therefore showed the empty board it
+   loaded with, forever, while you typed. Every keystroke rewrote an address that
+   nothing ever fetched.
+
+2. The khutba fields would not accept a typed time. They were time pickers, and a
+   time picker silently throws away anything it does not recognise. Typing
+   1:15 PM and pressing enter left the field empty, with no message. The board then
+   had no sitting to show, which looks identical to the feature not working.
+
+3. The preview asked for the Friday screen through the address bar, which had to
+   survive the redirect from board.html to board, and did not always.
+
+WHAT TO EXPECT NOW
+
+  Type 13:15, or 1:15 PM, or 1:15pm, or 2.45 pm. All four work.
+  The preview redraws about a third of a second after you stop typing.
+  If Jumu'ah is on and no time is set, the wizard says so in red.
+  If a time cannot be read, it quotes your text back and shows what does work.
+  The link for the television is /masjid/board, with no .html, so the screen
+  stops taking a redirect every time it loads.
