@@ -209,7 +209,14 @@
   "words.verses": "کلمې",
   "words.verses.desc": "له دې لارې اتلس جملې، له سرچینې سره، ژباړل شوې، او د همدې نن شپې لپاره چمتو.",
   "words.saidnow": "همدا اوس یې ووایئ",
-  "atlas.open": "پرانیستل"
+  "atlas.open": "پرانیستل",
+  "nav.hajj": "حج",
+  "m.hajj": "حج او عمره",
+  "m.hajjplan": "ستاسو د حج پلان",
+  "m.ramadan": "رمضان",
+  "m.eid": "دوه اخترونه",
+  "m.protection": "ساتنه او رڼا",
+  "m.dictionary": "د لارې پوهنغونډ"
  },
  "_meta": {
   "language": "ps",

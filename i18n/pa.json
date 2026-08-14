@@ -209,7 +209,14 @@
   "words.verses": "بول",
   "words.verses.desc": "راہ وچوں اٹھارہ جملے، حوالے نال، ترجمے نال، تے اج رات ای پڑھن لئی تیار۔",
   "words.saidnow": "ہُنے پڑھو",
-  "atlas.open": "کھولو"
+  "atlas.open": "کھولو",
+  "nav.hajj": "حج",
+  "m.hajj": "حج تے عمرہ",
+  "m.hajjplan": "تہاڈا حج دا منصوبہ",
+  "m.ramadan": "رمضان",
+  "m.eid": "دوویں عیداں",
+  "m.protection": "حفاظت تے نور",
+  "m.dictionary": "راہ دی لغت"
  },
  "_meta": {
   "language": "pa",

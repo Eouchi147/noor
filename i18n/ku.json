@@ -209,7 +209,14 @@
   "words.verses": "Peyv",
   "words.verses.desc": "Hijdeh hevok ji Rê, bi çavkanî, wergerandî, û ji bo îşev amade.",
   "words.saidnow": "Niha wê bibêje",
-  "atlas.open": "Veke"
+  "atlas.open": "Veke",
+  "nav.hajj": "Hec",
+  "m.hajj": "Hec û Umre",
+  "m.hajjplan": "Plana Hecê ya Te",
+  "m.ramadan": "Remezan",
+  "m.eid": "Du Cejn",
+  "m.protection": "Parastin û Ronahî",
+  "m.dictionary": "Ansîklopediya Rê"
  },
  "_meta": {
   "language": "ku",

@@ -209,7 +209,14 @@
   "words.verses": "Erayada",
   "words.verses.desc": "Siddeed iyo toban jumlo oo Jidka ka mid ah, il leh, la turjumay, oo caawa diyaar u ah.",
   "words.saidnow": "Hadda dheh",
-  "atlas.open": "Fur"
+  "atlas.open": "Fur",
+  "nav.hajj": "Xajka",
+  "m.hajj": "Xajka iyo Cumrada",
+  "m.hajjplan": "Qorshahaaga Xajka",
+  "m.ramadan": "Ramadaan",
+  "m.eid": "Labada Ciid",
+  "m.protection": "Ilaalinta iyo Nuurka",
+  "m.dictionary": "Qaamuuska Jidka"
  },
  "_meta": {
   "language": "so",

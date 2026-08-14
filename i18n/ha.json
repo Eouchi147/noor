@@ -209,7 +209,14 @@
   "words.verses": "Kalmomin",
   "words.verses.desc": "Jimloli goma sha takwas daga Hanya, da majiya, da fassara, a shirye don wannan dare.",
   "words.saidnow": "Ka faɗe shi yanzu",
-  "atlas.open": "Buɗe"
+  "atlas.open": "Buɗe",
+  "nav.hajj": "Hajji",
+  "m.hajj": "Hajji da Umra",
+  "m.hajjplan": "Shirinka na Hajji",
+  "m.ramadan": "Ramadan",
+  "m.eid": "Sallolin Biyu",
+  "m.protection": "Kariya da Haske",
+  "m.dictionary": "Ƙamusun Hanya"
  },
  "_meta": {
   "language": "ha",
