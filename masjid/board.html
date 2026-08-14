@@ -134,8 +134,12 @@ var JU=(function(){
   return {rep:j.rep!==false,all:j.all!==false,s:list};
 })();
 var ORDER=["fajr","sunrise","dhuhr","asr","maghrib","isha"];
-/* the wizard's preview asks for the Friday screen with ?friday=1; a real board never does */
-var FORCEFRI=/[?&]friday=1/.test(location.search||"");
+/* The wizard's preview asks for the Friday screen. It used to ask with
+   ?friday=1, which meant the request had to survive the clean URL redirect from
+   board.html to board, and the query did not always make it. The flag now also
+   rides inside the config in the hash, which cannot be dropped, so an imam who
+   sets up three sittings sees them immediately instead of a normal Tuesday. */
+var FORCEFRI=/[?&]friday=1/.test(location.search||"")||C._fri===1||C._fri===true;
 var TZ=C.tz||Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC";
 function zoned(d){ /* the masjid's own clock, whatever the TV thinks */
   try{

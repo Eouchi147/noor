@@ -1,0 +1,45 @@
+NOOR Codex of Light · translation coverage at v69
+
+Read this if you want to know exactly how far each language has come. The number
+that matters is the second one, the share of WORDS, because the strings count is
+flattered by the thousands of short labels that were carried first.
+
+corpus: 10439 strings, 165505 words, 21 languages
+
+  ar   #######################.....  8604/10439 strings   73% of words  (32 parts in flight)
+  ur   ###########.................  4074/10439 strings    9% of words  (2 parts in flight)
+  fr   ##############..............  5050/10439 strings   24% of words  (6 parts in flight)
+  es   #################...........  6398/10439 strings   43% of words  (40 parts in flight)
+  de   #################...........  6398/10439 strings   43% of words  (110 parts in flight)
+  ru   #################...........  6398/10439 strings   43% of words  (32 parts in flight)
+  tr   ###########.................  4017/10439 strings    6% of words
+  id   ###########.................  4017/10439 strings    6% of words
+  hi   ###########.................  4017/10439 strings    6% of words  (28 parts in flight)
+  bn   ###########.................  4017/10439 strings    6% of words
+  fa   ###########.................  4017/10439 strings    6% of words
+  prs  ###########.................  4017/10439 strings    6% of words  (62 parts in flight)
+  pa   ###########.................  4017/10439 strings    6% of words
+  ps   #...........................   408/10439 strings    1% of words  (44 parts in flight)
+  ha   #...........................   382/10439 strings    0% of words
+  so   #...........................   382/10439 strings    0% of words
+  ku   #...........................   382/10439 strings    0% of words
+  sw   #...........................   382/10439 strings    0% of words
+  zh   #...........................   382/10439 strings    0% of words
+  ja   #...........................   382/10439 strings    0% of words
+  ko   #...........................   382/10439 strings    0% of words
+
+21 of 21 languages started
+
+How it works, so a later session can pick it up without redoing anything:
+
+  python3 scripts/i18n.py status        what every language has, measured
+  python3 scripts/i18n.py todo <code>   the next batch of untranslated strings
+  python3 scripts/i18n.py merge <code>  fold finished parts back into the pack
+
+Seven packs are not in this zip: ha, so, ku, sw, zh, ja and ko. They contain only
+strings that need no translator at all, hadith references and numbers, so shipping
+them would change nothing a reader sees. Their menus and their gateway pages are
+fully translated and those ARE in this zip.
+
+Nothing already translated is ever translated twice. The queue is keyed on the
+string itself, so it survives across sessions.

@@ -473,6 +473,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 function $(i){return document.getElementById(i)}
 function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
 var ORD=["First jumu'ah","Second jumu'ah","Third jumu'ah"];
+var PSEQ=0,PTIMER=null;
 /* a readable clock for the legacy line older boards still read */
 function say12(v){
   var m=String(v||"").match(/^(\d{1,2}):(\d{2})$/);
@@ -499,10 +500,24 @@ function build(){
     ju:{on:jon,rep:!!$("j-rep").value,all:!!$("j-all").value,s:sits},
     jumuah:(jon&&sits.length)?((sits[0].l?sits[0].l+" ":"")+say12(sits[0].k)).trim().slice(0,40):"",
     ann:$("w-ann").value.split("\n").map(function(x){return x.trim()}).filter(Boolean).slice(0,6)};
-  var url=location.origin+location.pathname.replace(/[^\/]*$/,"").replace(/\/$/,"")+"/board.html#"+b64u(JSON.stringify(c));
-  var hash=url.slice(url.indexOf("#"));
+  var base=location.origin+location.pathname.replace(/[^\/]*$/,"").replace(/\/$/,"")+"/board";
+  var url=base+"#"+b64u(JSON.stringify(c));
   $("linkbox").textContent=url;$("w-open").href=url;
-  $("w-frame").src=url.slice(0,url.indexOf("#")).replace(/board\.html$/,"board.html"+((jon&&sits.length&&$("j-prev").value)?"?friday=1":""))+hash;
+  /* The preview carries the Friday flag inside the config, not in a query string
+     that a redirect can eat on the way.
+
+     And it must be made to reload. Changing only the fragment of an iframe's src
+     is not a navigation: the browser keeps the document it already has, and the
+     board reads its config once at startup. So the preview sat there showing the
+     empty board it loaded with while the imam typed in three sittings and
+     concluded the thing was broken. A counter in the query makes each build a
+     genuinely new document. It is debounced because these fields fire on every
+     keystroke and a board redraw is not free. */
+  var pv=JSON.parse(JSON.stringify(c));
+  if(jon&&sits.length&&$("j-prev").value)pv._fri=1;
+  var next=base+"?p="+(++PSEQ)+"#"+b64u(JSON.stringify(pv));
+  clearTimeout(PTIMER);
+  PTIMER=setTimeout(function(){ $("w-frame").src=next; }, 350);
   if(!isNaN(lat)&&!isNaN(lng)){$("w-qibla").hidden=false;$("w-qibla").innerHTML="Qibla from here: <b>"+window.NOOR_QIBLA(lat,lng).toFixed(1)+"° from true north</b> (great-circle bearing to the Kaaba).";}
 }
 ["w-name","w-lat","w-lng","w-m","w-a","w-lang","w-h24","iq-fajr","iq-dhuhr","iq-asr","iq-maghrib","iq-isha","w-ann",

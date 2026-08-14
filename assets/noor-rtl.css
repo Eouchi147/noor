@@ -89,3 +89,47 @@
 .ns-hint a{color:#8a6d13;font-weight:700}
 body.ns-open{overflow:hidden}
 @media (max-width:520px){.ns-panel{margin-top:4.2rem}}
+
+/* ============================================================
+   9. The mixed page, which is the normal case and not the edge
+   ------------------------------------------------------------
+   A language is carried across in waves, so an Arabic page holds
+   Arabic paragraphs and, for now, English ones beside them. An
+   English sentence inheriting rtl from its container is not just
+   right aligned: its full stop moves to the left of the line and
+   its brackets turn round. That is not a temporary blemish, it
+   is what every partly carried language looks like until the
+   last string lands.
+
+   plaintext asks the browser to take each paragraph's direction
+   from its own first strong character. Arabic runs right to
+   left, English runs left to right, in the same page, with the
+   punctuation on the correct end of both. It costs nothing when
+   a language is finished and it is the difference between
+   half translated and broken while it is not.
+   ============================================================ */
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] dd,
+[dir="rtl"] dt,
+[dir="rtl"] td,
+[dir="rtl"] th,
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] blockquote,
+[dir="rtl"] figcaption,
+[dir="rtl"] summary,
+[dir="rtl"] label,
+[dir="rtl"] .lead,
+[dir="rtl"] .sub,
+[dir="rtl"] .cap,
+[dir="rtl"] .short,
+[dir="rtl"] .dshort,
+[dir="rtl"] .dlong,
+[dir="rtl"] .ns-s,
+[dir="rtl"] [data-noor-sponsor] span { unicode-bidi: plaintext; }
+
+/* a heading or label that is a single word still wants to sit on
+   the reader's own side, which text-align: start already gives it */
