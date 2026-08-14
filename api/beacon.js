@@ -123,7 +123,7 @@ const ROOMS = {
   "latif": "latif", "begin": "begin", "kids": "kids", "arabic": "arabic", "pillars": "pillars", "license": "license", "school": "school", "madrasa": "madrasa", "kids/cradle": "kids",
   "kids/letters": "kids", "donate": "give",
   "sponsor": "sponsor", "legal": "legal",
-  "family": "family", "heroes": "heroes", "feedback": "feedback",
+  "family": "family", "protection": "protection", "heroes": "heroes", "feedback": "feedback",
   "hajj": "hajj", "hajj-plan": "hajjplan", "ramadan": "ramadan", "eid": "eid",
   "stories": "stories", "stories/index": "stories",
   "unseen": "unseen", "sermon": "sermon", "soul": "soul",
