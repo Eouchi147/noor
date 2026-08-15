@@ -192,7 +192,48 @@
     document.fonts.ready.then(function () { setTimeout(guard, 120); });
   }
 
+  /* ---- lazily sized pages -------------------------------------------
+     ScrollTrigger measures the whole document once and remembers where
+     every trigger sits. The dictionary breaks that promise: its 523
+     entries carry content-visibility:auto, so the browser renders them
+     only as they approach the fold and guesses the rest at 118px each.
+     The page therefore grows by thousands of pixels WHILE you scroll,
+     and every trigger below the list is pointing at a page that no
+     longer exists. That is why the three plates and the closing cards
+     at the foot of the dictionary stayed hidden until the eight second
+     failsafe caught them, and why their text would not even copy:
+     visibility:hidden takes an element out of the selection too.
+
+     So watch the height and re-measure when it settles. A page whose
+     height is stable never pays for this. */
+  function watchHeight() {
+    if (!window.ScrollTrigger || !window.ResizeObserver) return;
+    var last = document.documentElement.scrollHeight, timer = null, runs = 0, ro;
+    function settle() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        /* guard() re-measures AND reveals anything already in view, which is
+           what a jump to the foot of the page needs: after a long scroll the
+           trigger for a plate has not been crossed, it has been leapt over,
+           and a crossing that never happened will not fire on its own. */
+        try { guard(); } catch (e) {}
+        /* a page that never stops moving is not worth chasing forever */
+        if (++runs > 40 && ro) ro.disconnect();
+      }, 220);
+    }
+    try {
+      ro = new ResizeObserver(function () {
+        var h = document.documentElement.scrollHeight;
+        if (Math.abs(h - last) < 40) return;   /* ignore ordinary reflow noise */
+        last = h;
+        settle();
+      });
+      ro.observe(document.body);
+    } catch (e) {}
+  }
+
   window.NOOR_MO = { animate: animate, draw: animateDraw, floats: floats, revealAll: revealAll, reduce: REDUCE, gsap: g };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScroll);
-  else initScroll();
+  function boot() { initScroll(); watchHeight(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();

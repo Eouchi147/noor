@@ -38,7 +38,66 @@
     }).then(function (r) { return r.json().then(function (j) { return { code: r.status, j: j }; }); });
   }
 
+  /* ---- the lamp carries its own light -------------------------------
+     These rules also live in assets/noor-rtl.css, but a stylesheet is a
+     separate request with its own cache. When the Lantern rules were
+     added to that file its ?v= query was not bumped, so browsers and the
+     CDN went on serving the older copy: the script arrived, drew its
+     button and panel, and found no styles at all. The panel then sat
+     open in the page flow at the foot of every masjid tool.
+
+     A widget that builds its own DOM should carry its own appearance.
+     These are injected only if the sheet did not arrive, so the stylesheet
+     stays authoritative whenever it is present. */
+  var STYLE =
+    "#lantern-open{position:fixed;inset-inline-end:1rem;inset-block-end:1rem;z-index:78;display:inline-flex;align-items:center;gap:.45rem;border:1px solid rgba(201,162,39,.5);background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-radius:999px;padding:.6rem 1rem;font:inherit;font-size:.82rem;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(44,36,22,.22);transition:transform .18s,box-shadow .18s}" +
+    "#lantern-open:hover{transform:translateY(-1px);box-shadow:0 14px 36px rgba(44,36,22,.28)}" +
+    "#lantern-open.on{opacity:.55}" +
+    "#lantern-open .lm-fl{font-size:.95rem}" +
+    "#lantern-open .lm-n{font-size:.66rem;font-weight:800;background:rgba(26,22,15,.18);border-radius:999px;padding:.1rem .38rem;min-width:1rem;text-align:center}" +
+    "#lantern-open .lm-n:empty{display:none}" +
+    "@media (max-width:520px){#lantern-open .lm-tx{display:none}}" +
+    "#lantern-panel{position:fixed;inset-inline-end:1rem;inset-block-end:4.4rem;z-index:79;width:min(23rem,calc(100vw - 2rem));background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:18px;box-shadow:0 26px 64px rgba(44,36,22,.3);display:none;overflow:hidden}" +
+    "#lantern-panel.on{display:block}" +
+    "#lantern-panel .lm-top{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;border-bottom:1px solid rgba(44,36,22,.1);background:linear-gradient(170deg,#FFFCEF,#FFF6DB)}" +
+    "#lantern-panel .lm-top b{font-size:.9rem;font-weight:800;color:#2C2416}" +
+    "#lantern-panel .lm-sub{font-size:.66rem;color:rgba(44,36,22,.5);font-weight:700}" +
+    "#lantern-panel .lm-x{margin-inline-start:auto;border:0;background:none;font-size:1.2rem;line-height:1;color:rgba(44,36,22,.4);cursor:pointer}" +
+    "#lantern-panel .lm-log{max-height:min(46vh,24rem);overflow:auto;padding:.7rem .9rem;display:grid;gap:.55rem}" +
+    "#lantern-panel .lm-hi{font-size:.79rem;line-height:1.75;color:rgba(44,36,22,.55);margin:0}" +
+    "#lantern-panel .lm-msg{font-size:.83rem;line-height:1.8;border-radius:13px;padding:.5rem .7rem}" +
+    "#lantern-panel .lm-you{background:rgba(201,162,39,.14);color:#2C2416;justify-self:end;max-width:88%}" +
+    "#lantern-panel .lm-lamp{background:#fff;border:1px solid rgba(44,36,22,.1);color:rgba(44,36,22,.85)}" +
+    "#lantern-panel .lm-lamp a{color:#8a6d13;font-weight:700}" +
+    "#lantern-panel .lm-out{border-color:rgba(143,45,45,.3);background:#fffafa;color:#8f2d2d}" +
+    "#lantern-panel .lm-wait{opacity:.5}" +
+    "#lantern-panel .lm-ask{display:flex;gap:.4rem;padding:.6rem .7rem;border-top:1px solid rgba(44,36,22,.1)}" +
+    "#lantern-panel .lm-ask input{flex:1;min-width:0;border:1px solid rgba(44,36,22,.16);border-radius:11px;padding:.5rem .65rem;font:inherit;font-size:.85rem;outline:0}" +
+    "#lantern-panel .lm-ask input:focus{border-color:rgba(201,162,39,.75);box-shadow:0 0 0 3px rgba(201,162,39,.15)}" +
+    "#lantern-panel .lm-ask button{flex:none;border:0;border-radius:11px;padding:.5rem .85rem;font:inherit;font-size:.8rem;font-weight:800;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;cursor:pointer}" +
+    "#lantern-panel .lm-ask button:disabled{opacity:.5;cursor:default}" +
+    "@media print{#lantern-open,#lantern-panel{display:none!important}}";
+
+  function haveSheet() {
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var sh = document.styleSheets[i], rules;
+      try { rules = sh.cssRules; } catch (e) { continue; }   /* cross origin */
+      if (!rules) continue;
+      for (var k = 0; k < rules.length; k++) {
+        if (rules[k].selectorText && rules[k].selectorText.indexOf("#lantern-panel") === 0) return true;
+      }
+    }
+    return false;
+  }
+  function ensureStyle() {
+    if (document.getElementById("lantern-css") || haveSheet()) return;
+    var st = document.createElement("style");
+    st.id = "lantern-css"; st.textContent = STYLE;
+    document.head.appendChild(st);
+  }
+
   function build() {
+    ensureStyle();
     var b = document.createElement("button");
     b.id = "lantern-open"; b.type = "button";
     b.setAttribute("aria-label", "Ask the Lantern");
