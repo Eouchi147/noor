@@ -41,8 +41,8 @@
     var rises = root.querySelectorAll ? root.querySelectorAll(".mo") : [];
     var pops = root.querySelectorAll ? root.querySelectorAll(".mo-pop") : [];
     var draws = drawTargets(root);
-    if (rises.length) tl.fromTo(rises, { y: REDUCE ? 0 : 22, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65 * D, stagger: 0.08 * D }, 0);
-    if (pops.length) tl.fromTo(pops, { scale: REDUCE ? 1 : 0.55, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.7 * D, ease: "back.out(1.9)", stagger: 0.09 * D }, 0.1 * D);
+    if (rises.length) tl.fromTo(rises, { y: REDUCE ? 0 : 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65 * D, stagger: 0.08 * D }, 0);
+    if (pops.length) tl.fromTo(pops, { scale: REDUCE ? 1 : 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7 * D, ease: "back.out(1.9)", stagger: 0.09 * D }, 0.1 * D);
     if (draws.length) {
       if (window.DrawSVGPlugin) {
         tl.fromTo(draws, { drawSVG: REDUCE ? "0% 100%" : "0%" }, { drawSVG: "0% 100%", duration: 1.1 * D, ease: "power2.inOut", stagger: 0.1 * D }, 0.15 * D);
@@ -75,33 +75,40 @@
   }
 
   /* Scroll reveals: batched, resilient (elements start visible; we hide
-     then reveal only when JS is definitely running). */
+     then reveal only when JS is definitely running).
+
+     Held with opacity, never with visibility. GSAP's autoAlpha adds
+     visibility:hidden, which takes an element out of the selection and out of
+     the accessibility tree as well as out of sight, so a reader who selected
+     the whole dictionary and copied it got bare bullets for every part of the
+     page they had not scrolled past. Words the eye has not reached yet are
+     still words. pointerEvents keeps an unseen card from being clicked. */
   function initScroll() {
     if (!window.ScrollTrigger) { floats(document); return; }
     var singles = [].slice.call(document.querySelectorAll(".mo")).filter(function (el) { return !el.closest("[data-mo-stagger]") && !el.closest("dialog") && !el.closest(".encx"); });
     var pops = [].slice.call(document.querySelectorAll(".mo-pop")).filter(function (el) { return !el.closest("[data-mo-stagger]") && !el.closest("dialog") && !el.closest(".encx"); });
     if (singles.length) {
-      g.set(singles, { y: REDUCE ? 0 : 24, autoAlpha: 0 });
+      g.set(singles, { y: REDUCE ? 0 : 24, opacity: 0, pointerEvents: "none" });
       ScrollTrigger.batch(singles, {
         start: "top 88%", once: true,
-        onEnter: function (els) { g.to(els, { y: 0, autoAlpha: 1, duration: 0.75 * D, ease: "power3.out", stagger: 0.09 * D, overwrite: true }); }
+        onEnter: function (els) { g.to(els, { y: 0, opacity: 1, pointerEvents: "auto", duration: 0.75 * D, ease: "power3.out", stagger: 0.09 * D, overwrite: true }); }
       });
     }
     if (pops.length) {
-      g.set(pops, { scale: REDUCE ? 1 : 0.6, autoAlpha: 0 });
+      g.set(pops, { scale: REDUCE ? 1 : 0.6, opacity: 0, pointerEvents: "none" });
       ScrollTrigger.batch(pops, {
         start: "top 88%", once: true,
-        onEnter: function (els) { g.to(els, { scale: 1, autoAlpha: 1, duration: 0.7 * D, ease: "back.out(1.8)", stagger: 0.08 * D, overwrite: true }); }
+        onEnter: function (els) { g.to(els, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 0.7 * D, ease: "back.out(1.8)", stagger: 0.08 * D, overwrite: true }); }
       });
     }
     document.querySelectorAll("[data-mo-stagger]").forEach(function (wrap) {
       if (wrap.closest("dialog") || wrap.closest(".encx")) return;
       var kids = wrap.querySelectorAll(".mo, .mo-pop");
       if (!kids.length) return;
-      g.set(kids, { y: REDUCE ? 0 : 20, autoAlpha: 0 });
+      g.set(kids, { y: REDUCE ? 0 : 20, opacity: 0, pointerEvents: "none" });
       ScrollTrigger.create({
         trigger: wrap, start: "top 85%", once: true,
-        onEnter: function () { g.to(kids, { y: 0, autoAlpha: 1, duration: 0.7 * D, ease: "power3.out", stagger: { each: 0.07 * D, from: "start" }, overwrite: true }); }
+        onEnter: function () { g.to(kids, { y: 0, opacity: 1, pointerEvents: "auto", duration: 0.7 * D, ease: "power3.out", stagger: { each: 0.07 * D, from: "start" }, overwrite: true }); }
       });
     });
     /* standalone draw figures revealed on scroll */
@@ -153,7 +160,7 @@
     for (var i = 0; i < hidden.length; i++) {
       var el = hidden[i], cs = window.getComputedStyle(el);
       if (parseFloat(cs.opacity) < 0.99 || cs.visibility === "hidden") {
-        g.set(el, { autoAlpha: 1, y: 0, scale: 1, clearProps: "transform" });
+        g.set(el, { autoAlpha: 1, opacity: 1, pointerEvents: "auto", y: 0, scale: 1, clearProps: "transform" });
         fixed++;
       }
     }
@@ -167,7 +174,7 @@
       if (r.top < window.innerHeight * 1.1) {
         var cs = window.getComputedStyle(el);
         if (parseFloat(cs.opacity) < 0.99 || cs.visibility === "hidden") {
-          g.to(el, { autoAlpha: 1, y: 0, scale: 1, duration: 0.4 * D, overwrite: true });
+          g.to(el, { autoAlpha: 1, opacity: 1, pointerEvents: "auto", y: 0, scale: 1, duration: 0.4 * D, overwrite: true });
         }
       }
     });
@@ -206,6 +213,49 @@
 
      So watch the height and re-measure when it settles. A page whose
      height is stable never pays for this. */
+  /* ---- the reader is the authority --------------------------------
+     ScrollTrigger decides when to reveal from positions it measured once.
+     On a page that grows underneath it, those positions are fiction, and
+     the dictionary is exactly that page. So do not argue with it: watch
+     the scroll directly and release anything the reader has actually
+     reached. The list only ever shrinks, and the listener retires itself
+     when nothing is left waiting, so a settled page costs nothing. */
+  function sweeper() {
+    var pending = [].slice.call(document.querySelectorAll(".mo, .mo-pop"));
+    if (!pending.length) return;
+    var ticking = false;
+    function sweep() {
+      ticking = false;
+      var vh = window.innerHeight || 800, still = [];
+      for (var i = 0; i < pending.length; i++) {
+        var el = pending[i], r = el.getBoundingClientRect();
+        if (r.top < vh * 1.05) {
+          var cs = window.getComputedStyle(el);
+          if (parseFloat(cs.opacity) < 0.99 || cs.visibility === "hidden") {
+            /* Something the reader has already scrolled past should simply be
+               there. Only what is arriving at the fold is worth animating: a
+               card fading in above the fold reads as a glitch, not a flourish. */
+            var arriving = r.top > 0;
+            g.to(el, { autoAlpha: 1, opacity: 1, pointerEvents: "auto", y: 0, scale: 1,
+                       duration: arriving ? 0.45 * D : 0, overwrite: true });
+          }
+        } else {
+          still.push(el);          /* still below the fold, ask again later */
+        }
+      }
+      pending = still;
+      if (!pending.length) removeEventListener("scroll", onScroll);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      (window.requestAnimationFrame || function (f) { setTimeout(f, 16); })(sweep);
+    }
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    sweep();
+  }
+
   function watchHeight() {
     if (!window.ScrollTrigger || !window.ResizeObserver) return;
     var last = document.documentElement.scrollHeight, timer = null, runs = 0, ro;
@@ -233,7 +283,7 @@
   }
 
   window.NOOR_MO = { animate: animate, draw: animateDraw, floats: floats, revealAll: revealAll, reduce: REDUCE, gsap: g };
-  function boot() { initScroll(); watchHeight(); }
+  function boot() { initScroll(); watchHeight(); sweeper(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
