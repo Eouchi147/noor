@@ -127,6 +127,48 @@ select.fi option{background:#14100A;color:var(--parchment)}
 .tab:hover{color:var(--parchment)}
 .tab.on{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#241D12;border-color:transparent}
 .pane{display:none}
+/* the dials: grouped, one row each, never a wall of unlabelled switches */
+.dgrp{margin:0 0 1.05rem}
+.dgrp>h3{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#E9C86A;margin:0 0 .45rem}
+.drow{display:grid;grid-template-columns:1fr auto;gap:.6rem 1rem;align-items:center;
+      padding:.7rem .85rem;border-bottom:1px solid rgba(255,254,247,.07)}
+.drow:last-child{border-bottom:0}
+.drow .dn{font-size:.86rem;font-weight:700;color:#FFFEF7}
+.drow .dh{font-size:.74rem;line-height:1.65;color:rgba(255,254,247,.5);margin-top:.15rem;max-width:40rem}
+.drow .dsrc{font-size:.63rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,254,247,.34);margin-top:.28rem}
+.drow .dsrc b{color:#E9C86A;font-weight:800}
+.dctl{display:flex;align-items:center;gap:.5rem;justify-self:end}
+.dctl input,.dctl select{margin:0;width:auto;text-align:start;font-size:.82rem;padding:.42rem .6rem;
+  border-radius:10px;background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);
+  color:var(--parchment);font-family:inherit}
+.dctl input:focus,.dctl select:focus{border-color:#F4D46A;outline:none;box-shadow:0 0 0 3px rgba(201,162,39,.18)}
+.dctl input[type=number]{width:5.4rem;text-align:center}
+.dctl input[type=text]{width:min(20rem,42vw)}
+.dctl select{min-width:7.5rem}
+/* the console had no primary button until now: everything was a ghost */
+.dgo{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border:0;border-radius:999px;
+  padding:.45rem 1.1rem;font-size:.78rem;font-weight:800;cursor:pointer;font-family:inherit}
+.dgo:disabled{opacity:.4;cursor:default}
+.dgo:not(:disabled):hover{background:linear-gradient(135deg,#D4AC2B,#FFE28A)}
+.dsw{position:relative;width:3rem;height:1.65rem;border-radius:999px;border:1px solid rgba(255,254,247,.2);
+     background:rgba(255,254,247,.08);cursor:pointer;transition:background .18s,border-color .18s;flex:none}
+.dsw::after{content:"";position:absolute;top:.18rem;inset-inline-start:.2rem;width:1.2rem;height:1.2rem;border-radius:50%;
+     background:rgba(255,254,247,.7);transition:transform .18s,background .18s}
+.dsw[aria-checked=true]{background:linear-gradient(135deg,#C9A227,#E9C86A);border-color:#F4D46A}
+.dsw[aria-checked=true]::after{transform:translateX(1.3rem);background:#1A160F}
+.dsw:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
+.dundo{font-size:.66rem;background:none;border:0;color:rgba(255,254,247,.42);cursor:pointer;text-decoration:underline}
+.dundo:hover{color:#E9C86A}
+.dbar{position:sticky;bottom:0;margin-top:.9rem;display:flex;gap:.7rem;align-items:center;
+      background:rgba(20,16,10,.92);border:1px solid rgba(244,212,106,.3);border-radius:14px;padding:.7rem .9rem}
+.dbar .msg{font-size:.76rem;color:rgba(255,254,247,.6)}
+.dchanged{border-inline-start:2px solid #F4D46A;padding-inline-start:.7rem}
+.dforce{width:100%;border-collapse:collapse;font-size:.78rem}
+.dforce td{padding:.35rem .5rem;border-bottom:1px solid rgba(255,254,247,.07)}
+.dforce td:first-child{color:rgba(255,254,247,.55)}
+.dforce td:last-child{text-align:end;font-weight:700;color:#FFFEF7}
+@media(max-width:40rem){.drow{grid-template-columns:1fr}.dctl{justify-self:start}}
+
 .pane.on{display:block;animation:pin .3s ease}
 @keyframes pin{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
@@ -253,6 +295,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Legacy</button>
 <button class="tab" data-pane="traffic" role="tab"><span data-ic=scope></span> Traffic</button>
 <button class="tab" data-pane="market" role="tab"><span data-ic=globe></span> Marketing</button>
+<button class="tab" data-pane="dials" role="tab"><span data-ic=gear></span> Controls</button>
 <button class="tab" data-pane="system" role="tab"><span data-ic=gear></span> System</button>
 </div>
 
@@ -573,6 +616,18 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <h2 class="sec">Anonymity armor · do these once</h2>
 <div class="panel armor" id="armor"></div>
 
+</div>
+
+<!-- ===================== CONTROLS ===================== -->
+<div class="pane" id="pane-dials">
+<h2 class="sec">The dials</h2>
+<p class="muted" style="margin:.1rem 0 .9rem;max-width:46rem">Every switch in this house used to be an environment
+variable, which meant a redeploy to change a number and no single screen that said what was actually in force.
+These take effect on the next request. Each one says where its current value comes from, and
+<b>Use default</b> hands it back to the environment rather than pinning it here.</p>
+<div id="dials-wrap"><p class="muted">Reading the dials…</p></div>
+<h2 class="sec">What is in force right now</h2>
+<div class="panel" id="dials-force"><p class="muted">…</p></div>
 </div>
 
 <!-- ===================== SYSTEM ===================== -->
@@ -1315,6 +1370,106 @@ fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?
 
 /* If a valid cookie already exists, go straight in */
 fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)showDash();else api("/api/admin-auth",{probe:true}).then(function(p){if(p.ok&&p.j&&p.j.configured===false)$("setupHint").hidden=false}).catch(function(){})}).catch(function(){});
+})();
+
+/* ---------------- the dials ---------------- */
+(function(){
+  var wrap=document.getElementById("dials-wrap"), force=document.getElementById("dials-force");
+  if(!wrap) return;
+  var DIALS=[], dirty={}, loaded=false;
+
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  function ctl(d){
+    var v = (d.k in dirty) ? dirty[d.k] : d.value;
+    if(d.t==="bool")
+      return '<button class="dsw" role="switch" aria-checked="'+(v?"true":"false")+'" data-k="'+esc(d.k)+'" aria-label="'+esc(d.n)+'"></button>';
+    if(d.t==="int")
+      return '<input type="number" data-k="'+esc(d.k)+'" value="'+esc(v)+'" min="'+(d.min||0)+'" max="'+(d.max||9999)+'" step="1">';
+    if(d.t==="enum")
+      return '<select data-k="'+esc(d.k)+'">'+d.opts.map(function(o){
+        return '<option value="'+esc(o)+'"'+(String(v)===o?" selected":"")+'>'+esc(o)+"</option>";}).join("")+"</select>";
+    return '<input type="text" data-k="'+esc(d.k)+'" value="'+esc(v)+'" maxlength="'+(d.max||160)+'" placeholder="empty means no notice">';
+  }
+
+  function draw(){
+    var groups=[], seen={};
+    DIALS.forEach(function(d){ if(!seen[d.g]){seen[d.g]=[];groups.push(d.g);} seen[d.g].push(d); });
+    wrap.innerHTML = groups.map(function(g){
+      return '<div class="dgrp"><h3>'+esc(g)+'</h3><div class="panel">'+seen[g].map(function(d){
+        var pinned = d.src==="set here", changed = (d.k in dirty);
+        return '<div class="drow'+(changed?" dchanged":"")+'"><div>'+
+          '<div class="dn">'+esc(d.n)+"</div>"+
+          '<div class="dh">'+esc(d.h)+"</div>"+
+          '<div class="dsrc">now: <b>'+esc(fmt(d,(d.k in dirty)?dirty[d.k]:d.value))+"</b> · from "+esc(d.src)+
+            " · default "+esc(fmt(d,d.def))+
+            (pinned?' · <button class="dundo" data-undo="'+esc(d.k)+'">use default</button>':"")+"</div>"+
+          "</div>"+
+          '<div class="dctl">'+ctl(d)+"</div></div>";
+      }).join("")+"</div></div>";
+    }).join("") + bar();
+    wire();
+    force.innerHTML='<table class="dforce"><tbody>'+DIALS.map(function(d){
+      return "<tr><td>"+esc(d.n)+"</td><td>"+esc(fmt(d,d.value))+"</td></tr>";}).join("")+"</tbody></table>";
+  }
+  function fmt(d,v){ if(d.t==="bool") return v?"on":"off"; if(d.t==="text") return v?('"'+v+'"'):"none"; return String(v); }
+  function bar(){
+    var n=Object.keys(dirty).length;
+    return '<div class="dbar"><button class="dgo" id="dsave"'+(n?"":" disabled")+'>Save '+(n?n+" change"+(n>1?"s":""):"")+
+      '</button><button class="ghost" id="dreset"'+(n?"":" disabled")+'>Discard</button>'+
+      '<span class="msg" id="dmsg">'+(n?"Nothing is live until you save.":"No unsaved changes.")+"</span></div>";
+  }
+  function set(k,v){ dirty[k]=v; draw(); }
+
+  function wire(){
+    wrap.querySelectorAll(".dsw").forEach(function(b){
+      b.onclick=function(){ set(b.dataset.k, b.getAttribute("aria-checked")!=="true"); };});
+    wrap.querySelectorAll("input[data-k],select[data-k]").forEach(function(i){
+      i.onchange=function(){ set(i.dataset.k, i.type==="number"?parseInt(i.value,10)||0:i.value); };});
+    wrap.querySelectorAll("[data-undo]").forEach(function(b){
+      b.onclick=function(){ set(b.dataset.undo, null); };});
+    var s=document.getElementById("dsave"), r=document.getElementById("dreset");
+    if(r) r.onclick=function(){ dirty={}; draw(); };
+    if(s) s.onclick=save;
+  }
+
+  async function save(){
+    var msg=document.getElementById("dmsg"), btn=document.getElementById("dsave");
+    btn.disabled=true; msg.textContent="Saving…";
+    try{
+      var r=await fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},
+        credentials:"same-origin",body:JSON.stringify(dirty)});
+      var j=await r.json();
+      if(!r.ok){ msg.textContent=j.error||"Refused."; btn.disabled=false; return; }
+      dirty={}; await load();
+      msg=document.getElementById("dmsg");
+      if(msg) msg.textContent=(j.count||0)+" saved. Live on the next request.";
+    }catch(e){ msg.textContent="Could not reach the server."; btn.disabled=false; }
+  }
+
+  async function load(){
+    try{
+      var r=await fetch("/api/settings?all=1",{credentials:"same-origin"});
+      if(r.status===401){ wrap.innerHTML='<p class="muted">Unlock the console first.</p>'; return; }
+      var j=await r.json();
+      DIALS=j.dials||[];
+      draw();
+      if(!j.store){
+        wrap.insertAdjacentHTML("afterbegin",
+          '<div class="panel" style="border-color:rgba(233,200,106,.5);margin-bottom:.9rem">'+
+          '<b>No store is configured, so nothing can be saved yet.</b><br>'+
+          '<span class="muted">Every dial below is showing its environment default and is read only. '+
+          'Set REDIS_URL in Vercel and this page starts working.</span></div>');
+      }
+      loaded=true;
+    }catch(e){ wrap.innerHTML='<p class="muted">Could not read the dials.</p>'; }
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest('[data-pane="dials"]');
+    if(t && !loaded) load();
+  });
+  window.NOOR_DIALS={load:load};
 })();
 </script>
 </body>

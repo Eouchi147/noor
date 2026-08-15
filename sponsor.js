@@ -20,8 +20,11 @@
      Without a location we cannot know the reader's maghrib, so we take the
      ordinary convention: after six in the evening on Thursday, and all of
      Friday until six. ?jumuah=1 forces it on for a look. */
+  var DIALS = null;                 /* filled by /api/settings, may never arrive */
   function isJumuah() {
     try { if (/[?&]jumuah=1/.test(location.search)) return true; } catch (e) {}
+    if (DIALS && DIALS["jumuah.mode"] === "on") return true;
+    if (DIALS && DIALS["jumuah.mode"] === "off") return false;
     var d = new Date(), day = d.getDay(), h = d.getHours();
     if (day === 5) return h < 18;               /* Friday, until maghrib */
     if (day === 4) return h >= 18;              /* Thursday evening, once it has turned */
@@ -50,9 +53,47 @@
     border: "rgba(201,162,39,.28)",
   };
 
+  function remount() {
+    var old = document.querySelector("[data-noor-sponsor]");
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    mount();
+  }
+  /* ask the house what it has been told, and correct the band if the answer
+     differs from the guess. One small request, cached at the edge. */
+  function askDials() {
+    try {
+      fetch("/api/settings", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.s) return;
+          var before = JSON.stringify(DIALS);
+          DIALS = j.s;
+          notice(DIALS["notice.text"]);
+          if (JSON.stringify(DIALS) !== before) remount();
+        }).catch(function () {});
+    } catch (e) {}
+  }
+  /* one plain sentence the owner can put across the top for an outage or a
+     closure. Text only, inserted as text, never as markup. */
+  function notice(txt) {
+    var have = document.getElementById("noor-notice");
+    if (!txt) { if (have && have.parentNode) have.parentNode.removeChild(have); return; }
+    if (have) { have.textContent = txt; return; }
+    var hdr = document.getElementById("site-header");
+    if (!hdr || !hdr.parentNode) return;
+    var n = document.createElement("div");
+    n.id = "noor-notice";
+    n.setAttribute("role", "status");
+    n.style.cssText = "position:relative;z-index:36;background:#2C2416;color:#FFF3CC;" +
+      "font:600 .78rem/1.6 Inter,system-ui,sans-serif;text-align:center;padding:.5rem 1rem";
+    n.textContent = txt;
+    hdr.parentNode.insertBefore(n, hdr);
+  }
+
   function mount() {
     var hdr = document.getElementById("site-header");
     if (!hdr || !hdr.parentNode || document.querySelector("[data-noor-sponsor]")) return;
+    if (DIALS && DIALS["sponsor.band"] === false && !isJumuah()) return;
     var j = isJumuah(), M = j ? JUMUAH : MISSION;
     var d = document.createElement("div");
     d.setAttribute("data-noor-sponsor", "");
@@ -72,4 +113,5 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
+  askDials();
 })();
