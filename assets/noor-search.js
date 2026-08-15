@@ -6,10 +6,15 @@
    "qadr" was told, truthfully, that there was no match, because
    nothing on the site indexed a single word of vocabulary.
 
-   Now the magnifier in the header opens the same overlay on
-   every page and searches three things: the encyclopedia, the
-   rooms, and the stations of the Path. Spelling is folded, so
-   qadar, taqdeer and kadar all arrive at qadr.
+   Now it searches the whole house: the encyclopedia, the 114
+   surahs, every prophet, companion, place, hero and figure, the
+   stations of the Path, the masjid tools and the children's
+   rooms. Spelling is folded, so qadar, taqdeer and kadar all
+   arrive at qadr.
+
+   Results come back grouped, and the groups are ordered by their
+   own best match, so a search for Uhud opens with Places and a
+   search for riba opens with the encyclopedia.
    ============================================================ */
 (function () {
   "use strict";
@@ -26,18 +31,26 @@
   function load() {
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
-    loading = fetch("/assets/search-index.json", { cache: "force-cache" })
-      .then(function (r) { return r.ok ? r.json() : { w: [], r: [] }; })
+    loading = fetch("/assets/search-index.json?v=77", { cache: "force-cache" })
+      .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (j) {
-        IDX = {
-          w: (j.w || []).map(function (e) {
-            return { e: e, t: fold(e.t), l: (e.l || []).map(fold), s: fold(e.s), a: e.a || "" };
-          }),
-          r: (j.r || []).map(function (e) { return { e: e, t: fold(e.t), s: fold(e.s) }; }),
-        };
+        var groups = j.g || [], order = {}, names = {};
+        groups.forEach(function (g, i) { order[g.k] = i; names[g.k] = g.n; });
+        function prep(e, g, url) {
+          return { e: e, g: g, u: url, t: fold(e.t), l: (e.l || []).map(fold),
+                   s: fold(e.s), a: e.a || "",
+                   w: (groups[order[g]] || {}).w || 0 };
+        }
+        var all = [];
+        (j.w || []).forEach(function (e) { all.push(prep(e, "words", "/dictionary#" + e.i)); });
+        (j.e || []).forEach(function (e) { all.push(prep(e, e.g, e.u)); });
+        /* a room is worth finding by name, but it should never crowd out the
+           thing inside it that the reader actually asked for */
+        (j.r || []).forEach(function (e) { all.push(prep(e, "rooms", e.u)); });
+        IDX = { all: all, names: names, order: order };
         return IDX;
       })
-      .catch(function () { IDX = { w: [], r: [] }; return IDX; });
+      .catch(function () { IDX = { all: [], names: {}, order: {} }; return IDX; });
     return loading;
   }
 
@@ -90,35 +103,47 @@
     var n = fold(term);
     if (!n || n.length < 2) {
       out.innerHTML = '<p class="ns-hint">Type two letters. Every word of the encyclopedia is in here, ' +
-        'in every spelling we know.</p>';
+        'with the prophets, the companions, the places, the surahs and every room.</p>';
       return;
     }
     load().then(function (I) {
-      var words = [], rooms = [];
-      I.w.forEach(function (r) { var s = score(r, n); if (s) words.push({ s: s, e: r.e }); });
-      I.r.forEach(function (r) { var s = score(r, n); if (s) rooms.push({ s: s, e: r.e }); });
-      words.sort(function (a, b) { return b.s - a.s; });
-      rooms.sort(function (a, b) { return b.s - a.s; });
-      var h = "";
-      if (words.length) {
-        h += '<p class="ns-g">Words of the Path</p>';
-        h += words.slice(0, 8).map(function (x) {
-          return '<a class="ns-hit" href="/dictionary#' + esc(x.e.i) + '">' +
-            '<b>' + esc(x.e.t) + '</b>' +
-            (x.e.a ? '<span class="ns-ar notranslate" translate="no">' + x.e.a + "</span>" : "") +
-            '<span class="ns-s">' + esc(x.e.s) + "</span></a>";
-        }).join("");
+      var buckets = {}, best = {};
+      for (var i = 0; i < I.all.length; i++) {
+        var r = I.all[i], sc = score(r, n);
+        if (!sc) continue;
+        sc += r.w;                       /* a named prophet beats a passing mention */
+        (buckets[r.g] || (buckets[r.g] = [])).push({ s: sc, r: r });
+        if (sc > (best[r.g] || 0)) best[r.g] = sc;
       }
-      if (rooms.length) {
-        h += '<p class="ns-g">Rooms</p>';
-        h += rooms.slice(0, 5).map(function (x) {
-          return '<a class="ns-hit" href="' + esc(x.e.u) + '"><b>' + esc(x.e.t) +
-            '</b><span class="ns-s">' + esc(x.e.s) + "</span></a>";
-        }).join("");
+      /* the group that answered best comes first: that is the whole point */
+      var keys = Object.keys(buckets).sort(function (a, b) {
+        if (best[b] !== best[a]) return best[b] - best[a];
+        return (I.order[a] || 99) - (I.order[b] || 99);
+      });
+      if (!keys.length) {
+        out.innerHTML = '<p class="ns-hint">Nothing under that spelling yet. Try fewer letters, or the ' +
+          'plain English word. <a href="/feedback">Tell us what was missing</a> and it gets added.</p>';
+        return;
       }
-      if (!h) {
-        h = '<p class="ns-hint">Nothing under that spelling yet. Try fewer letters, or the plain English ' +
-          'word. <a href="/feedback">Tell us what was missing</a> and it gets added.</p>';
+      var h = "", shown = 0;
+      for (var k = 0; k < keys.length && shown < 34; k++) {
+        var g = keys[k], list = buckets[g];
+        list.sort(function (a, b) { return b.s - a.s || a.r.e.t.length - b.r.e.t.length; });
+        /* the best answering group gets room to breathe; the rest stay tidy */
+        var cap = k === 0 ? 8 : 5;
+        h += '<p class="ns-g">' + esc(I.names[g] || g) + "</p>";
+        h += list.slice(0, cap).map(function (x) {
+          shown++;
+          return '<a class="ns-hit" href="' + esc(x.r.u) + '">' +
+            "<b>" + esc(x.r.e.t) + "</b>" +
+            (x.r.e.a ? '<span class="ns-ar notranslate" translate="no">' + esc(x.r.e.a) + "</span>" : "") +
+            (x.r.e.s ? '<span class="ns-s">' + esc(x.r.e.s) + "</span>" : "") +
+            "</a>";
+        }).join("");
+        if (list.length > cap) {
+          h += '<p class="ns-more">and ' + (list.length - cap) + " more in " +
+               esc(I.names[g] || g) + "</p>";
+        }
       }
       out.innerHTML = h;
     });

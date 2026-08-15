@@ -80,6 +80,7 @@
 .ns-x{border:1px solid rgba(44,36,22,.18);background:none;border-radius:7px;font:inherit;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,36,22,.45);padding:.24rem .45rem;cursor:pointer;flex:none}
 .ns-out{margin-top:.6rem;background:#FFFEF7;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.5rem;max-height:min(62vh,32rem);overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.34)}
 .ns-g{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:.5rem .6rem .3rem}
+.ns-more{font-size:.68rem;color:rgba(44,36,22,.42);margin:.15rem .6rem .5rem;font-style:italic}
 .ns-hit{display:block;text-decoration:none;padding:.5rem .6rem;border-radius:11px;transition:background .15s}
 .ns-hit:hover,.ns-hit:focus-visible{background:rgba(201,162,39,.13)}
 .ns-hit b{font-size:.9rem;font-weight:800;color:#2C2416;margin-inline-end:.45rem}
