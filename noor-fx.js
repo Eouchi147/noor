@@ -28,6 +28,7 @@ const UI_EN = {
   "hero.kicker":"نُورٌ عَلَىٰ نُورٍ","hero.title":"Codex of Light",
   "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
   "hero.cta.enter":"Enter the Path","hero.cta.characters":"Characters","hero.cta.kids":"✦ Little Codex",
+  "hero.door.path.s":"The whole story, in order, from the first light","hero.door.learn.t":"The Classroom","hero.door.learn.s":"Step by step, properly taught","hero.door.look.t":"Look anything up","hero.door.look.s":"Search it all, in any spelling","hero.door.kids.s":"The same light, for children",
   "stats.nodes":"Chapters","stats.characters":"Characters","stats.places":"Places","stats.words":"Words","stats.quran":"Ayat cited","stats.hadith":"Hadith cited",
   "books.title":"Seven Books","books.sub":"The architecture of the Codex. All seven books are open on the Path.",
   "books.inpath":"In the Path","books.coming":"Coming",

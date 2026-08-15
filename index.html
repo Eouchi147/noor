@@ -775,14 +775,91 @@ html.dolly-on #hero .scroll-cue{display:none}
 <p class="r">An-Nur 24:35 · the verse this whole Codex is named from</p>
 <p class="d">descend into the Codex ↓</p>
 </div>
+<style id="hero-doors">
+/* The hero used to offer three identical pills floating on the geometry:
+   equal weight, no ground under them, and no hint of what was behind any
+   of them. A first visit is a question ("what is this, and where do I
+   start?"), so the answer is one clear way in and three named doors, each
+   saying in one line what it opens. Legibility over an illustration is
+   bought with a panel, not with heavier type. */
+.hero-doors{margin:0 auto;max-width:46rem;display:flex;flex-direction:column;align-items:center;gap:.85rem}
+.hd{position:relative;display:flex;flex-direction:column;gap:.18rem;text-decoration:none;text-align:center;
+    padding:.85rem 1.5rem;border-radius:16px;min-height:3.25rem;justify-content:center;
+    background:rgba(20,16,10,.42);border:1px solid rgba(244,212,106,.26);
+    -webkit-backdrop-filter:blur(10px) saturate(1.15);backdrop-filter:blur(10px) saturate(1.15);
+    transition:transform .22s cubic-bezier(.2,.7,.3,1),border-color .22s,background .22s,box-shadow .22s}
+.hd-t{font-family:Inter,system-ui,sans-serif;font-size:.94rem;font-weight:700;letter-spacing:-.005em;
+      color:#FFFEF7;line-height:1.35}
+.hd-s{font-family:Inter,system-ui,sans-serif;font-size:.735rem;line-height:1.6;
+      color:rgba(255,254,247,.66);font-weight:450}
+.hd:hover,.hd:focus-visible{transform:translateY(-2px);border-color:rgba(244,212,106,.62);
+      background:rgba(28,22,13,.56);box-shadow:0 12px 34px rgba(0,0,0,.34)}
+.hd:focus-visible{outline:2px solid #F4D46A;outline-offset:3px}
+
+/* the one way in: gold, wider, and lit from inside */
+.hd-first{padding:1.05rem 2.4rem;border-radius:999px;min-height:3.9rem;
+    background:linear-gradient(135deg,#C9A227,#F4D46A 52%,#E9C86A);
+    border-color:rgba(255,240,184,.9);box-shadow:0 10px 34px rgba(201,162,39,.34);
+    -webkit-backdrop-filter:none;backdrop-filter:none}
+.hd-first .hd-t{color:#1A160F;font-size:1.06rem;font-weight:800}
+.hd-first .hd-s{color:rgba(26,22,15,.68);font-weight:500}
+.hd-first:hover,.hd-first:focus-visible{transform:translateY(-2px);background:linear-gradient(135deg,#D4AC2B,#FFE28A 52%,#F0D177);
+    box-shadow:0 16px 44px rgba(201,162,39,.46);border-color:#FFF6D6}
+
+/* a slow sheen crosses the primary once in a while, the way light moves
+   over gilt. It is decoration, so it stops for anyone who asked it to. */
+.hd-first::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%);
+    background-size:280% 100%;background-position:150% 0;animation:hdSheen 6.5s ease-in-out infinite}
+@keyframes hdSheen{0%,72%{background-position:150% 0}100%{background-position:-60% 0}}
+
+.hd-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;width:100%}
+@media (max-width:38rem){
+  .hero-doors{max-width:23rem;gap:.7rem}
+  .hd-row{grid-template-columns:1fr;gap:.55rem}
+  .hd{padding:.78rem 1.1rem;min-height:0}
+  .hd-first{padding:.95rem 1.6rem}
+  .hd-s{font-size:.72rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .hd,.hd-first{transition:none}
+  .hd-first::after{animation:none;opacity:0}
+  .hd:hover,.hd:focus-visible,.hd-first:hover{transform:none}
+}
+@media print{.hero-doors{display:none}}
+</style>
 <div class="hero-content max-w-4xl mx-auto px-4 pt-28 pb-24 sm:pt-36 sm:pb-32 text-center">
 <p class="hero-kicker font-amiri text-gold text-2xl sm:text-3xl mb-5" data-i18n="hero.kicker">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-10"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<div class="flex flex-wrap justify-center gap-3">
-<a href="#timeline" class="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm" data-i18n="hero.cta.enter">Enter the Path</a>
-<a href="/characters" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.characters">Characters</a>
-<a href="/kids" class="btn-ghost inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm" data-i18n="hero.cta.kids">✦ Little Codex</a>
+<div class="hero-doors">
+<a class="hd hd-first" href="#timeline">
+  <span class="hd-t" data-i18n="hero.cta.enter">Enter the Path</span>
+  <span class="hd-s" data-i18n="hero.door.path.s">The whole story, in order, from the first light</span>
+</a>
+<div class="hd-row">
+  <a class="hd" href="/madrasa">
+    <span class="hd-t" data-i18n="hero.door.learn.t">The Classroom</span>
+    <span class="hd-s" data-i18n="hero.door.learn.s">Step by step, properly taught</span>
+  </a>
+  <a class="hd" href="/dictionary" data-opens-search>
+    <span class="hd-t" data-i18n="hero.door.look.t">Look anything up</span>
+    <span class="hd-s" data-i18n="hero.door.look.s">Search it all, in any spelling</span>
+  </a>
+  <a class="hd" href="/kids">
+    <span class="hd-t" data-i18n="hero.cta.kids">✦ Little Codex</span>
+    <span class="hd-s" data-i18n="hero.door.kids.s">The same light, for children</span>
+  </a>
 </div>
+</div>
+<script>
+/* the search door opens the overlay instead of loading a page; with no
+   JavaScript the same link still goes to the encyclopedia */
+(function(){var a=document.querySelector(".hd[data-opens-search]");if(!a)return;
+ a.addEventListener("click",function(e){
+   if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;      /* let a new tab be a new tab */
+   if(window.NOOR_SEARCH&&window.NOOR_SEARCH.open){e.preventDefault();window.NOOR_SEARCH.open();}
+ });})();
+</script>
 <div class="mt-12 flex justify-center"><svg class="scroll-cue w-5 h-5 text-parchment/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
 </div>
 </section>
