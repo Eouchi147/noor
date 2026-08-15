@@ -1,4 +1,5 @@
 import { askOpenRouter } from "./_models.js";
+import { settings } from "./settings.js";
 // Today's Light · one small illumination per day, sitewide.
 // Cost discipline: the answer is CDN-cached for a full day, so the AI is
 // asked roughly once per day, not once per visitor. If the key is absent
@@ -65,6 +66,11 @@ export default async function handler(req, res) {
   if (cache.has(want)) return res.status(200).json(cache.get(want));
 
   const key = process.env.OPENROUTER_API_KEY;
+  /* the owner can send the lamp back to the curated treasury, which never
+     invents and never costs anything */
+  let dial = null;
+  try { dial = await settings(); } catch {}
+  if (dial && dial["light.ai"] === false) return res.status(200).json(remember(want, fallback(want)));
   if (!key) return res.status(200).json(remember(want, fallback(want)));
 
   const SYSTEM = [

@@ -27,16 +27,19 @@
 //   worth more than a paragraph they cannot.
 
 import crypto from "crypto";
+import { settings } from "./settings.js";
 import { kv, kvReady } from "./_kv.js";
 import { askOpenRouter, modelChain } from "./_models.js";
 
-const FREE = () => Math.max(0, parseInt(process.env.LANTERN_FREE_PER_DAY || "6", 10) || 0);
-const KEYED = () => Math.max(0, parseInt(process.env.LANTERN_KEYED_PER_DAY || "30", 10) || 0);
+let DIAL = null;   /* filled once per request, so a dial turned in the console
+                      takes effect on the next question and not on the next deploy */
+const FREE = () => Math.max(0, parseInt((DIAL && DIAL["lantern.free"]) ?? process.env.LANTERN_FREE_PER_DAY ?? "6", 10) || 0);
+const KEYED = () => Math.max(0, parseInt((DIAL && DIAL["lantern.keyed"]) ?? process.env.LANTERN_KEYED_PER_DAY ?? "30", 10) || 0);
 const SALT = () => process.env.LANTERN_SALT || process.env.ADMIN_SECRET || "";
 /* the Lantern speaks through the same free chain as the rest of the house, so
    there is one place to look when a bill appears and one place to fix it */
 const API_KEY = () => process.env.OPENROUTER_API_KEY || "";
-const OPEN = () => process.env.ASK_PUBLIC === "1";
+const OPEN = () => (DIAL ? !!DIAL["lantern.on"] : process.env.ASK_PUBLIC === "1");
 
 const MAX_CHARS = 600;          /* one question, not an essay */
 const MAX_TOKENS = 420;         /* one answer, not a lecture */
@@ -124,6 +127,10 @@ that is.`;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  /* read the dials once, before anything decides whether the lamp is lit or
+     how much oil it has. A store that is down leaves DIAL null and every
+     reader below falls back to the environment, which is the old behaviour. */
+  try { DIAL = await settings(); } catch { DIAL = null; }
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
   body = body || {};

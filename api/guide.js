@@ -1,4 +1,5 @@
 import { askOpenRouter, allowPaid } from "./_models.js";
+import { settings } from "./settings.js";
 // NOOR Guide: optional live clarifier for a passage being read.
 // Runs on OPENROUTER_API_KEY (same key as The Lantern); falls back to
 // ANTHROPIC_API_KEY if that is set instead. Site works fully without either.
@@ -6,7 +7,10 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   /* Public per-article AI is off by default to keep usage disciplined.
      Set GUIDE_PUBLIC=1 in Vercel env to light it. */
-  if (process.env.GUIDE_PUBLIC !== "1") return res.status(501).json({ error: "guide API not enabled" });
+  let dial = null;
+  try { dial = await settings(); } catch {}
+  const guideOn = dial ? !!dial["guide.on"] : process.env.GUIDE_PUBLIC === "1";
+  if (!guideOn) return res.status(501).json({ error: "guide API not enabled" });
   const orKey = process.env.OPENROUTER_API_KEY;
   const key = process.env.ANTHROPIC_API_KEY;
   /* the Anthropic branch bills directly, so it is only reachable when paid
