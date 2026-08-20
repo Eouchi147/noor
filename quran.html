@@ -2,66 +2,944 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Qur&#x27;an · meaning in Islam · NOOR Codex of Light</title>
-<meta name="description" content="The speech of Allah revealed to Muhammad in Arabic over about twenty three years, preserved word for word. The word means the recitation, from a root meaning"/>
-<link rel="canonical" href="https://noorcodex.com/dictionary/quran"/>
-<meta property="og:title" content="Qur&#x27;an · meaning in Islam"/>
-<meta property="og:description" content="The speech of Allah revealed to Muhammad in Arabic over about twenty three years, preserved word for word. The word means the recitation, from a root meaning"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="The NOOR Mushaf: read, listen, translate and understand the Qur'an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="Qur&#x27;an · NOOR Codex of Light"/>
+<meta property="og:description" content="The NOOR Mushaf: read, listen, translate and understand the Qur&#x27;an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta name="theme-color" content="#14100A"/>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<title>Qur'an · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "DefinedTerm", "name": "Qur'an", "alternateName": ["Quran", "Koran", "Qoran", "Kuran", "Quraan", "Al-Quran"], "description": "The speech of Allah revealed to Muhammad in Arabic over about twenty three years, preserved word for word.", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "NOOR Codex · The Words of the Path", "url": "https://noorcodex.com/dictionary"}, "url": "https://noorcodex.com/dictionary/quran"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does Qur'an mean in Islam?", "acceptedAnswer": {"@type": "Answer", "text": "The speech of Allah revealed to Muhammad in Arabic over about twenty three years, preserved word for word. The word means the recitation, from a root meaning to read aloud. It is one book of 114 surahs, revealed piece by piece between Makkah and Madinah, memorised by the Companions and written down in the Prophet's lifetime. Muslims hold that the Arabic wording is itself the revelation, which is why any rendering into another language is called a translation of the meaning and never the Qur'an."}}]}]}</script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/tw.css?v=49"/>
+<script src="noor-fx.js" defer></script>
+<script src="noor-ink.js" defer></script>
+<script src="sponsor.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/ScrollTrigger.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
+<script src="assets/noor-motion.js?v=76" defer></script>
+<script src="quran-study.js" defer></script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
-:root{--ink:#2C2416;--gold:#C9A227;--hi:#F4D46A}
-*{box-sizing:border-box}
-body{margin:0;background:#FFFEF7;color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.85}
-a{color:#8a6d13}
-.top{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid rgba(44,36,22,.08);font-size:.8rem}
-.top .mark{width:1.9rem;height:1.9rem;border-radius:999px;background:#14100A;color:var(--hi);display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;text-decoration:none;font-size:1rem}
-.top .home{font-weight:800;color:var(--ink);text-decoration:none}
-.top .enc{margin-inline-start:auto;text-decoration:none;font-weight:700}
-main{max-width:42rem;margin:0 auto;padding:2.2rem 1.1rem 3rem}
-.kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin:0}
-h1{font-size:2rem;font-weight:800;letter-spacing:-.01em;margin:.3rem 0 0;display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
-h1 .ar{font-family:Amiri,serif;font-weight:400;font-size:1.9rem;color:var(--gold)}
-.badge{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid #1d6b3f;color:#1d6b3f;border-radius:999px;padding:.24rem .6rem;margin-top:.8rem}
-.lede{font-size:1.02rem;font-weight:600;margin:1rem 0 0}
-h2{font-size:.95rem;font-weight:800;margin:1.8rem 0 .4rem}
-p{font-size:.9rem;margin:.4rem 0;color:rgba(44,36,22,.85)}
-.alt{font-size:.78rem;color:rgba(44,36,22,.55);line-height:2}
-.see{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
-.see a{font-size:.76rem;font-weight:700;text-decoration:none;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.34rem .75rem;color:var(--ink);background:#fff}
-.see a:hover{border-color:var(--gold)}
-.deep{margin-top:2rem;background:linear-gradient(170deg,#14100A,#1b2440);border-radius:16px;padding:1.1rem 1.2rem;color:#FFFEF7}
-.deep p{color:rgba(255,254,247,.75);font-size:.82rem;margin:0 0 .7rem}
-.deep a{color:var(--hi);font-weight:800;text-decoration:none}
-footer{max-width:42rem;margin:0 auto;padding:0 1.1rem 2.4rem;font-size:.7rem;color:rgba(44,36,22,.45)}
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.font-amiri{font-family:Amiri,serif}
+.font-quran{font-family:'Amiri Quran',Amiri,serif}
+#qhero{position:relative;background:linear-gradient(175deg,#14100A 0%,#1A160F 55%,#241D12 100%);color:#FFFEF7;overflow:hidden}
+#qhero .rays{position:absolute;inset:-20% -10%;background:radial-gradient(ellipse 60% 45% at 50% 0%,rgba(201,162,39,.22),transparent 60%),radial-gradient(ellipse 35% 30% at 18% 8%,rgba(244,212,106,.10),transparent 70%),radial-gradient(ellipse 35% 30% at 82% 10%,rgba(244,212,106,.08),transparent 70%);pointer-events:none}
+.shimmer-gold{background:linear-gradient(100deg,#C9A227 20%,#F8E8A6 40%,#C9A227 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimq 6s linear infinite}
+@keyframes shimq{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.shimmer-gold{animation:none}}
+/* surah gates, 114 illuminated tiles */
+#gates-aside{margin-bottom:1.7rem}
+#gates-aside.folded{display:none}
+.gbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.6rem}
+.gbar .gsearch{flex:1 1 15rem;min-width:0}
+.gview{border:1px solid rgba(44,36,22,.14);background:#fff;color:rgba(44,36,22,.6);border-radius:999px;padding:.3rem .75rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s}
+.gview:hover{border-color:var(--gold);color:var(--ink)}
+.gview.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.glegend{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;font-size:.66rem;color:rgba(44,36,22,.5);margin:0 .15rem .7rem}
+.glegend b{font-weight:600;color:rgba(44,36,22,.55)}
+#gate-count{margin-left:auto;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,36,22,.4)}
+#gates-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.6rem,1fr));gap:.55rem}
+@media (min-width:640px){#gates-wrap{grid-template-columns:repeat(auto-fill,minmax(11.6rem,1fr));gap:.7rem}}
+.gate{position:relative;display:flex;flex-direction:column;align-items:center;gap:.1rem;width:100%;padding:.9rem .6rem .8rem;text-align:center;font-family:inherit;color:var(--ink);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.05rem;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease;content-visibility:auto;contain-intrinsic-size:auto 9.5rem}
+.gate:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.55);background:linear-gradient(168deg,#FFFDF4,#FFF8E4)}
+.gate:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gate.active{border-color:var(--gold);background:linear-gradient(160deg,#FFFDF4,#FFF4D2)}
+.gate .seal{position:relative;width:2.05rem;height:2.05rem;display:grid;place-items:center;border-radius:999px;background:radial-gradient(circle at 40% 32%,#2E2515,#14100A);color:var(--gold-hi);font-size:.7rem;font-weight:800;margin-bottom:.3rem;flex:none}
+.gate .seal::before{content:"";position:absolute;inset:-3px;border:1px solid rgba(201,162,39,.45);transform:rotate(45deg)}
+.gate .seal::after{content:"";position:absolute;inset:-3px;border:1px solid rgba(201,162,39,.22);border-radius:999px}
+.gate.md .seal::before{border-style:dashed;border-color:rgba(138,155,110,.6)}
+.gate .gar{font-family:Amiri,serif;font-size:1.35rem;line-height:1.5;color:var(--gold);direction:rtl}
+.gate .gen{font-size:.82rem;font-weight:700;line-height:1.3}
+.gate .gmn{font-size:.63rem;color:rgba(44,36,22,.5);line-height:1.35}
+.gate .gmeta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.28rem;margin-top:.42rem}
+.gchip{font-size:.55rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:999px;padding:.1rem .45rem;border:1px solid transparent;white-space:nowrap}
+.gchip.mk{color:#8a6d13;background:#FFF7DF;border-color:rgba(201,162,39,.35)}
+.gchip.md{color:#4d5c38;background:#F3F6EC;border-color:rgba(138,155,110,.45)}
+.gate .gct{font-size:.58rem;color:rgba(44,36,22,.45)}
+.gate .gfull{position:absolute;top:.42rem;right:.5rem;font-size:.6rem;color:var(--gold);line-height:1}
+.gate.deep{border-color:rgba(201,162,39,.3)}
+#gates-wrap.list{grid-template-columns:1fr;gap:.3rem}
+@media (min-width:640px){#gates-wrap.list{grid-template-columns:1fr 1fr;gap:.35rem}}
+#gates-wrap.list .gate{flex-direction:row;align-items:center;text-align:start;gap:.6rem;padding:.42rem .6rem;border-radius:.75rem;contain-intrinsic-size:auto 2.9rem}
+#gates-wrap.list .gate:hover{transform:none}
+#gates-wrap.list .seal{width:1.7rem;height:1.7rem;font-size:.62rem;margin-bottom:0}
+#gates-wrap.list .gar{font-size:1.05rem;order:9;margin-left:auto;padding-inline-start:.4rem}
+#gates-wrap.list .gen{font-size:.76rem}
+#gates-wrap.list .gmn,#gates-wrap.list .gmeta{display:none}
+#gates-wrap.list .gfull{position:static;order:8}
+/* ayah cards */
+.ayah{border-bottom:1px solid rgba(44,36,22,.07);padding:1.15rem .35rem;scroll-margin-top:150px}
+.ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
+.ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);border-radius:.75rem}
+.medallion{display:inline-flex;align-items:center;justify-content:center;min-width:1.9rem;height:1.9rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-size:.72rem;font-weight:800;margin-inline-start:.5rem;vertical-align:middle;box-shadow:0 1px 4px rgba(201,162,39,.5)}
+.playbtn{width:2rem;height:2rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:#fff;transition:all .2s;cursor:pointer}
+.playbtn:hover{border-color:var(--gold);color:var(--gold)}
+.playbtn.on{background:var(--gold);border-color:var(--gold);color:#241D12}
+.eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.eq i{width:2.5px;background:currentColor;border-radius:2px;animation:eqq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
+@keyframes eqq{0%,100%{height:4px}50%{height:12px}}
+@media (prefers-reduced-motion:reduce){.eq i{animation:none;height:8px}}
+.bismillah{font-family:'Amiri Quran',Amiri,serif;font-size:1.9rem;text-align:center;color:#241D12;padding:.8rem 0 .2rem}
+.bismillah small{display:block;font-family:Inter;font-size:.68rem;color:rgba(44,36,22,.5);letter-spacing:.14em;text-transform:uppercase;margin-top:.35rem}
+/* navigator toolbar */
+.tool{border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.34rem .8rem;font-size:.75rem;font-weight:600;color:rgba(44,36,22,.75);background:#fff;transition:all .2s;cursor:pointer;font-family:inherit}
+.tool:hover{border-color:var(--gold);color:var(--ink)}
+.tool.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.navarrow{width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
+.navarrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.navarrow:disabled{opacity:.3;cursor:default}
+#surah-select{border:1.5px solid rgba(201,162,39,.5);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF8E1);color:var(--ink);font-weight:700;font-size:.8rem;padding:.34rem .9rem;max-width:14rem;font-family:inherit}
+.skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06));background-size:200% 100%;animation:skl 1.2s linear infinite;border-radius:.5rem}
+@keyframes skl{to{background-position:-200% 0}}
+#room{max-width:48rem;margin-inline:auto}
+.rh-study{margin-top:.9rem;border:1px solid rgba(244,212,106,.45);background:rgba(244,212,106,.07);color:#F4D46A;border-radius:999px;padding:.34rem .95rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s}
+.rh-study:hover{background:rgba(244,212,106,.16);border-color:rgba(244,212,106,.75)}
+/* the study companion */
+#study-slot{margin-top:1.5rem}
+.sp{position:relative;background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.17),transparent 62%),linear-gradient(160deg,#1A160F,#241D12);border:1px solid rgba(201,162,39,.38);border-radius:1.3rem;padding:1.5rem 1.15rem 1.6rem;color:#FFFEF7;overflow:hidden}
+@media (min-width:640px){.sp{padding:1.7rem 1.6rem 1.8rem}}
+.sp-eye{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
+.sp-title{font-size:1.25rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
+.sp-title span{font-weight:400;font-size:.9rem;color:rgba(255,254,247,.6)}
+.sp-line{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.3rem 0 0}
+.sp-k{display:flex;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
+.sp-k::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
+.sp-p{font-size:.85rem;line-height:1.85;color:rgba(255,254,247,.84);margin:.6rem 0}
+.sp-heart{border-inline-start:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 16px 16px 0;padding:.9rem 1.05rem;margin:.5rem 0}
+.sp-heart p{font-size:.88rem;line-height:1.85;color:rgba(255,254,247,.92);margin:.5rem 0;font-style:italic}
+.sp-heart p:first-child{margin-top:0}.sp-heart p:last-child{margin-bottom:0}
+.sp-themes{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.2rem}
+.sp-chip{font-size:.7rem;font-weight:700;color:rgba(255,254,247,.85);border:1px solid rgba(244,212,106,.32);background:rgba(244,212,106,.07);border-radius:999px;padding:.26rem .7rem}
+.sp-theme{flex:1 1 13rem;border:1px solid rgba(244,212,106,.26);background:rgba(255,254,247,.045);border-radius:14px;padding:.6rem .75rem}
+.sp-theme b{display:block;font-size:.73rem;color:#F4D46A;letter-spacing:.02em}
+.sp-theme span{display:block;font-size:.74rem;line-height:1.65;color:rgba(255,254,247,.72);margin-top:.2rem}
+.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:start;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:14px;padding:.65rem .8rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.sp-btn:hover{background:rgba(244,212,106,.11);border-color:rgba(244,212,106,.5);transform:translateY(-1px)}
+.sp-btn:focus-visible{outline:2px solid rgba(244,212,106,.8);outline-offset:2px}
+.sp-btn .ic{flex:none;width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.09);color:#F4D46A;display:grid;place-items:center}
+.sp-btn .ic svg{width:.8rem;height:.8rem;display:block}
+.sp-btn .tx{min-width:0}
+.sp-btn b{display:block;font-size:.74rem;color:#F4D46A;letter-spacing:.03em}
+.sp-btn span{display:block;font-size:.78rem;line-height:1.6;color:rgba(255,254,247,.78);margin-top:.12rem}
+.sp-links{display:grid;gap:.45rem}
+@media (min-width:640px){.sp-links{grid-template-columns:1fr 1fr}}
+.sp-virtue{border:1px solid rgba(244,212,106,.28);background:rgba(255,254,247,.045);border-radius:16px;padding:.9rem 1rem}
+.sp-virtue p{font-size:.82rem;line-height:1.75;color:rgba(255,254,247,.85);margin:0}
+.sp-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;align-items:center}
+.sp-badge{font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;border:1px solid}
+.sp-badge.ok{color:#cfe0b4;border-color:rgba(138,155,110,.55);background:rgba(138,155,110,.14)}
+.sp-badge.weak{color:#F3C9A0;border-color:rgba(214,150,90,.55);background:rgba(214,150,90,.13)}
+.sp-src{font-size:.62rem;letter-spacing:.06em;color:rgba(255,254,247,.5)}
+.sp-note{font-size:.74rem;line-height:1.7;color:rgba(255,254,247,.55);border-top:1px solid rgba(244,212,106,.18);margin-top:1.4rem;padding-top:.8rem}
+/* the movements band, the animated figure of a deep surah */
+.sp-fig{margin:.3rem 0 .2rem}
+.sp-fig svg{display:block;width:100%;height:auto;overflow:visible}
+.mvg{cursor:pointer}
+.mvseg{transform-box:fill-box;transform-origin:left center;animation:mvgrow .7s cubic-bezier(.2,.8,.25,1) both;animation-delay:calc(var(--i) * .1s);transition:opacity .18s}
+.mvg:hover .mvseg{opacity:.82}
+.mvg:focus-visible{outline:2px solid rgba(244,212,106,.9);outline-offset:3px}
+.mvnum{font-size:15px;font-weight:800;fill:#1A160F;pointer-events:none}
+.mvcap{font-size:13px;fill:rgba(255,254,247,.6);pointer-events:none}
+@keyframes mvgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.mvseg{animation:none}}
+.sp-mv{display:grid;gap:.4rem;margin-top:.7rem}
+.sp-mv .rg{font-size:.6rem;font-weight:800;letter-spacing:.08em;color:#F4D46A;background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.3);border-radius:999px;padding:.14rem .5rem;white-space:nowrap}
+/* bottom player bar */
+#player{position:fixed;left:0;right:0;bottom:-90px;z-index:60;transition:bottom .35s ease;background:linear-gradient(90deg,#14100A,#241D12);border-top:1px solid rgba(201,162,39,.35);box-shadow:0 -8px 30px rgba(20,16,10,.35)}
+#player.show{bottom:0}
+#player .inner{max-width:44rem;margin:0 auto;display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem calc(.55rem + env(safe-area-inset-bottom))}
+#player .label{min-width:0;flex:1}
+#player .label b{display:block;color:#F4D46A;font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#player .label span{color:rgba(255,254,247,.55);font-size:.64rem}
+.pbtn{flex:none;width:2.3rem;height:2.3rem;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.04);color:#F4D46A;cursor:pointer;display:grid;place-items:center;transition:all .18s;padding:0}
+.pbtn svg{width:.92rem;height:.92rem;display:block}
+.pbtn:hover{background:rgba(244,212,106,.14);border-color:rgba(244,212,106,.7);transform:translateY(-1px)}
+.pbtn:active{transform:translateY(0) scale(.96)}
+.pbtn.main{width:2.85rem;height:2.85rem;background:radial-gradient(circle at 40% 32%,#F4D46A,#C9A227);color:#241D12;border:0;box-shadow:0 4px 16px rgba(201,162,39,.45),inset 0 1px 0 rgba(255,255,255,.35)}
+.pbtn.main svg{width:1.12rem;height:1.12rem}
+.pbtn.main:hover{box-shadow:0 6px 22px rgba(201,162,39,.6),inset 0 1px 0 rgba(255,255,255,.35)}
+body.has-player{padding-bottom:74px}
 </style>
+<link rel="canonical" href="https://noorcodex.com/quran"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "The Qur'an · NOOR Mushaf", "url": "https://noorcodex.com/quran", "inLanguage": ["en", "ar"], "description": "Read, listen, translate and understand the Qur'an: all 114 surahs in Uthmani script with per-verse recitation by Mishary Rashid Alafasy and English and French translations.", "isPartOf": {"@id": "https://noorcodex.com/#site"}, "about": {"@type": "Book", "name": "The Qur'an", "inLanguage": "ar"}}</script>
+<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=82" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
+<script src="/assets/noor-search.js?v=77" defer></script>
 </head>
-<body>
-<nav class="top">
-<a class="mark" href="/" aria-label="NOOR Codex of Light">ن</a>
-<a class="home" href="/">NOOR Codex of Light</a>
-<a class="enc" href="/dictionary">The Encyclopedia →</a>
-</nav>
-<main>
-<p class="kick">A word of the Path</p>
-<h1>Qur&#x27;an <span class="ar" translate="no">القُرْآن</span></h1>
-<span class="badge" title="Stated directly in the Qur’an">Qur’an</span>
-<p class="lede">The speech of Allah revealed to Muhammad in Arabic over about twenty three years, preserved word for word.</p>
-<h2>What does Qur&#x27;an mean in Islam?</h2>
-<p>The word means the recitation, from a root meaning to read aloud. It is one book of 114 surahs, revealed piece by piece between Makkah and Madinah, memorised by the Companions and written down in the Prophet&#x27;s lifetime. Muslims hold that the Arabic wording is itself the revelation, which is why any rendering into another language is called a translation of the meaning and never the Qur&#x27;an.</p>
-<h2>Also written</h2><p class="alt">Quran · Koran · Qoran · Kuran · Quraan · Al-Quran · Alquran · Coran · Holy Quran · Kalam Allah</p>
-<h2>Words that sit beside it</h2><div class="see"><a href="/dictionary/mushaf">Mushaf</a><a href="/dictionary/surah">Surah</a><a href="/dictionary/ayah">Ayah</a><a href="/dictionary/nuzul-al-quran">Nuzul Al Quran</a><a href="/dictionary/tarjamah">Tarjamah</a></div>
-<div class="deep">
-<p>This entry lives inside a free encyclopedia of 523 words of the Path, each with its meaning, its Arabic, its evidence, and its neighbours.</p>
-<a href="/dictionary#quran">Open Qur&#x27;an in the full encyclopedia →</a>
+<body class="antialiased">
+<div id="progress"></div>
+
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+/* --- self-contained header layout (works with or without the shared sheet) --- */
+#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
+#site-header a{text-decoration:none;color:inherit}
+#site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
+#site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
+#site-header>div>a:first-child>div:last-child>div:first-child{font-family:Amiri,serif;font-size:1.125rem;line-height:1;color:#2C2416}
+#site-header>div>a:first-child>div:last-child>div:last-child{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
+#site-header nav[aria-label="Primary"]{display:none;align-items:center;gap:1rem;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65)}
+@media (min-width:1024px){#site-header nav[aria-label="Primary"]{display:flex}}
+#site-header nav[aria-label="Primary"] a{color:inherit;transition:color .15s}
+#site-header nav[aria-label="Primary"] a:hover{color:#2C2416}
+#site-header nav[aria-label="Primary"] a.text-ink{color:#2C2416;font-weight:700}
+#site-header>div>div:last-child{display:flex;align-items:center;gap:.5rem}
+#site-header .give-pill{display:none}
+@media (min-width:640px){#site-header .give-pill{display:inline-block}}
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+
+/* --- the search drawer -------------------------------------------------
+   The magnifier at top right is the only search chrome the house shows.
+   The panel is hard-hidden until it is opened, and it is a floating drawer,
+   never a band across the page. These rules live in the generator so a nav
+   rebuild can never strip them again. */
+#search-bar{display:none}
+#search-bar.open{display:block;position:fixed;top:3.5rem;right:1rem;z-index:72;width:min(26rem,calc(100vw - 2rem))}
+@media (min-width:640px){#search-bar.open{right:1.5rem}}
+body.sheet-open #search-bar{display:none}
+#search-bar .sb-in{background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:16px;box-shadow:0 20px 48px rgba(26,22,15,.18);padding:.5rem}
+#search-bar input#search-input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:.9rem;line-height:1.4;color:#2C2416;background:#fff;border:1px solid rgba(44,36,22,.15);border-radius:11px;padding:.62rem .8rem;outline:0;-webkit-appearance:none;appearance:none}
+#search-bar input#search-input::placeholder{color:rgba(44,36,22,.4)}
+#search-bar input#search-input:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
+#search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
+#search-bar #search-results.hidden{display:none}
+
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
+/* --- paper ---------------------------------------------------------------
+   Choreography must never cost a reader the words. Anything the motion
+   layer is holding back is forced visible before it reaches a printer. */
+@media print{
+  #site-header,#nav-sheet,#search-bar{display:none!important}
+  .mo,.mo-pop,.mo-draw,[data-mo-stagger] .mo,[data-mo-stagger] .mo-pop{
+    opacity:1!important;visibility:visible!important;transform:none!important}
+  .mo-draw path,.mo-draw line,.mo-draw circle,.mo-draw rect,.mo-draw polyline,.mo-draw ellipse{
+    stroke-dasharray:none!important;stroke-dashoffset:0!important;opacity:1!important}
+}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="/" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="/quran" class="text-ink font-bold" data-i18n="nav.quran">Qur'an</a>
+<a href="/prophets" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="/hajj" class="hover:text-ink transition-colors" data-i18n="nav.hajj">Hajj</a>
+<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="/kids" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a role="menuitem" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
 </div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
+<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.heart">The Heart</p>
+<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
+<a role="menuitem" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a role="menuitem" href="/protection" data-i18n="m.protection">Protection & the Light</a>
+<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
+</nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+</header>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.learn">Learn</p>
+<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
+<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
+<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
+<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
+<a class="shl" href="/places" data-i18n="m.places">Places</a>
+<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<p class="sh-g" data-i18n="g.heart">The Heart</p>
+<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
+<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
+<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a class="shl" href="/protection" data-i18n="m.protection">Protection & the Light</a>
+<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-ink=soft id="qhero">
+<div class="rays" aria-hidden="true"></div>
+<div class="relative z-[2] max-w-4xl mx-auto px-4 pt-12 pb-10 text-center">
+<p class="font-quran text-gold text-2xl sm:text-3xl mb-3">وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</p>
+<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold">The Mushaf of Light</span></h1>
+<p class="text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">The Qur'an does not change; the way you meet it can. Pick a surah, read, listen, translate and understand, verse by verse.</p>
+</div>
+</section>
+
+<!-- NAVIGATOR, always one tap from any surah -->
+<nav id="qnav" class="sticky top-[94px] md:top-14 z-30 bg-parchment/95 backdrop-blur border-b border-ink/5">
+<div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-center gap-2">
+<button class="navarrow" id="prev-s" aria-label="Previous surah" disabled>‹</button>
+<select id="surah-select" aria-label="Choose surah"><option value="">, Choose a surah, </option></select>
+<button class="navarrow" id="next-s" aria-label="Next surah" disabled>›</button>
+<button class="tool" id="t-gates">☰ Browse the 114 gates</button>
+<button class="tool on" id="t-trans">Translation</button>
+<select id="t-lang" class="tool" style="appearance:auto">
+<option value="en.sahih">EN · Saheeh Intl</option>
+<option value="fr.hamidullah">FR · Hamidullah</option>
+</select>
+<button class="tool" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
+<span id="t-status" class="text-[11px] text-ink/40"></span>
+</div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+<!-- The Verse Lamp · one ayah a day, reflected -->
+<div id="vlamp" style="max-width:44rem;margin:1rem auto 0;padding:0 1rem">
+<div style="background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);border-radius:18px;padding:1rem 1.1rem;color:#FFFEF7">
+<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+<span aria-hidden="true" style="color:#F4D46A">✦</span>
+<span style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800">The Verse Lamp</span>
+<b id="vl-ref" style="font-size:.72rem;color:rgba(255,254,247,.75);margin-left:auto">Qur'an 2:286</b>
+</div>
+<p id="vl-text" style="font-size:.82rem;line-height:1.75;color:rgba(255,254,247,.85);margin:.55rem 0 0">Allah does not burden a soul beyond what it can carry. Whatever today weighs, the verse is a scale in your favor: the load was measured by the One who made your shoulders. Read it slowly, then stand up again.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;align-items:center">
+<button id="vl-play" type="button" style="display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.08);color:#F4D46A;border-radius:999px;padding:.32rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit"><svg viewBox="0 0 24 24" fill="currentColor" style="width:.6rem;height:.6rem" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Listen</button>
+<a id="vl-open" href="/quran?surah=2&ayah=286" style="font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.32rem .8rem">Open in the Mushaf →</a>
+</div>
+</div>
+</div>
+<script>
+(function(){
+var REF="2:286";
+function g(id){return document.getElementById(id)}
+fetch("/api/illuminations?kind=verse").then(function(r){return r.ok?r.json():null}).then(function(v){
+  if(!v||!v.ref)return;
+  REF=v.ref;
+  g("vl-ref").textContent="Qur'an "+v.ref;
+  if(v.reflection)g("vl-text").textContent=v.reflection;
+  var m=v.ref.match(/^(\d+):(\d+)$/);
+  if(m)g("vl-open").href="/quran?surah="+m[1]+"&ayah="+m[2];
+}).catch(function(){});
+g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(REF,g("vl-play")); });
+})();
+</script>
+
+<div>
+
+<!-- Surah gates (folds away once you're reading) -->
+<aside id="gates-aside">
+<div class="gbar">
+<div class="gsearch"><input id="gate-search" type="search" placeholder="Find a surah… (name, meaning or number)" class="w-full text-sm border border-ink/15 rounded-full px-4 py-2 bg-white focus:outline-none focus:border-gold"/></div>
+<button class="gview on" id="gv-tiles" type="button" aria-pressed="true">Tiles</button>
+<button class="gview" id="gv-list" type="button" aria-pressed="false">Compact list</button>
+</div>
+<p class="glegend">
+<span class="gchip mk">Makkan</span><b>revealed before the migration</b>
+<span class="gchip md">Madinan</span><b>revealed after it</b>
+<span style="color:#C9A227" aria-hidden="true">✦</span><b>opened in full by the study companion</b>
+<span id="gate-count"></span>
+</p>
+<div id="gates-wrap" role="list"></div>
+</aside>
+
+<!-- Reading room -->
+<section id="room">
+<div id="room-head" class="mb-2"></div>
+<div id="room-body">
+<div class="text-center py-16 text-ink/50 text-sm max-w-md mx-auto">
+<p class="font-quran text-4xl text-gold mb-4">﷽</p>
+<p>Choose a surah above, or browse the 114 illuminated gates.<br/>Every verse offers its recitation, translation, and place in the whole.</p>
+</div>
+</div>
+</section>
+
+</div>
+<!--WGO-->
+<style>.wgo{max-width:62rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(44,36,22,.12)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#2C2416;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(201,162,39,.7);transform:translateY(-1px);box-shadow:0 5px 18px rgba(44,36,22,.07)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#2C2416;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#C9A227}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.68);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
+<section class="wgo" aria-labelledby="wgo-h">
+<h2 id="wgo-h">Where to go from here</h2>
+<div class="wgo-g">
+<a class="wgo-c" href="/arabic"><b>The Letters of Light</b><span>Twenty eight letters with their sounds, so the script above stops being a picture and starts being words.</span></a>
+<a class="wgo-c" href="/ramadan#khatm"><b>The Qur'an in thirty nights</b><span>A reading plan that finishes the whole Book in a month, one juz a night, kept in the Ramadan room.</span></a>
+<a class="wgo-c" href="/prophets"><b>The 25 Prophets</b><span>The stories the surahs tell in pieces, gathered into one chain with their sources.</span></a>
+<a class="wgo-c" href="/madrasa#t-tajwid"><b>Tajwid, in the Classroom</b><span>The science of reciting properly, taught as fifteen lessons with recitation and quizzes.</span></a>
+</div>
+</section>
+<!--/WGO-->
 </main>
-<footer>NOOR Codex of Light · free forever, no ads, no trackers · <a href="/">noorcodex.com</a></footer>
+
+<!-- BOTTOM PLAYER -->
+<div id="player" role="region" aria-label="Recitation player">
+<div class="inner">
+<div class="label"><b id="p-title">·</b><span id="p-sub">Alafasy</span></div>
+<button class="pbtn" id="p-prev" aria-label="Previous verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2.4v14H6zM19.5 5v14L9.6 12z"/></svg></button>
+<button class="pbtn main" id="p-toggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+<button class="pbtn" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
+<button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
+</div>
+</div>
+
+<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
+<div class="relative max-w-3xl mx-auto px-4 text-center">
+<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
+<p class="text-xs text-parchment/50 leading-relaxed">Text: Uthmani mushaf via AlQuran Cloud · Recitation: Mishary Rashid Alafasy · Translations: Saheeh International, Muhammad Hamidullah. The Qur'an is unchanged; only the doorway is new.</p>
+<a href="/#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
+<p class="mt-3 text-[10px] text-parchment/35"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+</div>
+</footer>
+
+<script>
+/* ================= NOOR Mushaf v2 =================
+   Sealed in its own scope so shared page scripts (noor-fx.js also has a
+   playAyah for other rooms) can never clobber the Mushaf's player again. */
+(function(){
+const SURAHS=[[1,"Al-Fatiha","الفاتحة","The Opening",7,"M"],[2,"Al-Baqarah","البقرة","The Cow",286,"D"],[3,"Aal Imran","آل عمران","Family of Imran",200,"D"],[4,"An-Nisa","النساء","The Women",176,"D"],[5,"Al-Ma'idah","المائدة","The Table Spread",120,"D"],[6,"Al-An'am","الأنعام","The Cattle",165,"M"],[7,"Al-A'raf","الأعراف","The Heights",206,"M"],[8,"Al-Anfal","الأنفال","The Spoils of War",75,"D"],[9,"At-Tawbah","التوبة","The Repentance",129,"D"],[10,"Yunus","يونس","Jonah",109,"M"],[11,"Hud","هود","Hud",123,"M"],[12,"Yusuf","يوسف","Joseph",111,"M"],[13,"Ar-Ra'd","الرعد","The Thunder",43,"D"],[14,"Ibrahim","إبراهيم","Abraham",52,"M"],[15,"Al-Hijr","الحجر","The Rocky Tract",99,"M"],[16,"An-Nahl","النحل","The Bee",128,"M"],[17,"Al-Isra","الإسراء","The Night Journey",111,"M"],[18,"Al-Kahf","الكهف","The Cave",110,"M"],[19,"Maryam","مريم","Mary",98,"M"],[20,"Ta-Ha","طه","Ta-Ha",135,"M"],[21,"Al-Anbiya","الأنبياء","The Prophets",112,"M"],[22,"Al-Hajj","الحج","The Pilgrimage",78,"D"],[23,"Al-Mu'minun","المؤمنون","The Believers",118,"M"],[24,"An-Nur","النور","The Light",64,"D"],[25,"Al-Furqan","الفرقان","The Criterion",77,"M"],[26,"Ash-Shu'ara","الشعراء","The Poets",227,"M"],[27,"An-Naml","النمل","The Ant",93,"M"],[28,"Al-Qasas","القصص","The Stories",88,"M"],[29,"Al-Ankabut","العنكبوت","The Spider",69,"M"],[30,"Ar-Rum","الروم","The Romans",60,"M"],[31,"Luqman","لقمان","Luqman",34,"M"],[32,"As-Sajdah","السجدة","The Prostration",30,"M"],[33,"Al-Ahzab","الأحزاب","The Confederates",73,"D"],[34,"Saba","سبأ","Sheba",54,"M"],[35,"Fatir","فاطر","The Originator",45,"M"],[36,"Ya-Sin","يس","Ya-Sin",83,"M"],[37,"As-Saffat","الصافات","Those Ranged in Ranks",182,"M"],[38,"Sad","ص","Sad",88,"M"],[39,"Az-Zumar","الزمر","The Groups",75,"M"],[40,"Ghafir","غافر","The Forgiver",85,"M"],[41,"Fussilat","فصلت","Explained in Detail",54,"M"],[42,"Ash-Shura","الشورى","The Consultation",53,"M"],[43,"Az-Zukhruf","الزخرف","The Gold Adornments",89,"M"],[44,"Ad-Dukhan","الدخان","The Smoke",59,"M"],[45,"Al-Jathiyah","الجاثية","The Kneeling",37,"M"],[46,"Al-Ahqaf","الأحقاف","The Wind-Curved Sandhills",35,"M"],[47,"Muhammad","محمد","Muhammad",38,"D"],[48,"Al-Fath","الفتح","The Victory",29,"D"],[49,"Al-Hujurat","الحجرات","The Rooms",18,"D"],[50,"Qaf","ق","Qaf",45,"M"],[51,"Adh-Dhariyat","الذاريات","The Winnowing Winds",60,"M"],[52,"At-Tur","الطور","The Mount",49,"M"],[53,"An-Najm","النجم","The Star",62,"M"],[54,"Al-Qamar","القمر","The Moon",55,"M"],[55,"Ar-Rahman","الرحمن","The Most Merciful",78,"D"],[56,"Al-Waqi'ah","الواقعة","The Inevitable",96,"M"],[57,"Al-Hadid","الحديد","The Iron",29,"D"],[58,"Al-Mujadilah","المجادلة","The Pleading Woman",22,"D"],[59,"Al-Hashr","الحشر","The Exile",24,"D"],[60,"Al-Mumtahanah","الممتحنة","She Who is Examined",13,"D"],[61,"As-Saff","الصف","The Ranks",14,"D"],[62,"Al-Jumu'ah","الجمعة","Friday",11,"D"],[63,"Al-Munafiqun","المنافقون","The Hypocrites",11,"D"],[64,"At-Taghabun","التغابن","Mutual Loss and Gain",18,"D"],[65,"At-Talaq","الطلاق","The Divorce",12,"D"],[66,"At-Tahrim","التحريم","The Prohibition",12,"D"],[67,"Al-Mulk","الملك","The Sovereignty",30,"M"],[68,"Al-Qalam","القلم","The Pen",52,"M"],[69,"Al-Haqqah","الحاقة","The Reality",52,"M"],[70,"Al-Ma'arij","المعارج","The Ascending Stairways",44,"M"],[71,"Nuh","نوح","Noah",28,"M"],[72,"Al-Jinn","الجن","The Jinn",28,"M"],[73,"Al-Muzzammil","المزمل","The Enshrouded One",20,"M"],[74,"Al-Muddaththir","المدثر","The Cloaked One",56,"M"],[75,"Al-Qiyamah","القيامة","The Resurrection",40,"M"],[76,"Al-Insan","الإنسان","Man",31,"D"],[77,"Al-Mursalat","المرسلات","Those Sent Forth",50,"M"],[78,"An-Naba","النبأ","The Great News",40,"M"],[79,"An-Nazi'at","النازعات","Those Who Pull Out",46,"M"],[80,"Abasa","عبس","He Frowned",42,"M"],[81,"At-Takwir","التكوير","The Folding Up",29,"M"],[82,"Al-Infitar","الانفطار","The Cleaving",19,"M"],[83,"Al-Mutaffifin","المطففين","The Defrauders",36,"M"],[84,"Al-Inshiqaq","الانشقاق","The Splitting Open",25,"M"],[85,"Al-Buruj","البروج","The Constellations",22,"M"],[86,"At-Tariq","الطارق","The Night-Comer",17,"M"],[87,"Al-A'la","الأعلى","The Most High",19,"M"],[88,"Al-Ghashiyah","الغاشية","The Overwhelming",26,"M"],[89,"Al-Fajr","الفجر","The Dawn",30,"M"],[90,"Al-Balad","البلد","The City",20,"M"],[91,"Ash-Shams","الشمس","The Sun",15,"M"],[92,"Al-Layl","الليل","The Night",21,"M"],[93,"Ad-Duha","الضحى","The Morning Brightness",11,"M"],[94,"Ash-Sharh","الشرح","The Opening of the Breast",8,"M"],[95,"At-Tin","التين","The Fig",8,"M"],[96,"Al-Alaq","العلق","The Clot",19,"M"],[97,"Al-Qadr","القدر","The Night of Decree",5,"M"],[98,"Al-Bayyinah","البينة","The Clear Evidence",8,"D"],[99,"Az-Zalzalah","الزلزلة","The Earthquake",8,"D"],[100,"Al-Adiyat","العاديات","The Coursers",11,"M"],[101,"Al-Qari'ah","القارعة","The Calamity",11,"M"],[102,"At-Takathur","التكاثر","The Rivalry in Increase",8,"M"],[103,"Al-Asr","العصر","The Declining Day",3,"M"],[104,"Al-Humazah","الهمزة","The Slanderer",9,"M"],[105,"Al-Fil","الفيل","The Elephant",5,"M"],[106,"Quraysh","قريش","Quraysh",4,"M"],[107,"Al-Ma'un","الماعون","The Small Kindnesses",7,"M"],[108,"Al-Kawthar","الكوثر","The Abundance",3,"M"],[109,"Al-Kafirun","الكافرون","The Disbelievers",6,"M"],[110,"An-Nasr","النصر","The Divine Support",3,"D"],[111,"Al-Masad","المسد","The Palm Fiber",5,"M"],[112,"Al-Ikhlas","الإخلاص","The Sincerity",4,"M"],[113,"Al-Falaq","الفلق","The Daybreak",5,"M"],[114,"An-Nas","الناس","Mankind",6,"M"]];
+const INTROS={1:"The Mother of the Book. Seven verses that are themselves a conversation: you praise, you ask, He answers. Recited in every unit of every prayer, no Muslim ever graduates from it.",2:"The longest surah: law, memory and mercy woven together in Madinah. It holds Ayat al-Kursi (255) and closes with two verses the Prophet ﷺ said suffice whoever recites them at night.",12:"The most beautiful of stories, revealed whole in the Year of Sorrow: betrayal, patience, temptation resisted, and a family restored. Yusuf forgives before he is asked.",18:"The Friday surah. Four stories, the sleepers, the two gardens, Musa and al-Khadir, Dhul-Qarnayn, each answering a trial: faith, wealth, knowledge, power.",19:"Maryam: a surah named for a woman, carried by the letter-sounds Kaf-Ha-Ya-Ayn-Sad. Zakariyya's whisper, Maryam's labour, and Isa speaking from the cradle.",36:"Often called the heart of the Qur'an. Resurrection argued from a dead earth brought to life, and one man from the far side of the city who ran to warn his people.",55:"Ar-Rahman: a refrain: 'so which of the favours of your Lord will you both deny?', returning thirty-one times, addressed to humans and jinn together.",56:"Al-Waqi'ah sorts humanity into three companies on the Day: the foremost, the right, the left. The Prophet's ﷺ companions recited it against poverty of heart.",67:"Al-Mulk: sovereignty argued from the flight of birds and the seven heavens without flaw. A protector in the grave for those who kept its company.",93:"Revealed when revelation paused and the Prophet ﷺ feared abandonment: 'Your Lord has not forsaken you, nor does He hate you.' The morning light after night.",94:"Ash-Sharh: 'Did We not expand for you your breast?', with the promise stated twice so it cannot be missed: with hardship comes ease.",97:"Laylat al-Qadr, the night the Qur'an descended, better than a thousand months. Peace it is, until the rising of dawn.",112:"A third of the Qur'an in four verses: Allah, One, Eternal, unbegotten and unbegetting, without equal. The creed at its purest.",113:"First of the two refuges. From the evil of what He created, of darkness gathering, of knots blown upon, of the envier, you flee to the Lord of the daybreak.",114:"The last word of the Book is refuge in its Lord from the whisperer, and the reminder that the quietest enemy is the one inside the chest."};
+
+const $=id=>document.getElementById(id);
+const gatesWrap=$("gates-wrap"), roomBody=$("room-body"), roomHead=$("room-head"), aside=$("gates-aside");
+let cur=null, ayahs=[], trans=[], transOn=true, audio=null, playingIdx=-1, continuous=false, paused=false;
+let transEdition="en.sahih";
+
+/* ---------- navigator ---------- */
+const sel=$("surah-select");
+SURAHS.forEach(s=>{const o=document.createElement("option");o.value=s[0];o.textContent=s[0]+" · "+s[1]+" · "+s[3];sel.appendChild(o);});
+sel.addEventListener("change",()=>{if(sel.value)openSurah(+sel.value,1,true);});
+$("prev-s").addEventListener("click",()=>{if(cur>1)openSurah(cur-1,1,true);});
+$("next-s").addEventListener("click",()=>{if(cur<114)openSurah(cur+1,1,true);});
+function gatesLabel(){$("t-gates").textContent=aside.classList.contains("folded")?"☰ Browse the 114 gates":"☰ Close the gates";}
+$("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");gatesLabel();
+ if(!aside.classList.contains("folded"))aside.scrollIntoView({behavior:"smooth",block:"start"});});
+
+/* ---------- gates: 114 tiles, tiles or compact list ---------- */
+const STUDY=()=>window.NOOR_STUDY||null;
+const isDeep=n=>{const D=STUDY();return !!(D&&D[n]&&D[n].depth==="deep");};
+function gateHTML(s){const[n,en,ar,meaning,count,place]=s;const mk=place==="M",deep=isDeep(n);
+ return `<button class="gate ${mk?"mk":"md"}${deep?" deep":""}" role="listitem" data-n="${n}" aria-label="Surah ${n}, ${en}, ${meaning}, ${count} ayat, ${mk?"Makkan":"Madinan"}${deep?", opened in full":""}">
+  <span class="seal" aria-hidden="true">${n}</span>
+  <span class="gar font-amiri" translate="no">${ar}</span>
+  <span class="gen">${en}</span>
+  <span class="gmn">${meaning}</span>
+  <span class="gmeta"><span class="gchip ${mk?"mk":"md"}">${mk?"Makkan":"Madinan"}</span><span class="gct">${count} ayat</span></span>
+  ${deep?`<span class="gfull" aria-hidden="true" title="Opened in full">✦</span>`:""}</button>`;}
+function renderGates(filter){const q=(filter||"").trim().toLowerCase();
+ const list=SURAHS.filter(s=>!q||String(s[0])===q||s[1].toLowerCase().includes(q)||s[3].toLowerCase().includes(q)||s[2].includes(q));
+ gatesWrap.innerHTML=list.map(gateHTML).join("")||`<p class="text-xs text-ink/40 px-2 py-4">No surah matches "${filter}".</p>`;
+ const c=$("gate-count");if(c)c.textContent=list.length===114?"114 gates":list.length+" of 114";
+ if(cur)markActive(cur);}
+function markActive(n){gatesWrap.querySelectorAll(".gate.active").forEach(g=>g.classList.remove("active"));
+ const el=gatesWrap.querySelector(`[data-n="${n}"]`);if(el)el.classList.add("active");}
+gatesWrap.addEventListener("click",e=>{const g=e.target.closest(".gate");if(g)openSurah(+g.dataset.n,1,true);});
+$("gate-search").addEventListener("input",e=>renderGates(e.target.value));
+function setView(list){gatesWrap.classList.toggle("list",list);
+ $("gv-list").classList.toggle("on",list);$("gv-list").setAttribute("aria-pressed",String(list));
+ $("gv-tiles").classList.toggle("on",!list);$("gv-tiles").setAttribute("aria-pressed",String(!list));
+ try{localStorage.setItem("noor-gates-view",list?"list":"tiles")}catch(e){}}
+$("gv-list").addEventListener("click",()=>setView(true));
+$("gv-tiles").addEventListener("click",()=>setView(false));
+
+/* ---------- fetch & render ---------- */
+async function j(url){const r=await fetch(url);if(!r.ok)throw new Error(r.status);return(await r.json()).data;}
+const BISMILLAH=/^بِ?سْ?مِ.{0,45}?رّ?َ?حِ?يمِ?\s*/;
+
+async function openSurah(n,gotoAyah,user){
+  if(!SURAHS[n-1])return;
+  stopAudio();
+  cur=n; markActive(n);
+  sel.value=String(n);
+  $("prev-s").disabled=n<=1; $("next-s").disabled=n>=114;
+  if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
+  const[num,en,ar,meaning,count,place]=SURAHS[n-1];
+  roomHead.innerHTML=`
+   <div class="rounded-2xl overflow-hidden border border-ink/8" style="background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)">
+     <div class="px-5 py-6 text-center">
+       <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
+       <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:rgba(255,254,247,.55)">, ${meaning}</span></h2>
+       <p class="text-[11px] mt-1" style="color:rgba(255,254,247,.5)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
+       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:rgba(255,254,247,.75)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
+       <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>
+     </div>
+   </div>`;
+  roomBody.innerHTML=`<div class="space-y-4 py-6">${Array.from({length:4},()=>`<div class="skel h-16"></div>`).join("")}</div>`;
+  $("t-status").textContent="Opening…";
+  if(user)setTimeout(()=>roomHead.scrollIntoView({behavior:"smooth",block:"start"}),60);  /* jump straight to the reader */
+  try{
+    const[arb,tr]=await Promise.all([j(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`),j(`https://api.alquran.cloud/v1/surah/${n}/${transEdition}`)]);
+    if(cur!==n)return;
+    ayahs=arb.ayahs; trans=tr.ayahs;
+    renderAyahs(n);
+    $("t-status").textContent="";
+    if(gotoAyah&&gotoAyah>1)setTimeout(()=>document.getElementById(`a-${gotoAyah}`)?.scrollIntoView({behavior:"smooth"}),150);
+    history.replaceState(null,"",`?surah=${n}${gotoAyah&&gotoAyah>1?`&ayah=${gotoAyah}`:""}`);
+  }catch(err){
+    roomBody.innerHTML=`<div class="text-center py-14 max-w-sm mx-auto">
+      <p class="font-quran text-3xl text-gold mb-3">﷽</p>
+      <p class="text-sm text-ink/60 leading-relaxed mb-4">The Mushaf could not be reached, the text service may be blocked on your network.</p>
+      <button class="tool on" onclick="openSurah(${n},1)">Try again</button></div>
+      <div id="study-slot"></div>`;
+    $("t-status").textContent="";
+    mountStudy(n);   /* the companion is carried in the page, so it opens even when the text service is down */
+  }
+}
+
+function renderAyahs(n){
+  const showBismillah=n!==1&&n!==9;
+  let html=showBismillah?`<div class="bismillah" translate="no">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<small>In the name of Allah, the Entirely Merciful, the Especially Merciful</small></div>`:"";
+  html+=ayahs.map((a,i)=>{let text=a.text;if(i===0&&showBismillah)text=text.replace(BISMILLAH,"");
+   return `<article class="ayah" id="a-${a.numberInSurah}" data-i="${i}">
+    <p class="ar" translate="no">${text}<span class="medallion" translate="no">${a.numberInSurah}</span></p>
+    <div class="mt-2.5 flex items-start gap-3">
+      <button class="playbtn flex-none" data-play="${i}" aria-label="Play ayah ${a.numberInSurah}"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <p class="trans text-[13.5px] leading-relaxed text-ink/70 ${transOn?"":"hidden"}">${trans[i]?.text||""}</p>
+    </div></article>`;}).join("");
+  roomBody.innerHTML=`<div class="bg-white rounded-2xl border border-ink/8 px-4 sm:px-7 py-2 mt-4">${html}</div>
+   <div id="study-slot"></div>
+   <div class="flex justify-between items-center py-5 text-sm">
+     ${cur>1?`<button class="tool" onclick="openSurah(${cur-1},1,true)">‹ ${SURAHS[cur-2][1]}</button>`:"<span></span>"}
+     ${cur<114?`<button class="tool" onclick="openSurah(${cur+1},1,true)">${SURAHS[cur][1]} ›</button>`:"<span></span>"}
+   </div>`;
+  mountStudy(n);
+}
+
+/* ---------- the study companion ----------
+   Built from window.NOOR_STUDY (quran-study.js, deferred). Every use is guarded:
+   if that file never arrives the room behaves exactly as it did before. */
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const arr=v=>v==null?[]:(Array.isArray(v)?v:[v]);
+const kick=t=>`<p class="sp-k">${esc(t)}</p>`;
+const PLAYICO=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+const MVC=["#C9A227","#E9C86A","#B8912A","#F4D46A","#D3AE3C","#A8842A"];
+
+function mvRange(range,count){const p=String(range).split("-");
+ let a=parseInt(p[0],10)||1,b=parseInt(p[1],10)||a;
+ a=Math.min(Math.max(a,1),count);b=Math.min(Math.max(b,a),count);return[a,b];}
+
+/* the animated figure of a deep surah: its movements, each segment true to its ayah range */
+function bandFig(rec,n,count){
+ const W=620,H=58,segs=rec.movements.map((m,i)=>{const[a,b]=mvRange(m.range,count);
+  return{a:a,b:b,x:(a-1)/count*W,w:Math.max(7,(b-a+1)/count*W-3),i:i};});
+ let bars="",ticks="",labels="",lastL=-99;
+ segs.forEach(s=>{
+  bars+=`<g class="mvg" role="button" tabindex="0" data-sp="${s.a}" data-flow="1" aria-label="Listen from verse ${s.a}, movement ${s.i+1}">
+   <title>${esc(rec.movements[s.i].h)}, verses ${s.a} to ${s.b}</title>
+   <rect class="mvseg" x="${s.x.toFixed(1)}" y="6" width="${s.w.toFixed(1)}" height="26" rx="6" fill="${MVC[s.i%MVC.length]}" style="--i:${s.i}"/>
+   ${s.w>22?`<text class="mvnum" x="${(s.x+s.w/2).toFixed(1)}" y="24" text-anchor="middle">${s.i+1}</text>`:""}</g>`;
+  ticks+=`<path d="M${s.x.toFixed(1)} 36V42"/>`;
+  if(s.x-lastL>36){labels+=`<text class="mvcap" x="${s.x.toFixed(1)}" y="54" text-anchor="${s.x<8?"start":"middle"}">${s.a}</text>`;lastL=s.x;}
+ });
+ return `<div class="sp-fig mo-pop"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="The ${segs.length} movements of this surah, drawn to the length of each">
+  <g class="mo-draw" fill="none" stroke="rgba(244,212,106,.45)" stroke-width="1.4" stroke-linecap="round"><path d="M0 42H${W}"/>${ticks}<path d="M${W} 36V42"/></g>
+  ${bars}${labels}<text class="mvcap" x="${W}" y="54" text-anchor="end">${count}</text>
+ </svg></div>`;
+}
+
+/* the figure of a surah opened in brief: its length against the longest */
+function lengthFig(n,count,place){
+ const W=620,MAX=286,w=Math.max(9,count/MAX*W),mk=place==="M";
+ const cap=n===2?"the longest surah in the Book":"against Al-Baqarah, the longest, at 286";
+ return `<div class="sp-fig mo-pop"><svg viewBox="0 0 ${W} 60" role="img" aria-label="${mk?"Makkan":"Madinan"} surah, ${count} ayat, against the longest surah at 286">
+  <text class="mvcap" x="0" y="12" fill="${mk?"#F4D46A":"#B7C795"}" style="font-weight:800;letter-spacing:1px">${mk?"MAKKAN":"MADINAN"}</text>
+  <text class="mvcap" x="${W}" y="12" text-anchor="end">${count} ${count===1?"ayah":"ayat"}</text>
+  <g class="mo-draw" fill="none" stroke="rgba(244,212,106,.4)" stroke-width="1.4"><rect x="0.7" y="20.7" width="${W-1.4}" height="20.6" rx="10"/></g>
+  <rect class="mvseg" x="1" y="21" width="${w.toFixed(1)}" height="20" rx="10" fill="${mk?"#C9A227":"#8A9B6E"}" style="--i:0"/>
+  <text class="mvcap" x="0" y="56">${cap}</text>
+ </svg></div>`;
+}
+
+function studyHTML(n){
+ const D=STUDY();if(!D||!D[n]||!SURAHS[n-1])return "";
+ const rec=D[n],s=SURAHS[n-1],count=s[4],place=s[5],deep=rec.depth==="deep";
+ let h=`<section class="sp mo" aria-label="Study companion for surah ${esc(s[1])}">
+  <p class="sp-eye">✦ The study companion</p>
+  <h3 class="sp-title">${esc(s[1])}<span>, ${esc(s[3])}</span></h3>
+  <p class="sp-line">${place==="M"?"Makkan":"Madinan"} · ${count} ayat · ${deep?"opened in full":"opened in brief"}</p>`;
+
+ const ctx=arr(rec.context);
+ if(ctx.length)h+=kick("When it came down")+ctx.map(p=>`<p class="sp-p">${esc(p)}</p>`).join("");
+
+ if(deep&&rec.name_story)h+=kick("The name")+`<p class="sp-p">${esc(rec.name_story)}</p>`;
+
+ if(deep&&rec.movements&&rec.movements.length){
+  h+=kick("The movements")+bandFig(rec,n,count)
+   +`<div class="sp-mv">`+rec.movements.map((m,i)=>{const[a,b]=mvRange(m.range,count);
+     return `<button type="button" class="sp-btn" data-sp="${a}" data-flow="1">
+      <span class="ic">${PLAYICO}</span>
+      <span class="tx"><b><span class="rg">${a===b?"Verse "+a:"Verses "+a+" to "+b}</span> ${esc(m.h)}</b><span>${esc(m.note)}</span></span></button>`;}).join("")
+   +`</div><p class="sp-note" style="border:0;margin-top:.5rem;padding-top:0">Tap any movement to hear it recited from its first verse.</p>`;
+ }else{
+  h+=kick("The shape of it")+lengthFig(n,count,place);
+ }
+
+ const th=arr(rec.themes);
+ if(th.length)h+=kick("Themes")+`<div class="sp-themes">`+th.map(t=>typeof t==="string"
+   ?`<span class="sp-chip">${esc(t)}</span>`
+   :`<span class="sp-theme"><b>${esc(t.t)}</b><span>${esc(t.d)}</span></span>`).join("")+`</div>`;
+
+ const heart=arr(rec.heart);
+ if(heart.length)h+=kick("The heart")+`<div class="sp-heart">`+heart.map(p=>`<p>${esc(p)}</p>`).join("")+`</div>`;
+
+ const stops=rec.passages?arr(rec.passages):(rec.passage?[rec.passage]:[]);
+ if(stops.length)h+=kick("Stop here")+stops.map(p=>{const a=parseInt(String(p.ref).split(":")[1],10)||1;
+   return `<button type="button" class="sp-btn" data-sp="${a}">
+    <span class="ic">${PLAYICO}</span>
+    <span class="tx"><b>Qur'an ${esc(p.ref)}</b><span>${esc(p.why)}</span></span></button>`;}).join("");
+
+ const con=arr(rec.connections);
+ if(con.length)h+=kick("It speaks with")+`<div class="sp-links">`+con.map(c=>{const t=SURAHS[c.to-1];if(!t)return "";
+   return `<button type="button" class="sp-btn" data-sg="${c.to}">
+    <span class="tx"><b>${t[0]} ${esc(t[1])}, ${esc(t[3])}</b><span>${esc(c.why)}</span></span></button>`;}).join("")+`</div>`;
+
+ if(deep&&rec.virtue&&rec.virtue.text){const sound=rec.virtue.level==="sunnah";
+  h+=kick("What is authentically reported")+`<div class="sp-virtue">
+   <p>${esc(rec.virtue.text)}</p>
+   <div class="sp-tags"><span class="sp-badge ${sound?"ok":"weak"}">${sound?"Established":"Weak or contested, so we say so"}</span>
+   ${rec.virtue.src?`<span class="sp-src">${esc(rec.virtue.src)}</span>`:""}</div></div>`;}
+
+ if(!deep)h+=`<p class="sp-note">This surah is opened in brief here. The full companion is being written.</p>`;
+ return h+`</section>`;
+}
+
+function mountStudy(n){
+ let html="";try{html=studyHTML(n)}catch(e){html=""}
+ const slot=$("study-slot");
+ if(slot){slot.innerHTML=html;
+  if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(slot)}catch(e){}}}
+ const b=roomHead.querySelector("#t-study");
+ if(b)b.style.display=(html&&slot)?"":"none";
+}
+
+/* every study button reaches the player the reader already knows */
+function playStudyAyah(num){
+ if(!ayahs.length){$("t-status").textContent="The verses are still opening, one moment.";
+  setTimeout(()=>$("t-status").textContent="",2500);return;}
+ let i=ayahs.findIndex(a=>+a.numberInSurah===+num);
+ if(i<0)i=Math.min(Math.max(num-1,0),ayahs.length-1);
+ playAyah(i);
+}
+function studyAct(el){
+ const sp=el.getAttribute("data-sp");
+ if(sp!==null){const flow=el.getAttribute("data-flow")==="1";   /* a movement plays on; a single stop plays once */
+  continuous=flow;listenLabel(continuous);$("t-listen").classList.toggle("on",continuous);
+  playStudyAyah(+sp);return true;}
+ const sg=el.getAttribute("data-sg");
+ if(sg!==null){openSurah(+sg,1,true);return true;}
+ return false;
+}
+roomBody.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-sp],[data-sg]");if(el)studyAct(el);});
+roomBody.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;
+ const el=e.target.closest&&e.target.closest(".mvg[data-sp]");if(!el)return;e.preventDefault();studyAct(el);});
+roomHead.addEventListener("click",e=>{if(!e.target.closest||!e.target.closest("#t-study"))return;
+ const el=$("study-slot");if(el&&el.firstChild)el.scrollIntoView({behavior:"smooth",block:"start"});});
+
+/* ---------- audio engine v2: 4-source fallback, stall watchdog, honest UI ----------
+   The equalizer only dances when sound is actually coming out. While a server
+   is answering, the verse shows a quiet "…" and the player says loading.
+   If a server hangs (no sound, no error: the silent-forever bug), a watchdog
+   moves to the next source after a few seconds. A stale-audio guard makes
+   sure callbacks from a replaced audio object can never resurrect playback. */
+function srcsFor(i){if(window.NOOR_QURAN_TEST&&NOOR_QURAN_TEST.srcs)return NOOR_QURAN_TEST.srcs(i);
+ const a=ayahs[i];const g=a.number,s3=String(cur).padStart(3,"0"),a3=String(a.numberInSurah).padStart(3,"0");
+ return[`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${g}.mp3`,
+        `https://everyayah.com/data/Alafasy_128kbps/${s3}${a3}.mp3`,
+        `https://cdn.islamic.network/quran/audio/64/ar.alafasy/${g}.mp3`,
+        `https://verses.quran.com/Alafasy/mp3/${s3}${a3}.mp3`];}
+function playerShow(on){$("player").classList.toggle("show",on);document.body.classList.toggle("has-player",on);}
+function playerLabel(extra){if(playingIdx<0||!ayahs[playingIdx])return;
+ $("p-title").textContent=SURAHS[cur-1][1]+" · verse "+ayahs[playingIdx].numberInSurah+" / "+SURAHS[cur-1][4];
+ $("p-sub").textContent=extra||((continuous?"Continuous · ":"")+"Alafasy");}
+const EQ=`<span class="eq"><i></i><i></i><i></i></span>`;
+const ICO_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
+function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;}
+function listenLabel(on){$("t-listen").innerHTML=on
+ ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
+ :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah`;}
+const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+function setPlaying(i,loading){playingIdx=i;
+ document.querySelectorAll(".ayah").forEach(el=>el.classList.remove("playing"));
+ document.querySelectorAll(".playbtn").forEach(b=>{b.classList.remove("on");b.innerHTML=TRI;});
+ if(i>=0){const el=document.querySelector(`.ayah[data-i="${i}"]`),b=document.querySelector(`[data-play="${i}"]`);
+  if(el){el.classList.add("playing");el.scrollIntoView({behavior:"smooth",block:"center"});}
+  if(b){b.classList.add("on");b.innerHTML=loading?`<span style="font-weight:800;letter-spacing:1px">…</span>`:EQ;}
+  playerLabel(loading?"loading recitation…":null);}}
+function markSounding(i){const b=document.querySelector(`[data-play="${i}"]`);
+ if(b){b.classList.add("on");b.innerHTML=EQ;}playerLabel();}
+let watchdog=null,failStreak=0;
+function clearWatch(){if(watchdog){clearTimeout(watchdog);watchdog=null;}}
+function killAudio(){clearWatch();
+ if(audio){audio.onended=null;audio.onerror=null;audio.onplaying=null;audio.pause();
+  try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
+function stopAudio(){killAudio();
+ setPlaying(-1);continuous=false;paused=false;playerShow(false);
+ listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);}
+function ayahFailed(i){
+ if(continuous&&failStreak<2&&i+1<ayahs.length){failStreak++;
+  $("t-status").textContent="A verse could not load, continuing…";setTimeout(()=>$("t-status").textContent="",2500);
+  playAyah(i+1);return;}
+ $("t-status").textContent="Recitation servers are unreachable right now. Try again in a minute.";
+ setTimeout(()=>$("t-status").textContent="",4500);stopAudio();}
+function playAyah(i,srcIdx){srcIdx=srcIdx||0;
+ if(!ayahs[i]){stopAudio();return;}
+ const srcs=srcsFor(i);
+ if(srcIdx>=srcs.length){ayahFailed(i);return;}
+ killAudio();
+ const me=new Audio();audio=me;
+ me.preload="auto";me.src=srcs[srcIdx];
+ paused=false;setToggle(true);playerShow(true);setPlaying(i,true);
+ const next=()=>{if(audio!==me)return;clearWatch();playAyah(i,srcIdx+1);};
+ watchdog=setTimeout(next,srcIdx===srcs.length-1?8000:5000);   /* hang rescue */
+ me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);};
+ me.onended=()=>{if(audio!==me)return;clearWatch();if(continuous&&i+1<ayahs.length)playAyah(i+1);else stopAudio();};
+ me.onerror=()=>next();
+ me.play().catch(err=>{if(audio!==me)return;
+  if(err&&err.name==="NotAllowedError"){clearWatch();
+   $("t-status").textContent="Your browser blocked sound. Tap the <span data-ic=play></span> beside a verse once.";
+   setTimeout(()=>$("t-status").textContent="",4500);stopAudio();return;}
+  next();});
+}
+roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
+ const i=+b.dataset.play;
+ if(playingIdx===i&&audio){$("p-toggle").click();return;}
+ continuous=false;listenLabel(false);$("t-listen").classList.remove("on");
+ playAyah(i);});
+$("t-listen").addEventListener("click",()=>{
+ if(continuous){stopAudio();return;}
+ if(!ayahs.length)return;
+ continuous=true;listenLabel(true);$("t-listen").classList.add("on");
+ playAyah(playingIdx>=0?playingIdx:0);});
+$("p-toggle").addEventListener("click",()=>{if(!audio)return;
+ if(paused){audio.play().catch(()=>{});paused=false;setToggle(true);}
+ else{clearWatch();audio.pause();paused=true;setToggle(false);}});
+$("p-next").addEventListener("click",()=>{if(playingIdx>=0&&playingIdx+1<ayahs.length)playAyah(playingIdx+1);});
+$("p-prev").addEventListener("click",()=>{if(playingIdx>0)playAyah(playingIdx-1);});
+$("p-stop").addEventListener("click",stopAudio);
+$("t-trans").addEventListener("click",()=>{transOn=!transOn;$("t-trans").classList.toggle("on",transOn);
+ document.querySelectorAll(".trans").forEach(p=>p.classList.toggle("hidden",!transOn));});
+$("t-lang").addEventListener("change",e=>{transEdition=e.target.value;if(cur)openSurah(cur,1);});
+
+/* ---------- boot ---------- */
+try{if(localStorage.getItem("noor-gates-view")==="list")setView(true);}catch(e){}
+renderGates("");
+const usp=new URLSearchParams(location.search);
+const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
+if(s0>=1&&s0<=114){aside.classList.add("folded");openSurah(s0,a0,false);}
+gatesLabel();
+/* quran-study.js is deferred, so it lands after this script: pick it up when it does */
+function studyReady(){if(!STUDY())return;renderGates($("gate-search").value);if(cur)mountStudy(cur);}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",studyReady,{once:true});
+else studyReady();
+/* the only global the page markup needs (inline onclick on gate buttons) */
+window.openSurah=openSurah;
+})();
+</script>
 </body>
 </html>
