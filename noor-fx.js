@@ -19,7 +19,7 @@ const UI_EN = {
   "m.madrasa":"The Classroom \u00b7 Madrasa",
   "m.dictionary": "The Encyclopedia of the Path","m.quran":"The Mushaf \u00b7 Study the Qur'an","m.arabic":"Learn Arabic \u00b7 The Letters","m.words":"The Words of the Path","m.health":"Prophetic Health","m.theology":"Theology \u00b7 The Branches","m.school":"The School \u00b7 Full Curriculum",
   "m.path":"The Path of Creation","m.prophets":"The 25 Prophets","m.companions":"The Companions","m.characters":"Characters","m.places":"Places","m.heroes":"Heroes of Islam","m.unseen":"The Unseen & the Mysteries",
-  "m.pillars":"The Five Pillars","m.hajj":"Hajj & Umrah","m.hajjplan":"Your Pilgrim Plan","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room",
+  "m.pillars":"The Five Pillars","m.hajj":"Hajj & Umrah","m.hajjplan":"Your Pilgrim Plan","m.begin":"Begin \u00b7 New Muslim","m.family":"The Family Room","m.marriage":"Marriage & the Home","m.teens":"For Teenagers",
   "m.protection": "Protection & the Light","m.ramadan":"Ramadan","m.eid":"The Two Eids","m.sermon":"The Last Sermon","m.soul":"The Journey of the Soul","m.mizan":"Two Lives",
   "m.stories":"The Hall of Stories","m.kidscodex":"The Kids' Codex","m.lanterns":"The Lantern Sky",
   "m.masjid":"The Masjid Toolbox","m.orgs":"For Schools & Organizations","m.give":"Give a Gift","m.feedback":"Corrections & Ideas","m.legal":"Terms & Transparency",
@@ -570,9 +570,22 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
         src = h === location.hostname ? "" : h;
       } else src = "direct";
     } catch (e) {}
-    var payload = JSON.stringify({ p: location.pathname, n: first, s: src });
+    var payload = JSON.stringify({ p: location.pathname, n: first, s: src, h: new Date().getHours() });
     if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([payload], { type: "application/json" }));
     else fetch("/api/beacon", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
+
+    /* how long the visit lasted, in whole seconds, sent once when the reader
+       leaves or first hides the tab. Aggregate only: no ID travels with it. */
+    var t0 = Date.now(), durSent = false;
+    function sendDur() {
+      if (durSent) return; durSent = true;
+      var secs = Math.round((Date.now() - t0) / 1000);
+      if (secs < 3 || secs > 7200) return;
+      var pl = JSON.stringify({ p: location.pathname, d: secs });
+      if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([pl], { type: "application/json" }));
+    }
+    addEventListener("pagehide", sendDur);
+    document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") sendDur(); });
   } catch (e) {}
 })();
 

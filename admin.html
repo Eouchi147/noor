@@ -127,6 +127,24 @@ select.fi option{background:#14100A;color:var(--parchment)}
 .tab:hover{color:var(--parchment)}
 .tab.on{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#241D12;border-color:transparent}
 .pane{display:none}
+/* traffic: collapsible sections, no fluff */
+.tsec{margin-top:1rem;border:1px solid rgba(255,254,247,.1);border-radius:16px;background:rgba(255,254,247,.02)}
+.tsec>summary{cursor:pointer;list-style:none;padding:.75rem 1rem;font-size:.9rem;font-weight:800;color:#FFFEF7;display:flex;align-items:center;gap:.6rem}
+.tsec>summary::-webkit-details-marker{display:none}
+.tsec>summary::before{content:"▸";color:#E9C86A;transition:transform .18s;font-size:.8rem}
+.tsec[open]>summary::before{transform:rotate(90deg)}
+.tsec>summary .ts-s{margin-inline-start:auto;font-size:.68rem;font-weight:600;color:rgba(255,254,247,.45)}
+.tsec>.panel,.tsec>p{margin:0 .8rem .8rem}
+.tsec>.panel+.panel{margin-top:.6rem}
+.ttab{width:100%;border-collapse:collapse;font-size:.76rem}
+.ttab th{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.4);text-align:end;padding:.3rem .45rem;font-weight:800}
+.ttab th:first-child{text-align:start}
+.ttab td{padding:.3rem .45rem;border-top:1px solid rgba(255,254,247,.06);text-align:end;color:rgba(255,254,247,.78);font-variant-numeric:tabular-nums}
+.ttab td:first-child{text-align:start;color:rgba(255,254,247,.55)}
+.hbar{display:flex;align-items:flex-end;gap:2px;height:5.2rem}
+.hbar i{flex:1;background:linear-gradient(180deg,#F4D46A,#C9A227);border-radius:3px 3px 0 0;min-height:2px;opacity:.85}
+.hlab{display:flex;justify-content:space-between;font-size:.6rem;color:rgba(255,254,247,.4);margin-top:.3rem}
+
 /* the dials: grouped, one row each, never a wall of unlabelled switches */
 .dgrp{margin:0 0 1.05rem}
 .dgrp>h3{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#E9C86A;margin:0 0 .45rem}
@@ -532,25 +550,47 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="tc"><div class="v" data-t="pp">·</div><div class="l">Pages per reader</div><div class="d" data-d="pp"></div></div>
 </div>
 
-<h2 class="sec">The last 30 days</h2>
+<details class="tsec" open>
+<summary>The last 30 days <span class="ts-s" id="ts-days"></span></summary>
 <div class="panel">
 <svg id="tchart" viewBox="0 0 600 170" preserveAspectRatio="none" aria-label="Readers over the last 30 days"></svg>
 <div style="display:flex;justify-content:space-between;font-size:.62rem;color:rgba(255,254,247,.42);margin-top:.35rem"><span id="t-a"></span><span id="t-peak" style="color:var(--gold-hi)"></span><span id="t-b"></span></div>
+<div id="t-daytable" style="margin-top:.8rem"></div>
 </div>
+</details>
 
-<div class="two" style="margin-top:.9rem">
-<div>
-<h2 class="sec">What brought them</h2>
+<details class="tsec" open>
+<summary>What brought them <span class="ts-s" id="ts-src"></span></summary>
 <div class="panel" id="t-src"><p class="muted">No sources counted yet.</p></div>
-</div>
-<div>
-<h2 class="sec">From where</h2>
-<div class="panel" id="t-cty"><p class="muted">No countries counted yet.</p></div>
-</div>
-</div>
+<p class="muted" style="margin:.4rem 0 0">Each arrival is counted once per person per day, so one reader opening ten rooms is one arrival, not ten.</p>
+</details>
 
-<h2 class="sec">Most read rooms</h2>
+<details class="tsec">
+<summary>From where <span class="ts-s" id="ts-cty"></span></summary>
+<div class="panel" id="t-cty"><p class="muted">No countries counted yet.</p></div>
+</details>
+
+<details class="tsec">
+<summary>Which rooms <span class="ts-s" id="ts-room"></span></summary>
 <div class="panel" id="t-room"><p class="muted">No rooms counted yet.</p></div>
+<div class="panel" style="margin-top:.6rem" id="t-dayrooms"><p class="muted">Room-by-day detail begins counting with this deploy.</p></div>
+</details>
+
+<details class="tsec">
+<summary>When in the day <span class="ts-s" id="ts-hh"></span></summary>
+<div class="panel">
+<div id="t-hours"><p class="muted">Hour-of-day counting begins with this deploy. Check back tomorrow.</p></div>
+<p class="muted" style="margin:.5rem 0 0">Each reader's own clock, 0 to 23. No identifier travels with it.</p>
+</div>
+</details>
+
+<details class="tsec">
+<summary>How long they stay <span class="ts-s" id="ts-dur"></span></summary>
+<div class="panel">
+<div id="t-dur"><p class="muted">Visit-length counting begins with this deploy. Check back tomorrow.</p></div>
+</div>
+<div class="panel" style="margin-top:.6rem" id="t-roomtime"><p class="muted">Time-per-room appears once at least three visits of a room have been measured.</p></div>
+</details>
 
 <h2 class="sec">The Lantern reads the numbers</h2>
 <div class="panel">
@@ -607,6 +647,35 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="out" id="mk-out"></div>
 </div>
 
+<h2 class="sec">The outreach studio</h2>
+<div class="panel">
+<div style="display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap">
+<div style="flex:1;min-width:16rem">
+<b style="font-size:.9rem">The Learning Map · a one-page gift</b>
+<p class="muted" style="margin:.35rem 0 .6rem;line-height:1.7">A self-contained infographic: what Islam is, the five pillars,
+the six articles, the two sources, and one quiet door to the Codex. Email-safe HTML (tables and inline
+styles, 600px), so it survives Gmail and Outlook. Paste it into a newsletter, attach it, or open the
+preview and screenshot it for image posts. It obeys the four laws above: it gives before it asks.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap">
+<button class="dgo" id="og-preview">Preview</button>
+<button class="ghost" id="og-copy">Copy HTML</button>
+<button class="ghost" id="og-dl">Download .html</button>
+</div>
+<p class="muted" id="og-msg" style="margin-top:.5rem"></p>
+</div>
+</div>
+<hr style="border:0;border-top:1px solid rgba(255,254,247,.08);margin:1rem 0">
+<div>
+<b style="font-size:.9rem">Write my week</b>
+<p class="muted" style="margin:.35rem 0 .6rem;line-height:1.7">One click, seven ready-to-paste pieces, Monday to Sunday, each on a different
+channel and a different room of the house: Reddit, a Facebook group, X, Telegram, a WhatsApp line, one masjid email, and one
+answer to a question people actually search. Ten minutes a day to paste them is the whole job.
+If the free chain writes poorly, turn on <i>Marketing may use a stronger paid model</i> in Controls.</p>
+<button class="dgo" id="wk-go">Write my week</button>
+<span class="muted" id="wk-state" style="margin-inline-start:.6rem"></span>
+<div id="wk-out" style="margin-top:.8rem"></div>
+</div>
+</div>
 <h2 class="sec">The pipeline · ten rows a day</h2>
 <div class="panel">
 <table class="pipe"><thead><tr><th>Masjid / school / business</th><th>Sent</th><th>Replied</th><th>Tried demo</th><th>Follow-up</th><th>YES</th><th></th></tr></thead><tbody id="pipe-b"></tbody></table>
@@ -843,7 +912,7 @@ $("v-go").addEventListener("click",function(){
     setTimeout(function(){box.querySelectorAll(".tr i").forEach(function(i,k){setTimeout(function(){i.style.width=i.getAttribute("data-w")+"%"},k*55)})},60);
   }
   var FLAG={reddit:"Reddit",facebook:"Facebook",instagram:"Instagram",x:"X",telegram:"Telegram",whatsapp:"WhatsApp",youtube:"YouTube",tiktok:"TikTok",google:"Google search",search:"Other search",ai:"AI assistants",linkedin:"LinkedIn",pinterest:"Pinterest",forum:"Islamic forums",email:"Email",direct:"Typed or saved"};
-  var ROOMN={home:"Home",quran:"Qur'an",prophets:"Prophets",madrasa:"Madrasa",school:"For schools",kids:"Kids' Codex",arabic:"Letters of Light",pillars:"Five Pillars",give:"Give page",license:"Licensing",sponsor:"Sponsor",health:"Health",begin:"Begin",theology:"Theology",legal:"Legal",family:"Family Room",hajj:"Hajj & Umrah",hajjplan:"Pilgrim Planner",ramadan:"Ramadan",eid:"The Two Eids",heroes:"Heroes of Islam",stories:"Hall of Stories",unseen:"The Unseen",sermon:"Last Sermon",soul:"Journey of the Soul",masjid:"Masjid Toolbox",lanterns:"Lantern Sky",feedback:"Corrections",other:"Other"};
+  var ROOMN={home:"Home",quran:"Qur'an",prophets:"Prophets",madrasa:"Madrasa",school:"For schools",kids:"Kids' Codex",arabic:"Letters of Light",pillars:"Five Pillars",give:"Give page",license:"Licensing",sponsor:"Sponsor",health:"Health",begin:"Begin",theology:"Theology",legal:"Legal",family:"Family Room",hajj:"Hajj & Umrah",hajjplan:"Pilgrim Planner",ramadan:"Ramadan",eid:"The Two Eids",heroes:"Heroes of Islam",stories:"Hall of Stories",unseen:"The Unseen",sermon:"Last Sermon",soul:"Journey of the Soul",masjid:"Masjid Toolbox",lanterns:"Lantern Sky",feedback:"Corrections",dictionary:"Encyclopedia",words:"Words of the Path",protection:"Protection",latif:"The Unseen · names",characters:"Characters",companions:"Companions",places:"Places",marriage:"Marriage & the Home",teens:"For Teenagers",other:"Other"};
 
   function chart(days){
     var svg=$("tchart"); if(!days.length){svg.innerHTML="";return}
@@ -891,7 +960,63 @@ $("v-go").addEventListener("click",function(){
     bars($("t-src"),v.sources||[],people,"green",function(r){return FLAG[r.s]||r.s});
     bars($("t-cty"),v.countries||[],people,"blue",function(r){return r.c});
     bars($("t-room"),v.rooms||[],views,"",function(r){return ROOMN[r.r]||r.r});
+
+    /* summary chips on each collapsed section, so nothing needs opening to scan */
+    function chip(id,t){var e=$(id); if(e) e.textContent=t;}
+    chip("ts-days", people?(people.toLocaleString()+" readers · "+views.toLocaleString()+" views"):"");
+    chip("ts-src", (v.sources&&v.sources.length)?(v.sources[0]&&(FLAG[v.sources[0].s]||v.sources[0].s)+" leads"):"");
+    chip("ts-cty", (v.countries&&v.countries.length)?(v.countries.length+" countries"):"");
+    chip("ts-room", (v.rooms&&v.rooms.length)?((ROOMN[v.rooms[0].r]||v.rooms[0].r)+" leads"):"");
+
+    /* day table: date · readers · views · average stay */
+    var durByDay={}; ((v.duration&&v.duration.days)||[]).forEach(function(d){durByDay[d.date]=d});
+    var rows=days.slice(-14).reverse().map(function(d){
+      var du=durByDay[d.date];
+      return "<tr><td>"+d.date+"</td><td>"+(d.people||0)+"</td><td>"+(d.views||0)+"</td><td>"+
+        (du&&du.n?fmtDur(du.avg):"·")+"</td></tr>";
+    }).join("");
+    $("t-daytable").innerHTML='<table class="ttab"><thead><tr><th>Day</th><th>Readers</th><th>Views</th><th>Avg stay</th></tr></thead><tbody>'+rows+"</tbody></table>";
+
+    /* hours 0-23 */
+    var hh=v.hours||[]; var hmax=Math.max.apply(null,hh.concat([0]));
+    if(hmax>0){
+      $("t-hours").innerHTML='<div class="hbar">'+hh.map(function(n,i){
+        return '<i style="height:'+Math.max(3,Math.round(n/hmax*100))+'%" title="'+i+':00 · '+n+' views"></i>';
+      }).join("")+'</div><div class="hlab"><span>midnight</span><span>6</span><span>noon</span><span>18</span><span>23</span></div>';
+      var top=hh.indexOf(hmax);
+      chip("ts-hh","busiest around "+top+":00");
+    }
+
+    /* how long they stay */
+    var du=v.duration;
+    if(du&&du.n>0){
+      var B=du.buckets, tot=B.b1+B.b2+B.b3+B.b4||1;
+      function brow(lab,n){var pc=Math.round(n/tot*100);
+        return '<div class="brow"><span class="nm">'+lab+'</span><span class="tr"><i style="width:'+pc+'%"></i></span><span class="vv">'+pc+"%</span></div>";}
+      $("t-dur").innerHTML='<p style="margin:0 0 .6rem;font-size:.86rem"><b style="color:#F4D46A">'+fmtDur(du.avg)+
+        "</b> average · "+du.n.toLocaleString()+" measured visits</p>"+
+        brow("under 30 seconds",B.b1)+brow("half a minute to 2",B.b2)+brow("2 to 10 minutes",B.b3)+brow("over 10 minutes",B.b4);
+      chip("ts-dur",fmtDur(du.avg)+" average");
+    }
+    /* time per room */
+    if(v.roomTime&&v.roomTime.length){
+      $("t-roomtime").innerHTML='<table class="ttab"><thead><tr><th>Room</th><th>Visits</th><th>Avg time</th></tr></thead><tbody>'+
+        v.roomTime.map(function(r){return "<tr><td>"+esc(ROOMN[r.r]||r.r)+"</td><td>"+r.n+"</td><td>"+fmtDur(r.avg)+"</td></tr>"}).join("")+
+        "</tbody></table>";
+    }
+    /* rooms day by day: last 7 counted days, top 6 rooms */
+    var dr=v.dayRooms||[];
+    if(dr.length){
+      var agg={}; dr.forEach(function(d){for(var r in d.rooms)agg[r]=(agg[r]||0)+d.rooms[r]});
+      var cols=Object.keys(agg).sort(function(a,b){return agg[b]-agg[a]}).slice(0,6);
+      var body=dr.slice(-7).reverse().map(function(d){
+        return "<tr><td>"+d.date.slice(5)+"</td>"+cols.map(function(c){return "<td>"+(d.rooms[c]||"·")+"</td>"}).join("")+"</tr>";
+      }).join("");
+      $("t-dayrooms").innerHTML='<table class="ttab"><thead><tr><th>Day</th>'+cols.map(function(c){return "<th>"+esc(ROOMN[c]||c)+"</th>"}).join("")+
+        "</tr></thead><tbody>"+body+"</tbody></table>";
+    }
   }
+  function fmtDur(s){ if(!s)return "0s"; if(s<60)return s+"s"; var m=Math.floor(s/60); return m+"m "+(s%60)+"s"; }
 
   function load(){
     fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){
@@ -1470,6 +1595,134 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     if(t && !loaded) load();
   });
   window.NOOR_DIALS={load:load};
+})();
+
+/* ---------------- the outreach studio ---------------- */
+(function(){
+  var G="#F4D46A", GD="#C9A227", INK="#14100A", PAPER="#FFFEF7";
+  function card(ar,en,sub,body){
+    return '<td width="33%" valign="top" style="padding:0 4px">'+
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.25);border-radius:12px"><tr><td style="padding:14px 12px;text-align:center">'+
+    '<div style="font-size:26px;line-height:1.3;color:'+G+'">'+ar+'</div>'+
+    '<div style="font:800 15px Georgia,serif;color:'+PAPER+';margin-top:2px">'+en+'</div>'+
+    '<div style="font:700 9px Arial,sans-serif;letter-spacing:2px;color:'+GD+';margin-top:2px">'+sub+'</div>'+
+    '<div style="font:12px/1.6 Arial,sans-serif;color:rgba(255,254,247,.72);margin-top:8px">'+body+'</div>'+
+    '</td></tr></table></td>';
+  }
+  function sec(n,kick,title){
+    return '<tr><td style="padding:26px 24px 4px">'+
+    '<div style="font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+GD+'">'+n+' — '+kick+'</div>'+
+    '<div style="font:800 20px Georgia,serif;color:'+PAPER+';margin-top:4px">'+title+'</div>'+
+    '</td></tr>';
+  }
+  function row(n,ar,en,body,hi){
+    return '<tr><td style="padding:5px 24px">'+
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:'+(hi?'rgba(244,212,106,.12)':'#1a2138')+';border:1px solid rgba(244,212,106,'+(hi?'.55':'.22')+');border-radius:10px"><tr>'+
+    '<td width="44" style="padding:12px 0 12px 14px;font:800 16px Georgia,serif;color:'+G+'" valign="top">'+n+'</td>'+
+    '<td style="padding:12px 14px 12px 0"><span style="font:800 14px Georgia,serif;color:'+PAPER+'">'+en+
+    '</span> <span style="font-size:15px;color:'+G+'">&nbsp;'+ar+'</span>'+
+    '<div style="font:12px/1.6 Arial,sans-serif;color:rgba(255,254,247,.7);margin-top:3px">'+body+'</div></td>'+
+    '</tr></table></td></tr>';
+  }
+  function art(en,body){
+    return '<td width="50%" valign="top" style="padding:4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.22);border-radius:10px"><tr><td style="padding:11px 13px">'+
+    '<div style="font:800 13px Georgia,serif;color:'+PAPER+'">'+en+'</div>'+
+    '<div style="font:11px/1.55 Arial,sans-serif;color:rgba(255,254,247,.68);margin-top:3px">'+body+'</div>'+
+    '</td></tr></table></td>';
+  }
+  function learningMap(){
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
+    '<title>Islam: Light Upon Light · a free learning map</title></head>'+
+    '<body style="margin:0;padding:0;background:#0B1020">'+
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0B1020"><tr><td align="center" style="padding:26px 10px">'+
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">'+
+    '<tr><td align="center" style="padding:0 24px"><div style="display:inline-block;border:1px solid rgba(244,212,106,.45);border-radius:999px;padding:6px 16px;font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+G+'">FREE LEARNING MAP · NOORCODEX.COM</div></td></tr>'+
+    '<tr><td align="center" style="padding:22px 24px 0"><div style="font-size:54px;line-height:1.2;color:'+G+'">&#1606;&#1615;&#1608;&#1585;</div>'+
+    '<div style="font:800 10px Arial,sans-serif;letter-spacing:4px;color:rgba(255,254,247,.55);margin-top:4px">LIGHT UPON LIGHT</div></td></tr>'+
+    '<tr><td align="center" style="padding:14px 24px 0"><div style="font:800 30px Georgia,serif;color:'+PAPER+'">Islam: <span style="color:'+G+'">Light Upon Light</span></div>'+
+    '<div style="font:13px Georgia,serif;color:rgba(255,254,247,.6);margin-top:6px">&#1606;&#1615;&#1608;&#1585;&#1612; &#1593;&#1614;&#1604;&#1614;&#1609;&#1648; &#1606;&#1615;&#1608;&#1585;&#1612; — Qur&rsquo;an 24:35</div>'+
+    '<div style="font:14px/1.7 Arial,sans-serif;color:rgba(255,254,247,.78);margin-top:12px;max-width:440px">Islam means peace through surrender to the One who is Light itself. Here is the whole map, on one page.</div></td></tr>'+
+    sec('01','THE CORE','What Islam actually is')+
+    '<tr><td style="padding:10px 20px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>'+
+    card('&#1573;&#1587;&#1604;&#1575;&#1605;','Islam','SUBMISSION','What you do: the body in worship. From the root of salam, peace.')+
+    card('&#1573;&#1610;&#1605;&#1575;&#1606;','Iman','FAITH','What you believe: the heart&rsquo;s conviction in the unseen.')+
+    card('&#1573;&#1581;&#1587;&#1575;&#1606;','Ihsan','EXCELLENCE','To worship as if you see Him; for He surely sees you.')+
+    '</tr></table></td></tr>'+
+    sec('02','THE PRACTICE','The five pillars')+
+    row('&#1633;','&#1588;&#1614;&#1607;&#1614;&#1575;&#1583;&#1614;&#1577;','Shahadah','The testimony: no god but Allah, and Muhammad &#65018; is His Messenger.',false)+
+    row('&#1634;','&#1589;&#1614;&#1604;&#1614;&#1575;&#1577;','Salah','Five prayers that pin the day to its Maker.',true)+
+    row('&#1635;','&#1586;&#1614;&#1603;&#1614;&#1575;&#1577;','Zakat','2.5% of held wealth, every year, owed to those in need.',false)+
+    row('&#1636;','&#1589;&#1614;&#1608;&#1605;','Sawm','The fast of Ramadan: hunger that teaches mercy.',false)+
+    row('&#1637;','&#1581;&#1614;&#1580;','Hajj','The pilgrimage, once in a life, for those who are able.',false)+
+    sec('03','THE BELIEF','The six articles of faith')+
+    '<tr><td style="padding:8px 20px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">'+
+    '<tr>'+art('Allah','One God, no partner, no image, no equal.')+art('The Angels','Made of light, never disobeying.')+'</tr>'+
+    '<tr>'+art('The Books','Revelation across the ages, sealed by the Qur&rsquo;an.')+art('The Messengers','From Adam to Muhammad &#65018;, one call.')+'</tr>'+
+    '<tr>'+art('The Last Day','Every soul answers; nothing is lost.')+art('The Decree','Nothing escapes His knowledge or His mercy.')+'</tr>'+
+    '</table></td></tr>'+
+    sec('04','THE SOURCE','Where it all comes from')+
+    '<tr><td align="center" style="padding:10px 24px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.3);border-radius:12px"><tr><td align="center" style="padding:16px 14px">'+
+    '<div style="font-size:24px;color:'+G+'">&#1602;&#1614;&#1604;&#1618;&#1576;</div>'+
+    '<div style="font:12px/1.65 Arial,sans-serif;color:rgba(255,254,247,.75);margin-top:6px;max-width:420px">The Qur&rsquo;an, the preserved speech of God, and the Sunnah, the lived example of His Messenger &#65018;. Everything else is commentary.</div>'+
+    '</td></tr></table></td></tr>'+
+    sec('05','THE DOOR','Why NOOR Codex')+
+    '<tr><td style="padding:8px 24px 0"><div style="font:13px/1.8 Arial,sans-serif;color:rgba(255,254,247,.75)">'+
+    '&#10022;&nbsp; A whole library: the story in order, the 25 prophets, an encyclopedia of 500+ words, tools for every masjid.<br>'+
+    '&#10022;&nbsp; Free forever. No ads, no trackers, no accounts.<br>'+
+    '&#10022;&nbsp; In your language: 21 doors and growing.</div></td></tr>'+
+    '<tr><td align="center" style="padding:24px"><a href="https://noorcodex.com" style="display:inline-block;background:'+G+';color:'+INK+';font:800 14px Arial,sans-serif;text-decoration:none;border-radius:999px;padding:13px 30px">Open the Codex &rarr;</a>'+
+    '<div style="font:10px Arial,sans-serif;letter-spacing:2px;color:rgba(255,254,247,.4);margin-top:12px">NOORCODEX.COM · FREE FOREVER · SHARE THIS PAGE</div></td></tr>'+
+    '</table></td></tr></table></body></html>';
+  }
+  var msg=document.getElementById('og-msg');
+  function say(t){ if(msg){ msg.textContent=t; setTimeout(function(){ if(msg.textContent===t) msg.textContent=''; },4000);} }
+  var bp=document.getElementById('og-preview');
+  if(bp) bp.onclick=function(){
+    var u=URL.createObjectURL(new Blob([learningMap()],{type:'text/html'}));
+    window.open(u,'_blank'); setTimeout(function(){URL.revokeObjectURL(u);},60000);
+  };
+  var bc=document.getElementById('og-copy');
+  if(bc) bc.onclick=function(){
+    navigator.clipboard.writeText(learningMap()).then(function(){say('Copied. Paste into a newsletter or an email that accepts HTML.');},
+      function(){say('The browser refused the clipboard. Use Download instead.');});
+  };
+  var bd=document.getElementById('og-dl');
+  if(bd) bd.onclick=function(){
+    var u=URL.createObjectURL(new Blob([learningMap()],{type:'text/html'}));
+    var a=document.createElement('a'); a.href=u; a.download='noor-learning-map.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(u);},5000); say('Saved as noor-learning-map.html.');
+  };
+})();
+
+/* ---------------- write my week ---------------- */
+(function(){
+  var go=document.getElementById('wk-go'); if(!go) return;
+  var st=document.getElementById('wk-state'), out=document.getElementById('wk-out');
+  function esc2(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  go.onclick=function(){
+    go.disabled=true; st.textContent='Writing… this is one large request and can take a minute.'; out.innerHTML='';
+    api('/api/marketing',{kind:'week'}).then(function(r){
+      go.disabled=false;
+      if(!r.ok){ st.textContent=(r.j&&r.j.error)||'The Lantern is dark. Check OPENROUTER_API_KEY.'; return; }
+      st.textContent='';
+      var wk=(r.j&&r.j.week)||[];
+      out.innerHTML=wk.map(function(p,i){
+        return '<div class="panel" style="margin-top:.6rem"><div style="display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap">'+
+          '<b style="color:#F4D46A">'+esc2(p.day)+'</b><span style="font-size:.72rem;color:rgba(255,254,247,.55)">'+esc2(p.channel)+
+          (p.leads_with?' · leads with '+esc2(p.leads_with):'')+'</span>'+
+          '<button class="ghost" style="margin-inline-start:auto" data-wk="'+i+'">Copy</button></div>'+
+          (p.title?'<div style="font-weight:800;margin-top:.4rem">'+esc2(p.title)+'</div>':'')+
+          '<div style="font-size:.8rem;line-height:1.75;color:rgba(255,254,247,.78);white-space:pre-wrap;margin-top:.35rem">'+esc2(p.body)+'</div></div>';
+      }).join('');
+      out.querySelectorAll('[data-wk]').forEach(function(b){
+        b.onclick=function(){
+          var p=wk[+b.dataset.wk];
+          navigator.clipboard.writeText((p.title?p.title+'\n\n':'')+p.body).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},2000);});
+        };
+      });
+    }).catch(function(){ go.disabled=false; st.textContent='Could not reach the server.'; });
+  };
 })();
 </script>
 </body>
