@@ -96,7 +96,8 @@
   function load(code) {
     if (code === "en") return Promise.resolve(null);
     if (CACHE[code]) return Promise.resolve(CACHE[code]);
-    return fetch("/i18n/text/" + code + ".json", { cache: "force-cache" })
+    /* PACK_V: bump with every release that ships new packs, or readers keep stale translations forever */
+    return fetch("/i18n/text/" + code + ".json?v=82", { cache: "force-cache" })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (!j) return null;
