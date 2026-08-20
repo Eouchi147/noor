@@ -60,6 +60,11 @@ export const DIALS = {
                          g: "The house", n: "A notice across the top",
                          h: "Plain text only, 160 characters. Empty means no notice. For an outage or a closure, not for marketing." },
 
+  /* ---- traffic ------------------------------------------------------- */
+  "traffic.duration": { t: "bool", def: true,
+                         g: "Traffic", n: "Measure how long visits last",
+                         h: "Aggregate seconds only, no identifier travels with them. Off stops collection on the next request." },
+
   /* ---- the desk ------------------------------------------------------ */
   "inbox.open":        { t: "bool", def: true, pub: true,
                          g: "The desk", n: "Readers may send corrections",
@@ -67,6 +72,9 @@ export const DIALS = {
   "marketing.daily":   { t: "int", env: "MARKETING_PER_DAY", def: 10, min: 0, max: 60,
                          g: "The desk", n: "Drafts written a day",
                          h: "The pipeline stops at this many, so a runaway loop cannot spend the whole month." },
+  "marketing.paid":    { t: "bool", def: false,
+                         g: "The desk", n: "Marketing may use a stronger paid model",
+                         h: "On lets outreach drafts use a low-cost paid model through your OpenRouter key when the free chain writes poorly. Off keeps every draft free." },
 };
 
 function envDefault(d) {

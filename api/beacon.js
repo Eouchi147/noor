@@ -9,6 +9,7 @@
 
 import net from "node:net";
 import tls from "node:tls";
+import { settings } from "./settings.js";
 
 /* ---------- the store, whoever provides it ----------
    Reads readers' counts from either an Upstash-style REST endpoint
@@ -123,7 +124,7 @@ const ROOMS = {
   "latif": "latif", "begin": "begin", "kids": "kids", "arabic": "arabic", "pillars": "pillars", "license": "license", "school": "school", "madrasa": "madrasa", "kids/cradle": "kids",
   "kids/letters": "kids", "donate": "give",
   "sponsor": "sponsor", "legal": "legal",
-  "family": "family", "protection": "protection", "dictionary": "dictionary", "heroes": "heroes", "feedback": "feedback",
+  "family": "family", "protection": "protection", "marriage": "marriage", "teens": "teens", "dictionary": "dictionary", "heroes": "heroes", "feedback": "feedback",
   "hajj": "hajj", "hajj-plan": "hajjplan", "ramadan": "ramadan", "eid": "eid",
   "stories": "stories", "stories/index": "stories",
   "unseen": "unseen", "sermon": "sermon", "soul": "soul",
@@ -175,8 +176,37 @@ export default async function handler(req, res) {
   const cc = String(req.headers["x-vercel-ip-country"] || "??").slice(0, 2).toUpperCase();
   let room = String(body.p || "").replace(/^\/+|\.html$/g, "").split("/")[0].toLowerCase();
   room = ROOMS[room] !== undefined ? ROOMS[room] : (room && /^[a-z0-9-]{1,20}$/.test(room) ? "other" : "home");
+
+  /* ---- the second ping: how long the visit lasted -------------------
+     Aggregate seconds only, in one hash per day and one per month/room,
+     so the owner can see how long people stay and where. The dial
+     traffic.duration switches this off without a deploy. */
+  const dur = parseInt(body.d, 10);
+  if (Number.isFinite(dur) && dur > 0) {
+    let dial = null;
+    try { dial = await settings(); } catch {}
+    if (dial && dial["traffic.duration"] === false) return res.status(204).end();
+    const secs = Math.min(7200, dur);
+    const bucket = secs < 30 ? "b1" : secs < 120 ? "b2" : secs < 600 ? "b3" : "b4";
+    try {
+      await kv([
+        ["HINCRBY", "nvh:" + day + ":dur", "secs", String(secs)],
+        ["HINCRBY", "nvh:" + day + ":dur", "n", "1"],
+        ["HINCRBY", "nvh:" + day + ":dur", bucket, "1"],
+        ["EXPIRE", "nvh:" + day + ":dur", "8000000"],
+        ["HINCRBY", "nmh:" + month + ":rt", "s:" + room, String(secs)],
+        ["HINCRBY", "nmh:" + month + ":rt", "n:" + room, "1"],
+        ["EXPIRE", "nmh:" + month + ":rt", "35000000"]
+      ]);
+    } catch {}
+    return res.status(204).end();
+  }
+
   const firstToday = body.n === 1;
   const src = sourceOf(body.s);
+  /* the visitor's own hour of day, 0-23, so the owner can see WHEN people
+     read. Sent by the page, never derived from anything identifying. */
+  const hour = parseInt(body.h, 10);
 
   const cmds = [
     ["INCR", "nv:" + day + ":views"],
@@ -196,6 +226,13 @@ export default async function handler(req, res) {
     cmds.push(["INCR", "nv:" + day + ":people"]);
     cmds.push(["EXPIRE", "nv:" + day + ":people", "8000000"]);
   }
+  /* by hour and by room, per day, in one hash each */
+  if (Number.isFinite(hour) && hour >= 0 && hour <= 23) {
+    cmds.push(["HINCRBY", "nvh:" + day + ":hh", String(hour), "1"]);
+    cmds.push(["EXPIRE", "nvh:" + day + ":hh", "8000000"]);
+  }
+  cmds.push(["HINCRBY", "nvh:" + day + ":rr", room, "1"]);
+  cmds.push(["EXPIRE", "nvh:" + day + ":rr", "8000000"]);
   try { await kv(cmds); } catch {}
   return res.status(204).end();
 }

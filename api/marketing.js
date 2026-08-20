@@ -10,6 +10,7 @@
 // Nothing here ever names the owner. The project speaks; the keeper stays unseen.
 
 import crypto from "crypto";
+import { settings } from "./settings.js";
 import { modelChain, isFree, allowPaid } from "./_models.js";
 
 function verify(cookieHeader, secret) {
@@ -25,6 +26,9 @@ function verify(cookieHeader, secret) {
 
 /* the chain lives in api/_models.js now, free only unless paid is allowed */
 const MODEL_CHAIN = () => modelChain();
+/* strong low-cost paid models, used ONLY when the marketing.paid dial is on;
+   an unknown name simply fails through to the free chain */
+const PAID_FIRST = ["deepseek/deepseek-chat", "openai/gpt-4o-mini"];
 
 /* ---------- what the house actually is (facts the AI may use) ---------- */
 const HOUSE = [
@@ -82,6 +86,10 @@ const SHAPES = {
     hint: "You are handed the last 30 days of traffic for the site. Read it like an honest advisor who wants the house to make money without ever betraying its four laws. Say what is actually working and should be doubled, what is weak and should be fixed, and the single next action for tomorrow. Be concrete and quantitative: name the actual rooms, countries and sources in the numbers. If the numbers are too small to conclude anything, say exactly that rather than inventing a pattern, and say what volume would make them meaningful. Never flatter.",
     json: '{"headline":"...","verdict":"...","push":[{"what":"...","why":"..."}],"fix":[{"what":"...","why":"..."}],"next":"..."}'
   },
+  week: {
+    hint: "Write a full week of shareable pieces, seven of them, one per day Monday to Sunday. Vary the channel across the week: Reddit post, Facebook group post, X post, Telegram message, WhatsApp forward line, an email to a masjid or school, and one answer-style piece for a question people actually search (\"what is qadr\", \"how to pray\", \"who was Bilal\"). Each piece must stand on a DIFFERENT named thing from the house facts, give real value on its own, and carry at most one link. Each is ready to paste with nothing to fill in.",
+    json: '{"week":[{"day":"Mon","channel":"...","title":"...","body":"...","leads_with":"..."}]}'
+  },
   angle: {
     hint: "Give distinct campaign angles for the topic named. Each angle is one honest, specific thing about the Codex that a particular audience would find genuinely useful, plus where to say it and the one true sentence that carries it. No slogans, no hype, no invented claims.",
     json: '{"angles":[{"who":"...","angle":"...","where":"...","line":"..."}]}'
@@ -118,11 +126,15 @@ export default async function handler(req, res) {
     body.stats ? "THE NUMBERS, last 30 days, as JSON:\n" + cut(typeof body.stats === "string" ? body.stats : JSON.stringify(body.stats), 3000) : "",
     "",
     shape.hint,
-    "Return between 2 and 4 options." + (kind === "angle" ? " Return 5 angles." : ""),
+    (kind === "week" ? "Return exactly 7 pieces, Monday to Sunday." : "Return between 2 and 4 options." + (kind === "angle" ? " Return 5 angles." : "")),
     "Reply with JSON only, no prose around it, shaped exactly: " + shape.json
   ].filter(Boolean).join("\n");
 
-  const models = MODEL_CHAIN();
+  let models = MODEL_CHAIN();
+  try {
+    const dial = await settings();
+    if (dial && dial["marketing.paid"] === true) models = PAID_FIRST.concat(models);
+  } catch {}
   let raw = "";
   for (const model of models) {
     try {
@@ -136,7 +148,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           model,
-          max_tokens: 1600,
+          max_tokens: kind === "week" ? 3400 : 1600,
           temperature: 0.65,
           messages: [
             { role: "system", content: DOCTRINE + "\n\nWHAT THE HOUSE ACTUALLY IS, use only these facts:\n" + HOUSE },
@@ -163,6 +175,14 @@ export default async function handler(req, res) {
   const LEAK = /\[(your|my|the founder|name|city|phone|company)[^\]]*\]/gi;
   const scrub = s => clean(s).replace(LEAK, "The NOOR Codex team").replace(/\s{3,}/g, "\n\n");
 
+  if (kind === "week") {
+    const week = (Array.isArray(parsed.week) ? parsed.week : []).slice(0, 7).map(p => ({
+      day: cut(p.day, 10), channel: cut(p.channel, 40), title: scrub(cut(p.title, 140)),
+      body: scrub(cut(p.body, 2200)), leads_with: cut(p.leads_with, 80)
+    }));
+    if (!week.length) return res.status(502).json({ error: "the week came back empty, try again" });
+    return res.status(200).json({ kind, week });
+  }
   if (kind === "read") {
     const arr = x => (Array.isArray(x) ? x : []).slice(0, 5).map(o => ({
       what: cut(o && o.what, 140), why: cut(o && o.why, 260)

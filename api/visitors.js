@@ -147,6 +147,24 @@ export default async function handler(req, res) {
       ["MGET", ...peopleKeys],
       ...(dimKeys.length ? [["MGET", ...dimKeys]] : [])
     ]);
+    /* the finer grain: hour-of-day, visit length, per-day rooms, and how
+       long each room holds a reader. All hashes, all aggregate. */
+    const hashes = await kv([
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":hh"]),
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":dur"]),
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":rr"]),
+      ...months.map(m => ["HGETALL", "nmh:" + m + ":rt"])
+    ]).catch(() => []);
+    function toObj(x) {
+      if (!x) return {};
+      if (Array.isArray(x)) { const o = {}; for (let i = 0; i + 1 < x.length; i += 2) o[x[i]] = parseInt(x[i + 1], 10) || 0; return o; }
+      const o = {}; for (const k of Object.keys(x)) o[k] = parseInt(x[k], 10) || 0; return o;
+    }
+    const N = days.length;
+    const hh = (hashes.slice(0, N) || []).map(toObj);
+    const du = (hashes.slice(N, 2 * N) || []).map(toObj);
+    const rr = (hashes.slice(2 * N, 3 * N) || []).map(toObj);
+    const rt = (hashes.slice(3 * N) || []).map(toObj);
     const views = (values[0] || []).map(x => parseInt(x, 10) || 0);
     const people = (values[1] || []).map(x => parseInt(x, 10) || 0);
     const dims = dimKeys.length ? (values[2] || []).map(x => parseInt(x, 10) || 0) : [];
@@ -163,6 +181,31 @@ export default async function handler(req, res) {
       else if (m[1] === "s") sAgg[m[2]] = (sAgg[m[2]] || 0) + dims[i];
       else rAgg[m[2]] = (rAgg[m[2]] || 0) + dims[i];
     });
+    /* hours 0-23, summed over the window */
+    out.hours = Array.from({ length: 24 }, (_, h) => hh.reduce((t, d) => t + (d[h] || 0), 0));
+    /* visit length: totals, four buckets, and a per-day average */
+    const dtot = { secs: 0, n: 0, b1: 0, b2: 0, b3: 0, b4: 0 };
+    du.forEach(d => { for (const k of Object.keys(dtot)) dtot[k] += d[k] || 0; });
+    out.duration = {
+      n: dtot.n, avg: dtot.n ? Math.round(dtot.secs / dtot.n) : 0,
+      buckets: { b1: dtot.b1, b2: dtot.b2, b3: dtot.b3, b4: dtot.b4 },
+      days: days.map((d, i) => ({ date: d, n: du[i].n || 0, avg: du[i].n ? Math.round((du[i].secs || 0) / du[i].n) : 0 }))
+    };
+    /* which rooms, day by day (only days that counted anything) */
+    out.dayRooms = days.map((d, i) => ({ date: d, rooms: rr[i] })).filter(x => Object.keys(x.rooms).length);
+    /* how long each room holds a reader, over the window months */
+    const rtAgg = {};
+    rt.forEach(h => {
+      for (const k of Object.keys(h)) {
+        const m2 = k.match(/^(s|n):(.+)$/); if (!m2) continue;
+        (rtAgg[m2[2]] = rtAgg[m2[2]] || { s: 0, n: 0 })[m2[1]] += h[k];
+      }
+    });
+    out.roomTime = Object.entries(rtAgg)
+      .filter(([, v]) => v.n >= 3)
+      .map(([r, v]) => ({ r, n: v.n, avg: Math.round(v.s / v.n) }))
+      .sort((a, b) => b.n - a.n).slice(0, 16);
+
     out.countries = Object.entries(cAgg).map(([k, v]) => ({ c: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 20);
     out.rooms = Object.entries(rAgg).map(([k, v]) => ({ r: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 14);
     out.sources = Object.entries(sAgg).map(([k, v]) => ({ s: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 14);
