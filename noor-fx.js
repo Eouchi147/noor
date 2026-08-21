@@ -756,6 +756,16 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     var sheet = document.getElementById("nav-sheet");
     if (sheet && sheet.parentNode !== document.body) document.body.appendChild(sheet);
     var burger = document.getElementById("nav-burger");
+  /* Home-screen installs on older iOS do not answer the display-mode query,
+     but they do set navigator.standalone. One class on <html> lets the CSS
+     reserve the notch either way. */
+  try {
+    if (window.navigator.standalone === true ||
+        (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)) {
+      document.documentElement.classList.add("standalone");
+    }
+  } catch (e) { /* the page is correct without it */ }
+
     if (burger) burger.addEventListener("click", function () {
       var open = document.body.classList.toggle("sheet-open");
       burger.setAttribute("aria-expanded", open ? "true" : "false");

@@ -44,7 +44,16 @@ code{background:rgba(255,254,247,.08);padding:.1rem .35rem;border-radius:6px;fon
 .stat .l{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.5);margin-top:.15rem}
 h2.sec{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:1.6rem 0 .7rem}
 .panel{background:rgba(255,254,247,.04);border:1px solid rgba(255,254,247,.1);border-radius:16px;padding:1rem 1.1rem}
+/* A wide table on a narrow phone used to push the whole console sideways:
+   the day-by-room grid has seven columns and no phone is that wide. The table
+   keeps its own width and scrolls inside its panel instead, so the page never
+   moves and no column is squeezed into a vertical stack of letters. */
+.panel{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:.78rem}
+@media (max-width:44rem){
+  table{width:auto;min-width:100%}
+  th,td{white-space:nowrap}
+}
 th{text-align:start;color:rgba(255,254,247,.45);font-weight:600;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .5rem;border-bottom:1px solid rgba(255,254,247,.1)}
 td{padding:.5rem;border-bottom:1px solid rgba(255,254,247,.05);color:rgba(255,254,247,.8)}
 .pill{display:inline-block;border-radius:999px;padding:.1rem .5rem;font-size:.62rem;font-weight:700}

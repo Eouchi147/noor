@@ -47,7 +47,10 @@ body.final .veil{opacity:1}
 .crescent{position:fixed;top:12px;right:14px;width:64px;z-index:0;pointer-events:none;filter:drop-shadow(0 0 16px rgba(233,200,106,.45));opacity:.95}
 
 /* header */
-header{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 2px;max-width:660px;margin:0 auto}
+header{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(14px + var(--safetop,0px)) 16px 2px;max-width:660px;margin:0 auto}
+:root{--safetop:0px}
+@media (display-mode:standalone),(display-mode:fullscreen){:root{--safetop:env(safe-area-inset-top,0px)}}
+html.standalone{--safetop:env(safe-area-inset-top,0px)}
 .wordmark{display:flex;flex-direction:column;line-height:1.15;text-decoration:none}
 .wordmark .wm-top{font-weight:800;font-size:16px;letter-spacing:.05em;color:var(--parchment)}
 .wordmark .wm-top .moon{color:var(--gold-hi)}

@@ -107,6 +107,14 @@ button.gpill[disabled]{opacity:.6;cursor:default}
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
+/* While the sheet is open the body carries overflow:hidden, and on iOS that
+   quietly breaks position:sticky: the header stops sticking and scrolls away,
+   leaving page content in the strip above the menu and no way to close it
+   without scrolling back to the top. Pinning it for the duration fixes that.
+   The swap is invisible because at any scroll position a sticky header and a
+   fixed one both render at the top of the viewport, and everything behind is
+   covered by the sheet. */
+body.sheet-open #site-header{position:fixed;left:0;right:0;top:0;z-index:70}
 #site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
 #site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
 @media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
@@ -157,9 +165,20 @@ button.gpill[disabled]{opacity:.6;cursor:default}
 body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 body.sheet-open #nav-burger span:nth-child(2){opacity:0}
 body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-#nav-sheet{position:fixed;left:0;right:0;top:3.5rem;bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+#nav-sheet{position:fixed;left:0;right:0;top:calc(3.5rem + var(--safetop,0px));bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
 body.sheet-open #nav-sheet{display:block}
 body.sheet-open{overflow:hidden}
+/* Installed to a home screen there is no browser chrome above the page, so the
+   header sits under the clock and the signal bars. Scoped to standalone on
+   purpose: in an ordinary mobile browser the chrome already holds this space
+   and adding the inset there would push the header down for no reason. */
+:root{--safetop:0px}
+@media (display-mode:standalone),(display-mode:fullscreen){
+  :root{--safetop:env(safe-area-inset-top,0px)}
+  #site-header{padding-top:env(safe-area-inset-top,0px)}
+}
+html.standalone{--safetop:env(safe-area-inset-top,0px)}
+html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
 #nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
 #nav-sheet .sh-g:first-child{margin-top:.2rem}
 #nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
@@ -375,6 +394,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
 
 
 
