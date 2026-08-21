@@ -640,12 +640,23 @@ themed so that no reader can mistake it for the teaching rooms.</p>
 <h2 class="sec">Entries</h2>
 <div class="panel"><div id="jw-list"><p class="muted">Reading the journal&hellip;</p></div></div>
 
-<h2 class="sec">Replies held by the filter</h2>
-<p class="muted" style="margin:.1rem 0 .7rem;max-width:46rem">Nothing here was removed. A filter thought it had the shape of
-spam and set it aside for you. Release the real ones. The rule the site promises publicly is that no reply is ever
-removed for disagreeing, so use <b>Remove</b> only for machines, for unlawful content, or for something aimed at a
-named private person.</p>
+<h2 class="sec">Replies waiting to be read</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:46rem">Nothing appears on the journal until you approve it here. Flags are
+only what a machine noticed first, so the obvious rubbish clears in a glance. The promise the site makes in public is
+that <b>no reply is ever refused for disagreeing</b>, and the whole point of the section is to be corrected, so approve
+the hard ones. Refuse only spam, scams, coarse language a child should not meet, anything unlawful, anything that
+publishes a private person&rsquo;s details, and anything written to harass someone by name.</p>
 <div class="panel"><div id="jw-held"><p class="muted">&hellip;</p></div></div>
+
+<h2 class="sec">The Lantern&rsquo;s sorting</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:46rem">Once a month the Lantern scores approved replies for how much they
+actually help you get closer to the truth: evidence, a real correction, a serious question. Agreement with no content
+and insult with no argument sink. Readers&rsquo; own votes are weighed alongside. It never removes anything and it never
+sees an address. You can run it by hand here at any time.</p>
+<div class="panel">
+<button class="ghost" id="jw-triage" style="border-color:rgba(233,200,106,.6);color:var(--gold-hi)">&#10022; Sort the replies now</button>
+<span class="muted" id="jw-tstate" style="margin-inline-start:.6rem"></span>
+</div>
 </div>
 
 <div class="pane" id="pane-market">
@@ -1986,9 +1997,30 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
   }
 
   function loadHeld(){
-    api({action:"held"}).then(function(r){
-      var held=(r.j&&r.j.held)||[];
-      if(!held.length){ heldBox.innerHTML='<p class="muted">Nothing is being held. Every reply that has arrived is live on the page.</p>'; return; }
+    api({action:"queue"}).then(function(r){
+      var q=(r.j&&r.j.queue)||[];
+      if(!q.length){ heldBox.innerHTML='<p class="muted">Nothing is waiting. Every reply that has arrived has been answered for.</p>'; return; }
+      heldBox.innerHTML = q.map(function(c){
+        return '<div class="vcard" style="margin-top:.6rem"><div class="vl">'+esc(c.title||"")+'</div>'+
+          '<p class="muted" style="margin:.3rem 0 0;font-size:.72rem"><b>'+esc(c.name)+'</b> &middot; '+esc(String(c.at||"").slice(0,16))+
+          ' &middot; <a href="mailto:'+esc(c.mail||"")+'" style="color:var(--gold-hi)">'+esc(c.mail||"no address")+'</a>'+
+          (c.why? ' &middot; <span style="color:#f8d98a">flagged: '+esc(c.why)+'</span>' : '')+'</p>'+
+          '<pre style="white-space:pre-wrap">'+esc(c.body)+'</pre>'+
+          '<div class="cp"><button class="ghost" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'" style="border-color:rgba(233,200,106,.6);color:var(--gold-hi)">Approve</button> '+
+          '<button class="ghost" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Refuse</button> '+
+          '<a class="ghost" href="/journal/'+encodeURIComponent(c.slug)+'" target="_blank" rel="noopener" style="text-decoration:none">Open entry</a></div></div>';
+      }).join("");
+      heldBox.querySelectorAll("[data-rel]").forEach(function(b){
+        b.onclick=function(){ var p=b.dataset.rel.split("|"); api({action:"comment-state",id:p[0],cid:p[1],state:"approve"}).then(loadHeld); };
+      });
+      heldBox.querySelectorAll("[data-rm]").forEach(function(b){
+        b.onclick=function(){
+          if(b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Sure?"; setTimeout(function(){b.dataset.sure="0";b.textContent="Refuse"},4000); return; }
+          var p=b.dataset.rm.split("|"); api({action:"comment-state",id:p[0],cid:p[1],state:"reject"}).then(loadHeld);
+        };
+      });
+      return;
+      var held=[];
       /* each held marker names an entry and a comment: fetch the entries it points at */
       var slugs=[]; held.forEach(function(h){ if(slugs.indexOf(h.slug)<0) slugs.push(h.slug); });
       Promise.all(slugs.map(function(sl){
@@ -2019,6 +2051,18 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       });
     }).catch(function(){ heldBox.innerHTML='<p class="muted">Could not reach the journal.</p>'; });
   }
+
+  var tb=document.getElementById("jw-triage");
+  if(tb) tb.onclick=function(){
+    var ts=document.getElementById("jw-tstate");
+    tb.disabled=true; ts.textContent="The Lantern is reading the replies\u2026";
+    api({action:"triage"}).then(function(r){
+      tb.disabled=false;
+      if(!r.j||!r.j.ok){ ts.textContent=(r.j&&r.j.reason==="off")?"Sorting is switched off in Controls.":"The Lantern could not be reached; the order is unchanged."; return; }
+      ts.textContent="Sorted "+r.j.replies+" replies across "+r.j.entries+" entries.";
+      loadHeld();
+    }).catch(function(){ tb.disabled=false; ts.textContent="Could not reach the server."; });
+  };
 
   /* the desk only wakes when its tab is opened, so the console stays quick */
   var woke=false;
