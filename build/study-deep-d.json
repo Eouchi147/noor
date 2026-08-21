@@ -1,0 +1,285 @@
+{
+  "_note": "Tranche D. Seven more surahs promoted from the short record to the full one: 4, 5, 9, 16, 17, 24, 33. Several of these legislate on matters where the schools differ considerably. The companion's job in those places is to say accurately what the surah covers and where the disagreement lies, and to send the reader to scholarship rather than to settle it here. Where no authentic virtue report exists the virtue level is 'none', which is a finding and not a gap.",
+  "surahs": [
+    {
+      "n": 4,
+      "context": [
+        "An-Nisa is Madinan and its occasion is visible in almost every page. Uhud had left roughly seventy men dead in a small community, and the households they left behind were suddenly full of widows and of orphans holding property they were too young to defend. The surah legislates into that exact situation, which is why its opening verses move within a few lines from the creation of humanity out of a single soul to the property of orphans and the rights of women.",
+        "It is also the surah in which the hypocrites of Madinah are examined most closely. A community under military pressure had acquired members who calculated their allegiance week by week, and long passages describe the posture precisely: standing lazily for prayer, wavering between two sides, belonging fully to neither."
+      ],
+      "name_story": "Named for the women who are its most persistent concern. The naming is not incidental. In a society where a widow could be inherited along with the property, the surah opens by grounding the rights of women in the fact that men and women were made from one soul, and then spends much of its length converting that into enforceable rules on inheritance, dower, marriage and the treatment of orphans.",
+      "movements": [
+        {"range": "1-14", "h": "One soul, then the ledger", "note": "From the creation of humanity from a single soul straight into the property of orphans and the fixed shares of inheritance, with a severe warning about consuming what belongs to the defenceless."},
+        {"range": "15-42", "h": "Marriage and the household", "note": "Who may be married, the dower as the woman's own right, conduct within the home, and the instruction to live with them in kindness."},
+        {"range": "43-104", "h": "Prayer, the Book, and a community at war", "note": "Purification, the fear prayer, addresses to the People of the Book, and the rules of fighting including the prohibition on killing a believer."},
+        {"range": "105-126", "h": "Justice, even against your own", "note": "Occasioned by a case in which a Muslim was nearly acquitted and a Jewish man nearly convicted of a theft the Muslim had committed. The surah refuses it."},
+        {"range": "127-176", "h": "The hypocrites, and the last verse of inheritance", "note": "The wavering described at length, the correction of claims about Isa, and a closing verse on kalalah, the estate of one who dies with neither parent nor child, revealed last."}
+      ],
+      "themes": [
+        {"t": "Guarding those who cannot guard themselves", "d": "Orphans and widows are named again and again, and the threat attached to consuming an orphan's property is among the sharpest in the Qur'an."},
+        {"t": "Rights made specific", "d": "The surah does not exhort men to be fair. It fixes shares, names the dower as the woman's own, and puts numbers where sentiment would have been easier."},
+        {"t": "Justice without regard to who benefits", "d": "Stand firmly for justice as witnesses for Allah, even against yourselves, your parents and your relatives. The occasion of the passage was a case where the community's instinct went the other way."},
+        {"t": "Faith that is calculated", "d": "The long treatment of hypocrisy describes not deception of others so much as a permanent hedging, which is why the imagery is of wavering rather than of lying."}
+      ],
+      "heart": [
+        "Recited slowly, An-Nisa trains a particular kind of attention: it makes you notice who in a situation has no one to speak for them. Its rhythm is the repeated turn from a general principle to the specific person the principle protects, and a reciter comes away less able to leave the weakest party in a room out of the calculation.",
+        "It is also the surah that made the Prophet ﷺ weep. He asked Ibn Mas'ud to recite to him from it, and when the recitation reached the verse about bringing a witness from every nation and bringing you as a witness against these, he said enough, and Ibn Mas'ud looked up to find his eyes overflowing."
+      ],
+      "passages": [
+        {"ref": "4:1", "why": "The opening: created from one soul, and from it its mate. Everything the surah legislates about men and women is built on this sentence."},
+        {"ref": "4:58", "why": "Render trusts to whom they are due, and judge with justice. Two clauses that between them cover most of public life."},
+        {"ref": "4:135", "why": "Stand firmly for justice even against yourselves, your parents and your kin. Revealed about a case the community had been getting wrong."},
+        {"ref": "4:41", "why": "The verse at which the Prophet ﷺ told Ibn Mas'ud to stop, because he was weeping."}
+      ],
+      "connections": [
+        {"to": 3, "why": "Aal Imran works through the defeat at Uhud; An-Nisa legislates for the households that defeat emptied."},
+        {"to": 65, "why": "At-Talaq takes up divorce in detail, and the two are read together on that subject."}
+      ],
+      "virtue": {
+        "text": "There is no report promising a specific reward for reciting An-Nisa. What is authentically reported is an incident: the Prophet ﷺ asked Ibn Mas'ud to recite from this surah, and stopped him at verse 41 with his eyes overflowing. That is a report about what the surah did to him, and is given here as that rather than as a promised merit.",
+        "src": "Bukhari 4582; Muslim 800",
+        "level": "sunnah"
+      }
+    },
+    {
+      "n": 5,
+      "context": [
+        "Al-Ma'idah is among the last surahs to come down, from the years of treaties, settled authority and the Farewell Pilgrimage. The community it addresses is no longer improvising: it has borders, agreements with other powers, and the ordinary business of a state, and the surah opens accordingly with a command to fulfil contracts.",
+        "It carries the verse the community understood immediately as a closing: this day I have perfected your religion for you. Umar is reported to have wept when he heard it, because a thing that is completed has nothing further to come. It was revealed at Arafah during the Farewell Pilgrimage, and the Prophet ﷺ died some months later."
+      ],
+      "name_story": "Named for the ma'idah, the table spread with food that the disciples of Isa asked to be sent down from heaven as a sign. The story sits near the end of the surah and is characteristic of it: a request for a sign is granted, and comes attached to a warning that a sign refused after being given is worse than one never asked for.",
+      "movements": [
+        {"range": "1-11", "h": "Fulfil the contracts", "note": "The opening command, then the lawful and unlawful in food, purification, and the covenant taken from the community."},
+        {"range": "12-43", "h": "Covenants broken before", "note": "The covenants of Bani Israil and of the Christians, the two sons of Adam, and the verse on the sanctity of a single life."},
+        {"range": "44-86", "h": "Judging by what was revealed", "note": "The relationship of the three scriptures, the command to judge between them by what Allah revealed, and warnings against taking as allies those who mock the religion."},
+        {"range": "87-108", "h": "Do not make unlawful what is good", "note": "Against inventing prohibitions, then oaths, intoxicants and gambling, game while in ihram, and the law of bequest."},
+        {"range": "109-120", "h": "Isa questioned", "note": "The table from heaven, and the exchange in which Isa is asked whether he told people to take him and his mother as gods, and answers that he said only what he was commanded."}
+      ],
+      "themes": [
+        {"t": "A contract is a religious obligation", "d": "The surah opens on fulfilling agreements and returns to oaths and covenants repeatedly, treating a broken word as a matter of faith rather than of manners."},
+        {"t": "Justice owed to people you dislike", "d": "Do not let the hatred of a people prevent you from being just. Be just; that is nearer to righteousness. The verse assumes the hatred is real and rules on it anyway."},
+        {"t": "A completed religion", "d": "The verse of perfection closes the legislative project, and much of the surah reads like a final tidying of loose obligations."},
+        {"t": "Do not invent prohibitions", "d": "A distinct warning against forbidding the good things Allah has made lawful, aimed at a piety that expresses itself by adding restrictions."}
+      ],
+      "heart": [
+        "Recited slowly, the surah's refrain of covenant begins to feel like a handshake tightening. Being Muslim is presented here as a promise already accepted and now waiting to be kept, and the reciter is repeatedly asked whether the specific agreements of his own week, the contract, the oath, the debt, the marriage, are being honoured with the seriousness the surah assumes.",
+        "Its hardest instruction for most readers is the one about justice toward people you dislike. It does not ask you to stop disliking them. It fixes your conduct while the dislike remains, which is a far more usable command than an instruction to feel differently."
+      ],
+      "passages": [
+        {"ref": "5:3", "why": "This day I have perfected your religion for you. Revealed at Arafah on the Farewell Pilgrimage; Umar is reported to have wept because completion means nothing more is coming."},
+        {"ref": "5:8", "why": "Do not let the hatred of a people prevent you from being just. The most demanding sentence in the surah."},
+        {"ref": "5:32", "why": "Whoever saves one life, it is as if he saved humanity entirely. Stated as something prescribed to Bani Israil, and carried forward."},
+        {"ref": "5:87", "why": "Do not make unlawful the good things Allah has made lawful for you. A correction aimed at excess rather than at laxity."}
+      ],
+      "connections": [
+        {"to": 2, "why": "Both are long Madinan legislations, and Al-Ma'idah closes much of what Al-Baqarah opened."},
+        {"to": 4, "why": "The two together carry most of the family and civic law of the Qur'an."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Ma'idah. Its standing rests on its content and its timing: it carries the verse of the perfection of the religion, revealed at Arafah in the final year, which the community recognised at once as a closing.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 9,
+      "context": [
+        "At-Tawbah comes from around the ninth year in Madinah and the campaign to Tabuk, a march of several hundred miles in extreme heat at harvest time, undertaken against the Byzantine frontier. It is the surah of a community strong enough to have obligations it would rather avoid, and it is unsparing about those who found reasons not to go.",
+        "It is also the surah that cancels standing agreements with those who had broken them, and its opening passages read as a formal notice rather than as a sermon. The severity is real and the surah does not apologise for it. What it does, repeatedly, is leave a door open on the other side of the severity, which is why it is named for repentance."
+      ],
+      "name_story": "Called At-Tawbah, the Repentance, and also Bara'ah, the Disavowal, which names the two halves of its work. It is the only surah that does not open with the Bismillah, and the early authorities differ on why: one view, reported from Uthman, is that the community was uncertain whether it and Al-Anfal were one surah or two; another is that a declaration of disavowal does not open with the naming of mercy. The honest position is that the reason is disputed.",
+      "movements": [
+        {"range": "1-37", "h": "The disavowal", "note": "Treaties with those who had broken them are cancelled with four months' notice; those who kept their agreements are to be kept with to the end of their term."},
+        {"range": "38-72", "h": "Tabuk, and the excuses", "note": "The command to march, the heat, the harvest, and a long examination of those who asked to be left behind, alongside the account of the cave."},
+        {"range": "73-99", "h": "The hypocrites named", "note": "Their oaths, their mosque built to divide, and the distinction drawn between them and the bedouins who simply did not yet know."},
+        {"range": "100-118", "h": "The three who were left behind", "note": "Ka'b ibn Malik and two others who told the truth about having no excuse, were boycotted for fifty nights, and were then forgiven by name."},
+        {"range": "119-129", "h": "Be with the truthful", "note": "The closing command, and the last two verses, which several reports identify as among the final revelation."}
+      ],
+      "themes": [
+        {"t": "Repentance, even after the worst of it", "d": "The surah's severity exists to make its openings meaningful. The three who stayed behind were cut off for fifty nights and then forgiven in revelation."},
+        {"t": "Truth-telling when a lie would be easier", "d": "Ka'b's account is preserved because he refused to invent an excuse when eighty others had, and his honesty is what the surah rewards."},
+        {"t": "Agreements honoured even with enemies", "d": "The cancellation applies to those who broke faith; those who kept it are explicitly to be kept with until their term ends."},
+        {"t": "Hypocrisy as an organised thing", "d": "The mosque built to cause harm shows the surah treating hypocrisy as institutional rather than merely personal."}
+      ],
+      "heart": [
+        "Its severity does not harden a slow reciter so much as corner him. There is no room in this surah to be vaguely committed; it keeps sorting people by what they actually did when it was inconvenient, and the reciter finds himself being sorted along with them.",
+        "Then it breaks open. The account of the three left behind is one of the most human passages in the Qur'an: the earth became narrow for them despite its vastness, and their own souls became narrow, and they knew there was no refuge from Allah except in Him. A repentance that arrives late, after fifty nights of being unable to breathe, is met and accepted."
+      ],
+      "passages": [
+        {"ref": "9:40", "why": "The cave verse: do not grieve, indeed Allah is with us. Two men, hunted, with the pursuers close enough to be heard."},
+        {"ref": "9:118", "why": "The earth became narrow for them despite its vastness. The most exact description of a guilty conscience in the Book."},
+        {"ref": "9:119", "why": "Be with the truthful. Placed immediately after the account of three men whose truthfulness cost them fifty nights."},
+        {"ref": "9:128", "why": "There has come to you a Messenger from among yourselves. Grieved by what grieves you, concerned over you. Among the last verses revealed."}
+      ],
+      "connections": [
+        {"to": 8, "why": "Al-Anfal precedes it and treats the earlier battle; the two were close enough in the early community's reading that their separation was discussed."},
+        {"to": 66, "why": "At-Tahrim carries the other major passage on turning back to Allah, in a domestic rather than a military setting."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting At-Tawbah. The question most often asked about this surah is not its merit but the absence of the Bismillah at its head, and on that the early authorities genuinely differ, so the companion reports the disagreement rather than choosing between the views.",
+        "src": "no authentic virtue report; the Bismillah question is disputed among the early authorities",
+        "level": "none"
+      }
+    },
+    {
+      "n": 16,
+      "context": [
+        "An-Nahl is Makkan and is known among the commentators as the surah of blessings. It was revealed to a people who were using Allah's own gifts, their cattle, their rain, their trade routes, the shade of their own dwellings, as the raw material of a life that denied Him, and its method is to walk them through those gifts one at a time until the denial becomes conspicuous.",
+        "Its closing verses belong to a harder moment. They address a community being persecuted and instruct it to respond in proportion, and then, immediately, to prefer patience. Several reports connect the final passage to the killing of Hamza at Uhud, which would place the ending later than the body of the surah, and the commentators discuss it."
+      ],
+      "name_story": "Named for the bee in verses 68 and 69, which is described as having been given wahy, inspiration, by its Lord: take homes in the mountains, in the trees, and in what they construct. Out of its bellies comes a drink of varying colours in which there is healing for people. A small industrious creature is given a form of the same word used for revelation, and the surah lets that sit without further comment.",
+      "movements": [
+        {"range": "1-34", "h": "The creation, itemised", "note": "Cattle, warmth, food, beauty in bringing them home at evening, the horses, the stars for navigation. Blessings listed until the listing becomes an argument."},
+        {"range": "35-64", "h": "The excuse examined", "note": "The claim that had Allah willed they would not have associated, answered by pointing at the messengers sent to every nation."},
+        {"range": "65-89", "h": "Water, milk, honey", "note": "The bee, the drink with healing in it, the fruits from which people take both intoxicant and good provision, and the parables of dependence."},
+        {"range": "90-110", "h": "Justice, excellence, and giving", "note": "The verse recited at the close of Friday sermons across the Muslim world, then the warning against breaking oaths after confirming them."},
+        {"range": "111-128", "h": "Ibrahim, and the last instruction", "note": "Ibrahim described as a nation in himself, the food laws, the call to the way of your Lord with wisdom and good counsel, and the closing command to patience."}
+      ],
+      "themes": [
+        {"t": "Blessing as an argument", "d": "The surah does not argue from logic but from inventory. It names what the listener is holding, wearing, eating and riding, and asks where it came from."},
+        {"t": "Gratitude, and its opposite", "d": "The favours are countless, and the surah says so plainly: if you should count the favours of Allah, you could not enumerate them."},
+        {"t": "How to call people", "d": "Invite to the way of your Lord with wisdom and good instruction, and argue with them in the way that is best. The method is prescribed as carefully as the message."},
+        {"t": "Proportion, then patience", "d": "The closing verses permit a response in kind and then immediately say that patience is better, which is the surah's characteristic move."}
+      ],
+      "heart": [
+        "A slow reciter starts auditing the room around him. Water, cloth, shade, the food in the house, and the surah turns each item into a question that has only one honest answer. By the time it reaches verse ninety, justice and excellence and giving to relatives feel less like commands and more like the rent owed on everything already listed.",
+        "The verse most readers carry away is 16:97, the promise of a good life to whoever works righteousness while believing. It is worth noticing where it sits: in a surah about blessing, immediately after a passage about persecution, offered to people whose circumstances were not about to improve."
+      ],
+      "passages": [
+        {"ref": "16:18", "why": "If you should count the favours of Allah, you could not enumerate them. Try it for one minute and the verse proves itself."},
+        {"ref": "16:97", "why": "Whoever does righteousness while believing, We will surely give them a good life. The promise is hayat tayyiba, a good life, not an easy one."},
+        {"ref": "16:90", "why": "Justice, excellence, and giving to relatives. Recited at the end of the Friday sermon in most of the Muslim world."},
+        {"ref": "16:125", "why": "Invite to the way of your Lord with wisdom and good instruction. The manner of calling is legislated, not left to temperament."}
+      ],
+      "connections": [
+        {"to": 14, "why": "Ibrahim carries the other great statement on gratitude: if you are grateful, I will increase you."},
+        {"to": 31, "why": "Luqman opens by defining wisdom itself as gratitude, which is An-Nahl's argument in one sentence."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting An-Nahl. Its place in ordinary Muslim life is secured instead by a single verse, 16:90, which is recited from the pulpit at the close of the Friday sermon every week in most of the Muslim world.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 17,
+      "context": [
+        "Al-Isra is Makkan and opens on the Night Journey, which came in the bleakest stretch of the Prophet's ﷺ mission: after the deaths of Khadijah and Abu Talib, after Ta'if had driven him out, when the human support around him had effectively collapsed. The journey from the Sacred Mosque to the furthest mosque is stated in a single verse and not elaborated, and the surah moves on.",
+        "What follows is unexpected after an opening like that. Rather than dwelling on the miracle, the surah lays out a charter of ordinary conduct: how to treat parents, relatives, the traveller, your own children, your money, your speech, your walk. A man given the most extraordinary night in human history is handed, in the same surah, a list of instructions about being decent at home."
+      ],
+      "name_story": "Named for the isra, the night journey itself, and also known as Bani Israil for the long address to the children of Israel that follows. The two names mark the two halves of the surah: an event that cannot be repeated, and a code of conduct that must be, nightly.",
+      "movements": [
+        {"range": "1-8", "h": "The journey, and a warning", "note": "The night journey in one verse, then the two occasions of corruption foretold for Bani Israil and the promise that the pattern repeats: if you return, We will return."},
+        {"range": "9-22", "h": "This Qur'an guides to what is most upright", "note": "The haste of the human being, the night and day as two signs, and the record that will be spread open."},
+        {"range": "23-39", "h": "The charter", "note": "Parents, kin, the needy, the traveller, moderation in spending, the prohibition of killing children out of fear of poverty, honesty in measure, and the warning not to pursue what you have no knowledge of."},
+        {"range": "40-72", "h": "The objections answered", "note": "The claim of daughters for Allah, the seven heavens glorifying Him, Iblis and his stake in the children of Adam."},
+        {"range": "73-111", "h": "Steadiness, and the Qur'an itself", "note": "The pressure to compromise slightly, the prayer at the two ends of the day, the soul as a matter belonging to Allah, and the challenge that humans and jinn together could not produce the like of this."}
+      ],
+      "themes": [
+        {"t": "Conduct as the response to honour", "d": "The surah answers the greatest miracle given to the Prophet ﷺ with a list of household instructions, which is a statement about where religion actually lives."},
+        {"t": "Parents, at the age when it is hard", "d": "The passage specifies the moment: when one or both reach old age with you. It legislates for the difficult stage, not the easy one."},
+        {"t": "The Qur'an as healing", "d": "We send down of the Qur'an that which is healing and mercy for the believers, stated in a surah that opens on the Prophet's ﷺ worst year."},
+        {"t": "Pressure to shift slightly", "d": "They were near to tempting you away from what We revealed. The temptation described is not to abandon the message but to soften it a little."}
+      ],
+      "heart": [
+        "Recited slowly, the middle section reads like being handed your own conduct one line at a time. The reciter lowers his voice at the verse about voices, slows his walk at the verse about walking, and arrives at rabbi irhamhuma, my Lord have mercy on them both, owing a debt to two aging faces he can picture exactly.",
+        "The wing of humility in verse 24 is the image most people keep. A bird lowering its wing to shelter something small, offered as the posture a grown adult should take toward a parent who has become difficult, forgetful, or demanding."
+      ],
+      "passages": [
+        {"ref": "17:23", "why": "Say not to them a word of disrespect. The Arabic is uff, the smallest sound of irritation, and it is the thing prohibited by name."},
+        {"ref": "17:24", "why": "Lower to them the wing of humility out of mercy, and say: my Lord, have mercy on them as they raised me when I was small."},
+        {"ref": "17:36", "why": "Do not pursue what you have no knowledge of. The hearing, the sight and the heart will all be questioned. Written before anyone could forward a rumour to thousands of people in a second."},
+        {"ref": "17:82", "why": "We send down of the Qur'an that which is healing and mercy for the believers."}
+      ],
+      "connections": [
+        {"to": 31, "why": "Luqman gives the parallel charter, taught by a father to a son rather than revealed to a community."},
+        {"to": 53, "why": "An-Najm treats the other part of that night, the ascent, and the two are usually read together."}
+      ],
+      "virtue": {
+        "text": "Aisha reported that the Prophet ﷺ would not sleep until he had recited Bani Israil, which is this surah, and Az-Zumar. The report is graded hasan by a number of scholars rather than being of the highest grade, and it describes his practice rather than promising a reward, so it is given here with both qualifications attached.",
+        "src": "Tirmidhi 2920; graded hasan",
+        "level": "sunnah"
+      }
+    },
+    {
+      "n": 24,
+      "context": [
+        "An-Nur is Madinan and much of it was revealed around one specific injury. Aisha had been left behind by the caravan and returned escorted by a single man, and a slander spread through Madinah for roughly a month while the Prophet ﷺ received no revelation about it and the household lived inside the accusation. The passage that eventually came, ten verses of it, cleared her by name and legislated permanently about what a community may do with an unproven accusation.",
+        "Around that centre the surah builds a law of privacy and of sight: how a person enters another's home, where the eyes go, what may be worn before whom. It is the surah in which the Muslim household acquires a threshold."
+      ],
+      "name_story": "Named for the Light verse, 24:35, which sits in the middle of a surah otherwise concerned with slander, evidence and household conduct. The placement is striking and deliberate: an extended image of a lamp within a niche within glass, lit from a blessed olive tree neither of the east nor the west, dropped into the middle of legislation about ordinary decency.",
+      "movements": [
+        {"range": "1-10", "h": "A surah We have made obligatory", "note": "The surah announces itself as sent down and imposed, then legislates on accusation and evidence, including the four witnesses required for a charge of unchastity."},
+        {"range": "11-26", "h": "The slander", "note": "The ten verses on the ifk: why did the believers not think well of their own, why did they not demand four witnesses, and the warning against passing on with your tongues what you have no knowledge of."},
+        {"range": "27-34", "h": "The threshold", "note": "Do not enter houses other than your own until you have asked permission and greeted the people in them, then the lowering of the gaze, addressed to men first."},
+        {"range": "35-46", "h": "The Light", "note": "The lamp, the niche, the olive tree, light upon light, set against the parable of deeds like a mirage in a desert, and the layered darkness of a deep sea."},
+        {"range": "47-64", "h": "Obedience, and the three times of privacy", "note": "The promise of succession to those who believe and do righteous deeds, and the instruction about the hours when a household is not to be entered unannounced."}
+      ],
+      "themes": [
+        {"t": "The presumption of innocence, legislated", "d": "The surah's answer to the slander is procedural: four witnesses, or the accuser is punished. It does not ask the community to be more charitable; it removes their ability to act on suspicion."},
+        {"t": "Repeating is participating", "d": "You received it with your tongues and said with your mouths that of which you had no knowledge. The offence is located in the passing on, not only in the inventing."},
+        {"t": "Privacy as a right of the house", "d": "The rules of entry, greeting and the three times of undress construct a household that other people cannot simply walk into."},
+        {"t": "Light, described rather than defined", "d": "The Light verse offers an image and then declines to explain it, and the commentators' many readings of it are themselves part of its history."}
+      ],
+      "heart": [
+        "Recited slowly, the passage on the slander is uncomfortable in a way few passages are, because it does not address the person who invented the rumour. It addresses everyone else: why did you not think well, why did you not stop it, why did you consider it a light matter when it was, with Allah, tremendous. Every reciter has been in the second group.",
+        "Then the Light verse arrives in the middle of all that, with no transition, and the register changes completely. A reciter who has just been told exactly how a community wounds itself is shown a lamp burning in a niche, and the two things are left beside each other without explanation."
+      ],
+      "passages": [
+        {"ref": "24:35", "why": "Allah is the Light of the heavens and the earth. Read it slowly and without hurrying to interpret it."},
+        {"ref": "24:15", "why": "You considered it a light matter, while it was, with Allah, tremendous. Said about repeating a rumour."},
+        {"ref": "24:22", "why": "Let them pardon and overlook. Would you not like Allah to forgive you? Revealed about a man withdrawing support from a relative who had joined the slander."},
+        {"ref": "24:30-31", "why": "The lowering of the gaze, addressed to the believing men first and then to the believing women."}
+      ],
+      "connections": [
+        {"to": 33, "why": "Al-Ahzab carries the other major passage on household conduct, and the two are read together on the subject."},
+        {"to": 49, "why": "Al-Hujurat legislates the manners of a community, including suspicion and backbiting, and completes what An-Nur begins."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting An-Nur. The surah is unusual in that it describes itself in its first verse as one Allah has sent down and made obligatory, which is a stronger self-description than most surahs carry and does not require a virtue report to support it.",
+        "src": "no authentic virtue report; the surah's own description at 24:1",
+        "level": "none"
+      }
+    },
+    {
+      "n": 33,
+      "context": [
+        "Al-Ahzab is Madinan and takes its name from the confederates who besieged the city in the fifth year: a coalition of tribes assembled to end the community in a single campaign. The believers dug a trench across the exposed approach and waited through cold, hunger and fear, and the siege broke without a general battle when a wind scattered the camp of the besiegers.",
+        "The surah legislates around that siege on matters the community found difficult: the ending of the practice of treating adopted sons as biological ones, the marriage of Zaynab, the conduct of the Prophet's ﷺ household, and the manner in which visitors were to behave in his home. Several of its passages address awkward, specific and human situations by name."
+      ],
+      "name_story": "Named for al-ahzab, the confederates or the combined parties. The naming keeps the siege at the centre, and the surah's opening account of it is unusually vivid: when eyes shifted and hearts reached the throats, and the believers were shaken with a severe shaking.",
+      "movements": [
+        {"range": "1-8", "h": "Adoption, and the covenant of the prophets", "note": "The end of treating adopted sons as sons in lineage, with the instruction to call them by their fathers, and the solemn covenant taken from the prophets."},
+        {"range": "9-27", "h": "The trench", "note": "The siege described from inside: the fear, the hypocrites asking permission to leave, the believers who saw in it only what Allah had promised, and the wind that ended it."},
+        {"range": "28-40", "h": "The Prophet's household", "note": "The choice offered to his wives between the world and Allah and His Messenger, the conduct required of them, and the marriage of Zaynab which ended the adoption rule in practice."},
+        {"range": "41-52", "h": "Remembrance, and the witness", "note": "Remember Allah with much remembrance, and the description of the Prophet ﷺ as a witness, a bringer of good tidings, a warner, and a lamp giving light."},
+        {"range": "53-73", "h": "Manners in the house, and the trust", "note": "The instruction about entering his home and not staying to talk, the command to send blessings upon him, the outer garment, and the closing verses on the trust that the heavens and the earth declined."}
+      ],
+      "themes": [
+        {"t": "Fear described honestly", "d": "The account of the siege does not present the believers as unafraid. Eyes shifted, hearts reached the throats, and they were shaken severely, and the surah records that before it records the relief."},
+        {"t": "A pattern to follow", "d": "There is for you in the Messenger of Allah an excellent pattern. The verse sits inside the siege account, so the pattern being praised is his conduct under exactly those conditions."},
+        {"t": "Ending a practice people were attached to", "d": "The adoption rule was changed in law and then changed in fact through a marriage the Prophet ﷺ found difficult, and the surah addresses the difficulty rather than hiding it."},
+        {"t": "The trust that was declined", "d": "The closing image of the heavens, the earth and the mountains refusing to carry the trust, and the human being carrying it, frames everything the surah has legislated."}
+      ],
+      "heart": [
+        "Recited slowly, the siege passage is one of the few places in the Qur'an where a reciter is put inside collective fear rather than shown it from outside. The detail that undoes most people is small: the hypocrites saying our houses are exposed, when their houses were not exposed. The excuse of a frightened person, recorded permanently.",
+        "And in the middle of it, verse 21: an excellent pattern for whoever hopes in Allah and the Last Day and remembers Allah often. It is not praise offered in a calm moment. It is said about a man digging a trench with his companions on an empty stomach while a coalition assembles to kill them all."
+      ],
+      "passages": [
+        {"ref": "33:21", "why": "An excellent pattern in the Messenger of Allah. Placed inside the account of the siege, so the pattern is his conduct under siege."},
+        {"ref": "33:10", "why": "When eyes shifted and hearts reached the throats. The Qur'an describing fear without softening it."},
+        {"ref": "33:56", "why": "Allah and His angels send blessings upon the Prophet. O you who believe, send blessings upon him. The basis of the salawat every Muslim says."},
+        {"ref": "33:72", "why": "The heavens, the earth and the mountains declined to carry the trust, and the human being carried it."}
+      ],
+      "connections": [
+        {"to": 24, "why": "An-Nur carries the parallel legislation on the household and on entering homes."},
+        {"to": 3, "why": "Aal Imran treats Uhud as this surah treats the trench, and the two together are the Qur'an's account of the community under arms."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Ahzab. Its weight in daily practice comes from one verse, 33:56, which is the basis of the blessings on the Prophet ﷺ that Muslims say in every prayer and at the mention of his name.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    }
+  ]
+}
