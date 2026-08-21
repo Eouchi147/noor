@@ -274,17 +274,30 @@ M.append(sec("monday", "العَمَل", "So what changes on Monday morning",
     ref("editorial","Editorial","our own counsel, never revelation"))))
 
 # ---- where to go -----------------------------------------------------------
-M.append('<section class="rsec"><div class="wrap"><div class="wgo" style="border:0;padding-top:0">'
-  '<h2>Where to go from here</h2>'
-  '<p class="wgo-s">This room is a doorway, not a destination. Each of these takes one part of it much further.</p>'
-  '<div class="wgo-g">'
-  '<a class="wgo-c" href="/soul"><b>The Journey of the Soul</b><span>What actually happens after the last breath, station by station, which is the half of the question no theory answers.</span></a>'
-  '<a class="wgo-c" href="/#mizan"><b>The Weighing</b><span>The two lives drawn to true scale, and what a deed is worth when it is measured rather than remembered.</span></a>'
-  '<a class="wgo-c" href="/unseen"><b>The Unseen and the Mysteries</b><span>Angels, jinn and the signs of the Hour, every claim badged for the strength of its evidence.</span></a>'
-  '<a class="wgo-c" href="/theology"><b>Theology and the Branches</b><span>Who He is and who He is not, including why He cannot be the programmer at the top of a tower.</span></a>'
-  '<a class="wgo-c" href="/begin"><b>Begin here</b><span>If the feeling in this room is what brought you, this is the door with nothing assumed and nothing asked.</span></a>'
-  '<a class="wgo-c" href="/words"><b>The Words of the Path</b><span>Dunya, akhirah, barzakh, batil: the vocabulary this page is built from, each one explained.</span></a>'
-  '</div></div></div></section>')
+# Built by synergy.band() rather than by hand. The band ships its own small
+# stylesheet with its markup, so writing the HTML by hand here produced the
+# right elements with none of the skin: six links collapsed into one run-on
+# paragraph at the foot of the page. Calling the helper means this section can
+# never drift from the same band in every other room again.
+from synergy import band
+
+M.append(band(
+  "Where to go from here",
+  "This room is a doorway, not a destination. Each of these takes one part of it much further.",
+  [
+    ("/soul", "The Journey of the Soul",
+     "What actually happens after the last breath, station by station, which is the half of the question no theory answers."),
+    ("/#mizan", "The Weighing",
+     "The two lives drawn to true scale, and what a deed is worth when it is measured rather than remembered."),
+    ("/unseen", "The Unseen and the Mysteries",
+     "Angels, jinn and the signs of the Hour, every claim badged for the strength of its evidence."),
+    ("/theology", "Theology and the Branches",
+     "Who He is and who He is not, including why He cannot be the programmer at the top of a tower."),
+    ("/begin", "Begin here",
+     "If the feeling in this room is what brought you, this is the door with nothing assumed and nothing asked."),
+    ("/words", "The Words of the Path",
+     "Dunya, akhirah, barzakh, batil: the vocabulary this page is built from, each one explained."),
+  ]))
 
 JSONLD = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article",
