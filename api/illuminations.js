@@ -139,6 +139,33 @@ const TREASURY = [
   { category: "Travel", title: "He out-traveled Marco Polo three times over", story: "Ibn Battuta left Tangier in 1325 for hajj and kept going for 29 years: some 117,000 km across Africa, Arabia, India, Southeast Asia and China, leaving one of history's greatest travel accounts, the Rihla.", detail: "Ibn Battuta · 1304-1369 CE" },
   { category: "Coffee", title: "Your morning coffee has Sufi roots", story: "Coffee spread through the world from 15th-century Yemen, where Sufis in Mocha drank qahwa to stay awake for night devotion. From their gatherings it reached Makkah, Cairo, Istanbul, and eventually every café on earth.", detail: "Yemen · 15th century" }
 ];
+
+/* The lantern has a beautiful written fallback, and that fallback was in
+   English only: a reader in Arabic met an English paragraph in an Arabic page
+   whenever the AI could not be reached, which for weeks was every single day.
+   The two languages that are fully carried have their own treasury. The rest
+   fall back to English honestly rather than to machine mush. */
+const TREASURY_I18N = {
+  ar: [
+  { category: "مؤسِّسون", title: "امرأة أسّست أقدم جامعة في العالم", story: "في سنة 859 للميلاد أنفقت فاطمة الفهرية، وهي امرأة مسلمة في فاس، ميراثها كله على بناء جامع القرويين، الذي تعترف اليونسكو وموسوعة غينيس بأنه أقدم جامعة مانحة للشهادات ما زالت تعمل على وجه الأرض. وهي تُدرّس إلى اليوم.", detail: "فاس، المغرب · 859م" },
+  { category: "بصريات", title: "للمنهج العلمي أبٌ من البصرة", story: "أثبت ابن الهيثم في كتاب المناظر، نحو سنة 1021، أن الإبصار يقع حين يدخل الضوء إلى العين، وأجرى أوائل تجارب الغرفة المظلمة، وأصرّ على أن كل دعوى تُختبر بتجربة تُعاد، قبل الثورة العلمية في أوروبا بقرون.", detail: "ابن الهيثم · نحو 965-1040م" },
+  { category: "رياضيات", title: "الخوارزمية اسم رجل", story: "كلمة algorithm جاءت من الخوارزمي، عالم بغداد الذي أعطى العالم الجبر في كتابه عن الجبر والمقابلة في القرن التاسع. وكل تطبيق تلمسه اليوم يقوم على أفكار تمر باسمه.", detail: "بيت الحكمة، بغداد · القرن التاسع" },
+  { category: "طبّ", title: "درست أوروبا كتاب مسلم في الطب ستمئة سنة", story: "نظّم ابن سينا في القانون في الطب، الذي فرغ منه سنة 1025، معارف الطب في العالم تنظيمًا جعل الجامعات الأوروبية تتخذه كتابًا أساسيًا إلى القرن السابع عشر، وقد وصف العدوى قبل نظرية الجراثيم بزمن طويل.", detail: "ابن سينا · 980-1037م" },
+  { category: "حفظ", title: "كتابٌ يحفظه الملايين حرفًا حرفًا", story: "القرآن هو الكتاب الوحيد على وجه الأرض الذي يحفظه من أوله إلى آخره ملايين الأحياء، بلغته التي نزل بها، في كل قارة. وهذه السلسلة البشرية المتصلة من الحفظ حرست نصّه أكثر من أربعة عشر قرنًا.", detail: "من زمن الوحي إلى اليوم" },
+  { category: "رحلة", title: "طاف من الأرض ثلاثة أضعاف ما طافه ماركو بولو", story: "خرج ابن بطوطة من طنجة سنة 1325 قاصدًا الحج، ثم مضى تسعًا وعشرين سنة يمشي: نحو 117,000 كيلومتر عبر إفريقيا والجزيرة والهند وجنوب شرق آسيا والصين، وترك واحدة من أعظم كتب الرحلة في التاريخ، الرحلة.", detail: "ابن بطوطة · 1304-1369م" },
+  { category: "قهوة", title: "لقهوة صباحك أصلٌ صوفي", story: "انتشرت القهوة في العالم من اليمن في القرن الخامس عشر، حيث كان الصوفية في المخا يشربون القهوة ليصحوا لقيام الليل. ومن مجالسهم بلغت مكة والقاهرة وإسطنبول، ثم كل مقهى على وجه الأرض.", detail: "اليمن · القرن الخامس عشر" }
+  ],
+  fr: [
+  { category: "Fondatrices", title: "Une femme a fondé la plus ancienne université du monde", story: "En 859, Fatima al-Fihri, une musulmane de Fès, consacra tout son héritage à fonder al-Qarawiyyin, reconnue par l'UNESCO et le Guinness comme la plus ancienne université délivrant des diplômes encore en activité sur terre. Elle enseigne toujours.", detail: "Fès, Maroc · 859" },
+  { category: "Optique", title: "La méthode scientifique a un père né à Bassora", story: "Le Livre de l'optique d'Ibn al-Haytham, vers 1021, démontra que la vision se produit lorsque la lumière entre dans l'œil, conduisit les premières expériences de chambre noire et exigea que toute affirmation soit éprouvée par l'expérience répétable, des siècles avant la révolution scientifique européenne.", detail: "Ibn al-Haytham · vers 965-1040" },
+  { category: "Mathématiques", title: "Algorithme est un nom d'homme", story: "Le mot algorithme vient d'al-Khwarizmi, le savant de Bagdad dont le livre du 9e siècle sur la restauration et la comparaison donna au monde l'algèbre, al-jabr. Chaque application que vous touchez aujourd'hui repose sur des idées qui passent par son nom.", detail: "Maison de la sagesse, Bagdad · 9e siècle" },
+  { category: "Médecine", title: "L'Europe a étudié le livre d'un musulman pendant six cents ans", story: "Le Canon de la médecine d'Ibn Sina, achevé en 1025, organisa le savoir médical du monde si complètement que les universités européennes en firent un manuel de base jusqu'au 17e siècle, et il y décrivait la contagion bien avant la théorie microbienne.", detail: "Ibn Sina, Avicenne · 980-1037" },
+  { category: "Préservation", title: "Un livre su par cœur par des millions, à la lettre", story: "Le Coran est le seul livre au monde mémorisé d'un bout à l'autre par des millions de personnes vivantes, dans sa langue d'origine, sur tous les continents. Cette chaîne humaine ininterrompue garde son texte depuis plus de quatorze siècles.", detail: "De la révélation à aujourd'hui" },
+  { category: "Voyage", title: "Il a parcouru trois fois plus de chemin que Marco Polo", story: "Ibn Battuta quitta Tanger en 1325 pour le hajj et continua vingt-neuf ans : quelque 117 000 km à travers l'Afrique, l'Arabie, l'Inde, l'Asie du Sud-Est et la Chine, laissant l'un des plus grands récits de voyage de l'histoire, la Rihla.", detail: "Ibn Battuta · 1304-1369" },
+  { category: "Café", title: "Votre café du matin a des racines soufies", story: "Le café se répandit dans le monde depuis le Yémen du 15e siècle, où les soufis de Moka buvaient le qahwa pour veiller en prière la nuit. De leurs assemblées il gagna La Mecque, Le Caire, Istanbul, puis chaque café de la terre.", detail: "Yémen · 15e siècle" }
+  ]
+};
+
 const THEMES = [
   "a Muslim scientific or medical breakthrough, classical golden age",
   "a moment from the life of a companion of the Prophet ﷺ",
@@ -252,9 +279,10 @@ async function kindLight(today, want, lang) {
   if (!p.title || !p.story) throw 0;
   return { date: want, lang: lang || "en", source: "lantern", category: clean(p.category).slice(0, 24) || "History", title: clean(p.title).slice(0, 90), story: clean(p.story).slice(0, 700), detail: clean(p.detail).slice(0, 90) };
 }
-function lightFallback(want) {
-  const f = TREASURY[dayIndexOf(want) % TREASURY.length];
-  return Object.assign({ date: want, source: "treasury" }, f);
+function lightFallback(want, lang) {
+  const t = (lang && TREASURY_I18N[lang]) || TREASURY;
+  const f = t[dayIndexOf(want) % t.length];
+  return Object.assign({ date: want, lang: lang || "en", source: "treasury" }, f);
 }
 async function kindVerse(today) {
   const ref = VERSES[dayIndexOf(today) % VERSES.length];
@@ -343,7 +371,7 @@ export default async function handler(req, res) {
           if (hit) return res.status(200).json(remember(ck, JSON.parse(hit)));
         } catch {}
       }
-      return res.status(200).json(remember(ck, lightFallback(want)));
+      return res.status(200).json(remember(ck, lightFallback(want, lang)));
     }
     /* Today, asked once. Whoever arrives first (usually the nightly warm run)
        pays for the generation; everyone else on earth reads what was stored. */
@@ -358,7 +386,7 @@ export default async function handler(req, res) {
       if (kvReady()) { kv([["SET", kk, JSON.stringify(lit)], ["EXPIRE", kk, "2764800"]]).catch(() => {}); }
       return res.status(200).json(remember(ck, lit));
     }
-    catch { return res.status(200).json(remember(ck, lightFallback(want))); }
+    catch { return res.status(200).json(remember(ck, lightFallback(want, lang))); }
   }
 
   if (kind === "friday") {
