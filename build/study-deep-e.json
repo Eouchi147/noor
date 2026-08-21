@@ -1,0 +1,244 @@
+{
+  "_note": "Tranche E. Six long Makkan surahs promoted from the short record to the full one: 21, 23, 25, 28, 30, 39. These are the narrative surahs of the Makkan period, and the thing they share is that each was revealed to a community with no power and no prospect of any, which is why their arguments run on patience and on evidence rather than on law. Virtue reports are given with their gradings attached; where none exists the level is 'none', which is a finding and not a gap.",
+  "surahs": [
+    {
+      "n": 21,
+      "context": [
+        "Al-Anbiya is Makkan and belongs to the years when the demand for a miracle was loudest and the community's own situation was at its most precarious. Its answer is not a sign but a roll call: sixteen prophets named across its length, and almost every one introduced at the moment his situation had become impossible.",
+        "The surah has one recurring shape, and once a reader notices it the whole thing opens. A prophet is shown at the end of his resources. He calls out. He is answered. Nuh calls and is answered. Ayyub calls and is answered. Yunus calls from inside the darkness and is answered. The surah is making an argument about the reliability of that sequence to people who were themselves at the end of their resources."
+      ],
+      "name_story": "Named simply for the prophets, and the naming is accurate: no other surah gathers so many of them in so little space. They are presented not as a series of biographies but as one continuous demonstration, and the surah says so directly near its end, that this community of yours is one community, and I am your Lord, so worship Me.",
+      "movements": [
+        {"range": "1-29", "h": "The reckoning has drawn near", "note": "The opening warning, the objections of the deniers to a messenger who is a man, and the argument that had there been gods besides Allah in the heavens and earth, both would have been ruined."},
+        {"range": "30-50", "h": "Signs in the made world", "note": "The heavens and the earth as a joined entity separated, every living thing made from water, mountains set firm, and the statement that every soul will taste death."},
+        {"range": "51-75", "h": "Ibrahim among the idols", "note": "The young man questioning his people, the axe left on the shoulder of the largest idol, the trial by fire, and the command to the fire to be coolness and safety."},
+        {"range": "76-91", "h": "The ones who called out", "note": "Nuh, Dawud and Sulayman, Ayyub, Isma'il, Idris, Dhul-Kifl, Yunus in the darkness, and Zakariyya. Each in distress, each answered."},
+        {"range": "92-112", "h": "One community", "note": "The unity of the prophetic message, the closing scenes of the Hour, and the description of the Prophet ﷺ as a mercy to the worlds."}
+      ],
+      "themes": [
+        {"t": "Distress, then an answer", "d": "The surah's structural argument is repetition. It shows the same sequence so many times that the reader stops treating it as anecdote and starts treating it as a pattern."},
+        {"t": "One message, many messengers", "d": "The prophets are not presented as founders of separate religions but as one continuous community delivering one thing."},
+        {"t": "Every soul will taste death", "d": "Stated flatly in the middle of the surah, with the addition that you are tested with evil and with good as a trial."},
+        {"t": "Mercy as the purpose", "d": "The description of the Prophet ﷺ as a mercy to the worlds is placed near the end, after all the warning, and reframes everything before it."}
+      ],
+      "heart": [
+        "Recited slowly, this is the surah to hold when a situation has gone past what you can manage. Its method is not consolation but accumulation: by the time you reach Yunus in the belly of the fish, calling out that there is no god but You, glory be to You, indeed I was among the wrongdoers, you have already watched the same rescue happen six times.",
+        "The words Yunus said are the ones most readers keep, and the surah adds a line about them that is easy to miss. So We responded to him and saved him from the distress. And thus do We save the believers. The rescue is not presented as a special dispensation for a prophet. It is generalised, deliberately, in the next sentence."
+      ],
+      "passages": [
+        {"ref": "21:87", "why": "The du'a of Dhun-Nun from inside the darkness. Short enough to say under your breath and the surah immediately promises the same rescue to anyone who says it."},
+        {"ref": "21:83", "why": "Ayyub's call, which is remarkable for what it does not contain: no complaint, no request stated, only that harm has touched me and You are the most merciful of the merciful."},
+        {"ref": "21:30", "why": "The heavens and the earth were a joined entity, and We separated them, and made from water every living thing."},
+        {"ref": "21:107", "why": "We have not sent you except as a mercy to the worlds. The whole mission stated in one clause."}
+      ],
+      "connections": [
+        {"to": 12, "why": "Yusuf tells one rescue at length; Al-Anbiya compresses many, and reading them together shows the same shape at two speeds."},
+        {"to": 37, "why": "As-Saffat carries the other major gathering of prophets and completes several of the accounts begun here."}
+      ],
+      "virtue": {
+        "text": "No prophetic report establishes a specific merit for reciting Al-Anbiya. What is authentically recorded is a companion's remark: Ibn Mas'ud said of this surah, along with Bani Israil, al-Kahf and Maryam, that they are among the earliest revealed and are his treasured possessions. That is his own testimony to their standing, reported in Bukhari, and it is not a saying of the Prophet ﷺ, so it is given here as what it is.",
+        "src": "no prophetic virtue report; Ibn Mas'ud's remark in Bukhari 4739",
+        "level": "none"
+      }
+    },
+    {
+      "n": 23,
+      "context": [
+        "Al-Mu'minun is Makkan and opens with the most direct description in the Qur'an of what a successful believer actually does. Eleven verses, a short list, no metaphor. It was revealed to a community that was being told daily that it had chosen ruin, and the first word of the surah is aflaha, they have succeeded.",
+        "The rest of the surah works outward from that claim. It walks through the stages of a human being's formation in the womb, through the story of Nuh and the messengers after him, through the objections of those who cannot accept being raised again, and closes on a question that reframes the whole thing: did you think that We created you aimlessly?"
+      ],
+      "name_story": "Named for the believers of its first verse, and the naming is unusually load-bearing. Most surahs are named for an object or an event in them. This one is named for a category of person, and the opening eleven verses are the definition of that category, given in the order the surah wants them remembered: prayer first, then speech, then wealth, then chastity, then trusts, and prayer again at the end as a frame.",
+      "movements": [
+        {"range": "1-11", "h": "The definition", "note": "Humility in prayer, turning away from idle talk, giving zakah, guarding chastity, keeping trusts and covenants, and guarding the prayers. The list closes by naming the inheritance."},
+        {"range": "12-22", "h": "How a person is made", "note": "From an extract of clay through the stages of formation, ending in the phrase that made a companion say it aloud before it was revealed: so blessed is Allah, the best of creators."},
+        {"range": "23-54", "h": "Nuh, and the messengers after him", "note": "The same argument in each generation, the same objection each time, and the observation that they cut their affair into sects, each faction rejoicing in what it has."},
+        {"range": "55-92", "h": "Wealth mistaken for approval", "note": "Do they think that what We extend to them of wealth and children means We hasten good for them? Then the description of those who give what they give while their hearts are fearful."},
+        {"range": "93-118", "h": "The barzakh, and the question", "note": "The plea to be sent back, refused; the barrier until the Day they are raised; and the closing question about being created without purpose."}
+      ],
+      "themes": [
+        {"t": "Success, defined before it is claimed", "d": "The surah does not argue that believers will succeed. It states that they have, and then spends eleven verses saying precisely which believers it means."},
+        {"t": "Prosperity is not a verdict", "d": "The passage on wealth and children answers the oldest confusion there is: that being comfortable means being approved of."},
+        {"t": "Fear inside good deeds", "d": "Those who give what they give while their hearts are fearful. Aisha asked whether this meant the one who steals and drinks, and was told no: it is the one who prays and fasts and gives, and fears it will not be accepted."},
+        {"t": "The door that does not reopen", "d": "The request to be returned is answered with a single word, kalla, no, and then a barrier is described. The surah does not soften it."}
+      ],
+      "heart": [
+        "Recited slowly, the opening eleven verses function as an examination, and most reciters fail some line of it every time. That is the point. The list is short enough to hold in the head for a week, and the items are specific enough that you can check them against an actual Tuesday: how the prayer was prayed, what was said that had no purpose, what was given, what was guarded, what was promised and not kept.",
+        "Then the surah closes on the question. Did you think that We created you aimlessly, and that you would not be returned to Us? It arrives after a hundred verses of formation, history and refusal, and it lands as the only question the whole surah has actually been asking."
+      ],
+      "passages": [
+        {"ref": "23:1-2", "why": "They have succeeded, those who believe: those who in their prayer are humbly submissive. The definition begins with how you stand, not with what you believe."},
+        {"ref": "23:14", "why": "So blessed is Allah, the best of creators. The stages of formation described fourteen centuries before they could be observed."},
+        {"ref": "23:60", "why": "Those who give what they give while their hearts are fearful. The verse about people who worry their good is not good enough."},
+        {"ref": "23:115", "why": "Did you then think that We created you aimlessly? The question the whole surah was built to ask."}
+      ],
+      "connections": [
+        {"to": 70, "why": "Al-Ma'arij gives a parallel list of the qualities of the saved, and the two lists read best side by side."},
+        {"to": 2, "why": "Al-Baqarah opens by describing the God-conscious in similar terms; this surah expands that description into its own opening."}
+      ],
+      "virtue": {
+        "text": "A report from Umar has the Prophet ﷺ saying that ten verses were revealed to him, and that whoever fulfils them enters Paradise, then reciting the opening of this surah. The report is transmitted in more than one collection and its grading is discussed by the scholars, with some grading it acceptable and others weakening it. It is given here with that disagreement stated rather than presented as settled.",
+        "src": "Tirmidhi 3173 and Ahmad 223; grading discussed among the scholars",
+        "level": "debated"
+      }
+    },
+    {
+      "n": 25,
+      "context": [
+        "Al-Furqan is Makkan and its first half is a record of the specific objections raised against the Prophet ﷺ, quoted rather than summarised. What is this messenger who eats food and walks in the markets? Why was an angel not sent down with him? Why was the Qur'an not revealed to him all at once? Why does he not have a treasure, or a garden?",
+        "The surah answers each and then does something more interesting. It stops arguing and describes instead, at length and in the last fifteen verses, what the people it is defending actually look like when they walk down a street. The answer to a caricature turns out to be a portrait."
+      ],
+      "name_story": "Al-Furqan, the Criterion: the thing that separates. It is a name for the Qur'an itself, given in the surah's first verse, and it names the surah's function. Everything in it is a sorting, between a messenger who eats and an angel who does not, between water that is sweet and water that is salt, between deeds that weigh and deeds that turn out to be scattered dust.",
+      "movements": [
+        {"range": "1-20", "h": "The objections, quoted", "note": "The demands for an angel, a treasure, a garden, and the observation that messengers before him also ate food and walked in the markets."},
+        {"range": "21-34", "h": "The Day they see the angels", "note": "The scene of regret, the Messenger's complaint that his people took this Qur'an as a thing abandoned, and the reason the revelation came gradually: to make firm your heart."},
+        {"range": "35-44", "h": "The nations before", "note": "Musa, Nuh, Ad and Thamud, and the man who has taken his own desire as his god."},
+        {"range": "45-60", "h": "Signs, quietly", "note": "The shadow lengthening, night as a covering, sleep as rest, wind before mercy, the two seas that do not mix, and the human being made from water and given lineage."},
+        {"range": "61-77", "h": "The servants of the Merciful", "note": "Fifteen verses describing them: how they walk, how they answer the ignorant, how they spend, what they ask for, ending with the du'a for a family that is a comfort to the eyes."}
+      ],
+      "themes": [
+        {"t": "A caricature answered with a portrait", "d": "The surah spends its first half refuting what was said about the believers and its last quarter simply describing them, which is the more effective of the two."},
+        {"t": "Gradual revelation as mercy", "d": "The objection that the Qur'an came piece by piece is answered directly: thus, that We may strengthen your heart by it, and We have spaced it distinctly."},
+        {"t": "Deeds that turn out to be nothing", "d": "We will regard what they have done of deeds and make them as dust dispersed. The image is of work that was real and weighed nothing."},
+        {"t": "Abandoning a book you own", "d": "The Messenger's complaint on that Day is not that they burned it or denied it, but that they took it as mahjur, a thing left alone."}
+      ],
+      "heart": [
+        "Recited slowly, the last fifteen verses are the ones that do the work. They describe a way of being in public that most people would recognise instantly and few could sustain for a day: walking without swagger, answering an aggressive stranger with peace, spending without extravagance and without meanness, standing at night, and asking for a family that will be a comfort to look at.",
+        "The complaint in verse 30 is the one that stops readers who already own several copies of the Qur'an. My Lord, indeed my people have taken this Qur'an as a thing abandoned. It is said about people who kept it, honoured it, and did not open it."
+      ],
+      "passages": [
+        {"ref": "25:30", "why": "My people have taken this Qur'an as a thing abandoned. Worth reading beside your own shelf."},
+        {"ref": "25:63", "why": "The servants of the Merciful walk upon the earth gently, and when the ignorant address them, they say peace."},
+        {"ref": "25:67", "why": "When they spend, they are neither extravagant nor stingy, but between that, justly moderate."},
+        {"ref": "25:74", "why": "Our Lord, grant us from among our spouses and offspring a comfort to our eyes. The du'a most parents eventually memorise."}
+      ],
+      "connections": [
+        {"to": 17, "why": "Al-Isra gives the parallel charter of conduct; this surah gives the portrait rather than the instructions."},
+        {"to": 31, "why": "Luqman's counsel on how to walk and how to speak matches the description of the servants of the Merciful almost line for line."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Furqan. Its standing rests on the closing passage, the description of the servants of the Merciful, which has been used as a portrait of Muslim character for as long as there has been anyone to read it.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 28,
+      "context": [
+        "Al-Qasas is Makkan and tells the early life of Musa in more detail than anywhere else in the Qur'an: the decree to kill the newborn boys, the mother instructed to place her child in the river, the palace of the man hunting him, the killing that made him a fugitive, ten years of shepherding in Madyan, and the return.",
+        "It came to a Prophet ﷺ whose own community was being ground down in Makkah and who would shortly have to leave the city that had rejected him. The surah is telling a man about to become an emigrant the story of another emigrant, one who left with nothing, worked for a decade in obscurity, and came back."
+      ],
+      "name_story": "Al-Qasas, the Stories or the Narration, from the moment Musa arrives in Madyan and tells the old man his story: and when he came to him and related to him the narration, he said, do not fear, you have escaped from the wrongdoing people. The surah is named for the act of a frightened man telling somebody what happened to him, and being told he is safe.",
+      "movements": [
+        {"range": "1-13", "h": "The river", "note": "Fir'awn's decree, the mother's fear, the inspiration to place the child in the water, and the promise that he would be returned to her. He is raised in the house of the man who ordered his death."},
+        {"range": "14-28", "h": "The killing, and Madyan", "note": "The fight, the flight, the shade where he prays the shortest du'a in the surah, the two women at the well, and ten years of work in exchange for a marriage."},
+        {"range": "29-42", "h": "The fire, and the return", "note": "The commission, the request for Harun, and the confrontation with a man who had claimed divinity."},
+        {"range": "43-60", "h": "Addressed to Makkah", "note": "The surah turns from the story to the Prophet's ﷺ own situation: you were not on the western side when We decreed, and the objection that following guidance would drive them from their land."},
+        {"range": "61-88", "h": "Qarun, and the closing", "note": "The man whose treasure keys weighed down a group of strong men, swallowed with his house, and the verse about seeking the Home of the Hereafter without forgetting your share of this world."}
+      ],
+      "themes": [
+        {"t": "Rescue that runs through the danger", "d": "The child is saved not by being hidden from Fir'awn but by being raised in his house. The surah's idea of protection is not avoidance."},
+        {"t": "The long obscure middle", "d": "Ten years of shepherding are given a few words. The surah does not treat them as wasted, and a reader in the middle of their own decade of nothing visible should notice."},
+        {"t": "Wealth as a test that can be failed", "d": "Qarun is not punished for having. He is ruined for the sentence he says: I was only given it because of knowledge I have."},
+        {"t": "You do not guide whom you love", "d": "Revealed about the Prophet's ﷺ own uncle, and it is one of the hardest verses in the Qur'an for anyone praying for a relative."}
+      ],
+      "heart": [
+        "Recited slowly, the verse that stays is the one Musa says in the shade at Madyan, exhausted, hunted, with nothing. My Lord, indeed I am, for whatever good You would send down to me, in need. He does not name what he wants. He describes his condition and stops, and the rest of his life follows from that afternoon.",
+        "The other passage that lands is the mother's. Her heart became empty, and she almost disclosed it, had We not bound fast her heart. The Qur'an records the exact interior state of a woman who has just put her baby in a river because she was told to, and does not tidy it."
+      ],
+      "passages": [
+        {"ref": "28:24", "why": "My Lord, indeed I am in need of whatever good You would send down to me. The shortest and most usable du'a in the Qur'an for a person at the end of their resources."},
+        {"ref": "28:7", "why": "The instruction to the mother of Musa: do not fear and do not grieve, indeed We will return him to you. Given at the moment she was told to let him go."},
+        {"ref": "28:56", "why": "You do not guide whom you love, but Allah guides whom He wills. Revealed about the Prophet's ﷺ own uncle at his deathbed."},
+        {"ref": "28:77", "why": "Seek the Home of the Hereafter, and do not forget your share of this world. Both halves belong to the same verse."}
+      ],
+      "connections": [
+        {"to": 20, "why": "Ta-Ha tells the later part of the same life, and the two together form one continuous account of Musa."},
+        {"to": 12, "why": "Yusuf is the other long Makkan narrative of a man taken from his family and raised in a foreign house."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Qasas. It carries instead one of the most historically anchored verses in the Qur'an, 28:56, which the authentic collections record as revealed about the Prophet's ﷺ uncle Abu Talib at his death, and which settles a question every believer with an unbelieving relative eventually asks.",
+        "src": "no authentic virtue report; the occasion of 28:56 in Bukhari 3884 and Muslim 24",
+        "level": "none"
+      }
+    },
+    {
+      "n": 30,
+      "context": [
+        "Ar-Rum is Makkan and opens with something no other surah does: a specific, falsifiable prediction about a foreign war. The Byzantines had been defeated by Persia in the nearest land, and the idolaters of Makkah took it as a sign, since the Byzantines were people of scripture and the Persians were not. The surah states that the Byzantines will themselves be victorious within bid' sinin, a term the Arabs used for somewhere between three and nine years.",
+        "Abu Bakr is reported to have wagered on it publicly with Ubayy ibn Khalaf, and the Byzantines won at Nineveh within the stated window. It is an unusual thing for a scripture to do, because a prediction with a deadline attached can only be one of two things."
+      ],
+      "name_story": "Named for the Romans, meaning the Byzantines of the eastern empire. A surah named for a foreign power in a war the listeners had no part in, which is itself the point: the argument is that the rise and fall of empires belongs to Allah both before and after, and that the people arguing about it in a Makkan market had understood neither end of it.",
+      "movements": [
+        {"range": "1-10", "h": "The prediction", "note": "The defeat, the promise of victory within a few years, and the note that the believers will rejoice on that day, with the observation that most people know only the outward of this life."},
+        {"range": "11-32", "h": "Signs, one after another", "note": "Creation from dust, spouses and the affection placed between them, the diversity of languages and colours, sleep, lightning, and the fitrah upon which people were made."},
+        {"range": "33-45", "h": "The pattern of turning", "note": "People calling on Allah in hardship and forgetting Him in ease, the corruption that appeared on land and sea by what people's hands earned, and usury set against zakah."},
+        {"range": "46-60", "h": "Winds, rain, and dead earth", "note": "The winds sent as bringers of good tidings, the reviving of dead land as the image of the resurrection, and the closing instruction to be patient because the promise of Allah is true."}
+      ],
+      "themes": [
+        {"t": "History is not self-directed", "d": "The surah opens on an empire's defeat and its coming victory, both stated as belonging to Allah's command, before and after."},
+        {"t": "The fitrah", "d": "The original disposition upon which people were made, described as a pattern that does not change, which underlies the whole Islamic account of why belief feels like recognition rather than acquisition."},
+        {"t": "Marriage as a sign", "d": "The verse on spouses is placed inside a list of cosmic signs, between the creation of humanity from dust and the diversity of languages, which is a statement about its weight."},
+        {"t": "Corruption traced to hands", "d": "Corruption has appeared on land and sea because of what the hands of people have earned. The causation is stated plainly and was written long before anyone could measure it."}
+      ],
+      "heart": [
+        "Recited slowly, this surah does something to a reader's sense of scale. It begins with an empire, moves through the creation of the human being, and arrives at the affection between two people in a house, all in the same register and all called signs. The effect is that a marriage stops feeling like a private arrangement and starts feeling like part of the same evidence as the sky.",
+        "Its closing instruction is the one most needed by anyone watching the world go badly. So be patient. Indeed, the promise of Allah is truth. And let them not disquiet you who are not certain. It was given to people whose situation would not improve for years."
+      ],
+      "passages": [
+        {"ref": "30:21", "why": "He created for you from yourselves mates, and placed between you affection and mercy. The verse read at most Muslim weddings, and it is filed under signs."},
+        {"ref": "30:30", "why": "The fitrah of Allah upon which He created people. No change should there be in the creation of Allah."},
+        {"ref": "30:41", "why": "Corruption has appeared on land and sea because of what the hands of people have earned."},
+        {"ref": "30:60", "why": "So be patient. Indeed, the promise of Allah is truth. The last verse, and the instruction the whole surah has been building toward."}
+      ],
+      "connections": [
+        {"to": 13, "why": "Ar-Ra'd makes the same argument from ordinary signs against the demand for spectacle."},
+        {"to": 16, "why": "An-Nahl is the other great inventory of blessing, and the two surahs use the same method."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Ar-Rum. What distinguishes it is historical rather than devotional: it makes a dated, falsifiable prediction about a foreign war in its opening verses, and the histories record that the prediction held within the window it named.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 39,
+      "context": [
+        "Az-Zumar is Makkan and its subject is ikhlas, sincerity: the insistence, repeated from the first page, that the religion belongs to Allah alone and that worship offered with a divided intention is not a smaller version of worship but a different thing.",
+        "It was revealed while the pressure to compromise was constant, and its argument runs through comparison after comparison. A servant owned by several quarrelling masters against a servant owned by one. Those who know against those who do not. Those driven to the Fire in throngs against those led to the Garden in throngs. The surah is named for the last of these."
+      ],
+      "name_story": "Az-Zumar, the Groups or Throngs, from the closing scenes in which both destinations are approached zumaran, in crowds. The image is of two great processions moving in opposite directions, and the surah spends seventy verses establishing the difference between the people in them before it shows them walking.",
+      "movements": [
+        {"range": "1-21", "h": "The religion, purely", "note": "The insistence on sincerity, the argument against intermediaries, the creation of humanity in stages, and the description of skins that shiver at the recitation and then soften."},
+        {"range": "22-40", "h": "A chest opened to Islam", "note": "The one whose breast Allah has expanded walking in light, set against hardened hearts, and the parable of the two servants."},
+        {"range": "41-52", "h": "Souls taken in sleep and in death", "note": "Allah takes the souls at the time of their death, and those that did not die during their sleep, and He keeps one and releases the other."},
+        {"range": "53-63", "h": "The verse of hope", "note": "O My servants who have transgressed against themselves, do not despair of the mercy of Allah, followed immediately by the instruction to turn back before it is too late."},
+        {"range": "64-75", "h": "The two throngs", "note": "The measure of Allah not truly estimated, the trumpet, and the two processions, one to the Fire whose gates open as they arrive, one to the Garden whose gates are already open."}
+      ],
+      "themes": [
+        {"t": "Sincerity is the whole subject", "d": "The surah returns to it in almost every section: worship Allah, sincere to Him in religion, stated three separate times in the first eleven verses."},
+        {"t": "Despair as the greater danger", "d": "The most quoted verse in the surah addresses people who have already ruined things, and forbids them one specific response."},
+        {"t": "Knowing and not knowing", "d": "Are those who know equal to those who do not know? Asked about people who stand in the night in prayer, which sets what kind of knowing is meant."},
+        {"t": "Sleep as the smaller death", "d": "The verse on souls taken nightly is the clearest statement in the Qur'an that the exit is rehearsed every night."}
+      ],
+      "heart": [
+        "Recited slowly, verse 53 is one of the few places in the Qur'an where a reader may find themselves stopping mid-line. O My servants who have transgressed against themselves, do not despair of the mercy of Allah. Indeed, Allah forgives all sins. It is addressed, by name, to the people who assume the address is not for them.",
+        "What is often missed is the verse immediately after it, which stops the passage from becoming a licence. And return to your Lord and submit to Him before the punishment comes upon you. The door is described as wide open and as having a closing time, in consecutive sentences."
+      ],
+      "passages": [
+        {"ref": "39:53", "why": "Do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Read the next verse with it, always."},
+        {"ref": "39:9", "why": "Are those who know equal to those who do not know? Asked about a person standing in the depths of the night."},
+        {"ref": "39:23", "why": "The skins of those who fear their Lord shiver at it, then their skins and hearts soften at the remembrance of Allah."},
+        {"ref": "39:42", "why": "Allah takes the souls at the time of their death, and those that did not die during their sleep."}
+      ],
+      "connections": [
+        {"to": 17, "why": "The Prophet ﷺ is reported to have recited these two together every night before sleeping."},
+        {"to": 112, "why": "Al-Ikhlas states in four verses the sincerity that this surah argues for across seventy five."}
+      ],
+      "virtue": {
+        "text": "Aisha reported that the Prophet ﷺ would not sleep until he had recited Bani Israil and Az-Zumar. The report is graded hasan by a number of scholars rather than being of the highest grade, and it records his practice rather than promising a reward, so both qualifications are given here with it.",
+        "src": "Tirmidhi 2920; graded hasan",
+        "level": "sunnah"
+      }
+    }
+  ]
+}

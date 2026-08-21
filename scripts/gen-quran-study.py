@@ -7,6 +7,7 @@ Sources (all under build/):
   study-deep-b.json   23 surahs, rich records
   study-deep-c.json    8 surahs, promoted from short to rich
   study-deep-d.json    7 surahs, promoted from short to rich
+  study-deep-e.json    6 surahs, promoted from short to rich
   study-light.json    72 surahs, short records, the complete 114 minus the deep ones
 
 A surah that appears in a deep tranche AND in the light file is taken from the
@@ -29,7 +30,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD = os.path.join(ROOT, "build")
 OUT = os.path.join(ROOT, "quran-study.js")
 DEEP_FILES = ["study-deep-a.json", "study-deep-b.json",
-              "study-deep-c.json", "study-deep-d.json"]
+              "study-deep-c.json", "study-deep-d.json",
+              "study-deep-e.json"]
 LIGHT_FILE = "study-light.json"
 
 DEEP_KEYS = ["context", "name_story", "movements", "themes", "heart",
