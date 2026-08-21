@@ -32,6 +32,7 @@ GROUPS = [
         ("places.html", "m.places", "Places"),
         ("heroes.html", "m.heroes", "Heroes of Islam"),
         ("unseen.html", "m.unseen", "The Unseen &amp; the Mysteries"),
+        ("simulation.html", "m.simulation", "Are We in a Simulation?"),
     ]),
     ("g.heart", "The Heart", [
         ("pillars.html", "m.pillars", "The Five Pillars"),
@@ -39,6 +40,8 @@ GROUPS = [
         ("hajj-plan.html", "m.hajjplan", "Your Pilgrim Plan"),
         ("begin.html", "m.begin", "Begin · New Muslim"),
         ("family.html", "m.family", "The Family Room"),
+        ("marriage.html", "m.marriage", "Marriage &amp; the Home"),
+        ("teens.html", "m.teens", "For Teenagers"),
         ("protection.html", "m.protection", "Protection & the Light"),
         ("ramadan.html", "m.ramadan", "Ramadan"),
         ("eid.html", "m.eid", "The Two Eids"),
