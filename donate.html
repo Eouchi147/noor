@@ -41,7 +41,8 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sec{max-width:34rem;margin:0 auto;padding:1.6rem 1rem 0}
 .lead{font-size:.88rem;color:rgba(44,36,22,.72);line-height:1.8}
 .gcard{background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:22px;box-shadow:0 14px 44px rgba(44,36,22,.1);padding:1.4rem 1.4rem 1.2rem;margin-top:-2.6rem;position:relative;z-index:20}
-.amts{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.9rem}
+.amts{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.9rem}
+@media(min-width:24rem){.amts{grid-template-columns:repeat(4,1fr)}}
 .amt{border:1.5px solid rgba(44,36,22,.16);background:#FFFDF6;border-radius:14px;padding:.75rem .2rem;text-align:center;cursor:pointer;transition:all .15s;font-family:inherit}
 .amt .v{display:block;font-weight:800;font-size:1.02rem;color:#2C2416}
 .amt .u{display:block;font-size:.58rem;color:rgba(44,36,22,.45);margin-top:.1rem;letter-spacing:.04em}
@@ -474,7 +475,15 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 "use strict";
 var $=function(id){return document.getElementById(id)};
 /* USD anchor ladder, converted to the reader's own currency. */
-var USD=[250,100,50,20], DEFAULT_IDX=2;
+/* The ladder runs upward from a single dollar so that nobody is priced out
+   of giving at all, and reaches a thousand so that nobody generous has to
+   hunt for the custom box. Dense at the bottom, where most gifts actually
+   land, and the names rise with the amount without ever making the smallest
+   one sound apologetic: an atom's weight is seen. */
+var USD=[1,5,10,25,50,100,250,1000];
+var TIER=["a spark","a wick","a candle","a steady lamp",
+          "a strong lamp","a lantern","a beacon","a founding gift"];
+var DEFAULT_IDX=3;
 var cur="usd", sym="$", localAmts=USD.slice(), chosen=DEFAULT_IDX, customMode=false;
 
 var fxRate=1, minLocal=1, maxLocal=1000;
@@ -507,7 +516,7 @@ function renderAmts(){
     var b=document.createElement("button");
     b.type="button"; b.className="amt"+(!customMode&&i===chosen?" on":""); b.setAttribute("role","radio");
     b.setAttribute("aria-checked",(!customMode&&i===chosen)?"true":"false");
-    b.innerHTML='<span class="v">'+fmt(a)+'</span><span class="u">'+(i===0?"a founding gift":i===1?"a strong lamp":i===2?"a steady lamp":"a candle")+'</span>';
+    b.innerHTML='<span class="v">'+fmt(a)+'</span><span class="u">'+(TIER[i]||"a light")+'</span>';
     b.addEventListener("click",function(){ chosen=i; customMode=false; $("custom-wrap").hidden=true; renderAmts(); label(); });
     box.appendChild(b);
   });
@@ -536,9 +545,18 @@ document.addEventListener("DOMContentLoaded",function(){
         var mx=1000*fx, px=Math.pow(10,Math.floor(Math.log10(mx)))/20;
         maxLocal=Math.round(mx/px)*px;
         localAmts=USD.map(function(u){return clean(u*fx)});
+        /* The server holds a floor and a ceiling per currency. A dollar
+           converted into a weak currency can land under that floor, and the
+           reader would then be charged more than the rung they tapped. Every
+           rung is pulled inside the range before it is ever shown. */
+        localAmts=localAmts.map(function(v){ return Math.min(maxLocal, Math.max(minLocal, v)); });
         localAmts=localAmts.filter(function(v,i,a){return a.indexOf(v)===i});
       } }
   }catch(e){}
+  /* In a weak currency two rungs can round to the same figure and one is
+     dropped, so the default is clamped rather than left pointing past the end
+     of a shorter ladder. */
+  if(chosen >= localAmts.length) chosen = Math.max(0, localAmts.length - 1);
   renderAmts(); label();
   try{ $("custom").min=String(minLocal); $("custom").max=String(maxLocal);
        $("custom-range").textContent="Anything from "+fmt(minLocal)+" to "+fmt(maxLocal); }catch(e){}
