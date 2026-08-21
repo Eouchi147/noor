@@ -189,6 +189,26 @@ function dayIndexOf(dateStr) {
   return Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - start) / 86400000);
 }
 const clean = x => String(x || "").replace(/—|–/g, "·").trim();
+
+/* The Codex speaks 21 languages, and until now its daily light spoke one.
+   A reader who switched to Arabic met an English paragraph sitting inside an
+   otherwise Arabic page. The lantern is simply told which language to write
+   in, and each language keeps its own copy of the day, so the cost is one
+   generation per language per day rather than one per reader. */
+const LANGS = { en:"English", ar:"Arabic", fr:"French", es:"Spanish", de:"German",
+  ru:"Russian", tr:"Turkish", ur:"Urdu", hi:"Hindi", bn:"Bengali", id:"Indonesian",
+  fa:"Persian", prs:"Dari", pa:"Punjabi", ha:"Hausa", ps:"Pashto", so:"Somali",
+  ku:"Kurdish", sw:"Swahili", zh:"Chinese", ja:"Japanese", ko:"Korean" };
+function langOf(req) {
+  const raw = String((req.query && req.query.lang) || "").slice(0, 3).toLowerCase();
+  return LANGS[raw] ? raw : "en";
+}
+function inLanguage(code) {
+  if (code === "en") return "";
+  return "\nWrite every value in " + LANGS[code] + ", in the natural register a "
+    + LANGS[code] + " reader expects from a reverent Islamic library. Proper names take "
+    + "their standard " + LANGS[code] + " form. Numbers and dates stay in Western digits.";
+}
 /* One shared abort for the whole chain was this file's quiet bug: the first
    few names were dead, they spent the 6.5 seconds between them, and the model
    that would have answered was never reached. Each attempt now carries its own
@@ -221,16 +241,16 @@ async function lantern(system, user, maxTokens) {
 const BASE_RULES = "Accuracy is sacred: well-established facts and mainstream Sunni understanding only; never invent dates, quotes, hadith or verses; no rulings, no fatwas. Warm, vivid, plain language. Never use the em dash character; use commas or · instead. Reply with JSON only.";
 
 /* ---------- kinds ---------- */
-async function kindLight(today, want) {
+async function kindLight(today, want, lang) {
   const p = await lantern(
     ["You write one small daily illumination for NOOR Codex of Light, a free Islamic library.",
      'JSON exactly: {"category":"...","title":"...","story":"...","detail":"..."}',
      "category: one or two words. title: striking, truthful, under 60 characters.",
      "story: 55 to 90 words. Theme for this day: " + THEMES[dayIndexOf(want) % THEMES.length] + ".",
-     "detail: one short line: who / where / when.", BASE_RULES].join("\n"),
-    "The light for " + want + ". Choose the single best-documented fact fitting the theme.", 350);
+     "detail: one short line: who / where / when.", BASE_RULES + inLanguage(lang || "en")].join("\n"),
+    "The light for " + want + ". Choose the single best-documented fact fitting the theme.", 420);
   if (!p.title || !p.story) throw 0;
-  return { date: want, source: "lantern", category: clean(p.category).slice(0, 24) || "History", title: clean(p.title).slice(0, 90), story: clean(p.story).slice(0, 700), detail: clean(p.detail).slice(0, 90) };
+  return { date: want, lang: lang || "en", source: "lantern", category: clean(p.category).slice(0, 24) || "History", title: clean(p.title).slice(0, 90), story: clean(p.story).slice(0, 700), detail: clean(p.detail).slice(0, 90) };
 }
 function lightFallback(want) {
   const f = TREASURY[dayIndexOf(want) % TREASURY.length];
@@ -308,15 +328,18 @@ export default async function handler(req, res) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(want)) want = today;
     const age = Math.floor((Date.parse(today) - Date.parse(want)) / 86400000);
     if (!(age >= 0 && age <= 30)) want = today;
+    const lang = langOf(req);
+    res.setHeader("Vary", "Accept-Language");
     res.setHeader("Cache-Control", want === today ? "public, s-maxage=86400, stale-while-revalidate=172800" : "public, s-maxage=2592000, stale-while-revalidate=2592000");
-    const ck = "light:" + want;
+    const ck = "light:" + lang + ":" + want;
+    const kk = "nl:" + (lang === "en" ? "" : lang + ":") + want;
     if (cache.has(ck)) return res.status(200).json(cache.get(ck));
     /* past days never wake the AI: they come from the store's memory of
        what actually shone that day, or from the treasury, instantly. */
     if (want !== today) {
       if (kvReady()) {
         try {
-          const hit = (await kv([["GET", "nl:" + want]]))[0];
+          const hit = (await kv([["GET", kk]]))[0];
           if (hit) return res.status(200).json(remember(ck, JSON.parse(hit)));
         } catch {}
       }
@@ -326,13 +349,13 @@ export default async function handler(req, res) {
        pays for the generation; everyone else on earth reads what was stored. */
     if (kvReady()) {
       try {
-        const hit = (await kv([["GET", "nl:" + want]]))[0];
+        const hit = (await kv([["GET", kk]]))[0];
         if (hit) return res.status(200).json(remember(ck, JSON.parse(hit)));
       } catch {}
     }
     try {
-      const lit = await kindLight(today, want);
-      if (kvReady()) { kv([["SET", "nl:" + want, JSON.stringify(lit)], ["EXPIRE", "nl:" + want, "2764800"]]).catch(() => {}); }
+      const lit = await kindLight(today, want, lang);
+      if (kvReady()) { kv([["SET", kk, JSON.stringify(lit)], ["EXPIRE", kk, "2764800"]]).catch(() => {}); }
       return res.status(200).json(remember(ck, lit));
     }
     catch { return res.status(200).json(remember(ck, lightFallback(want))); }
