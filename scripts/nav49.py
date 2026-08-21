@@ -33,6 +33,7 @@ GROUPS = [
         ("heroes.html", "m.heroes", "Heroes of Islam"),
         ("unseen.html", "m.unseen", "The Unseen &amp; the Mysteries"),
         ("simulation.html", "m.simulation", "Are We in a Simulation?"),
+        ("journal.html", "m.journal", "The Guardian's Journal"),
     ]),
     ("g.heart", "The Heart", [
         ("pillars.html", "m.pillars", "The Five Pillars"),

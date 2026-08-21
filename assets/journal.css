@@ -1,0 +1,144 @@
+/* The Guardian's Journal · a hand, not a house style.
+   ------------------------------------------------------------------
+   Every other room of the Codex is printed: even margins, evidence badges,
+   a voice that speaks for the tradition. This one is written. It should feel
+   like a bound notebook that happens to live on a website, and a reader
+   should know within one second, before reading a word, that the authority
+   here is one man's and not revelation's.
+   The devices are old and few: vellum rather than white, a warm serif, a
+   ruled margin, an inked initial, a lozenge where a paragraph rests, and a
+   seal that says whose opinion this is. Light, not heavy. Nothing here is
+   an image; it is all type, rule and a little geometry, so it costs nothing
+   to load and never blocks the words. */
+
+:root{
+  --vellum:#F5EEDC;
+  --vellum-2:#EFE5CE;
+  --jink:#3A2E1C;
+  --jink-soft:rgba(58,46,28,.72);
+  --jink-faint:rgba(58,46,28,.45);
+  --jgold:#A9812B;
+  --jgold-hi:#C9A227;
+  --jseal:#7B2D26;
+  --jrule-c:rgba(169,129,43,.35);
+}
+
+.jwrap{
+  background:var(--vellum);
+  color:var(--jink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  position:relative;
+}
+/* the tooth of the paper: one tiny tile, not an image request */
+.jwrap::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0 0.19 0 0 0 0.055 0'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");
+}
+.jwrap > *{position:relative;z-index:1}
+
+/* ---- the head of the journal ---------------------------------------- */
+.jhead{max-width:44rem;margin:0 auto;padding:3.2rem 1.15rem 1.4rem;text-align:center}
+.jhead .jorn{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--jgold);font-weight:700;margin:0}
+.jhead h1{font-size:clamp(1.85rem,5.4vw,2.7rem);font-weight:600;letter-spacing:-.01em;margin:.5rem 0 0;line-height:1.15}
+.jhead .jsub{font-size:.95rem;line-height:1.85;color:var(--jink-soft);margin:.9rem auto 0;max-width:34rem}
+
+/* the seal: this is opinion, and it says so before you read a line */
+.jseal{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.15rem;
+  border:1px solid rgba(123,45,38,.35);background:rgba(123,45,38,.07);
+  border-radius:999px;padding:.42rem .85rem .42rem .5rem}
+.jseal i{width:1.35rem;height:1.35rem;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:radial-gradient(circle at 34% 32%,#9C4038,var(--jseal) 62%,#5E1F1A);
+  box-shadow:inset 0 0 0 1px rgba(255,240,220,.28),0 1px 3px rgba(58,46,28,.3);
+  font-style:normal;font-size:.66rem;color:rgba(255,238,220,.92);font-family:Amiri,serif;line-height:1}
+.jseal span{font-family:Inter,system-ui,sans-serif;font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:700;color:var(--jseal)}
+
+/* ---- a lozenge where the page takes a breath ------------------------- */
+.jdiv{display:flex;align-items:center;gap:.8rem;max-width:42rem;margin:2rem auto;padding:0 1.15rem}
+.jdiv::before,.jdiv::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--jrule-c),transparent)}
+.jdiv i{font-style:normal;color:var(--jgold);font-size:.66rem;letter-spacing:.4em}
+
+/* ---- the list of entries -------------------------------------------- */
+.jlist{max-width:44rem;margin:0 auto;padding:0 1.15rem 1rem}
+.jentry{position:relative;padding:1.5rem 0 1.6rem;border-bottom:1px solid rgba(169,129,43,.22)}
+.jentry:last-child{border-bottom:0}
+.jentry .jmeta{font-family:Inter,system-ui,sans-serif;font-size:.63rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--jgold);font-weight:700}
+.jentry h2{font-size:1.32rem;font-weight:600;line-height:1.35;margin:.45rem 0 0}
+.jentry h2 a{color:var(--jink);text-decoration:none;background-image:linear-gradient(var(--jrule-c),var(--jrule-c));
+  background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .3s}
+.jentry h2 a:hover,.jentry h2 a:focus-visible{background-size:100% 1px}
+.jentry .jdek{font-size:.93rem;line-height:1.85;color:var(--jink-soft);margin:.5rem 0 0}
+.jentry .jfoot{font-family:Inter,system-ui,sans-serif;font-size:.68rem;color:var(--jink-faint);margin:.7rem 0 0;
+  display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+.jtag{border:1px solid var(--jrule-c);border-radius:999px;padding:.14rem .5rem;font-size:.62rem;
+  letter-spacing:.05em;color:var(--jgold)}
+
+/* ---- one entry, read ------------------------------------------------- */
+.jpage{max-width:40rem;margin:0 auto;padding:0 1.15rem}
+.jpage .jmeta{font-family:Inter,system-ui,sans-serif;font-size:.63rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--jgold);font-weight:700;text-align:center}
+.jpage h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:600;line-height:1.25;margin:.55rem 0 0;text-align:center}
+.jpage .jdek{font-size:1rem;line-height:1.9;color:var(--jink-soft);margin:.9rem 0 0;text-align:center;font-style:italic}
+
+/* the body carries the ruled margin, the way a notebook does */
+.jbody{margin-top:1.9rem;padding-inline-start:1.15rem;border-inline-start:1px solid var(--jrule-c)}
+.jbody p{font-size:1.02rem;line-height:1.95;margin:0 0 1.15rem;color:var(--jink)}
+.jbody p:last-child{margin-bottom:0}
+/* the inked initial, only on the first paragraph, and never on a phone
+   where three lines of drop cap eat a third of the screen */
+@media (min-width:34rem){
+  .jbody > p:first-of-type::first-letter{
+    float:inline-start;font-size:3.15rem;line-height:.82;margin-inline-end:.42rem;margin-top:.28rem;
+    color:var(--jgold);font-weight:600;
+  }
+}
+.jbody h3{font-size:1.1rem;font-weight:600;margin:2rem 0 .6rem;letter-spacing:-.005em}
+.jbody h4{font-size:.96rem;font-weight:700;margin:1.6rem 0 .5rem}
+.jbody ul{margin:0 0 1.15rem;padding-inline-start:1.15rem}
+.jbody li{font-size:1rem;line-height:1.9;margin:0 0 .4rem}
+.jbody blockquote{margin:1.3rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:2px solid var(--jgold);
+  font-style:italic;color:var(--jink-soft)}
+.jbody blockquote p{font-size:.98rem}
+.jbody a{color:#7A5B12;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--jrule-c)}
+.jbody a:hover{text-decoration-color:var(--jgold)}
+.jbody hr.jrule{border:0;height:1px;margin:1.9rem auto;width:6rem;
+  background:linear-gradient(90deg,transparent,var(--jgold),transparent)}
+
+/* the closing mark of an entry */
+.jend{text-align:center;color:var(--jgold);font-size:.8rem;letter-spacing:.5em;margin:2.2rem 0 0}
+
+/* ---- the reply room -------------------------------------------------- */
+.jtalk{max-width:40rem;margin:2.6rem auto 0;padding:0 1.15rem 3rem}
+.jtalk h2{font-size:1.05rem;font-weight:600;margin:0}
+.jtalk .jnote{font-size:.82rem;line-height:1.8;color:var(--jink-soft);margin:.5rem 0 1.2rem}
+.jform{background:rgba(255,253,245,.72);border:1px solid var(--jrule-c);border-radius:6px;padding:1rem}
+.jform input,.jform textarea{width:100%;box-sizing:border-box;background:#FFFDF5;color:var(--jink);
+  border:1px solid rgba(58,46,28,.18);border-radius:4px;padding:.6rem .7rem;font-family:inherit;font-size:.92rem;
+  line-height:1.7}
+.jform textarea{margin-top:.5rem;resize:vertical;min-height:6.5rem}
+.jform input:focus,.jform textarea:focus{outline:2px solid rgba(169,129,43,.5);outline-offset:1px;border-color:var(--jgold)}
+.jform .jrow{display:flex;gap:.6rem;align-items:center;margin-top:.6rem;flex-wrap:wrap}
+.jsend{background:var(--jink);color:var(--vellum);border:0;border-radius:4px;padding:.6rem 1.15rem;
+  font-family:Inter,system-ui,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.04em;cursor:pointer}
+.jsend:hover{background:#4A3B24}
+.jsend[disabled]{opacity:.55;cursor:default}
+.jsay{font-family:Inter,system-ui,sans-serif;font-size:.74rem;color:var(--jink-faint)}
+.jcs{margin-top:1.6rem;display:flex;flex-direction:column;gap:1.1rem}
+.jc{border-inline-start:2px solid var(--jrule-c);padding-inline-start:.9rem}
+.jc .jw{font-family:Inter,system-ui,sans-serif;font-size:.72rem;color:var(--jink-faint)}
+.jc .jw b{color:var(--jink);font-weight:700}
+.jc p{font-size:.95rem;line-height:1.85;margin:.35rem 0 0;white-space:pre-wrap}
+.jc.held{opacity:.75;border-inline-start-color:rgba(123,45,38,.5)}
+.jc .jheld{font-family:Inter,system-ui,sans-serif;font-size:.66rem;color:var(--jseal);font-weight:700}
+
+/* ---- the way back ----------------------------------------------------- */
+.jback{max-width:40rem;margin:0 auto;padding:1.6rem 1.15rem 0}
+.jback a{font-family:Inter,system-ui,sans-serif;font-size:.74rem;color:var(--jink-faint);text-decoration:none;
+  letter-spacing:.04em}
+.jback a:hover{color:var(--jgold)}
+
+.jempty{max-width:40rem;margin:0 auto;padding:2rem 1.15rem 3rem;text-align:center;color:var(--jink-soft);
+  font-size:.95rem;line-height:1.9}
+
+@media (prefers-reduced-motion:reduce){.jentry h2 a{transition:none}}
