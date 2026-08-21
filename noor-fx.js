@@ -91,7 +91,10 @@ const NOOR_I18N = {
     this.lang = code; try { localStorage.setItem("noor_lang", code); } catch (e) {}
     if (code !== "en" && !this.packs[code]) {
       try {
-        const r = await fetch(`/i18n/${code}.json`, {cache:"force-cache"});
+        /* PACK_V: force-cache means a reader who visited before keeps the pack
+           they first downloaded, forever, unless the URL changes. Bump this on
+           every release that ships translations, exactly like noor-text.js. */
+        const r = await fetch(`/i18n/${code}.json?v=83`, {cache:"force-cache"});
         if (r.ok) { const j = await r.json(); this.packs[code] = Object.assign({}, UI_EN, j.ui || j); this.fullPacks[code] = j; }
         else toast(this.t("lang.fallback"));
       } catch (e) { toast(this.t("lang.fallback")); }
