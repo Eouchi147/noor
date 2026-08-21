@@ -313,6 +313,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <button class="tab" data-pane="guardians" role="tab"><span data-ic=shield></span> Legacy</button>
 <button class="tab" data-pane="traffic" role="tab"><span data-ic=scope></span> Traffic</button>
 <button class="tab" data-pane="market" role="tab"><span data-ic=globe></span> Marketing</button>
+<button class="tab" data-pane="journal" role="tab"><span data-ic=book></span> Journal</button>
 <button class="tab" data-pane="dials" role="tab"><span data-ic=gear></span> Controls</button>
 <button class="tab" data-pane="system" role="tab"><span data-ic=gear></span> System</button>
 </div>
@@ -604,6 +605,49 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 </div>
 
 <!-- ===================== MARKETING ===================== -->
+<!-- ===================== THE JOURNAL ===================== -->
+<div class="pane" id="pane-journal">
+<h2 class="sec">The writing desk</h2>
+<p class="muted" style="margin:.1rem 0 .9rem;max-width:46rem">Everything written here appears at
+<a href="/journal" target="_blank" rel="noopener" style="color:var(--gold-hi)">/journal</a> the moment it is saved as published.
+No zip, no upload, no deploy. Save it as a draft and only you can see it. The journal is your opinion and is
+themed so that no reader can mistake it for the teaching rooms.</p>
+
+<div class="panel">
+<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem">
+<button class="dgo" id="jw-new">New entry</button>
+<span class="muted" id="jw-state"></span>
+</div>
+<div id="jw-form" hidden>
+<input class="fi" id="jw-title" placeholder="Title" maxlength="160" style="width:100%;font-size:1rem;font-weight:700"/>
+<input class="fi" id="jw-dek" placeholder="One line underneath the title, optional" maxlength="300" style="width:100%;margin-top:.5rem"/>
+<textarea class="fi" id="jw-body" rows="16" placeholder="Write. A blank line makes a new paragraph. ## makes a heading. > makes a quotation. --- makes a divider. *word* is italic, **word** is bold, and [text](https://link) is a link." style="width:100%;margin-top:.5rem;line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem"></textarea>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+<input class="fi" id="jw-tags" placeholder="Tags, comma separated" maxlength="120" style="flex:1;min-width:12rem"/>
+<input class="fi" id="jw-slug" placeholder="Address, left blank it is made from the title" maxlength="70" style="flex:1;min-width:12rem"/>
+</div>
+<p style="margin-top:.7rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+<button class="dgo" id="jw-publish">Publish</button>
+<button class="ghost" id="jw-draft">Save as draft</button>
+<button class="ghost" id="jw-preview">Preview</button>
+<button class="ghost" id="jw-cancel">Close</button>
+<span class="muted" id="jw-count"></span>
+</p>
+<div id="jw-prev" class="out" hidden style="margin-top:.7rem"></div>
+</div>
+</div>
+
+<h2 class="sec">Entries</h2>
+<div class="panel"><div id="jw-list"><p class="muted">Reading the journal&hellip;</p></div></div>
+
+<h2 class="sec">Replies held by the filter</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:46rem">Nothing here was removed. A filter thought it had the shape of
+spam and set it aside for you. Release the real ones. The rule the site promises publicly is that no reply is ever
+removed for disagreeing, so use <b>Remove</b> only for machines, for unlawful content, or for something aimed at a
+named private person.</p>
+<div class="panel"><div id="jw-held"><p class="muted">&hellip;</p></div></div>
+</div>
+
 <div class="pane" id="pane-market">
 
 <h2 class="sec">The four laws every message obeys</h2>
@@ -1838,6 +1882,150 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       }
     }).catch(function(){ go.disabled=false; st.textContent='Could not reach the server.'; });
   };
+})();
+
+/* ================= THE WRITING DESK ================= */
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var wrap=$("jw-form"), listBox=$("jw-list"), heldBox=$("jw-held"), st=$("jw-state");
+  if(!wrap) return;
+  var editing=null;
+  function esc(x){return String(x==null?"":x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function api(body){
+    return fetch("/api/journal",{method:"POST",credentials:"same-origin",
+      headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j||{}}},function(){return {ok:false,j:{}}})});
+  }
+  function open(e){
+    editing = e || null;
+    wrap.hidden=false;
+    $("jw-title").value = e?e.title:"";
+    $("jw-dek").value   = e?(e.dek||""):"";
+    $("jw-body").value  = e?(e.body||""):"";
+    $("jw-tags").value  = e?((e.tags||[]).join(", ")):"";
+    $("jw-slug").value  = e?(e.slug||""):"";
+    $("jw-prev").hidden=true;
+    count();
+    $("jw-title").focus();
+  }
+  function count(){
+    var w=($("jw-body").value||"").split(/\s+/).filter(Boolean).length;
+    $("jw-count").textContent = w? (w+" words · about "+Math.max(1,Math.round(w/220))+" min") : "";
+  }
+  $("jw-body").addEventListener("input", count);
+  $("jw-new").onclick=function(){ open(null); };
+  $("jw-cancel").onclick=function(){ wrap.hidden=true; editing=null; st.textContent=""; };
+
+  function save(status){
+    var title=($("jw-title").value||"").trim();
+    if(!title){ st.textContent="It needs a title."; return; }
+    st.textContent="Saving…";
+    api({action:"save", id: editing?editing.id:"", title:title, dek:$("jw-dek").value,
+         body:$("jw-body").value, tags:$("jw-tags").value, slug:$("jw-slug").value, status:status})
+    .then(function(r){
+      if(!r.ok||!r.j.ok){ st.textContent=(r.j&&r.j.reason)||"That did not save."; return; }
+      st.textContent = status==="published" ? "Published. It is live at /journal now." : "Saved as a draft, visible only to you.";
+      wrap.hidden=true; editing=null; load();
+    });
+  }
+  $("jw-publish").onclick=function(){ save("published"); };
+  $("jw-draft").onclick=function(){ save("draft"); };
+  $("jw-preview").onclick=function(){
+    var p=$("jw-prev");
+    if(!p.hidden){ p.hidden=true; return; }
+    /* the same renderer the site uses, asked for through a throwaway draft is
+       overkill: this is a faithful local echo of the small markup rules */
+    var md=($("jw-body").value||"").replace(/\r\n?/g,"\n");
+    var html=md.split(/\n{2,}/).map(function(b){
+      b=b.trim(); if(!b) return "";
+      var inl=function(t){ return esc(t)
+        .replace(/\*\*([^*]{1,200})\*\*/g,"<strong>$1</strong>")
+        .replace(/\*([^*]{1,200})\*/g,"<em>$1</em>")
+        .replace(/\[([^\]]{1,120})\]\((https?:\/\/[^\s)]{1,300}|\/[^\s)]{0,200})\)/g,'<a href="$2">$1</a>')
+        .replace(/\n/g,"<br>"); };
+      if(/^---+$/.test(b)) return "<hr>";
+      if(/^###\s+/.test(b)) return "<h4>"+inl(b.replace(/^###\s+/,""))+"</h4>";
+      if(/^##\s+/.test(b))  return "<h3>"+inl(b.replace(/^##\s+/,""))+"</h3>";
+      if(/^>\s?/.test(b))   return "<blockquote>"+inl(b.split("\n").map(function(l){return l.replace(/^>\s?/,"")}).join("\n"))+"</blockquote>";
+      if(/^[-*]\s+/.test(b))return "<ul>"+b.split("\n").filter(function(l){return /^[-*]\s+/.test(l)}).map(function(l){return "<li>"+inl(l.replace(/^[-*]\s+/,""))+"</li>"}).join("")+"</ul>";
+      return "<p>"+inl(b)+"</p>";
+    }).join("");
+    p.innerHTML='<div class="vcard" style="line-height:1.9">'+html+"</div>";
+    p.hidden=false;
+  };
+
+  function load(){
+    fetch("/api/journal",{credentials:"same-origin"}).then(function(r){return r.json()}).then(function(j){
+      var list=(j&&j.entries)||[];
+      if(j&&j.store===false){ listBox.innerHTML='<p class="muted">No store is connected, so the journal cannot save anything. Add REDIS_URL in Vercel.</p>'; return; }
+      if(!list.length){ listBox.innerHTML='<p class="muted">Nothing written yet. The first entry is one click away.</p>'; return; }
+      listBox.innerHTML='<table><thead><tr><th>Entry</th><th>State</th><th>Replies</th><th></th></tr></thead><tbody>'+
+        list.map(function(e,i){
+          return '<tr><td><b>'+esc(e.title)+'</b><br><span class="muted" style="font-size:.7rem">'+esc(String(e.at||"").slice(0,10))+' · /journal/'+esc(e.slug)+'</span></td>'+
+            '<td><span class="pill '+(e.status==="published"?"on":"wait")+'">'+esc(e.status)+'</span></td>'+
+            '<td>'+(e.comments||0)+'</td>'+
+            '<td style="white-space:nowrap"><button class="ghost" data-ed="'+i+'">Edit</button> '+
+            '<a class="ghost" href="/journal/'+encodeURIComponent(e.slug)+'" target="_blank" rel="noopener" style="text-decoration:none">View</a> '+
+            '<button class="ghost" data-del="'+i+'">Delete</button></td></tr>';
+        }).join("")+"</tbody></table>";
+      listBox.querySelectorAll("[data-ed]").forEach(function(b){
+        b.onclick=function(){
+          var e=list[+b.dataset.ed];
+          fetch("/api/journal?slug="+encodeURIComponent(e.slug),{credentials:"same-origin"})
+            .then(function(r){return r.json()}).then(function(j){ if(j&&j.entry) open(j.entry); });
+        };
+      });
+      listBox.querySelectorAll("[data-del]").forEach(function(b){
+        b.onclick=function(){
+          var e=list[+b.dataset.del];
+          if(b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Sure?"; setTimeout(function(){b.dataset.sure="0";b.textContent="Delete"},4000); return; }
+          api({action:"delete", id:e.id}).then(load);
+        };
+      });
+    }).catch(function(){ listBox.innerHTML='<p class="muted">Could not reach the journal.</p>'; });
+  }
+
+  function loadHeld(){
+    api({action:"held"}).then(function(r){
+      var held=(r.j&&r.j.held)||[];
+      if(!held.length){ heldBox.innerHTML='<p class="muted">Nothing is being held. Every reply that has arrived is live on the page.</p>'; return; }
+      /* each held marker names an entry and a comment: fetch the entries it points at */
+      var slugs=[]; held.forEach(function(h){ if(slugs.indexOf(h.slug)<0) slugs.push(h.slug); });
+      Promise.all(slugs.map(function(sl){
+        return fetch("/api/journal?slug="+encodeURIComponent(sl),{credentials:"same-origin"}).then(function(r){return r.json()}).catch(function(){return null});
+      })).then(function(all){
+        var rows=[];
+        all.forEach(function(j){
+          if(!j||!j.entry) return;
+          (j.comments||[]).filter(function(c){return c.held}).forEach(function(c){
+            rows.push('<div class="vcard" style="margin-top:.6rem"><div class="vl">'+esc(j.entry.title)+'</div>'+
+              '<p class="muted" style="margin:.3rem 0 0;font-size:.72rem"><b>'+esc(c.name)+'</b> · '+esc(String(c.at||"").slice(0,16))+
+              ' · held for: '+esc(c.why||"unknown")+'</p>'+
+              '<pre style="white-space:pre-wrap">'+esc(c.body)+'</pre>'+
+              '<div class="cp"><button class="ghost" data-rel="'+esc(j.entry.id)+'|'+esc(c.cid)+'">Release</button> '+
+              '<button class="ghost" data-rm="'+esc(j.entry.id)+'|'+esc(c.cid)+'">Remove</button></div></div>');
+          });
+        });
+        heldBox.innerHTML = rows.length? rows.join("") : '<p class="muted">Nothing is being held.</p>';
+        heldBox.querySelectorAll("[data-rel]").forEach(function(b){
+          b.onclick=function(){ var p=b.dataset.rel.split("|"); api({action:"comment-state",id:p[0],cid:p[1],state:"show"}).then(loadHeld); };
+        });
+        heldBox.querySelectorAll("[data-rm]").forEach(function(b){
+          b.onclick=function(){
+            if(b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Sure?"; setTimeout(function(){b.dataset.sure="0";b.textContent="Remove"},4000); return; }
+            var p=b.dataset.rm.split("|"); api({action:"comment-state",id:p[0],cid:p[1],state:"remove"}).then(loadHeld);
+          };
+        });
+      });
+    }).catch(function(){ heldBox.innerHTML='<p class="muted">Could not reach the journal.</p>'; });
+  }
+
+  /* the desk only wakes when its tab is opened, so the console stays quick */
+  var woke=false;
+  document.addEventListener("click", function(ev){
+    var t=ev.target.closest && ev.target.closest('[data-pane="journal"]');
+    if(t && !woke){ woke=true; load(); loadHeld(); }
+  });
 })();
 
 /* ---- Is the lantern lit? -------------------------------------------------

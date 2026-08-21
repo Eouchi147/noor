@@ -2,49 +2,91 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="NOOR Places: the geography of the Codex. Sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end of time."/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="NOOR · Codex of Light"/>
-<meta property="og:title" content="Places · NOOR Codex of Light"/>
-<meta property="og:description" content="NOOR Places: the geography of the Codex. Sanctuaries, mountains of revelation, cities and lands, waters and valleys, and the stations of the end of time."/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Personal reflections from the person building NOOR Codex of Light. Opinion, clearly labelled as opinion, never presented as a ruling, and open to reply without an account."/>
+<meta property="og:title" content="The Guardian's Journal · thoughts from inside the work · NOOR Codex of Light"/>
+<meta property="og:description" content="Personal reflections from the person building NOOR Codex of Light. Opinion, clearly labelled as opinion, never presented as a ruling, and open to reply without an account."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
-<meta property="og:image:width" content="1200"/>
-<meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta name="theme-color" content="#14100A"/>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
-<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
-<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
 <link rel="manifest" href="/manifest.webmanifest"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="NOOR"/>
-<title>Places · NOOR Codex of Light</title>
+<title>The Guardian's Journal · thoughts from inside the work · NOOR Codex of Light</title>
+<link rel="canonical" href="https://noorcodex.com/journal"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css?v=49"/>
-<link rel="stylesheet" href="assets/hub.css?v=10"/>
-<script src="places.js" defer></script>
 <script src="noor-fx.js" defer></script>
-<script src="noor-hub.js" defer></script>
-<script src="sponsor.js" defer></script>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
-<link rel="canonical" href="https://noorcodex.com/places"/>
+<script src="noor-ink.js" defer></script>
+<script src="assets/gsap.min.js" defer></script>
+<script src="assets/ScrollTrigger.min.js" defer></script>
+<script src="assets/DrawSVGPlugin.min.js" defer></script>
+<script src="assets/noor-motion.js?v=76" defer></script>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
 <script src="/assets/noor-text.js?v=82" defer></script>
-<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <script src="/assets/noor-search.js?v=77" defer></script>
+<script src="/sponsor.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","name":"The Guardian's Journal",
+"description":"Personal reflections from the builder of NOOR Codex of Light: opinion, clearly labelled as opinion, open to reply.",
+"url":"https://noorcodex.com/journal",
+"isPartOf":{"@type":"WebSite","name":"NOOR Codex of Light","url":"https://noorcodex.com"}}
+</script>
+<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button{touch-action:manipulation}</style>
+<style>
+:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--night:#14100A}
+body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;margin:0}
+.font-amiri{font-family:Amiri,serif}
+.rhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#151b2e 55%,#1d2a45 100%);color:#FFFEF7;text-align:center;padding:3.4rem 1rem 3.6rem}
+.rhero .ar{font-family:Amiri,serif;font-size:2.2rem;color:#F4D46A;filter:drop-shadow(0 0 18px rgba(244,212,106,.45));position:relative;z-index:2}
+.rhero h1{font-size:clamp(1.6rem,4.6vw,2.3rem);font-weight:800;margin:.4rem 0 0;position:relative;z-index:2;line-height:1.18}
+.rhero .lead{font-size:.88rem;color:rgba(255,254,247,.72);max-width:36rem;margin:.75rem auto 0;line-height:1.75;position:relative;z-index:2}
+.rhero .kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,212,106,.75);font-weight:800;position:relative;z-index:2}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.wrapw{max-width:62rem;margin:0 auto;padding:0 1rem}
+.rsec{padding:2.6rem 0 .4rem}
+.rsec h2{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.rsec .sub{font-size:.85rem;color:rgba(44,36,22,.62);line-height:1.75;margin:.5rem 0 0;max-width:38rem}
+.rsec .sh{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.rsec .sh .ar{font-family:Amiri,serif;font-size:1.35rem;color:var(--gold)}
+.card{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:18px;padding:1.1rem 1.15rem;margin-top:.85rem;box-shadow:0 2px 10px rgba(44,36,22,.04)}
+.card h3{font-size:1rem;font-weight:800;margin:0 0 .45rem}
+.card p{font-size:.87rem;line-height:1.85;color:rgba(44,36,22,.8);margin:0 0 .7rem}
+.card p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;border-radius:999px;padding:.28rem .62rem;background:rgba(201,162,39,.13);color:#8a6d13;border:1px solid rgba(201,162,39,.3)}
+.gpill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.62rem 1.25rem;font-size:.8rem;text-decoration:none;display:inline-block;transition:transform .15s}
+.gpill:hover{transform:translateY(-1px)}
+.ghost{border:1px solid rgba(44,36,22,.22);color:rgba(44,36,22,.75);border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-block}
+.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:.95rem 0}
+.fig .cap{font-size:.72rem;color:rgba(255,254,247,.62);text-align:center;margin:.7rem 0 0;line-height:1.6}
+.rfoot{border-top:1px solid rgba(44,36,22,.1);padding:2.2rem 1rem 2.6rem;text-align:center;margin-top:2.6rem}
+.rfoot p{font-size:.74rem;color:rgba(44,36,22,.45);line-height:1.9;margin:0}
+.rfoot a{color:rgba(44,36,22,.6);text-decoration:underline}
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.24rem .55rem;border:1px solid}
+.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.55);background:rgba(29,107,63,.13)}
+.evb.quran::before{content:"";width:.46rem;height:.46rem;border-radius:999px;background:#1d6b3f;box-shadow:0 0 0 2px rgba(29,107,63,.28);flex:none}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.evb.sunnah::before{content:"";width:.46rem;height:.46rem;background:#C9A227;flex:none;transform:rotate(45deg)}
+.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.evb.debated::before{content:"";width:.46rem;height:.46rem;border-radius:999px;border:1.5px dashed #6b4f92;flex:none}
+.evb.editorial{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.evb.editorial::before{content:"";width:.46rem;height:.1rem;background:rgba(44,36,22,.5);flex:none}
+.refs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.ref{font-size:.68rem;font-weight:700;color:rgba(44,36,22,.6);background:rgba(44,36,22,.05);border-radius:999px;padding:.26rem .6rem;border:1px solid rgba(44,36,22,.1)}
+.ref b{color:#8a6d13}
+.vplay{cursor:pointer;border:1px solid rgba(201,162,39,.45);background:rgba(244,212,106,.12);color:#8a6d13;border-radius:999px;padding:.24rem .6rem;font-size:.66rem;font-weight:800;font-family:inherit}
+.vplay.playing{background:#2C2416;color:#F4D46A;border-color:#2C2416}
+@media (prefers-reduced-motion:no-preference){.mo,.mo-pop{will-change:transform,opacity}}
+.rhero{display:none}
+main{background:#F5EEDC}
+body{background:#F5EEDC}</style>
+<link rel="stylesheet" href="/assets/journal.css?v=89"/>
 </head>
-<body class="antialiased">
-<div id="progress"></div>
-
+<body>
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
@@ -316,89 +358,74 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section id="chero">
-<canvas id="chero-canvas" aria-hidden="true"></canvas>
-<svg class="hub-crescent" viewBox="0 0 100 100" aria-hidden="true">
-<defs><radialGradient id="hmg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="hmm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
-<circle cx="50" cy="50" r="36" fill="url(#hmg)" mask="url(#hmm)"/>
-</svg>
-<div class="hero-fade" aria-hidden="true"></div>
-<div class="relative z-[3] max-w-4xl mx-auto px-4 pt-14 pb-16 text-center">
-<p class="font-amiri text-gold text-xl sm:text-2xl mb-3">وَهَٰذَا الْبَلَدِ الْأَمِينِ</p>
-<h1 class="text-3xl sm:text-5xl font-bold mb-3"><span class="shimmer-gold" data-i18n="places.title">Places</span></h1>
-<p class="text-parchment/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed" data-i18n="places.sub"></p>
-<div id="chero-stats" class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-parchment/60"></div>
-</div>
+<main>
+<section class="rhero" data-ink=soft>
+<h1></h1>
+<p class="lead"></p>
 </section>
 
-<nav class="section-nav sticky top-[94px] md:top-14 z-30 bg-parchment/94 backdrop-blur border-b border-ink/5">
-<div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap gap-2 justify-center text-xs font-semibold" id="section-nav-links"></div>
-</nav>
-
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16" id="hub-main"></main>
-
-<!--WGO-->
-<style>.wgo{max-width:62rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(44,36,22,.12)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#2C2416;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(201,162,39,.7);transform:translateY(-1px);box-shadow:0 5px 18px rgba(44,36,22,.07)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#2C2416;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#C9A227}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.68);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
-<section class="wgo" aria-labelledby="wgo-h">
-<h2 id="wgo-h">Where to go from here</h2>
-<div class="wgo-g">
-<a class="wgo-c" href="/hajj"><b>Hajj and Umrah</b><span>Makkah, the Kaaba, Safa and Marwah, Arafah and Zamzam, walked in the order a pilgrim walks them.</span></a>
-<a class="wgo-c" href="/prophets"><b>The 25 Prophets</b><span>The lives that made these places matter, each with its verses and its sources.</span></a>
-<a class="wgo-c" href="/characters"><b>Characters</b><span>Who was in them: angels, jinn, the animals of the signs, and the beings of the end.</span></a>
-<a class="wgo-c" href="/#timeline"><b>The Path of Creation</b><span>The whole story in order, so the map turns back into a sequence.</span></a>
+<div class="jwrap">
+<div class="jhead">
+<p class="jorn">The Guardian&rsquo;s Journal</p>
+<h1>Thoughts from inside the work</h1>
+<p class="jsub">Everything else in this Codex is written in the voice of the tradition, and carries the evidence for every line. This page is not that. These are the reflections of one contemporary Muslim who is building this library, thinking aloud about faith, doubt, work and the age we are living in. Read them as you would read a letter from someone walking the same road: worth hearing, and entirely capable of being wrong.</p>
+<span class="jseal"><i aria-hidden="true">&#1606;</i><span>One reader&rsquo;s opinion, not a ruling</span></span>
 </div>
-</section>
-<!--/WGO-->
-<footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
-<div class="absolute inset-0 opacity-40 pl-end" aria-hidden="true"></div>
-<div class="relative max-w-3xl mx-auto px-4 text-center">
-<p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
-<p class="text-xs text-parchment/50 leading-relaxed" data-i18n="about.text"></p>
-<a href="/#timeline" class="inline-block mt-4 text-sm text-gold hover:underline" data-i18n="footer.back">← Back to the Path</a>
-<p class="mt-3 text-[10px] text-parchment/35"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
-</div>
-</footer>
 
-<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Places">
-<div class="modal">
-<div class="modal-girih" aria-hidden="true"></div>
-<div class="modal-hero" id="modal-hero"></div>
-<div class="modal-body" id="modal-body"></div>
-<button id="modal-close" class="absolute top-4 right-3.5 w-9 h-9 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-gold hover:text-ink transition-colors z-10" aria-label="Close">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-</button>
+<div class="jdiv" aria-hidden="true"><i>&#10022;</i></div>
+
+<div id="jlist" class="jlist"><p class="jempty">Opening the journal&hellip;</p></div>
+
+<div class="jdiv" aria-hidden="true"><i>&#10022;</i></div>
+
+<div class="jback" style="text-align:center;padding-bottom:3rem">
+<p style="font-size:.82rem;line-height:1.85;color:var(--jink-soft);margin:0 auto;max-width:32rem">
+Every entry is open for reply, with no account and no login. Disagreement is welcome here and is never removed for being disagreement.
+<a href="/journal-rules" style="color:#7A5B12">How replies are handled &rarr;</a></p>
 </div>
 </div>
 
 <script>
-window.NOOR_HUB = {
-  data: () => PLACES,
-  type: "place",
-  sections: [
-    {key:"sanctuaries", chip:"chip-sanctuary", gate:"sg-sanctuary", ar:"المقدسات", tk:"places.sanctuaries", dk:"places.sanctuaries.desc"},
-    {key:"mountains", chip:"chip-mountain", gate:"sg-mountain", ar:"الجبال والمشاعر", tk:"places.mountains", dk:"places.mountains.desc"},
-    {key:"cities", chip:"chip-city", gate:"sg-city", ar:"المدن والديار", tk:"places.cities", dk:"places.cities.desc"},
-    {key:"waters", chip:"chip-water", gate:"sg-water", ar:"المياه والأودية", tk:"places.waters", dk:"places.waters.desc"},
-    {key:"endtimes", chip:"chip-end", gate:"sg-end", ar:"منازل النهاية", tk:"places.endtimes", dk:"places.endtimes.desc"}
-  ]
-};
+(function(){
+  var box = document.getElementById("jlist");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function when(iso){
+    try{ var d=new Date(iso);
+      var lang=(window.NOOR_I18N&&NOOR_I18N.lang)||document.documentElement.lang||"en";
+      return d.toLocaleDateString(lang,{year:"numeric",month:"long",day:"numeric"});
+    }catch(e){ return String(iso||"").slice(0,10); }
+  }
+  fetch("/api/journal").then(function(r){return r.ok?r.json():null}).then(function(j){
+    var list = (j&&j.entries)||[];
+    if(!list.length){
+      box.innerHTML = '<p class="jempty">The first entry has not been written yet. When it is, it will stand here.</p>';
+      return;
+    }
+    var n = list.length;
+    box.innerHTML = list.map(function(e,i){
+      var num = n - i;
+      return '<article class="jentry">' +
+        '<p class="jmeta">Entry ' + num + ' &middot; ' + esc(when(e.at)) + '</p>' +
+        '<h2><a href="/journal/' + encodeURIComponent(e.slug) + '">' + esc(e.title) + '</a></h2>' +
+        (e.dek ? '<p class="jdek">' + esc(e.dek) + '</p>' : '') +
+        '<p class="jfoot">' +
+          (e.words ? '<span>' + Math.max(1, Math.round(e.words/220)) + ' min</span>' : '') +
+          '<span>' + (e.comments||0) + ' ' + ((e.comments===1)?'reply':'replies') + '</span>' +
+          (e.tags||[]).map(function(t){return '<span class="jtag">'+esc(t)+'</span>'}).join("") +
+        '</p></article>';
+    }).join("");
+  }).catch(function(){
+    box.innerHTML = '<p class="jempty">The journal could not be opened just now. The rest of the Codex is unaffected.</p>';
+  });
+})();
 </script>
+
+</main>
+
+<footer class="rfoot">
+<p>Opinion, offered openly. The teaching rooms of the Codex carry their evidence; this one carries a name.<br/>
+<a href="/">Return to the Codex</a> · <a href="/feedback">Send a correction</a> · <a href="/donate">Keep the lamp lit ✦</a></p>
+</footer>
+
 </body>
 </html>
