@@ -201,7 +201,7 @@ main{max-width:660px}
 }
 </style>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}img,svg{-webkit-user-drag:none}a,button,[role="button"]{touch-action:manipulation}</style>
-<script src="sponsor.js?v=83" defer></script>
+<script src="sponsor.js" defer></script>
 <link rel="canonical" href="https://noorcodex.com/kids"/>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
@@ -256,7 +256,7 @@ main{max-width:660px}
 </a>
 <div class="w-feat" id="wfeat"></div>
 <p class="w-kick" style="margin-top:26px">✦ More wonders ✦</p>
-<h2 class="w-title">Nine Little Games</h2>
+<h2 class="w-title">Little Games and Rooms</h2>
 <div class="w-grid" id="wgrid"></div>
 <style>
 .w-sky{display:flex;align-items:center;gap:1rem;text-decoration:none;background:linear-gradient(150deg,#0d1430,#1b2450 60%,#2a2340);border:1px solid rgba(244,212,106,.4);border-radius:22px;padding:1rem 1.1rem;margin:0 0 1rem;box-shadow:0 14px 38px rgba(6,10,26,.35);position:relative;overflow:hidden}
@@ -281,7 +281,7 @@ main{max-width:660px}
 <div class="wgo-g">
 <a class="wgo-c" href="/kids/cradle"><b>The Cradle</b><span>For the littlest ones, 0 to 3: first sounds, first words, and a gentle rhythm for the day.</span></a>
 <a class="wgo-c" href="/madrasa#t-rawda"><b>The Garden</b><span>Real lessons made small, with quizzes and a certificate the day you finish one.</span></a>
-<a class="wgo-c" href="/stories"><b>The Hall of Stories</b><span>Nine long stories for when you can sit still, each one carrying a Name of Allah.</span></a>
+<a class="wgo-c" href="/stories"><b>The Hall of Stories</b><span>Nine long stories for when you can sit still, each one carrying a Name of Allah.</span></a><a class="wgo-c" href="/teens"><b>For Teenagers</b><span>When the Little Codex starts feeling little: the room for the years just after this one.</span></a>
 </div>
 </section>
 <!--/WGO-->
@@ -383,8 +383,12 @@ function render(){
   return '<a class="w-card" href="/'+x.f.replace(/\.html$/,'')+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
    '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
  }).join("");
+ /* the twelve was written by hand and the list grew to fourteen, so a child
+    who finished everything was told they had done 14 of 12. The total counts
+    itself now, and the congratulation waits for the real last one. */
+ var WONDERS=G.length+1+HEROES.length;
  var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
- c.textContent=total===0?"Twelve wonders are waiting for you ✦":total===12?"All twelve wonders are yours! ✦":"You have finished "+total+" of 12 wonders ✦";
+ c.textContent=total===0?("All "+WONDERS+" wonders are waiting for you ✦"):total>=WONDERS?"Every wonder is yours ✦":("You have finished "+total+" of "+WONDERS+" wonders ✦");
 }
 render();
 window.addEventListener("pageshow",render);

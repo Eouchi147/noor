@@ -402,7 +402,7 @@ window.bindEntityLinks = bindEntityLinks;
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c();})();
 
 /* ================= v24 · the language doors =================
-   NOOR speaks ten languages through its own gateway pages. When a
+   NOOR speaks twenty one languages through its own gateway pages. When a
    reader's language is detected, the Codex offers its own door instead
    of browser-translate instructions. Sacred text stays shielded:
    the Qur'an's Arabic, the Bismillah, and the house marks are never
@@ -433,7 +433,13 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     ["ur", "اردو", "نُور اردو میں پڑھیں", "داخل ہوں"],
     ["hi", "हिन्दी", "NOOR हिन्दी में पढ़ें", "प्रवेश करें"],
     ["bn", "বাংলা", "বাংলায় NOOR পড়ুন", "প্রবেশ করুন"],
-    ["id", "Bahasa Indonesia", "Baca NOOR dalam Bahasa Indonesia", "Masuk"]
+    ["id", "Bahasa Indonesia", "Baca NOOR dalam Bahasa Indonesia", "Masuk"],
+    /* zh, ja and ko had live gateway pages for months and no door offered to
+       them: the array was written before those three were built, and every
+       count on the site was copied from its length. */
+    ["zh", "中文", "用中文阅读 NOOR", "进入"],
+    ["ja", "日本語", "NOOR を日本語で読む", "入る"],
+    ["ko", "한국어", "NOOR를 한국어로 읽기", "들어가기"]
   ];
   function detected() {
     var l = ((navigator.language || "en").slice(0, 2) || "en").toLowerCase();
