@@ -1,0 +1,710 @@
+{
+ "_note": "Tranche C. Eight surahs promoted from the short record to the full one, chosen by what readers actually open rather than by mushaf order. Where no authentic virtue report exists for a surah, the virtue field says so plainly rather than reaching for a weak one: a companion that invents merit for a surah is worth less than one that admits the silence.",
+ "surahs": [
+  {
+   "n": 2,
+   "context": [
+    "Al-Baqarah is the first long revelation of Madinah and it came down not at once but across most of the ten years there, verse joining verse as a scattered band of emigrants turned into a city with law, money, marriages, debts and enemies. Its earliest passages meet a community that had just arrived with nothing; its latest, by the report of many of the early commentators, include the verses of usury revealed near the very end of the Prophet's ﷺ life.",
+    "That slow assembly explains its shape. A reader expecting a single argument finds instead a whole civic order being handed down in the order a young society actually needed it, and running underneath the legislation is one continuous question: will this people keep the covenant that the peoples before them broke? The cow of the title is not decoration. It is a story about a community given a simple instruction and arguing its way around it, placed early as a warning to a community about to be given many."
+   ],
+   "name_story": "Named for the cow that Bani Israil were commanded to sacrifice in verses 67 to 73. They were told to slaughter a cow, any cow, and instead asked what colour, what age, what kind, until the specification had narrowed so far that the animal was almost impossible to find. The surah keeps the name as a permanent caution: the more a heart looks for room to argue with a clear command, the heavier that command becomes. The Prophet ﷺ also called this surah and Aal Imran az-Zahrawan, the two luminous ones.",
+   "movements": [
+    {
+     "range": "1-20",
+     "h": "Three kinds of people",
+     "note": "The Book opens by sorting its readers before it teaches them: those who believe, those who refuse outright, and the far longer passage on those who say they believe and do not."
+    },
+    {
+     "range": "21-39",
+     "h": "Adam, and the first refusal",
+     "note": "Humanity is made a khalifah on earth, the angels ask their question, Iblis refuses to bow, and the pattern of guidance offered and rejected begins."
+    },
+    {
+     "range": "40-123",
+     "h": "Bani Israil, examined at length",
+     "note": "The longest sustained address to a previous community in the Qur'an: the favours given, the covenant taken, and each place it was broken, laid out for a new community about to receive the same trust."
+    },
+    {
+     "range": "124-152",
+     "h": "Ibrahim and the change of qiblah",
+     "note": "The house at Makkah is rebuilt in the narrative and then in the prayer itself, as the direction of worship turns from Jerusalem and the community's obedience is tested in public."
+    },
+    {
+     "range": "153-242",
+     "h": "The law of an ordinary life",
+     "note": "Patience, fasting, pilgrimage, fighting, wine and gambling, orphans, marriage, divorce, nursing, widowhood. Worship and household arrangement in one continuous breath."
+    },
+    {
+     "range": "243-286",
+     "h": "Spending, and the closing prayer",
+     "note": "The stories of a king, a ruined town and Ibrahim's birds; Ayat al-Kursi at the centre; then charity, usury, the longest verse in the Qur'an on recording a debt, and the two verses that close the surah as a supplication."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Covenant, kept or broken",
+     "d": "The surah is built around agreements: the one taken from Adam, the one taken from Bani Israil, and the one now being taken from the people of Madinah, who are shown at length what breaking it looks like."
+    },
+    {
+     "t": "Law as an act of mercy",
+     "d": "Rules on debt, divorce and inheritance sit beside verses on prayer and fasting with no change of register, because the surah does not divide life into a sacred part and an administrative one."
+    },
+    {
+     "t": "Guidance is not neutral ground",
+     "d": "It opens by saying the Book is guidance for those already conscious of Allah, and spends twenty verses on the ones who position themselves near faith without entering it."
+    },
+    {
+     "t": "Obedience before explanation",
+     "d": "The cow, the qiblah and the fighting verses each test whether a command will be carried out before its wisdom has been made obvious."
+    }
+   ],
+   "heart": [
+    "Read slowly, Al-Baqarah stops feeling like a legal code and starts feeling like being moved into a house where every room already has a lamp lit in it. You arrive with a question about money, and it is answered. About grief, about a failing marriage, about what to do when you are afraid: answered, in the same voice, without any suggestion that one of these is a lesser subject than the others.",
+    "Its two ends are where most reciters break. Ayat al-Kursi in the middle is one sentence of sheer description, and the surah is silent around it. Then the final two verses turn, unannounced, from address into supplication, and the reciter finds himself no longer being told something but saying it: our Lord, do not burden us beyond what we can bear. It is the only proper way to leave a surah this heavy."
+   ],
+   "passages": [
+    {
+     "ref": "2:255",
+     "why": "Ayat al-Kursi. The Prophet ﷺ named it the greatest verse in the Qur'an; it is one unbroken description of who Allah is, with nothing asked of you in it at all."
+    },
+    {
+     "ref": "2:186",
+     "why": "Dropped into the middle of the fasting verses with no introduction: when My servants ask you about Me, I am near. No intermediary is mentioned in the whole verse."
+    },
+    {
+     "ref": "2:216",
+     "why": "You may hate a thing and it is good for you. Read this on the far side of a year that did not go the way you asked."
+    },
+    {
+     "ref": "2:285-286",
+     "why": "The closing two, which the Prophet ﷺ said would suffice whoever recites them at night. The surah ends by putting a prayer in your mouth."
+    }
+   ],
+   "connections": [
+    {
+     "to": 1,
+     "why": "Al-Fatiha ends asking to be shown the straight path, and Al-Baqarah opens on the next page answering: this is the Book, guidance."
+    },
+    {
+     "to": 3,
+     "why": "The Prophet ﷺ paired these two as az-Zahrawan, the two luminous ones, and the second continues the argument with the People of the Book that the first began."
+    }
+   ],
+   "virtue": {
+    "text": "Among the most firmly established of any surah. The Prophet ﷺ said not to make your houses graveyards, for the house in which Al-Baqarah is recited is one Satan does not enter, and that the last two verses suffice whoever recites them at night. He also described Al-Baqarah and Aal Imran coming on the Day of Rising like two clouds shading their reciter.",
+    "src": "Muslim 780; Bukhari 5009 and Muslim 807; Muslim 804",
+    "level": "sunnah"
+   }
+  },
+  {
+   "n": 3,
+   "context": [
+    "Aal Imran belongs to Madinah and is framed by two encounters that could hardly be less alike. The first is intellectual: a delegation of Christians from Najran came to debate the Prophet ﷺ about the nature of Isa, and a long opening passage answers them with argument rather than dismissal, insisting on the shared line of prophets before it states where the two accounts part.",
+    "The second is a wound. The middle of the surah works through the defeat at Uhud, where seventy of the believers were killed, the Prophet ﷺ himself was injured, and the reversal came after a clear victory had already been in hand. The surah does not soften what happened. It names the disobedience that caused it, and then reframes the loss as a sifting rather than an abandonment."
+   ],
+   "name_story": "Named for the family of Imran: the mother of Maryam who vowed the child in her womb to the service of the sanctuary, Maryam herself, and Isa. The naming is deliberate in a surah addressed partly to Christians. Before any disagreement is stated, the family at the centre of their reverence is honoured by name and given some of the most tender narrative in the Qur'an.",
+   "movements": [
+    {
+     "range": "1-63",
+     "h": "The argument with Najran",
+     "note": "Clear verses and ambiguous ones; the family of Imran; the birth of Maryam and of Isa; and the invitation to mubahalah, a mutual invocation, when argument had gone as far as it could."
+    },
+    {
+     "range": "64-101",
+     "h": "Come to a common word",
+     "note": "An address to the People of the Book that begins from what is shared, then holds the line on what is not, and warns against being turned back after belief."
+    },
+    {
+     "range": "102-120",
+     "h": "Hold the rope together",
+     "note": "The command to hold fast to the rope of Allah and not be divided, placed immediately before the battle account, which is where division had cost them."
+    },
+    {
+     "range": "121-179",
+     "h": "Uhud, examined honestly",
+     "note": "The archers who left their post, the rumour that the Prophet ﷺ had been killed, the wounds, and the long correction that follows: this was a test, and the dead are alive with their Lord."
+    },
+    {
+     "range": "180-200",
+     "h": "Those who reflect, and the last command",
+     "note": "The surah closes on people who remember Allah standing, sitting and lying down, and who look at the sky until it becomes an argument, then ends with four verbs: be patient, outlast, stand firm, and fear Allah."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Steadfastness after defeat",
+     "d": "The surah's treatment of Uhud refuses both denial and despair. The loss was real, its cause was named, and it is placed inside a longer account in which it is not the end."
+    },
+    {
+     "t": "One line of prophets",
+     "d": "Isa, Musa, Ibrahim and Muhammad ﷺ are set in a single sequence, so the disagreement with Najran is presented as a dispute inside one story rather than between two."
+    },
+    {
+     "t": "Unity as a survival instruction",
+     "d": "Hold fast to the rope of Allah together and do not be divided arrives just before an account of what division actually cost, which is the surah's way of showing rather than telling."
+    },
+    {
+     "t": "Creation as an argument",
+     "d": "The closing passage puts the case for faith not in a proof but in a habit: people who cannot look at the alternation of night and day without their minds moving."
+    }
+   ],
+   "heart": [
+    "Recited slowly, this is the surah for the period after something has gone badly wrong and the temptation is to conclude that you were never being helped. Its answer is unusually adult. It does not say the defeat did not happen or that it did not hurt. It says the defeat is inside a larger account, that some of it was your own doing, and that both of those can be true without meaning you have been abandoned.",
+    "Its final page changes the temperature entirely. After all the argument and all the blood it arrives at men and women standing at night saying our Lord, You did not create this in vain, and the Prophet ﷺ is reported to have wept when these verses came down, saying woe to whoever recites them and does not reflect on them."
+   ],
+   "passages": [
+    {
+     "ref": "3:103",
+     "why": "Hold firmly to the rope of Allah, all together, and do not become divided. Placed exactly where the community was about to learn the cost of ignoring it."
+    },
+    {
+     "ref": "3:159",
+     "why": "Addressed to the Prophet ﷺ immediately after Uhud: had you been harsh and hard-hearted, they would have scattered from around you. Said about the aftermath of a disaster caused partly by disobedience."
+    },
+    {
+     "ref": "3:190-191",
+     "why": "The verses the Prophet ﷺ wept over: in the creation of the heavens and the earth are signs for those of understanding."
+    },
+    {
+     "ref": "3:200",
+     "why": "The last verse, four commands in one breath, ending a surah about a defeat with an instruction to outlast."
+    }
+   ],
+   "connections": [
+    {
+     "to": 2,
+     "why": "The Prophet ﷺ named these two together as az-Zahrawan, and the argument begun in Al-Baqarah with the People of the Book is carried forward here."
+    },
+    {
+     "to": 19,
+     "why": "Maryam is honoured at length in both, and the two accounts read best beside each other."
+    }
+   ],
+   "virtue": {
+    "text": "The Prophet ﷺ said to recite the two luminous ones, Al-Baqarah and Aal Imran, for they will come on the Day of Rising like two clouds, or two flocks of birds in ranks, pleading for their companion. The virtue is reported for the pair rather than for this surah alone.",
+    "src": "Muslim 804",
+    "level": "sunnah"
+   }
+  },
+  {
+   "n": 12,
+   "context": [
+    "Surah Yusuf came down in Makkah in the hardest stretch of the Prophet's ﷺ life, in or near the year that took both Khadijah and Abu Talib from him, when the protection he had relied on for a decade was gone and Ta'if had already turned him away. Several of the early commentators report that it answered a challenge put to him about how the children of Israel came to be in Egypt.",
+    "What arrived was not a legal ruling or a warning, but a story: one continuous narrative from the first verse to nearly the last, the only place in the Qur'an where that happens. A man being told he has lost everything is given an account of another man who lost everything, in order, and was not lost at all. It was consolation delivered as narrative, which is a particular kind of mercy."
+   ],
+   "name_story": "Named for Yusuf, and the Qur'an itself calls what follows ahsan al-qasas, the best of stories, in its third verse. The claim is not sentimental. Nowhere else does the Qur'an give a single life this much unbroken attention, and no other passage carries a reader through so complete an arc: a well, a household, a prison, a throne, and a room in which the brothers who threw him in do not recognise the man in front of them.",
+   "movements": [
+    {
+     "range": "1-6",
+     "h": "A dream, and a father who understands it",
+     "note": "Eleven stars, the sun and the moon prostrating. Ya'qub knows immediately what it means and tells his son to keep it to himself."
+    },
+    {
+     "range": "7-20",
+     "h": "The brothers, and the well",
+     "note": "Jealousy reasoned into a plan, the shirt returned with false blood, and a father who says something remarkable: beautiful patience."
+    },
+    {
+     "range": "21-35",
+     "h": "The house in Egypt",
+     "note": "Bought, raised in privilege, and then the scene with the wife of al-Aziz, which the Qur'an handles with unusual restraint and unusual precision."
+    },
+    {
+     "range": "36-57",
+     "h": "The prison years",
+     "note": "Two fellow prisoners, two dreams, and Yusuf using the moment of their attention to speak about the oneness of Allah before he interprets anything."
+    },
+    {
+     "range": "58-93",
+     "h": "The brothers return, not knowing",
+     "note": "Grain, a hidden cup, Binyamin held back, and a father going blind with grief while insisting he complains only to Allah."
+    },
+    {
+     "range": "94-111",
+     "h": "The shirt, and the forgiveness",
+     "note": "Sight restored, the family reunited in Egypt, the childhood dream fulfilled decades late, and a sentence of forgiveness offered at the exact moment revenge was available."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Beautiful patience",
+     "d": "Sabrun jamil, patience with no complaint made to people. Ya'qub says it twice, and the surah shows him weeping constantly while saying it, so the phrase cannot mean the absence of grief."
+    },
+    {
+     "t": "Decree working through people's worst choices",
+     "d": "Every step toward Yusuf's rise is somebody's sin against him. The surah never excuses the brothers, and never suggests the outcome required their innocence."
+    },
+    {
+     "t": "Power as the moment of testing",
+     "d": "The character of the man is settled not in the well or in the prison but in the room where he finally has authority over the people who put him there."
+    },
+    {
+     "t": "The long delay",
+     "d": "The dream at the start is fulfilled in the final pages, decades later, by which time everyone who could have doubted it has aged."
+    }
+   ],
+   "heart": [
+    "Read slowly, the surah teaches one sentence that most people need for the rest of their lives: I only complain of my anguish and my sorrow to Allah. Ya'qub is not stoic. He weeps until he loses his sight. What he does not do is take his grief to an audience, and the surah quietly draws the line between carrying pain and performing it.",
+    "The other thing it teaches is patience with the length of things. Nothing in this story resolves quickly. The reciter, who usually wants a rescue by the end of the page, is made to wait through a well, a household, a false accusation, years of prison and a famine before the dream from verse four is allowed to come true."
+   ],
+   "passages": [
+    {
+     "ref": "12:18",
+     "why": "So beautiful patience, and Allah is the one whose help is sought against what you describe. Said by a father who has just been handed his son's bloodied shirt."
+    },
+    {
+     "ref": "12:86",
+     "why": "I only complain of my anguish and my sorrow to Allah. The most practical verse in the surah for anyone carrying something they cannot say out loud."
+    },
+    {
+     "ref": "12:87",
+     "why": "Do not despair of the mercy of Allah. Spoken to sons setting out on what looks like a hopeless search."
+    },
+    {
+     "ref": "12:92",
+     "why": "No blame upon you today. Forgiveness spoken at the one moment when revenge was both possible and, by any ordinary reckoning, deserved."
+    }
+   ],
+   "connections": [
+    {
+     "to": 93,
+     "why": "Ad-Duha was revealed to console the Prophet ﷺ in the same Makkan years, and the two answer the same fear with different instruments."
+    },
+    {
+     "to": 21,
+     "why": "Al-Anbiya gathers the prophets who called out in distress and were answered, which is the compressed version of what this surah tells at length."
+    }
+   ],
+   "virtue": {
+    "text": "No authentic report establishes a specific merit for reciting Surah Yusuf, and several that circulate widely are graded weak or fabricated. Its standing rests on what the Qur'an says of it in its own third verse, that it is the best of stories, which is a stronger footing than any of the reports it is being given.",
+    "src": "no authentic virtue report; the Qur'an's own description at 12:3",
+    "level": "none"
+   }
+  },
+  {
+   "n": 19,
+   "context": [
+    "Maryam is Makkan and belongs to the years of open persecution, when a group of the believers left for Abyssinia to seek refuge with the Negus, a Christian king. When Quraysh sent envoys to demand their return, Ja'far ibn Abi Talib recited from this surah in his court, and the report is that the king wept until his beard was wet and refused to hand them over.",
+    "That is the setting the surah was built for. It reaches across to a Christian listener with the two things he already reveres, Yahya and Isa and the woman who bore him, tells those stories with extraordinary tenderness, and only then states the point on which it will not move: that Allah does not take a son. The order matters. The honouring is not a preamble to the disagreement; it is meant, and the disagreement is stated anyway."
+   ],
+   "name_story": "The only surah in the Qur'an named for a woman, and Maryam is the only woman named anywhere in it. She is spoken of here with more attention than in any other passage: her retreat, her fear, her labour under a palm tree, the instruction to shake the trunk toward herself, and her return to a community with a child and no explanation she is permitted to give.",
+   "movements": [
+    {
+     "range": "1-15",
+     "h": "Zakariyya, asking late",
+     "note": "An old man with a weak frame and white hair asking for an heir, and being given one. The surah opens with a prayer that was answered long after it was reasonable to expect it."
+    },
+    {
+     "range": "16-40",
+     "h": "Maryam",
+     "note": "The withdrawal to a place facing east, the angel, the pains of childbirth, the wish to have died before this, and the vindication that comes from the infant himself."
+    },
+    {
+     "range": "41-50",
+     "h": "Ibrahim and his father",
+     "note": "The gentlest disagreement in the Qur'an: O my father, repeated four times to a man threatening to stone him."
+    },
+    {
+     "range": "51-65",
+     "h": "The line of prophets",
+     "note": "Musa, Isma'il, Idris and others named in quick succession, described as those who wept in prostration when the verses of the Merciful were recited to them."
+    },
+    {
+     "range": "66-98",
+     "h": "The Merciful, and the claim refused",
+     "note": "The name ar-Rahman dominates the closing pages, and the claim that the Merciful has taken a son is answered in the strongest language in the surah."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Mercy as the governing name",
+     "d": "Ar-Rahman appears more densely here than almost anywhere else, and every story in the surah is arranged as an instance of it."
+    },
+    {
+     "t": "Prayers answered late",
+     "d": "Zakariyya asks as an old man. Maryam is vindicated only after she has already had to face her people. Nothing here arrives on time by human reckoning."
+    },
+    {
+     "t": "Speaking gently to those who refuse you",
+     "d": "Ibrahim's address to his father is the model: four times O my father, no answering insult, and a quiet withdrawal at the end."
+    },
+    {
+     "t": "Honour first, then disagree",
+     "d": "The surah gives Isa and his mother the fullest honour before it states, without softening, what it will not accept about him."
+    }
+   ],
+   "heart": [
+    "Recited slowly, this is the surah for anyone whose situation cannot be explained to the people around them. Maryam is told to fast from speech and to let the accusation stand; her defence is not something she is allowed to make. Very few readers will have a defence delivered as hers was, but the posture the surah teaches, holding still while being misread, is available to everyone.",
+    "It is also the surah to reach for when a prayer has gone unanswered so long that continuing to make it feels foolish. It opens with exactly that man, and does not treat his lateness as an obstacle worth mentioning."
+   ],
+   "passages": [
+    {
+     "ref": "19:4",
+     "why": "My bones have weakened and my head has filled with white, and never have I been unblessed in my supplication to You. A model of how to ask after decades of asking."
+    },
+    {
+     "ref": "19:23-26",
+     "why": "The palm tree, the instruction to shake it, and the dates that fall. Allah tells a woman in labour to do something, rather than simply providing it."
+    },
+    {
+     "ref": "19:41-48",
+     "why": "Ibrahim to his father. The most instructive passage in the Qur'an on speaking to a relative who has rejected what you believe."
+    },
+    {
+     "ref": "19:96",
+     "why": "Those who believe and do righteous deeds, the Merciful will appoint for them affection. The love comes from Him and is placed in other people."
+    }
+   ],
+   "connections": [
+    {
+     "to": 3,
+     "why": "The family of Imran is told there with a different emphasis, and the two accounts of Maryam complete each other."
+    },
+    {
+     "to": 21,
+     "why": "Al-Anbiya gathers the same prophets under the theme of distress answered."
+    }
+   ],
+   "virtue": {
+    "text": "No authentic report establishes a specific merit for reciting Surah Maryam. What is well attested is its use: Ja'far ibn Abi Talib recited its opening before the Negus of Abyssinia, and the king wept and granted the Muslims refuge. That is a report about the surah's effect rather than a promise of reward for reciting it, and it is given here as the former.",
+    "src": "no authentic virtue report; the Abyssinia account in Ahmad 1740 and the sirah",
+    "level": "none"
+   }
+  },
+  {
+   "n": 20,
+   "context": [
+    "Ta-Ha is Makkan, from the early years, and its most famous association is with the conversion of Umar ibn al-Khattab. The account, well known though its chains are discussed, has him setting out to kill the Prophet ﷺ, learning that his own sister had accepted Islam, and finding a page of this surah in her house. He read it, and went instead to declare his belief.",
+    "The surah's opening explains why it could do that. It begins by telling the Prophet ﷺ that the Qur'an was not sent down to cause him distress, and then, for more than eighty verses, tells the story of Musa in more detail than anywhere else in the Book: a man who was afraid, who asked for his brother's help because he could not do it alone, and who was sent to the most powerful man on earth anyway."
+   ],
+   "name_story": "Ta and Ha are two of the disconnected letters that open several surahs, and the honest position, held by many of the early commentators, is that their meaning is not known with certainty. Some reports treat them as a name or an address to the Prophet ﷺ. The surah is called by them, and the Qur'an does not explain them, which is itself worth sitting with.",
+   "movements": [
+    {
+     "range": "1-8",
+     "h": "Not to cause you distress",
+     "note": "The opening addresses the Prophet's ﷺ own exhaustion before it asks anything of him."
+    },
+    {
+     "range": "9-48",
+     "h": "The fire, and the commission",
+     "note": "Musa sees a fire, is spoken to directly, is given the staff and the hand, and asks for his chest to be expanded, his task made easy, and his brother appointed with him."
+    },
+    {
+     "range": "49-79",
+     "h": "Before Fir'awn, and the sea",
+     "note": "The confrontation, the magicians who prostrate and are threatened with crucifixion and do not move, and the crossing."
+    },
+    {
+     "range": "80-98",
+     "h": "The calf",
+     "note": "Forty nights away and the community has made a calf. Harun's defence, and the confrontation with Samiri."
+    },
+    {
+     "range": "99-135",
+     "h": "Adam, and the closing instruction",
+     "note": "The forgetting of Adam, the promise that whoever follows the guidance will not go astray nor suffer, and the warning about a life turned away from remembrance."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Revelation as relief, not burden",
+     "d": "The surah states in its second verse that it was not sent down to distress him, which sets the register for everything after it."
+    },
+    {
+     "t": "Asking for help is part of the commission",
+     "d": "Musa's response to the greatest assignment ever given is to ask for his chest to be expanded and for his brother, and both requests are granted without comment."
+    },
+    {
+     "t": "Conviction arriving in an instant",
+     "d": "The magicians go from employees of Fir'awn to men facing execution in the space of a single prostration, and the surah lets that happen fast."
+    },
+    {
+     "t": "Turning away has a texture",
+     "d": "The closing passage does not threaten a distant punishment for forgetting Allah. It describes a constricted life, here, as the consequence."
+    }
+   ],
+   "heart": [
+    "Recited slowly, the surah's centre is Musa's prayer at the burning bush, and it is the prayer of somebody who knows he is not adequate to what he has been given. My Lord, expand for me my chest, and ease for me my task, and untie the knot from my tongue. It is short enough to memorise in a minute and is worth having ready before anything you are afraid of.",
+    "Its closing pages do something quieter and harder. Whoever turns away from My remembrance will have a constricted life. Not a punishment scheduled for later: a description of now, which any reader who has spent a season away from prayer will recognise before they have finished the verse."
+   ],
+   "passages": [
+    {
+     "ref": "20:1-2",
+     "why": "Ta-Ha. We did not send down the Qur'an to you to cause you distress. Worth reading whenever the religion has started to feel like one more thing you are failing at."
+    },
+    {
+     "ref": "20:25-28",
+     "why": "Musa's prayer. Four short requests, granted in full, made by a man who had every reason to think himself the wrong choice."
+    },
+    {
+     "ref": "20:46",
+     "why": "Do not fear. Indeed, I am with you both, hearing and seeing. Said to two men about to walk into the court of Fir'awn."
+    },
+    {
+     "ref": "20:124",
+     "why": "Whoever turns away from My remembrance will have a depressed life. A diagnosis rather than a threat."
+    }
+   ],
+   "connections": [
+    {
+     "to": 28,
+     "why": "Al-Qasas tells the earlier part of Musa's life, and the two together make one continuous account."
+    },
+    {
+     "to": 94,
+     "why": "Ash-Sharh answers the same request Musa made, expanding the chest, and gives it to the Prophet ﷺ as a statement rather than a prayer."
+    }
+   ],
+   "virtue": {
+    "text": "No authentic report establishes a specific merit for reciting Ta-Ha; reports naming a reward for it are graded weak. The account of Umar's conversion through a page of this surah is widely transmitted in the sirah literature and is given here as biography, not as a virtue report.",
+    "src": "no authentic virtue report; the conversion account in the sirah",
+    "level": "none"
+   }
+  },
+  {
+   "n": 31,
+   "context": [
+    "Luqman is Makkan, from a period when the community was small and the pressure on it came from inside families as much as from outside them. Its central passage is not a prophet addressing a nation. It is a father speaking privately to his son, and the father is not a prophet either.",
+    "That choice is deliberate and is one of the more striking things in the Qur'an. Luqman is described as having been given hikmah, wisdom, and the counsel he gives is preserved in scripture and recited in prayer by people who will never know anything else about him. A short passage of one man's parenting was judged worth keeping for ever."
+   ],
+   "name_story": "Named for Luqman, whom the majority of the early commentators regarded as a wise man rather than a prophet, and whom several describe as an Abyssinian. The Qur'an tells us almost nothing about his circumstances and everything about what he said to his child, which is a fair indication of where it wants the reader's attention.",
+   "movements": [
+    {
+     "range": "1-11",
+     "h": "The Book, and those who trade it away",
+     "note": "Guidance and mercy for those who do good, set against the man who buys idle talk to lead others astray without knowledge."
+    },
+    {
+     "range": "12-19",
+     "h": "The counsel",
+     "note": "Gratitude, the warning against shirk, the debt owed to parents including the limit of that debt, and then six short instructions on prayer, patience, the face, the walk and the voice."
+    },
+    {
+     "range": "20-34",
+     "h": "Signs, and the five that are not known",
+     "note": "The sea and the trees as ink for the words of Allah, and a closing list of five things whose knowledge is with Allah alone."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Wisdom is gratitude first",
+     "d": "The description of Luqman's hikmah opens by defining it as being grateful to Allah, before any of the counsel begins."
+    },
+    {
+     "t": "Character taught in specifics",
+     "d": "The advice is not abstract. Do not turn your cheek away from people. Do not walk in arrogance. Lower your voice. It is small, physical and immediately actionable."
+    },
+    {
+     "t": "Obedience to parents, and its one limit",
+     "d": "The passage commands companionship with parents in kindness in this world and, in the same breath, says that if they strive to make you associate anything with Allah, do not obey them in that."
+    },
+    {
+     "t": "What is not given to you",
+     "d": "The surah closes on five matters known only to Allah, which quietly ends the human appetite to have everything explained."
+    }
+   ],
+   "heart": [
+    "Recited slowly, this is the surah for a parent, and it is unusually humbling. Everything Luqman says to his son is short. None of it is a lecture. The instruction on modesty is one sentence about how you carry your face; the instruction on humility is one sentence about how you walk. A father who has been trying to hand his child a philosophy is shown a man handing his child six habits.",
+    "The passage on parents is the one most readers were not expecting. It is placed inside the father's advice, so a son reading his father's counsel is simultaneously told what he owes his own parents, and told, in the same passage, the single point at which that obedience stops."
+   ],
+   "passages": [
+    {
+     "ref": "31:13",
+     "why": "O my son, do not associate anything with Allah. Indeed, association is a great injustice. The first thing he says, and he says it as a kindness."
+    },
+    {
+     "ref": "31:14-15",
+     "why": "The debt owed to parents, and its limit, stated together so neither can be quoted without the other."
+    },
+    {
+     "ref": "31:17",
+     "why": "Establish prayer, enjoin what is right, forbid what is wrong, and be patient over what befalls you. A whole life in one verse, ending with the acknowledgement that the first three will cost you something."
+    },
+    {
+     "ref": "31:19",
+     "why": "Be moderate in your pace and lower your voice. Character taught at the level of how you actually move through a room."
+    }
+   ],
+   "connections": [
+    {
+     "to": 17,
+     "why": "Al-Isra gives the parallel charter of conduct, including the wing of humility lowered to parents."
+    },
+    {
+     "to": 46,
+     "why": "Al-Ahqaf carries the other major passage on what parents are owed, from the child's side."
+    }
+   ],
+   "virtue": {
+    "text": "No authentic report establishes a specific merit for reciting Surah Luqman. Its weight in Muslim practice comes from the counsel itself, which has been used to teach children for fourteen centuries without needing a virtue report to recommend it.",
+    "src": "no authentic virtue report",
+    "level": "none"
+   }
+  },
+  {
+   "n": 32,
+   "context": [
+    "As-Sajdah is Makkan and short, thirty verses, and its place in practice is larger than its length. The Prophet ﷺ recited it together with Surah al-Insan in the dawn prayer of Friday, and the report is authentic and well known, which has kept this surah in weekly circulation in a way most surahs of its size are not.",
+    "Its subject is the two things a Makkan audience found hardest: that the Qur'an is from the Lord of the worlds and not composed by a man, and that a body which has decayed into the earth will be raised. It answers both briefly and moves on."
+   ],
+   "name_story": "Named for the prostration in verse fifteen, one of the places in the Qur'an where a reciter and those listening prostrate. The verse describes people who, when reminded of the verses of their Lord, fall down in prostration and glorify Him and are not arrogant, and the surah asks the reciter to do the thing being described while describing it.",
+   "movements": [
+    {
+     "range": "1-11",
+     "h": "From the Lord of the worlds",
+     "note": "The claim that this is revelation, the creation of the human being from a despised fluid, and the answer to the objection about being raised after decay."
+    },
+    {
+     "range": "12-22",
+     "h": "Two responses",
+     "note": "The criminals with their heads lowered before their Lord, set against those whose sides part from their beds, calling on Him in fear and hope. The prostration falls in this passage."
+    },
+    {
+     "range": "23-30",
+     "h": "The Book given to Musa, and the closing",
+     "note": "The pattern of scripture and patience, the barren land revived by water, and a warning to turn away from those who will not be reached."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Rising after decay",
+     "d": "The objection, that a body dissolved into the ground cannot return, is stated plainly and answered without evasion."
+    },
+    {
+     "t": "Worship in the dark",
+     "d": "The believers of this surah are described by what they do at night, when their sides part from their beds and nobody is watching."
+    },
+    {
+     "t": "A reward nobody has been told about",
+     "d": "No soul knows what has been hidden for them of comfort for the eyes, which leaves the best thing in the surah deliberately undescribed."
+    },
+    {
+     "t": "Reminder, then prostration",
+     "d": "The surah does not only argue. At its centre it asks the reciter to stop reading and put his forehead on the ground."
+    }
+   ],
+   "heart": [
+    "Recited slowly, this surah is short enough to hold whole and heavy enough to leave a mark. Its centre is a description of people who get out of a warm bed in the dark to pray, and the phrase used, their sides part from their beds, is physical enough that a reciter feels it in the body before he understands it.",
+    "Then comes the promise that no soul knows what has been kept hidden for them. Everything else the Qur'an describes of the next life is given in images a person can picture. Here it declines to, and the refusal does more than a description would."
+   ],
+   "passages": [
+    {
+     "ref": "32:15",
+     "why": "The verse of prostration. Read it, and then do what it describes."
+    },
+    {
+     "ref": "32:16",
+     "why": "Their sides part from their beds, calling upon their Lord in fear and hope. The most exact description of night prayer in the Qur'an."
+    },
+    {
+     "ref": "32:17",
+     "why": "No soul knows what has been hidden for them of comfort for the eyes, as reward for what they used to do."
+    },
+    {
+     "ref": "32:7",
+     "why": "Who perfected everything He created and began the creation of man from clay. The answer to the objection is that He has already done the harder thing once."
+    }
+   ],
+   "connections": [
+    {
+     "to": 76,
+     "why": "Al-Insan is its pair in the Friday dawn prayer, by the Prophet's ﷺ own practice."
+    },
+    {
+     "to": 67,
+     "why": "Al-Mulk covers the same ground of sovereignty and accountability at a similar length."
+    }
+   ],
+   "virtue": {
+    "text": "The Prophet ﷺ used to recite As-Sajdah and Al-Insan in the dawn prayer on Friday. This is an authentic report of his practice. It establishes the surah's place in the week; it is not a report promising a specific reward for reciting it at other times.",
+    "src": "Bukhari 891; Muslim 880",
+    "level": "sunnah"
+   }
+  },
+  {
+   "n": 13,
+   "context": [
+    "Ar-Ra'd sits at a boundary the commentators discuss: its voice is Makkan and its concerns are those of the Makkan period, yet some orderings place it among the Madinan surahs, and the early authorities differ. The honest position is that its period is disputed, and nothing in the surah's meaning depends on which view is taken.",
+    "Its setting is a demand for spectacle. The deniers wanted a sign of the kind they could point at, a mountain moved or a dead man raised, and the surah's answer is to redirect their attention to what was already falling on them: rain arriving on dead ground, thunder glorifying Allah in awe, and a revelation doing to hearts what the water does to the earth."
+   ],
+   "name_story": "Named for the thunder in verse thirteen, which is described as glorifying Allah with praise, as do the angels, out of awe of Him. The naming is characteristic of the surah: it takes the loudest ordinary thing in the sky and points out that it is already doing what the people demanding a miracle are refusing to do.",
+   "movements": [
+    {
+     "range": "1-7",
+     "h": "The signs already given",
+     "note": "Raised heavens without pillars, the sun and the moon running to an appointed term, and neighbouring plots of land watered with the same water that yield differently."
+    },
+    {
+     "range": "8-18",
+     "h": "What He knows, and what glorifies Him",
+     "note": "Every female's burden, the guardians before and behind a person, the thunder, the lightning, and the parable of the flood that carries away foam while what benefits people remains."
+    },
+    {
+     "range": "19-29",
+     "h": "Those of understanding",
+     "note": "People who fulfil the covenant, join what Allah commanded to be joined, and repel evil with good, ending in the verse the whole surah is best known for."
+    },
+    {
+     "range": "30-43",
+     "h": "Signs are not the problem",
+     "note": "Even if a Qur'an could move mountains or make the dead speak, the matter belongs to Allah, and the messenger's task is delivery, not compulsion."
+    }
+   ],
+   "themes": [
+    {
+     "t": "Signs over spectacle",
+     "d": "The demand for a dramatic miracle is answered by pointing at rain, growth and thunder, on the argument that a person unmoved by these would not be moved by more."
+    },
+    {
+     "t": "What lasts and what is foam",
+     "d": "The parable of the valley in flood, where the froth on the surface goes and what benefits people stays in the earth, is the surah's compressed theory of everything."
+    },
+    {
+     "t": "Remembrance as the settling of the heart",
+     "d": "The most quoted verse in the surah is a plain statement of mechanism rather than an exhortation."
+    },
+    {
+     "t": "Delivery, not compulsion",
+     "d": "The closing passage limits the messenger's responsibility, which is a mercy to everyone who has ever been unable to convince someone they love."
+    }
+   ],
+   "heart": [
+    "Recited slowly, this surah works on a specific kind of restlessness: the state of a person who is waiting for God to do something obvious before they will settle. It does not scold that person. It walks them past a series of ordinary things, water and fruit and lightning, until the demand starts to look like a way of not looking.",
+    "And then it gives them the sentence they were actually looking for. Unquestionably, by the remembrance of Allah hearts find rest. Not entertainment, not resolution of their circumstances: rest, which is a smaller word and the only one that fits."
+   ],
+   "passages": [
+    {
+     "ref": "13:28",
+     "why": "Those who believe and whose hearts find rest in the remembrance of Allah. The verse most often needed and least often quoted in full, since the first half names who it is describing."
+    },
+    {
+     "ref": "13:11",
+     "why": "Allah does not change the condition of a people until they change what is in themselves. Frequently quoted; worth reading in its own context, which is about guardians and decree."
+    },
+    {
+     "ref": "13:17",
+     "why": "The parable of the flood and the foam. One image for how to tell what will still be here later."
+    },
+    {
+     "ref": "13:31",
+     "why": "Even if a Qur'an could move mountains, the decision belongs to Allah. The verse that closes the argument about miracles."
+    }
+   ],
+   "connections": [
+    {
+     "to": 10,
+     "why": "Yunus answers the same demand for a different Qur'an or a dazzling sign, and the two make one argument."
+    },
+    {
+     "to": 2,
+     "why": "Al-Baqarah's opening sorts the same three responses to revelation that this surah illustrates."
+    }
+   ],
+   "virtue": {
+    "text": "No authentic report establishes a specific merit for reciting Surah Ar-Ra'd. It is included in this companion at depth because of one verse, 13:28, which carries more weight in ordinary Muslim life than most whole surahs do.",
+    "src": "no authentic virtue report",
+    "level": "none"
+   }
+  }
+ ]
+}

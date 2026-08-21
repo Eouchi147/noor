@@ -13,16 +13,61 @@ TOP = [
     ("kids.html", "nav.kids", "Kids"),
 ]
 
+# ---------------------------------------------------------------------------
+# The library, arranged by what a reader is actually trying to do.
+#
+# The old arrangement was five headings and thirty eight links, all visible at
+# once. Every one of them was a good room, and the effect of showing them
+# together was that the owner of the site could not find his own work. Volume
+# was the problem, not the labels.
+#
+# So the menu now answers a question before it offers a list. Six doors, each
+# named for an intent rather than for a category:
+#
+#   READ    the text itself, and the words needed to hold it
+#   LEARN   what to believe and how to pray it
+#   LIVE    the practice as it meets an ordinary week
+#   STORY   where all of it came from, and where it is going
+#   LITTLE  the rooms built for children
+#   HOUSE   the building itself: its tools, its keeper, its terms
+#
+# And above the doors, PINNED, sit the five rooms most people actually came
+# for. The common case now costs no taps at all; the uncommon case costs one.
+# ---------------------------------------------------------------------------
+
+PINNED = [
+    ("quran.html", "p.quran", "The Mushaf"),
+    ("good-life.html", "p.goodlife", "How to Live Well"),
+    ("prophets.html", "p.prophets", "The 25 Prophets"),
+    ("pillars.html", "p.pillars", "The Five Pillars"),
+    ("stories/", "p.stories", "The Hall of Stories"),
+]
+
 GROUPS = [
-    ("g.learn", "Learn", [
-        ("madrasa.html", "m.madrasa", "The Classroom · Madrasa"),
-        ("dictionary.html", "m.dictionary", "The Encyclopedia of the Path"),
-        ("quran.html", "m.quran", "The Mushaf · Study the Qur'an"),
-        ("arabic.html", "m.arabic", "Learn Arabic · The Letters"),
+    ("g.read", "Read", [
+        ("quran.html", "m.quran", "The Mushaf &middot; Study the Qur'an"),
         ("words.html", "m.words", "The Words of the Path"),
+        ("dictionary.html", "m.dictionary", "The Encyclopedia of the Path"),
+        ("arabic.html", "m.arabic", "Learn Arabic &middot; The Letters"),
+    ]),
+    ("g.learn", "Learn", [
+        ("begin.html", "m.begin", "Begin &middot; New Muslim"),
+        ("pillars.html", "m.pillars", "The Five Pillars"),
+        ("theology.html", "m.theology", "Theology &middot; The Branches"),
+        ("madrasa.html", "m.madrasa", "The Classroom &middot; Madrasa"),
+        ("school.html", "m.school", "The School &middot; Full Curriculum"),
+    ]),
+    ("g.live", "Live", [
+        ("good-life.html", "m.goodlife", "How to Live a Good Life"),
         ("health.html", "m.health", "Prophetic Health"),
-        ("theology.html", "m.theology", "Theology · The Branches"),
-        ("school.html", "m.school", "The School · Full Curriculum"),
+        ("family.html", "m.family", "The Family Room"),
+        ("marriage.html", "m.marriage", "Marriage &amp; the Home"),
+        ("teens.html", "m.teens", "For Teenagers"),
+        ("protection.html", "m.protection", "Protection &amp; the Light"),
+        ("ramadan.html", "m.ramadan", "Ramadan"),
+        ("eid.html", "m.eid", "The Two Eids"),
+        ("hajj.html", "m.hajj", "Hajj &amp; Umrah"),
+        ("hajj-plan.html", "m.hajjplan", "Your Pilgrim Plan"),
     ]),
     ("g.story", "The Story", [
         ("index.html#timeline", "m.path", "The Path of Creation"),
@@ -31,33 +76,21 @@ GROUPS = [
         ("characters.html", "m.characters", "Characters"),
         ("places.html", "m.places", "Places"),
         ("heroes.html", "m.heroes", "Heroes of Islam"),
-        ("unseen.html", "m.unseen", "The Unseen &amp; the Mysteries"),
-        ("simulation.html", "m.simulation", "Are We in a Simulation?"),
-        ("journal.html", "m.journal", "The Guardian's Journal"),
-    ]),
-    ("g.heart", "The Heart", [
-        ("pillars.html", "m.pillars", "The Five Pillars"),
-        ("hajj.html", "m.hajj", "Hajj &amp; Umrah"),
-        ("hajj-plan.html", "m.hajjplan", "Your Pilgrim Plan"),
-        ("begin.html", "m.begin", "Begin · New Muslim"),
-        ("family.html", "m.family", "The Family Room"),
-        ("marriage.html", "m.marriage", "Marriage &amp; the Home"),
-        ("teens.html", "m.teens", "For Teenagers"),
-        ("protection.html", "m.protection", "Protection & the Light"),
-        ("ramadan.html", "m.ramadan", "Ramadan"),
-        ("eid.html", "m.eid", "The Two Eids"),
         ("sermon.html", "m.sermon", "The Last Sermon"),
+        ("unseen.html", "m.unseen", "The Unseen &amp; the Mysteries"),
         ("soul.html", "m.soul", "The Journey of the Soul"),
         ("index.html#mizan", "m.mizan", "Two Lives"),
+        ("simulation.html", "m.simulation", "Are We in a Simulation?"),
     ]),
-    ("g.little", "Stories &amp; Little Ones", [
+    ("g.little", "Little Ones", [
         ("stories/", "m.stories", "The Hall of Stories"),
         ("kids.html", "m.kidscodex", "The Kids' Codex"),
         ("kids/lanterns.html", "m.lanterns", "The Lantern Sky"),
     ]),
-    ("g.houses", "Houses &amp; Support", [
+    ("g.house", "The House", [
         ("masjid/", "m.masjid", "The Masjid Toolbox"),
         ("license.html", "m.orgs", "For Schools &amp; Organizations"),
+        ("journal.html", "m.journal", "The Guardian's Journal"),
         ("donate.html", "m.give", "Give a Gift"),
         ("feedback.html", "m.feedback", "Corrections &amp; Ideas"),
         ("legal.html", "m.legal", "Terms &amp; Transparency"),
@@ -147,6 +180,39 @@ body.sheet-open{overflow:hidden}
 }
 html.standalone{--safetop:env(safe-area-inset-top,0px)}
 html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
+/* ---- the pinned strip -------------------------------------------------
+   Five rooms, two across, sitting above everything else. This is the whole
+   point of the redesign: the common case is answered before the reader has
+   to choose anything. */
+#nav-sheet .pins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.35rem 0 .4rem}
+#nav-sheet .pin{display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:3.4rem;padding:.6rem .7rem;border:1px solid rgba(201,162,39,.4);
+  background:linear-gradient(160deg,#FFFDF4,#FFF6E2);border-radius:14px;
+  font-size:.8rem;font-weight:800;color:#2C2416;text-decoration:none;line-height:1.35}
+#nav-sheet .pin:active{background:#FFF1CE}
+#nav-sheet .pin:first-child{grid-column:1 / -1}
+
+/* ---- the doors ---------------------------------------------------------
+   <details> rather than a script: they open with JavaScript unavailable, and
+   a screen reader already knows what a disclosure is. */
+#nav-sheet .door{border-bottom:1px solid rgba(201,162,39,.18)}
+#nav-sheet .door summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;
+  padding:.85rem .1rem;font-size:.95rem;font-weight:800;color:#2C2416;
+  font-family:Inter,system-ui,sans-serif}
+#nav-sheet .door summary::-webkit-details-marker{display:none}
+#nav-sheet .door summary::after{content:"";margin-inline-start:auto;width:.5rem;height:.5rem;flex:none;
+  border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;
+  transform:rotate(45deg);transition:transform .2s ease}
+#nav-sheet .door[open] summary::after{transform:rotate(-135deg)}
+#nav-sheet .door .cnt{font-size:.62rem;font-weight:700;color:rgba(44,36,22,.38);
+  border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.05rem .4rem;line-height:1.6}
+#nav-sheet .door-in{padding:0 0 .6rem}
+/* Said explicitly rather than left to the browser: the sheet's own
+   a.shl{display:block} was out-specifying the built-in hiding, so every
+   door stood open and the redesign achieved nothing. */
+#nav-sheet .door:not([open]) .door-in{display:none}
+@media (prefers-reduced-motion:reduce){#nav-sheet .door summary::after{transition:none}}
+
 #nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
 #nav-sheet .sh-g:first-child{margin-top:.2rem}
 #nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
@@ -222,20 +288,35 @@ def nav_html(prefix, active):
             out.append('<a role="menuitem" href="%s"%s data-i18n="%s">%s</a>' % (href(h), extra, k, label))
         return "\n".join(out)
 
-    cols.append('<div class="mg">\n' + group_html(*GROUPS[0]) + "\n</div>")
-    cols.append('<div class="mg">\n' + group_html(*GROUPS[1]) + "\n</div>")
+    # Six doors into four columns: the two short ones pair up at each end, so
+    # the columns stay close in height and nothing runs off the bottom.
+    cols.append('<div class="mg">\n' + group_html(*GROUPS[0]) + "\n" + group_html(*GROUPS[1]) + "\n</div>")
     cols.append('<div class="mg">\n' + group_html(*GROUPS[2]) + "\n</div>")
-    cols.append('<div class="mg">\n' + group_html(*GROUPS[3]) + "\n" + group_html(*GROUPS[4]) + "\n</div>")
+    cols.append('<div class="mg">\n' + group_html(*GROUPS[3]) + "\n</div>")
+    cols.append('<div class="mg">\n' + group_html(*GROUPS[4]) + "\n" + group_html(*GROUPS[5]) + "\n</div>")
 
     lang_buttons = "\n".join(
         '<button type="button" data-setlang="%s" lang="%s">%s</button>' % (c, c, n) for c, n in LANGS
     )
 
-    sheet_groups = []
+    # The sheet leads with the five rooms most people came for, then closes
+    # everything else behind six doors. <details> is used rather than a script
+    # so the doors still open with JavaScript unavailable and screen readers
+    # already know what they are.
+    pin_rows = "".join(
+        '<a class="pin" href="%s" data-i18n="%s">%s</a>' % (href(h), k, label)
+        for h, k, label in PINNED)
+    sheet_groups = ['<p class="sh-g" data-i18n="g.pinned">Most opened</p>'
+                    '<div class="pins">' + pin_rows + '</div>']
     for gk, gtitle, items in GROUPS:
-        rows = ['<p class="sh-g" data-i18n="%s">%s</p>' % (gk, gtitle)]
+        # the key sits on an inner span: the translator replaces the text of
+        # whatever carries data-i18n, and on the summary itself that swallowed
+        # the count along with it
+        rows = ['<details class="door"><summary><span data-i18n="%s">%s</span>'
+                '<span class="cnt">%d</span></summary><div class="door-in">' % (gk, gtitle, len(items))]
         for h, k, label in items:
             rows.append('<a class="shl" href="%s" data-i18n="%s">%s</a>' % (href(h), k, label))
+        rows.append("</div></details>")
         sheet_groups.append("\n".join(rows))
 
     return """<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">

@@ -178,6 +178,39 @@ body.sheet-open{overflow:hidden}
 }
 html.standalone{--safetop:env(safe-area-inset-top,0px)}
 html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
+/* ---- the pinned strip -------------------------------------------------
+   Five rooms, two across, sitting above everything else. This is the whole
+   point of the redesign: the common case is answered before the reader has
+   to choose anything. */
+#nav-sheet .pins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.35rem 0 .4rem}
+#nav-sheet .pin{display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:3.4rem;padding:.6rem .7rem;border:1px solid rgba(201,162,39,.4);
+  background:linear-gradient(160deg,#FFFDF4,#FFF6E2);border-radius:14px;
+  font-size:.8rem;font-weight:800;color:#2C2416;text-decoration:none;line-height:1.35}
+#nav-sheet .pin:active{background:#FFF1CE}
+#nav-sheet .pin:first-child{grid-column:1 / -1}
+
+/* ---- the doors ---------------------------------------------------------
+   <details> rather than a script: they open with JavaScript unavailable, and
+   a screen reader already knows what a disclosure is. */
+#nav-sheet .door{border-bottom:1px solid rgba(201,162,39,.18)}
+#nav-sheet .door summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;
+  padding:.85rem .1rem;font-size:.95rem;font-weight:800;color:#2C2416;
+  font-family:Inter,system-ui,sans-serif}
+#nav-sheet .door summary::-webkit-details-marker{display:none}
+#nav-sheet .door summary::after{content:"";margin-inline-start:auto;width:.5rem;height:.5rem;flex:none;
+  border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;
+  transform:rotate(45deg);transition:transform .2s ease}
+#nav-sheet .door[open] summary::after{transform:rotate(-135deg)}
+#nav-sheet .door .cnt{font-size:.62rem;font-weight:700;color:rgba(44,36,22,.38);
+  border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.05rem .4rem;line-height:1.6}
+#nav-sheet .door-in{padding:0 0 .6rem}
+/* Said explicitly rather than left to the browser: the sheet's own
+   a.shl{display:block} was out-specifying the built-in hiding, so every
+   door stood open and the redesign achieved nothing. */
+#nav-sheet .door:not([open]) .door-in{display:none}
+@media (prefers-reduced-motion:reduce){#nav-sheet .door summary::after{transition:none}}
+
 #nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
 #nav-sheet .sh-g:first-child{margin-top:.2rem}
 #nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
@@ -233,15 +266,30 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
 <div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
 <div class="mg">
-<p class="dd-h" data-i18n="g.learn">Learn</p>
-<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<p class="dd-h" data-i18n="g.read">Read</p>
+<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
 <a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
+<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
+<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
+<a role="menuitem" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.live">Live</p>
+<a role="menuitem" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
 <a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a role="menuitem" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a role="menuitem" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
+<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a role="menuitem" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
+<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
 </div>
 <div class="mg">
 <p class="dd-h" data-i18n="g.story">The Story</p>
@@ -251,34 +299,21 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
 <a role="menuitem" href="/places" data-i18n="m.places">Places</a>
 <a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a role="menuitem" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-<a role="menuitem" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.heart">The Heart</p>
-<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-<a role="menuitem" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
-<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a role="menuitem" href="/protection" data-i18n="m.protection">Protection & the Light</a>
-<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
 <a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
 <a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
 <a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+<a role="menuitem" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
 </div>
 <div class="mg">
-<p class="dd-h" data-i18n="g.little">Stories &amp; Little Ones</p>
+<p class="dd-h" data-i18n="g.little">Little Ones</p>
 <a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
 <a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
 <a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="dd-h" data-i18n="g.houses">Houses &amp; Support</p>
+<p class="dd-h" data-i18n="g.house">The House</p>
 <a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
 <a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
 <a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
 <a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
 <a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
@@ -322,49 +357,58 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 </div>
 </header>
 <div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.learn">Learn</p>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom · Madrasa</a>
-<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf · Study the Qur'an</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic · The Letters</a>
+<p class="sh-g" data-i18n="g.pinned">Most opened</p><div class="pins"><a class="pin" href="/quran" data-i18n="p.quran">The Mushaf</a><a class="pin" href="/good-life" data-i18n="p.goodlife">How to Live Well</a><a class="pin" href="/prophets" data-i18n="p.prophets">The 25 Prophets</a><a class="pin" href="/pillars" data-i18n="p.pillars">The Five Pillars</a><a class="pin" href="/stories" data-i18n="p.stories">The Hall of Stories</a></div>
+<details class="door"><summary><span data-i18n="g.read">Read</span><span class="cnt">4</span></summary><div class="door-in">
+<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
 <a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.learn">Learn</span><span class="cnt">5</span></summary><div class="door-in">
+<a class="shl" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
+<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
+<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
+<a class="shl" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.live">Live</span><span class="cnt">10</span></summary><div class="door-in">
+<a class="shl" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
 <a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology · The Branches</a>
-<a class="shl" href="/school" data-i18n="m.school">The School · Full Curriculum</a>
-<p class="sh-g" data-i18n="g.story">The Story</p>
+<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a class="shl" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
+<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.story">The Story</span><span class="cnt">11</span></summary><div class="door-in">
 <a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
 <a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
 <a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
 <a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
 <a class="shl" href="/places" data-i18n="m.places">Places</a>
 <a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a class="shl" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-<a class="shl" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-<p class="sh-g" data-i18n="g.heart">The Heart</p>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-<a class="shl" href="/begin" data-i18n="m.begin">Begin · New Muslim</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a class="shl" href="/protection" data-i18n="m.protection">Protection & the Light</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
 <a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
 <a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
 <a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<p class="sh-g" data-i18n="g.little">Stories &amp; Little Ones</p>
+<a class="shl" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.little">Little Ones</span><span class="cnt">3</span></summary><div class="door-in">
 <a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
 <a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
 <a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="sh-g" data-i18n="g.houses">Houses &amp; Support</p>
+</div></details>
+<details class="door"><summary><span data-i18n="g.house">The House</span><span class="cnt">6</span></summary><div class="door-in">
 <a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
 <a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
 <a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
 <a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
 <a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div></details>
 <p class="sh-g" data-i18n="lang.choose">Choose your language</p>
 <div class="lang-grid">
 <button type="button" data-setlang="en" lang="en">English</button>
@@ -393,6 +437,9 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
+
+
 
 
 

@@ -16,7 +16,7 @@
 "g.learn": "Learn",
 "g.story": "The Story",
 "g.heart": "The Heart",
-"g.little": "Stories & Little Ones",
+"g.little": "Little Ones",
 "g.houses": "Houses & Support",
 "m.madrasa": "The Classroom · Madrasa",
 "m.quran": "The Mushaf · Study the Qur'an",
@@ -225,5 +225,15 @@
 "hero2.more": "A full madrasa, rooms for every age, and a lantern that lights something new each day.",
 "hero2.short": "The whole of Islam, one illuminated library. Free forever.",
 "m.simulation": "Are We in a Simulation?",
-"m.journal": "The Guardian's Journal"
+"m.journal": "The Guardian's Journal",
+"m.goodlife": "How to Live a Good Life",
+"g.read": "Read",
+"g.live": "Live",
+"g.house": "The House",
+"g.pinned": "Most opened",
+"p.quran": "The Mushaf",
+"p.goodlife": "How to Live Well",
+"p.prophets": "The 25 Prophets",
+"p.pillars": "The Five Pillars",
+"p.stories": "The Hall of Stories"
 }

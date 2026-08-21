@@ -83,6 +83,17 @@
 .narc .nlbl{font:700 8px Inter,system-ui,sans-serif;fill:rgba(255,254,247,.62);
   letter-spacing:.1em;text-transform:uppercase}
 .narc .nlbl.on{fill:rgba(244,212,106,.95)}
+/* the second line under a mark is a timing note, not a name: smaller, so two
+   marks close together cannot run their captions into each other */
+.narc .nsub{font:700 6.4px Inter,system-ui,sans-serif;fill:rgba(255,254,247,.45);
+  letter-spacing:.06em;text-transform:uppercase}
+
+/* ---- 5 · a day cut into fixed points ---------------------------------
+   The span is the waking day; the marks are the prayers landing in it. The
+   still frame already shows all five in place, which is the true picture; the
+   motion only reveals them in the order the day meets them. */
+.nspan{stroke-dasharray:var(--len,300)}
+.nmark{opacity:1}
 
 /* ---- 4 · two columns that disagree -----------------------------------
    For the places a metaphor breaks: the claim on one side, what the sources
@@ -128,6 +139,12 @@
   @keyframes ndraw{ to{stroke-dashoffset:0} }
   .nfig.ngo .narc .nwalk{animation:nwalk 7s linear 1.9s infinite}
   @keyframes nwalk{ from{offset-distance:0%} to{offset-distance:100%} }
+
+  /* the day draws itself once, then each prayer lands in the order it comes */
+  .nfig.ngo .nspan{stroke-dashoffset:var(--len,300);animation:ndraw 1.6s ease-out both}
+  .nfig.ngo .nmark{opacity:0;animation:nland .5s cubic-bezier(.16,.84,.36,1) both;
+    animation-delay:calc(.45s + var(--i,0) * .26s)}
+  @keyframes nland{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
 
   /* the two columns arrive one after the other, never together */
   .nfig.ngo .ncol{animation:nrise .7s cubic-bezier(.16,.84,.36,1) both}
