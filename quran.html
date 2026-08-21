@@ -618,7 +618,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <p class="glegend">
 <span class="gchip mk">Makkan</span><b>revealed before the migration</b>
 <span class="gchip md">Madinan</span><b>revealed after it</b>
-<span style="color:#C9A227" aria-hidden="true">✦</span><b>opened in full by the study companion</b>
+<span style="color:#C9A227" aria-hidden="true">✦</span><b>every surah opened in full by the study companion</b>
 <span id="gate-count"></span>
 </p>
 <div id="gates-wrap" role="list"></div>
@@ -697,7 +697,7 @@ $("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");gate
 const STUDY=()=>window.NOOR_STUDY||null;
 const isDeep=n=>{const D=STUDY();return !!(D&&D[n]&&D[n].depth==="deep");};
 function gateHTML(s){const[n,en,ar,meaning,count,place]=s;const mk=place==="M",deep=isDeep(n);
- return `<button class="gate ${mk?"mk":"md"}${deep?" deep":""}" role="listitem" data-n="${n}" aria-label="Surah ${n}, ${en}, ${meaning}, ${count} ayat, ${mk?"Makkan":"Madinan"}${deep?", opened in full":""}">
+ return `<button class="gate ${mk?"mk":"md"}${deep?" deep":""}" role="listitem" data-n="${n}" aria-label="Surah ${n}, ${en}, ${meaning}, ${count} ayat, ${mk?"Makkan":"Madinan"}">
   <span class="seal" aria-hidden="true">${n}</span>
   <span class="gar font-amiri" translate="no">${ar}</span>
   <span class="gen">${en}</span>
@@ -815,7 +815,7 @@ function bandFig(rec,n,count){
  </svg></div>`;
 }
 
-/* the figure of a surah opened in brief: its length against the longest */
+/* the figure of a surah's length against the longest in the Book */
 function lengthFig(n,count,place){
  const W=620,MAX=286,w=Math.max(9,count/MAX*W),mk=place==="M";
  const cap=n===2?"the longest surah in the Book":"against Al-Baqarah, the longest, at 286";
@@ -834,7 +834,7 @@ function studyHTML(n){
  let h=`<section class="sp mo" aria-label="Study companion for surah ${esc(s[1])}">
   <p class="sp-eye">✦ The study companion</p>
   <h3 class="sp-title">${esc(s[1])}<span>, ${esc(s[3])}</span></h3>
-  <p class="sp-line">${place==="M"?"Makkan":"Madinan"} · ${count} ayat · ${deep?"opened in full":"opened in brief"}</p>`;
+  <p class="sp-line">${place==="M"?"Makkan":"Madinan"} · ${count} ayat</p>`;
 
  const ctx=arr(rec.context);
  if(ctx.length)h+=kick("When it came down")+ctx.map(p=>`<p class="sp-p">${esc(p)}</p>`).join("");
@@ -881,7 +881,11 @@ function studyHTML(n){
    <div class="sp-tags"><span class="sp-badge ${sound?"ok":"weak"}">${sound?"Established":silent?"No authentic report, and we say so":"Weak or contested, so we say so"}</span>
    ${rec.virtue.src?`<span class="sp-src">${esc(rec.virtue.src)}</span>`:""}</div></div>`;}
 
- if(!deep)h+=`<p class="sp-note">This surah is opened in brief here. The full companion is being written.</p>`;
+ /* Every surah is now opened in full, so the note promising that a fuller
+    companion is coming would never fire. It is kept only as a safety net:
+    if a record ever lands here without the deep fields, the reader is told
+    rather than shown a half-empty panel with no explanation. */
+ if(!deep)h+=`<p class="sp-note">This surah is opened in brief here.</p>`;
  return h+`</section>`;
 }
 
