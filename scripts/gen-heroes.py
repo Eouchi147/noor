@@ -377,7 +377,7 @@ GIFT_FIGS["triangles-bent-around-a-sphere"] = fig(
     '<text x="180" y="276" class="t2 gold">exactly 180 degrees</text>'
     '<text x="480" y="250" class="t2">on a round earth</text>'
     '<text x="480" y="276" class="t2 gold">always more than 180</text></g>'
-    '<text x="330" y="310" class="t4">so the way to Mecca is an arc, not a straight line on a flat map</text>',
+    '<text x="330" y="310" class="t4">so the way to Makkah is an arc, not a straight line on a flat map</text>',
     "Five times a day, from any village on a round earth, a Muslim needs the direction of one "
     "city. Answering that precisely, along with prayer times and calendars, drove al-Battani at "
     "Raqqa and Abu al-Wafa at Baghdad deep into the trigonometry of the sphere, where the flat "
@@ -943,7 +943,7 @@ GIFT_FIGS["reading-the-monsoon-sea"] = fig(
 
 GIFT_FIGS["coffee-the-night-prayer-s-drink"] = fig(
     "fcof",
-    "The road coffee travelled, from the shrub across the Red Sea to Yemen, then Mecca, Cairo and "
+    "The road coffee travelled, from the shrub across the Red Sea to Yemen, then Makkah, Cairo and "
     "Istanbul, with the word changing shape along the same road",
     660, 316,
     '<g class="rd"><path d="M90 132C140 112 170 98 210 104C260 112 290 132 330 132'
@@ -955,7 +955,7 @@ GIFT_FIGS["coffee-the-night-prayer-s-drink"] = fig(
     '<text x="90" y="188" class="t4">the shrub’s home</text>'
     '<text x="210" y="80" class="t2">Yemen</text>'
     '<text x="210" y="58" class="t4">roasted and brewed, qahwa</text>'
-    '<text x="330" y="166" class="t2">Mecca</text>'
+    '<text x="330" y="166" class="t2">Makkah</text>'
     '<text x="330" y="188" class="t4">carried by pilgrims</text>'
     '<text x="455" y="80" class="t2">Cairo</text>'
     '<text x="650" y="166" class="t2 te">Istanbul</text>'
@@ -1181,7 +1181,7 @@ LIFE_FIGS["ash-shafii"] = fig(
     '<rect x="60" y="120" width="400" height="32" rx="8"/>'
     '<rect x="60" y="158" width="400" height="32" rx="8"/>'
     '<rect x="60" y="196" width="400" height="32" rx="8"/></g>'
-    '<g class="mo"><text x="260" y="103" class="t4">the Quran</text>'
+    '<g class="mo"><text x="260" y="103" class="t4">the Qur'an</text>'
     '<text x="260" y="141" class="t4">the Sunnah, the way of the Prophet ﷺ</text>'
     '<text x="260" y="179" class="t4">ijma, what the scholars agreed</text>'
     '<text x="260" y="217" class="t4">qiyas, likeness to a case already settled</text></g>'

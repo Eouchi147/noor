@@ -160,8 +160,17 @@ export async function askOpenRouter(messages, opts = {}) {
       });
       clearTimeout(timer);
       if (!r.ok) {
-        last = "http " + r.status;
-        tried.push({ model, ms: Date.now() - t0, err: last });
+        /* "http 404" tells nobody anything. OpenRouter says exactly why in the
+           body, and the difference matters enormously: a 404 here almost always
+           means "no provider matches your privacy settings", which is one
+           checkbox on their site, not a broken key. Read it and pass it on. */
+        let why = "";
+        try {
+          const e = await r.json();
+          why = String((e && e.error && (e.error.message || e.error)) || "").slice(0, 160);
+        } catch { try { why = (await r.text()).slice(0, 160); } catch {} }
+        last = "http " + r.status + (why ? ": " + why : "");
+        tried.push({ model, ms: Date.now() - t0, err: last, status: r.status, why });
         continue;                                   /* dead name, rate limit, or refusal: next */
       }
       const j = await r.json();
@@ -203,5 +212,26 @@ export async function probeLantern() {
   out.error = got.error;
   out.tried = got.tried || [];
   out.ms = Date.now() - t0;
+
+  /* Turn the pattern of failures into the one sentence that tells the owner
+     what to do. These three cover essentially every way a working key still
+     produces no words. */
+  const st = out.tried.map(t => t.status).filter(Boolean);
+  const body = out.tried.map(t => String(t.why || "")).join(" ").toLowerCase();
+  if (!out.ok) {
+    if (st.includes(401) || st.includes(403)) {
+      out.verdict = "key";
+      out.advice = "OpenRouter refused the key itself. Check that OPENROUTER_API_KEY in Vercel matches a key that still exists on openrouter.ai/keys, and redeploy after changing it.";
+    } else if (/data policy|privacy|no endpoints|no allowed providers/.test(body) || (st.includes(404) && !st.includes(401))) {
+      out.verdict = "policy";
+      out.advice = "The key works, but no provider is allowed to answer. Free models are served by providers that may train on prompts, so OpenRouter hides them until you allow it: open openrouter.ai/settings/privacy and enable the free-model / prompt-training option. Nothing needs redeploying afterwards.";
+    } else if (st.includes(429)) {
+      out.verdict = "limit";
+      out.advice = "Every model answered with a rate limit. Free models share a small daily allowance per account; it resets each day. Adding a few dollars of credit on OpenRouter raises that allowance permanently without making any request paid.";
+    } else {
+      out.verdict = "unknown";
+      out.advice = "No model answered and none gave a reason the house recognises. The exact words each one returned are in the table below.";
+    }
+  }
   return out;
 }

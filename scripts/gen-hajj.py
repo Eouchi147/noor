@@ -970,7 +970,7 @@ if(rail){
 
 JSONLD = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Hajj and Umrah, made simple",
-"description":"A first timer's guide to Hajj and Umrah: the three ways, ihram and the miqats, tawaf and sa'i, the five days from 8 to 13 Dhul Hijjah, the pillars and obligations of the four schools, and what to do when something goes wrong.",
+"description":"A first timer's guide to Hajj and Umrah: the three ways, ihram and the miqats, tawaf and sa'i, the days of Hajj from 8 to 13 Dhul Hijjah, the pillars and obligations of the four schools, and what to do when something goes wrong.",
 "inLanguage":"en","isAccessibleForFree":true,
 "about":["Hajj","Umrah","Ihram","Tawaf","Arafah","Islamic pilgrimage"],
 "publisher":{"@type":"Organization","name":"NOOR Codex of Light","url":"https://noorcodex.com"},
