@@ -351,6 +351,7 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .h2kick{font-size:1.6rem;color:#F4D46A;filter:drop-shadow(0 0 14px rgba(244,212,106,.5));margin:0 0 .5rem}
 .h2title{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.04;font-weight:800;letter-spacing:-.02em;margin:0}
 .h2sub{font-size:.95rem;line-height:1.85;color:rgba(255,254,247,.72);max-width:34rem;margin:1.05rem 0 0}
+.h2phone{display:none}
 .h2search{display:flex;align-items:center;gap:.7rem;width:100%;max-width:34rem;margin-top:1.5rem;
   background:rgba(20,16,10,.5);border:1px solid rgba(244,212,106,.4);border-radius:16px;
   padding:.95rem 1.05rem;color:rgba(255,254,247,.62);font:inherit;font-size:.9rem;cursor:text;text-align:start;
@@ -410,16 +411,26 @@ a:hover .logo-seal{transform:rotate(12deg)}
 .h2mq-t i{font-style:normal;color:#C9A227;font-size:.6rem}
 @keyframes h2drift{to{transform:translateX(-50%)}}
 /* the relocated seal, crowning the Path */
-.path-seal{position:relative;height:clamp(15rem,34vw,21rem);margin:0 auto;max-width:24rem;
-  filter:drop-shadow(0 10px 30px rgba(20,16,10,.35))}
-.path-seal .geo-pos{top:50%;left:50%;width:min(80vw,21rem);margin-inline-start:calc(min(80vw,21rem)/-2);
-  margin-top:calc(min(80vw,21rem)/-2)}
-.path-seal-cap{text-align:center;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(44,36,22,.45);font-weight:800;margin:0 0 2rem}
+/* The wheel was drawn for the night sky and was standing on parchment, pale
+   and washed out, with a caption running straight through it because the box
+   was shorter than the emblem inside it. Wheel, caption and the ayah it
+   illustrates are now one lit panel: the emblem sits in a square that is
+   exactly its own size, so nothing can overlap it at any width, and the
+   centring uses a transform rather than a logical margin, which flipped the
+   whole thing off-centre the moment the page turned right to left. */
+.path-medallion{max-width:38rem;margin:0 auto 2.4rem;padding:1.6rem 1.2rem 1.3rem;
+  background:linear-gradient(168deg,#0F1428,#171126 46%,#1d1630);
+  border:1px solid rgba(201,162,39,.34);border-radius:24px;
+  box-shadow:0 22px 60px rgba(12,10,26,.30)}
+.path-seal{position:relative;width:min(72vw,17rem);aspect-ratio:1;margin:0 auto;
+  filter:drop-shadow(0 8px 26px rgba(0,0,0,.45))}
+.path-seal .geo-pos{position:absolute;inset:0;top:0;left:0;width:auto;height:auto;
+  margin:0;transform:none}
+.path-seal-cap{text-align:center;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,254,247,.45);font-weight:800;margin:1.1rem 0 1.3rem;line-height:1.7}
 /* the emblem was inked for the night sky; on parchment the same lines
    are deepened to antique bronze, keeping their relative weights */
-.path-seal #geo{filter:brightness(.62) saturate(1.4)}
-.path-seal #rv-ring tspan+tspan{fill:rgba(60,48,26,.72)}
+.path-seal #rv-ring{opacity:.85}
 @media (prefers-reduced-motion:reduce){
   .path-seal #geo .gp,.path-seal #geo .gpt,.path-seal #geo .gpf,.path-seal .crescent{transition:none}
   .path-seal .kun-seed{display:none}
@@ -440,8 +451,14 @@ a:hover .logo-seal{transform:rotate(12deg)}
   .h2left,.h2right{min-width:0;max-width:100%}
   .h2kick{font-size:1.25rem;margin-bottom:.35rem}
   .h2title{font-size:clamp(2.15rem,10.5vw,3.1rem);line-height:1.06}
-  .h2sub{font-size:.9rem;line-height:1.7;margin-top:.75rem}
-  .h2sub.h2more{display:none}
+  .h2sub{font-size:.92rem;line-height:1.65;margin-top:.7rem}
+  .h2sub.h2more,.h2sub.h2desk{display:none}
+  .h2phone{display:block}
+  /* the tile keeps its light and loses its furniture: the archive arrows are
+     a desk affordance, and the kicker has no business taking two lines */
+  .h2c-light #dl-prev,.h2c-light #dl-next{display:none!important}
+  .h2c-light #dl-date{font-size:.63rem;letter-spacing:.02em;white-space:nowrap}
+  .h2ck,.h2c-light [style*="letter-spacing:.22em"]{letter-spacing:.13em;white-space:nowrap;font-size:.6rem}
   .h2search{margin-top:1.15rem;padding:.86rem .95rem;font-size:.86rem;border-radius:14px}
   .h2search kbd{display:none}
   .h2doors{grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;max-width:none;margin-top:.85rem}
@@ -452,12 +469,27 @@ a:hover .logo-seal{transform:rotate(12deg)}
   .h2d-first{grid-column:1/-1;text-align:start;display:block;padding:.85rem 1rem;border-radius:14px;min-height:0}
   .h2d-first b{font-size:.98rem}
   .h2d-first span{display:block;font-size:.7rem}
-  .h2right{grid-auto-flow:column;grid-auto-columns:min(84vw,21rem);overflow-x:auto;overscroll-behavior-x:contain;
-    scroll-snap-type:x mandatory;gap:.7rem;padding-bottom:.45rem;
-    margin-inline:-1.1rem;padding-inline:1.1rem;scrollbar-width:none}
-  .h2right::-webkit-scrollbar{display:none}
-  .h2card{scroll-snap-align:center}
-  .h2c-num{grid-template-columns:repeat(3,minmax(0,1fr))}
+  /* Nothing on a phone's first screen may hide behind a swipe. The three
+     cards were a snap carousel: two thirds of what the Codex offers sat
+     off-screen, and the one card you could see was clipped. They are one
+     column now, each showing everything it has to say, and the counters
+     drop their frame entirely: numbers on the night, not a box. */
+  .h2right{grid-auto-flow:row;grid-template-columns:minmax(0,1fr);gap:.55rem;
+    overflow:visible;margin-inline:0;padding-inline:0;padding-bottom:0}
+  .h2card{scroll-snap-align:none}
+  /* the day's light: enough to want it, not the whole essay */
+  .h2c-light #dl-story{display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;
+    -webkit-box-orient:vertical;overflow:hidden}
+  .h2c-light #dl-card{padding-bottom:.2rem}
+  .h2c-word .h2ws{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;
+    -webkit-box-orient:vertical;overflow:hidden}
+  .h2c-num{background:transparent;border:0;box-shadow:none;
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    grid-template-columns:repeat(3,minmax(0,1fr));padding:.45rem 0 0;
+    border-top:1px solid rgba(244,212,106,.16);border-radius:0}
+  .h2n{padding:.3rem .1rem}
+  .h2n b{font-size:1.06rem}
+  .h2n span{font-size:.55rem}
   .h2mq{margin:2rem -1.1rem 0}
 }
 /* very narrow phones: the three doors stack two and one rather than crush */
@@ -471,8 +503,8 @@ a:hover .logo-seal{transform:rotate(12deg)}
 }
 @media print{.h2mq,.h2search{display:none}}
 
-.path-ayah{max-width:38rem;margin:0 auto 2.2rem;text-align:center;background:linear-gradient(165deg,#14100A,#1b2440);
-  border:1px solid rgba(244,212,106,.35);border-radius:18px;padding:1.3rem 1.4rem;color:#FFFEF7}
+.path-ayah{max-width:32rem;margin:0 auto;text-align:center;background:transparent;
+  border:0;border-top:1px solid rgba(201,162,39,.22);border-radius:0;padding:1.3rem .2rem .2rem;color:#FFFEF7}
 .path-ayah .a{font-family:Amiri,serif;font-size:1.5rem;line-height:2;color:#F4D46A;margin:0}
 .path-ayah .e{font-size:.84rem;line-height:1.85;color:rgba(255,254,247,.78);margin:.7rem 0 0}
 .path-ayah .r{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,254,247,.45);font-weight:800;margin:.7rem 0 0}
@@ -876,7 +908,8 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="h2left">
 <p class="h2kick font-amiri notranslate" translate="no">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="h2title"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="h2sub" data-i18n="hero2.lead">The whole of Islam, one illuminated library: the story in order, the Qur&rsquo;an recited, every word explained. Free forever.</p>
+<p class="h2sub h2phone" data-i18n="hero2.short">The whole of Islam, one illuminated library. Free forever.</p>
+<p class="h2sub h2desk" data-i18n="hero2.lead">The whole of Islam, one illuminated library: the story in order, the Qur&rsquo;an recited, every word explained. Free forever.</p>
 <p class="h2sub h2more" data-i18n="hero2.more">A full madrasa, rooms for every age, and a lantern that lights something new each day.</p>
 <button class="h2search" id="h2search" type="button" aria-label="Search the whole Codex">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -932,11 +965,26 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 var g=function(id){return document.getElementById(id)};
 var MAXBACK=30, off=0, seen={}, busy=false;
 function dstr(n){ return new Date(Date.now()-n*86400000).toISOString().slice(0,10); }
+/* the reader's chosen language, not the browser's, decides both the words the
+   lantern writes and the way this date is spelled */
+function lang(){
+  try{ if(window.NOOR_I18N&&NOOR_I18N.lang) return NOOR_I18N.lang;
+       return localStorage.getItem("noor_lang")||document.documentElement.lang||"en"; }
+  catch(e){ return document.documentElement.lang||"en"; }
+}
+var DAYWORD={en:["Today","Yesterday"],ar:["اليوم","أمس"],fr:["Aujourd’hui","Hier"],
+  es:["Hoy","Ayer"],de:["Heute","Gestern"],ru:["Сегодня","Вчера"],tr:["Bugün","Dün"],
+  ur:["آج","کل"],hi:["आज","कल"],bn:["আজ","গতকাল"],id:["Hari ini","Kemarin"],
+  fa:["امروز","دیروز"],prs:["امروز","دیروز"],pa:["اَج","کل"],ha:["Yau","Jiya"],
+  ps:["نن","پرون"],so:["Maanta","Shalay"],ku:["Îro","Duh"],sw:["Leo","Jana"],
+  zh:["今天","昨天"],ja:["今日","昨日"],ko:["오늘","어제"]};
 function labelFor(n){
-  var d=new Date(dstr(n)+"T12:00:00Z");
-  var txt=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
-  if(n===0)return "Today · "+txt;
-  if(n===1)return "Yesterday · "+txt;
+  var L=lang(), d=new Date(dstr(n)+"T12:00:00Z"), txt;
+  try{ txt=d.toLocaleDateString(L==="prs"?"fa":L,{weekday:"long",month:"long",day:"numeric"}); }
+  catch(e){ txt=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}); }
+  var w=DAYWORD[L]||DAYWORD.en;
+  if(n===0)return w[0]+" · "+txt;
+  if(n===1)return w[1]+" · "+txt;
   return txt;
 }
 function paint(d,n){
@@ -952,7 +1000,7 @@ function show(n,dir){
   busy=true; off=n;
   var b=g("dl-body");
   b.style.opacity="0"; b.style.transform="translateX("+(dir<0?"14px":"-14px")+")";
-  var url=n===0?"/api/illuminations?kind=light":"/api/illuminations?kind=light&date="+dstr(n);
+  var url="/api/illuminations?kind=light&lang="+encodeURIComponent(lang())+(n===0?"":"&date="+dstr(n));
   var done=function(d){
     setTimeout(function(){
       paint(d,n);
@@ -976,7 +1024,19 @@ g("dl-card").addEventListener("touchend",function(e){
   if(dx<0)show(off+1,-1); else show(off-1,1);
 },{passive:true});
 paint(null,0);
-fetch("/api/illuminations?kind=light").then(function(r){return r.ok?r.json():null}).then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
+function firstLight(){
+  fetch("/api/illuminations?kind=light&lang="+encodeURIComponent(lang()))
+    .then(function(r){return r.ok?r.json():null})
+    .then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
+}
+firstLight();
+/* switching language re-lights the tile rather than leaving an English
+   paragraph sitting inside an Arabic page */
+document.addEventListener("noor:lang", function(){
+  seen={}; off=0;
+  paint(null,0);          /* the date word changes even if the light cannot be fetched */
+  firstLight();
+});
 })();
 </script>
 <script>
@@ -1060,7 +1120,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 
 <!-- The Hidden Thread · one true connection a day -->
 <section id="thread" style="background:#FFFEF7;border-bottom:1px solid rgba(201,162,39,.15)">
-<div class="path-seal" aria-hidden="true"><div class="geo-pos" data-depth="0.13" aria-hidden="true">
+<div class="path-medallion"><div class="path-seal" aria-hidden="true"><div class="geo-pos" data-depth="0.13" aria-hidden="true">
 <div id="geo">
 <div class="geo-halo"></div>
 <div class="geo-spin">
@@ -1112,6 +1172,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 <p class="e">Light upon light. Allah guides to His light whom He wills. The words that welcomed you above were never a slogan: they are the middle of this ayah, hidden in plain sight.</p>
 <p class="r">An-Nur 24:35 · the verse this whole Codex is named from</p>
 <p class="d">descend into the Codex ↓</p></div>
+</div>
 
 <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-8">
 <div style="background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);border-radius:20px;padding:1.05rem 1.2rem;color:#FFFEF7">
