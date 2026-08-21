@@ -11,11 +11,17 @@
 // the store, are written from the owner's console, and appear the moment they
 // are saved.
 //
-// On moderation, plainly: opinions are not moderated here, including opinions
-// about the journal, the author, or the Codex. What is filtered is the machine
-// noise that would otherwise bury them, spam, scams and floods, and that
-// filtering only ever HOLDS a comment for the owner to look at. Nothing is
-// deleted by a rule. A person decides.
+// On moderation, plainly. Every reply is read by a person before it appears.
+// That is a real cost to the reader and it is stated in public rather than
+// hidden: the journal exists so that the author can be corrected, and it must
+// never become a liability for the library it hangs beside. What is refused is
+// narrow and named at /journal-rules. What is NOT refused, ever, is
+// disagreement: the whole purpose is to be told where he is wrong.
+//
+// Replies also carry an address, kept private and never shown, so that a
+// person who takes the trouble to correct him can be told when he answers.
+// Readers vote, the Lantern scores substance once a month, and between them
+// the useful replies rise and the noise sinks without anything being deleted.
 //
 // Keys:
 //   nj:e:<id>       one entry, JSON
@@ -26,6 +32,7 @@
 //   nj:rl:*         short lived flood counters, keyed by a one way hash
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
+import { askOpenRouter } from "./_models.js";
 
 const LIST_CAP = 500, COMMENT_CAP = 400;
 const PER_DAY = 20, PER_MIN = 3;
@@ -67,6 +74,26 @@ const strip = (s, keepLines, keepMarks) => String(s == null ? "" : s)
   .replace(/[ \t]{3,}/g, "  ")
   .replace(/\n{4,}/g, "\n\n\n")
   .trim();
+
+/* An address is required to reply and is never published, never shown to
+   other readers, and never returned by any public response. It exists for one
+   purpose: telling someone that the author answered them. */
+const EMAIL = /^[^\s@]{1,64}@[^\s@.]{1,63}(\.[^\s@.]{2,63}){1,3}$/;
+
+/* A parental filter, applied to replies only. It is about register, not
+   opinion: a reply may call the author badly mistaken, dishonest, or a fool,
+   and pass. It may not arrive as abuse or as sexual content, because children
+   read this library and the journal sits inside it. Anything it catches is
+   flagged for the owner, not thrown away. */
+const COARSE = [
+  "f\\*?u\\*?c\\*?k", "sh[i1]t", "b[i1]tch", "c\\*?u\\*?n\\*?t", "wh0?re", "sl[u4]t",
+  "b[a4]st[a4]rd", "d[i1]ckhead", "a[s5][s5]hole", "m[o0]therf", "n[i1]gg", "f[a4]gg",
+  "r[a4]pe", "porn", "xxx", "blowjob", "masturbat", "orgasm", "horny", "nude[s]?\\b"
+];
+const COARSE_RE = new RegExp("(" + COARSE.join("|") + ")", "i");
+function parental(text) {
+  return COARSE_RE.test(String(text || "")) ? ["language a child should not meet here"] : [];
+}
 
 const esc = s => String(s == null ? "" : s)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -141,6 +168,31 @@ export function smells(name, body) {
   return reasons;
 }
 
+/* The section's own switches, read fresh but cheaply. If the store cannot be
+   reached the journal defaults to open for reading and closed for replying,
+   which is the safe direction: the Codex is never put at risk by a failure. */
+let DIAL_CACHE = { at: 0, v: null };
+async function dials() {
+  if (DIAL_CACHE.v && Date.now() - DIAL_CACHE.at < 30000) return DIAL_CACHE.v;
+  const v = { on: true, replies: true, triage: true };
+  try {
+    const raw = (await kv([["GET", "nb:settings"]]))[0];
+    if (raw) {
+      const o = JSON.parse(raw);
+      if (o["journal.on"] === false) v.on = false;
+      if (o["journal.replies"] === false) v.replies = false;
+      if (o["journal.triage"] === false) v.triage = false;
+    }
+  } catch { /* the defaults above stand */ }
+  DIAL_CACHE = { at: Date.now(), v };
+  return v;
+}
+
+/* What a reader is allowed to see of a reply: never the address, never the
+   flags a machine raised, never anything that was not approved by a person. */
+const publicComment = c => ({ cid: c.cid, name: c.name, body: c.body, at: c.at,
+                              votes: c.votes || 0, rank: c.rank || 0 });
+
 async function readEntry(id) {
   const got = await kv([["GET", "nj:e:" + id], ["LLEN", "nj:c:" + id]]);
   if (!got[0]) return null;
@@ -169,14 +221,20 @@ export default async function handler(req, res) {
 
   /* ---------------- reading, open to everyone ---------------- */
   if (req.method === "GET") {
+    const D = await dials();
+    if (!D.on && !owner) return json(res, 404, { ok: false, reason: "closed" });
     if (q.slug) {
       const id = (await kv([["GET", "nj:slug:" + slugify(q.slug)]]))[0];
       if (!id) return json(res, 404, { ok: false, reason: "not found" });
       const e = await readEntry(id);
       if (!e || (e.status !== "published" && !owner)) return json(res, 404, { ok: false, reason: "not found" });
       const rows = (await kv([["LRANGE", "nj:c:" + id, "0", String(COMMENT_CAP)]]))[0] || [];
-      const comments = rows.map(r => { try { return JSON.parse(r); } catch { return null; } })
-        .filter(Boolean).filter(c => owner || !c.held);
+      const all = rows.map(r => { try { return JSON.parse(r); } catch { return null; } }).filter(Boolean);
+      /* substance first, then what readers thought of it, then the clock */
+      const shown = all.filter(c => c.state === "approved")
+        .sort((a, b) => (b.rank || 0) - (a.rank || 0) || (b.votes || 0) - (a.votes || 0) ||
+                        String(b.at).localeCompare(String(a.at)));
+      const comments = owner ? all : (D.replies ? shown.map(publicComment) : []);
       return json(res, 200, { ok: true, entry: e, html: render(e.body), comments },
                   e.status === "published" ? "public, s-maxage=60, stale-while-revalidate=600" : "no-store");
     }
@@ -200,10 +258,13 @@ export default async function handler(req, res) {
 
   /* ---------------- anyone may answer back ---------------- */
   if (action === "comment") {
+    if (!(await dials()).replies) return json(res, 200, { ok: false, reason: "closed" });
     const slug = slugify(body.slug);
     const name = strip(body.name, false).slice(0, 40) || "A reader";
     const text = strip(body.body, true).slice(0, 4000);
+    const mail = strip(body.email, false).slice(0, 120);
     if (text.length < 2) return json(res, 400, { ok: false, reason: "empty" });
+    if (!EMAIL.test(mail)) return json(res, 400, { ok: false, reason: "email" });
 
     const id = (await kv([["GET", "nj:slug:" + slug]]))[0];
     if (!id) return json(res, 404, { ok: false, reason: "not found" });
@@ -217,21 +278,55 @@ export default async function handler(req, res) {
        kept. Arguing with a script only teaches it. */
     if (perDay > PER_DAY || perMin > PER_MIN) return json(res, 200, { ok: true, queued: true });
 
-    const reasons = smells(name, text);
-    const c = { cid: newId(), name, body: text, at: new Date().toISOString(),
-                held: reasons.length ? 1 : 0, why: reasons.join(", ") };
-    const cmds = [["LPUSH", "nj:c:" + id, JSON.stringify(c)],
-                  ["LTRIM", "nj:c:" + id, "0", String(COMMENT_CAP)]];
-    if (reasons.length) {
-      cmds.push(["LPUSH", "nj:held", JSON.stringify({ entry: id, slug, cid: c.cid, at: c.at })]);
-      cmds.push(["LTRIM", "nj:held", "0", "300"]);
-    }
-    await kv(cmds);
-    return json(res, 200, { ok: true, held: !!reasons.length, comment: reasons.length ? null : c });
+    /* Everything waits to be read. The flags only tell the owner what a
+       machine noticed first, so the obvious rubbish can be cleared in a
+       glance and the serious corrections can be given real attention. */
+    const flags = smells(name, text).concat(parental(text));
+    const c = { cid: newId(), name, mail, body: text, at: new Date().toISOString(),
+                state: "pending", why: flags.join(", "), votes: 0, rank: 0 };
+    await kv([["LPUSH", "nj:c:" + id, JSON.stringify(c)],
+              ["LTRIM", "nj:c:" + id, "0", String(COMMENT_CAP)],
+              ["LPUSH", "nj:queue", JSON.stringify({ entry: id, slug, cid: c.cid, at: c.at })],
+              ["LTRIM", "nj:queue", "0", "500"]]);
+    return json(res, 200, { ok: true, pending: true });
   }
 
-  /* ---------------- everything below is the owner's ---------------- */
-  if (!owner) return json(res, 401, { ok: false, reason: "locked" });
+  /* ---------------- a reader's vote ----------------
+     One voice per reply per person per day, recognised by the same one way
+     hash the flood counter uses and forgotten just as fast. Votes only lift;
+     there is no way to bury someone here, because a downvote button on a
+     religious argument is an invitation to brigade it. */
+  if (action === "vote") {
+    if (!(await dials()).replies) return json(res, 200, { ok: false, reason: "closed" });
+    const slug = slugify(body.slug), cid = String(body.cid || "");
+    if (!ID_OK.test(cid)) return json(res, 400, { ok: false });
+    const id = (await kv([["GET", "nj:slug:" + slug]]))[0];
+    if (!id) return json(res, 404, { ok: false });
+    const seen = "nj:v:" + fingerprint(req) + ":" + cid;
+    const first = (await kv([["INCR", seen], ["EXPIRE", seen, "90000"]]))[0];
+    if (parseInt(first, 10) !== 1) return json(res, 200, { ok: true, already: true });
+
+    const key = "nj:c:" + id;
+    const rows = (await kv([["LRANGE", key, "0", String(COMMENT_CAP)]]))[0] || [];
+    let votes = 0;
+    const keep = rows.map(r => {
+      let c; try { c = JSON.parse(r); } catch { return r; }
+      if (c.cid === cid) { c.votes = (c.votes || 0) + 1; votes = c.votes; }
+      return JSON.stringify(c);
+    });
+    const cmds = [["DEL", key]];
+    if (keep.length) cmds.push(["RPUSH", key].concat(keep));
+    await kv(cmds);
+    return json(res, 200, { ok: true, votes });
+  }
+
+  /* ---------------- everything below is the owner's ----------------
+     with one exception: the nightly run may ask for the monthly sorting, and
+     proves it is the house by presenting the same secret the console uses. */
+  const fromCron = action === "triage" && SECRET &&
+    typeof body.key === "string" && body.key.length === SECRET.length &&
+    crypto.timingSafeEqual(Buffer.from(body.key), Buffer.from(SECRET));
+  if (!owner && !fromCron) return json(res, 401, { ok: false, reason: "locked" });
 
   if (action === "save") {
     const id = ID_OK.test(String(body.id || "")) ? String(body.id) : newId();
@@ -293,8 +388,8 @@ export default async function handler(req, res) {
       if (c.cid === cid) {
         touched = true;
         if (body.state === "remove") continue;
-        c.held = body.state === "hold" ? 1 : 0;
-        if (!c.held) c.why = "";
+        c.state = body.state === "approve" ? "approved" : body.state === "reject" ? "rejected" : "pending";
+        if (c.state === "approved") c.why = "";
       }
       keep.push(JSON.stringify(c));
     }
@@ -305,9 +400,65 @@ export default async function handler(req, res) {
     return json(res, 200, { ok: true });
   }
 
-  if (action === "held") {
-    const rows = (await kv([["LRANGE", "nj:held", "0", "300"]]))[0] || [];
-    return json(res, 200, { ok: true, held: rows.map(r => { try { return JSON.parse(r); } catch { return null; } }).filter(Boolean) });
+  /* the reading queue: every reply that has not yet been answered for */
+  if (action === "queue") {
+    const marks = (await kv([["LRANGE", "nj:queue", "0", "500"]]))[0] || [];
+    const seen = {}, out = [];
+    for (const m of marks) {
+      let q; try { q = JSON.parse(m); } catch { continue; }
+      if (!seen[q.entry]) {
+        const rows = (await kv([["LRANGE", "nj:c:" + q.entry, "0", String(COMMENT_CAP)]]))[0] || [];
+        const raw = (await kv([["GET", "nj:e:" + q.entry]]))[0];
+        let title = ""; try { title = JSON.parse(raw).title; } catch {}
+        seen[q.entry] = { title, rows: rows.map(r => { try { return JSON.parse(r); } catch { return null; } }).filter(Boolean) };
+      }
+      const c = seen[q.entry].rows.find(x => x.cid === q.cid);
+      if (c && c.state === "pending") out.push(Object.assign({ entry: q.entry, slug: q.slug, title: seen[q.entry].title }, c));
+    }
+    return json(res, 200, { ok: true, queue: out });
+  }
+
+  /* Once a month the Lantern reads the approved replies of an entry and scores
+     each for how much it actually helps the author get closer to the truth.
+     It never removes anything and never sees an address: it only decides what
+     rises. A reader's own votes are added on top, so the two agree or the
+     disagreement is visible. */
+  if (action === "triage") {
+    const D = await dials();
+    if (!D.triage) return json(res, 200, { ok: false, reason: "off" });
+    const ids = (await kv([["LRANGE", "nj:list", "0", "60"]]))[0] || [];
+    let scored = 0, touched = 0;
+    for (const id of ids) {
+      const key = "nj:c:" + id;
+      const rows = (await kv([["LRANGE", key, "0", String(COMMENT_CAP)]]))[0] || [];
+      const all = rows.map(r => { try { return JSON.parse(r); } catch { return null; } }).filter(Boolean);
+      const live = all.filter(c => c.state === "approved");
+      if (live.length < 2) continue;
+      let marks = null;
+      try {
+        const list = live.slice(0, 40).map((c, i) => (i + 1) + ". " + c.body.replace(/\s+/g, " ").slice(0, 420)).join("\n");
+        const got = await askOpenRouter([
+          { role: "system", content: "You score replies on a Muslim writer's personal journal. He publishes reflections and asks to be corrected. Score each reply 0 to 10 for how much it helps him get closer to the truth: evidence, precision, a real correction, a serious question, or lived experience score high; agreement with no content, insult with no argument, and off topic noise score low. Disagreement is not a penalty; an excellent reply may disagree entirely. Reply with JSON only: {\"scores\":[{\"n\":1,\"s\":7},...]}" },
+          { role: "user", content: list }
+        ], { max_tokens: 700, temperature: 0 });
+        const m = String(got.text || "").match(/\{[\s\S]*\}/);
+        if (m) marks = JSON.parse(m[0]).scores;
+      } catch { marks = null; }
+      if (!marks || !marks.length) continue;
+      const byN = {};
+      marks.forEach(x => { const n = parseInt(x.n, 10); if (n >= 1) byN[n] = Math.max(0, Math.min(10, Number(x.s) || 0)); });
+      const keep = all.map(c => {
+        const i = live.indexOf(c);
+        if (i >= 0 && byN[i + 1] !== undefined) { c.rank = byN[i + 1]; scored++; }
+        return JSON.stringify(c);
+      });
+      const cmds = [["DEL", key]];
+      if (keep.length) cmds.push(["RPUSH", key].concat(keep));
+      await kv(cmds);
+      touched++;
+    }
+    await kv([["SET", "nj:triaged", new Date().toISOString()]]);
+    return json(res, 200, { ok: true, entries: touched, replies: scored });
   }
 
   return json(res, 400, { ok: false, reason: "unknown action" });

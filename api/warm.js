@@ -38,6 +38,18 @@ export default async function handler(req, res) {
     }
   } catch (e) { out.lantern = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
+  /* On the first of the month the Lantern sorts the journal's replies. Doing it
+     here rather than on its own schedule keeps the site to a single cron. */
+  if (new Date().getUTCDate() === 1) {
+    try {
+      const r = await fetch(base + "/api/journal", {
+        method: "POST", headers: { "Content-Type": "application/json", "cache-control": "no-cache" },
+        body: JSON.stringify({ action: "triage", key: process.env.ADMIN_SECRET || "" })
+      });
+      out.triage = r.ok ? await r.json() : { ok: false, status: r.status };
+    } catch (e) { out.triage = { ok: false, err: String(e && e.message || e).slice(0, 60) }; }
+  }
+
   out.ms = Date.now() - started;
   res.setHeader("Cache-Control", "no-store");
   return res.status(200).json(out);

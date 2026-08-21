@@ -65,6 +65,21 @@ export const DIALS = {
                          g: "Traffic", n: "Measure how long visits last",
                          h: "Aggregate seconds only, no identifier travels with them. Off stops collection on the next request." },
 
+  /* ---- the journal ---------------------------------------------------
+     Three switches rather than one, because a section can go wrong in three
+     different ways and the owner should be able to answer each of them
+     without silencing the others. The whole point of the section is that it
+     must never put the rest of the Codex at risk. */
+  "journal.on":      { t: "bool", def: true, pub: true,
+                       g: "The Journal", n: "The journal is open",
+                       h: "Off hides /journal from readers entirely and stops serving every entry. The Codex is unaffected. Use this if the section ever becomes a liability." },
+  "journal.replies": { t: "bool", def: true, pub: true,
+                       g: "The Journal", n: "Readers may reply",
+                       h: "Off keeps the entries readable but closes the reply form and hides the replies already there. Nothing is deleted." },
+  "journal.triage":  { t: "bool", def: true,
+                       g: "The Journal", n: "The Lantern sorts replies monthly",
+                       h: "Once a month the Lantern scores approved replies for usefulness and relevance so the most substantial rise and the noise sinks. Readers' own votes are weighed alongside it. Off leaves replies in the order they arrived." },
+
   /* ---- the desk ------------------------------------------------------ */
   "inbox.open":        { t: "bool", def: true, pub: true,
                          g: "The desk", n: "Readers may send corrections",

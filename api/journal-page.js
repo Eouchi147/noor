@@ -52,6 +52,10 @@ function page({ title, desc, canonical, body, status }) {
   .jfooter{border-top:1px solid rgba(169,129,43,.25);margin-top:2.4rem;padding:1.6rem 1.15rem 2.6rem;text-align:center}
   .jfooter p{font-family:Inter,system-ui,sans-serif;font-size:.72rem;line-height:1.9;color:rgba(58,46,28,.5);margin:0}
   .jfooter a{color:rgba(58,46,28,.68)}
+  .jup{background:none;border:1px solid rgba(169,129,43,.35);border-radius:999px;color:#7A5B12;
+    font-family:inherit;font-size:.68rem;padding:.16rem .5rem;cursor:pointer;line-height:1.4}
+  .jup:hover{background:rgba(169,129,43,.1)}
+  .jup[disabled]{opacity:.5;cursor:default}
 </style>
 </head>
 <body>
@@ -89,7 +93,7 @@ export default async function handler(req, res) {
   const slug = slugify((req.query && req.query.slug) || "");
   if (!slug || !kvReady()) return notFound(res);
 
-  let entry = null, comments = [];
+  let entry = null, comments = [], repliesOpen = true;
   try {
     const id = (await kv([["GET", "nj:slug:" + slug]]))[0];
     if (!id) return notFound(res);
@@ -98,8 +102,22 @@ export default async function handler(req, res) {
     entry = JSON.parse(raw);
     if (entry.status !== "published") return notFound(res);
     const rows = (await kv([["LRANGE", "nj:c:" + id, "0", "400"]]))[0] || [];
+    /* only what a person approved, and in the order the section earns:
+       substance first, then what readers thought, then the clock */
     comments = rows.map(r => { try { return JSON.parse(r); } catch { return null; } })
-      .filter(Boolean).filter(c => !c.held);
+      .filter(Boolean).filter(c => c.state === "approved")
+      .sort((a, b) => (b.rank || 0) - (a.rank || 0) || (b.votes || 0) - (a.votes || 0) ||
+                      String(b.at).localeCompare(String(a.at)));
+    /* the section's own switches: the journal can be closed without touching
+       the Codex, and replies can be closed without hiding the writing */
+    const set = (await kv([["GET", "nb:settings"]]))[0];
+    if (set) {
+      try {
+        const o = JSON.parse(set);
+        if (o["journal.on"] === false) return notFound(res);
+        if (o["journal.replies"] === false) { comments = []; repliesOpen = false; }
+      } catch {}
+    }
   } catch { return notFound(res); }
 
   const when = (() => {
@@ -110,7 +128,10 @@ export default async function handler(req, res) {
   const desc = entry.dek || String(entry.body || "").replace(/\s+/g, " ").slice(0, 180);
 
   const commentHtml = comments.length
-    ? comments.map(c => `<div class="jc"><p class="jw"><b>${esc(c.name)}</b> &middot; ${esc(String(c.at || "").slice(0, 10))}</p><p>${esc(c.body)}</p></div>`).join("")
+    ? comments.map(c => `<div class="jc"><p class="jw"><b>${esc(c.name)}</b> &middot; ${esc(String(c.at || "").slice(0, 10))}` +
+        (c.rank >= 7 ? ` &middot; <span style="color:#7A5B12">worth reading</span>` : "") +
+        `</p><p>${esc(c.body)}</p>` +
+        `<p class="jw" style="margin-top:.45rem"><button class="jup" data-cid="${esc(c.cid)}" type="button" aria-label="This reply helped">&#9650; <span>${c.votes || 0}</span></button></p></div>`).join("")
     : `<p class="jsay" style="margin-top:1.4rem">No replies yet. Yours would be the first.</p>`;
 
   const jsonld = {
@@ -137,46 +158,61 @@ export default async function handler(req, res) {
 
 <section class="jtalk">
   <h2>Replies</h2>
-  <p class="jnote">Open to anyone, with no account and no login. Disagreement is welcome and is never removed for being disagreement. Only spam, scams and floods are held back, and a person looks at everything that is held.</p>
+  ${!repliesOpen ? `<p class="jnote">Replies are closed on the journal at the moment. The writing stays where it is.</p>` : `
+  <p class="jnote">This journal exists to be corrected. If you know the material properly and I have got something wrong, say so plainly and bring the reference: that is the most useful thing anyone can do here. Disagreement is never refused for being disagreement. Every reply is read by a person before it appears, which takes a little time, and an address is required so that I can tell you when I answer. Your address is never shown, never sold, and never given to anyone. <a href="/journal-rules">The full rules &rarr;</a></p>
   <form class="jform" id="jf">
     <input id="jn" maxlength="40" placeholder="Your name, or leave it blank" autocomplete="off"/>
-    <textarea id="jb" maxlength="4000" placeholder="Say what you think." required></textarea>
+    <input id="je" type="email" maxlength="120" placeholder="Your email, never shown to anyone" autocomplete="email" required/>
+    <textarea id="jb" maxlength="4000" placeholder="Say what you think. If I am wrong, name the error and bring the evidence." required></textarea>
     <div class="jrow">
       <button class="jsend" type="submit">Send the reply</button>
       <span class="jsay" id="js"></span>
     </div>
   </form>
-  <div class="jcs" id="jcs">${commentHtml}</div>
+  <div class="jcs" id="jcs">${commentHtml}</div>`}
 </section>
 
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <script>
-(function(){
-  var f=document.getElementById("jf"), n=document.getElementById("jn"),
+${!repliesOpen ? "" : `(function(){
+  var SLUG=${JSON.stringify(entry.slug)};
+  var f=document.getElementById("jf"), n=document.getElementById("jn"), em=document.getElementById("je"),
       b=document.getElementById("jb"), s=document.getElementById("js"), box=document.getElementById("jcs");
+  /* a vote lifts a reply; there is deliberately no way to bury one */
+  document.addEventListener("click", function(ev){
+    var u = ev.target.closest && ev.target.closest(".jup");
+    if(!u) return;
+    u.disabled = true;
+    fetch("/api/journal",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({action:"vote",slug:SLUG,cid:u.dataset.cid})})
+      .then(function(r){return r.json()})
+      .then(function(j){ if(j&&j.ok&&j.votes!==undefined){ u.querySelector("span").textContent=j.votes; } })
+      .catch(function(){ u.disabled=false; });
+  });
   function esc(x){return String(x==null?"":x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
   f.addEventListener("submit", function(ev){
     ev.preventDefault();
     var text=(b.value||"").trim();
     if(text.length<2){ s.textContent="Write a little more first."; return; }
+    if(!/^[^\s@]+@[^\s@.]+\.[^\s@]+$/.test((em.value||"").trim())){ s.textContent="An address is needed so I can tell you when I answer. It is never shown."; return; }
     var btn=f.querySelector("button"); btn.disabled=true; s.textContent="Sending\\u2026";
     fetch("/api/journal",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({action:"comment",slug:${JSON.stringify(entry.slug)},name:n.value,body:text})})
+      body:JSON.stringify({action:"comment",slug:SLUG,name:n.value,email:em.value,body:text})})
       .then(function(r){return r.json()})
       .then(function(j){
         btn.disabled=false;
-        if(!j||!j.ok){ s.textContent="That did not go through. Try again in a moment."; return; }
+        if(!j||!j.ok){
+          s.textContent = (j&&j.reason==="email") ? "That address does not look right."
+            : (j&&j.reason==="closed") ? "Replies are closed on this journal at the moment."
+            : "That did not go through. Try again in a moment.";
+          return;
+        }
         b.value="";
-        if(j.held||j.queued){ s.textContent="Received. This one is waiting for a human to look at it, which usually means a filter saw a link."; return; }
-        s.textContent="Posted. Thank you.";
-        var d=document.createElement("div"); d.className="jc";
-        d.innerHTML='<p class="jw"><b>'+esc(j.comment.name)+'</b> &middot; just now</p><p>'+esc(j.comment.body)+'</p>';
-        var first=box.querySelector(".jc");
-        if(first) box.insertBefore(d,first); else { box.innerHTML=""; box.appendChild(d); }
+        s.textContent="Received. I read every reply myself before it appears, so give it a little time. If you have corrected me, you will hear back at that address.";
       })
       .catch(function(){ btn.disabled=false; s.textContent="No connection just now."; });
   });
-})();
+})();`}
 </script>`;
 
   res.setHeader("Content-Type", "text/html; charset=utf-8");

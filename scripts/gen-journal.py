@@ -18,6 +18,22 @@ MAIN = """
 <span class="jseal"><i aria-hidden="true">&#1606;</i><span>One reader&rsquo;s opinion, not a ruling</span></span>
 </div>
 
+<div class="jlist" style="padding-bottom:0">
+<div style="border:1px solid rgba(123,45,38,.3);background:rgba(123,45,38,.05);border-radius:6px;padding:1.05rem 1.15rem">
+<p style="font-family:Inter,system-ui,sans-serif;font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--jseal);margin:0">Read this before anything else</p>
+<p style="font-size:.92rem;line-height:1.9;color:var(--jink);margin:.6rem 0 0">
+I am <b>not a scholar</b>. I hold no ijazah, no chain and no licence to rule on anything, and nothing written here is
+a fatwa, a ruling, or teaching. These are reflections that have been turning in my head for years with nowhere to go,
+and I have finally written them down for one reason: <b>so that people who know more than I do can tell me where I am
+wrong.</b></p>
+<p style="font-size:.92rem;line-height:1.9;color:var(--jink);margin:.6rem 0 0">
+If you are qualified, correct me plainly in the replies and bring the evidence. Where a correction lands I will change
+the entry itself rather than leave the objection buried underneath it. If you want to know what Islam actually
+teaches on a subject, do not read me: read <a href="/" style="color:#7A5B12">the Codex</a>, where every line carries
+its evidence, or ask a scholar you can see and question.</p>
+</div>
+</div>
+
 <div class="jdiv" aria-hidden="true"><i>&#10022;</i></div>
 
 <div id="jlist" class="jlist"><p class="jempty">Opening the journal&hellip;</p></div>
