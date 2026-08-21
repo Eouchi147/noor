@@ -32,7 +32,7 @@
 <script src="noor-fx.js" defer></script>
 <script src="noor-guide-data.js" defer></script>
 <script src="noor-guide.js" defer></script>
-<script src="sponsor.js" defer></script>
+<script src="sponsor.js?v=83" defer></script>
 <script src="noor-ink.js" defer></script>
 <style>
 /* ============ NOOR base ============ */
@@ -425,18 +425,46 @@ a:hover .logo-seal{transform:rotate(12deg)}
   .path-seal .kun-seed{display:none}
 }
 #thread{padding-top:2.4rem}
+/* ---- the phone ---------------------------------------------------------
+   A phone screen is one column and one thumb. The first screen therefore
+   holds only what answers "what is this and where do I start": the name,
+   one sentence, the search, one gold way in and three short doors. The
+   living cards sit just under the fold, one at a time, so the reader
+   swipes them rather than squinting at three at once.
+   The hard rule underneath: every grid track is minmax(0,...) and every
+   grid child has min-width:0, or one wide card silently widens the whole
+   page and the text runs off the screen. */
 @media (max-width:56rem){
-  .h2wrap{padding-top:4.6rem}
-  .h2grid{grid-template-columns:1fr;gap:1.6rem}
-  .h2sub{font-size:.88rem}
-  .h2right{grid-auto-flow:column;grid-auto-columns:minmax(17rem,86%);overflow-x:auto;
-    scroll-snap-type:x mandatory;padding-bottom:.5rem;margin-inline-end:-1.2rem;padding-inline-end:1.2rem}
+  .h2wrap{padding:4.4rem 1.1rem 0}
+  .h2grid{grid-template-columns:minmax(0,1fr);gap:1.5rem}
+  .h2left,.h2right{min-width:0;max-width:100%}
+  .h2kick{font-size:1.25rem;margin-bottom:.35rem}
+  .h2title{font-size:clamp(2.15rem,10.5vw,3.1rem);line-height:1.06}
+  .h2sub{font-size:.9rem;line-height:1.7;margin-top:.75rem}
+  .h2sub.h2more{display:none}
+  .h2search{margin-top:1.15rem;padding:.86rem .95rem;font-size:.86rem;border-radius:14px}
+  .h2search kbd{display:none}
+  .h2doors{grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;max-width:none;margin-top:.85rem}
+  .h2d{padding:.62rem .5rem;text-align:center;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;min-height:2.9rem}
+  .h2d b{font-size:.78rem;line-height:1.25}
+  .h2d span{display:none}
+  .h2d-first{grid-column:1/-1;text-align:start;display:block;padding:.85rem 1rem;border-radius:14px;min-height:0}
+  .h2d-first b{font-size:.98rem}
+  .h2d-first span{display:block;font-size:.7rem}
+  .h2right{grid-auto-flow:column;grid-auto-columns:min(84vw,21rem);overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;gap:.7rem;padding-bottom:.45rem;
+    margin-inline:-1.1rem;padding-inline:1.1rem;scrollbar-width:none}
   .h2right::-webkit-scrollbar{display:none}
-  .h2card{scroll-snap-align:start}
-  .h2doors{grid-template-columns:1fr 1fr}
-  .h2mq{margin-top:2rem}
+  .h2card{scroll-snap-align:center}
+  .h2c-num{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .h2mq{margin:2rem -1.1rem 0}
 }
-@media (max-width:26rem){.h2doors{grid-template-columns:1fr}}
+/* very narrow phones: the three doors stack two and one rather than crush */
+@media (max-width:22rem){
+  .h2doors{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .h2d:last-child{grid-column:1/-1}
+}
 @media (prefers-reduced-motion:reduce){
   .h2mq-t{animation:none}
   .h2search:hover,.h2d:hover{transform:none}
@@ -778,7 +806,38 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 @keyframes rvflk{0%,100%{opacity:.55}50%{opacity:1}}
 #rv-ring{position:absolute;inset:0;animation:rvspin 90s linear infinite;transform-origin:center;pointer-events:none}
 @keyframes rvspin{to{transform:rotate(-360deg)}}
-@media (prefers-reduced-motion:reduce){#rv-ring,.rv-lamp,.rv-car{animation:none}}
+
+/* ---- the quiet story in the background --------------------------------
+   Nothing here asks to be watched. Over about a minute: the town on the
+   far hill lights its lamps one by one, a caravan crosses the near dune
+   from east to west, and now and then a star falls. It is the night a
+   traveller reads by, told slowly enough that a reader notices it only
+   on the second visit. */
+@keyframes carWalk{
+  0%{transform:translateX(30vw)}
+  100%{transform:translateX(-34vw)}
+}
+@keyframes carGlow{0%,100%{opacity:0}6%,92%{opacity:.85}}
+.rv-car{animation:carWalk 78s linear infinite,carGlow 78s linear infinite}
+@keyframes lampWake{0%,10%{opacity:0}22%,74%{opacity:1}92%,100%{opacity:.12}}
+.rv-lamp{animation:lampWake 34s ease-in-out infinite}
+.night-tale{position:absolute;inset:0;z-index:5;pointer-events:none}
+.shoot{position:absolute;z-index:5;width:96px;height:1.4px;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,249,225,.9));border-radius:2px;
+  filter:drop-shadow(0 0 6px rgba(255,240,190,.8))}
+@keyframes shootFall{
+  0%,88%{opacity:0;transform:translate3d(0,0,0) rotate(24deg) scaleX(.2)}
+  90%{opacity:.9;transform:translate3d(0,0,0) rotate(24deg) scaleX(1)}
+  97%{opacity:0;transform:translate3d(-320px,150px,0) rotate(24deg) scaleX(.35)}
+  100%{opacity:0;transform:translate3d(-320px,150px,0) rotate(24deg) scaleX(.2)}
+}
+.shoot.s1{top:16%;right:12%;animation:shootFall 41s linear infinite}
+.shoot.s2{top:9%;right:38%;animation:shootFall 67s linear infinite 23s;width:66px}
+@media (max-width:56rem){.shoot.s2{display:none}.shoot.s1{top:12%;right:8%;width:70px}}
+@media (prefers-reduced-motion:reduce){
+  #rv-ring,.rv-lamp,.rv-car,.shoot{animation:none}
+  .shoot{display:none}.rv-lamp,.rv-car{opacity:.8}
+}
 </style>
 <section id="hero">
 <div class="crown" aria-hidden="true"></div>
@@ -786,6 +845,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="milky" aria-hidden="true"></div>
 <div class="ghost-pos" data-depth="0.06" aria-hidden="true"><div class="ghost-noor">نُور</div><div class="ghost-noor glow">نُور</div></div>
 <canvas id="hero-canvas" aria-hidden="true"></canvas>
+<span class="shoot s1" aria-hidden="true"></span><span class="shoot s2" aria-hidden="true"></span>
 <div class="rays-wheel" aria-hidden="true"></div>
 <div class="dune" data-depth="0.1" aria-hidden="true" style="opacity:.6">
 <svg viewBox="0 0 1440 230" preserveAspectRatio="none" style="height:230px">
@@ -797,14 +857,16 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <path d="M1102,98 l0,-38 a4.5 7 0 0 1 9,0 l0,36 Z"/><path d="M1104,56 l2,-8 2,8 Z"/>
 <path d="M905,110 c8,-14 6,-26 2,-34 c12,6 16,22 10,36 Z"/><path d="M918,112 c6,-10 5,-20 2,-27 c9,5 12,17 8,28 Z"/>
 </g></svg>
-<span class="rv-lamp" style="left:70.4%;bottom:180px"></span><span class="rv-lamp" style="left:73.1%;bottom:176px"></span><span class="rv-lamp" style="left:76.6%;bottom:172px"></span>
 </div>
 <div class="dune" data-depth="0.22" aria-hidden="true" style="opacity:.8">
-<span class="rv-car" style="left:7%;bottom:74px;animation-delay:-0.3s"></span><span class="rv-car" style="left:11.5%;bottom:80px;animation-delay:-1.1s"></span><span class="rv-car" style="left:16%;bottom:84px;animation-delay:-1.9s"></span><span class="rv-car" style="left:21%;bottom:86px;animation-delay:-0.6s"></span><span class="rv-car" style="left:26.5%;bottom:83px;animation-delay:-2.4s"></span><span class="rv-car" style="left:32%;bottom:77px;animation-delay:-1.5s"></span><span class="rv-car" style="left:38%;bottom:70px;animation-delay:-0.2s"></span><span class="rv-car" style="left:44%;bottom:64px;animation-delay:-2.8s"></span><span class="rv-car" style="left:50%;bottom:60px;animation-delay:-1.0s"></span>
 <svg viewBox="0 0 1440 170" preserveAspectRatio="none" style="height:170px"><path d="M0,120 C240,62 470,142 720,106 C950,74 1180,140 1440,90 L1440,170 L0,170 Z" fill="#0A0D1C"/></svg>
 </div>
 <div class="dune" data-depth="0.4" aria-hidden="true">
 <svg viewBox="0 0 1440 130" preserveAspectRatio="none" style="height:130px"><path d="M0,84 C320,130 560,54 860,92 C1120,124 1300,74 1440,98 L1440,130 L0,130 Z" fill="#070910"/></svg>
+</div>
+<div class="night-tale" aria-hidden="true">
+<span class="rv-lamp" style="left:70.4%;bottom:180px;animation-delay:-2s"></span><span class="rv-lamp" style="left:73.1%;bottom:176px;animation-delay:-5.5s"></span><span class="rv-lamp" style="left:76.6%;bottom:172px;animation-delay:-9s"></span>
+<span class="rv-car" style="left:7%;bottom:74px;"></span><span class="rv-car" style="left:11.5%;bottom:80px;"></span><span class="rv-car" style="left:16%;bottom:84px;"></span><span class="rv-car" style="left:21%;bottom:86px;"></span><span class="rv-car" style="left:26.5%;bottom:83px;"></span><span class="rv-car" style="left:32%;bottom:77px;"></span><span class="rv-car" style="left:38%;bottom:70px;"></span><span class="rv-car" style="left:44%;bottom:64px;"></span><span class="rv-car" style="left:50%;bottom:60px;"></span>
 </div>
 <div class="mist" aria-hidden="true"></div>
 <div class="hero-fade" aria-hidden="true"></div>
@@ -814,7 +876,8 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="h2left">
 <p class="h2kick font-amiri notranslate" translate="no">نُورٌ عَلَىٰ نُورٍ</p>
 <h1 class="h2title"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="h2sub" data-i18n="hero2.sub">The whole of Islam, one illuminated library: the story in order, the Qur&rsquo;an with recitation, an encyclopedia of the Path, a full madrasa, and rooms for every age. Free forever.</p>
+<p class="h2sub" data-i18n="hero2.lead">The whole of Islam, one illuminated library: the story in order, the Qur&rsquo;an recited, every word explained. Free forever.</p>
+<p class="h2sub h2more" data-i18n="hero2.more">A full madrasa, rooms for every age, and a lantern that lights something new each day.</p>
 <button class="h2search" id="h2search" type="button" aria-label="Search the whole Codex">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
 <span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah&hellip;</span>
@@ -990,16 +1053,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 })();
 </script>
 
-<!-- Friday Light · appears only on Jumu'ah -->
-<div id="friday-light" hidden style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.3)">
-<div style="max-width:48rem;margin:0 auto;padding:.85rem 1rem;display:flex;gap:.7rem;align-items:flex-start;font-family:Inter,system-ui,sans-serif">
-<span aria-hidden="true" style="color:#F4D46A;font-size:1.1rem;flex:none"><span data-ic=minaret></span></span>
-<div style="min-width:0">
-<p id="fl-text" style="font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.85);margin:0"></p>
-<a href="/quran?surah=18" style="display:inline-block;margin-top:.35rem;font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none">Open Surah Al-Kahf →</a>
-</div>
-</div>
-</div>
+<!-- the Jumu'ah band is raised sitewide by sponsor.js; one is enough -->
 
 <!-- ============ TODAY'S LIGHT · daily illumination ============ -->
 
@@ -1081,13 +1135,6 @@ fetch("/api/illuminations?kind=thread").then(function(r){return r.ok?r.json():nu
   if(t.a&&t.a.href){a.href=t.a.href;a.textContent=t.a.label+" →"}
   if(t.b&&t.b.href){b.href=t.b.href;b.textContent=t.b.label+" →"}
 }).catch(function(){});
-if((new Date()).getDay()===5){
-  fetch("/api/illuminations?kind=friday").then(function(r){return r.ok?r.json():null}).then(function(f){
-    if(!f||!f.text)return;
-    document.getElementById("fl-text").textContent=f.text;
-    document.getElementById("friday-light").hidden=false;
-  }).catch(function(){});
-}
 })();
 </script>
 </section>

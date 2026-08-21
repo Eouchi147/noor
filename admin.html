@@ -704,6 +704,13 @@ These take effect on the next request. Each one says where its current value com
 <h2 class="sec">Health of the house</h2>
 <div class="panel" id="syschecks"></div>
 
+<h2 class="sec">Is the lantern actually lit?</h2>
+<div class="panel">
+<p class="muted" style="margin:0 0 .7rem">A key that is set is not the same as a key that works. This asks the lantern for one word, right now, and shows every model it tried, in order, with what each one said. If the light has been resting, the answer is here in plain words.</p>
+<button class="ghost" id="lantern-test" style="border-color:rgba(233,200,106,.6);color:var(--gold-hi)">✦ Test the lantern now</button>
+<div id="lantern-out" style="margin-top:.8rem"></div>
+</div>
+
 <h2 class="sec">Quick doors</h2>
 <div class="linkrow">
 <a href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener">Stripe ↗</a>
@@ -1144,22 +1151,116 @@ $("v-go").addEventListener("click",function(){
     box.appendChild(p);
   }
 
-  /* ---- the writer ---- */
+  /* ---- the writer · a paste kit, not a printout ------------------------
+     What came back before was a block of text with one Copy button, and an
+     email whose subject was glued to its body: pasting it into Gmail put the
+     words "Subject: ..." inside the message. A piece of outreach is really
+     two or three separate fields going to separate boxes, it usually needs a
+     small edit first, and some channels have a length that matters. So every
+     result is now editable in place, copies field by field, counts itself,
+     and an email can open in the mail app already filled in. */
+  window.NOOR_PASTE = (function(){
+    var seq = 0;
+    function limitFor(ch){
+      var c = String(ch||"").toLowerCase();
+      if (/(^|\W)x(\W|$)|twitter/.test(c)) return 280;
+      if (/threads|mastodon/.test(c)) return 500;
+      if (/instagram/.test(c)) return 2200;
+      return 0;
+    }
+    /* Bracketed blanks are the one thing that must never be sent as written. */
+    function blanks(t){ var m = String(t||"").match(/\[[^\]\n]{2,40}\]/g); return m ? m.slice(0,6) : []; }
+
+    function kit(o){
+      var id = "pk" + (++seq);
+      var lim = limitFor(o.channel);
+      var gaps = blanks((o.subject||"") + " " + (o.body||""));
+      var h = '<div class="vcard" data-kit="'+id+'">';
+      h += '<div style="display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap">';
+      if (o.label) h += '<div class="vl" style="margin:0">'+esc(o.label)+'</div>';
+      if (o.channel) h += '<span class="muted" style="font-size:.7rem">'+esc(o.channel)+'</span>';
+      h += '<span class="muted" style="font-size:.68rem;margin-inline-start:auto" data-count>&nbsp;</span></div>';
+      if (o.note) h += '<p class="muted" style="margin:.35rem 0 0;font-size:.72rem">'+esc(o.note)+'</p>';
+      if (o.subject != null) {
+        h += '<label class="muted" style="display:block;margin-top:.6rem;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase">'+(o.subjectLabel||"Subject")+'</label>'+
+             '<input class="fi" data-sub style="width:100%;margin-top:.25rem" value="'+esc(o.subject)+'"/>';
+      }
+      h += '<label class="muted" style="display:block;margin-top:.6rem;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase">'+(o.bodyLabel||"Message")+'</label>'+
+           '<textarea class="fi" data-body rows="'+Math.min(18, Math.max(4, Math.ceil(String(o.body||"").length/64)))+'" style="width:100%;margin-top:.25rem;line-height:1.7">'+esc(o.body||"")+'</textarea>';
+      if (gaps.length) h += '<p class="muted" style="margin:.4rem 0 0;color:#f8d98a;font-size:.72rem">Fill in before sending: '+esc(gaps.join(" · "))+'</p>';
+      h += '<div class="cp" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.55rem">';
+      if (o.subject != null) h += '<button class="ghost" data-do="sub">Copy '+((o.subjectLabel||"subject").toLowerCase())+'</button>';
+      h += '<button class="ghost" data-do="body">Copy '+((o.bodyLabel||"message").toLowerCase())+'</button>';
+      if (o.subject != null) h += '<button class="ghost" data-do="both">Copy both</button>';
+      if (o.mail) h += '<button class="ghost" data-do="mail">Open in mail</button>';
+      h += '</div></div>';
+      return h;
+    }
+
+    function put(text, btn){
+      var done = function(){ var o = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function(){ btn.textContent = o; }, 1500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+      } else fallback(text, done);
+    }
+    function fallback(text, done){
+      var ta = document.createElement("textarea"); ta.value = text;
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta); done();
+    }
+
+    function bind(root){
+      if (!root) return;
+      root.querySelectorAll("[data-kit]").forEach(function(card){
+        var sub = card.querySelector("[data-sub]"), body = card.querySelector("[data-body]"),
+            cnt = card.querySelector("[data-count]"), lim = 0;
+        var chan = card.querySelector(".muted");
+        lim = limitFor(chan ? chan.textContent : "");
+        function tally(){
+          var t = body ? body.value : "";
+          var words = t.trim() ? t.trim().split(/\s+/).length : 0;
+          var txt = words + " words · " + t.length + " characters";
+          if (lim) { txt += " · limit " + lim; cnt.style.color = t.length > lim ? "#f8a3a3" : ""; }
+          cnt.textContent = txt;
+        }
+        if (body) { body.addEventListener("input", tally); tally(); }
+        card.querySelectorAll("[data-do]").forEach(function(b){
+          b.addEventListener("click", function(){
+            var what = b.getAttribute("data-do");
+            if (what === "sub") return put(sub ? sub.value : "", b);
+            if (what === "body") return put(body ? body.value : "", b);
+            if (what === "both") return put(((sub && sub.value) ? sub.value + "\n\n" : "") + (body ? body.value : ""), b);
+            if (what === "mail") {
+              var href = "mailto:?subject=" + encodeURIComponent(sub ? sub.value : "") + "&body=" + encodeURIComponent(body ? body.value : "");
+              window.open(href, "_blank");
+            }
+          });
+        });
+      });
+    }
+    return { kit: kit, bind: bind };
+  })();
+
   function card(v){
-    var head=v.subject?("Subject: "+v.subject):(v.title||"");
-    return '<div class="vcard"><div class="vl">'+esc(v.label)+'</div>'+
-      (head?'<div class="vs">'+esc(head)+'</div>':'')+
-      '<pre>'+esc(v.body)+'</pre>'+
-      '<div class="cp"><button class="ghost" data-copy="'+encodeURIComponent((head?head+"\n\n":"")+v.body)+'">Copy</button></div></div>';
+    var isMail = /mail|email/i.test(v.label || "") || !!v.subject;
+    return NOOR_PASTE.kit({
+      label: v.label, channel: v.channel || "",
+      subject: v.subject != null ? v.subject : (v.title != null ? v.title : null),
+      subjectLabel: v.subject != null ? "Subject" : (v.title != null ? "Title" : "Subject"),
+      body: v.body, mail: isMail && v.subject != null
+    });
   }
   function angleCard(a){
-    return '<div class="vcard"><div class="vl">'+esc(a.who)+'</div>'+
-      '<div class="vs">'+esc(a.angle)+'</div>'+
-      '<pre>'+esc(a.line)+'</pre>'+
-      '<p class="muted" style="margin-top:.4rem">Where: '+esc(a.where)+'</p>'+
-      '<div class="cp"><button class="ghost" data-copy="'+encodeURIComponent(a.line)+'">Copy the line</button></div></div>';
+    return NOOR_PASTE.kit({
+      label: a.who, channel: a.where || "", subject: null,
+      bodyLabel: "The line", body: a.line,
+      note: a.angle ? "Angle: " + a.angle : ""
+    });
   }
   function bindCopy(){
+    NOOR_PASTE.bind($("mk-out"));
     $("mk-out").querySelectorAll("[data-copy]").forEach(function(b){
       b.addEventListener("click",function(){
         var t=decodeURIComponent(b.getAttribute("data-copy"));
@@ -1707,21 +1808,71 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       if(!r.ok){ st.textContent=(r.j&&r.j.error)||'The Lantern is dark. Check OPENROUTER_API_KEY.'; return; }
       st.textContent='';
       var wk=(r.j&&r.j.week)||[];
-      out.innerHTML=wk.map(function(p,i){
-        return '<div class="panel" style="margin-top:.6rem"><div style="display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap">'+
-          '<b style="color:#F4D46A">'+esc2(p.day)+'</b><span style="font-size:.72rem;color:rgba(255,254,247,.55)">'+esc2(p.channel)+
-          (p.leads_with?' · leads with '+esc2(p.leads_with):'')+'</span>'+
-          '<button class="ghost" style="margin-inline-start:auto" data-wk="'+i+'">Copy</button></div>'+
-          (p.title?'<div style="font-weight:800;margin-top:.4rem">'+esc2(p.title)+'</div>':'')+
-          '<div style="font-size:.8rem;line-height:1.75;color:rgba(255,254,247,.78);white-space:pre-wrap;margin-top:.35rem">'+esc2(p.body)+'</div></div>';
+      /* Each day is its own paste kit: editable, counted, and copied field by
+         field, because a Reddit title and a Reddit body go in two boxes. */
+      out.innerHTML=wk.map(function(p){
+        var isMail=/mail|email/i.test(p.channel||"");
+        return NOOR_PASTE.kit({
+          label:p.day, channel:p.channel||"",
+          subject:p.title!=null?p.title:null,
+          subjectLabel:isMail?"Subject":"Title",
+          body:p.body, mail:isMail,
+          note:p.leads_with?("Leads with "+p.leads_with):""
+        });
       }).join('');
-      out.querySelectorAll('[data-wk]').forEach(function(b){
-        b.onclick=function(){
-          var p=wk[+b.dataset.wk];
-          navigator.clipboard.writeText((p.title?p.title+'\n\n':'')+p.body).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},2000);});
+      NOOR_PASTE.bind(out);
+      if(wk.length){
+        var all=document.createElement("p");
+        all.style.marginTop=".7rem";
+        all.innerHTML='<button class="ghost" id="wk-all">Copy the whole week as one list</button> <span class="muted" style="font-size:.72rem">for pasting into your notes or a calendar</span>';
+        out.appendChild(all);
+        document.getElementById("wk-all").onclick=function(){
+          var b=this;
+          var txt=wk.map(function(p){
+            return (p.day||"")+" · "+(p.channel||"")+"\n"+(p.title?p.title+"\n":"")+(p.body||"");
+          }).join("\n\n----------------------------------------\n\n");
+          (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject())
+            .then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent="Copy the whole week as one list"},1600)})
+            .catch(function(){});
         };
-      });
+      }
     }).catch(function(){ go.disabled=false; st.textContent='Could not reach the server.'; });
+  };
+})();
+
+/* ---- Is the lantern lit? -------------------------------------------------
+   The tile has a beautiful fallback, which is exactly why a broken lantern
+   could sit unnoticed for weeks: the Codex looked fine. This makes one real
+   request and prints the whole walk, model by model. */
+(function(){
+  var btn=document.getElementById("lantern-test"), out=document.getElementById("lantern-out");
+  if(!btn) return;
+  function esc2(x){return String(x==null?"":x).replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+  btn.onclick=function(){
+    btn.disabled=true; var t0=Date.now();
+    out.innerHTML='<p class="muted">Asking the lantern for one word&hellip; free models can take a few seconds.</p>';
+    fetch("/api/admin-data?probe=lantern",{credentials:"same-origin"})
+      .then(function(r){return r.json()})
+      .then(function(d){
+        btn.disabled=false;
+        if(d.error&&!d.key){
+          out.innerHTML='<div class="check"><span class="no">\u25CB</span><span><b>The key is missing on this deployment.</b> Add <code>OPENROUTER_API_KEY</code> in Vercel &rarr; Settings &rarr; Environment Variables (Production), then redeploy. Nothing else here can work until it is set.</span></div>';
+          return;
+        }
+        var rows=(d.tried||[]).map(function(t){
+          var okk=!t.err;
+          return '<tr><td>'+(okk?'<span class="pill on">answered</span>':'<span class="pill off">'+esc2(t.err)+'</span>')+
+                 '</td><td style="font-family:ui-monospace,monospace;font-size:.72rem">'+esc2(t.model)+'</td><td>'+(t.ms||0)+' ms</td></tr>';
+        }).join("");
+        var head = d.ok
+          ? '<div class="check"><span class="ok">\u25CF</span><span><b>The lantern is lit.</b> '+esc2(d.answered)+' answered &ldquo;'+esc2(d.reply)+'&rdquo; in '+(d.ms||0)+' ms. Your OpenRouter key was used just now, so its activity page will show today.</span></div>'
+          : '<div class="check"><span class="no">\u25CB</span><span><b>The lantern could not be lit.</b> Last word from the chain: <i>'+esc2(d.error||"unknown")+'</i>. The Codex is still whole: every tile falls back to its written treasury.</span></div>';
+        var listed = '<p class="muted" style="margin:.6rem 0 .2rem">OpenRouter lists <b>'+(d.listed||0)+'</b> free model'+((d.listed===1)?"":"s")+' right now'+(d.listErr?' ('+esc2(d.listErr)+')':'')+'. The house asks for that list itself every six hours, so a model that disappears is simply never asked for again.</p>';
+        var warn = d.warning ? '<p class="muted" style="color:#f8d98a">'+esc2(d.warning)+'</p>' : '';
+        out.innerHTML = head + listed + warn +
+          (rows ? '<table style="margin-top:.5rem"><thead><tr><th>result</th><th>model asked</th><th>took</th></tr></thead><tbody>'+rows+'</tbody></table>' : '');
+      })
+      .catch(function(){ btn.disabled=false; out.innerHTML='<p class="muted">Could not reach the server ('+Math.round((Date.now()-t0)/1000)+'s).</p>'; });
   };
 })();
 </script>

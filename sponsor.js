@@ -94,6 +94,16 @@
     var hdr = document.getElementById("site-header");
     if (!hdr || !hdr.parentNode || document.querySelector("[data-noor-sponsor]")) return;
     if (DIALS && DIALS["sponsor.band"] === false && !isJumuah()) return;
+    /* On a phone the Jumu'ah reminder ran five lines and pushed the page
+       itself below the fold. It keeps its whole text, but folds to three
+       lines there; the reminder is a whisper before the door, not the door. */
+    if (!document.getElementById("nsp-css")) {
+      var st = document.createElement("style");
+      st.id = "nsp-css";
+      st.textContent = "@media (max-width:56rem){[data-noor-sponsor]>div{padding:.42rem .9rem!important;font-size:.68rem!important;line-height:1.55!important}" +
+        "[data-noor-sponsor] .nsp-t{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}";
+      document.head.appendChild(st);
+    }
     var j = isJumuah(), M = j ? JUMUAH : MISSION;
     var d = document.createElement("div");
     d.setAttribute("data-noor-sponsor", "");
@@ -106,7 +116,7 @@
       ';font-family:Inter,system-ui,sans-serif;flex-wrap:wrap">' +
       '<span aria-hidden="true" style="color:' + (j ? "#C9A227" : "rgba(201,162,39,.75)") +
       ';font-size:' + (j ? ".95rem" : "inherit") + '">' + M.mark + "</span>" +
-      "<span style=\"flex:1 1 16rem;min-width:0\">" + M.text + "</span>" +
+      "<span class=\"nsp-t\" style=\"flex:1 1 16rem;min-width:0\">" + M.text + "</span>" +
       '<a href="' + M.href + '" style="margin-inline-start:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;white-space:nowrap">' +
       M.cta + "</a></div>";
     hdr.parentNode.insertBefore(d, hdr.nextSibling);
