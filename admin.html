@@ -1864,9 +1864,20 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
           return '<tr><td>'+(okk?'<span class="pill on">answered</span>':'<span class="pill off">'+esc2(t.err)+'</span>')+
                  '</td><td style="font-family:ui-monospace,monospace;font-size:.72rem">'+esc2(t.model)+'</td><td>'+(t.ms||0)+' ms</td></tr>';
         }).join("");
+        var LINK = { policy:['openrouter.ai/settings/privacy','https://openrouter.ai/settings/privacy'],
+                     limit:['openrouter.ai/credits','https://openrouter.ai/credits'],
+                     key:['openrouter.ai/keys','https://openrouter.ai/keys'] };
         var head = d.ok
           ? '<div class="check"><span class="ok">\u25CF</span><span><b>The lantern is lit.</b> '+esc2(d.answered)+' answered &ldquo;'+esc2(d.reply)+'&rdquo; in '+(d.ms||0)+' ms. Your OpenRouter key was used just now, so its activity page will show today.</span></div>'
-          : '<div class="check"><span class="no">\u25CB</span><span><b>The lantern could not be lit.</b> Last word from the chain: <i>'+esc2(d.error||"unknown")+'</i>. The Codex is still whole: every tile falls back to its written treasury.</span></div>';
+          : '<div class="check"><span class="no">\u25CB</span><span><b>The lantern could not be lit.</b> The Codex is still whole: every tile falls back to its written treasury.</span></div>';
+        if (!d.ok && d.advice) {
+          var l = LINK[d.verdict];
+          head += '<div class="panel" style="margin-top:.6rem;border-color:rgba(233,200,106,.45)">'+
+            '<b style="color:var(--gold-hi);font-size:.82rem">What to do</b>'+
+            '<p style="margin:.4rem 0 0;font-size:.82rem;line-height:1.75">'+esc2(d.advice)+'</p>'+
+            (l?'<p style="margin:.5rem 0 0"><a href="'+l[1]+'" target="_blank" rel="noopener" style="color:var(--gold-hi);font-weight:700">'+l[0]+' \u2197</a></p>':'')+
+            '</div>';
+        }
         var listed = '<p class="muted" style="margin:.6rem 0 .2rem">OpenRouter lists <b>'+(d.listed||0)+'</b> free model'+((d.listed===1)?"":"s")+' right now'+(d.listErr?' ('+esc2(d.listErr)+')':'')+'. The house asks for that list itself every six hours, so a model that disappears is simply never asked for again.</p>';
         var warn = d.warning ? '<p class="muted" style="color:#f8d98a">'+esc2(d.warning)+'</p>' : '';
         out.innerHTML = head + listed + warn +

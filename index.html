@@ -1198,7 +1198,7 @@ fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(func
 </div>
 <script>
 (function(){
-fetch("/api/illuminations?kind=thread").then(function(r){return r.ok?r.json():null}).then(function(t){
+fetch("/api/illuminations?kind=thread&lang="+encodeURIComponent((function(){try{return (window.NOOR_I18N&&NOOR_I18N.lang)||localStorage.getItem("noor_lang")||document.documentElement.lang||"en"}catch(e){return document.documentElement.lang||"en"}})())).then(function(r){return r.ok?r.json():null}).then(function(t){
   if(!t||!t.text)return;
   document.getElementById("th-text").textContent=t.text;
   var a=document.getElementById("th-a"),b=document.getElementById("th-b");
