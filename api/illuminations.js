@@ -17,7 +17,7 @@
    which now requires ALLOW_PAID_MODELS=1 to be paid), then the best free
    lights of the day, in order. First to answer wins. */
 import net from "node:net";
-import { modelChain, isFree, allowPaid } from "./_models.js";
+import { modelChain, isFree, allowPaid, liveChain } from "./_models.js";
 import tls from "node:tls";
 
 /* ---------- the store, whoever provides it ----------
@@ -189,14 +189,21 @@ function dayIndexOf(dateStr) {
   return Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - start) / 86400000);
 }
 const clean = x => String(x || "").replace(/—|–/g, "·").trim();
+/* One shared abort for the whole chain was this file's quiet bug: the first
+   few names were dead, they spent the 6.5 seconds between them, and the model
+   that would have answered was never reached. Each attempt now carries its own
+   patience, and the walk stops when the function's own budget runs out. */
 async function lantern(system, user, maxTokens) {
-  const _ac = new AbortController(); const _tt = setTimeout(() => _ac.abort(), 6500);
-  try {
   const key = process.env.OPENROUTER_API_KEY;
   if (!key) throw 0;
-  for (const model of MODEL_CHAIN()) {
+  const chain = await liveChain();
+  const deadline = Date.now() + 20000;
+  for (const model of chain.slice(0, 4)) {
+    if (Date.now() > deadline) break;
+    const ac = new AbortController();
+    const tt = setTimeout(() => ac.abort(), Math.min(9000, Math.max(1500, deadline - Date.now())));
     try {
-      const r = await fetch("https://openrouter.ai/api/v1/chat/completions", { signal: _ac.signal,
+      const r = await fetch("https://openrouter.ai/api/v1/chat/completions", { signal: ac.signal,
         method: "POST",
         headers: { Authorization: "Bearer " + key, "Content-Type": "application/json", "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR illuminations" },
         body: JSON.stringify({ model, max_tokens: maxTokens, temperature: 0.4, messages: [{ role: "system", content: system }, { role: "user", content: user }] })
@@ -207,10 +214,9 @@ async function lantern(system, user, maxTokens) {
       let p = null;
       try { p = JSON.parse(raw); } catch { const m = raw.match(/\{[\s\S]*\}/); if (m) { try { p = JSON.parse(m[0]); } catch {} } }
       if (p) return p;
-    } catch {}
+    } catch {} finally { clearTimeout(tt); }
   }
   throw 0;
-  } finally { clearTimeout(_tt); }
 }
 const BASE_RULES = "Accuracy is sacred: well-established facts and mainstream Sunni understanding only; never invent dates, quotes, hadith or verses; no rulings, no fatwas. Warm, vivid, plain language. Never use the em dash character; use commas or · instead. Reply with JSON only.";
 
@@ -315,6 +321,14 @@ export default async function handler(req, res) {
         } catch {}
       }
       return res.status(200).json(remember(ck, lightFallback(want)));
+    }
+    /* Today, asked once. Whoever arrives first (usually the nightly warm run)
+       pays for the generation; everyone else on earth reads what was stored. */
+    if (kvReady()) {
+      try {
+        const hit = (await kv([["GET", "nl:" + want]]))[0];
+        if (hit) return res.status(200).json(remember(ck, JSON.parse(hit)));
+      } catch {}
     }
     try {
       const lit = await kindLight(today, want);

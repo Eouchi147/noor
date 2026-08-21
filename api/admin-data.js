@@ -3,7 +3,7 @@
 // money map: MRR, every region's subscriber, status, renewal date.
 
 import crypto from "crypto";
-import { modelChain, modelWarning, allowPaid } from "./_models.js";
+import { modelChain, modelWarning, allowPaid, probeLantern } from "./_models.js";
 
 const GUARDIAN_PRODUCT = "prod_V0xxFgmX793e9L";
 
@@ -22,6 +22,14 @@ export default async function handler(req, res) {
   const SECRET = process.env.ADMIN_SECRET, KEY = process.env.STRIPE_SECRET_KEY;
   if (!SECRET) return res.status(501).json({ error: "admin not configured" });
   if (!verify(req.headers.cookie, SECRET)) return res.status(401).json({ error: "locked" });
+
+  /* ?probe=lantern · the honest answer to "is the lantern actually lit?".
+     It makes one real, deliberate two-word request and reports every model it
+     tried, so a dark tile can never again be mistaken for a quiet day. */
+  if (String((req.query && req.query.probe) || "") === "lantern") {
+    const p = await probeLantern();
+    return res.status(200).json({ probe: "lantern", ...p, at: new Date().toISOString() });
+  }
 
   const out = {
     stripeConfigured: !!KEY,

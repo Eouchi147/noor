@@ -13,26 +13,74 @@
 // including whatever OPENROUTER_MODEL happens to be set to, unless
 // ALLOW_PAID_MODELS=1 says otherwise in as many words.
 //
-// Verified against OpenRouter's own model list in August 2026. Free models
-// come and go; a name that disappears simply fails and the next one answers,
-// which is the point of a chain. Check the list occasionally at
-// https://openrouter.ai/models?max_price=0
+// The list of free models is no longer written here by hand: it is asked of
+// OpenRouter at runtime and cached for six hours. See the note below.
 
-/* Free, in order of how good the answer is likely to be.
-   The quality numbers are OpenRouter's own comparative scores, kept here as a
-   comment so a future edit can see why the order is the order. */
+/* ---------------------------------------------------------------------------
+   THE LESSON OF AUGUST 2026: a hardcoded list of free models is a fuse.
+   Eight of the ten names below vanished from OpenRouter within weeks of being
+   written here. Every request walked a chain of 404s and the lantern went dark
+   without a single word of complaint, because a failed chain and a quiet day
+   look identical from the outside.
+   So the chain is no longer a guess. The house asks OpenRouter itself which
+   models are free right now, keeps the answer for six hours, and only falls
+   back to the list below if that call cannot be made. Names that disappear are
+   simply never asked for again. --------------------------------------------- */
+
+/* Last-resort names, verified live against OpenRouter in August 2026.
+   These are used only when the live list cannot be fetched. */
 export const FREE_CHAIN = [
-  "nvidia/nemotron-3-ultra-550b-a55b:free",      // 1M context, the strongest free one
-  "google/gemma-4-31b-it:free",                  // 262K, vision and tools
-  "nvidia/nemotron-3-super-120b-a12b:free",      // 262K
-  "google/gemma-4-26b-a4b-it:free",              // 262K
-  "nvidia/nemotron-3.5-lightning:free",          // 1M, fast and light
-  "openai/gpt-oss-20b:free",                     // 131K
-  "nvidia/nemotron-3-nano-30b-a3b:free",         // 256K
-  "poolside/laguna-s-2.1:free",                  // 262K
-  "nvidia/nemotron-nano-9b-v2:free",             // 128K
-  "openrouter/free"                              // the house's own free router, last resort
+  "nvidia/nemotron-3.5-lightning:free",
+  "poolside/laguna-s-2.1:free",
+  "dots-studio/dots-3-note-preview:free",
+  "liquid/lfm-2.5-2.6b:free"
 ];
+
+/* Preference, not a requirement: if one of these is free today it goes first,
+   because a bigger model writes a better paragraph. Anything unlisted is
+   ordered after them by context length. */
+const PREFERRED = [/nemotron.*(ultra|super|lightning)/i, /gemma/i, /gpt-oss/i, /qwen/i, /deepseek/i, /llama/i];
+
+let LIVE = { at: 0, ids: [], err: "" };
+const SIX_HOURS = 6 * 3600 * 1000;
+
+function priceZero(m) {
+  const p = m && m.pricing || {};
+  const n = v => Number(v || 0);
+  return n(p.prompt) === 0 && n(p.completion) === 0 && n(p.request) === 0;
+}
+
+/* Ask OpenRouter what is free today. Public endpoint, no key needed, so this
+   works even when the key is missing and can therefore say so honestly. */
+export async function refreshFreeModels(force) {
+  const now = Date.now();
+  if (!force && LIVE.ids.length && now - LIVE.at < SIX_HOURS) return LIVE.ids;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 6000);
+    const r = await fetch("https://openrouter.ai/api/v1/models", { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) throw new Error("http " + r.status);
+    const j = await r.json();
+    const list = (j.data || []).filter(m => m && m.id && (/:free$/i.test(m.id) || priceZero(m)));
+    list.sort((a, b) => {
+      const rank = m => { for (let i = 0; i < PREFERRED.length; i++) if (PREFERRED[i].test(m.id)) return i; return PREFERRED.length; };
+      const d = rank(a) - rank(b);
+      return d || (Number(b.context_length || 0) - Number(a.context_length || 0));
+    });
+    const ids = list.map(m => m.id);
+    if (ids.length) LIVE = { at: now, ids, err: "" };
+    else LIVE = { at: now, ids: [], err: "OpenRouter listed no free models" };
+  } catch (e) {
+    LIVE = { at: LIVE.at, ids: LIVE.ids, err: String(e && e.message || e).slice(0, 80) };
+  }
+  return LIVE.ids.length ? LIVE.ids : FREE_CHAIN;
+}
+
+/* What the house currently believes, without making a request. */
+export function liveFreeInfo() {
+  return { ids: LIVE.ids.slice(0, 12), count: LIVE.ids.length, ageMs: LIVE.at ? Date.now() - LIVE.at : null, err: LIVE.err };
+}
 
 /* Anything ending in :free is free by OpenRouter's own naming, and
    openrouter/free is their free-only router. Everything else may bill. */
@@ -53,8 +101,16 @@ export function modelChain() {
   const wanted = String(process.env.OPENROUTER_MODEL || "").trim();
   const out = [];
   if (wanted && (isFree(wanted) || allowPaid())) out.push(wanted);
-  for (const m of FREE_CHAIN) if (!out.includes(m)) out.push(m);
+  const base = LIVE.ids.length ? LIVE.ids : FREE_CHAIN;
+  for (const m of base) if (!out.includes(m)) out.push(m);
   return out;
+}
+
+/* The same chain, but having first asked OpenRouter what is actually free.
+   Every endpoint that can await should use this one. */
+export async function liveChain() {
+  await refreshFreeModels(false);
+  return modelChain();
 }
 
 /* What was dropped and why, so /admin can say it out loud rather than leaving
@@ -72,15 +128,25 @@ export function modelWarning() {
    half of the protocol. Walks the chain until one answers. */
 export async function askOpenRouter(messages, opts = {}) {
   const key = process.env.OPENROUTER_API_KEY;
-  if (!key) return { text: "", model: "", error: "no key" };
-  const chain = opts.chain || modelChain();
+  if (!key) return { text: "", model: "", error: "no key", tried: [] };
+  const chain = opts.chain || await liveChain();
   const max_tokens = opts.max_tokens || 400;
   const temperature = opts.temperature == null ? 0.4 : opts.temperature;
+  /* Two clocks, because one is never enough: each model gets its own patience,
+     and the whole walk has a deadline so a serverless function never hangs.
+     A single shared abort was what killed the lantern: the first dead names
+     spent the entire budget and the live model was never reached. */
+  const perModel = opts.timeout || 9000;
+  const deadline = Date.now() + (opts.budget || 22000);
+  const maxTries = opts.maxTries || 4;
+  const tried = [];
   let last = "";
-  for (const model of chain) {
+  for (const model of chain.slice(0, maxTries)) {
+    if (Date.now() > deadline) { last = "out of time"; break; }
+    const t0 = Date.now();
     try {
       const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), opts.timeout || 25000);
+      const timer = setTimeout(() => ctrl.abort(), Math.min(perModel, Math.max(1200, deadline - Date.now())));
       const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -93,14 +159,49 @@ export async function askOpenRouter(messages, opts = {}) {
         signal: ctrl.signal
       });
       clearTimeout(timer);
-      if (!r.ok) { last = "http " + r.status; continue; }   /* rate limited or gone: try the next */
+      if (!r.ok) {
+        last = "http " + r.status;
+        tried.push({ model, ms: Date.now() - t0, err: last });
+        continue;                                   /* dead name, rate limit, or refusal: next */
+      }
       const j = await r.json();
       const text = ((((j.choices || [])[0] || {}).message || {}).content || "").trim();
-      if (text) return { text, model, error: "" };
+      if (text) { tried.push({ model, ms: Date.now() - t0, err: "" }); return { text, model, error: "", tried }; }
       last = "empty";
+      tried.push({ model, ms: Date.now() - t0, err: last });
     } catch (e) {
       last = String(e && e.message || e).slice(0, 60);
+      tried.push({ model, ms: Date.now() - t0, err: last });
     }
   }
-  return { text: "", model: "", error: last || "all models failed" };
+  return { text: "", model: "", error: last || "all models failed", tried };
+}
+
+/* A deliberate, minimal call whose only purpose is to answer "is the lantern
+   lit?" out loud: does the key exist, which names are free today, and what
+   does the first one that answers actually say. Used by /admin. */
+export async function probeLantern() {
+  const t0 = Date.now();
+  const ids = await refreshFreeModels(true);
+  const info = liveFreeInfo();
+  const out = {
+    key: !!process.env.OPENROUTER_API_KEY,
+    keyTail: process.env.OPENROUTER_API_KEY ? "…" + String(process.env.OPENROUTER_API_KEY).slice(-4) : "",
+    listed: info.count || ids.length,
+    listErr: info.err,
+    chain: modelChain().slice(0, 6),
+    warning: modelWarning(),
+    paid: allowPaid()
+  };
+  if (!out.key) { out.ok = false; out.error = "OPENROUTER_API_KEY is not set on this deployment"; out.ms = Date.now() - t0; return out; }
+  const got = await askOpenRouter(
+    [{ role: "user", content: "Reply with exactly one word: lit" }],
+    { max_tokens: 12, temperature: 0, timeout: 9000, budget: 20000, maxTries: 4 });
+  out.ok = !!got.text;
+  out.answered = got.model;
+  out.reply = String(got.text || "").slice(0, 60);
+  out.error = got.error;
+  out.tried = got.tried || [];
+  out.ms = Date.now() - t0;
+  return out;
 }
