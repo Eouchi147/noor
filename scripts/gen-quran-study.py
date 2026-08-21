@@ -8,7 +8,11 @@ Sources (all under build/):
   study-deep-c.json    8 surahs, promoted from short to rich
   study-deep-d.json    7 surahs, promoted from short to rich
   study-deep-e.json    6 surahs, promoted from short to rich
-  study-light.json    72 surahs, short records, the complete 114 minus the deep ones
+  study-deep-f.json   45 surahs, written in parallel and audited
+  study-deep-g.json    6 surahs, the batch the parallel run dropped
+  study-light.json    72 surahs, short records. Every one of them is now
+                      superseded by a deep tranche; the file is kept so that
+                      withdrawing a tranche can never open a gap.
 
 A surah that appears in a deep tranche AND in the light file is taken from the
 deep tranche. The light file deliberately keeps its record, so that withdrawing
@@ -31,7 +35,7 @@ BUILD = os.path.join(ROOT, "build")
 OUT = os.path.join(ROOT, "quran-study.js")
 DEEP_FILES = ["study-deep-a.json", "study-deep-b.json",
               "study-deep-c.json", "study-deep-d.json",
-              "study-deep-e.json"]
+              "study-deep-e.json", "study-deep-f.json", "study-deep-g.json"]
 LIGHT_FILE = "study-light.json"
 
 DEEP_KEYS = ["context", "name_story", "movements", "themes", "heart",

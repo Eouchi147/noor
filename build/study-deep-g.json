@@ -1,0 +1,236 @@
+{
+  "_note": "The batch that did not come back from the parallel run: 69, 70, 71, 72, 73 and 74. Written by hand to the same schema and the same rules, and held to the same evidence discipline: virtue level 'none' wherever no authentic prophetic report establishes a merit for reciting the surah, which is the case for all six.",
+  "surahs": [
+    {
+      "n": 69,
+      "context": [
+        "Al-Haqqah is Makkan and comes from the years when the warning was the whole message. It has no legislation in it and almost no argument in the ordinary sense. It states a thing three times in its first three verses, refusing to move on, and then spends the rest of its length showing what happened to people who were told the same thing and did not believe it.",
+        "Its final section turns from the nations to the man delivering the message. Quraysh had said he was a poet, or a soothsayer, or a man inventing revelation and attributing it to Allah. The surah answers that last charge in the strongest terms it uses anywhere, and it does so by describing what would happen to him if it were true."
+      ],
+      "name_story": "Al-Haqqah, the Inevitable or the Sure Reality, from the opening word. The surah does not define it. It says al-Haqqah, then what is al-Haqqah, then what will make you know what al-Haqqah is, and the repetition is the definition: a thing whose name is stated three times before anything is said about it is a thing the listener is meant to feel the weight of before understanding it.",
+      "movements": [
+        {"range": "1-12", "h": "The nations that were told", "note": "Thamud and Ad, the screaming wind sent against them for seven nights and eight days, and Fir'awn and the towns overturned. The pattern is stated and then illustrated."},
+        {"range": "13-18", "h": "The single blast", "note": "The trumpet blown once, the earth and the mountains lifted and crushed in a single blow, the sky splitting, and the Throne borne above them by eight."},
+        {"range": "19-37", "h": "Two records", "note": "The man given his record in his right hand who says read my record, and the man given it in his left who wishes his death had been the end of him. The two speeches are placed side by side."},
+        {"range": "38-52", "h": "What this is, and what it is not", "note": "The oath by what is seen and what is not seen, the denial that this is the word of a poet or a soothsayer, and the statement of what would follow if the Messenger had invented it."}
+      ],
+      "themes": [
+        {"t": "A warning that does not argue", "d": "The surah does not reason with the listener. It describes, and the description is the argument, which is why its language is so much more physical than most of the Qur'an."},
+        {"t": "Two records, two speeches", "d": "The saved man and the ruined man are each given direct speech, and the contrast is built entirely from what each of them says on arriving."},
+        {"t": "The charge of invention, answered", "d": "The severity of the answer is the point: if he had invented sayings and attributed them to Us, We would have seized him by the right hand and cut his lifeline."},
+        {"t": "Detail as evidence", "d": "Seven nights and eight days. A chain seventy cubits long. The specificity is doing rhetorical work: a vague warning is easy to set aside."}
+      ],
+      "heart": [
+        "Recited slowly, the opening three verses do something no summary conveys. The surah names a thing, asks what it is, and then asks what could make you know what it is, and the reader is held there for three lines without being given an answer. Very little writing has the confidence to delay like that.",
+        "The passage most people carry away is the man with the record in his right hand, because of what he does with it. He does not thank anyone or explain himself. He turns to the people around him and says: here, read my record. It is the sound of somebody who has stopped being afraid of being examined."
+      ],
+      "passages": [
+        {"ref": "69:19", "why": "Here, read my record. Said by a man handed the account of his own life, offering it to be read by anyone."},
+        {"ref": "69:1-3", "why": "The Inevitable. What is the Inevitable? And what can make you know what the Inevitable is? Three lines that withhold the answer on purpose."},
+        {"ref": "69:44-46", "why": "Had he invented sayings and attributed them to Us, We would have seized him by the right hand. The answer to the charge of forgery, and it is not a gentle one."},
+        {"ref": "69:33-34", "why": "He did not believe in Allah the Most Great, nor did he encourage the feeding of the poor. Two failures named together, which is the surah's way of saying they are one failure."}
+      ],
+      "connections": [
+        {"to": 56, "why": "Al-Waqi'ah sorts humanity into three groups where this surah sorts by which hand holds the record, and the two scenes complete each other."},
+        {"to": 84, "why": "Al-Inshiqaq gives the same two records in shorter form and is best read immediately after this."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Haqqah. Its standing rests on its language, which is among the most concentrated in the Qur'an, and on the passage at 69:44-46, which is the Book's own answer to the charge that its Messenger composed it.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 70,
+      "context": [
+        "Al-Ma'arij is Makkan and opens with something unusual: a man asking for the punishment to be brought on, as a challenge rather than a question. Several of the commentators connect the opening to a specific mocker in Makkah who demanded that stones be rained on them from the sky if the message were true.",
+        "The surah answers the demand by describing the scale of what is being asked for, and then by describing, at length, the people who are not asking for it. Its closing section is a portrait of the believer that runs almost as a list, and it is one of the two great lists of this kind in the Qur'an."
+      ],
+      "name_story": "Al-Ma'arij, the Ascending Stairways or the Ways of Ascent, from the third verse, which names Allah as Lord of the ways of ascent. The following verse gives the measure that the name implies: the angels and the Spirit ascend to Him in a day the extent of which is fifty thousand years. A man demanding that the punishment be hurried is answered with a figure that makes hurrying meaningless.",
+      "movements": [
+        {"range": "1-18", "h": "The demand, and the day", "note": "The mocker asking for the punishment, the day of fifty thousand years, and the scene in which no close friend asks another about him, though they are shown each other."},
+        {"range": "19-35", "h": "Man was created anxious", "note": "The diagnosis: impatient when evil touches him, withholding when good does, and then the exception, those who pray, whose qualities are listed one after another."},
+        {"range": "36-44", "h": "The rush toward nothing", "note": "The image of people hurrying toward the caller with their eyes lowered, humiliation covering them, which closes the surah where it began."}
+      ],
+      "themes": [
+        {"t": "Impatience as the human default", "d": "Indeed, man was created anxious. The surah states it as a description of the species rather than as an accusation against individuals, and then names the one exception."},
+        {"t": "The exception is prayer", "d": "The list of qualities begins and ends with prayer, and everything else in it is placed inside that frame, which is a claim about what holds the rest together."},
+        {"t": "A known right in the wealth", "d": "The surah says the poor have a haqq ma'lum, a known right, in the wealth of the believer, which is a stronger word than charity."},
+        {"t": "Nobody asks after anybody", "d": "On that day no friend asks a friend, though they are shown each other. The isolation is described without any commentary at all."}
+      ],
+      "heart": [
+        "Recited slowly, the diagnosis in verse 19 is the line most readers stop at, because it explains a great deal of an ordinary week. Impatient when evil touches him, withholding when good touches him. Almost every small failure of the day fits one of those two clauses.",
+        "The list that follows is worth reading as an examination rather than as praise. It is short. It is specific. It includes keeping trusts and giving testimony honestly, which are not the items most people would have expected in a passage about people who pray, and their presence there is the point."
+      ],
+      "passages": [
+        {"ref": "70:19-21", "why": "Man was created anxious: when evil touches him, impatient, and when good touches him, withholding. The most useful description of the ordinary self in the Qur'an."},
+        {"ref": "70:24-25", "why": "In their wealth is a known right for the one who asks and the one deprived. Not generosity: a right."},
+        {"ref": "70:4", "why": "A day the extent of which is fifty thousand years. Given as the answer to a man demanding that things be hurried."},
+        {"ref": "70:10-11", "why": "No friend will ask about a friend, though they are shown one another."}
+      ],
+      "connections": [
+        {"to": 23, "why": "Al-Mu'minun opens with the parallel list of the qualities of the successful, and the two lists are best read together."},
+        {"to": 51, "why": "Adh-Dhariyat carries the other statement that the poor have a right in the believer's wealth."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Ma'arij. What gives it weight in practice is the passage from verse 22 to verse 35, which is one of the two places in the Qur'an where the qualities of a believer are set out as a plain list a person can check themselves against.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 71,
+      "context": [
+        "Nuh is Makkan and is given over almost entirely to one man's report of his own work. It is not a narrative about Nuh so much as a transcript from him: he describes what he tried, in what order, over what period, and what came of it, and the reporting is unusually procedural.",
+        "It was revealed to a Prophet ﷺ who had by then spent years calling a city that would not answer. The surah hands him the account of a man who called for nine hundred and fifty years, tried every approach available, and finished with a handful of people. The consolation is not that Nuh succeeded. It is that Nuh did the work."
+      ],
+      "name_story": "Named simply for Nuh, and it is one of the few surahs given over to a single prophet's account almost without interruption. The naming is plain because the surah is plain: a man is named, and then he speaks.",
+      "movements": [
+        {"range": "1-4", "h": "The commission", "note": "Warn your people before a painful punishment comes to them. The instruction, and the offer that follows it: He will forgive you your sins and delay you for a specified term."},
+        {"range": "5-20", "h": "What he actually did", "note": "Night and day, in public and in private. The fingers in ears, the garments pulled over heads, and the argument he made from rain, from the seven heavens, from the moon, from their own creation in stages."},
+        {"range": "21-24", "h": "The names of the idols", "note": "Wadd, Suwa, Yaghuth, Ya'uq and Nasr, named in scripture, which is the only place these five appear."},
+        {"range": "25-28", "h": "The end of it", "note": "The drowning, and the closing supplication, which asks for forgiveness for himself, his parents, and everyone who enters his house in faith."}
+      ],
+      "themes": [
+        {"t": "Method, described in detail", "d": "The surah records how he called: at night and in daylight, openly and then privately, and it records that he changed approach when one did not work."},
+        {"t": "An argument from the visible world", "d": "He does not argue metaphysics. He points at rain, at the moon, at their own bodies formed in stages, and at the earth spread out for them."},
+        {"t": "Forgiveness offered before obedience", "d": "Ask forgiveness of your Lord, He is ever a perpetual forgiver, and then the promise of rain, wealth, children and gardens. The order is deliberate."},
+        {"t": "A prayer that widens", "d": "The closing du'a moves outward: himself, his parents, whoever enters his house believing, and then all believing men and women."}
+      ],
+      "heart": [
+        "Recited slowly, the surah is oddly comforting to anyone who has tried to reach somebody and failed. Nuh's report contains no self-pity and no excuse. He states what he did, in order, and the fact that it did not work is stated in the same flat voice as everything else.",
+        "The passage about asking forgiveness is the one most readers take away, and it is worth noticing what it promises. Ask forgiveness, and He will send rain in abundance, and give you wealth and children, and make for you gardens and rivers. The reward listed for seeking forgiveness is entirely worldly, which is not what most readers expect."
+      ],
+      "passages": [
+        {"ref": "71:10-12", "why": "Ask forgiveness of your Lord. He will send rain in abundance, and give you wealth and children, and make for you gardens and rivers."},
+        {"ref": "71:13-14", "why": "What is wrong with you that you do not attribute to Allah due grandeur, while He has created you in stages."},
+        {"ref": "71:5-9", "why": "Night and day, openly and privately. The most detailed account in the Qur'an of how a prophet actually worked."},
+        {"ref": "71:28", "why": "The closing prayer: for himself, his parents, and everyone who enters his house as a believer."}
+      ],
+      "connections": [
+        {"to": 11, "why": "Hud tells the story of the ark and the son from outside; this surah gives Nuh's own account of the years before it."},
+        {"to": 54, "why": "Al-Qamar carries the compressed version, with its refrain about the Qur'an being made easy to remember."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Surah Nuh. Its distinctive value is documentary: it is the only place in the Qur'an where a prophet's method of calling people is set out step by step, and the only place the five idols of his people are named.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 72,
+      "context": [
+        "Al-Jinn is Makkan and its occasion is recorded in the authentic collections. The Prophet ﷺ was travelling with a group of his companions toward the market of Ukaz, and while he led them in the dawn prayer a company of jinn passed and heard the recitation. Ibn Abbas reports that the Prophet ﷺ did not see them and was told about them only by this revelation.",
+        "Almost the whole first half of the surah is their speech, quoted. It is the longest passage of non-human direct speech in the Qur'an, and what they say is theological rather than fantastic: they report that they used to think no human or jinn would ever speak a lie about Allah, and that they now know better."
+      ],
+      "name_story": "Named for the jinn, and the naming is exact because they are the speakers. The surah is not a description of them from outside. It is a report of what a group of them said after hearing the Qur'an once, transmitted in their own words, and the effect of that is to make the reader hear the recitation the way a stranger heard it.",
+      "movements": [
+        {"range": "1-15", "h": "What the jinn said", "note": "Their report: an amazing Qur'an guiding to right conduct, the correction of their own former beliefs, their account of the heavens now guarded, and their division into the righteous and the otherwise."},
+        {"range": "16-19", "h": "Water in abundance", "note": "The promise attached to remaining on the straight way, and the scene of the servant of Allah standing to call on Him."},
+        {"range": "20-28", "h": "I do not control harm or benefit", "note": "The Prophet ﷺ instructed to say that he has no power over harm or right guidance for anyone, that no one can protect him, and that he does not know whether what is promised is near."}
+      ],
+      "themes": [
+        {"t": "A stranger's ear", "d": "The Qur'an is described by listeners with no stake in it, who call it amazing and say it guides to rushd, right conduct, before they know anything else about it."},
+        {"t": "Jinn are accountable too", "d": "They describe themselves as divided, some righteous and some not, and as having reasoned their way out of an error, which places them inside the moral order rather than outside it."},
+        {"t": "The Messenger's own limits", "d": "Say: I do not possess for you harm or right direction. The surah spends its closing verses restricting rather than expanding what he claims."},
+        {"t": "Knowledge of the unseen, withheld", "d": "He is the Knower of the unseen and does not disclose it to anyone except a messenger whom He has approved, which is the surah's precise and narrow statement on the subject."}
+      ],
+      "heart": [
+        "Recited slowly, the surah gives a reader something rare: the experience of hearing the Qur'an from outside. A group who had never heard it before hear a single dawn prayer, and their first words are that they have heard something amazing. Familiarity dulls that, and this surah briefly returns it.",
+        "Its closing lines pull in the opposite direction to what most readers expect of a prophet's authority. Say: I do not know whether what you are promised is near, or whether my Lord will appoint for it a distant term. The limit is stated by the Messenger about himself."
+      ],
+      "passages": [
+        {"ref": "72:1-2", "why": "We have heard an amazing Qur'an. It guides to right conduct, so we have believed in it. The first reaction of people who had no prior knowledge of it."},
+        {"ref": "72:21", "why": "Say: I do not possess for you harm or right direction. Said by the Messenger about himself."},
+        {"ref": "72:26-27", "why": "He is the Knower of the unseen, and He does not disclose it to anyone, except whom He has approved of a messenger."},
+        {"ref": "72:16", "why": "If they had remained straight on the way, We would have given them abundant water. A worldly promise attached to steadiness."}
+      ],
+      "connections": [
+        {"to": 46, "why": "Al-Ahqaf carries the other account of jinn hearing the Qur'an, told from the outside rather than in their own words."},
+        {"to": 55, "why": "Ar-Rahman addresses humans and jinn together throughout, and its refrain assumes exactly what this surah establishes."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Surah Al-Jinn. What is authentically reported is its occasion: Ibn Abbas said the Prophet ﷺ was praying the dawn prayer with his companions when the jinn heard him, and that he had not recited to them and did not see them, and this revelation told him what had happened.",
+        "src": "no authentic virtue report; the occasion in Bukhari 773 and Muslim 449",
+        "level": "none"
+      }
+    },
+    {
+      "n": 73,
+      "context": [
+        "Al-Muzzammil is among the earliest revelations, from the period immediately after the first encounter in the cave, when the Prophet ﷺ had come home shaken and asked to be covered. The surah opens by addressing him by that state: O you who wraps himself in garments.",
+        "What follows is not comfort but an instruction, and the instruction is night prayer. He is told to stand nearly all night, or half of it, or a little less, and to recite the Qur'an slowly and distinctly. Then, at the very end of the surah, in a verse the commentators generally place about a year later, the requirement is lightened for the community because Allah knows that some are ill, some are travelling, and some are fighting."
+      ],
+      "name_story": "Al-Muzzammil, the Enshrouded One or the One Wrapped in Garments, from the first verse. It is one of two surahs that address the Prophet ﷺ by his physical posture in a moment of fear, and both do the same thing with it: they name the wrapping, and then tell him to get up.",
+      "movements": [
+        {"range": "1-10", "h": "Stand the night", "note": "The command to rise for most of the night, the instruction to recite with tartil, slowly and distinctly, the warning of a heavy word about to be laid on him, and the instruction to be patient with what is said."},
+        {"range": "11-19", "h": "Leave them to Me", "note": "The wealthy deniers left to Allah, the fetters and the fire, and the comparison of this messenger to the one sent to Fir'awn."},
+        {"range": "20", "h": "The lightening", "note": "The final verse, longer than the rest of the surah, which reduces the requirement because of illness, travel and fighting, and ends with prayer, zakah and a good loan to Allah."}
+      ],
+      "themes": [
+        {"t": "The night as preparation", "d": "The instruction to stand at night arrives before the mission's difficulties are described, which places it as the equipment rather than as an additional burden."},
+        {"t": "Tartil", "d": "Recite the Qur'an with measured recitation. The one instruction the Qur'an gives about how it is to be read, and it is about slowness."},
+        {"t": "A heavy word", "d": "We will cast upon you a heavy word. Said to a man who had just been frightened, and stated as a warning rather than softened."},
+        {"t": "The requirement lightened", "d": "The closing verse is unusually specific about why: some are ill, some travel for provision, some are fighting. Difficulty is treated as a reason and not as an excuse to be argued with."}
+      ],
+      "heart": [
+        "Recited slowly, the surah's opening is one of the most human moments in the Qur'an. A man is lying wrapped in a blanket because of what he has just seen, and the first words addressed to him name that exact posture. He is not told that he was mistaken or that there is nothing to fear. He is told to stand up and pray.",
+        "The instruction about tartil sits in the middle of it, and it is the only place the Qur'an says anything about the manner of its own recitation. Not to finish it. Not to recite much. To recite it slowly, distinctly, at a pace that lets the words land."
+      ],
+      "passages": [
+        {"ref": "73:1-2", "why": "O you who wraps himself in garments, stand at night, except for a little. The first instruction given to a frightened man."},
+        {"ref": "73:4", "why": "And recite the Qur'an with measured recitation. The Book's one instruction about how it is to be read."},
+        {"ref": "73:5", "why": "We will cast upon you a heavy word. A warning rather than a reassurance."},
+        {"ref": "73:20", "why": "The closing verse, which lightens the requirement and names illness, travel and fighting as the reasons."}
+      ],
+      "connections": [
+        {"to": 74, "why": "Al-Muddaththir addresses him in the same posture with the opposite instruction: not stand and pray, but arise and warn."},
+        {"to": 96, "why": "Al-Alaq records the encounter that put him under the blanket in the first place."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Muzzammil. Its importance lies in verse 4, which is the only instruction the Qur'an gives about the manner of its own recitation, and in verse 20, which the commentators generally treat as lightening the night prayer from an obligation to a voluntary one.",
+        "src": "no authentic virtue report",
+        "level": "none"
+      }
+    },
+    {
+      "n": 74,
+      "context": [
+        "Al-Muddaththir belongs to the same early period as Al-Muzzammil, and the authentic reports place its opening among the first revelation after a pause. Jabir ibn Abdullah relates that the Prophet ﷺ described seeing the angel again after that interval, becoming frightened, returning home and asking to be covered, and that this was then revealed.",
+        "Where the other surah told him to stand and pray, this one tells him to get up and warn, and to make his garments clean and to leave what is filthy. It is the point at which private preparation becomes public work. Its later section deals with a specific man who heard the Qur'an, was moved by it, and then constructed a reason to dismiss it."
+      ],
+      "name_story": "Al-Muddaththir, the Cloaked One or the One Covered Over, from the first verse. It pairs with Al-Muzzammil deliberately: the same man, the same blanket, two different commands. The naming preserves the moment before the mission became public.",
+      "movements": [
+        {"range": "1-10", "h": "Arise and warn", "note": "Get up and warn, magnify your Lord, purify your garments, avoid what is filthy, and do not give in order to receive more. The whole commission in seven short lines."},
+        {"range": "11-31", "h": "The man who thought and measured", "note": "The account of a man given wealth and sons who considered, then decided, and called the Qur'an magic transmitted from before. Then Saqar, and the nineteen over it."},
+        {"range": "32-48", "h": "What put you in Saqar", "note": "The oaths, and the answer given by those inside: we were not of those who prayed, nor did we feed the poor, and we used to talk idly with those who talked idly."},
+        {"range": "49-56", "h": "Turning away from a reminder", "note": "The image of frightened donkeys fleeing a lion, the demand that each of them be handed his own scripture, and the closing statement that this is a reminder for whoever wills."}
+      ],
+      "themes": [
+        {"t": "From private to public", "d": "The command changes from stand and pray to arise and warn, and the surah marks the exact point at which the mission left the house."},
+        {"t": "Giving without expecting return", "d": "Do not give, seeking to gain more. Placed inside the commission itself, which locates sincerity at the start rather than as a refinement."},
+        {"t": "Deliberate refusal", "d": "The man in this surah does not fail to understand. He thinks, and measures, and reaches a conclusion he has decided in advance, and the surah reports his deliberation in detail."},
+        {"t": "Four reasons given by those inside", "d": "Not praying, not feeding the poor, idle talk, and denying the Day. Two of the four are omissions rather than acts."}
+      ],
+      "heart": [
+        "Recited slowly, the seven opening lines read like a job description. Arise. Warn. Magnify your Lord. Purify your garments. Avoid filth. Do not give expecting return. Be patient for your Lord. Nothing in it is abstract and the whole of a prophet's public life is contained in it.",
+        "The answer given by those in Saqar is what stays with most readers, because two of the four things they name are not crimes. We were not of those who prayed, and we did not feed the poor, and we used to talk idly. It is a list of things not done."
+      ],
+      "passages": [
+        {"ref": "74:1-7", "why": "Arise and warn. The commission in seven lines, including the instruction not to give in order to receive more."},
+        {"ref": "74:42-46", "why": "What put you into Saqar? They will say: we were not of those who prayed, nor did we feed the poor. A list of omissions."},
+        {"ref": "74:38", "why": "Every soul, for what it has earned, is retained. One clause that closes off every argument about inherited standing."},
+        {"ref": "74:31", "why": "None knows the soldiers of your Lord except Him. Said in the middle of the passage about the nineteen, and it settles the matter."}
+      ],
+      "connections": [
+        {"to": 73, "why": "Al-Muzzammil addresses the same man in the same blanket and tells him to pray; this one tells him to go out and speak."},
+        {"to": 96, "why": "Al-Alaq holds the first five verses ever revealed, and this surah records what followed the pause after them."}
+      ],
+      "virtue": {
+        "text": "No authentic report establishes a specific merit for reciting Al-Muddaththir. What is authentically reported is its occasion: Jabir ibn Abdullah relates the Prophet's ﷺ own account of seeing the angel after the pause in revelation, returning home frightened, asking to be covered, and this surah then being revealed.",
+        "src": "no authentic virtue report; the occasion in Bukhari 4922 and Muslim 161",
+        "level": "none"
+      }
+    }
+  ]
+}
