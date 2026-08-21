@@ -1,0 +1,824 @@
+{
+"tranche": "k",
+"surahs": [
+{
+"n": 86,
+"verses": {
+"1": {
+  "words": [
+    {"a": "وَٱلسَّمَآءِ", "t": "wa-s-samā'i", "g": "by the sky"},
+    {"a": "وَٱلطَّارِقِ", "t": "wa-ṭ-ṭāriq", "g": "and by the night-comer"}
+  ],
+  "sense": "An oath by the sky, and then by something that arrives in it after dark. The thing sworn by is named for the sound it makes on arrival rather than for what it is, and the surah will spend two more verses telling you what it means.",
+  "notes": [
+    {"t": "Tariq comes from tarq, to strike or knock. An Arab called a night visitor a tariq because anyone arriving after dark had to knock at the door to be let in, and the word carries that unannounced arrival up into the sky.", "lvl": "editorial"},
+    {"t": "The surah asks what the tariq is in the next verse and answers in the one after, so it defines its own oath before it uses it. Very little else in the Qur'an is built this way.", "lvl": "quran", "src": "86:2-3"},
+    {"t": "Jabir ibn Samurah reported that the Prophet ﷺ used to recite this surah and its like in the noon and afternoon prayers, so it had a place in his ordinary week rather than only in his night.", "lvl": "sunnah", "src": "Abu Dawud 805, sahih"}
+  ],
+  "links": [
+    {"ref": "85:1", "why": "the surah immediately before opens with an oath by the sky"},
+    {"ref": "51:1", "why": "another surah that swears a chain of oaths before naming what they establish"}
+  ]
+},
+"2": {
+  "words": [
+    {"a": "وَمَآ", "t": "wa-mā", "g": "and what"},
+    {"a": "أَدْرَىٰكَ", "t": "adrāka", "g": "has made you know"},
+    {"a": "مَا", "t": "mā", "g": "what is"},
+    {"a": "ٱلطَّارِقُ", "t": "aṭ-ṭāriq", "g": "the night-comer"}
+  ],
+  "sense": "The question is put to the Prophet ﷺ himself. It is not decoration. The Qur'an uses this formula when it is about to supply something the hearer could not have reasoned his way to, and it pauses first so he notices that he did not have it.",
+  "notes": [
+    {"t": "The exegetes keep two formulas apart. Where the Qur'an asks wa ma yudrika, what will make you know, the answer is withheld and the matter stays with Allah. Where it asks wa ma adraka, what has made you know, an answer follows immediately. This is the second kind, and verse three delivers it.", "lvl": "editorial"},
+    {"t": "The verb adra is the causative of dara, to know by picking something up. It asks not whether you know but what could possibly have told you, which rules out the sky, experience and inheritance in one word.", "lvl": "editorial"},
+    {"t": "The same construction opens the Qur'an's own account of the Night of Decree and of the Striking Calamity, both times on a thing no observer could have measured.", "lvl": "quran", "src": "97:2"}
+  ],
+  "links": [
+    {"ref": "97:2", "why": "the same question asked of the Night of Decree, then answered"},
+    {"ref": "101:10", "why": "the same formula opening onto the Striking Calamity"}
+  ]
+},
+"3": {
+  "words": [
+    {"a": "ٱلنَّجْمُ", "t": "an-najmu", "g": "the star"},
+    {"a": "ٱلثَّاقِبُ", "t": "ath-thāqib", "g": "the piercing one"}
+  ],
+  "sense": "The answer is two words. Thaqib is what a drill does to wood: it goes all the way through. The star is identified by its light getting through the dark, not by its size, its name or its place in the sky.",
+  "notes": [
+    {"t": "Which star is meant was never settled. Reports from the early generations name a particular planet, and others read an-najm as the whole kind rather than one of them, which is ordinary Arabic usage.", "lvl": "debated", "src": "at-Tabari collects the reports naming a single star and those reading the genus, and decides for neither"},
+    {"t": "Thaqib is from th-q-b, to bore a hole. The Arabs used it of a lamp turned up until it burns white. The word is about penetration, so the oath is by light that does not merely shine but gets in.", "lvl": "editorial"},
+    {"t": "The Qur'an uses the same adjective of the flame that pursues a devil trying to eavesdrop on the heavens, which keeps the star in the register of something that goes after what it is aimed at.", "lvl": "quran", "src": "37:10"}
+  ],
+  "links": [
+    {"ref": "37:10", "why": "the same word thaqib, there of a piercing flame"},
+    {"ref": "67:5", "why": "the nearest heaven set with lamps that double as missiles"}
+  ]
+},
+"4": {
+  "words": [
+    {"a": "إِن", "t": "in", "g": "not"},
+    {"a": "كُلُّ", "t": "kullu", "g": "every"},
+    {"a": "نَفْسٍ", "t": "nafsin", "g": "soul"},
+    {"a": "لَّمَّا", "t": "lammā", "g": "but has"},
+    {"a": "عَلَيْهَا", "t": "ʿalayhā", "g": "over it"},
+    {"a": "حَافِظٌ", "t": "ḥāfiẓ", "g": "a guardian"}
+  ],
+  "sense": "This is what the oath was sworn to establish. Not most souls and not the ones that matter to somebody. Every soul, and the sentence is built as a negation with an exception so that no reader can quietly place himself outside it.",
+  "notes": [
+    {"t": "Two canonical readings stand here. Hafs, the reading of this Mushaf, has lamma with the doubled meem, which makes in a negation and lamma mean except. A lightened lama is transmitted from other readers, which makes in affirmative and the lam emphatic. The sentence says the same thing either way.", "lvl": "debated", "src": "Hafs reads lammā; a lightened lamā is transmitted from Nafiʿ, Ibn Kathir and Abu Amr"},
+    {"t": "Hafiz is one who keeps a thing from being lost. It is the same word used of a person who has committed the Qur'an to memory. What a hafiz does, in every use of the word, is not lose what was given to him.", "lvl": "editorial"},
+    {"t": "The Qur'an identifies the guardians elsewhere as recording angels, noble and writing, so the keeper here is not an abstraction or a conscience.", "lvl": "quran", "src": "82:10-11"}
+  ],
+  "links": [
+    {"ref": "82:10", "why": "the guardians named plainly, noble ones who write"},
+    {"ref": "13:11", "why": "angels before him and behind him, guarding by the command of Allah"}
+  ]
+},
+"5": {
+  "words": [
+    {"a": "فَلْيَنظُرِ", "t": "fa-l-yanẓuri", "g": "so let him look at"},
+    {"a": "ٱلْإِنسَٰنُ", "t": "al-insānu", "g": "the human being"},
+    {"a": "مِمَّ", "t": "mimma", "g": "from what"},
+    {"a": "خُلِقَ", "t": "khuliq", "g": "he was created"}
+  ],
+  "sense": "A command to look, and the thing to be looked at is not the sky the surah has just sworn by. It is the reader's own beginning. The argument turns from the far and impressive to the near and slightly embarrassing.",
+  "notes": [
+    {"t": "Khuliqa is passive, he was created, which leaves the maker unnamed for three more verses. The grammar makes the reader supply Him before the text does.", "lvl": "editorial"},
+    {"t": "The command is in the third person, let the human being look, rather than look. Arabic uses this to state a duty that stands whether or not the person addressed accepts it.", "lvl": "editorial"},
+    {"t": "The Qur'an points this same instruction at the camel, the sky, the mountains, the earth and the self. The evidence it keeps asking for is never in a book.", "lvl": "quran", "src": "51:21"}
+  ],
+  "links": [
+    {"ref": "51:21", "why": "and in yourselves, so will you not see"},
+    {"ref": "88:17", "why": "the same command to look, there aimed at the camel"}
+  ]
+},
+"6": {
+  "words": [
+    {"a": "خُلِقَ", "t": "khuliqa", "g": "he was created"},
+    {"a": "مِن", "t": "min", "g": "from"},
+    {"a": "مَّآءٍ", "t": "mā'in", "g": "a fluid"},
+    {"a": "دَافِقٍ", "t": "dāfiq", "g": "gushing"}
+  ],
+  "sense": "The answer to the question the verse before asked. It is deliberately plain and slightly undignified, because the whole argument depends on the reader admitting how little he started out as.",
+  "notes": [
+    {"t": "Dafiq is grammatically active, gushing, although the fluid is what gets poured rather than what pours. Arabic allows the active form where the sense is passive, and the exegetes read it as poured out under force.", "lvl": "editorial"},
+    {"t": "The noun is indefinite, a fluid, not the fluid. Nothing about it is singled out or dignified, and that is the point of the sentence rather than an accident of it.", "lvl": "editorial"},
+    {"t": "The Qur'an describes the same origin elsewhere in blunter terms still, calling it a fluid held in contempt.", "lvl": "quran", "src": "77:20"}
+  ],
+  "links": [
+    {"ref": "77:20", "why": "did We not create you from a fluid disdained"},
+    {"ref": "23:13", "why": "the same beginning, there set out in stages"}
+  ]
+},
+"7": {
+  "words": [
+    {"a": "يَخْرُجُ", "t": "yakhruju", "g": "it comes out"},
+    {"a": "مِنۢ", "t": "min", "g": "from"},
+    {"a": "بَيْنِ", "t": "bayni", "g": "between"},
+    {"a": "ٱلصُّلْبِ", "t": "aṣ-ṣulbi", "g": "the backbone"},
+    {"a": "وَٱلتَّرَآئِبِ", "t": "wa-t-tarā'ib", "g": "and the breastbones"}
+  ],
+  "sense": "The fluid is given a place of departure, named by two parts of the body. What exactly those two parts are, and whose body they belong to, is where the commentaries part company and have stayed parted.",
+  "notes": [
+    {"t": "The identification is old and unresolved. Some read both parts as the man's, the backbone and the front of his chest. Others read the sulb as the man's and the tara'ib as the woman's, which makes the verse describe the two parents together.", "lvl": "debated", "src": "at-Tabari records both identifications from the early generations without preferring one"},
+    {"t": "Tara'ib is a plural with no clean English equivalent. The lexicographers place it at the upper chest, the area where a necklace lies, between the collarbones and the breast.", "lvl": "editorial"},
+    {"t": "The verse names a place of exit, not a mechanism. Reading a modern account of embryology into it, whether to defend it or to attack it, presses it for an answer to a question it is not putting.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "32:8", "why": "posterity made from an extract of a fluid held cheap"},
+    {"ref": "23:12", "why": "the stages of the making set out in order"}
+  ]
+},
+"8": {
+  "words": [
+    {"a": "إِنَّهُۥ", "t": "innahu", "g": "indeed He"},
+    {"a": "عَلَىٰ", "t": "ʿalā", "g": "upon"},
+    {"a": "رَجْعِهِۦ", "t": "rajʿihi", "g": "returning him"},
+    {"a": "لَقَادِرٌ", "t": "la-qādir", "g": "is surely able"}
+  ],
+  "sense": "The conclusion the last three verses were built to carry. The One who assembled a person out of that can reassemble him, and the verse puts it as a question of capacity rather than of promise, because capacity was what the deniers were disputing.",
+  "notes": [
+    {"t": "What the returning refers to is discussed. Most read it of bringing the person back to life after death. A minority read it as returning him to the state he came from, which keeps the argument to the same body.", "lvl": "debated", "src": "at-Tabari records both, and the majority of the exegetes take it of the resurrection"},
+    {"t": "Qadir is the participle of one who has the power now, not one who will acquire it when the time comes. The lam in front of it is the lam of emphasis, so the sentence is an assertion twice over.", "lvl": "editorial"},
+    {"t": "The Qur'an puts the identical argument as an objection and answers it: who will give life to bones after they have crumbled, and the reply names the One who made them the first time.", "lvl": "quran", "src": "36:78-79"}
+  ],
+  "links": [
+    {"ref": "36:78", "why": "the same argument raised as an objection and then answered"},
+    {"ref": "30:27", "why": "He begins the creation and repeats it, and repeating is easier"}
+  ]
+},
+"9": {
+  "words": [
+    {"a": "يَوْمَ", "t": "yawma", "g": "on the Day"},
+    {"a": "تُبْلَى", "t": "tublā", "g": "are put to the test"},
+    {"a": "ٱلسَّرَآئِرُ", "t": "as-sarā'ir", "g": "the secrets"}
+  ],
+  "sense": "The Day is named by what happens to hidden things, not by the sky splitting or the mountains moving. Tubla is the verb for putting a thing under trial in order to find out what it actually is, and here the thing tested is the inside of a person.",
+  "notes": [
+    {"t": "Sara'ir is the plural of sarira, from the root s-r-r, what a person keeps to himself. It covers intentions and not only concealed deeds, so what is examined is the reason behind the record rather than the record.", "lvl": "editorial"},
+    {"t": "Bala is the same verb the Qur'an uses of Allah testing people in this life with good and with harm. Applying it to the secrets makes the last event an assay rather than a sentence: the result is a finding about what a thing was.", "lvl": "editorial"},
+    {"t": "The Qur'an states the same outcome without the metaphor: that Day you will be exhibited, and nothing of you stays concealed.", "lvl": "quran", "src": "69:18"}
+  ],
+  "links": [
+    {"ref": "100:10", "why": "and what is in the breasts is brought out and collected"},
+    {"ref": "69:18", "why": "you are exposed, and nothing hidden of you stays hidden"}
+  ]
+},
+"10": {
+  "words": [
+    {"a": "فَمَا", "t": "fa-mā", "g": "then not"},
+    {"a": "لَهُۥ", "t": "lahu", "g": "for him"},
+    {"a": "مِن", "t": "min", "g": "any"},
+    {"a": "قُوَّةٍ", "t": "quwwatin", "g": "strength"},
+    {"a": "وَلَا", "t": "wa-lā", "g": "and no"},
+    {"a": "نَاصِرٍ", "t": "nāṣir", "g": "helper"}
+  ],
+  "sense": "Two supports are removed in one line: what a person can do for himself, and what anyone else can do for him. The order runs from the inside outward, and nothing is left standing behind it.",
+  "notes": [
+    {"t": "The particle min before quwwatin makes the denial total in Arabic. It is not that he has little strength on that Day. He has none of the category at all.", "lvl": "editorial"},
+    {"t": "The pronoun is singular and unattached. The verse does not say the denier or the criminal, only him, so no reader has yet been told he is outside the sentence.", "lvl": "editorial"},
+    {"t": "The Qur'an describes the same Day as one on which no soul holds anything at all for another soul, which is the second half of this verse stated as a general rule.", "lvl": "quran", "src": "82:19"}
+  ],
+  "links": [
+    {"ref": "82:19", "why": "no soul possesses anything for another soul that Day"},
+    {"ref": "44:41", "why": "no relative avails a relative, and they are not helped"}
+  ]
+},
+"11": {
+  "words": [
+    {"a": "وَٱلسَّمَآءِ", "t": "wa-s-samā'i", "g": "by the sky"},
+    {"a": "ذَاتِ", "t": "dhāti", "g": "possessor of"},
+    {"a": "ٱلرَّجْعِ", "t": "ar-rajʿ", "g": "the return"}
+  ],
+  "sense": "A second oath opens the second half of the surah, and the sky is sworn by again, this time under a description rather than by name alone. It is the sky that gives back what it took up.",
+  "notes": [
+    {"t": "What the return names is not agreed. The commonest reading is the rain, which the Arabs themselves called the return because it comes back season after season. Others read it of the sun, moon and stars returning to their places.", "lvl": "debated", "src": "at-Tabari records the rain and the returning heavenly bodies, and the exegetes divide between them"},
+    {"t": "Raj is the same root as raji in verse eight, where Allah is said to be able to return a human being. The sky giving its water back and the Maker giving His creature back are put under one word, so the second half of the surah rests on the first.", "lvl": "editorial"},
+    {"t": "The oath is by a habit rather than by an object. What is sworn by is not the sky but a thing the sky reliably does, which is the sort of evidence a farmer already trusts.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "80:25", "why": "We poured the water down in abundance, said without an oath"},
+    {"ref": "51:7", "why": "the same construction, an oath by the sky under a description"}
+  ]
+},
+"12": {
+  "words": [
+    {"a": "وَٱلْأَرْضِ", "t": "wa-l-arḍi", "g": "and by the earth"},
+    {"a": "ذَاتِ", "t": "dhāti", "g": "possessor of"},
+    {"a": "ٱلصَّدْعِ", "t": "aṣ-ṣadʿ", "g": "the splitting"}
+  ],
+  "sense": "The matching oath from below. Sad is a crack in something solid, and the earth is sworn by as the thing that opens. What comes up through the crack is left unsaid, because everyone who has watched a field knows it.",
+  "notes": [
+    {"t": "Sad is used of a crack in glass or in rock. Applied to soil it names the split a seedling makes on its way up, which is a small violence that nobody ever notices happening.", "lvl": "editorial"},
+    {"t": "Sky above and earth below, one giving back and one opening. The two oaths take in the whole visible world between them, and both of them describe one event from its two ends.", "lvl": "editorial"},
+    {"t": "The Qur'an spells the pair out without oaths in another place: the water poured down, and then the earth split open.", "lvl": "quran", "src": "80:25-26"}
+  ],
+  "links": [
+    {"ref": "80:26", "why": "then We split the earth open, a splitting"},
+    {"ref": "50:11", "why": "a dead land brought back to life, and such is the coming out"}
+  ]
+},
+"13": {
+  "words": [
+    {"a": "إِنَّهُۥ", "t": "innahu", "g": "indeed it is"},
+    {"a": "لَقَوْلٌ", "t": "la-qawlun", "g": "surely a word"},
+    {"a": "فَصْلٌ", "t": "faṣl", "g": "that decides"}
+  ],
+  "sense": "The thing both oaths were sworn to. Fasl is the word for cutting one thing away from another, so a qawl fasl is a statement that separates. After it there is a right side and a wrong side where before there had been discussion.",
+  "notes": [
+    {"t": "Fasl is the root behind the word for a judge's ruling and the word for a season of the year, both of them things that divide. The Qur'an calls the Day of Judgement yawm al-fasl on exactly the same logic.", "lvl": "editorial"},
+    {"t": "What the pronoun refers to is discussed. Most exegetes read it of the Qur'an, since the surah has been contested speech from the start. Some read it of the resurrection announced in verse eight.", "lvl": "debated", "src": "at-Tabari prefers the Qur'an; the reading of the resurrection is also recorded"},
+    {"t": "The Qur'an describes itself elsewhere as a Book of unassailable standing, one that falsehood cannot get at from in front or behind.", "lvl": "quran", "src": "41:41-42"}
+  ],
+  "links": [
+    {"ref": "77:13", "why": "the Day of Decision, named from the same root"},
+    {"ref": "41:41", "why": "the Book described as one falsehood cannot approach"}
+  ]
+},
+"14": {
+  "words": [
+    {"a": "وَمَا", "t": "wa-mā", "g": "and it is not"},
+    {"a": "هُوَ", "t": "huwa", "g": "it"},
+    {"a": "بِٱلْهَزْلِ", "t": "bi-l-hazl", "g": "any joke"}
+  ],
+  "sense": "The denial that follows the claim. Hazl is speech said for amusement, the kind the speaker does not stand behind. The verse rules the Qur'an out of that category, which means every sentence in it is meant to be acted on.",
+  "notes": [
+    {"t": "Hazl is the standing opposite of jidd, seriousness, in ordinary Arabic. The pairing was already worn smooth by use, and the verse picks the harder of the two and attaches it to the Book.", "lvl": "editorial"},
+    {"t": "The denial has an audience. In Makkah the recitation was being treated as material to laugh at between other business, and the verse names that response before refusing it.", "lvl": "editorial"},
+    {"t": "The Qur'an describes the same crowd elsewhere as listening while they play, and as amusing themselves at the moment the warning arrives.", "lvl": "quran", "src": "53:59-61"}
+  ],
+  "links": [
+    {"ref": "53:61", "why": "and you are amusing yourselves while this is being recited"},
+    {"ref": "21:2", "why": "no reminder reaches them but they listen to it while they play"}
+  ]
+},
+"15": {
+  "words": [
+    {"a": "إِنَّهُمْ", "t": "innahum", "g": "indeed they"},
+    {"a": "يَكِيدُونَ", "t": "yakīdūna", "g": "are plotting"},
+    {"a": "كَيْدًا", "t": "kaydā", "g": "a plot"}
+  ],
+  "sense": "The subject changes without warning from the Book to the people arranging themselves against it. Kayd is planning done quietly, with the target not meant to find out until it is finished.",
+  "notes": [
+    {"t": "The verb and its object come from one root, yakiduna kaydan. In Arabic that doubling intensifies rather than repeats: they are not making a plan, they are plotting hard at it.", "lvl": "editorial"},
+    {"t": "The tense is present and continuous. This is not a plot that was made once and recorded; it is being made while the verse is being recited, which is why the reply in the next line is also present.", "lvl": "editorial"},
+    {"t": "The Qur'an sets out what the plotting of Makkah actually consisted of: to confine the Prophet ﷺ, or kill him, or drive him out.", "lvl": "quran", "src": "8:30"}
+  ],
+  "links": [
+    {"ref": "8:30", "why": "the plot of Makkah set out in its three options"},
+    {"ref": "27:50", "why": "they schemed a scheme and We schemed a scheme"}
+  ]
+},
+"16": {
+  "words": [
+    {"a": "وَأَكِيدُ", "t": "wa-akīdu", "g": "and I am planning"},
+    {"a": "كَيْدًا", "t": "kaydā", "g": "a plan"}
+  ],
+  "sense": "The reply uses their own verb back at them, and it is said in the first person singular, which the Qur'an keeps for moments when nothing at all stands between the speaker and the matter.",
+  "notes": [
+    {"t": "This is muqabala, answering a word with the same word. The Qur'an does it with mockery, deception and plotting alike, and it does not mean Allah does what they do. It means their act is met on its own ground and outmatched there.", "lvl": "editorial"},
+    {"t": "Theirs is plural and His is singular, and the singular is the one that settles the matter. The asymmetry is the whole argument of the line.", "lvl": "editorial"},
+    {"t": "The Qur'an states the same exchange with the outcome attached: they schemed and Allah schemed, and Allah is the best of schemers.", "lvl": "quran", "src": "3:54"}
+  ],
+  "links": [
+    {"ref": "68:45", "why": "I give them time; indeed My plan is firm, both halves in one line"},
+    {"ref": "3:54", "why": "they schemed and Allah schemed, and He is the best of schemers"}
+  ]
+},
+"17": {
+  "words": [
+    {"a": "فَمَهِّلِ", "t": "fa-mahhili", "g": "so grant respite to"},
+    {"a": "ٱلْكَٰفِرِينَ", "t": "al-kāfirīna", "g": "those who deny"},
+    {"a": "أَمْهِلْهُمْ", "t": "amhilhum", "g": "give them time"},
+    {"a": "رُوَيْدًۢا", "t": "ruwaydā", "g": "a little while"}
+  ],
+  "sense": "The instruction that closes the surah is not a counterattack. Having just been told that the plotting is already answered from above, the Prophet ﷺ is told to do nothing about it and wait, and the waiting is handed to him with a short measure attached.",
+  "notes": [
+    {"t": "Two verbs from one root sit side by side, mahhil and amhil, one intensive and one plain. Saying it twice in two forms is how Arabic settles a matter the hearer might otherwise argue with.", "lvl": "editorial"},
+    {"t": "Ruwaydan is a diminutive of a word that already means a little. It shortens the wait twice over, so the command is patience with an end fixed to it in advance rather than patience without limit.", "lvl": "editorial"},
+    {"t": "The same instruction is given in another Makkan surah with the same verb: leave Me and the deniers, and grant them a little respite.", "lvl": "quran", "src": "73:11"}
+  ],
+  "links": [
+    {"ref": "73:11", "why": "leave Me and the deniers, and grant them respite a little"},
+    {"ref": "31:24", "why": "We let them enjoy a little, then drive them to a heavy punishment"}
+  ]
+}
+}
+},
+{
+"n": 92,
+"verses": {
+"1": {
+  "words": [
+    {"a": "وَٱلَّيْلِ", "t": "wa-l-layli", "g": "by the night"},
+    {"a": "إِذَا", "t": "idhā", "g": "when"},
+    {"a": "يَغْشَىٰ", "t": "yaghshā", "g": "it covers over"}
+  ],
+  "sense": "The surah opens on the night, and the verb is left without an object. It covers, and the Arabic does not say what it covers, so the answer is the earth and whatever else the hearer is willing to put under it.",
+  "notes": [
+    {"t": "Ghashiya is to cover a thing completely, the verb behind al-Ghashiyah, the Overwhelming. Night is described here as something done to the world rather than as a time of day that arrives on a schedule.", "lvl": "editorial"},
+    {"t": "When Muadh made the prayer long on people, the Prophet ﷺ named the surahs an imam should lead with instead, and this was one of them. Its length was judged by him against the weakest person standing behind.", "lvl": "sunnah", "src": "Bukhari 705, Muslim 465"},
+    {"t": "The present tense yaghsha sits beside a past tense in verse three. The night is kept as something still happening; the making of male and female is kept as something finished.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "91:4", "why": "the same oath one surah earlier, with the object supplied"},
+    {"ref": "93:2", "why": "the surah after next swears by the night when it settles"}
+  ]
+},
+"2": {
+  "words": [
+    {"a": "وَٱلنَّهَارِ", "t": "wa-n-nahāri", "g": "and by the day"},
+    {"a": "إِذَا", "t": "idhā", "g": "when"},
+    {"a": "تَجَلَّىٰ", "t": "tajallā", "g": "it shows itself"}
+  ],
+  "sense": "The matching oath. Tajalla is a verb of uncovering, the exact reverse of what the night was doing a line earlier, and between them the two verses take in the whole of a reader's experience of time.",
+  "notes": [
+    {"t": "Tajalla is used of a thing that comes out from behind what was hiding it. Night covers and day uncovers, and the surah has taught its pattern of opposites before it applies the pattern to people in verse four.", "lvl": "editorial"},
+    {"t": "The night is named first. That is the usual Qur'anic order and it matches an Arabian day, which begins at sunset rather than at dawn.", "lvl": "editorial"},
+    {"t": "The Qur'an elsewhere calls the two of them two signs, and says the sign of the night was wiped out while the sign of the day was made visible.", "lvl": "quran", "src": "17:12"}
+  ],
+  "links": [
+    {"ref": "17:12", "why": "night and day made two signs, one erased and one left visible"},
+    {"ref": "91:3", "why": "and by the day when it displays the sun"}
+  ]
+},
+"3": {
+  "words": [
+    {"a": "وَمَا", "t": "wa-mā", "g": "and by what"},
+    {"a": "خَلَقَ", "t": "khalaqa", "g": "He created"},
+    {"a": "ٱلذَّكَرَ", "t": "adh-dhakara", "g": "the male"},
+    {"a": "وَٱلْأُنثَىٰٓ", "t": "wa-l-unthā", "g": "and the female"}
+  ],
+  "sense": "The third oath is not by a thing overhead but by an act, or by the One who performs it, depending on how one small word is read. Either way it sets the making of the two sexes beside night and day as a third pair that divides.",
+  "notes": [
+    {"t": "The grammarians read the ma two ways. As masdariyya it means by His creating of the male and the female, which swears by the act. As mawsula it means by the One who created them, which swears by the Maker.", "lvl": "debated", "src": "at-Tabari records both readings of the ma and the exegetes divide between them"},
+    {"t": "A reading transmitted from Ibn Masud and Abu ad-Darda recites the line simply as wa-dh-dhakari wa-l-untha. The exchange is recorded in the Sahih collections, but the reading is not part of the transmitted Mushaf and the community recites what is in front of it.", "lvl": "debated", "src": "the report of Alqamah with Abu ad-Darda in Bukhari and Muslim; the Mushaf carries the longer wording"},
+    {"t": "Three oaths, and every one of them is a pair set against itself. The verdict in verse four is about opposition too, so the oaths have already argued the case before the case is stated.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "53:45", "why": "He created the two mates, the male and the female"},
+    {"ref": "75:39", "why": "and made from him the two mates, male and female"}
+  ]
+},
+"4": {
+  "words": [
+    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
+    {"a": "سَعْيَكُمْ", "t": "saʿyakum", "g": "your striving"},
+    {"a": "لَشَتَّىٰ", "t": "la-shattā", "g": "is surely scattered"}
+  ],
+  "sense": "The thing three oaths were sworn to establish. Human effort does not run one way. Shatta is a plural word for things that have gone off in different directions, and it is applied here to what people are spending their lives on.",
+  "notes": [
+    {"t": "Say is not belief and not intention. It is running about and working at something, so the verse measures lives by their motion rather than by what they claim, and it addresses everyone at once in the plural.", "lvl": "editorial"},
+    {"t": "Shatta is a plural adjective placed on a singular noun, your striving. Arabic does that to say the one activity has already broken into pieces, and the two pieces are named in the verses that follow.", "lvl": "editorial"},
+    {"t": "The Qur'an states the other half of this elsewhere: a person gets nothing except what he strove for, so the scattering of effort is also the scattering of outcomes.", "lvl": "quran", "src": "53:39"}
+  ],
+  "links": [
+    {"ref": "53:39", "why": "a person has nothing except what he strove for"},
+    {"ref": "17:19", "why": "whoever wants the Hereafter and strives for it with the striving it deserves"}
+  ]
+},
+"5": {
+  "words": [
+    {"a": "فَأَمَّا", "t": "fa-ammā", "g": "so as for"},
+    {"a": "مَنْ", "t": "man", "g": "the one who"},
+    {"a": "أَعْطَىٰ", "t": "aʿṭā", "g": "gave"},
+    {"a": "وَٱتَّقَىٰ", "t": "wa-ttaqā", "g": "and guarded himself"}
+  ],
+  "sense": "The first of the two directions, and it is described by a hand and a caution rather than by a creed. He gave, and the verse does not say what or to whom, so nothing that counts as giving is left out.",
+  "notes": [
+    {"t": "Ata is left without an object, which in Arabic makes the giving general. This is not a rule about a percentage of income; it is a description of which way a person's hand habitually moves.", "lvl": "editorial"},
+    {"t": "Taqwa is added second so that giving is not left standing on its own. A person can be generous and still reckless with himself, and the verse does not let that half count as the whole.", "lvl": "editorial"},
+    {"t": "The Prophet ﷺ recited these verses at a funeral in Baqi al-Gharqad, after telling the companions that each person is eased toward what he was made for, and they had asked whether they might then stop working and rely on what is written.", "lvl": "sunnah", "src": "Bukhari 1362 and Muslim 2647, the report of Ali ibn Abi Talib"}
+  ],
+  "links": [
+    {"ref": "2:274", "why": "those who spend their wealth by night and day, in secret and openly"},
+    {"ref": "64:16", "why": "guard yourselves as far as you can, and listen, and spend"}
+  ]
+},
+"6": {
+  "words": [
+    {"a": "وَصَدَّقَ", "t": "wa-ṣaddaqa", "g": "and held true"},
+    {"a": "بِٱلْحُسْنَىٰ", "t": "bi-l-ḥusnā", "g": "the best"}
+  ],
+  "sense": "The third item, and the one that makes the first two something other than good manners. He held the best to be true. What the best is, the verse leaves as a definite noun with no explanation attached.",
+  "notes": [
+    {"t": "What al-husna names is not settled. It is read as the reward, as the promise of the Garden, and as the word la ilaha illa Allah. The exegetes preserve all three and the verse survives each of them.", "lvl": "debated", "src": "at-Tabari records the reward, the Garden and the word of tawhid, and settles on none"},
+    {"t": "Saddaqa is not the same as believed. It is to declare something true, and its exact opposite, kadhdhaba, to declare it false, arrives in verse nine. The whole surah is built on that one pair of verbs.", "lvl": "editorial"},
+    {"t": "Al-husna is a feminine superlative, the best. Whatever it names here, it is a promise that a person is either counting on or not, and the counting shows up in his hands long before it shows up in his speech.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "10:26", "why": "for those who did well is the best, and more besides"},
+    {"ref": "4:95", "why": "and to each Allah has promised the best"}
+  ]
+},
+"7": {
+  "words": [
+    {"a": "فَسَنُيَسِّرُهُۥ", "t": "fa-sa-nuyassiruhu", "g": "then We will ease him"},
+    {"a": "لِلْيُسْرَىٰ", "t": "li-l-yusrā", "g": "toward the easy"}
+  ],
+  "sense": "The return on the first direction is not a wage. It is more of the same road, made easier underfoot. What he was doing with effort he will find himself doing without it.",
+  "notes": [
+    {"t": "The verb and the destination share a root, y-s-r. We will make it easy for him toward the easy. English needs two different words for what Arabic says with one, and the repetition is the sense.", "lvl": "editorial"},
+    {"t": "The prefix sa- is the marker of the near future, not the distant one. The easing is not held back for the Hereafter. It begins in the next thing he is asked to do.", "lvl": "editorial"},
+    {"t": "The Prophet ﷺ is told the same thing in nearly the same words in another surah, which shows the promise is not reserved for the exceptional.", "lvl": "quran", "src": "87:8"}
+  ],
+  "links": [
+    {"ref": "87:8", "why": "and We will ease you toward the easy"},
+    {"ref": "29:69", "why": "those who strive for Us, We guide them to Our ways"}
+  ]
+},
+"8": {
+  "words": [
+    {"a": "وَأَمَّا", "t": "wa-ammā", "g": "and as for"},
+    {"a": "مَنۢ", "t": "man", "g": "the one who"},
+    {"a": "بَخِلَ", "t": "bakhila", "g": "was miserly"},
+    {"a": "وَٱسْتَغْنَىٰ", "t": "wa-staghnā", "g": "and thought himself beyond need"}
+  ],
+  "sense": "The second direction, matched item for item against the first. Where the other gave, this one held on; where the other guarded himself, this one decided there was nothing to guard against.",
+  "notes": [
+    {"t": "Istaghna is a form meaning to consider oneself free of need. It is not the same as being rich. A poor man can hold this position and a wealthy man can fail to hold it, which is why the surah names the attitude and not the balance.", "lvl": "editorial"},
+    {"t": "Bakhila and istaghna belong together in this order. Withholding is the act and self-sufficiency is the belief underneath it, so the verse gives the symptom first and the cause second.", "lvl": "editorial"},
+    {"t": "The Qur'an names this exact posture as the reason a person overreaches: he transgresses when he sees himself as needing nobody.", "lvl": "quran", "src": "96:6-7"}
+  ],
+  "links": [
+    {"ref": "96:7", "why": "man transgresses at the moment he sees himself beyond need"},
+    {"ref": "59:9", "why": "whoever is guarded from the greed of his own soul is the one who succeeds"}
+  ]
+},
+"9": {
+  "words": [
+    {"a": "وَكَذَّبَ", "t": "wa-kadhdhaba", "g": "and declared false"},
+    {"a": "بِٱلْحُسْنَىٰ", "t": "bi-l-ḥusnā", "g": "the best"}
+  ],
+  "sense": "The exact reverse of verse six, placed in the same slot of the same sentence. He did not merely fail to believe the promise. He called it a lie, which takes work.",
+  "notes": [
+    {"t": "Kadhdhaba is an intensive form and it requires effort. The surah is not describing a person who never heard the promise. It is describing one who heard it and pushed back against it.", "lvl": "editorial"},
+    {"t": "The object is word for word the same as in verse six, al-husna, which keeps both men measured against one standard instead of each against his own account of himself.", "lvl": "editorial"},
+    {"t": "This verb returns in verse sixteen as the first half of the definition of the wretched one, so the surah closes the loop it opens here.", "lvl": "quran", "src": "92:16"}
+  ],
+  "links": [
+    {"ref": "84:22", "why": "rather, those who deny are busy calling it false"},
+    {"ref": "64:10", "why": "those who denied and called Our signs false"}
+  ]
+},
+"10": {
+  "words": [
+    {"a": "فَسَنُيَسِّرُهُۥ", "t": "fa-sa-nuyassiruhu", "g": "then We will ease him"},
+    {"a": "لِلْعُسْرَىٰ", "t": "li-l-ʿusrā", "g": "toward the hard"}
+  ],
+  "sense": "The line most readers stop at. The same verb of easing is used, and it is pointed at hardship. Whatever he chose is made simple for him, including the choice that ruins him.",
+  "notes": [
+    {"t": "To be eased toward difficulty is a contradiction in ordinary speech, in Arabic as much as in English. The verse keeps the word anyway so that the symmetry with verse seven is exact, and the strangeness is what the reader is meant to feel.", "lvl": "editorial"},
+    {"t": "This is the moral shape of a habit. A refusal repeated often enough stops requiring a decision, and the verse describes that hardening as something done to a person and not only by him.", "lvl": "editorial"},
+    {"t": "This pair of verses is what the Prophet ﷺ recited after saying that each person is eased toward what he was created for, which fixes the meaning of the easing to the road a person is already on.", "lvl": "sunnah", "src": "Bukhari 1362 and Muslim 2647, the report of Ali ibn Abi Talib"}
+  ],
+  "links": [
+    {"ref": "6:125", "why": "the one left astray finds his chest made tight and constricted"},
+    {"ref": "61:5", "why": "when they turned aside, Allah turned their hearts aside"}
+  ]
+},
+"11": {
+  "words": [
+    {"a": "وَمَا", "t": "wa-mā", "g": "and not"},
+    {"a": "يُغْنِى", "t": "yughnī", "g": "will avail"},
+    {"a": "عَنْهُ", "t": "ʿanhu", "g": "him"},
+    {"a": "مَالُهُۥٓ", "t": "māluhu", "g": "his wealth"},
+    {"a": "إِذَا", "t": "idhā", "g": "when"},
+    {"a": "تَرَدَّىٰٓ", "t": "taraddā", "g": "he falls"}
+  ],
+  "sense": "The one thing the second man was relying on is taken away at the single moment it was being saved for. The last word is a falling verb, and the picture is of a man going over an edge with his money still standing at the top.",
+  "notes": [
+    {"t": "Taradda is from r-d-y, to fall from a height and by extension to be destroyed. Arabic uses it of a man who goes down into a pit and of an animal that falls to its death. Both senses are alive in the word here.", "lvl": "editorial"},
+    {"t": "Yughni is the same root as istaghna in verse eight. He judged himself beyond need, and now the thing that gave him that judgement does not do the one job it was kept for.", "lvl": "editorial"},
+    {"t": "The Qur'an says the same of wealth in several places, including of one man whose ruin it names outright.", "lvl": "quran", "src": "111:2"}
+  ],
+  "links": [
+    {"ref": "111:2", "why": "his wealth did not avail him, nor what he earned"},
+    {"ref": "69:28", "why": "my wealth has not availed me, said too late"}
+  ]
+},
+"12": {
+  "words": [
+    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
+    {"a": "عَلَيْنَا", "t": "ʿalaynā", "g": "upon Us"},
+    {"a": "لَلْهُدَىٰ", "t": "la-l-hudā", "g": "is the guidance"}
+  ],
+  "sense": "After two roads and two destinations, a statement about whose responsibility the map is. The preposition is ala, upon, the preposition Arabic uses for a duty, and Allah places it on Himself.",
+  "notes": [
+    {"t": "What is taken on is discussed. Most read it as showing the way, since Allah has undertaken to make the road plain to whoever wants it. Some read it of the reward that guidance leads to.", "lvl": "debated", "src": "at-Tabari prefers the showing of the way; the reading of the reward is also recorded"},
+    {"t": "Alayna is pulled in front of al-huda, and in Arabic that fronting means it is on Us and on no one else. A person cannot manufacture his own directions, however much effort he puts into the walking.", "lvl": "editorial"},
+    {"t": "The same claim appears elsewhere as a flat statement: upon Allah is the pointing out of the way, and some of the roads lead elsewhere.", "lvl": "quran", "src": "16:9"}
+  ],
+  "links": [
+    {"ref": "16:9", "why": "upon Allah is the direction of the way"},
+    {"ref": "28:56", "why": "you do not guide whom you love, but Allah guides"}
+  ]
+},
+"13": {
+  "words": [
+    {"a": "وَإِنَّ", "t": "wa-inna", "g": "and indeed"},
+    {"a": "لَنَا", "t": "lanā", "g": "to Us belong"},
+    {"a": "لَلْـَٔاخِرَةَ", "t": "la-l-ākhirata", "g": "the last"},
+    {"a": "وَٱلْأُولَىٰ", "t": "wa-l-ūlā", "g": "and the first"}
+  ],
+  "sense": "Both lives are named as property, and the later one is named first. Whatever a person thinks he is choosing between, he is choosing inside something that is already owned.",
+  "notes": [
+    {"t": "The ordinary order is this life and then the next. Reversing it puts the Hereafter in the position of the more real of the two and leaves the present life trailing after it as an afterthought.", "lvl": "editorial"},
+    {"t": "Both nouns are feminine adjectives with the word for life dropped out, al-akhirah and al-ula, the last and the first. Arabic can leave the noun unsaid when everyone knows it, and that makes the phrase sound like something already agreed rather than something being argued.", "lvl": "editorial"},
+    {"t": "The identical phrase appears in another surah in the same order, so the wording is a fixed way of saying that neither end of a person's existence is his own.", "lvl": "quran", "src": "53:25"}
+  ],
+  "links": [
+    {"ref": "53:25", "why": "to Allah belong the last and the first, word for word"},
+    {"ref": "28:70", "why": "to Him belongs praise in the first life and in the last"}
+  ]
+},
+"14": {
+  "words": [
+    {"a": "فَأَنذَرْتُكُمْ", "t": "fa-andhartukum", "g": "so I have warned you"},
+    {"a": "نَارًا", "t": "nāran", "g": "of a fire"},
+    {"a": "تَلَظَّىٰ", "t": "talaẓẓā", "g": "that blazes"}
+  ],
+  "sense": "The speaker steps into the first person and takes the position of a warner who has now done his part. The fire is left indefinite, a fire, which in Arabic makes it larger and stranger rather than smaller.",
+  "notes": [
+    {"t": "The verb is in the past tense. The warning is treated as already delivered by the time the sentence ends, so whatever happens after it belongs to the hearer and not to the one who warned.", "lvl": "editorial"},
+    {"t": "A canonical reading gives the fuller form of the verb with both letters, tatalazza, rather than the contracted talazza. The reading changes the weight of the word and nothing else.", "lvl": "debated", "src": "al-Bazzi from Ibn Kathir reads tatalazza; Hafs and the majority read talazza with one ta"},
+    {"t": "Talazza describes a fire that has properly caught, all flame and no smoke. The Arabs used laza of a flame that leaps, and the Qur'an makes Laza a name of the Fire in another surah.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "70:15", "why": "no indeed, it is Laza, from the same root"},
+    {"ref": "111:3", "why": "he will burn in a fire of flame"}
+  ]
+},
+"15": {
+  "words": [
+    {"a": "لَا", "t": "lā", "g": "not"},
+    {"a": "يَصْلَىٰهَآ", "t": "yaṣlāhā", "g": "will burn in it"},
+    {"a": "إِلَّا", "t": "illā", "g": "except"},
+    {"a": "ٱلْأَشْقَى", "t": "al-ashqā", "g": "the most wretched"}
+  ],
+  "sense": "A restriction, and it has troubled readers since the first generation, because taken flatly it would empty the Fire of everyone but the very worst. The next verse defines the term, which is how the surah answers the objection it has just raised.",
+  "notes": [
+    {"t": "Two answers are given to the apparent restriction. One is that the fire meant is the particular blaze just described and not every punishment. The other is that al-ashqa here is a superlative in form without being comparative in force, so it means the wretched one rather than the worst of all.", "lvl": "debated", "src": "at-Tabari and the later exegetes record both replies without ruling one out"},
+    {"t": "Sala is to be roasted by a fire, to go into it and remain. It is a heavier verb than to burn, and the Qur'an keeps it for the punishment rather than for ordinary fire.", "lvl": "editorial"},
+    {"t": "Arabic can use a superlative with no second party in view, the way the elder can simply mean an old man. Read that way the verse states who enters without ranking anybody.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "87:12", "why": "the one who burns in the greatest fire, the same verb"},
+    {"ref": "91:12", "why": "the same superlative used of the wretched one of Thamud"}
+  ]
+},
+"16": {
+  "words": [
+    {"a": "ٱلَّذِى", "t": "alladhī", "g": "the one who"},
+    {"a": "كَذَّبَ", "t": "kadhdhaba", "g": "declared it false"},
+    {"a": "وَتَوَلَّىٰ", "t": "wa-tawallā", "g": "and turned away"}
+  ],
+  "sense": "The definition of the term used one line earlier. Two acts, one of the tongue and one of the back. He said it was a lie and then he left, and the leaving is what makes the saying final.",
+  "notes": [
+    {"t": "Tawalla is to turn one's back and go. It is the physical half of denial, and the Qur'an pairs the two verbs often enough that together they work as a single description of a person.", "lvl": "editorial"},
+    {"t": "Naming him with a relative clause rather than a noun keeps the door open. He is not a category of person that somebody else belongs to. He is whoever does these two things.", "lvl": "editorial"},
+    {"t": "The same pair of verbs describes the man in another surah who neither held the message true nor prayed, but denied and turned away.", "lvl": "quran", "src": "75:31-32"}
+  ],
+  "links": [
+    {"ref": "75:32", "why": "but he denied and turned away"},
+    {"ref": "96:13", "why": "have you seen if he denied and turned away"}
+  ]
+},
+"17": {
+  "words": [
+    {"a": "وَسَيُجَنَّبُهَا", "t": "wa-sa-yujannabuhā", "g": "and he will be kept away from it"},
+    {"a": "ٱلْأَتْقَى", "t": "al-atqā", "g": "the most guarded"}
+  ],
+  "sense": "The matching promise. He is not described as escaping the fire. He is described as having it steered away from him, which puts the effort on somebody else's side of the ledger.",
+  "notes": [
+    {"t": "Jannaba is to set a thing off to one side, away from the flank. The passive here means the man does not have to do the steering; he is steered, and he learns about it afterwards.", "lvl": "editorial"},
+    {"t": "Al-atqa answers al-ashqa exactly, superlative for superlative, and the two words rhyme in Arabic. The surah is arranging its two men as mirror images down to the sound of their names.", "lvl": "editorial"},
+    {"t": "The same verb appears in another short surah with the roles reversed, where it is the wretched one who keeps himself away from the reminder.", "lvl": "quran", "src": "87:11"}
+  ],
+  "links": [
+    {"ref": "87:11", "why": "the same verb of being set aside, there of the wretched turning from the reminder"},
+    {"ref": "19:72", "why": "then We deliver those who guarded themselves and leave the wrongdoers"}
+  ]
+},
+"18": {
+  "words": [
+    {"a": "ٱلَّذِى", "t": "alladhī", "g": "the one who"},
+    {"a": "يُؤْتِى", "t": "yu'tī", "g": "gives"},
+    {"a": "مَالَهُۥ", "t": "mālahu", "g": "his wealth"},
+    {"a": "يَتَزَكَّىٰ", "t": "yatazakkā", "g": "purifying himself"}
+  ],
+  "sense": "The definition of the second man, and this time the thing given is named. Not a surplus and not a portion described as small, but his wealth, and the clause at the end says the giving is done to clean the giver rather than to relieve the receiver.",
+  "notes": [
+    {"t": "Zakah and tazkiyah come from a root that means both to purify and to grow. Arabic does not separate the two, so the wealth going out and the man being made larger are one motion inside a single word.", "lvl": "editorial"},
+    {"t": "Many early authorities read these closing verses in the light of Abu Bakr, who bought tortured slaves out of their owners' hands and asked nothing back from them. The reading is old and widely held, and the reports carrying it are discussed rather than agreed.", "lvl": "debated", "src": "Ibn Kathir and others record the reports naming Abu Bakr; their chains and gradings are discussed"},
+    {"t": "The Qur'an gives the same purpose for the charity taken from wealth, that it purifies the people it is taken from, so the motive here is not an unusual one.", "lvl": "quran", "src": "9:103"}
+  ],
+  "links": [
+    {"ref": "9:103", "why": "take a charity from their wealth, purifying them by it"},
+    {"ref": "87:14", "why": "he has succeeded who purified himself"}
+  ]
+},
+"19": {
+  "words": [
+    {"a": "وَمَا", "t": "wa-mā", "g": "and not"},
+    {"a": "لِأَحَدٍ", "t": "li-aḥadin", "g": "for anyone"},
+    {"a": "عِندَهُۥ", "t": "ʿindahu", "g": "with him"},
+    {"a": "مِن", "t": "min", "g": "any"},
+    {"a": "نِّعْمَةٍ", "t": "niʿmatin", "g": "favour"},
+    {"a": "تُجْزَىٰٓ", "t": "tujzā", "g": "to be repaid"}
+  ],
+  "sense": "The giving is stripped of the one motive that would explain it in ordinary terms. Nobody has done him a favour that he is now settling. He is not paying anyone back, which removes the last account the transaction could have belonged to.",
+  "notes": [
+    {"t": "This is the ordinary social economy of the Arabs and of everybody else. Gifts create obligations and obligations get discharged, usually in public. The verse lifts the praised giver out of that system entirely.", "lvl": "editorial"},
+    {"t": "The negation uses min before nimatin, which makes it total. Not a small favour, not a favour long ago, not any favour of any size at all.", "lvl": "editorial"},
+    {"t": "The Qur'an puts the same disclaimer in the mouths of others who feed the poor and say plainly that they want no repayment and no thanks.", "lvl": "quran", "src": "76:9"}
+  ],
+  "links": [
+    {"ref": "76:9", "why": "we feed you for the face of Allah, wanting no reward and no thanks"},
+    {"ref": "2:264", "why": "do not cancel your charity by reminding people of it"}
+  ]
+},
+"20": {
+  "words": [
+    {"a": "إِلَّا", "t": "illā", "g": "except"},
+    {"a": "ٱبْتِغَآءَ", "t": "ibtighā'a", "g": "seeking"},
+    {"a": "وَجْهِ", "t": "wajhi", "g": "the face of"},
+    {"a": "رَبِّهِ", "t": "rabbihi", "g": "his Lord"},
+    {"a": "ٱلْأَعْلَىٰ", "t": "al-aʿlā", "g": "the Most High"}
+  ],
+  "sense": "The one motive left standing after the others are ruled out. Everything he did has a single address, and the verse names it with the highest of the descriptions available to it.",
+  "notes": [
+    {"t": "The grammarians call this exception munqati, a break rather than a carve-out. Seeking the face of his Lord is not one more item on the list of debts being settled. It is a different kind of thing from everything the list contained.", "lvl": "editorial"},
+    {"t": "What is meant by the face of Allah is discussed at length by the exegetes and the schools of creed. The position of the early generations is to affirm what He affirmed of Himself without likening it to anything created and without denying it.", "lvl": "debated", "src": "the schools of creed differ on the wajh; the position reported from the early generations is affirmation without likeness"},
+    {"t": "Al-ala, the Most High, attaches to his Lord and not to the face. Putting it at the very end of the sentence lets the surah climb one last step before its closing verse.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "30:38", "why": "that is better for those who want the face of Allah"},
+    {"ref": "18:28", "why": "those who call on their Lord morning and evening, wanting His face"}
+  ]
+},
+"21": {
+  "words": [
+    {"a": "وَلَسَوْفَ", "t": "wa-la-sawfa", "g": "and surely he will"},
+    {"a": "يَرْضَىٰ", "t": "yarḍā", "g": "be satisfied"}
+  ],
+  "sense": "Two words end the surah. He is not promised his wealth back, or safety, or a name people remember. He is promised the state the man in verse eight was trying to buy and did not get.",
+  "notes": [
+    {"t": "Sawfa is the particle of the far future and the lam in front of it is emphasis. Together they say the thing is certain and it is not yet, which is exactly the position the giver was already living in while he gave.", "lvl": "editorial"},
+    {"t": "The verb has no object. He will be satisfied, and the verse does not say with what, so nothing is left outside the satisfaction and nothing has to be listed.", "lvl": "editorial"},
+    {"t": "The Prophet ﷺ is given the same promise in nearly the same words two surahs later, with the same particle of the far future in front of it.", "lvl": "quran", "src": "93:5"}
+  ],
+  "links": [
+    {"ref": "93:5", "why": "your Lord will give you, and you will be satisfied"},
+    {"ref": "89:28", "why": "return to your Lord, well pleased and pleasing to Him"}
+  ]
+}
+}
+},
+{
+"n": 102,
+"verses": {
+"1": {
+  "words": [
+    {"a": "أَلْهَىٰكُمُ", "t": "alhākumu", "g": "it has diverted you"},
+    {"a": "ٱلتَّكَاثُرُ", "t": "at-takāthur", "g": "the competing for more"}
+  ],
+  "sense": "The surah opens with the verdict and no introduction at all. Something has taken hold of the reader's attention and kept it, and the something is named second, so the diversion is felt before it is identified.",
+  "notes": [
+    {"t": "Lahw is amusement that occupies a person and keeps him from what he should be at. The verb alha is causative: not you were amused, but it amused you away from something. What the something is never gets stated, and the silence is part of the accusation.", "lvl": "editorial"},
+    {"t": "Takathur is a mutual form of the root k-th-r, much. It does not name having more. It names the two-sided business of having more than somebody else, which cannot be done alone and does not stop on its own.", "lvl": "editorial"},
+    {"t": "The Qur'an lists the same competition among the things this life is actually made of, alongside play, adornment and boasting.", "lvl": "quran", "src": "57:20"}
+  ],
+  "links": [
+    {"ref": "57:20", "why": "competing in wealth and children, named as what this life consists of"},
+    {"ref": "63:9", "why": "do not let wealth and children divert you, the same verb"}
+  ]
+},
+"2": {
+  "words": [
+    {"a": "حَتَّىٰ", "t": "ḥattā", "g": "until"},
+    {"a": "زُرْتُمُ", "t": "zurtumu", "g": "you visited"},
+    {"a": "ٱلْمَقَابِرَ", "t": "al-maqābir", "g": "the graves"}
+  ],
+  "sense": "The counting runs on until the counter is in the ground. The verb is the ordinary word for paying a call on somebody, which makes the grave a place a person stops at rather than a place he stays.",
+  "notes": [
+    {"t": "Zara is to visit, and a visitor by definition leaves again. The whole doctrine of the resurrection is carried inside that one verb, and the surah does not stop to argue for it here because the word has already done the work.", "lvl": "editorial"},
+    {"t": "Commentators report an occasion in which two clans fell to boasting over their numbers and went out to the graveyard to count their dead into the tally. The report is carried in the commentaries rather than in the Sahih collections, and its chains are discussed.", "lvl": "debated", "src": "recorded by the commentators including Ibn Kathir; not in the two Sahihs, and the chains are discussed"},
+    {"t": "Al-maqabir is a plural, the graveyards, and the address is plural too. The picture is not of one funeral but of a whole population arriving at once.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "23:100", "why": "behind them is a barrier until the Day they are raised"},
+    {"ref": "80:21", "why": "then He caused him to die and had him put in a grave"}
+  ]
+},
+"3": {
+  "words": [
+    {"a": "كَلَّا", "t": "kallā", "g": "no indeed"},
+    {"a": "سَوْفَ", "t": "sawfa", "g": "you are going to"},
+    {"a": "تَعْلَمُونَ", "t": "taʿlamūn", "g": "know"}
+  ],
+  "sense": "A word of refusal, and then a fact with no object attached. You are going to know is not followed by what you are going to know, which leaves the sentence open and makes it worse rather than vaguer.",
+  "notes": [
+    {"t": "Kalla is a hard stop in Arabic, a word that rejects what came before it and clears the ground for what follows. It belongs almost entirely to the Makkan surahs, and almost always to people who were certain of themselves.", "lvl": "editorial"},
+    {"t": "The object of talamun is deliberately left out. The rhetoricians treat this omission as a device, and its effect is to let each hearer supply the thing he would least like to be told.", "lvl": "editorial"},
+    {"t": "The Qur'an ends a warning elsewhere with the same open construction, and there the diverting is named with the same root that opened this surah.", "lvl": "quran", "src": "15:3"}
+  ],
+  "links": [
+    {"ref": "15:3", "why": "leave them to eat and be diverted by hope, for they are going to know"},
+    {"ref": "38:88", "why": "and you will certainly know its news after a time"}
+  ]
+},
+"4": {
+  "words": [
+    {"a": "ثُمَّ", "t": "thumma", "g": "then again"},
+    {"a": "كَلَّا", "t": "kallā", "g": "no indeed"},
+    {"a": "سَوْفَ", "t": "sawfa", "g": "you are going to"},
+    {"a": "تَعْلَمُونَ", "t": "taʿlamūn", "g": "know"}
+  ],
+  "sense": "The same sentence a second time with one word added in front of it. Nothing new is said, and the repetition is itself the message: the warning is not being explained, it is being pressed.",
+  "notes": [
+    {"t": "Whether this is one warning said twice for weight or two separate occasions of knowing is an old difference. Those who take it as two name the grave first and the resurrection second, so the sentence is not repeated but rescheduled.", "lvl": "debated", "src": "at-Tabari records both readings; those who read two occasions name the grave and then the raising"},
+    {"t": "Thumma normally opens a gap between two things. Placing it between two identical sentences makes the second one land as a second event rather than as an echo of the first.", "lvl": "editorial"},
+    {"t": "An-Naba doubles the same two words in the same order and to the same effect, which shows the construction is a form rather than an accident of this surah.", "lvl": "quran", "src": "78:4-5"}
+  ],
+  "links": [
+    {"ref": "78:4", "why": "the identical doubling in another Makkan warning"},
+    {"ref": "6:67", "why": "every announcement has its settled time, and you are going to know"}
+  ]
+},
+"5": {
+  "words": [
+    {"a": "كَلَّا", "t": "kallā", "g": "no indeed"},
+    {"a": "لَوْ", "t": "law", "g": "if"},
+    {"a": "تَعْلَمُونَ", "t": "taʿlamūna", "g": "you knew"},
+    {"a": "عِلْمَ", "t": "ʿilma", "g": "with the knowledge of"},
+    {"a": "ٱلْيَقِينِ", "t": "al-yaqīn", "g": "certainty"}
+  ],
+  "sense": "A conditional sentence with its second half missing. If you knew with the knowledge of certainty, and then nothing. The Arabic simply stops, and the reader is left holding the unfinished part of it.",
+  "notes": [
+    {"t": "The grammarians call the missing half the answer of law, and dropping it here is deliberate. Whatever would have followed, you would not be living like this, is either too large or too obvious to say, so it is not said.", "lvl": "editorial"},
+    {"t": "Ilm al-yaqin is the first of three grades the Qur'an works with. Knowledge of certainty is what a person has from being told by someone who does not lie. It is real knowledge, and it is not yet sight.", "lvl": "editorial"},
+    {"t": "The third grade, haqq al-yaqin, the truth of certainty, is named in two other places, so the surah is using a scale the Book set up elsewhere.", "lvl": "quran", "src": "56:95"}
+  ],
+  "links": [
+    {"ref": "56:95", "why": "the third grade named, the very truth of certainty"},
+    {"ref": "69:51", "why": "and indeed it is the truth of certainty"}
+  ]
+},
+"6": {
+  "words": [
+    {"a": "لَتَرَوُنَّ", "t": "la-tarawunna", "g": "you will surely see"},
+    {"a": "ٱلْجَحِيمَ", "t": "al-jaḥīm", "g": "the blaze"}
+  ],
+  "sense": "The construction swears the thing twice over, with an emphatic lam in front of the verb and a heavy nun on the end of it. Seeing is promised rather than described, and the surah is still not saying when.",
+  "notes": [
+    {"t": "A canonical reading turns the verb passive, la-turawunna, you will surely be shown it, which moves the act from the eye to whoever brings the sight about. The consonantal text carries both.", "lvl": "debated", "src": "al-Kisa'i is transmitted with the passive; Hafs and the majority read the active"},
+    {"t": "Al-jahim is from a root for a fire kindled until it stares back. The Arabs used jahmah of a fire whose flames have grown and taken hold of what they are burning.", "lvl": "editorial"},
+    {"t": "The Qur'an says elsewhere that the blaze is brought into plain view for anyone with eyes on that Day, which is this promise stated from the other side.", "lvl": "quran", "src": "79:36"}
+  ],
+  "links": [
+    {"ref": "79:36", "why": "the blaze brought out into view for whoever sees"},
+    {"ref": "19:71", "why": "there is not one of you but will come to it"}
+  ]
+},
+"7": {
+  "words": [
+    {"a": "ثُمَّ", "t": "thumma", "g": "then"},
+    {"a": "لَتَرَوُنَّهَا", "t": "la-tarawunnahā", "g": "you will surely see it"},
+    {"a": "عَيْنَ", "t": "ʿayna", "g": "with the eye of"},
+    {"a": "ٱلْيَقِينِ", "t": "al-yaqīn", "g": "certainty"}
+  ],
+  "sense": "The same promise a second time, raised a grade. The first said you will see it. This one says what kind of seeing, and the phrase moves the matter out of the ear and into the eye.",
+  "notes": [
+    {"t": "Ayn is the eye and also the very thing itself. Ayn al-yaqin therefore says eyewitness certainty and certainty itself at the same time, and both senses sit in the phrase without either one crowding the other out.", "lvl": "editorial"},
+    {"t": "Verse five said you do not have the first grade of certainty. This verse says you will be given the second whether you want it or not, and thumma keeps the two apart so the upgrade is felt as a step.", "lvl": "editorial"},
+    {"t": "Ibrahim asked to be shown rather than told, and was answered, and the reason he gave was that his heart should be settled, which is the same distinction this verse is drawing.", "lvl": "quran", "src": "2:260"}
+  ],
+  "links": [
+    {"ref": "2:260", "why": "asking to see what he already believed, so his heart would settle"},
+    {"ref": "83:16", "why": "then they will be the ones entering the blaze"}
+  ]
+},
+"8": {
+  "words": [
+    {"a": "ثُمَّ", "t": "thumma", "g": "then"},
+    {"a": "لَتُسْـَٔلُنَّ", "t": "la-tus'alunna", "g": "you will surely be asked"},
+    {"a": "يَوْمَئِذٍ", "t": "yawma'idhin", "g": "on that Day"},
+    {"a": "عَنِ", "t": "ʿani", "g": "about"},
+    {"a": "ٱلنَّعِيمِ", "t": "an-naʿīm", "g": "the delight"}
+  ],
+  "sense": "The surah ends by turning the ordinary comforts of a life into items on a list of questions. Not the crimes, and not the wealth in the abstract, but the enjoyment of it, which is the part nobody thinks to keep an account of.",
+  "notes": [
+    {"t": "The Prophet ﷺ went out in hunger with Abu Bakr and Umar and they were given ripe dates, water and meat at an Ansari's house, and he ﷺ told them they would be asked about that delight on the Day of Resurrection. The delight he pointed at was a meal, not a fortune.", "lvl": "sunnah", "src": "Muslim 2038, the report of Abu Hurayra on the dates and the cold water"},
+    {"t": "The Prophet ﷺ recited this surah and said that the son of Adam claims my wealth, my wealth, while he owns of it only what he ate and used up, what he wore and wore out, and what he gave away and sent on ahead.", "lvl": "sunnah", "src": "Muslim 2958"},
+    {"t": "An-naim is definite and singular, the delight, not a list of luxuries. It names the whole condition of being comfortable, so shade, water, health and safety are inside it and not exceptions to it.", "lvl": "editorial"}
+  ],
+  "links": [
+    {"ref": "17:36", "why": "the hearing, the sight and the heart, every one of them questioned"},
+    {"ref": "16:18", "why": "if you counted the favours of Allah you could not number them"}
+  ]
+}
+}
+}
+]
+}

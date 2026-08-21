@@ -1,0 +1,2459 @@
+{
+ "tranche": "e",
+ "note": "Three surahs about what is written down and what is asked for. Al-Mutaffifin begins at a rigged scale in a marketplace and ends at a settled account, keeping two files open the whole way. Ash-Sharh is spoken to one man about three things already done for him, and then tells him what to do next. Al-Falaq is five verses of taking cover, and the last danger it names is a look on somebody's face.",
+ "surahs": [
+  {
+   "n": 83,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "وَيْلٌ",
+       "t": "waylun",
+       "g": "woe"
+      },
+      {
+       "a": "لِّلْمُطَفِّفِينَ",
+       "t": "lil-muṭaffifīn",
+       "g": "to those who give short measure"
+      }
+     ],
+     "sense": "The surah opens with a threat, and the threat is aimed at a small dishonesty. Not murder, not idolatry, but the shaving of a fraction off a weight that the other party will never notice and could never prove.",
+     "notes": [
+      {
+       "t": "Tatfif comes from tafif, a trifle, the thin edge of a thing. The word is built to say that the amount taken is negligible and that the taking is not.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verdict is given before any argument for it. The reasoning arrives three verses later, at the question about being raised, so the reader is told the sentence first and shown the case afterwards.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ibn Abbas is reported to have said that the people of Madinah were among the worst of people in measuring when the Prophet ﷺ arrived, that this surah came down, and that they became among the best in it.",
+       "lvl": "debated",
+       "src": "reported from Ibn ʿAbbās by an-Nasa'i and Ibn Majah; the gradings given to the chain differ"
+      }
+     ],
+     "links": [
+      {
+       "ref": "26:181",
+       "why": "Shu'ayb tells his people to fill the measure and not be of those who cause loss"
+      },
+      {
+       "ref": "55:9",
+       "why": "establish the weighing in justice and do not skimp the balance"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "ٱكْتَالُوا۟",
+       "t": "iktālū",
+       "g": "they take by measure"
+      },
+      {
+       "a": "عَلَى",
+       "t": "ʿalā",
+       "g": "from"
+      },
+      {
+       "a": "ٱلنَّاسِ",
+       "t": "an-nāsi",
+       "g": "the people"
+      },
+      {
+       "a": "يَسْتَوْفُونَ",
+       "t": "yastawfūn",
+       "g": "they take it in full"
+      }
+     ],
+     "sense": "They are identified by conduct rather than by name or party. When they are the ones receiving, they want every grain that is owed to them, and they are careful and exact about getting it.",
+     "notes": [
+      {
+       "t": "Yastawfun is from wafa, to complete, and the form here means to demand completeness. The verse does not accuse them of asking for more than their due. It says they ask for exactly their due, which is their right.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The construction iktalu ala an-nas, measured against people, carries the sense of drawing out of someone else's stock into your own, so the direction of the transaction is built into the grammar.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "17:35",
+       "why": "give full measure when you measure, and weigh with an even balance"
+      },
+      {
+       "ref": "7:85",
+       "why": "Shu'ayb given the same instruction for the same trade"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "كَالُوهُمْ",
+       "t": "kālūhum",
+       "g": "they measure out for them"
+      },
+      {
+       "a": "أَو",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "وَّزَنُوهُمْ",
+       "t": "wazanūhum",
+       "g": "weigh out for them"
+      },
+      {
+       "a": "يُخْسِرُونَ",
+       "t": "yukhsirūn",
+       "g": "they cause loss"
+      }
+     ],
+     "sense": "The same people, the other direction. Measuring out and weighing out for somebody else, they cut. The entire crime is the gap between this verse and the one before it, and nothing about the man has changed except which side of the scale he is standing on.",
+     "notes": [
+      {
+       "t": "Yukhsirun is the causative of the same root as khusr, loss. They do not merely take a loss; they inflict one, and on a person who is trusting the scale.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The two verbs cover the two ways goods moved in that market: by volume for grain and by weight for metal and produce. Between them the verse closes off both.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The grammarians differ over the joined pronoun in kaluhum and wazanuhum, reading it either as the direct object, they measured them out, or as standing for an elided lahum, they measured for them. The sense arrived at is the same in both readings.",
+       "lvl": "debated",
+       "src": "a grammatical difference recorded by az-Zamakhshari and others in their treatment of this verse"
+      }
+     ],
+     "links": [
+      {
+       "ref": "11:85",
+       "why": "give full measure and weight in justice and do not deprive people of their things"
+      },
+      {
+       "ref": "6:152",
+       "why": "give full measure and weight in justice, and no soul is charged beyond its capacity"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "أَلَا",
+       "t": "alā",
+       "g": "do not"
+      },
+      {
+       "a": "يَظُنُّ",
+       "t": "yaẓunnu",
+       "g": "expect"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulā'ika",
+       "g": "those ones"
+      },
+      {
+       "a": "أَنَّهُم",
+       "t": "annahum",
+       "g": "that they"
+      },
+      {
+       "a": "مَّبْعُوثُونَ",
+       "t": "mabʿūthūn",
+       "g": "will be raised"
+      }
+     ],
+     "sense": "The question names the cause. A man who genuinely expected to be raised and questioned would not shave an ounce off a stranger's flour. The fraud is treated as evidence about what he believes, not only as a defect of character.",
+     "notes": [
+      {
+       "t": "Zann in Arabic runs from a passing suspicion up to a settled conviction. The verse asks whether these men hold even the suspicion, which is the lowest reading of the word, and it implies they do not.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an ties honest dealing to belief in the reckoning rather than to reputation or contract. What a man does with the scale when nobody is checking is taken as a report on what he thinks happens next.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "45:24",
+       "why": "they say there is only our worldly life, we die and we live"
+      },
+      {
+       "ref": "2:9",
+       "why": "they think they deceive Allah and those who believe"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "لِيَوْمٍ",
+       "t": "li-yawmin",
+       "g": "for a Day"
+      },
+      {
+       "a": "عَظِيمٍ",
+       "t": "ʿaẓīm",
+       "g": "tremendous"
+      }
+     ],
+     "sense": "Two words hold the answer to the question just asked. Raised for what, and the reply gives the Day no description at all except its size, leaving the next verse to say what actually happens on it.",
+     "notes": [
+      {
+       "t": "The Day is left indefinite in the Arabic, yawmin rather than al-yawm, which enlarges it rather than pointing at a known date on a calendar.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Azim here is not length or splendour but weight, the sense of a matter too heavy to be set aside or dealt with later.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "22:1",
+       "why": "the convulsion of the Hour is a tremendous thing"
+      },
+      {
+       "ref": "70:4",
+       "why": "a Day whose measure is fifty thousand years"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "the Day"
+      },
+      {
+       "a": "يَقُومُ",
+       "t": "yaqūmu",
+       "g": "stand"
+      },
+      {
+       "a": "ٱلنَّاسُ",
+       "t": "an-nāsu",
+       "g": "mankind"
+      },
+      {
+       "a": "لِرَبِّ",
+       "t": "li-rabbi",
+       "g": "before the Lord of"
+      },
+      {
+       "a": "ٱلْعَٰلَمِينَ",
+       "t": "al-ʿālamīn",
+       "g": "all the worlds"
+      }
+     ],
+     "sense": "The whole description of that Day is one act. People standing. No trial scene, no fire yet, only everyone on their feet in front of the One who owns everything, which is the position a man at a market stall never pictures himself in.",
+     "notes": [
+      {
+       "t": "Ibn Umar reported that the Prophet ﷺ recited this verse and said that one of them will stand in his own sweat until it reaches the middle of his ears.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, in their chapters on the Resurrection, from Ibn ʿUmar"
+      },
+      {
+       "t": "The title used is Rabb al-alamin, the same one recited in Al-Fatiha every day. The men who trim an ounce off a sale are set in front of the Lord of all the worlds, and the mismatch of scale is the argument.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Standing is a posture of being summoned, not of being at ease. In Arabic usage a man stands for a judge, and the verse gives no one anywhere to sit.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "1:2",
+       "why": "the same title said in every prayer, here made the setting of the reckoning"
+      },
+      {
+       "ref": "80:34",
+       "why": "the Day a man flees from his brother, his mother and his father"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "كَلَّآ",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "كِتَٰبَ",
+       "t": "kitāba",
+       "g": "the record of"
+      },
+      {
+       "a": "ٱلْفُجَّارِ",
+       "t": "al-fujjār",
+       "g": "the wicked"
+      },
+      {
+       "a": "لَفِى",
+       "t": "lafī",
+       "g": "is surely in"
+      },
+      {
+       "a": "سِجِّينٍ",
+       "t": "sijjīn",
+       "g": "Sijjin"
+      }
+     ],
+     "sense": "A hard stop, and then the subject moves from what these people do to where their file is kept. The rest of the surah is built around two records, one filed low and one filed high.",
+     "notes": [
+      {
+       "t": "Kalla is a word of rebuttal rather than of transition. It cuts off the assumption sitting inside the previous question, that a man might not be raised at all.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Fujjar comes from a root meaning to split open. A fajir is one who has broken through a boundary, not one who merely fell short of a standard, which is why the word suits a man who knows the scale is wrong.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "What Sijjin is was not agreed by the early exegetes. The readings recorded include a place in the lowest earth, a register in which the deeds of the wicked are entered, and a prison, from the root of sijn.",
+       "lvl": "debated",
+       "src": "at-Tabari collects reports for the several meanings and settles on none of them"
+      }
+     ],
+     "links": [
+      {
+       "ref": "69:25",
+       "why": "the one given his record in his left hand and what he says about it"
+      },
+      {
+       "ref": "84:10",
+       "why": "whoever is given his record from behind his back"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "أَدْرَىٰكَ",
+       "t": "adrāka",
+       "g": "can make you know"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what is"
+      },
+      {
+       "a": "سِجِّينٌ",
+       "t": "sijjīn",
+       "g": "Sijjin"
+      }
+     ],
+     "sense": "The question is put to the Prophet ﷺ himself, and asking it that way says the thing named lies outside anything he has seen. Then the answer that follows is not obviously about the place at all.",
+     "notes": [
+      {
+       "t": "The Qur'an uses this formula, and what can make you know, at points where the thing named has no equivalent a listener could be pointed at. It is a way of saying that ordinary experience will not reach it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verse after this one says kitabun marqum, an inscribed record, which answers the words kitab al-fujjar rather than the word Sijjin. Some exegetes therefore read the place itself as left undescribed, while others take the line as the answer to the question asked here.",
+       "lvl": "debated",
+       "src": "both readings are set out side by side by at-Tabari and repeated by Ibn Kathir"
+      }
+     ],
+     "links": [
+      {
+       "ref": "101:10",
+       "why": "the same formula, and what can make you know what it is"
+      },
+      {
+       "ref": "82:17",
+       "why": "and what can make you know what the Day of Recompense is, asked twice"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "كِتَٰبٌ",
+       "t": "kitābun",
+       "g": "a record"
+      },
+      {
+       "a": "مَّرْقُومٌ",
+       "t": "marqūm",
+       "g": "inscribed"
+      }
+     ],
+     "sense": "Two words. The record is written and marked, which in Arabic means stamped and settled rather than merely legible. Nothing can be added to it after the fact and nothing rubbed out of it.",
+     "notes": [
+      {
+       "t": "Raqm is the marking of a thing so that it can be identified afterwards, the root behind the word for a numeral. A marqum book is one whose entries are fixed, not one still being drafted.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The identical two words appear again later in this surah for the record of the righteous, so the Qur'an gives both files the same description and separates them only by where each is kept.",
+       "lvl": "quran",
+       "src": "83:20"
+      }
+     ],
+     "links": [
+      {
+       "ref": "18:49",
+       "why": "a record that leaves out nothing small or large but has counted it"
+      },
+      {
+       "ref": "83:20",
+       "why": "the same two words used of the other file"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "وَيْلٌ",
+       "t": "waylun",
+       "g": "woe"
+      },
+      {
+       "a": "يَوْمَئِذٍ",
+       "t": "yawma'idhin",
+       "g": "that Day"
+      },
+      {
+       "a": "لِّلْمُكَذِّبِينَ",
+       "t": "lil-mukadhdhibīn",
+       "g": "to the deniers"
+      }
+     ],
+     "sense": "The threat of the first verse returns with the target widened. It began at a man beside a scale and it now covers anybody who calls the Day of settling a lie.",
+     "notes": [
+      {
+       "t": "This exact sentence is the refrain of Surah al-Mursalat, where it is repeated ten times. Here it appears once, and the surah then stops to say who the deniers are.",
+       "lvl": "quran",
+       "src": "77:15"
+      },
+      {
+       "t": "Wayl is not a curse aimed at somebody. It is a statement of what is already coming to them, nearer to ruin awaits than to a wish for harm.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "77:15",
+       "why": "the same line used as the refrain of a whole surah"
+      },
+      {
+       "ref": "52:11",
+       "why": "so woe that Day to the deniers, said of the same Day"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "يُكَذِّبُونَ",
+       "t": "yukadhdhibūna",
+       "g": "call a lie"
+      },
+      {
+       "a": "بِيَوْمِ",
+       "t": "bi-yawmi",
+       "g": "the Day of"
+      },
+      {
+       "a": "ٱلدِّينِ",
+       "t": "ad-dīn",
+       "g": "the Recompense"
+      }
+     ],
+     "sense": "The definition arrives at once and it is narrow. Not those who doubt, and not those who were never told, but those who take the Day of settling and call it false.",
+     "notes": [
+      {
+       "t": "Yawm ad-Din is the phrase recited in Al-Fatiha every day. Din here is what comes back to a person, the settling of an account, rather than religion as a system of practice.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Takdhib is an act and not an absence. The form of the verb means to declare a thing false, which requires having heard the thing first, so it is a response and not mere ignorance.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "1:4",
+       "why": "Master of the Day of Recompense, the phrase these men reject"
+      },
+      {
+       "ref": "107:1",
+       "why": "have you seen the one who denies the Recompense, and what it made him do"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "وَمَا",
+       "t": "wa-mā",
+       "g": "and none"
+      },
+      {
+       "a": "يُكَذِّبُ",
+       "t": "yukadhdhibu",
+       "g": "calls it a lie"
+      },
+      {
+       "a": "بِهِۦٓ",
+       "t": "bihi",
+       "g": "in it"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "كُلُّ",
+       "t": "kullu",
+       "g": "every"
+      },
+      {
+       "a": "مُعْتَدٍ",
+       "t": "muʿtadin",
+       "g": "transgressor"
+      },
+      {
+       "a": "أَثِيمٍ",
+       "t": "athīm",
+       "g": "steeped in sin"
+      }
+     ],
+     "sense": "The verse reverses the order most people assume. It does not say that denial leads to sin. It says the man who has already crossed the line and made a practice of it is the one who ends up at denial.",
+     "notes": [
+      {
+       "t": "Mutadi is one who goes past a limit he knows is there. Athim is the intensive form, someone in whom wrongdoing has settled into a habit rather than an episode. The two words describe conduct before they describe creed.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The construction is exclusive, none except, so it is a claim about every case of denial and not a general tendency with exceptions allowed for.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Read next to the opening verses, the sequence runs from a rigged scale to a hardened habit to a rejected Day, which is the reverse of how the surah presented them.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "30:10",
+       "why": "the end of those who did evil was that they denied the signs of Allah"
+      },
+      {
+       "ref": "2:10",
+       "why": "in their hearts is a disease and Allah increased it"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "تُتْلَىٰ",
+       "t": "tutlā",
+       "g": "are recited"
+      },
+      {
+       "a": "عَلَيْهِ",
+       "t": "ʿalayhi",
+       "g": "to him"
+      },
+      {
+       "a": "ءَايَٰتُنَا",
+       "t": "āyātunā",
+       "g": "Our verses"
+      },
+      {
+       "a": "قَالَ",
+       "t": "qāla",
+       "g": "he says"
+      },
+      {
+       "a": "أَسَٰطِيرُ",
+       "t": "asāṭīru",
+       "g": "legends of"
+      },
+      {
+       "a": "ٱلْأَوَّلِينَ",
+       "t": "al-awwalīn",
+       "g": "the former peoples"
+      }
+     ],
+     "sense": "The reply he gives has no argument inside it. He does not say the verses are false, he says they are old, which lets him set the matter down without ever picking it up.",
+     "notes": [
+      {
+       "t": "Legends of the former peoples appears again and again in the Qur'an as the standard answer of those who rejected the message, which is why it is recorded as a slogan rather than as a position anyone worked out.",
+       "lvl": "quran",
+       "src": "6:25, 25:5 and 68:15"
+      },
+      {
+       "t": "Calling something the tales of the ancients dates a claim instead of testing it. The verse places this reply immediately after the description of settled transgression, which says where the reply is coming from.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "25:5",
+       "why": "legends of the former peoples which he has had written down for him"
+      },
+      {
+       "ref": "68:15",
+       "why": "the identical sentence, word for word, in another surah"
+      }
+     ]
+    },
+    "14": {
+     "words": [
+      {
+       "a": "كَلَّا",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "بَلْ",
+       "t": "bal",
+       "g": "rather"
+      },
+      {
+       "a": "رَانَ",
+       "t": "rāna",
+       "g": "has settled like rust"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "قُلُوبِهِم",
+       "t": "qulūbihim",
+       "g": "their hearts"
+      },
+      {
+       "a": "مَّا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "they used to"
+      },
+      {
+       "a": "يَكْسِبُونَ",
+       "t": "yaksibūn",
+       "g": "earn"
+      }
+     ],
+     "sense": "Here is the mechanism. What they did settled on their hearts the way rust settles on iron left in the damp, a layer laid down by repetition, until the surface no longer takes an impression.",
+     "notes": [
+      {
+       "t": "Rayn is the film that forms on metal over time. It is not a blow struck at the heart but a deposit left on it, built up by ordinary acts done again and again rather than by one decision.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Prophet ﷺ said that when a servant commits a sin a black mark is placed on his heart, that if he leaves it and seeks forgiveness his heart is polished clean, and that if he returns to it the mark grows until it covers the heart, and he identified that covering as the rayn named in this verse.",
+       "lvl": "sunnah",
+       "src": "at-Tirmidhi in the Book of Tafsir on this surah, from Abu Hurayra, graded hasan sahih by him; also in Ibn Majah and Ahmad"
+      },
+      {
+       "t": "The word used for what they earned, yaksibun, is the ordinary word for acquiring a wage. The surah keeps its vocabulary in the marketplace even when it is talking about the inside of a person.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:7",
+       "why": "Allah has set a seal upon their hearts and upon their hearing"
+      },
+      {
+       "ref": "47:24",
+       "why": "do they not reflect on the Qur'an, or are there locks upon hearts"
+      }
+     ]
+    },
+    "15": {
+     "words": [
+      {
+       "a": "كَلَّآ",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "they"
+      },
+      {
+       "a": "عَن",
+       "t": "ʿan",
+       "g": "from"
+      },
+      {
+       "a": "رَّبِّهِمْ",
+       "t": "rabbihim",
+       "g": "their Lord"
+      },
+      {
+       "a": "يَوْمَئِذٍ",
+       "t": "yawma'idhin",
+       "g": "that Day"
+      },
+      {
+       "a": "لَّمَحْجُوبُونَ",
+       "t": "la-maḥjūbūn",
+       "g": "will surely be screened off"
+      }
+     ],
+     "sense": "The first punishment named is not fire. It is a curtain. Having let a film build over their own hearts in this life, they are held behind a screen from their Lord in the next, and the fire is only mentioned in the verse after this one.",
+     "notes": [
+      {
+       "t": "Mahjubun is passive. The screen is placed on them, and it comes after the layer they laid down themselves, so the sentence answers the state described one verse earlier.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ash-Shafi'i argued from this verse that the believers will see their Lord, reasoning that a screen is only named as a penalty if there are others who are not behind it. Later scholars took the same position from this verse alongside others, while the Mu'tazila read the veiling as a figure for being deprived of reward.",
+       "lvl": "debated",
+       "src": "the argument is attributed to ash-Shafiʿi and reported by Ibn Kathir in his commentary on this verse"
+      },
+      {
+       "t": "Being kept from a sight is a punishment only for someone who wanted it. The verse assumes a loss the men in question would not have said they felt.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "75:22",
+       "why": "faces that Day are radiant, looking toward their Lord"
+      },
+      {
+       "ref": "10:26",
+       "why": "for those who did good is the best and something more"
+      }
+     ]
+    },
+    "16": {
+     "words": [
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "they"
+      },
+      {
+       "a": "لَصَالُوا۟",
+       "t": "la-ṣālū",
+       "g": "will surely burn in"
+      },
+      {
+       "a": "ٱلْجَحِيمِ",
+       "t": "al-jaḥīm",
+       "g": "the Blaze"
+      }
+     ],
+     "sense": "The fire comes second, after the screening. The order is kept deliberately, and keeping it says which of the two the surah counts as the greater loss.",
+     "notes": [
+      {
+       "t": "Thumma marks sequence rather than mere addition, so the veiling precedes the burning both in the text and, on the plain reading, in the event.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Sali means to be roasted, to go into a thing and be cooked by it, rather than to be set down beside it. The Arabic makes the fire a medium and not a location.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:15",
+       "why": "the screen that this verse places before the fire"
+      },
+      {
+       "ref": "88:4",
+       "why": "they will burn in an intensely hot fire"
+      }
+     ]
+    },
+    "17": {
+     "words": [
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "يُقَالُ",
+       "t": "yuqālu",
+       "g": "it will be said"
+      },
+      {
+       "a": "هَٰذَا",
+       "t": "hādhā",
+       "g": "this is"
+      },
+      {
+       "a": "ٱلَّذِى",
+       "t": "alladhī",
+       "g": "that which"
+      },
+      {
+       "a": "كُنتُم",
+       "t": "kuntum",
+       "g": "you used to"
+      },
+      {
+       "a": "بِهِۦ",
+       "t": "bihi",
+       "g": "in it"
+      },
+      {
+       "a": "تُكَذِّبُونَ",
+       "t": "tukadhdhibūn",
+       "g": "call a lie"
+      }
+     ],
+     "sense": "The third thing, after the screen and the fire, is a sentence spoken to them. They are told what they are looking at, and the words do nothing except hand their own denial back to them.",
+     "notes": [
+      {
+       "t": "The speaker is not named, which the Qur'an often does when the point of a scene is the statement rather than who is making it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Nothing is added to what they said. The whole rebuke consists of pointing at the thing and repeating their word for it, which is the same method the surah uses again at its close.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "52:14",
+       "why": "this is the Fire which you used to deny"
+      },
+      {
+       "ref": "32:20",
+       "why": "taste the punishment of the Fire which you used to deny"
+      }
+     ]
+    },
+    "18": {
+     "words": [
+      {
+       "a": "كَلَّآ",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "كِتَٰبَ",
+       "t": "kitāba",
+       "g": "the record of"
+      },
+      {
+       "a": "ٱلْأَبْرَارِ",
+       "t": "al-abrār",
+       "g": "the devoted good"
+      },
+      {
+       "a": "لَفِى",
+       "t": "lafī",
+       "g": "is surely in"
+      },
+      {
+       "a": "عِلِّيِّينَ",
+       "t": "ʿilliyyīn",
+       "g": "Illiyyun"
+      }
+     ],
+     "sense": "The surah turns, and it turns by repeating a sentence already used with two words changed. The wicked become the good, and the low filing place becomes the high one.",
+     "notes": [
+      {
+       "t": "Illiyyun is built on the root of uluww, height, in a form that piles the meaning up, so the name itself says elevation on top of elevation.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Abrar is the plural of barr, from birr, the wide word for doing good that the Qur'an also uses for kindness to parents. It is not first a ritual word, which fits a surah whose opening crime was committed in a shop.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Where Illiyyun is was described differently by the early exegetes, with reports naming the seventh heaven, a register kept with Allah, and a place near the Throne.",
+       "lvl": "debated",
+       "src": "at-Tabari records several sayings of the early authorities and does not decide between them"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:7",
+       "why": "the sentence this one is answering, word for word except two"
+      },
+      {
+       "ref": "76:5",
+       "why": "the abrar named again and given a cup to drink"
+      }
+     ]
+    },
+    "19": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "أَدْرَىٰكَ",
+       "t": "adrāka",
+       "g": "can make you know"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what is"
+      },
+      {
+       "a": "عِلِّيُّونَ",
+       "t": "ʿilliyyūn",
+       "g": "Illiyyun"
+      }
+     ],
+     "sense": "The same question, asked in the same words, about the opposite place. The surah is building its two halves out of matching parts and letting the reader notice the match.",
+     "notes": [
+      {
+       "t": "The formula appears twice in this surah and both times the reply given is the same two words, an inscribed record, so the symmetry runs through the answers as well as the questions.",
+       "lvl": "quran",
+       "src": "83:8"
+      },
+      {
+       "t": "Repeating a structure with one term swapped is how this surah argues. The reader is never told the two destinies are opposites. He is shown one sentence twice with the words exchanged and left to draw it himself.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:8",
+       "why": "the identical question asked about the other place"
+      },
+      {
+       "ref": "56:10",
+       "why": "the foremost are the foremost, and they are the ones brought near"
+      }
+     ]
+    },
+    "20": {
+     "words": [
+      {
+       "a": "كِتَٰبٌ",
+       "t": "kitābun",
+       "g": "a record"
+      },
+      {
+       "a": "مَّرْقُومٌ",
+       "t": "marqūm",
+       "g": "inscribed"
+      }
+     ],
+     "sense": "Word for word the same as the answer given about Sijjin. The records of the wicked and of the good are described identically, which says the keeping is equally exact in both directions.",
+     "notes": [
+      {
+       "t": "Nothing in the wording distinguishes the two books. The difference the surah draws is entirely in where each is filed and, in the next verse, in who attends it.",
+       "lvl": "quran",
+       "src": "83:9"
+      },
+      {
+       "t": "An exact repetition inside a short surah is unusual enough that the exegetes treat it as deliberate rather than as a stock phrase reused.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:9",
+       "why": "the identical line given for the other file"
+      },
+      {
+       "ref": "45:29",
+       "why": "this is Our record, it speaks about you in truth"
+      }
+     ]
+    },
+    "21": {
+     "words": [
+      {
+       "a": "يَشْهَدُهُ",
+       "t": "yashhaduhu",
+       "g": "it is attended and witnessed by"
+      },
+      {
+       "a": "ٱلْمُقَرَّبُونَ",
+       "t": "al-muqarrabūn",
+       "g": "those brought near"
+      }
+     ],
+     "sense": "One line is added to the good record that is not added to the other. It has witnesses, and the witnesses are the ones already brought close.",
+     "notes": [
+      {
+       "t": "Shahida carries both to witness and to be present at, and both senses work here: the near ones see the record and are there when it is kept.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Muqarrabun is the word the Qur'an uses for the highest of the three groups sorted on that Day, and it returns later in this surah at the spring the drink is mixed from.",
+       "lvl": "quran",
+       "src": "56:11"
+      }
+     ],
+     "links": [
+      {
+       "ref": "56:88",
+       "why": "if he is one of those brought near, then rest and fragrance"
+      },
+      {
+       "ref": "83:28",
+       "why": "the same group named again, at the spring"
+      }
+     ]
+    },
+    "22": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱلْأَبْرَارَ",
+       "t": "al-abrāra",
+       "g": "the devoted good"
+      },
+      {
+       "a": "لَفِى",
+       "t": "lafī",
+       "g": "are surely in"
+      },
+      {
+       "a": "نَعِيمٍ",
+       "t": "naʿīm",
+       "g": "delight"
+      }
+     ],
+     "sense": "The same construction that put the wicked in loss now places the good in ease. It is given as a location and not as a payment, in delight rather than given delight.",
+     "notes": [
+      {
+       "t": "The phrase surely in is the same one used of the record in Sijjin here and of man in loss in Surah al-Asr. The Qur'an keeps setting people inside conditions rather than next to them.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Naim is left indefinite, which widens it in Arabic, and the verses that follow then name particular parts of it, a couch, a face, a sealed cup.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "82:13",
+       "why": "the identical sentence stands in another surah of the same group"
+      },
+      {
+       "ref": "103:2",
+       "why": "the same grammar of being inside a condition, used there for loss"
+      }
+     ]
+    },
+    "23": {
+     "words": [
+      {
+       "a": "عَلَى",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "ٱلْأَرَآئِكِ",
+       "t": "al-arā'iki",
+       "g": "the canopied couches"
+      },
+      {
+       "a": "يَنظُرُونَ",
+       "t": "yanẓurūn",
+       "g": "they look"
+      }
+     ],
+     "sense": "They are seated and they are looking, and what they look at is not stated. The verse leaves the sentence open, which is why the exegetes finished it in several ways.",
+     "notes": [
+      {
+       "t": "Ara'ik are canopied couches, a particular piece of furniture in the older Arabic, tied to rest indoors rather than to a throne of office.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The object of the looking is left out. The completions offered include what has been prepared for them, the state of those they left behind, and their Lord, which some tie back to the screen mentioned earlier in this surah.",
+       "lvl": "debated",
+       "src": "at-Tabari and later commentators list the several completions without ruling one out"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:35",
+       "why": "the same three words repeated at the close of the surah"
+      },
+      {
+       "ref": "76:13",
+       "why": "reclining on couches, seeing neither burning sun nor bitter cold"
+      }
+     ]
+    },
+    "24": {
+     "words": [
+      {
+       "a": "تَعْرِفُ",
+       "t": "taʿrifu",
+       "g": "you will recognise"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "وُجُوهِهِمْ",
+       "t": "wujūhihim",
+       "g": "their faces"
+      },
+      {
+       "a": "نَضْرَةَ",
+       "t": "naḍrata",
+       "g": "the freshness of"
+      },
+      {
+       "a": "ٱلنَّعِيمِ",
+       "t": "an-naʿīm",
+       "g": "the delight"
+      }
+     ],
+     "sense": "The address turns to the reader. You would know it by looking at them, without being told anything, because ease of that kind shows on a face.",
+     "notes": [
+      {
+       "t": "Nadra is the word for the glow of a well watered plant or of a face with blood in it. It names a condition rather than an expression, so it is not something they are putting on for a visitor.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb is second person singular, so the recognising is handed to whoever is reading instead of being reported about someone else. The surah has been describing people at a distance and here it brings one close enough to read.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "88:8",
+       "why": "faces that Day will be at ease, pleased with their striving"
+      },
+      {
+       "ref": "75:24",
+       "why": "and other faces that Day will be darkened, the same test applied in reverse"
+      }
+     ]
+    },
+    "25": {
+     "words": [
+      {
+       "a": "يُسْقَوْنَ",
+       "t": "yusqawna",
+       "g": "they are given to drink"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "رَّحِيقٍ",
+       "t": "raḥīqin",
+       "g": "clear wine"
+      },
+      {
+       "a": "مَّخْتُومٍ",
+       "t": "makhtūm",
+       "g": "sealed"
+      }
+     ],
+     "sense": "They are served rather than serving themselves, and what is poured has never been opened before. The seal is the detail that carries the verse: this is not a cup anyone has drunk from.",
+     "notes": [
+      {
+       "t": "Rahiq in the older Arabic is wine left to settle until nothing in it clouds or fouls. The Qur'an elsewhere states plainly that the drink of the Garden brings no headache and no loss of the senses.",
+       "lvl": "quran",
+       "src": "37:47"
+      },
+      {
+       "t": "Yusqawna is passive. Somebody else pours, and being poured for is part of what the surah is saying about their standing, in a passage that began with men who filed their own paperwork.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "37:45",
+       "why": "a cup from a flowing spring passed round among them"
+      },
+      {
+       "ref": "56:19",
+       "why": "from it they get no headache and no exhaustion"
+      }
+     ]
+    },
+    "26": {
+     "words": [
+      {
+       "a": "خِتَٰمُهُۥ",
+       "t": "khitāmuhu",
+       "g": "its seal"
+      },
+      {
+       "a": "مِسْكٌ",
+       "t": "miskun",
+       "g": "is musk"
+      },
+      {
+       "a": "وَفِى",
+       "t": "wa-fī",
+       "g": "and for"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "فَلْيَتَنَافَسِ",
+       "t": "fal-yatanāfasi",
+       "g": "let them compete"
+      },
+      {
+       "a": "ٱلْمُتَنَٰفِسُونَ",
+       "t": "al-mutanāfisūn",
+       "g": "the competitors"
+      }
+     ],
+     "sense": "The seal on the cup is musk, so the last thing before the drink is a scent. Then the surah stops describing and speaks to the reader directly: if people are going to compete over something, this is the thing to compete over.",
+     "notes": [
+      {
+       "t": "Khitam can mean the seal itself or the finish a thing leaves behind, so the exegetes read it both as a stopper made of musk and as the taste left once the cup is drained. Both readings are early and neither cancels the other.",
+       "lvl": "debated",
+       "src": "at-Tabari records the reading of the seal and the reading of the last taste, each from early authorities"
+      },
+      {
+       "t": "Tanafus is competition over something limited, from the same root as nafis, a prized thing. The verse does not tell anyone to stop competing. It takes an existing human drive and turns it toward one object.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "This is the only instruction addressed to the reader anywhere in the surah. Everything else is threat, description or report, which makes the single command stand out where it sits.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "57:21",
+       "why": "race one another toward forgiveness from your Lord"
+      },
+      {
+       "ref": "3:133",
+       "why": "hasten to forgiveness from your Lord and a garden as wide as the heavens"
+      }
+     ]
+    },
+    "27": {
+     "words": [
+      {
+       "a": "وَمِزَاجُهُۥ",
+       "t": "wa-mizājuhu",
+       "g": "and its mixture"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "is from"
+      },
+      {
+       "a": "تَسْنِيمٍ",
+       "t": "tasnīm",
+       "g": "Tasnim"
+      }
+     ],
+     "sense": "The sealed wine is not served neat. Something is blended into it, and the thing blended is named without being explained, which is why the next verse has to explain it.",
+     "notes": [
+      {
+       "t": "Mizaj is what is added to a drink to temper it. Ordinarily the added thing is the lesser one, and here it turns out to be the higher, which reverses the usual reason for mixing anything.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Tasnim is from the root of sanam, height or the hump of a camel, and the early exegetes describe it as a spring that comes down from above. The name occurs only here in the Qur'an.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "76:6",
+       "why": "a spring the servants of Allah drink from, made to gush forth abundantly"
+      },
+      {
+       "ref": "83:28",
+       "why": "the verse that says who drinks this one undiluted"
+      }
+     ]
+    },
+    "28": {
+     "words": [
+      {
+       "a": "عَيْنًا",
+       "t": "ʿaynan",
+       "g": "a spring"
+      },
+      {
+       "a": "يَشْرَبُ",
+       "t": "yashrabu",
+       "g": "drink"
+      },
+      {
+       "a": "بِهَا",
+       "t": "bihā",
+       "g": "from it"
+      },
+      {
+       "a": "ٱلْمُقَرَّبُونَ",
+       "t": "al-muqarrabūn",
+       "g": "those brought near"
+      }
+     ],
+     "sense": "Tasnim is a spring, and the ones brought near drink it as it comes while for the wider group it is mixed into the cup. Two levels are described and neither is called deficient.",
+     "notes": [
+      {
+       "t": "The plain reading is that the muqarrabun take Tasnim undiluted and the abrar receive it as an admixture, which is how most exegetes take the two verses when read together.",
+       "lvl": "debated",
+       "src": "the reading is transmitted from Ibn ʿAbbās and others by at-Tabari; some later commentators have both groups drinking the same"
+      },
+      {
+       "t": "These are the same ones brought near who attend the record earlier in the surah, so the surah has now placed them twice, once at the filing of the book and once at the source of the drink.",
+       "lvl": "quran",
+       "src": "83:21"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:21",
+       "why": "the same group standing over the record"
+      },
+      {
+       "ref": "56:12",
+       "why": "the ones brought near, in gardens of delight"
+      }
+     ]
+    },
+    "29": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "أَجْرَمُوا۟",
+       "t": "ajramū",
+       "g": "committed crimes"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "used to"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "at"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believed"
+      },
+      {
+       "a": "يَضْحَكُونَ",
+       "t": "yaḍḥakūn",
+       "g": "laugh"
+      }
+     ],
+     "sense": "The surah drops back into the world and describes a street. The criminals used to laugh at the believers, and the laughing is entered as an act with consequences rather than as an atmosphere nobody is answerable for.",
+     "notes": [
+      {
+       "t": "Kanu yadhakun is a past continuous, so it reports a habit and not one incident. What is being recorded is the ordinary daily texture of what the early Muslims took in Makkah.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Some exegetes name particular Makkan men and particular Companions behind this passage, and others leave it general. The verses themselves name nobody on either side.",
+       "lvl": "debated",
+       "src": "several occasions are reported by the commentators, including from Ibn ʿAbbās, and the chains vary in strength"
+      }
+     ],
+     "links": [
+      {
+       "ref": "6:10",
+       "why": "messengers before you were mocked, and what surrounded those who mocked"
+      },
+      {
+       "ref": "21:41",
+       "why": "the same charge made about earlier generations"
+      }
+     ]
+    },
+    "30": {
+     "words": [
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "مَرُّوا۟",
+       "t": "marrū",
+       "g": "they passed"
+      },
+      {
+       "a": "بِهِمْ",
+       "t": "bihim",
+       "g": "by them"
+      },
+      {
+       "a": "يَتَغَامَزُونَ",
+       "t": "yataghāmazūn",
+       "g": "they would signal to one another with their eyes"
+      }
+     ],
+     "sense": "The detail is small and exact. Not a speech made against them, a glance passed between friends as a believer walks by, the kind of thing that can be denied afterwards because nothing was actually said.",
+     "notes": [
+      {
+       "t": "Ghamz is a signal made with the eye or the eyebrow. The reciprocal form of the verb means they did it to each other about a third person, which is the specific mechanics of ridicule inside a group.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an records a wink. That level of detail says what is on the record, and it sits in the same surah as an ounce shaved off a measure.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "104:1",
+       "why": "woe to every fault finder and backbiter, the same conduct named as a crime"
+      },
+      {
+       "ref": "49:11",
+       "why": "let no people ridicule another people, they may be better than them"
+      }
+     ]
+    },
+    "31": {
+     "words": [
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "ٱنقَلَبُوٓا۟",
+       "t": "inqalabū",
+       "g": "they returned"
+      },
+      {
+       "a": "إِلَىٰٓ",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "أَهْلِهِمُ",
+       "t": "ahlihimu",
+       "g": "their households"
+      },
+      {
+       "a": "ٱنقَلَبُوا۟",
+       "t": "inqalabū",
+       "g": "they returned"
+      },
+      {
+       "a": "فَكِهِينَ",
+       "t": "fakihīn",
+       "g": "amused and pleased with themselves"
+      }
+     ],
+     "sense": "They went home in a good mood. The mockery cost them nothing and kept them nothing awake, it was the day's entertainment, and it was told again at their own table.",
+     "notes": [
+      {
+       "t": "The verb for returning is used twice inside one short verse, which slows the sentence down on the going home and makes the mood, not the movement, the thing being reported.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Fakih is from the root of fakiha, fruit, and carries the sense of a man relishing something the way one enjoys a sweet course after a meal.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:34",
+       "why": "the laughter turned around and given to the other side"
+      },
+      {
+       "ref": "9:65",
+       "why": "were you mocking Allah and His verses and His Messenger"
+      }
+     ]
+    },
+    "32": {
+     "words": [
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "رَأَوْهُمْ",
+       "t": "ra'awhum",
+       "g": "they saw them"
+      },
+      {
+       "a": "قَالُوٓا۟",
+       "t": "qālū",
+       "g": "they said"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "هَٰٓؤُلَآءِ",
+       "t": "hā'ulā'i",
+       "g": "these people"
+      },
+      {
+       "a": "لَضَآلُّونَ",
+       "t": "la-ḍāllūn",
+       "g": "are certainly astray"
+      }
+     ],
+     "sense": "Now the mockery acquires a verdict. They are not only laughing, they are ruling on the people they laugh at, and they reach for a religious word to do it.",
+     "notes": [
+      {
+       "t": "Dallun, astray, is the same word the Qur'an uses for real misguidance, and the man praying Al-Fatiha asks every day to be kept out of that category. Here it is being handed out by the wrong party.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an records the same shape of contempt from earlier peoples, who objected that the ones following the message were the lowest among them.",
+       "lvl": "quran",
+       "src": "26:111"
+      },
+      {
+       "t": "The sentence they speak is emphatic in the Arabic, with inna and the lam of emphasis, so it is delivered as a settled certainty rather than an opinion offered.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "46:11",
+       "why": "if it were any good they would not have reached it before us"
+      },
+      {
+       "ref": "1:7",
+       "why": "the word astray, in the request the believer makes about himself"
+      }
+     ]
+    },
+    "33": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and not"
+      },
+      {
+       "a": "أُرْسِلُوا۟",
+       "t": "ursilū",
+       "g": "were they sent"
+      },
+      {
+       "a": "عَلَيْهِمْ",
+       "t": "ʿalayhim",
+       "g": "over them"
+      },
+      {
+       "a": "حَٰفِظِينَ",
+       "t": "ḥāfiẓīn",
+       "g": "as keepers"
+      }
+     ],
+     "sense": "One line of reply, and it removes their standing rather than their argument. Nobody appointed them to supervise anyone, so the verdict they had just passed was never theirs to pass.",
+     "notes": [
+      {
+       "t": "Hafiz is a guardian who keeps a record and answers for what he keeps, and the Qur'an uses the word for the angels who write. Denying it of these men strips them of the office they had quietly taken.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The reply does not argue that the believers were guided. It says the mockers were never commissioned, which is a narrower point and a harder one to answer.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "82:10",
+       "why": "over you are keepers, noble ones who write, the real holders of the office"
+      },
+      {
+       "ref": "6:107",
+       "why": "We have not made you a keeper over them, said even to the Prophet ﷺ"
+      }
+     ]
+    },
+    "34": {
+     "words": [
+      {
+       "a": "فَٱلْيَوْمَ",
+       "t": "fal-yawma",
+       "g": "so today"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believed"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "at"
+      },
+      {
+       "a": "ٱلْكُفَّارِ",
+       "t": "al-kuffār",
+       "g": "the deniers"
+      },
+      {
+       "a": "يَضْحَكُونَ",
+       "t": "yaḍḥakūn",
+       "g": "laugh"
+      }
+     ],
+     "sense": "The sentence about laughter is said again with the two parties exchanged. The same verb, the same construction, and the laughing moved across to the other side.",
+     "notes": [
+      {
+       "t": "Today, al-yawm, is the Day of Recompense spoken of as present tense. The surah has stopped predicting and moved the reader inside the scene.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "No new punishment is introduced here. The act itself is returned to its owners, which is the same method used earlier when the deniers are shown the Fire and told it is the thing they denied.",
+       "lvl": "quran",
+       "src": "83:17"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:29",
+       "why": "the sentence this one reverses, verb for verb"
+      },
+      {
+       "ref": "9:82",
+       "why": "let them laugh a little and weep much for what they were earning"
+      }
+     ]
+    },
+    "35": {
+     "words": [
+      {
+       "a": "عَلَى",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "ٱلْأَرَآئِكِ",
+       "t": "al-arā'iki",
+       "g": "the canopied couches"
+      },
+      {
+       "a": "يَنظُرُونَ",
+       "t": "yanẓurūn",
+       "g": "they look"
+      }
+     ],
+     "sense": "The same three words used earlier, put here after the reversal. In the first place the looking had no stated object; here the surrounding verses supply one, and the surah leaves the reader to make the join.",
+     "notes": [
+      {
+       "t": "Repeating a line at two points in a short surah ties the halves together and asks that the two places be read against each other rather than separately.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Coming straight after the reversal of the laughter, this looking is read by many commentators as looking at the ones who used to wink as they passed. The verse does not say so in words, and the reading rests on the order.",
+       "lvl": "debated",
+       "src": "the connection is drawn by Ibn Kathir and others from the sequence of the verses rather than from the wording"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:23",
+       "why": "the first occurrence of the identical line, before the reversal"
+      },
+      {
+       "ref": "37:55",
+       "why": "he looked down and saw his old companion in the midst of the Blaze"
+      }
+     ]
+    },
+    "36": {
+     "words": [
+      {
+       "a": "هَلْ",
+       "t": "hal",
+       "g": "have"
+      },
+      {
+       "a": "ثُوِّبَ",
+       "t": "thuwwiba",
+       "g": "been repaid"
+      },
+      {
+       "a": "ٱلْكُفَّارُ",
+       "t": "al-kuffāru",
+       "g": "the deniers"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "for what"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "they used to"
+      },
+      {
+       "a": "يَفْعَلُونَ",
+       "t": "yafʿalūn",
+       "g": "do"
+      }
+     ],
+     "sense": "The surah ends on a question rather than a statement, and the question is about payment. Everything from the first shaved ounce onward has been an account, and the last line asks whether the account has now been settled.",
+     "notes": [
+      {
+       "t": "Thawwaba is from thawab, the ordinary word for reward. Using it of the deniers turns their own conduct into their wage, which is the same reversal the surah has been running since the laughter changed sides.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The question form hands the last step to the reader. The Qur'an closes several surahs this way, stopping one move short and leaving the move to be made.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah opened by threatening men who took a little more than they gave, and closes by asking whether everyone has now been given exactly what they gave. The frame is the same scale from beginning to end.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "83:1",
+       "why": "the woe the surah opened with, now presented as a price paid"
+      },
+      {
+       "ref": "88:26",
+       "why": "then upon Us is their accounting, the settling this question asks about"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 94,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "a-lam",
+       "g": "have We not"
+      },
+      {
+       "a": "نَشْرَحْ",
+       "t": "nashraḥ",
+       "g": "expanded"
+      },
+      {
+       "a": "لَكَ",
+       "t": "laka",
+       "g": "for you"
+      },
+      {
+       "a": "صَدْرَكَ",
+       "t": "ṣadrak",
+       "g": "your chest"
+      }
+     ],
+     "sense": "A question that works as a reminder, put to one man. It asks him to look back at something already done for him before it asks anything at all of him.",
+     "notes": [
+      {
+       "t": "Sharh is the word for opening a thing out flat so that what is inside becomes reachable, which is why a commentary written on a book is called a sharh.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The question form, have We not, is used because the answer is not in doubt. Arabic uses this shape to make the listener supply the yes himself rather than be told it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "That the chest of the Prophet ﷺ was opened physically, once as a child and again on the night of the Ascension, is narrated in the Sahih collections. Whether this verse points at that event, or at the widening of the heart to carry the message, or at both, is where the commentators divide.",
+       "lvl": "debated",
+       "src": "the opening of the chest is narrated from Anas ibn Malik in Sahih Muslim, Book of Faith; the application to this verse is the disputed part"
+      }
+     ],
+     "links": [
+      {
+       "ref": "20:25",
+       "why": "Musa asks for exactly this, my Lord expand for me my chest"
+      },
+      {
+       "ref": "6:125",
+       "why": "whomever Allah wills to guide, He expands his chest for Islam"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "وَوَضَعْنَا",
+       "t": "wa-waḍaʿnā",
+       "g": "and We took off"
+      },
+      {
+       "a": "عَنكَ",
+       "t": "ʿanka",
+       "g": "from you"
+      },
+      {
+       "a": "وِزْرَكَ",
+       "t": "wizrak",
+       "g": "your burden"
+      }
+     ],
+     "sense": "The second thing is a weight lifted off. The verse does not say what the weight was, and the verse after it says only what the weight was doing to him.",
+     "notes": [
+      {
+       "t": "Wizr is a load carried on the back, from the same root as wazir, the minister who carries a share of the ruler's load. It is a word for freight, not for guilt in itself.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "What this burden was is read several ways: the weight of the years before revelation came, the strain of carrying the mission, or the distress at the state of his people. The Qur'an does not name it here.",
+       "lvl": "debated",
+       "src": "at-Tabari and later commentators set out these readings without agreeing on one"
+      }
+     ],
+     "links": [
+      {
+       "ref": "48:2",
+       "why": "that Allah may forgive you what preceded and what followed"
+      },
+      {
+       "ref": "93:6",
+       "why": "the surah before this one, listing what was already done for him"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "ٱلَّذِىٓ",
+       "t": "alladhī",
+       "g": "which"
+      },
+      {
+       "a": "أَنقَضَ",
+       "t": "anqaḍa",
+       "g": "made crack"
+      },
+      {
+       "a": "ظَهْرَكَ",
+       "t": "ẓahrak",
+       "g": "your back"
+      }
+     ],
+     "sense": "The load is described by the sound it made. Anqada is the noise of something under strain, the creak of a joint or a beam at the point of giving way.",
+     "notes": [
+      {
+       "t": "Naqid is the sound a saddle or a bone makes when it is loaded past what it can hold. The verse picks a sound rather than a weight to say how heavy the burden was, which is more exact than any number would be.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The clause is subordinate, so the sentence is still about the removal announced in the verse before. The description of the load only arrives once we have been told it is gone.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "94:2",
+       "why": "the burden this clause is attached to and describing"
+      },
+      {
+       "ref": "15:97",
+       "why": "We know your chest is straitened by what they say"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "وَرَفَعْنَا",
+       "t": "wa-rafaʿnā",
+       "g": "and We raised"
+      },
+      {
+       "a": "لَكَ",
+       "t": "laka",
+       "g": "for you"
+      },
+      {
+       "a": "ذِكْرَكَ",
+       "t": "dhikrak",
+       "g": "your mention"
+      }
+     ],
+     "sense": "The third thing is not internal. The first two happened inside him; this one happened in the mouths of other people, and it was stated while most of those people were still against him.",
+     "notes": [
+      {
+       "t": "Dhikr is mention, being spoken of. The promise that the name would be raised was made in a town where that same name was being used as an insult in the street outside.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The declaration of faith joins his name to the name of Allah, and the call to prayer says both of them aloud five times a day wherever Muslims settle. The verse is commonly read as describing this.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A report is transmitted in which Allah says that whenever He is mentioned His Messenger is mentioned with Him. The chain is graded differently by different scholars, and the point it makes is audible in the adhan without it.",
+       "lvl": "debated",
+       "src": "reported from Abu Saʿid al-Khudri and cited by Ibn Kathir on this verse; the chain is assessed differently by different scholars"
+      }
+     ],
+     "links": [
+      {
+       "ref": "33:56",
+       "why": "Allah and His angels send blessings upon the Prophet ﷺ"
+      },
+      {
+       "ref": "62:2",
+       "why": "He sent among the unlettered a Messenger from among themselves"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "فَإِنَّ",
+       "t": "fa-inna",
+       "g": "so indeed"
+      },
+      {
+       "a": "مَعَ",
+       "t": "maʿa",
+       "g": "with"
+      },
+      {
+       "a": "ٱلْعُسْرِ",
+       "t": "al-ʿusri",
+       "g": "the hardship"
+      },
+      {
+       "a": "يُسْرًا",
+       "t": "yusran",
+       "g": "is ease"
+      }
+     ],
+     "sense": "The three reminders end and a rule follows from them. The word is with, not after. The ease is not placed at the far end of the hardship but alongside it, inside the same stretch of time.",
+     "notes": [
+      {
+       "t": "Maa in Arabic is accompaniment. The language had a plain word for after, bada, and the Qur'an uses it elsewhere for this very subject. Here it did not use it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Al-usr carries the definite article and yusran does not. The exegetes read this as one known hardship set against an unspecified ease, which is what makes the repetition in the next verse do work.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The rule is given to a man who has just been reminded of three specific things already done for him, so it is presented as an inference from his own record rather than as a general saying.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "65:7",
+       "why": "Allah will bring about ease after hardship, the same promise worded with after"
+      },
+      {
+       "ref": "2:286",
+       "why": "Allah does not burden a soul beyond what it can carry"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "مَعَ",
+       "t": "maʿa",
+       "g": "with"
+      },
+      {
+       "a": "ٱلْعُسْرِ",
+       "t": "al-ʿusri",
+       "g": "the hardship"
+      },
+      {
+       "a": "يُسْرًا",
+       "t": "yusran",
+       "g": "is ease"
+      }
+     ],
+     "sense": "The same sentence again, one word lighter at the front. Nothing new is added, and that is the substance of it: the statement is repeated rather than developed, and the repeating is itself the reassurance.",
+     "notes": [
+      {
+       "t": "Because al-usr is definite in both verses, Arabic grammar takes the second mention to be the same hardship. Because yusran is indefinite in both, the two eases are read as two different ones.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The saying that one hardship will never overcome two eases is widely quoted. It is transmitted from the Prophet ﷺ in incomplete form and also as a statement of companions and of al-Hasan al-Basri, and the scholars hold it more confidently as the latter.",
+       "lvl": "debated",
+       "src": "reported in mursal form by at-Tabari and attributed to Ibn Masʿud and to al-Hasan al-Basri in the commentaries"
+      },
+      {
+       "t": "Saying a thing twice in Arabic is emphasis, not padding, and the same device stands at the head of Al-Fatiha where the two names of mercy are said and then said again.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "94:5",
+       "why": "the identical sentence one verse earlier"
+      },
+      {
+       "ref": "3:139",
+       "why": "do not weaken and do not grieve, spoken after a defeat"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "فَإِذَا",
+       "t": "fa-idhā",
+       "g": "so when"
+      },
+      {
+       "a": "فَرَغْتَ",
+       "t": "faraghta",
+       "g": "you are free"
+      },
+      {
+       "a": "فَٱنصَبْ",
+       "t": "fan-ṣab",
+       "g": "then labour until tired"
+      }
+     ],
+     "sense": "The instruction says what to do with the ease when it comes. Finishing one thing is not the start of rest, it is the start of the next exertion.",
+     "notes": [
+      {
+       "t": "Nasab is effort that tires the body. The command is not simply to work but to spend yourself, and it is the same root the Qur'an uses in the negative of the people of the Garden, whom no fatigue will touch.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "What the finishing and the labouring refer to is read variously: finishing the prayer and then supplicating, finishing the conveying of the message and then standing in worship, finishing worldly work and then turning to devotion. The wording is left general.",
+       "lvl": "debated",
+       "src": "at-Tabari lists the sayings of the early exegetes and the wording carries more than one of them"
+      },
+      {
+       "t": "The verse arrives immediately after two promises of ease, which places the command exactly where a person would expect to be told to stop.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "73:7",
+       "why": "you have a long stretch of occupation by day, so remember the name of your Lord"
+      },
+      {
+       "ref": "15:99",
+       "why": "and worship your Lord until the certainty comes to you"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "وَإِلَىٰ",
+       "t": "wa-ilā",
+       "g": "and toward"
+      },
+      {
+       "a": "رَبِّكَ",
+       "t": "rabbika",
+       "g": "your Lord"
+      },
+      {
+       "a": "فَٱرْغَب",
+       "t": "far-ghab",
+       "g": "direct your longing"
+      }
+     ],
+     "sense": "The last words aim the effort. Work until you are tired, and then want nothing out of it except Him. The surah closes on the same address it has used throughout, your Lord, spoken to the same one man.",
+     "notes": [
+      {
+       "t": "Toward your Lord is placed in front of the verb, and in Arabic that inversion carries the sense of only. Not turn to your Lord, but to your Lord and to no one else, turn.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Raghiba is desire that leans toward a thing. With ila it means longing for; with an it means turning away from. The preposition chosen here makes the closing verse a direction given to appetite.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah moves from what was done for him, to a rule about hardship, to a command to work, and ends by naming where the wanting should point. Nothing in it is addressed to a crowd.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "94:1",
+       "why": "the reminders the whole instruction is resting on"
+      },
+      {
+       "ref": "9:59",
+       "why": "sufficient for us is Allah, to Allah we turn in hope, the same verb"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 113,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "قُلْ",
+       "t": "qul",
+       "g": "say"
+      },
+      {
+       "a": "أَعُوذُ",
+       "t": "aʿūdhu",
+       "g": "I take refuge"
+      },
+      {
+       "a": "بِرَبِّ",
+       "t": "bi-rabbi",
+       "g": "with the Lord of"
+      },
+      {
+       "a": "ٱلْفَلَقِ",
+       "t": "al-falaq",
+       "g": "the daybreak"
+      }
+     ],
+     "sense": "The surah is an instruction to speak, and the first move it teaches is to get behind somebody. The name chosen is the Lord of the splitting, which is the Lord of the thing that happens to every night that has ever fallen.",
+     "notes": [
+      {
+       "t": "Falaq is from a root meaning to split. The Qur'an uses the same root for the dawn cracking the dark open and for the seed splitting to send up a shoot, so the name is of a Lord who opens closed things.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Audhu means to attach yourself to something strong for cover, the way a man puts a wall at his back. It is not a request in its form; it is a report of what the speaker is doing as he says it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Uqbah ibn Amir reported that the Prophet ﷺ said verses had been sent down that night the like of which had not been seen, and he named this surah and the one after it.",
+       "lvl": "sunnah",
+       "src": "Sahih Muslim, from ʿUqbah ibn ʿĀmir, in the Book of the Prayer of Travellers"
+      }
+     ],
+     "links": [
+      {
+       "ref": "114:1",
+       "why": "the companion surah, taking refuge with the Lord of mankind"
+      },
+      {
+       "ref": "6:96",
+       "why": "the Splitter of the daybreak, the same name given as a description"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "شَرِّ",
+       "t": "sharri",
+       "g": "the evil of"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "خَلَقَ",
+       "t": "khalaq",
+       "g": "He created"
+      }
+     ],
+     "sense": "The first thing named is everything. Whatever harm exists anywhere in what has been made is already covered by this line, and the three that follow are named separately afterwards.",
+     "notes": [
+      {
+       "t": "The phrase is the evil of what He created, not the evil He created. The harm is located in the creature, and making a thing that is able to turn harmful is not the same as making the harm.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Because this clause already covers all created harm, the three specific dangers after it are read as singled out for attention rather than as items the first clause had missed.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "21:35",
+       "why": "We test you with evil and with good as a trial"
+      },
+      {
+       "ref": "67:2",
+       "why": "who created death and life to test which of you is best in deed"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَمِن",
+       "t": "wa-min",
+       "g": "and from"
+      },
+      {
+       "a": "شَرِّ",
+       "t": "sharri",
+       "g": "the evil of"
+      },
+      {
+       "a": "غَاسِقٍ",
+       "t": "ghāsiqin",
+       "g": "the darkening night"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "وَقَبَ",
+       "t": "waqab",
+       "g": "it settles in"
+      }
+     ],
+     "sense": "The first named danger is a time rather than a creature. Not the night as such, but the night at the moment it fills, when the things that work under cover come out.",
+     "notes": [
+      {
+       "t": "Waqaba is used of something that sinks into a hollow and settles there. The verse marks a moment and not a stretch, the point at which the dark has gone all the way in.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ghasiq is read by the exegetes as the night when it darkens and also as the moon, when it rises or when it is eclipsed. Both readings are early, and the wording carries the first without strain.",
+       "lvl": "debated",
+       "src": "at-Tabari records both the reading of the night and the reading of the moon from early authorities"
+      },
+      {
+       "t": "Naming the danger at nightfall matches the ordinary practice of saying this surah at the end of the day rather than at the start of it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "92:1",
+       "why": "by the night when it covers over"
+      },
+      {
+       "ref": "81:17",
+       "why": "by the night as it closes in"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "وَمِن",
+       "t": "wa-min",
+       "g": "and from"
+      },
+      {
+       "a": "شَرِّ",
+       "t": "sharri",
+       "g": "the evil of"
+      },
+      {
+       "a": "ٱلنَّفَّٰثَٰتِ",
+       "t": "an-naffāthāti",
+       "g": "those who blow"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "upon"
+      },
+      {
+       "a": "ٱلْعُقَدِ",
+       "t": "al-ʿuqad",
+       "g": "the knots"
+      }
+     ],
+     "sense": "The second named danger is a practice. Somebody ties a knot, breathes over it with words, and intends the harm to travel to a person who is not present and does not know it is being done.",
+     "notes": [
+      {
+       "t": "Naffathat is a feminine plural in an intensive form, so it names those who blow repeatedly. The commentators take the feminine as the women who practised this, or as the souls that do it, or as the blowings themselves.",
+       "lvl": "debated",
+       "src": "at-Tabari and later commentators record the several ways the feminine plural has been taken"
+      },
+      {
+       "t": "That the Prophet ﷺ was affected by magic worked against him is narrated in the Sahih collections. Whether this surah and the one after it were sent down on that occasion comes through separate reports whose strength is assessed differently.",
+       "lvl": "debated",
+       "src": "the incident is in Bukhari and Muslim in their Books of Medicine; the link to the revelation of these two surahs rests on other narrations of varying grade"
+      },
+      {
+       "t": "The verse takes the practice seriously enough to name it and at the same time refuses it any standing of its own, since the whole sentence is governed by taking refuge with the One who made everything in it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:102",
+       "why": "they harm no one by it except by the permission of Allah"
+      },
+      {
+       "ref": "20:69",
+       "why": "the sorcerer does not succeed wherever he goes"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "وَمِن",
+       "t": "wa-min",
+       "g": "and from"
+      },
+      {
+       "a": "شَرِّ",
+       "t": "sharri",
+       "g": "the evil of"
+      },
+      {
+       "a": "حَاسِدٍ",
+       "t": "ḥāsidin",
+       "g": "an envier"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "حَسَدَ",
+       "t": "ḥasad",
+       "g": "he envies"
+      }
+     ],
+     "sense": "The last named danger needs no equipment and leaves no trace. A man looks at what somebody else has and wants it gone from him, and the verse treats that look as a thing to take shelter from.",
+     "notes": [
+      {
+       "t": "The clause when he envies limits the refuge to the acted moment. Envy that a person notices in himself and puts down is not what is being named here, on the plain reading of the condition attached.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Hasad in Arabic usage is wanting a favour taken away from the one who has it, which is a different thing from wanting the like of it for yourself. The Qur'an records this as a stated motive of people who wished the believers back into disbelief.",
+       "lvl": "quran",
+       "src": "2:109"
+      },
+      {
+       "t": "Aisha reported that each night when he went to his bed the Prophet ﷺ would bring his palms together, blow into them, recite Qul huwa Allahu ahad and the two surahs of refuge, then wipe over what he could reach of his body, starting with his head and face, and that he did this three times.",
+       "lvl": "sunnah",
+       "src": "Sahih al-Bukhari, from Aisha, in the Book of the Virtues of the Qur'an"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:109",
+       "why": "many wished to turn you back, out of envy from within themselves"
+      },
+      {
+       "ref": "4:54",
+       "why": "or do they envy people for what Allah gave them of His bounty"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
