@@ -413,21 +413,13 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <div class="owel">Still owed</div>
 <div class="split"><div>Set aside<b data-accrued>·</b></div><div>Already given<b data-given>·</b></div></div>
 </div>
-<div class="fund" id="fund-masjid">
-<div class="nm">Masjid fund</div>
-<div class="rate">17.5 percent of money received, toward helping build masajid</div>
-<div class="owe" data-owe>·</div>
-<div class="owel">Still owed</div>
-<div class="split"><div>Set aside<b data-accrued>·</b></div><div>Already given<b data-given>·</b></div></div>
-</div>
-</div>
-
-<div class="honest" id="lg-honest">These two are set aside from money received. They are a commitment of the keeper, not a condition of any gift, and no giver was ever promised that their particular gift would go to zakat or to a masjid.</div>
+<div id="lg-water" style="margin:.9rem 0 0"></div>
+<div class="honest" id="lg-honest">The zakat is set aside from everything received. It is a commitment of the keeper, not a condition of any gift, and no giver was ever promised that their particular gift would go anywhere in particular. What sits beneath it is a waterfall, not a promise: costs at what they cost, a household floor, and whatever stands above it.</div>
 
 <h2 class="sec">Record something you have given</h2>
 <div class="panel">
 <div class="giveform">
-<select class="fi" id="lg-kind"><option value="zakat">Zakat</option><option value="masjid">Masjid fund</option></select>
+<select class="fi" id="lg-kind"><option value="zakat">Zakat &mdash; the due, given onward</option><option value="upkeep">Upkeep &mdash; hosting, models, tools</option><option value="household">Household &mdash; drawn for the family</option><option value="onward">Onward &mdash; given above the floor</option></select>
 <input class="fi" id="lg-amount" type="text" inputmode="decimal" placeholder="Amount"/>
 <input class="fi wide" id="lg-note" placeholder="Who it went to (optional)"/>
 <input class="fi" id="lg-date" type="date"/>
@@ -439,7 +431,7 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <h2 class="sec">Month by month</h2>
 <div class="panel" style="overflow-x:auto">
-<table id="lg-months"><thead><tr><th>Month</th><th>Received</th><th>Fees</th><th>Net</th><th>Zakat 2.5%</th><th>Masjid 17.5%</th></tr></thead><tbody></tbody></table>
+<table id="lg-months"><thead><tr><th>Month</th><th>Received</th><th>Fees</th><th>Net</th><th>Zakat 2.5%</th><th>Given</th></tr></thead><tbody></tbody></table>
 <p class="muted" id="lg-mnote" style="margin-top:.6rem"></p>
 </div>
 
@@ -1578,20 +1570,49 @@ $("v-go").addEventListener("click",function(){
     if(!rows||!rows.length){box.innerHTML='<p class="muted">Nothing recorded yet. When you give something away, write it here so the number above stays true.</p>';return}
     box.innerHTML='<table><thead><tr><th>Date</th><th>Fund</th><th>Amount</th><th>Note</th><th></th></tr></thead><tbody>'+
       rows.map(function(g){
-        return "<tr><td>"+esc(g.date)+"</td><td>"+(g.kind==="zakat"?"Zakat":"Masjid fund")+"</td><td>"+cash(g.amountMinor,g.currency)+"</td><td>"+esc(g.note||"·")+
+        return "<tr><td>"+esc(g.date)+"</td><td>"+({zakat:"Zakat",upkeep:"Upkeep",household:"Household",onward:"Onward"}[g.kind]||esc(g.kind))+"</td><td>"+cash(g.amountMinor,g.currency)+"</td><td>"+esc(g.note||"·")+
           '</td><td><button class="ghost" data-rmg="'+esc(g.id)+'">remove</button></td></tr>';
       }).join("")+"</tbody></table>";
+  }
+  /* The waterfall, in the order the money actually has to move. Zakat is
+     shown first and separately because it is the only line that is a due
+     rather than a decision. */
+  function water(w){
+    var box=$("lg-water"); if(!box) return;
+    if(!w){ box.innerHTML=""; return; }
+    function step(n,label,value,note,tone){
+      return '<div style="display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;border-top:1px solid rgba(233,200,106,.14)">'+
+        '<span class="muted" style="font-size:.7rem;min-width:1.1rem;font-weight:800'+(tone?";color:"+tone:"")+'">'+n+'</span>'+
+        '<span style="flex:1"><b style="font-size:.82rem'+(tone?";color:"+tone:"")+'">'+label+'</b>'+
+        '<p class="muted" style="margin:.15rem 0 0;font-size:.72rem">'+note+'</p></span>'+
+        '<b style="font-size:.9rem;white-space:nowrap'+(tone?";color:"+tone:"")+'">'+value+'</b></div>';
+    }
+    var owed=w.zakat.outstanding;
+    box.innerHTML =
+      '<p class="muted" style="margin:0 0 .3rem;font-size:.72rem">Where the money stands, after '+
+        w.monthsRun+' month'+(w.monthsRun===1?"":"s")+' of running:</p>'+
+      step("1","Zakat, off the gross", cash(owed),
+           owed>0 ? cash(w.zakat.due)+" is due and "+cash(w.zakat.given)+" has gone. This much is not yours to spend."
+                  : "All of it has been given onward. &#10022;",
+           owed>0 ? "#f0b429" : "#6fcf97")+
+      step("2","Upkeep, at what it costs", cash(w.upkeep.spent),
+           "hosting, domains, the models it thinks with")+
+      step("3","Household floor", cash(w.household.undrawn)+" left",
+           cash(w.household.floor)+" a month &times; "+w.monthsRun+" = "+cash(w.household.target)+
+           " &middot; "+cash(w.household.taken)+" drawn so far")+
+      step("4","Above the floor, to give onward", cash(w.onward.remaining),
+           cash(w.onward.available)+" stands above the floor &middot; "+cash(w.onward.given)+" already given");
   }
   function render(j){
     DATA=j;CUR=j.currency||"usd";
     if(j.ok===false&&j.reason==="stripe"){$("lg-setup").hidden=false;$("lg-wrap").hidden=true;return}
     $("lg-setup").hidden=true;$("lg-wrap").hidden=false;
     fund("zakat",j.funds&&j.funds.zakat);
-    fund("masjid",j.funds&&j.funds.masjid);
+    water(j.waterfall);
     var tb=$("lg-months").querySelector("tbody");
     var ms=j.months||[];
     tb.innerHTML=ms.map(function(m){
-      return "<tr><td><b>"+esc(m.month)+"</b></td><td>"+cash(m.gross)+"</td><td>"+cash(m.fee)+"</td><td>"+cash(m.net)+"</td><td>"+cash(m.zakat)+"</td><td>"+cash(m.masjid)+"</td></tr>";
+      return "<tr><td><b>"+esc(m.month)+"</b></td><td>"+cash(m.gross)+"</td><td>"+cash(m.fee)+"</td><td>"+cash(m.net)+"</td><td>"+cash(m.zakat)+"</td><td>"+cash(m.givenZakat||0)+"</td></tr>";
     }).join("")||'<tr><td colspan="6" class="muted">No money has arrived yet.</td></tr>';
     var t=j.totals||{};
     $("lg-mnote").textContent="All time: "+cash(t.gross)+" received across "+(t.count||0)+" payments, "+cash(t.fee)+" in Stripe fees, "+cash(t.net)+" net."+
