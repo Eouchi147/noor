@@ -65,6 +65,14 @@ export const DIALS = {
                          g: "Traffic", n: "Measure how long visits last",
                          h: "Aggregate seconds only, no identifier travels with them. Off stops collection on the next request." },
 
+  /* ---- the ledger ----------------------------------------------------
+     A floor, not a share. Below this figure the work cannot become the
+     keeper's occupation; above it, what is left is meant to leave. Zakat is
+     never affected by this number, because a due is not a remainder. */
+  "ledger.floor": { t: "num", def: 20000, min: 0, max: 1000000,
+                    g: "The Ledger", n: "Household floor each month",
+                    h: "In whole units of your currency. The private ledger counts this per month elapsed since the first gift arrived, and treats everything above it as onward giving. Never shown to a reader." },
+
   /* ---- the journal ---------------------------------------------------
      Three switches rather than one, because a section can go wrong in three
      different ways and the owner should be able to answer each of them

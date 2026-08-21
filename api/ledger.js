@@ -1,11 +1,25 @@
 // The Giving Ledger · owner-only. The promise, kept in arithmetic.
 //
 // The house sets aside, as a personal commitment of the keeper and never as
-// a condition of any gift, 2.5 percent of money received for zakat-eligible
-// causes and 17.5 percent toward a fund to help build masajid. No giver was
-// ever told that their particular gift would go to either. This endpoint
-// exists so the keeper always knows the one number that matters: what is
-// still owed.
+// a condition of any gift, 2.5 percent of everything received for
+// zakat-eligible causes. That share is not the Codex's to spend. No giver was
+// ever told that their particular gift would go anywhere in particular. This
+// endpoint exists so the keeper always knows the one number that matters:
+// what is still owed.
+//
+// Beneath the due, the rest of the money is shown as a waterfall rather than
+// as further promises, because the sources fix no percentages there and
+// nothing should be attributed to God that He did not fix:
+//
+//   UPKEEP     what it actually costs to keep the thing alive: hosting,
+//              domains, the models it thinks with. Cost driven, not a share.
+//   HOUSEHOLD  a floor, not a share, counted per month the work has run. Set
+//              in Controls. Below it this cannot become the keeper's work.
+//   ONWARD     whatever stands above the floor. Meant to leave.
+//
+// Zakat sits above all three and is computed on the GROSS, never on what is
+// left after costs, because a due is not a remainder. In a thin month the
+// floor goes unmet and the zakat is still owed.
 //
 // It reads Stripe for succeeded payments, page by page, subtracts refunds,
 // reads the Stripe fee where the balance transaction gives it, and holds the
@@ -140,16 +154,19 @@ function verify(cookieHeader, secret) {
 
 /* ---------- the two set-asides, in basis points so the maths is exact ---- */
 export const FUNDS = {
-  zakat: { bp: 250, label: "Zakat", pct: "2.5 percent", of: "zakat-eligible causes" },
-  masjid: { bp: 1750, label: "Masjid fund", pct: "17.5 percent", of: "a fund to help build masajid" }
+  zakat: { bp: 250, label: "Zakat", pct: "2.5 percent", of: "zakat-eligible causes" }
 };
 export const HONEST_LINE =
-  "These two are set aside from money received. They are a commitment of the keeper, " +
+  "The zakat is set aside from everything received. It is a commitment of the keeper, " +
   "not a condition of any gift, and no giver was ever promised that their particular " +
-  "gift would go to zakat or to a masjid.";
+  "gift would go anywhere in particular. What sits beneath it is a waterfall, not a " +
+  "promise: costs at what they cost, a household floor, and whatever stands above it.";
 
 const share = (grossMinor, bp) => Math.round((grossMinor * bp) / 10000);
-const KINDS = ["zakat", "masjid"];
+const KINDS = ["zakat", "upkeep", "household", "onward"];
+/* Only the zakat accrues as a percentage. The other three are places money
+   goes, recorded as it goes, so the waterfall can be shown against them. */
+const ACCRUING = ["zakat"];
 const LIST_CAP = 500;
 const DATE_OK = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -205,7 +222,7 @@ export async function fetchCharges(key, from, to, fetchImpl) {
 }
 
 /* ---------- the arithmetic, on its own, so it can be tested and reused --- */
-export function tally(charges, given) {
+export function tally(charges, given, floorMinor, nowMonth) {
   const byCur = {};
   const months = {};
   let feesPartial = false;
@@ -229,7 +246,7 @@ export function tally(charges, given) {
 
     const month = c.created ? new Date(c.created * 1000).toISOString().slice(0, 7) : "unknown";
     const mk = cur + "|" + month;
-    if (!months[mk]) months[mk] = { month, currency: cur, gross: 0, fee: 0, net: 0, count: 0, zakat: 0, masjid: 0, givenZakat: 0, givenMasjid: 0 };
+    if (!months[mk]) months[mk] = { month, currency: cur, gross: 0, fee: 0, net: 0, count: 0, zakat: 0, givenZakat: 0 };
     months[mk].gross += gross;
     months[mk].fee += fee;
     months[mk].count += 1;
@@ -242,7 +259,7 @@ export function tally(charges, given) {
   /* the accrual is taken on the whole, not month by month, so the total is
      exactly the percentage of the total and no rounding creeps in */
   const funds = {};
-  KINDS.forEach(k => {
+  ACCRUING.forEach(k => {
     const accrued = share(primary.gross, FUNDS[k].bp);
     funds[k] = {
       key: k,
@@ -268,27 +285,67 @@ export function tally(charges, given) {
 
   cleanGiven.forEach(g => {
     if (g.currency !== primary.currency) return;
-    funds[g.kind].given += g.amountMinor;
+    if (funds[g.kind]) funds[g.kind].given += g.amountMinor;
     const month = DATE_OK.test(g.date) ? g.date.slice(0, 7) : "unknown";
     const mk = g.currency + "|" + month;
-    if (!months[mk]) months[mk] = { month, currency: g.currency, gross: 0, fee: 0, net: 0, count: 0, zakat: 0, masjid: 0, givenZakat: 0, givenMasjid: 0 };
+    if (!months[mk]) months[mk] = { month, currency: g.currency, gross: 0, fee: 0, net: 0, count: 0, zakat: 0, givenZakat: 0 };
     if (g.kind === "zakat") months[mk].givenZakat += g.amountMinor;
-    else months[mk].givenMasjid += g.amountMinor;
   });
 
-  KINDS.forEach(k => { funds[k].outstanding = funds[k].accrued - funds[k].given; });
+  ACCRUING.forEach(k => { funds[k].outstanding = funds[k].accrued - funds[k].given; });
 
   const monthRows = Object.values(months)
     .filter(m => m.currency === primary.currency)
     .map(m => {
       m.net = m.gross - m.fee;
       m.zakat = share(m.gross, FUNDS.zakat.bp);
-      m.masjid = share(m.gross, FUNDS.masjid.bp);
       return m;
     })
     .sort((a, b) => (a.month < b.month ? 1 : a.month > b.month ? -1 : 0));
 
+  /* ---- the waterfall ------------------------------------------------
+     Zakat off the gross first and untouchable. Then costs at what they
+     actually cost. Then a floor for the household, counted per month the
+     work has been running, capped by what is actually there. Whatever
+     stands above the floor is meant to leave. */
+  const spentIn = k => cleanGiven.filter(g => g.kind === k && g.currency === primary.currency)
+                                 .reduce((t, g) => t + g.amountMinor, 0);
+  const zakatDue = share(primary.gross, FUNDS.zakat.bp);
+  let left = primary.gross - zakatDue;
+  const upkeepSpent = spentIn("upkeep");
+  const upkeepCovered = Math.min(left, upkeepSpent);
+  left -= upkeepCovered;
+
+  /* the earliest month any money arrived, found by comparing rather than by
+     trusting the order the rows came back in */
+  const allMonths = Object.values(months).filter(m => m.currency === primary.currency && m.month !== "unknown").map(m => m.month);
+  const firstMonth = allMonths.length ? allMonths.reduce((a, b) => (b < a ? b : a)) : null;
+  let monthsRun = 0;
+  if (firstMonth) {
+    const [fy, fm] = firstMonth.split("-").map(Number);
+    const now = nowMonth || new Date().toISOString().slice(0, 7);
+    const [ny, nm] = now.split("-").map(Number);
+    monthsRun = Math.max(1, (ny - fy) * 12 + (nm - fm) + 1);
+  }
+  const householdTarget = Math.max(0, Math.round(floorMinor || 0)) * monthsRun;
+  const householdTaken = spentIn("household");
+  const householdAllowed = Math.min(left, householdTarget);
+  left -= householdAllowed;
+  const onwardGiven = spentIn("onward");
+
+  const waterfall = {
+    monthsRun,
+    zakat:     { due: zakatDue, given: funds.zakat ? funds.zakat.given : 0,
+                 outstanding: Math.max(0, zakatDue - (funds.zakat ? funds.zakat.given : 0)) },
+    upkeep:    { spent: upkeepSpent, covered: upkeepCovered },
+    household: { floor: Math.max(0, Math.round(floorMinor || 0)), target: householdTarget,
+                 taken: householdTaken, allowed: householdAllowed,
+                 undrawn: Math.max(0, householdTarget - householdTaken) },
+    onward:    { available: left, given: onwardGiven, remaining: Math.max(0, left - onwardGiven) }
+  };
+
   return {
+    waterfall,
     currency: primary.currency,
     totals: {
       gross: primary.gross,
@@ -326,7 +383,20 @@ export async function computeLedger(opts) {
   } catch {
     return { ok: false, reason: "stripe", configured: true, store, ...tally([], given) };
   }
-  return { ok: true, configured: true, store, range: { from: o.from || null, to: o.to || null }, ...tally(charges, given) };
+  /* the household floor, set in Controls in whole units, held here in minor
+     units so it never meets a float on the way to the arithmetic */
+  let floorMinor = 2000000;
+  try {
+    const raw = (await kv([["GET", "nb:settings"]]))[0];
+    if (raw) {
+      const v = JSON.parse(raw)["ledger.floor"];
+      if (v !== undefined && v !== null && Number.isFinite(Number(v)) && Number(v) >= 0)
+        floorMinor = Math.round(Number(v) * 100);
+    }
+  } catch { /* the default stands */ }
+
+  return { ok: true, configured: true, store, range: { from: o.from || null, to: o.to || null },
+           ...tally(charges, given, floorMinor, new Date().toISOString().slice(0, 7)) };
 }
 
 const unix = (s, endOfDay) => {
