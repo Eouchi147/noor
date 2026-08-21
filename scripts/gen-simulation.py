@@ -24,16 +24,114 @@ CSS = """
 .brk .b h4{margin:0 0 .3rem;font-size:.9rem;font-weight:800;color:#2C2416}
 .brk .b .t{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin:0 0 .45rem}
 .brk .b p{margin:0;font-size:.82rem;line-height:1.8;color:rgba(44,36,22,.78)}
-.scale{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.2rem 1rem 1rem;margin:1rem 0}
-.scale .row{display:flex;align-items:center;gap:.6rem;margin:.5rem 0}
-.scale .lbl{font-size:.68rem;color:rgba(255,254,247,.62);width:5.4rem;flex:none;text-align:end}
-.scale .bar{height:.55rem;border-radius:999px;background:linear-gradient(90deg,#C9A227,#F4D46A);flex:none}
-.scale .bar.dim{background:rgba(255,254,247,.16)}
-.scale .val{font-size:.68rem;color:rgba(244,212,106,.85);font-weight:800}
 .hon{border-inline-start:3px solid rgba(201,162,39,.55);background:rgba(201,162,39,.06);border-radius:0 14px 14px 0;padding:.9rem 1rem;margin:1rem 0}
 .hon b{color:#8a6d13}
 .hon p{margin:.4rem 0 0;font-size:.85rem;line-height:1.85;color:rgba(44,36,22,.8)}
 """
+
+
+# ---- the animated figures --------------------------------------------------
+# Each one animates the single thing its paragraph claims, and each one is
+# written so the still frame is already true: a reader who has asked for no
+# motion loses nothing but the motion.
+
+# The figures hold their finished state until they are actually looked at.
+# Nothing here is required for the page to be correct: if the observer never
+# runs, every figure simply stays in its true still frame.
+FIG_JS = """<script>
+(function(){
+  var figs = document.querySelectorAll(".nfig");
+  if (!figs.length) return;
+  if (!("IntersectionObserver" in window)) {
+    figs.forEach(function(f){ f.classList.add("ngo"); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      e.target.classList.add("ngo");
+      io.unobserve(e.target);      /* each figure arrives once and stays arrived */
+    });
+  }, { rootMargin: "0px 0px -12% 0px", threshold: .2 });
+  figs.forEach(function(f){ io.observe(f); });
+})();
+</script>"""
+
+FIG_SCALE = (
+  '<figure class="nfig nscale">'
+  '<p class="nlede">If a life of eighty years is drawn to the scale the Qur&rsquo;an gives it, the drawing fails, '
+  'because one of the two lines has no end. This is the closest an honest diagram gets:</p>'
+
+  '<div class="nrow">'
+    '<p class="nrl">This life</p>'
+    '<div class="ntrack"><span class="nbar" style="--w:7px"></span></div>'
+    '<p class="nrv">a finger of water</p>'
+  '</div>'
+
+  '<div class="nrow">'
+    '<p class="nrl">What follows</p>'
+    '<div class="ntrack nendless"><span class="nbar" style="--w:100%"></span></div>'
+    '<p class="nmore"><span>the sea</span><i aria-hidden="true">&rarr;</i></p>'
+    '<p class="nrv" style="font-weight:400;color:rgba(255,254,247,.7);font-size:.72rem">and it does not stop at the edge of this card</p>'
+  '</div>'
+
+  '<figcaption class="ncap">Drawn from <b>Muslim 2858</b>. The second bar is cut off by the screen, not by the reality.</figcaption>'
+  '</figure>')
+
+FIG_REMADE = (
+  '<figure class="nfig">'
+  '<p class="nlede">If existence is not a property a thing owns but something continuously given, then nothing here '
+  'coasts. Every point below leaves and is returned on its own clock, which is why the field never goes dark and is '
+  'never twice the same.</p>'
+  '<div class="ngrid" aria-hidden="true">' + "".join(
+      '<i style="--d:%.2fs;--s:%.2fs"></i>' % (1.9 + (i % 7) * 0.28, (i * 0.137) % 3.4) for i in range(56)
+  ) + '</div>'
+  '<figcaption class="ncap">A picture of a claim, not of physics. Scholars differ on how far to press it; what is '
+  'agreed is that nothing subsists on its own. <b>Editorial</b></figcaption>'
+  '</figure>')
+
+FIG_NIGHT = (
+  '<figure class="nfig">'
+  '<p class="nlede">You have rehearsed the exit every night of your life and called it going to bed. The Qur&rsquo;an '
+  'uses one verb for both: souls are taken in death, and taken in sleep, and one of the two is sent back.</p>'
+  '<div class="narc">'
+  '<svg viewBox="0 0 300 96" role="img" aria-label="An arc from waking through sleep and back to waking">'
+    '<defs>'
+      '<linearGradient id="nagrad" x1="0" y1="0" x2="1" y2="0">'
+        '<stop offset="0%" stop-color="#C9A227"/><stop offset="50%" stop-color="rgba(255,254,247,.35)"/>'
+        '<stop offset="100%" stop-color="#F4D46A"/>'
+      '</linearGradient>'
+      '<path id="narcp" d="M18 74 C 70 8, 230 8, 282 74"/>'
+    '</defs>'
+    '<use href="#narcp" class="ntrack2"/>'
+    '<use href="#narcp" class="npath" style="--len:330"/>'
+    '<circle class="ndot nwalk" r="4.5" style="offset-path:path(\'M18 74 C 70 8, 230 8, 282 74\')"/>'
+    '<circle class="ndot" cx="18" cy="74" r="3"/>'
+    '<circle class="ndot" cx="282" cy="74" r="3"/>'
+    '<text class="nlbl" x="18" y="90" text-anchor="start">Waking</text>'
+    '<text class="nlbl on" x="150" y="18" text-anchor="middle">The soul is taken</text>'
+    '<text class="nlbl" x="282" y="90" text-anchor="end">Waking</text>'
+  '</svg>'
+  '</div>'
+  '<figcaption class="ncap">&ldquo;Allah takes the souls at the time of their death, and those that did not die, '
+  'during their sleep.&rdquo; <b>Qur&rsquo;an 39:42</b></figcaption>'
+  '</figure>')
+
+FIG_BREAK = (
+  '<figure class="nfig">'
+  '<p class="nlede">The two claims are close enough to be confused and far enough apart to lead opposite lives. '
+  'The whole difference sits in one word.</p>'
+  '<div class="ntwo">'
+    '<div class="ncol"><h4>The modern version</h4>'
+    '<p>This world is <b>false</b>. Nothing in it finally counts, so nothing in it need be paid for. The correct '
+    'response is contempt, and contempt is cheap.</p></div>'
+    '<div class="ncol nright"><h4>What the sources say</h4>'
+    '<p>This world is <b>not final</b>. It was not made in vain, an atom&rsquo;s weight is seen, and it is therefore '
+    'to be held loosely and used carefully at the same time.</p></div>'
+  '</div>'
+  '<figcaption class="ncap">&ldquo;Our Lord, You did not create this in vain&rdquo; <b>3:191</b> &middot; '
+  '&ldquo;We did not create the heavens and the earth and what is between them in play&rdquo; <b>44:38</b></figcaption>'
+  '</figure>')
 
 def qv(ar, en, ref):
     return ('<div class="qv"><p class="a notranslate" translate="no">' + ar + '</p>'
@@ -80,11 +178,7 @@ M.append(sec("small", "قَلِيل", "How small it actually is",
   + card("How to stand in it", "A stranger, or someone crossing a road.",
     "<p>&ldquo;Be in this world as though you were a stranger, or a passer-by.&rdquo; Ibn &lsquo;Umar, who narrated it, used to say: when you reach evening do not expect the morning, and when you reach morning do not expect the evening. Not gloom. Luggage discipline.</p>",
     ref("sunnah","Sunnah","Bukhari 6416"))
-  + '<div class="scale"><p style="color:#FFFEF7;font-size:.82rem;margin:0 0 .8rem;line-height:1.75">'
-    'If a life of eighty years is drawn to the scale the Qur&rsquo;an gives it, the drawing fails, because one of the two lines has no end. This is the closest an honest diagram gets:</p>'
-    '<div class="row"><span class="lbl">this life</span><span class="bar" style="width:6px"></span><span class="val">a finger of water</span></div>'
-    '<div class="row"><span class="lbl">what follows</span><span class="bar dim" style="width:72%"></span><span class="val">the sea, and it does not stop at the edge of this card</span></div>'
-    '<p class="cap" style="color:rgba(255,254,247,.55);font-size:.7rem;margin:.8rem 0 0;line-height:1.65">Drawn from Muslim 2858. The bar for what follows is cut off by the screen, not by the reality.</p></div>'))
+  + FIG_SCALE))
 
 # ---- 3 · built as a test ---------------------------------------------------
 M.append(sec("designed", "ابْتِلَاء", "It was built to be entered, and built to be a test",
@@ -111,7 +205,8 @@ M.append(sec("notfake", "بَاطِلًا", "But it is not fake, and this is exa
   + card("And the pain here is real", "He &#65018; wept when his son died.",
     "<p>When his infant son Ibrahim died in his arms, the Prophet &#65018; wept, and said: &ldquo;The eye sheds tears and the heart grieves, and we say nothing except what pleases our Lord.&rdquo; A teaching that this life is unreal would have made that grief a mistake. It was not a mistake. Grief here is not an error in the code; it is the weight of a real loss in a world that will not last.</p>"
     "<p>So the accurate sentence is not <i>this life is fake</i>. It is harder and better than that: <b>this life is short, light, and decisive.</b> Small in size. Infinite in weight. And the shortness is not an excuse to sit out; the shortness is the reason to move.</p>",
-    ref("sunnah","Sunnah","Bukhari 1303") + ref("editorial","Editorial","the phrasing is ours, the ruling is not"))))
+    ref("sunnah","Sunnah","Bukhari 1303") + ref("editorial","Editorial","the phrasing is ours, the ruling is not"))
+  + FIG_BREAK))
 
 # ---- 5 · continuous creation ----------------------------------------------
 M.append(sec("rendered", "التَّجْدِيد", "The part that will surprise you: a world re-created moment by moment",
@@ -125,7 +220,8 @@ M.append(sec("rendered", "التَّجْدِيد", "The part that will surprise 
      "Fatir 35:41")
   + card("Say it plainly", "Held, not left running.",
     "<p>Read that verse next to the doctrine and the picture is unmistakable: the universe is not a machine that was wound up and released. It is held. The regularity you rely on every second, that the floor stays solid and the sun returns, is in this reading not the world&rsquo;s own habit but His, kept faithfully enough that science works and no one is fooled.</p>",
-    ref("quran","Qur'an","35:41"))))
+    ref("quran","Qur'an","35:41"))
+  + FIG_REMADE))
 
 # ---- 6 · sleep -------------------------------------------------------------
 M.append(sec("sleep", "النَّوْم", "You already leave it every night",
@@ -138,7 +234,8 @@ M.append(sec("sleep", "النَّوْم", "You already leave it every night",
     ref("quran","Qur'an","39:42") + ref("sunnah","Sunnah","Bukhari 6312"))
   + card("A famous line, honestly labelled", "&ldquo;People are asleep, and when they die they awaken.&rdquo;",
     "<p>You will meet this sentence everywhere, usually presented as a hadith. It is not established as a statement of the Prophet &#65018;. It is widely attributed to &lsquo;Ali ibn Abi Talib, and its chain is contested. It is quoted here because it is beautiful and because you deserve to know exactly what it is, which is a saying of the pious rather than revelation.</p>",
-    ref("debated","Attributed","commonly to 'Ali; chain contested, not an established hadith"))))
+    ref("debated","Attributed","commonly to 'Ali; chain contested, not an established hadith"))
+  + FIG_NIGHT))
 
 # ---- 7 · four breaks -------------------------------------------------------
 M.append(sec("breaks", "الفَرْق", "Four places the metaphor breaks",
@@ -205,7 +302,8 @@ html = shell(
     kick="The question under the question",
     h1="Are we living in a simulation?",
     lead="Modern philosophy asks whether the world is rendered. The Qur&rsquo;an asked something older and harder: whether it is <i>final</i>. It answers no, then does the thing no simulation theory has ever done, and tells you who holds it, why you were placed inside, and what happens when it stops.",
-    css=CSS, jsonld=JSONLD, main="\n".join(M))
+    extra_head='<link rel="stylesheet" href="/assets/anim.css?v=93"/>',
+    css=CSS, jsonld=JSONLD, main="\n".join(M) + FIG_JS)
 
 open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "simulation.html"), "w", encoding="utf-8").write(html)
 print("simulation.html written:", len(html), "bytes")

@@ -1,0 +1,136 @@
+/* NOOR · animated figures
+   ------------------------------------------------------------------
+   A small kit of diagrams that move, meant to be reused in any room. No
+   images, no libraries: everything here is type, CSS and a little SVG, so a
+   figure costs nothing to load and never blocks a word of the page.
+
+   Two rules hold throughout.
+
+   First, motion is evidence, not decoration. Each figure animates the ONE
+   thing its paragraph is claiming — a bar that will not stop growing, a
+   world that winks out and is remade, a soul taken and given back. If the
+   animation could be removed without losing the argument, it should not be
+   there.
+
+   Second, the still frame must be the honest one. Every figure is written so
+   that its finished state, with no motion at all, still says the true thing.
+   That is what a reader with prefers-reduced-motion sees, what a screenshot
+   shows, and what appears if the observer never fires. Motion is the second
+   telling, never the only one. */
+
+.nfig{
+  background:linear-gradient(170deg,#14100A,#1b2440);
+  border:1px solid rgba(244,212,106,.22);
+  border-radius:18px;padding:1.3rem 1.15rem 1.15rem;margin:1.15rem 0;
+  color:#FFFEF7;position:relative;overflow:hidden;
+}
+.nfig .nlede{font-size:.82rem;line-height:1.8;margin:0 0 1.1rem;color:rgba(255,254,247,.9)}
+.nfig .ncap{font-size:.7rem;line-height:1.7;margin:1rem 0 0;color:rgba(255,254,247,.5)}
+.nfig .ncap b{color:rgba(244,212,106,.8);font-weight:700}
+
+/* ---- 1 · the scale ---------------------------------------------------
+   The old version laid label, bar and value in one flex row, so a 72% bar
+   left the value about eleven pixels of room and the text fell down the
+   right edge one letter at a time. Everything stacks now: nothing has to
+   fight the bar for width at any screen size. */
+.nscale .nrow{margin:0 0 1.15rem}
+.nscale .nrow:last-of-type{margin-bottom:0}
+.nrl{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  color:rgba(255,254,247,.55);margin:0 0 .4rem}
+.ntrack{height:.55rem;border-radius:999px;background:rgba(255,254,247,.07);position:relative;overflow:hidden}
+.nbar{position:absolute;inset-block:0;inset-inline-start:0;border-radius:999px;
+  background:linear-gradient(90deg,#C9A227,#F4D46A);
+  width:var(--w);           /* the still frame is already correct */
+}
+.nrv{font-size:.75rem;font-weight:800;color:rgba(244,212,106,.9);margin:.45rem 0 0;line-height:1.6}
+
+/* the endless bar: it reaches the edge and keeps a light travelling out of it */
+.ntrack.nendless{background:rgba(255,254,247,.07)}
+.nendless .nbar{
+  background:linear-gradient(90deg,rgba(255,254,247,.22) 0%,rgba(255,254,247,.22) 70%,rgba(244,212,106,.5) 100%);
+}
+.nendless::after{
+  content:"";position:absolute;inset-block:0;inset-inline-end:0;width:38%;
+  background:linear-gradient(90deg,transparent,rgba(244,212,106,.16));
+  pointer-events:none;
+}
+.nrow .nmore{display:flex;align-items:center;gap:.4rem;margin:.45rem 0 0}
+.nrow .nmore span{font-size:.75rem;font-weight:800;color:rgba(244,212,106,.9);line-height:1.6}
+.nrow .nmore i{font-style:normal;color:rgba(244,212,106,.75);font-size:.9rem;flex:none}
+
+/* ---- 2 · the world remade every instant ------------------------------
+   A field of points. Each one leaves and returns on its own clock, so the
+   whole is never absent and never the same twice. */
+.ngrid{display:grid;grid-template-columns:repeat(14,1fr);gap:.42rem;margin:.3rem 0 0}
+.ngrid i{aspect-ratio:1;border-radius:50%;background:rgba(244,212,106,.75);display:block;
+  opacity:.85;transform:scale(1)}
+@media (max-width:26rem){ .ngrid{grid-template-columns:repeat(10,1fr)} }
+
+/* ---- 3 · the nightly leaving -----------------------------------------
+   An arc from waking to waking, with the point of departure marked. */
+.narc{position:relative;margin:.4rem 0 0}
+.narc svg{width:100%;height:auto;display:block;overflow:visible}
+.narc .ntrack2{stroke:rgba(255,254,247,.14);stroke-width:2.5;fill:none}
+.narc .npath{stroke:url(#nagrad);stroke-width:2.5;fill:none;stroke-linecap:round}
+.narc .ndot{fill:#F4D46A}
+/* The travelling marker needs offset-path. Where that is missing the circle
+   would otherwise sit at the origin, a gold dot stranded in the corner of the
+   drawing, so it is not drawn at all unless it can be drawn correctly. The
+   arc, its endpoints and its labels carry the meaning on their own. */
+.narc .nwalk{display:none}
+@supports (offset-path: path("M0 0 L1 1")){ .narc .nwalk{display:inline} }
+
+.narc .nlbl{font:700 8px Inter,system-ui,sans-serif;fill:rgba(255,254,247,.62);
+  letter-spacing:.1em;text-transform:uppercase}
+.narc .nlbl.on{fill:rgba(244,212,106,.95)}
+
+/* ---- 4 · two columns that disagree -----------------------------------
+   For the places a metaphor breaks: the claim on one side, what the sources
+   actually say on the other. */
+.ntwo{display:grid;grid-template-columns:1fr;gap:.5rem;margin:.3rem 0 0}
+@media (min-width:34rem){ .ntwo{grid-template-columns:1fr 1fr;gap:.7rem} }
+.ncol{border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.8rem .85rem;background:rgba(255,254,247,.03)}
+.ncol.nright{border-color:rgba(244,212,106,.32);background:rgba(244,212,106,.06)}
+.ncol h4{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;margin:0 0 .45rem;
+  color:rgba(255,254,247,.5);font-weight:700}
+.ncol.nright h4{color:rgba(244,212,106,.85)}
+.ncol p{font-size:.78rem;line-height:1.75;margin:0;color:rgba(255,254,247,.82)}
+
+/* ================= motion =================
+   Everything above is the finished picture. Everything below is the second
+   telling, and it only runs when the figure is on screen and the reader has
+   not asked for stillness. */
+@media (prefers-reduced-motion:no-preference){
+
+  /* bars draw themselves from nothing to their true width */
+  .nfig.ngo .nbar{animation:ngrow 1.5s cubic-bezier(.16,.84,.36,1) both}
+  @keyframes ngrow{ from{width:0} to{width:var(--w)} }
+
+  /* and the endless one keeps sending light off the edge, for ever */
+  .nfig.ngo .nendless::before{
+    content:"";position:absolute;inset-block:0;width:34%;border-radius:999px;
+    background:linear-gradient(90deg,transparent,rgba(244,212,106,.42),transparent);
+    animation:nrun 2.9s linear 1.5s infinite;
+  }
+  @keyframes nrun{ from{transform:translateX(-40%)} to{transform:translateX(340%)} }
+
+  /* the field: each point on its own clock, so the whole never blinks at once */
+  .nfig.ngo .ngrid i{animation:nremake var(--d,2.4s) ease-in-out var(--s,0s) infinite}
+  @keyframes nremake{
+    0%,100%{opacity:.85;transform:scale(1)}
+    44%{opacity:.06;transform:scale(.55)}
+    56%{opacity:1;transform:scale(1.12)}
+  }
+
+  /* the arc draws once, then the marker walks it, night after night */
+  .nfig.ngo .narc .npath{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
+    animation:ndraw 1.9s ease-out both}
+  @keyframes ndraw{ to{stroke-dashoffset:0} }
+  .nfig.ngo .narc .nwalk{animation:nwalk 7s linear 1.9s infinite}
+  @keyframes nwalk{ from{offset-distance:0%} to{offset-distance:100%} }
+
+  /* the two columns arrive one after the other, never together */
+  .nfig.ngo .ncol{animation:nrise .7s cubic-bezier(.16,.84,.36,1) both}
+  .nfig.ngo .ncol.nright{animation-delay:.22s}
+  @keyframes nrise{ from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+}
