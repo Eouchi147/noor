@@ -30,11 +30,8 @@
 <script src="noor-fx.js" defer></script>
 <script src="noor-ink.js" defer></script>
 <script src="sponsor.js" defer></script>
-<script src="assets/gsap.min.js" defer></script>
-<script src="assets/ScrollTrigger.min.js" defer></script>
-<script src="assets/DrawSVGPlugin.min.js" defer></script>
-<script src="assets/noor-motion.js?v=76" defer></script>
-<script src="quran-study.js" defer></script>
+<script src="/assets/noor-motion-boot.js?v=101" defer></script>
+
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <style>
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#F4D46A;--deep:#1A160F;--sage:#8A9B6E}
@@ -178,7 +175,65 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .pbtn.main{width:2.85rem;height:2.85rem;background:radial-gradient(circle at 40% 32%,#F4D46A,#C9A227);color:#241D12;border:0;box-shadow:0 4px 16px rgba(201,162,39,.45),inset 0 1px 0 rgba(255,255,255,.35)}
 .pbtn.main svg{width:1.12rem;height:1.12rem}
 .pbtn.main:hover{box-shadow:0 6px 22px rgba(201,162,39,.6),inset 0 1px 0 rgba(255,255,255,.35)}
-body.has-player{padding-bottom:74px}
+body.has-player{padding-bottom:80px}
+
+/* ---------- verse by verse ----------
+   The expander is deliberately quiet. It sits under the translation as a rule
+   and a few small capitals, so a page of two hundred verses does not turn into
+   a page of two hundred buttons. */
+.vx{margin-block:.55rem 0;margin-inline-start:2.75rem;display:inline-flex;align-items:center;gap:.4rem;font-size:.63rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:rgba(44,36,22,.42);background:none;border:0;padding:.15rem 0;cursor:pointer;font-family:inherit;transition:color .18s}
+.vx::before{content:"";width:.85rem;height:1px;background:currentColor;opacity:.6;flex:none}
+.vx:hover,.vx:focus-visible{color:#8a6d13}
+.vx.on{color:#8a6d13}
+.vx .vxc{display:inline-block;transition:transform .22s}
+.vx.on .vxc{transform:rotate(90deg)}
+html[dir="rtl"] .vx.on .vxc{transform:rotate(-90deg)}
+.vpan{margin-block:.65rem .25rem;margin-inline-start:2.75rem;border-inline-start:2px solid rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.07),rgba(201,162,39,.02));border-start-end-radius:14px;border-end-end-radius:14px;padding:.9rem 1rem}
+.vwords{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .85rem;direction:rtl}
+.vw{display:flex;flex-direction:column;align-items:center;gap:.08rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:10px;padding:.4rem .55rem;min-width:3.3rem}
+.vw b{font-family:'Amiri Quran',Amiri,serif;font-size:1.1rem;line-height:1.6;color:#241D12;font-weight:400}
+.vw i{font-style:normal;font-size:.59rem;letter-spacing:.01em;color:#8a6d13;font-weight:700;direction:ltr}
+.vw em{font-style:normal;font-size:.62rem;line-height:1.35;color:rgba(44,36,22,.58);text-align:center;direction:ltr;max-width:8rem}
+.vsense{font-size:.845rem;line-height:1.85;color:rgba(44,36,22,.82);margin:0}
+.vnote{margin-top:.65rem;padding-top:.65rem;border-top:1px dashed rgba(44,36,22,.13)}
+.vnote p{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.74);margin:.35rem 0 0}
+.vsrc{display:inline-block;margin-top:.32rem;font-size:.65rem;line-height:1.5;color:rgba(44,36,22,.48);font-style:italic}
+.vlinks{margin-top:.85rem;border-top:1px dashed rgba(44,36,22,.13);padding-top:.65rem}
+.vlinks h6{font-size:.59rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.42);margin:0 0 .4rem}
+.vlink{display:block;width:100%;text-align:start;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:10px;padding:.44rem .62rem;margin-top:.32rem;font-family:inherit;font-size:.75rem;line-height:1.6;color:rgba(44,36,22,.72);cursor:pointer;transition:border-color .18s,background .18s}
+.vlink b{color:#8a6d13;font-weight:800}
+.vlink:hover{border-color:rgba(201,162,39,.55);background:rgba(201,162,39,.07)}
+.vnone,.vwait{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:0}
+.vnone a{color:#8a6d13;text-decoration:underline}
+@media (max-width:520px){.vx,.vpan{margin-inline-start:0}}
+
+/* the four evidence badges, the same four the teaching rooms use and with the
+   same four meanings, so a reader who has learned them once has learned them */
+.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.58rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.22rem .52rem;border:1px solid}
+.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.55);background:rgba(29,107,63,.13)}
+.evb.quran::before{content:"";width:.44rem;height:.44rem;border-radius:999px;background:#1d6b3f;box-shadow:0 0 0 2px rgba(29,107,63,.28);flex:none}
+.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
+.evb.sunnah::before{content:"";width:.44rem;height:.44rem;background:#C9A227;flex:none;transform:rotate(45deg)}
+.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.11)}
+.evb.debated::before{content:"";width:.44rem;height:.44rem;border-radius:999px;border:1.5px dashed #6b4f92;flex:none}
+.evb.editorial{color:rgba(44,36,22,.62);border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.05)}
+.evb.editorial::before{content:"";width:.44rem;height:.1rem;background:rgba(44,36,22,.5);flex:none}
+/* the progress line: three pixels of it, with a finger-sized target grown
+   downwards into the player so the reader can seek without hitting the page */
+#player .pbar{position:relative;height:3px;background:rgba(244,212,106,.16);cursor:pointer}
+#player .pbar i{display:block;height:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:transform .18s linear}
+html[dir="rtl"] #player .pbar i{transform-origin:right center}
+#player .pbar::after{content:"";position:absolute;inset:-2px 0 -9px}
+#player .pbar:hover{background:rgba(244,212,106,.3)}
+/* following is a mode, and the button says which mode you are in */
+#p-follow.off{opacity:.45;border-style:dashed}
+@media (max-width:430px){
+  #player .inner{gap:.4rem;padding-inline:.6rem}
+  .pbtn{width:2.05rem;height:2.05rem}
+  .pbtn.main{width:2.6rem;height:2.6rem}
+  #player .label b{font-size:.72rem}
+}
+@media (prefers-reduced-motion:reduce){#player .pbar i{transition:none}}
 </style>
 <link rel="canonical" href="https://noorcodex.com/quran"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "The Qur'an · NOOR Mushaf", "url": "https://noorcodex.com/quran", "inLanguage": ["en", "ar"], "description": "Read, listen, translate and understand the Qur'an: all 114 surahs in Uthmani script with per-verse recitation by Mishary Rashid Alafasy and English and French translations.", "isPartOf": {"@id": "https://noorcodex.com/#site"}, "about": {"@type": "Book", "name": "The Qur'an", "inLanguage": "ar"}}</script>
@@ -652,8 +707,10 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 
 <!-- BOTTOM PLAYER -->
 <div id="player" role="region" aria-label="Recitation player">
+<div class="pbar" id="p-bar" title="Seek within this verse"><i id="p-fill"></i></div>
 <div class="inner">
 <div class="label"><b id="p-title">·</b><span id="p-sub">Alafasy</span></div>
+<button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
 <button class="pbtn" id="p-prev" aria-label="Previous verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2.4v14H6zM19.5 5v14L9.6 12z"/></svg></button>
 <button class="pbtn main" id="p-toggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
 <button class="pbtn" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
@@ -681,6 +738,7 @@ const INTROS={1:"The Mother of the Book. Seven verses that are themselves a conv
 const $=id=>document.getElementById(id);
 const gatesWrap=$("gates-wrap"), roomBody=$("room-body"), roomHead=$("room-head"), aside=$("gates-aside");
 let cur=null, ayahs=[], trans=[], transOn=true, audio=null, playingIdx=-1, continuous=false, paused=false;
+let chaining=false;   /* true only while the recitation is crossing into the next surah */
 let transEdition="en.sahih";
 
 /* ---------- navigator ---------- */
@@ -694,8 +752,26 @@ $("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");gate
  if(!aside.classList.contains("folded"))aside.scrollIntoView({behavior:"smooth",block:"start"});});
 
 /* ---------- gates: 114 tiles, tiles or compact list ---------- */
-const STUDY=()=>window.NOOR_STUDY||null;
-const isDeep=n=>{const D=STUDY();return !!(D&&D[n]&&D[n].depth==="deep");};
+/* ---------- the study companion, fetched one surah at a time ----------
+   The whole companion is roughly six hundred kilobytes and was downloaded by
+   every visitor to this page, including the majority who never open it. Each
+   surah is now its own small file, fetched the first time it is needed and
+   kept for the rest of the visit. Every record is deep, so isDeep is true
+   without asking the network anything. */
+const SCACHE = Object.create(null);
+const SPENDING = Object.create(null);
+function studyFetch(n){
+  if (SCACHE[n]) return Promise.resolve(SCACHE[n]);
+  if (SPENDING[n]) return SPENDING[n];
+  SPENDING[n] = fetch("/study/" + n + ".json")
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ if (j) SCACHE[n] = j; delete SPENDING[n]; return j; })
+    .catch(function(){ delete SPENDING[n]; return null; });
+  return SPENDING[n];
+}
+/* kept so anything still reaching for the old global keeps working */
+const STUDY=()=>SCACHE;
+const isDeep=n=>true;
 function gateHTML(s){const[n,en,ar,meaning,count,place]=s;const mk=place==="M",deep=isDeep(n);
  return `<button class="gate ${mk?"mk":"md"}${deep?" deep":""}" role="listitem" data-n="${n}" aria-label="Surah ${n}, ${en}, ${meaning}, ${count} ayat, ${mk?"Makkan":"Madinan"}">
   <span class="seal" aria-hidden="true">${n}</span>
@@ -726,7 +802,7 @@ const BISMILLAH=/^بِ?سْ?مِ.{0,45}?رّ?َ?حِ?يمِ?\s*/;
 
 async function openSurah(n,gotoAyah,user){
   if(!SURAHS[n-1])return;
-  stopAudio();
+  if(chaining)killAudio(); else stopAudio();   /* a chained surah keeps the player up and the mode intact */
   cur=n; markActive(n);
   sel.value=String(n);
   $("prev-s").disabled=n<=1; $("next-s").disabled=n>=114;
@@ -746,7 +822,9 @@ async function openSurah(n,gotoAyah,user){
   $("t-status").textContent="Opening…";
   if(user)setTimeout(()=>roomHead.scrollIntoView({behavior:"smooth",block:"start"}),60);  /* jump straight to the reader */
   try{
-    const[arb,tr]=await Promise.all([j(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`),j(`https://api.alquran.cloud/v1/surah/${n}/${transEdition}`)]);
+    /* the verse index rides along with the text: it is local, tiny, and it
+       decides which verses get an expander, so it must be here before render */
+    const[arb,tr]=await Promise.all([j(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`),j(`https://api.alquran.cloud/v1/surah/${n}/${transEdition}`),vIndex()]);
     if(cur!==n)return;
     ayahs=arb.ayahs; trans=tr.ayahs;
     renderAyahs(n);
@@ -768,12 +846,13 @@ function renderAyahs(n){
   const showBismillah=n!==1&&n!==9;
   let html=showBismillah?`<div class="bismillah" translate="no">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<small>In the name of Allah, the Entirely Merciful, the Especially Merciful</small></div>`:"";
   html+=ayahs.map((a,i)=>{let text=a.text;if(i===0&&showBismillah)text=text.replace(BISMILLAH,"");
-   return `<article class="ayah" id="a-${a.numberInSurah}" data-i="${i}">
-    <p class="ar" translate="no">${text}<span class="medallion" translate="no">${a.numberInSurah}</span></p>
+   const v=+a.numberInSurah;
+   return `<article class="ayah" id="a-${v}" data-i="${i}">
+    <p class="ar" translate="no">${text}<span class="medallion" translate="no">${v}</span></p>
     <div class="mt-2.5 flex items-start gap-3">
-      <button class="playbtn flex-none" data-play="${i}" aria-label="Play ayah ${a.numberInSurah}"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="playbtn flex-none" data-play="${i}" aria-label="Play ayah ${v}"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       <p class="trans text-[13.5px] leading-relaxed text-ink/70 ${transOn?"":"hidden"}">${trans[i]?.text||""}</p>
-    </div></article>`;}).join("");
+    </div>${hasVerse(n,v)?`<button type="button" class="vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><span class="vxc">›</span>Study this verse</button><div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
   roomBody.innerHTML=`<div class="bg-white rounded-2xl border border-ink/8 px-4 sm:px-7 py-2 mt-4">${html}</div>
    <div id="study-slot"></div>
    <div class="flex justify-between items-center py-5 text-sm">
@@ -784,7 +863,7 @@ function renderAyahs(n){
 }
 
 /* ---------- the study companion ----------
-   Built from window.NOOR_STUDY (quran-study.js, deferred). Every use is guarded:
+   Built from the per-surah file fetched above. Every use is guarded:
    if that file never arrives the room behaves exactly as it did before. */
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const arr=v=>v==null?[]:(Array.isArray(v)?v:[v]);
@@ -829,7 +908,7 @@ function lengthFig(n,count,place){
 }
 
 function studyHTML(n){
- const D=STUDY();if(!D||!D[n]||!SURAHS[n-1])return "";
+ const D=SCACHE;if(!D||!D[n]||!SURAHS[n-1])return "";
  const rec=D[n],s=SURAHS[n-1],count=s[4],place=s[5],deep=rec.depth==="deep";
  let h=`<section class="sp mo" aria-label="Study companion for surah ${esc(s[1])}">
   <p class="sp-eye">✦ The study companion</p>
@@ -890,13 +969,93 @@ function studyHTML(n){
 }
 
 function mountStudy(n){
- let html="";try{html=studyHTML(n)}catch(e){html=""}
- const slot=$("study-slot");
- if(slot){slot.innerHTML=html;
-  if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(slot)}catch(e){}}}
- const b=roomHead.querySelector("#t-study");
- if(b)b.style.display=(html&&slot)?"":"none";
+ /* The record for this surah may not be here yet. Fetch it, then render. The
+    reader sees the surah open immediately either way: the companion is a
+    second layer and never blocks the text. */
+ studyFetch(n).then(function(){
+   if (cur !== n) return;            /* they moved on while it was in flight */
+   let html=""; try{ html=studyHTML(n) }catch(e){ html="" }
+   const slot=$("study-slot");
+   if(slot){ slot.innerHTML=html;
+     if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(slot)}catch(e){}} }
+   const b=roomHead.querySelector("#t-study");
+   if(b)b.style.display=(html&&slot)?"":"none";
+ });
 }
+
+/* ---------- verse by verse ----------
+   Six thousand two hundred and thirty six verses will not be written in a day,
+   and an expander on every verse that mostly opens on an apology is a worse
+   room than no expander at all. So the page asks once, at the start of a visit,
+   which verses have actually been written, and the button appears only on
+   those. As tranches land the buttons appear by themselves. If the index never
+   arrives, the Mushaf behaves exactly as it did before: no buttons, no errors.
+
+   The notes for a surah are a separate small file, fetched the first time a
+   reader opens one of its verses and kept for the rest of the visit. Nothing
+   about this layer is downloaded by a reader who never touches it. */
+var VSET=null, VCACHE=Object.create(null), VPEND=Object.create(null), VIDX_P=null;
+function vIndex(){
+ if(VSET)return Promise.resolve(VSET);
+ if(VIDX_P)return VIDX_P;
+ VIDX_P=fetch("/verse/index.json").then(r=>r.ok?r.json():null).then(j=>{
+   VSET=Object.create(null);
+   const have=(j&&j.have)||{};
+   for(const k in have){try{VSET[k]=new Set(have[k])}catch(e){VSET[k]=have[k]}}
+   return VSET;
+ }).catch(()=>{VSET=Object.create(null);return VSET;});
+ return VIDX_P;
+}
+function hasVerse(n,v){const s=VSET&&VSET[String(n)];
+ if(!s)return false;
+ return s.has?s.has(v):s.indexOf(v)>=0;}
+function vFetch(n){
+ if(VCACHE[n])return Promise.resolve(VCACHE[n]);
+ if(VPEND[n])return VPEND[n];
+ VPEND[n]=fetch("/verse/"+n+".json").then(r=>r.ok?r.json():null).then(j=>{
+   VCACHE[n]=(j&&j.v)||{};delete VPEND[n];return VCACHE[n];
+ }).catch(()=>{VCACHE[n]=Object.create(null);delete VPEND[n];return VCACHE[n];});
+ return VPEND[n];
+}
+const EVN={quran:"Qur'an",sunnah:"Sunnah",debated:"Scholars differ",editorial:"Our reading"};
+function versePanel(rec){
+ if(!rec)return `<p class="vnone">Nothing has been written on this verse yet. What is here is written slowly and checked before it is published, so the gaps are honest ones rather than filler. <a href="/feedback">Tell us if you can help fill one.</a></p>`;
+ let h="";
+ const words=arr(rec.words);
+ if(words.length)h+=`<div class="vwords">`+words.map(w=>
+   `<span class="vw"><b translate="no">${esc(w.a)}</b><i translate="no">${esc(w.t)}</i><em>${esc(w.g)}</em></span>`).join("")+`</div>`;
+ if(rec.sense)h+=`<p class="vsense">${esc(rec.sense)}</p>`;
+ arr(rec.notes).forEach(nt=>{
+   const lvl=EVN[nt.lvl]?nt.lvl:"editorial";
+   h+=`<div class="vnote"><span class="evb ${lvl}">${EVN[lvl]}</span><p>${esc(nt.t)}</p>`
+     +(nt.src?`<span class="vsrc">${esc(nt.src)}</span>`:"")+`</div>`;});
+ const links=arr(rec.links);
+ if(links.length){h+=`<div class="vlinks"><h6>Read alongside</h6>`+links.map(l=>{
+   const p=String(l.ref).split(":"),s=+p[0],a=parseInt(p[1],10)||1;
+   const nm=SURAHS[s-1]?SURAHS[s-1][1]:("Surah "+s);
+   return `<button type="button" class="vlink" data-goto="${s}:${a}"><b>${esc(l.ref)}</b> · ${esc(nm)} — ${esc(l.why)}</button>`;
+  }).join("")+`</div>`;}
+ return h;
+}
+roomBody.addEventListener("click",e=>{
+ const g=e.target.closest&&e.target.closest("[data-goto]");
+ if(g){const p=g.dataset.goto.split(":");openSurah(+p[0],+p[1]||1,true);return;}
+ const b=e.target.closest&&e.target.closest("[data-vx]");
+ if(!b)return;
+ const v=+b.dataset.vx, pan=$("vp-"+v);
+ if(!pan)return;
+ if(b.getAttribute("aria-expanded")==="true"){
+   pan.hidden=true;b.setAttribute("aria-expanded","false");b.classList.remove("on");return;}
+ b.setAttribute("aria-expanded","true");b.classList.add("on");pan.hidden=false;
+ if(pan.dataset.filled==="1")return;
+ pan.innerHTML=`<p class="vwait">Opening the notes…</p>`;
+ const n=cur;
+ vFetch(n).then(map=>{
+   if(cur!==n||!pan.isConnected)return;
+   pan.innerHTML=versePanel(map[String(v)]);
+   pan.dataset.filled="1";
+ });
+});
 
 /* every study button reaches the player the reader already knows */
 function playStudyAyah(num){
@@ -945,22 +1104,93 @@ function listenLabel(on){$("t-listen").innerHTML=on
  ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
  :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah`;}
 const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+const LOAD=`<span style="font-weight:800;letter-spacing:1px">…</span>`;
+
+/* ---------- following the recitation ----------
+   The old player called scrollIntoView({block:"center"}) on every verse change,
+   which meant a reader who had scrolled ahead to look at something was dragged
+   back to the middle of the screen twice a minute, with no way to stop it.
+
+   Following is now a mode, and it obeys three rules.
+
+     · The reader's hands win. We listen for wheel, touch and the scrolling
+       keys rather than for scroll events, because our own smooth scrolling
+       fires scroll events too and there is no honest way to tell them apart
+       afterwards. One gesture and following stops, until the reader asks for
+       it back.
+     · A verse that can already be read is not moved. We only scroll when the
+       verse has left a comfortable band, measured against the real furniture:
+       the sticky header above, the player bar below.
+     · Nothing is centred. The verse is placed a little below the header, the
+       way a page turns, so the verses after it are visible too. */
+let follow=true, followEl=null;
+function reduced(){try{return matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){return false}}
+function headTop(){const h=$("site-header");if(!h)return 8;
+ const r=h.getBoundingClientRect();return (r.top<=1?r.height:0)+8;}
+function followBtn(on){const b=$("p-follow");if(!b)return;
+ b.classList.toggle("off",!on);b.setAttribute("aria-pressed",on?"true":"false");
+ b.title=on?"Following the recitation":"Not following. Tap to jump back to the verse.";}
+function setFollow(on){follow=on;followBtn(on);if(on&&followEl)scrollToVerse(followEl,true);}
+function scrollToVerse(el,force){
+ if(!el||!el.isConnected)return;
+ const top=headTop(), bottom=innerHeight-(document.body.classList.contains("has-player")?92:14);
+ const band=Math.max(140,bottom-top), r=el.getBoundingClientRect();
+ if(!force){
+  const fits=r.height<=band;
+  /* a short verse is comfortable when it is wholly inside the band; a long one
+     when its opening line is inside the upper part of it */
+  if(fits?(r.top>=top&&r.bottom<=bottom):(r.top<=top+band*0.45&&r.bottom>=top+40))return;
+ }
+ const lead=Math.min(64,band*0.12);
+ try{scrollTo({top:Math.max(0,scrollY+r.top-top-lead),behavior:reduced()?"auto":"smooth"});}
+ catch(e){scrollTo(0,Math.max(0,scrollY+r.top-top-lead));}
+}
+function readerMoved(){if(follow&&playingIdx>=0)setFollow(false);}
+["wheel","touchmove"].forEach(ev=>addEventListener(ev,readerMoved,{passive:true}));
+addEventListener("keydown",e=>{if(/^(Arrow|Page|Home|End)/.test(e.key)||e.key===" ")readerMoved();});
+
+/* ---------- the two elements that actually change ----------
+   The old setPlaying walked every .ayah and every .playbtn in the document on
+   every verse change: five hundred and seventy elements twice a minute on
+   Al-Baqarah, which is precisely the jank a phone in battery saver reports.
+   The previous verse and its button are remembered instead. */
+let prevAy=null, prevBtn=null;
+function paintBtn(b,state){if(!b)return;      /* 0 idle, 1 loading, 2 sounding */
+ b.classList.toggle("on",state>0);b.innerHTML=state===2?EQ:state===1?LOAD:TRI;}
+function progress(f){const b=$("p-fill");
+ if(b)b.style.transform="scaleX("+Math.max(0,Math.min(1,f||0))+")";}
 function setPlaying(i,loading){playingIdx=i;
- document.querySelectorAll(".ayah").forEach(el=>el.classList.remove("playing"));
- document.querySelectorAll(".playbtn").forEach(b=>{b.classList.remove("on");b.innerHTML=TRI;});
- if(i>=0){const el=document.querySelector(`.ayah[data-i="${i}"]`),b=document.querySelector(`[data-play="${i}"]`);
-  if(el){el.classList.add("playing");el.scrollIntoView({behavior:"smooth",block:"center"});}
-  if(b){b.classList.add("on");b.innerHTML=loading?`<span style="font-weight:800;letter-spacing:1px">…</span>`:EQ;}
-  playerLabel(loading?"loading recitation…":null);}}
-function markSounding(i){const b=document.querySelector(`[data-play="${i}"]`);
- if(b){b.classList.add("on");b.innerHTML=EQ;}playerLabel();}
+ if(prevAy){prevAy.classList.remove("playing");prevAy=null;}
+ if(prevBtn){paintBtn(prevBtn,0);prevBtn=null;}
+ followEl=null;
+ if(i<0){progress(0);return;}
+ const el=roomBody.querySelector(`.ayah[data-i="${i}"]`), b=el&&el.querySelector(".playbtn");
+ if(el){el.classList.add("playing");prevAy=el;followEl=el;if(follow)scrollToVerse(el);}
+ if(b){paintBtn(b,loading?1:2);prevBtn=b;}
+ playerLabel(loading?"loading recitation…":null);}
+function markSounding(i){if(prevBtn&&playingIdx===i)paintBtn(prevBtn,2);playerLabel();}
+
+/* ---------- the next verse, fetched while this one is still sounding ----------
+   The gap between verses was never the recitation. It was a network round trip
+   that began only once the previous verse had ended. */
+let pre=null;
+function dropPre(){if(pre&&pre.el){try{pre.el.pause();pre.el.removeAttribute("src");pre.el.load();}catch(e){}}pre=null;}
+function preloadNext(i){
+ if(!continuous){dropPre();return;}
+ const j=i+1;
+ if(!ayahs[j]){dropPre();return;}
+ if(pre&&pre.i===j)return;
+ dropPre();
+ try{const a=new Audio();a.preload="auto";a.src=srcsFor(j)[0];a.load();pre={i:j,el:a};}catch(e){pre=null;}
+}
 let watchdog=null,failStreak=0;
 function clearWatch(){if(watchdog){clearTimeout(watchdog);watchdog=null;}}
 function killAudio(){clearWatch();
- if(audio){audio.onended=null;audio.onerror=null;audio.onplaying=null;audio.pause();
+ if(audio){audio.onended=null;audio.onerror=null;audio.onplaying=null;audio.ontimeupdate=null;audio.pause();
   try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
-function stopAudio(){killAudio();
- setPlaying(-1);continuous=false;paused=false;playerShow(false);
+function stopAudio(){killAudio();dropPre();
+ setPlaying(-1);continuous=false;paused=false;playerShow(false);progress(0);
+ setFollow(true);            /* the next listen starts following again */
  listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);}
 function ayahFailed(i){
  if(continuous&&failStreak<2&&i+1<ayahs.length){failStreak++;
@@ -973,30 +1203,70 @@ function playAyah(i,srcIdx){srcIdx=srcIdx||0;
  const srcs=srcsFor(i);
  if(srcIdx>=srcs.length){ayahFailed(i);return;}
  killAudio();
- const me=new Audio();audio=me;
- me.preload="auto";me.src=srcs[srcIdx];
- paused=false;setToggle(true);playerShow(true);setPlaying(i,true);
- const next=()=>{if(audio!==me)return;clearWatch();playAyah(i,srcIdx+1);};
+ let me;
+ if(srcIdx===0&&pre&&pre.i===i&&pre.el){me=pre.el;pre=null;}   /* already on its way down */
+ else{me=new Audio();me.preload="auto";me.src=srcs[srcIdx];}
+ audio=me;
+ paused=false;setToggle(true);playerShow(true);progress(0);setPlaying(i,true);
+ let moved=false;
+ const next=()=>{if(moved||audio!==me)return;moved=true;clearWatch();playAyah(i,srcIdx+1);};
  watchdog=setTimeout(next,srcIdx===srcs.length-1?8000:5000);   /* hang rescue */
- me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);};
- me.onended=()=>{if(audio!==me)return;clearWatch();if(continuous&&i+1<ayahs.length)playAyah(i+1);else stopAudio();};
+ me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);preloadNext(i);};
+ me.ontimeupdate=()=>{if(audio!==me)return;if(me.duration)progress(me.currentTime/me.duration);};
+ me.onended=()=>{if(audio!==me)return;clearWatch();progress(1);
+  if(!continuous){stopAudio();return;}
+  if(i+1<ayahs.length){playAyah(i+1);return;}
+  surahEnded();};
  me.onerror=()=>next();
+ if(me.error){next();return;}   /* a preloaded source that failed before we adopted it */
  me.play().catch(err=>{if(audio!==me)return;
   if(err&&err.name==="NotAllowedError"){clearWatch();
    $("t-status").textContent="Your browser blocked sound. Tap the <span data-ic=play></span> beside a verse once.";
    setTimeout(()=>$("t-status").textContent="",4500);stopAudio();return;}
   next();});
 }
+
+/* ---------- the end of a surah is not the end of the recitation ----------
+   A reader listening straight through expects the next surah to begin, the way
+   it does on a recording. It stops at An-Nas, because there is nowhere further. */
+function surahEnded(){
+ if(!(cur>=1&&cur<114)){stopAudio();return;}
+ const n=cur+1, wasFollow=follow;
+ killAudio();dropPre();
+ chaining=true;
+ Promise.resolve(openSurah(n,1,false)).then(()=>{
+   chaining=false;
+   /* openSurah swallows its own network failure and leaves the previous
+      surah's verses in ayahs. Reciting those under the new surah's name would
+      be a lie, so the recitation stops unless the new text really rendered. */
+   if(cur!==n||!roomBody.querySelector('.ayah[data-i="0"]')){stopAudio();return;}
+   continuous=true;listenLabel(true);$("t-listen").classList.add("on");
+   follow=wasFollow;followBtn(follow);
+   $("t-status").textContent="Continuing into "+SURAHS[n-1][1]+"…";
+   setTimeout(()=>{if($("t-status").textContent.indexOf("Continuing")===0)$("t-status").textContent="";},3000);
+   playAyah(0);
+ }).catch(()=>{chaining=false;stopAudio();});
+}
 roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
  const i=+b.dataset.play;
  if(playingIdx===i&&audio){$("p-toggle").click();return;}
- continuous=false;listenLabel(false);$("t-listen").classList.remove("on");
+ continuous=false;dropPre();listenLabel(false);$("t-listen").classList.remove("on");
+ follow=true;followBtn(true);   /* they chose this verse: follow it */
  playAyah(i);});
 $("t-listen").addEventListener("click",()=>{
  if(continuous){stopAudio();return;}
  if(!ayahs.length)return;
  continuous=true;listenLabel(true);$("t-listen").classList.add("on");
+ follow=true;followBtn(true);
  playAyah(playingIdx>=0?playingIdx:0);});
+$("p-follow").addEventListener("click",()=>setFollow(!follow));
+$("p-bar").addEventListener("click",e=>{
+ if(!audio||!audio.duration||!isFinite(audio.duration))return;
+ const r=e.currentTarget.getBoundingClientRect();
+ let f=(e.clientX-r.left)/(r.width||1);
+ if(document.documentElement.dir==="rtl")f=1-f;
+ f=Math.max(0,Math.min(1,f));
+ try{audio.currentTime=f*audio.duration;progress(f);}catch(err){}});
 $("p-toggle").addEventListener("click",()=>{if(!audio)return;
  if(paused){audio.play().catch(()=>{});paused=false;setToggle(true);}
  else{clearWatch();audio.pause();paused=true;setToggle(false);}});
@@ -1014,12 +1284,24 @@ const usp=new URLSearchParams(location.search);
 const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
 if(s0>=1&&s0<=114){aside.classList.add("folded");openSurah(s0,a0,false);}
 gatesLabel();
-/* quran-study.js is deferred, so it lands after this script: pick it up when it does */
-function studyReady(){if(!STUDY())return;renderGates($("gate-search").value);if(cur)mountStudy(cur);}
+/* Nothing to wait for any more: the gates render from the surah table, and each
+   companion arrives when its surah is opened. */
+function studyReady(){ renderGates($("gate-search").value); if(cur) mountStudy(cur); }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",studyReady,{once:true});
 else studyReady();
 /* the only global the page markup needs (inline onclick on gate buttons) */
 window.openSurah=openSurah;
+
+/* A read-only window on the room's state. It exists so the regression tests
+   can hold the player to its promises: that following yields to the reader,
+   that the next verse is fetched before it is needed, that nothing is left
+   marked after a stop. It exposes nothing a reader cannot already see on the
+   page, and it can change nothing. */
+window.NOOR_MUSHAF={
+ get cur(){return cur}, get playingIdx(){return playingIdx},
+ get follow(){return follow}, get continuous(){return continuous},
+ get paused(){return paused}, get preloaded(){return pre?pre.i:-1},
+ get verseNotes(){return VSET?Object.keys(VSET).length:-1}};
 })();
 </script>
 </body>

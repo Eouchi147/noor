@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css?v=49"/>
-<script src="nodes.js" defer></script>
+<script src="nodes-index.js?v=101" defer></script>
 <script src="noor-fx.js" defer></script>
 <script src="noor-guide-data.js" defer></script>
 <script src="noor-guide.js" defer></script>
@@ -1680,8 +1680,34 @@ function renderPath(filter){
 
 /* ---------- modal ---------- */
 function sect(title, inner, extraCls){ return `<div class="mset mt-7 ${extraCls||""}"><h3 class="sect-h"><span class="g">۞</span>${title}</h3>${inner}</div>`; }
+/* The timeline index carries what the list shows. The details prose, the
+   verses and the narrations for a node are three hundred and thirty kilobytes
+   across all seventy one, so they are fetched one node at a time when a node
+   is actually opened, and kept for the rest of the visit. */
+const NCACHE = Object.create(null);
+function nodeFull(id){
+  if (NCACHE[id]) return Promise.resolve(NCACHE[id]);
+  return fetch("/node/" + id + ".json")
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ if (j) NCACHE[id] = j; return j; })
+    .catch(function(){ return null; });
+}
 function openModal(id, push = true){
-  let n = NODES.find(x => x.id === id);
+  const light = NODES.find(x => x.id === id);
+  if (!light) return;
+  /* open immediately with what the index already holds, then fill in the rest
+     when it lands. A reader on a slow connection sees the node open at once
+     rather than waiting on a request. */
+  nodeFull(id).then(function(full){
+    if (!full || cur_modal_id !== id) return;
+    keptScroll = $("modal-backdrop").scrollTop;
+    renderModal(full, false);
+  });
+  cur_modal_id = id;
+  return renderModal(NCACHE[id] || light, push);
+}
+let cur_modal_id = null, keptScroll = 0;
+function renderModal(n, push = true){
   if (!n) return;
   n = NOOR_I18N.loc("nodes", n);
   lastFocus = document.activeElement;
@@ -1742,10 +1768,17 @@ function openModal(id, push = true){
   if (window.NoorGuide) NoorGuide.attach(body, "n:" + n.id, n.titleEn);
 
   $("modal-backdrop").classList.add("open");
-  $("modal-backdrop").scrollTop = 0;
   document.body.style.overflow = "hidden";
-  if (push) history.replaceState(null, "", "?node=" + id);
-  setTimeout(() => $("modal-close").focus({preventScroll:true}), 60);
+  if (push) history.replaceState(null, "", "?node=" + n.id);
+  /* The refill pass runs when the full record lands. It must not throw the
+     reader back to the top of a modal they have started reading, and it must
+     not steal focus a second time. */
+  if (push) {
+    $("modal-backdrop").scrollTop = 0;
+    setTimeout(() => $("modal-close").focus({preventScroll:true}), 60);
+  } else {
+    $("modal-backdrop").scrollTop = keptScroll;
+  }
 }
 function closeModal(){
   $("modal-backdrop").classList.remove("open");

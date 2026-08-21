@@ -31,7 +31,13 @@ console.log('\n[1] index.html');
   ok(await page.locator('#hero-stats .hero-stat').count() === 6, '6 hero stats');
   ok(await page.locator('.crescent').count() === 1, 'crescent rendered');
   ok(await page.locator('#geo .gp').count() >= 12, 'sacred-geometry rose paths present');
-  ok(await page.evaluate(() => document.getElementById('hero').classList.contains('drawn')), 'Kun draw sequence triggered');
+  /* The ink goes on the seal, not on the hero, and it goes on when the reader
+     reaches it. Scroll to it the way a reader would, then look. */
+  await page.locator('.path-seal').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  ok(await page.evaluate(() => document.querySelector('.path-seal').classList.contains('drawn')), 'Kun draw sequence triggered');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(300);
   await page.waitForTimeout(1300);
   const statVal = await page.locator('#hero-stats [data-count]').first().textContent();
   ok(statVal === '71', `count-up completed (${statVal})`);
@@ -74,7 +80,10 @@ console.log('\n[1b] seven books · mizan section');
   ok(await page.locator('#modal-backdrop.open').count() === 1, 'Abu Bakr caliphate chapter opens');
   await noDash(page, 'khulafa modal');
   await page.keyboard.press('Escape');
-  await page.locator('a[href="#mizan"]').first().click();
+  /* The menu no longer carries a #mizan link: the doors replaced the long list
+     of anchors. The section is still there, so reach it the way a reader
+     scrolling the page does. */
+  await page.locator('#mizan').scrollIntoViewIfNeeded();
   await page.waitForTimeout(2600);
   ok(await page.locator('.mz-card').count() === 9, 'mizan: 9 infographic cards');
   ok(await page.locator('.mz-debt').count() === 1, 'debt strip in follow card');
@@ -165,9 +174,13 @@ console.log('\n[5] deep links · nihaya · RTL');
   ok(await page.locator('.seq-strip').count() === 1 && await page.locator('.mtimeline li').count() >= 6 && await page.locator('.shield-box li').count() >= 3, 'sequence + timeline + shield intact');
   await noDash(page, 'Dajjal modal');
   await page.keyboard.press('Escape');
-  await page.selectOption('#lang-switch', 'ar'); await page.waitForTimeout(600);
+  /* The language <select> became a grid of buttons in the header dropdown when
+     the menu was rebuilt. Set the language the way the buttons do. */
+  await page.evaluate(() => document.querySelector('[data-setlang="ar"]').click());
+  await page.waitForTimeout(700);
   ok(await page.evaluate(() => document.documentElement.dir) === 'rtl', 'AR → dir=rtl');
-  await page.selectOption('#lang-switch', 'en'); await page.waitForTimeout(300);
+  await page.evaluate(() => document.querySelector('[data-setlang="en"]').click());
+  await page.waitForTimeout(400);
   ok(await page.evaluate(() => document.documentElement.dir) === 'ltr', 'EN → ltr');
   await ctx.close();
 }
@@ -180,7 +193,9 @@ console.log('\n[6] mobile 390×844');
   await page.waitForTimeout(800);
   ok(errors.length === 0, 'no JS errors mobile');
   ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
-  ok(await page.locator('header .md\\:hidden a[href="places.html"]').count() === 1, 'mobile pill nav has Places');
+  /* The mobile header is the doors sheet now, and clean URLs dropped the .html.
+     What matters is that a phone can still reach Places from the header. */
+  ok(await page.locator('header a[href="/places"], header a[href="places.html"]').count() >= 1, 'mobile header can reach Places');
   await page.screenshot({ path: 'tests/shots/v3-07-hero-mobile.png' });
   await page.goto(BASE + '/words.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
@@ -195,13 +210,26 @@ console.log('\n[7] reduced motion · search');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   ok(errors.length === 0 && await page.locator('.tile').count() === 71, 'reduced motion healthy');
+  /* Search became a full overlay built by /assets/noor-search.js: the field is
+     #ns-q and the results live in #ns-out. */
   await page.click('#search-toggle');
-  await page.fill('#search-input', 'kawthar');
-  await page.waitForTimeout(300);
-  ok(await page.locator('#search-results button').count() >= 1, 'search finds Kawthar (Hawd)');
-  await page.locator('#search-results button').first().click();
+  await page.waitForSelector('#ns-q', { timeout: 8000 });
+  await page.fill('#ns-q', 'kawthar');
   await page.waitForTimeout(400);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'search opens modal');
+  ok(await page.locator('#ns-out a, #ns-out button').count() >= 1, 'search finds Kawthar (Hawd)');
+  const href = await page.locator('#ns-out a').first().getAttribute('href');
+  await page.locator('#ns-out a').first().click();
+  await page.waitForTimeout(900);
+  const landed = await page.evaluate(() => ({
+    modal: document.querySelectorAll('#modal-backdrop.open').length,
+    url: location.pathname + location.search,
+    text: document.body.innerText.length
+  }));
+  /* A result either opens a chapter in place, or carries the reader to the room
+     that answers. Searching "kawthar" landing on the Mushaf at surah 108 is the
+     right answer, not a miss. */
+  ok(landed.modal === 1 || !/index\.html$/.test(landed.url),
+     `search result leads somewhere real (${href} \u2192 ${landed.url})`);
   await ctx.close();
 }
 
@@ -223,9 +251,17 @@ console.log('\n[8] kids.html');
     if (await btn.count()) { await btn.click(); await page.waitForTimeout(850); }
   }
   ok(await page.evaluate(() => /1 of 7/.test(document.body.innerText)), 'gem collected, back on star map');
-  ok(await page.locator('.w-card').count() === 9, 'More Wonders: 9 game cards');
-  ok(await page.locator('.w-hero').count() === 2, 'Hero Stories: 2 highlighted cards');
-  ok(await page.evaluate(() => /12|Twelve/i.test(document.getElementById('wcount').textContent)), 'wonders counter counts 12');
+  /* The list of games grows. Pinning a number here made every addition look
+     like a break, so what is checked is that the page counts itself: every
+     game card, every hero story, plus the star map, and the line the child
+     reads agrees with the cards on the screen. */
+  const cards = await page.locator('.w-card').count();
+  const heroes = await page.locator('.w-hero').count();
+  ok(cards >= 9, `More Wonders: ${cards} game cards`);
+  ok(heroes === 2, 'Hero Stories: 2 highlighted cards');
+  const wtext = await page.evaluate(() => document.getElementById('wcount').textContent);
+  ok(new RegExp('\\b' + (cards + heroes + 1) + '\\b').test(wtext),
+     `wonders counter agrees with the cards on the page (${cards}+${heroes}+1, reads "${wtext.trim()}")`);
   await ctx.close();
 }
 
@@ -233,14 +269,14 @@ console.log('\n[8] kids.html');
 console.log('\n[8b] nine little games');
 {
   const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
-  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo','adam','isla']) {
+  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo','strong','island']) {
     errors.length = 0;
     await page.goto(BASE + '/kids/' + g + '.html', { waitUntil: 'networkidle' });
     await page.waitForTimeout(900);
     const ov = await page.evaluate(() => document.body.scrollWidth > innerWidth + 1);
     const dash = await page.evaluate(() => /[—–]/.test(document.body.innerText));
     ok(errors.length === 0 && !ov && !dash, `${g}: loads clean, no overflow, no dashes` + (errors.length ? ' → ' + errors.join('|') : ''));
-    ok(await page.locator('a[href="../kids.html"]').count() >= 1, `${g}: links back to Little Codex`);
+    ok(await page.locator('a[href="/kids"], a[href="../kids.html"]').count() >= 1, `${g}: links back to Little Codex`);
   }
   await ctx.close();
 }
@@ -281,7 +317,7 @@ console.log('\n[10] health.html');
   await page.goto(BASE + '/health.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(1400);
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.locator('.th-sec').count() === 8, '8 sections render');
+  ok(await page.locator('.th-sec').count() === 9, '9 sections render');
   ok(await page.locator('.duo').count() >= 6, 'sunnah|science duo cards');
   ok(await page.locator('.food').count() === 6, 'six plate medallions');
   ok(await page.locator('#rail a').count() === 8, 'scrollspy rail');
@@ -301,7 +337,85 @@ console.log('\n[10] health.html');
   ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'health mobile: no overflow');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
-  ok(await page.locator('a[href="health.html"]').count() >= 2, 'Health linked from index nav + pills');
+  /* clean URLs dropped the .html, and the pill row became the doors sheet */
+  ok(await page.locator('a[href="/health"], a[href="health.html"]').count() >= 1, 'Health reachable from the home page');
+  await ctx.close();
+}
+
+/* 11. the mission line, and Friday's claim on the strip
+   The per-market sponsorship program was retired: sponsor.js now carries one
+   sentence, and steps aside for Jumu'ah from Thursday evening to Friday
+   maghrib. These are the promises left to keep. */
+console.log('\n[11] the mission line · Jumu\'ah');
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(700);
+  ok(await page.evaluate(() => !window.NOOR_SPONSORS && !window.NOOR_SPONSOR_PICK),
+     'the retired market system left no globals behind');
+  ok(await page.locator('a[href="/sponsor"], a[href="sponsor.html"], a[href="/donate"], a[href="donate.html"]').count() >= 1,
+     'the reader can still reach the way to give');
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
+  await ctx.close();
+}
+{
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/index.html?jumuah=1', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(900);
+  const band = await page.evaluate(() => document.body.innerText);
+  ok(/Jumu|Kahf|Friday/i.test(band), 'forced Jumu\'ah raises the day\'s band');
+  ok(errors.length === 0, 'no JS errors on the Jumu\'ah band');
+  await ctx.close();
+}
+{
+  /* The sponsor page no longer carries an application form for a market
+     program that was retired. What it must still do is open cleanly and point
+     a willing reader at the way to give. */
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/sponsor.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  ok(errors.length === 0, 'sponsor page: no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
+  ok(await page.locator('a[href="/donate"], a[href="donate.html"], a[href*="donate"]').count() >= 1, 'the way to give is one click away');
+  await noDash(page, 'sponsor page');
+  await ctx.close();
+}
+{
+  /* The console. The structural guard lives in scripts/check-admin.mjs and runs
+     on the file; this is the live half of it, because the bug that actually hit
+     was a pane that existed in the markup and could not be reached in a
+     browser. Every tab must reveal its own pane and no other. */
+  const { ctx, page, errors } = await newPage();
+  await page.goto(BASE + '/admin.html', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(700);
+  ok(errors.length === 0, 'admin.html: no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
+  ok(await page.evaluate(() => document.querySelector('meta[name="robots"]').content.includes('noindex')), 'console is noindex');
+  /* The console lives behind a password gate that needs the api/ folder. The
+     tests run against a static server, so open the dashboard the way a
+     successful login does and then walk it. */
+  await page.evaluate(() => {
+    const g = document.getElementById('gate'), d = document.getElementById('dash');
+    if (g) g.hidden = true;
+    if (d) d.hidden = false;
+  });
+  await page.waitForTimeout(300);
+  const tabs = await page.locator('.tab').count();
+  ok(tabs >= 8, `console has its tabs (${tabs})`);
+  let reachable = 0, blank = [];
+  for (let i = 0; i < tabs; i++) {
+    await page.locator('.tab').nth(i).click();
+    await page.waitForTimeout(120);
+    const st = await page.evaluate(() => {
+      const on = [...document.querySelectorAll('.pane.on')];
+      if (on.length !== 1) return { bad: 'panes on: ' + on.length };
+      const p = on[0], r = p.getBoundingClientRect();
+      return { ok: r.width > 0 && r.height > 0 && p.innerText.trim().length > 0, id: p.id || '(no id)' };
+    });
+    if (st.ok) reachable++; else blank.push(st.id || st.bad);
+  }
+  ok(reachable === tabs, `every tab opens a pane that is visible and not blank${blank.length ? ' \u2192 ' + blank.join(', ') : ''}`);
+  /* /api/* is not served here, so its 401s and 404s are the harness. */
+  const admErr = errors.filter(e => !/\/api\/|Failed to load resource|Unexpected token|JSON/i.test(e));
+  ok(admErr.length === 0, 'no JS errors after walking every tab' + (admErr.length ? ' \u2192 ' + admErr.join(' | ') : ''));
   await ctx.close();
 }
 

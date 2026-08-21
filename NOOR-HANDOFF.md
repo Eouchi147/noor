@@ -297,3 +297,49 @@ Owner request: several revenues at once, for the same slot, in different markets
 - **api/sponsor-checkout.js**: accepts `market`; price = `SPONSOR_PRICE_ID_<MARKET>` env (e.g. `_CA`, `_GLOBAL`) with `SPONSOR_PRICE_ID` fallback, so each market can carry its own monthly rate.
 - e2e section [11] rewritten for markets: resolver priority (domain > language region > timezone > catch-all), device fall-through, escaping, attestation/date refusals, per-market console flow, add-market. Full suite green.
 - Domains: owner approved noorcodex.com ($11.25/yr) + noorcodex.ca ($16.99/yr); the session's Vercel token lacks purchase permission (Owner/Billing role required), so purchase happens from the owner's dashboard. IMPORTANT once owned: attach BOTH domains to the Vercel project WITHOUT redirecting .ca → .com, so the .ca hostname reaches readers and the CA market matcher fires on the typed domain.
+
+## v102 — "The Verse, and the Reciter Who Keeps Up"
+
+Three things the owner asked for, and one a reader reported.
+
+### The player, rebuilt (owner: "MuslimPro auto scrolls to follow the recitation and is very reactive, not very clunky")
+
+Three faults were measured, not guessed at, and each is now answered.
+
+- **It yanked.** `setPlaying` called `scrollIntoView({block:"center"})` on every verse change, so a reader who had scrolled ahead was dragged back twice a minute with no way to stop it. Following is a *mode* now. It listens for `wheel`, `touchmove` and the scrolling keys rather than for scroll events, because the player's own smooth scrolling fires those too and there is no honest way to tell them apart afterwards. One gesture and following stops; the `#p-follow` button in the player says so and turns it back on, jumping to the verse being recited. When following is on, a verse **already comfortably in view is not moved at all**: the band is measured against the sticky header above and the player bar below, and the verse is placed a little under the header rather than centred, so the verses after it stay visible.
+- **It gapped.** The next verse's `Audio` was created only after the previous one ended, so every verse boundary carried a network round trip. The next verse is now fetched while the current one is still sounding, and adopted when its turn comes.
+- **It swept.** Every verse change walked every `.ayah` and every `.playbtn` in the document. On Al-Baqarah that is 572 elements, twice a minute. Measured at 6× CPU throttle: **28.54 ms → 0.21 ms per verse change, 138× cheaper**, on every verse, for the whole recitation.
+
+Also new: a seekable progress line across the top of the player, and the recitation **carries on into the next surah** instead of stopping dead at the last verse, stopping at An-Nas because there is nowhere further. If the next surah's text fails to arrive, the recitation stops rather than reciting the previous surah's audio under the new surah's name.
+
+### Verse by verse (owner: "all the verses expandable for a verse by verse analysis")
+
+The structure is finished; the writing arrives one tranche at a time and needs no further page changes.
+
+- `build/verse-notes-*.json` → `scripts/gen-verse-notes.py` → `/verse/index.json` + `/verse/<n>.json`.
+- Per verse: word-by-word (Arabic, transliteration, gloss), one plain paragraph of sense, badged notes, and cross-links that open in the Mushaf. The four evidence badges are **the same four the teaching rooms use**: Qur'an, Sunnah, Scholars differ, Our reading.
+- **The expander appears only where a note exists.** 6,236 verses will not be written in a day, and a button on every verse that mostly opens on an apology is a worse room than no button. The index is fetched once per visit alongside the surah text; if it never arrives the Mushaf behaves exactly as before.
+- The generator refuses to write on: a verse past the end of its surah, a cross-link past the end of its surah, a duplicate between tranches, an unknown badge, a word card with no Arabic in it, a link with no reason, and **a Sunnah or Scholars-differ badge with no source named**. Proven by deliberately breaking all six.
+- **First tranche: 15 verses.** Al-Fatiha (all 7), Ayat al-Kursi (2:255), Al-Asr (all 3), Al-Ikhlas (all 4). 0.24% of the Book, and the shape is proven.
+
+### Weight (a reader: "The webapp is heavily unoptimized… on battery saver the website is sluggish")
+
+- `quran-study.js` (608 KB, downloaded by everyone who opened the Mushaf, opened by few) is **no longer served at all**. Each surah's companion is its own ~5 KB file, fetched when that surah is opened. The browsable whole now lives in `build/`.
+- `sw.js` **stopped precaching GSAP, ScrollTrigger and noor-motion.js** (116 KB). Precaching them put that weight onto exactly the phones `assets/noor-motion-boot.js` was written to spare, quietly undoing its decision. Cache bumped to `noor-v67`.
+- `/study/*.json` and `/verse/*.json` get `max-age=300, stale-while-revalidate=86400` in `vercel.json`.
+- Measured on a 390px viewport: the Mushaf loads **137 KB of JS** where it used to load 794 KB.
+
+### Tests
+
+- **`tests/mushaf.mjs` is new: 42 assertions**, no network needed (the text service and the four recitation servers are stubbed, the test tones are built in the file). It holds the player to every promise above: the band rule in both directions, the gesture that stops following, the automatic advance that must not move the page, the early fetch, the crossing into the next surah, and a stop that leaves nothing marked, lit or held.
+- **`tests/e2e.mjs` is green again at 121 assertions.** Its failures were all drift from shipped work rather than regressions, and each was repaired rather than deleted: the Kun seal takes `.drawn` on `.path-seal` not `#hero`; the `#mizan` anchor and the `#lang-switch` select were both replaced when the doors menu shipped; search became an overlay (`#ns-q` / `#ns-out`) whose results carry the reader to the room that answers rather than opening a modal; the per-market Guardian program was retired, so its two blocks were replaced with what those pages promise now. The kids' wonder count no longer pins a number, it checks the page counts itself, so adding a game is not a failure. The admin block now **walks every tab in a browser and asserts each opens a visible, non-blank pane**, which is the live half of the guard in `scripts/check-admin.mjs` and the exact bug that hit before.
+
+### Run it
+
+```
+python3 scripts/gen-verse-notes.py     # verse layer, refuses to write if anything is wrong
+python3 scripts/gen-quran-study.py     # study/1..114.json + build/quran-study.js
+node scripts/check-admin.mjs           # console structure
+node tests/mushaf.mjs                  # player + verse layer  (server on 8433)
+node tests/e2e.mjs                     # whole site            (server on 8123)
+```

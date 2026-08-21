@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Build /home/claude/noor/quran-study.js: the study companion for all 114 surahs.
+Build the study companion for all 114 surahs.
+
+Output is /study/<n>.json, one small file per surah, fetched by the Mushaf the
+first time a reader opens that surah's companion. A browsable copy of the whole
+thing is also written to build/quran-study.js; nothing on the site loads it.
 
 Sources (all under build/):
   study-deep-a.json   19 surahs, rich records
@@ -32,7 +36,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD = os.path.join(ROOT, "build")
-OUT = os.path.join(ROOT, "quran-study.js")
+OUT = os.path.join(BUILD, "quran-study.js")   # browsable copy, not served
 DEEP_FILES = ["study-deep-a.json", "study-deep-b.json",
               "study-deep-c.json", "study-deep-d.json",
               "study-deep-e.json", "study-deep-f.json", "study-deep-g.json"]
@@ -165,6 +169,27 @@ def build():
     for bad in ("—", "–", "‒", "―"):
         if bad in text:
             sys.exit("a long dash slipped into the data, house style forbids it")
+    # ---- one file per surah, fetched on demand ---------------------------
+    # The single bundle had grown to six hundred kilobytes and was downloaded by
+    # every visitor to the Mushaf, including the large majority who never open a
+    # companion at all. It is emitted one surah at a time now, roughly five
+    # kilobytes each, so a reader pays only for the surah they actually open.
+    #
+    # The bundle itself is written to build/ rather than to the site root. It is
+    # the browsable form, useful for reading the whole companion at once and for
+    # diffing a tranche, and it is no longer something a visitor can download by
+    # accident. Nothing on the site loads it.
+    split_dir = os.path.join(ROOT, "study")
+    os.makedirs(split_dir, exist_ok=True)
+    total = 0
+    for n, rec in records.items():
+        blob = json.dumps(rec, ensure_ascii=False, separators=(",", ":"))
+        with open(os.path.join(split_dir, "%d.json" % n), "w", encoding="utf-8") as g:
+            g.write(blob)
+        total += len(blob.encode("utf-8"))
+    print("wrote study/1.json .. study/114.json: %d KB total, %d KB average"
+          % (total // 1024, total // len(records) // 1024))
+
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(text)
     print("wrote %s: %d records (%d deep, %d light), %d bytes"
