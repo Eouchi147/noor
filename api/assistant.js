@@ -14,7 +14,7 @@
 // never name, describe or hint at the person who keeps this house.
 
 import crypto from "crypto";
-import { modelChain, isFree, allowPaid } from "./_models.js";
+import { modelChain, isFree, allowPaid, liveChain } from "./_models.js";
 import { kv, kvReady } from "./_kv.js";
 import { checkOverride, PAGES } from "./overrides.js";
 import { computeLedger, FUNDS } from "./ledger.js";
@@ -223,7 +223,10 @@ const json = (res, code, obj) => {
 };
 
 async function ask(key, messages, temperature, maxTokens) {
-  for (const model of MODEL_CHAIN()) {
+  /* awaited: MODEL_CHAIN() is synchronous and therefore empty on a cold
+     start, which is most invocations. This one line is why the assistant
+     answered nothing for weeks at a time. */
+  for (const model of await liveChain()) {
     try {
       const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",

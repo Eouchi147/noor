@@ -11,7 +11,7 @@
 
 import crypto from "crypto";
 import { settings } from "./settings.js";
-import { modelChain, isFree, allowPaid } from "./_models.js";
+import { modelChain, liveChain, isFree, allowPaid } from "./_models.js";
 
 function verify(cookieHeader, secret) {
   const m = /(?:^|;\s*)noor_admin=([^;]+)/.exec(cookieHeader || "");
@@ -100,6 +100,10 @@ const clean = s => String(s == null ? "" : s).replace(/[—–]/g, "·").trim();
 const cut = (s, n) => clean(s).slice(0, n);
 
 export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const SECRET = process.env.ADMIN_SECRET, KEY = process.env.OPENROUTER_API_KEY;
   if (!SECRET) return res.status(501).json({ error: "admin not configured" });
@@ -130,7 +134,8 @@ export default async function handler(req, res) {
     "Reply with JSON only, no prose around it, shaped exactly: " + shape.json
   ].filter(Boolean).join("\n");
 
-  let models = MODEL_CHAIN();
+  /* awaited: the synchronous chain is empty on a cold start */
+  let models = await liveChain();
   try {
     const dial = await settings();
     if (dial && dial["marketing.paid"] === true) models = PAID_FIRST.concat(models);

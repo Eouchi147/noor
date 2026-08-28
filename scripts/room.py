@@ -80,14 +80,16 @@ HEAD = """<!DOCTYPE html>
 <script src="{p}assets/gsap.min.js" defer></script>
 <script src="{p}assets/ScrollTrigger.min.js" defer></script>
 <script src="{p}assets/DrawSVGPlugin.min.js" defer></script>
-<script src="{p}assets/noor-motion.js" defer></script>
+<script src="{p}assets/noor-motion.js?v=76" defer></script>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
-<link rel="stylesheet" href="/assets/noor-rtl.css?v=1"/>
+<link rel="stylesheet" href="/assets/figfit.css?v=106"/>
+<script src="/assets/figfit.js?v=106" defer></script>
+<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
-<script src="/assets/noor-text.js?v=1" defer></script>
-<script src="/assets/noor-search.js?v=1" defer></script>
+<script src="/assets/noor-text.js?v=82" defer></script>
+<script src="/assets/noor-search.js?v=77" defer></script>
 <script src="/sponsor.js" defer></script>
 {jsonld}
 <style>html{{-webkit-text-size-adjust:100%}}html,body{{overflow-x:clip}}*{{-webkit-tap-highlight-color:transparent}}a,button{{touch-action:manipulation}}</style>

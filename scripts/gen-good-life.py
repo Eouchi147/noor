@@ -102,7 +102,7 @@ FIG_DAY = (
   'It cuts the slope into five, and no stretch is ever long enough to get lost in.</p>'
   '<div class="narc">'
   '<svg viewBox="0 0 300 108" role="img" aria-label="A waking day divided by five prayers">'
-    '<defs><linearGradient id="ngday" x1="0" y1="0" x2="1" y2="0">'
+    '<defs><linearGradient id="ngday" gradientUnits="userSpaceOnUse" x1="14" y1="0" x2="286" y2="0">'
       '<stop offset="0%" stop-color="#C9A227"/><stop offset="100%" stop-color="#F4D46A"/>'
     '</linearGradient></defs>'
     '<line x1="14" y1="62" x2="286" y2="62" stroke="rgba(255,254,247,.14)" stroke-width="2.5" stroke-linecap="round"/>'

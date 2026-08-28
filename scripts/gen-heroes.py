@@ -252,10 +252,10 @@ def fig_lamps():
     off = ('<g class="lamp lamp-off" transform="translate(602 0)">'
            '<circle class="wait" cx="0" cy="70" r="23"/>%s'
            '<text x="0" y="128" class="t2">the one</text>'
-           '<text x="0" y="150" class="t2">being lit</text>'
-           '<text x="0" y="172" class="t2">now</text></g>' % LAMP)
+           '<text x="0" y="155" class="t2">being lit</text>'
+           '<text x="0" y="182" class="t2">now</text></g>' % LAMP)
     return ("""<div class="fig mo-draw" id="lampchain">
-<svg viewBox="0 0 660 186" class="figsvg lamps" role="img" aria-labelledby="figlamp-t">
+<svg viewBox="0 0 660 200" class="figsvg lamps" role="img" aria-labelledby="figlamp-t">
 <title id="figlamp-t">A chain of hanging lamps lit one after another across the centuries, the last one still unlit</title>
 <g class="ln"><path d="M20 46h620"/></g>
 %s%s
@@ -1181,7 +1181,7 @@ LIFE_FIGS["ash-shafii"] = fig(
     '<rect x="60" y="120" width="400" height="32" rx="8"/>'
     '<rect x="60" y="158" width="400" height="32" rx="8"/>'
     '<rect x="60" y="196" width="400" height="32" rx="8"/></g>'
-    '<g class="mo"><text x="260" y="103" class="t4">the Qur'an</text>'
+    '<g class="mo"><text x="260" y="103" class="t4">the Qur&rsquo;an</text>'
     '<text x="260" y="141" class="t4">the Sunnah, the way of the Prophet ﷺ</text>'
     '<text x="260" y="179" class="t4">ijma, what the scholars agreed</text>'
     '<text x="260" y="217" class="t4">qiyas, likeness to a case already settled</text></g>'

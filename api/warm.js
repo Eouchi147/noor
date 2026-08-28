@@ -7,7 +7,7 @@
 // it, and records what happened, so there is always an answer to "when did the
 // lantern last actually speak?"
 import { kv, kvReady } from "./_kv.js";
-import { probeLantern } from "./_models.js";
+import { probeLantern, refreshIntoStore } from "./_models.js";
 
 export default async function handler(req, res) {
   const started = Date.now();
@@ -27,6 +27,12 @@ export default async function handler(req, res) {
       out.ran.push({ kind, ok: false, err: String(e && e.message || e).slice(0, 60) });
     }
   }
+
+  /* The free-model list, refreshed into the store, so that every cold start
+     tomorrow reads a list at most a day old instead of the written guess.
+     This is the single most important line in this file. */
+  try { out.models = await refreshIntoStore(); }
+  catch (e) { out.models = { err: String(e && e.message || e).slice(0, 60) }; }
 
   /* And a one-word probe, so the console can say when the key last worked. */
   try {

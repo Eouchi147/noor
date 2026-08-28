@@ -125,6 +125,10 @@ function verify(cookieHeader, secret) {
 }
 
 export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
   const SECRET = process.env.ADMIN_SECRET;
   if (!SECRET) return res.status(501).json({ error: "admin not configured" });
   if (!verify(req.headers.cookie, SECRET)) return res.status(401).json({ error: "locked" });

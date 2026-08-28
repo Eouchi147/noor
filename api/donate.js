@@ -17,6 +17,10 @@ const CURRENCIES = {
 };
 
 export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const key = process.env.STRIPE_SECRET_KEY;
   let body = req.body;

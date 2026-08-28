@@ -375,3 +375,44 @@ A closing section, **"Where the three arrive"**, was added: the scale as an inst
 23 evidence badges, zero em dashes, no horizontal overflow at 390px, no page errors, every figure activating in both motion modes.
 
 Menu: added under **Live**. `scripts/nav49.py` regenerated across 53 pages; `good-life` now links across to it. **All 121 e2e assertions green, all 42 Mushaf assertions green** after the nav rewrite.
+
+## v108 — "The Lantern's real fault, the console rebuilt, and the manual"
+
+### The Lantern
+
+It was one word: **synchronous**. `modelChain()` reads an in-process cache filled by an awaited fetch, and on Vercel every cold start begins with that cache empty, so it returned the hardcoded fallback instead. Five endpoints called it that way: the assistant, the dedications gate, the marketing writer, part of the illuminations, and the console's own data route. On a cold start each walked four model names written down in August, every one of which OpenRouter had since retired, waited nine seconds per name, and returned nothing. **A cold start is not the rare case. It is most invocations.**
+
+The free list lives in the store now (`nlm:free`), so any instance reads the last good list in one round trip. The house remembers which model actually answered (`nlm:good`) and asks it first. The written list is the third fallback and is labelled as the guess it is. The nightly cron forces a fresh list into the store. Ranking prefers families that write decent prose and drops image and embedding models, which are free and useless here.
+
+**`tests/lantern.mjs`** is new: 25 assertions with OpenRouter and the store both stubbed, so it runs with no network and no Redis. **`tests/api-audit.mjs`** fails the build if anything ever calls the synchronous chain again.
+
+### The audit
+
+**`tests/api-audit.mjs`**, 88 checks over 27 routes: handlers, admin gating, literal secrets, store guards, cache headers, dead routes, and the cold-start rule. It found the fifth cold-start caller and **nine routes shipping with no `Cache-Control` at all**, including every admin route, which leaves caching to whatever proxy sits in front. All nine now say `no-store`.
+
+### The figures
+
+**`tests/figures.mjs`** sweeps every page with a drawing, at three widths, for overlapping labels, labels outside their frame, gradients that cannot paint, and type too small to read. **It found 700 problems.**
+
+- **611 were one systemic fault.** A diagram drawn in a 900 unit box and rendered into 320 points of phone shows its labels at six pixels, which is not small type, it is decoration shaped like words. `assets/figfit.js` measures every figure and gives the ones that need it a minimum width and a scroll of their own. The page never scrolls sideways; only the figure does, and only when it must. Added to 65 pages and to `room.py`, so every future room has it.
+- **51 were the detector lying.** `getBBox()` reports a box in the element's own coordinates and ignores every ancestor transform, so seven labels each drawn at `x=0` inside seven translated groups looked stacked. Measured on screen instead.
+- **The rest were real.** The gold line in the good-life day figure **had never once rendered**, because a gradient in `objectBoundingBox` units cannot paint a stroke whose box has zero height, and a horizontal line has exactly that. Two-line names colliding on the peoples figure and the lamp chain. Captions sitting on the edges of their own frames. A verse pushed out of its box.
+
+**And `gen-heroes.py` has been syntactically broken** (an unescaped apostrophe in `Qur'an`). It is fixed, but the shipped `heroes.html` is far *ahead* of its generator, so running it reverts the motion loader and the stylesheet work. The page was patched directly and the hazard is now recorded in `OPERATIONS.md`.
+
+### The console
+
+Rebuilt around a **sidebar**, using the fact that hidden panes are `display:none` and take part in no layout: `#dash` simply becomes a flex row. Every pane, every dial and every listener is untouched, and `check-admin.mjs` still passes.
+
+- A **health strip**: Lantern, Store, Stripe, Nightly, gifts, inbox. Four questions that previously meant opening four panes. Each chip is a button that goes where the answer is. It reads what `/api/admin-data` already knows, so opening the console costs one request.
+- A **command palette** on ⌘K / ctrl K that indexes the ten rooms *and re-reads every dial in every pane each time it opens*, so a dial added later is reachable without touching this code. Enter jumps to it, scrolls it into view, focuses it and rings it in gold.
+- **alt+1 to alt+0** jumps straight to a room, and the shortcut is written on each tab so it is discoverable without a manual.
+- Genuinely usable on a phone: the strip wraps, the tabs scroll, the panes are full width.
+
+`/api/admin-data` now also reports `store`, `storeKind` and `lastWarm`, which were previously invisible until something had already broken.
+
+### The manual
+
+**`OPERATIONS.md`** is new, 395 lines: what runs where, every environment variable with what breaks without it, the Lantern's three fallback layers and why it broke, every key in the store, all 27 routes, the build system with its **hazard list**, every guard and the incident that caused it, runbooks for the seven things that actually go wrong, how a change reaches the live site, the content standards, the security posture, and what to read first if somebody else takes this over.
+
+**All guards green: 25 lantern · 88 audit · 42 mushaf · 121 e2e · figures clean · console structure clean.**

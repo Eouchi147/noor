@@ -3,7 +3,8 @@
 // money map: MRR, every region's subscriber, status, renewal date.
 
 import crypto from "crypto";
-import { modelChain, modelWarning, allowPaid, probeLantern } from "./_models.js";
+import { liveChain, modelWarning, allowPaid, probeLantern } from "./_models.js";
+import { kv, kvReady, kvKind } from "./_kv.js";
 
 const GUARDIAN_PRODUCT = "prod_V0xxFgmX793e9L";
 
@@ -19,6 +20,10 @@ function verify(cookieHeader, secret) {
 }
 
 export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
   const SECRET = process.env.ADMIN_SECRET, KEY = process.env.STRIPE_SECRET_KEY;
   if (!SECRET) return res.status(501).json({ error: "admin not configured" });
   if (!verify(req.headers.cookie, SECRET)) return res.status(401).json({ error: "locked" });
@@ -31,11 +36,22 @@ export default async function handler(req, res) {
     return res.status(200).json({ probe: "lantern", ...p, at: new Date().toISOString() });
   }
 
+  /* The store, and when the nightly breath last ran. Both are one line here
+     and both were previously invisible until something had already broken. */
+  let lastWarm = null;
+  if (kvReady()) {
+    try { const r = await kv([["GET", "nwarm:last"]]); if (r && r[0]) lastWarm = typeof r[0] === "string" ? JSON.parse(r[0]) : r[0]; }
+    catch { }
+  }
+
   const out = {
+    store: kvReady(), storeKind: kvKind(), lastWarm,
     stripeConfigured: !!KEY,
     checkoutEnabled: !!KEY,
     lanternConfigured: !!process.env.OPENROUTER_API_KEY,
-    lanternModel: modelChain()[0],
+    /* awaited: the synchronous chain is empty on a cold start, so the
+       console used to report the written fallback as the live model. */
+    lanternModel: (await liveChain())[0],
     lanternPaidAllowed: allowPaid(),
     lanternWarning: modelWarning(),
     moneyMode: process.env.NOOR_MONEY_MODE === "guardian" ? "guardian" : "donate",

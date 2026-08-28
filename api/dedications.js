@@ -1,4 +1,4 @@
-import { modelChain, isFree, allowPaid } from "./_models.js";
+import { liveChain, isFree, allowPaid } from "./_models.js";
 // The wall of du'as · prayers left by givers at checkout, shown
 // anonymously so the community can answer with amin. Each line passes
 // the Lantern's content gate before it shines: sincere du'as only,
@@ -17,7 +17,10 @@ async function gate(key, candidates) {
     "Reject: anything promotional or brand-like, links or contact details, full names or identifying details, politics, insults or mockery, indecency, spam or gibberish, messages that are not du'as or prayer requests, and anything unworthy of a sacred library.",
     "When in doubt, reject."
   ].join("\n");
-  const CHAIN = modelChain();
+  /* awaited, not the synchronous chain: on a cold start modelChain() has
+     nothing cached and hands back the written fallback, which is how this
+     gate spent months asking retired model names to vet du'as. */
+  const CHAIN = await liveChain();
   for (const model of CHAIN) {
     try {
       const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {

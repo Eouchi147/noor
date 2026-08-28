@@ -17,7 +17,7 @@
    which now requires ALLOW_PAID_MODELS=1 to be paid), then the best free
    lights of the day, in order. First to answer wins. */
 import net from "node:net";
-import { modelChain, isFree, allowPaid, liveChain } from "./_models.js";
+import { isFree, allowPaid, liveChain } from "./_models.js";
 import tls from "node:tls";
 
 /* ---------- the store, whoever provides it ----------
@@ -127,7 +127,8 @@ async function kv(cmds) {
 }
 
 /* the chain lives in api/_models.js now, free only unless paid is allowed */
-const MODEL_CHAIN = () => modelChain();
+/* the synchronous chain was defined here and never called. Removed rather
+   than left as a loaded gun: it is empty on every cold start. */
 
 /* ---------- Today's Light treasury (fallback) ---------- */
 const TREASURY = [

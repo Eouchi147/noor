@@ -424,7 +424,7 @@ def fig_taraweeh():
 def fig_fasting():
     """Who fasts, who is excused, and what each one owes."""
     svg = (
-        '<svg viewBox="0 0 480 296" role="img" aria-label="One road that divides into three: the '
+        '<svg viewBox="0 0 480 312" role="img" aria-label="One road that divides into three: the '
         'one who fasts, the one who makes the days up later, and the one who feeds a poor person '
         'instead.">'
         '<path class="s1" d="M240 28v34"/>'
@@ -448,8 +448,8 @@ def fig_fasting():
         '<text class="fs" x="396" y="210" text-anchor="middle">feeds a poor</text>'
         '<text class="fs" x="396" y="226" text-anchor="middle">person instead</text>'
         '<path class="s3" d="M60 250H420"/>'
-        '<text class="fg" x="240" y="278" text-anchor="middle">Allah intends ease for you</text>'
-        '<text class="fs" x="240" y="294" text-anchor="middle">and does not intend hardship for '
+        '<text class="fg" x="240" y="276" text-anchor="middle">Allah intends ease for you</text>'
+        '<text class="fs" x="240" y="298" text-anchor="middle">and does not intend hardship for '
         'you</text>'
         "</svg>")
     legend = [

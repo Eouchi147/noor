@@ -283,10 +283,10 @@ def fig_peoples():
         if up:
             parts.append('<path class="s3" d="M%d 160 V 114"/>'
                          '<circle class="f2" cx="%d" cy="114" r="7"/>' % (x, x))
-            ny = 94 - (22 * (len(names) - 1))
+            ny = 94 - (27 * (len(names) - 1))
             for i, n in enumerate(names):
                 parts.append('<text class="fl" x="%d" y="%d">%s</text>'
-                             % (x, ny + i * 22, esc(n)))
+                             % (x, ny + i * 27, esc(n)))
             parts.append('<text class="fs" x="%d" y="%d">%s</text>' % (x, ny - 24, esc(sign)))
             parts.append('<text class="fk" x="%d" y="%d">%s</text>' % (x, ny - 48, esc(end)))
         else:
@@ -295,8 +295,8 @@ def fig_peoples():
             ny = 230
             for i, n in enumerate(names):
                 parts.append('<text class="fl" x="%d" y="%d">%s</text>'
-                             % (x, ny + i * 22, esc(n)))
-            base = ny + 22 * len(names)
+                             % (x, ny + i * 27, esc(n)))
+            base = ny + 27 * len(names)
             parts.append('<text class="fs" x="%d" y="%d">%s</text>' % (x, base + 4, esc(sign)))
             parts.append('<text class="fk" x="%d" y="%d">%s</text>' % (x, base + 28, esc(end)))
     svg = ('<svg viewBox="0 0 750 320" class="figsvg tl" role="img" '

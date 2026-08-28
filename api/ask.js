@@ -126,6 +126,10 @@ library: say kindly that it is outside what this lamp is for, and point at a roo
 that is.`;
 
 export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   /* read the dials once, before anything decides whether the lamp is lit or
      how much oil it has. A store that is down leaves DIAL null and every
