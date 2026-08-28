@@ -357,7 +357,7 @@ Owner request: a section that puts life in perspective, with animated infographi
 
 **Three — The balanced life.** 56:39-40 says the companions of the right are a multitude from the former peoples *and* a multitude from the later ones, while the verses just above thin the foremost to *a few* of the later — the Qur'an makes the distinction openly, and that door was not narrowed. The floor is concrete and stated as a list you could start tonight, built on Salman's three rights confirmed by the Prophet ﷺ (Bukhari 1968), the small consistent deed ranked *above* the large discontinuous one (Bukhari 6464, Muslim 783), and the pass of Al-Balad, which the Qur'an defines and then names its people: *those are the companions of the right* (90:10-18).
 
-**Six animated figures**, all on the existing kit (`assets/anim.css`), all authored so the still frame is already the true picture:
+**Seventeen animated figures** (six at first release, eleven added in the expansion), all authored so the still frame is already the true picture. Six use the shared kit in `assets/anim.css`; the other eleven needed motions the kit does not have, and those live in the room's own stylesheet rather than in the shared one, so no other page carries their weight:
 
 - the ledger, twenty five boxes landing in turn, obligatory in gold and voluntary in grey so the two are never confused
 - the bankrupt one's scale: brought 100%, claimed 100%, **remaining 0%**
@@ -366,6 +366,12 @@ Owner request: a section that puts life in perspective, with animated infographi
 - the three rights, none at full and none at nothing, which is the finding and not a failure of the drawing
 - the small act that does not stop, on the endless track
 
-20 evidence badges, zero em dashes, no horizontal overflow at 390px, no page errors.
+Added in the expansion: **three roads** leaving one point, the surah's own three kinds drawn; **one act, two intentions, two destinations** (Bukhari 1); **the three of Muslim 1905** side by side, each with what he was told; **an illustration, not a chart** — a man, a screen and two walls that have closed in, which is *ma'ishatan danka* drawn; **the counting that only stops at the graves** (102:1-2); **the supplication rising through seven veils that do not stop it** (Bukhari 1496); **the heart polished clean**, the rust figure run backwards, whose still frame is the clean heart because that is where it ends; **the steep pass of Al-Balad** climbed one named step at a time; **a year drawn two ways**, four weeks lit against fifty two; **the balance settling**, weighed to the mustard seed (21:47); and **the two records**, each man's first sentence quoted (69:19-27).
+
+A closing section, **"Where the three arrive"**, was added: the scale as an instrument of exactness rather than of threat, why that exactness is the mercy (99:7-8), the two records, and Al-Qari'ah's plain statement of the two outcomes.
+
+**Two real bugs found and fixed while drawing:** a `linearGradient` in the default `objectBoundingBox` units cannot paint a stroke whose bounding box has zero height or zero width, so the straight middle road and the vertical supplication both rendered as nothing; both gradients are pinned to `userSpaceOnUse`. And the climber on the pass sat on top of its own labels; it is seated inside each step now, with both labels above the bar.
+
+23 evidence badges, zero em dashes, no horizontal overflow at 390px, no page errors, every figure activating in both motion modes.
 
 Menu: added under **Live**. `scripts/nav49.py` regenerated across 53 pages; `good-life` now links across to it. **All 121 e2e assertions green, all 42 Mushaf assertions green** after the nav rewrite.

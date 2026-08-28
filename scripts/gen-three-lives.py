@@ -73,6 +73,77 @@ CSS = """
 .floor li{position:relative;padding-inline-start:1.6rem;font-size:.87rem;line-height:1.9;color:rgba(44,36,22,.84);margin:0 0 .55rem}
 .floor li::before{content:"";position:absolute;inset-inline-start:0;top:.72rem;width:.5rem;height:.5rem;border-radius:999px;background:#C9A227}
 .floor li b{color:#2C2416}
+
+/* ===================== the room's own motion =========================
+   The kit in assets/anim.css covers bars, fields, arcs and columns. These
+   nine are particular to this room, and they obey the same two rules it
+   does: the still frame is already the true picture, and nothing moves for
+   a reader who has asked for stillness. */
+.nthree{display:grid;grid-template-columns:1fr;gap:.5rem;margin:.3rem 0 0}
+@media(min-width:36rem){.nthree{grid-template-columns:repeat(3,1fr);gap:.6rem}}
+.pdraw{stroke-dasharray:var(--len,340);stroke-dashoffset:0}
+.yr{display:grid;grid-template-columns:repeat(26,1fr);gap:2.5px;margin:.4rem 0 0}
+.yr i{aspect-ratio:1;border-radius:50%;display:block;background:rgba(255,254,247,.09)}
+.yr i.on{background:rgba(244,212,106,.85)}
+.yrl{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:rgba(255,254,247,.5);margin:1rem 0 .1rem}
+.yrl:first-of-type{margin-top:.2rem}
+.yrn{font-size:.72rem;font-weight:800;color:rgba(244,212,106,.9);margin:.5rem 0 0}
+.polish{opacity:0;transform-box:fill-box;transform-origin:center}
+.gbar{transform-box:fill-box;transform-origin:bottom}
+.beam{transform-origin:150px 34px;transform:rotate(-9deg)}
+.svgw svg{width:100%;height:auto;display:block;overflow:visible;margin:.3rem 0 0}
+.slbl{font:800 7.2px Inter,system-ui,sans-serif;letter-spacing:.1em;fill:rgba(255,254,247,.62)}
+.slbl.on{fill:rgba(244,212,106,.95)}
+.slbl.bad{fill:rgba(214,120,100,.92)}
+.ssub{font:700 6.2px Inter,system-ui,sans-serif;letter-spacing:.05em;fill:rgba(255,254,247,.42)}
+
+@media (prefers-reduced-motion:no-preference){
+  /* paths that draw themselves, one after the other */
+  .nfig.ngo .pdraw{stroke-dashoffset:var(--len,340);
+    animation:npdraw 1.5s ease-out both;animation-delay:calc(var(--i,0) * .34s)}
+  @keyframes npdraw{ to{stroke-dashoffset:0} }
+
+  /* three columns, in turn, never together */
+  .nfig.ngo .nthree .ncol{animation-delay:calc(var(--i,0) * .22s)}
+
+  /* the walls of a narrow life, arriving where they already are */
+  .nfig.ngo .wl{animation:nwl 2.4s cubic-bezier(.4,0,.2,1) both}
+  .nfig.ngo .wr{animation:nwr 2.4s cubic-bezier(.4,0,.2,1) both}
+  @keyframes nwl{ from{transform:translateX(-52px)} to{transform:translateX(0)} }
+  @keyframes nwr{ from{transform:translateX(52px)} to{transform:translateX(0)} }
+
+  /* the screen that is never off */
+  .nfig.ngo .glow{animation:nflick 3.6s ease-in-out infinite}
+  @keyframes nflick{0%,100%{opacity:.45}28%{opacity:.9}46%{opacity:.3}64%{opacity:.75}}
+
+  /* the counting that keeps climbing */
+  .nfig.ngo .gbar{animation:ngup .5s cubic-bezier(.16,.84,.36,1) both;
+    animation-delay:calc(var(--i,0) * .12s)}
+  @keyframes ngup{ from{transform:scaleY(0)} to{transform:scaleY(1)} }
+
+  /* the supplication going up through everything in the way */
+  .nfig.ngo .rise{animation:nrise2 2.6s cubic-bezier(.3,.7,.3,1) .3s both}
+  @keyframes nrise2{ from{transform:translateY(74px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+  /* the climb, one named step at a time */
+  .nfig.ngo .climber{animation:nclimb 3.4s cubic-bezier(.55,0,.45,1) .6s both}
+  @keyframes nclimb{
+    0%{transform:translate(0,0)} 33%{transform:translate(56px,-19px)}
+    66%{transform:translate(112px,-38px)} 100%{transform:translate(168px,-57px)} }
+
+  /* a year, one week at a time */
+  .nfig.ngo .yr i.on{animation:nylit .45s ease-out both;animation-delay:calc(var(--i,0) * .022s)}
+  @keyframes nylit{ from{opacity:0;transform:scale(.25)} to{opacity:1;transform:none} }
+
+  /* what repentance does. The still frame is the CLEAN heart, because that is
+     the true end of this figure; the marks appear only to be taken away. */
+  .nfig.ngo .polish{animation:npol 3s ease-in-out both;animation-delay:calc(var(--i,0) * .09s)}
+  @keyframes npol{0%{opacity:0;transform:scale(1)}14%{opacity:1}52%{opacity:1}100%{opacity:0;transform:scale(.2)}}
+
+  /* the beam, settling where it already rests */
+  .nfig.ngo .beam{animation:ntip 2.8s cubic-bezier(.3,1.3,.4,1) both}
+  @keyframes ntip{0%{transform:rotate(12deg)}42%{transform:rotate(-14deg)}70%{transform:rotate(-6deg)}100%{transform:rotate(-9deg)}}
+}
 """
 
 FIG_JS = """<script>
@@ -277,6 +348,287 @@ FIG_KEEP = (
   '</figure>')
 
 
+# ---------------------------------------------------------------------------
+# the second wave of figures
+# ---------------------------------------------------------------------------
+
+# 7 · the three kinds, drawn as three roads out of one point. Every reader is
+# standing at the left edge of this drawing.
+FIG_THREE = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">Three roads out of one morning. Nobody is told which one he is on, and the '
+  'surah does not describe them by how they look from outside. It describes where they arrive.</p>'
+  '<svg viewBox="0 0 300 132" role="img" aria-label="Three roads leaving one point: the foremost, the right, the left">'
+    '<defs>'
+    '<linearGradient id="n3a" gradientUnits="userSpaceOnUse" x1="23" y1="0" x2="282" y2="0">'
+    '<stop offset="0%" stop-color="rgba(201,162,39,.35)"/><stop offset="100%" stop-color="#F4D46A"/></linearGradient>'
+    '<linearGradient id="n3b" gradientUnits="userSpaceOnUse" x1="23" y1="0" x2="282" y2="0">'
+    '<stop offset="0%" stop-color="rgba(201,162,39,.3)"/><stop offset="100%" stop-color="rgba(233,200,106,.95)"/></linearGradient>'
+    '<linearGradient id="n3c" gradientUnits="userSpaceOnUse" x1="23" y1="0" x2="282" y2="0">'
+    '<stop offset="0%" stop-color="rgba(214,120,100,.25)"/><stop offset="100%" stop-color="rgba(190,80,64,.85)"/></linearGradient></defs>'
+    '<circle cx="18" cy="66" r="5" fill="#FFFEF7"/>'
+    '<text x="18" y="84" text-anchor="middle" class="ssub">TODAY</text>'
+    '<path class="pdraw" style="--i:0;--len:300" d="M23 66 C110 66 150 30 282 20" fill="none" stroke="url(#n3a)" stroke-width="2.6" stroke-linecap="round"/>'
+    '<path class="pdraw" style="--i:1;--len:270" d="M23 66 C120 66 170 66 282 66" fill="none" stroke="url(#n3b)" stroke-width="2.6" stroke-linecap="round"/>'
+    '<path class="pdraw" style="--i:2;--len:300" d="M23 66 C110 66 150 102 282 114" fill="none" stroke="url(#n3c)" stroke-width="2.6" stroke-linecap="round"/>'
+    '<text x="282" y="12" text-anchor="end" class="slbl on">THE FOREMOST</text>'
+    '<text x="282" y="56" text-anchor="end" class="slbl on">THE RIGHT HAND</text>'
+    '<text x="282" y="128" text-anchor="end" class="slbl bad">THE LEFT HAND</text>'
+  '</svg>'
+  '<figcaption class="ncap">Al-Waqi&rsquo;ah gives the three by name, and gives their sizes: the '
+  'foremost thin to <b>a few</b> of the later peoples, the right hand stays <b>a multitude</b> of '
+  'them. <b>Qur&rsquo;an 56:7-14 &middot; 56:39-40</b></figcaption>'
+  '</figure>')
+
+# 8 · one act, two intentions, two destinations.
+FIG_INTENT = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">The first hadith in Bukhari&rsquo;s collection is not about prayer or fasting. '
+  'It is the rule that decides what everything else is worth: actions are but by intentions, and '
+  'every man has only what he intended.</p>'
+  '<svg viewBox="0 0 300 128" role="img" aria-label="One act splitting into two destinations by intention">'
+    '<rect x="8" y="52" width="62" height="26" rx="8" fill="rgba(244,212,106,.16)" stroke="rgba(244,212,106,.6)" stroke-width="1.6"/>'
+    '<text x="39" y="69" text-anchor="middle" class="slbl on">ONE ACT</text>'
+    '<path class="pdraw" style="--i:0;--len:220" d="M72 62 C140 62 160 30 214 28" fill="none" stroke="#F4D46A" stroke-width="2.4" stroke-linecap="round"/>'
+    '<path class="pdraw" style="--i:1;--len:220" d="M72 68 C140 68 160 100 214 102" fill="none" stroke="rgba(190,80,64,.8)" stroke-width="2.4" stroke-linecap="round"/>'
+    '<text x="150" y="34" text-anchor="middle" class="ssub">FOR HIM</text>'
+    '<text x="150" y="116" text-anchor="middle" class="ssub">TO BE SEEN</text>'
+    '<g class="nmark" style="--i:2">'
+      '<rect x="218" y="14" width="74" height="28" rx="8" fill="rgba(244,212,106,.18)" stroke="rgba(244,212,106,.65)" stroke-width="1.6"/>'
+      '<text x="255" y="32" text-anchor="middle" class="slbl on">IT WEIGHS</text></g>'
+    '<g class="nmark" style="--i:4">'
+      '<rect x="218" y="88" width="74" height="28" rx="8" fill="rgba(190,80,64,.14)" stroke="rgba(190,80,64,.55)" stroke-width="1.6"/>'
+      '<text x="255" y="106" text-anchor="middle" class="slbl bad">NOTHING</text></g>'
+  '</svg>'
+  '<figcaption class="ncap">&ldquo;Actions are but by intentions, and every man shall have only '
+  'what he intended.&rdquo; <b>Bukhari 1</b></figcaption>'
+  '</figure>')
+
+# 9 · the three of Muslim 1905, in the order the hadith gives them.
+FIG_SEEN = (
+  '<figure class="nfig">'
+  '<p class="nlede">He &#65018; named the first three brought forward on that Day, and the world '
+  'would have called all three of them exemplary. Read what each was told.</p>'
+  '<div class="nthree">'
+    '<div class="ncol nright" style="--i:0"><h4>The one killed in battle</h4>'
+    '<p>He is asked what he did. He says: I fought for You until I was killed. He is told: '
+    '<b>you lied. You fought so it would be said he is brave.</b> And it was said.</p></div>'
+    '<div class="ncol nright" style="--i:1"><h4>The scholar and reciter</h4>'
+    '<p>He says: I learned knowledge, I taught it, and I recited the Qur&rsquo;an for You. He is '
+    'told: <b>you lied. You learned so it would be said he is learned</b>, and you recited so it '
+    'would be said he is a reciter. And it was said.</p></div>'
+    '<div class="ncol nright" style="--i:2"><h4>The one who gave everything</h4>'
+    '<p>He says: I left no path You love to be spent in except that I spent in it. He is told: '
+    '<b>you lied. You gave so it would be said he is generous.</b> And it was said.</p></div>'
+  '</div>'
+  '<figcaption class="ncap">Each is then dragged on his face into the Fire. Now look again at the '
+  'twenty five entry ledger: the three deeds most likely to be seen by other people are these '
+  'three. <b>Muslim 1905</b></figcaption>'
+  '</figure>')
+
+# 10 · the narrowing room. An illustration, not a chart: a man, a screen, and
+# two walls already close.
+FIG_NARROWING = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">The Qur&rsquo;an&rsquo;s word for this life is physical. <i>Danka</i> is what '
+  'you say about a space too small to turn around in. Here it is drawn: the room does not start '
+  'small, and nothing pushes the walls except the man in it.</p>'
+  '<svg viewBox="0 0 300 150" role="img" aria-label="A man seated before a screen in a room whose walls have closed in">'
+    '<rect x="0" y="0" width="300" height="150" fill="none"/>'
+    '<line x1="20" y1="128" x2="280" y2="128" stroke="rgba(255,254,247,.16)" stroke-width="1.6"/>'
+    '<g class="wl"><rect x="86" y="16" width="7" height="112" rx="3" fill="rgba(244,212,106,.42)"/></g>'
+    '<g class="wr"><rect x="207" y="16" width="7" height="112" rx="3" fill="rgba(244,212,106,.42)"/></g>'
+    '<ellipse class="glow" cx="150" cy="66" rx="46" ry="30" fill="rgba(120,170,220,.5)"/>'
+    '<rect x="127" y="46" width="46" height="30" rx="3" fill="rgba(180,215,245,.85)"/>'
+    '<circle cx="150" cy="98" r="10" fill="rgba(255,254,247,.82)"/>'
+    '<path d="M136 128 C136 112 143 106 150 106 C157 106 164 112 164 128 Z" fill="rgba(255,254,247,.82)"/>'
+    '<text x="150" y="144" text-anchor="middle" class="slbl bad">MA&rsquo;ISHATAN DANKA</text>'
+    '<text x="44" y="70" text-anchor="middle" class="ssub">HE BUILT</text>'
+    '<text x="44" y="80" text-anchor="middle" class="ssub">THESE</text>'
+    '<text x="256" y="70" text-anchor="middle" class="ssub">NOBODY</text>'
+    '<text x="256" y="80" text-anchor="middle" class="ssub">ELSE DID</text>'
+  '</svg>'
+  '<figcaption class="ncap">&ldquo;And whoever turns away from My remembrance, indeed he will have '
+  'a constricted life, and We will raise him blind on the Day of Resurrection.&rdquo; '
+  '<b>Qur&rsquo;an 20:124</b></figcaption>'
+  '</figure>')
+
+# 11 · the counting that only stops at the graves.
+FIG_TAKATHUR = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">At-Takathur is eight verses long and its first two contain the entire biography '
+  'of the man above. Rivalry in increase distracted you, <i>until you visited the graves</i>. Not '
+  'until you were stopped. Until you simply arrived.</p>'
+  '<svg viewBox="0 0 300 124" role="img" aria-label="A rising column of increase that stops at a grave">'
+    '<line x1="10" y1="104" x2="290" y2="104" stroke="rgba(255,254,247,.16)" stroke-width="1.6"/>'
+    + "".join(
+        '<rect class="gbar" style="--i:%d" x="%d" y="%d" width="13" height="%d" rx="2.5" '
+        'fill="rgba(244,212,106,%s)"/>' % (i, 16 + i * 18, 104 - h, h, op)
+        for i, (h, op) in enumerate([(9,".30"),(14,".34"),(18,".38"),(24,".42"),(29,".46"),
+                                     (35,".52"),(41,".58"),(48,".64"),(55,".70"),(63,".78"),
+                                     (71,".86"),(80,".95")]))
+    + '<g class="nmark" style="--i:14">'
+      '<rect x="248" y="72" width="32" height="32" rx="3" fill="rgba(255,254,247,.14)"/>'
+      '<path d="M264 72 v-16 M256 62 h16" stroke="rgba(255,254,247,.5)" stroke-width="2.4" stroke-linecap="round"/>'
+      '<text x="264" y="118" text-anchor="middle" class="slbl">THE GRAVE</text></g>'
+    + '<text x="120" y="120" text-anchor="middle" class="ssub">MORE. AND THEN MORE. AND THEN MORE.</text>'
+  '</svg>'
+  '<figcaption class="ncap">&ldquo;Competition in increase diverted you, until you visited the '
+  'graveyards.&rdquo; <b>Qur&rsquo;an 102:1-2</b>. The column never falls. It is simply still '
+  'rising on the day it stops.</figcaption>'
+  '</figure>')
+
+# 12 · the supplication with nothing in the way.
+FIG_VEIL = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">Sending Mu&rsquo;adh to Yemen, he &#65018; gave him a warning about the people '
+  'he would have authority over. Fear the supplication of the wronged, <b>for there is no veil '
+  'between it and Allah.</b> That sentence describes a mechanism, and the mechanism has no delay '
+  'built into it.</p>'
+  '<svg viewBox="0 0 300 152" role="img" aria-label="A supplication rising through seven layers with nothing stopping it">'
+    + "".join(
+        '<line x1="34" y1="%d" x2="266" y2="%d" stroke="rgba(255,254,247,.13)" stroke-width="1.4" '
+        'stroke-dasharray="5 6"/>' % (18 + i * 17, 18 + i * 17) for i in range(7))
+    + '<g class="rise">'
+      '<path d="M150 140 L150 14" stroke="url(#nvg)" stroke-width="2.6" stroke-linecap="round"/>'
+      '<circle cx="150" cy="14" r="5.5" fill="#F4D46A"/>'
+      '</g>'
+      '<defs><linearGradient id="nvg" gradientUnits="userSpaceOnUse" x1="0" y1="140" x2="0" y2="14">'
+      '<stop offset="0%" stop-color="rgba(244,212,106,.2)"/><stop offset="100%" stop-color="#F4D46A"/>'
+      '</linearGradient></defs>'
+      '<circle cx="150" cy="142" r="4" fill="rgba(255,254,247,.7)"/>'
+      '<text x="150" y="152" text-anchor="middle" class="ssub">THE ONE YOU WRONGED</text>'
+      '<text x="292" y="8" text-anchor="end" class="slbl on">NO VEIL</text>'
+  '</svg>'
+  '<figcaption class="ncap">He held a wage for six weeks because the man had no papers. There is a '
+  'petition filed against him that no procedure delays. <b>Bukhari 1496</b></figcaption>'
+  '</figure>')
+
+# 13 · what repentance does. The still frame is the clean heart, because that
+# is where this figure ends; the marks appear only in order to be removed.
+FIG_RETURN = (
+  '<figure class="nfig heart">'
+  '<p class="nlede">The same hadith that describes the covering describes the undoing of it, in the '
+  'same sentence, and the undoing comes first: <i>if he leaves it, seeks forgiveness and repents, '
+  'his heart is polished.</i> The covering is only what happens when that step is skipped.</p>'
+  '<svg viewBox="0 0 120 126" role="img" aria-label="A heart being polished clean, with the marks lifting away">'
+    '<defs><linearGradient id="nhr2" x1="0" y1="0" x2="0" y2="1">'
+      '<stop offset="0%" stop-color="rgba(244,212,106,.55)"/>'
+      '<stop offset="100%" stop-color="rgba(201,162,39,.3)"/></linearGradient></defs>'
+    '<path d="M60 100 C20 72 8 48 8 33 C8 17 20 8 32 8 C44 8 54 16 60 27 C66 16 76 8 88 8 '
+    'C100 8 112 17 112 33 C112 48 100 72 60 100 Z" fill="url(#nhr2)" '
+    'stroke="rgba(244,212,106,.8)" stroke-width="2"/>'
+    + "".join('<circle class="polish" style="--i:%d" cx="%d" cy="%d" r="%d" fill="rgba(16,13,8,.9)"/>'
+              % (i, x, y, r) for i, (x, y, r) in enumerate(SPOTS))
+    + '<text x="60" y="119" text-anchor="middle" '
+      'style="font:800 7.4px Inter,system-ui,sans-serif;fill:rgba(244,212,106,.95);'
+      'letter-spacing:.14em">POLISHED</text>'
+  '</svg>'
+  '<figcaption class="ncap">This is the same heart as the figure above it, in the other direction. '
+  'Nothing was needed to reverse it except naming the thing and turning from it. '
+  '<b>Tirmidhi 3334</b>, graded <b>hasan sahih</b></figcaption>'
+  '</figure>')
+
+# 14 · the pass of Al-Balad, which the Qur'an defines and then costs.
+FIG_PASS = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">Al-Balad asks what the steep pass is, and then, unusually, answers its own '
+  'question. Four steps. Not one of them requires a scholar, a title or an unusual capacity, and '
+  'three of the four are done to a human being who is worse off than you.</p>'
+  '<svg viewBox="0 0 300 150" role="img" aria-label="Four steps up a steep pass, each one named">'
+    + "".join(
+        '<g class="nmark" style="--i:%d">'
+        '<rect x="%d" y="%d" width="52" height="%d" rx="4" fill="rgba(244,212,106,%s)"/>'
+        '<text x="%d" y="%d" text-anchor="middle" class="slbl on">%s</text>'
+        '<text x="%d" y="%d" text-anchor="middle" class="ssub">%s</text></g>'
+        % (i, 14 + i*56, 128 - (i+1)*19, (i+1)*19, op,
+           40 + i*56, 113 - (i+1)*19, top,
+           40 + i*56, 123 - (i+1)*19, bot)
+        for i, (op, top, bot) in enumerate([
+            (".30", "FREE", "A NECK"), (".45", "FEED", "THE ORPHAN"),
+            (".62", "FEED", "THE POOR"), (".85", "BELIEVE", "AND COUNSEL")]))
+    + '<circle class="climber" cx="40" cy="119" r="6" fill="#FFFEF7" '
+      'transform="translate(168,-57)"/>'
+      '<text x="292" y="10" text-anchor="end" class="slbl on">THE RIGHT HAND</text>'
+      '<line x1="14" y1="140" x2="286" y2="140" stroke="rgba(255,254,247,.16)" stroke-width="1.6"/>'
+  '</svg>'
+  '<figcaption class="ncap">&ldquo;And what can make you know what the steep pass is? The freeing '
+  'of a neck, or feeding on a day of severe hunger an orphan of near relationship, or a needy '
+  'person in the dust. And then being of those who believed and advised one another to patience '
+  'and advised one another to compassion. <b>Those are the companions of the right.</b>&rdquo; '
+  '<b>Qur&rsquo;an 90:12-18</b></figcaption>'
+  '</figure>')
+
+# 15 · a year, two ways. Fifty two weeks in each row.
+def weeks(lit):
+    return "".join('<i class="%s" style="--i:%d"></i>' % ("on" if i in lit else "", i)
+                   for i in range(52))
+
+FIG_YEAR = (
+  '<figure class="nfig">'
+  '<p class="nlede">Two years of a life, drawn a week at a time. The first belongs to a man who '
+  'gives everything he has for one month. The second belongs to a man who gives two rak&rsquo;ahs '
+  'a day and does not stop. Both are real. Only one of them is the answer the sources gave.</p>'
+  '<p class="yrl">A month of everything, then eleven of nothing</p>'
+  '<div class="yr">' + weeks(set(range(28, 32))) + '</div>'
+  '<p class="yrn">4 weeks lit &middot; 48 dark</p>'
+  '<p class="yrl">The small thing, kept</p>'
+  '<div class="yr">' + weeks(set(range(52))) + '</div>'
+  '<p class="yrn">52 weeks lit, and it is still going next January</p>'
+  '<figcaption class="ncap">This is not an argument against Ramadan. It is the reason he &#65018; '
+  'ranked <b>consistency above quantity</b> when he was asked directly which deeds are most '
+  'beloved. <b>Bukhari 6464 &middot; Muslim 783</b></figcaption>'
+  '</figure>')
+
+# 16 · the scale, and the mustard seed.
+FIG_MIZAN = (
+  '<figure class="nfig svgw">'
+  '<p class="nlede">The scales are described as an instrument of exactness rather than of threat. '
+  'Nothing is rounded. Nothing is lost in the noise. A thing the weight of a mustard seed is '
+  'brought and put on the pan.</p>'
+  '<svg viewBox="0 0 300 152" role="img" aria-label="A balance settling, weighed to the mustard seed">'
+    '<line x1="150" y1="34" x2="150" y2="132" stroke="rgba(244,212,106,.6)" stroke-width="3" stroke-linecap="round"/>'
+    '<path d="M118 138 L150 122 L182 138 Z" fill="rgba(244,212,106,.45)"/>'
+    '<g class="beam">'
+      '<line x1="48" y1="34" x2="252" y2="34" stroke="#F4D46A" stroke-width="3.4" stroke-linecap="round"/>'
+      '<circle cx="150" cy="34" r="5.5" fill="#FFFEF7"/>'
+      '<line x1="48" y1="34" x2="48" y2="66" stroke="rgba(244,212,106,.6)" stroke-width="1.6"/>'
+      '<line x1="252" y1="34" x2="252" y2="66" stroke="rgba(244,212,106,.6)" stroke-width="1.6"/>'
+      '<path d="M22 66 A26 26 0 0 0 74 66 Z" fill="rgba(244,212,106,.3)" stroke="rgba(244,212,106,.8)" stroke-width="1.6"/>'
+      '<path d="M226 66 A26 26 0 0 0 278 66 Z" fill="rgba(190,80,64,.16)" stroke="rgba(190,80,64,.6)" stroke-width="1.6"/>'
+      '<circle cx="40" cy="72" r="5" fill="#F4D46A"/><circle cx="54" cy="74" r="4" fill="#F4D46A"/>'
+      '<circle cx="47" cy="62" r="3.4" fill="#F4D46A"/>'
+      '<circle cx="250" cy="73" r="3" fill="rgba(190,80,64,.8)"/>'
+    '</g>'
+    '<text x="48" y="112" text-anchor="middle" class="slbl on">HEAVY</text>'
+    '<text x="252" y="112" text-anchor="middle" class="slbl bad">LIGHT</text>'
+    '<text x="150" y="150" text-anchor="middle" class="ssub">DOWN TO THE WEIGHT OF A MUSTARD SEED</text>'
+  '</svg>'
+  '<figcaption class="ncap">&ldquo;And We place the scales of justice for the Day of Resurrection, '
+  'so no soul will be treated unjustly at all. And if there is the weight of a mustard seed, We '
+  'will bring it forth.&rdquo; <b>Qur&rsquo;an 21:47</b></figcaption>'
+  '</figure>')
+
+# 17 · the two books, in the words each man says out loud.
+FIG_HANDS = (
+  '<figure class="nfig">'
+  '<p class="nlede">Al-Haqqah does something almost cinematic here: it does not describe the two '
+  'men, it lets each of them speak, and the first line out of each mouth tells you everything '
+  'about the life behind it.</p>'
+  '<div class="ntwo">'
+    '<div class="ncol nright"><h4>The record in the right hand</h4>'
+    '<p><b>&ldquo;Here, read my record!&rdquo;</b> He is not asked to hand it over. He offers it, '
+    'unprompted, to anyone standing near. Whatever is in it, he wants it read aloud.</p></div>'
+    '<div class="ncol"><h4>The record in the left hand</h4>'
+    '<p><b>&ldquo;I wish I had not been given my record, and had not known what my account is. '
+    'I wish it had been the decisive finish.&rdquo;</b> He does not argue with a single line of '
+    'it. He argues with having been shown it.</p></div>'
+  '</div>'
+  '<figcaption class="ncap">The whole difference between the two lives on this page, said in two '
+  'sentences by the men who lived them. <b>Qur&rsquo;an 69:19-27</b></figcaption>'
+  '</figure>')
+
+
 M = []
 
 # ---------------------------------------------------------------------------
@@ -295,6 +647,7 @@ M.append(sec("frame", "أَزْوَاجًا ثَلَاثَةً", "You become thr
     'close the page. The third is the one the Qur&rsquo;an says a great many people reach, from '
     'the earliest generations and the later ones both, and it is the only one of the three built '
     'to be reached from where you are sitting.</p>'
+  + FIG_THREE
   + '<div class="hon"><b>What this room will not do</b>'
     '<p>It will not tell you which of the three you are. Nobody on earth is in a position to tell '
     'you that, and the one place the sources are unanimous is that a man can look like the first '
@@ -314,6 +667,7 @@ M.append(sec("ledger", "الْكِتَاب", "One &middot; The full ledger",
     "<p>This is not an argument against the twenty five. Keep them. It is an argument that they "
     "were never the whole accounting, and the sources say so in language far harder than ours.</p>",
     ref("editorial", "Editorial", "our reading of what the ledger leaves out"))
+  + FIG_INTENT
   + FIG_MUFLIS
   + card("The first way a full ledger fails", "It can be paid out entirely to the people you wronged.",
     "<p>The hadith of the bankrupt one is not a warning about a bad man with no prayer. It is "
@@ -335,6 +689,7 @@ M.append(sec("ledger", "الْكِتَاب", "One &middot; The full ledger",
     "seen are the three in the hadith. This is why <i>riya&rsquo;</i>, doing it to be seen, was "
     "called the hidden thing: nobody performs it on purpose, and nobody is safe from it.</p>",
     ref("sunnah", "Sunnah", "Muslim 1905"))
+  + FIG_SEEN
   + card("The third way", "Some of it was never asked of you.",
     "<p>Three men came to the houses of the Prophet &#65018; asking about his worship. When they "
     "were told, they thought it too little for a man already forgiven. One said he would pray all "
@@ -351,6 +706,7 @@ M.append(sec("worst", "أَصْحَابُ الْمَشْأَمَة", "Two &middo
   "Written plainly, because the person who needs this section will recognise softening "
   "immediately and stop reading.",
   FIG_NARROW
+  + FIG_NARROWING
   + '<div class="dark"><p class="k">The worst life a human being can live on this earth</p>'
     '<p>He is sixty one. He owns four properties and cannot name a single person who would sit '
     'with him for an hour without wanting something. He has not spoken to his mother in nine years '
@@ -387,6 +743,7 @@ M.append(sec("worst", "أَصْحَابُ الْمَشْأَمَة", "Two &middo
     "<i>until you visited the graves</i>. Not until you were confronted. Until you simply arrived, "
     "with the counting unfinished, the way it always is.</p>",
     ref("quran", "Qur'an", "7:179") + ref("quran", "Qur'an", "102:1-2"))
+  + FIG_TAKATHUR
   + card("The one thing that makes it irreversible", "Not the sin. The refusal to look at it.",
     "<p>The heart in the figure below is not covered by a single catastrophe. It is covered a "
     "point at a time, and the hadith is precise about which point sticks: the one that is "
@@ -409,6 +766,8 @@ M.append(sec("worst", "أَصْحَابُ الْمَشْأَمَة", "Two &middo
     "available. That is the verse.</p>",
     ref("sunnah", "Sunnah", "Bukhari 1496") + ref("sunnah", "Sunnah", "Bukhari 5984")
     + ref("quran", "Qur'an", "4:10"))
+  + FIG_VEIL
+  + FIG_RETURN
   + '<div class="door"><p class="k">And now the part that is not optional to include</p>'
     '<p>A man came to a scholar having killed ninety nine people and asked whether repentance was '
     'possible. He was told no, and he killed him too, making a hundred. He asked again, of someone '
@@ -472,6 +831,7 @@ M.append(sec("balance", "أَصْحَابُ الْيَمِين", "Three &middot;
     ref("sunnah", "Sunnah", "Bukhari 1968") + ref("sunnah", "Sunnah", "Bukhari 6307")
     + ref("editorial", "Editorial", "the arrangement into a floor is ours, not revelation"))
   + FIG_KEEP
+  + FIG_YEAR
   + card("Why the small consistent thing is not a consolation prize", "It is the ranked answer.",
     "<p>It would be easy to read <i>the most beloved deeds are the most consistent, even if few</i> "
     "as a kindness offered to people who cannot manage more. It is not phrased as a kindness. It "
@@ -495,6 +855,7 @@ M.append(sec("balance", "أَصْحَابُ الْيَمِين", "Three &middot;
     "who is worse off than you, and the fourth is refusing to let the people around you face "
     "difficulty alone. It is a definition you could satisfy this month.</p>",
     ref("quran", "Qur'an", "90:10-18"))
+  + FIG_PASS
   + '<div class="hon"><b>What none of this promises</b>'
     '<p>Not an easy life. Not a life without grief, illness, money trouble or the ordinary '
     'humiliations. The man who lived this pattern most completely buried six of his seven children. '
@@ -503,6 +864,35 @@ M.append(sec("balance", "أَصْحَابُ الْيَمِين", "Three &middot;
     'A good one. Not a comfortable one.</p></div>'))
 
 # ---------------------------------------------------------------------------
+M.append(sec("scale", "الْمَوَازِين", "Where the three arrive",
+  "Every road on this page ends at the same instrument, and the Qur'an describes it as a thing "
+  "of exactness rather than a thing of threat.",
+  FIG_MIZAN
+  + card("Why the exactness is the mercy", "Nothing is rounded off, in either direction.",
+    "<p>A scale accurate to the weight of a mustard seed is frightening if you are only thinking "
+    "about your sins. Turn it over. It also means the two minutes you spent listening to someone "
+    "who had nobody else to tell, on a Tuesday nobody remembers, was weighed. The glass of water. "
+    "The debt you quietly forgave. The temper you swallowed in a car park.</p>"
+    "<p>An imprecise scale would lose all of that in the noise. This one does not lose it. "
+    "<i>Whoever does an atom's weight of good will see it, and whoever does an atom's weight of "
+    "evil will see it.</i></p>",
+    ref("quran", "Qur'an", "21:47") + ref("quran", "Qur'an", "99:7-8"))
+  + FIG_HANDS
+  + card("The one line that decides which sentence you say", "It is not a mystery, and it is not a lottery.",
+    "<p>Al-Qari'ah puts it as plainly as it can be put: as for one whose scales are heavy, he is "
+    "in a pleasant life; as for one whose scales are light, his refuge is an abyss. There is no "
+    "third outcome offered and no appeal described.</p>"
+    "<p>What there is, and the whole of this page has been pointing at it, is the entire span of "
+    "your life before that morning, in which the pans are still being loaded, by you, in "
+    "quantities as small as a seed.</p>",
+    ref("quran", "Qur'an", "101:6-11"))
+  + '<div class="hon"><b>And the thing nobody on this page can tell you</b>'
+    '<p>Which pan your own life is currently loading. Not us, not a teacher, not a person who has '
+    'watched you for thirty years. The sources are unanimous that a man can look like the first '
+    'section and be the second, and look like the second and die as the first, and that certainty '
+    'about your own standing is itself a warning sign rather than a good one. What is available to '
+    'you is not the verdict. It is the next hour.</p></div>'))
+
 M.append(sec("place", "الْمِيزَان", "Where you actually are",
   "One question, asked honestly, is worth more than the whole page above.",
   '<p class="raw">Not <i>which of the three am I</i>. Nobody can answer that and the sources warn '
