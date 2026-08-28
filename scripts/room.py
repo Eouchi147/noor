@@ -84,6 +84,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <link rel="stylesheet" href="/assets/figfit.css?v=106"/>
 <script src="/assets/figfit.js?v=106" defer></script>
+<script src="/assets/noor-dials.js?v=109" defer></script>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>

@@ -250,7 +250,9 @@ python3 scripts/gen-verse-notes.py    # refuses to write if any verse note is ma
 node scripts/check-admin.mjs          # console structure: every pane reachable
 node tests/lantern.mjs                # 25 · the model chain, no network needed
 node tests/api-audit.mjs              # 87 · every route: auth, caching, secrets, cold start
-node tests/figures.mjs                # every drawing on every page, 3 widths   (server :8433)
+node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
+node tests/dials.mjs                  # the console's switches actually switch    (server :8433)
+node tests/figures.mjs                # every drawing on every page, 3 widths     (server :8433)
 node tests/mushaf.mjs                 # 42 · the Qur'an player and verse layer  (server :8433)
 node tests/e2e.mjs                    # 121 · the whole site                    (server :8123)
 ```
@@ -267,6 +269,8 @@ python3 /tmp/vercelish.py    # :8433, mimics Vercel's clean URLs
 - `lantern.mjs`, the cold-start fault above.
 - `api-audit.mjs`, nine routes shipped with no `Cache-Control` at all.
 - `figures.mjs`, 700 problems, including a gradient that had never once painted.
+- `symbols.mjs` , a Christian cross was drawn as a grave marker on an Islamic site.
+- `dials.mjs` , the journal was switched off in the console and kept working.
 
 ---
 
@@ -301,6 +305,25 @@ always run it by hand: visit `https://noorcodex.com/api/warm`.
 `REDIS_URL` or the KV pair is not set, or is wrong. Until it is fixed: the journal
 cannot take replies, counters do not accumulate, and dials do not persist. Nothing
 else breaks.
+
+### A dial in the console does not seem to do anything
+
+Dials come in two kinds and they fail differently.
+
+**Server-side dials** (`journal.replies`, `lantern.on`, the rate limits) are read by
+the API on every request and take effect immediately.
+
+**Reader-facing dials** (`journal.on`, `notice.text`) have to reach a *static* page.
+The menu is baked into every page at generation time, so no server dial can reach it.
+`assets/noor-dials.js` reads `/api/settings` on every page and applies them.
+
+If a reader-facing dial appears to do nothing, check in this order:
+1. Is the page carrying `assets/noor-dials.js`? Every page except `/admin` should.
+2. Does `GET /api/settings` return the dial in its `s` object? Only dials marked
+   `pub: true` in `api/settings.js` are sent to the public site.
+3. The script **fails open by design**: if the request does not land, the site behaves
+   exactly as built. A library that hides itself over a network hiccup is worse than
+   one that shows a section an hour longer than intended. Verified in `tests/dials.mjs`.
 
 ### A reply got onto the journal that should not have
 
@@ -362,6 +385,14 @@ These are not style preferences. They are the reason the library can be trusted.
 - **No em dashes or en dashes anywhere.** Guarded in e2e.
 - Write **the Prophet ﷺ** with the symbol, and **Qur'an** with the apostrophe.
 - Illuminated manuscript art only. **No faces of prophets or companions.**
+- **No symbol of another faith is ever drawn, anywhere.** This is not a matter of
+  words: a cross once reached a published page as two line commands in an SVG path,
+  with the word "cross" appearing nowhere, so no text search could have found it.
+  `tests/symbols.mjs` parses every path into its straight segments and reports a
+  horizontal stroke crossing a vertical one at an interior point of both. Plus-shapes
+  that are genuinely a lattice, a window or a kite's spars are cleared **by name** in
+  that file with their reason, so a new one can never hide among them.
+- Relief and medicine use the **crescent**, never the medical cross.
 - **The still frame of every animated figure must already be true.** Motion is the
   second telling, never the only one. A reader with reduced motion loses the motion
   and nothing else.

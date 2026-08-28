@@ -1388,7 +1388,7 @@ LIFE_FIGS["abdul-sattar-edhi"] = fig(
     "arcs across the country",
     520, 306,
     '<g class="rd"><rect x="60" y="116" width="54" height="26" rx="4"/><path d="M114 126h16l10 16h-26z"/>'
-    '<circle cx="76" cy="150" r="8"/><circle cx="124" cy="150" r="8"/><path d="M87 129h10M92 124v10"/></g>'
+    '<circle cx="76" cy="150" r="8"/><circle cx="124" cy="150" r="8"/><path d="M95 123.4a6 6 0 1 0 0 11.2a4.7 4.7 0 1 1 0-11.2z"/></g>'
     '<g class="ln thin"><path d="M186 64A120 120 0 0 1 186 198"/>'
     '<path d="M250 44A185 185 0 0 1 250 218"/><path d="M319 37A250 250 0 0 1 319 225"/></g>'
     + dots([(87 + r * math.cos(math.radians(a)), 131 + r * math.sin(math.radians(a)))

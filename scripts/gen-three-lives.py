@@ -467,9 +467,17 @@ FIG_TAKATHUR = (
         for i, (h, op) in enumerate([(9,".30"),(14,".34"),(18,".38"),(24,".42"),(29,".46"),
                                      (35,".52"),(41,".58"),(48,".64"),(55,".70"),(63,".78"),
                                      (71,".86"),(80,".95")]))
+    # A Muslim grave, drawn the way the sunnah leaves it: earth raised about a
+    # hand span, one plain unmarked stone so the place can be found again, and
+    # nothing else at all. The Prophet forbade that graves be plastered, that
+    # structures be built over them, and that they be sat upon (Muslim 970).
+    # The first version of this figure carried a cross, which is a Christian
+    # marker and had no business anywhere on this site.
     + '<g class="nmark" style="--i:14">'
-      '<rect x="248" y="72" width="32" height="32" rx="3" fill="rgba(255,254,247,.14)"/>'
-      '<path d="M264 72 v-16 M256 62 h16" stroke="rgba(255,254,247,.5)" stroke-width="2.4" stroke-linecap="round"/>'
+      '<path d="M224 104 H298" stroke="rgba(255,254,247,.3)" stroke-width="1.5" stroke-linecap="round"/>'
+      '<path d="M242 104 Q266 70 290 104 Z" fill="rgba(255,254,247,.15)" '
+      'stroke="rgba(255,254,247,.42)" stroke-width="1.7" stroke-linejoin="round"/>'
+      '<path d="M229 104 V90 q0 -5 5.5 -5 q5.5 0 5.5 5 V104 Z" fill="rgba(255,254,247,.32)"/>'
       '<text x="264" y="118" text-anchor="middle" class="slbl">THE GRAVE</text></g>'
     + '<text x="120" y="120" text-anchor="middle" class="ssub">MORE. AND THEN MORE. AND THEN MORE.</text>'
   '</svg>'
