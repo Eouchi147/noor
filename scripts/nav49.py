@@ -59,6 +59,7 @@ GROUPS = [
     ]),
     ("g.live", "Live", [
         ("good-life.html", "m.goodlife", "How to Live a Good Life"),
+        ("three-lives.html", "m.threelives", "Three Lives &middot; Weigh Your Own"),
         ("health.html", "m.health", "Prophetic Health"),
         ("family.html", "m.family", "The Family Room"),
         ("marriage.html", "m.marriage", "Marriage &amp; the Home"),

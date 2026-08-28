@@ -344,3 +344,28 @@ node scripts/check-admin.mjs           # console structure
 node tests/mushaf.mjs                  # player + verse layer  (server on 8433)
 node tests/e2e.mjs                     # whole site            (server on 8123)
 ```
+
+## v105 — "Three Lives" (a room that puts one life beside another)
+
+Owner request: a section that puts life in perspective, with animated infographics, showing three things — a day with every obligatory and voluntary box ticked, the worst life a human being can live described raw and without censorship while staying respectful, and a balanced life anyone can reach.
+
+**The sorting is not ours.** Al-Waqi'ah does it by name: *"and you become of three kinds"* (56:7-10) — the foremost, the companions of the right, the companions of the left. Each section is one of the three, so the room is a reading of a surah rather than an invented scheme.
+
+**One — The full ledger.** Twenty five entries, eleven obligatory and fourteen voluntary, every one ticked, every one from the sources. Then, from the sources and not from opinion, three ways a complete ledger still fails: it can be paid out entirely to the people you wronged (*al-muflis*, Muslim 2581); the three most impressive entries in it are the three named in the hadith of the first three thrown into the Fire (Muslim 1905); and some of it was never asked of you — the three who thought his worship too little and were told *whoever turns away from my way is not of me* (Bukhari 5063). The section is deliberately a trap, because it is the life most people aim at.
+
+**Two — The worst life.** Written without softening, because a reader in it will recognise a flinch and close the page. The Qur'an locates the worst life away from poverty and pain: *ma'ishatan danka*, a constricted living (20:124). The portrait is a comfortable, likeable, sixty-one-year-old man who has never once run a sentence with himself as its subject — no group named, nothing gratuitous, nothing graphic, and no consolation offered until the sources offer it. Then the three the sources single out by name: the supplication of the oppressed with no veil between it and Allah (Bukhari 1496), severed kinship (Bukhari 5984), the orphan's wealth eaten as fire (4:10). Then the door, which is not optional to include: the man who killed a hundred and was forgiven **on the road, having completed nothing** (Bukhari 3470, Muslim 2766), 39:53, and the death-rattle hadith. A `.care` block follows: if what holds you is addiction, spiralling debt, or having stopped wanting to be here, that is a doctor and a trusted person this week, not a matter of praying harder.
+
+**Three — The balanced life.** 56:39-40 says the companions of the right are a multitude from the former peoples *and* a multitude from the later ones, while the verses just above thin the foremost to *a few* of the later — the Qur'an makes the distinction openly, and that door was not narrowed. The floor is concrete and stated as a list you could start tonight, built on Salman's three rights confirmed by the Prophet ﷺ (Bukhari 1968), the small consistent deed ranked *above* the large discontinuous one (Bukhari 6464, Muslim 783), and the pass of Al-Balad, which the Qur'an defines and then names its people: *those are the companions of the right* (90:10-18).
+
+**Six animated figures**, all on the existing kit (`assets/anim.css`), all authored so the still frame is already the true picture:
+
+- the ledger, twenty five boxes landing in turn, obligatory in gold and voluntary in grey so the two are never confused
+- the bankrupt one's scale: brought 100%, claimed 100%, **remaining 0%**
+- the two columns that disagree: what the life looks like from outside, against the word the Qur'an uses for it
+- the heart covered point by point, with one part left gold and never covered, which is 39:53 drawn rather than stated
+- the three rights, none at full and none at nothing, which is the finding and not a failure of the drawing
+- the small act that does not stop, on the endless track
+
+20 evidence badges, zero em dashes, no horizontal overflow at 390px, no page errors.
+
+Menu: added under **Live**. `scripts/nav49.py` regenerated across 53 pages; `good-life` now links across to it. **All 121 e2e assertions green, all 42 Mushaf assertions green** after the nav rewrite.

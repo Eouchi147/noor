@@ -330,6 +330,8 @@ M.append(band(
   [
     ("/pillars", "The Five Pillars",
      "The frame this whole page rests on, each pillar with its evidence and its practical shape."),
+    ("/three-lives", "Three Lives",
+     "The same question weighed three ways: a day with every box ticked, the worst life a human being can live, and the balanced one."),
     ("/health", "Prophetic Health",
      "Sleep, food, medicine and the body's claim on you, in far more detail than one section allows."),
     ("/family", "The Family Room",
