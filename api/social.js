@@ -42,6 +42,7 @@
 import { kv, kvReady } from "./_kv.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
+import { ownerGate } from "./_owner.js";
 
 /* Meta issues two kinds of publishing credential. The classic route, through
    Facebook login and a linked Page, hands out EAA... tokens and speaks
@@ -446,9 +447,16 @@ export default async function handler(req, res) {
   let date = String(q.date || "").slice(0, 10);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) date = new Date().toISOString().slice(0, 10);
 
-  const key = req.headers["x-admin-key"] || (q.key || "");
-  if (!(process.env.ADMIN_SECRET && key === process.env.ADMIN_SECRET))
-    return json(res, 401, { ok: false, reason: "locked" });
+  /* Who is allowed to drive this.
+     The console proves itself with the signed noor_admin cookie it was handed
+     when the owner unlocked it. The nightly cron and a hand-run request have no
+     cookie and carry the secret in a header instead. This route used to accept
+     only the second kind, so every request the console ever made to it came
+     back 401, the Social room rendered empty, and the empty state blamed
+     ADMIN_SECRET -- which was set, and had been since the fifth of August.
+     One check now, in _owner.js, shared rather than reinvented per route. */
+  const gate = ownerGate(req);
+  if (!gate.ok) return json(res, gate.code, { ok: false, reason: gate.reason });
 
   if (req.method === "GET") {
     const action = String(q.action || "preview");
