@@ -51,6 +51,19 @@ export default async function handler(req, res) {
     });
   }
 
+  /* ?probe=night · what the Lantern did while nobody was watching, and every
+     passage it thinks an editor should look at again. */
+  if (String((req.query && req.query.probe) || "") === "night") {
+    const N = await import("./_nightshift.js");
+    const q = req.query || {};
+    if (String(q.clear || "")) return res.status(200).json(await N.clearFinding(String(q.clear)));
+    return res.status(200).json({
+      probe: "night", at: new Date().toISOString(),
+      last: await N.lastShift(), brief: await N.readBrief(),
+      findings: await N.findings(60), perNight: N.DEFAULT_AUDIT
+    });
+  }
+
   if (String((req.query && req.query.probe) || "") === "lantern") {
     const p = await probeLantern();
     return res.status(200).json({ probe: "lantern", ...p, at: new Date().toISOString() });

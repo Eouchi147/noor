@@ -93,9 +93,9 @@ export const DIALS = {
      Nothing here writes a fact: the card comes from the validated library, so
      the worst that can happen is a caption phrased badly. The schedule is OFF
      until the owner has previewed a post and sent one by hand. */
-  "social.auto":       { t: "bool", def: false,
-                         g: "The social machine", n: "Post the day's light every morning",
-                         h: "Off means nothing is ever sent on a schedule; you can still post by hand from this room. Leave it off until you have previewed a card and posted one manually, because the two network calls have never been run against your live accounts." },
+  "social.mode":       { t: "enum", def: "off", opts: ["off", "approve", "auto"],
+                         g: "The social machine", n: "How the day's post goes out",
+                         h: "off: nothing is ever sent on a schedule, and you can still post by hand from this room. approve: every morning it writes the post and leaves it in the queue for you, and nothing reaches a network until you press Post. auto: it posts once a morning with nobody in the loop. Climb one rung at a time. Sit on approve for a fortnight and read what the feed actually looks like before you trust auto, because the two network calls have never been run against your live accounts." },
   "social.fb":         { t: "bool", def: true,
                          g: "The social machine", n: "Send to Facebook",
                          h: "Needs FB_PAGE_ID and FB_PAGE_TOKEN in Vercel. Posts the card as a photo with the caption underneath." },
@@ -104,7 +104,21 @@ export const DIALS = {
                          h: "Needs IG_USER_ID and a token. Instagram will only accept a real JPEG or PNG at a public address, which is what /api/card?fmt=png serves." },
   "social.polish":     { t: "bool", def: true,
                          g: "The social machine", n: "Let the Lantern tighten the caption",
-                         h: "It may reorder and shorten words. It may not add a fact: any number it introduces that the card did not contain causes the plain caption to be used instead. Off writes the caption straight from the card." },
+                         h: "It may reorder and shorten words. It may not add a fact: any number it introduces that the card did not contain causes the plain caption to be used instead. It is never asked at all about a card carrying a Qur'an or hadith citation, because a model can change the sense of a sentence without touching a number. Off writes every caption straight from the card." },
+
+  /* ---- the night shift ----------------------------------------------
+     The Lantern's background work. Every job here reads material the house
+     has already published and files a finding; none of them may edit,
+     publish or delete anything. See api/_nightshift.js. */
+  "nightshift.on":     { t: "bool", def: true,
+                         g: "The night shift", n: "The Lantern works while you sleep",
+                         h: "Off stops all of the background jobs below at once. Nothing on the site changes either way: every job files a finding for you to read and none of them can edit a page." },
+  "nightshift.audit":  { t: "int", def: 12, min: 0, max: 60,
+                         g: "The night shift", n: "Passages checked a night",
+                         h: "It reads that many published passages, in order, and says which ones an editor should look at again. Twelve a night walks the whole library about three times a year. Zero switches the audit off. Each passage is one call on the free chain." },
+  "nightshift.triage": { t: "bool", def: true,
+                         g: "The night shift", n: "Sort the inbox",
+                         h: "Puts a kind and a one line gist on every unread message, so a correction about a citation never sits behind forty messages of thanks. It never replies, publishes or deletes. Capped at twenty messages a night." },
 
   /* ---- the desk ------------------------------------------------------ */
   "inbox.open":        { t: "bool", def: true, pub: true,

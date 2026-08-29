@@ -529,6 +529,23 @@ button,.btn{letter-spacing:-.01em}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem .8rem;font-size:.78rem;align-items:baseline}
 .kv b{color:var(--txt-3);font-weight:600;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
 .kv span{font-family:var(--mono);color:var(--txt)}
+/* the ladder: three rungs, and the one in force is unmistakable, because the
+   difference between "drafts and waits" and "posts by itself" is the whole
+   safety of this room */
+.rung{display:grid;gap:.25rem;text-align:start;padding:.85rem 1rem;border-radius:12px;cursor:pointer;
+  background:rgba(255,254,247,.04);border:1px solid rgba(255,254,247,.1);color:var(--txt-2);
+  font:inherit;width:100%;transition:background .16s ease,border-color .16s ease}
+.rung+.rung{margin-top:.5rem}
+.rung b{color:var(--txt);font-size:.9rem}
+.rung span{font-size:.76rem;color:var(--txt-3);line-height:1.55}
+.rung i{font-style:normal;justify-self:start;margin-top:.2rem;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#1A160F;background:#F4D46A;border-radius:999px;padding:.1rem .5rem;font-weight:800}
+.rung:hover{background:rgba(255,254,247,.07);border-color:rgba(255,254,247,.2)}
+.rung.on{background:rgba(201,162,39,.12);border-color:rgba(244,212,106,.55)}
+.rung.on b{color:#F4D46A}
+button.sm{padding:.28rem .6rem;font-size:.7rem;border-radius:8px}
+.pill-mute{display:inline-block;padding:.05rem .45rem;border-radius:999px;font-size:.64rem;font-weight:700;
+  background:rgba(255,254,247,.08);color:var(--txt-3)}
 .logrow{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;
   padding:.5rem 0;border-bottom:1px solid rgba(255,254,247,.06);font-size:.78rem}
 .logrow:last-child{border-bottom:0}
@@ -776,6 +793,25 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <!-- ===================== THE LANTERN ASSISTANT ===================== -->
 <div class="pane" id="pane-lantern">
+
+<h2 class="sec">The night shift</h2>
+<p class="muted" style="margin:.1rem 0 .9rem;max-width:52rem">The Lantern does not write facts for this
+site. It exercises judgment over what the house has already published. Every night it reads a slice of the
+library and says which passages an editor should look at again, sorts the inbox so a correction never sits
+behind forty messages of thanks, and writes you the day in three sentences. <b>None of these jobs can edit,
+publish or delete anything.</b> They file a finding and stop.</p>
+<div class="panel" id="ns-brief"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">Passages it thinks you should look at</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">It is asked one question about each passage:
+is a hadith or a verse attributed without a reference, is a claim of fact surprising, does this read as a
+ruling rather than teaching, is a difference between scholars being presented as settled, does a date look
+wrong. Nothing else. Nothing on the site has been changed. Check the claim yourself, then fix the source
+file or dismiss the finding.</p>
+<div class="panel" id="ns-find"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">What the night cost</h2>
+<div class="panel" id="ns-run"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">The Lantern, your right hand</h2>
 <div class="panel">
@@ -1044,31 +1080,55 @@ claim yourself, then correct the card in <code>build/lights-*.json</code> and re
 
 <!-- ===================== SOCIAL ===================== -->
 <div class="pane" id="pane-social">
+
+<h2 class="sec">The ladder</h2>
+<p class="muted" style="margin:.1rem 0 .9rem;max-width:50rem">Three rungs, climbed one at a time. This
+machine ships on the bottom rung and is happy sitting on any of them forever. The two network calls have
+never been run against your live accounts, so post one by hand and read what comes back before you climb.</p>
+<div class="panel" id="so-ladder"><p class="muted">&hellip;</p></div>
+
 <h2 class="sec">The day's post</h2>
-<p class="muted" style="margin:.1rem 0 .9rem;max-width:48rem">The same light, made into a square card
-and a caption, for Facebook and Instagram. <b>Nothing is ever sent until you turn the schedule on in
-Controls</b>, and the two network calls have never run against your live accounts, so preview first
-and send one by hand before trusting the schedule.</p>
 <div class="panel" style="display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)">
   <div id="so-preview"><p class="muted">Building the preview&hellip;</p></div>
-  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
     <button class="ghost" id="so-refresh">Rebuild the preview</button>
     <button class="btn" id="so-send">Post this now</button>
-    <span class="muted" id="so-state" style="align-self:center"></span>
+    <button class="ghost" id="so-skip">Skip today</button>
+    <span class="muted" id="so-state"></span>
   </div>
 </div>
 
+<h2 class="sec">Waiting for you</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:50rem">On the middle rung the machine writes the post
+every morning and stops here. Nothing below has touched a network.</p>
+<div class="panel" id="so-queue"><p class="muted">&hellip;</p></div>
+
 <h2 class="sec">What has gone out</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:50rem">The last sixty, with what each one said and
+where it landed. A post leaves the queue and joins this list in the same write, so nothing that succeeded
+can become invisible.</p>
 <div class="panel" id="so-log"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">The token clock</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:50rem">Meta's long lived tokens die every sixty days,
+silently. No warning email, no error until a post fails. <b>This is a countdown, not a bug.</b> When you
+paste a new token into Vercel, tap the button and the clock restarts. Nothing here ever sees the token
+itself.</p>
+<div class="panel" id="so-tokens"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">What it needs</h2>
 <div class="panel">
 <div class="kv">
 <b>Facebook</b><span id="so-fb">FB_PAGE_ID, FB_PAGE_TOKEN</span>
 <b>Instagram</b><span id="so-ig">IG_USER_ID, IG_TOKEN or the page token</span>
-<b>Schedule</b><span>Controls, the social machine, "Post the day's light every morning"</span>
+<b>Image host</b><span id="so-host">&hellip;</span>
+<b>Rung</b><span>Controls &middot; the social machine &middot; "How the day's post goes out"</span>
 <b>Runs at</b><span>04:00 UTC, with the nightly cron</span>
 </div>
+<p class="muted" style="margin:.8rem 0 0;font-size:.74rem;max-width:50rem">On Meta's side the Instagram
+account must be a <b>Professional</b> account linked to a Facebook Page, and the app needs
+<code>instagram_content_publish</code>, <code>pages_manage_posts</code> and <code>pages_read_engagement</code>.
+App review takes days, so start it before you need it.</p>
 </div>
 </div>
 
@@ -2801,6 +2861,39 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
   }
 
   /* ---------------- Social ---------------- */
+  var SOC = { mode: "off", tokens: null, cfg: null };
+
+  var RUNGS = [
+    ["off", "Off", "Nothing is ever sent on a schedule. You can still post by hand from this room."],
+    ["approve", "I approve each post", "Every morning it writes the post and leaves it below. Nothing reaches a network until you press Post."],
+    ["auto", "Full auto", "One post a morning, nobody in the loop. Climb here only after a fortnight on approve has been boring."]
+  ];
+
+  function drawLadder() {
+    $("so-ladder").innerHTML = RUNGS.map(function (r, i) {
+      var on = SOC.mode === r[0];
+      return '<button class="rung' + (on ? " on" : "") + '" data-rung="' + r[0] + '">' +
+             '<b>' + (i + 1) + '. ' + esc(r[1]) + '</b><span>' + esc(r[2]) + '</span>' +
+             (on ? '<i>in force</i>' : '') + '</button>';
+    }).join("");
+  }
+
+  function setRung(mode) {
+    fetch("/api/settings", {
+      method: "POST", credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ set: { "social.mode": mode } })
+    }).then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || j.ok === false) { toast("The dial would not move", "bad"); return; }
+        SOC.mode = mode; drawLadder();
+        toast(mode === "auto" ? "Full auto. It will post every morning by itself."
+            : mode === "approve" ? "It will draft every morning and wait for you."
+            : "Off. Nothing sends by itself.", mode === "auto" ? "bad" : "ok");
+        loadSocial();
+      }).catch(function () { toast("Could not reach /api/settings", "bad"); });
+  }
+
   function drawPost(p, dials) {
     if (!p) { $("so-preview").innerHTML = '<p class="muted">No post could be built. The library may not be reachable.</p>'; return; }
     $("so-preview").innerHTML =
@@ -2813,14 +2906,62 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       '<p class="muted" style="margin:.7rem 0 0;font-size:.72rem">' +
       (p.polished ? 'The Lantern tightened this.' : 'Written straight from the card.') +
       (p.refused ? ' Its rewrite was refused: ' + esc(p.refused) + '.' : '') +
-      ' Card <code>' + esc(p.light.id) + '</code>.</p></div></div>';
+      ' Card <code>' + esc(p.light.id) + '</code>' +
+      (p.light.lvl ? ' &middot; ' + esc(p.light.lvl) : '') + '. ' +
+      esc(String(p.caption).length) + ' characters. ' +
+      'Meta will fetch the picture from <code>' +
+      esc(String(p.image).replace(/^https:\/\//, "").split("/api")[0] || location.host) + '</code>.' +
+      '</p></div></div>';
     var d = dials || {};
-    $("so-state").textContent = d.auto ? "The daily schedule is ON." : "The daily schedule is off; nothing sends by itself.";
+    $("so-state").textContent =
+      d.mode === "auto" ? "Full auto: it posts every morning by itself."
+      : d.mode === "approve" ? "It drafts every morning and waits for you."
+      : "Off: nothing sends by itself.";
   }
+
+  function stateChip(st) {
+    var m = { sent: "ok", partial: "bad", blocked: "bad", sending: "bad", queued: "", skipped: "" };
+    return '<span class="' + (m[st] === "ok" ? "pill-ok" : m[st] === "bad" ? "pill-bad" : "pill-mute") + '">' + esc(st || "?") + '</span>';
+  }
+
+  function drawQueue(q) {
+    $("so-queue").innerHTML = (q && q.length)
+      ? q.map(function (x) {
+          return '<div class="logrow"><time>' + esc(x.date || "") + '</time>' +
+                 '<span><b>' + esc(x.title || x.id || "") + '</b><br>' +
+                 '<span class="muted" style="font-size:.72rem">' + esc(String(x.caption || "").slice(0, 150)) + '…</span></span>' +
+                 '<span style="display:flex;gap:.35rem;align-items:center">' +
+                 '<button class="ghost sm" data-approve="' + esc(x.date) + '">Post it</button>' +
+                 '<button class="ghost sm" data-skip="' + esc(x.date) + '">Skip</button></span></div>';
+        }).join("")
+      : '<p class="muted">Nothing waiting. On the middle rung the nightly run puts the day\'s post here.</p>';
+  }
+
+  function drawTokens(t) {
+    if (!t) { $("so-tokens").innerHTML = '<p class="muted">&hellip;</p>'; return; }
+    var rows = [["fb", "Facebook page token"], ["ig", "Instagram token"]].map(function (kv) {
+      var x = t[kv[0]] || {};
+      var days = x.daysLeft;
+      var note = !x.configured ? '<span class="pill-mute">not set in Vercel</span>'
+        : days === null ? '<span class="pill-mute">no renewal recorded</span>'
+        : days < 0 ? '<span class="pill-bad">expired ' + Math.abs(days) + ' days ago</span>'
+        : days <= 7 ? '<span class="pill-bad">' + days + ' days left</span>'
+        : days <= 14 ? '<span class="pill-bad">' + days + ' days left</span>'
+        : '<span class="pill-ok">' + days + ' days left</span>';
+      return '<div class="logrow"><time>' + esc(x.renewedAt || "—") + '</time>' +
+             '<span>' + esc(kv[1]) + ' ' + note + '</span>' +
+             '<span><button class="ghost sm" data-renewed="' + kv[0] + '">I renewed it today</button></span></div>';
+    }).join("");
+    $("so-tokens").innerHTML = rows +
+      '<p class="muted" style="margin:.8rem 0 0;font-size:.74rem;max-width:50rem">To renew: Meta Business Suite &rarr; ' +
+      'your app &rarr; Tools &rarr; Access Token Tool, generate a long lived Page token, paste it into Vercel &rarr; ' +
+      'Settings &rarr; Environment Variables, redeploy, then tap the button. A System User token from Business Manager ' +
+      'does not expire at all and is the better answer if your account can create one.</p>';
+  }
+
   function loadSocial() {
     $("so-preview").innerHTML = '<p class="muted">Building the preview&hellip;</p>';
-    fetch("/api/admin-data?probe=lights", { credentials: "same-origin" }).then(function () { });
-    fetch("/api/social?action=preview", { credentials: "same-origin", headers: { "x-admin-key": "" } })
+    fetch("/api/social?action=preview", { credentials: "same-origin" })
       .then(function (r) { return r.json().catch(function () { return null; }); })
       .then(function (j) {
         if (!j || j.ok === false) {
@@ -2829,37 +2970,50 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
             'empty until <code>ADMIN_SECRET</code> is set and this console is unlocked against it.</p>';
           return;
         }
+        SOC.mode = (j.dials && j.dials.mode) || "off";
+        drawLadder();
         drawPost(j.preview, j.dials);
+        drawTokens(j.tokens);
+        var c = j.configured || {};
+        $("so-fb").innerHTML = c.fb ? '<span class="pill-ok">configured</span>' : 'FB_PAGE_ID, FB_PAGE_TOKEN <span class="pill-mute">not set</span>';
+        $("so-ig").innerHTML = c.ig ? '<span class="pill-ok">configured</span>' : 'IG_USER_ID, IG_TOKEN or the page token <span class="pill-mute">not set</span>';
+        $("so-host").textContent = j.publicHost || "";
       })
       .catch(function () { $("so-preview").innerHTML = '<p class="muted">Could not reach /api/social.</p>'; });
+
     fetch("/api/social?action=log", { credentials: "same-origin" })
       .then(function (r) { return r.json().catch(function () { return null; }); })
       .then(function (j) {
         var log = (j && j.log) || [];
+        drawQueue((j && j.queue) || []);
         $("so-log").innerHTML = log.length
           ? log.map(function (x) {
               var ran = (x.ran || []).map(function (r) {
-                return '<span class="' + (r.ok ? "pill-ok" : "pill-bad") + '">' + esc(r.where) + '</span>'; }).join(" ");
+                return '<span class="' + (r.ok ? "pill-ok" : "pill-bad") + '" title="' + esc(r.error || r.id || "") + '">' +
+                       esc(r.where) + '</span>'; }).join(" ");
               return '<div class="logrow"><time>' + esc(String(x.at || "").slice(0, 16).replace("T", " ")) + '</time>' +
-                     '<span>' + esc(x.title || x.id || "") + '</span><span>' + (ran || esc(x.state || "")) + '</span></div>';
+                     '<span><b>' + esc(x.title || x.id || "") + '</b>' +
+                     (x.error ? '<br><span class="muted" style="font-size:.72rem;color:#E08A82">' + esc(x.error) + '</span>' : '') +
+                     '</span><span>' + (ran || "") + " " + stateChip(x.state) + '</span></div>';
             }).join("")
           : '<p class="muted">Nothing has gone out yet.</p>';
       }).catch(function () { });
   }
 
-  function send() {
-    if (!confirm("Post today's card to every channel that is switched on?\n\nThis publishes to your live accounts.")) return;
+  function send(date) {
+    if (!confirm("Post " + (date ? "the card for " + date : "today's card") +
+                 " to every channel that is switched on?\n\nThis publishes to your live accounts.")) return;
     $("so-send").disabled = true;
     $("so-state").textContent = "Sending…";
-    fetch("/api/social", {
+    fetch("/api/social" + (date ? "?date=" + encodeURIComponent(date) : ""), {
       method: "POST", credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ live: true, dry: false })
+      body: JSON.stringify({ live: true })
     }).then(function (r) { return r.json().catch(function () { return null; }); })
       .then(function (j) {
         $("so-send").disabled = false;
         if (!j || j.ok === false) { toast("It refused: " + ((j && j.reason) || "unknown"), "bad"); $("so-state").textContent = ""; return; }
-        if (j.skipped) { toast(j.skipped, "bad"); $("so-state").textContent = j.skipped; return; }
+        if (j.skipped) { toast(j.skipped, "bad"); $("so-state").textContent = j.skipped; loadSocial(); return; }
         var good = (j.ran || []).filter(function (x) { return x.ok; }).length;
         var bad = (j.ran || []).filter(function (x) { return !x.ok; });
         toast(good + " channel(s) posted" + (bad.length ? ", " + bad.length + " refused" : ""), bad.length ? "bad" : "ok");
@@ -2869,6 +3023,59 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       }).catch(function () { $("so-send").disabled = false; toast("Could not reach /api/social", "bad"); });
   }
 
+  function socPost(body, msg) {
+    fetch("/api/social" + (body.date ? "?date=" + encodeURIComponent(body.date) : ""), {
+      method: "POST", credentials: "same-origin",
+      headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) { toast((j && j.ok !== false) ? msg : "It refused", (j && j.ok !== false) ? "ok" : "bad"); loadSocial(); })
+      .catch(function () { toast("Could not reach /api/social", "bad"); });
+  }
+
+  /* ---------------- the night shift ---------------- */
+  function drawNight(d) {
+    var b = d && d.brief;
+    $("ns-brief").innerHTML = b
+      ? '<p style="margin:0;font-size:.95rem;line-height:1.8;color:var(--txt)">' + esc(b.text) + '</p>' +
+        '<p class="muted" style="margin:.7rem 0 0;font-size:.7rem">Written ' +
+        esc(String(b.at || "").slice(0, 16).replace("T", " ")) + ' from the night\'s own numbers' +
+        (b.model ? ' by ' + esc(b.model) : '') + '. It cannot use a number the numbers did not contain.</p>'
+      : '<p class="muted">No brief yet. It is written by the nightly cron at 04:00 UTC.</p>';
+
+    var f = (d && d.findings) || [];
+    $("ns-find").innerHTML = f.length
+      ? f.map(function (x) {
+          return '<div class="logrow"><time>' + esc(String(x.at || "").slice(0, 10)) + '</time>' +
+                 '<span><b>' + esc(x.id) + '</b> <span class="pill-mute">' + esc(x.kind || "") + '</span><br>' +
+                 '<span class="muted">' + esc(x.why) + '</span><br>' +
+                 '<span class="muted" style="font-size:.68rem">in <code>' + esc(x.where || "") + '</code></span></span>' +
+                 '<span><button class="ghost sm" data-clearfind="' + esc(x.id) + '">Dismiss</button></span></div>';
+        }).join("")
+      : '<p class="muted">Nothing flagged. Most passages are fine, and "clear" is the correct answer for most of them.</p>';
+
+    var L = d && d.last;
+    if (!L) { $("ns-run").innerHTML = '<p class="muted">The night shift has not run yet.</p>'; return; }
+    var j = L.jobs || {};
+    var a = j.audit || {}, t = j.triage || {};
+    $("ns-run").innerHTML = '<div class="kv">' +
+      '<b>Last night</b><span>' + esc(String(L.at || "").slice(0, 16).replace("T", " ")) + '</span>' +
+      '<b>Passages read</b><span>' + esc(String(a.looked || 0)) + ' of ' + esc(String(a.of || 0)) +
+        (a.pace ? ' &middot; ' + esc(a.pace) : '') + '</span>' +
+      '<b>Flagged</b><span>' + esc(String(a.found || 0)) + '</span>' +
+      '<b>Inbox sorted</b><span>' + esc(String(t.sorted || 0)) +
+        (t.urgent ? ' &middot; ' + esc(String(t.urgent)) + ' want you first' : '') + '</span>' +
+      '<b>Calls spent</b><span>' + esc(String((a.looked || 0) + (t.sorted || 0) + 1)) + ' on the free chain</span>' +
+      '</div><p class="muted" style="margin:.7rem 0 0;font-size:.72rem">Change the pace in Controls, under ' +
+      'the night shift. Zero passages a night switches the audit off without switching off the brief.</p>';
+  }
+
+  function loadNight() {
+    fetch("/api/admin-data?probe=night", { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) { if (j) drawNight(j); })
+      .catch(function () { $("ns-find").innerHTML = '<p class="muted">Could not reach /api/admin-data.</p>'; });
+  }
+
   /* ---------------- wiring ---------------- */
   document.addEventListener("click", function (e) {
     var t = e.target;
@@ -2876,11 +3083,26 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     if (t.id === "lt-go") { loadLights($("lt-date").value.trim()); }
     if (t.id === "so-refresh") loadSocial();
     if (t.id === "so-send") send();
+    if (t.id === "so-skip") socPost({ action: "skip" }, "Marked as skipped; nothing will be sent for today.");
+    var rung = t.closest && t.closest("[data-rung]");
+    if (rung) setRung(rung.getAttribute("data-rung"));
+    if (t.getAttribute && t.getAttribute("data-approve")) send(t.getAttribute("data-approve"));
+    if (t.getAttribute && t.getAttribute("data-skip"))
+      socPost({ action: "skip", date: t.getAttribute("data-skip") }, "Skipped.");
+    if (t.getAttribute && t.getAttribute("data-clearfind")) {
+      fetch("/api/admin-data?probe=night&clear=" + encodeURIComponent(t.getAttribute("data-clearfind")),
+            { credentials: "same-origin" })
+        .then(function () { toast("Dismissed."); loadNight(); })
+        .catch(function () { toast("Could not reach /api/admin-data", "bad"); });
+    }
+    if (t.getAttribute && t.getAttribute("data-renewed"))
+      socPost({ action: "renewed", which: t.getAttribute("data-renewed") }, "The clock is restarted at sixty days.");
     var tab = t.closest && t.closest(".tab");
     if (tab) {
       var p = tab.getAttribute("data-pane");
       if (p === "lights") loadLights("");
       if (p === "social") loadSocial();
+      if (p === "lantern") loadNight();
     }
   });
 

@@ -28,7 +28,7 @@ const UI_EN = {
   "hero.kicker":"نُورٌ عَلَىٰ نُورٍ","hero.title":"Codex of Light",
   "hero.subtitle":"From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.",
   "hero.cta.enter":"Enter the Path",
-  "hero2.sub":"The whole of Islam, one illuminated library: the story in order, the Qur'an with recitation, an encyclopedia of the Path, a full madrasa, and rooms for every age. Free forever.","hero2.lead":"The whole of Islam, one illuminated library: the story in order, the Qur'an recited, every word explained. Free forever.","hero2.short":"The whole of Islam, one illuminated library. Free forever.","m.simulation":"Are We in a Simulation?","m.journal":"The Guardian's Journal","m.goodlife":"How to Live a Good Life","p.quran":"The Mushaf","p.goodlife":"How to Live Well","p.prophets":"The 25 Prophets","p.pillars":"The Five Pillars","p.stories":"The Hall of Stories","g.read":"Read","g.live":"Live","g.house":"The House","g.pinned":"Most opened","hero2.more":"A full madrasa, rooms for every age, and a lantern that lights something new each day.","hero2.search":"Search anything: a word, a prophet, a place, a surah\u2026","hero2.door.mushaf":"The Mushaf","hero2.door.mushaf.s":"Every ayah, with recitation","hero.cta.characters":"Characters","hero.cta.kids":"✦ Little Codex",
+  "hero2.sub":"The whole of Islam, one illuminated library: the story in order, the Qur'an with recitation, an encyclopedia of the Path, a full madrasa, and rooms for every age. Free forever.","hero2.lead":"The whole of Islam, one illuminated library: the story in order, the Qur'an recited, every word explained. Free forever.","hero2.short":"The whole of Islam, one illuminated library. Free forever.","m.simulation":"Are We in a Simulation?","m.journal":"The Guardian's Journal","m.goodlife":"How to Live a Good Life","m.threelives":"Three Lives \u00b7 Weigh Your Own","p.quran":"The Mushaf","p.goodlife":"How to Live Well","p.prophets":"The 25 Prophets","p.pillars":"The Five Pillars","p.stories":"The Hall of Stories","g.read":"Read","g.live":"Live","g.house":"The House","g.pinned":"Most opened","hero2.more":"A full madrasa, rooms for every age, and a lantern that lights something new each day.","hero2.search":"Search anything: a word, a prophet, a place, a surah\u2026","hero2.door.mushaf":"The Mushaf","hero2.door.mushaf.s":"Every ayah, with recitation","hero.cta.characters":"Characters","hero.cta.kids":"✦ Little Codex",
   "hero.door.path.s":"The whole story, in order, from the first light","hero.door.learn.t":"The Classroom","hero.door.learn.s":"Step by step, properly taught","hero.door.look.t":"Look anything up","hero.door.look.s":"Search it all, in any spelling","hero.door.kids.s":"The same light, for children",
   "stats.nodes":"Chapters","stats.characters":"Characters","stats.places":"Places","stats.words":"Words","stats.quran":"Ayat cited","stats.hadith":"Hadith cited",
   "books.title":"Seven Books","books.sub":"The architecture of the Codex. All seven books are open on the Path.",
@@ -78,12 +78,32 @@ const NOOR_I18N = {
   lang: localStorage.getItem("noor_lang") || "en",
   packs: { en: UI_EN },
   rtl: ["ar","ur","fa","he","ps","sd","prs","pa"],
-  t(k){ const p=this.packs[this.lang]||UI_EN; return p[k] ?? UI_EN[k] ?? k; },
+  /* `fb` is what to show when no pack has the key. It used to be the key
+     itself, which is how "m.threelives" appeared in the live menu: the English
+     label was written correctly into all 106 pages, and the translator
+     overwrote good English with its own internal name for it. A missing string
+     must never be louder than no translation at all. */
+  t(k, fb){ const p=this.packs[this.lang]||UI_EN; const v = p[k] ?? UI_EN[k]; return v ?? (fb !== undefined ? fb : k); },
+  /* The English baked into the page is the last fallback, so it is remembered
+     once, before the first write, and survives a round trip through another
+     language. */
+  en(el, attr){
+    if (!el.hasAttribute(attr)) el.setAttribute(attr, attr === "data-i18n-en" ? el.textContent : el.placeholder);
+    return el.getAttribute(attr);
+  },
   apply(){
     document.documentElement.lang = this.lang;
     document.documentElement.dir = this.rtl.includes(this.lang) ? "rtl" : "ltr";
-    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = this.t(el.getAttribute("data-i18n")); });
-    document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = this.t(el.getAttribute("data-i18n-ph")); });
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const fb = this.en(el, "data-i18n-en");
+      const v = this.t(el.getAttribute("data-i18n"), fb);
+      if (el.textContent !== v) el.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+      const fb = this.en(el, "data-i18n-ph-en");
+      const v = this.t(el.getAttribute("data-i18n-ph"), fb);
+      if (el.placeholder !== v) el.placeholder = v;
+    });
     this.syncLangUI();
   },
   fullPacks: {},

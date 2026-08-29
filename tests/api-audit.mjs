@@ -107,5 +107,27 @@ for (const f of routes) {
   if (!html.includes('/api/' + name)) note('/api/' + name + ' is referenced nowhere: dead route?');
 }
 
+
+/* askOpenRouter returns { text, model, error, tried }. It has no `ok`. Three
+   jobs in the night shift were written against an `ok` that never existed, so
+   every successful reply read as a dark Lantern and each job quietly did
+   nothing while reporting success. Nothing threw, nothing logged. */
+{
+  const bad = [];
+  for (const f of files) {
+    const code = src[f];
+    if (f === '_models.js' || !/askOpenRouter/.test(code)) continue;
+    /* the variable a call is assigned to, then any `.ok` read off it */
+    for (const m of code.matchAll(/(?:const|let|var)\s+(\w+)\s*=\s*await\s+askOpenRouter/g)) {
+      const v = m[1];
+      const re = new RegExp('\\b' + v + '\\.ok\\b');
+      if (re.test(code.slice(m.index, m.index + 1400))) bad.push(f + ': reads ' + v + '.ok');
+    }
+  }
+  ok(bad.length === 0,
+     'nothing reads .ok off an askOpenRouter result, because there is no such field' +
+     (bad.length ? ' (' + bad.join('; ') + ')' : ''));
+}
+
 console.log('\n' + pass + ' checks passed, ' + fail + ' failed, ' + warn + ' to look at');
 process.exit(fail ? 1 : 0);

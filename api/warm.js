@@ -9,7 +9,37 @@
 import { kv, kvReady } from "./_kv.js";
 import { probeLantern, refreshIntoStore } from "./_models.js";
 
+/* the dials, read directly: warm.js runs before anything else is warm and has
+   no business importing the whole settings route for three values */
+async function settingsFor(keys) {
+  const out = {};
+  if (!kvReady()) return out;
+  try {
+    const raw = (await kv([["GET", "nb:settings"]]))[0];
+    const o = raw ? (typeof raw === "string" ? JSON.parse(raw) : raw) : {};
+    for (const k of keys) if (k in o) out[k] = o[k];
+  } catch { }
+  return out;
+}
+
 export default async function handler(req, res) {
+  /* Vercel signs its own cron requests, and anybody who knows this URL could
+     otherwise force the daily run: burn the model budget, and once the social
+     machine is on auto, make the house post on demand. CRON_SECRET is checked
+     when it is set. When it is not, the route still runs, because refusing to
+     warm a site whose owner has not set a variable yet is a worse failure than
+     an open warm endpoint, and the console says loudly that it is unset. */
+  const secret = process.env.CRON_SECRET;
+  if (secret) {
+    const auth = String(req.headers.authorization || "");
+    const given = auth.replace(/^Bearer\s+/i, "") || String((req.query || {}).key || "");
+    const fromVercel = !!req.headers["x-vercel-signature"] || /vercel-cron/i.test(String(req.headers["user-agent"] || ""));
+    if (given !== secret && !fromVercel) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(401).json({ ok: false, reason: "locked" });
+    }
+  }
+
   const started = Date.now();
   const today = new Date().toISOString().slice(0, 10);
   const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
@@ -44,7 +74,7 @@ export default async function handler(req, res) {
     }
   } catch (e) { out.lantern = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
-  /* The day's post. It sends only if the social.auto dial is on, only once
+  /* The day's post. It sends only if the mode dial allows it, only once
      per day whatever happens, and never before the owner has turned it on. */
   try {
     const { runDaily } = await import("./social.js");
@@ -54,6 +84,30 @@ export default async function handler(req, res) {
       out.social.post = { id: out.social.post.light.id, title: out.social.post.light.title };
     }
   } catch (e) { out.social = { err: String(e && e.message || e).slice(0, 80) }; }
+
+  /* The night shift. The Lantern reads the house's own published passages and
+     says which ones an editor should look at again, sorts the inbox so a
+     correction never sits behind forty messages of thanks, and writes the day
+     in three sentences. It never edits, publishes or deletes anything: every
+     job files a finding and stops. See api/_nightshift.js for why this shape
+     and not another. */
+  try {
+    const { runNightShift, DEFAULT_AUDIT } = await import("./_nightshift.js");
+    const s = await settingsFor(["nightshift.on", "nightshift.audit", "nightshift.triage"]);
+    if (s["nightshift.on"] !== false) {
+      out.night = await runNightShift(String(host).replace(/^https?:\/\//, ""), {
+        audit: typeof s["nightshift.audit"] === "number" ? s["nightshift.audit"] : DEFAULT_AUDIT,
+        triage: s["nightshift.triage"] !== false,
+        facts: {
+          "gifts in the last 30 days": (out.gifts && out.gifts.count30d) ?? null,
+          "unread messages": out.unread ?? null,
+          "the lantern answered a probe": out.lantern ? String(!!out.lantern.ok) : "unknown",
+          "the day's post": out.social ? (out.social.state || out.social.skipped || "nothing") : "unknown",
+          "cards the lantern held back": out.doubts ?? null
+        }
+      });
+    } else out.night = { skipped: "the night shift dial is off" };
+  } catch (e) { out.night = { err: String(e && e.message || e).slice(0, 80) }; }
 
   /* On the first of the month the Lantern sorts the journal's replies. Doing it
      here rather than on its own schedule keeps the site to a single cron. */

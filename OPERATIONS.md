@@ -102,6 +102,7 @@ on every cold start. The library itself is unaffected.
 | `LANTERN_SALT`, `NOOR_RATE_SALT` | none | Salts for the rate-limit fingerprints. **Set these.** Without them the fingerprint is weaker. |
 | `ASK_PUBLIC`, `GUIDE_PUBLIC` | none | Open the ask and guide endpoints to the public |
 | `ANTHROPIC_API_KEY` | none | Unused on the current path. Safe to leave unset. |
+| `CHROMIUM_PATH` | built in | Overrides where the test suites look for the browser. |
 
 ### The social machine, all optional
 
@@ -113,12 +114,28 @@ previews the post; it simply has nowhere to send it.
 |---|---|
 | `FB_PAGE_ID` | The numeric id of the Facebook Page. Not the vanity name. |
 | `FB_PAGE_TOKEN` | A Page access token with `pages_manage_posts`. Long-lived. |
-| `IG_USER_ID` | The Instagram **business** account id linked to that Page. |
-| `IG_TOKEN` | Token for Instagram. If unset, `FB_PAGE_TOKEN` is used. |
+| `IG_USER_ID` | The Instagram **Professional** account id linked to that Page. |
+| `IG_TOKEN` / `IG_ACCESS_TOKEN` | Token for Instagram. If unset, `FB_PAGE_TOKEN` is used. |
+| `SITE_HOST` | The production hostname the card is served from. Defaults to `noorcodex.com`. |
+| `CRON_SECRET` | Shared secret so only the scheduler can fire `/api/warm`. **Set this.** |
 
-Instagram will only accept a **publicly reachable image URL**, which is why the
-card is served from `/api/card` on the live domain rather than uploaded as bytes.
-A preview built on a preview deployment cannot be posted to Instagram.
+On Meta's side the Instagram account must be **Professional**, linked to a
+Facebook Page, and the app needs `instagram_content_publish`,
+`pages_manage_posts` and `pages_read_engagement`. App review takes days.
+
+**Meta issues two kinds of publishing credential and they speak to different
+hosts.** The classic route, through Facebook login and a linked Page, hands out
+`EAA...` tokens and speaks `graph.facebook.com`. The newer route, Instagram
+login from the app dashboard, hands out `IG...` tokens and speaks
+`graph.instagram.com`. The publish dance is identical, so `api/social.js` reads
+the host off the token rather than offering a switch, and therefore it cannot be
+set wrong.
+
+Instagram will only accept a **publicly reachable image URL**: it fetches the
+picture from the server, so bytes, data URIs, localhost and preview hostnames
+are all refused. `publicHost()` forces the production domain no matter which
+deployment composed the post, because a preview hostname baked into a live
+Instagram post is a dead image within days.
 
 ---
 
@@ -205,17 +222,51 @@ can never publish a false fact, because it cannot write one.
 background jobs for a free model are all of this shape, judgment over material that
 is already true:
 
-| Job | What the model does | What it may never do |
-|---|---|---|
-| The day's light | Choose among six real cards, and doubt its choice | Write a fact |
-| The day's caption | Tighten wording the site already published | Add a number or a claim |
-| Journal triage | Sort replies by what needs the owner first | Publish or delete one |
-| Content vetting | Flag a passage that reads as a fatwa, or lacks a source | Rewrite the passage |
+| Job | What the model does | What it may never do | Calls/night |
+|---|---|---|---|
+| The day's light | Choose among six real cards, and doubt its choice | Write a fact | 1 |
+| The corpus audit | Say which published passages an editor should look at | Edit, publish or delete | 12 |
+| The day in three sentences | Say what changed, what needs you, what can wait | Use a number it was not given | 1 |
+| Inbox triage | Sort messages so a correction rises above thanks | Reply, publish or delete | ≤20 |
+| The day's caption | Tighten wording the site already published | Add a number or a claim | ≤1 |
+| Journal triage | Sort replies by what needs the owner first | Publish or delete one | monthly |
 
-The caption guard in `api/social.js` is the same principle made mechanical: if the
-polished caption contains **any number that was not in the original**, the original
-is sent instead and the refusal is logged. The model is allowed to improve the
-sentence. It is not allowed to add to it.
+**Every one of those guards is mechanical, not a request in a prompt.** The caption
+and the brief both run the same check: any number in the model's output that was not
+in the input causes the output to be thrown away and the plain version used instead,
+with the refusal recorded. The audit runs it too, because a finding that invents a
+number sends the owner looking for something that was never on the page.
+
+### The night shift, `api/_nightshift.js`
+
+Run once a night by `/api/warm`, off every request path, so a reader never waits for
+any of it. Every job reads material the house has already published, asks one bounded
+question about it, and **files a finding**. No job in the file has a write path to a
+page, a card, a note or a message body.
+
+- **The corpus auditor** walks the whole library with a cursor rather than sampling,
+  so a passage is read once before any passage is read twice, exactly like the light
+  rotation. Twelve a night is about three full passes a year over the current corpus.
+  It is asked to flag only five things: a hadith or verse attributed without a
+  reference, a claim that would surprise a specialist, something that reads as a
+  ruling rather than teaching, a difference between scholars presented as settled,
+  and a date or number that looks wrong. It is told explicitly that most passages are
+  fine and "clear" is the right answer for most of them.
+- **The brief** turns the night's own numbers into three sentences at the top of the
+  Lantern room.
+- **The triage** puts a kind and a one-line gist on unread inbox messages. A
+  correction about a citation is the most valuable message this site can receive and
+  it must not sit behind forty messages of thanks.
+
+Findings appear in the Lantern room with the file to open. Nothing is auto-corrected
+and nothing is dismissed for you.
+
+**A trap worth knowing about:** `askOpenRouter` returns `{ text, model, error, tried }`
+and has **no `ok` field**. All three night-shift jobs were first written against an
+`ok` that never existed, so every successful reply read as a dark Lantern and each job
+quietly did nothing while reporting success. Nothing threw and nothing logged.
+`tests/api-audit.mjs` now fails the build on any `.ok` read off an `askOpenRouter`
+result.
 
 ---
 
@@ -246,6 +297,12 @@ sentence. It is not allowed to add to it.
 | `nl:doubt` | Cards the Lantern refused to publish, with its doubt | `_lights.js` |
 | `nsoc:day:<date>` | Written **before** the network calls, so a retry cannot double post | `social.js` |
 | `nsoc:log` | What has actually gone out, newest first | `social.js` |
+| `nsoc:q` | Days drafted and waiting for approval | `social.js` |
+| `nsoc:tok` | The dates the owner last pasted a token. Never the token. | `social.js` |
+| `nl:find` | Passages the night shift says an editor should look at again | `_nightshift.js` |
+| `nl:auditcur` | How far through the corpus the auditor has walked | `_nightshift.js` |
+| `nl:brief` | The day in three sentences | `_nightshift.js` |
+| `nl:shift` | What the last night shift actually did, and what it cost | `_nightshift.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -270,7 +327,7 @@ stripped from everything public.
 | `/api/settings` | admin | Reads and writes `nb:settings`: every dial |
 | `/api/overrides` | admin | Content overrides |
 | `/api/admin-auth` | none | Unlocks the console, sets the signed cookie |
-| `/api/admin-data` | admin | The console's data, plus `?probe=lantern` and `?probe=lights` |
+| `/api/admin-data` | admin | The console's data, plus `?probe=lantern`, `?probe=lights` and `?probe=night` |
 | `/api/card` | none | The day's card as SVG, or `?fmt=png` for the social image |
 | `/api/social` | admin | Compose, preview, post, and the log of what went out |
 | `/api/admin-vet` | admin | Runs the model over a piece of content |
@@ -296,6 +353,7 @@ python3 scripts/gen-quran-study.py     # /study/<n>.json  + build/quran-study.js
 python3 scripts/gen-three-lives.py     # three-lives.html
 python3 scripts/gen-good-life.py       # good-life.html
 python3 scripts/gen-lights.py          # /lights/all.json + /lights/index.json
+python3 scripts/gen-card-fonts.py      # api/_cardfont.js  (after gen-lights.py)
 python3 scripts/gen-<room>.py          # one room each
 node    scripts/build.mjs              # nodes.js, nodes-index.js, node/<id>.json
 ```
@@ -318,6 +376,27 @@ every problem and exits non-zero, so a bad card can never reach the site quietly
 Add cards by editing or adding a tranche in `build/`, then run it. Output goes to
 `/lights/`, which the server reads once per start and caches for six hours.
 
+### The card's fonts
+
+`scripts/gen-card-fonts.py` embeds the two faces the social card is drawn with,
+subset to the characters the library actually contains, into `api/_cardfont.js`,
+along with the exact list of codepoints they can draw.
+
+**Run it after adding cards that introduce a new character**, and always after
+`gen-lights.py`. The reason it exists rather than a font-family stack: font
+fallback is silent. On the first real rasterisation of a card, the honorific in
+"the birth of the Prophet ﷺ, or the" came out as an empty gap. No error, no
+warning, no missing-glyph box, and `document.fonts.check()` will happily say the
+face is present when it is not. It was visible only by looking at the picture.
+
+So the renderer runs with system fonts switched off entirely, carries its faces
+in the repository, spells the ﷺ and ﷻ ligatures out in English before drawing
+(they are the least reliably supported codepoints this project will touch, and a
+broken one on a card about the Prophet is not an ordinary bug), and refuses to
+draw a character the faces do not have. `tests/card.mjs` rasterises and then
+compares pixel counts, because a render that did not throw is not a render that
+is right.
+
 ### ⚠ Hazard list, read before running any generator
 
 - **`scripts/gen-heroes.py` is far BEHIND `heroes.html`.** The shipped page has the
@@ -336,7 +415,10 @@ python3 scripts/gen-verse-notes.py    # refuses to write if any verse note is ma
 node scripts/check-admin.mjs          # console structure: every pane reachable
 node tests/lantern.mjs                # 25 · the model chain, no network needed
 node tests/lights.mjs                 # 24 · the library, the rotation, the anchors
-node tests/social.mjs                 # 23 · the caption guard and the double-post guard
+node tests/social.mjs                 # 60 · the ladder, the guards, the half-failure retry
+node tests/card.mjs                   # 15 · the card really rasterises, and is looked at
+node tests/nightshift.mjs             # 31 · every background job, and that it cannot write
+node tests/i18n.mjs                   # 7  · no reader ever sees a translation key  (server :8433)
 node tests/api-audit.mjs              # 97 · every route: auth, caching, secrets, cold start
 node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
 node tests/dials.mjs                  # the console's switches actually switch    (server :8433)
@@ -363,6 +445,12 @@ python3 /tmp/vercelish.py    # :8433, mimics Vercel's clean URLs
   same card twenty six times a year, and a first fix still repeated cards early.
 - `social.mjs` , a caption that invents a number, or an em dash, must never leave
   the building, and a retried cron must never post the same card twice.
+- `card.mjs` , the PNG path had never once produced a PNG, and the honorific
+  rendered as an empty gap that nothing anywhere reported.
+- `nightshift.mjs` , three background jobs were written against a field that does
+  not exist and did nothing at all while reporting success.
+- `i18n.mjs` , the live menu showed `m.threelives` because a missing string fell
+  back to printing its own key over English that was already correct.
 
 ---
 
@@ -435,22 +523,50 @@ site and nothing was silently corrected. Check the claim yourself. If the card i
 wrong, fix it in `build/lights-*.json` and rebuild. If the Lantern was wrong, leave
 it, and it will come round again in the rotation.
 
+### A reader says the menu shows something like "m.threelives"
+
+The chrome is translated by `data-i18n` keys, and a key with no English string
+used to render as **the key itself**, painted over English that was already
+correct in the HTML. Two things fixed it and both matter: the missing string was
+added to `UI_EN` in `noor-fx.js`, and `t()` now falls back to the text baked into
+the page. So a missing translation is invisible rather than loud. Add new strings
+to `UI_EN` in `noor-fx.js` (the runtime pack) and to `i18n/text/ui-en.json`, then
+run `node tests/i18n.mjs`, which walks six pages in four languages and fails if
+anything key-shaped reaches a reader.
+
 ### The day's post did not go out
 
 Order of checks, cheapest first:
 
-1. **Controls → the social machine → "Post the day's light every morning."** Off
-   means nothing sends on a schedule, by design. This ships off.
-2. **Social pane → What has gone out.** A row with a red network means the call ran
-   and Meta refused it; the error is on the row.
-3. **No row at all** means the cron did not reach `runDaily`, or `nsoc:day:<date>`
+1. **The token expired.** This is the most likely answer and it is silent: Meta's
+   long-lived tokens die every sixty days with no warning and no error until a post
+   fails. The Social pane counts down. A System User token from Business Manager
+   does not expire at all and is the better answer if the account can create one.
+2. **Which rung is it on?** Social pane, top. `off` sends nothing by design and is
+   the shipped state; `approve` drafts every morning and waits for you.
+3. **Social pane → What has gone out.** A row carrying Meta's own words is the
+   whole point: `(#10) Application does not have permission for this action` says
+   exactly what to fix. A generic failure would not.
+4. **A `blocked` row** means the pre-flight refused: the card URL did not answer,
+   or did not answer with a PNG or JPEG. Open the URL in a private window. Meta
+   fetches that URL itself, so if you cannot, neither can it.
+5. **No row at all** means the cron did not reach `runDaily`, or `nsoc:day:<date>`
    was already written. That key is written *before* the network calls on purpose:
-   a retried cron will decline rather than post twice. Delete the key to allow a
-   re-send, and only if you are certain nothing went out.
-4. **Instagram alone failed.** It needs a publicly reachable image URL and will not
-   take one from a preview deployment. Facebook does not care.
-5. `Post this now` in the console runs the whole path by hand, including the
-   network calls, and prints exactly what came back. Use it before trusting a schedule.
+   a retried cron declines rather than posting twice. It also records each network's
+   own post id as it lands, so a retry after a half failure sends **only the missing
+   half**. Delete the key to allow a full re-send, and only if you are certain
+   nothing went out.
+6. `Post this now` runs the whole path by hand, including the network calls, and
+   prints exactly what came back. Use it before trusting a schedule.
+
+### The night shift flagged something
+
+Lantern room, "Passages it thinks you should look at". Each finding names the file
+to open. **Nothing on the site has been changed and nothing has been corrected for
+you.** Check the claim yourself, then either fix the source file and rebuild, or
+dismiss the finding. If findings are arriving in floods, the pace dial is in
+Controls, and zero passages a night switches the audit off while leaving the brief
+and the triage running.
 
 ### A reply got onto the journal that should not have
 
