@@ -132,54 +132,72 @@ ${body.map((l, i) => `<text x="${W / 2}" y="${titleY + title.length * 62 + 74 + 
    from the build machine and look right here and wrong in production. The only
    faces in the world are the two carried in _cardfont.js.
 --------------------------------------------------------------------------- */
-let RESVG = null, RESVG_ERR = "";
+/* ---------------------------------------------------------------------------
+   the rasteriser, and the one thing that decides whether the card has words
+
+   There are two resvg builds and THEY TAKE FONTS DIFFERENTLY. That single
+   fact cost two blank deploys.
+
+     @resvg/resvg-wasm  takes fontBuffers. Bytes. No filesystem involved.
+     @resvg/resvg-js    (native) has fontFiles and fontDirs and NOTHING else.
+                        It silently ignores fontBuffers.
+
+   The native build drew perfectly on a laptop and produced a completely blank
+   card on Vercel: border, gradient, gold rule, not one letter. Writing the
+   faces to the function's /tmp and passing fontFiles did not save it either.
+   Nothing threw. It returned a valid 1080 by 1080 PNG of nothing.
+
+   So the WASM build goes first, because handing it bytes cannot fail for any
+   environmental reason: no path, no write, no tracing, no permission. The
+   native build stays as a fallback for the day the wasm binary is missing.
+
+   The wasm binary is the one file that must be findable on disk, and Vercel's
+   tracer does not follow it on its own. vercel.json pulls it into the bundle:
+       "functions": { "api/card.js": { "includeFiles": "node_modules/@resvg/resvg-wasm/**" } }
+   Take that out and the card goes blank again.
+--------------------------------------------------------------------------- */
+let RESVG = null, RESVG_KIND = "", RESVG_ERR = "";
+export const rasteriserKind = () => RESVG_KIND;
+
+async function wasmBinary() {
+  const [{ default: fs }, { default: path }] = await Promise.all([import("fs"), import("path")]);
+  const tries = [
+    path.join(process.cwd(), "node_modules/@resvg/resvg-wasm/index_bg.wasm"),
+    "/var/task/node_modules/@resvg/resvg-wasm/index_bg.wasm",
+    path.join(process.cwd(), "api/node_modules/@resvg/resvg-wasm/index_bg.wasm")
+  ];
+  for (const p of tries) { try { if (fs.existsSync(p)) return fs.readFileSync(p); } catch { } }
+  throw new Error("index_bg.wasm is not in the bundle (see vercel.json includeFiles)");
+}
+
 async function rasteriser() {
   if (RESVG) return RESVG;
   if (RESVG_ERR) throw new Error(RESVG_ERR);
   const tried = [];
 
-  /* First choice: the native build. A plain dynamic import with a literal
-     name, nothing to locate on disk, nothing for the ESM to CommonJS rewrite
-     to trip over. */
+  /* first: wasm, fed bytes, nothing to find on disk except the binary itself */
+  try {
+    const mod = await import("@resvg/resvg-wasm");
+    await mod.initWasm(await wasmBinary());
+    RESVG = mod.Resvg; RESVG_KIND = "wasm";
+    return RESVG;
+  } catch (e) { tried.push("wasm: " + String(e && e.message || e).slice(0, 90)); }
+
+  /* second: the native build, which can only read faces from files */
   try {
     const mod = await import("@resvg/resvg-js");
     const R = mod.Resvg || (mod.default && mod.default.Resvg);
-    if (R) { RESVG = R; return R; }
-    tried.push("@resvg/resvg-js loaded without a Resvg export");
-  } catch (e) { tried.push("@resvg/resvg-js: " + String(e && e.message || e).slice(0, 70)); }
-
-  /* Second choice: the wasm build, whose binary has to be found on disk.
-     NOT with createRequire(import.meta.url): that is what took this whole
-     route down. The function's working directory is where node_modules sits,
-     so look there, and say plainly when it is not there rather than serving
-     an SVG that Instagram will reject. */
-  try {
-    const [{ default: fs }, { default: path }] = await Promise.all([import("fs"), import("path")]);
-    const here = [
-      path.join(process.cwd(), "node_modules/@resvg/resvg-wasm/index_bg.wasm"),
-      "/var/task/node_modules/@resvg/resvg-wasm/index_bg.wasm"
-    ].find(p => { try { return fs.existsSync(p); } catch { return false; } });
-    if (!here) throw new Error("index_bg.wasm is not in the bundle");
-    const mod = await import("@resvg/resvg-wasm");
-    await mod.initWasm(fs.readFileSync(here));
-    RESVG = mod.Resvg;
+    if (!R) throw new Error("loaded without a Resvg export");
+    RESVG = R; RESVG_KIND = "native";
     return RESVG;
-  } catch (e) { tried.push("@resvg/resvg-wasm: " + String(e && e.message || e).slice(0, 70)); }
+  } catch (e) { tried.push("native: " + String(e && e.message || e).slice(0, 90)); }
 
-  RESVG_ERR = tried.join(" · ");
+  RESVG_ERR = tried.join(" \u00b7 ");
   throw new Error(RESVG_ERR);
 }
 
-/* resvg reads faces from FILES, not from memory: @resvg/resvg-js has
-   fontFiles and fontDirs and no way to hand it a buffer. The first version of
-   this passed `fontBuffers`, which that library silently ignores, and it drew
-   perfectly on a laptop that happened to have the same font installed system
-   wide. On Vercel, where nothing is installed, the card came out blank.
-
-   So the bytes are written once to the function's own /tmp, which is the one
-   writable place a serverless function has, and resvg is pointed at the files.
-   loadSystemFonts stays off: with a family name no system font can satisfy,
-   there is nothing on any machine that could quietly stand in. */
+/* The native build needs the faces as files, so they are written once to the
+   function's own /tmp. The wasm build never looks at these. */
 let FONT_FILES = null;
 async function fontFiles() {
   if (FONT_FILES) return FONT_FILES;
@@ -199,18 +217,39 @@ async function fontFiles() {
 
 export async function cardPNG(svg, width = 1080) {
   const Resvg = await rasteriser();
-  const files = await fontFiles();
-  const r = new Resvg(svg, {
-    fitTo: { mode: "width", value: width },
-    font: {
-      loadSystemFonts: false,
-      fontFiles: files,
-      fontBuffers: [REGULAR, BOLD],   /* the wasm build takes buffers instead */
-      defaultFontFamily: FAMILY,
-      sansSerifFamily: FAMILY, serifFamily: FAMILY, monospaceFamily: FAMILY
-    }
-  });
+  const font = {
+    loadSystemFonts: false,          /* nothing may quietly stand in for our faces */
+    defaultFontFamily: FAMILY,
+    sansSerifFamily: FAMILY, serifFamily: FAMILY, monospaceFamily: FAMILY
+  };
+  if (RESVG_KIND === "wasm") font.fontBuffers = [REGULAR, BOLD];
+  else { const files = await fontFiles(); font.fontFiles = files; font.fontDirs = [files[0].replace(/[\\/][^\\/]+$/, "")]; }
+  const r = new Resvg(svg, { fitTo: { mode: "width", value: width }, font });
   return Buffer.from(r.render().asPng());
+}
+
+/* What the renderer actually saw, so a blank card never again has to be
+   diagnosed by guesswork. /api/card?debug=1 */
+export async function fontReport() {
+  const out = { family: FAMILY, regularBytes: REGULAR.length, boldBytes: BOLD.length,
+                isBuffer: Buffer.isBuffer(REGULAR), coverage: COVERAGE.size, cwd: process.cwd() };
+  try { await rasteriser(); out.renderer = RESVG_KIND; }
+  catch (e) { out.renderer = "NONE"; out.rendererError = String(e && e.message || e); }
+  try {
+    const { default: fs } = await import("fs");
+    out.files = (await fontFiles()).map(p => p + " = " + (fs.existsSync(p) ? fs.statSync(p).size + " bytes" : "MISSING"));
+  } catch (e) { out.files = "could not be written: " + String(e && e.message || e); }
+  try {
+    const svg = cardSVG({ title: "Test", story: "Test story for the font report.", detail: "d", category: "c" });
+    out.drawn = (await cardPNG(svg)).length;
+    const { Resvg } = { Resvg: await rasteriser() };
+    out.blank = Buffer.from(new Resvg(svg, { fitTo: { mode: "width", value: 1080 },
+      font: { loadSystemFonts: false, defaultFontFamily: FAMILY } }).render().asPng()).length;
+    out.verdict = out.drawn > out.blank * 1.1
+      ? "OK: the faces are drawing"
+      : "BLANK: the renderer is not using our faces";
+  } catch (e) { out.verdict = "could not render: " + String(e && e.message || e); }
+  return out;
 }
 
 export default async function handler(req, res) {
@@ -225,6 +264,12 @@ export default async function handler(req, res) {
 
   const story = String(q.shape || "") === "story";
   const svg = cardSVG(light, { story });
+
+  if (String(q.debug || "")) {
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(200).send(JSON.stringify(await fontReport(), null, 1));
+  }
 
   if (String(q.fmt || "") === "png") {
     /* No silent fallback. A caller asking for a PNG is almost always Meta, and
