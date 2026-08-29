@@ -170,11 +170,45 @@ async function rasteriser() {
   throw new Error(RESVG_ERR);
 }
 
+/* resvg reads faces from FILES, not from memory: @resvg/resvg-js has
+   fontFiles and fontDirs and no way to hand it a buffer. The first version of
+   this passed `fontBuffers`, which that library silently ignores, and it drew
+   perfectly on a laptop that happened to have the same font installed system
+   wide. On Vercel, where nothing is installed, the card came out blank.
+
+   So the bytes are written once to the function's own /tmp, which is the one
+   writable place a serverless function has, and resvg is pointed at the files.
+   loadSystemFonts stays off: with a family name no system font can satisfy,
+   there is nothing on any machine that could quietly stand in. */
+let FONT_FILES = null;
+async function fontFiles() {
+  if (FONT_FILES) return FONT_FILES;
+  const [{ default: fs }, { default: os }, { default: path }] =
+    await Promise.all([import("fs"), import("os"), import("path")]);
+  const dir = path.join(os.tmpdir(), "noor-card-fonts");
+  fs.mkdirSync(dir, { recursive: true });
+  const files = [];
+  for (const [name, buf] of [["regular.ttf", REGULAR], ["bold.ttf", BOLD]]) {
+    const p = path.join(dir, name);
+    if (!fs.existsSync(p) || fs.statSync(p).size !== buf.length) fs.writeFileSync(p, buf);
+    files.push(p);
+  }
+  FONT_FILES = files;
+  return files;
+}
+
 export async function cardPNG(svg, width = 1080) {
   const Resvg = await rasteriser();
+  const files = await fontFiles();
   const r = new Resvg(svg, {
     fitTo: { mode: "width", value: width },
-    font: { loadSystemFonts: false, fontBuffers: [REGULAR, BOLD], defaultFontFamily: FAMILY }
+    font: {
+      loadSystemFonts: false,
+      fontFiles: files,
+      fontBuffers: [REGULAR, BOLD],   /* the wasm build takes buffers instead */
+      defaultFontFamily: FAMILY,
+      sansSerifFamily: FAMILY, serifFamily: FAMILY, monospaceFamily: FAMILY
+    }
   });
   return Buffer.from(r.render().asPng());
 }
