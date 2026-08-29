@@ -1,0 +1,77 @@
+NOOR Codex of Light · v112 · HOTFIX
+
+/api/card is returning 500 on the live site right now, on every path,
+which means the social machine cannot post at all.
+
+────────────────────────────────────────────────────────────────────
+WHAT BROKE
+────────────────────────────────────────────────────────────────────
+
+From your own Vercel runtime log:
+
+    /var/task/api/card.js:141
+        const req = (0, _module.createRequire)(import.meta.url);
+    SyntaxError: Cannot use 'import.meta' outside a module
+
+Your package.json has no "type": "module". Vercel therefore compiles
+every file under api/ from ES modules to CommonJS at build time. Its
+own build log says so:
+
+    Warning: Node.js functions are compiled from ESM to CommonJS.
+
+Nearly everything survives that rewrite. `import.meta.url` cannot:
+there is no import.meta in CommonJS. I used it in the new card route
+to find the picture library, and it killed the whole file at load, so
+even the SVG path 500'd.
+
+This is mine. Node printed a warning about it on every local test run
+and I filtered it out as noise.
+
+────────────────────────────────────────────────────────────────────
+WHAT TO DRAG
+────────────────────────────────────────────────────────────────────
+
+Two folders, at the ROOT of github.com/Eouchi147/noor:
+
+    api/        (one file: card.js, replaces the broken one)
+    tests/      (one new file: esm-cjs.mjs, the guard)
+
+Nothing else changes. No package.json change is required.
+
+────────────────────────────────────────────────────────────────────
+AFTER IT DEPLOYS
+────────────────────────────────────────────────────────────────────
+
+Open  noorcodex.com/api/card?fmt=png
+
+  · A picture  -> fixed, and the social machine can post.
+  · A line of text starting "the card could not be rasterised"
+      -> the route is alive but the picture library is not reachable
+         in the bundle. Send me that line; it names exactly which of
+         the two it tried and what each said.
+  · A 500 page -> tell me, and I will look at the log again.
+
+The card route now tries two picture libraries, not one. The first
+is @resvg/resvg-js, which is NOT in your package.json yet; the second
+is @resvg/resvg-wasm, which already is and already installs cleanly
+on your builds. Both were tested here and produce the same picture.
+Adding the first is a one line edit to package.json if the second
+turns out not to be reachable, and I will do it for you in the
+browser.
+
+────────────────────────────────────────────────────────────────────
+THE GUARD
+────────────────────────────────────────────────────────────────────
+
+tests/esm-cjs.mjs compiles every route the way Vercel does and refuses
+any file that uses import.meta, so this exact failure cannot ship
+again. Run it with the others:
+
+    node tests/esm-cjs.mjs api
+
+A note on it, because I got this wrong once already today: the first
+version of that guard used a regular expression to ignore comments and
+strings, ran green, and proved nothing. One unbalanced quote and it
+swallowed the very line it was supposed to catch. It uses a real
+scanner now, and I checked it by breaking the file on purpose and
+confirming it fails.

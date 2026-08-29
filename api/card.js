@@ -4,24 +4,36 @@
 // the preview in the console and the image on Instagram are provably the same
 // picture rather than two drawings that agree today.
 //
-// TWO THINGS HERE WERE PAID FOR IN BLOOD, BOTH ABOUT FONTS
+// THREE THINGS HERE WERE PAID FOR IN BLOOD
 //
-// 1. Instagram will not accept an SVG. This route used to try @vercel/og and
-//    silently serve the SVG when it was missing, and @vercel/og was never a
-//    dependency, so the PNG path had NEVER ONCE produced a PNG. Nothing failed
-//    loudly: the header said svg-fallback and no one reads headers. Every post
-//    to Instagram would have been rejected for a reason findable without ever
-//    holding a credential. It rasterises properly now, with resvg.
+// 1. THIS FILE MAY NOT USE `import.meta`. IT WILL CRASH IN PRODUCTION.
+//    package.json has no "type":"module", so Vercel compiles every route from
+//    ESM to CommonJS at build time. It says so in the build log:
+//      Warning: Node.js functions are compiled from ESM to CommonJS.
+//    Almost everything survives that rewrite. `import.meta.url` cannot: there
+//    is no import.meta in CommonJS, so the file dies at load with
+//      SyntaxError: Cannot use 'import.meta' outside a module
+//    and every path through the route 500s, including the ones that never
+//    touch the code that used it. A first cut of this file called
+//    createRequire(import.meta.url) to find the wasm rasteriser, and took the
+//    whole card route down with it. Node printed a warning about exactly this
+//    on every local test run and it was filtered out as noise.
+//    tests/esm-cjs.mjs now compiles this file the way Vercel does and loads
+//    the result, so the same mistake fails on a laptop instead of in public.
 //
-// 2. Font fallback is silent, and it is worse than garbage. On the first real
-//    render, "the birth of the Prophet ﷺ, or the" came out as
-//    "the birth of the Prophet  , or the": an empty gap, no error, no warning,
-//    no missing-glyph box. U+FDFA and U+FDFB are the least reliably supported
-//    codepoints this project will ever touch, and a broken one on a card about
-//    the Prophet, peace be upon him, is not an ordinary bug. So the honorific
-//    is SPELLED OUT before the card is drawn, the faces are carried in the
-//    repository, the system fonts are switched off entirely, and anything
-//    outside the faces' coverage is reported rather than dropped.
+// 2. Instagram will not accept an SVG. This route used to try @vercel/og,
+//    which was never a dependency, and served the SVG instead behind a header
+//    nobody reads, so the PNG path had NEVER ONCE produced a PNG.
+//
+// 3. Font fallback is silent. On the first real render, "the birth of the
+//    Prophet ﷺ, or the" came out as "the birth of the Prophet  , or the": an
+//    empty gap, no error, no warning, no missing-glyph box. U+FDFA and U+FDFB
+//    are the least reliably supported codepoints this project will touch, and
+//    a broken one on a card about the Prophet, peace be upon him, is not an
+//    ordinary bug. So the honorific is SPELLED OUT before the card is drawn,
+//    the faces are carried in the repository, system fonts are switched off
+//    entirely, and anything outside the faces' coverage is reported rather
+//    than dropped.
 //
 //    The caption is different and deliberately so: it is text, not a picture,
 //    and Facebook and Instagram both draw ﷺ correctly in a caption. It keeps
@@ -29,13 +41,11 @@
 
 import { chooseLight } from "./_lights.js";
 import { REGULAR, BOLD, FAMILY, COVERAGE } from "./_cardfont.js";
-import { createRequire } from "module";
-import fs from "fs";
 
 /* The honorifics, written out for the drawing only. */
 const HONORIFIC = [
-  [/\uFDFA/g, "(peace be upon him)"],
-  [/\uFDFB/g, "(glorified and exalted)"]
+  [/ﷺ/g, "(peace be upon him)"],
+  [/ﷻ/g, "(glorified and exalted)"]
 ];
 
 /* Everything the faces cannot draw, named rather than dropped. A card that
@@ -115,26 +125,49 @@ ${body.map((l, i) => `<text x="${W / 2}" y="${titleY + title.length * 62 + 74 + 
 /* ---------------------------------------------------------------------------
    the rasteriser
 
-   resvg draws the same SVG the console previews. The wasm is initialised once
-   per process and kept, because a cold start already costs enough. System
-   fonts are OFF: with them on, a missing glyph borrows a face from the build
-   machine and the card looks fine here and different in production. With them
-   off, the only faces in the world are the two carried in _cardfont.js.
+   resvg draws the same SVG the console previews. The native build is a plain
+   import with no file to locate, which is the whole point after the
+   import.meta crash: there is nothing here for the ESM to CommonJS rewrite to
+   break. System fonts are OFF, so a missing glyph cannot quietly borrow a face
+   from the build machine and look right here and wrong in production. The only
+   faces in the world are the two carried in _cardfont.js.
 --------------------------------------------------------------------------- */
 let RESVG = null, RESVG_ERR = "";
 async function rasteriser() {
   if (RESVG) return RESVG;
   if (RESVG_ERR) throw new Error(RESVG_ERR);
+  const tried = [];
+
+  /* First choice: the native build. A plain dynamic import with a literal
+     name, nothing to locate on disk, nothing for the ESM to CommonJS rewrite
+     to trip over. */
   try {
+    const mod = await import("@resvg/resvg-js");
+    const R = mod.Resvg || (mod.default && mod.default.Resvg);
+    if (R) { RESVG = R; return R; }
+    tried.push("@resvg/resvg-js loaded without a Resvg export");
+  } catch (e) { tried.push("@resvg/resvg-js: " + String(e && e.message || e).slice(0, 70)); }
+
+  /* Second choice: the wasm build, whose binary has to be found on disk.
+     NOT with createRequire(import.meta.url): that is what took this whole
+     route down. The function's working directory is where node_modules sits,
+     so look there, and say plainly when it is not there rather than serving
+     an SVG that Instagram will reject. */
+  try {
+    const [{ default: fs }, { default: path }] = await Promise.all([import("fs"), import("path")]);
+    const here = [
+      path.join(process.cwd(), "node_modules/@resvg/resvg-wasm/index_bg.wasm"),
+      "/var/task/node_modules/@resvg/resvg-wasm/index_bg.wasm"
+    ].find(p => { try { return fs.existsSync(p); } catch { return false; } });
+    if (!here) throw new Error("index_bg.wasm is not in the bundle");
     const mod = await import("@resvg/resvg-wasm");
-    const req = createRequire(import.meta.url);
-    await mod.initWasm(fs.readFileSync(req.resolve("@resvg/resvg-wasm/index_bg.wasm")));
+    await mod.initWasm(fs.readFileSync(here));
     RESVG = mod.Resvg;
     return RESVG;
-  } catch (e) {
-    RESVG_ERR = String(e && e.message || e).slice(0, 140);
-    throw new Error(RESVG_ERR);
-  }
+  } catch (e) { tried.push("@resvg/resvg-wasm: " + String(e && e.message || e).slice(0, 70)); }
+
+  RESVG_ERR = tried.join(" · ");
+  throw new Error(RESVG_ERR);
 }
 
 export async function cardPNG(svg, width = 1080) {
@@ -164,7 +197,7 @@ export default async function handler(req, res) {
        Meta will reject an SVG. If the rasteriser cannot run, that is a 503 the
        console shows and the poster refuses on, not a picture nobody can use. */
     try {
-      const png = await cardPNG(svg, story ? 1080 : 1080);
+      const png = await cardPNG(svg, 1080);
       res.setHeader("Content-Type", "image/png");
       res.setHeader("Content-Length", String(png.length));
       res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
