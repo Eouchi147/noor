@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "functions": { "api/card.js": { "includeFiles": "node_modules/@resvg/resvg-wasm/**" } },
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
