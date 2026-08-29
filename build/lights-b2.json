@@ -1,0 +1,500 @@
+{
+ "tranche": "b2",
+ "lights": [
+  {
+   "id": "bimaristan-endowment-funding",
+   "kind": "science",
+   "category": "Medicine",
+   "title": "Hospitals were paid for by endowments, not by patients",
+   "story": "The bimaristan, from a Persian word meaning place of the sick, was funded by waqf, a permanent endowment. A donor signed over shops, farms or a bathhouse, and the rent paid the staff and the drugs from then on. The deed set the rules, and several survive. The Adudi hospital in Baghdad opened around 981 and Nur al-Din's in Damascus in 1154, and both had wards divided by complaint, including for mental illness, with salaried physicians, oculists, surgeons, bone setters and pharmacists, a kitchen and a library. Treatment was free because the endowment said so, not because a state had decided to provide health care. The system depended on wealthy people wanting a charity that outlived them, and it decayed wherever the endowments were seized or lost.",
+   "detail": "Bimaristans · Baghdad c. 981, Damascus 1154",
+   "tags": [
+    "medicine",
+    "waqf",
+    "hospitals"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-razi-case-records",
+   "kind": "science",
+   "category": "Medicine",
+   "title": "Al-Razi wrote down the cases where he was wrong",
+   "story": "Abu Bakr al-Razi, born in Rayy near modern Tehran in the middle of the ninth century, ran hospitals there and in Baghdad. The book he is best known for, the Hawi, was not written by him for readers. After his death his students assembled it from his working notebooks, which is why it reads as it does: an authority quoted, then Greek and Indian opinion, then a mark meaning mine, followed by what he had seen at the bedside. His case notes record particular patients, the treatment given and whether it worked, including the times it did not. He also wrote a book of doubts about Galen, arguing that medicine advances only when a physician trusts a careful observation over a great name, and that Galen's own method demanded it.",
+   "detail": "Al-Razi · Rayy and Baghdad, died c. 925",
+   "tags": [
+    "medicine",
+    "method",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-razi-smallpox-measles-book",
+   "kind": "book",
+   "category": "Medicine",
+   "title": "The first book to tell smallpox from measles",
+   "story": "Al-Razi's treatise on smallpox and measles sets the two diseases side by side and separates them by what a physician can see and ask: the pattern of fever, the back pain, the state of the eyes, the itching in the nose, how the eruption comes on and how it differs between the two. It is the earliest known clinical account to distinguish them. His management is practical, and much of it is about protecting the eyes, because blindness was the outcome he was trying to prevent. He had no notion of a virus and explained both diseases by the humoral theory of his day, which was wrong. The value of the book is the description, and it was accurate enough that European physicians kept printing it from the fifteenth century into the nineteenth.",
+   "detail": "Al-Razi · Kitab al-Jadari wa'l-Hasba",
+   "tags": [
+    "medicine",
+    "books",
+    "observation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-sina-canon-textbook",
+   "kind": "book",
+   "category": "Medicine",
+   "title": "One textbook was taught in Europe for six centuries",
+   "story": "Ibn Sina finished the Canon of Medicine around 1025. It is five books: general principles, some eight hundred simple drugs, diseases taken organ by organ from head to foot, diseases affecting the whole body, and a formulary of compound remedies. Its success was organisation. What Greek, Persian, Indian and Arabic medicine held was arranged so that a physician could find the passage he needed, which made it teachable. Gerard of Cremona translated it at Toledo in the twelfth century, it was printed in Latin in the 1470s, and it was still set reading in Italian and French medical faculties in the sixteenth century. That was also the trouble with it. A book good enough to be the syllabus is a book people stop testing, and physicians from Ibn al-Nafis onward had to argue against it.",
+   "detail": "Ibn Sina · Canon of Medicine, c. 1025",
+   "tags": [
+    "medicine",
+    "books",
+    "teaching"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-sina-drug-testing-rules",
+   "kind": "science",
+   "category": "Method",
+   "title": "Ibn Sina set the conditions for judging a drug",
+   "story": "In the second book of the Canon, Ibn Sina asks how anybody can know that a drug works, and lays down conditions. The drug must be pure and unspoiled, so that nothing else is being tested. It must be tried on a single disease and not on a mixture of complaints. Its strength must be matched against the strength of the illness. The time it takes to act must be noted. The effect must appear again and again in many cases, because a result seen once may be chance. And the trial must be made on human beings, since what a drug does to a horse proves nothing about a man. This is not a controlled trial, and there is no comparison group anywhere in it. It is a set of rules for not being fooled.",
+   "detail": "Ibn Sina · Canon, Book Two, c. 1025",
+   "tags": [
+    "medicine",
+    "method",
+    "evidence"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-nafis-europe-question",
+   "kind": "science",
+   "category": "Medicine",
+   "title": "Nobody knows whether Europe read Ibn al-Nafis on the heart",
+   "story": "Writing in Cairo around 1242, Ibn al-Nafis said that the wall between the two sides of the heart is solid, that no blood seeps through it, and that blood must therefore travel from the right chamber out to the lungs, mix with air there, and return to the left. Three centuries later Michael Servetus in 1553 and Realdo Colombo in 1559 described the same route in Europe. Whether they knew of him is an open question. A Venetian physician, Andrea Alpago, had spent about thirty years in Damascus and translated Ibn al-Nafis into Latin, printed in Venice in the 1540s, so a channel existed. No European text of the period cites him, and independent rediscovery is entirely possible. Historians have argued both sides since an Egyptian doctor found the Arabic passage in a Berlin manuscript in 1924.",
+   "detail": "Ibn al-Nafis · Cairo, c. 1242",
+   "tags": [
+    "medicine",
+    "transmission",
+    "debate"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-zuhr-goat-tracheotomy",
+   "kind": "science",
+   "category": "Surgery",
+   "title": "He tried the operation on a goat first",
+   "story": "Abu Marwan ibn Zuhr, who died at Seville around 1162, is the plainest experimenter in Andalusi medicine. Before performing a tracheotomy on a person he did it on a goat, watched the animal recover, and only then accepted the procedure. For patients who could not swallow he fed them through a silver tube into the gullet, and by nutrient enema. He wrote his book of particular treatments, the Taysir, at the request of his friend Ibn Rushd, who was writing the general work and wanted the practical half from a man who actually saw patients. Ibn Zuhr is often credited with the first description of the mite that causes scabies. The passage is short, and historians disagree about whether it says what modern readers want it to say.",
+   "detail": "Ibn Zuhr · Seville, died c. 1162",
+   "tags": [
+    "surgery",
+    "andalus",
+    "experiment"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-zahrawi-tasrif-thirty-volumes",
+   "kind": "book",
+   "category": "Surgery",
+   "title": "Only one of his thirty volumes is about surgery",
+   "story": "Al-Zahrawi worked at Madinat al-Zahra outside Cordoba and finished his medical encyclopedia, the Tasrif, around the year 1000. It runs to thirty treatises, and the famous one is the last: surgery, with about two hundred instruments drawn on the page so that a reader could have them made. The other twenty nine are the ordinary business of medicine, on diet, on drugs and how to prepare them, on childbirth, on the teeth, and a long section on what would now be called cosmetics, which he treated as a branch of medicine rather than a vanity. Gerard of Cremona translated the surgical volume at Toledo, and it remained the standard surgical text in Europe for roughly five hundred years, printed in Latin under the name Albucasis.",
+   "detail": "Al-Zahrawi · Cordoba, c. 936-1013",
+   "tags": [
+    "surgery",
+    "books",
+    "andalus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-zahrawi-catgut-and-clips",
+   "kind": "science",
+   "category": "Surgery",
+   "title": "A surgeon in Cordoba stitched with thread the body dissolves",
+   "story": "Animal gut had been used as thread before al-Zahrawi. What he set down, in the surgical volume of the Tasrif, was its use inside the body, where the point is that the thread is absorbed and nothing has to be taken out again. He describes closing a wound with two needles on one thread, using the mandibles of large ants as clips to hold the edges of a torn intestine, tying off a bleeding vessel, and cauterising. He also describes a family whose boys bled to death from small cuts, which is often read as the earliest clinical account of an inherited bleeding disorder. His warning to readers was blunt: anyone who cuts without knowing anatomy will kill the patient, and in his day almost nobody was taught it.",
+   "detail": "Al-Zahrawi · Kitab al-Tasrif, c. 1000 CE",
+   "tags": [
+    "surgery",
+    "andalus",
+    "medicine"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sabur-ibn-sahl-formulary",
+   "kind": "book",
+   "category": "Pharmacy",
+   "title": "Pharmacy split from medicine and got its own book",
+   "story": "Sabur ibn Sahl, a physician who died in 869, compiled the earliest known Arabic formulary standing on its own: a book of compound remedies, each with its ingredients, quantities, method of preparation, dose and use. Books of this kind, called aqrabadhin, were kept in hospital pharmacies and copied for the shops, and later hospitals commissioned their own. The trade was policed from outside. A market inspector, the muhtasib, checked the apothecaries, and the surviving inspection manuals tell him how to detect a drug cut with something cheaper, how to test weights, and which substitutions count as fraud. Making up medicines had become a separate occupation from prescribing them, with its own literature, its own shops and its own ways of being caught out.",
+   "detail": "Sabur ibn Sahl · died 869 CE",
+   "tags": [
+    "pharmacy",
+    "books",
+    "regulation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "physician-examination-baghdad-931",
+   "kind": "science",
+   "category": "Medicine",
+   "title": "Baghdad examined its physicians after one patient died",
+   "story": "The physician and historian Ibn abi Usaybi'a, writing in the thirteenth century, reports that in 931 a man in Baghdad died through a practitioner's mistake, and the caliph al-Muqtadir ordered that nobody practise medicine until examined. The task went to Sinan ibn Thabit, of a famous scholarly family, who tested the practitioners of the city and is said to have passed more than eight hundred and sixty. Those who failed were barred, with exemptions for physicians of established reputation. Sinan also arranged for doctors to visit prisons and sent staffed dispensaries out to the villages of the Iraqi countryside. The account is a later one and the round number should be read as a round number, but the principle in it is clear: a licence to practise, granted by examination.",
+   "detail": "Baghdad · 931 CE, reported by Ibn abi Usaybi'a",
+   "tags": [
+    "medicine",
+    "regulation",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-baytar-simple-drugs",
+   "kind": "book",
+   "category": "Pharmacy",
+   "title": "He walked from Malaga to Damascus collecting plants",
+   "story": "Ibn al-Baytar was born at Malaga near the end of the twelfth century, learned botany in Seville, then worked his way east through North Africa, Egypt, Syria and Anatolia, collecting and identifying plants and questioning the people who used them. He ended as chief herbalist to the ruler of Egypt and died in Damascus in 1248. His compendium of simple drugs lists roughly fourteen hundred substances, several hundred of them not described in Arabic before, arranged alphabetically, with earlier authorities named and his own findings marked as his own. Where he had checked a claim in the field and found it false, he said so. It stayed the fullest work of its kind in any language for centuries, and botanists were still mining it for identifications in the nineteenth.",
+   "detail": "Ibn al-Baytar · Malaga to Damascus, died 1248",
+   "tags": [
+    "pharmacy",
+    "botany",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "anaesthesia-what-is-attested",
+   "kind": "science",
+   "category": "Surgery",
+   "title": "What the surgeons used for pain is less than claimed",
+   "story": "It is often said that Muslim surgeons invented general anaesthesia. What the sources attest is narrower and worth knowing accurately. Opium, henbane, mandrake and related drugs were given to dull pain and make a patient drowsy, and recipes exist for a sponge soaked in a decoction, dried, then moistened and held under the nose. Recipes of that kind appear in Latin and in Arabic medical writing in overlapping centuries, and which way they travelled is not settled. There is no evidence of measured dosing, of controlled unconsciousness, or of anything a modern anaesthetist would recognise. The surgical texts assume a patient who feels the operation, work to keep it short, and describe assistants holding him still. General anaesthesia arrived in the 1840s with ether, and it was new then.",
+   "detail": "Arabic and Latin surgery · 9th to 13th centuries",
+   "tags": [
+    "surgery",
+    "medicine",
+    "evidence"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ophthalmology-cataract-needle",
+   "kind": "science",
+   "category": "Ophthalmology",
+   "title": "An Iraqi oculist drew a cataract out through a needle",
+   "story": "Eye disease was the commonest serious illness across the region, and it produced a specialist, the kahhal, with a literature of his own. Hunayn ibn Ishaq's Ten Treatises on the Eye, from the ninth century, carries what are thought to be the earliest anatomical diagrams of the eye, though the surviving copies are later than the author. Around 1010 Ammar ibn Ali al-Mawsili described removing a soft cataract by suction through a hollow metal needle and named the patients he had done it on. Ali ibn Isa's notebook for oculists, from Baghdad, worked through more than a hundred conditions and was translated into Latin and used for centuries. Pushing the clouded lens aside with a needle was old, Indian and Greek before them. The refinement and the record keeping were theirs.",
+   "detail": "Ammar al-Mawsili and Ali ibn Isa · c. 1000 CE",
+   "tags": [
+    "medicine",
+    "eyes",
+    "iraq"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "rufayda-al-aslamiyya-nursing",
+   "kind": "science",
+   "category": "Nursing",
+   "title": "The earliest named Muslim nurse worked in a tent",
+   "story": "Early biographical works, chiefly Ibn Sa'd's Tabaqat, name a woman of the Aslam tribe, Rufayda al-Aslamiyya, who cared for the wounded in a tent pitched near the Prophet's ﷺ mosque in Madinah, and report that Sa'd ibn Mu'adh, wounded at the Battle of the Trench, was placed in her care so that he could be visited. Other women of Madinah are named in the same sources doing similar work. What those reports say is short. The fuller modern picture, of a training school with a syllabus and enrolled students, is a twentieth century elaboration and ought to be labelled as one. The attested part is enough on its own. In the 620s a woman ran a place for treating the injured at the centre of the town, and everybody knew her name.",
+   "detail": "Rufayda al-Aslamiyya · Madinah, 620s CE",
+   "tags": [
+    "nursing",
+    "women",
+    "medina"
+   ],
+   "lvl": "debated",
+   "src": "Ibn Sa'd, Kitab al-Tabaqat al-Kabir"
+  },
+  {
+   "id": "plague-of-amwas-quarantine",
+   "kind": "science",
+   "category": "Public Health",
+   "title": "Umar turned an army around at the edge of a plague",
+   "story": "In 638 plague broke out at Amwas in Syria and killed on a scale the chroniclers count in the tens of thousands, among them the commander Abu Ubayda ibn al-Jarrah. Umar ibn al-Khattab was travelling towards Syria and halted at Sargh on the border. He consulted those with him, and the argument put to him was that to go on was to walk into a plague. When he ordered the return, Abu Ubayda asked whether he was fleeing the decree of God, and Umar answered that he was fleeing from the decree of God to the decree of God. Abd al-Rahman ibn Awf then reported the Prophet's ﷺ instruction not to enter a land where plague has broken out, and not to leave it if you are already there. The rule cuts both ways, and Muslim authorities cited it again in 2020.",
+   "detail": "Plague of Amwas · Syria, 638 CE",
+   "tags": [
+    "health",
+    "quarantine",
+    "early-islam"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari, Kitab al-Tibb; Sahih Muslim, Kitab al-Salam"
+  },
+  {
+   "id": "ibn-al-khatib-contagion-1348",
+   "kind": "science",
+   "category": "Public Health",
+   "title": "A Granadan doctor argued contagion from what he could see",
+   "story": "When the Black Death reached Granada in 1348, some scholars argued that a disease cannot pass from person to person, because that would put the cause somewhere other than in the hands of God. Lisan al-Din ibn al-Khatib, vizier and physician, wrote a short treatise in reply. He set out the evidence of the senses: that whoever nurses the sick catches it and whoever stays away does not, that it arrives in a port with a ship, that it runs through a household and through a quarter, that people cut off by desert or by sea escape it. He wrote that a proof drawn from transmitted authority has to be reconsidered when experience contradicts it. His colleague Ibn Khatima wrote a similar account at Almeria the following year. Ibn al-Khatib died in a prison cell in Fez in 1374, in a political quarrel.",
+   "detail": "Ibn al-Khatib · Granada, 1348 to 1349",
+   "tags": [
+    "health",
+    "andalus",
+    "observation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "jabir-corpus-authorship",
+   "kind": "science",
+   "category": "Chemistry",
+   "title": "Three thousand books carry his name and he wrote few",
+   "story": "Jabir ibn Hayyan is said to have lived in Kufa in the eighth century and to have studied with Ja'far al-Sadiq. Some three thousand treatises circulated under his name. In 1942 the scholar Paul Kraus showed from internal evidence that they cannot be the work of one man of that period: they quote translations made later, and most of the corpus belongs to the late ninth and tenth centuries, the product of a school rather than a person. What the corpus contains is a landmark all the same. Substances are classified, apparatus is described, and procedures are set out in order, calcination, sublimation, crystallisation, distillation. One passage, in Holmyard's translation, says that whoever does not perform practical work and make experiments will never attain the least degree of mastery. The Latin books signed Geber are different works again, written in Europe.",
+   "detail": "The Jabirian corpus · 8th to 10th centuries",
+   "tags": [
+    "chemistry",
+    "books",
+    "attribution"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "alembic-and-the-words-for-it",
+   "kind": "science",
+   "category": "Chemistry",
+   "title": "The still was Greek, the words for it are Arabic",
+   "story": "Distilling apparatus existed in Greco-Egyptian alchemy centuries before Islam, and one of its practitioners, Maria the Jewess, is credited with the water bath that a cook still calls a bain-marie. What happened in the Arabic laboratories was refinement and scale: better condensation, glass that would take the heat, and distillation run as an industry for rosewater, essential oils, naphtha and medicines. Al-Razi's book of secrets lists the equipment like a workshop inventory. The vocabulary crossed into Europe with the technique. Alembic is al-anbiq, itself from a Greek word. Alkali is al-qali, the ash of a saltwort plant. Elixir is al-iksir. Alcohol is al-kuhl, which meant the fine dark powder used on the eyes and came to mean the spirit of wine only later, in European usage.",
+   "detail": "Arabic chemical apparatus · 9th to 10th centuries",
+   "tags": [
+    "chemistry",
+    "language",
+    "distillation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-kindi-perfume-recipes",
+   "kind": "book",
+   "category": "Chemistry",
+   "title": "A philosopher wrote a hundred recipes for perfume",
+   "story": "Al-Kindi, the first of the major philosophers to write in Arabic, also wrote the Book of the Chemistry of Perfume and Distillations. It survives in a single manuscript in Istanbul and was edited and translated into German by Karl Garbers in 1948. It holds more than a hundred recipes and methods: aromatic waters and oils, the apparatus, the timings, and a section of substitutes, cheaper imitations of costly scents and medicines for people who could not pay for the real thing. He treated smell as a manufacturing problem with quantities in it. He did something similar in another work on compound drugs, trying to put numbers to how the strengths of the ingredients in a mixture add up, one of the first attempts to make pharmacy arithmetic rather than judgement.",
+   "detail": "Al-Kindi · Baghdad, 9th century",
+   "tags": [
+    "chemistry",
+    "perfume",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "frequency-analysis-from-dictionaries",
+   "kind": "science",
+   "category": "Cryptography",
+   "title": "Frequency analysis came out of Arabic dictionary work",
+   "story": "Counting letters was a habit of Arabic linguistics before it was a weapon. Al-Khalil ibn Ahmad, who died around 786, built the first Arabic dictionary by working through the permutations of the roots, and is credited with a book on ciphers that has not survived. Scholars of the Qur'an counted words and letters as a matter of course. So when al-Kindi wrote his treatise on deciphering messages in the ninth century, he could assume readers who already thought of a language as a distribution: take a long ordinary text, count how often each letter occurs, count the symbols in the cipher, and match them in order. The tradition ran on for centuries through Ibn Adlan and Ibn al-Durayhim into the Ottoman chancery manuals. Al-Kindi's own treatise was thought lost until a copy turned up in an Istanbul archive in 1987.",
+   "detail": "Al-Khalil to Ibn al-Durayhim · 8th to 14th c.",
+   "tags": [
+    "cryptography",
+    "language",
+    "method"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "banu-musa-ingenious-devices",
+   "kind": "book",
+   "category": "Engineering",
+   "title": "Three brothers designed machines that regulated themselves",
+   "story": "Muhammad, Ahmad and al-Hasan, the sons of Musa ibn Shakir, were astronomers and patrons in ninth century Baghdad who paid translators out of their own pockets. Around 850 they produced the Book of Ingenious Devices, about a hundred machines. Most are vessels and fountains that do something unexpected, which makes them look like toys, and the surprise is nearly always a hidden control: a float that rises with the liquid and closes a valve, a siphon that empties a chamber at a set level, a lamp that trims its own wick and draws up its own oil. That is feedback, a machine holding a condition steady with no hand on it. They also describe a grab for lifting objects off a riverbed. Donald Hill translated the book into English in 1979.",
+   "detail": "Banu Musa · Baghdad, c. 850 CE",
+   "tags": [
+    "engineering",
+    "books",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-jazari-crank-and-hierapolis",
+   "kind": "science",
+   "category": "Engineering",
+   "title": "His famous crank turns up on a Roman relief",
+   "story": "Al-Jazari, chief engineer to the Artuqid court at Diyarbakir, finished his book of mechanical devices in 1206 with instructions detailed enough to build from, and wrote that he described nothing he had not made himself. Historians of technology long credited him with the earliest known crank and connecting rod, the linkage in his twin cylinder pump that turns rotation into a push and a pull. Then a carved relief from Hierapolis, in what is now Turkey, studied and published in the 2000s, showed a water powered stone saw using the same linkage in the third century of the common era. The credit for the mechanism moves back. What does not move is the book: the earliest surviving set of engineering drawings that explains segmental gears, cams and valves well enough for somebody else to copy.",
+   "detail": "Al-Jazari · Diyarbakir, 1206 CE",
+   "tags": [
+    "engineering",
+    "machines",
+    "priority"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "qanat-underground-water",
+   "kind": "science",
+   "category": "Water",
+   "title": "A Persian water tunnel older than Islam spread west with it",
+   "story": "A qanat is a tunnel driven gently downhill from groundwater under a hillside out to the fields, so that water arrives by gravity and does not evaporate on the way. A line of vertical shafts marks its course across the desert, sunk to lift out the spoil and to let the diggers breathe. The technique is Iranian and pre-Islamic, at least two and a half thousand years old, and the one at Gonabad is still delivering water. Under Muslim rule it spread east and west and took local names: falaj in Oman, foggara in Algeria, khettara in Morocco, karez further east. Madrid drank from galleries of this kind into the nineteenth century. Around the year 1000 the mathematician al-Karaji wrote a book on finding hidden water and building these tunnels, with surveying instruments and rules for ventilation.",
+   "detail": "Qanats · Iran and westward, from c. 500 BCE",
+   "tags": [
+    "water",
+    "engineering",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "noria-saqiya-water-raising",
+   "kind": "science",
+   "category": "Water",
+   "title": "The water wheel came west and left its words behind",
+   "story": "Two machines raised water from Iran to Spain. The saqiya is a chain of pots turned by an ox through right angled gearing. The noria is a wheel with pots on its rim, driven by the current of the river itself and needing no animal at all. Seventeen of them still stand at Hama on the Orontes in Syria, the largest about twenty metres across, and they groan as they turn. They were not new in the Islamic period: a mosaic at Apamea, dated 469, already shows one. What the Muslim centuries added was their spread and the law of water shares that went with them, measured in time rather than volume. The words travelled too. Spanish noria is na'ura and acequia is al-saqiya, and irrigation ditches in New Mexico are still called acequias and still run by their own elected associations.",
+   "detail": "Norias of Hama · Apamea mosaic, 469 CE",
+   "tags": [
+    "water",
+    "engineering",
+    "language"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sistan-windmills",
+   "kind": "science",
+   "category": "Engineering",
+   "title": "The oldest windmills stood on a plain of constant wind",
+   "story": "In Sistan, on what is now the border of Iran and Afghanistan, a wind blows from the north for about a hundred and twenty days each summer, and the mills built there were made for it. They turn on a vertical shaft, sails set like doors inside a walled housing that funnels the wind onto one side of them, with the millstone below. Arabic geographers of the ninth and tenth centuries describe the windmills of the region as a known feature. Mills of the same design at Nashtifan in eastern Iran are still standing and were still grinding within living memory. European windmills, which appear in the records of the 1180s, turn on a horizontal shaft and are a different machine, so most historians treat them as a separate development rather than a borrowing.",
+   "detail": "Sistan and Nashtifan · attested from the 9th c.",
+   "tags": [
+    "engineering",
+    "wind",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "paper-route-talas-legend",
+   "kind": "science",
+   "category": "Paper",
+   "title": "The story of papermakers captured at Talas is probably legend",
+   "story": "Papermaking is Chinese. The usual account of how it reached the Muslim world says that Chinese papermakers taken prisoner at the battle of Talas in 751 taught the craft at Samarkand. That story is first told by al-Tha'alibi, writing nearly three hundred years afterwards, and historians of the subject now doubt it, because paper was already circulating in Central Asia before 751 and one group of captives is a thin explanation for an industry. The route and the consequence are not in doubt. Samarkand paper became famous, a mill was working in Baghdad by the 790s, and the craft moved on to Damascus, Cairo, Fez, then Xativa in Spain and Fabriano in Italy. Arabic papermakers worked from rags and linen rather than bark, and Europe received paper through their mills rather than from China directly.",
+   "detail": "Samarkand to Fabriano · 8th to 13th centuries",
+   "tags": [
+    "paper",
+    "books",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "islamic-bookbinding-flap",
+   "kind": "science",
+   "category": "Books",
+   "title": "The flap on an old book cover is structural, not decoration",
+   "story": "The Islamic book got a binding of its own. Its boards are pasteboard, layers of waste paper pasted up rather than the wooden boards of the European codex, so the book is light. The sewing runs without cords across the spine, which leaves the back flat. The cover has a fifth part, a flap that comes off the back board, crosses the fore edge and tucks under the front, closing the book against dust and holding the text block square. Books were shelved flat, so titles were written on the fore edge rather than the spine. Decoration was stamped into damp leather with cut brass tools and, from the fifteenth century, tooled in gold. Historians of binding trace European gold tooling back to these workshops, reaching Italy by way of Venice and Naples.",
+   "detail": "Islamic bookbinding · from the 9th century",
+   "tags": [
+    "books",
+    "craft",
+    "design"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "textile-words-and-dyes",
+   "kind": "science",
+   "category": "Textiles",
+   "title": "Muslin, damask and mohair are place names or Arabic words",
+   "story": "Textiles were the largest manufacturing industry of the medieval Muslim world, and the trade left its vocabulary in European languages. Muslin is named for Mosul and damask for Damascus. Mohair is mukhayyar, meaning choice or selected. Taffeta is the Persian taftah. Cotton is qutn, and sash is shash, a length of fine cloth wound as a turban. Some other favourites are guesswork: gauze from Gaza and satin from the Arabic name for the Chinese port of Quanzhou are marked uncertain in the dictionaries, and should be repeated with that attached. State workshops wove bands of inscription, tiraz, into robes, naming the ruler and the year, and a robe from the ruler's own wardrobe was a political act as much as a gift. The dyers left words as well. Crimson comes through Arabic qirmiz, the insect that gave the red.",
+   "detail": "Tiraz workshops and the cloth trade",
+   "tags": [
+    "textiles",
+    "language",
+    "trade"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "damascus-steel-wootz-analysis",
+   "kind": "science",
+   "category": "Metallurgy",
+   "title": "Damascus steel was made from Indian ingots and analysed in 2006",
+   "story": "The watered blades were forged at Damascus, Isfahan and elsewhere, but the steel itself arrived as cakes of crucible metal from southern India and Sri Lanka, the material English writers called wootz. The pattern in the finished blade comes from bands of carbide in the metal. The technique lapsed in the eighteenth century, and the best explanation offered is that a particular ore, carrying the trace elements that make those bands form, stopped coming through the trade. In 2006 a group at Dresden dissolved a fragment of a seventeenth century sabre in acid and reported carbon nanotubes and cementite nanowires in what was left, published in Nature. The finding is real; what it means is argued over, and nobody claims the smiths knew. They knew which ore, which heat, and how slowly to let it cool.",
+   "detail": "Wootz steel · India to Damascus, analysed 2006",
+   "tags": [
+    "metallurgy",
+    "science",
+    "trade"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muqaddimah-new-science",
+   "kind": "book",
+   "category": "Social Science",
+   "title": "He named a new science before writing the history",
+   "story": "The Muqaddimah is only the introduction to Ibn Khaldun's history, and it is the part still read. In it he announces a subject nobody had named, the science of human social organisation, and then sets about doing it. He argues that a state's revenue is largest when its rates of tax are low and shrinks as the rates rise, an observation Arthur Laffer credited to him when the same idea shaped American tax argument in the 1980s. He explains prices by supply and by the labour inside a good. He tests old chronicles against what an economy could actually feed and rejects their numbers as impossible. He also reasons from climate to character in ways no reader accepts now. The book was translated into French in the 1860s and into English by Franz Rosenthal in 1958.",
+   "detail": "Ibn Khaldun · Muqaddimah, 1377",
+   "tags": [
+    "history",
+    "economics",
+    "method"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-jubayr-first-rihla",
+   "kind": "book",
+   "category": "Travel",
+   "title": "The first great travel book was written as penance",
+   "story": "Ibn Jubayr, a secretary in Granada, set out for Makkah in 1183 and came back two years later by way of Baghdad, Damascus, Acre and Sicily. He wrote it up day by day, and the result set the shape of the rihla, the travel book, for everybody after him, including Ibn Battuta, who copied passages from it without saying so. The story that he went in penance, having been made to drink wine by his governor, is told in the sources and may well be true. What makes the book unusual is that he wrote down things that did not suit him. Passing through Crusader ruled Palestine he found Muslim farmers under Frankish lords paying a fixed tax and otherwise left alone, said their condition looked better than that of their brothers under Muslim lords, and admitted that it troubled him.",
+   "detail": "Ibn Jubayr · 1183 to 1185",
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "travel",
+    "books",
+    "andalus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-battuta-dictated-book",
+   "kind": "book",
+   "category": "Travel",
+   "title": "Ibn Battuta did not write the book that carries his name",
+   "story": "In 1355 at Fez, on the order of the sultan, Ibn Battuta dictated his travels to a young literary scholar, Ibn Juzayy, who wrote them up and said openly that he had polished the language. He also lifted long passages describing Damascus and Makkah straight out of Ibn Jubayr, writing a century and a half earlier, which was ordinary practice then and is disconcerting now. Nothing in Ibn Battuta's own hand survives, and he was recalling three decades of travel with few notes. Historians therefore argue about particular stretches: whether he really reached Bulghar on the Volga, how much of China he saw, how the Anatolian dates fit together. It remains the fullest description of the fourteenth century Muslim world anybody left, and it has to be read knowing how it was made.",
+   "detail": "Dictated to Ibn Juzayy · Fez, 1355",
+   "tags": [
+    "travel",
+    "books",
+    "sources"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-awwam-book-of-agriculture",
+   "kind": "book",
+   "category": "Agriculture",
+   "title": "A Seville farmer wrote down what he had actually grown",
+   "story": "Ibn al-Awwam's Book of Agriculture, written near Seville in the later twelfth century, is the longest farming manual to survive from the medieval world. It covers roughly five hundred and eighty five plants and fifty fruit trees, with chapters on soils and how to judge them by hand and by taste, on manures, on grafting, on irrigation, on pests, on cattle and on bees. He names the authorities he is drawing on, among them Ibn Bassal, who had run the royal garden at Toledo and written from what he grew, and he marks his own trials separately: this I have tested. A Spanish translation appeared in Madrid in 1802 and a French one in the 1860s, and nineteenth century agronomists read them for practical advice rather than as history.",
+   "detail": "Ibn al-Awwam · Seville, late 12th century",
+   "tags": [
+    "agriculture",
+    "books",
+    "andalus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "agricultural-revolution-debate",
+   "kind": "science",
+   "category": "Agriculture",
+   "title": "Historians still argue whether there was a farming revolution",
+   "story": "In 1974 the economic historian Andrew Watson proposed that between the eighth and the tenth centuries a group of crops moved west across the Muslim world and changed how land was worked: sugar cane, cotton, rice, hard wheat, citrus, bananas, aubergines, spinach, watermelon, together with irrigation that allowed a summer crop where the fields had rested. He called it an agricultural revolution and the phrase stuck. Michael Decker and others have since argued from archaeology and from Roman farming manuals that several of those crops were already grown in the Roman east, so what happened was spread and intensification rather than novelty. The argument is not settled. Both sides agree the crops and the irrigation moved, that the Arabic farming manuals record real practice, and that much of it ended up in Spain and then in the Americas.",
+   "detail": "Watson 1974, Decker 2009 · a continuing debate",
+   "tags": [
+    "agriculture",
+    "debate",
+    "history"
+   ],
+   "lvl": "editorial"
+  }
+ ]
+}

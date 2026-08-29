@@ -1,0 +1,1039 @@
+{
+ "tranche": "e",
+ "lights": [
+  {
+   "id": "haram-makkah-how-it-grew",
+   "kind": "place",
+   "category": "Makkah",
+   "title": "The Haram at Makkah began as an open space between houses",
+   "story": "In the lifetime of the Prophet ﷺ the Kaaba stood in a small courtyard with private houses pressed around it and no enclosing wall. Around 638 the caliph Umar bought the nearest houses, had them pulled down and put a low wall around the cleared ground. Uthman widened it again. The Abbasid caliph al-Mahdi spent heavily between 777 and 781 to enlarge the courtyard and bring the Kaaba nearer its centre. The arcades most photographed in old prints were Ottoman work of the 1570s. Saudi expansions since 1955 have taken the enclosure past 350,000 square metres, and each stage removed older fabric, including most of those Ottoman arcades, which historians of architecture objected to at the time.",
+   "detail": "Masjid al-Haram, Makkah · 638 CE to the present",
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "makkah",
+    "architecture",
+    "hajj"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "zamzam-well-under-the-mataf",
+   "kind": "place",
+   "category": "Water",
+   "title": "Zamzam is a shallow well in a dry valley floor",
+   "story": "The well of Zamzam sits about twenty metres east of the Kaaba, in the bed of the Wadi Ibrahim. It is roughly thirty metres deep. The upper part passes through the loose sand and gravel that the valley floor is made of, and the lower part is cut into fractured rock, which is where most of the water enters. Pilgrims once drew it by bucket, then by hand pump. Today the well head is sealed below the circumambulation floor, the water is pumped, treated with ultraviolet light and piped to taps and to a bottling plant at Kudai. The Saudi Geological Survey monitors the water level continuously, because heavy pumping during Hajj draws it down and it recovers afterwards.",
+   "detail": "Wadi Ibrahim, Makkah",
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "water",
+    "makkah",
+    "hajj"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "safa-marwa-inside-the-mosque",
+   "kind": "place",
+   "category": "Hajj",
+   "title": "Two hills of a woman's search now stand inside a mosque",
+   "story": "Safa and Marwa are two rock outcrops a little under four hundred metres apart. Muslims walk between them seven times during Hajj and Umrah, a distance of roughly three kilometres, in memory of Hagar going back and forth looking for water for her son Ismail. The Qur'an names both hills and calls them among the symbols of God. For most of history the walk was along an open street with shops on it. The Saudi expansions enclosed the whole route inside the mosque, air conditioned it and later stacked it on several levels to move larger crowds. The bare rock of Safa is still exposed at one end, fenced behind glass, so that what people are walking between can still be seen.",
+   "detail": "Masjid al-Haram, Makkah",
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "hajj",
+    "women",
+    "makkah"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:158"
+  },
+  {
+   "id": "arafat-plain-of-standing",
+   "kind": "place",
+   "category": "Hajj",
+   "title": "A pilgrim who misses this afternoon has missed the Hajj",
+   "story": "Arafat is a flat, stony plain about twenty kilometres southeast of Makkah, with a granite hill at its edge that people call Jabal al-Rahmah. Pilgrims stand there from midday until sunset on the ninth of Dhul Hijjah, and that standing is the one rite the Hajj cannot be completed without. The Prophet ﷺ delivered the sermon of his farewell pilgrimage there in 632. A hadith reports him saying that Hajj is Arafat. The plain is empty and closed for most of the year. For a few hours it holds more than two million people, all standing outdoors in the same place at the same time, doing nothing except asking.",
+   "detail": "Plain of Arafat, near Makkah",
+   "hijri": {
+    "m": 12,
+    "d": 9
+   },
+   "tags": [
+    "hajj",
+    "makkah",
+    "prayer"
+   ],
+   "lvl": "sunnah",
+   "src": "Sunan al-Tirmidhi and Sunan Abi Dawud, Books of Hajj"
+  },
+  {
+   "id": "mina-tent-city-and-jamarat",
+   "kind": "place",
+   "category": "Hajj",
+   "title": "Mina is a city of tents empty fifty weeks a year",
+   "story": "Mina is a narrow valley five kilometres east of Makkah where pilgrims sleep for three or four nights of the Hajj and throw pebbles at three stone markers. After a fire in 1997 killed hundreds of people, the canvas was replaced with fibreglass coated tents on fixed steel frames, about a hundred thousand of them, laid out in numbered streets with their own hospitals and fire mains. The Jamarat itself has been rebuilt twice. The current structure, finished between 2006 and 2009, is a multi level bridge with separate ramps for each direction, designed for a flow measured in hundreds of thousands per hour. It was built because crowds crushed on the old bridge, most severely in 1990 and again in 2015.",
+   "detail": "Mina, near Makkah",
+   "hijri": {
+    "m": 12,
+    "d": 11
+   },
+   "tags": [
+    "hajj",
+    "engineering",
+    "makkah"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "masjid-nabawi-palm-trunks",
+   "kind": "place",
+   "category": "Madinah",
+   "title": "The Prophet's mosque began with palm trunks and a gravel floor",
+   "story": "When the Prophet ﷺ reached Yathrib in 622 he bought a plot used for drying dates and built on it: mud brick walls, columns of palm trunks, a roof of palm fronds that leaked, a floor of earth and gravel. A shaded bench along one wall, the Suffa, housed companions who had nowhere else. Umar and Uthman enlarged it. The Umayyad governor rebuilt it between 707 and 709, adding the concave prayer niche and minarets and taking in the room where the Prophet ﷺ was buried. A dome was raised over that room in 1279 and painted green in 1837. The building now holds more than a million people, around a plot bought for drying dates.",
+   "detail": "Al-Masjid al-Nabawi, Madinah · 622 CE onward",
+   "tags": [
+    "madinah",
+    "architecture",
+    "prophet"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "quba-mosque-first-built",
+   "kind": "place",
+   "category": "Madinah",
+   "title": "He walked out to Quba every Saturday to pray two units",
+   "story": "Quba was a settlement on the southern edge of Yathrib. The Prophet ﷺ stopped there for several days before entering the town in 622 and had a mosque built, the first built after the migration. Bukhari and Muslim both record that afterwards he went out to Quba every Saturday, sometimes riding and sometimes walking, and prayed two units there. Many commentators identify Quba with the Qur'anic phrase about a mosque founded on God consciousness from the first day, though others read that verse as referring to his own mosque in the town. The present building on the site is modern, rebuilt in the 1980s, and stands about three kilometres from the Prophet's mosque.",
+   "detail": "Quba, Madinah · 622 CE",
+   "tags": [
+    "madinah",
+    "prayer",
+    "prophet"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari and Sahih Muslim, Books of Prayer"
+  },
+  {
+   "id": "cave-of-hira-jabal-al-nour",
+   "kind": "place",
+   "category": "Makkah",
+   "title": "The cave of the first revelation is smaller than most rooms",
+   "story": "Hira is a cleft near the top of Jabal al-Nour, a steep hill about four kilometres northeast of the Kaaba. The climb takes most people over an hour. The cave itself is small, roughly the length of a man lying down and about a metre and a half wide, with an opening that faces toward the Kaaba. The Prophet ﷺ used to withdraw there for nights at a time before revelation began, and the first verses came to him in that space during Ramadan. Thousands of pilgrims climb it each season. Visiting it is not part of Umrah or Hajj and carries no rite, which scholars in Makkah repeat every year.",
+   "detail": "Jabal al-Nour, Makkah",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "makkah",
+    "revelation",
+    "ramadan"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cave-of-thawr-hijra",
+   "kind": "place",
+   "category": "Makkah",
+   "title": "The cave in the Qur'an held two men for three nights",
+   "story": "Jabal Thawr rises south of Makkah, higher and harder to climb than Jabal al-Nour. In 622 the Prophet ﷺ and Abu Bakr hid in a cave near its summit for three nights while search parties from Quraysh combed the roads north, and only then set out for Yathrib by a coastal route. The Qur'an refers to the episode directly, describing the second of two when they were in the cave and one said to his companion not to grieve. The familiar detail of a spider's web and nesting doves across the entrance comes from later biographical literature, not from the Qur'an, and hadith scholars have long noted that its chains are weak.",
+   "detail": "Jabal Thawr, Makkah · 622 CE",
+   "tags": [
+    "makkah",
+    "hijra",
+    "prophet"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 9:40"
+  },
+  {
+   "id": "mount-uhud-madinah",
+   "kind": "place",
+   "category": "Madinah",
+   "title": "A mountain the Prophet said loves us and we love it",
+   "story": "Uhud is a red granite ridge a few kilometres north of the Prophet's mosque, running for several kilometres and standing apart from the ranges around it, which is where its name, meaning single or alone, is usually traced. The battle fought at its foot in 625 cost the Muslims about seventy dead, among them the Prophet's uncle Hamza, after archers left the small hill they had been told to hold. That hill, Jabal al-Rumat, is still there, a rise of a few metres beside the cemetery of the fallen. Bukhari and Muslim record the Prophet ﷺ saying of it that this is a mountain that loves us and we love it.",
+   "detail": "Jabal Uhud, Madinah · battle 3 AH, 625 CE",
+   "tags": [
+    "madinah",
+    "early-islam",
+    "prophet"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari and Sahih Muslim"
+  },
+  {
+   "id": "badr-wells-on-the-caravan-road",
+   "kind": "place",
+   "category": "Early Islam",
+   "title": "Badr was a watering stop on the road to Syria",
+   "story": "Badr lies about 130 kilometres southwest of Madinah, near the coastal route that Makkan caravans took to Syria. It mattered because it had wells. Whoever held them controlled where an army could stand and where it could not, and on 17 Ramadan in year 2 of the Hijra the smaller Muslim force reached them first and filled in the rest. The place is an ordinary town today, with a mosque, a museum and a walled graveyard holding the fourteen Muslims who died in the battle. Historians still argue about exactly which depressions in the ground were the wells. What is not in doubt is that the whole engagement turned on water in a dry valley.",
+   "detail": "Badr, Hijaz · 17 Ramadan 2 AH, 624 CE",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "early-islam",
+    "water",
+    "ramadan"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "aqsa-compound-fourteen-hectares",
+   "kind": "place",
+   "category": "Jerusalem",
+   "title": "Al-Aqsa is the whole enclosure, not only the silver dome",
+   "story": "In Muslim usage al-Masjid al-Aqsa names the entire walled enclosure in Jerusalem, about fourteen and a half hectares, which includes the Dome of the Rock, the silver domed congregational hall at the southern end, courtyards, fountains, cisterns and colonnades. The Qur'an calls it the farthest mosque in the verse about the Prophet ﷺ being taken by night. The congregational hall has been destroyed and rebuilt repeatedly, mainly by earthquakes: the shocks of 748 and 1033 each brought much of it down, and its present columns and arcades are largely eleventh century work with Fatimid, Crusader, Ayyubid and modern repairs on top. The wooden pulpit installed by Salah ad-Din's order was burned in an arson attack in 1969 and replaced in 2007.",
+   "detail": "Al-Haram al-Sharif, Jerusalem",
+   "tags": [
+    "jerusalem",
+    "architecture",
+    "quran"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 17:1"
+  },
+  {
+   "id": "umayyad-mosque-damascus-layers",
+   "kind": "place",
+   "category": "Damascus",
+   "title": "Four religions built on the same rectangle in Damascus",
+   "story": "The Great Mosque of Damascus stands inside a walled rectangle that began as an Aramean temple precinct to the storm god Hadad, was rebuilt as a Roman temple of Jupiter, and by the fourth century held a Christian basilica dedicated to John the Baptist. After the Muslim conquest of 635 the two communities used parts of the site alongside each other for about seventy years. In 705 the caliph al-Walid took over the church and built the mosque that stands now, finished around 715. Sources differ on the terms, some reporting compensation and other churches given in exchange, others plain seizure. A shrine inside is said to hold the head of John the Baptist, and Christian as well as Muslim visitors still stop at it.",
+   "detail": "Damascus · 705 to 715 CE",
+   "tags": [
+    "damascus",
+    "architecture",
+    "umayyad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cordoba-mezquita-arches",
+   "kind": "place",
+   "category": "Al-Andalus",
+   "title": "Cordoba's double arches made short columns carry a high roof",
+   "story": "Abd al-Rahman I began the mosque of Cordoba in 785 on the site of a church, which the sources say was first shared and then bought. His builders had a supply of Roman and Visigothic columns that were too short for the height they wanted, so they stacked two tiers of arches on each column, a lower horseshoe and an upper semicircle, banded in red brick and pale stone. It worked, and it was extended three times, ending with around 850 columns. Cordoba fell to Castile in 1236 and the building became a cathedral. In 1523 a Renaissance nave was cut into the middle of the hall. Mass is said there daily, and Muslim prayer in the building is not permitted.",
+   "detail": "Cordoba · begun 785 CE",
+   "tags": [
+    "andalus",
+    "architecture",
+    "cordoba"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "alhambra-no-victor-but-god",
+   "kind": "place",
+   "category": "Al-Andalus",
+   "title": "One sentence is carved thousands of times across the Alhambra",
+   "story": "The Alhambra was built on a ridge above Granada by the Nasrid sultans, mostly between 1238 and 1391. Its walls are not carved stone but moulded plaster, cut and painted while damp, which is why so much detail was possible and why so much of it has had to be repaired. Running through that decoration, in cursive and in angular script, in courtyards and over doorways, is the Nasrid motto: there is no victor but God. Scholars who have counted the inscriptions put its repetitions in the thousands. It was the family slogan of a dynasty that survived by paying tribute to Castile, and they wrote it on every wall of the palace they lost in 1492.",
+   "detail": "Granada · Nasrid work, 1238 to 1391",
+   "tags": [
+    "andalus",
+    "architecture",
+    "calligraphy"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "kairouan-great-mosque-minaret",
+   "kind": "place",
+   "category": "North Africa",
+   "title": "The oldest standing minaret is a square tower in Tunisia",
+   "story": "Uqba ibn Nafi founded Kairouan in 670 as a garrison in the Tunisian steppe. Its great mosque was rebuilt several times, most substantially by the Aghlabid ruler Ziyadat Allah I around 836, and that is essentially the building that stands. Its massive three tiered square tower is generally taken to be the oldest minaret still standing anywhere, with a lower section that may be older still. The prayer hall rests on roughly four hundred columns carried in from Roman and Byzantine ruins across the region, no two bays quite alike. Around the prayer niche are lustre tiles brought from Iraq in the ninth century. The city became the centre where Maliki law was written down, in Sahnun's Mudawwana.",
+   "detail": "Kairouan, Tunisia · founded 670, rebuilt c. 836",
+   "tags": [
+    "north-africa",
+    "architecture",
+    "law"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "qarawiyyin-library-fez",
+   "kind": "place",
+   "category": "Libraries",
+   "title": "The world's oldest working library reopened in 2016",
+   "story": "The library attached to the Qarawiyyin in Fez holds about four thousand manuscripts, among them a ninth century copy of Malik's Muwatta written on parchment and a fourteenth century copy of Ibn Khaldun's Muqaddimah. It has been in use since the medieval period, which makes it one of the oldest libraries anywhere still doing the job it was built for. By 2012 it had broken gutters, damp in the walls and a collection at risk. The restoration was led by Aziza Chaouni, a Canadian trained engineer and architect from Fez, who put in a new drainage system, solar panels and climate control for the manuscript room, and kept the old door of the manuscript room with its four locks, whose keys are held by four different people. It opened to readers again in 2016.",
+   "detail": "Fez, Morocco · restored 2012 to 2016",
+   "tags": [
+    "libraries",
+    "morocco",
+    "women"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "fatima-al-fihri-qarawiyyin",
+   "kind": "founder",
+   "category": "Learning",
+   "title": "She spent an inheritance on a mosque that became a university",
+   "story": "Fatima al-Fihri came from a family that migrated from Kairouan to Fez in the early ninth century. When her father died she used her share of his estate to build a mosque in 859 in the quarter where the migrants had settled, and tradition holds that she fasted while the work went on. That mosque, al-Qarawiyyin, acquired teaching circles, then a library, then salaried professors and issued certificates, and it has never closed. UNESCO and Guinness both list it as the oldest existing degree granting institution. Almost everything told about Fatima herself comes from Ibn Abi Zar's chronicle written some five centuries later, and historians say plainly that earlier evidence for her life is thin.",
+   "detail": "Fatima al-Fihri · Fez, 859 CE",
+   "tags": [
+    "women",
+    "learning",
+    "morocco"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "djenne-mud-mosque-replastering",
+   "kind": "place",
+   "category": "West Africa",
+   "title": "A whole town replasters its mosque in a single morning",
+   "story": "The Great Mosque of Djenne in Mali is the largest mud brick building in the world. Its walls are made of sun dried bricks and coated in banco, a mud and rice husk plaster that the rainy season washes away every year. So each spring the town replasters it. Masons of the local guild direct the work, young men carry the mud, women bring water, and the bundles of palm wood that stick out of the walls, the toron, are the permanent scaffolding they climb. It is done in one day. The present building dates from 1906 and 1907, raised on the footprint of a much older mosque, and how closely it follows the earlier one is still debated by historians of the region.",
+   "detail": "Djenne, Mali · rebuilt 1906 to 1907",
+   "tags": [
+    "west-africa",
+    "architecture",
+    "craft"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "kizimkazi-inscription-zanzibar",
+   "kind": "place",
+   "category": "Swahili Coast",
+   "title": "A dated inscription of 1107 sits in a Zanzibar village mosque",
+   "story": "In the fishing village of Kizimkazi at the southern tip of Zanzibar there is a small mosque whose prayer niche carries a foundation inscription in floriated Kufic script. It gives a date corresponding to 1107, which makes it the oldest dated Islamic inscription known in East Africa. The letters are cut into coral stone, the local building material along the whole coast, quarried soft from the reef and hardening in the air. Excavations further north at Shanga on the Kenyan coast have found the postholes of a timber mosque dating from around the eighth century, rebuilt in stone later. Islam arrived on this coast by sea and by trade, and it left dated stone behind it.",
+   "detail": "Kizimkazi, Zanzibar · inscription dated 500 AH, 1107 CE",
+   "tags": [
+    "swahili-coast",
+    "africa",
+    "archaeology"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "xian-great-mosque-pagoda-minaret",
+   "kind": "place",
+   "category": "China",
+   "title": "The minaret in Xi'an is a wooden pagoda in a garden",
+   "story": "The Great Mosque of Xi'an sits in the old Muslim quarter of the city, at the eastern end of what was the Silk Road. Tradition dates a mosque here to 742, and the buildings standing now are mostly Ming work from 1384 onward with later repairs. It looks nothing like a mosque in Cairo or Istanbul. It is a Chinese temple compound: four walled courtyards on a long axis, timber halls with upturned tiled roofs, memorial arches, stone tablets, a garden. The minaret is a three storey octagonal wooden pavilion. There is no dome. The axis runs east to west rather than north to south, because the prayer hall at the far end has to face Makkah.",
+   "detail": "Xi'an, China · standing buildings from 1384",
+   "tags": [
+    "china",
+    "architecture",
+    "silk-road"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sarajevo-gazi-husrev-beg-waqf",
+   "kind": "place",
+   "category": "Bosnia",
+   "title": "A 1531 endowment in Sarajevo still pays for its own library",
+   "story": "In 1531 Gazi Husrev-beg, the Ottoman governor of Bosnia, endowed a mosque in Sarajevo and, in the same deed, a madrasa, a library, a public bath, a soup kitchen and a covered market whose rents were to pay for the rest. The endowment survived empires and still funds the library, which now holds more than ten thousand manuscripts in Arabic, Turkish, Persian and Bosnian. During the siege of Sarajevo between 1992 and 1995 the collection was moved by hand between hiding places, box by box, and came through intact. The city's National and University Library was less fortunate: it was shelled and burned in August 1992, and something like a million and a half books and periodicals were lost.",
+   "detail": "Sarajevo · endowed 1531",
+   "tags": [
+    "bosnia",
+    "libraries",
+    "waqf"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "konya-green-dome-rumi",
+   "kind": "place",
+   "category": "Konya",
+   "title": "The green dome over Rumi covers a museum, not a lodge",
+   "story": "Rumi died in Konya in December 1273 and was buried beside his father. A tomb was raised over him with Seljuk patronage, crowned by a fluted cone of turquoise glazed tiles that the city has been repairing ever since. Around it grew the mother lodge of the Mevlevi order, with cells, a kitchen where novices were trained for a thousand and one days, and a hall for the turning ceremony. In 1925 the Turkish Republic closed all dervish lodges. The building reopened in 1926 as a museum and remains one, receiving well over a million visitors a year, more than any other museum in the country in some years. The ceremony is now performed as a cultural programme, most fully in the week of his death.",
+   "detail": "Konya, Turkey · tomb from 1274",
+   "tags": [
+    "konya",
+    "poetry",
+    "sufism"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "kalyan-minaret-bukhara",
+   "kind": "place",
+   "category": "Bukhara",
+   "title": "A brick tower in Bukhara has stood since 1127",
+   "story": "The Kalyan minaret in Bukhara was finished in 1127 for the Karakhanid ruler Arslan Khan. It is baked brick, about forty six metres high, tapering, set on a deep foundation packed with reeds, and its whole surface is worked into fourteen bands, each with a different geometric pattern laid up in the brickwork itself rather than applied to it. The city was destroyed by the Mongols in 1220 and the minaret was left standing. A well known story says Genghis Khan ordered it spared after his hat fell off as he looked up, which is a good story with no early source behind it. The mosque beside it was rebuilt in the sixteenth century. The tower is the older thing on the square by four hundred years.",
+   "detail": "Bukhara, Uzbekistan · 1127 CE",
+   "tags": [
+    "bukhara",
+    "architecture",
+    "central-asia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "registan-samarkand-three-madrasas",
+   "kind": "place",
+   "category": "Samarkand",
+   "title": "Tigers and a human faced sun sit above a college door",
+   "story": "The Registan in Samarkand is a public square hemmed in on three sides by colleges. Ulugh Beg built the first in 1420 and taught astronomy in it. Facing it, the Sher-Dor madrasa was finished in 1636, and its portal carries two great cats stalking deer, each with a rising sun on its back, and each sun has a human face. Figural images on a madrasa front were unusual, and the tiling has survived to be argued about. The third side, Tilya-Kori, was finished around 1660 and its prayer hall is gilded. In 1932 a leaning minaret at the Ulugh Beg madrasa was pulled back upright with cables and jacks rather than dismantled, an operation engineers still write about.",
+   "detail": "Registan, Samarkand · 1420 to 1660",
+   "tags": [
+    "samarkand",
+    "architecture",
+    "central-asia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "naqsh-e-jahan-isfahan-angle",
+   "kind": "place",
+   "category": "Isfahan",
+   "title": "Isfahan's great mosque sits at an angle to its square",
+   "story": "Shah Abbas began laying out the Naqsh-e Jahan square in Isfahan in 1598. It measures roughly 160 by 510 metres, and the stone goalposts of the polo ground are still standing at either end. Three buildings and a bazaar gate open onto it. The problem the architects had was that the square is aligned to the city and the qibla is not. Their answer is visible from the air: the portal of the Shah Mosque sits square with the plaza, and behind it the entire building swings about forty five degrees to face Makkah, the turn taken up inside a short vestibule. The smaller Sheikh Lotfollah mosque, built for the court, does the same trick and has neither minaret nor courtyard.",
+   "detail": "Isfahan, Iran · begun 1598",
+   "tags": [
+    "isfahan",
+    "architecture",
+    "qibla"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "qutb-complex-delhi-columns",
+   "kind": "place",
+   "category": "Delhi",
+   "title": "Delhi's first mosque was built from demolished temples and says so",
+   "story": "The Quwwat al-Islam mosque in Delhi was begun in 1192 by Qutb al-Din Aibak, and its courtyard is ringed with carved columns taken from Hindu and Jain temples that his forces pulled down. An inscription over the eastern gate states this outright, giving the number of temples as twenty seven. Some of the figures on the columns were defaced, others were left. Beside the mosque rises the Qutb Minar, begun in 1199 and finished under Iltutmish, seventy two and a half metres of fluted red sandstone and marble, the tallest brick minaret in the world. In the courtyard stands an iron pillar cast around the fourth century, centuries before the mosque, still almost free of rust because of the phosphorus in its metal.",
+   "detail": "Delhi · begun 1192",
+   "tags": [
+    "delhi",
+    "architecture",
+    "india"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "fatehpur-sikri-akbar-city",
+   "kind": "place",
+   "category": "Mughals",
+   "title": "Akbar built a sandstone capital and left it fourteen years later",
+   "story": "Akbar began Fatehpur Sikri in 1571 near the hermitage of the Sufi Salim Chishti, whose white marble tomb sits in the courtyard of the mosque there. The city is built almost entirely of the local red sandstone, cut like carpentry, with brackets and screens copied from Gujarati and Rajput work. In its hall of worship Akbar had Muslim scholars debate Hindus, Jains, Zoroastrians and Jesuit priests, sometimes into the night. The gateway he added after his Gujarat campaign carries an inscription attributing to Jesus the words that the world is a bridge, and that one should pass over it and build no house upon it. By about 1585 the court had moved on. Historians usually cite water supply and northwestern campaigns.",
+   "detail": "Fatehpur Sikri, India · 1571 to c. 1585",
+   "tags": [
+    "mughals",
+    "architecture",
+    "india"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sultan-ahmed-six-minarets",
+   "kind": "place",
+   "category": "Ottomans",
+   "title": "The Blue Mosque was criticised because its patron had won nothing",
+   "story": "Sultan Ahmed I began his mosque in Istanbul in 1609, on the site of the old Byzantine palace and directly facing Hagia Sophia. The architect was Sedefkar Mehmed Agha, trained in Sinan's office. Inside are more than twenty thousand tiles from the kilns at Iznik, and the order was so large that the workshops raised their prices and the sultan capped them. Six minarets went up, matching the number then at Makkah, which caused comment at the time. The sharper criticism was financial. A sultan's mosque was expected to be paid for from the spoils of a victory, and Ahmed had no victory, so the money came from the treasury, and jurists said so.",
+   "detail": "Istanbul · 1609 to 1617",
+   "tags": [
+    "ottomans",
+    "architecture",
+    "istanbul"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "hagia-sophia-long-history",
+   "kind": "place",
+   "category": "Istanbul",
+   "title": "Hagia Sophia has been four things in fifteen hundred years",
+   "story": "Justinian's church was finished in 537, designed by two men trained in geometry rather than building, Anthemius of Tralles and Isidore of Miletus. Its first dome fell in 558 and was rebuilt steeper. It was the cathedral of Constantinople for nine hundred years, and it was looted in 1204 by a Christian army of the Fourth Crusade. After the Ottoman conquest of 1453 Mehmed II converted it into a mosque, and it served as one for nearly five centuries, with Sinan adding buttresses that are part of why it is still standing. In 1934 the Turkish government made it a museum, and the covered mosaics were uncovered. In 2020 it became a mosque again, with the mosaics curtained during prayer.",
+   "detail": "Istanbul · 537 CE to the present",
+   "tags": [
+    "istanbul",
+    "architecture",
+    "history"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sinan-selimiye-edirne",
+   "kind": "founder",
+   "category": "Architecture",
+   "title": "He became chief architect at fifty and worked fifty more years",
+   "story": "Sinan was born around 1490 to a Christian family in Anatolia, taken into Ottoman service through the levy of boys, and spent his early career as a military engineer building bridges on campaign. He was made chief court architect in 1538, at about fifty. The registers of his office credit him with roughly three hundred buildings, many of them the work of assistants under his name. He called the Selimiye in Edirne, finished in 1575, his masterwork, and set out to make its dome match the span of Hagia Sophia, which by careful measurement it very nearly does. He also rebuilt the water supply of Istanbul. He is buried in a small stone tomb he built himself, beside one of his own water channels.",
+   "detail": "Mimar Sinan · c. 1490 to 1588",
+   "tags": [
+    "architecture",
+    "ottomans",
+    "engineering"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "waqf-property-that-cannot-be-sold",
+   "kind": "place",
+   "category": "Endowments",
+   "title": "A waqf takes property permanently out of the market",
+   "story": "A waqf is founded by a deed that freezes a piece of property forever. Once the deed is registered the thing cannot be sold, given away or inherited, and only its income may be spent, on whatever the founder wrote down: a mosque, a school, a hospital, a fountain, blankets for the poor in winter, feed for stray cats. The founder names the trustee and the rules, and courts enforce them centuries later. The legal starting point is a report in Bukhari and Muslim in which Umar acquires land at Khaybar and is told by the Prophet ﷺ to hold the property itself and give away its produce. By the nineteenth century a large share of the cultivated land in some Ottoman provinces was held this way.",
+   "detail": "Islamic endowment law",
+   "tags": [
+    "waqf",
+    "law",
+    "charity"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari and Sahih Muslim, Books of Conditions"
+  },
+  {
+   "id": "haseki-hurrem-jerusalem-kitchen",
+   "kind": "founder",
+   "category": "Endowments",
+   "title": "A soup kitchen endowed in 1552 is still serving in Jerusalem",
+   "story": "Hurrem Sultan, wife of Suleiman and known in Europe as Roxelana, endowed a complex in Jerusalem in 1552: a mosque, a hostel for travellers and a public kitchen. The deed she registered assigned the revenue of named villages and shops to pay for it and specified what was to be cooked, how much bread each person got, and who was to be served first. The kitchen fed several hundred people a day in the sixteenth century. It has run, with interruptions and much reduced, ever since, and meals are still handed out from the Haseki Sultan foundation in the Old City. The endowment outlived the empire that produced it because the deed made the property unsellable.",
+   "detail": "Haseki Hurrem Sultan · Jerusalem, 1552",
+   "tags": [
+    "waqf",
+    "women",
+    "jerusalem"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "bimaristan-nuri-damascus",
+   "kind": "place",
+   "category": "Medicine",
+   "title": "A Damascus hospital of 1154 charged nobody and taught medicine",
+   "story": "Nur al-Din Zangi founded the bimaristan that carries his name in Damascus in 1154. Like the other great hospitals it was paid for out of waqf, the rents of shops, bathhouses and farmland assigned to it in perpetuity, which meant its budget did not depend on a ruler staying alive or generous. Treatment was free. The rules of these institutions record admission without regard to religion, origin or means, separate wards by illness including wards for patients with mental disorders, and a resident staff of physicians, oculists, surgeons and pharmacists. Students walked the wards with their teachers and were examined before they could practise. The building still stands in the old city of Damascus and now houses a museum of medicine.",
+   "detail": "Bimaristan al-Nuri · Damascus, 1154",
+   "tags": [
+    "medicine",
+    "waqf",
+    "damascus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "mustansiriya-four-schools",
+   "kind": "place",
+   "category": "Learning",
+   "title": "Baghdad's 1233 college taught four schools of law at once",
+   "story": "The Mustansiriya was opened in Baghdad in 1233 by the caliph al-Mustansir, on the east bank of the Tigris. Its innovation was to house all four Sunni schools of law in one building, each with its own professor, its own students and its own corner of the courtyard, rather than one school per college as had been usual. It also had teaching in Qur'an, hadith, medicine and mathematics, a hospital, a kitchen that fed the students, a bath, stipends, and a large library. Over the entrance was a water clock that marked the hours for the whole quarter. The building survived the sack of 1258 and is still standing on the riverbank in Baghdad.",
+   "detail": "Baghdad · opened 1233",
+   "tags": [
+    "learning",
+    "baghdad",
+    "law"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ijaza-licence-to-teach",
+   "kind": "book",
+   "category": "Learning",
+   "title": "The certificate was written on your copy of the book",
+   "story": "In the Muslim scholarly tradition the qualification belonged to a person, not to a building. A teacher who was satisfied that a student had read a book with him, correctly and in full, wrote an ijaza on the student's copy: a licence to transmit that text, naming the teacher's own teachers back to the author. Some ijazas run for pages and list a chain of thirty names across seven centuries. There was a separate licence to teach law and issue legal opinions, which is the nearest thing to a professional qualification. The historian George Makdisi argued that this practice shaped the European licence to teach; other historians think the resemblance is not close enough to prove a debt.",
+   "detail": "Ijaza · classical Muslim scholarship",
+   "tags": [
+    "learning",
+    "books",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "maragha-observatory-1259",
+   "kind": "place",
+   "category": "Astronomy",
+   "title": "An observatory in Iran hired astronomers from as far as China",
+   "story": "Nasir al-Din al-Tusi persuaded the Mongol ruler Hulagu to fund an observatory at Maragha in northwest Iran, begun in 1259. It was not one instrument but an institution: a staff drawn from Damascus, Mosul, Tus and Andalusia, a Chinese astronomer among them, a library, a workshop for making instruments, and thirty years of funding. The star tables produced there, the Zij-i Ilkhani, were finished in 1272 and used for centuries. The astronomers of Maragha also built new geometric models to fix the parts of Ptolemy they thought incoherent, and the same devices turn up later in Copernicus. How they reached him is still argued, and no document of the transmission has been found.",
+   "detail": "Maragha, Iran · founded 1259",
+   "tags": [
+    "astronomy",
+    "iran",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "istanbul-observatory-demolished-1580",
+   "kind": "place",
+   "category": "Astronomy",
+   "title": "Istanbul's observatory was built in 1577 and demolished in 1580",
+   "story": "Taqi al-Din, an astronomer from Damascus who had become chief astronomer to the Ottoman court, was given money by Sultan Murad III to build an observatory in Galata. It was finished in 1577, with a staff of about fifteen and instruments comparable to those Tycho Brahe was using in Denmark in the same years. Taqi al-Din observed the great comet of that autumn and read it as favourable. What followed was plague and a costly war. In January 1580 the observatory was demolished by order, after the chief mufti gave an opinion against it. Historians who have worked on the episode read the destruction as a court quarrel as much as a religious one, but the instruments went all the same.",
+   "detail": "Galata, Istanbul · 1577 to 1580",
+   "tags": [
+    "astronomy",
+    "ottomans",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "barid-relay-post",
+   "kind": "place",
+   "category": "Communications",
+   "title": "The postmaster's real job was reporting on the governor",
+   "story": "The barid was the state post, a chain of relay stations along the main roads with fresh mounts waiting at each. It carried official mail, not private letters. Its second function was intelligence: the postmaster in each province reported directly to the caliph on prices, harvests, unrest and the conduct of the governor he lived beside. One such official, Ibn Khurradadhbih, used the road registers to write the earliest surviving Arabic geography of routes, listing stages and distances across the empire. The Mamluks rebuilt the system under Baybars in the thirteenth century, moving despatches from Cairo to Damascus in about four days, with a parallel pigeon service and towers built to receive the birds.",
+   "detail": "Abbasid and Mamluk state post",
+   "tags": [
+    "communications",
+    "governance",
+    "geography"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muhtasib-market-inspector",
+   "kind": "book",
+   "category": "Cities",
+   "title": "Manuals told inspectors exactly how bakers water the dough",
+   "story": "The muhtasib was the official who walked the markets. His brief covered weights and scales, adulterated bread, milk and saffron, blocked streets, unsafe buildings, the cleanliness of butchers and the honesty of money changers. Manuals were written to train him. Al-Shayzari's twelfth century handbook and Ibn al-Ukhuwwa's fourteenth century one from Egypt go trade by trade, explaining how each is cheated: how a baker adds water to increase weight, how a miller mixes in cheap grain, how a cloth seller stretches a bolt. They also cover schoolteachers, and instruct the inspector to test physicians against the questions in Hunayn ibn Ishaq's textbook before letting them practise.",
+   "detail": "Hisba manuals · 12th to 14th centuries",
+   "tags": [
+    "cities",
+    "trade",
+    "governance"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ribat-monastir-sousse",
+   "kind": "place",
+   "category": "North Africa",
+   "title": "Frontier forts on the Tunisian coast doubled as retreat houses",
+   "story": "A ribat was a fortified post on a threatened frontier, most often a coast. The ones at Monastir, founded in 796, and Sousse, built in 821, still stand in Tunisia: square blocks of stone with a courtyard, cells on two storeys, a prayer hall and a watchtower. They were held by volunteers who came for a term of service rather than by a standing garrison, and the same men spent their nights in prayer and Qur'an study, so the buildings functioned as barracks and retreat houses at once. The towers were close enough to pass a signal fire along the coast within a night. In later centuries the word ribat shifted meaning and came to name a Sufi lodge with no walls to defend.",
+   "detail": "Monastir 796, Sousse 821 · Tunisia",
+   "tags": [
+    "north-africa",
+    "architecture",
+    "frontier"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sultanhani-caravanserai-anatolia",
+   "kind": "place",
+   "category": "Trade",
+   "title": "Anatolian road inns were spaced one day's walk apart",
+   "story": "The Seljuks of Anatolia built stone inns along their trade roads at intervals of about thirty kilometres, a day with loaded animals. The largest, the Sultan Han near Aksaray, was built in 1229 for Kayqubad I and covers some four and a half thousand square metres: an open courtyard with arcades and stables, a vaulted hall for winter, and a small mosque raised on four piers in the middle of the yard so that the animals could be led underneath it. The endowment deeds that paid for these buildings provide for lodging without charge for a set period, commonly three days, with food, fodder, a bath, medicine for the sick and shoeing for horses.",
+   "detail": "Sultan Han, near Aksaray · 1229",
+   "tags": [
+    "trade",
+    "architecture",
+    "anatolia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sabil-kuttab-cairo",
+   "kind": "place",
+   "category": "Water",
+   "title": "Cairo put a school for children above the drinking fountain",
+   "story": "Ottoman Cairo built hundreds of small corner buildings of a single type: a sabil below and a kuttab above. The sabil was a public cistern with bronze grilles onto the street, where anyone could take a cup of cold water for nothing. Above it, open to the air, sat a room where children learned to read the Qur'an. The cistern underneath held the year's supply, filled at the Nile flood and carried in by water sellers. The best known, built by Abd al-Rahman Katkhuda in 1744, still stands where the main street of the old city forks. A report in the Sunan collections has the Prophet ﷺ answer that the best charity is water, and founders of fountains have quoted it for centuries.",
+   "detail": "Cairo · Ottoman period",
+   "tags": [
+    "water",
+    "charity",
+    "cairo"
+   ],
+   "lvl": "sunnah",
+   "src": "Sunan Abi Dawud and Sunan Ibn Majah"
+  },
+  {
+   "id": "ahmed-iii-fountain-istanbul",
+   "kind": "place",
+   "category": "Water",
+   "title": "A sultan wrote the advertisement for his own fountain",
+   "story": "In front of the outer gate of Topkapi Palace stands a square marble pavilion built in 1728 for Sultan Ahmed III. Each of its four faces has a tap and a basin, and each corner has a grilled window where an attendant handed cups of water to passers by without charge. The whole surface is carved with tulips, cypresses and inscriptions, and the closing couplet is attributed to the sultan himself: open the tap with the name of God, drink the water, and pray for Khan Ahmed. The city had hundreds of such endowed fountains, fed by aqueducts and cisterns that Sinan and others had rebuilt, and the men who staffed them, the sebilci, were paid from the same endowments.",
+   "detail": "Istanbul · 1728",
+   "tags": [
+    "water",
+    "ottomans",
+    "charity"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "bayt-al-hikma-what-it-was",
+   "kind": "place",
+   "category": "Libraries",
+   "title": "The House of Wisdom was probably a library, not an academy",
+   "story": "Baghdad's Bayt al-Hikma is often described as a great research academy where Greek learning was translated by teams of salaried scholars. The evidence is thinner than that picture. Early sources mention it mainly as a palace library, in existence under Harun al-Rashid and expanded under al-Ma'mun, associated above all with translation from Persian and with astronomical work. Dimitri Gutas and others have shown that most Greek to Arabic translation was commissioned privately, by wealthy families such as the Banu Musa, who reportedly paid Hunayn ibn Ishaq in gold matching the weight of the books he produced. The translation movement was real, expensive and enormous. It simply was not run out of one building with a famous name.",
+   "detail": "Baghdad · 8th and 9th centuries",
+   "tags": [
+    "libraries",
+    "translation",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ashrafiya-library-catalogue",
+   "kind": "book",
+   "category": "Libraries",
+   "title": "A Damascus library's own catalogue survives with 2,000 titles",
+   "story": "Attached to a mausoleum in thirteenth century Damascus was a modest library called the Ashrafiya. Its catalogue survived, bound into a manuscript now in Istanbul, and it is the most detailed library catalogue to come down to us from the medieval Muslim world. It lists roughly two thousand titles by about twelve hundred authors, ordered by the size of the volume and then alphabetically by the first letter of the title, with notes on condition and on multiple copies. The shelves held law and hadith as expected, and also poetry, cookery, chess, veterinary medicine, popular epics and Christian texts. Konrad Hirschler edited it in 2016, which means we can now read what an ordinary reader in Damascus could borrow.",
+   "detail": "Ashrafiya library, Damascus · 13th century",
+   "tags": [
+    "libraries",
+    "books",
+    "damascus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "blue-quran-kairouan",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "A Qur'an written in gold on indigo dyed parchment",
+   "story": "The Blue Qur'an is a manuscript whose parchment leaves were dyed a deep indigo blue and then written on in gold Kufic script, with silver rosettes marking the verses that have since tarnished to grey. It was made in the ninth or tenth century and was recorded in the library of the Great Mosque of Kairouan, where an inventory of 1294 describes a Qur'an in blue and gold. Where it was actually produced is still disputed between North Africa, Iraq and Muslim Spain. The volume has been broken up. Its leaves are now scattered across museums in Tunisia, Europe and the United States, and single pages appear at auction, which is why no one can say how long the complete book once was.",
+   "detail": "North Africa · 9th or 10th century",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "craft"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "block-printed-amulets-fustat",
+   "kind": "book",
+   "category": "Printing",
+   "title": "Arabic was block printed centuries before Gutenberg, on amulets",
+   "story": "About sixty printed Arabic texts survive from medieval Egypt and Syria, most of them dug up at Fustat, the old settlement under Cairo. They are narrow strips of paper carrying Qur'anic verses, the names of God and prayers for protection, printed from carved blocks between roughly the tenth and fourteenth centuries and rolled into metal amulet cases. So the technology of printing on paper existed and was practised in Arabic before it existed in Europe. It stayed confined to amulets sold by street sellers, a trade of low standing, and never moved to books. Historians give various reasons, from the prestige of the copyist's hand to the economics of a strong manuscript trade, and none of them is settled.",
+   "detail": "Fustat, Egypt · c. 10th to 14th centuries",
+   "tags": [
+    "printing",
+    "paper",
+    "egypt"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "topkapi-sacred-trusts",
+   "kind": "place",
+   "category": "Istanbul",
+   "title": "A room in Topkapi has had a reciter since 1517",
+   "story": "The Chamber of the Sacred Trusts in Topkapi Palace holds objects venerated as relics: a mantle and a staff attributed to the Prophet ﷺ, hairs of his beard, swords attributed to his companions, the keys and gilded fittings of the Kaaba door, and letters said to be his to foreign rulers. Most arrived after 1517, when Selim I took Cairo and the sharif of Makkah sent the keys of the sanctuary. Historians cannot establish the provenance of most of the objects by ordinary evidence, and museum labels are careful about this. What is documented is the practice around them: Qur'an has been recited in that room continuously, in shifts, since the trusts arrived, and reciters are still appointed to do it.",
+   "detail": "Topkapi Palace, Istanbul · from 1517",
+   "tags": [
+    "istanbul",
+    "relics",
+    "ottomans"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "damascus-steel-wootz",
+   "kind": "place",
+   "category": "Metallurgy",
+   "title": "Damascus steel was made from Indian ingots and then lost",
+   "story": "The blades called Damascus steel carry a watered pattern of light and dark bands in the metal itself. They were forged from wootz, a crucible steel made in South India and Sri Lanka and traded west as small cakes of metal, so the city gave the blades a name rather than a birthplace. Production faded in the eighteenth century and the method was lost. In the 1990s John Verhoeven and Alfred Pendray reproduced the pattern and showed it depends on trace elements, vanadium among them, present in particular ores, which explains why the craft died when a supply changed. A 2006 paper reported carbon nanotubes in one sabre sample. That finding is still discussed, and it does not mean the smiths knew what they had.",
+   "detail": "Wootz steel · South Asia and Syria",
+   "tags": [
+    "metallurgy",
+    "craft",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ardabil-carpet-knots",
+   "kind": "place",
+   "category": "Craft",
+   "title": "A carpet signed by its maker holds 26 million knots",
+   "story": "Two carpets were woven for the shrine of Shaykh Safi al-Din at Ardabil in northwest Iran and finished in 1539 or 1540. Both carry a date and an inscription naming the work of the servant of the threshold, Maqsud of Kashan, with a couplet of Hafiz above it, which is rare because carpets are usually anonymous. The larger, now in London, is about ten and a half metres long and contains something near twenty six million knots, roughly three hundred and fifty in every square inch, each one tied by hand around two warp threads. Persian workshops used an asymmetric knot looped around one warp, Turkish workshops a symmetric knot around two, and the difference can still be read off the back of any old rug.",
+   "detail": "Ardabil, Iran · dated 946 AH, 1539 CE",
+   "tags": [
+    "craft",
+    "iran",
+    "textiles"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muqarnas-vault-designed-on-paper",
+   "kind": "place",
+   "category": "Architecture",
+   "title": "Honeycomb vaults were drawn as flat plans before they were built",
+   "story": "Muqarnas is the tiered cluster of small niches that fills the corner where a square room becomes a round dome. It looks improvised and is not. A scroll now in Topkapi, made in Iran or Central Asia around the fifteenth or sixteenth century, contains sheet after sheet of geometric drawings including muqarnas designs set out as flat plans, the view from directly below, which a mason could scale up and build from. In the same period the mathematician al-Kashi in Samarkand devoted a section of his arithmetic textbook to muqarnas, classifying the types and giving a method for measuring their surfaces so that a builder could estimate materials. The ornament was a calculation before it was a ceiling.",
+   "detail": "Topkapi Scroll and al-Kashi · 15th century",
+   "tags": [
+    "architecture",
+    "geometry",
+    "craft"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "girih-tiles-isfahan",
+   "kind": "place",
+   "category": "Geometry",
+   "title": "A 1453 Isfahan shrine carries a pattern that never repeats",
+   "story": "In 2007 Peter Lu and Paul Steinhardt published a paper in Science on the tilework of the Darb-i Imam shrine in Isfahan, finished in 1453. They showed that its patterns can be generated from a set of five decorated tiles, and that the result is close to a quasiperiodic tiling, a pattern with fivefold symmetry that never exactly repeats, of the kind Roger Penrose described in the 1970s and physicists later found in real crystals. What the paper did not claim is that the craftsmen had the modern concept. Emil Makovicky had described related patterns in a Maragha tomb in 1992, and other geometers disputed how much of the tiling is quasiperiodic. What is certain is that the geometry is on the wall.",
+   "detail": "Darb-i Imam, Isfahan · 1453",
+   "tags": [
+    "geometry",
+    "isfahan",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "mariam-al-astrulabi-aleppo",
+   "kind": "founder",
+   "category": "Instruments",
+   "title": "One sentence in one book is all we know of her",
+   "story": "An astrolabe is the sky rendered in brass. Turn its rotating grid against an engraved plate for your latitude and it will give you the time from the height of the sun, the hour of sunrise, the direction to look for a star, and the hours for prayer. More than a thousand survive from the Muslim world, and the oldest dated ones are from the tenth century. In his catalogue of books written around 987, Ibn al-Nadim lists instrument makers and names among them Mariam, daughter of al-Ijli the astrolabist, who worked at the court of Sayf al-Dawla in Aleppo. That is the whole record. No instrument of hers is known. An asteroid discovered in 1990 was later named for her.",
+   "detail": "Mariam al-Ijliya · Aleppo, 10th century",
+   "tags": [
+    "instruments",
+    "women",
+    "astronomy"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "qibla-tables-al-khalili",
+   "kind": "founder",
+   "category": "Qibla",
+   "title": "A Damascus timekeeper computed the qibla for every latitude",
+   "story": "Finding the direction of Makkah from anywhere else is a problem in spherical trigonometry, and Muslim astronomers knew it. In the fourteenth century Shams al-Din al-Khalili, the timekeeper at the Umayyad mosque in Damascus, computed a table of about 2,880 entries giving the qibla for every degree of latitude and every degree of longitude difference from Makkah. When David King checked the values against exact modern computation, almost all were correct to within a minute or two of arc. Ordinary travellers used simpler things: brass compass boxes made in Istanbul and Isfahan, with a needle, a list of cities and the angle to set for each. Early mosque qiblas vary, and surveyors are still measuring them.",
+   "detail": "Shams al-Din al-Khalili · Damascus, 14th century",
+   "tags": [
+    "qibla",
+    "astronomy",
+    "instruments"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "fez-water-clock-dar-al-magana",
+   "kind": "place",
+   "category": "Instruments",
+   "title": "Fez has a water clock nobody has managed to restart",
+   "story": "On a street in Fez, opposite the Bou Inania madrasa, is a wall with thirteen carved cedar beams jutting out of it and twelve brass bowls set below them. It is the front of a water clock built in 1357 for the Marinid sultan Abu Inan, and the building behind it is still called Dar al-Magana, the house of the clock. On the hour a weight is thought to have released a ball onto a bowl, so the hours were counted by sound. The mechanism inside is gone. Several restorations have cleaned and stabilised the facade, and the working of it remains a matter of competing reconstructions, none of them proved. Elsewhere al-Jazari's manual preserves the drawings that Fez lacks.",
+   "detail": "Dar al-Magana, Fez · 1357",
+   "tags": [
+    "instruments",
+    "morocco",
+    "time"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sign-water-every-living-thing",
+   "kind": "sign",
+   "category": "Life",
+   "title": "Made from water every living thing",
+   "story": "Surah al-Anbiya says that We made from water every living thing. What biology observes is that water is the medium the whole business runs in. A human body is around sixty percent water by mass, a jellyfish closer to ninety five, and every chemical reaction inside a cell happens in solution. When astronomers search other worlds for life, the first thing they look for is liquid water, because nobody has a working model for life without a solvent that behaves as water does. None of this needs the verse to have anticipated it. A community living in a dry valley knew perfectly well that water and life go together. The verse asks them to notice that ordinary fact and say who arranged it.",
+   "detail": "Surah al-Anbiya 21:30",
+   "tags": [
+    "water",
+    "life",
+    "creation"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 21:30"
+  },
+  {
+   "id": "sign-clouds-and-hail",
+   "kind": "sign",
+   "category": "Weather",
+   "title": "Clouds joined, then heaped, then hail out of mountains",
+   "story": "A verse in Surah al-Nur describes God driving clouds, then joining them together, then piling them into a heap, with rain coming out from the middle of it, and hail sent down from mountains in the sky. Meteorologists describe a thunderstorm in a similar order. Small cumulus cells merge, the merged cell grows vertically into a tower that can reach twelve kilometres, and hailstones form inside that tower, carried up and down through freezing layers until they are heavy enough to fall. The word in the verse for the heaped cloud, rukam, is an ordinary word for a pile. Anyone standing in Arabia in a summer storm could watch this happen. The verse is pointing at what is already visible.",
+   "detail": "Surah al-Nur 24:43",
+   "tags": [
+    "weather",
+    "creation",
+    "observation"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 24:43"
+  },
+  {
+   "id": "sign-languages-and-colours",
+   "kind": "sign",
+   "category": "People",
+   "title": "Your languages and your colours are listed among the signs",
+   "story": "Surah al-Rum puts the making of the heavens and the earth in one clause and the differences of human languages and colours in the next, and calls both of them signs. There are roughly seven thousand languages spoken now, and about forty percent of them have fewer than a thousand speakers left. On colour, geneticists find that human variation is continuous rather than banded, that most of the variation in our species is found within any one population rather than between populations, and that skin tone is governed by a small number of genes tracking ultraviolet exposure across latitudes. The verse ranks nothing. It lists difference as evidence, in the same breath as the sky.",
+   "detail": "Surah al-Rum 30:22",
+   "tags": [
+    "people",
+    "language",
+    "creation"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 30:22"
+  },
+  {
+   "id": "sign-two-seas-barrier",
+   "kind": "sign",
+   "category": "Oceans",
+   "title": "Two seas meet and a barrier lies between them",
+   "story": "Surah al-Rahman says He released the two seas, meeting, and between them a barrier they do not overrun. Where a river runs into the sea, oceanographers do find a boundary: fresh water is lighter and rides over a wedge of salt water, and the two keep separate identities for a distance, sometimes with a visible line on the surface where sediment collects. Similar density fronts exist between water masses in the open ocean. What should not be said is that the verse predicted this. These boundaries are not walls, they mix steadily by turbulence and diffusion, and the classical commentators, long before any of it was measured, read the passage as saying that sweet water and salt each keep their character.",
+   "detail": "Surah al-Rahman 55:19-20",
+   "tags": [
+    "oceans",
+    "creation",
+    "observation"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 55:19-20"
+  },
+  {
+   "id": "sign-honey-healing",
+   "kind": "sign",
+   "category": "Medicine",
+   "title": "A drink of varying colours in which there is healing",
+   "story": "Surah al-Nahl describes the bee taking from every fruit, and a drink of varying colours coming out of it, in which there is healing for people. Honey does vary in colour, from near white to almost black, according to the flowers worked. It is also genuinely hostile to bacteria: it is supersaturated with sugar so it pulls water out of cells, it is acidic, and bee enzymes make small amounts of hydrogen peroxide in it. Sterilised medical grade honey is licensed as a wound dressing and used in hospitals, with the best evidence in partial thickness burns. It is not a cure for everything, and it should never be given to a baby under one year, because of the risk of infant botulism.",
+   "detail": "Surah al-Nahl 16:69",
+   "tags": [
+    "medicine",
+    "bees",
+    "creation"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 16:69"
+  },
+  {
+   "id": "sign-guided-by-the-stars",
+   "kind": "sign",
+   "category": "Navigation",
+   "title": "By the stars they are guided",
+   "story": "Surah al-Nahl mentions landmarks, and adds that by the stars they are guided. This was a working technology, not a figure of speech. The altitude of the pole star above the horizon equals your latitude, so a sailor who can measure that angle knows how far north he is. Indian Ocean pilots did it with the kamal, a small wooden plate on a knotted string held at arm's length, one knot per port. Ahmad ibn Majid, a pilot from Julfar who wrote navigation manuals in the fifteenth century, set out star bearings and courses in verse so that crews could memorise them. The sextant refined the same measurement, and warships still teach it in case the satellites go dark.",
+   "detail": "Surah al-Nahl 16:16",
+   "tags": [
+    "navigation",
+    "stars",
+    "sea"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 16:16"
+  },
+  {
+   "id": "sign-expanding-heaven-honestly",
+   "kind": "sign",
+   "category": "Cosmology",
+   "title": "One word in Surah al-Dhariyat is often pushed too far",
+   "story": "The verse says the heaven We built with power, and that We are musi'un. The word comes from a root meaning breadth or capacity, and the classical commentators, al-Tabari among them, read it as We are able, or possessed of vastness. After Hubble published his measurements in 1929, translators began rendering it as We are expanding it, and it is now quoted as though the Qur'an announced cosmic expansion. The observation itself is solid: distant galaxies recede, and the further away they are the faster, which is what an expanding space looks like from inside. But hanging that on one contested word makes the credibility of scripture depend on the next revision of cosmology, which is a poor trade.",
+   "detail": "Surah al-Dhariyat 51:47",
+   "tags": [
+    "cosmology",
+    "language",
+    "honesty"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 51:47"
+  },
+  {
+   "id": "sign-mountains-as-pegs",
+   "kind": "sign",
+   "category": "Earth",
+   "title": "Mountains are called pegs, and a peg is a tent peg",
+   "story": "Surah al-Naba pairs the earth as a resting place with the mountains as awtad, pegs. The image is a tent peg, an object every listener owned and hammered into the ground each evening. It is often claimed that this predicts isostasy, the fact that a mountain range floats on a deep root of lighter crust, which under the Himalaya reaches more than seventy kilometres down. The geology is real, and it was worked out from survey measurements in India in the 1850s. The verse is not doing geology. Mountains do not stop continents moving, and peg imagery for hills is common in older Arabic poetry. Read as it stands, the verse is about a world made steady enough to live on.",
+   "detail": "Surah al-Naba 78:6-7",
+   "tags": [
+    "earth",
+    "geology",
+    "honesty"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 78:6-7"
+  },
+  {
+   "id": "sign-spider-house",
+   "kind": "sign",
+   "category": "Creatures",
+   "title": "The frailest of houses is the house of the spider",
+   "story": "Surah al-Ankabut compares taking protectors other than God to a spider taking a house, and says the frailest of houses is the spider's house. Spider silk is not frail. Weight for weight, dragline silk has a tensile strength in the range of steel, and it absorbs far more energy before breaking, which is why materials scientists have spent decades trying to make it in factories. The verse does not say the thread is weak. It says the house is, and it is: an orb web keeps out no rain, no wind and no cold, is torn by a passing bird, and is usually eaten and rebuilt by its owner within a day. The comparison is about shelter, not tensile strength.",
+   "detail": "Surah al-Ankabut 29:41",
+   "tags": [
+    "creatures",
+    "materials",
+    "honesty"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 29:41"
+  },
+  {
+   "id": "sign-iron-sent-down",
+   "kind": "sign",
+   "category": "Metals",
+   "title": "We sent down iron, and what that verb does elsewhere",
+   "story": "Surah al-Hadid says that We sent down iron, in it great strength and benefits for people. The same verb, anzala, is used in the Qur'an for cattle and for clothing, and classical commentators read it in the sense of bestowal from above rather than as a statement about where the metal came from physically. Astrophysics does say that all the iron in the earth was forged inside stars and scattered by their deaths, long before the planet gathered. Iron also arrived more directly on occasion: the dagger buried with Tutankhamun was analysed in 2016 and its nickel content shows the blade was made from a meteorite, worked centuries before anyone in Egypt could smelt iron ore.",
+   "detail": "Surah al-Hadid 57:25",
+   "tags": [
+    "metals",
+    "astronomy",
+    "honesty"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 57:25"
+  },
+  {
+   "id": "sign-crescents-are-timings",
+   "kind": "sign",
+   "category": "Moon",
+   "title": "They ask about the crescents and the answer is about time",
+   "story": "When people asked the Prophet ﷺ about the phases of the moon, Surah al-Baqarah gave an answer about function rather than astronomy: they are timings for people, and for the Hajj. The moon returns to the same phase every 29.53 days on average, which is why Islamic months run to 29 or 30 days and never to a fixed number. Whether the new crescent can actually be seen on a given evening depends on how far the moon has moved from the sun, how high it sits when the sky darkens, and how clear the air is, and astronomers have published visibility criteria for exactly this. Communities still divide over whether to sight it or to calculate it, and the calculation is not in dispute.",
+   "detail": "Surah al-Baqarah 2:189",
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "moon",
+    "calendar",
+    "hajj"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:189"
+  },
+  {
+   "id": "sign-white-thread-of-dawn",
+   "kind": "sign",
+   "category": "Fasting",
+   "title": "A companion tested the verse with two threads under his pillow",
+   "story": "Surah al-Baqarah tells those fasting to eat and drink until the white thread becomes distinct from the black thread of dawn. Bukhari and Muslim report that Adi ibn Hatim took this literally, put a white string and a black string under his pillow and looked at them in the dark until he could tell them apart, and that the Prophet ﷺ told him it meant the blackness of the night and the whiteness of the day. What he was being pointed at is astronomical twilight: the first horizontal band of light on the horizon before sunrise. Modern timetables fix it by how far the sun is below the horizon, commonly eighteen degrees, and because that figure is argued, printed times for the same city can differ by twenty minutes.",
+   "detail": "Surah al-Baqarah 2:187",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "fasting",
+    "dawn",
+    "ramadan"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:187"
+  },
+  {
+   "id": "sign-sun-radiance-moon-light",
+   "kind": "sign",
+   "category": "Astronomy",
+   "title": "The sun is called a radiance and the moon a light",
+   "story": "Surah Yunus says He made the sun a radiance, diya, and the moon a light, nur, and measured out phases for it so that people could count years and reckon time. Arabic uses two different words there, and commentators noticed and discussed the difference long ago. It is sometimes offered as proof that the Qur'an knew the moon shines by reflection before science did. That is not fair to the astronomers. Greek writers had already explained lunar phases by reflected sunlight, and al-Biruni set the geometry out with diagrams in the eleventh century, as did Ibn al-Haytham in a treatise on moonlight. The knowledge was in the world and was hard won. The verse asks that the counting of months be noticed as a gift.",
+   "detail": "Surah Yunus 10:5",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "astronomy",
+    "moon",
+    "honesty"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 10:5"
+  },
+  {
+   "id": "sign-night-wound-over-day",
+   "kind": "sign",
+   "category": "Earth",
+   "title": "Night is wound over day with the verb for a turban",
+   "story": "Surah al-Zumar says He winds the night over the day and winds the day over the night. The verb, yukawwir, comes from a root used for coiling a rope and for winding a turban round a head, and exegetes writing centuries before telescopes discussed what that shape implies. It is worth being careful about what follows. Muslim astronomers did not need the verse to tell them the earth is a ball. Al-Biruni measured its radius from a mountain in what is now Pakistan and got a figure close to the modern one, and no serious astronomer of the period held any other view. The verse gives an image of one thing wrapped over another, and the geographers went out and measured the thing.",
+   "detail": "Surah al-Zumar 39:5",
+   "tags": [
+    "earth",
+    "language",
+    "astronomy"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 39:5"
+  }
+ ]
+}

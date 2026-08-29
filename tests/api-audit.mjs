@@ -27,7 +27,10 @@ const files = fs.readdirSync(dir).filter(f => f.endsWith('.js')).sort();
 const src = {};
 for (const f of files) src[f] = fs.readFileSync(path.join(dir, f), 'utf8');
 
-const HELPERS = new Set(['_kv.js', '_models.js']);
+/* Vercel does not route a file whose name starts with an underscore, so these
+   are shared modules, not endpoints. The list is derived rather than typed out
+   so a new helper can never be audited as a route it is not. */
+const HELPERS = new Set(files.filter(f => f.startsWith('_')));
 const routes = files.filter(f => !HELPERS.has(f));
 
 console.log('auditing ' + files.length + ' files (' + routes.length + ' routes, ' + HELPERS.size + ' helpers)\n');

@@ -31,6 +31,26 @@ export default async function handler(req, res) {
   /* ?probe=lantern · the honest answer to "is the lantern actually lit?".
      It makes one real, deliberate two-word request and reports every model it
      tried, so a dark tile can never again be mistaken for a quiet day. */
+  /* ?probe=lights · what the library holds, what it would show today, and
+     every card the Lantern raised a question about. */
+  if (String((req.query && req.query.probe) || "") === "lights") {
+    const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
+    const { chooseLight, libraryInfo, doubts, hijriOf, hijriName } = await import("./_lights.js");
+    const day = String((req.query && req.query.date) || "").slice(0, 10) || new Date().toISOString().slice(0, 10);
+    /* peek: looking at the console must never consume a card from the bag */
+    const today = await chooseLight(host, day, { useLantern: false, peek: true });
+    let index = null;
+    try {
+      const r = await fetch("https://" + String(host).replace(/^https?:\/\//, "") + "/lights/index.json");
+      if (r.ok) index = await r.json();
+    } catch { }
+    const h = hijriOf(day);
+    return res.status(200).json({
+      probe: "lights", date: day, hijri: { ...h, name: hijriName(h.m) },
+      today, index, lib: libraryInfo(), doubts: await doubts(), at: new Date().toISOString()
+    });
+  }
+
   if (String((req.query && req.query.probe) || "") === "lantern") {
     const p = await probeLantern();
     return res.status(200).json({ probe: "lantern", ...p, at: new Date().toISOString() });

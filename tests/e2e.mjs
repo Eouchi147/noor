@@ -4,7 +4,8 @@ const BASE = 'http://localhost:8123';
 let failures = 0;
 const ok = (cond, name) => { console.log((cond ? '  ✓ ' : '  ✗ FAIL ') + name); if (!cond) failures++; };
 
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
+const EXE = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const browser = await chromium.launch({ executablePath: EXE, args: ['--no-sandbox'] });
 async function newPage(ctxOpts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...ctxOpts });
   const page = await ctx.newPage();

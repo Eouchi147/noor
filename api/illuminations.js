@@ -18,6 +18,7 @@
    lights of the day, in order. First to answer wins. */
 import net from "node:net";
 import { isFree, allowPaid, liveChain } from "./_models.js";
+import { chooseLight, libraryInfo, hijriOf } from "./_lights.js";
 import tls from "node:tls";
 
 /* ---------- the store, whoever provides it ----------
@@ -344,16 +345,26 @@ async function lantern(system, user, maxTokens) {
 const BASE_RULES = "Accuracy is sacred: well-established facts and mainstream Sunni understanding only; never invent dates, quotes, hadith or verses; no rulings, no fatwas. Warm, vivid, plain language. Never use the em dash character; use commas or · instead. Reply with JSON only.";
 
 /* ---------- kinds ---------- */
-async function kindLight(today, want, lang) {
-  const p = await lantern(
-    ["You write one small daily illumination for NOOR Codex of Light, a free Islamic library.",
-     'JSON exactly: {"category":"...","title":"...","story":"...","detail":"..."}',
-     "category: one or two words. title: striking, truthful, under 60 characters.",
-     "story: 55 to 90 words. Theme for this day: " + THEMES[dayIndexOf(want) % THEMES.length] + ".",
-     "detail: one short line: who / where / when.", BASE_RULES + inLanguage(lang || "en")].join("\n"),
-    "The light for " + want + ". Choose the single best-documented fact fitting the theme.", 420);
-  if (!p.title || !p.story) throw 0;
-  return { date: want, lang: lang || "en", source: "lantern", category: clean(p.category).slice(0, 24) || "History", title: clean(p.title).slice(0, 90), story: clean(p.story).slice(0, 700), detail: clean(p.detail).slice(0, 90) };
+/* Today's Light no longer comes from the AI.
+   ---------------------------------------------------------------------------
+   It comes from a library of hundreds of written, validated cards, and the
+   Lantern is moved to the job it is actually good at: choosing which one fits
+   today and checking it before it is shown. See api/_lights.js for why.
+
+   The old behaviour, an AI writing a historical claim fresh every morning with
+   nobody checking it, is exactly the thing this site is not allowed to do. */
+async function kindLight(today, want, lang, host) {
+  const picked = await chooseLight(host, want, { useLantern: true });
+  if (picked) {
+    return { date: want, lang: lang || "en", source: picked.source,
+             category: clean(picked.category).slice(0, 26),
+             title: clean(picked.title).slice(0, 96),
+             story: clean(picked.story).slice(0, 1200),
+             detail: clean(picked.detail).slice(0, 64),
+             id: picked.id, why: picked.why, lvl: picked.lvl, src: picked.src,
+             hijri: picked.hijri };
+  }
+  return lightFallback(want, lang);
 }
 function lightFallback(want, lang) {
   const t = (lang && TREASURY_I18N[lang]) || TREASURY;
@@ -460,7 +471,8 @@ export default async function handler(req, res) {
       } catch {}
     }
     try {
-      const lit = await kindLight(today, want, lang);
+      const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
+      const lit = await kindLight(today, want, lang, host);
       if (kvReady()) { kv([["SET", kk, JSON.stringify(lit)], ["EXPIRE", kk, "2764800"]]).catch(() => {}); }
       return res.status(200).json(remember(ck, lit));
     }

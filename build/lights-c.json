@@ -1,0 +1,1042 @@
+{
+ "tranche": "c",
+ "lights": [
+  {
+   "id": "quran-collected-after-yamama",
+   "kind": "book",
+   "category": "Compilation",
+   "title": "The Qur'an was gathered into one book after a battle",
+   "story": "After the battle of Yamama in the year 12 of the Hijra, in which a large number of those who had memorised the Qur'an were killed, Umar ibn al-Khattab went to the caliph Abu Bakr and pressed him to have the text collected in one place. Abu Bakr sent for Zayd ibn Thabit, who had written down revelation for the Prophet ﷺ. Zayd's own account, preserved by al-Bukhari, says he found the task heavier than being asked to move a mountain, and that he gathered the Qur'an from palm stalks, thin white stones and the chests of men who had learned it. The sheets he produced stayed with Abu Bakr, then Umar, then Umar's daughter Hafsa.",
+   "detail": "Zayd ibn Thabit · Madinah, c. 633 CE",
+   "tags": [
+    "quran",
+    "compilation",
+    "companions"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari 4986"
+  },
+  {
+   "id": "uthman-master-copies",
+   "kind": "book",
+   "category": "Compilation",
+   "title": "Uthman sent a master copy to each garrison city",
+   "story": "Hudhayfa ibn al-Yaman came back from campaigning in Armenia and Azerbaijan alarmed at how differently the soldiers from Syria and Iraq were reciting. He went straight to the caliph Uthman and asked him to save the community before it split over its book the way earlier communities had split over theirs. Uthman borrowed the sheets held by Hafsa, had copies made by a small committee that again included Zayd ibn Thabit, and sent one to each of the main centres with a reciter to teach from it. Other manuscripts in circulation were withdrawn. Every printed Qur'an descends from that decision, taken by a man who had watched an army argue on the road home.",
+   "detail": "Uthman ibn Affan · Madinah, c. 650 CE",
+   "tags": [
+    "quran",
+    "compilation",
+    "caliphate"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari 4987"
+  },
+  {
+   "id": "quran-guards-itself",
+   "kind": "book",
+   "category": "Preservation",
+   "title": "The book makes a claim about its own survival",
+   "story": "In Surah al-Hijr the Qur'an calls itself al-Dhikr, the Reminder, and says that it was sent down and that its keeping is undertaken by the One who sent it. The sentence is short and it is not a claim about paper. Muslims read it as covering the whole apparatus that grew around the text: children who learn it by heart before they can parse it, chains of teachers who will not certify a student until they have heard every letter, the standard copies, the counting of verses, the arguments over a single vowel that were written down rather than suppressed. The verse comes early, in a Makkan chapter, before any of that existed.",
+   "detail": "Surah al-Hijr, a Makkan chapter",
+   "tags": [
+    "quran",
+    "preservation",
+    "memory"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 15:9"
+  },
+  {
+   "id": "birmingham-leaves-paris-codex",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "Birmingham's two leaves belong to a book kept in Paris",
+   "story": "The two parchment leaves in Birmingham that were radiocarbon dated in 2015 to between 568 and 645 CE are not a stray find. Alba Fedeli identified them during doctoral work as having been bound by mistake into a different manuscript, and François Déroche of the Collège de France confirmed that they belong with sixteen leaves in the Bibliothèque nationale de France in Paris, catalogued as Arabe 328(c). One codex, eighteen surviving leaves, split between two European cities and reunited on paper rather than in a case. The Birmingham pages carry part of Surah al-Kahf, the closing verses of Surah Maryam, and the opening forty verses of Surah Ta-Ha.",
+   "detail": "Mingana 1572a and BnF Arabe 328(c)",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "research"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sanaa-attic-1972",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "A wall in Sana'a gave up a paper hoard in 1972",
+   "story": "In 1972 workers repairing the roof of the Great Mosque of Sana'a in Yemen broke into the space between the ceiling and the roof and found it packed with old parchment and paper. The material was swept into sacks and left on a staircase. A conservation project funded by the German foreign ministry ran from 1980 to 1989, with the conservator Ursula Dreibholz sorting and flattening fragments, and it recovered tens of thousands of pieces from what had served as the mosque's store for worn out copies of scripture, which are set aside rather than destroyed. Among them are some of the earliest Qur'anic manuscripts known anywhere, kept safe by being walled up and forgotten.",
+   "detail": "Great Mosque of Sana'a, Yemen · 1972",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "yemen"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sanaa-lower-text",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "One Sana'a manuscript was written over an older text",
+   "story": "One of the Sana'a manuscripts is a palimpsest: the parchment was scraped clean and reused, and ultraviolet imaging brings back the erased lower layer. That lower text is Qur'anic, but it puts the chapters in a different order and differs from the standard text in wording at many points, mostly in ways that do not change the sense. Scholars read it as a companion's personal codex from before Uthman standardised copies, of the kind the early sources describe and name. What follows from that is argued over, from confirmation of the sources' own account to much wider claims. A leaf from the same manuscript was radiocarbon dated to between 578 and 669 CE with 95 per cent probability.",
+   "detail": "The Sana'a palimpsest, Yemen",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "scholarship"
+   ],
+   "lvl": "debated",
+   "src": "Scholars differ over how to read the lower text, from a companion's codex consistent with the early sources to broader conclusions about the text's history."
+  },
+  {
+   "id": "tubingen-fragment",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "A Tübingen fragment holds a quarter of the Qur'an",
+   "story": "The university library at Tübingen holds a Qur'anic manuscript catalogued as Ma VI 165, which reached Germany through the nineteenth century consul and collector Johann Gottfried Wetzstein. In 2014 the library published radiocarbon results for it: 649 to 675 CE with 95.4 per cent probability, which places the parchment within about forty years of the Prophet's death. The fragment is not a scrap. It runs continuously from Surah al-Isra to Surah Ya-Sin, roughly a quarter of the whole text, in an early script with sparse dotting. Radiocarbon dates the animal skin and not the ink, so it gives an earliest possible date rather than an exact one, and that caution belongs on every result of the kind.",
+   "detail": "Universitätsbibliothek Tübingen, Ma VI 165",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "topkapi-uthman-attribution",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "The Istanbul codex called Uthman's was written later",
+   "story": "Topkapi Palace in Istanbul holds a very large early Qur'an, missing only two pages of the entire text, which tradition names as one of the copies Uthman had made. The Turkish scholar Tayyar Altikulac produced a full facsimile and study of it, and later work has gone further. The vowel marking and the dotting it carries were developed after Uthman's lifetime, and the letter forms point to the eighth century rather than the seventh. Manuscripts in Istanbul, Cairo, Tashkent and Mashhad all carry the same attribution and none of them survives that test. They are genuinely early and genuinely important. What is disputed is the label, not the age.",
+   "detail": "Topkapi Palace Museum, Istanbul",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "istanbul"
+   ],
+   "lvl": "debated",
+   "src": "Scholars differ: Tayyar Altikulac dates the manuscript between the late first and early second century AH, while more recent study rejects the attribution to Uthman outright."
+  },
+  {
+   "id": "samarkand-codex-travels",
+   "kind": "book",
+   "category": "Manuscripts",
+   "title": "A Qur'an went from Samarkand to Russia and back",
+   "story": "The Samarkand codex, a large Kufic Qur'an long said to be Uthman's own copy, was kept at a shrine in Samarkand and was believed to have been brought there by Timur. After the Russian capture of Samarkand in 1868 a Russian general acquired it and sent it to the Imperial Library in Saint Petersburg. Following the revolution it was handed back to Muslims in Ufa, and after petitions from Turkestan it reached Tashkent in 1924, where about a third of it is kept at the Hast Imam library. Leaves from the same manuscript are now in New York, Toronto, Doha, Paris and Gotha. Radiocarbon and letter forms both place it well after Uthman's death.",
+   "detail": "Hast Imam library, Tashkent · 1868 to 1924",
+   "tags": [
+    "manuscripts",
+    "quran",
+    "central-asia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cairo-1924-edition",
+   "kind": "book",
+   "category": "Printing",
+   "title": "The Qur'an most people read was typeset over seventeen years",
+   "story": "In 1907 the Egyptian government set a committee of scholars from al-Azhar to work on a reliable printed Qur'an for state schools, where the copies in use were full of errors. The senior reciter Muhammad ibn Ali al-Husayni al-Haddad was among the leading figures. The edition appeared in July 1924 from the government press in Cairo. It follows the reading of Hafs from Asim, uses the Kufan way of dividing and numbering the verses, and fixes the pause marks and the spelling. It was not a new text. It was a decision about which inherited conventions to print, and almost every Qur'an published since, by Sunni and Shia publishers alike, follows it.",
+   "detail": "Cairo · begun 1907, published July 1924",
+   "tags": [
+    "quran",
+    "printing",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "paganini-venice-quran",
+   "kind": "book",
+   "category": "Printing",
+   "title": "The first printed Arabic Qur'an survives in a single copy",
+   "story": "Paganino and Alessandro Paganini printed an Arabic Qur'an in Venice between August 1537 and August 1538, the first anywhere produced with movable type. It was a commercial venture, apparently aimed at markets in the Ottoman lands, and it failed. The typesetting was full of errors, some of them mangling the Arabic beyond use, which made it worthless to any Muslim buyer. For centuries it was thought every copy had been destroyed, and a story circulated that the pope had ordered them burned. In 1987 the scholar Angela Nuovo found a surviving copy in the library of the Franciscan friars on the island of San Michele in Venice, where it had sat for four hundred years.",
+   "detail": "Venice · 1537 to 1538, rediscovered 1987",
+   "tags": [
+    "quran",
+    "printing",
+    "venice"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "shatibiyya-poem",
+   "kind": "book",
+   "category": "Readings",
+   "title": "A blind Andalusian put the seven readings into verse",
+   "story": "Qasim ibn Firruh al-Shatibi was born in Xativa in eastern al-Andalus in 538 of the Hijra, which is 1144 CE, and the biographers describe him as blind. He settled in Egypt and died there in 1194. His contribution was a poem, Hirz al-Amani, known to every student as the Shatibiyya, which takes the technical detail of the seven canonical readings and encodes it in over a thousand lines of rhymed verse, using letter symbols to stand for the readers so that the metre holds. Students still memorise it before they are permitted to teach the readings. A body of exact technical information was made portable by being turned into something a person can sing.",
+   "detail": "Al-Shatibi · Xativa 1144 to Egypt 1194",
+   "tags": [
+    "quran",
+    "readings",
+    "andalus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "surahs-ordered-by-length",
+   "kind": "book",
+   "category": "Structure",
+   "title": "The first words revealed sit at chapter ninety six",
+   "story": "The Qur'an is not arranged in the order it came down. Its 114 chapters run roughly from longest to shortest, with al-Baqarah at 286 verses near the front and the three verse al-Kawthar near the back. The passage identified as the first revelation, five verses opening with the command to read, sits at chapter 96, close to the end of the book. Some of the last material revealed is found in the middle. The effect is that a reader meets the material by theme rather than by date, and anyone who wants the historical sequence has to reconstruct it, which is what the science of the occasions of revelation was built to do.",
+   "detail": "114 chapters, ordered by length",
+   "tags": [
+    "quran",
+    "structure",
+    "revelation"
+   ],
+   "lvl": "debated",
+   "src": "Scholars differ over whether the order of the chapters was fixed by the Prophet ﷺ or settled by the companions at the compilation; the order of verses within each chapter is not disputed."
+  },
+  {
+   "id": "fatiha-seven-oft-repeated",
+   "kind": "book",
+   "category": "Structure",
+   "title": "The Qur'an names one of its own chapters in passing",
+   "story": "In Surah al-Hijr, a Makkan chapter, the Prophet ﷺ is told that he has been given seven of the oft repeated, and the great Qur'an. Commentators from the earliest period read the seven as the seven verses of al-Fatiha, the short opening chapter recited in every unit of every prayer. The phrase gives that chapter one of its many names, al-Sab al-Mathani. It is also called Umm al-Kitab, the mother of the book, and al-Shifa, the cure. Anyone praying the five obligatory prayers recites it seventeen times a day. It is spoken from the reader upward, praise and then request, which is unusual in a book that mostly speaks downward.",
+   "detail": "Surah al-Fatiha, seven verses",
+   "tags": [
+    "quran",
+    "structure",
+    "prayer"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 15:87"
+  },
+  {
+   "id": "longest-verse-is-a-contract",
+   "kind": "book",
+   "category": "Structure",
+   "title": "The longest verse in the Qur'an is about debt",
+   "story": "Verse 282 of Surah al-Baqarah is the longest single verse in the Qur'an, longer than most of the short chapters. Its subject is not prayer or paradise. It is a commercial instruction: when you contract a debt for a fixed term, write it down, let a scribe write it justly, let the one who owes dictate, bring witnesses, and do not think it beneath you to write it down whether the sum is small or large. The verse anticipates objections, allows for a debtor who cannot dictate, and permits a pledge instead of a written record when travelling. The most space given to any one subject in a single verse goes to keeping an accurate record of what one person owes another.",
+   "detail": "Surah al-Baqarah, verse 282",
+   "tags": [
+    "quran",
+    "law",
+    "structure"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:282"
+  },
+  {
+   "id": "verse-counts-differ",
+   "kind": "book",
+   "category": "Structure",
+   "title": "Different cities counted the verses differently",
+   "story": "Printed Qur'ans following the Cairo edition give 6,236 verses. Other totals circulate, and they come from old regional traditions of verse division associated with Kufa, Basra, Madinah, Makkah and Damascus, which differ from one another by a few dozen. The difference is never about the words. It is about where one verse stops and the next begins: whether a phrase closes one verse or opens the next, and whether the opening formula counts as a verse of the chapter. Reciters were trained in one system and transmitted it. Anyone comparing two translations that give different numbers for the same sentence is looking at the tail of an argument between early schools of recitation.",
+   "detail": "Kufan, Basran, Madinan, Makkan, Syrian",
+   "tags": [
+    "quran",
+    "structure",
+    "readings"
+   ],
+   "lvl": "debated",
+   "src": "The counting traditions differ, giving totals from about 6,200 to 6,236; the Cairo edition follows the Kufan count of 6,236, and none of the systems differs over a word."
+  },
+  {
+   "id": "ring-composition",
+   "kind": "book",
+   "category": "Structure",
+   "title": "Some chapters are built as a ring around a centre",
+   "story": "Hamiduddin Farahi, an Indian scholar who died in 1930, argued that each chapter of the Qur'an has a single organising theme and a deliberate shape, and his student Amin Ahsan Islahi worked the idea through the whole book in an Urdu commentary. Later scholars, among them Michel Cuypers on Surah al-Ma'ida and Raymond Farrin on al-Baqarah, have described the pattern as ring composition: sections mirror each other outward from a middle, so that the first answers the last and the pivot sits at the centre. The approach is one reading among several and is contested. What it does is treat the jumps between subjects as a shape to be found rather than a defect to be explained.",
+   "detail": "Farahi, Islahi, Cuypers, Farrin",
+   "tags": [
+    "quran",
+    "structure",
+    "scholarship"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "surah-names-one-word",
+   "kind": "book",
+   "category": "Names",
+   "title": "Most chapter names come from one word, not the theme",
+   "story": "Surah al-Baqarah is called the Cow after an episode of seven verses in a chapter of 286, in which Musa tells his people to sacrifice a cow and they ask a series of questions to avoid doing it. Surah al-Nahl is the Bee, from two verses about where the bee is taught to build. Surah al-Naml is the Ant, from a single ant who warns her colony to get out of Sulayman's way. Surah al-Ankabut is the Spider, from one image of a fragile house. The names work like handles. They pick a word that appears nowhere nearby, so anyone can find the chapter. They are not summaries, and reading them as summaries misleads.",
+   "detail": "Chapter names taken from a rare word",
+   "tags": [
+    "quran",
+    "names",
+    "structure"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:67-73, 16:68-69, 27:18, 29:41"
+  },
+  {
+   "id": "surah-maryam-only-woman",
+   "kind": "book",
+   "category": "Names",
+   "title": "Only one woman is named in the Qur'an",
+   "story": "Chapter 19 is called Maryam, and Mary is the only woman in the Qur'an referred to by her own name. Every other woman appears by relation: the wife of Imran, the wife of Fir'awn, the queen who came to Sulayman, the mothers and daughters and wives of prophets. Maryam is named directly, and the chapter carrying her name opens with the birth of Yahya and then gives her the longest continuous account of any woman in the book, including her withdrawal to a distant place, the palm tree, and her return to her people carrying the child. She is also the one person told she has been chosen above the women of the worlds.",
+   "detail": "Surah Maryam, chapter 19",
+   "tags": [
+    "quran",
+    "women",
+    "names"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 19:16, 3:42"
+  },
+  {
+   "id": "ibn-al-bawwab-dublin",
+   "kind": "book",
+   "category": "Calligraphy",
+   "title": "One Qur'an in Ibn al-Bawwab's hand survives, in Dublin",
+   "story": "Ibn al-Bawwab worked in Baghdad around the year 1000 and took the proportional system of Ibn Muqla and made it supple. Contemporaries said he was a doorkeeper's son who learned to decorate rooms, then to write, and that he could match another calligrapher's hand well enough to replace a missing volume without anyone noticing. Of everything he wrote, one complete Qur'an survives carrying his name, copied in Baghdad in the year 391 of the Hijra, which is 1000 to 1001 CE. It is the earliest surviving Qur'an in naskh, the cursive book hand that took over from angular Kufic for scripture. It has been in the Chester Beatty Library in Dublin since the collector acquired it.",
+   "detail": "Chester Beatty Library, Dublin · 391 AH",
+   "tags": [
+    "calligraphy",
+    "quran",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "seven-ahruf-report",
+   "kind": "science",
+   "category": "Readings",
+   "title": "Umar tried to stop a man reciting and was corrected",
+   "story": "Umar ibn al-Khattab heard Hisham ibn Hakim reciting Surah al-Furqan in a way he had not been taught. He waited for the prayer to finish, took him by the cloak and marched him to the Prophet ﷺ. Both men recited. Both were told they were right. The Prophet ﷺ then said the Qur'an was sent down in seven ahruf and they should recite whichever was easier. What an harf is has been argued for twelve centuries: dialects, wordings, a category of permitted variation, something else again. Al-Suyuti collected dozens of opinions on it. The report stands in the strongest collections, and its plain effect was to license difference in a community newly unified around a book.",
+   "detail": "Umar and Hisham ibn Hakim, Madinah",
+   "tags": [
+    "quran",
+    "readings",
+    "companions"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari 4992"
+  },
+  {
+   "id": "ibn-mujahid-seven-readings",
+   "kind": "science",
+   "category": "Readings",
+   "title": "A Baghdad scholar chose seven readings out of many",
+   "story": "Around the year 930 in Baghdad, Ibn Mujahid wrote Kitab al-Sab'a, the Book of the Seven, in which he selected seven reciters whose readings he judged both soundly transmitted and widely followed, and set out their differences systematically. He took three from Kufa and one each from Makkah, Madinah, Basra and Damascus, so the geography of the early community was represented. His seven were not the only readings in use and he never claimed they were. The number stuck anyway, partly because it echoed the report about seven ahruf, and later scholars had to keep explaining that the two sevens are not the same thing. Ibn Mujahid died in 936.",
+   "detail": "Ibn Mujahid · Baghdad, died 936 CE",
+   "tags": [
+    "quran",
+    "readings",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "hafs-and-warsh-today",
+   "kind": "science",
+   "category": "Readings",
+   "title": "The Qur'an in Morocco is recited differently from Egypt",
+   "story": "Each canonical reading is transmitted through named students, usually two of them, so ten readings arrive as twenty transmissions. The one most of the world reads is Hafs from Asim, both men of Kufa, which the Cairo edition of 1924 printed and which spread with it. In Morocco, Algeria, Mauritania and much of West Africa the reading is Warsh from Nafi of Madinah, and a printed Warsh Qur'an looks noticeably different on the page, with different vowel signs and spellings. Parts of Libya read Qalun from the same Nafi. Sudan and the Horn read al-Duri from Abu Amr. The same text, in more than one transmitted form, on shelves a few hours' flight apart.",
+   "detail": "Hafs, Warsh, Qalun and al-Duri",
+   "tags": [
+    "quran",
+    "readings",
+    "geography"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-jazari-ten-readings",
+   "kind": "science",
+   "category": "Readings",
+   "title": "One man's book settled the readings at ten",
+   "story": "Ibn al-Jazari, born in Damascus in 1350 and dead in Shiraz in 1429, spent his life on the readings of the Qur'an. He argued that three further readings met the same standards as Ibn Mujahid's seven, and his book al-Nashr fi'l-Qira'at al-Ashr fixed the number at ten, where it has stayed. He set out three tests a reading must pass: it must fit the consonantal skeleton of the Uthmanic copies, it must be defensible in Arabic, and its chain of transmission must be sound. He also compiled Ghayat al-Nihaya, a biographical dictionary of thousands of reciters listed generation by generation, so that the chains could be checked rather than asserted.",
+   "detail": "Ibn al-Jazari · 1350 to 1429 CE",
+   "tags": [
+    "quran",
+    "readings",
+    "damascus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "tajwid-and-tartil",
+   "kind": "science",
+   "category": "Recitation",
+   "title": "The command to recite slowly created a whole discipline",
+   "story": "In an early Makkan chapter addressed to the Prophet ﷺ standing at night, the instruction is to recite the Qur'an in tartil, measured and unhurried. Tajwid, the science that grew from that word, comes from a root meaning to make something well. It is not about having a fine voice. It is a precise phonetic system: which letters are held and for how many counts, where the nasal sound called ghunna is sustained, which consonants merge into the next, which are hidden, which are formed at the back of the tongue against the soft palate. It is taught by ear and corrected by ear, and it has held the pronunciation of a seventh century text steady across languages that contain none of those sounds.",
+   "detail": "Surah al-Muzzammil, verse 4",
+   "tags": [
+    "quran",
+    "recitation",
+    "tajwid"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 73:4"
+  },
+  {
+   "id": "makharij-al-huruf",
+   "kind": "science",
+   "category": "Phonetics",
+   "title": "Arabic sounds were mapped by where they are made",
+   "story": "Reciters learn the makharij, the exact points in the mouth and throat where each Arabic consonant is formed, and the sifat, the qualities each sound carries: whether it is voiced, whether air escapes around it, whether the tongue rises behind it. A student is asked to hold a letter and told which surface to touch. The system was worked out by early grammarians and reciters together, and it is the same analysis that let al-Khalil ibn Ahmad order the first Arabic dictionary by the throat rather than the alphabet. Scholars have counted the points differently, and the count used in teaching recitation is seventeen.",
+   "detail": "Makharij and sifat in tajwid",
+   "tags": [
+    "arabic",
+    "recitation",
+    "phonetics"
+   ],
+   "lvl": "debated",
+   "src": "Scholars count the points of articulation at seventeen, sixteen or fourteen depending on how some are grouped; the reciters follow the count of seventeen."
+  },
+  {
+   "id": "sajawandi-pause-marks",
+   "kind": "science",
+   "category": "Recitation",
+   "title": "The small letters above the line tell you where to stop",
+   "story": "Open a printed Qur'an and small letters float above the text: a mim, a jim, a lam with an alif, a cluster of three dots that appears twice. They are not part of the revealed text. They are pause marks, worked out so that a reciter taking a breath at the end of a phrase does not break the sense, and the system in widest use is credited to Muhammad ibn Tayfur al-Sajawandi, who died in the twelfth century. There is a compulsory stop, a permitted stop, a place where stopping is forbidden, and a pair where you may stop at one but not at both. A reader who ignores them can turn a clause into a sentence that says something else.",
+   "detail": "Al-Sajawandi · died c. 1165 CE",
+   "tags": [
+    "quran",
+    "recitation",
+    "notation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ijaza-and-the-chain",
+   "kind": "science",
+   "category": "Chains",
+   "title": "A reciter's licence lists every teacher back to the source",
+   "story": "To be certified in recitation a student sits with a teacher and recites the entire Qur'an aloud, letter by letter, and is corrected. At the end the teacher issues an ijaza, a licence, which names the student, names the teacher, then names the teacher's teacher, and continues back through the generations to the Prophet ﷺ. The document is a list of people. Nothing in it rests on a manuscript. The same instrument is used in hadith, and it is why Muslim scholarship produced such large biographical dictionaries: if a chain is a claim, every name in it has to be a person whose dates, teachers and reliability can be checked by somebody else.",
+   "detail": "Ijaza and sanad in Qur'anic recitation",
+   "tags": [
+    "quran",
+    "chains",
+    "teaching"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "rasm-uthmani-spelling",
+   "kind": "science",
+   "category": "Orthography",
+   "title": "Printed Qur'ans keep a spelling a thousand years old",
+   "story": "The consonantal skeleton of the Uthmanic copies is preserved on purpose, even where it no longer matches how Arabic is written. The word salah carries a waw where modern spelling uses an alif. Some words carry a letter nobody pronounces, others drop one that is pronounced. Copyists were instructed not to modernise, and printed editions follow the same rule, adding vowel signs and dots on top of an unchanged skeleton rather than tidying it up. The result is that a page printed in Cairo last year and a seventh century parchment agree letter for letter in their consonants, which is what makes comparing them possible at all.",
+   "detail": "Rasm Uthmani, the consonantal skeleton",
+   "tags": [
+    "quran",
+    "manuscripts",
+    "orthography"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "dots-and-vowels-added",
+   "kind": "science",
+   "category": "Script",
+   "title": "Arabic got its dots and vowels after the Qur'an",
+   "story": "The earliest Qur'anic manuscripts have almost no dots and no vowel marks. Arabic script distinguishes several consonants only by dots above or below an identical shape, and the short vowels are not written at all, so an unpointed text is a memory aid for somebody who already knows it. The sources credit Abu al-Aswad al-Du'ali, who died around 688, with introducing coloured dots for the vowels, and reciters working under the governor al-Hajjaj with systematising the consonant dots. Al-Khalil ibn Ahmad later replaced the vowel dots with the small shapes still used. Who did what is reported differently in different sources. The order is not in doubt: recitation first, notation built to serve it.",
+   "detail": "Basra and Kufa · late seventh century",
+   "tags": [
+    "arabic",
+    "script",
+    "quran"
+   ],
+   "lvl": "debated",
+   "src": "The early sources attribute the vowel dots to Abu al-Aswad al-Du'ali and the consonant dots to reciters under al-Hajjaj, but they differ over the names and the sequence."
+  },
+  {
+   "id": "ibn-muqla-proportioned-hand",
+   "kind": "science",
+   "category": "Calligraphy",
+   "title": "He measured letters in dots and lost his writing hand",
+   "story": "Ibn Muqla was born in Baghdad around 885 and served three times as vizier to the Abbasid caliphs. He is credited with putting Arabic calligraphy on a geometric footing: the rhombic dot made by pressing the reed pen once becomes the unit of measure, the alif is a set number of dots tall, and a circle whose diameter is that alif governs the proportions of every other letter. Scripts written this way were called al-khatt al-mansub, the proportioned hand. Politics ended badly for him. He was imprisoned, his right hand was cut off, his tongue was cut out afterwards, and he died in prison in July 940. His system was still being taught five hundred years later.",
+   "detail": "Ibn Muqla · Baghdad, c. 885 to 940 CE",
+   "tags": [
+    "calligraphy",
+    "baghdad",
+    "script"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "yaqut-oblique-nib",
+   "kind": "science",
+   "category": "Calligraphy",
+   "title": "He cut the pen at an angle and changed the letters",
+   "story": "Yaqut al-Musta'simi was taken as a boy, probably from Amasya in Anatolia, and became secretary to al-Musta'sim, the last Abbasid caliph in Baghdad. When the Mongols took the city in 1258 he is said to have sheltered in a minaret and gone on practising. His technical contribution was small and consequential: he trimmed the nib of the reed pen to an oblique angle instead of a straight one, which varies the thickness of every stroke as the hand turns and gives the letters their tapering weight. He reworked the six standard scripts on that basis, and for two centuries afterwards calligraphers identified themselves by which of his students they descended from.",
+   "detail": "Yaqut al-Musta'simi · died 1298 CE",
+   "tags": [
+    "calligraphy",
+    "baghdad",
+    "script"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "shaykh-hamdullah-istanbul",
+   "kind": "science",
+   "category": "Calligraphy",
+   "title": "An Ottoman calligrapher copied forty seven Qur'ans",
+   "story": "Shaykh Hamdullah was born in Amasya in 1436 and knew the future sultan Bayezid II when they were both young men there. When Bayezid took the throne he brought him to Istanbul. In 1485 the sultan set a group of Yaqut al-Musta'simi's writings in front of him and asked for something better. Hamdullah went away, worked, and came back with a reformed naskh that became the Ottoman standard and stayed so into the twentieth century. He is said to have copied forty seven complete Qur'ans. An Ottoman saying held that the Qur'an was revealed in the Hijaz, recited in Egypt and written in Istanbul, and it was Hamdullah's line of students that earned the third clause.",
+   "detail": "Shaykh Hamdullah · Amasya 1436 to 1520",
+   "tags": [
+    "calligraphy",
+    "ottoman",
+    "istanbul"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "jibril-ramadan-review",
+   "kind": "sign",
+   "category": "Ramadan",
+   "title": "Ramadan was when the text was checked against its source",
+   "story": "Ibn Abbas said the Prophet ﷺ was the most generous of people, and most generous of all in Ramadan, when Jibril used to meet him every night of the month and go through the Qur'an with him. The report sits at the very front of Sahih al-Bukhari, as the sixth hadith in the collection. It is the origin of the tarawih habit of reciting a portion each night until the whole book is finished, and of the practice called mudarasa, in which two people take turns reciting to one another and correcting. The annual review is why Ramadan is a month of recitation and not only a month of hunger.",
+   "detail": "Ibn Abbas, on the Prophet ﷺ in Ramadan",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "quran",
+    "ramadan",
+    "memory"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari 6"
+  },
+  {
+   "id": "quran-made-easy-four-times",
+   "kind": "sign",
+   "category": "Memory",
+   "title": "One sentence about memory is repeated four times over",
+   "story": "Surah al-Qamar, the fifty fourth chapter, tells four stories of communities that rejected the messengers sent to them: the people of Nuh, of Hud, of Salih, and of Lut. After each one the same sentence lands. We have made the Qur'an easy to remember, so is there any who will take heed. Four times, unaltered, at verses 17, 22, 32 and 40. The refrain works structurally, closing each panel, and it makes a claim that can be tested. Children who speak no Arabic memorise the entire book, and the number of living people who have done so runs into the millions. Very few texts of that length are carried whole in ordinary memory.",
+   "detail": "Surah al-Qamar, four times",
+   "tags": [
+    "quran",
+    "memory",
+    "structure"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 54:17, 54:22, 54:32, 54:40"
+  },
+  {
+   "id": "best-who-learn-and-teach",
+   "kind": "sign",
+   "category": "Teaching",
+   "title": "The measure given was learning it and passing it on",
+   "story": "Uthman ibn Affan reported the Prophet ﷺ saying that the best of you are those who learn the Qur'an and teach it. The sentence is short and its shape is the point: not the one who learns it, and not the one who teaches it, but the one who does both. It became the charter for an institution found in every Muslim town, the kuttab or maktab where children learn to recite before they learn to read. Teachers in that system are often unpaid or barely paid, and the chain of transmission runs through them. A body of knowledge that could have stayed with specialists was made everybody's business by a sentence with two verbs in it.",
+   "detail": "Reported by Uthman ibn Affan",
+   "tags": [
+    "quran",
+    "teaching",
+    "memory"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih al-Bukhari 5027"
+  },
+  {
+   "id": "basmala-appears-114-times",
+   "kind": "sign",
+   "category": "Structure",
+   "title": "The opening formula appears exactly 114 times",
+   "story": "Every chapter of the Qur'an opens with the basmala, in the name of Allah, the Most Merciful, the Most Compassionate, except chapter 9, Surah al-Tawba, which begins without it. So the formula heads 113 chapters. It occurs once more inside the text, in Surah al-Naml, where the queen of Saba reads out the letter that has reached her and quotes its opening: it is from Sulayman, and it is in the name of Allah, the Most Merciful, the Most Compassionate. That brings the total in the book to 114, the number of chapters. The one occurrence that is not a heading is a quotation from a letter between two heads of state.",
+   "detail": "Surah al-Naml, verse 30",
+   "tags": [
+    "quran",
+    "structure",
+    "mercy"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 27:30"
+  },
+  {
+   "id": "muqattaat-opening-letters",
+   "kind": "sign",
+   "category": "Letters",
+   "title": "Twenty nine chapters open with letters nobody can explain",
+   "story": "Alif Lam Mim. Ha Mim. Kaf Ha Ya Ayn Sad. Nun. Twenty nine chapters of the Qur'an begin with strings of disconnected Arabic letters, recited by name rather than sounded as a word. Fourteen of the twenty eight letters are used, in fourteen different combinations, and Alif Lam Mim and Ha Mim each appear six times. The classical commentators offer many readings: names of God, abbreviations, a challenge pointing out that the book is built from the same letters its opponents use, a signal that recitation is beginning. A great many early scholars declined to explain them and said their meaning rests with God. It is the one part of the text that has never been decoded.",
+   "detail": "Al-huruf al-muqatta'a, 29 chapters",
+   "tags": [
+    "quran",
+    "letters",
+    "structure"
+   ],
+   "lvl": "debated",
+   "src": "Commentators differ widely over the disconnected letters, and many of the earliest authorities declined to interpret them at all."
+  },
+  {
+   "id": "ayat-al-kursi-greatest-verse",
+   "kind": "sign",
+   "category": "Verses",
+   "title": "He was asked which verse was greatest and answered at once",
+   "story": "The Prophet ﷺ asked Ubayy ibn Ka'b which verse of the book of Allah was the greatest. Ubayy answered with the verse of the Throne, verse 255 of Surah al-Baqarah. The Prophet ﷺ struck him on the chest and told him that knowledge should be pleasant for him. The verse itself is one sentence made of negations: no god but Him, no drowsiness takes Him and no sleep, no intercession without His permission, nothing of His knowledge grasped except as He wills, no fatigue in holding the heavens and the earth. It sits in the middle of the longest chapter, surrounded by rules about debt, warfare, marriage and charity.",
+   "detail": "Ubayy ibn Ka'b · al-Baqarah, verse 255",
+   "tags": [
+    "quran",
+    "verses",
+    "companions"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih Muslim 810"
+  },
+  {
+   "id": "no-compulsion-follows-the-throne",
+   "kind": "sign",
+   "category": "Verses",
+   "title": "The verse after the Throne verse forbids compelling belief",
+   "story": "Verse 255 of Surah al-Baqarah is the fullest description of God in the Qur'an. Verse 256, immediately after it, opens with the words there is no compulsion in religion, and continues that right guidance has become clear from error. The placement has been noticed by commentators since the earliest period. The largest possible statement of divine power is followed at once by a limit on what human beings may do to each other about belief. The classical discussion of what the verse forbids and whom it addresses is long, and it works from a reported occasion of revelation involving families in Madinah whose sons had been brought up in another faith.",
+   "detail": "Surah al-Baqarah, verses 255 and 256",
+   "tags": [
+    "quran",
+    "verses",
+    "freedom"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:256"
+  },
+  {
+   "id": "i-am-near-inside-the-fasting-rules",
+   "kind": "sign",
+   "category": "Verses",
+   "title": "A verse about nearness sits inside the rules on fasting",
+   "story": "Surah al-Baqarah gives the law of Ramadan in a short run of verses: who must fast, who is excused, what to do when ill or travelling, when the fast begins and when it ends. In the middle of that legal passage, at verse 186, the register changes completely. When My servants ask you about Me, I am near. I answer the call of the caller when he calls Me. There is no intermediary in the sentence and no instruction to go through anyone, and unlike most answers in the Qur'an it does not begin with the command to say. It is set between rules about food and rules about the first light.",
+   "detail": "Surah al-Baqarah, verse 186",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "quran",
+    "ramadan",
+    "prayer"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:186"
+  },
+  {
+   "id": "verse-of-light-among-the-rules",
+   "kind": "sign",
+   "category": "Verses",
+   "title": "The verse of light sits between rules about privacy",
+   "story": "Surah al-Nur is a legal chapter. It sets penalties, deals with a false accusation made against Aisha, tells believers to lower their gaze, and instructs people not to enter houses without asking permission and giving greeting. At verse 35, in the middle of all that, comes the passage that gives this site its name. Allah is the light of the heavens and the earth. The likeness of His light is a niche in which there is a lamp, the lamp in glass, the glass like a shining star, lit from a blessed olive tree neither of the east nor of the west. The image is an ordinary household object, seen at night.",
+   "detail": "Surah al-Nur, verse 35",
+   "tags": [
+    "quran",
+    "verses",
+    "light"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 24:35"
+  },
+  {
+   "id": "seven-oaths-of-al-shams",
+   "kind": "sign",
+   "category": "Oaths",
+   "title": "Seven oaths in a row open one short chapter",
+   "story": "Surah al-Shams begins with the longest run of oaths in the Qur'an. By the sun and its morning brightness, by the moon when it follows it, by the day when it displays it, by the night when it covers it, by the sky and what built it, by the earth and what spread it, by the soul and what proportioned it. Seven verses, seven oaths, moving from the largest visible object down to the interior of one person, and the last of them puts the human soul in the same series as the sun. Only then does the thing sworn to arrive: he has succeeded who purifies it, and he has failed who buries it.",
+   "detail": "Surah al-Shams, verses 1 to 10",
+   "tags": [
+    "quran",
+    "oaths",
+    "soul"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 91:1-10"
+  },
+  {
+   "id": "oath-by-the-pen",
+   "kind": "sign",
+   "category": "Oaths",
+   "title": "One of the earliest chapters swears by the pen",
+   "story": "Surah al-Qalam opens with a single letter, Nun, and then an oath: by the pen and what they inscribe. Many early authorities place it among the very first chapters revealed, close behind the five opening verses of Surah al-Alaq, which themselves end with the statement that God taught by the pen. Makkah at that time was a trading town with limited literacy and no scholarly tradition of its own. The oath is sworn on an instrument and on the act of using it, in a chapter that goes on to defend the Prophet ﷺ against the charge of madness. What grew from those verses included paper mills, libraries and a copying trade.",
+   "detail": "Surah al-Qalam, verse 1",
+   "tags": [
+    "quran",
+    "oaths",
+    "writing"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 68:1"
+  },
+  {
+   "id": "oath-by-time-al-asr",
+   "kind": "sign",
+   "category": "Oaths",
+   "title": "A three verse chapter swears by time itself",
+   "story": "Surah al-Asr has three verses. It swears by al-asr, which carries the age, or time, or the late part of the afternoon, and then states that mankind is in loss, except those who believe and do right and counsel one another to truth and counsel one another to patience. That is the entire chapter. A remark attributed to al-Shafi'i and quoted by Ibn Kathir in his commentary says that if people weighed only this chapter it would be enough for them. Companions are reported to have recited it to each other on parting. The exception clause is the shortest complete account of what the Qur'an asks: belief, action, truth between people, endurance.",
+   "detail": "Surah al-Asr, three verses",
+   "tags": [
+    "quran",
+    "oaths",
+    "time"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 103:1-3"
+  },
+  {
+   "id": "ayah-means-sign",
+   "kind": "sign",
+   "category": "Language",
+   "title": "The word for a verse is the word for a sign",
+   "story": "An ayah is a verse of the Qur'an. It is also the word the Qur'an uses for a sign in the world: the alternation of night and day, ships running on the sea, rain that revives dead ground, sleep, lightning, and the diversity of your languages and your colours. One noun covers a sentence in a book and a fact about the world, which puts them in the same category. A person reading is looking at ayat. A person looking at the sky is also looking at ayat. It is a choice of vocabulary that makes the natural world part of the same exercise as the text, and both of them things to be read rather than only used.",
+   "detail": "Ayah, a verse and a sign",
+   "tags": [
+    "quran",
+    "language",
+    "nature"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 30:22"
+  },
+  {
+   "id": "rahma-and-the-womb",
+   "kind": "word",
+   "category": "Mercy",
+   "title": "Mercy and the womb come from the same three letters",
+   "story": "The root r h m gives rahma, mercy, and rahim, the womb. It gives al-Rahman and al-Rahim, the two names of God that open every chapter of the Qur'an, and it gives the ordinary Arabic word for kinship, since relatives are the people connected through a womb. The Prophet ﷺ reported God saying that He is al-Rahman, that He created the rahim and derived its name from His own name, and that whoever keeps it joined He will keep joined, and whoever cuts it off He will cut off. The formula recited before every reading of the Qur'an rests on the same three letters as the organ that carried the reader.",
+   "detail": "Root r h m, mercy and the womb",
+   "tags": [
+    "arabic",
+    "mercy",
+    "family"
+   ],
+   "lvl": "sunnah",
+   "src": "Sunan Abi Dawud 1694"
+  },
+  {
+   "id": "sabr-is-restraint",
+   "kind": "word",
+   "category": "Patience",
+   "title": "Patience in Arabic is a word about restraint",
+   "story": "Sabr is usually translated as patience, which suggests sitting still and letting time pass. The root s b r means to bind, to hold something in place, to keep it from going where it wants to go. The same root names a bitter plant and supplies the verb for holding a person to a commitment. So sabr sits closer to self restraint under pressure than to endurance: keeping the tongue off complaint, the body at its task, the hand from retaliation. The Qur'an says the patient will be given their reward without reckoning. The word describes somebody doing something difficult, not somebody waiting for it to be over.",
+   "detail": "Root s b r, to bind and restrain",
+   "tags": [
+    "arabic",
+    "patience",
+    "character"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 39:10"
+  },
+  {
+   "id": "taqwa-is-a-shield",
+   "kind": "word",
+   "category": "Godwariness",
+   "title": "God consciousness is built on a word meaning to shield",
+   "story": "Taqwa is usually rendered piety or fear of God. Its root is w q y, to guard, to shield, to put something between yourself and harm. A wiqaya is a protective covering, and the same root gives modern Arabic its term for preventive medicine. Read that way taqwa is not a feeling but a practice of keeping a barrier between yourself and what damages you. The Qur'an makes the image explicit twice. In the middle of the rules for pilgrimage it tells travellers to take provision, and says the best provision is taqwa. In a passage about clothing it calls taqwa a garment, and the best of garments. A shield, a supply and something you wear.",
+   "detail": "Root w q y, to guard and to shield",
+   "tags": [
+    "arabic",
+    "taqwa",
+    "character"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:197, 7:26"
+  },
+  {
+   "id": "dhikr-memory-and-mention",
+   "kind": "word",
+   "category": "Remembrance",
+   "title": "The Qur'an's name for itself is a word about memory",
+   "story": "The root dh k r means both to remember and to mention, and Arabic does not separate the two: bringing a thing to mind and saying it aloud are one act. Dhikr therefore covers remembrance and recitation at once. The Qur'an uses the word as one of its own names, calling itself al-Dhikr, the Reminder. It also uses it for the practice: remember Me and I will remember you, and the statement that in the remembrance of God hearts find rest. What grew out of that root includes litanies counted on the fingers, phrases repeated after prayer, and the habit of saying a short formula aloud before eating, travelling or sleeping.",
+   "detail": "Root dh k r, to remember and to mention",
+   "tags": [
+    "arabic",
+    "dhikr",
+    "prayer"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 13:28, 2:152"
+  },
+  {
+   "id": "iman-and-amn",
+   "kind": "word",
+   "category": "Faith",
+   "title": "Faith and safety are the same word in Arabic",
+   "story": "The root a m n gives iman, faith, and amn, safety. It gives amana, a trust placed in somebody's keeping, and amin, trustworthy, which was what the Makkans called the Prophet ﷺ before he had recited a single verse to them. It gives the word said at the end of al-Fatiha. A mu'min, a believer, is at root somebody who has been made safe and who makes others safe. The Qur'an sets the pair side by side in the short chapter about Quraysh, thanking God for feeding them against hunger and making them safe from fear. Belief and security are not two subjects in this language. They share a skeleton.",
+   "detail": "Root a m n, faith and safety",
+   "tags": [
+    "arabic",
+    "faith",
+    "safety"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 106:4"
+  },
+  {
+   "id": "salah-prayer-and-blessing",
+   "kind": "word",
+   "category": "Prayer",
+   "title": "The word for prayer also means blessing the Prophet",
+   "story": "Salah is the ritual prayer performed five times a day. The same word from the same root is what God and the angels are said to do for the Prophet ﷺ, and what believers are told to do when they say the formula asking for peace upon him. The lexicographers connect the root with supplication and with turning towards. The Qur'an gives the purpose of the prayer in three words in Surah Ta-Ha: establish the prayer for My remembrance. Not for reward, not for protection, not for good order. The verse makes the standing and bowing and prostrating an instrument of memory, which puts salah and dhikr into one sentence.",
+   "detail": "Surah Ta-Ha, verse 14",
+   "tags": [
+    "arabic",
+    "prayer",
+    "dhikr"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 20:14, 33:56"
+  },
+  {
+   "id": "zakat-is-growth",
+   "kind": "word",
+   "category": "Charity",
+   "title": "The word for alms means growth, not deduction",
+   "story": "Zakat is the obligatory portion of accumulated wealth handed over each year. The root z k w means to grow and to increase, and also to be pure, and the noun is used of a plant that thrives. Arabic takes purity and increase from the same three letters because a thing cleaned of what spoils it grows better. So the term for taking a fortieth out of your savings is a word about the pile getting larger. The Qur'an uses the same verb of the self in the chapter of the sun: he has succeeded who causes it to grow, and he has failed who buries it. One verb covers a bank balance and a person.",
+   "detail": "Root z k w, growth and purity",
+   "tags": [
+    "arabic",
+    "zakat",
+    "wealth"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 91:9-10"
+  },
+  {
+   "id": "islam-and-salam",
+   "kind": "word",
+   "category": "Peace",
+   "title": "Islam and peace and the greeting share three letters",
+   "story": "The root s l m carries wholeness, soundness, being intact. From it come salam, peace, and the greeting exchanged between Muslims; salim, sound and unbroken, as in the sound heart that the Qur'an says is the only thing worth arriving with; istislam, surrender; and islam itself, which is the act of handing something over whole. Al-Salam is one of the names of God listed at the end of Surah al-Hashr. A Muslim is one who gives himself over, and the word for what he gives and the word for the state he is meant to reach are built from one skeleton. The greeting is the religion's own name, conjugated.",
+   "detail": "Root s l m, wholeness and peace",
+   "tags": [
+    "arabic",
+    "peace",
+    "islam"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 59:23, 26:89"
+  },
+  {
+   "id": "kufr-is-covering",
+   "kind": "word",
+   "category": "Disbelief",
+   "title": "The Qur'an uses the word for disbeliever to mean farmer",
+   "story": "The root k f r means to cover and to conceal. A kafir in ordinary Arabic is somebody who covers a thing over, and the Qur'an uses exactly that sense in Surah al-Hadid, comparing the life of this world to rain whose resulting growth pleases al-kuffar, meaning the farmers, the men who cover seed with soil. The same root gives kaffara, an expiation, which covers a fault. Applied to belief the word describes covering over something known rather than failing to know it, which is why the classical discussions of kufr turn on knowledge and rejection rather than on ignorance. Old Arabic poetry calls the night kafir because it covers what lies under it.",
+   "detail": "Root k f r, to cover over",
+   "tags": [
+    "arabic",
+    "belief",
+    "language"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 57:20"
+  },
+  {
+   "id": "shukr-and-the-full-udder",
+   "kind": "word",
+   "category": "Gratitude",
+   "title": "Gratitude shares a root with a beast that thrives on little",
+   "story": "The lexicons record an old use of the root sh k r: a she camel called shakur is one that yields plenty of milk on scant fodder, and an animal described with the same word visibly puts on condition from a small ration. The image behind shukr, gratitude, is therefore a return larger than what was given. It is not acknowledgement, it is output. The Qur'an keeps the accounting sense in Surah Ibrahim: if you are grateful I will certainly increase you. Ingratitude in Arabic is kufr, from covering, so the opposite of gratitude in this language is not indifference but concealment of what was received.",
+   "detail": "Root sh k r, a return larger than the gift",
+   "tags": [
+    "arabic",
+    "gratitude",
+    "character"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 14:7"
+  },
+  {
+   "id": "tawakkul-and-the-agent",
+   "kind": "word",
+   "category": "Trust",
+   "title": "Trust in God uses a word from commercial law",
+   "story": "Tawakkul is usually translated as reliance on God. The root w k l is the ordinary vocabulary of agency. A wakil is the agent you appoint to act on your behalf, and in Arabic today a wakil is a lawyer or a proxy or a company representative, while a tawkil is a power of attorney. Tawakkul is appointing God as your agent in a matter, which assumes there is a matter and that you have done your part of the paperwork. The Qur'an puts it after an instruction to act: once you have decided, rely on God. And elsewhere, whoever relies on God, He is enough for him.",
+   "detail": "Root w k l, to appoint an agent",
+   "tags": [
+    "arabic",
+    "trust",
+    "character"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 3:159, 65:3"
+  },
+  {
+   "id": "ihsan-well-made",
+   "kind": "word",
+   "category": "Excellence",
+   "title": "Excellence was defined as working as if you were watched",
+   "story": "A man came to the Prophet ﷺ and asked him about islam, then about iman, then about ihsan. The answer to the third was that you worship God as though you see Him, and if you do not see Him, then He sees you. The questioner was Jibril, and the report is the standard summary of the religion in three levels: practice, belief, and the quality of both. Ihsan comes from the root h s n, which covers what is good and what is well made in one word. Arabic offers no convenient way to say that a thing is morally right but badly done.",
+   "detail": "The hadith of Jibril",
+   "tags": [
+    "arabic",
+    "ihsan",
+    "character"
+   ],
+   "lvl": "sunnah",
+   "src": "Sahih Muslim 8"
+  },
+  {
+   "id": "adab-manners-and-letters",
+   "kind": "word",
+   "category": "Manners",
+   "title": "Manners and literature are the same word in Arabic",
+   "story": "Adab today means good manners, courtesy, knowing how to behave. It also means literature. A professor of Arabic adab teaches poetry and prose, and a faculty of adab is a faculty of arts. The lexicographers connect the root with ma'duba, a banquet to which people are invited, so that adab began as the conduct proper to somebody invited to a table and widened into the whole body of things a cultivated person should know. Medieval books of adab teach both at once: how to sit, what to quote, how to open a letter, when to stay quiet. The manners and the reading were never filed as separate subjects.",
+   "detail": "Root a d b, banquet, manners, letters",
+   "tags": [
+    "arabic",
+    "adab",
+    "learning"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "hilm-keeping-your-temper",
+   "kind": "word",
+   "category": "Forbearance",
+   "title": "One name of God means keeping your temper",
+   "story": "Hilm is the quality of somebody who has the power to react and does not: deliberate, slow to anger, not easily provoked. Pre Islamic Arabs prized it as the opposite of jahl, which is usually translated as ignorance but in that setting means hot headedness, the readiness to be roused. Al-Halim is one of the names of God in the Qur'an, and it is repeatedly paired with al-Ghani, the one free of need. The pairing has a logic to it. Somebody who needs nothing from you has no reason to be provoked by you. The verse that pairs them is about not following a gift with a reminder of the favour.",
+   "detail": "Root h l m, forbearance",
+   "tags": [
+    "arabic",
+    "character",
+    "names"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 2:263"
+  },
+  {
+   "id": "rizq-an-allotted-share",
+   "kind": "word",
+   "category": "Provision",
+   "title": "Provision in Arabic is a portion allotted, not earned",
+   "story": "Rizq means provision: food, income, whatever sustains a life. The root r z q carries the sense of a share handed out, and classical usage applies it to the daily ration issued to a soldier. It is not a word about earning. The Qur'an says there is no creature moving on the earth whose provision is not upon God, and it places rizq in the sky alongside what has been promised. What follows in practice is a division of labour that runs through Muslim ethics: the effort belongs to the person, the outcome does not. Somebody who works and does not receive has not failed at rizq, because rizq was never the thing he was doing.",
+   "detail": "Root r z q, an allotted share",
+   "tags": [
+    "arabic",
+    "provision",
+    "work"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 11:6, 51:22"
+  },
+  {
+   "id": "barakah-and-the-kneeling-camel",
+   "kind": "word",
+   "category": "Blessing",
+   "title": "Blessing comes from the word for a camel kneeling down",
+   "story": "Barakah is usually translated as blessing, and it means something more specific: a good that settles, stays, and goes on producing beyond what its size accounts for. The root b r k gives baraka, the verb used when a camel folds its legs and lowers itself to the ground to remain there, and birka, a pool, water that has stopped moving and stayed. Both images are about something coming to rest rather than passing through. The Qur'an uses the noun for what would have been opened on a town from the sky and the earth had its people believed and been mindful. Barakah is the difference between an amount and what it does.",
+   "detail": "Root b r k, to kneel and to settle",
+   "tags": [
+    "arabic",
+    "blessing",
+    "language"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 7:96"
+  },
+  {
+   "id": "fitrah-and-iftar",
+   "kind": "word",
+   "category": "Human Nature",
+   "title": "The word for human nature also means breaking a fast",
+   "story": "The root f t r means to split open, to cleave. From it comes fatir, the originator, used as a name of God and as the title of chapter 35, the one who splits creation into being out of nothing. From it also comes iftar, the breaking of the fast at sunset, which splits the day's abstention in two. And from it comes fitrah, the original pattern on which people were made, named in Surah al-Rum: the fitrah of God, upon which He originated mankind, with no altering of the creation of God. The same three letters carry the first act of creation and the meal a fasting person eats at dusk.",
+   "detail": "Root f t r, to split open",
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "arabic",
+    "fitrah",
+    "ramadan"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 30:30"
+  },
+  {
+   "id": "nafs-three-states",
+   "kind": "word",
+   "category": "The Self",
+   "title": "The Qur'an names three states of the self",
+   "story": "Nafs is the self, the soul, the person. The root n f s is the root of breath: nafas is a breath, tanaffasa is to breathe, and Surah al-Takwir swears by the morning when it breathes. The same root gives nafis, precious, and munafasa, competition, the state of two people breathing hard for the same thing. The Qur'an describes the nafs in three conditions, which the later tradition read as stages: the one that commands to evil, in the story of Yusuf; the one that reproaches itself, at the opening of Surah al-Qiyamah; and the one at rest, addressed in Surah al-Fajr and told to return to its Lord.",
+   "detail": "Root n f s, breath and self",
+   "tags": [
+    "arabic",
+    "soul",
+    "character"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 12:53, 75:2, 89:27"
+  },
+  {
+   "id": "qalb-the-thing-that-turns",
+   "kind": "word",
+   "category": "The Heart",
+   "title": "The Arabic word for heart means the thing that turns",
+   "story": "Qalb comes from the root q l b, to turn something over, to invert it. The same root gives inqilab, which in modern Arabic is a coup, and taqallub, fluctuation. The organ is named in Arabic for instability rather than for steadiness, which is the reverse of what the English word heart suggests. The Prophet ﷺ is reported to have prayed often with the words: O Turner of hearts, make my heart firm upon Your religion. Asked why he needed to say it, he answered that hearts are between two of the fingers of the Merciful, turned as He wills. The supplication is built on the same root as the noun.",
+   "detail": "Root q l b, to turn over",
+   "tags": [
+    "arabic",
+    "heart",
+    "prayer"
+   ],
+   "lvl": "sunnah",
+   "src": "Jami' at-Tirmidhi 2140"
+  },
+  {
+   "id": "ruh-spirit-and-relief",
+   "kind": "word",
+   "category": "The Spirit",
+   "title": "Spirit, wind and relief are one word family in Arabic",
+   "story": "The root r w h gives ruh, spirit; rih, wind; rawh, relief or mercy; rayhan, a fragrant herb; istiraha, rest; and rawah, the going home in the evening. Everything in the family involves air moving or a pressure lifting. When the Prophet ﷺ was asked about the ruh, the answer given in Surah al-Isra is short and closes the subject: the ruh is of the affair of my Lord, and you have been given only a little knowledge. Yaqub, waiting for news of Yusuf, tells his sons not to despair of the rawh of God, using the same root, so that relief and breath and spirit arrive in one word.",
+   "detail": "Root r w h, breath, wind, relief",
+   "tags": [
+    "arabic",
+    "soul",
+    "language"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 17:85, 12:87"
+  },
+  {
+   "id": "arabic-dictionaries-by-root",
+   "kind": "word",
+   "category": "Roots",
+   "title": "Arabic dictionaries file every word under a three letter root",
+   "story": "Ibn Manzur, an Egyptian judge who died around 1311, spent much of his life compiling Lisan al-Arab, which fills twenty volumes in modern printings. It is not alphabetical in the way an English dictionary is. Words are filed under their root, usually three consonants, so that everything grown from k t b sits in one place: kataba, he wrote; kitab, a book; katib, a writer; maktab, a desk or an office; maktaba, a library; kitaba, the act of writing. Looking a word up means first stripping it back to its skeleton, which is a small act of analysis. The reader who finds the word also finds its relatives, and the relatives usually explain it.",
+   "detail": "Ibn Manzur · Lisan al-Arab, c. 1311",
+   "tags": [
+    "arabic",
+    "roots",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "arabic-patterns-make-tools",
+   "kind": "word",
+   "category": "Patterns",
+   "title": "Arabic builds tools by pouring a root into a mould",
+   "story": "Arabic takes a root of three consonants and pours it into fixed patterns, and the pattern carries as much meaning as the root. The pattern mif'al makes an instrument: from f t h, to open, comes miftah, a key; from w z n, to weigh, mizan, a scale; from n sh r, to saw, minshar, a saw. The pattern maf'al makes a place: from k t b comes maktab, an office; from s j d, to prostrate, comes masjid, the place of prostration, which English took in as mosque. A speaker who meets an unfamiliar word can often work out both halves of it, the family and the function, before reaching for a dictionary.",
+   "detail": "The Arabic pattern system, al-awzan",
+   "tags": [
+    "arabic",
+    "roots",
+    "language"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "maliki-or-maliki-in-al-fatiha",
+   "kind": "word",
+   "category": "Readings",
+   "title": "One missing letter changes the King into the Owner",
+   "story": "In the fourth verse of al-Fatiha, recited in every prayer, the word describing God in relation to the day of judgement is read two ways. Hafs from Asim, the reading in most printed copies, has maliki with a long first vowel, meaning owner or master. Nafi of Madinah and Ibn Kathir of Makkah read it short, meaning king. Both are canonically transmitted, both were recited from the beginning, and the difference is a single alif that the earliest manuscripts did not write in either case. A king rules what is not his. An owner possesses it. The verse is recited both ways every day by hundreds of millions of people.",
+   "detail": "Surah al-Fatiha, verse 4",
+   "tags": [
+    "quran",
+    "readings",
+    "language"
+   ],
+   "lvl": "debated",
+   "src": "The canonical readings differ: Hafs from Asim reads maliki with the alif, Nafi and Ibn Kathir read maliki without it."
+  },
+  {
+   "id": "mushaf-and-the-journalist",
+   "kind": "word",
+   "category": "Codex",
+   "title": "The word for a Qur'an copy also gives journalist",
+   "story": "Muslims distinguish the Qur'an, which is the recitation, from the mushaf, which is the physical book on the shelf. The word comes from the root s h f, which gives sahifa, a sheet or a page, and suhuf, the pages that the Qur'an says were given to Ibrahim and Musa. The same root gives modern Arabic sahafa, journalism, and sahafi, a journalist, somebody whose work is pages. Early reports say the companions weighed several words for the bound volume before settling on mushaf. The distinction still does work: a mushaf can wear out and be buried or replaced, and none of that touches the Qur'an, which is what is recited.",
+   "detail": "Root s h f, sheet, codex, press",
+   "tags": [
+    "arabic",
+    "quran",
+    "language"
+   ],
+   "lvl": "editorial"
+  }
+ ]
+}

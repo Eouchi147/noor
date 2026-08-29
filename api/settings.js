@@ -88,6 +88,24 @@ export const DIALS = {
                        g: "The Journal", n: "The Lantern sorts replies monthly",
                        h: "Once a month the Lantern scores approved replies for usefulness and relevance so the most substantial rise and the noise sinks. Readers' own votes are weighed alongside it. Off leaves replies in the order they arrived." },
 
+  /* ---- the social machine -------------------------------------------
+     The house posts the day's light to Facebook and Instagram once a morning.
+     Nothing here writes a fact: the card comes from the validated library, so
+     the worst that can happen is a caption phrased badly. The schedule is OFF
+     until the owner has previewed a post and sent one by hand. */
+  "social.auto":       { t: "bool", def: false,
+                         g: "The social machine", n: "Post the day's light every morning",
+                         h: "Off means nothing is ever sent on a schedule; you can still post by hand from this room. Leave it off until you have previewed a card and posted one manually, because the two network calls have never been run against your live accounts." },
+  "social.fb":         { t: "bool", def: true,
+                         g: "The social machine", n: "Send to Facebook",
+                         h: "Needs FB_PAGE_ID and FB_PAGE_TOKEN in Vercel. Posts the card as a photo with the caption underneath." },
+  "social.ig":         { t: "bool", def: true,
+                         g: "The social machine", n: "Send to Instagram",
+                         h: "Needs IG_USER_ID and a token. Instagram will only accept a real JPEG or PNG at a public address, which is what /api/card?fmt=png serves." },
+  "social.polish":     { t: "bool", def: true,
+                         g: "The social machine", n: "Let the Lantern tighten the caption",
+                         h: "It may reorder and shorten words. It may not add a fact: any number it introduces that the card did not contain causes the plain caption to be used instead. Off writes the caption straight from the card." },
+
   /* ---- the desk ------------------------------------------------------ */
   "inbox.open":        { t: "bool", def: true, pub: true,
                          g: "The desk", n: "Readers may send corrections",

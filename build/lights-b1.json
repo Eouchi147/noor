@@ -1,0 +1,495 @@
+{
+ "tranche": "b1",
+ "lights": [
+  {
+   "id": "maragha-observatory-institution",
+   "kind": "science",
+   "category": "Observatories",
+   "title": "Maragha was an observatory with a budget and a staff",
+   "story": "In 1259 Nasir al-Din al-Tusi began building an observatory at Maragha, in what is now northwest Iran, with Hulagu's backing and, more usefully, a share of endowment income assigned to it so that it did not depend on one ruler's mood. That was the new thing. Earlier observatories had been the project of a single astronomer and closed when he died or lost his patron. Maragha had a director, a library, a workshop, salaried staff drawn from Damascus to Andalusia, and a Chinese astronomer named in the sources. Its instruments were designed by Mu'ayyad al-Din al-Urdi. The tables it produced, the Zij-i Ilkhani, were finished in 1272 and used for centuries. The pattern it set, a funded institution outliving its founder, was copied at Samarkand and Istanbul.",
+   "detail": "Nasir al-Din al-Tusi · Maragha, from 1259",
+   "tags": [
+    "astronomy",
+    "observatory",
+    "institutions"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-kashi-letters-samarkand",
+   "kind": "science",
+   "category": "Observatories",
+   "title": "Letters home from Samarkand describe how an observatory ran",
+   "story": "Two letters written by Jamshid al-Kashi to his father in Kashan survive from the 1420s, and they are the closest thing anyone has to an eyewitness account of a great observatory at work. Al-Kashi describes the staff at Ulugh Beg's institution in Samarkand, dozens of scholars with the ruler himself among the working astronomers, and reports that Ulugh Beg could carry long calculations in his head. He is blunt about colleagues he thought incompetent. He also admits that he had no manners at court and that Ulugh Beg overlooked it. The observatory was attached to a madrasa where astronomy and mathematics were taught, so the staff trained their own replacements, and one of those students, Ali Qushji, later carried the work west to Istanbul.",
+   "detail": "Al-Kashi at Ulugh Beg's court · 1420s",
+   "tags": [
+    "astronomy",
+    "observatory",
+    "central-asia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "istanbul-observatory-1577",
+   "kind": "science",
+   "category": "Observatories",
+   "title": "Istanbul's observatory was demolished three years after it opened",
+   "story": "Taqi al-Din, chief astronomer to Sultan Murad III, built an observatory at Tophane in Istanbul in the 1570s, at almost the same time as Tycho Brahe was building Uraniborg on an island in Denmark. The instruments were of comparable size and design. Taqi al-Din observed the great comet of 1577, as Tycho did, and read it as a good omen for the campaign against Iran. The campaign went badly, plague came to the city, and the chief mufti gave the opinion that prying into the secrets of the heavens brought misfortune. In January 1580 the building was pulled down on the sultan's order by a detachment of the navy. Uraniborg ran for twenty years and produced the observations Kepler used to find the orbit of Mars.",
+   "detail": "Taqi al-Din · Istanbul, 1577 to 1580",
+   "tags": [
+    "astronomy",
+    "observatory",
+    "ottoman"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-battani-solar-year",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "He measured the year and was off by two minutes",
+   "story": "Al-Battani observed from Raqqa, on the Euphrates, from about 877 until 918, with instruments he had built and checked himself. He put the length of the solar year at 365 days, 5 hours, 46 minutes and 24 seconds, which is about two minutes and twenty seconds short of the modern value. He also found that the point at which the sun is furthest from the earth had shifted since Ptolemy recorded its position, which meant the Greek tables were not simply to be copied forward. His own tables were translated into Latin in the twelfth century, he was known in Europe as Albategnius, and Copernicus cites him repeatedly in the book of 1543. There is a crater on the moon carrying his Latin name.",
+   "detail": "Al-Battani · Raqqa, died 929 CE",
+   "tags": [
+    "astronomy",
+    "measurement",
+    "precision"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-biruni-earth-radius",
+   "kind": "science",
+   "category": "Geodesy",
+   "title": "One hill in the Punjab was enough to measure the earth",
+   "story": "Around 1018, at the fort of Nandana in what is now Pakistan, al-Biruni measured the height of a hill by sighting its summit from two places on the plain below. He then climbed it and measured how far the horizon had dropped below the level line. From those two numbers and some trigonometry he obtained the radius of the earth. His answer works out at about 6,340 kilometres, within a fraction of a per cent of the modern figure. He liked the method mainly because it needed one person and one instrument, where the caliph al-Ma'mun's astronomers had needed survey parties pacing across a plain. Historians note that his instrument could not really support that much accuracy, so part of the agreement is luck.",
+   "detail": "Al-Biruni · Nandana fort, c. 1018 CE",
+   "tags": [
+    "geodesy",
+    "astronomy",
+    "measurement"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-yunus-eclipse-records",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "His eclipse timings were still useful eight hundred years later",
+   "story": "Ibn Yunus worked in Cairo under the Fatimids and finished his great set of astronomical tables, the Hakimi Zij, around 1003. What sets it apart is that he wrote down the raw observations, his own and other people's, rather than only the conclusions drawn from them: dozens of planetary conjunctions and about thirty lunar eclipses, each with its date and its measured time, including older records he had dug out of earlier astronomers' papers. Extracts were printed in Paris in 1804, and nineteenth century astronomers used his eclipse times, along with other early records, to test whether the moon's motion around the earth is slowly changing. It is. Ibn Yunus was not answering that question. He simply wrote the numbers down and kept them.",
+   "detail": "Ibn Yunus · Cairo, died 1009 CE",
+   "tags": [
+    "astronomy",
+    "cairo",
+    "records"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "tusi-couple",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "Two rolling circles turn a circle into a straight line",
+   "story": "Ptolemy's planetary models needed a device called the equant, a point about which a planet swept equal angles although it was not the centre of the circle it moved on. It predicted well and it broke the rule that motion in the heavens is uniform and circular, and astronomers had complained about it for centuries. In 1247 Nasir al-Din al-Tusi published a way round it. Roll a small circle inside a circle of twice its diameter, and any point on the small circle traces a straight line, back and forth. Circular motions alone can therefore produce oscillation. The construction is called the Tusi couple. It appears, drawn the same way and with no attribution, in Copernicus's book of 1543, and how it got there is a standing question.",
+   "detail": "Nasir al-Din al-Tusi · Maragha, 1247",
+   "tags": [
+    "astronomy",
+    "geometry",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-shatir-copernicus",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "A mosque timekeeper's lunar model matches Copernicus exactly",
+   "story": "Ibn al-Shatir kept the prayer times at the Umayyad Mosque in Damascus and built the sundial for its minaret. He also rebuilt planetary astronomy, discarding Ptolemy's equant and off centre circles and assembling his models from uniform circular motions only. In 1957 Victor Roberts, working with E. S. Kennedy in Beirut, showed that Ibn al-Shatir's model of the moon is mathematically identical to the one Copernicus published in 1543, and that several parameters match. What nobody has found is a route. No Latin translation of Ibn al-Shatir is known and Copernicus never names him. Some scholars argue for transmission through Byzantine Greek manuscripts, others for two men solving the same problem the same way. Ibn al-Shatir kept the earth at the centre. Copernicus moved it.",
+   "detail": "Ibn al-Shatir · Damascus, c. 1304-1375",
+   "tags": [
+    "astronomy",
+    "damascus",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ali-qushji-moving-earth",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "He argued nothing observable rules out a turning earth",
+   "story": "Ali Qushji learned his astronomy at Ulugh Beg's observatory in Samarkand and worked on its star tables. After Ulugh Beg was killed in 1449 he moved west, and in the early 1470s Mehmed II brought him to Istanbul to teach. He made two arguments unusual for his time. The first was that astronomy does not need Aristotle's physics underneath it and should be built on observation and geometry alone. The second followed from it: everything seen in the sky would look the same whether the earth stands still or turns, so observation cannot settle the matter, and no astronomical result requires a motionless earth. He did not claim the earth moves. He said the case that it does not was weaker than people assumed.",
+   "detail": "Ali Qushji · Samarkand and Istanbul, died 1474",
+   "tags": [
+    "astronomy",
+    "ottoman",
+    "thought"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "thabit-ibn-qurra-sabian",
+   "kind": "science",
+   "category": "Mathematics",
+   "title": "The caliph's best mathematician was not a Muslim",
+   "story": "Thabit ibn Qurra came from Harran in upper Mesopotamia and belonged to the Sabians, a small community with its own religion and its own regard for the stars. He was working as a money changer when one of the Banu Musa brothers noticed him and brought him to Baghdad. He kept his religion, wrote in Syriac for his own people and in Arabic for the court, and became one of the finest mathematicians of the ninth century. He revised the Arabic Euclid, translated Archimedes and Apollonius, found the area under a parabola by a method close to integration, and gave the first general rule for producing amicable numbers, pairs in which each is the sum of the other's divisors. He died in 901. His son and grandsons were scientists too.",
+   "detail": "Thabit ibn Qurra · Harran and Baghdad, died 901",
+   "tags": [
+    "mathematics",
+    "baghdad",
+    "translation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "abu-kamil-algebra-in-words",
+   "kind": "science",
+   "category": "Algebra",
+   "title": "Algebra had no symbols for four hundred years",
+   "story": "Abu Kamil, an Egyptian calculator working a generation or so after al-Khwarizmi, wrote everything out in words. An equation was a sentence: a square and ten roots equal thirty nine dirhams. There was no x, no equals sign, no notation for a power, and the proofs were geometrical, drawn as actual squares and rectangles. Inside that constraint he did serious work. He allowed irrational quantities as coefficients and as answers, which al-Khwarizmi had not, handled powers up to the eighth, and solved systems in several unknowns. One of his puzzles about buying birds has 2,676 whole number solutions, and he counted every one of them and recorded that he was pleased with himself. Fibonacci took problems from him into the book that brought algebra to Latin Europe.",
+   "detail": "Abu Kamil · Egypt, c. 850-930 CE",
+   "tags": [
+    "algebra",
+    "mathematics",
+    "egypt"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-karaji-powers-and-water",
+   "kind": "science",
+   "category": "Algebra",
+   "title": "The man who freed algebra also wrote about underground water",
+   "story": "Al-Karaji worked in Baghdad around the year 1000. Before him algebra was tied to geometry, because a square meant an area and a cube meant a volume, and a fourth power meant nothing anyone could draw. He cut the tie, treating the powers of the unknown as a ladder you can climb in either direction, with reciprocals going down, and gave rules for multiplying and dividing them. He set out the triangle of binomial coefficients that Europe would later name after Pascal, supported by reasoning historians describe as an early form of mathematical induction. He then left the capital and wrote a manual on locating groundwater and digging qanats, the underground channels that watered Iran, thought to be the oldest surviving text on the subject.",
+   "detail": "Al-Karaji · Baghdad, c. 953-1029 CE",
+   "tags": [
+    "algebra",
+    "mathematics",
+    "water"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-samawal-nineteen",
+   "kind": "science",
+   "category": "Algebra",
+   "title": "He wrote his algebra book at nineteen",
+   "story": "Al-Samawal was born in Baghdad to a Jewish family from Morocco. He worked through the mathematics available in the city, found by his late teens that he had exhausted it, and wrote al-Bahir, the Brilliant, at about nineteen. In it he divided one polynomial by another by setting the coefficients out in a table, which is the long division of algebra, stated the laws of exponents including the negative ones, and recorded that any quantity raised to the power zero is one. He used repeated division to carry a quotient to as many places as he wanted, coming close to the idea of an unending decimal. He became a Muslim in 1163 and wrote his own account of why. He died around 1180 at Maragha.",
+   "detail": "Al-Samawal al-Maghribi · Baghdad, c. 1130-1180",
+   "tags": [
+    "algebra",
+    "mathematics",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "khayyam-cubics-by-conics",
+   "kind": "science",
+   "category": "Algebra",
+   "title": "Khayyam solved cubic equations by crossing two curves",
+   "story": "Omar Khayyam is read in English as a poet, on the strength of a loose Victorian version of verses attributed to him. In Persian and Arabic he is a mathematician. Around 1070 he wrote a treatise sorting cubic equations into fourteen kinds that cannot be reduced to anything simpler, and giving each kind a solution by drawing two conic sections, a circle with a parabola or a hyperbola, and measuring where they cross. He said plainly that he had found no way to solve them by arithmetic and hoped somebody would. Somebody did, in Italy, four and a half centuries later. He also led the committee that produced the Jalali solar calendar, and wrote on the parallel postulate that troubled geometers until the nineteenth century.",
+   "detail": "Omar Khayyam · Samarkand and Isfahan, c. 1070",
+   "tags": [
+    "algebra",
+    "geometry",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-kashi-sine-one-degree",
+   "kind": "number",
+   "category": "Trigonometry",
+   "title": "The sine of one degree, to ten sexagesimal places",
+   "story": "Every table of sines has to start somewhere, and the hard case is one degree, which cannot be reached by the usual halving and adding of angles already known. At Samarkand in the 1420s, Jamshid al-Kashi turned it into a cubic equation and solved that equation by repeated approximation, each round of arithmetic adding another correct digit, until he had the value to ten places in the base sixty notation astronomers used. No instrument of his day, or for a long time after, could measure an angle anywhere near that finely. He did the same with the circumference of a circle, taking the value of what we call pi far past any practical need. Ulugh Beg's star tables were built on his figures.",
+   "detail": "Al-Kashi · Samarkand, 1420s",
+   "tags": [
+    "mathematics",
+    "trigonometry",
+    "precision"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-uqlidisi-paper-arithmetic",
+   "kind": "number",
+   "category": "Arithmetic",
+   "title": "He moved arithmetic off the dust board and onto paper",
+   "story": "In Damascus in 952 a mathematician known as al-Uqlidisi wrote a book on calculating with the Indian numerals. Reckoning was then done on a takht, a board spread with fine dust, where each step was wiped out as the next was written. He argued for ink and paper instead, partly because the dust board was the tool of street fortune tellers and carried their reputation, and partly because on paper the working stays where you can check it. In the same book he uses a mark to separate a whole number from the fraction following it, which is the earliest known use of a decimal fraction. Al-Kashi set decimal fractions out systematically in 1427, and Simon Stevin made them ordinary in Europe in 1585.",
+   "detail": "Al-Uqlidisi · Damascus, 952 CE",
+   "tags": [
+    "arithmetic",
+    "numbers",
+    "paper"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ghubar-numerals-route",
+   "kind": "number",
+   "category": "Numerals",
+   "title": "Your digits came west through the Maghrib and Spain",
+   "story": "The numerals reached the Arabic speaking world from India, and Arabic writers called them the Indian figures, which is what they were. They then split into two families of shapes. In the east, from Egypt to Iran, the forms still printed on Egyptian number plates and Iranian banknotes took hold. In the west, in the Maghrib and al-Andalus, a different set developed, called ghubar or dust figures after the boards they were written on. Those are the ones Europe learned. Gerbert of Aurillac, later Pope Sylvester II, met them in Catalonia in the tenth century, and Fibonacci learned them properly as a boy at Bugia on the coast of what is now Algeria, where his father was a customs official.",
+   "detail": "Maghrib to Europe · tenth to thirteenth centuries",
+   "tags": [
+    "numbers",
+    "transmission",
+    "andalus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sifr-zero-cipher",
+   "kind": "number",
+   "category": "Numerals",
+   "title": "Zero and cipher are one word borrowed twice",
+   "story": "The Indian mathematicians who made place value work called the empty column shunya, meaning void. Arabic translators rendered that as sifr, meaning empty. When the system moved into Latin, sifr was written down two ways, as zephirum and as cifra. Zephirum became the Italian zefiro and then zero. Cifra became the French chiffre and the English cipher, which first meant zero, then meant any digit at all, and then, because the new figures looked like a code to people who could not read them, came to mean a secret code. So a cipher is a zero, a zero is an emptiness, and the English word for a person who counts for nothing is the Sanskrit word for the void, carried west in Arabic.",
+   "detail": "Sanskrit to Arabic to Latin · one word's route",
+   "tags": [
+    "numbers",
+    "language",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "sine-mistranslation",
+   "kind": "science",
+   "category": "Trigonometry",
+   "title": "Sine is a mistranslation of a misread Arabic word",
+   "story": "Indian astronomers worked with the half chord of an arc and called it jya. When their tables were translated into Arabic the word was carried across by sound as jiba, which means nothing in Arabic. Written without vowels, those same letters spell jayb, which means a fold, or the opening at the breast of a garment where things are kept. Later readers naturally read it that way, because it was a real word. When the Arabic was translated into Latin in twelfth century Spain, the translator rendered the meaning he found, and jayb became sinus, the Latin for a fold or a bay. English shortened that to sine. The function is Indian, the name is an accident, and the tangent began separately as the length of a shadow.",
+   "detail": "India to Baghdad to Toledo · one word's route",
+   "tags": [
+    "trigonometry",
+    "language",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "abu-al-wafa-sine-table",
+   "kind": "science",
+   "category": "Trigonometry",
+   "title": "His sine table was right to eight decimal places",
+   "story": "Abu al-Wafa al-Buzjani came from Khurasan to Baghdad as a young man and stayed for the rest of his life. He treated all six trigonometric quantities as functions rather than as lines in a diagram, gave the addition formula for sines, and computed a fresh table at intervals of fifteen minutes of arc. His value for the sine of half a degree is correct to eight decimal places, and was not improved on for a long time. The spherical law of sines, the rule that makes triangles on a globe calculable, is credited to him and to two contemporaries, Abu Nasr Mansur and al-Khujandi, and which of the three had it first has never been settled. He also wrote a book of geometrical constructions for craftsmen.",
+   "detail": "Abu al-Wafa al-Buzjani · Baghdad, 940-998 CE",
+   "tags": [
+    "trigonometry",
+    "baghdad",
+    "precision"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "tusi-complete-quadrilateral",
+   "kind": "book",
+   "category": "Trigonometry",
+   "title": "A book that made trigonometry a subject of its own",
+   "story": "Trigonometry had always been a tool for something else. You calculated triangles in order to find where a planet would be, and the tables lived inside astronomy books, in the chapters before the interesting part. Around 1260 Nasir al-Din al-Tusi wrote the Treatise on the Complete Quadrilateral, five books setting out plane and spherical trigonometry as a subject with its own problems and its own proofs and no astronomy in it at all. Historians usually call it the first work to do that, while noting that Abu al-Wafa and Abu Nasr Mansur had already gone much of the way. It was printed with a French translation at Istanbul in 1891, which is when European mathematicians could finally read it.",
+   "detail": "Nasir al-Din al-Tusi · Maragha, c. 1260",
+   "tags": [
+    "trigonometry",
+    "books",
+    "maragha"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-khalili-qibla-table",
+   "kind": "science",
+   "category": "Qibla",
+   "title": "He tabulated the direction of Makkah for every latitude",
+   "story": "Facing Makkah from anywhere else on earth is a problem in spherical trigonometry. You need the shortest path over a sphere between two points whose latitudes and longitudes you know, and then the angle that path makes with north. Exact solutions were worked out in the ninth century, and al-Biruni wrote a whole book on pinning down the coordinates that go into them. In the fourteenth century Shams al-Din al-Khalili, timekeeper at the Umayyad Mosque in Damascus, computed the answer in advance for every combination of latitude and longitude difference across the inhabited world, close to three thousand entries, by hand. When his table was checked against modern computation in the twentieth century, almost every entry proved correct.",
+   "detail": "Al-Khalili · Damascus, fourteenth century",
+   "tags": [
+    "qibla",
+    "trigonometry",
+    "damascus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "mecca-centred-world-maps",
+   "kind": "science",
+   "category": "Instruments",
+   "title": "Two brass maps give the direction to Makkah from anywhere",
+   "story": "Two engraved brass world maps came to light in the 1990s, made in Iran and generally dated to the seventeenth century. They look ornamental until you understand what the grid is doing. Makkah sits at the centre, and the curved lines around it are laid out so that a ruler pivoted at that centre reads off both the direction of Makkah and the distance to it for any place marked on the plate, with no calculation at all. David King, the historian who published them, argued that the mathematics behind the grid is much older than the objects themselves and goes back to methods worked out around the eleventh century. A hard problem in spherical trigonometry, compressed into a disc of metal you can hold.",
+   "detail": "Safavid Iran · published by David King",
+   "tags": [
+    "qibla",
+    "instruments",
+    "maps"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "astrolabe-model-of-the-sky",
+   "kind": "science",
+   "category": "Instruments",
+   "title": "An astrolabe is a model of the sky you hold",
+   "story": "You sight a star or the sun through the bar on the back of an astrolabe, read its height above the horizon off the rim, turn the openwork grid on the front until it matches, and the instrument tells you the time of day or night, the direction you are facing, where any other star has got to, and the height of the tower across the street. No arithmetic is needed. The flattening of the sphere onto a disc is Greek geometry and goes back to Hipparchus. Muslim makers turned it into a standard object made in quantity, with prayer times and the direction of Makkah engraved on it. Chaucer wrote a manual for one in English, for his ten year old son.",
+   "detail": "Oldest dated example by Nastulus · 927 CE",
+   "tags": [
+    "instruments",
+    "astronomy",
+    "time"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-ijliyya-astrolabe-maker",
+   "kind": "science",
+   "category": "Instruments",
+   "title": "One line in one book records a woman who made astrolabes",
+   "story": "In the catalogue of books he compiled at Baghdad around 987, Ibn al-Nadim lists the makers of astrolabes, and among them names the daughter of al-Ijli, saying she made the instruments and worked at the court of Sayf al-Dawla in Aleppo. That is the whole record. He gives no first name, no instrument by her is known to survive, and nothing further about her life has been found. Modern accounts often call her Mariam, which is a later addition rather than anything the source says. What the single line does establish is that a woman making precision instruments in tenth century Aleppo was worth listing without comment, alongside the men. An asteroid is named al-Ijliya after her.",
+   "detail": "Al-Ijliyya of Aleppo · named in the Fihrist, c. 987",
+   "tags": [
+    "instruments",
+    "women",
+    "aleppo"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muwaqqit-mosque-astronomer",
+   "kind": "science",
+   "category": "Timekeeping",
+   "title": "Mosques put an astronomer on the payroll",
+   "story": "The five prayers are defined by the sun: first light, the moment a stick's shadow reaches a set length, sunset. Working out when those moments fall on a given day at a given latitude is astronomy, and from the thirteenth century mosques in Egypt and Syria employed a salaried official to do it, the muwaqqit. He kept the tables, checked them against the sky, and set the times for the muezzin. The post drew serious people: Ibn al-Shatir held it in Damascus, and so did al-Khalili. Their everyday tool was the sine quadrant, a quarter circle of brass or wood with a plumb line and a grid of curves, on which the day's trigonometry could be read by sliding a bead along a thread.",
+   "detail": "The muwaqqit · Egypt and Syria, from the 1200s",
+   "tags": [
+    "timekeeping",
+    "instruments",
+    "prayer"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-khujandi-fakhri-sextant",
+   "kind": "science",
+   "category": "Instruments",
+   "title": "The largest instrument yet built sank under its own weight",
+   "story": "Around 994, near Rayy in northern Iran, al-Khujandi built the Fakhri sextant, named after the ruler who paid for it. It was an arc of sixty degrees set in a north to south trench and roofed over, its radius long enough that a single degree on the scale could be divided into seconds, which no smaller instrument allowed. A small aperture let a disc of sunlight fall on the scale at noon. As far as is known it was the largest astronomical instrument built up to that time. His measurement of the tilt of the earth's axis came out about two minutes of arc short. Al-Biruni, who examined it and wrote about it, concluded that the aperture had sunk as the masonry settled.",
+   "detail": "Al-Khujandi · Rayy, c. 994 CE",
+   "tags": [
+    "instruments",
+    "astronomy",
+    "precision"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "camera-obscura-dark-room",
+   "kind": "science",
+   "category": "Optics",
+   "title": "A dark room with a pinhole gave the camera its name",
+   "story": "Make a small hole in the wall of a dark room and the scene outside appears on the opposite wall, upside down. The effect was noticed long before anyone explained it. It is described in the Chinese Mozi text around the fourth century BCE, and a Greek work handed down under Aristotle's name notes that gaps between leaves cast crescents on the ground during an eclipse. Ibn al-Haytham, in Cairo in the early eleventh century, turned it into an experiment. He set several lamps outside the aperture and showed their images stayed separate on the wall, which means light travels in straight lines and rays do not mix. His term was the dark room. Kepler put that into Latin in 1604 as camera obscura.",
+   "detail": "Ibn al-Haytham · Cairo, early eleventh century",
+   "tags": [
+    "optics",
+    "light",
+    "language"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-farisi-glass-raindrop",
+   "kind": "science",
+   "category": "Optics",
+   "title": "He built a glass raindrop to explain the rainbow",
+   "story": "Around 1309 in Tabriz, Kamal al-Din al-Farisi was working through Ibn al-Haytham's Optics at the suggestion of his teacher Qutb al-Din al-Shirazi, and reached the rainbow. Rather than argue about it he built a model: a large clear glass sphere filled with water, standing in for one drop, set up in a darkened room. Tracing the light through it, he found that the main bow comes from two refractions and one reflection inside each drop, and the fainter outer bow from an extra reflection, which is also why its colours run the other way. At almost the same time Theodoric of Freiberg in Germany reached the same conclusion by the same kind of experiment. There is no sign either knew of the other.",
+   "detail": "Kamal al-Din al-Farisi · Tabriz, c. 1309",
+   "tags": [
+    "optics",
+    "light",
+    "tabriz"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "optics-basel-to-kepler",
+   "kind": "book",
+   "category": "Optics",
+   "title": "The Book of Optics reached Kepler through a Basel printer",
+   "story": "Ibn al-Haytham finished his Book of Optics in Cairo in the 1020s. Around 1200 it was translated into Latin under the name Alhazen, and it became the foundation of the subject in Europe. Roger Bacon used it, Witelo rewrote it at length, and John Peckham made a students' textbook out of it that was copied for two hundred years. In 1572 a printer at Basel, Friedrich Risner, issued the Latin Alhazen and Witelo together in a single volume. That book was on Kepler's desk. His own optics of 1604 is titled as a set of additions to Witelo, and it corrects Ibn al-Haytham on how the eye forms an image while working entirely inside the tradition that his book began.",
+   "detail": "Kitab al-Manazir · Cairo 1020s, Basel 1572",
+   "tags": [
+    "optics",
+    "books",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "arabic-star-names",
+   "kind": "science",
+   "category": "Stars",
+   "title": "Many of the brightest stars still carry Arabic names",
+   "story": "Look up on a clear night and you are mostly reading Arabic. Altair is al-nasr al-ta'ir, the flying eagle, and Vega is al-nasr al-waqi, the swooping one, two birds on opposite banks of the Milky Way. Aldebaran is al-dabaran, the follower, because it rises behind the Pleiades. Deneb is a tail, Rigel a foot, Fomalhaut the mouth of the fish, Algol the ghoul. Some are worn past recognition. Betelgeuse is usually explained as a misreading of the Arabic for the hand of the Jawza, one letter taken for another by a copyist. The names entered Latin through translations of Ptolemy and through star tables, and when the International Astronomical Union began fixing official spellings in 2016, a large share of the list was Arabic.",
+   "detail": "Star names in English · from Arabic star lists",
+   "tags": [
+    "stars",
+    "language",
+    "astronomy"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-idrisi-nubian-geography",
+   "kind": "book",
+   "category": "Cartography",
+   "title": "Europe read his geography for centuries under a wrong name",
+   "story": "Al-Idrisi finished his geography for Roger II of Sicily in January 1154. Its structure is a grid: the inhabited world divided into seven bands of climate, each band cut into ten sections, giving seventy sectional maps that fit together into one map of the world, with a chapter of description for each. Fewer than a dozen manuscripts survive. In 1592 an abridged Arabic version was printed at Rome, among the first Arabic books printed in Europe with movable type. A Latin translation followed in 1619, and its editors, not knowing who had written it, called it the Geographia Nubiensis. For most of two centuries European scholars cited an anonymous geographer from Nubia who had never existed.",
+   "detail": "Al-Idrisi · Palermo 1154, printed Rome 1592",
+   "tags": [
+    "maps",
+    "books",
+    "sicily"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "piri-reis-book-of-the-sea",
+   "kind": "book",
+   "category": "Cartography",
+   "title": "An admiral wrote sailing directions for every Mediterranean harbour",
+   "story": "Piri Reis is remembered for a fragment of a world map, but his working book was the Kitab-i Bahriye, the Book of the Sea. He compiled it in 1521 and expanded it in 1526 for Sultan Suleiman: around two hundred charts of the Mediterranean coasts, harbour by harbour, each with facing text on the depths, the anchorages, the currents and the winds, where to take on water and where the rocks lie. It is a pilot's manual rather than a display piece, and much of it records what he had seen himself in a lifetime at sea. He was executed at Cairo around 1553, in his eighties, after a campaign in the Gulf went wrong. Copies of the book kept being made regardless.",
+   "detail": "Piri Reis · Kitab-i Bahriye, 1521 and 1526",
+   "tags": [
+    "maps",
+    "navigation",
+    "ottoman"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-farghani-mile-columbus",
+   "kind": "book",
+   "category": "Astronomy",
+   "title": "Columbus sailed on a number he had converted wrongly",
+   "story": "Al-Farghani wrote an introduction to astronomy at Baghdad in the 830s, thirty short chapters with almost no mathematics in them, which is exactly why it served as the standard textbook for seven hundred years. Translated twice into Latin in the twelfth century, it is where Dante took his figures for the size of the heavens. It also carried the caliph al-Ma'mun's measurement of the earth, given as fifty six and two thirds miles to one degree of latitude. Those were Arabic miles, longer than Roman ones. Columbus, working from that figure, used the shorter mile, and so calculated an earth about a quarter smaller than it is, with Asia correspondingly nearer. How much was error and how much was wishful thinking is still argued.",
+   "detail": "Al-Farghani · Baghdad, c. 833 CE",
+   "tags": [
+    "astronomy",
+    "books",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-zarqali-toledan-tables",
+   "kind": "science",
+   "category": "Astronomy",
+   "title": "A Toledo instrument maker ended up correcting Ptolemy",
+   "story": "Al-Zarqali began as a metalworker in Toledo, making instruments to order for the astronomers of the city, who noticed how well he understood what he was building and gave him books. He went on to lead the group that produced the Toledan Tables around 1070. Translated into Latin, those were the tables Europe used for two centuries, until the Alfonsine Tables replaced them, and those were compiled in the same city. He tracked the slow drift of the point where the sun is furthest from the earth, which al-Battani had shown was moving but had not measured. He also designed an astrolabe plate that works at any latitude, as did a contemporary in Toledo, so a traveller no longer needed a separate disc for every city.",
+   "detail": "Al-Zarqali · Toledo, c. 1029-1100",
+   "tags": [
+    "astronomy",
+    "andalus",
+    "instruments"
+   ],
+   "lvl": "editorial"
+  }
+ ]
+}

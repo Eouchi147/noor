@@ -44,6 +44,17 @@ export default async function handler(req, res) {
     }
   } catch (e) { out.lantern = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
+  /* The day's post. It sends only if the social.auto dial is on, only once
+     per day whatever happens, and never before the owner has turned it on. */
+  try {
+    const { runDaily } = await import("./social.js");
+    out.social = await runDaily(String(host).replace(/^https?:\/\//, ""), today, {});
+    if (out.social && out.social.post) {
+      /* the caption is long and the console can read it from the log */
+      out.social.post = { id: out.social.post.light.id, title: out.social.post.light.title };
+    }
+  } catch (e) { out.social = { err: String(e && e.message || e).slice(0, 80) }; }
+
   /* On the first of the month the Lantern sorts the journal's replies. Doing it
      here rather than on its own schedule keeps the site to a single cron. */
   if (new Date().getUTCDate() === 1) {

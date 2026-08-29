@@ -103,6 +103,23 @@ on every cold start. The library itself is unaffected.
 | `ASK_PUBLIC`, `GUIDE_PUBLIC` | none | Open the ask and guide endpoints to the public |
 | `ANTHROPIC_API_KEY` | none | Unused on the current path. Safe to leave unset. |
 
+### The social machine, all optional
+
+Nothing is ever sent without **both** the credentials below and the `social.auto`
+dial turned on in Controls. With no credentials the console still composes and
+previews the post; it simply has nowhere to send it.
+
+| Variable | What it does |
+|---|---|
+| `FB_PAGE_ID` | The numeric id of the Facebook Page. Not the vanity name. |
+| `FB_PAGE_TOKEN` | A Page access token with `pages_manage_posts`. Long-lived. |
+| `IG_USER_ID` | The Instagram **business** account id linked to that Page. |
+| `IG_TOKEN` | Token for Instagram. If unset, `FB_PAGE_TOKEN` is used. |
+
+Instagram will only accept a **publicly reachable image URL**, which is why the
+card is served from `/api/card` on the live domain rather than uploaded as bytes.
+A preview built on a preview deployment cannot be posted to Instagram.
+
 ---
 
 ## 3. The Lantern, how the AI actually chooses a model
@@ -143,12 +160,62 @@ retired model names, waiting nine seconds each, and returning nothing.
 
 `/api/warm` runs at **04:00 UTC daily** (`vercel.json` → crons). It:
 1. forces a fresh free-model list into the store,
-2. generates the day's light and stores it,
+2. chooses and audits the day's light from the library, and stores it,
 3. runs a one-word probe and records the result at `nwarm:last`,
-4. on the 1st of the month, runs the journal triage.
+4. composes the day's social post, and sends it **only if `social.auto` is on**,
+5. on the 1st of the month, runs the journal triage.
 
 The health strip reads `nwarm:last`. **If "Nightly" says more than 36h, the cron is
 not running.**
+
+### What the Lantern is for, and what it is not for
+
+This is the design decision the whole daily-light system turns on, and it should
+survive any future rewrite.
+
+**The Lantern does not write facts. It edits a corpus that was written and validated
+in advance.**
+
+The old daily light asked a free model to produce a historical fact every morning.
+That is the single worst use of a language model this project could have made: it is
+the one job where being confidently wrong is invisible, unbounded, and published
+under the name of an Islamic library. It also meant that when the model went dark,
+the feature went dark.
+
+The library inverts it. `build/lights-*.json` holds 350 written, validated,
+source-carrying cards. Every morning:
+
+1. **The picker scores** every card against today, with no AI involved at all:
+   an exact Islamic day (10 Muharram, 17 Ramadan) outranks an exact Western
+   anniversary, which outranks the Islamic month, which outranks a season tag,
+   which outranks the general pool. A shuffle-bag ring of the last *n-1* ids means
+   every card is shown once before any is shown twice.
+2. **The Lantern is handed the top six** and asked to choose between them and say
+   why, in the reader's language, for today.
+3. **The Lantern is then asked to doubt its own pick.** If it raises a doubt, the
+   card is **held back, not published**, and the doubt is written to `nl:doubt`
+   where the owner reads it in the console. Nothing is auto-corrected.
+
+So the failure modes are bounded. If the model is dark, the picker still picks and
+the reader sees a real card, with `source: library`. If the model is wrong about
+*which* card fits today, the worst case is a true card on a slightly odd day. It
+can never publish a false fact, because it cannot write one.
+
+**This is the pattern to reach for everywhere else in the project.** The useful
+background jobs for a free model are all of this shape, judgment over material that
+is already true:
+
+| Job | What the model does | What it may never do |
+|---|---|---|
+| The day's light | Choose among six real cards, and doubt its choice | Write a fact |
+| The day's caption | Tighten wording the site already published | Add a number or a claim |
+| Journal triage | Sort replies by what needs the owner first | Publish or delete one |
+| Content vetting | Flag a passage that reads as a fatwa, or lacks a source | Rewrite the passage |
+
+The caption guard in `api/social.js` is the same principle made mechanical: if the
+polished caption contains **any number that was not in the original**, the original
+is sent instead and the refusal is logged. The model is allowed to improve the
+sentence. It is not allowed to add to it.
 
 ---
 
@@ -175,6 +242,10 @@ not running.**
 | `nm:*`, `nmh:*` | Beacon metrics | `beacon.js` |
 | `nl:*` | Lantern quota per reader | `ask.js` |
 | `noor:lantern:keys` | Issued Lantern keys | `ask.js` |
+| `nl:seen` | The rotation ring: the last *n-1* light ids shown | `_lights.js` |
+| `nl:doubt` | Cards the Lantern refused to publish, with its doubt | `_lights.js` |
+| `nsoc:day:<date>` | Written **before** the network calls, so a retry cannot double post | `social.js` |
+| `nsoc:log` | What has actually gone out, newest first | `social.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -186,7 +257,7 @@ stripped from everything public.
 
 | Route | Public? | What it does |
 |---|---|---|
-| `/api/illuminations` | yes | The day's light, the verse lamp, the Friday light. Falls back to a written treasury. |
+| `/api/illuminations` | yes | The day's light, the verse lamp, the Friday light. `?kind=light` now draws from the Illuminations Library via `_lights.js`; the written treasury is the last resort behind it. |
 | `/api/ask` | gated | The Lantern's public question box. Rate limited per reader. |
 | `/api/guide` | gated | The quiet clarifier |
 | `/api/daily-light` | internal | Called by illuminations |
@@ -199,7 +270,9 @@ stripped from everything public.
 | `/api/settings` | admin | Reads and writes `nb:settings`: every dial |
 | `/api/overrides` | admin | Content overrides |
 | `/api/admin-auth` | none | Unlocks the console, sets the signed cookie |
-| `/api/admin-data` | admin | The console's data, plus `?probe=lantern` |
+| `/api/admin-data` | admin | The console's data, plus `?probe=lantern` and `?probe=lights` |
+| `/api/card` | none | The day's card as SVG, or `?fmt=png` for the social image |
+| `/api/social` | admin | Compose, preview, post, and the log of what went out |
 | `/api/admin-vet` | admin | Runs the model over a piece of content |
 | `/api/admin-guardians` | admin | The Legacy pane |
 | `/api/assistant` | admin | The console's own assistant |
@@ -222,6 +295,7 @@ python3 scripts/gen-verse-notes.py     # /verse/index.json + /verse/<n>.json
 python3 scripts/gen-quran-study.py     # /study/<n>.json  + build/quran-study.js
 python3 scripts/gen-three-lives.py     # three-lives.html
 python3 scripts/gen-good-life.py       # good-life.html
+python3 scripts/gen-lights.py          # /lights/all.json + /lights/index.json
 python3 scripts/gen-<room>.py          # one room each
 node    scripts/build.mjs              # nodes.js, nodes-index.js, node/<id>.json
 ```
@@ -231,6 +305,18 @@ node    scripts/build.mjs              # nodes.js, nodes-index.js, node/<id>.jso
 so changing the menu means regenerating or re-injecting across every page.
 `scripts/synergy.py` emits the "Where to go from here" band **with its own stylesheet**
 ,  never hand-write that markup, it will render unstyled.
+
+### The Illuminations Library
+
+`scripts/gen-lights.py` is the only generator that is also a **validator**. It reads
+every `build/lights-*.json` tranche and refuses to write anything at all if it finds
+a duplicate id, an impossible date, a story shorter than 60 or longer than 190 words,
+an evidence level claiming a source it does not carry, an em dash, a banned word, a
+Gregorian day with no month, or a hijri day with no hijri month. On refusal it prints
+every problem and exits non-zero, so a bad card can never reach the site quietly.
+
+Add cards by editing or adding a tranche in `build/`, then run it. Output goes to
+`/lights/`, which the server reads once per start and caches for six hours.
 
 ### ⚠ Hazard list, read before running any generator
 
@@ -249,7 +335,9 @@ so changing the menu means regenerating or re-injecting across every page.
 python3 scripts/gen-verse-notes.py    # refuses to write if any verse note is malformed
 node scripts/check-admin.mjs          # console structure: every pane reachable
 node tests/lantern.mjs                # 25 · the model chain, no network needed
-node tests/api-audit.mjs              # 87 · every route: auth, caching, secrets, cold start
+node tests/lights.mjs                 # 24 · the library, the rotation, the anchors
+node tests/social.mjs                 # 23 · the caption guard and the double-post guard
+node tests/api-audit.mjs              # 97 · every route: auth, caching, secrets, cold start
 node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
 node tests/dials.mjs                  # the console's switches actually switch    (server :8433)
 node tests/figures.mjs                # every drawing on every page, 3 widths     (server :8433)
@@ -271,6 +359,10 @@ python3 /tmp/vercelish.py    # :8433, mimics Vercel's clean URLs
 - `figures.mjs`, 700 problems, including a gradient that had never once painted.
 - `symbols.mjs` , a Christian cross was drawn as a grave marker on an Islamic site.
 - `dials.mjs` , the journal was switched off in the console and kept working.
+- `lights.mjs` , fourteen written cards on a modulo meant a daily reader saw the
+  same card twenty six times a year, and a first fix still repeated cards early.
+- `social.mjs` , a caption that invents a number, or an em dash, must never leave
+  the building, and a retried cron must never post the same card twice.
 
 ---
 
@@ -324,6 +416,41 @@ If a reader-facing dial appears to do nothing, check in this order:
 3. The script **fails open by design**: if the request does not land, the site behaves
    exactly as built. A library that hides itself over a network hiccup is worse than
    one that shows a section an hour longer than intended. Verified in `tests/dials.mjs`.
+
+### Readers say they keep seeing the same daily light
+
+Open **Lights** in the console (`alt4`). "Cards" is the size of the library and
+"Repeats after" is how many mornings pass before any card can come round again.
+If that number is small, the library did not build: run `python3 scripts/gen-lights.py`
+and read what it refuses on. If it is large and readers still see repeats, the
+rotation ring is not being written, which means the store is down, so check the
+health strip first. **The picker is deliberate about this: it will show a card it
+has already shown only when it has run out of cards it has not.**
+
+### The Lantern held a card back
+
+The **What the Lantern questioned** list at the bottom of the Lights pane is cards
+the editor declined to publish, with the doubt it raised. Nothing was changed on the
+site and nothing was silently corrected. Check the claim yourself. If the card is
+wrong, fix it in `build/lights-*.json` and rebuild. If the Lantern was wrong, leave
+it, and it will come round again in the rotation.
+
+### The day's post did not go out
+
+Order of checks, cheapest first:
+
+1. **Controls → the social machine → "Post the day's light every morning."** Off
+   means nothing sends on a schedule, by design. This ships off.
+2. **Social pane → What has gone out.** A row with a red network means the call ran
+   and Meta refused it; the error is on the row.
+3. **No row at all** means the cron did not reach `runDaily`, or `nsoc:day:<date>`
+   was already written. That key is written *before* the network calls on purpose:
+   a retried cron will decline rather than post twice. Delete the key to allow a
+   re-send, and only if you are certain nothing went out.
+4. **Instagram alone failed.** It needs a publicly reachable image URL and will not
+   take one from a preview deployment. Facebook does not care.
+5. `Post this now` in the console runs the whole path by hand, including the
+   network calls, and prints exactly what came back. Use it before trusting a schedule.
 
 ### A reply got onto the journal that should not have
 

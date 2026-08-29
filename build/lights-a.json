@@ -1,0 +1,1274 @@
+{
+ "tranche": "a",
+ "lights": [
+  {
+   "id": "hijri-calendar-epoch-622",
+   "kind": "onthisday",
+   "category": "Calendar",
+   "title": "The Muslim year counts from a departure, not a birth",
+   "story": "Around 638 CE the caliph Umar ibn al-Khattab and his advisers had to decide where the Muslim calendar should begin. They did not choose the birth of the Prophet ﷺ, or the first revelation, or a victory. They chose the Hijra, the migration from Makkah to Yathrib, because that was when a scattered community became a society with obligations to one another. By the standard reckoning the first day of Muharram in year 1 falls on 16 July 622 in the Julian calendar. Every Islamic date since is counted from a group of refugees arriving in a town that agreed to take them in.",
+   "detail": "Set under Umar ibn al-Khattab · c. 638 CE",
+   "when": {
+    "y": 622,
+    "m": 7,
+    "d": 16
+   },
+   "hijri": {
+    "m": 1,
+    "d": 1
+   },
+   "tags": [
+    "calendar",
+    "hijra",
+    "time"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "constitution-of-medina-622",
+   "kind": "onthisday",
+   "category": "Governance",
+   "title": "Medina's founding document named Jews as part of one community",
+   "story": "Soon after arriving in Yathrib in 622, the Prophet ﷺ set out the terms on which a mixed town would live. The text, preserved by the early biographer Ibn Ishaq and usually called the Sahifa or Constitution of Medina, lists the tribes by name, including the Jewish clans, and states that they form one community alongside the believers. It guarantees them their religion, fixes who pays blood money for whom, requires joint defence of the town, and says disputes go to arbitration rather than feud. Historians treat it as one of the earliest written constitutional documents anywhere, and it was written for a place with more than one faith in it.",
+   "detail": "Yathrib, later Madinah · 622 CE",
+   "when": {
+    "y": 622
+   },
+   "tags": [
+    "governance",
+    "medina",
+    "law"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "abyssinia-first-refuge-615",
+   "kind": "onthisday",
+   "category": "Refuge",
+   "title": "The first Muslim refugees were sheltered by a Christian king",
+   "story": "Around 615 CE, with the Makkan boycott closing in, the Prophet ﷺ told a small group of his followers to cross the Red Sea to Abyssinia, telling them there was a king there under whom no one was wronged. A first party of about a dozen went, and more followed. Quraysh sent envoys with gifts to demand their return. The Aksumite ruler, called the Negus in Arabic sources, heard both sides, listened to a passage of the Qur'an about Jesus and Mary read aloud in his court, and refused to hand them over. The first migration in Islamic history was not to a Muslim country. It was asylum granted by someone of another faith.",
+   "detail": "Aksum, Abyssinia · c. 615 CE",
+   "when": {
+    "y": 615
+   },
+   "tags": [
+    "refuge",
+    "africa",
+    "early-islam"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "battle-of-badr-624",
+   "kind": "onthisday",
+   "category": "Early Islam",
+   "title": "Badr is the only battle the Qur'an names outright",
+   "story": "On 17 Ramadan in year 2 of the Hijra, which converts to 13 March 624, a small Muslim force met a far larger Makkan army at the wells of Badr, southwest of Madinah. The traditional count puts the Muslims at 313 men against roughly a thousand. The Qur'an refers to the day directly in Surah Al Imran, naming the place and reminding the community that it was given victory at Badr while it was weak. Prisoners taken that day were treated in a way that surprised their own side, and some literate captives were released in exchange for teaching Muslim children to write. It remains the single engagement the Qur'an mentions by name.",
+   "detail": "Wells of Badr · 17 Ramadan 2 AH, 13 March 624",
+   "when": {
+    "y": 624,
+    "m": 3,
+    "d": 13
+   },
+   "hijri": {
+    "m": 9,
+    "d": 17
+   },
+   "tags": [
+    "early-islam",
+    "ramadan",
+    "medina"
+   ],
+   "lvl": "quran",
+   "src": "Qur'an 3:123"
+  },
+  {
+   "id": "umar-jerusalem-covenant-637",
+   "kind": "onthisday",
+   "category": "Jerusalem",
+   "title": "Umar prayed outside the church so it would stay a church",
+   "story": "In 637 CE, some sources say 638, Jerusalem's Patriarch Sophronius handed the city over to the caliph Umar ibn al-Khattab, who came in plain clothes and on foot for part of the way. The written terms, known as the Umariyya covenant, guaranteed the safety of the inhabitants, their churches and their crosses, and stated that no church would be seized or destroyed. Later chroniclers report that when the hour of prayer came while Umar was inside the Church of the Holy Sepulchre, he stepped outside to pray, saying that if he prayed there Muslims after him would claim the spot. A small mosque stands opposite the church door to this day.",
+   "detail": "Jerusalem · 637 CE",
+   "when": {
+    "y": 637
+   },
+   "tags": [
+    "jerusalem",
+    "governance",
+    "caliphate"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "dome-of-the-rock-inscription-691",
+   "kind": "onthisday",
+   "category": "Architecture",
+   "title": "The oldest dated Qur'anic text is written on a wall",
+   "story": "The Dome of the Rock in Jerusalem was completed under the Umayyad caliph Abd al-Malik, and the mosaic inscription running around its inner octagon gives the year 72 of the Hijra, which is 691 to 692 CE. That band of gold on blue, some 240 metres of it, carries Qur'anic verses and is the oldest securely dated Qur'anic text that survives anywhere in the world. It is older than any surviving complete manuscript. The building itself is not a mosque but a shrine over the rock, and its octagonal plan and dome were built by craftsmen working in a late Roman and Byzantine tradition, for a new patron and a new text.",
+   "detail": "Jerusalem · 72 AH, 691 CE",
+   "when": {
+    "y": 691
+   },
+   "tags": [
+    "architecture",
+    "jerusalem",
+    "quran"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "tariq-gibraltar-711",
+   "kind": "onthisday",
+   "category": "Al-Andalus",
+   "title": "Gibraltar is a rock named after a Berber commander",
+   "story": "In 711 a force led by Tariq ibn Ziyad, a Berber commander in Umayyad service, crossed the strait from North Africa and landed at the great rock at its northern end. The Arabic name for the place became Jabal Tariq, the mountain of Tariq, and that is what Spanish and then English wore down into Gibraltar. Within a few years most of the Iberian peninsula was under Muslim rule, and it would remain so in part for nearly eight hundred years. Millions of people say the name of a seventh century North African officer every time they mention the strait, the rock, or the airport built on the isthmus below it.",
+   "detail": "Jabal Tariq · 711 CE",
+   "when": {
+    "y": 711
+   },
+   "tags": [
+    "andalus",
+    "language",
+    "north-africa"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "baghdad-round-city-762",
+   "kind": "onthisday",
+   "category": "Cities",
+   "title": "Baghdad was built as a perfect circle and nothing remains",
+   "story": "In 762 the Abbasid caliph al-Mansur laid out a new capital on the Tigris and called it Madinat al-Salam, the City of Peace. It was circular, a double ring of walls with four equidistant gates, the mosque and the palace at the exact centre, and the chroniclers describe tens of thousands of workers brought in to build it. Within a century it was among the largest cities on earth and the place where Greek, Persian, Syriac and Sanskrit books were translated into Arabic. Not one stone of the Round City has been located with certainty today. The plan survives only in the descriptions of the geographers who walked through its gates.",
+   "detail": "Al-Mansur · Baghdad, 762 CE",
+   "when": {
+    "y": 762
+   },
+   "tags": [
+    "baghdad",
+    "cities",
+    "abbasid"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "indian-numerals-baghdad-773",
+   "kind": "onthisday",
+   "category": "Mathematics",
+   "title": "The numbers we use came to Baghdad from India in 773",
+   "story": "In 773 an embassy from Sind reached the court of the caliph al-Mansur carrying an Indian astronomical work, a Siddhanta, most likely Brahmagupta's. It was translated into Arabic as the Zij al-Sindhind, and with it came the decimal place value system and the zero, which Indian mathematicians had developed. Arabic writers were clear about the debt and called the figures al-arqam al-hindiyya, the Indian numerals. When the system reached Europe through Arabic books, Europeans called them Arabic numerals, after the language they had read them in. The digits on every phone screen carry two civilisations in their name, and the older claim belongs to India.",
+   "detail": "Court of al-Mansur, Baghdad · 773 CE",
+   "when": {
+    "y": 773
+   },
+   "tags": [
+    "mathematics",
+    "india",
+    "transmission"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "first-paper-mill-baghdad-794",
+   "kind": "onthisday",
+   "category": "Paper",
+   "title": "A paper mill in Baghdad changed what a book cost",
+   "story": "Papermaking was invented in China. It reached Central Asia through Samarkand, and around 794, during the reign of Harun al-Rashid, a paper mill was set up in Baghdad, credited to his vizier al-Fadl ibn Yahya. Paper was cheaper than parchment and harder to erase than papyrus, which made it good for both scholarship and government records. Within a generation the state chancery had moved to paper, booksellers filled a street of their own, and the copying of books became an ordinary trade rather than a luxury craft. The translation movement and the libraries that followed rested on a Chinese invention passed westward, and on a mill by a river.",
+   "detail": "Baghdad · c. 794 CE",
+   "when": {
+    "y": 794
+   },
+   "tags": [
+    "paper",
+    "books",
+    "abbasid"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "maamun-earth-measurement-830",
+   "kind": "onthisday",
+   "category": "Geodesy",
+   "title": "Two teams walked in opposite directions to measure the earth",
+   "story": "Around 830 the caliph al-Ma'mun sent surveyors to the flat plain of Sinjar, north of the Tigris, with a task: find the length of one degree of latitude. Two parties started from the same point, one walking north and one south, measuring the ground as they went, until each found the pole star had shifted by one degree. Their answer was about 56 and two thirds Arabic miles per degree. Converted into a circumference for the whole earth it comes close to the modern figure, though how close depends on which mile they were using, and that is still argued. What is not in doubt is the method: not a calculation from books, but people counting paces across a plain.",
+   "detail": "Plain of Sinjar · c. 830 CE",
+   "when": {
+    "y": 830
+   },
+   "tags": [
+    "astronomy",
+    "geography",
+    "abbasid"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "zubayda-pilgrim-road-831",
+   "kind": "onthisday",
+   "category": "Water",
+   "title": "A caliph's wife paid for the water on the Makkah road",
+   "story": "Zubayda bint Ja'far, wife of Harun al-Rashid, made the hajj and saw pilgrims dying of thirst on the route from Kufa to Makkah. She spent her own fortune on the problem: wells, cisterns, paved stretches, milestones and waystations along some 1,500 kilometres of desert road, and a spring channel at Makkah itself that carried water into the city. The road has been called Darb Zubayda, Zubayda's Road, ever since, and the archaeological remains of its pools and wells are still mapped across Iraq and Saudi Arabia. She died in 831. Her name survived not through a battle or a dynasty but through drinking water.",
+   "detail": "Zubayda bint Ja'far · died 831 CE",
+   "when": {
+    "y": 831
+   },
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "water",
+    "women",
+    "hajj"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "nilometer-rawda-861",
+   "kind": "onthisday",
+   "category": "Measurement",
+   "title": "A marble column in Cairo set the year's tax rate",
+   "story": "On Rawda Island in the Nile stands a stone pit with a marble column at its centre, marked off in cubits. It was rebuilt in 861 under the caliph al-Mutawakkil, and the astronomer Ahmad ibn Muhammad al-Farghani is named as its designer. Each summer the river rose, and the height it reached on that column decided everything: too low meant famine, too high meant destroyed villages, and a good flood meant the year's taxes could be levied. Officials read the mark and criers announced the number in the streets. The nilometer still stands, its Kufic inscriptions intact, one of the oldest Islamic structures in Egypt and a piece of public infrastructure that doubled as a public forecast.",
+   "detail": "Rawda Island, Cairo · 861 CE",
+   "when": {
+    "y": 861
+   },
+   "tags": [
+    "measurement",
+    "egypt",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "bukhari-sahih-870",
+   "kind": "onthisday",
+   "category": "Hadith",
+   "title": "He spent sixteen years deciding what to leave out",
+   "story": "Muhammad ibn Ismail al-Bukhari was born in Bukhara in 810 and died in 870. He travelled for years through Khurasan, Iraq, the Hijaz, Syria and Egypt collecting reports of what the Prophet ﷺ said and did, and interrogating the people who transmitted them: where they lived, whether they had actually met their teacher, whether anyone doubted their memory or honesty. The point of the work was subtraction. His Sahih contains roughly 7,275 reports counting repetitions, sifted out of a far greater mass he had gathered and rejected. The discipline he helped build, weighing a chain of names before weighing the text, is one of the earliest systematic methods for testing testimony.",
+   "detail": "Al-Bukhari · 810-870 CE",
+   "when": {
+    "y": 870
+   },
+   "tags": [
+    "hadith",
+    "central-asia",
+    "method"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-kindi-frequency-analysis-873",
+   "kind": "onthisday",
+   "category": "Cryptography",
+   "title": "Codebreaking was invented by counting letters in Arabic",
+   "story": "Al-Kindi, the philosopher of Baghdad who died around 873, wrote a short treatise on deciphering encrypted messages. In it he explains that if you know the language a message is written in, you take a long ordinary text in that language, count how often each letter appears, then count the symbols in the cipher and match the most frequent to the most frequent. That is frequency analysis, and it broke every simple substitution cipher for the next seven hundred years. The manuscript was lost for centuries and was rediscovered in 1987 in the Ottoman archive in Istanbul. Scholars of the Qur'an had already been counting letters and word frequencies, which is where the habit came from.",
+   "detail": "Al-Kindi · Baghdad, died c. 873 CE",
+   "when": {
+    "y": 873
+   },
+   "tags": [
+    "cryptography",
+    "language",
+    "baghdad"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cordoba-caliphate-929",
+   "kind": "onthisday",
+   "category": "Al-Andalus",
+   "title": "Cordoba declared itself a caliphate in January 929",
+   "story": "On 16 January 929, Abd al-Rahman III, ruler of a fractured al-Andalus he had spent seventeen years pulling back together, stopped calling himself emir and took the titles of caliph and commander of the faithful. It was a direct claim against Baghdad and against the Fatimids in North Africa, and it made Cordoba the seat of a third caliphate. Under him and his son the city grew into one of the largest in Europe, with paved and lit streets, public baths, a court that employed Muslims, Christians and Jews, and a library that scholars crossed the continent to use. The caliphate he proclaimed lasted just over a century before civil war broke it apart.",
+   "detail": "Abd al-Rahman III · Cordoba, 929 CE",
+   "when": {
+    "y": 929,
+    "m": 1,
+    "d": 16
+   },
+   "tags": [
+    "andalus",
+    "cordoba",
+    "governance"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-sufi-andromeda-964",
+   "kind": "onthisday",
+   "category": "Astronomy",
+   "title": "A little cloud in his star book was another galaxy",
+   "story": "In 964 the Persian astronomer Abd al-Rahman al-Sufi finished his Book of Fixed Stars in Isfahan. He went through Ptolemy's catalogue constellation by constellation, checked every star with his own eyes, corrected magnitudes and positions, drew each constellation twice, as seen on a globe and as seen in the sky, and recorded the Arabic names Bedouin observers already used. In Andromeda he described a small cloud, a faint patch that was not a star. It is the earliest known record of the Andromeda galaxy, which no one would understand as a separate galaxy until the 1920s. His book was copied and translated for six hundred years, and many star names in use today come through it.",
+   "detail": "Al-Sufi · Isfahan, 964 CE",
+   "when": {
+    "y": 964
+   },
+   "tags": [
+    "astronomy",
+    "stars",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cairo-founded-969",
+   "kind": "onthisday",
+   "category": "Cities",
+   "title": "Cairo was laid out as a private city for one dynasty",
+   "story": "In 969 the Fatimid general Jawhar al-Siqilli, a former slave of Sicilian origin, took Egypt for the caliph al-Mu'izz and marked out a walled enclosure north of the existing town of Fustat. It was called al-Qahira, the victorious, and it was not built for the public: it held the palaces, the guard and the administration, and ordinary Egyptians lived outside it. Within two centuries the walls had been overtaken and the name had spread to the whole city. Europeans took al-Qahira into their languages as Cairo. Egyptians still often call it simply Misr, the name of the country itself, because for a long time the city and the country were spoken of as one thing.",
+   "detail": "Jawhar al-Siqilli · Cairo, 969 CE",
+   "when": {
+    "y": 969
+   },
+   "tags": [
+    "cairo",
+    "fatimid",
+    "cities"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-azhar-founded-970",
+   "kind": "onthisday",
+   "category": "Learning",
+   "title": "Al-Azhar was founded by one sect and outlived it",
+   "story": "Construction of the mosque of al-Azhar in Cairo began in 970 under the Fatimids, and the first Friday prayer was held there in 972. It was built to teach and spread Ismaili Shi'i doctrine, and for two centuries that is what it did. When Salah ad-Din ended Fatimid rule in 1171 the mosque was turned to Sunni teaching, and it has taught, with one long interruption, ever since. Its method was circles on the floor: a teacher against a pillar, students around him, a licence granted by the teacher rather than the institution. More than a thousand years later it is still one of the central seats of Sunni learning, in a building begun by the people whose theology it now teaches against.",
+   "detail": "Cairo · founded 970, first prayer 972",
+   "when": {
+    "y": 970
+   },
+   "tags": [
+    "learning",
+    "cairo",
+    "institutions"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "cordoba-library-al-hakam-976",
+   "kind": "onthisday",
+   "category": "Libraries",
+   "title": "Cordoba's caliph read the books before he shelved them",
+   "story": "Al-Hakam II, who ruled Cordoba from 961 to 976, was a collector on a state scale. He sent agents to Baghdad, Cairo and Damascus with orders to buy or copy anything worth having, paid scribes in several cities to work for him, and according to the sources built a library whose catalogue alone ran to 44 volumes. The figure usually given for the collection is 400,000 volumes, which comes from later writers and may be generous, but no one disputes it was the largest in Europe. Marginal notes in his own hand survive in some manuscripts. After his death much of it was dispersed or burned during the civil wars that broke the caliphate apart.",
+   "detail": "Al-Hakam II · Cordoba, died 976 CE",
+   "when": {
+    "y": 976
+   },
+   "tags": [
+    "libraries",
+    "andalus",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-biruni-india-1030",
+   "kind": "onthisday",
+   "category": "Anthropology",
+   "title": "He learned Sanskrit to describe Hinduism in its own words",
+   "story": "Al-Biruni finished his book on India around 1030. He had gone there with Mahmud of Ghazna's campaigns, but what he wrote was not a conqueror's report. He learned Sanskrit, read the Puranas and the Bhagavad Gita, sat with Brahmins, and stated his method at the start: he would report what Hindus themselves say, in their own terms, and would not argue with them in the telling. He compared their astronomy with Greek astronomy, described their weights, calendars, castes and festivals, and noted where he thought they were mistaken and where he thought his own side was. The book is still used by historians as the best outside account of eleventh century India.",
+   "detail": "Al-Biruni · c. 1030 CE",
+   "when": {
+    "y": 1030
+   },
+   "tags": [
+    "india",
+    "science",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "nizamiyya-baghdad-1065",
+   "kind": "onthisday",
+   "category": "Learning",
+   "title": "The Seljuk state paid students to study, from 1065",
+   "story": "Nizam al-Mulk, vizier to the Seljuk sultans, began building the Nizamiyya of Baghdad in 1065 and opened it in 1067. What was new was not teaching, which had always happened in mosques, but the funding: a permanent endowment, a waqf, paid the professors a salary, gave students stipends and lodging, and maintained a library, so that a poor student could study without a patron. He founded sister colleges in Nishapur, Isfahan, Basra and other cities. Al-Ghazali held the chair in Baghdad. The model, an endowed college with salaried teachers and funded students, spread across the Muslim world and is one of the ancestors of the modern university.",
+   "detail": "Nizam al-Mulk · Baghdad, 1065 CE",
+   "when": {
+    "y": 1065
+   },
+   "tags": [
+    "learning",
+    "seljuk",
+    "waqf"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "manzikert-1071",
+   "kind": "onthisday",
+   "category": "Seljuks",
+   "title": "One August day in 1071 opened Anatolia to Turkish settlement",
+   "story": "On 26 August 1071 the Seljuk sultan Alp Arslan met the Byzantine emperor Romanos IV Diogenes near Manzikert, in what is now eastern Turkey. Alp Arslan had been trying to avoid the battle and had offered terms. He won it, and captured the emperor, who by most accounts was treated courteously and released for a ransom that was never fully paid. The consequences were not military so much as demographic. Byzantine control of the Anatolian interior collapsed into civil war, Turkoman groups moved in over the following decades, and the region that had been Greek speaking for well over a thousand years slowly became the Turkish speaking country it is today.",
+   "detail": "Alp Arslan · Manzikert, 26 August 1071",
+   "when": {
+    "y": 1071,
+    "m": 8,
+    "d": 26
+   },
+   "tags": [
+    "seljuk",
+    "anatolia",
+    "battle"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "jalali-calendar-1079",
+   "kind": "onthisday",
+   "category": "Calendar",
+   "title": "Omar Khayyam helped fix a calendar still used in Iran",
+   "story": "The Seljuk sultan Malik Shah asked for a solar calendar that would keep the seasons in place, and a committee of astronomers, among them the poet and mathematician Omar Khayyam, worked at an observatory in Isfahan to produce one. The Jalali calendar they delivered begins on 15 March 1079, with the year starting at the exact moment the sun crosses the equator at the spring equinox rather than by a fixed rule. Its year tracks the sun more closely than the Julian calendar then in use in Europe, and more closely than the Gregorian reform that came five centuries later. A direct descendant of it is the official calendar of Iran and Afghanistan today.",
+   "detail": "Isfahan · epoch 15 March 1079",
+   "when": {
+    "y": 1079,
+    "m": 3,
+    "d": 15
+   },
+   "tags": [
+    "calendar",
+    "astronomy",
+    "persia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-ghazali-leaves-baghdad-1095",
+   "kind": "onthisday",
+   "category": "Thought",
+   "title": "The most famous teacher in Baghdad walked away in 1095",
+   "story": "Al-Ghazali held the chair at the Nizamiyya of Baghdad, the most prestigious teaching post in the Muslim world, with hundreds of students. In 1095 he had a breakdown he described plainly in his own account: he found he could not speak in the lecture hall, could not swallow food, and could not tell whether he was teaching for God or for his reputation. He gave away most of what he owned, left the city under the cover of going on pilgrimage, and spent about eleven years in Damascus, Jerusalem, Makkah and back home in Tus. Out of that came the Revival of the Religious Sciences, still one of the most widely read books in Islam.",
+   "detail": "Al-Ghazali · Baghdad, 1095 CE",
+   "when": {
+    "y": 1095
+   },
+   "tags": [
+    "thought",
+    "baghdad",
+    "tazkiyah"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-idrisi-world-map-1154",
+   "kind": "onthisday",
+   "category": "Geography",
+   "title": "He drew the world with south at the top",
+   "story": "Al-Idrisi, born in Ceuta and trained in Cordoba, spent about fifteen years at the Norman court of Roger II in Palermo, interviewing travellers and merchants and checking their accounts against each other. In 1154 he delivered a book of geography and a world map engraved on a great disc of silver, which was later broken up and lost. The maps that survive in the manuscripts show south at the top, following a convention of the time, so the familiar shape of Africa and Arabia sits upside down to a modern eye. His work was made for a Christian king by a Muslim scholar using Norman, Arab, Greek and Jewish informants, and it stayed a standard reference in Europe for three centuries.",
+   "detail": "Al-Idrisi · Palermo, 1154 CE",
+   "when": {
+    "y": 1154
+   },
+   "tags": [
+    "geography",
+    "maps",
+    "sicily"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "saladin-jerusalem-1187",
+   "kind": "onthisday",
+   "category": "Jerusalem",
+   "title": "Jerusalem changed hands in 1187 without a massacre",
+   "story": "On 2 October 1187, corresponding to 27 Rajab 583, Salah ad-Din took Jerusalem after a short siege. The terms were negotiated with Balian of Ibelin: the inhabitants could buy their freedom at a fixed rate per head, and those who could not pay were to be enslaved. In the event large numbers were released without payment, some ransomed by Salah ad-Din and his brother from their own funds, and the Christian population was allowed to leave with what it could carry. Eastern Christians were permitted to stay, and Jews were allowed to resettle in the city. The contrast with the sack of 1099 was noted by chroniclers on both sides at the time.",
+   "detail": "Salah ad-Din · Jerusalem, 2 October 1187",
+   "when": {
+    "y": 1187,
+    "m": 10,
+    "d": 2
+   },
+   "hijri": {
+    "m": 7,
+    "d": 27
+   },
+   "tags": [
+    "jerusalem",
+    "salah-ad-din",
+    "mercy"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "saladin-death-1193",
+   "kind": "onthisday",
+   "category": "Rulers",
+   "title": "Salah ad-Din died owning one gold piece and no property",
+   "story": "Salah ad-Din died in Damascus on 4 March 1193, in his mid fifties, after a fever of about two weeks. He had ruled Egypt and Syria and had commanded armies for twenty years. His secretary and biographer Baha al-Din ibn Shaddad, who was present, records that when the estate was counted there were 47 silver dirhams and one piece of gold in the treasury, and that he owned no house, no garden, no village and no farm. There was not enough money on hand to pay for the funeral, and the sum had to be borrowed. His tomb, a modest chamber next to the Umayyad Mosque in Damascus, can still be visited.",
+   "detail": "Damascus · 4 March 1193",
+   "when": {
+    "y": 1193,
+    "m": 3,
+    "d": 4
+   },
+   "tags": [
+    "salah-ad-din",
+    "damascus",
+    "character"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-jazari-machines-1206",
+   "kind": "onthisday",
+   "category": "Engineering",
+   "title": "A palace engineer drew fifty machines and how to build them",
+   "story": "In 1206, at the Artuqid court in Diyarbakir, al-Jazari finished the Book of Knowledge of Ingenious Mechanical Devices. It describes about fifty machines with exploded diagrams and step by step instructions: water clocks including an elephant clock combining Indian, Greek, Chinese and Arab parts, hand washing basins that pour and refill, musical automata, and pumps for raising water. Historians of technology point to his use of the crankshaft joined to a connecting rod, and of segmental gears and a camshaft, in working machines. He wrote that he would describe nothing he had not built and tested himself. He died the year the book was completed.",
+   "detail": "Al-Jazari · Diyarbakir, 1206 CE",
+   "when": {
+    "y": 1206
+   },
+   "tags": [
+    "engineering",
+    "machines",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-al-nafis-circulation-1242",
+   "kind": "onthisday",
+   "category": "Medicine",
+   "title": "He corrected Galen on the heart and was lost for centuries",
+   "story": "Around 1242, in Cairo, the Syrian physician Ibn al-Nafis wrote a commentary on the anatomy in Ibn Sina's Canon and disagreed with both Ibn Sina and Galen. The accepted view was that blood passed from the right side of the heart to the left through invisible pores in the wall between them. Ibn al-Nafis wrote that the wall is solid, with no pores, and that the blood must travel from the right chamber to the lungs, mix with air there, and return to the left. That is the pulmonary circulation, described three centuries before European anatomists. His text sat unread until a physician, Muhyi al-Din al-Tatawi, found it in a Berlin manuscript and published on it in 1924.",
+   "detail": "Ibn al-Nafis · Cairo, c. 1242 CE",
+   "when": {
+    "y": 1242
+   },
+   "tags": [
+    "medicine",
+    "cairo",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "shajar-al-durr-1250",
+   "kind": "onthisday",
+   "category": "Rulers",
+   "title": "A former slave ruled Egypt with coins in her own name",
+   "story": "When the sultan al-Salih Ayyub died in 1249 with a French army in the Nile delta, his widow Shajar al-Durr, who had been bought as a slave, concealed his death, kept issuing orders in his name, and held the campaign together until his son arrived. The son was killed by the army months later, and in 1250 the commanders made her sultan. Coins were struck in her name and the Friday sermon was said for her, the two public marks of sovereignty. Her rule lasted about three months before pressure from Baghdad forced her to marry her commander Aybak and rule beside him. Her reign is generally taken as the start of the Mamluk state in Egypt.",
+   "detail": "Shajar al-Durr · Cairo, 1250 CE",
+   "when": {
+    "y": 1250
+   },
+   "tags": [
+    "women",
+    "mamluk",
+    "egypt"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "baghdad-1258",
+   "kind": "onthisday",
+   "category": "Baghdad",
+   "title": "Baghdad fell in February 1258 and the books went to Maragha",
+   "story": "Hulagu's Mongol army reached Baghdad in January 1258. The caliph al-Musta'sim surrendered on 10 February, and the city was sacked over the following week. Five centuries of libraries were destroyed, and the canal system that fed the region was damaged past easy repair. One thing was saved deliberately: the astronomer Nasir al-Din al-Tusi, who was travelling with Hulagu, secured books and instruments and persuaded him to fund an observatory. It was built at Maragha, in what is now northwest Iran, and within a few years it held a large library and a team of astronomers from as far as China. The tables they produced there corrected Ptolemy and were read for centuries.",
+   "detail": "Baghdad · 10 February 1258",
+   "when": {
+    "y": 1258,
+    "m": 2,
+    "d": 10
+   },
+   "tags": [
+    "baghdad",
+    "mongols",
+    "libraries"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ayn-jalut-1260",
+   "kind": "onthisday",
+   "category": "Mongols",
+   "title": "The Mongol advance west stopped at a spring in Galilee",
+   "story": "On 3 September 1260 a Mamluk army from Egypt under Qutuz and Baybars met a Mongol force under Kitbuqa at Ayn Jalut, the Spring of Goliath, in Galilee. The Mongols had taken Baghdad two years earlier and Aleppo and Damascus that spring, and had not been defeated in a pitched battle in the region. They were beaten at Ayn Jalut and their commander was killed. The Mamluks drew them in with a feigned retreat of the kind the Mongols themselves favoured. Historians debate how decisive one battle can be, since Hulagu had already withdrawn most of his army eastward, but the westward advance never resumed.",
+   "detail": "Ayn Jalut, Galilee · 3 September 1260",
+   "when": {
+    "y": 1260,
+    "m": 9,
+    "d": 3
+   },
+   "hijri": {
+    "m": 9
+   },
+   "tags": [
+    "mongols",
+    "mamluk",
+    "battle"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "rumi-death-1273",
+   "kind": "onthisday",
+   "category": "Poetry",
+   "title": "Rumi called the night he died his wedding night",
+   "story": "Jalal ad-Din Rumi died in Konya on 17 December 1273. He had told those around him not to mourn, because he understood death as a meeting rather than an ending, and the anniversary is still called Sheb-i Arus, the wedding night. The early accounts of his funeral describe Christians, Jews and Muslims in the same procession, each group reading from its own scripture, and say the crowd took most of a day to reach the grave. He wrote in Persian, some 25,000 couplets in the Masnavi alone, and his son organised his followers into the order later known in the West as the whirling dervishes. Konya still marks the date every December.",
+   "detail": "Konya · 17 December 1273",
+   "when": {
+    "y": 1273,
+    "m": 12,
+    "d": 17
+   },
+   "tags": [
+    "poetry",
+    "sufism",
+    "anatolia"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "qalawun-hospital-1284",
+   "kind": "onthisday",
+   "category": "Medicine",
+   "title": "A Cairo hospital was endowed to turn nobody away",
+   "story": "The Mamluk sultan Qalawun founded a hospital in Cairo in 1284, on the site of a former Fatimid palace, as part of a complex that also held a school and his tomb. Its endowment deed, a legal document that survives, set out how it was to run: separate wards for different illnesses, a pharmacy, a library, a salaried staff of physicians, oculists and surgeons, and treatment funded by the endowment so that payment was never required of the patient. Sick people who could not work were given an allowance on discharge. Endowed hospitals of this kind, called bimaristans, existed across the Muslim world from the ninth century. The Cairo site has served the sick almost continuously since, and an eye hospital still operates there.",
+   "detail": "Bimaristan al-Mansuri · Cairo, 1284 CE",
+   "when": {
+    "y": 1284
+   },
+   "tags": [
+    "medicine",
+    "waqf",
+    "cairo"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ghazan-converts-1295",
+   "kind": "onthisday",
+   "category": "Mongols",
+   "title": "The grandson of Baghdad's destroyer became a Muslim ruler",
+   "story": "In 1295 Ghazan, great grandson of Hulagu who had sacked Baghdad, accepted Islam shortly before taking the Ilkhanid throne in Iran, and much of the Mongol army in the region followed. Within four decades of the destruction of 1258 the conquering dynasty had adopted the religion of the conquered, and Ghazan spent his short reign rebuilding: a currency reform, a fixed land tax to stop soldiers extorting villages, roads and post stations, and endowed hospitals and schools in Tabriz. He commissioned Rashid al-Din, a physician of Jewish birth who had become Muslim, to write a history of the world including the Franks, the Chinese and the Indians. It is one of the first histories written on that scale anywhere.",
+   "detail": "Ghazan Khan · Iran, 1295 CE",
+   "when": {
+    "y": 1295
+   },
+   "tags": [
+    "mongols",
+    "persia",
+    "conversion"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "samudera-pasai-gravestone-1297",
+   "kind": "onthisday",
+   "category": "Malay World",
+   "title": "A gravestone in Sumatra dates Islam in Southeast Asia",
+   "story": "At Pasai, on the north coast of Sumatra, stands the tombstone of Sultan Malik al-Salih, carved with the date 696 of the Hijra, which is 1297. It is the earliest firmly dated evidence of a Muslim ruler anywhere in Southeast Asia, and the stone itself appears to have been imported from Cambay in Gujarat, which says something about who was sailing where. Marco Polo, passing the same coast in 1292, noted that the people of the port of Perlak had become Muslim through contact with merchants. Islam reached the region not by conquest but along the monsoon trade routes, carried by traders and teachers, and it is now the religion of more people in Southeast Asia than in the Arab world.",
+   "detail": "Samudera Pasai, Sumatra · 1297 CE",
+   "when": {
+    "y": 1297
+   },
+   "tags": [
+    "malay-world",
+    "trade",
+    "archaeology"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "mansa-musa-hajj-1324",
+   "kind": "onthisday",
+   "category": "West Africa",
+   "title": "Mansa Musa's hajj was still being discussed in Cairo years later",
+   "story": "In 1324 Mansa Musa, ruler of Mali, crossed the Sahara for the hajj with a very large caravan. In Cairo he gave away and spent so much gold that, according to the Egyptian official al-Umari who was writing about twelve years afterwards, the price of gold in the city had still not recovered and local people were talking about it. On the way home he recruited scholars and an architect from Granada, Abu Ishaq al-Sahili, who worked at Timbuktu and Gao. The Djinguereber mosque at Timbuktu dates from that return. European mapmakers, hearing the reports, began drawing a king with a gold nugget in the middle of Africa.",
+   "detail": "Mansa Musa of Mali · hajj of 1324",
+   "when": {
+    "y": 1324
+   },
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "west-africa",
+    "hajj",
+    "mali"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ibn-battuta-kilwa-1331",
+   "kind": "onthisday",
+   "category": "Swahili Coast",
+   "title": "An East African island city impressed the world's great traveller",
+   "story": "In 1331 Ibn Battuta sailed down the East African coast to Kilwa, an island town in what is now Tanzania, and wrote that it was one of the finest and most substantially built towns he had seen. Kilwa lived on the Indian Ocean trade, exporting gold brought north from the Zimbabwe plateau through Sofala, and importing Chinese porcelain, glass and cloth. Its ruler built the Husuni Kubwa palace, with an octagonal bathing pool cut into the cliff, and a great mosque roofed with coral stone domes. The ruins of both stand today. The Swahili language and the stone towns of the coast grew out of centuries of Africans and Arabs and Persians and Indians trading in the same ports.",
+   "detail": "Kilwa Kisiwani · 1331 CE",
+   "when": {
+    "y": 1331
+   },
+   "tags": [
+    "east-africa",
+    "trade",
+    "swahili"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muqaddimah-1377",
+   "kind": "onthisday",
+   "category": "History",
+   "title": "He invented a science of society in five months",
+   "story": "Ibn Khaldun, out of political favour and living in a castle in what is now Algeria, wrote the first draft of the Muqaddimah in 1377. He says it took him about five months. It was meant as the introduction to a history of the Arabs and Berbers, but it turned into something else: an argument that history should be tested like any other report, that a chronicle full of impossible numbers should be rejected on the grounds of what economies and armies can actually sustain, and that dynasties rise and fall by a pattern in group solidarity that he called asabiyya. He gave the subject a name, the science of human social organisation. Sociologists and economists still read it.",
+   "detail": "Ibn Khaldun · Qal'at Ibn Salama, 1377 CE",
+   "when": {
+    "y": 1377
+   },
+   "tags": [
+    "history",
+    "thought",
+    "north-africa"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "al-kashi-pi-1424",
+   "kind": "onthisday",
+   "category": "Mathematics",
+   "title": "A Samarkand mathematician held the record for pi for 180 years",
+   "story": "In 1424, working at Ulugh Beg's observatory in Samarkand, Jamshid al-Kashi wrote a short treatise on the circumference of the circle. Using a polygon of more than eight hundred million sides, he calculated two pi correct to sixteen decimal places, and explained why he had gone that far: he wanted the error in a circle the size of the known universe to be less than the width of a horse's hair. Nobody improved on his figure for about 180 years, until Ludolph van Ceulen in the Netherlands. Al-Kashi also set out decimal fractions systematically in his Key to Arithmetic three years later, and gave an iterative method for solving cubic equations.",
+   "detail": "Al-Kashi · Samarkand, 1424 CE",
+   "when": {
+    "y": 1424
+   },
+   "tags": [
+    "mathematics",
+    "central-asia",
+    "precision"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ulugh-beg-catalogue-1437",
+   "kind": "onthisday",
+   "category": "Astronomy",
+   "title": "A prince measured a thousand stars and timed the year",
+   "story": "Ulugh Beg was a grandson of Timur and governor of Samarkand, and he was more interested in the sky than in ruling. In the 1420s he built an observatory whose main instrument was a sextant arc about forty metres in radius, sunk into a trench in the rock so it could not shift. In 1437 his team completed the Zij-i Sultani, a catalogue of 1,018 stars measured fresh rather than copied from Ptolemy, along with a value for the length of the year that is within about a minute of the modern figure. He was killed in 1449. The buried arc of his instrument was rediscovered by excavation in 1908 and can be visited.",
+   "detail": "Ulugh Beg · Samarkand, 1437 CE",
+   "when": {
+    "y": 1437
+   },
+   "tags": [
+    "astronomy",
+    "central-asia",
+    "observatory"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "constantinople-1453",
+   "kind": "onthisday",
+   "category": "Ottomans",
+   "title": "A twenty one year old took Constantinople in May 1453",
+   "story": "On 29 May 1453 the Ottoman sultan Mehmed II entered Constantinople after a siege of about seven weeks. He was twenty one. The walls that had held for a thousand years were broken by cannon cast for the purpose, some of them by a Hungarian founder who had offered his services to both sides. Mehmed made the city his capital and set about refilling it: he brought in Greeks, Armenians, Jews and Turks by decree and incentive, confirmed a Greek patriarch, and within decades the population had grown several times over. He collected Greek manuscripts and had his portrait painted by the Venetian Gentile Bellini. The city has been called Istanbul ever since.",
+   "detail": "Mehmed II · Constantinople, 29 May 1453",
+   "when": {
+    "y": 1453,
+    "m": 5,
+    "d": 29
+   },
+   "tags": [
+    "ottoman",
+    "istanbul",
+    "cities"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "granada-1492",
+   "kind": "onthisday",
+   "category": "Al-Andalus",
+   "title": "Al-Andalus ended with a treaty that was broken in ten years",
+   "story": "On 2 January 1492 Muhammad XII, the last Nasrid ruler of Granada, handed the keys of the city to Ferdinand and Isabella, ending nearly eight centuries of Muslim rule in Iberia. The surrender terms were generous on paper: Muslims could keep their religion, their mosques, their language, their property and their law, and no one was to be forced to convert. Within a decade the terms had been abandoned. Forced conversions began in 1499, Arabic books were burned in the squares of Granada, and by 1502 Islam was banned in Castile. The Alhambra survived because the new rulers wanted to live in it, which is why its rooms of carved plaster and poetry are still standing.",
+   "detail": "Granada · 2 January 1492",
+   "when": {
+    "y": 1492,
+    "m": 1,
+    "d": 2
+   },
+   "tags": [
+    "andalus",
+    "granada",
+    "endings"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "safavid-tabriz-1501",
+   "kind": "onthisday",
+   "category": "Persia",
+   "title": "A teenager took Tabriz and changed Iran's religion",
+   "story": "In 1501 Ismail, about fourteen years old and the head of a Sufi order with a devoted military following, took Tabriz and declared himself shah. He made Twelver Shi'ism the official religion of his state, in a country that was then largely Sunni, and imported scholars from Lebanon and Bahrain to teach it because there were not enough locally. The change took generations and was not gentle, but it is the reason Iran is a Shi'i country today and its neighbours are not. The Safavid state he founded lasted more than two centuries, gave Persian painting and carpet weaving a great period, and rebuilt Isfahan into one of the most admired cities in the world.",
+   "detail": "Shah Ismail I · Tabriz, 1501 CE",
+   "when": {
+    "y": 1501
+   },
+   "tags": [
+    "safavid",
+    "persia",
+    "religion"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "piri-reis-map-1513",
+   "kind": "onthisday",
+   "category": "Maps",
+   "title": "An Ottoman admiral's map lists its own sources",
+   "story": "In 1513 Piri Reis, an Ottoman naval captain, drew a world map on gazelle skin. Only the left third survives, showing the Atlantic, the coasts of Iberia and West Africa, and part of South America. What makes it unusual is that he wrote his method on the map itself: he names about twenty source charts he compiled from, including Portuguese and Arab charts and, he says, a map used by Columbus, which he had obtained from a Spanish sailor taken prisoner. He later wrote a detailed pilot's book of the Mediterranean. The surviving fragment was found in the Topkapi Palace archives in 1929, more than four centuries after it was drawn.",
+   "detail": "Piri Reis · Gallipoli, 1513 CE",
+   "when": {
+    "y": 1513
+   },
+   "tags": [
+    "maps",
+    "ottoman",
+    "navigation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "panipat-1526",
+   "kind": "onthisday",
+   "category": "Mughals",
+   "title": "Babur won an empire with cannon and a diary",
+   "story": "On 21 April 1526 at Panipat, north of Delhi, Babur defeated Ibrahim Lodi with a much smaller force by lashing carts together as a firing line, placing field guns behind them, and sending cavalry around both flanks. The victory founded the Mughal empire, which lasted in some form until 1857. Babur was a great grandson several times over of both Timur and Genghis Khan, and he had spent years losing Samarkand before he ever saw India. He also kept a diary in Chaghatai Turkish, the Baburnama, in which he complains about the Indian climate, catalogues its fruits and birds, and admits to his own fears and drinking. Few founders of empires left so candid a record.",
+   "detail": "Panipat · 21 April 1526",
+   "when": {
+    "y": 1526,
+    "m": 4,
+    "d": 21
+   },
+   "tags": [
+    "mughal",
+    "india",
+    "battle"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "ahmad-baba-timbuktu-1593",
+   "kind": "onthisday",
+   "category": "Timbuktu",
+   "title": "He called his 1,600 books the smallest library in the family",
+   "story": "When a Moroccan army took Timbuktu, its scholars were arrested, and in 1593 Ahmad Baba was taken in chains across the Sahara to Marrakesh. He was held for years and then taught there, becoming well known enough that Moroccan scholars sought him out. He later wrote that his library, seized when he was arrested, held 1,600 volumes, and that his had been the smallest library among his relatives. He returned to Timbuktu in 1607 and wrote more than forty works, including a legal opinion arguing that being African was no ground for enslaving anyone, and that the only relevant question in law was belief, not origin.",
+   "detail": "Ahmad Baba · Timbuktu and Marrakesh, 1593 CE",
+   "when": {
+    "y": 1593
+   },
+   "tags": [
+    "west-africa",
+    "books",
+    "scholars"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "isfahan-capital-1598",
+   "kind": "onthisday",
+   "category": "Cities",
+   "title": "Isfahan was rebuilt around a square used for polo",
+   "story": "In 1598 Shah Abbas I moved the Safavid capital to Isfahan and had a new centre laid out beside the old city: a rectangular open space about 160 metres by 500, with a mosque at one end, a bazaar entrance at the other, a palace pavilion on one side and a smaller mosque on the other. It was a market, a parade ground and a polo field, and the stone goalposts are still in place at each end. Its name, Naqsh-e Jahan, means image of the world. Armenian craftsmen and merchants were resettled in a quarter across the river with their own churches. The square is now a UNESCO World Heritage site and people still picnic on it.",
+   "detail": "Shah Abbas I · Isfahan, 1598 CE",
+   "when": {
+    "y": 1598
+   },
+   "tags": [
+    "cities",
+    "safavid",
+    "architecture"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "taj-mahal-1632",
+   "kind": "onthisday",
+   "category": "Architecture",
+   "title": "The Taj Mahal is a tomb built for one named woman",
+   "story": "Mumtaz Mahal died in 1631, and construction of her tomb at Agra began in 1632 on the orders of her husband, the Mughal emperor Shah Jahan. The main mausoleum took about twelve years and the wider complex around twenty. The building is almost exactly symmetrical, its four minarets lean very slightly outward so that they would fall away from the dome in an earthquake, and the white marble came from Makrana in Rajasthan with inlaid stones brought from as far as Afghanistan and Sri Lanka. The sources name Ustad Ahmad Lahori as the chief architect. It is one of the few world famous monuments built as a private act of grief for a specific person.",
+   "detail": "Agra · begun 1632",
+   "when": {
+    "y": 1632
+   },
+   "tags": [
+    "architecture",
+    "mughal",
+    "india"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "aceh-queens-1641",
+   "kind": "onthisday",
+   "category": "Malay World",
+   "title": "Four women ruled Aceh in a row for fifty eight years",
+   "story": "In 1641, on the death of her husband, Safiatuddin Syah became ruler of Aceh in northern Sumatra, then one of the strongest states in Southeast Asia and a hub of the pepper trade. She reigned for thirty four years, and three more women followed her, so that Aceh was ruled by sultanas continuously from 1641 to 1699. Under them the state kept its independence, its scholars kept writing in Malay, and Dutch and English traders negotiated with a woman's court. The line ended when opponents obtained a ruling from Makkah against female rule. Two centuries later, Acehnese women again led resistance to Dutch conquest, among them Cut Nyak Dhien.",
+   "detail": "Aceh, Sumatra · 1641 to 1699",
+   "when": {
+    "y": 1641
+   },
+   "tags": [
+    "women",
+    "malay-world",
+    "governance"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "muteferrika-press-1729",
+   "kind": "onthisday",
+   "category": "Printing",
+   "title": "The first Ottoman press printed a dictionary in 1729",
+   "story": "Ibrahim Muteferrika, born in Hungary and a convert to Islam, obtained permission from Sultan Ahmed III and a legal opinion from the chief mufti, and in 1729 produced the first book printed with Arabic type by an Ottoman press: a two volume Arabic to Turkish dictionary. The permission excluded the Qur'an and religious texts, which stayed with the copyists, and his list ran to seventeen titles including geography, history and a treatise on military reform. Printing in Istanbul was not new. Jewish, Armenian and Greek presses had been working in the city since the 1490s, in their own scripts. What was new in 1729 was Arabic type, and the argument that had to be won first.",
+   "detail": "Istanbul · 1729",
+   "when": {
+    "y": 1729
+   },
+   "tags": [
+    "printing",
+    "ottoman",
+    "books"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "auwal-mosque-cape-town-1794",
+   "kind": "onthisday",
+   "category": "South Africa",
+   "title": "He wrote the Qur'an from memory on Robben Island",
+   "story": "Tuan Guru, born Abdullah ibn Qadi Abd al-Salam, was a prince from Tidore in the Indonesian archipelago, exiled by the Dutch and held on Robben Island off Cape Town from 1780. In prison he wrote out the Qur'an from memory, and also compiled a book of belief in Malay and Arabic. Copies survive. Released in 1793, he founded a school and then, in 1794, the Auwal Mosque in the Bo-Kaap, the first mosque in South Africa, in a property made available by Saartjie van de Kaap, a freed slave woman who owned it. The mosque is still in use, and much of the Cape Muslim community traces itself to those exiles.",
+   "detail": "Bo-Kaap, Cape Town · 1794",
+   "when": {
+    "y": 1794
+   },
+   "tags": [
+    "south-africa",
+    "quran",
+    "mosques"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "omar-ibn-said-1831",
+   "kind": "onthisday",
+   "category": "Manuscripts",
+   "title": "An enslaved man in Carolina wrote his life in Arabic",
+   "story": "Omar ibn Said was born around 1770 in Futa Toro, in what is now Senegal, studied for about twenty five years, and was captured and shipped to Charleston in 1807. In 1831, enslaved in North Carolina, he wrote fifteen pages in Arabic setting out his life. It is the only known autobiography written in Arabic by an enslaved person in the United States. He opens not with his own name but with Surah al-Mulk written out from memory, and he describes being taken from a place where he had prayed and studied. The manuscript was bought by the Library of Congress in 2017, digitised, and put online, where anyone can read his handwriting.",
+   "detail": "Omar ibn Said · North Carolina, 1831",
+   "when": {
+    "y": 1831
+   },
+   "tags": [
+    "manuscripts",
+    "america",
+    "slavery"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "nana-asmau-1864",
+   "kind": "onthisday",
+   "category": "Teachers",
+   "title": "She built a network of women teaching women across Sokoto",
+   "story": "Nana Asma'u, born in 1793, was the daughter of Usman dan Fodio and one of the most learned figures of the Sokoto Caliphate in what is now northern Nigeria. She read and wrote Arabic, Fulfulde, Hausa and Tamacheq, and more than sixty of her works survive: poems, elegies, instruction in law and medicine, and a verse history of her father's movement. Her lasting work was organisational. She trained older women as itinerant teachers, the jaji, who travelled between villages teaching women in their own homes, each carrying a cloth or a symbol marking her as a teacher. The network she set up in the 1830s is called the yan taru, and it still operates in northern Nigeria. She died in 1864.",
+   "detail": "Nana Asma'u · Sokoto, 1793-1864",
+   "when": {
+    "y": 1864
+   },
+   "tags": [
+    "women",
+    "west-africa",
+    "teaching"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "iqbal-born-1877",
+   "kind": "onthisday",
+   "category": "Poets",
+   "title": "A poet in Sialkot wrote in Persian to reach further",
+   "story": "Muhammad Iqbal was born on 9 November 1877 in Sialkot, in what was then British India and is now Pakistan. He studied philosophy at Cambridge and took a doctorate at Munich on metaphysics in Persia, then practised law in Lahore while writing the poetry he is known for. He wrote much of it in Persian rather than Urdu, because Persian was still read from Istanbul to Delhi and he wanted the wider audience. His theme was self hood, khudi: that a person and a community come alive by taking responsibility rather than waiting. In 1930 he argued for a separate Muslim political unit in northwest India. He died in 1938, nine years before Pakistan existed.",
+   "detail": "Muhammad Iqbal · born 9 November 1877",
+   "when": {
+    "y": 1877,
+    "m": 11,
+    "d": 9
+   },
+   "tags": [
+    "poetry",
+    "india",
+    "thought"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "hejaz-railway-1908",
+   "kind": "onthisday",
+   "category": "Railways",
+   "title": "Pilgrims funded a railway to Madinah by subscription",
+   "story": "On 1 September 1908 the first train from Damascus reached Madinah, about 1,300 kilometres to the south, cutting a camel route of some forty days to under four. The Hejaz Railway was built between 1900 and 1908 and paid for in large part by public donation from Muslims across the world, from India to North Africa, collected in mosques and by newspaper appeal. Much of the labour was done by Ottoman soldiers. It is often recounted that near Madinah the rails were laid on felt so that the noise would not disturb the Prophet's ﷺ resting place. The line ran for less than a decade before the First World War, and the stations and rolling stock still stand rusting in the Jordanian and Saudi desert.",
+   "detail": "Damascus to Madinah · opened 1 September 1908",
+   "when": {
+    "y": 1908,
+    "m": 9,
+    "d": 1
+   },
+   "hijri": {
+    "m": 12
+   },
+   "tags": [
+    "railways",
+    "hajj",
+    "ottoman"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "azerbaijan-women-vote-1918",
+   "kind": "onthisday",
+   "category": "Modern",
+   "title": "Azerbaijan gave women the vote before Britain did",
+   "story": "On 28 May 1918 the Azerbaijan Democratic Republic declared independence, the first secular parliamentary republic in the Muslim world. Its electoral law gave the vote to all citizens over twenty regardless of sex, religion or ethnicity, which put Azerbaijani women at the ballot box before women in Britain had equal franchise, which came in 1928, and before women in the United States, who got it in 1920. The parliament included Armenian, Russian, Jewish and Georgian members. The republic lasted twenty three months before the Red Army entered Baku in April 1920. Its flag and its independence day were both taken up again when Azerbaijan became independent a second time in 1991.",
+   "detail": "Azerbaijan Democratic Republic · 28 May 1918",
+   "when": {
+    "y": 1918,
+    "m": 5,
+    "d": 28
+   },
+   "tags": [
+    "modern",
+    "women",
+    "caucasus"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "caliphate-abolished-1924",
+   "kind": "onthisday",
+   "category": "Modern",
+   "title": "The caliphate was ended by a vote in March 1924",
+   "story": "On 3 March 1924 the Grand National Assembly in Ankara abolished the caliphate, an institution that had existed in some form since 632, and the last caliph, Abdulmecid II, left Istanbul by train the following night. The office had been almost powerless for centuries and had already been separated from the sultanate in 1922, but its ending mattered far beyond Turkey. In India it had already produced the Khilafat movement, one of the first mass political campaigns on the subcontinent. Muslims elsewhere held congresses in Cairo and Makkah to consider what to do, and agreed on nothing. The question of who, if anyone, speaks for the whole community has been open since that day.",
+   "detail": "Ankara · 3 March 1924",
+   "when": {
+    "y": 1924,
+    "m": 3,
+    "d": 3
+   },
+   "tags": [
+    "modern",
+    "ottoman",
+    "governance"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "indonesia-independence-1945",
+   "kind": "onthisday",
+   "category": "Independence",
+   "title": "Indonesia was declared in a front garden in 35 words",
+   "story": "On the morning of 17 August 1945, two days after the Japanese surrender and before the Dutch could return, Sukarno stood in the front garden of his house in Jakarta and read out a proclamation of two short sentences, typed that night after a long argument among younger and older nationalists. There was no ceremony to speak of, a flag sewn by Sukarno's wife Fatmawati was raised, and a few hundred people were present. Four years of war followed before the Netherlands recognised it in 1949. Indonesia is now the country with the largest Muslim population on earth, and Islam arrived there not by conquest but along the trade routes, centuries earlier.",
+   "detail": "Jakarta · 17 August 1945",
+   "when": {
+    "y": 1945,
+    "m": 8,
+    "d": 17
+   },
+   "tags": [
+    "independence",
+    "indonesia",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "pakistan-independence-1947",
+   "kind": "onthisday",
+   "category": "Independence",
+   "title": "Pakistan was created on a date chosen for convenience",
+   "story": "Pakistan became independent on 14 August 1947 and India the following day, because the last viceroy Louis Mountbatten had moved the whole transfer of power forward by about ten months and the two ceremonies had to be held on separate days so he could attend both. The boundary line between the two countries was drawn by Cyril Radcliffe, a British lawyer who had never been to India before, working from maps and census returns in five weeks. It was not published until after independence. The migration that followed was one of the largest in human history, and the border he drew still runs through Punjab and Bengal today.",
+   "detail": "Karachi and Delhi · 14 August 1947",
+   "when": {
+    "y": 1947,
+    "m": 8,
+    "d": 14
+   },
+   "tags": [
+    "independence",
+    "pakistan",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "malaya-merdeka-1957",
+   "kind": "onthisday",
+   "category": "Independence",
+   "title": "Malaya's independence was announced with one word, seven times",
+   "story": "On 31 August 1957 at the Merdeka Stadium in Kuala Lumpur, Tunku Abdul Rahman read the proclamation of independence and then raised his hand and called out merdeka, freedom, seven times, with the crowd answering each one. The word is Malay, borrowed long before from the Sanskrit maharddhika, and it is still the name of the day. The constitution agreed that year made Islam the religion of the federation while guaranteeing the practice of other religions, and set up a rotating monarchy in which nine hereditary Malay rulers elect one of their number as king every five years, an arrangement that exists nowhere else in the world.",
+   "detail": "Kuala Lumpur · 31 August 1957",
+   "when": {
+    "y": 1957,
+    "m": 8,
+    "d": 31
+   },
+   "tags": [
+    "independence",
+    "malay-world",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "algeria-independence-1962",
+   "kind": "onthisday",
+   "category": "Independence",
+   "title": "Algeria chose the anniversary of its own conquest",
+   "story": "Algeria proclaimed its independence on 5 July 1962, and the date was not an accident. French troops had entered Algiers on 5 July 1830, so the new state closed the account exactly 132 years later, to the day. The war that ended in 1962 had lasted almost eight years and cost hundreds of thousands of lives, and afterwards close to a million European settlers left within months. The country's first task was practical and enormous: at independence the great majority of the population could not read, and teachers had to be recruited from Egypt, Syria and elsewhere to staff the schools of a country the size of Western Europe.",
+   "detail": "Algiers · 5 July 1962",
+   "when": {
+    "y": 1962,
+    "m": 7,
+    "d": 5
+   },
+   "tags": [
+    "independence",
+    "north-africa",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "abdus-salam-nobel-1979",
+   "kind": "onthisday",
+   "category": "Physics",
+   "title": "He built a physics institute for scientists with no equipment",
+   "story": "On 10 December 1979 Abdus Salam of Pakistan received the Nobel Prize in Physics with Sheldon Glashow and Steven Weinberg, for work showing that electromagnetism and the weak nuclear force are two aspects of one force. He was the first Muslim to win a Nobel Prize in a science. He accepted it in Punjabi dress and a turban. Long before the prize, in 1964, he had founded the International Centre for Theoretical Physics in Trieste so that physicists from poor countries could spend part of each year working with equipment and colleagues and then return home rather than emigrate. Thousands have passed through it. He is buried in Pakistan.",
+   "detail": "Abdus Salam · Nobel Prize, 10 December 1979",
+   "when": {
+    "y": 1979,
+    "m": 12,
+    "d": 10
+   },
+   "tags": [
+    "science",
+    "physics",
+    "modern"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "first-muslim-in-space-1985",
+   "kind": "onthisday",
+   "category": "Space",
+   "title": "The first Muslim in space watched the crescent from orbit",
+   "story": "On 17 June 1985 the space shuttle Discovery lifted off with Sultan bin Salman al-Saud aboard as a payload specialist for the launch of an Arab communications satellite. He was twenty eight, the first Muslim, the first Arab and the first member of a royal family to go into space. He carried a Qur'an with him. He also carried a practical question that later Muslim astronauts would have to answer formally: how to keep prayer times and face Makkah in a vehicle that circles the earth roughly every ninety minutes.",
+   "detail": "Sultan bin Salman al-Saud · 17 June 1985",
+   "when": {
+    "y": 1985,
+    "m": 6,
+    "d": 17
+   },
+   "tags": [
+    "space",
+    "modern",
+    "prayer"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "benazir-bhutto-1988",
+   "kind": "onthisday",
+   "category": "Modern",
+   "title": "In 1988 a woman took office as prime minister of Pakistan",
+   "story": "Benazir Bhutto was sworn in as prime minister of Pakistan on 2 December 1988, the first woman to lead the government of a Muslim majority country in modern times. She was thirty five. Her father, a former prime minister, had been hanged nine years earlier, and she had spent much of the intervening period in prison or in exile. Her opponents argued that a woman could not hold the office at all; the electorate and the courts settled it otherwise. Her two terms were both cut short. She was assassinated in Rawalpindi in 2007. Women have since led governments in Bangladesh, Turkey, Indonesia, Senegal, Kosovo and Kyrgyzstan.",
+   "detail": "Islamabad · 2 December 1988",
+   "when": {
+    "y": 1988,
+    "m": 12,
+    "d": 2
+   },
+   "tags": [
+    "women",
+    "modern",
+    "pakistan"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "space-station-prayer-guidelines-2007",
+   "kind": "onthisday",
+   "category": "Fiqh",
+   "title": "Malaysia wrote the rules for praying in orbit",
+   "story": "Before Sheikh Muszaphar Shukor launched to the International Space Station on 10 October 2007, Malaysia's national fatwa council convened scholars and scientists and published a short document, Guidelines for Performing Islamic Rites at the International Space Station. The problems were concrete. The station circles the earth about sixteen times a day, so which sunrise starts a fast. There is no down, so how do you bow and prostrate. The direction of Makkah changes second by second, so the guidance says face it as best you can at the start and continue, and if that is impossible, face anywhere. Prayer times were to follow the launch site. Old rules for travellers and the sick were applied to a new place.",
+   "detail": "Malaysia · 10 October 2007",
+   "when": {
+    "y": 2007,
+    "m": 10,
+    "d": 10
+   },
+   "tags": [
+    "fiqh",
+    "space",
+    "prayer"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "timbuktu-manuscripts-rescue-2013",
+   "kind": "onthisday",
+   "category": "Libraries",
+   "title": "Timbuktu's manuscripts were smuggled out in footlockers",
+   "story": "When armed groups took Timbuktu in 2012, the city's libraries held centuries of manuscripts on law, astronomy, medicine, poetry and mathematics, many still owned by the families who had copied them. Abdel Kader Haidara, a librarian, organised an evacuation. Volunteers packed manuscripts into metal footlockers and rice sacks, moved them out of the city a few at a time by car, donkey and boat down the Niger, through checkpoints, and stored them in houses in Bamako. By early 2013 an estimated 350,000 manuscripts had been moved. Some were burned in Timbuktu, but far fewer than first reported. The collections are now being conserved and digitised in the south of the country.",
+   "detail": "Timbuktu to Bamako · 2012 to 2013",
+   "when": {
+    "y": 2013
+   },
+   "tags": [
+    "libraries",
+    "west-africa",
+    "preservation"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "birmingham-quran-2015",
+   "kind": "onthisday",
+   "category": "Manuscripts",
+   "title": "Two leaves in Birmingham dated to within a lifetime of revelation",
+   "story": "On 22 July 2015 the University of Birmingham announced the results of radiocarbon dating on two parchment leaves that had sat in its Mingana Collection, uncatalogued alongside another manuscript, since the 1920s. The parchment dated to between 568 and 645 CE with 95.4 per cent probability. The text, parts of chapters 18 to 20 in an early Hijazi script, matches the standard Qur'an in use today. The date is of the animal skin rather than the ink, so it gives an upper limit rather than an exact age, and scholars continue to discuss what that means. The leaves are among the oldest Qur'anic manuscripts known, and they were found by a doctoral student looking properly at a box.",
+   "detail": "University of Birmingham · 22 July 2015",
+   "when": {
+    "y": 2015,
+    "m": 7,
+    "d": 22
+   },
+   "tags": [
+    "manuscripts",
+    "quran",
+    "science"
+   ],
+   "lvl": "editorial"
+  },
+  {
+   "id": "hope-probe-mars-2021",
+   "kind": "onthisday",
+   "category": "Space",
+   "title": "An Arab probe reached Mars orbit in February 2021",
+   "story": "On 9 February 2021 the Emirates Mars Mission, called Hope, fired its engines for twenty seven minutes and entered orbit around Mars. It was the first interplanetary mission by an Arab country, and only about half of all Mars missions to that point had succeeded. The spacecraft was built in six years by a team whose average age was in the early thirties, working with the University of Colorado, and the science lead was Sarah al-Amiri. Its orbit was chosen to see the whole planet at all times of day, which no earlier mission had done, and it studies how the Martian atmosphere is escaping into space. Its data is released publicly to anyone who asks for it.",
+   "detail": "Emirates Mars Mission · 9 February 2021",
+   "when": {
+    "y": 2021,
+    "m": 2,
+    "d": 9
+   },
+   "tags": [
+    "space",
+    "modern",
+    "science"
+   ],
+   "lvl": "editorial"
+  }
+ ]
+}

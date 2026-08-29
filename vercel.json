@@ -4,7 +4,7 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(study|verse)/(.*)\\.json",
+      "source": "/(study|verse|lights)/(.*)\\.json",
       "headers": [
         {
           "key": "Cache-Control",
