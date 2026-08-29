@@ -49,6 +49,11 @@ import { askOpenRouter } from "./_models.js";
 const ringSize = n => Math.min(1500, Math.max(30, n - 1));
 const K_SEEN = "nl:seen";         /* the ring itself */
 const K_DOUBT = "nl:doubt";       /* cards the Lantern raised a question about */
+/* The day's light, written down once. See readDay/claimDay below for why this
+   key had to exist. Kept for a year so that a card linked from an old post
+   still renders the light that post was about. */
+const K_DAY = d => "nl:day:" + d;
+const DAY_TTL = "31536000";
 const SIX_HOURS = 6 * 3600 * 1000;
 
 let LIB = { at: 0, lights: [], err: "" };
@@ -170,6 +175,62 @@ async function remember(id, n) {
   try { await kv([["LPUSH", K_SEEN, id], ["LTRIM", K_SEEN, "0", String(ringSize(n) - 1)], ["EXPIRE", K_SEEN, "31536000"]]); }
   catch { }
 }
+/* ---------------------------------------------------------------------------
+   one light per day
+
+   THE BUG THIS FIXES
+
+   There was no record anywhere of "today's light". Every caller recomputed it,
+   and the callers did not agree.
+
+   The site's call consumes: it pushes its pick onto the ring above. The card
+   image and the social caption both call with `peek: true`, which reads that
+   ring but never writes to it. So they read the ring, found the site's pick
+   already sitting in it, scored it -5000 by the rule in scoreLights, and took
+   the runner-up. The card was structurally incapable of ever showing the light
+   the site was showing.
+
+   Observed on the live site before the fix:
+     29 Aug 2026  site: indonesia-independence-1945   card: Pakistan / a date chosen for convenience
+     27 Aug 2026  site: the scientific method, Basra  card: Abu Bakr / answered with a verse
+
+   noorcodex.com and Noor's own Facebook and Instagram would have published a
+   different "today's light" every single morning, for a project whose whole
+   premise is one light a day.
+
+   THE FIX
+
+   Whoever asks first decides the day and writes it down. Everyone who asks
+   afterwards reads the record. The pick is made once, not per caller, so the
+   site, the card and the caption cannot disagree.
+
+   Only TODAY is written down. A crawler walking /api/card across a year of
+   dates must not be able to claim, and so consume, a year of lights: any other
+   date is still computed and thrown away, exactly as before. A day that was
+   claimed while it was current stays readable for a year, so a card linked
+   from an old post keeps rendering that post's light.
+--------------------------------------------------------------------------- */
+async function readDay(dateStr) {
+  if (!kvReady()) return null;
+  try {
+    const r = await kv([["GET", K_DAY(dateStr)]]);
+    const raw = r && r[0];
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    return p && p.id ? p : null;
+  } catch { return null; }
+}
+/* NX, because two servers waking on the same morning must not both claim the
+   day. The one that loses reads the winner's record and agrees with it, and
+   only the winner is allowed to consume from the ring. */
+async function claimDay(dateStr, rec) {
+  if (!kvReady()) return false;
+  try {
+    const r = await kv([["SET", K_DAY(dateStr), JSON.stringify(rec), "NX", "EX", DAY_TTL]]);
+    return !!(r && r[0]);
+  } catch { return false; }
+}
+
 async function recordDoubt(entry) {
   if (!kvReady()) return;
   try { await kv([["LPUSH", K_DOUBT, JSON.stringify(entry)], ["LTRIM", K_DOUBT, "0", "60"], ["EXPIRE", K_DOUBT, "7776000"]]); }
@@ -224,10 +285,45 @@ async function lanternEdit(cands, dateStr) {
 /* ---------------------------------------------------------------------------
    the one call the rest of the house makes
 --------------------------------------------------------------------------- */
+/* Both paths out of chooseLight -- the record and a fresh pick -- must hand
+   back the same shape, or a caller reading the record would quietly get a
+   different object than a caller that picked. */
+function shapeLight(L, dateStr, why, editor, pool, ranked) {
+  return {
+    date: dateStr,
+    source: editor ? "library+lantern" : "library",
+    id: L.id, category: L.c || "Light", title: L.t, story: L.s, detail: L.d,
+    kind: L.k, lvl: L.lvl, src: L.src || "",
+    why, editor, hijri: hijriOf(dateStr),
+    pool, ranked
+  };
+}
+
+/* Call this once a night, ahead of the poster, so that the day is claimed by
+   the editor-enabled path and every later caller inherits the Lantern's audit
+   rather than a score-only pick. Harmless if nothing calls it. */
+export const claimToday = host =>
+  chooseLight(host, new Date().toISOString().slice(0, 10), { useLantern: true });
+
 export async function chooseLight(host, dateStr, opts = {}) {
   const lights = await library(host);
   if (!lights.length) return null;
-  const seen = opts.fresh === false ? [] : await readSeen(lights.length);
+
+  /* fresh:false means "no memory at all", so it looks past the record too */
+  const memory = opts.fresh !== false;
+
+  if (memory) {
+    const pinned = await readDay(dateStr);
+    if (pinned) {
+      const L = lights.find(x => x.id === pinned.id);
+      /* if the card has left the library since it was written down, fall
+         through and pick again rather than answering with nothing */
+      if (L) return shapeLight(L, dateStr, pinned.why, pinned.editor || "",
+                               lights.length, pinned.ranked || 0);
+    }
+  }
+
+  const seen = memory ? await readSeen(lights.length) : [];
   const ranked = scoreLights(lights, dateStr, seen);
   const top = ranked.slice(0, 6);
   let chosen = top[0], why = top[0].why, editor = "", doubt = "";
@@ -251,14 +347,25 @@ export async function chooseLight(host, dateStr, opts = {}) {
     } catch { /* the editor is optional; the picker is not */ }
   }
 
-  if (!opts.peek) await remember(chosen.L.id, lights.length);
-  const L = chosen.L;
-  return {
-    date: dateStr,
-    source: editor ? "library+lantern" : "library",
-    id: L.id, category: L.c || "Light", title: L.t, story: L.s, detail: L.d,
-    kind: L.k, lvl: L.lvl, src: L.src || "",
-    why, editor, hijri: hijriOf(dateStr),
-    pool: lights.length, ranked: top.length
-  };
+  /* Writing the day down is what consumes the light, and it happens once. peek
+     no longer decides whether the ring turns -- the claim does -- which is the
+     whole point: the poster reads the same record the site wrote, instead of
+     being pushed off it. */
+  const today = new Date().toISOString().slice(0, 10);
+  if (memory && dateStr === today) {
+    const won = await claimDay(dateStr, { id: chosen.L.id, why, editor, ranked: top.length });
+    if (won) {
+      await remember(chosen.L.id, lights.length);
+    } else {
+      /* another server claimed the morning while we were choosing: agree */
+      const theirs = await readDay(dateStr);
+      const L2 = theirs && lights.find(x => x.id === theirs.id);
+      if (L2) return shapeLight(L2, dateStr, theirs.why, theirs.editor || "",
+                                lights.length, theirs.ranked || 0);
+    }
+  } else if (memory && !opts.peek) {
+    await remember(chosen.L.id, lights.length);
+  }
+
+  return shapeLight(chosen.L, dateStr, why, editor, lights.length, top.length);
 }
