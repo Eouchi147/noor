@@ -43,6 +43,7 @@ import { kv, kvReady } from "./_kv.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
 import { ownerGate } from "./_owner.js";
+import { trimToSentences } from "./_prose.js";
 
 /* Meta issues two kinds of publishing credential. The classic route, through
    Facebook login and a linked Page, hands out EAA... tokens and speaks
@@ -109,8 +110,85 @@ export async function dials() {
 
 /* ---------------------------------------------------------------------------
    the caption
+
+   THE CARD AND THE CAPTION SAY DIFFERENT THINGS, ON PURPOSE.
+
+   The card holds as many whole sentences as its box allows and has to make
+   sense to someone who never reads a word below it. The caption carries the
+   WHOLE story, which is longer than the card can hold, so it is a real
+   expansion of the picture rather than a transcript of it. On the day this was
+   written the card ended at "never fully paid" and only the caption reached
+   "the consequences were not military so much as demographic" -- which is the
+   part that actually explains why the day mattered.
+
+   The Lantern is allowed two things here and nothing else: the opening line,
+   and the hashtags. It writes no facts. Both are checked mechanically against
+   the card before they are used, and either can fall back on its own without
+   taking the other down.
 --------------------------------------------------------------------------- */
-const TAGS = "#Islam #IslamicHistory #Quran #Muslim #NoorCodexOfLight";
+const BASE_TAGS = ["#Islam", "#IslamicHistory", "#NoorCodexOfLight"];
+const FALLBACK_TAGS = "#Islam #IslamicHistory #Quran #Muslim #NoorCodexOfLight";
+
+const PROMO =
+  "Noor Codex of Light is a free illuminated library of Islam: the whole Qur'an with recitation " +
+  "and a companion for every surah, the 25 prophets, the five pillars, the Arabic letters, " +
+  "a children's codex, and a madrasa of 106 lessons.\n\n" +
+  "No ads. No trackers. No account. Free forever.\n\n" +
+  "Read it at noorcodex.com";
+
+/* Words a hook may capitalise without the card having to name them. Without
+   this an opener like "Did" or "Before" reads as an invented proper noun and
+   every hook is thrown away. */
+const COMMON = new Set(("the a an and but or if so for from at in on by with of to is was were be been "
+  + "this that these those it its he she they them his her their there here when where why how what who "
+  + "which did does do done can could would should will shall may might must not no yes one two three "
+  + "first last next before after until while during since about into over under between among each "
+  + "every all most many few some any both then than as up out off down near far new old long short "
+  + "great small good bad right left true false "
+  /* The list above was written from memory and was too short. The first real
+     hook the Lantern produced was thrown away over the word "Because", which
+     the card happened not to use. A guard that refuses ordinary English is a
+     guard that silently turns itself off, because every hook falls back. */
+  + "because since although though whether once unless until without within despite across against "
+  + "along around behind beyond during except inside outside through toward towards upon whose whom "
+  + "whatever whenever wherever however therefore instead indeed perhaps almost nearly hardly rarely "
+  + "often always never sometimes still yet also even just only more less much well back away together "
+  + "alone again nothing nobody everything everyone someone something another other others own same "
+  + "such enough later earlier today tomorrow yesterday now soon long ago").split(" "));
+
+/* A hashtag may only name something the card already names. Anything else is
+   the model inventing a subject, which is how an account about a religion ends
+   up tagged with a place or a person the card never mentions. */
+const TAG_SAFE = new Set(("islam islamic history islamichistory muslim muslims quran qur deen ummah "
+  + "noor codex light noorcodexoflight learn learning knowledge seerah hadith sunnah faith "
+  + "muslimhistory islamicart free library").split(" "));
+
+const words = tag => String(tag).replace(/^#/, "")
+  .replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_\-]+/g, " ")
+  .toLowerCase().split(/\s+/).filter(Boolean);
+
+export function tagAllowed(tag, source) {
+  const w = words(tag);
+  if (!w.length || !/^#?[\p{L}\p{N}_]+$/u.test(String(tag).replace(/^#/, "#"))) return false;
+  return w.every(x => x.length < 4 || TAG_SAFE.has(x) || source.includes(x));
+}
+
+export function hookAllowed(hook, source) {
+  const h = String(hook || "").trim();
+  if (!h || h.length > 110) return false;
+  /* The old range started at U+1F300 and let every dingbat through: a sparkle
+     is U+2728 and would have gone out on a card about the Prophet. Arrows,
+     dingbats, symbols, variation selectors and the emoji planes, all of it. */
+  if (/[\u2014\u2013!]/.test(h)) return false;
+  if (/[\u2190-\u21FF\u2300-\u27BF\u2B00-\u2BFF\uFE0F\u{1F000}-\u{1FAFF}]/u.test(h)) return false;
+  const nums = x => (x.match(/\d+/g) || []);
+  const ours = new Set(nums(source));
+  if (nums(h).some(n => !ours.has(n))) return false;
+  const low = source.toLowerCase();
+  /* a capitalised word the card never uses is a name that was made up */
+  return (h.match(/\b[A-Z][\p{L}\u2019'-]{2,}/gu) || [])
+    .every(w => COMMON.has(w.toLowerCase()) || low.includes(w.toLowerCase()));
+}
 
 /* Instagram counts hashtags across the whole caption and rejects past 30, and
    truncates past 2200 characters. Trim rather than trust. */
@@ -147,27 +225,56 @@ export function fitCaption(text) {
 const CITED = new Set(["quran", "sunnah", "debated"]);
 export const polishAllowed = light => !CITED.has(light && light.lvl);
 
+/* The whole story, never a fragment. 1500 characters is far under Instagram's
+   2200 and leaves room for the promotion and the tags underneath. */
+const STORY_BUDGET = 1500;
+
+export function buildCaption(light, hook, tags) {
+  const story = trimToSentences(light.story || "", STORY_BUDGET) || String(light.story || "");
+  const head = hook && hook !== light.title ? hook + "\n\n" + light.title : light.title;
+  const tagLine = (tags && tags.length ? tags.join(" ") : FALLBACK_TAGS);
+  return fitCaption(`${head}\n\n${story}\n\n${light.detail}\n\n${PROMO}\n\n${tagLine}`);
+}
+
 async function caption(light, polish) {
-  const s = light.story.length > 300 ? light.story.slice(0, 297).replace(/\s+\S*$/, "") + "…" : light.story;
-  const plain = fitCaption(`${light.title}\n\n${s}\n\n${light.detail}\n\nRead free at noorcodex.com\n\n${TAGS}`);
+  const plain = buildCaption(light, "", null);
   if (!polish) return { text: plain, polished: false };
   if (CITED.has(light.lvl)) return { text: plain, polished: false, refused: "it carries a citation" };
+
+  const source = [light.title, light.story, light.detail, light.category].filter(Boolean).join(" ");
   try {
     const got = await askOpenRouter([
-      { role: "system", content: "You tighten the first sentence of a social caption for a free Islamic library. " +
-        "You may reorder and shorten words. You may NOT add any fact, name, number, date or claim that is not " +
-        "already in the text you are given. No emoji. No exclamation marks. No em dashes. Reply with the caption only." },
-      { role: "user", content: plain }
-    ], { max_tokens: 400, temperature: 0.3, timeout: 8000, budget: 16000, maxTries: 2,
+      { role: "system", content:
+        "You write the opening line and the hashtags for one post from a free Islamic library. " +
+        "You do not write facts. Every word you produce must already be supported by the text you are given: " +
+        "you may not add a name, number, date, place or claim that is not in it. " +
+        "The opening line must make a reader stop scrolling. It may be a question or a plain striking " +
+        "statement. Under 90 characters. No emoji, no exclamation marks, no em dashes. " +
+        "Then six to ten hashtags naming what the text is actually about. " +
+        "Reply with JSON only: {\"hook\":\"...\",\"tags\":[\"#One\",\"#Two\"]}" },
+      { role: "user", content: source }
+    ], { max_tokens: 300, temperature: 0.5, timeout: 8000, budget: 16000, maxTries: 2,
          title: "NOOR Codex of Light · the day's post" });
-    const out = String(got.text || "").trim();
-    if (!out) return { text: plain, polished: false };
-    const nums = x => (x.match(/\d+/g) || []);
-    const ours = new Set(nums(plain));
-    if (nums(out).some(n => !ours.has(n))) return { text: plain, polished: false, refused: "it introduced a number" };
-    if (/[—–!]|[\u{1F300}-\u{1FAFF}]/u.test(out)) return { text: plain, polished: false, refused: "house style" };
-    if (out.length > CAP_CHARS) return { text: plain, polished: false, refused: "too long" };
-    return { text: fitCaption(out), polished: true, model: got.model };
+
+    let p = null;
+    try { p = JSON.parse(String(got.text || "")); }
+    catch { const m = String(got.text || "").match(/\{[\s\S]*\}/); if (m) { try { p = JSON.parse(m[0]); } catch { } } }
+    if (!p) return { text: plain, polished: false, refused: "the editor did not answer" };
+
+    /* Each half stands or falls on its own: a bad hook must not cost us good
+       tags, and a bad tag must not cost us a good hook. */
+    const hookOk = hookAllowed(p.hook, source);
+    const kept = (Array.isArray(p.tags) ? p.tags : [])
+      .map(x => "#" + String(x).replace(/^#/, "").replace(/[^\p{L}\p{N}_]/gu, ""))
+      .filter(x => x.length > 2 && tagAllowed(x, source.toLowerCase()))
+      .slice(0, CAP_TAGS - BASE_TAGS.length);
+    const tags = [...new Set([...kept, ...BASE_TAGS])];
+    const refused = hookOk ? "" : "the opening line was not supported by the card";
+
+    return {
+      text: buildCaption(light, hookOk ? String(p.hook).trim() : "", tags),
+      polished: hookOk || kept.length > 0, refused, model: got.model
+    };
   } catch { return { text: plain, polished: false }; }
 }
 

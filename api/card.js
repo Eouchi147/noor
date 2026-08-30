@@ -41,6 +41,7 @@
 
 import { chooseLight } from "./_lights.js";
 import { REGULAR, BOLD, FAMILY, COVERAGE } from "./_cardfont.js";
+import { fitSentences } from "./_prose.js";
 
 /* The honorifics, written out for the drawing only. */
 const HONORIFIC = [
@@ -90,7 +91,21 @@ export function cardSVG(light, opts = {}) {
      honorific is spelled out and nothing silently disappears */
   const D = s => drawable(s).text;
   const title = wrap(D(light.title || ""), 26, 3);
-  const body = wrap(D(light.story || ""), 46, opts.story ? 12 : 8);
+
+  /* THE CARD HAS TO BE READABLE ON ITS OWN.
+     It used to fill its box and stop at whatever word landed on the last line,
+     so the first thing Noor ever posted ended "a British lawyer who…" -- a
+     picture that teaches nothing and reads as careless on an account about a
+     religion. Someone scrolling sees the picture and nothing else; the caption
+     is not there to rescue it.
+     So the card now takes as many WHOLE sentences as its box will hold. The
+     caption carries the entire story, which is longer than this, and is
+     therefore a real expansion of the card rather than a repetition of it. */
+  const PER_LINE = 46, MAX_LINES = opts.story ? 12 : 8;
+  const storyText = D(light.story || "");
+  const whole = fitSentences(storyText, t => wrap(t, PER_LINE, MAX_LINES + 1).length <= MAX_LINES);
+  /* If not even the first sentence fits, an ellipsis beats an empty card. */
+  const body = wrap(whole || storyText, PER_LINE, MAX_LINES);
   const cat = D((light.category || "Light").toUpperCase());
   const det = D(light.detail || "");
   const titleY = midY - (title.length * 62) / 2 - (body.length * 21);
