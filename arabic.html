@@ -191,6 +191,10 @@ section.blk{padding:2.6rem 0 1rem}
 <body>
 
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<!-- The menu. Its index is fetched on first open rather than inlined, so these
+     54 pages do not each carry 120KB of it. The magnifier above opens it. -->
+<link rel="stylesheet" href="/assets/noor-menu.css?v=1">
+<script src="/assets/noor-menu.js?v=1" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -441,7 +445,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
 <a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
-<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
+<a id="search-toggle" data-nm-open href="/#search" aria-label="Search the library" title="Search the library" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
 <button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
 </div>
 </div>
@@ -530,6 +534,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 <a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
 </div>
+
 
 
 
