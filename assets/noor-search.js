@@ -31,7 +31,7 @@
   function load() {
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
-    loading = fetch("/assets/search-index.json?v=77", { cache: "force-cache" })
+    loading = fetch("/assets/search-index.json?v=78", { cache: "force-cache" })
       .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (j) {
         var groups = j.g || [], order = {}, names = {};

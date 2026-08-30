@@ -123,6 +123,8 @@ room("index.html", "<!-- ============ ABOUT ============ -->", width="w",
 
 room("prophets.html", "</main>",
      cards=[
+         ("/muhammad", "The Seerah \u00b7 Twenty-Three Years",
+          "The last of the twenty-five, at length: the whole life in twenty-one stations, then what he was like and how he handled things."),
          ("/characters", "Characters",
           "The rest of the cast in these same stories: angels, jinn, the animals of the signs, and the beings of the end."),
          ("/places", "Places",
@@ -135,6 +137,8 @@ room("prophets.html", "</main>",
 
 room("companions.html", "<footer",
      cards=[
+         ("/muhammad", "The Seerah \u00b7 Twenty-Three Years",
+          "The life they were witnesses to, station by station, with what they themselves said about his character."),
          ("/prophets", "The 25 Prophets",
           "The man they followed, told in full, at the end of the whole chain before him."),
          ("/sermon", "The Last Sermon",
@@ -405,6 +409,34 @@ room("stories/index.html", "</main>", width="w",
          ("/family", "The Family Room",
           "Marriage, grief, provision and parents, taught straight instead of through a story."),
      ])
+
+
+# The two deep rooms. Each one is the place a reader lands after a question
+# they could not answer from a definition, so the doors out of them go to the
+# rooms that carry the same question further rather than to a category list.
+room("allah.html", "<footer",
+     cards=[
+         ("/theology", "Theology \u00b7 The Branches",
+          "Where the arguments about His names and attributes actually ran, and which of them the Sunnah settled."),
+         ("/muhammad", "The Seerah \u00b7 Twenty-Three Years",
+          "The man who was sent to say all of this, and what twenty-three years of saying it cost him."),
+         ("/words", "The Words of the Path",
+          "The names are for calling with. These are the du\u2019as that call by them, in Arabic and in English."),
+         ("/quran", "The Mushaf",
+          "Every verse quoted in this room, in its own place, with the recitation beside it."),
+     ], width="w")
+
+room("muhammad.html", "<footer",
+     cards=[
+         ("/prophets", "The 25 Prophets",
+          "The twenty-four who came before him, and the single message all of them carried."),
+         ("/companions", "The Companions",
+          "The men and women who sat with him, and whose testimony most of this room is built from."),
+         ("/sermon", "The Last Sermon",
+          "The final khutbah, line by line: what he chose to say when he knew it was the last time."),
+         ("/health", "Prophetic Health",
+          "His habits at the table, in sleep and in the body, gathered as practice rather than as history."),
+     ], width="w")
 
 STORY_EXITS = {
     "latif.html": [

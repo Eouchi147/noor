@@ -90,22 +90,103 @@ export function publicHost(host) {
    the dials
 --------------------------------------------------------------------------- */
 const MODES = new Set(["off", "approve", "auto"]);
+const K_SET = "nb:settings";
+
+/* READING THE DIAL.
+
+   The owner pressed "Full auto", the page reloaded, and the room came back
+   reading "Off". A decision he had made was silently undone, which is the
+   worst thing a settings room can do, because it teaches the owner that the
+   control does not work and gives him nothing to act on.
+
+   Two separate faults did it. The first is here: this function used to test
+   the stored value with MODES.has(), which passes only for the exact strings
+   "off", "approve" and "auto". Anything else -- a value a generic settings
+   writer JSON-encoded a second time, a string with a space around it, a
+   capital letter, the older boolean, the console's own button label -- failed
+   that test and fell through to the shipped default, which is "off". A dial
+   that was genuinely set came back reading off.
+
+   So the read is now generous and the write is strict: whatever shape a value
+   arrives in, if its meaning is unambiguous it is honoured; what gets written
+   back by setMode below is always the plain canonical word. Being strict on
+   the way in was never protecting anything -- an unrecognised value still
+   lands on "off", which is the safe end of the ladder. */
+export function normMode(v) {
+  if (v === true) return "auto";
+  if (v === false) return "off";
+  let s = String(v == null ? "" : v).trim().toLowerCase();
+  if (s.length > 1 && ((s[0] === '"' && s[s.length - 1] === '"') ||
+                       (s[0] === "'" && s[s.length - 1] === "'")))
+    s = s.slice(1, -1).trim();
+  s = s.replace(/[\s_-]+/g, " ").trim();
+  if (MODES.has(s)) return s;
+  if (s === "1" || s === "true" || s === "on" || s === "yes" ||
+      s === "full" || s === "full auto" || s === "fullauto") return "auto";
+  if (s === "0" || s === "false" || s === "no" || s === "none" ||
+      s === "stop" || s === "paused") return "off";
+  if (s === "manual" || s === "review" || s === "draft" ||
+      s === "i approve each post") return "approve";
+  return "";
+}
 
 export async function dials() {
   /* the shipped state, and the state a store that will not answer gets */
   const v = { mode: "off", fb: true, ig: true, polish: true, storeOk: false };
   if (!kvReady()) return v;
   try {
-    const raw = (await kv([["GET", "nb:settings"]]))[0];
+    const raw = (await kv([["GET", K_SET]]))[0];
     const o = raw ? (typeof raw === "string" ? JSON.parse(raw) : raw) : {};
     v.storeOk = true;
-    if (MODES.has(o["social.mode"])) v.mode = o["social.mode"];
-    else if (o["social.auto"] === true) v.mode = "auto";   /* the older boolean dial */
+    const m = normMode(o["social.mode"]);
+    if (m) v.mode = m;
+    else {
+      const legacy = normMode(o["social.auto"]);   /* the older boolean dial */
+      if (legacy) v.mode = legacy;
+    }
     if (o["social.fb"] === false) v.fb = false;
     if (o["social.ig"] === false) v.ig = false;
     if (o["social.polish"] === false) v.polish = false;
   } catch { return { mode: "off", fb: true, ig: true, polish: true, storeOk: false }; }
   return v;
+}
+
+/* SETTING THE DIAL.
+
+   The second fault: before this, social.mode was read in five places in this
+   file and written in none. This route consumed a dial it had no way to move,
+   so the console had to reach some other writer to change the ladder, and
+   whether that writer would accept the key was not this file's business and
+   therefore nobody's.
+
+   The ladder's own route now owns the ladder's own dial. Three rules:
+
+     - the rest of nb:settings is read, amended and written back, so turning
+       the ladder up never wipes a zakat rate or a Facebook switch;
+     - the value written is the plain canonical word, and the older boolean is
+       kept in step so nothing else in the house disagrees;
+     - it READS THE DIAL BACK before answering. The console has already been
+       told "auto" once and had it turn back into off. This route does not
+       claim a thing it has not seen. */
+export async function setMode(mode) {
+  const want = normMode(mode);
+  if (!want) return { ok: false, code: 400, reason: "mode must be off, approve or auto" };
+  if (!kvReady()) return { ok: false, code: 409, reason: "no store is configured, so the dial cannot be remembered" };
+  try {
+    const raw = (await kv([["GET", K_SET]]))[0];
+    let o = {};
+    if (raw) { try { o = typeof raw === "string" ? JSON.parse(raw) : raw; } catch { o = {}; } }
+    if (!o || typeof o !== "object" || Array.isArray(o)) o = {};
+    o["social.mode"] = want;
+    o["social.auto"] = want === "auto";
+    await kv([["SET", K_SET, JSON.stringify(o)]]);
+    const after = await dials();
+    if (after.mode !== want)
+      return { ok: false, code: 409, reason: "the store did not keep it", mode: after.mode, dials: after };
+    return { ok: true, code: 200, mode: after.mode, dials: after };
+  } catch (e) {
+    return { ok: false, code: 409, reason: "store error: " + String((e && e.message) || e) };
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -708,6 +789,13 @@ export default async function handler(req, res) {
     const action = String(q.action || "preview");
     if (action === "log") return json(res, 200, { ok: true, log: await socialLog(), queue: await queue() });
     if (action === "tokens") return json(res, 200, { ok: true, tokens: await tokenClock() });
+    /* The console re-renders the ladder after every change. Composing a whole
+       post just to read three booleans made that reload slow enough to look
+       like the page had hung, so the dials answer on their own. */
+    if (action === "dials") return json(res, 200, {
+      ok: true, dials: await dials(),
+      configured: { fb: fbConfigured(), ig: igConfigured() }
+    });
     const post = await compose(host, date, { polish: String(q.polish || "1") !== "0" });
     return json(res, 200, {
       ok: !!post, preview: post, dials: await dials(), tokens: await tokenClock(),
@@ -720,6 +808,12 @@ export default async function handler(req, res) {
     let body = req.body;
     if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
     body = body || {};
+    if (body.action === "mode") {
+      const r = await setMode(body.mode);
+      const code = r.code || (r.ok ? 200 : 409);
+      delete r.code;
+      return json(res, code, r);
+    }
     if (body.action === "renewed")
       return json(res, 200, await markTokenRenewed(String(body.which || "both"), body.at));
     if (body.action === "skip") {
@@ -727,6 +821,26 @@ export default async function handler(req, res) {
       rec.state = "skipped"; await writeDay(date, rec, true);
       return json(res, 200, { ok: true, skipped: date });
     }
+    /* WHY AN UNKNOWN ACTION IS NOW AN ERROR AND NOT A RUN.
+
+       This is almost certainly what the owner was actually hitting. The
+       console posted a mode change, nothing above matched the action, and
+       execution fell straight through to here -- so pressing "Full auto" did
+       not set the ladder to auto, it RAN THE DAILY JOB. That job answers with
+       an object whose own `mode` field is the mode it read on the way in, so
+       the console got back { ok: true, mode: "off" } for a request that meant
+       "make it auto", re-rendered the ladder from that field, and showed Off.
+       Truthfully, from its point of view. The compose it did on the way is
+       also slow, which is what made the room look like it was reloading.
+
+       A route that silently does something else when it does not understand a
+       request will keep producing bugs of exactly this shape, so it now says
+       so instead. Only a request that actually asks for a run gets a run. */
+    const act = String(body.action || "").trim().toLowerCase();
+    const RUNS = new Set(["", "run", "post", "preview", "daily", "compose"]);
+    if (!RUNS.has(act))
+      return json(res, 400, { ok: false, reason: "unknown action: " + act, dials: await dials() });
+
     /* live:true is the only thing that reaches a network from here, and it is
        always force:true, because pressing Post by hand is the whole point of
        approve mode */

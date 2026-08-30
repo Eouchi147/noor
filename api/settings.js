@@ -149,6 +149,16 @@ function coerce(d, v) {
     if (!Number.isFinite(n)) return null;
     return Math.max(d.min ?? 0, Math.min(d.max ?? 1e9, n));
   }
+  /* "num" was declared on ledger.floor and never handled here, so the one
+     figure in the house that decides what counts as onward giving fell to the
+     `return null` at the bottom of this function and could not be saved from
+     the console at all. It read as its built-in default and stayed there,
+     silently, however many times it was set. */
+  if (d.t === "num") {
+    const n = typeof v === "number" ? v : parseFloat(String(v).replace(/[\s,]/g, ""));
+    if (!Number.isFinite(n)) return null;
+    return Math.max(d.min ?? 0, Math.min(d.max ?? 1e9, n));
+  }
   if (d.t === "enum") return d.opts.includes(String(v)) ? String(v) : null;
   if (d.t === "text") {
     /* a notice is prose the whole site will show, so it may not smuggle
@@ -235,16 +245,36 @@ export default async function handler(req, res) {
   if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
   body = body || {};
 
+  /* TWO CALLERS, TWO SHAPES.
+
+     The Dials screen posts the keys flat, which is what the header of this
+     file documents. The Social ladder posts { set: { "social.mode": "auto" } }.
+     Only the flat shape was ever handled -- and the wrapped one did not fail,
+     it fell straight through the loop below, because DIALS["set"] is not a
+     dial, so `continue` ran once and the request saved nothing and answered
+     ok:true with an empty list. The owner pressed Full auto, was told it had
+     worked, and watched the ladder snap back to Off on the next read. Both
+     shapes are this endpoint's own callers, so both are accepted. */
+  if (body.set && typeof body.set === "object" && !Array.isArray(body.set)) body = body.set;
+
   const saved = (await readStore()) || {};
-  const changed = [];
+  const changed = [], refused = [];
   for (const [k, v] of Object.entries(body)) {
     const d = DIALS[k];
-    if (!d) continue;
+    if (!d) { refused.push(k + " is not a dial"); continue; }
     if (v === null) { if (k in saved) { delete saved[k]; changed.push(k + " → default"); } continue; }
     const c = coerce(d, v);
-    if (c === null) continue;
+    if (c === null) { refused.push(k + ": " + JSON.stringify(v) + " is not a value this dial takes"); continue; }
     if (saved[k] !== c) { saved[k] = c; changed.push(k + " = " + c); }
   }
+
+  /* A request that named dials and moved none of them, because every one of
+     them was refused, is a failure. Answering 200 ok:true to it is exactly
+     what hid the bug above for as long as it hid: the console had no way to
+     tell a save from a silent no-op. Setting a dial to the value it already
+     holds is NOT that, and stays a 200. */
+  if (refused.length && !changed.length)
+    return res.status(400).json({ ok: false, error: "nothing was saved", refused });
   try {
     await kv([["SET", KEY, JSON.stringify(saved)]]);
     cache = { at: 0, val: null };
@@ -252,5 +282,5 @@ export default async function handler(req, res) {
     return res.status(502).json({ error: "the store refused the write" });
   }
   res.setHeader("Cache-Control", "no-store");
-  return res.status(200).json({ ok: true, changed, count: changed.length });
+  return res.status(200).json({ ok: true, changed, refused, count: changed.length });
 }

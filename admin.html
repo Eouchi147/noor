@@ -2878,20 +2878,52 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     }).join("");
   }
 
+  /* PRESSING A RUNG.
+
+     This used to send { set: { "social.mode": mode } }, which /api/settings
+     quietly ignored -- "set" is not a dial, so the loop there skipped it and
+     answered ok:true having written nothing. This function then trusted that
+     ok, lit the rung it had asked for, and called loadSocial(), which read the
+     real value back and re-drew the ladder on Off. Press, flash, snap back:
+     what it looked like from the outside was the page refreshing itself.
+
+     Two things changed. The keys go flat, which is the shape the endpoint
+     documents and the Dials screen has always used. And nothing is drawn from
+     what we asked for -- the rung that lights up is the one the server says is
+     in force, read back after the write. A control that shows your intention
+     rather than the state is worse than no control, because it is confident. */
   function setRung(mode) {
+    var asked = mode;
     fetch("/api/settings", {
       method: "POST", credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ set: { "social.mode": mode } })
-    }).then(function (r) { return r.json().catch(function () { return null; }); })
-      .then(function (j) {
-        if (!j || j.ok === false) { toast("The dial would not move", "bad"); return; }
-        SOC.mode = mode; drawLadder();
-        toast(mode === "auto" ? "Full auto. It will post every morning by itself."
-            : mode === "approve" ? "It will draft every morning and wait for you."
-            : "Off. Nothing sends by itself.", mode === "auto" ? "bad" : "ok");
+      body: JSON.stringify({ "social.mode": mode })
+    }).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (j) { return [r, j || {}]; });
+    }).then(function (p) {
+      var r = p[0], j = p[1];
+      if (!r.ok || j.ok === false) {
+        toast(j.error || (j.refused && j.refused[0]) || "The dial would not move", "bad");
         loadSocial();
-      }).catch(function () { toast("Could not reach /api/settings", "bad"); });
+        return;
+      }
+      /* read it back before claiming anything */
+      return fetch("/api/social?action=dials", { credentials: "same-origin" })
+        .then(function (r2) { return r2.json().catch(function () { return null; }); })
+        .then(function (d) {
+          var now = d && d.dials && d.dials.mode;
+          if (!now) { loadSocial(); return; }   /* older /api/social: let the full read decide */
+          SOC.mode = now; drawLadder();
+          if (now !== asked) {
+            toast("The dial did not stay on " + asked + ". It reads " + now + ".", "bad");
+          } else {
+            toast(now === "auto" ? "Full auto. It will post every morning by itself."
+                : now === "approve" ? "It will draft every morning and wait for you."
+                : "Off. Nothing sends by itself.", now === "auto" ? "bad" : "ok");
+          }
+          loadSocial();
+        });
+    }).catch(function () { toast("Could not reach /api/settings", "bad"); });
   }
 
   function drawPost(p, dials) {

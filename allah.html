@@ -17,6 +17,16 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Ninety-Nine Names · NOOR Codex of Light">
 <meta name="twitter:description" content="The ninety-nine names of Allah in Arabic and English, the verses that say what He is not, the fourteen names gathered at the end of Surah al-Hashr, Ayat al-Kursi, and the three doors of tawhid.">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="NOOR"/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<link rel="stylesheet" href="/assets/tw.css?v=49"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&amp;family=Inter:wght@400;500;600&amp;family=Amiri:wght@400;700&amp;display=swap">
@@ -282,29 +292,6 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
     transition-duration:.001ms!important}
 }
 
-/* ---------- site bar (simplified: the full Tailwind header is not reproduced here) ---------- */
-.sitebar{position:fixed; inset:0 0 auto 0; z-index:70; display:flex; align-items:center;
-  gap:clamp(.9rem,3vw,1.6rem); padding:.68rem clamp(.9rem,4vw,2.2rem);
-  background:rgba(6,8,14,.74); backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid rgba(232,200,116,.16); font-size:.8rem}
-.sitebar a{color:#C9C5B8; text-decoration:none; white-space:nowrap;
-  transition:color .25s}
-.sitebar a:hover,.sitebar a:focus-visible{color:#E8C874; outline:none}
-.sitebar a:focus-visible{text-decoration:underline; text-underline-offset:.3em}
-.sitebar .brand{display:flex; align-items:baseline; gap:.5rem; flex:0 0 auto; color:#F3EFE2}
-.sitebar .brand .ar{font-family:Amiri,serif; direction:rtl; color:#E8C874; font-size:1.3rem;
-  line-height:1.5}
-.sitebar .brand b{font-weight:600; letter-spacing:.2em; font-size:.72rem; text-transform:uppercase}
-.sitebar .rooms{display:flex; gap:clamp(.85rem,2.6vw,1.4rem); margin-left:auto;
-  overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch}
-.sitebar .rooms::-webkit-scrollbar{display:none}
-.sitebar .rooms a[aria-current="page"]{color:#E8C874}
-@media (max-width:52rem){
-  /* the row scrolls on a narrow screen, so fade the edge rather than chop a word */
-  .sitebar .rooms{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent);
-    mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent); padding-right:2rem}
-}
-@media (max-width:34rem){ .sitebar .brand b{display:none} }
 
 /* ---------- footer links ---------- */
 .flinks{display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; justify-content:center;
@@ -312,20 +299,370 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
 .flinks a{color:#C9C5B8; text-decoration:none; border-bottom:1px solid rgba(232,200,116,.22);
   padding-bottom:.15rem}
 .flinks a:hover,.flinks a:focus-visible{color:#E8C874; outline:none}
+
+/* ---------- the "where to go from here" band, on a dark ground ----------
+   synergy.py ships the band with the parchment palette every other room in
+   the house uses, and it ships it as a <style> block inside the band itself,
+   which therefore sits AFTER this stylesheet in the document. Equal
+   specificity, later wins: white cards at the foot of a night sky. Doubling
+   each class buys one point of specificity, which is enough, and leaves the
+   generator's own markup and rules untouched -- run synergy.py as often as
+   you like and this still answers it. */
+.wgo.wgo{border-top-color:rgba(232,200,116,.16)}
+.wgo.wgo>h2{color:#FFF0C4; font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400; font-size:1.55rem; letter-spacing:0}
+.wgo.wgo>.wgo-s{color:#B9B6AC}
+.wgo-c.wgo-c{background:linear-gradient(180deg,rgba(255,254,247,.05),transparent);
+  border-color:rgba(232,200,116,.16)}
+.wgo-c.wgo-c:hover,.wgo-c.wgo-c:focus-visible{border-color:rgba(232,200,116,.5);
+  background:rgba(232,200,116,.08); box-shadow:none}
+.wgo-c.wgo-c b{color:#F3EFE2}
+.wgo-c.wgo-c span,.wgo-c.wgo-c p,.wgo-c.wgo-c small{color:#B9B6AC}
+.wgo-c.wgo-c i,.wgo-c.wgo-c em{color:#E8C874}
 </style>
 </head>
 <body>
 
-<nav class="sitebar" aria-label="Codex">
-  <a class="brand" href="https://noorcodex.com/"><span class="ar">نُور</span><b>Noor</b></a>
-  <span class="rooms">
-    <a href="https://noorcodex.com/quran">Qur'an</a>
-    <a href="https://noorcodex.com/prophets">Prophets</a>
-    <a href="/allah" aria-current="page">The Names</a>
-    <a href="/muhammad">The Seerah</a>
-    <a href="https://noorcodex.com/madrasa">Madrasa</a>
-  </span>
+<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<style id="nav49">
+/* --- self-contained header layout (works with or without the shared sheet) --- */
+/* While the sheet is open the body carries overflow:hidden, and on iOS that
+   quietly breaks position:sticky: the header stops sticking and scrolls away,
+   leaving page content in the strip above the menu and no way to close it
+   without scrolling back to the top. Pinning it for the duration fixes that.
+   The swap is invisible because at any scroll position a sticky header and a
+   fixed one both render at the top of the viewport, and everything behind is
+   covered by the sheet. */
+body.sheet-open #site-header{position:fixed;left:0;right:0;top:0;z-index:70}
+#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
+#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
+#site-header a{text-decoration:none;color:inherit}
+#site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
+#site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
+#site-header>div>a:first-child>div:last-child>div:first-child{font-family:Amiri,serif;font-size:1.125rem;line-height:1;color:#2C2416}
+#site-header>div>a:first-child>div:last-child>div:last-child{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
+#site-header nav[aria-label="Primary"]{display:none;align-items:center;gap:1rem;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65)}
+@media (min-width:1024px){#site-header nav[aria-label="Primary"]{display:flex}}
+#site-header nav[aria-label="Primary"] a{color:inherit;transition:color .15s}
+#site-header nav[aria-label="Primary"] a:hover{color:#2C2416}
+#site-header nav[aria-label="Primary"] a.text-ink{color:#2C2416;font-weight:700}
+#site-header>div>div:last-child{display:flex;align-items:center;gap:.5rem}
+#site-header .give-pill{display:none}
+@media (min-width:640px){#site-header .give-pill{display:inline-block}}
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
+.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
+.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
+.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
+.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
+@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
+.dd-mega .mg{min-width:0}
+.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
+.dd-mega .dd-h + .dd-h{margin-top:.8rem}
+.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
+.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
+.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
+.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
+.give-pill:hover{transform:translateY(-1px)}
+.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
+.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
+.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
+.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
+.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
+.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
+.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
+.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
+.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
+.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
+#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
+#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
+@media (max-width:1023.5px){#nav-burger{display:block}}
+body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.sheet-open #nav-burger span:nth-child(2){opacity:0}
+body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#nav-sheet{position:fixed;left:0;right:0;top:calc(3.5rem + var(--safetop,0px));bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
+body.sheet-open #nav-sheet{display:block}
+body.sheet-open{overflow:hidden}
+/* Installed to a home screen there is no browser chrome above the page, so the
+   header sits under the clock and the signal bars. Scoped to standalone on
+   purpose: in an ordinary mobile browser the chrome already holds this space
+   and adding the inset there would push the header down for no reason. */
+:root{--safetop:0px}
+@media (display-mode:standalone),(display-mode:fullscreen){
+  :root{--safetop:env(safe-area-inset-top,0px)}
+  #site-header{padding-top:env(safe-area-inset-top,0px)}
+}
+html.standalone{--safetop:env(safe-area-inset-top,0px)}
+html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
+/* ---- the pinned strip -------------------------------------------------
+   Five rooms, two across, sitting above everything else. This is the whole
+   point of the redesign: the common case is answered before the reader has
+   to choose anything. */
+#nav-sheet .pins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.35rem 0 .4rem}
+#nav-sheet .pin{display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:3.4rem;padding:.6rem .7rem;border:1px solid rgba(201,162,39,.4);
+  background:linear-gradient(160deg,#FFFDF4,#FFF6E2);border-radius:14px;
+  font-size:.8rem;font-weight:800;color:#2C2416;text-decoration:none;line-height:1.35}
+#nav-sheet .pin:active{background:#FFF1CE}
+#nav-sheet .pin:first-child{grid-column:1 / -1}
+
+/* ---- the doors ---------------------------------------------------------
+   <details> rather than a script: they open with JavaScript unavailable, and
+   a screen reader already knows what a disclosure is. */
+#nav-sheet .door{border-bottom:1px solid rgba(201,162,39,.18)}
+#nav-sheet .door summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;
+  padding:.85rem .1rem;font-size:.95rem;font-weight:800;color:#2C2416;
+  font-family:Inter,system-ui,sans-serif}
+#nav-sheet .door summary::-webkit-details-marker{display:none}
+#nav-sheet .door summary::after{content:"";margin-inline-start:auto;width:.5rem;height:.5rem;flex:none;
+  border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;
+  transform:rotate(45deg);transition:transform .2s ease}
+#nav-sheet .door[open] summary::after{transform:rotate(-135deg)}
+#nav-sheet .door .cnt{font-size:.62rem;font-weight:700;color:rgba(44,36,22,.38);
+  border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.05rem .4rem;line-height:1.6}
+#nav-sheet .door-in{padding:0 0 .6rem}
+/* Said explicitly rather than left to the browser: the sheet's own
+   a.shl{display:block} was out-specifying the built-in hiding, so every
+   door stood open and the redesign achieved nothing. */
+#nav-sheet .door:not([open]) .door-in{display:none}
+@media (prefers-reduced-motion:reduce){#nav-sheet .door summary::after{transition:none}}
+
+#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
+#nav-sheet .sh-g:first-child{margin-top:.2rem}
+#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
+#nav-sheet a.shl:active{background:#FFF7DF}
+#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
+#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
+
+/* --- the search drawer -------------------------------------------------
+   The magnifier at top right is the only search chrome the house shows.
+   The panel is hard-hidden until it is opened, and it is a floating drawer,
+   never a band across the page. These rules live in the generator so a nav
+   rebuild can never strip them again. */
+#search-bar{display:none}
+#search-bar.open{display:block;position:fixed;top:3.5rem;right:1rem;z-index:72;width:min(26rem,calc(100vw - 2rem))}
+@media (min-width:640px){#search-bar.open{right:1.5rem}}
+body.sheet-open #search-bar{display:none}
+#search-bar .sb-in{background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:16px;box-shadow:0 20px 48px rgba(26,22,15,.18);padding:.5rem}
+#search-bar input#search-input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:.9rem;line-height:1.4;color:#2C2416;background:#fff;border:1px solid rgba(44,36,22,.15);border-radius:11px;padding:.62rem .8rem;outline:0;-webkit-appearance:none;appearance:none}
+#search-bar input#search-input::placeholder{color:rgba(44,36,22,.4)}
+#search-bar input#search-input:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
+#search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
+#search-bar #search-results.hidden{display:none}
+
+/* --- the three new doors: let each system supply the face it renders best --- */
+html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
+html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
+
+/* --- paper ---------------------------------------------------------------
+   Choreography must never cost a reader the words. Anything the motion
+   layer is holding back is forced visible before it reaches a printer. */
+@media print{
+  #site-header,#nav-sheet,#search-bar{display:none!important}
+  .mo,.mo-pop,.mo-draw,[data-mo-stagger] .mo,[data-mo-stagger] .mo-pop{
+    opacity:1!important;visibility:visible!important;transform:none!important}
+  .mo-draw path,.mo-draw line,.mo-draw circle,.mo-draw rect,.mo-draw polyline,.mo-draw ellipse{
+    stroke-dasharray:none!important;stroke-dashoffset:0!important;opacity:1!important}
+}
+</style>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+<a href="/" class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
+<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+</a>
+<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
+<a href="/quran" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
+<a href="/prophets" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
+<a href="/hajj" class="hover:text-ink transition-colors" data-i18n="nav.hajj">Hajj</a>
+<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
+<a href="/kids" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
+<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
+<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
+<div class="mg">
+<p class="dd-h" data-i18n="g.read">Read</p>
+<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
+<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
+<p class="dd-h" data-i18n="g.learn">Learn</p>
+<a role="menuitem" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
+<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a role="menuitem" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
+<a role="menuitem" href="/allah" data-i18n="m.allah">The Ninety-Nine Names</a>
+<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
+<a role="menuitem" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.live">Live</p>
+<a role="menuitem" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
+<a role="menuitem" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
+<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
+<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a role="menuitem" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
+<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.story">The Story</p>
+<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a role="menuitem" href="/muhammad" data-i18n="m.seerah">The Seerah &middot; Twenty-Three Years</a>
+<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
+<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
+<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
+<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+<a role="menuitem" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
+</div>
+<div class="mg">
+<p class="dd-h" data-i18n="g.little">Little Ones</p>
+<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+<p class="dd-h" data-i18n="g.house">The House</p>
+<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a role="menuitem" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
+<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
+<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div>
+</div></div></div>
 </nav>
+<div class="flex items-center gap-2">
+<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
+<div class="dd-menu49"><div class="lang-pane">
+<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid" id="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+</div></div></div>
+<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
+<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
+<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
+</div>
+</div>
+</header>
+<div id="nav-sheet" role="dialog" aria-label="Menu">
+<p class="sh-g" data-i18n="g.pinned">Most opened</p><div class="pins"><a class="pin" href="/quran" data-i18n="p.quran">The Mushaf</a><a class="pin" href="/good-life" data-i18n="p.goodlife">How to Live Well</a><a class="pin" href="/prophets" data-i18n="p.prophets">The 25 Prophets</a><a class="pin" href="/pillars" data-i18n="p.pillars">The Five Pillars</a><a class="pin" href="/stories" data-i18n="p.stories">The Hall of Stories</a></div>
+<details class="door"><summary><span data-i18n="g.read">Read</span><span class="cnt">4</span></summary><div class="door-in">
+<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
+<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
+<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
+<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.learn">Learn</span><span class="cnt">6</span></summary><div class="door-in">
+<a class="shl" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
+<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
+<a class="shl" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
+<a class="shl" href="/allah" data-i18n="m.allah">The Ninety-Nine Names</a>
+<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
+<a class="shl" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.live">Live</span><span class="cnt">11</span></summary><div class="door-in">
+<a class="shl" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
+<a class="shl" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
+<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
+<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
+<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
+<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
+<a class="shl" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
+<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
+<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
+<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
+<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.story">The Story</span><span class="cnt">12</span></summary><div class="door-in">
+<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
+<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
+<a class="shl" href="/muhammad" data-i18n="m.seerah">The Seerah &middot; Twenty-Three Years</a>
+<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
+<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
+<a class="shl" href="/places" data-i18n="m.places">Places</a>
+<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
+<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
+<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
+<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
+<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
+<a class="shl" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.little">Little Ones</span><span class="cnt">3</span></summary><div class="door-in">
+<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
+<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
+<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
+</div></details>
+<details class="door"><summary><span data-i18n="g.house">The House</span><span class="cnt">6</span></summary><div class="door-in">
+<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
+<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
+<a class="shl" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
+<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
+<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
+<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
+</div></details>
+<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
+<div class="lang-grid">
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
+</div>
+<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
+<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
+</div>
 
 
 <canvas id="field" aria-hidden="true"></canvas>
@@ -477,6 +814,18 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
   </div>
 </section>
 
+<!--WGO-->
+<style>.wgo{max-width:62rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(44,36,22,.12)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#2C2416;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(201,162,39,.7);transform:translateY(-1px);box-shadow:0 5px 18px rgba(44,36,22,.07)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#2C2416;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#C9A227}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.68);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
+<section class="wgo" aria-labelledby="wgo-h">
+<h2 id="wgo-h">Where to go from here</h2>
+<div class="wgo-g">
+<a class="wgo-c" href="/theology"><b>Theology · The Branches</b><span>Where the arguments about His names and attributes actually ran, and which of them the Sunnah settled.</span></a>
+<a class="wgo-c" href="/muhammad"><b>The Seerah · Twenty-Three Years</b><span>The man who was sent to say all of this, and what twenty-three years of saying it cost him.</span></a>
+<a class="wgo-c" href="/words"><b>The Words of the Path</b><span>The names are for calling with. These are the du’as that call by them, in Arabic and in English.</span></a>
+<a class="wgo-c" href="/quran"><b>The Mushaf</b><span>Every verse quoted in this room, in its own place, with the recitation beside it.</span></a>
+</div>
+</section>
+<!--/WGO-->
 <footer>
   <p class="flinks">
     <a href="https://noorcodex.com/quran">The Mushaf</a>
@@ -847,5 +1196,11 @@ const HASHR_NAMES = ["Ar-Rahman","Ar-Raheem","Al-Malik","Al-Quddus","As-Salam","
 })();
 </script>
 
+
+<script src="/assets/noor-hijri.js?v=1" defer></script>
+<script src="/assets/noor-ramadan.js?v=1" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-search.js?v=78" defer></script>
+<script src="/assets/noor-dials.js?v=109" defer></script>
 </body>
 </html>
