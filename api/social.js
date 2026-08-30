@@ -228,9 +228,50 @@ const metaErr = (j, fallback) =>
   (j && j.error && (j.error.error_user_msg || j.error.message)) ||
   (j && j.error_message) || fallback;
 
+/* ---------------------------------------------------------------------------
+   the Page token, fetched rather than asked for
+
+   A System User token is not a Page token. Post to /{page}/photos with one and
+   Meta answers by naming a permission it deprecated in 2018:
+
+     (#200) The permission(s) publish_actions are not available.
+
+   which is a true sentence about the wrong thing, and it cost us the first
+   real post. Instagram accepts the System User token directly, which is why
+   that half went out and this half did not.
+
+   The Page token is derivable from the System User token, so the house fetches
+   it instead of asking a human to find, copy and paste a second secret. It is
+   sent as a Bearer header, never in a query string, so it cannot be left
+   behind in a log or a referrer. If the owner has already pasted a real Page
+   token, asking the page for its token with it returns the same value, so this
+   works either way and nothing needs to know which kind was pasted.
+--------------------------------------------------------------------------- */
+let PAGE_TOK = { at: 0, tok: "" };
+const PAGE_TOK_TTL = 3600 * 1000;
+
+async function pageToken() {
+  const id = process.env.FB_PAGE_ID, tok = process.env.FB_PAGE_TOKEN;
+  if (!id || !tok) return "";
+  if (PAGE_TOK.tok && Date.now() - PAGE_TOK.at < PAGE_TOK_TTL) return PAGE_TOK.tok;
+  try {
+    const r = await fetch(`${GRAPH_FB}/${id}?fields=access_token`, {
+      headers: { authorization: "Bearer " + tok }
+    });
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j && j.access_token) {
+      PAGE_TOK = { at: Date.now(), tok: j.access_token };
+      return j.access_token;
+    }
+  } catch { }
+  /* Falling back to what the owner pasted keeps the old behaviour rather than
+     turning a fetch wobble into a silent refusal to post. */
+  return tok;
+}
+
 async function postFacebook(post) {
   if (!fbConfigured()) return { ok: false, skipped: "FB_PAGE_ID or FB_PAGE_TOKEN is not set" };
-  const id = process.env.FB_PAGE_ID, tok = process.env.FB_PAGE_TOKEN;
+  const id = process.env.FB_PAGE_ID, tok = await pageToken();
   try {
     const r = await fetch(`${GRAPH_FB}/${id}/photos`, {
       method: "POST", headers: { "content-type": "application/json" },
