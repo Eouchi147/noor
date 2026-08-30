@@ -129,12 +129,22 @@ export async function dials() {
 const BASE_TAGS = ["#Islam", "#IslamicHistory", "#NoorCodexOfLight"];
 const FALLBACK_TAGS = "#Islam #IslamicHistory #Quran #Muslim #NoorCodexOfLight";
 
+/* WHAT THE PROMOTION MAY AND MAY NOT CLAIM.
+   The first version said "Read it at noorcodex.com" directly under a story
+   about eleventh century Anatolia. The library does not teach Seljuk military
+   history, so that sentence sent a reader looking for something that is not
+   there. A free library cannot afford to overpromise: the one thing it has is
+   that it tells the truth for nothing.
+   What IS true, and is checked on the live site rather than remembered: a new
+   light like this one appears every morning, and the library is the Qur'an
+   recited, the prophets, and the words of the Path explained. The card is the
+   invitation. The library is what the invitation is to. */
 const PROMO =
-  "Noor Codex of Light is a free illuminated library of Islam: the whole Qur'an with recitation " +
-  "and a companion for every surah, the 25 prophets, the five pillars, the Arabic letters, " +
-  "a children's codex, and a madrasa of 106 lessons.\n\n" +
+  "A light like this one every morning, from Noor Codex of Light: a free illuminated library " +
+  "of Islam. The whole Qur'an recited, the 25 prophets, and the words of the Path explained, " +
+  "one at a time.\n\n" +
   "No ads. No trackers. No account. Free forever.\n\n" +
-  "Read it at noorcodex.com";
+  "noorcodex.com";
 
 /* Words a hook may capitalise without the card having to name them. Without
    this an opener like "Did" or "Before" reads as an invented proper noun and
@@ -163,19 +173,93 @@ const TAG_SAFE = new Set(("islam islamic history islamichistory muslim muslims q
   + "noor codex light noorcodexoflight learn learning knowledge seerah hadith sunnah faith "
   + "muslimhistory islamicart free library").split(" "));
 
+/* THE MODEL WILL COPY YOUR EXAMPLE.
+   The first prompt ended with a sample answer, {"hook":"...","tags":["#One",
+   "#Two"]}, and the Lantern returned exactly that, verbatim. Both guards let it
+   through: a hook of three dots carries no number, no capital and no emoji, and
+   #One survived because its only word is under four letters and the escape for
+   short words skipped the check. So the machine reported a polished caption and
+   published the placeholder out of its own instructions.
+   The prompt no longer contains anything copyable, and these are the words that
+   are refused outright even if it ever does again. */
+const PLACEHOLDER = new Set(("one two three four example examples tag tags hashtag hashtags "
+  + "hook keyword keywords placeholder sample yourtag topic subject foo bar lorem ipsum").split(" "));
+
 const words = tag => String(tag).replace(/^#/, "")
   .replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_\-]+/g, " ")
   .toLowerCase().split(/\s+/).filter(Boolean);
 
 export function tagAllowed(tag, source) {
+  const bare = String(tag).replace(/^#/, "");
   const w = words(tag);
-  if (!w.length || !/^#?[\p{L}\p{N}_]+$/u.test(String(tag).replace(/^#/, "#"))) return false;
-  return w.every(x => x.length < 4 || TAG_SAFE.has(x) || source.includes(x));
+  if (!w.length || !/^[\p{L}\p{N}_]+$/u.test(bare)) return false;
+  if (bare.length < 4) return false;                       /* #One, #Two */
+  if (w.some(x => PLACEHOLDER.has(x))) return false;
+  /* No escape for short words any more. "alp" is three letters and passes
+     because the card says Alp Arslan; "one" is three letters and does not,
+     because the only reason it appeared was my own example. */
+  return w.every(x => TAG_SAFE.has(x) || source.includes(x));
+}
+
+/* ---------------------------------------------------------------------------
+   custom hashtags without asking anyone
+
+   The owner's requirement is that the tags are custom EVERY time. A free model
+   cannot promise that: the first live answer echoed the placeholder out of the
+   prompt and the caption fell back to the same five tags it would have used for
+   any card in the library.
+   So the card names its own. The people and places are already written in the
+   title, the detail line and the category, in capitals, which is what a proper
+   noun looks like. Pulling them out is mechanical, needs no model, cannot
+   invent anything, and by construction every tag it produces is named by the
+   card. The Lantern's suggestions are added on top when they survive the guard.
+--------------------------------------------------------------------------- */
+const NOT_A_SUBJECT = new Set(("january february march april may june july august september october "
+  + "november december monday tuesday wednesday thursday friday saturday sunday "
+  + "allah god lord indeed today year years day days night month century centuries "
+  + "when what where which while there their they this that then than with without "
+  + "after before during until about among between").split(" "));
+
+export function tagsFromCard(light) {
+  const fields = [light.category, light.detail, light.title, light.story];
+  const seen = new Set(), out = [];
+  fields.forEach((f, rank) => {
+    const text = String(f || "");
+    /* runs of capitalised words: "Alp Arslan", "Romanos IV Diogenes" */
+    const runs = text.match(/\b[A-Z][\p{L}'\u2019-]+(?:\s+[A-Z][\p{L}'\u2019-]+)*/gu) || [];
+    for (const run of runs) {
+      /* Drop only the words that are not part of a name. The length test is
+         applied to standalone words, never inside a run: "Alp" is three letters
+         and dropping it turned Alp Arslan into #Arslan. */
+      const kept = run.split(/\s+/).filter(w =>
+        !COMMON.has(w.toLowerCase()) && !NOT_A_SUBJECT.has(w.toLowerCase()));
+      if (!kept.length) continue;
+      /* A name gives one tag, not one per half: #AlpArslan, never also #Arslan. */
+      const cands = kept.length > 1 ? [kept.join("")] : kept.filter(w => w.length > 3);
+      for (const c of cands) {
+        const tag = "#" + c.replace(/[^\p{L}\p{N}]/gu, "");
+        /* Seljuk and Seljuks are one subject, not two */
+        const k = tag.toLowerCase().replace(/s$/, "");
+        if (tag.length > 4 && !seen.has(k)) { seen.add(k); out.push(tag); }
+      }
+    }
+  });
+  return out.slice(0, 8);
 }
 
 export function hookAllowed(hook, source) {
   const h = String(hook || "").trim();
   if (!h || h.length > 110) return false;
+  /* A hook has to be a sentence a person could read aloud. Three dots is not
+     one, and it passed every other check. */
+  const letters = (h.match(/\p{L}/gu) || []).length;
+  const wordCount = h.split(/\s+/).filter(x => /\p{L}/u.test(x)).length;
+  if (letters < 14 || wordCount < 3) return false;
+  /* Only a hook made ENTIRELY of placeholder words is refused. Checking word by
+     word rejected "One afternoon changed a language", which is ordinary
+     English, and a guard that refuses ordinary English refuses every hook. */
+  const hw = h.split(/\s+/).map(x => x.toLowerCase().replace(/[^\p{L}]/gu, "")).filter(Boolean);
+  if (hw.length && hw.every(x => PLACEHOLDER.has(x))) return false;
   /* The old range started at U+1F300 and let every dingbat through: a sparkle
      is U+2728 and would have gone out on a card about the Prophet. Arrows,
      dingbats, symbols, variation selectors and the emoji planes, all of it. */
@@ -232,7 +316,9 @@ const STORY_BUDGET = 1500;
 export function buildCaption(light, hook, tags) {
   const story = trimToSentences(light.story || "", STORY_BUDGET) || String(light.story || "");
   const head = hook && hook !== light.title ? hook + "\n\n" + light.title : light.title;
-  const tagLine = (tags && tags.length ? tags.join(" ") : FALLBACK_TAGS);
+  /* Even with the Lantern switched off entirely, the tags are the card's own. */
+  const auto = tags && tags.length ? tags : [...new Set([...tagsFromCard(light), ...BASE_TAGS])];
+  const tagLine = (auto.length ? auto.join(" ") : FALLBACK_TAGS);
   return fitCaption(`${head}\n\n${story}\n\n${light.detail}\n\n${PROMO}\n\n${tagLine}`);
 }
 
@@ -250,8 +336,11 @@ async function caption(light, polish) {
         "you may not add a name, number, date, place or claim that is not in it. " +
         "The opening line must make a reader stop scrolling. It may be a question or a plain striking " +
         "statement. Under 90 characters. No emoji, no exclamation marks, no em dashes. " +
-        "Then six to ten hashtags naming what the text is actually about. " +
-        "Reply with JSON only: {\"hook\":\"...\",\"tags\":[\"#One\",\"#Two\"]}" },
+        "Then six to ten hashtags naming the people, places and subjects the text actually " +
+        "names. Every hashtag must be a word the text itself uses. " +
+        "Reply with nothing but a JSON object carrying two keys. The key hook holds your opening " +
+        "line as a string. The key tags holds an array of strings, each starting with a hash. " +
+        "Do not copy any wording from these instructions into your answer." },
       { role: "user", content: source }
     ], { max_tokens: 300, temperature: 0.5, timeout: 8000, budget: 16000, maxTries: 2,
          title: "NOOR Codex of Light · the day's post" });
@@ -268,12 +357,21 @@ async function caption(light, polish) {
       .map(x => "#" + String(x).replace(/^#/, "").replace(/[^\p{L}\p{N}_]/gu, ""))
       .filter(x => x.length > 2 && tagAllowed(x, source.toLowerCase()))
       .slice(0, CAP_TAGS - BASE_TAGS.length);
-    const tags = [...new Set([...kept, ...BASE_TAGS])];
-    const refused = hookOk ? "" : "the opening line was not supported by the card";
+    /* The card's own names come first: they are always custom and always true.
+     Whatever the Lantern offered that survived the guard is added after. */
+  const mine = tagsFromCard(light);
+  const tags = [...new Set([...mine, ...kept, ...BASE_TAGS])].slice(0, CAP_TAGS);
+    /* The console has to be able to see a half failure. A caption that quietly
+       falls back to the same five tags every day is the failure this whole
+       change exists to make visible. */
+    const bad = [];
+    if (!hookOk) bad.push("the opening line was not supported by the card");
+    if (!kept.length) bad.push("the editor's hashtags were refused, so these are the card's own names");
 
     return {
       text: buildCaption(light, hookOk ? String(p.hook).trim() : "", tags),
-      polished: hookOk || kept.length > 0, refused, model: got.model
+      polished: hookOk || kept.length > 0,
+      refused: bad.join(" \u00b7 "), model: got.model
     };
   } catch { return { text: plain, polished: false }; }
 }
