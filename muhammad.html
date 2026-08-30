@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twenty-Three Years · NOOR Codex of Light</title>
+<meta name="description" content="The life of the Prophet Muhammad ﷺ in twenty-one stations, and then his character, his habits and his way of handling things — every verse and narration carried with its source.">
+<link rel="canonical" href="https://noorcodex.com/muhammad">
+<meta name="theme-color" content="#070A14">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NOOR Codex of Light">
+<meta property="og:title" content="Twenty-Three Years · NOOR Codex of Light">
+<meta property="og:description" content="The life of the Prophet Muhammad ﷺ in twenty-one stations, and then his character, his habits and his way of handling things — every verse and narration carried with its source.">
+<meta property="og:url" content="https://noorcodex.com/muhammad">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Twenty-Three Years · NOOR Codex of Light">
+<meta name="twitter:description" content="The life of the Prophet Muhammad ﷺ in twenty-one stations, and then his character, his habits and his way of handling things — every verse and narration carried with its source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&amp;family=Inter:wght@400;500;600&amp;family=Amiri:wght@400;700&amp;display=swap">
+
+<style>
+/* One committed world, walked from night into dawn. Makkah is cold and blue,
+   Madinah is warm: طلع البدر علينا is a colour instruction, not a slogan. */
+:root{
+  --night:#070A14;
+  --night-2:#0B1020;
+  --dawn:#160F0A;
+  --gold:#E8C874;
+  --gold-hi:#FFF0C4;
+  --rose:#F0C9A0;
+  --edge:rgba(232,200,116,.16);
+  --ink:#F2EFE4;
+  --dim:#8C8F9E;
+  --panel:rgba(255,254,247,.035);
+  --measure:33rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--night); color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,sans-serif; font-size:16px; line-height:1.7;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+.ar{font-family:Amiri,"Times New Roman",serif; direction:rtl; unicode-bidi:isolate}
+#sky{position:fixed; inset:0; z-index:0; pointer-events:none}
+.shell{position:relative; z-index:1}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif; text-wrap:balance; margin:0}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh; display:grid; place-items:center; text-align:center; padding:6rem 1.25rem 4rem}
+.hero-in{max-width:44rem; display:grid; gap:1.8rem; justify-items:center}
+.ayah{font-family:Amiri,serif; direction:rtl; font-size:clamp(1.5rem,4.4vw,2.5rem); line-height:2.05;
+  color:var(--gold); text-shadow:0 0 44px rgba(232,200,116,.3)}
+.ref{font-size:.7rem; letter-spacing:.24em; text-transform:uppercase; color:var(--dim); margin:-1.1rem 0 0}
+h1{font-weight:300; font-size:clamp(2.8rem,9vw,5.4rem); line-height:.98; letter-spacing:-.015em}
+h1 em{font-style:italic; color:var(--gold)}
+.lede{margin:0; max-width:32rem; color:#C4C1B7; text-wrap:pretty}
+.cue{font-size:.66rem; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);
+  display:grid; gap:.6rem; justify-items:center}
+.cue span{width:1px; height:2.6rem; background:linear-gradient(rgba(232,200,116,.5),transparent);
+  animation:drop 3.2s ease-in-out infinite}
+@keyframes drop{0%,100%{opacity:.25;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ---------- shared section furniture ---------- */
+section{padding:6rem 1.25rem}
+.wrap{max-width:64rem; margin:0 auto}
+.eyebrow{font-size:.68rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold);
+  margin:0 0 1rem; display:flex; align-items:center; gap:.9rem}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--edge)}
+h2{font-weight:400; font-size:clamp(1.8rem,4.2vw,2.7rem); line-height:1.14; margin-bottom:1rem}
+.say{color:#B6B3A9; max-width:var(--measure); margin:0}
+
+/* ---------- infographic: thirteen and ten ---------- */
+.shape{background:linear-gradient(180deg,var(--night-2),var(--night)); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge)}
+.years{margin-top:2.6rem; display:grid; gap:.9rem}
+.bar{display:flex; height:5.2rem; border-radius:10px; overflow:hidden; border:1px solid var(--edge)}
+.bar>div{position:relative; display:grid; align-content:center; padding:0 1.1rem;
+  transform:scaleX(0); transform-origin:left; transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.on .bar>div{transform:scaleX(1)}
+.makkah{flex:13; background:linear-gradient(90deg,rgba(80,110,200,.16),rgba(80,110,200,.07))}
+.madinah{flex:10; background:linear-gradient(90deg,rgba(240,201,160,.2),rgba(240,201,160,.09));
+  transition-delay:.35s!important}
+.bar b{font-family:"Cormorant Garamond",serif; font-size:1.5rem; font-weight:600; display:block; line-height:1.1}
+.bar small{font-size:.74rem; color:var(--dim); letter-spacing:.06em}
+.bar .madinah b{color:var(--rose)}
+.bar .makkah b{color:#A8BEF0}
+.scale{display:flex; font-size:.72rem; color:var(--dim); font-variant-numeric:tabular-nums}
+.scale span:first-child{flex:13} .scale span:last-child{flex:10; text-align:right}
+
+/* ---------- the road ---------- */
+.road{position:relative}
+.rail{position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%);
+  background:rgba(255,255,255,.06)}
+.lit{position:absolute; left:0; top:0; width:100%; background:linear-gradient(180deg,var(--gold),var(--rose));
+  height:0; box-shadow:0 0 18px rgba(232,200,116,.6)}
+@media (max-width:52rem){ .rail{left:1.1rem} }
+
+.stations{list-style:none; margin:0; padding:0; display:grid; gap:3.2rem; position:relative}
+.st{position:relative; display:grid; grid-template-columns:1fr 1fr; gap:2.6rem; align-items:start}
+@media (max-width:52rem){ .st{grid-template-columns:1fr; padding-left:3rem; gap:0} }
+.st .card{
+  background:var(--panel); border:1px solid var(--edge); border-radius:16px; padding:1.6rem 1.5rem;
+  opacity:0; transform:translateY(26px); transition:opacity .8s, transform .8s cubic-bezier(.2,.8,.2,1);
+}
+.st.on .card{opacity:1; transform:none}
+.st:nth-child(odd) .card{grid-column:1}
+.st:nth-child(even) .card{grid-column:2}
+@media (max-width:52rem){ .st .card{grid-column:1!important} }
+.dot{position:absolute; left:50%; top:2.2rem; width:11px; height:11px; border-radius:50%;
+  transform:translate(-50%,-50%) scale(.4); background:var(--night); border:2px solid var(--gold);
+  opacity:.35; transition:opacity .6s, transform .6s, box-shadow .6s}
+.st.on .dot{opacity:1; transform:translate(-50%,-50%) scale(1); box-shadow:0 0 20px rgba(232,200,116,.85)}
+@media (max-width:52rem){ .dot{left:1.1rem} }
+.st .yr{font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); display:block; margin-bottom:.5rem}
+.st .arn{font-family:Amiri,serif; direction:rtl; font-size:1.6rem; color:var(--gold); display:block; line-height:1.6}
+.st h3{font-weight:600; font-size:1.3rem; margin:.15rem 0 .7rem}
+.st .q{margin:0 0 .9rem; padding-left:.9rem; border-left:2px solid rgba(232,200,116,.4);
+  font-family:"Cormorant Garamond",serif; font-size:1.08rem; font-style:italic; color:#DAD6C9; line-height:1.6}
+.st .q cite{display:block; font-style:normal; font-family:Inter,sans-serif; font-size:.68rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-top:.5rem}
+.st .h{margin:0; font-size:.9rem; color:#AFACA3; line-height:1.62}
+.st .h cite{display:block; font-style:normal; font-size:.68rem; letter-spacing:.1em; color:var(--dim); margin-top:.45rem}
+/* Madinah warms */
+.st.warm .arn{color:var(--rose)}
+.st.warm .dot{border-color:var(--rose)}
+.st.warm.on .dot{box-shadow:0 0 20px rgba(240,201,160,.85)}
+.st.warm .q{border-left-color:rgba(240,201,160,.45)}
+.st.warm .q cite{color:var(--rose)}
+
+.act{grid-column:1/-1; text-align:center; padding:1.5rem 0 .5rem}
+.act p{margin:0; font-size:.7rem; letter-spacing:.34em; text-transform:uppercase; color:var(--dim)}
+.act b{display:block; font-family:"Cormorant Garamond",serif; font-weight:400; font-size:1.7rem;
+  color:var(--ink); letter-spacing:0; text-transform:none; margin-top:.3rem}
+
+/* ---------- infographic: badr ---------- */
+.badr{background:linear-gradient(180deg,var(--night),#0D0A16,var(--night))}
+.badr-grid{display:grid; gap:2.6rem; grid-template-columns:1fr}
+@media (min-width:56rem){ .badr-grid{grid-template-columns:.85fr 1.15fr; gap:4rem; align-items:center} }
+#dots{width:100%; height:auto; display:block; border:1px solid var(--edge); border-radius:14px; background:rgba(0,0,0,.25)}
+.legend{display:flex; gap:1.5rem; margin-top:1rem; font-size:.78rem; color:var(--dim); flex-wrap:wrap}
+.legend i{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:.45rem; vertical-align:middle}
+
+/* ---------- close ---------- */
+.close{background:linear-gradient(180deg,var(--night),var(--dawn)); text-align:center}
+.close .ayah{margin-bottom:.4rem}
+.doors{display:grid; gap:1rem; grid-template-columns:1fr; margin-top:3rem; text-align:left}
+@media (min-width:48rem){ .doors{grid-template-columns:repeat(3,1fr)} }
+.door{display:block; text-decoration:none; color:inherit; border:1px solid var(--edge); border-radius:16px;
+  padding:1.6rem 1.4rem; background:linear-gradient(180deg,rgba(255,254,247,.04),transparent);
+  transition:border-color .35s, transform .35s}
+.door:hover,.door:focus-visible{border-color:rgba(232,200,116,.5); transform:translateY(-3px); outline:none}
+.door h3{font-weight:600; font-size:1.15rem; margin-bottom:.35rem}
+.door p{margin:0; font-size:.87rem; color:var(--dim); line-height:1.55}
+.door .go{display:inline-block; margin-top:.85rem; font-size:.7rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--gold)}
+.note{border-left:2px solid rgba(232,200,116,.4); padding:.2rem 0 .2rem 1.2rem; color:var(--dim);
+  font-size:.87rem; max-width:var(--measure); margin:3rem auto 0; text-align:left}
+footer{padding:3.5rem 1.25rem 5rem; text-align:center; color:var(--dim); font-size:.82rem; border-top:1px solid var(--edge)}
+footer a{color:var(--gold); text-decoration:none}
+footer a:hover{text-decoration:underline}
+.draft{position:fixed; z-index:60; bottom:1rem; left:1rem; pointer-events:none;
+  background:linear-gradient(rgba(232,200,116,.12),rgba(232,200,116,.12)), #0A0D18;
+  border:1px solid rgba(232,200,116,.4); color:var(--gold); font-size:.68rem; letter-spacing:.14em;
+  text-transform:uppercase; padding:.45rem .85rem; border-radius:2rem; backdrop-filter:blur(8px)}
+/* ---------- provenance ---------- */
+.prov{display:inline-block; margin-left:.5rem; font-size:.58rem; letter-spacing:.12em;
+  text-transform:uppercase; padding:.1rem .42rem; border-radius:1rem; vertical-align:.08em}
+.prov.codex{background:rgba(232,200,116,.14); color:var(--gold); border:1px solid rgba(232,200,116,.3)}
+.prov.check{background:rgba(150,160,190,.12); color:#A6ADC4; border:1px solid rgba(150,160,190,.3)}
+
+/* ---------- witnesses ---------- */
+.wits{display:grid; gap:1rem; grid-template-columns:1fr; margin-top:2.6rem}
+@media (min-width:52rem){ .wits{grid-template-columns:repeat(2,1fr)} }
+.wit{border:1px solid var(--edge); border-radius:16px; padding:1.5rem 1.4rem;
+  background:linear-gradient(180deg,rgba(255,254,247,.04),transparent);
+  opacity:0; transform:translateY(20px); transition:opacity .7s, transform .7s}
+.wit.on{opacity:1; transform:none}
+.wit blockquote{margin:0 0 .9rem; font-family:"Cormorant Garamond",serif; font-size:1.22rem;
+  font-style:italic; line-height:1.55; color:#E4E0D3}
+.wit .who{font-size:.76rem; color:var(--dim)}
+.wit .who b{color:var(--gold); font-weight:600; font-style:normal}
+
+/* ---------- the method ---------- */
+.cases{display:grid; gap:.85rem; margin-top:2.6rem}
+.case{border:1px solid var(--edge); border-radius:14px; overflow:hidden; background:var(--panel)}
+.case>button{width:100%; text-align:left; background:none; border:0; color:inherit; font:inherit;
+  padding:1.15rem 1.3rem; cursor:pointer; display:grid; grid-template-columns:1fr auto; gap:1rem;
+  align-items:center; transition:background .3s}
+.case>button:hover,.case>button:focus-visible{background:rgba(232,200,116,.06); outline:none}
+.case .prob{font-family:"Cormorant Garamond",serif; font-size:1.2rem; font-weight:600}
+.case .rule{display:block; font-size:.8rem; color:var(--gold); margin-top:.25rem; letter-spacing:.02em}
+.case .chev{color:var(--dim); transition:transform .35s; font-size:1.1rem}
+.case.open .chev{transform:rotate(90deg)}
+.case .body{display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.case.open .body{grid-template-rows:1fr}
+.case .body>div{overflow:hidden}
+.case .inner{padding:0 1.3rem 1.3rem; display:grid; gap:.85rem}
+.case .did{margin:0; color:#C2BFB5; line-height:1.65}
+.case .ev{margin:0; padding-left:.9rem; border-left:2px solid rgba(232,200,116,.4); font-size:.9rem;
+  color:#AFACA3; line-height:1.6}
+.case .ev cite{display:block; font-style:normal; font-size:.68rem; letter-spacing:.1em; color:var(--dim); margin-top:.4rem}
+
+/* ---------- the day ---------- */
+.day{background:linear-gradient(180deg,var(--night),#0C0E1C,var(--night))}
+.dayfig{position:relative; margin-top:2.8rem}
+#arc{width:100%; height:auto; display:block; overflow:visible}
+.arc-lab{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; fill:#8C8F9E}
+.hab{display:grid; gap:.7rem; margin-top:1.6rem; grid-template-columns:1fr}
+@media (min-width:46rem){ .hab{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:70rem){ .hab{grid-template-columns:repeat(3,1fr)} }
+.hb{border:1px solid var(--edge); border-radius:12px; padding:1.05rem 1.1rem; background:var(--panel)}
+.hb h4{margin:0 0 .35rem; font-family:"Cormorant Garamond",serif; font-size:1.08rem; font-weight:600}
+.hb .t{font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:.4rem}
+.hb p{margin:0; font-size:.87rem; color:#AAA79E; line-height:1.6}
+.hb cite{display:block; font-style:normal; font-size:.66rem; letter-spacing:.08em; color:var(--dim); margin-top:.5rem}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .wit{opacity:1!important; transform:none!important}
+  *,*::before,*::after{animation-duration:.001ms!important; animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+  .st .card{opacity:1!important; transform:none!important}
+  .bar>div{transform:scaleX(1)!important}
+}
+
+/* ---------- site bar (simplified: the full Tailwind header is not reproduced here) ---------- */
+.sitebar{position:fixed; inset:0 0 auto 0; z-index:70; display:flex; align-items:center;
+  gap:clamp(.9rem,3vw,1.6rem); padding:.68rem clamp(.9rem,4vw,2.2rem);
+  background:rgba(6,8,14,.74); backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid rgba(232,200,116,.16); font-size:.8rem}
+.sitebar a{color:#C9C5B8; text-decoration:none; white-space:nowrap;
+  transition:color .25s}
+.sitebar a:hover,.sitebar a:focus-visible{color:#E8C874; outline:none}
+.sitebar a:focus-visible{text-decoration:underline; text-underline-offset:.3em}
+.sitebar .brand{display:flex; align-items:baseline; gap:.5rem; flex:0 0 auto; color:#F3EFE2}
+.sitebar .brand .ar{font-family:Amiri,serif; direction:rtl; color:#E8C874; font-size:1.3rem;
+  line-height:1.5}
+.sitebar .brand b{font-weight:600; letter-spacing:.2em; font-size:.72rem; text-transform:uppercase}
+.sitebar .rooms{display:flex; gap:clamp(.85rem,2.6vw,1.4rem); margin-left:auto;
+  overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch}
+.sitebar .rooms::-webkit-scrollbar{display:none}
+.sitebar .rooms a[aria-current="page"]{color:#E8C874}
+@media (max-width:52rem){
+  /* the row scrolls on a narrow screen, so fade the edge rather than chop a word */
+  .sitebar .rooms{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent);
+    mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent); padding-right:2rem}
+}
+@media (max-width:34rem){ .sitebar .brand b{display:none} }
+
+/* ---------- footer links ---------- */
+.flinks{display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; justify-content:center;
+  margin:0 0 1.4rem; padding:0}
+.flinks a{color:#C9C5B8; text-decoration:none; border-bottom:1px solid rgba(232,200,116,.22);
+  padding-bottom:.15rem}
+.flinks a:hover,.flinks a:focus-visible{color:#E8C874; outline:none}
+</style>
+</head>
+<body>
+
+<nav class="sitebar" aria-label="Codex">
+  <a class="brand" href="https://noorcodex.com/"><span class="ar">نُور</span><b>Noor</b></a>
+  <span class="rooms">
+    <a href="https://noorcodex.com/quran">Qur'an</a>
+    <a href="https://noorcodex.com/prophets">Prophets</a>
+    <a href="/allah">The Names</a>
+    <a href="/muhammad" aria-current="page">The Seerah</a>
+    <a href="https://noorcodex.com/madrasa">Madrasa</a>
+  </span>
+</nav>
+
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="shell">
+
+<header class="hero">
+  <div class="hero-in">
+    <p class="ayah">وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ</p>
+    <p class="ref">Qur'an 21:107</p>
+    <h1>Twenty-Three <em>Years</em></h1>
+    <p class="lede">From a cave above Makkah to a grave in Madinah, and then the harder question:
+    what he was actually like, and how a person is supposed to copy it. Every verse and every
+    narration below is carried with its source.</p>
+    <p class="cue">Walk it<span></span></p>
+  </div>
+</header>
+
+<section class="shape" id="shape">
+  <div class="wrap">
+    <p class="eyebrow">The shape of it</p>
+    <h2>Thirteen years of being refused, ten of building</h2>
+    <p class="say">Prophethood lasted twenty-three years and it was not one thing twice. Thirteen
+    were spent in Makkah with almost no power and almost no protection. Ten were spent in Madinah
+    with both. The first period is where most of the Qur'an about patience came down; the second is
+    where almost all of the law did.</p>
+    <div class="years">
+      <div class="bar">
+        <div class="makkah"><b>13 years</b><small>MAKKAH &middot; 610 to 622</small></div>
+        <div class="madinah"><b>10 years</b><small>MADINAH &middot; 622 to 632</small></div>
+      </div>
+      <div class="scale"><span>First revelation, age 40</span><span>The Passing, 11 AH</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="road">
+  <div class="wrap">
+    <p class="eyebrow">The road &middot; twenty stations</p>
+    <h2>Each one carries its own evidence</h2>
+    <p class="say" style="margin-bottom:3.5rem">Every station names the verse and the narration it
+    rests on. Nothing here is summary without a source behind it.</p>
+
+    <div style="position:relative">
+      <div class="rail"><div class="lit" id="lit"></div></div>
+      <ul class="stations" id="stations"></ul>
+    </div>
+  </div>
+</section>
+
+<section class="badr" id="badr">
+  <div class="wrap badr-grid">
+    <div>
+      <p class="eyebrow">Badr &middot; 17 Ramadan, 2 AH</p>
+      <h2>Three hundred and thirteen</h2>
+      <p class="say">The numbers are the argument. Every dot on the right is one man. The believers
+      came out with no intention of a battle and were given one anyway, against an army more than
+      three times their size, better armed and better mounted.</p>
+      <p class="q" style="margin-top:1.4rem; padding-left:.9rem; border-left:2px solid rgba(232,200,116,.4);
+        font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:#DAD6C9">
+        Allah had already given you victory at Badr while you were few.
+        <cite style="display:block; font-style:normal; font-family:Inter,sans-serif; font-size:.68rem;
+        letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-top:.5rem">Qur'an 3:123</cite></p>
+      <div class="legend">
+        <span><i style="background:var(--gold)"></i>313 believers</span>
+        <span><i style="background:rgba(150,160,190,.55)"></i>about 1,000 of Quraysh</span>
+      </div>
+    </div>
+    <canvas id="dots" width="900" height="620" role="img"
+      aria-label="Three hundred and thirteen points of light against about one thousand"></canvas>
+  </div>
+</section>
+
+<section id="example">
+  <div class="wrap">
+    <p class="eyebrow">The example &middot; al-uswa al-hasana</p>
+    <h2>He was sent to be copied, not only believed</h2>
+    <p class="say">The Qur'an does not describe him as a set of doctrines to agree with. It calls him
+    a pattern, and the word it uses is the one for a mould a thing is pressed into. Everything below
+    is here because a person can do it tomorrow.</p>
+    <p class="q" style="max-width:34rem; margin:2rem 0 0; padding-left:1rem;
+      border-left:2px solid rgba(232,200,116,.4); font-family:'Cormorant Garamond',serif;
+      font-style:italic; font-size:1.2rem; color:#DAD6C9; line-height:1.6">
+      There is certainly in the Messenger of Allah an excellent pattern for whoever hopes in Allah
+      and the Last Day, and remembers Allah much.
+      <cite style="display:block; font-style:normal; font-family:Inter,sans-serif; font-size:.68rem;
+      letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-top:.6rem">Qur'an 33:21</cite></p>
+
+    <p class="eyebrow" style="margin-top:4rem">What the people who lived with him said</p>
+    <div class="wits" id="wits"></div>
+  </div>
+</section>
+
+<section class="badr" id="method">
+  <div class="wrap">
+    <p class="eyebrow">The method &middot; how he handled things</p>
+    <h2>Nine problems, and what he actually did</h2>
+    <p class="say">Not maxims. Real situations with a person in front of him and a decision to make.
+    Read the problem, then open it to see what he did and the rule underneath, which is the part that
+    still works on a Tuesday.</p>
+    <div class="cases" id="cases"></div>
+  </div>
+</section>
+
+<section class="day" id="day">
+  <div class="wrap">
+    <p class="eyebrow">The day &middot; his habits, in the order they fell</p>
+    <h2>A life with a shape to it</h2>
+    <p class="say">He did not live in bursts. The day had joints in it, and the same small acts sat at
+    the same joints for twenty-three years. That repetition is most of what made the character.</p>
+    <div class="dayfig">
+      <svg id="arc" viewBox="0 0 900 300" role="img" aria-label="The arc of a day, from before dawn to night">
+        <defs>
+          <linearGradient id="ag" x1="0" y1="0" x2="900" y2="0">
+            <stop offset="0%" stop-color="#5A6EA8"/><stop offset="45%" stop-color="#E8C874"/>
+            <stop offset="100%" stop-color="#3E4670"/>
+          </linearGradient>
+        </defs>
+        <path id="apath" d="M40 250 Q450 20 860 250" fill="none" stroke="url(#ag)" stroke-width="2.5"
+          stroke-linecap="round" opacity=".85"/>
+        <g id="apts"></g>
+        <text class="arc-lab" x="40" y="285" text-anchor="start">Before dawn</text>
+        <text class="arc-lab" x="450" y="285" text-anchor="middle">Midday</text>
+        <text class="arc-lab" x="860" y="285" text-anchor="end">Night</text>
+      </svg>
+    </div>
+    <div class="hab" id="habits"></div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <p class="ayah">الرَّفِيقَ الْأَعْلَى</p>
+    <p class="ref">Bukhari 4463 &middot; Muslim 2444</p>
+    <h2 style="margin-top:1.4rem">&ldquo;Rather, the Highest Companion.&rdquo;</h2>
+    <p class="say" style="margin:0 auto">He said it three times, and he passed. Abu Bakr stood before
+    a community that could not accept it and said: whoever worshipped Muhammad, Muhammad has died;
+    and whoever worships Allah, Allah is Living and does not die. Then he recited the verse that had
+    been waiting for that morning since Uhud.</p>
+    <p class="q" style="max-width:33rem; margin:2rem auto 0; text-align:left; padding-left:.9rem;
+      border-left:2px solid rgba(240,201,160,.45); font-family:'Cormorant Garamond',serif;
+      font-style:italic; font-size:1.1rem; color:#DAD6C9">
+      Muhammad is only a messenger; messengers have passed away before him. If he dies or is killed,
+      will you turn back on your heels?
+      <cite style="display:block; font-style:normal; font-family:Inter,sans-serif; font-size:.68rem;
+      letter-spacing:.16em; text-transform:uppercase; color:var(--rose); margin-top:.5rem">Qur'an 3:144</cite></p>
+
+    <div class="doors">
+      <a class="door" href="/?node=45"><h3>The Farewell Hajj</h3>
+        <p>Arafat, 9 Dhul-Hijjah, 10 AH. The sermon that fixed what the community owed each other.</p>
+        <span class="go">Open the station &rarr;</span></a>
+      <a class="door" href="/?node=46"><h3>The Passing</h3>
+        <p>Rabi' al-Awwal, 11 AH. The completion of the message, and the community's hardest morning.</p>
+        <span class="go">Open the station &rarr;</span></a>
+      <a class="door" href="/?node=51"><h3>The Preservation</h3>
+        <p>Book, Sunnah, chain. How a religion was built to survive its Messenger.</p>
+        <span class="go">Open the station &rarr;</span></a>
+    </div>
+
+    <p class="note">Every verse and every narration on this page is carried from the Codex's own
+    entries, with the collection and number it was recorded under. Where a report is from the sirah
+    literature rather than the two Sahihs, it says so. Nothing here was written from memory.</p>
+  </div>
+</section>
+
+<footer>
+  <p class="flinks">
+    <a href="https://noorcodex.com/quran">The Mushaf</a>
+    <a href="https://noorcodex.com/prophets">The 25 Prophets</a>
+    <a href="/allah">The Names</a>
+    <a href="https://noorcodex.com/madrasa">Madrasa</a>
+    <a href="https://noorcodex.com/feedback">Corrections &amp; ideas</a>
+  </p>
+  <p>NOOR Codex of Light &middot; free forever, no ads, no trackers &middot;
+  <a href="https://noorcodex.com">noorcodex.com</a></p>
+</footer>
+</div>
+
+<p class="draft">Draft &middot; wording pending review</p>
+
+<script>
+/* Every station below is carried from the Codex's own node JSON: the verse with
+   its reference, the narration with its collection and number. Nothing is
+   written from recall. */
+const STATIONS = [
+["prologue","~570 CE","عام الفيل","The Year of the Elephant",
+ "Have you not seen how your Lord dealt with the companions of the elephant?","Qur'an 105:1-5",
+ "Allah held back the elephant from Makkah and gave His Messenger and the believers authority over it. Its sanctity today is as its sanctity yesterday.","Bukhari 112 · Muslim 1355"],
+["makkah","Monday, Year of the Elephant","المولد","The Birth",
+ "Did He not find you an orphan and shelter you?","Qur'an 93:6",
+ "He was asked about fasting on Monday. He said: That is the day I was born, and the day revelation came to me.","Muslim 1162"],
+["makkah","Age about four","شق الصدر","The Chest Opened",
+ "Did We not expand for you your chest?","Qur'an 94:1",
+ "Jibril came to him while he was playing with the boys, took him, laid him down, split his chest, and removed from the heart a clot, and said: this was Shaytan's portion of you.","Muslim 162"],
+["makkah","Before the first revelation","غار حراء","Hira, and the searching",
+ "And He found you searching, and guided.","Qur'an 93:7",
+ "The first of what began of revelation was the true dream in sleep. He never saw a dream but it came like the break of dawn. Then solitude was made beloved to him.","Bukhari 3, from Aisha"],
+["makkah","Ramadan · age 40","اقرأ","Read",
+ "Read in the name of your Lord who created, created man from a clinging substance. Read, and your Lord is the Most Generous.","Qur'an 96:1-5",
+ "He pressed me until I reached my limit, then released me and said: Read. Until he said: Read in the name of your Lord who created.","Bukhari 3 · Muslim 160"],
+["makkah","After the death of Abu Talib","الطائف","Taif, and the hardest day",
+ "Say: it has been revealed to me that a company of the jinn listened, and said: we have heard an amazing Qur'an.","Qur'an 72:1",
+ "Aisha asked: was there a day harder upon you than Uhud? He said: I met from your people what I met, and the hardest was the day of Aqabah at Taif.","Bukhari 3231 · Muslim 1795"],
+["makkah","One night","الإسراء والمعراج","The Night Journey",
+ "Glory be to Him who took His servant by night from the Sacred Mosque to the Farthest Mosque.","Qur'an 17:1",
+ "Then he took my hand and ascended with me to the nearest heaven.","Bukhari and Muslim, summarising a long narration"],
+["makkah","12, then 73 and 2","بيعة العقبة","The Pledges at Aqabah",
+ "And those who gave shelter and aided, they are allies of one another.","Qur'an 8:72",
+ "Pledge to me: that you will associate nothing with Allah, nor steal, nor commit zina. Whoever fulfils it, his reward is with Allah.","Bukhari 18"],
+["turn","Three nights inside","غار ثور","The Cave of Thawr",
+ "When he said to his companion: do not grieve; indeed Allah is with us.","Qur'an 9:40",
+ "I said: Messenger of Allah, if one of them looks beneath his feet he will see us. He said: what do you think of two, whose third is Allah?","Bukhari 3653 · Muslim 2381"],
+["turn","A hundred camels on his head","سراقة","Suraqah turns back",
+ "And We placed before them a barrier and behind them a barrier, and covered them, so they do not see.","Qur'an 36:9",
+ "His horse's forelegs sank into the ground, and he called out to them for safety, and turned back and kept their secret.","Bukhari 3906"],
+["turn","Founded on taqwa","مسجد قباء","Quba, the first masjid",
+ "A masjid founded upon taqwa from the first day is more worthy that you stand within it.","Qur'an 9:108",
+ "The Prophet ﷺ used to come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Muslim 1399"],
+["madinah","622 CE","طلع البدر","Madinah receives him",
+ "Remember when you were few and oppressed in the land, fearing the people would snatch you away, and He sheltered you.","Qur'an 8:26",
+ "People: spread salam, feed food, keep the ties of kinship, and pray at night while people sleep, and you will enter Jannah in peace.","Tirmidhi 2485 · Ibn Majah 1334, sahih"],
+["madinah","17 Ramadan, 2 AH","بدر","Badr",
+ "Allah had already given you victory at Badr while you were few.","Qur'an 3:123",
+ "The Prophet looked at the polytheists and said: Allah, this is Quraysh, come with their vanity and their pride, opposing You and calling Your Messenger a liar.","Ibn Ishaq, sirah literature"],
+["madinah","3 AH","أحد","Uhud, and the archers",
+ "Allah had certainly fulfilled His promise to you when you were killing them by His permission.","Qur'an 3:152",
+ "Hamza is the master of the martyrs.","Reported in the sirah and hadith literature"],
+["madinah","5 AH","الخندق","The Trench",
+ "You who believe, remember the favour of Allah upon you when armies came against you.","Qur'an 33:9",
+ "Salman is one of us, the people of the house.","Reported in the sirah literature"],
+["madinah","6 AH","الحديبية","Hudaybiyyah",
+ "Indeed, We have given you a clear victory.","Qur'an 48:1",
+ "The treaty read as a defeat on every clause, and the verse calling it a clear victory came down on the road home.","Qur'an 48:1, revealed after the treaty"],
+["madinah","8 AH","فتح مكة","The Opening of Makkah",
+ "When the help of Allah and the Opening come.","Qur'an 110:1",
+ "Truth has come and falsehood has vanished; indeed falsehood is bound to vanish. He recited it as the idols came down.","Qur'an 17:81, recited at the Opening"],
+["madinah","8 AH","حنين","Hunayn, and the lesson in numbers",
+ "And on the day of Hunayn, when your great number pleased you, but it availed you nothing.","Qur'an 9:25",
+ "I am the Prophet, no lie. I am the son of Abd al-Muttalib.","Bukhari 2864 · Muslim 1776"],
+["madinah","9 AH","تبوك","Tabuk, the hour of hardship",
+ "And to the three left behind, until the earth, vast as it is, closed in on them. Then He turned to them, that they might repent.","Qur'an 9:117-118",
+ "Are you not content to be to me as Harun was to Musa, except that there is no prophet after me?","Bukhari 4416 · Muslim 2404"],
+["madinah","9 Dhul-Hijjah, 10 AH","حجة الوداع","The Farewell at Arafat",
+ "This day I have perfected for you your religion, completed upon you My favour, and approved for you Islam as religion.","Qur'an 5:3",
+ "Your blood and your wealth are sacred to one another as the sanctity of this day of yours, in this month of yours, in this city of yours.","Muslim 1218, the long narration of Jabir"],
+["madinah","Rabi' al-Awwal, 11 AH","الوفاة","The Passing",
+ "Muhammad is only a messenger; messengers have passed away before him.","Qur'an 3:144",
+ "He murmured: with those You have favoured. Rather, the Highest Companion, three times, and he passed.","Bukhari 4463 · Muslim 2444"]
+];
+const ACTS = { 1:["Act one","Makkah · thirteen years"], 8:["The turn","The road to Madinah"], 11:["Act two","Madinah · ten years"] };
+
+const list = document.getElementById("stations");
+STATIONS.forEach((s, i) => {
+  const [phase, yr, ar, title, qEn, qRef, hEn, hRef] = s;
+  if (ACTS[i]) {
+    const a = document.createElement("li");
+    a.className = "act";
+    a.innerHTML = "<p></p>";
+    a.querySelector("p").innerHTML = "";
+    a.querySelector("p").append(ACTS[i][0]);
+    const b = document.createElement("b"); b.textContent = ACTS[i][1];
+    a.querySelector("p").appendChild(b);
+    list.appendChild(a);
+  }
+  const li = document.createElement("li");
+  li.className = "st" + (phase === "madinah" ? " warm" : "");
+  const card = document.createElement("div"); card.className = "card";
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  card.appendChild(mk("span", "yr", yr));
+  const an = mk("span", "arn ar", ar); card.appendChild(an);
+  card.appendChild(mk("h3", null, title));
+  const q = mk("p", "q", qEn); const qc = mk("cite", null, qRef); q.appendChild(qc); card.appendChild(q);
+  const h = mk("p", "h", hEn); const hc = mk("cite", null, hRef); h.appendChild(hc); card.appendChild(h);
+  li.appendChild(mk("span", "dot"));
+  li.appendChild(card);
+  list.appendChild(li);
+});
+
+/* ---------------------------------------------------------------------------
+   PROVENANCE. Two kinds of evidence sit on this page and they are not equal.
+
+     "codex"  the Codex's own node files carry it, with this reference.
+     "check"  it is not in the corpus. The reference is the standard one, and
+              it is marked so a qualified reader can check it rather than
+              having it blended in beside material that was already validated.
+
+   Nothing is presented as verified that is not. The markers stay until the
+   second column has been read by someone entitled to read it.
+--------------------------------------------------------------------------- */
+const WITNESSES = [
+["His character was the Qur'an.","Aisha, asked what he was like","Muslim 746","check"],
+["I served him for ten years, and he never said uff to me, and never said of a thing I did why did you do it, nor of a thing I left undone why did you not do it.","Anas ibn Malik","Bukhari 6038 · Muslim 2309","check"],
+["He never struck anything with his hand, not a servant and not a woman, except when fighting in the path of Allah.","Aisha","Muslim 2328","check"],
+["He was shyer than a maiden behind her veil, and when he disliked a thing we knew it in his face.","Abu Sa'id al-Khudri","Bukhari 6102 · Muslim 2320","check"],
+["I was sent only to perfect noble character.","His own account of the errand","al-Adab al-Mufrad 273 · Ahmad 8952","check"],
+["He bought the ground for the masjid from two orphan boys, and would not take it as a gift.","How he treated the powerless when he had power","Bukhari 428","codex"]
+];
+
+const CASES = [
+["A man urinates inside the mosque","Correct the thing without breaking the person",
+ "The companions rushed at him. He stopped them, let the man finish, then had a bucket of water poured over the spot and told them plainly that they were sent to make things easy and not to make them hard.",
+ "Leave him, and pour a bucket of water over it. You were sent to make things easy and were not sent to make them hard.","Bukhari 220 · Muslim 285","check"],
+["A young man asks permission to commit zina","Argue with the person's own conscience, not at him",
+ "The people shouted him down. He called the young man close, sat him down, and asked him one question at a time: would you like it for your mother, your daughter, your sister. Each time the man said no. He then said, people do not like it for theirs either, and prayed for him. The man left saying nothing was more hateful to him.",
+ "Would you like it for your mother? He said no. Nor do people like it for their mothers.","Ahmad 22211","check"],
+["Four tribes will fight over who lifts the Black Stone","Design a solution in which nobody has to lose",
+ "The rebuilding of the Ka'bah reached the stone and the clans were close to war over the honour. He asked for a cloak, laid the stone in the middle of it, and had one man from each clan take an edge. They carried it together and he set it in place with his own hands.",
+ "Recorded in the sirah literature rather than the two Sahihs, and given as such.","Ibn Ishaq, sirah","check"],
+["A treaty whose every clause reads as a defeat","Take the humiliating terms when the long game is worth it",
+ "At Hudaybiyyah he accepted terms his own companions found unbearable: no umrah that year, and any man who fled to him would be returned while any who fled from him would not. Umar objected openly. He signed. The verse calling it a clear victory came down on the road home, and within two years Makkah opened without a battle.",
+ "Indeed, We have given you a clear victory.","Qur'an 48:1","codex"],
+["An enemy army is coming and the city cannot be held","Take the best idea in the room from whoever is holding it",
+ "Facing a siege he had no answer for, he took the plan of a Persian freedman, Salman, who knew a defence the Arabs did not use. They dug a trench. The confederates could not cross it and the siege broke.",
+ "Salman is one of us, the people of the house.","Reported in the sirah literature","check"],
+["Spoils are divided and the Ansar are left out","Give the goods to whoever needs winning, keep the relationship with whoever is secure",
+ "After Hunayn he gave the largest shares to men newly reconciled to Islam and nothing to the Ansar who had carried him for ten years. When it reached him that they were hurt, he gathered them alone and asked whether they would rather leave with sheep and camels, or leave with him.",
+ "Are you not content that the people leave with sheep and camels, and you return with the Messenger of Allah to your homes?","Bukhari 4330 · Muslim 1061","codex"],
+["Someone has made you angry","Anger is not strength, and it is not to be obeyed",
+ "He defined strength against the whole culture around him. Not the man who throws others down; the man who holds himself when the anger arrives.",
+ "The strong one is not the one who overcomes people by his strength. The strong one is the one who controls himself when he is angry.","Bukhari 6114 · Muslim 2609","check"],
+["You are teaching someone and they are struggling","Make it easy, and give people something to want",
+ "The instruction he gave to men he was sending to govern was two pairs, and the second half of each pair is the one people forget.",
+ "Make things easy and do not make them hard. Give glad tidings and do not drive people away.","Bukhari 69 · Muslim 1734","check"],
+["You are the head of a household and nobody is watching","What a man is at home is what he is",
+ "He mended his own sandals, patched his own clothes and helped in the house. Asked what he did at home, Aisha answered in a sentence that leaves nowhere to hide.",
+ "He was in the service of his family, and when the prayer came he went out to the prayer.","Bukhari 676","check"]
+];
+
+const HABITS = [
+[6,"Before dawn","The night prayer","He stood at night until his feet swelled, and when asked why when he was already forgiven, he said: shall I not be a grateful servant.","Bukhari 4837 · Muslim 2819","check"],
+[16,"On waking","The first words","On waking he said: praise be to Allah who gave us life after He caused us to die, and to Him is the resurrection.","Bukhari 6312","check"],
+[26,"Before every prayer","The siwak","Were it not that I would burden my community, I would have ordered them to use the siwak at every prayer.","Bukhari 887 · Muslim 252","check"],
+[36,"Before Fajr","Two rak'ahs","The two rak'ahs before dawn are better than the world and everything in it.","Muslim 725","check"],
+[52,"Through the day","At the table","He never criticised food. If he wanted it he ate it, and if he disliked it he left it.","Bukhari 5409 · Muslim 2064","check"],
+[62,"Meeting anyone","The face he gave people","Do not think little of any act of kindness, even meeting your brother with a cheerful face.","Muslim 2626","check"],
+[74,"Every Saturday","Walking to Quba","He would come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Muslim 1399","codex"],
+[86,"Before sleep","How he lay down","When he went to his bed he lay on his right side and placed his hand under his cheek.","Bukhari 6314","check"]
+];
+
+/* ---- witnesses ---- */
+const witBox = document.getElementById("wits");
+WITNESSES.forEach(([quote, who, ref, prov]) => {
+  const d = document.createElement("div"); d.className = "wit";
+  const bq = document.createElement("blockquote"); bq.textContent = "\u201C" + quote + "\u201D";
+  const w = document.createElement("p"); w.className = "who";
+  const b = document.createElement("b"); b.textContent = who;
+  w.appendChild(b); w.append(" \u00b7 " + ref);
+  const tag = document.createElement("span");
+  tag.className = "prov " + (prov === "codex" ? "codex" : "check");
+  tag.textContent = prov === "codex" ? "in the Codex" : "to verify";
+  w.appendChild(tag);
+  d.append(bq, w); witBox.appendChild(d);
+});
+
+/* ---- the method ---- */
+const caseBox = document.getElementById("cases");
+CASES.forEach(([prob, rule, did, ev, ref, prov], i) => {
+  const wrap = document.createElement("div"); wrap.className = "case";
+  const btn = document.createElement("button"); btn.type = "button";
+  btn.setAttribute("aria-expanded", "false");
+  const left = document.createElement("span");
+  const p = document.createElement("span"); p.className = "prob"; p.textContent = prob;
+  const r = document.createElement("span"); r.className = "rule"; r.textContent = rule;
+  left.append(p, r);
+  const ch = document.createElement("span"); ch.className = "chev"; ch.textContent = "\u203A";
+  btn.append(left, ch);
+  const body = document.createElement("div"); body.className = "body";
+  const inner0 = document.createElement("div");
+  const inner = document.createElement("div"); inner.className = "inner";
+  const dd = document.createElement("p"); dd.className = "did"; dd.textContent = did;
+  const ee = document.createElement("p"); ee.className = "ev"; ee.textContent = ev;
+  const cc = document.createElement("cite"); cc.textContent = ref;
+  const tag = document.createElement("span");
+  tag.className = "prov " + (prov === "codex" ? "codex" : "check");
+  tag.textContent = prov === "codex" ? "in the Codex" : "to verify";
+  cc.appendChild(tag); ee.appendChild(cc);
+  inner.append(dd, ee); inner0.appendChild(inner); body.appendChild(inner0);
+  wrap.append(btn, body); caseBox.appendChild(wrap);
+  btn.addEventListener("click", () => {
+    const open = wrap.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+});
+
+/* ---- the day ---- */
+const pathEl = document.getElementById("apath");
+const ptsG = document.getElementById("apts");
+const habBox = document.getElementById("habits");
+const L = pathEl.getTotalLength();
+HABITS.forEach(([pct, when, what, text, ref, prov], i) => {
+  const pt = pathEl.getPointAtLength(L * pct / 100);
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y); c.setAttribute("r", "6");
+  c.setAttribute("fill", "#070A14"); c.setAttribute("stroke", "#E8C874");
+  c.setAttribute("stroke-width", "2"); c.setAttribute("opacity", "0");
+  c.style.transition = "opacity .5s " + (i * .12) + "s";
+  ptsG.appendChild(c);
+
+  const card = document.createElement("div"); card.className = "hb";
+  const t = document.createElement("span"); t.className = "t"; t.textContent = when;
+  const h = document.createElement("h4"); h.textContent = what;
+  const pp = document.createElement("p"); pp.textContent = text;
+  const cite = document.createElement("cite"); cite.textContent = ref;
+  const tag = document.createElement("span");
+  tag.className = "prov " + (prov === "codex" ? "codex" : "check");
+  tag.textContent = prov === "codex" ? "in the Codex" : "to verify";
+  cite.appendChild(tag); pp.appendChild(cite);
+  card.append(t, h, pp); habBox.appendChild(card);
+});
+new IntersectionObserver((es, o) => es.forEach(e => {
+  if (e.isIntersecting){ ptsG.querySelectorAll("circle").forEach(c => c.setAttribute("opacity", "1")); o.disconnect(); }
+}), { threshold: .3 }).observe(document.getElementById("arc"));
+
+/* reveal the witnesses too */
+const wio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("on"); }),
+  { threshold: .2 });
+document.querySelectorAll(".wit").forEach(el => wio.observe(el));
+
+/* reveal each station as it is reached */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("on"); }),
+  { rootMargin: "0px 0px -18% 0px", threshold: .15 });
+document.querySelectorAll(".st, #shape").forEach(el => io.observe(el));
+
+/* the rail lights as far as you have walked */
+const lit = document.getElementById("lit"), road = document.querySelector(".road");
+function walk(){
+  const r = road.getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, (innerHeight * .6 - r.top) / r.height));
+  lit.style.height = (p * 100).toFixed(2) + "%";
+  requestAnimationFrame(walk);
+}
+walk();
+
+/* ---- the sky: night over Makkah, dawn over Madinah ---- */
+(function(){
+  const c = document.getElementById("sky"), x = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w, h, stars = [];
+  function size(){
+    const d = Math.min(devicePixelRatio || 1, 2);
+    c.width = innerWidth * d; c.height = innerHeight * d;
+    c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
+    x.setTransform(d, 0, 0, d, 0, 0); w = innerWidth; h = innerHeight;
+    stars = Array.from({ length: Math.round(Math.min(190, w / 8)) }, () => ({
+      x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.3 + .25,
+      o: Math.random() * .55 + .1, p: Math.random() * 6.283
+    }));
+  }
+  function frame(){
+    const doc = Math.max(1, document.body.scrollHeight - innerHeight);
+    const t = Math.min(1, scrollY / doc);                 /* 0 night, 1 dawn */
+    x.clearRect(0, 0, w, h);
+    const g = x.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, "rgba(" + Math.round(20 + 40 * t) + "," + Math.round(16 + 20 * t) + "," + Math.round(40 - 12 * t) + ",.55)");
+    g.addColorStop(1, "rgba(7,10,20,0)");
+    x.fillStyle = g; x.fillRect(0, 0, w, h);
+    /* the dawn glow rises from the bottom as the road is walked */
+    if (t > .25){
+      const rg = x.createRadialGradient(w * .5, h * 1.08, 0, w * .5, h * 1.08, h * .95);
+      const a = (t - .25) / .75;
+      rg.addColorStop(0, "rgba(240,201,160," + (a * .3).toFixed(3) + ")");
+      rg.addColorStop(1, "rgba(240,201,160,0)");
+      x.fillStyle = rg; x.fillRect(0, 0, w, h);
+    }
+    for (const s of stars){
+      if (!reduce) s.p += .01;
+      const tw = reduce ? 1 : (.55 + Math.sin(s.p) * .45);
+      x.beginPath(); x.arc(s.x, s.y, s.r, 0, 6.2832);
+      x.fillStyle = "rgba(255,246,224," + (s.o * tw * (1 - t * .65)).toFixed(3) + ")"; x.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  addEventListener("resize", size, { passive: true });
+  size(); frame();
+})();
+
+/* ---- Badr: 313 against about 1000, drawn to scale ---- */
+(function(){
+  const c = document.getElementById("dots"), x = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const W = c.width, H = c.height;
+  const pts = [];
+  const cols = 40, gap = W / (cols + 2);
+  for (let i = 0; i < 1313; i++){
+    const believer = i < 313;
+    const col = i % cols, row = Math.floor(i / cols);
+    pts.push({
+      x: gap * (col + 1.5),
+      y: 26 + row * ((H - 52) / Math.ceil(1313 / cols)),
+      b: believer,
+      d: Math.random()
+    });
+  }
+  let started = false, t0 = 0;
+  function draw(now){
+    if (!started) return;
+    const el = Math.min(1, (now - t0) / (reduce ? 1 : 2600));
+    x.clearRect(0, 0, W, H);
+    for (const p of pts){
+      const appear = Math.min(1, Math.max(0, (el - p.d * .55) / .45));
+      if (appear <= 0) continue;
+      x.beginPath(); x.arc(p.x, p.y, p.b ? 4.2 : 2.6, 0, 6.2832);
+      x.fillStyle = p.b ? "rgba(232,200,116," + (appear * .95).toFixed(3) + ")"
+                        : "rgba(150,160,190," + (appear * .42).toFixed(3) + ")";
+      x.fill();
+      if (p.b && appear > .6){
+        x.beginPath(); x.arc(p.x, p.y, 8, 0, 6.2832);
+        x.fillStyle = "rgba(232,200,116,.07)"; x.fill();
+      }
+    }
+    if (el < 1) requestAnimationFrame(draw);
+  }
+  new IntersectionObserver((es, o) => es.forEach(e => {
+    if (e.isIntersecting && !started){ started = true; t0 = performance.now(); requestAnimationFrame(draw); o.disconnect(); }
+  }), { threshold: .25 }).observe(c);
+})();
+</script>
+
+</body>
+</html>

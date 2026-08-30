@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ninety-Nine Names · NOOR Codex of Light</title>
+<meta name="description" content="The ninety-nine names of Allah in Arabic and English, the verses that say what He is not, the fourteen names gathered at the end of Surah al-Hashr, Ayat al-Kursi, and the three doors of tawhid.">
+<link rel="canonical" href="https://noorcodex.com/allah">
+<meta name="theme-color" content="#06070C">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NOOR Codex of Light">
+<meta property="og:title" content="The Ninety-Nine Names · NOOR Codex of Light">
+<meta property="og:description" content="The ninety-nine names of Allah in Arabic and English, the verses that say what He is not, the fourteen names gathered at the end of Surah al-Hashr, Ayat al-Kursi, and the three doors of tawhid.">
+<meta property="og:url" content="https://noorcodex.com/allah">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Ninety-Nine Names · NOOR Codex of Light">
+<meta name="twitter:description" content="The ninety-nine names of Allah in Arabic and English, the verses that say what He is not, the fourteen names gathered at the end of Surah al-Hashr, Ayat al-Kursi, and the three doors of tawhid.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&amp;family=Inter:wght@400;500;600&amp;family=Amiri:wght@400;700&amp;display=swap">
+
+<style>
+/* One committed visual world: light inside darkness. A light mode would fight
+   the whole idea, so every colour is painted explicitly and nothing is left to
+   the host's ground. */
+:root{
+  --void:#06070C;
+  --deep:#0C1226;
+  --deeper:#080B16;
+  --gold:#E8C874;
+  --gold-hi:#FFF0C4;
+  --gold-dim:rgba(232,200,116,.42);
+  --ink:#F2EFE4;
+  --dim:#8A8DA0;
+  --rule:rgba(232,200,116,.16);
+  --panel:rgba(255,254,247,.035);
+  --measure:34rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+body{
+  margin:0; background:var(--void); color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.ar{font-family:Amiri,"Times New Roman",serif; direction:rtl; unicode-bidi:isolate}
+
+/* ---------------- the field of light ---------------- */
+#field{position:fixed; inset:0; z-index:0; pointer-events:none}
+.shell{position:relative; z-index:1}
+
+/* ---------------- the empty centre ---------------- */
+.hero{
+  min-height:100svh; display:grid; place-items:center; text-align:center;
+  padding:6rem 1.25rem 4rem; position:relative;
+}
+.hero-in{max-width:44rem; display:grid; gap:1.9rem; justify-items:center}
+.ayah{
+  font-family:Amiri,serif; direction:rtl;
+  font-size:clamp(1.6rem,4.6vw,2.7rem); line-height:2.1; color:var(--gold);
+  text-shadow:0 0 42px rgba(232,200,116,.28);
+}
+.ayah-ref{
+  font-size:.7rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--dim); margin:-1.2rem 0 0;
+}
+h1{
+  font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
+  font-size:clamp(2.9rem,9vw,5.6rem); line-height:.98; margin:0;
+  letter-spacing:-.015em; text-wrap:balance; color:var(--ink);
+}
+h1 em{font-style:italic; color:var(--gold)}
+.lede{
+  margin:0; max-width:32rem; color:#C6C3B8; font-size:1.02rem;
+  text-wrap:pretty;
+}
+.scroll-cue{
+  font-size:.66rem; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--dim); display:grid; gap:.6rem; justify-items:center;
+}
+.scroll-cue span{display:block; width:1px; height:2.6rem;
+  background:linear-gradient(var(--gold-dim),transparent); animation:drop 3.2s ease-in-out infinite}
+@keyframes drop{0%,100%{opacity:.25;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ---------------- sections ---------------- */
+section{padding:6.5rem 1.25rem}
+.wrap{max-width:66rem; margin:0 auto}
+.eyebrow{
+  font-size:.68rem; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--gold); margin:0 0 1rem; display:flex; align-items:center; gap:.9rem;
+}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--rule)}
+h2{
+  font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
+  font-size:clamp(1.9rem,4.4vw,2.9rem); line-height:1.12; margin:0 0 1rem;
+  text-wrap:balance; letter-spacing:-.01em;
+}
+.say{color:#B9B6AC; max-width:var(--measure); margin:0}
+
+/* ---------------- al-ikhlas ---------------- */
+.ikhlas{
+  background:linear-gradient(180deg,var(--deeper),var(--deep));
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+}
+.ikhlas-grid{display:grid; gap:3rem; grid-template-columns:1fr; align-items:center}
+@media (min-width:56rem){ .ikhlas-grid{grid-template-columns:1.1fr .9fr; gap:4.5rem} }
+.surah{display:grid; gap:1.15rem}
+.surah p{
+  margin:0; font-family:Amiri,serif; direction:rtl; text-align:center;
+  font-size:clamp(1.5rem,4vw,2.1rem); line-height:1.9; color:var(--gold-hi);
+  padding-bottom:1.15rem; border-bottom:1px solid var(--rule);
+}
+.surah p:last-child{border-bottom:0; padding-bottom:0}
+
+/* ---------------- the names ---------------- */
+.tools{
+  display:flex; flex-wrap:wrap; gap:.8rem; align-items:center;
+  margin:2.2rem 0 2.4rem;
+}
+.search{
+  flex:1 1 16rem; display:flex; align-items:center; gap:.7rem;
+  background:var(--panel); border:1px solid var(--rule); border-radius:2rem;
+  padding:.6rem 1.1rem;
+}
+.search input{
+  flex:1; background:none; border:0; color:var(--ink); font:inherit; font-size:.95rem;
+  outline:none; min-width:0;
+}
+.search input::placeholder{color:var(--dim)}
+.search svg{flex:none; opacity:.55}
+.count{font-size:.78rem; color:var(--dim); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+.names{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:.7rem;
+  grid-template-columns:repeat(auto-fill,minmax(13.5rem,1fr));
+}
+.name{
+  position:relative; text-align:center; cursor:pointer;
+  background:var(--panel); border:1px solid transparent; border-radius:14px;
+  padding:1.3rem .9rem 1.1rem; color:inherit; font:inherit;
+  display:grid; gap:.32rem; width:100%;
+  transition:border-color .35s, background .35s, transform .35s;
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.88}50%{opacity:1}}
+.name:hover,.name:focus-visible{
+  border-color:var(--gold-dim); background:rgba(232,200,116,.07);
+  transform:translateY(-3px); outline:none;
+}
+.name .n{
+  position:absolute; top:.55rem; left:.7rem; font-size:.62rem; color:var(--dim);
+  font-variant-numeric:tabular-nums; letter-spacing:.08em;
+}
+.name .a{font-family:Amiri,serif; font-size:1.75rem; color:var(--gold); line-height:1.5; direction:rtl}
+.name .t{font-family:"Cormorant Garamond",serif; font-size:1.18rem; letter-spacing:.01em}
+.name .m{font-size:.78rem; color:var(--dim); line-height:1.45}
+.name[hidden]{display:none}
+
+/* ---------------- the contemplation panel ---------------- */
+.veil{
+  position:fixed; inset:0; z-index:40; display:grid; place-items:center;
+  padding:1.25rem; background:rgba(3,4,8,.86); backdrop-filter:blur(14px);
+  opacity:0; pointer-events:none; transition:opacity .4s;
+}
+.veil.on{opacity:1; pointer-events:auto}
+.panel{
+  width:min(34rem,100%); text-align:center; position:relative;
+  background:linear-gradient(180deg,#0D1428,#080B16);
+  border:1px solid var(--gold-dim); border-radius:22px;
+  padding:3.4rem 2rem 2.6rem; display:grid; gap:1.1rem;
+  transform:translateY(14px) scale(.97); transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9), 0 0 90px -40px rgba(232,200,116,.4);
+}
+.veil.on .panel{transform:none}
+.panel .idx{font-size:.68rem; letter-spacing:.3em; color:var(--dim); text-transform:uppercase}
+.panel .a{font-family:Amiri,serif; font-size:clamp(3rem,11vw,4.4rem); color:var(--gold-hi);
+  line-height:1.5; direction:rtl; text-shadow:0 0 50px rgba(232,200,116,.35)}
+.panel .t{font-family:"Cormorant Garamond",serif; font-size:1.9rem; letter-spacing:.01em}
+.panel .m{color:#C6C3B8; margin:0}
+.shut{
+  position:absolute; top:.85rem; right:1rem; background:none; border:0; cursor:pointer;
+  color:var(--dim); font-size:1.5rem; line-height:1; padding:.3rem .5rem; border-radius:8px;
+}
+.shut:hover,.shut:focus-visible{color:var(--gold); outline:none}
+.step{display:flex; gap:.6rem; justify-content:center; margin-top:.5rem}
+.step button{
+  background:var(--panel); border:1px solid var(--rule); color:var(--ink);
+  border-radius:2rem; padding:.45rem 1.1rem; font:inherit; font-size:.82rem; cursor:pointer;
+  transition:border-color .3s,color .3s;
+}
+.step button:hover,.step button:focus-visible{border-color:var(--gold-dim); color:var(--gold); outline:none}
+
+/* ---------------- the three doors ---------------- */
+.doors{display:grid; gap:1rem; grid-template-columns:1fr; margin-top:2.4rem}
+@media (min-width:48rem){ .doors{grid-template-columns:repeat(3,1fr)} }
+.door{
+  display:block; text-decoration:none; color:inherit;
+  border:1px solid var(--rule); border-radius:16px; padding:1.7rem 1.4rem;
+  background:linear-gradient(180deg,rgba(255,254,247,.04),transparent);
+  transition:border-color .35s, transform .35s;
+}
+.door:hover,.door:focus-visible{border-color:var(--gold-dim); transform:translateY(-3px); outline:none}
+.door .a{font-family:Amiri,serif; font-size:1.5rem; color:var(--gold); direction:rtl; display:block; margin-bottom:.5rem}
+.door h3{font-family:"Cormorant Garamond",serif; font-weight:600; font-size:1.25rem; margin:0 0 .4rem}
+.door p{margin:0; font-size:.88rem; color:var(--dim); line-height:1.55}
+.door .go{display:inline-block; margin-top:.9rem; font-size:.72rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--gold)}
+
+/* ---------------- the honest note ---------------- */
+.note{
+  border-left:2px solid var(--gold-dim); padding:.2rem 0 .2rem 1.2rem;
+  color:var(--dim); font-size:.88rem; max-width:var(--measure); margin-top:2.5rem;
+}
+footer{
+  padding:4rem 1.25rem 5rem; text-align:center; color:var(--dim); font-size:.82rem;
+  border-top:1px solid var(--rule);
+}
+footer a{color:var(--gold); text-decoration:none}
+footer a:hover,footer a:focus-visible{text-decoration:underline}
+
+.draft{
+  position:fixed; z-index:60; bottom:1rem; left:1rem; pointer-events:none;
+  background:linear-gradient(rgba(232,200,116,.12),rgba(232,200,116,.12)), #0A0D18;
+  border:1px solid var(--gold-dim); color:var(--gold);
+  font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:.45rem .85rem; border-radius:2rem; backdrop-filter:blur(8px);
+}
+
+/* ---------- what He is not ---------- */
+.nots{display:grid; gap:.8rem; grid-template-columns:1fr; margin-top:2.6rem}
+@media (min-width:44rem){ .nots{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:66rem){ .nots{grid-template-columns:repeat(3,1fr)} }
+.not{border:1px solid var(--rule); border-radius:14px; padding:1.35rem 1.25rem;
+  background:linear-gradient(180deg,rgba(255,254,247,.04),transparent);
+  opacity:0; transform:translateY(18px); transition:opacity .7s, transform .7s}
+.not.on{opacity:1; transform:none}
+.not .a{font-family:Amiri,serif; direction:rtl; font-size:1.5rem; color:var(--gold);
+  display:block; line-height:1.7; margin-bottom:.55rem}
+.not p{margin:0; font-size:.95rem; color:#C6C3B8; line-height:1.6}
+.not cite{display:block; font-style:normal; font-size:.66rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--dim); margin-top:.7rem}
+
+/* ---------- the fourteen ---------- */
+.fourteen{background:linear-gradient(180deg,var(--deeper),var(--deep));
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.chips{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:2rem}
+.chip{border:1px solid var(--rule); border-radius:2rem; padding:.5rem 1rem; font-size:.9rem;
+  background:var(--panel); transition:border-color .3s, background .3s, transform .3s}
+.chip .a{font-family:Amiri,serif; direction:rtl; color:var(--gold); margin-right:.5rem}
+.chip.hot{border-color:var(--gold-dim); background:rgba(232,200,116,.1); transform:translateY(-2px)}
+.pulse{display:inline-block; margin-top:1.6rem; background:none; border:1px solid var(--gold-dim);
+  color:var(--gold); border-radius:2rem; padding:.55rem 1.2rem; font:inherit; font-size:.84rem; cursor:pointer}
+.pulse:hover,.pulse:focus-visible{background:rgba(232,200,116,.1); outline:none}
+.name.hot{border-color:var(--gold); background:rgba(232,200,116,.14)}
+.name.hot .n{color:var(--gold-hi)}
+.hverses{display:grid; gap:1.15rem; margin-top:2.4rem; max-width:52rem}
+.hv{border-left:2px solid var(--gold-dim); padding:.15rem 0 .15rem 1.15rem}
+.hv .a{font-family:Amiri,serif; direction:rtl; font-size:clamp(1.1rem,2.7vw,1.45rem);
+  line-height:2.15; color:var(--gold-hi); display:block}
+.hv .en{margin:.7rem 0 0; font-size:.93rem; color:#C6C3B8; line-height:1.65;
+  max-width:var(--measure)}
+.hv cite{display:block; font-style:normal; font-size:.64rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--dim); margin-top:.55rem}
+.hint{margin:1.3rem 0 0; font-size:.94rem; color:#C6C3B8; line-height:1.7; max-width:44rem;
+  opacity:0; transform:translateY(10px); transition:opacity .7s, transform .7s}
+.hint.on{opacity:1; transform:none}
+
+/* ---------- call on Him ---------- */
+.kursi{text-align:center}
+.kursi .big{font-family:Amiri,serif; direction:rtl; font-size:clamp(1.4rem,3.6vw,2rem);
+  line-height:2.1; color:var(--gold-hi); max-width:44rem; margin:0 auto;
+  text-shadow:0 0 40px rgba(232,200,116,.22)}
+
+@media (prefers-reduced-motion:reduce){
+  .not,.hint{opacity:1!important; transform:none!important}
+  *,*::before,*::after{animation-duration:.001ms!important; animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+}
+
+/* ---------- site bar (simplified: the full Tailwind header is not reproduced here) ---------- */
+.sitebar{position:fixed; inset:0 0 auto 0; z-index:70; display:flex; align-items:center;
+  gap:clamp(.9rem,3vw,1.6rem); padding:.68rem clamp(.9rem,4vw,2.2rem);
+  background:rgba(6,8,14,.74); backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid rgba(232,200,116,.16); font-size:.8rem}
+.sitebar a{color:#C9C5B8; text-decoration:none; white-space:nowrap;
+  transition:color .25s}
+.sitebar a:hover,.sitebar a:focus-visible{color:#E8C874; outline:none}
+.sitebar a:focus-visible{text-decoration:underline; text-underline-offset:.3em}
+.sitebar .brand{display:flex; align-items:baseline; gap:.5rem; flex:0 0 auto; color:#F3EFE2}
+.sitebar .brand .ar{font-family:Amiri,serif; direction:rtl; color:#E8C874; font-size:1.3rem;
+  line-height:1.5}
+.sitebar .brand b{font-weight:600; letter-spacing:.2em; font-size:.72rem; text-transform:uppercase}
+.sitebar .rooms{display:flex; gap:clamp(.85rem,2.6vw,1.4rem); margin-left:auto;
+  overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch}
+.sitebar .rooms::-webkit-scrollbar{display:none}
+.sitebar .rooms a[aria-current="page"]{color:#E8C874}
+@media (max-width:52rem){
+  /* the row scrolls on a narrow screen, so fade the edge rather than chop a word */
+  .sitebar .rooms{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent);
+    mask-image:linear-gradient(to right,#000 calc(100% - 2.2rem),transparent); padding-right:2rem}
+}
+@media (max-width:34rem){ .sitebar .brand b{display:none} }
+
+/* ---------- footer links ---------- */
+.flinks{display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; justify-content:center;
+  margin:0 0 1.4rem; padding:0}
+.flinks a{color:#C9C5B8; text-decoration:none; border-bottom:1px solid rgba(232,200,116,.22);
+  padding-bottom:.15rem}
+.flinks a:hover,.flinks a:focus-visible{color:#E8C874; outline:none}
+</style>
+</head>
+<body>
+
+<nav class="sitebar" aria-label="Codex">
+  <a class="brand" href="https://noorcodex.com/"><span class="ar">نُور</span><b>Noor</b></a>
+  <span class="rooms">
+    <a href="https://noorcodex.com/quran">Qur'an</a>
+    <a href="https://noorcodex.com/prophets">Prophets</a>
+    <a href="/allah" aria-current="page">The Names</a>
+    <a href="/muhammad">The Seerah</a>
+    <a href="https://noorcodex.com/madrasa">Madrasa</a>
+  </span>
+</nav>
+
+
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="shell">
+
+<header class="hero">
+  <div class="hero-in">
+    <p class="ayah">لَيْسَ كَمِثْلِهِ شَيْءٌ</p>
+    <p class="ayah-ref">Qur'an 42:11</p>
+    <h1>The Ninety-Nine <em>Names</em></h1>
+    <p class="lede">Every other room in this library has something you can draw. This one has the
+    names He gave Himself, and the light they are read by. The Book spends as much of itself saying
+    what He is not as saying what He is, and that is where this room begins.</p>
+    <p class="scroll-cue">Begin<span></span></p>
+  </div>
+</header>
+
+<section class="ikhlas">
+  <div class="wrap ikhlas-grid">
+    <div class="surah">
+      <p>قُلْ هُوَ اللَّهُ أَحَدٌ</p>
+      <p>اللَّهُ الصَّمَدُ</p>
+      <p>لَمْ يَلِدْ وَلَمْ يُولَدْ</p>
+      <p>وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ</p>
+    </div>
+    <div>
+      <p class="eyebrow">Surah al-Ikhlas &middot; 112</p>
+      <h2>Four lines, and the question is answered</h2>
+      <p class="say">The Prophet &#65018; was asked to describe his Lord. The answer that came down
+      is four short verses, and it is mostly a list of what He is not. He is not begotten. He does
+      not beget. Nothing is comparable to Him. The shortest complete theology in the Book spends
+      three quarters of itself clearing the ground.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Al-Asma al-Husna &middot; The Most Beautiful Names</p>
+    <h2>Ninety-nine, and He is one</h2>
+    <p class="say">Touch any name to sit with it. Each one is a door, not a definition: the Arabic
+    carries a weight no English line can hold, and the line beneath is a hand pointing, not the
+    thing itself.</p>
+
+    <div class="tools">
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <input id="q" type="search" placeholder="Search a name, in English or Arabic" aria-label="Search the names">
+      </label>
+      <p class="count" id="count">99 names</p>
+    </div>
+
+    <ul class="names" id="names"></ul>
+
+    <p class="note">This is the enumeration narrated in Jami' at-Tirmidhi. The hadith that the
+    names are ninety-nine is agreed upon; the list itself is a narration, and scholars have differed
+    over which ninety-nine it names. The Arabic is the name. The English beneath it is a translation,
+    and every translation of a name of God is a smaller thing than the name.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What He is not</p>
+    <h2>The Book clears the ground before it builds</h2>
+    <p class="say">Most of what a person gets wrong about God is a picture they brought with them.
+    The Qur'an spends a great deal of itself taking pictures away, and every one of these is a
+    sentence of denial rather than description.</p>
+    <div class="nots" id="nots"></div>
+  </div>
+</section>
+
+<section class="fourteen">
+  <div class="wrap">
+    <p class="eyebrow">Al-Hashr 59:22-24</p>
+    <h2>Fourteen of them arrive in one breath</h2>
+    <p class="say">The names are not scattered evenly through the Book. At the end of Surah al-Hashr
+    fourteen of them come one after another in three verses, which is the densest the Qur'an ever
+    gets about who He is. Press the button and watch where they fall in the ninety-nine.</p>
+    <div class="hverses" id="hverses"></div>
+    <div class="chips" id="chips"></div>
+    <button class="pulse" id="pulse" type="button">Show me where they are</button>
+    <p class="hint" id="hint"></p>
+  </div>
+</section>
+
+<section class="kursi">
+  <div class="wrap">
+    <p class="eyebrow" style="justify-content:center">Ayat al-Kursi &middot; 2:255</p>
+    <h2>Neither drowsiness nor sleep</h2>
+    <p class="big ar">لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ</p>
+    <p class="say" style="margin:2rem auto 0">Every created thing that keeps watch eventually stops
+    keeping watch. The verse the Prophet &#65018; called the greatest in the Book makes its case by
+    naming a limit and then denying it: the One holding the heavens and the earth in place is not
+    tired by holding them.</p>
+    <p class="big ar" style="margin-top:2.2rem">وَلَا يَئُودُهُ حِفْظُهُمَا</p>
+    <p class="ayah-ref" style="margin-top:.8rem">And their preservation does not weary Him</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Why they were given</p>
+    <h2>They were not given to be listed</h2>
+    <p class="say">A name is for calling with. The command in the Qur'an is not to memorise the
+    ninety-nine but to use them, and the classical practice is to match the name to the need: to ask
+    the Provider for provision, the Forgiving for forgiveness, the Guide when you do not know which
+    way to go.</p>
+    <p class="big ar" style="font-family:Amiri,serif; direction:rtl; font-size:clamp(1.3rem,3.2vw,1.8rem);
+      line-height:2; color:var(--gold-hi); max-width:40rem; margin:2.2rem 0 0">
+      وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا</p>
+    <p class="ayah-ref" style="margin-top:.9rem">To Allah belong the most beautiful names, so call
+      upon Him by them &middot; Qur'an 7:180</p>
+  </div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,var(--deeper))">
+  <div class="wrap">
+    <p class="eyebrow">Tawhid &middot; The three doors</p>
+    <h2>One, in three ways of saying it</h2>
+    <p class="say">The classical scholars divided the oneness of God into three, not because He is
+    three, but because there are three ways a person forgets it.</p>
+    <div class="doors">
+      <a class="door" href="/tawhid-al-rububiyyah">
+        <span class="ar a">الرُّبُوبِيَّة</span>
+        <h3>Lordship</h3>
+        <p>That He alone creates, owns and sustains. The part almost everyone concedes, and the part
+        that settles nothing on its own.</p>
+        <span class="go">Open &rarr;</span>
+      </a>
+      <a class="door" href="/tawhid-al-uluhiyyah">
+        <span class="ar a">الأُلُوهِيَّة</span>
+        <h3>Worship</h3>
+        <p>That He alone is worshipped. This is the one the messengers were sent with, and the one
+        their people fought them over.</p>
+        <span class="go">Open &rarr;</span>
+      </a>
+      <a class="door" href="/asma-wa-sifat">
+        <span class="ar a">الأَسْمَاء وَالصِّفَات</span>
+        <h3>Names and Attributes</h3>
+        <p>That He is as He described Himself, without denying a word of it and without picturing
+        Him as a larger version of something made.</p>
+        <span class="go">Open &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="flinks">
+    <a href="https://noorcodex.com/quran">The Mushaf</a>
+    <a href="https://noorcodex.com/prophets">The 25 Prophets</a>
+    <a href="/muhammad">The Seerah</a>
+    <a href="https://noorcodex.com/madrasa">Madrasa</a>
+    <a href="https://noorcodex.com/feedback">Corrections &amp; ideas</a>
+  </p>
+  <p>NOOR Codex of Light &middot; free forever, no ads, no trackers &middot;
+  <a href="https://noorcodex.com">noorcodex.com</a></p>
+</footer>
+</div>
+
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="p-t">
+  <div class="panel">
+    <button class="shut" id="shut" aria-label="Close">&times;</button>
+    <p class="idx" id="p-i"></p>
+    <p class="a ar" id="p-a"></p>
+    <p class="t" id="p-t"></p>
+    <p class="m" id="p-m"></p>
+    <div class="step">
+      <button id="prev">&larr; Before</button>
+      <button id="next">After &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<p class="draft">Draft &middot; wording pending review</p>
+
+<script>
+/* The list, in one place, so a correction is one line and never a hunt. */
+const NAMES = [
+["الرَّحْمَٰن","Ar-Rahman","The Most Merciful, whose mercy reaches all that is"],
+["الرَّحِيم","Ar-Raheem","The Bestower of Mercy, especially upon those who believe"],
+["الْمَلِك","Al-Malik","The King, who owns without being owned"],
+["الْقُدُّوس","Al-Quddus","The Most Holy, free of every defect"],
+["السَّلَام","As-Salam","The Source of Peace, and free of all that disturbs it"],
+["الْمُؤْمِن","Al-Mu'min","The Granter of Security"],
+["الْمُهَيْمِن","Al-Muhaymin","The Guardian who watches over all"],
+["الْعَزِيز","Al-'Aziz","The Almighty, whom nothing overcomes"],
+["الْجَبَّار","Al-Jabbar","The Compeller, who sets the broken right"],
+["الْمُتَكَبِّر","Al-Mutakabbir","The Supreme in Greatness"],
+["الْخَالِق","Al-Khaliq","The Creator"],
+["الْبَارِئ","Al-Bari'","The Originator, who makes from nothing"],
+["الْمُصَوِّر","Al-Musawwir","The Fashioner of Forms"],
+["الْغَفَّار","Al-Ghaffar","The Ever-Forgiving"],
+["الْقَهَّار","Al-Qahhar","The All-Subduing"],
+["الْوَهَّاب","Al-Wahhab","The Bestower, who gives without being asked"],
+["الرَّزَّاق","Ar-Razzaq","The Provider"],
+["الْفَتَّاح","Al-Fattah","The Opener, who opens what was closed"],
+["الْعَلِيم","Al-'Alim","The All-Knowing"],
+["الْقَابِض","Al-Qabid","The Withholder"],
+["الْبَاسِط","Al-Basit","The Extender"],
+["الْخَافِض","Al-Khafid","The Abaser"],
+["الرَّافِع","Ar-Rafi'","The Exalter"],
+["الْمُعِزّ","Al-Mu'izz","The Giver of Honour"],
+["الْمُذِلّ","Al-Mudhill","The Giver of Dishonour"],
+["السَّمِيع","As-Sami'","The All-Hearing"],
+["الْبَصِير","Al-Basir","The All-Seeing"],
+["الْحَكَم","Al-Hakam","The Judge, whose ruling is final"],
+["الْعَدْل","Al-'Adl","The Utterly Just"],
+["اللَّطِيف","Al-Latif","The Subtle and the Gentle, whose kindness reaches unseen"],
+["الْخَبِير","Al-Khabir","The All-Aware"],
+["الْحَلِيم","Al-Halim","The Forbearing, who does not hasten to punish"],
+["الْعَظِيم","Al-'Azim","The Magnificent"],
+["الْغَفُور","Al-Ghafur","The Much-Forgiving"],
+["الشَّكُور","Ash-Shakur","The Most Appreciative, who repays little with much"],
+["الْعَلِيّ","Al-'Ali","The Most High"],
+["الْكَبِير","Al-Kabir","The Most Great"],
+["الْحَفِيظ","Al-Hafiz","The Preserver"],
+["الْمُقِيت","Al-Muqit","The Sustainer, who gives each thing its measure"],
+["الْحَسِيب","Al-Hasib","The Reckoner, who is enough"],
+["الْجَلِيل","Al-Jalil","The Majestic"],
+["الْكَرِيم","Al-Karim","The Most Generous"],
+["الرَّقِيب","Ar-Raqib","The Watchful"],
+["الْمُجِيب","Al-Mujib","The Responsive, who answers the one who calls"],
+["الْوَاسِع","Al-Wasi'","The All-Encompassing"],
+["الْحَكِيم","Al-Hakim","The All-Wise"],
+["الْوَدُود","Al-Wadud","The Most Loving"],
+["الْمَجِيد","Al-Majid","The Most Glorious"],
+["الْبَاعِث","Al-Ba'ith","The Resurrector"],
+["الشَّهِيد","Ash-Shahid","The Witness, from whom nothing is hidden"],
+["الْحَقّ","Al-Haqq","The Truth, and the only thing that does not pass"],
+["الْوَكِيل","Al-Wakil","The Trustee, to whom affairs are handed"],
+["الْقَوِيّ","Al-Qawiyy","The All-Strong"],
+["الْمَتِين","Al-Matin","The Firm, whose strength does not tire"],
+["الْوَلِيّ","Al-Waliyy","The Protecting Friend"],
+["الْحَمِيد","Al-Hamid","The Praiseworthy"],
+["الْمُحْصِي","Al-Muhsi","The One who counts all things"],
+["الْمُبْدِئ","Al-Mubdi'","The Originator, who begins"],
+["الْمُعِيد","Al-Mu'id","The Restorer, who begins it again"],
+["الْمُحْيِي","Al-Muhyi","The Giver of Life"],
+["الْمُمِيت","Al-Mumit","The Bringer of Death"],
+["الْحَيّ","Al-Hayy","The Ever-Living"],
+["الْقَيُّوم","Al-Qayyum","The Self-Subsisting, upon whom all else stands"],
+["الْوَاجِد","Al-Wajid","The Finder, who lacks nothing"],
+["الْمَاجِد","Al-Majid","The Noble"],
+["الْوَاحِد","Al-Wahid","The One"],
+["الْأَحَد","Al-Ahad","The Unique, who has no second"],
+["الصَّمَد","As-Samad","The Eternal Refuge, needing none, needed by all"],
+["الْقَادِر","Al-Qadir","The All-Powerful"],
+["الْمُقْتَدِر","Al-Muqtadir","The Determiner, who brings power to bear"],
+["الْمُقَدِّم","Al-Muqaddim","The Expediter, who brings forward"],
+["الْمُؤَخِّر","Al-Mu'akhkhir","The Delayer, who holds back"],
+["الْأَوَّل","Al-Awwal","The First, before whom there is nothing"],
+["الْآخِر","Al-Akhir","The Last, after whom there is nothing"],
+["الظَّاهِر","Az-Zahir","The Manifest, above whom there is nothing"],
+["الْبَاطِن","Al-Batin","The Hidden, nearer than anything"],
+["الْوَالِي","Al-Wali","The Governor of all that happens"],
+["الْمُتَعَالِي","Al-Muta'ali","The Most Exalted"],
+["الْبَرّ","Al-Barr","The Source of Goodness"],
+["التَّوَّاب","At-Tawwab","The Ever-Relenting, who turns to the one who turns"],
+["الْمُنْتَقِم","Al-Muntaqim","The Avenger of wrong"],
+["الْعَفُوّ","Al-'Afuww","The Pardoner, who erases the trace"],
+["الرَّءُوف","Ar-Ra'uf","The Most Kind"],
+["مَالِكُ الْمُلْك","Malik al-Mulk","Owner of all sovereignty"],
+["ذُو الْجَلَالِ وَالْإِكْرَام","Dhul-Jalali wal-Ikram","Lord of Majesty and Honour"],
+["الْمُقْسِط","Al-Muqsit","The Equitable"],
+["الْجَامِع","Al-Jami'","The Gatherer, who will bring all together"],
+["الْغَنِيّ","Al-Ghani","The Self-Sufficient"],
+["الْمُغْنِي","Al-Mughni","The Enricher"],
+["الْمَانِع","Al-Mani'","The Withholder"],
+["الضَّارّ","Ad-Darr","The One who allows harm"],
+["النَّافِع","An-Nafi'","The One who brings benefit"],
+["النُّور","An-Nur","The Light"],
+["الْهَادِي","Al-Hadi","The Guide"],
+["الْبَدِيع","Al-Badi'","The Incomparable Originator"],
+["الْبَاقِي","Al-Baqi","The Everlasting"],
+["الْوَارِث","Al-Warith","The Inheritor of all"],
+["الرَّشِيد","Ar-Rashid","The Guide to what is right"],
+["الصَّبُور","As-Sabur","The Most Patient"]
+];
+
+/* ---- the field of light: no shape, ever, only light ---- */
+(function(){
+  const c = document.getElementById("field"), x = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w, h, motes = [], t = 0;
+  function size(){
+    const d = Math.min(devicePixelRatio || 1, 2);
+    w = c.width = innerWidth * d; h = c.height = innerHeight * d;
+    c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
+    x.setTransform(d, 0, 0, d, 0, 0);
+    const n = Math.round(Math.min(150, innerWidth / 11));
+    motes = Array.from({ length: n }, () => ({
+      x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+      r: Math.random() * 1.5 + .3, s: Math.random() * .16 + .03,
+      o: Math.random() * .5 + .12, p: Math.random() * 6.283
+    }));
+  }
+  function frame(){
+    x.clearRect(0, 0, innerWidth, innerHeight);
+    const cx = innerWidth / 2, cy = innerHeight * .34;
+    /* the centre glows and never resolves into anything */
+    const g = x.createRadialGradient(cx, cy, 0, cx, cy, Math.max(innerWidth, innerHeight) * .55);
+    const pulse = reduce ? .12 : .12 + Math.sin(t / 90) * .035;
+    g.addColorStop(0, "rgba(232,200,116," + pulse + ")");
+    g.addColorStop(.45, "rgba(232,200,116,.03)");
+    g.addColorStop(1, "rgba(232,200,116,0)");
+    x.fillStyle = g; x.fillRect(0, 0, innerWidth, innerHeight);
+    for (const m of motes){
+      if (!reduce){ m.y -= m.s; m.p += .008; if (m.y < -6) { m.y = innerHeight + 6; m.x = Math.random() * innerWidth; } }
+      const o = m.o * (reduce ? 1 : (.55 + Math.sin(m.p) * .45));
+      x.beginPath(); x.arc(m.x, m.y, m.r, 0, 6.2832);
+      x.fillStyle = "rgba(255,240,196," + o.toFixed(3) + ")"; x.fill();
+    }
+    t++; requestAnimationFrame(frame);
+  }
+  addEventListener("resize", size, { passive: true });
+  size(); frame();
+})();
+
+/* ---- the names ---- */
+const list = document.getElementById("names");
+const countEl = document.getElementById("count");
+NAMES.forEach(([a, t, m], i) => {
+  const li = document.createElement("li");
+  const b = document.createElement("button");
+  b.className = "name"; b.type = "button"; b.dataset.i = i;
+  b.style.animationDelay = (i % 12) * .35 + "s";
+  b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, "0") + '</span>' +
+                '<span class="a ar"></span><span class="t"></span><span class="m"></span>';
+  b.querySelector(".a").textContent = a;
+  b.querySelector(".t").textContent = t;
+  b.querySelector(".m").textContent = m;
+  li.appendChild(b); list.appendChild(li);
+});
+
+const q = document.getElementById("q");
+q.addEventListener("input", () => {
+  const v = q.value.trim().toLowerCase();
+  let n = 0;
+  list.querySelectorAll(".name").forEach(b => {
+    const [a, t, m] = NAMES[+b.dataset.i];
+    const hit = !v || (t + " " + m).toLowerCase().includes(v) || a.includes(q.value.trim());
+    b.hidden = !hit; if (hit) n++;
+  });
+  countEl.textContent = n === 99 ? "99 names" : n + (n === 1 ? " name" : " names");
+});
+
+/* ---- the panel ---- */
+const veil = document.getElementById("veil");
+let at = 0, opener = null;
+function show(i){
+  at = (i + 99) % 99;
+  const [a, t, m] = NAMES[at];
+  document.getElementById("p-i").textContent = "The " + ordinal(at + 1) + " name";
+  document.getElementById("p-a").textContent = a;
+  document.getElementById("p-t").textContent = t;
+  document.getElementById("p-m").textContent = m;
+  veil.classList.add("on");
+  document.getElementById("shut").focus();
+}
+function ordinal(n){
+  const s = ["th","st","nd","rd"], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+function hide(){ veil.classList.remove("on"); if (opener) opener.focus(); }
+list.addEventListener("click", e => {
+  const b = e.target.closest(".name"); if (!b) return;
+  opener = b; show(+b.dataset.i);
+});
+document.getElementById("shut").addEventListener("click", hide);
+document.getElementById("prev").addEventListener("click", () => show(at - 1));
+document.getElementById("next").addEventListener("click", () => show(at + 1));
+veil.addEventListener("click", e => { if (e.target === veil) hide(); });
+addEventListener("keydown", e => {
+  if (!veil.classList.contains("on")) return;
+  if (e.key === "Escape") hide();
+  if (e.key === "ArrowLeft") show(at - 1);
+  if (e.key === "ArrowRight") show(at + 1);
+});
+/* ---- what He is not: the Book's own denials, each one a verse ---- */
+const NOTS = [
+["لَيْسَ كَمِثْلِهِۦ شَىْءٌۭ",
+ "There is nothing whatsoever like Him. Not a larger version of anything, not a better version of anything. Every comparison you can build out of created things fails before it starts.",
+ "Qur'an 42:11"],
+["لَمْ يَلِدْ وَلَمْ يُولَدْ",
+ "He did not father and was not fathered. No lineage above Him and none descending from Him, which removes at one stroke every family of gods the world has ever drawn up.",
+ "Qur'an 112:3"],
+["وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+ "And there is none comparable to Him. Not an equal, not a rival, not a second of the same kind, not even one.",
+ "Qur'an 112:4"],
+["لَّا تُدْرِكُهُ ٱلْأَبْصَٰرُ",
+ "Vision does not encompass Him, and He encompasses all vision. The seeing runs one way. That is why this room holds light and no likeness.",
+ "Qur'an 6:103"],
+["وَمَا مَسَّنَا مِن لُّغُوبٍۢ",
+ "The heavens and the earth were made in six days, and no weariness touched Him. Making costs the maker something. It costs Him nothing.",
+ "Qur'an 50:38"],
+["هَلْ تَعْلَمُ لَهُۥ سَمِيًّۭا",
+ "Do you know any that can be named alongside Him? The verse does not argue. It asks, and lets the silence answer.",
+ "Qur'an 19:65"]
+];
+
+(function(){
+  const box = document.getElementById("nots");
+  if (!box) return;
+  NOTS.forEach(([a, en, ref], i) => {
+    const d = document.createElement("div");
+    d.className = "not";
+    d.style.transitionDelay = (i % 3) * .12 + "s";
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const p = document.createElement("p"); p.textContent = en;
+    const c = document.createElement("cite"); c.textContent = ref;
+    d.append(sa, p, c); box.appendChild(d);
+  });
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("on"); io.unobserve(e.target); } });
+  }, { threshold: .18 });
+  box.querySelectorAll(".not").forEach(n => io.observe(n));
+})();
+
+/* ---- al-Hashr 59:22-24: the three verses, then the fourteen names inside them ---- */
+const HASHR_VERSES = [
+["هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَٰهَ إِلَّا هُوَ ۖ عَٰلِمُ ٱلْغَيْبِ وَٱلشَّهَٰدَةِ ۖ هُوَ ٱلرَّحْمَٰنُ ٱلرَّحِيمُ",
+ "He is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Entirely Merciful, the Especially Merciful.", "59:22"],
+["هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَٰهَ إِلَّا هُوَ ٱلْمَلِكُ ٱلْقُدُّوسُ ٱلسَّلَٰمُ ٱلْمُؤْمِنُ ٱلْمُهَيْمِنُ ٱلْعَزِيزُ ٱلْجَبَّارُ ٱلْمُتَكَبِّرُ ۚ سُبْحَٰنَ ٱللَّهِ عَمَّا يُشْرِكُونَ",
+ "He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him.", "59:23"],
+["هُوَ ٱللَّهُ ٱلْخَٰلِقُ ٱلْبَارِئُ ٱلْمُصَوِّرُ ۖ لَهُ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ ۚ يُسَبِّحُ لَهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+ "He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names. Whatever is in the heavens and earth is exalting Him. And He is the Exalted in Might, the Wise.", "59:24"]
+];
+
+/* Named by transliteration so the list above stays the single source of truth:
+   if a name is ever corrected there, this finds it anyway. */
+const HASHR_NAMES = ["Ar-Rahman","Ar-Raheem","Al-Malik","Al-Quddus","As-Salam","Al-Mu'min",
+  "Al-Muhaymin","Al-'Aziz","Al-Jabbar","Al-Mutakabbir","Al-Khaliq","Al-Bari'","Al-Musawwir","Al-Hakim"];
+
+(function(){
+  const vbox = document.getElementById("hverses");
+  const cbox = document.getElementById("chips");
+  const btn  = document.getElementById("pulse");
+  const hint = document.getElementById("hint");
+  if (!vbox || !cbox || !btn) return;
+
+  HASHR_VERSES.forEach(([a, en, ref]) => {
+    const d = document.createElement("div"); d.className = "hv";
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const p = document.createElement("p"); p.className = "en"; p.textContent = en;
+    const c = document.createElement("cite"); c.textContent = "Al-Hashr " + ref;
+    d.append(sa, p, c); vbox.appendChild(d);
+  });
+
+  const idx = HASHR_NAMES.map(t => NAMES.findIndex(n => n[1] === t)).filter(i => i >= 0);
+
+  idx.forEach(i => {
+    const [a, t] = NAMES[i];
+    const c = document.createElement("span"); c.className = "chip"; c.dataset.i = i;
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const st = document.createElement("span"); st.textContent = t;
+    c.append(sa, st); cbox.appendChild(c);
+  });
+
+  /* the first thirteen of the enumeration are al-Hashr's own order, unbroken */
+  const run = (function(){ let n = 0; while (n < idx.length && idx[n] === n) n++; return n; })();
+
+  const grid = document.getElementById("names");
+  const countEl2 = document.getElementById("count");
+  const q2 = document.getElementById("q");
+  let lit = false, timers = [];
+
+  function paint(on){
+    timers.forEach(clearTimeout); timers = [];
+    idx.forEach((i, k) => {
+      const chip = cbox.children[k];
+      const cell = grid.querySelector('.name[data-i="' + i + '"]');
+      const put = () => {
+        if (chip) chip.classList.toggle("hot", on);
+        if (cell) cell.classList.toggle("hot", on);
+      };
+      if (on) timers.push(setTimeout(put, k * 110)); else put();
+    });
+  }
+
+  btn.addEventListener("click", () => {
+    lit = !lit;
+    btn.textContent = lit ? "Let them rest" : "Show me where they are";
+    btn.setAttribute("aria-pressed", lit ? "true" : "false");
+
+    if (hint){
+      hint.textContent = lit
+        ? "They are lit in the list above. The first " + run + " are not scattered through the ninety-nine at "
+          + "all \u2014 they open it, in the order the verses give them, one after another from the very top. "
+          + "The fourteenth, Al-Hakim, closes verse 24 and sits further down at number "
+          + (idx[idx.length - 1] + 1) + "."
+        : "";
+      hint.classList.toggle("on", lit);
+    }
+
+    if (!lit){ paint(false); return; }
+
+    /* a search filter would hide the very names we are about to light */
+    if (q2 && q2.value){ q2.value = ""; q2.dispatchEvent(new Event("input")); }
+    if (countEl2) countEl2.textContent = "14 of them, from Al-Hashr";
+
+    /* the payoff is the unbroken run at the top of the list, so go there and watch it fill */
+    grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    timers.push(setTimeout(() => paint(true), 520));
+  });
+
+  /* typing in the search resets the reveal, so the count is never left lying */
+  if (q2) q2.addEventListener("input", () => {
+    if (!lit) return;
+    lit = false; paint(false);
+    btn.textContent = "Show me where they are";
+    btn.setAttribute("aria-pressed", "false");
+    if (hint){ hint.textContent = ""; hint.classList.remove("on"); }
+  });
+})();
+</script>
+
+</body>
+</html>
