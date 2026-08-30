@@ -54,6 +54,7 @@ GROUPS = [
         ("begin.html", "m.begin", "Begin &middot; New Muslim"),
         ("pillars.html", "m.pillars", "The Five Pillars"),
         ("theology.html", "m.theology", "Theology &middot; The Branches"),
+        ("allah.html", "m.allah", "The Ninety-Nine Names"),
         ("madrasa.html", "m.madrasa", "The Classroom &middot; Madrasa"),
         ("school.html", "m.school", "The School &middot; Full Curriculum"),
     ]),
@@ -73,6 +74,7 @@ GROUPS = [
     ("g.story", "The Story", [
         ("index.html#timeline", "m.path", "The Path of Creation"),
         ("prophets.html", "m.prophets", "The 25 Prophets"),
+        ("muhammad.html", "m.seerah", "The Seerah &middot; Twenty-Three Years"),
         ("companions.html", "m.companions", "The Companions"),
         ("characters.html", "m.characters", "Characters"),
         ("places.html", "m.places", "Places"),
@@ -321,6 +323,10 @@ def nav_html(prefix, active):
         sheet_groups.append("\n".join(rows))
 
     return """<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
+<!-- The menu. Its index is fetched on first open rather than inlined, so these
+     54 pages do not each carry 120KB of it. The magnifier above opens it. -->
+<link rel="stylesheet" href="/assets/noor-menu.css?v=1">
+<script src="/assets/noor-menu.js?v=1" defer></script>
 %s
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
 <a href="/" class="flex items-center gap-2.5">
@@ -344,7 +350,7 @@ def nav_html(prefix, active):
 <p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
 </div></div></div>
 <a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
-<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
+<a id="search-toggle" data-nm-open href="/#search" aria-label="Search the library" title="Search the library" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
 <button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
 </div>
 </div>
