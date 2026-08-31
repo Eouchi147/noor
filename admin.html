@@ -573,10 +573,7 @@ button.sm{padding:.28rem .6rem;font-size:.7rem;border-radius:8px}
 <div class="wrap">
 <header class="bar">
 <a class="logo" href="/"><span class="n">ن</span> The Owner's Console</a>
-<span style="display:flex;gap:.45rem;align-items:center">
-<a class="site" href="/console">◉ The dial</a>
 <a class="site" href="/">← noorcodex.com</a>
-</span>
 </header>
 
 <!-- LOGIN GATE -->
@@ -1087,8 +1084,15 @@ claim yourself, then correct the card in <code>build/lights-*.json</code> and re
 <h2 class="sec">The ladder</h2>
 <p class="muted" style="margin:.1rem 0 .9rem;max-width:50rem">Three rungs, climbed one at a time. This
 machine ships on the bottom rung and is happy sitting on any of them forever. The two network calls have
-never been run against your live accounts, so post one by hand and read what comes back before you climb.</p>
+never been run against your live accounts, so post one by hand and read what comes back before you climb.
+The rung applies to every slot in the day, not just the card.</p>
 <div class="panel" id="so-ladder"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">Today, hour by hour</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Four every day, five when something is
+coming. Times are UTC. A slot that has gone shows what it said and where it landed; the rest wait
+their hour. If a run is missed the machine sends the most recent one owed, never the whole backlog.</p>
+<div class="panel" id="so-sched"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">The day's post</h2>
 <div class="panel" style="display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)">
@@ -1105,6 +1109,13 @@ never been run against your live accounts, so post one by hand and read what com
 <p class="muted" style="margin:.1rem 0 .7rem;max-width:50rem">On the middle rung the machine writes the post
 every morning and stops here. Nothing below has touched a network.</p>
 <div class="panel" id="so-queue"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">Reddit &middot; waiting for your hand</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Nothing is ever posted to Reddit
+automatically &mdash; automated posting there is read as spam and answered with a shadowban you cannot
+see. These are written and ready. Click one and you land on Reddit, in your own session, with the
+title and body already filled in. You read the room and press submit.</p>
+<div class="panel" id="so-reddit"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">What has gone out</h2>
 <p class="muted" style="margin:.1rem 0 .7rem;max-width:50rem">The last sixty, with what each one said and
@@ -1126,7 +1137,7 @@ itself.</p>
 <b>Instagram</b><span id="so-ig">IG_USER_ID, IG_TOKEN or the page token</span>
 <b>Image host</b><span id="so-host">&hellip;</span>
 <b>Rung</b><span>Controls &middot; the social machine &middot; "How the day's post goes out"</span>
-<b>Runs at</b><span>04:00 UTC, with the nightly cron</span>
+<b>Runs at</b><span>every hour, sending whatever the day owes &middot; 05:00, 12:00, 16:00 and 20:00 UTC</span>
 </div>
 <p class="muted" style="margin:.8rem 0 0;font-size:.74rem;max-width:50rem">On Meta's side the Instagram
 account must be a <b>Professional</b> account linked to a Facebook Page, and the app needs
@@ -2864,12 +2875,12 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
   }
 
   /* ---------------- Social ---------------- */
-  var SOC = { mode: "off", tokens: null, cfg: null };
+  var SOC = { mode: "off", tokens: null, cfg: null, lightSent: "" };
 
   var RUNGS = [
     ["off", "Off", "Nothing is ever sent on a schedule. You can still post by hand from this room."],
     ["approve", "I approve each post", "Every morning it writes the post and leaves it below. Nothing reaches a network until you press Post."],
-    ["auto", "Full auto", "One post a morning, nobody in the loop. Climb here only after a fortnight on approve has been boring."]
+    ["auto", "Full auto", "The whole day goes out by itself \u2014 four posts, five when something is coming. Climb here only after a fortnight on approve has been boring."]
   ];
 
   function drawLadder() {
@@ -2952,6 +2963,109 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       d.mode === "auto" ? "Full auto: it posts every morning by itself."
       : d.mode === "approve" ? "It drafts every morning and waits for you."
       : "Off: nothing sends by itself.";
+    markSent(SOC.lightSent);
+  }
+
+  /* Once the day's card has gone, the room must stop offering to send it again.
+     It used to keep showing a live preview with a Post button after a successful
+     send, which reads as "this has not happened yet" and invites a double post. */
+  function markSent(sent) {
+    var btn = $("so-send"), prev = $("so-preview");
+    if (!btn || !prev) return;
+    var old = prev.querySelector(".sent-banner");
+    if (old) old.remove();
+    btn.hidden = !!sent;
+    $("so-skip").hidden = !!sent;
+    if (sent) {
+      var b = document.createElement("div");
+      b.className = "sent-banner";
+      b.style.cssText = "margin:0 0 .9rem;padding:.6rem .9rem;border-radius:12px;"
+        + "border:1px solid rgba(142,212,155,.4);background:rgba(142,212,155,.09);font-size:.85rem";
+      b.innerHTML = '<b style="color:#8ED49B">Already sent today.</b> '
+        + '<span class="muted">' + esc(sent) + ' &middot; this is what went out, kept for reference. '
+        + 'The next card goes at 12:00 UTC tomorrow.</span>';
+      prev.insertBefore(b, prev.firstChild);
+    }
+  }
+
+  var SLOT_WHAT = {
+    dawn:  "What today is in the Islamic year, and what to do about it",
+    lead:  "A countdown, only when something is coming",
+    light: "The day's card",
+    word:  "One of 523 words, Arabic and plain English",
+    dusk:  "One of 71 chapters of the Path"
+  };
+  function drawSchedule(j) {
+    var el = $("so-sched");
+    if (!j || !j.slots) { el.innerHTML = '<p class="muted">Could not read today\'s schedule.</p>'; return; }
+    var head = "";
+    if (j.plan && j.plan.verified === false) {
+      head = '<p class="muted" style="margin:0 0 .8rem;color:#E9C86A">The calendar could not be verified '
+           + 'today, so nothing dated is scheduled. The word and the chapter still go out &mdash; the '
+           + 'machine stops claiming what today is rather than guessing at it.</p>';
+    } else if (j.plan && j.plan.hijri) {
+      head = '<p class="muted" style="margin:0 0 .8rem">Today is <b style="color:var(--gold-hi)">'
+           + esc(j.plan.hijri.d + " " + j.plan.hijri.name + " " + j.plan.hijri.y)
+           + '</b> &middot; by the Umm al-Qura calendar.</p>';
+    }
+    el.innerHTML = head + j.slots.map(function (s) {
+      var past = j.nowHour >= s.at;
+      var chip = s.state === "sent"   ? '<span class="pill-ok">sent</span>'
+               : s.state === "failed" ? '<span class="pill-bad">failed</span>'
+               : s.state === "queued" ? '<span class="pill-mute">waiting for you</span>'
+               : s.state === "due"    ? '<span class="pill-bad">owed</span>'
+               : '<span class="pill-mute">' + String(s.at).padStart(2, "0") + ':00</span>';
+      var where = "";
+      if (s.results) {
+        where = Object.keys(s.results).filter(function (k) { return k !== "reddit"; })
+          .map(function (k) {
+            return '<span style="color:' + (s.results[k] && s.results[k].ok ? "#8ED49B" : "#F08A8A")
+                 + '">' + esc(k) + '</span>'; }).join(" ");
+      }
+      return '<div style="display:flex;gap:.8rem;align-items:baseline;padding:.6rem 0;'
+        + 'border-bottom:1px solid rgba(255,254,247,.07)">'
+        + '<code style="flex:0 0 3.4rem;color:' + (past ? "var(--gold-hi)" : "rgba(255,254,247,.4)") + '">'
+        + String(s.at).padStart(2, "0") + ':00</code>'
+        + '<span style="flex:1 1 auto;min-width:0"><b>' + esc(s.id) + '</b>'
+        + (s.title ? ' &middot; ' + esc(s.title) : '')
+        + '<br><small class="muted">' + esc(SLOT_WHAT[s.id] || "") + '</small></span>'
+        + '<span style="flex:0 0 auto;text-align:end">' + chip
+        + (where ? '<br><small>' + where + '</small>' : '') + '</span></div>';
+    }).join("");
+  }
+
+  function drawReddit(j) {
+    var el = $("so-reddit");
+    if (!j || j.ok === false) { el.innerHTML = '<p class="muted">Could not read the Reddit drafts.</p>'; return; }
+    if (!j.subs || !j.subs.length) {
+      el.innerHTML = '<p class="muted">No subreddits are set, so nothing is aimed anywhere. Add '
+        + '<code>REDDIT_SUBS</code> in Vercel &mdash; the subreddits you actually take part in, comma '
+        + 'separated &mdash; and redeploy.</p>'; return;
+    }
+    var when = "";
+    if (j.lastOfferedAt) {
+      var days = Math.floor((Date.now() - Date.parse(j.lastOfferedAt)) / 86400000);
+      when = '<p class="muted" style="margin:0 0 .7rem">Last offered ' + days + ' day(s) ago &middot; '
+           + 'one every ' + j.everyDays + ' days.</p>';
+    }
+    if (!j.held || !j.held.length) {
+      el.innerHTML = when + '<p class="muted">Nothing waiting. The next draft comes round on the rhythm '
+        + 'above &mdash; roughly one self-promotional post per nine genuine contributions is the norm '
+        + 'these communities keep, and the gap is there to respect it.</p>'; return;
+    }
+    el.innerHTML = when + j.held.map(function (h) {
+      return '<div style="padding:.8rem 0;border-bottom:1px solid rgba(255,254,247,.07)">'
+        + '<b>' + esc(h.title) + '</b> <small class="muted">&middot; ' + esc(h.slot) + '</small>'
+        + '<pre style="white-space:pre-wrap;font-family:inherit;font-size:.78rem;line-height:1.6;'
+        + 'margin:.5rem 0;color:rgba(243,241,232,.72);max-height:9rem;overflow:auto">'
+        + esc(h.text) + '</pre>'
+        + '<div style="display:flex;gap:.45rem;flex-wrap:wrap">'
+        + h.links.map(function (l) {
+            return '<a class="ghost" style="text-decoration:none;display:inline-block;padding:.4rem .8rem;'
+              + 'border-radius:10px;font-size:.8rem" target="_blank" rel="noopener" href="'
+              + esc(l.url) + '">Post to r/' + esc(l.sub) + ' &rarr;</a>'; }).join("")
+        + '</div></div>';
+    }).join("");
   }
 
   function stateChip(st) {
@@ -2969,7 +3083,7 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
                  '<button class="ghost sm" data-approve="' + esc(x.date) + '">Post it</button>' +
                  '<button class="ghost sm" data-skip="' + esc(x.date) + '">Skip</button></span></div>';
         }).join("")
-      : '<p class="muted">Nothing waiting. On the middle rung the nightly run puts the day\'s post here.</p>';
+      : '<p class="muted">Nothing waiting. On the middle rung each slot writes its post and leaves it here.</p>';
   }
 
   function drawTokens(t) {
@@ -2996,6 +3110,25 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
 
   function loadSocial() {
     $("so-preview").innerHTML = '<p class="muted">Building the preview&hellip;</p>';
+
+    /* the schedule first: it decides whether the preview below is an offer or a receipt */
+    fetch("/api/social?action=today", { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        drawSchedule(j);
+        var lit = (j && j.slots || []).filter(function (s) { return s.id === "light"; })[0];
+        var legacy = j && j.legacy;
+        SOC.lightSent = (lit && lit.state === "sent") ? ("at " + String(lit.sentAt || "").slice(11, 16) + " UTC")
+          : (legacy && legacy.state === "sent") ? ("at " + String(legacy.at || "").slice(11, 16) + " UTC")
+          : "";
+        markSent(SOC.lightSent);
+      })
+      .catch(function () { $("so-sched").innerHTML = '<p class="muted">Could not read the schedule.</p>'; });
+
+    fetch("/api/social?action=reddit", { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(drawReddit)
+      .catch(function () { $("so-reddit").innerHTML = '<p class="muted">Could not read the Reddit drafts.</p>'; });
     fetch("/api/social?action=preview", { credentials: "same-origin" })
       .then(function (r) { return r.json().catch(function () { return null; }); })
       .then(function (j) {
@@ -3053,6 +3186,9 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
         var bad = (j.ran || []).filter(function (x) { return !x.ok; });
         toast(good + " channel(s) posted" + (bad.length ? ", " + bad.length + " refused" : ""), bad.length ? "bad" : "ok");
         bad.forEach(function (b) { toast(b.where + ": " + (b.error || b.skipped || "no reason given"), "bad"); });
+        /* flip the card to "sent" immediately; loadSocial confirms it from the store */
+        SOC.lightSent = "just now";
+        markSent(SOC.lightSent);
         $("so-state").textContent = "";
         loadSocial();
       }).catch(function () { $("so-send").disabled = false; toast("Could not reach /api/social", "bad"); });

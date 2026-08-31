@@ -41,7 +41,7 @@
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
-import { planDay, buildSlot, dueNow, SLOT_IDS } from "./_schedule.js";
+import { planDay, buildSlot, dueNow, SLOT_IDS, SLOTS } from "./_schedule.js";
 import * as CH from "./_channels.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
@@ -941,7 +941,31 @@ export default async function handler(req, res) {
         draftOnly: CH.draftOnly.has(c), spec: CH.SPEC[c] })),
       slots: SLOT_IDS
     });
-    if (action === "plan") return json(res, 200, { ok: true, plan: await planDay(date) });
+    /* THE DAY, AS THE CONSOLE NEEDS TO SEE IT.
+       The plan alone says what is scheduled. It does not say what already went,
+       which is the half the owner actually asks about -- and without it the
+       room kept offering to send a post that had already been sent. So the
+       state of each slot is read back and returned alongside. */
+    if (action === "plan" || action === "today") {
+      const plan = await planDay(date);
+      const now = new Date(), hour = now.getUTCHours();
+      const slots = [];
+      for (const s of SLOTS) {
+        if (!plan.slots.includes(s.id)) continue;
+        const rec = await readSlot(date, s.id);
+        slots.push({
+          id: s.id, at: s.at,
+          state: rec ? rec.state : (hour >= s.at ? "due" : "waiting"),
+          title: rec ? rec.title : "",
+          sentAt: rec ? rec.at : null,
+          results: rec ? rec.results : null
+        });
+      }
+      /* the legacy single-post record, so a hand-sent day still reads as sent */
+      const legacy = await readDay(date);
+      return json(res, 200, { ok: true, plan, slots, nowHour: hour,
+        legacy: legacy && !legacy.err ? { state: legacy.state, at: legacy.at, title: legacy.title } : null });
+    }
     /* the Reddit drafts waiting for a human, with their one-click links */
     if (action === "reddit") {
       let last = null;
