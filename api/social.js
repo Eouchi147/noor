@@ -812,6 +812,68 @@ async function sendOne(ch, shaped, post) {
   return await fn(shaped);
 }
 
+/* ONE SLOT, ON DEMAND.
+   The schedule is a promise about when things go out, not a rule about when
+   they MAY. A slot whose hour has passed and whose cron never fired sits there
+   owed, and the owner looking at it should be able to read it and send it —
+   not wait a day for a machine that already missed. So composing a slot and
+   sending a slot are separable, and neither consults the clock. runDue() is
+   just the caller that does consult it. */
+export async function composeSlot(host, date, slotId, opts = {}) {
+  const plan = opts.plan || await planDay(date, opts);
+  const base = "https://" + publicHost(host);
+  if (slotId === "light") {
+    const D = opts.dials || await dials();
+    const c = await compose(host, date, { polish: D.polish });
+    if (!c) return null;
+    return { lvl: (c.light && c.light.lvl) || "editorial", title: c.light.title,
+      oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
+      tags: [], link: c.link, image: c.image, imageSvg: c.imageSvg, card: c.light };
+  }
+  let index = opts.index || null;
+  if (!index) { try { const r = await fetch(base + "/assets/menu-index.json");
+    if (r.ok) index = await r.json(); } catch { } }
+  return buildSlot(slotId, {
+    date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
+    words: index && index.words, path: index && index.path,
+    link: base + "/?light=" + date, image: base + "/api/card?date=" + date + "&fmt=png"
+  });
+}
+
+export async function sendSlot(host, date, slotId, opts = {}) {
+  const D = await dials();
+  const out = { date, slot: slotId, at: new Date().toISOString() };
+  if (!SLOT_IDS.includes(slotId)) return { ...out, ok: false, error: "no such slot" };
+
+  const prev = await readSlot(date, slotId);
+  if (prev && prev.state === "sent" && !opts.force)
+    return { ...out, ok: false, error: "that slot has already gone today" };
+
+  const post = await composeSlot(host, date, slotId, opts);
+  if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
+  if (opts.dry) return { ...out, ok: true, dry: true, post };
+
+  const results = {};
+  for (const ch of liveChannels()) {
+    const shaped = CH.shape(post, ch);
+    if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
+    try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
+    catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
+  }
+  let lastRedditAt = null;
+  if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
+  results.reddit = await CH.sendReddit(CH.shape(post, "reddit"), { lastRedditAt });
+  if (results.reddit.links && results.reddit.links.length && kvReady()) {
+    try { await kv([["SET", K_RED, out.at]]); } catch { }
+  }
+
+  const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
+  const rec = { at: out.at, slot: slotId, state: anySent ? "sent" : "failed",
+    title: post.title, lvl: post.lvl, results };
+  await writeSlot(date, slotId, rec);
+  return { ...out, ok: anySent, state: rec.state, title: post.title, results };
+}
+
 export async function runDue(host, date, now, opts = {}) {
   const D = await dials();
   const out = { date, mode: D.mode, at: (now || new Date()).toISOString(), ran: [], skipped: "" };
@@ -967,6 +1029,19 @@ export default async function handler(req, res) {
         legacy: legacy && !legacy.err ? { state: legacy.state, at: legacy.at, title: legacy.title } : null });
     }
     /* the Reddit drafts waiting for a human, with their one-click links */
+    /* read one slot without sending it, so a row can be opened and inspected */
+    if (action === "slot") {
+      const id = String(q.slot || "");
+      if (!SLOT_IDS.includes(id)) return json(res, 400, { ok: false, error: "no such slot" });
+      const post = await composeSlot(host, date, id);
+      if (!post) return json(res, 200, { ok: true, slot: id, post: null,
+        note: "Nothing to say for this slot today." });
+      const shaped = {};
+      for (const ch of CH.ALL) shaped[ch] = CH.shape(post, ch);
+      const rec = await readSlot(date, id);
+      return json(res, 200, { ok: true, slot: id, post, shaped,
+        state: rec ? rec.state : null, sentAt: rec ? rec.at : null });
+    }
     if (action === "reddit") {
       let last = null;
       if (kvReady()) { try { last = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
@@ -1009,6 +1084,11 @@ export default async function handler(req, res) {
     }
     if (body.action === "renewed")
       return json(res, 200, await markTokenRenewed(String(body.which || "both"), body.at));
+    /* send one named slot now, regardless of its hour */
+    if (body.action === "send-slot") {
+      const r = await sendSlot(host, date, String(body.slot || ""), { force: !!body.force });
+      return json(res, r.ok ? 200 : 409, r);
+    }
     if (body.action === "skip") {
       const rec = await readDay(date) || { date, id: "", title: "" };
       rec.state = "skipped"; await writeDay(date, rec, true);

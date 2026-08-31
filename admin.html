@@ -3022,16 +3022,81 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
             return '<span style="color:' + (s.results[k] && s.results[k].ok ? "#8ED49B" : "#F08A8A")
                  + '">' + esc(k) + '</span>'; }).join(" ");
       }
-      return '<div style="display:flex;gap:.8rem;align-items:baseline;padding:.6rem 0;'
-        + 'border-bottom:1px solid rgba(255,254,247,.07)">'
+      /* A row you cannot act on is a dead end. An owed slot is one whose hour
+         has passed and whose run never happened — the honest thing is to let it
+         be read and sent from here, not to leave it sitting as a complaint. */
+      var owed = s.state === "due" || s.state === "failed";
+      var acts = '<button class="ghost" data-slotprev="' + esc(s.id) + '" '
+        + 'style="padding:.3rem .7rem;font-size:.74rem">Preview</button>'
+        + (owed ? ' <button class="btn" data-slotsend="' + esc(s.id) + '" '
+            + 'style="padding:.3rem .8rem;font-size:.74rem">Post now</button>' : '');
+      return '<div style="padding:.7rem 0;border-bottom:1px solid rgba(255,254,247,.07)">'
+        + '<div style="display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap">'
         + '<code style="flex:0 0 3.4rem;color:' + (past ? "var(--gold-hi)" : "rgba(255,254,247,.4)") + '">'
         + String(s.at).padStart(2, "0") + ':00</code>'
-        + '<span style="flex:1 1 auto;min-width:0"><b>' + esc(s.id) + '</b>'
+        + '<span style="flex:1 1 14rem;min-width:0"><b>' + esc(s.id) + '</b>'
         + (s.title ? ' &middot; ' + esc(s.title) : '')
         + '<br><small class="muted">' + esc(SLOT_WHAT[s.id] || "") + '</small></span>'
-        + '<span style="flex:0 0 auto;text-align:end">' + chip
-        + (where ? '<br><small>' + where + '</small>' : '') + '</span></div>';
+        + '<span style="flex:0 0 auto;display:flex;gap:.4rem;align-items:center">' + acts + '</span>'
+        + '<span style="flex:0 0 auto;text-align:end;min-width:5rem">' + chip
+        + (where ? '<br><small>' + where + '</small>' : '') + '</span></div>'
+        + '<div id="slotbox-' + esc(s.id) + '" hidden style="margin:.7rem 0 .2rem"></div></div>';
     }).join("");
+  }
+
+  /* open one slot and show exactly what would go out, per network */
+  function previewSlot(id) {
+    var box = $("slotbox-" + id);
+    if (!box) return;
+    if (!box.hidden) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = '<p class="muted" style="margin:0">Building&hellip;</p>';
+    fetch("/api/social?action=slot&slot=" + encodeURIComponent(id), { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || j.ok === false) { box.innerHTML = '<p class="muted">Could not build this slot.</p>'; return; }
+        if (!j.post) { box.innerHTML = '<p class="muted">' + esc(j.note || "Nothing to say for this slot today.") + '</p>'; return; }
+        var sh = j.shaped || {};
+        var order = ["facebook", "instagram", "pinterest", "linkedin", "x", "reddit"];
+        box.innerHTML =
+          '<div style="border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.9rem 1rem;'
+          + 'background:rgba(255,254,247,.03)">'
+          + (j.post.imageSvg ? '<img src="' + esc(j.post.imageSvg) + '" alt="" style="width:150px;float:inline-end;'
+              + 'margin:0 0 .6rem .9rem;border-radius:10px;border:1px solid rgba(255,254,247,.14)"/>' : '')
+          + '<p style="margin:0 0 .5rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;'
+          + 'color:var(--gold)">' + esc(j.post.title || id) + '</p>'
+          + order.filter(function (c) { return sh[c]; }).map(function (c) {
+              var t = sh[c].text || "";
+              return '<div style="margin:0 0 .6rem"><small class="muted" style="letter-spacing:.1em;'
+                + 'text-transform:uppercase;font-size:.62rem">' + esc(c)
+                + ' &middot; ' + t.length + ' chars</small>'
+                + '<pre style="white-space:pre-wrap;font-family:inherit;font-size:.78rem;line-height:1.55;'
+                + 'margin:.25rem 0 0;color:rgba(243,241,232,.85)">' + esc(t) + '</pre></div>'; }).join("")
+          + '<p class="muted" style="margin:.4rem 0 0;font-size:.72rem;clear:both">'
+          + (j.post.lvl ? 'Level <code>' + esc(j.post.lvl) + '</code>. ' : '')
+          + (["quran", "sunnah", "debated"].indexOf(j.post.lvl) >= 0
+              ? 'The Lantern may not rewrite this &mdash; it carries a citation.' : '')
+          + '</p></div>';
+      })
+      .catch(function () { box.innerHTML = '<p class="muted">Could not reach /api/social.</p>'; });
+  }
+
+  function sendSlotNow(id, btn) {
+    if (btn) { btn.disabled = true; btn.textContent = "Sending\u2026"; }
+    fetch("/api/social", { method: "POST", credentials: "same-origin",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "send-slot", slot: id }) })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || !j.ok) { toast((j && j.error) || "It refused.", "bad");
+          if (btn) { btn.disabled = false; btn.textContent = "Post now"; } return; }
+        var landed = Object.keys(j.results || {}).filter(function (k) {
+          return k !== "reddit" && j.results[k] && j.results[k].ok; });
+        toast("Sent " + esc(id) + (landed.length ? " to " + landed.join(", ") : ""), "ok");
+        loadSocial();
+      })
+      .catch(function () { toast("Could not reach /api/social", "bad");
+        if (btn) { btn.disabled = false; btn.textContent = "Post now"; } });
   }
 
   function drawReddit(j) {
@@ -3253,6 +3318,10 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     if (t.id === "lt-refresh") loadLights($("lt-date").value.trim());
     if (t.id === "lt-go") { loadLights($("lt-date").value.trim()); }
     if (t.id === "so-refresh") loadSocial();
+    var sp = t.closest ? t.closest("[data-slotprev]") : null;
+    if (sp) { previewSlot(sp.getAttribute("data-slotprev")); return; }
+    var ss = t.closest ? t.closest("[data-slotsend]") : null;
+    if (ss) { sendSlotNow(ss.getAttribute("data-slotsend"), ss); return; }
     if (t.id === "so-send") send();
     if (t.id === "so-skip") socPost({ action: "skip" }, "Marked as skipped; nothing will be sent for today.");
     var rung = t.closest && t.closest("[data-rung]");
