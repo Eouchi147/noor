@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#06070C">
+<title>The Dial · NOOR Guardian Console</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500;600;700&family=Amiri&display=swap">
+<style>
+:root{
+  --void:#06070C; --gold:#E8C874; --gold-hi:#FFF0C4; --gdim:rgba(232,200,116,.42);
+  --rule:rgba(232,200,116,.16); --ink:#F3EFE2; --soft:#C6C3B8; --dim:#8C8F9E;
+  --ok:#8ED49B; --warn:#E8C874; --bad:#F08A8A;
+  /* categorical series, validated against this surface with the palette
+     checker: lightness band, chroma floor, normal-vision separation and
+     contrast all pass; the one CVD warn is covered by direct labels. */
+  --c1:#B8862A; --c2:#3C7FD4; --c3:#C2513F; --c4:#1E8E63;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0;background:var(--void)}
+body{color:var(--ink);overflow:hidden;font:400 15px/1.6 Inter,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overscroll-behavior:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;margin:0;padding:0;text-align:left}
+
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ---------- top: who and where ---------- */
+.top{position:fixed;z-index:9;left:0;right:0;top:0;display:flex;align-items:center;gap:.7rem;
+  padding:max(.7rem,env(safe-area-inset-top)) clamp(.8rem,3vw,1.5rem) .7rem;
+  background:linear-gradient(180deg,rgba(6,7,12,.92),transparent)}
+.brand{display:flex;align-items:baseline;gap:.5rem;margin-right:auto}
+.brand .ar{font-family:Amiri,serif;color:var(--gold);font-size:1.25rem;line-height:1}
+.brand b{font-weight:700;letter-spacing:.2em;font-size:.68rem;text-transform:uppercase}
+.brand span{font-size:.66rem;color:var(--dim);letter-spacing:.1em}
+.demo{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--rule);border-radius:2rem;padding:.25rem .6rem}
+
+/* ---------- the dial ---------- */
+.stage{position:fixed;left:0;right:0;top:0;bottom:var(--bar,7rem);z-index:2;
+  perspective:1250px;perspective-origin:50% 50%;touch-action:none}
+.rig{position:absolute;left:50%;top:50%;transform-style:preserve-3d;will-change:transform}
+
+.node{position:absolute;left:0;top:0;width:var(--d);height:var(--d);margin:calc(var(--d)/-2);
+  border-radius:50%;display:grid;place-items:center;gap:0;padding:.35rem;
+  border:1px solid var(--rule);will-change:transform,opacity;
+  background:radial-gradient(circle at 50% 30%,rgba(255,254,247,.12),rgba(255,254,247,.02) 72%);
+  box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.node .in{display:grid;place-items:center;gap:.12rem;pointer-events:none;will-change:transform}
+.node svg{width:22px;height:22px;stroke:var(--soft);fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.node b{font-weight:600;font-size:.66rem;letter-spacing:.02em;color:var(--soft);
+  text-align:center;line-height:1.1}
+.node.focus{border-color:var(--gold);
+  background:radial-gradient(circle at 50% 30%,rgba(232,200,116,.3),rgba(232,200,116,.05) 72%);
+  box-shadow:0 0 46px rgba(232,200,116,.4),0 14px 34px rgba(0,0,0,.55)}
+.node.focus svg{stroke:var(--gold-hi)}
+.node.focus b{color:var(--gold-hi)}
+/* a room that wants you */
+.dot{position:absolute;top:8%;right:8%;width:10px;height:10px;border-radius:50%;
+  box-shadow:0 0 0 2px rgba(6,7,12,.8)}
+.dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)}
+.dot.bad,.dot.warn{animation:thump 1.9s ease-in-out infinite}
+@keyframes thump{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
+.badge{position:absolute;top:4%;left:6%;min-width:19px;height:19px;padding:0 5px;
+  border-radius:19px;background:var(--bad);color:#1a0e0e;font-size:.62rem;font-weight:700;
+  display:grid;place-items:center;box-shadow:0 0 0 2px rgba(6,7,12,.8)}
+
+.hub{position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%);
+  width:var(--hd);height:var(--hd);border-radius:50%;display:grid;place-items:center;
+  text-align:center;padding:.7rem;pointer-events:none;border:1px solid var(--gdim);
+  background:radial-gradient(circle at 50% 32%,rgba(232,200,116,.16),rgba(232,200,116,.02) 74%);
+  box-shadow:0 0 80px rgba(232,200,116,.2)}
+.hub .hn,.hub .hs,.hub .hv{display:block}
+.hub .hn{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;
+  font-size:clamp(1.05rem,3.4vw,1.5rem);color:var(--gold-hi);line-height:1.1}
+.hub .hs{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-top:.2rem}
+.hub .hv{margin:.5rem auto 0;font-size:.72rem;color:var(--soft);line-height:1.4;max-width:11rem}
+.retic{position:absolute;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .22s}
+.retic.on{opacity:1}
+.retic svg{display:block;animation:spin 15s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- bottom: the vitals ---------- */
+.bar{position:fixed;z-index:9;left:0;right:0;bottom:0;
+  padding-bottom:max(.7rem,env(safe-area-inset-bottom));
+  background:linear-gradient(0deg,rgba(6,7,12,.95),rgba(6,7,12,.8) 62%,transparent)}
+.hint{margin:0 0 .5rem;text-align:center;font-size:.7rem;color:var(--dim);padding:0 1rem}
+.vits{display:flex;gap:.15rem;justify-content:center;overflow-x:auto;scrollbar-width:none;
+  padding:0 clamp(.6rem,3vw,1.5rem)}
+.vits::-webkit-scrollbar{display:none}
+.vt{flex:0 0 auto;display:grid;gap:.02rem;padding:.15rem .7rem;text-align:center;
+  border-left:1px solid var(--rule)}
+.vt:first-child{border-left:0}
+.vt b{font-size:.85rem;font-weight:600;color:var(--gold-hi);font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+.vt b .led{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.35rem;
+  vertical-align:middle}
+.vt span{font-size:.55rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+@media (max-width:32rem){ .vt[data-opt]{display:none} .vt{padding:.15rem .5rem} }
+
+.went{position:fixed;left:50%;bottom:6.6rem;transform:translateX(-50%) scale(.9);z-index:20;
+  background:rgba(232,200,116,.16);border:1px solid var(--gdim);color:var(--gold-hi);
+  border-radius:2rem;padding:.5rem 1rem;font-size:.8rem;opacity:0;pointer-events:none;
+  transition:opacity .28s,transform .28s cubic-bezier(.16,1.4,.3,1);backdrop-filter:blur(8px)}
+.went.on{opacity:1;transform:translateX(-50%) scale(1)}
+
+/* =====================================================================
+   LIQUID FROSTED GLASS.
+   Three things stacked, because "frosted glass" is not one effect:
+     1. the frost -- a real backdrop-filter blur with saturation lifted,
+        so the dial and the stars behind actually bend through it;
+     2. the chromatic rim -- a conic gradient painted ONLY on the border,
+        via a mask-composite:xor trick, rotating slowly. That is what
+        gives the edge its shifting spectrum instead of a flat stroke;
+     3. the aberration -- two more rings offset a pixel in cyan and
+        magenta, which is what real glass does to light at its edge.
+   Plus a specular highlight that tracks the pointer, so the panel reads
+   as a curved surface rather than a rectangle.
+   ===================================================================== */
+@property --rim{syntax:'<angle>';initial-value:0deg;inherits:false}
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(4,5,10,.55);
+  backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .38s}
+.scrim.on{opacity:1;pointer-events:auto}
+.panel{position:fixed;z-index:31;left:50%;top:50%;
+  width:min(58rem,94vw);height:min(40rem,82vh);
+  transform:translate(-50%,-50%) translate(var(--ox,0px),var(--oy,0px)) scale(.28);
+  opacity:0;pointer-events:none;border-radius:26px;overflow:hidden;
+  transition:transform .5s cubic-bezier(.16,1.12,.28,1),opacity .32s;
+  background:linear-gradient(158deg,rgba(255,254,247,.115),rgba(255,254,247,.035) 44%,rgba(120,150,255,.06));
+  backdrop-filter:blur(36px) saturate(200%);-webkit-backdrop-filter:blur(36px) saturate(200%);
+  box-shadow:0 44px 100px rgba(0,0,0,.66),0 0 0 1px rgba(255,255,255,.05),
+    inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(255,255,255,.06)}
+.panel.on{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
+/* the rotating chromatic rim */
+.panel::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+  pointer-events:none;z-index:3;
+  background:conic-gradient(from var(--rim),
+    rgba(255,120,200,.85),rgba(120,190,255,.85),rgba(150,255,225,.6),
+    rgba(255,222,140,.9),rgba(255,140,190,.7),rgba(255,120,200,.85));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;animation:rim 11s linear infinite}
+@keyframes rim{to{--rim:360deg}}
+/* chromatic aberration: the same edge, split */
+.panel::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
+  box-shadow:inset 1.5px 1.5px 0 -.5px rgba(120,225,255,.4),
+             inset -1.5px -1.5px 0 -.5px rgba(255,120,210,.36)}
+/* the specular, following the pointer */
+.sheen{position:absolute;inset:0;pointer-events:none;z-index:1;border-radius:inherit;
+  background:radial-gradient(38rem 26rem at var(--mx,50%) var(--my,0%),
+    rgba(255,255,255,.13),rgba(255,255,255,.04) 38%,transparent 66%);
+  transition:background .18s}
+
+.ph{position:relative;z-index:4;display:flex;align-items:center;gap:.8rem;
+  padding:1rem 1.2rem .8rem;border-bottom:1px solid rgba(255,255,255,.09)}
+.ph .pi{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:rgba(232,200,116,.15);border:1px solid var(--gdim);flex:0 0 auto}
+.ph .pi svg{width:19px;height:19px;stroke:var(--gold-hi);fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.ph h2{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:1.5rem;
+  line-height:1.1;color:var(--gold-hi)}
+.ph p{margin:.1rem 0 0;font-size:.72rem;color:var(--dim)}
+.ph .x{margin-left:auto;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.14);color:var(--soft);font-size:1.2rem;flex:0 0 auto}
+.ph .x:hover{border-color:var(--gdim);color:var(--gold-hi)}
+.pb{position:relative;z-index:4;height:calc(100% - 4.6rem);overflow-y:auto;padding:1.1rem 1.2rem 1.4rem;
+  scrollbar-width:thin}
+
+/* ---------- dashboard furniture ---------- */
+.grid{display:grid;gap:.7rem}
+.g2{grid-template-columns:1fr}
+@media (min-width:44rem){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+ .g4{grid-template-columns:repeat(4,1fr)}}
+.g3,.g4{grid-template-columns:repeat(2,1fr)}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:.85rem .95rem;
+  background:rgba(255,254,247,.035)}
+.card>h3{margin:0 0 .5rem;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
+  font-weight:600}
+.stat{display:grid;gap:.1rem}
+.stat b{font-size:clamp(1.5rem,4.4vw,2.1rem);font-weight:600;color:var(--ink);
+  font-variant-numeric:tabular-nums;line-height:1}
+.stat span{font-size:.68rem;color:var(--dim)}
+.stat .delta{font-size:.7rem;font-weight:600}
+.up{color:#8ED49B}.down{color:#F08A8A}
+.rows{display:grid;gap:.35rem}
+.row{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:10px;
+  background:rgba(255,255,255,.035);min-height:44px}
+.row .t{flex:1 1 auto;min-width:0;font-size:.83rem}
+.row .t small{display:block;color:var(--dim);font-size:.7rem;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.row .v{flex:0 0 auto;font-size:.78rem;color:var(--soft);font-variant-numeric:tabular-nums}
+.pill{flex:0 0 auto;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:2rem;padding:.2rem .55rem;border:1px solid currentColor}
+.p-ok{color:#8ED49B}.p-warn{color:#E8C874}.p-bad{color:#F08A8A}.p-mute{color:var(--dim)}
+.bar-l{height:7px;border-radius:7px;background:rgba(255,255,255,.09);overflow:hidden}
+.bar-l i{display:block;height:100%;border-radius:7px;background:var(--c1)}
+.chart{width:100%;display:block;overflow:visible}
+.chart .gridline{stroke:rgba(255,255,255,.07);stroke-width:1}
+.chart .axis{fill:var(--dim);font-size:9px}
+.tipc{position:absolute;pointer-events:none;background:rgba(6,7,12,.94);
+  border:1px solid var(--gdim);border-radius:9px;padding:.3rem .55rem;font-size:.72rem;
+  opacity:0;transition:opacity .12s;z-index:9;white-space:nowrap}
+.tipc.on{opacity:1}
+.act{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}
+.btn{min-height:42px;display:inline-flex;align-items:center;gap:.4rem;border-radius:11px;
+  padding:.5rem .9rem;font-size:.82rem;border:1px solid rgba(255,255,255,.16);color:var(--soft)}
+.btn:hover{border-color:var(--gdim);color:var(--gold-hi);background:rgba(232,200,116,.09)}
+.btn.pri{border-color:rgba(232,200,116,.6);color:#FFF6DC;
+  background:linear-gradient(180deg,rgba(232,200,116,.26),rgba(232,200,116,.14))}
+.legend{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.45rem;font-size:.7rem;color:var(--soft)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:.35rem;
+  vertical-align:middle}
+@media (max-width:44rem){
+  .panel{width:100vw;height:100dvh;max-height:100dvh;border-radius:0;top:0;left:0;
+    transform:translate(0,0) scale(.9);}
+  .panel.on{transform:none}
+  .panel::before{border-radius:0}
+  .pb{height:calc(100dvh - 4.6rem);padding-bottom:max(1.4rem,env(safe-area-inset-bottom))}
+  .ph{padding-top:max(1rem,env(safe-area-inset-top))}
+}
+@media (prefers-reduced-motion:reduce){ .panel::before{animation:none} }
+
+@media (prefers-reduced-motion:reduce){ .retic svg,.dot{animation:none} }
+
+/* ---- the door out of a panel, into the full workbench ---- */
+.door{display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  margin-top:.2rem;padding:.85rem 1rem;border-radius:14px;
+  border:1px solid var(--rule);background:rgba(232,200,116,.06)}
+.door p{margin:0;font-size:.76rem;color:var(--soft);line-height:1.5}
+.door a{flex:0 0 auto;display:inline-flex;align-items:center;gap:.4rem;
+  min-height:44px;padding:0 1.05rem;border-radius:999px;text-decoration:none;
+  font-size:.78rem;font-weight:700;color:#241D12;
+  background:linear-gradient(160deg,var(--gold-hi),var(--gold))}
+.door a:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+/* ---- waiting, and the two ways a room can have nothing to show ---- */
+.load{display:grid;place-items:center;min-height:190px;gap:.7rem;
+  color:var(--dim);font-size:.78rem}
+.load i{width:26px;height:26px;border-radius:50%;border:2px solid var(--rule);
+  border-top-color:var(--gold);animation:sp .8s linear infinite;display:block}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.load i{animation:none}}
+.none{padding:1.1rem 1.15rem;border:1px dashed var(--rule);border-radius:14px;
+  color:var(--soft);font-size:.8rem;line-height:1.65}
+.none b{color:var(--gold-hi);font-weight:700}
+
+/* ---- the boot curtain: nothing shows until the first read answers ---- */
+.boot{position:fixed;inset:0;z-index:80;display:grid;place-items:center;gap:1rem;
+  background:var(--void);transition:opacity .5s ease,visibility .5s}
+.boot.off{opacity:0;visibility:hidden;pointer-events:none}
+.boot .ar{font-family:Amiri,serif;font-size:2.4rem;color:var(--gold);
+  text-shadow:0 0 34px rgba(232,200,116,.45)}
+.boot p{margin:0;font-size:.78rem;color:var(--dim);letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="boot" id="boot"><span class="ar">نُور</span><p>opening the console</p></div>
+<canvas id="sky"></canvas>
+<div class="top">
+  <span class="brand"><span class="ar">نُور</span><b>Guardian Console</b><span>the dial</span></span>
+  <a class="demo" href="/admin">the workbench &rarr;</a>
+</div>
+<div class="stage" id="stage">
+  <div class="rig" id="rig"></div>
+  <div class="hub" id="hub"></div>
+  <div class="retic" id="retic"><svg width="150" height="150" viewBox="0 0 150 150">
+    <circle cx="75" cy="75" r="68" fill="none" stroke="rgba(232,200,116,.55)" stroke-width="1"
+      stroke-dasharray="16 11"/>
+    <circle cx="75" cy="75" r="61" fill="none" stroke="rgba(232,200,116,.16)" stroke-width="1"/>
+  </svg></div>
+</div>
+<div class="bar" id="bar"><p class="hint" id="hint"></p><div class="vits" id="vits"></div></div>
+<div class="scrim" id="scrim"></div>
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-title">
+  <div class="sheen" id="sheen"></div>
+  <div class="ph"><span class="pi" id="p-icon"></span>
+    <span><h2 id="p-title"></h2><p id="p-sub"></p></span>
+    <button class="x" id="p-close" aria-label="Close">&times;</button></div>
+  <div class="pb" id="p-body"></div>
+</div>
+<div class="tipc" id="tipc"></div>
+<div class="went" id="went"></div>
+
+<script>
+"use strict";
+const $=i=>document.getElementById(i);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const REDUCE=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* Two different questions, and conflating them is a bug.
+   "Is the finger the pointer?" decides how big a target must be.
+   "Can this pointer hover?" decides whether hover effects exist at all.
+   maxTouchPoints>0 answers neither: every touchscreen laptop reports it, and
+   gating hover on it silently kills the hover on a large class of real
+   desktops -- which is exactly what it did here. */
+const COARSE  = matchMedia("(pointer:coarse)").matches;
+const CANHOVER= matchMedia("(hover:hover)").matches;
+const TOUCH   = COARSE;
+let wt; function went(t){const w=$("went");w.textContent=t;w.classList.add("on");
+  clearTimeout(wt);wt=setTimeout(()=>w.classList.remove("on"),1700);}
+
+/* ---- icons, matching the console's own data-ic names ---- */
+const IC={
+ pulse:'<path d="M2 12h4l3-8 4 16 3-8h6"/>',
+ note:'<path d="M4 4h16v13l-4 4H4z"/><path d="M8 9h8M8 13h5"/>',
+ bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/>',
+ lamp:'<path d="M12 3v3M6.5 7.5 12 6l5.5 1.5L15 14H9z"/><path d="M12 14v6M9 21h6"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/>',
+ shield:'<path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z"/>',
+ scope:'<circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>',
+ book:'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h7"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h5M9.5 14.5h5"/>',
+ pen:'<path d="M4 20l4-1 10-10-3-3L5 16z"/><path d="M14 6l3 3"/>'
+};
+
+
+/* ===================================================================
+   THE DATA LAYER.
+   Two rules decide what is fetched and when.
+
+   One: a read that costs nothing happens at boot. /api/admin-data,
+   /api/visitors, /api/inbox and the social dials are all a KV lookup or a
+   Stripe list, so they run once, fill the vitals bar, and every room that
+   needs them is already holding them by the time it opens.
+
+   Two: a read that costs MONEY never happens on its own. ?probe=lantern
+   spends a real model call to prove the key works, and marketing {kind:"week"}
+   writes a whole week of posts. Opening a panel must never spend anything, so
+   those two sit behind a button in the full workbench and are not called here
+   at all. This is the difference between a console and a meter that runs.
+   =================================================================== */
+const CACHE={};
+function get(url){
+  if(CACHE[url]) return CACHE[url];
+  return CACHE[url]=fetch(url,{credentials:"same-origin"})
+    .then(r=>{ if(r.status===401||r.status===501){locked();return null;}
+               return r.ok?r.json():null; })
+    .catch(()=>null);
+}
+let wentDark=false;
+function locked(){ if(wentDark)return; wentDark=true;
+  location.replace("/admin"+(location.hash||"")); }
+
+/* --- small honest formatters. Every one of them answers "nothing yet" with
+       an em dash rather than a zero, because 0 and "not counted" are not the
+       same fact and the whole point of this screen is to tell them apart. --- */
+const has=v=>v!==null&&v!==undefined&&v!=="";
+const em="—";
+const n0=v=>Number.isFinite(+v)?+v:null;
+const fmt=v=>has(n0(v))?n0(v).toLocaleString():em;
+/* /api/admin-data is already in whole currency. /api/ledger is in cents.
+   Conflating them is the easiest money bug in this house, so they get two
+   named functions and neither is ever used for the other's numbers. */
+const money=v=>has(n0(v))?"$"+Math.round(n0(v)).toLocaleString():em;
+const cash =v=>has(n0(v))?"$"+(n0(v)/100).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):em;
+function ago(iso){
+  if(!iso)return em;
+  const t=Date.parse(iso); if(!Number.isFinite(t))return em;
+  const s=Math.max(0,(Date.now()-t)/1000);
+  if(s<90)return "just now";
+  if(s<5400)return Math.round(s/60)+"m ago";
+  if(s<172800)return Math.round(s/3600)+"h ago";
+  return Math.round(s/86400)+"d ago";
+}
+const day=iso=>iso?String(iso).slice(0,10).slice(5):em;
+const trim=(s,n)=>{s=String(s||"").replace(/\s+/g," ").trim();
+  return s.length>n?s.slice(0,n-1)+"…":s;};
+
+/* ---- the twelve rooms. `pane` is the tab each one opens in the workbench;
+        note Legacy's pane is called guardians there, and has been since it
+        was built -- the label changed, the id never did. ---- */
+const ROOMS=[
+ {k:"pulse",  n:"Pulse",    ic:"pulse", pane:"pulse",     s:"the numbers today"},
+ {k:"inbox",  n:"Inbox",    ic:"note",  pane:"inbox",     s:"what readers sent"},
+ {k:"lantern",n:"Lantern",  ic:"bulb",  pane:"lantern",   s:"the AI, its key and its models"},
+ {k:"lights", n:"Lights",   ic:"lamp",  pane:"lights",    s:"the library the day's card is drawn from"},
+ {k:"social", n:"Social",   ic:"globe", pane:"social",    s:"the day's post"},
+ {k:"giving", n:"Giving",   ic:"coin",  pane:"giving",    s:"gifts and the ledger"},
+ {k:"legacy", n:"Legacy",   ic:"shield",pane:"guardians", s:"what happens after you"},
+ {k:"traffic",n:"Traffic",  ic:"scope", pane:"traffic",   s:"who is reading"},
+ {k:"market", n:"Marketing",ic:"pen",   pane:"market",    s:"the writing room"},
+ {k:"journal",n:"Journal",  ic:"book",  pane:"journal",   s:"the Guardian's Journal"},
+ {k:"dials",  n:"Controls", ic:"gear",  pane:"dials",     s:"every switch in the house"},
+ {k:"system", n:"System",   ic:"gear",  pane:"system",    s:"keys, crons and health"}
+];
+/* which reads a room needs before it can draw. The order here is the order
+   its builder receives them as arguments. */
+const NEEDS={
+ pulse  :["/api/admin-data","/api/visitors"],
+ inbox  :["/api/inbox?limit=100"],
+ lantern:["/api/admin-data?probe=night","/api/admin-data"],
+ lights :["/api/admin-data?probe=lights"],
+ social :["/api/social?action=dials"],
+ giving :["/api/admin-data","/api/ledger"],
+ legacy :["/api/admin-data"],
+ traffic:["/api/visitors"],
+ market :["/api/visitors","/api/admin-data"],
+ journal:["/api/journal"],
+ dials  :["/api/settings?all=1"],
+ system :["/api/admin-data"]
+};
+
+/* ---- what the hub says under a room's name while it is focused ---- */
+let A=null,V=null,IB=null,SO=null;      /* the four cheap reads, once landed */
+function READ(k){
+  switch(k){
+    case "pulse":{
+      if(!V)return em;
+      if(!V.enabled)return "the lamp counter is not on yet";
+      const d=(V.days||[]),l=d[d.length-1]||{};
+      return fmt(l.people)+" readers today · "+fmt(l.views)+" views";
+    }
+    case "inbox":{
+      if(!IB)return em;
+      const c=IB.counts||{};
+      return (c.new||0)+" unread · "+fmt(c.total)+" in all";
+    }
+    case "lantern": return A?((A.lanternConfigured?"lit":"no key")+" · "+trim(A.lanternModel||em,34)):em;
+    case "lights":  return "the day's card is drawn here";
+    case "social":  return SO&&SO.dials?("posting is "+String(SO.dials.mode||"off").toUpperCase()):em;
+    case "giving":  return A?(A.stripeConfigured?(money(A.gifts&&A.gifts.total30d)+" in 30 days · "+money(A.gifts&&A.gifts.monthly)+" monthly"):"Stripe is not connected yet"):em;
+    case "legacy":  return A?(fmt(A.activeCount)+" guardians lit"):em;
+    case "traffic": return V&&V.enabled?(fmt(V.totals&&V.totals.people30)+" people in 30 days"):em;
+    case "market":  return "where the readers came from";
+    case "journal": return "the Guardian's Journal";
+    case "dials":   return "every switch in the house";
+    case "system":  return A?("store: "+(A.store?(A.storeKind||"on"):"none")+" · warmed "+ago(A.lastWarm&&A.lastWarm.at)):em;
+  }
+  return em;
+}
+/* ---- the vitals strip along the bottom: the seven facts that decide
+        whether anything else on this screen can be trusted ---- */
+function paintVits(){
+  const v=[];
+  v.push({led:A?(A.store?"ok":"bad"):null, b:A?(A.store?(A.storeKind||"on"):"none"):em, s:"store"});
+  v.push({b:A?ago(A.lastWarm&&A.lastWarm.at):em, s:"last warm"});
+  const mode=SO&&SO.dials?String(SO.dials.mode||"off"):null;
+  v.push({led:mode?(mode==="off"?"warn":"ok"):null,
+          b:mode?mode[0].toUpperCase()+mode.slice(1):em, s:"social"});
+  v.push({led:A?(A.lanternConfigured?"ok":"warn"):null,
+          b:A?(A.lanternConfigured?"Lit":"No key"):em, s:"lantern", opt:1});
+  /* With no Stripe key these come back as 0 -- but "nothing was counted" and
+     "nothing was given" are different facts, and a console that prints $0 for
+     the first one is lying quietly. Money shows only when money can be seen. */
+  const seen=A&&A.stripeConfigured;
+  v.push({b:seen?money(A.gifts&&A.gifts.total30d):em, s:"gifts 30d"});
+  v.push({b:seen?money(A.gifts&&A.gifts.monthly):em, s:"monthly", opt:1});
+  v.push({led:A?(A.stripeConfigured?"ok":"warn"):null,
+          b:A?(A.stripeConfigured?"Live":"Off"):em, s:"stripe", opt:1});
+  $("vits").innerHTML=v.map(x=>'<div class="vt"'+(x.opt?" data-opt":"")+'><b>'
+    +(x.led?'<span class="led" style="background:var(--'+x.led+')"></span>':'')
+    +esc(x.b)+'</b><span>'+esc(x.s)+'</span></div>').join("");
+}
+/* ---- the lamps and counters on the balls themselves ---- */
+function paintNodes(){
+  const c=IB&&IB.counts?(IB.counts.new||0):0;
+  ROOMS[1].badge=c>0?c:0;
+  ROOMS[2].dot=A?(A.lanternConfigured?"ok":"warn"):"";
+  ROOMS[4].dot=SO&&SO.dials?(String(SO.dials.mode||"off")==="off"?"warn":"ok"):"";
+  ROOMS[11].dot=A?(A.store&&A.stripeConfigured?"ok":"warn"):"";
+  render();
+}
+
+/* ======================= parallax sky ======================= */
+const cv=$("sky"),cx=cv.getContext("2d");
+let VW=0,VH=0,LAYERS=[];
+function sizeSky(){
+  const d=Math.min(devicePixelRatio||1,2);VW=innerWidth;VH=innerHeight;
+  cv.width=Math.round(VW*d);cv.height=Math.round(VH*d);cx.setTransform(d,0,0,d,0,0);
+  LAYERS=[{k:.02,n:Math.round(VW/9),r:[.4,1.1],o:[.08,.26]},
+          {k:.055,n:Math.round(VW/15),r:[.7,1.6],o:[.15,.42]},
+          {k:.11,n:Math.round(VW/36),r:[1,2.4],o:[.26,.66]}]
+    .map(L=>({...L,st:Array.from({length:L.n},()=>({
+      x:Math.random()*VW*1.3-VW*.15,y:Math.random()*VH*1.3-VH*.15,
+      r:L.r[0]+Math.random()*(L.r[1]-L.r[0]),
+      o:L.o[0]+Math.random()*(L.o[1]-L.o[0]),p:Math.random()*6.283})) }));
+}
+function drawSky(T){
+  cx.clearRect(0,0,VW,VH);
+  const g=cx.createRadialGradient(VW/2,VH*.44,0,VW/2,VH*.44,Math.max(VW,VH)*.72);
+  g.addColorStop(0,"rgba(42,54,112,.28)");g.addColorStop(.5,"rgba(18,24,54,.12)");
+  g.addColorStop(1,"rgba(6,7,12,0)");
+  cx.fillStyle=g;cx.fillRect(0,0,VW,VH);
+  for(const L of LAYERS){
+    const ox=-cam.px*L.k*250,oy=-cam.py*L.k*250;
+    for(const s of L.st){
+      const tw=REDUCE?1:(.6+Math.sin(T*1.05+s.p)*.4);
+      cx.globalAlpha=s.o*tw;cx.beginPath();cx.arc(s.x+ox,s.y+oy,s.r,0,6.2832);
+      cx.fillStyle="#FFF0C4";cx.fill();
+    }
+  }
+  cx.globalAlpha=1;
+}
+
+/* ======================= the dial ======================= */
+const rig=$("rig"),hub=$("hub"),retic=$("retic");
+let nodes=[],focus=0,R=0,ND=0,born=0;
+const S={th:0,thV:0,tilt:-.6,tiltV:0};
+const cam={px:0,py:0,pxT:0,pyT:0};
+const J={detent:-1,shake:0,lag:0};
+/* WORLD OF GOO.
+   A goo ball is not a rectangle that scales. It has volume and a skin: push it
+   and it squashes wide, springs past round, wobbles narrow, and settles after
+   three or four visible swings. So each node carries its own under-damped
+   oscillator -- K high, C deliberately far below critical -- and the wobble
+   drives scaleX up while scaleY goes down by most of it, which is what reads
+   as "this thing is full of liquid" rather than "this thing got bigger". */
+const GOO_K=210, GOO_C=7.2, GOO_WMAX=.45, GOO_VMAX=9;
+/* THE SPEED CEILING.
+   Nothing on this dial may turn faster than a person can read it. Every input --
+   wheel, flick, key -- passes through MAXV, so the worst a violent gesture can do
+   is a fast, legible spin instead of a blur. LAGF is how far the label trails the
+   ball it belongs to, and it is a fraction of the ball, never a free multiple of
+   speed: at any velocity the label stays inside its own skin. */
+const MAXV=6.2, LAGF=.12, COAST=.958, LOOKAHEAD=2;
+const clampV=v=>v>MAXV?MAXV:(v<-MAXV?-MAXV:v);
+let snapTo=null;
+function kick(i,amount){ if(nodes[i]) nodes[i]._wv += amount; }
+function tick(strength){
+  J.shake=Math.max(J.shake,strength);
+  if(!REDUCE&&navigator.vibrate){try{navigator.vibrate(strength>.6?14:7);}catch(e){}}
+  kick(focus,1.5);
+}
+
+function metrics(){
+  const bar=$("bar").offsetHeight||96;
+  document.documentElement.style.setProperty("--bar",bar+"px");
+  const w=innerWidth,h=innerHeight-bar,small=Math.min(w,h);
+  ND=TOUCH?Math.max(66,Math.min(84,small*.185)):Math.max(76,Math.min(104,small*.135));
+  const M=ND*.5*1.6, LIFT=.88;
+  R=Math.min(w*.5-M,((h*.5-M)/Math.cos(.34))*LIFT,320);
+  R=Math.max(R,ND*1.35);
+  document.documentElement.style.setProperty("--d",ND+"px");
+  document.documentElement.style.setProperty("--hd",(ND*2.05)+"px");
+}
+function render(){
+  metrics();
+  rig.innerHTML=ROOMS.map((r,i)=>
+   '<button class="node" data-i="'+i+'" aria-label="'+esc(r.n)+' — '+esc(r.s)+'">'
+   +'<span class="in"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC[r.ic]+'</svg>'
+   +'<b>'+esc(r.n)+'</b></span>'
+   +(r.dot?'<span class="dot '+r.dot+'"></span>':'')
+   +(r.badge?'<span class="badge">'+r.badge+'</span>':'')+'</button>').join("");
+  nodes=[].slice.call(rig.children);
+  nodes.forEach(n=>{ n._w=0; n._wv=0; });
+  born=performance.now();
+  $("hint").textContent=COARSE
+    ?"Swipe to turn the dial · tap a room to open it"
+    :"Drag or ← → to turn · hover a room · Enter to open";
+  paintHub();
+}
+function paintHub(){
+  const r=ROOMS[focus];
+  hub.innerHTML='<span><span class="hn">'+esc(r.n)+'</span>'
+    +'<span class="hs">'+esc(r.s)+'</span>'
+    +'<span class="hv">'+esc(READ(r.k))+'</span></span>';
+}
+
+const TILT=.34;
+function layout(T){
+  const n=nodes.length;if(!n)return;
+  const age=(T*1000-born)/1000;
+  for(let i=0;i<n;i++){
+    const a=-Math.PI/2+(i/n)*Math.PI*2+S.th;
+    const x=Math.cos(a)*R, y=Math.sin(a)*R*Math.cos(TILT+S.tilt*.5),
+          z=Math.sin(a)*R*Math.sin(TILT)*-1;
+    const t0=i*.04,k=Math.max(0,Math.min(1,(age-t0)/.6));
+    const e=REDUCE?1:1-Math.pow(1-k,3);
+    const near=(z+R)/(2*R);
+    const base=(0.8+near*.34)*(i===focus?1.2:1);
+    const el=nodes[i];
+    /* the goo: one under-damped spring per ball, integrated every frame */
+    el._wv += (-GOO_K*el._w - GOO_C*el._wv)*(1/60);
+    el._w  += el._wv*(1/60);
+    /* kicks stack -- hover in and out fast enough and the ball would turn inside
+       out (scaleY goes negative past w=2.38). Bound the goo, not the fun. */
+    if(el._wv>GOO_VMAX)el._wv=GOO_VMAX; else if(el._wv<-GOO_VMAX)el._wv=-GOO_VMAX;
+    if(el._w>GOO_WMAX)el._w=GOO_WMAX;   else if(el._w<-GOO_WMAX)el._w=-GOO_WMAX;
+    if(Math.abs(el._w)<0.0006&&Math.abs(el._wv)<0.004){el._w=0;el._wv=0;}
+    const w=REDUCE?0:el._w;
+    const sx=base*(1+w*.55), sy=base*(1-w*.42);
+    el.style.transform="translate3d("+(x*e).toFixed(1)+"px,"+(y*e).toFixed(1)+"px,"
+      +(z*e).toFixed(1)+"px) scale("+sx.toFixed(4)+","+sy.toFixed(4)+")";
+    el.style.opacity=(e*(0.6+near*.4)).toFixed(3);
+    el.style.zIndex=String(1000+Math.round(z));
+    el.classList.toggle("focus",i===focus);
+    /* the contents wobble the other way, like a face on a balloon */
+    const inn=el.firstElementChild;
+    if(inn) inn.style.transform="scale("+(1-w*.30).toFixed(4)+","+(1+w*.24).toFixed(4)+") "
+      +"translateX("+J.lag.toFixed(1)+"px)";
+  }
+  const f=nodes[focus];
+  if(f){const r=f.getBoundingClientRect();
+    retic.style.transform="translate("+(r.left+r.width/2-75)+"px,"+(r.top+r.height/2-75)+"px)"
+      +" scale("+(r.width/ND*.92).toFixed(3)+")";
+    retic.classList.toggle("on",age>.45);}
+}
+
+let drag=false,lastX=0,vel=0,moved=0;
+function frame(now){
+  requestAnimationFrame(frame);
+  const T=now/1000,h=1/60,n=nodes.length||1,per=Math.PI*2/n;
+  if(!drag){
+    /* TWO WAYS TO ARRIVE.
+       Let go after a flick and the dial coasts, and the detent takes whichever
+       notch it happens to be nearest -- that is the loose, physical one. But a
+       wheel step or an arrow key does not mean "go faster in that direction", it
+       means "the next room": those name the notch outright in snapTo, and the pull
+       to it is stiff and just under critical, so it arrives once, overshoots a
+       hair, and stops -- rather than hunting, and rather than accumulating. */
+    const nearest=Math.round(-S.th/per);
+    const goal=(snapTo===null)?nearest:snapTo;
+    const err=(-goal*per)-S.th;
+    if(snapTo!==null){
+      /* SATISFYING BEATS ACCURATE.
+         At 22.8 this spring is critically damped -- it slides into the notch and
+         stops dead, which is correct and feels like nothing. At 15.4 the damping
+         ratio is 0.6: the dial arrives about a tenth of a notch past the room it
+         was going to, leans back, and settles. That tenth is the whole difference
+         between a value changing and a thing landing. It stays well under half a
+         notch, so the room under the reticle never flickers to its neighbour. */
+      S.thV+=(165*err-15.4*S.thV)*h;
+      if(Math.hypot(err,S.thV/12.8)<.004){S.th=-goal*per;S.thV=0;snapTo=null;}
+    } else {
+      /* GRIP, AND THE DAMPING THAT COMES WITH IT.
+         grip is near zero while the dial is flying -- the notches let a fling pass
+         straight through -- and near one once it has slowed, which is exactly when
+         the settle wants damping. So the brake rides on grip too: it is absent
+         during the coast and present for the landing. Without it the notch was a
+         spring with almost nothing opposing it, and the dial rang around its own
+         target for six full seconds after every flick. */
+      const grip=1/(1+Math.abs(S.thV)*5.5);
+      S.thV+=(34*err*grip - 3.6*S.thV*grip)*h; S.thV*=COAST;
+      /* and rest on amplitude, not on position and speed being small at the same
+         instant -- in an oscillator they never are: speed peaks where error is
+         zero. This is the whole swing measured at once, so it always terminates. */
+      if(Math.hypot(err,S.thV/5.5)<.006){S.th=-nearest*per;S.thV=0;}
+    }
+    S.thV=clampV(S.thV);
+    if(nearest!==J.detent){
+      if(J.detent!==-1) tick(Math.min(1,Math.abs(S.thV)*.25+.25));
+      J.detent=nearest; focus=((nearest%n)+n)%n; paintHub();
+    }
+    S.th+=S.thV*h;
+  } else { S.th+=S.thV*h; S.thV*=.88; }
+  S.tiltV+=(46*(0-S.tilt)-6*S.tiltV)*h; S.tilt+=S.tiltV*h;
+  if(Math.abs(S.tiltV)<.001&&Math.abs(S.tilt)<.001){S.tilt=0;S.tiltV=0;}
+  J.shake*=.86; if(J.shake<.002)J.shake=0;
+  /* follow-through, not ejection: the trail is clamped to a tenth of a ball, so
+     a hard spin reads as the label dragging behind rather than leaving home. */
+  const lt=-(S.thV/MAXV)*(ND*LAGF);
+  J.lag+=(lt-J.lag)*.18; if(Math.abs(J.lag)<.15&&S.thV===0)J.lag=0;
+  cam.px+=(cam.pxT-cam.px)*.06; cam.py+=(cam.pyT-cam.py)*.06;
+  if(Math.abs(cam.pxT-cam.px)<.0015)cam.px=cam.pxT;
+  if(Math.abs(cam.pyT-cam.py)<.0015)cam.py=cam.pyT;
+  const sh=REDUCE?0:J.shake, lean=REDUCE?0:1;
+  rig.style.transform="translate("+((Math.random()-.5)*sh*6).toFixed(2)+"px,"
+    +((Math.random()-.5)*sh*6).toFixed(2)+"px) "
+    +"rotateX("+((-cam.py*7-6)*lean+sh*2).toFixed(2)+"deg) "
+    +"rotateY("+((cam.px*9)*lean).toFixed(2)+"deg)";
+  drawSky(T); layout(T);
+}
+
+/* ===================================================================
+   THE TWELVE DASHBOARDS.
+   Each room gets its own layout, not a template with different words:
+   Pulse is stat tiles over a trend, Inbox is a queue, Giving is money
+   with a floor to clear, System is a checklist. The chart helpers below
+   are deliberately small -- 2px strokes, 4px rounded data-ends, a 2px
+   gap between bars, recessive gridlines, and a hover readout on every
+   plotted mark, which is the house style for charts here.
+   =================================================================== */
+const CH={c1:"#B8862A",c2:"#3C7FD4",c3:"#C2513F",c4:"#1E8E63"};
+const tipc=$("tipc");
+function showTip(x,y,html){tipc.innerHTML=html;tipc.style.left=(x+12)+"px";
+  tipc.style.top=(y-34)+"px";tipc.classList.add("on");}
+function hideTip(){tipc.classList.remove("on");}
+
+/* a line with an area under it, one series, no legend needed */
+function spark(vals,labels,unit,color){
+  const W=560,H=130,P=18,n=vals.length,mx=Math.max(...vals)*1.12,c=color||CH.c1;
+  const X=i=>P+(i/(n-1))*(W-P*2), Y=v=>H-P-(v/mx)*(H-P*2);
+  let d="",a="";
+  vals.forEach((v,i)=>{d+=(i?" L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1);});
+  a="M"+X(0)+" "+(H-P)+" "+d.slice(1)+" L"+X(n-1)+" "+(H-P)+" Z";
+  let g="";for(let k=0;k<=2;k++){const y=P+k*((H-P*2)/2);
+    g+='<line class="gridline" x1="'+P+'" y1="'+y+'" x2="'+(W-P)+'" y2="'+y+'"/>';}
+  let hit="";vals.forEach((v,i)=>{
+    hit+='<rect x="'+(X(i)-((W-P*2)/n/2))+'" y="0" width="'+((W-P*2)/n)+'" height="'+H
+      +'" fill="transparent" data-v="'+v+'" data-l="'+(labels[i]||"")+'" data-u="'+(unit||"")+'"/>';
+    hit+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3" fill="'+c+'" opacity="'+(i===n-1?1:0)+'"/>';});
+  return '<svg class="chart spk" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" '
+    +'style="height:130px">'+g
+    +'<defs><linearGradient id="fg'+(spark._i=(spark._i||0)+1)+'" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" stop-color="'+c+'" stop-opacity=".34"/>'
+    +'<stop offset="1" stop-color="'+c+'" stop-opacity="0"/></linearGradient></defs>'
+    +'<path d="'+a+'" fill="url(#fg'+spark._i+')"/>'
+    +'<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="2" stroke-linecap="round" '
+    +'stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+hit+'</svg>';
+}
+/* bars, 2px apart, rounded at the data end only */
+function bars(vals,labels,unit,color){
+  const W=560,H=140,P=20,n=vals.length,mx=Math.max(...vals)*1.15,c=color||CH.c1;
+  const bw=(W-P*2)/n-2;
+  let out="",lab="";
+  vals.forEach((v,i)=>{
+    const h=(v/mx)*(H-P*2), x=P+i*((W-P*2)/n)+1, y=H-P-h;
+    out+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)
+      +'" rx="4" fill="'+c+'" data-v="'+v+'" data-l="'+(labels[i]||"")+'" data-u="'+(unit||"")+'"/>';
+    if(n<=8||i%2===0) lab+='<text class="axis" x="'+(x+bw/2).toFixed(1)+'" y="'+(H-6)
+      +'" text-anchor="middle">'+(labels[i]||"")+'</text>';
+  });
+  return '<svg class="chart brs" viewBox="0 0 '+W+' '+H+'" style="height:140px">'+out+lab+'</svg>';
+}
+/* a ring gauge, for one number against a target */
+function ring(pct,mid,sub,color){
+  const c=color||CH.c1,R=52,C=2*Math.PI*R,off=C*(1-Math.min(1,pct));
+  return '<svg class="chart" viewBox="0 0 140 140" style="height:150px">'
+   +'<circle cx="70" cy="70" r="'+R+'" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="11"/>'
+   +'<circle cx="70" cy="70" r="'+R+'" fill="none" stroke="'+c+'" stroke-width="11" '
+   +'stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)
+   +'" transform="rotate(-90 70 70)"/>'
+   +'<text x="70" y="66" text-anchor="middle" fill="#F3EFE2" font-size="21" font-weight="600">'+mid+'</text>'
+   +'<text x="70" y="86" text-anchor="middle" fill="#8C8F9E" font-size="9" '
+   +'letter-spacing="1.4">'+sub+'</text></svg>';
+}
+const card=(t,inner)=>'<div class="card"><h3>'+t+'</h3>'+inner+'</div>';
+const stat=(b,s2,d)=>'<div class="stat"><b>'+b+'</b><span>'+s2+'</span>'
+  +(d?'<span class="delta '+(d[0]==="+"?"up":"down")+'">'+d+'</span>':'')+'</div>';
+const rows=a=>'<div class="rows">'+a.map(r=>'<div class="row"><span class="t">'+r[0]
+  +(r[1]?'<small>'+r[1]+'</small>':'')+'</span>'
+  +(r[2]?'<span class="pill p-'+(r[3]||"mute")+'">'+r[2]+'</span>':'')
+  +(r[4]?'<span class="v">'+r[4]+'</span>':'')+'</div>').join("")+'</div>';
+const acts=a=>'<div class="act">'+a.map((b,i)=>'<button class="btn'+(i===0?" pri":"")+'">'+b+'</button>').join("")+'</div>';
+
+const D14=["","","","","","","","","","","","","",""];
+
+/* ===================================================================
+   THE TWELVE DASHBOARDS, ON LIVE DATA.
+   Each builder receives exactly the reads NEEDS declared for it, in that
+   order, and any of them may be null -- a route can be locked, unconfigured,
+   or simply down. So every one of these starts by saying what it does NOT
+   have, before it says anything it does. A blank tile and a tile reading
+   zero are different claims about the world, and this console makes that
+   distinction visible rather than averaging over it.
+   =================================================================== */
+const none=h=>'<div class="none">'+h+'</div>';
+function door(k,line){
+  const r=ROOMS.find(x=>x.k===k)||{};
+  return '<div class="door"><p>'+esc(line)+'</p>'
+    +'<a href="/admin#'+esc(r.pane||"")+'">Open '+esc(r.n)+' &rarr;</a></div>';
+}
+const pct=(a,b)=>(b>0?Math.max(0,Math.min(1,a/b)):0);
+function delta(now,was){
+  if(!Number.isFinite(now)||!Number.isFinite(was)||was<=0)return "";
+  const d=Math.round(((now-was)/was)*100);
+  return (d>=0?"+":"-")+Math.abs(d)+"%";
+}
+const NOSTORE=none("<b>No store is connected.</b> Add <code>REDIS_URL</code> in Vercel "
+  +"with the connection URL of a Redis you already have, or make one from the Storage "
+  +"tab, then redeploy. Nothing here can be counted until it exists.");
+
+const DASH={
+
+/* ---------- 1 · PULSE ---------- */
+pulse:(a,v)=>{
+  if(!v) return none("The reader counter did not answer.")+door("pulse","The full Pulse tab has the setup roads written out.");
+  if(!v.enabled) return NOSTORE+door("pulse","The full Pulse tab has both roads written out, step by step.");
+  const d=v.days||[], L=d[d.length-1]||{}, P=d[d.length-2]||{}, t=v.totals||{};
+  const tail=d.slice(-14);
+  return '<div class="grid g4">'
+   +card("Readers today",  stat(fmt(L.people),"distinct people",delta(+L.people,+P.people)))
+   +card("Views today",    stat(fmt(L.views), "pages opened",   delta(+L.views,+P.views)))
+   +card("People · 30 days",stat(fmt(t.people30),"came at least once",""))
+   +card("Gifts · 30 days", stat(a?money(a.gifts&&a.gifts.total30d):em,
+        a?(fmt(a.gifts&&a.gifts.count30d)+" gifts"):"needs Stripe",""))
+   +'</div>'
+   +(tail.length>1?card("Readers · last "+tail.length+" days",
+      spark(tail.map(x=>+x.people||0),tail.map(x=>day(x.date)),"people",CH.c1)):"")
+   +'<div class="grid g2">'
+   +card("The night shift",rows([
+      ["Last warm", a&&a.lastWarm?ago(a.lastWarm.at):"never",
+       a&&a.lastWarm?(a.lastWarm.ok?"ok":"failed"):"waiting",
+       a&&a.lastWarm?(a.lastWarm.ok?"ok":"bad"):"mute", ""],
+      ["Store", a?(a.store?esc(a.storeKind||"on"):"none"):em, a&&a.store?"on":"off", a&&a.store?"ok":"warn",""],
+      ["Counter", v.enabled?"counting":"off", v.enabled?"on":"off", v.enabled?"ok":"warn",""]]))
+   +card("Where they landed", (v.rooms&&v.rooms.length)
+      ? rows(v.rooms.slice(0,5).map(r=>[esc(r.r||em),"","","",fmt(r.n)]))
+      : '<p class="none">Nothing counted yet today.</p>')
+   +'</div>'
+   +door("pulse","Charts, countries and the day-by-room table live in the full tab.");
+},
+
+/* ---------- 2 · INBOX ---------- */
+inbox:(j)=>{
+  if(!j) return none("The inbox did not answer.");
+  if(j.ok===false&&j.reason==="store") return NOSTORE+door("inbox","");
+  const it=j.items||[], c=j.counts||{};
+  return '<div class="grid g4">'
+   +card("Unread", stat(fmt(c.new),"waiting on you",""))
+   +card("Read",   stat(fmt(c.read),"seen, not closed",""))
+   +card("Done",   stat(fmt(c.done),"answered",""))
+   +card("In all", stat(fmt(c.total),"since the first",""))
+   +'</div>'
+   +card("Oldest first", it.length
+      ? rows(it.slice().sort((x,y)=>Date.parse(x.at||0)-Date.parse(y.at||0)).slice(0,7)
+          .map(m=>[esc(trim(m.body,64)),
+                   esc((m.kind||"note")+(m.page?" · "+trim(m.page,28):"")),
+                   esc(m.status||"new"),
+                   m.status==="done"?"ok":m.status==="read"?"mute":"warn",
+                   esc(ago(m.at))]))
+      : '<p class="none">Nothing waiting. The inbox is clear.</p>')
+   +door("inbox","Reading, replying and closing happen in the full tab.");
+},
+
+/* ---------- 3 · LANTERN ---------- */
+lantern:(nt,a)=>{
+  const keyed=a?!!a.lanternConfigured:null;
+  const head='<div class="grid g4">'
+   +card("The key", stat(keyed===null?em:(keyed?"Set":"Missing"),
+        keyed?"OPENROUTER_API_KEY":"add it in Vercel",""))
+   +card("Model", stat(a?trim(a.lanternModel||em,18):em,"first in the chain",""))
+   +card("Paid models", stat(a?(a.lanternPaidAllowed?"Allowed":"Free only"):em,"spending policy",""))
+   +card("Warning", stat(a&&a.lanternWarning?"Yes":"None",
+        a&&a.lanternWarning?trim(a.lanternWarning,30):"nothing flagged",""))
+   +'</div>';
+  if(!nt||!nt.last) return head
+   +none("<b>The night shift has not run yet.</b> It reads a slice of the library "
+        +"every night and flags anything an editor should look at again. The first "
+        +"run fills this in.")
+   +door("lantern","Proving the key works spends one real model call, so that button lives in the full tab.");
+  const au=(nt.last.jobs&&nt.last.jobs.audit)||{}, tr=(nt.last.jobs&&nt.last.jobs.triage)||{};
+  const f=nt.findings||[];
+  return head
+   +'<div class="grid g2">'
+   +card("Last night's read",
+      ring(pct(+au.looked||0,+au.of||1), fmt(au.looked), "OF "+fmt(au.of), CH.c2)
+      +'<p class="none" style="border:0;padding:.4rem 0 0">'
+      +esc((au.pace?au.pace+" · ":"")+ago(nt.last.at))+'</p>')
+   +card("What it did", rows([
+      ["Passages read","of "+fmt(au.of),"","",fmt(au.looked)],
+      ["Flagged for you","worth a second look","","",fmt(au.found)],
+      ["Letters sorted","","","",fmt(tr.sorted)],
+      ["Marked urgent","","",tr.urgent>0?"warn":"", fmt(tr.urgent)]]))
+   +'</div>'
+   +(nt.brief&&nt.brief.text?card("The brief it wrote",
+      '<p class="none" style="border:0;padding:0">'+esc(trim(nt.brief.text,420))
+      +'</p><p class="none" style="border:0;padding:.5rem 0 0;color:var(--dim)">'
+      +esc((nt.brief.model||"")+" · "+ago(nt.brief.at))+'</p>'):"")
+   +card("Flagged passages ("+f.length+")", f.length
+      ? rows(f.slice(0,6).map(x=>[esc(trim(x.why||x.id||"a passage",70)),
+          esc(trim(x.where||"",40)), esc(x.kind||""),"warn", esc(ago(x.at))]))
+      : '<p class="none">Nothing flagged.</p>')
+   +door("lantern","Clearing a flag, and testing the key for real, happen in the full tab.");
+},
+
+/* ---------- 4 · LIGHTS ---------- */
+lights:(g)=>{
+  if(!g) return none("The library did not answer.");
+  const t=g.today, ix=g.index||{}, h=g.hijri||{}, db=g.doubts||[];
+  const kinds=ix.kinds||{};
+  const kk=Object.keys(kinds).slice(0,8);
+  return '<div class="grid g3">'
+   +card("Today", stat(esc(day(g.date)), esc([h.d,h.name,h.y].filter(has).join(" ")||"—"),""))
+   +card("In the library", stat(fmt(ix.n),"cards to draw from",""))
+   +card("Fixed to a day", stat(fmt(ix.exact),fmt(ix.hdays)+" on Hijri days",""))
+   +'</div>'
+   +(t?card("The card it would show today",
+      '<p style="margin:0 0 .35rem;font-size:1.02rem;color:var(--gold-hi);font-weight:600">'
+      +esc(t.title||"untitled")+'</p>'
+      +'<p class="none" style="border:0;padding:0">'+esc(trim(t.story||t.detail||t.why||"",300))+'</p>'
+      +(t.category?'<p class="none" style="border:0;padding:.5rem 0 0;color:var(--dim)">'
+        +esc(t.category)+(t.lvl?" · "+esc(t.lvl):"")+'</p>':""))
+    :none("The library could not be read, so no card can be chosen today."))
+   +(kk.length?card("What the library is made of",
+      bars(kk.map(k=>+kinds[k]||0),kk.map(k=>trim(k,7)),"cards",CH.c2)):"")
+   +card("Cards the Lantern questioned ("+db.length+")", db.length
+      ? rows(db.slice(0,6).map(d=>[esc(trim(d.title||d.id||"a card",56)),
+          esc(trim(d.doubt||"",64)),"look","warn",esc(ago(d.at))]))
+      : '<p class="none">Nothing questioned.</p>')
+   +door("lights","Browsing every card, and answering a doubt, happen in the full tab.");
+},
+
+/* ---------- 5 · SOCIAL ---------- */
+social:(s)=>{
+  if(!s) return none("The social dial did not answer.");
+  const d=s.dials||{}, cf=s.configured||{};
+  const mode=String(d.mode||"off");
+  const rung=(k,name,what)=>['<span'+(mode===k?' style="color:var(--gold-hi);font-weight:700"':'')+'>'
+      +name+'</span>',what, mode===k?"now":"", mode===k?"ok":"mute",""];
+  return '<div class="grid g3">'
+   +card("Posting", stat(mode[0].toUpperCase()+mode.slice(1),
+      mode==="off"?"nothing goes out":mode==="approve"?"waits for your yes":"goes out on its own",""))
+   +card("Facebook", stat(cf.fb?"Connected":"Not set",cf.fb?"page token present":"needs FB_PAGE_TOKEN",""))
+   +card("Instagram",stat(cf.ig?"Connected":"Not set",cf.ig?"account linked":"needs IG_USER_ID",""))
+   +'</div>'
+   +card("The ladder", rows([
+      rung("off","Off","nothing is posted anywhere"),
+      rung("approve","Approve","a post is written and waits for you"),
+      rung("auto","Full auto","the day's post goes out by itself")]))
+   +card("Underneath", rows([
+      ["Store", d.storeOk?"queue can be written":"no queue", d.storeOk?"ok":"none", d.storeOk?"ok":"warn",""],
+      ["Polish", d.polish?"the Lantern rewrites before posting":"posts go out as written",
+       d.polish?"on":"off", d.polish?"ok":"mute",""],
+      ["Facebook", cf.fb?"ready":"not configured", cf.fb?"on":"off", cf.fb?"ok":"warn",""],
+      ["Instagram",cf.ig?"ready":"not configured", cf.ig?"on":"off", cf.ig?"ok":"warn",""]]))
+   +door("social","Writing, previewing and approving the day's post happen in the full tab.");
+},
+
+/* ---------- 6 · GIVING ---------- */
+giving:(a,l)=>{
+  if(!a) return none("The money map did not answer.");
+  const g=a.gifts||{};
+  const w=l&&l.waterfall||null, hh=w&&w.household||null, z=w&&w.zakat||null;
+  const ms=(l&&l.months||[]).slice(-12);
+  return '<div class="grid g4">'
+   +card("Last 30 days", stat(money(g.total30d),fmt(g.count30d)+" gifts",""))
+   +card("Monthly lights",stat(money(g.monthly),fmt(a.activeCount)+" guardians",""))
+   +card("Zakat outstanding", stat(z?cash(z.outstanding):em,
+        z?("2.5% · "+cash(z.given)+" given"):"needs the ledger",""))
+   +card("Toward the floor", stat(
+        hh&&hh.floor>0?Math.round(pct(+hh.taken||0,+hh.floor)*100)+"%":em,
+        hh?("of "+cash(hh.floor)):"needs the ledger",""))
+   +'</div>'
+   +(ms.length>1?card("Gross · last "+ms.length+" months",
+      bars(ms.map(m=>+m.gross||0),ms.map(m=>String(m.month||"").slice(5)),"cents",CH.c4)):"")
+   +(hh?card("The household floor",
+      '<p class="none" style="border:0;padding:0 0 .6rem">Below this the work cannot become '
+      +'the keeper&rsquo;s occupation. Above it, what is left is meant to leave.</p>'
+      +'<div class="bar-l"><i style="width:'+(pct(+hh.taken||0,+hh.floor)*100).toFixed(1)+'%"></i></div>'
+      +'<p class="none" style="border:0;padding:.5rem 0 0">'+cash(hh.taken)+' of '+cash(hh.floor)
+      +' this month'+(has(hh.undrawn)?' · '+cash(hh.undrawn)+' undrawn':'')+'</p>'):"")
+   +card("Recent gifts", (g.recent&&g.recent.length)
+      ? rows(g.recent.slice(0,6).map(r=>[money(r.amount),
+          esc(r.currency||""),"","",esc(day(r.when))]))
+      : '<p class="none">No gifts in the window.</p>')
+   +door("giving","The ledger, the zakat record and the du&rsquo;a wall are in the full tab.");
+},
+
+/* ---------- 7 · LEGACY ---------- */
+legacy:(a)=>{
+  if(!a) return none("The guardian list did not answer.");
+  const g=a.guardians||[], lit=g.filter(x=>x.approved), wait=g.filter(x=>!x.approved);
+  const ready=[
+    ["A store holds the work", a.store, a.store?"connected":"none"],
+    ["Money can be received", a.stripeConfigured, a.stripeConfigured?"Stripe live":"no key"],
+    ["Guardians are named", g.length>0, fmt(g.length)+" on the list"],
+    ["At least one is lit", lit.length>0, fmt(lit.length)+" lit"],
+    ["The nightly breath runs", !!a.lastWarm, a.lastWarm?ago(a.lastWarm.at):"never"]];
+  const done=ready.filter(r=>r[1]).length;
+  return '<div class="grid g3">'
+   +card("Guardians lit", stat(fmt(lit.length),"regions carried",""))
+   +card("Waiting", stat(fmt(wait.length),"not yet approved",""))
+   +card("Monthly", stat(money(a.mrr),String(a.moneyMode||"donate")+" mode",""))
+   +'</div>'
+   +'<div class="grid g2">'
+   +card("Readiness", ring(pct(done,ready.length), done+"/"+ready.length,"IN PLACE",
+        done===ready.length?CH.c4:CH.c1))
+   +card("What is in place", rows(ready.map(r=>
+        [esc(r[0]),"",r[1]?"yes":"not yet",r[1]?"ok":"warn",esc(r[2])])))
+   +'</div>'
+   +card("The list", g.length
+      ? rows(g.slice(0,8).map(x=>[esc(x.gname||x.name||x.email||"a guardian"),
+          esc(x.market||""), esc(x.approved?"lit":"waiting"), x.approved?"ok":"warn",
+          esc(x.renews?day(x.renews):"")]))
+      : '<p class="none">Nobody is carrying a region yet.</p>')
+   +door("legacy","Approving, extinguishing and releasing a guardian happen in the full tab.");
+},
+
+/* ---------- 8 · TRAFFIC ---------- */
+traffic:(v)=>{
+  if(!v) return none("The counter did not answer.");
+  if(!v.enabled) return NOSTORE+door("traffic","");
+  const d=v.days||[], t=v.totals||{}, tail=d.slice(-30);
+  const peak=d.reduce((m,x)=>((+x.views||0)>(+m.views||0)?x:m),{views:0});
+  const co=v.countries||[], rm=v.rooms||[], sr=v.sources||[];
+  return '<div class="grid g4">'
+   +card("People · 30 days", stat(fmt(t.people30),"first visit of their day",""))
+   +card("Views · 30 days",  stat(fmt(t.views30),"pages opened",""))
+   +card("Busiest day",      stat(fmt(peak.views),peak.date?day(peak.date):"—",""))
+   +card("Countries",        stat(fmt(co.length),"reached",""))
+   +'</div>'
+   +(tail.length>1?card("Views · last "+tail.length+" days",
+      spark(tail.map(x=>+x.views||0),tail.map(x=>day(x.date)),"views",CH.c1)):"")
+   +'<div class="grid g2">'
+   +card("Most read", rm.length
+      ? rows(rm.slice(0,6).map(r=>[esc(r.r||em),"","","",fmt(r.n)]))
+      : '<p class="none">Nothing counted yet.</p>')
+   +card("How they arrived", sr.length
+      ? rows(sr.slice(0,6).map(r=>[esc(r.s||em),"","","",fmt(r.n)]))
+      : '<p class="none">Nothing counted yet.</p>')
+   +'</div>'
+   +door("traffic","Countries, hours, dwell time and the day-by-room grid are in the full tab.");
+},
+
+/* ---------- 9 · MARKETING ---------- */
+market:(v,a)=>{
+  const on=v&&v.enabled, sr=(v&&v.sources)||[], co=(v&&v.countries)||[];
+  return '<div class="grid g3">'
+   +card("Reach · 30 days", stat(on?fmt(v.totals&&v.totals.people30):em,"people",""))
+   +card("Ways in", stat(on?fmt(sr.length):em,"distinct sources",""))
+   +card("The Lantern", stat(a?(a.lanternConfigured?"Lit":"No key"):em,
+        a&&a.lanternConfigured?"can draft a week":"needs OPENROUTER_API_KEY",""))
+   +'</div>'
+   +(sr.length?card("Where the readers came from",
+      bars(sr.slice(0,8).map(x=>+x.n||0),sr.slice(0,8).map(x=>trim(x.s||"?",8)),"people",CH.c2))
+     :none("Nothing to write from yet: no arrivals have been counted."))
+   +(co.length?card("Who is finding it", rows(co.slice(0,6).map(c=>
+      [esc(c.c||em),"","","",fmt(c.n)]))):"")
+   +none("Drafting a week of posts spends a real model call, so it is not run by "
+     +"opening this panel. The button for it is in the full tab.")
+   +door("market","Drafting, editing and logging the week's posts happen in the full tab.");
+},
+
+/* ---------- 10 · JOURNAL ---------- */
+journal:(j)=>{
+  if(!j) return none("The journal did not answer.");
+  if(j.store===false) return NOSTORE+door("journal","");
+  const e=j.entries||[], pub=e.filter(x=>x.status==="published"), dr=e.filter(x=>x.status!=="published");
+  const held=e.reduce((n,x)=>n+(+x.comments||0),0);
+  return '<div class="grid g4">'
+   +card("Published", stat(fmt(pub.length),"readers can see these",""))
+   +card("Drafts",    stat(fmt(dr.length),"not yet out",""))
+   +card("Replies held", stat(fmt(held),"waiting on your yes",""))
+   +card("Entries in all", stat(fmt(e.length),"since the first",""))
+   +'</div>'
+   +card("Most recent", e.length
+      ? rows(e.slice(0,7).map(x=>[esc(trim(x.title||x.slug||"untitled",56)),
+          esc(x.slug||""), esc(x.status||"draft"), x.status==="published"?"ok":"mute",
+          esc(ago(x.at))]))
+      : '<p class="none">Nothing written yet.</p>')
+   +none("Replies are held until you approve them, and nothing identifying a reader "
+     +"is ever stored beside one.")
+   +door("journal","Writing, previewing, publishing and approving replies happen in the full tab.");
+},
+
+/* ---------- 11 · CONTROLS ---------- */
+dials:(s)=>{
+  if(!s) return none("The switches did not answer.");
+  const d=s.dials||[];
+  const groups={}; d.forEach(x=>{(groups[x.g||"other"]=groups[x.g||"other"]||[]).push(x);});
+  const setHere=d.filter(x=>String(x.src||"")==="set here").length;
+  const fromEnv=d.filter(x=>/^env /.test(String(x.src||""))).length;
+  const show=v=>v===true?"on":v===false?"off":(has(v)?trim(String(v),22):em);
+  return '<div class="grid g4">'
+   +card("Switches", stat(fmt(d.length),"in the whole house",""))
+   +card("Set here",  stat(fmt(setHere),"changed from this console",""))
+   +card("From Vercel",stat(fmt(fromEnv),"environment variables",""))
+   +card("Writable",  stat(s.store?"Yes":"No",s.store?"changes will stick":"no store — read only",""))
+   +'</div>'
+   +(s.store?"":none("<b>Read only.</b> Without a store, a change made here cannot be saved. "
+      +"The values below are what the code and the environment currently say."))
+   +Object.keys(groups).slice(0,6).map(g=>card(esc(g),
+      rows(groups[g].slice(0,10).map(x=>[esc(x.n||x.k),esc(trim(x.h||"",64)),
+        show(x.value), x.value===true?"ok":x.value===false?"mute":"mute",
+        esc(String(x.src||""))])))).join("")
+   +door("dials","Every switch is changed in the full tab, where each one is explained.");
+},
+
+/* ---------- 12 · SYSTEM ---------- */
+system:(a)=>{
+  if(!a) return none("The console could not read its own health.");
+  const checks=[
+    ["Store", a.store, a.store?esc(a.storeKind||"connected"):"nothing is being remembered"],
+    ["Nightly warm", !!(a.lastWarm&&a.lastWarm.ok), a.lastWarm?ago(a.lastWarm.at):"has never run"],
+    ["Stripe", a.stripeConfigured, a.stripeConfigured?"money can be received":"STRIPE_SECRET_KEY not set"],
+    ["Checkout", a.checkoutEnabled!==false&&a.stripeConfigured, a.stripeConfigured?"open":"closed"],
+    ["Lantern", a.lanternConfigured, a.lanternConfigured?trim(a.lanternModel||"lit",34):"OPENROUTER_API_KEY not set"]];
+  const ok=checks.filter(c=>c[1]).length;
+  return '<div class="grid g3">'
+   +card("Health", stat(ok+"/"+checks.length,"green",""))
+   +card("Store", stat(a.store?esc(a.storeKind||"on"):"None",a.store?"remembering":"nothing is kept",""))
+   +card("Last warm", stat(ago(a.lastWarm&&a.lastWarm.at),
+        a.lastWarm?(a.lastWarm.ok?"the breath went through":"it failed"):"never run",""))
+   +'</div>'
+   +card("What is standing", rows(checks.map(c=>
+      [esc(c[0]),"",c[1]?"ok":"off",c[1]?"ok":"bad",esc(c[2])])))
+   +(a.lanternWarning?none("<b>The Lantern has a warning.</b> "+esc(a.lanternWarning)):"")
+   +card("Money", rows([
+      ["Mode",esc(String(a.moneyMode||"donate")),"","",""],
+      ["Monthly","from guardians","","",money(a.mrr)],
+      ["Gifts · 30 days","",  "","",money(a.gifts&&a.gifts.total30d)]]))
+   +card("Read at", rows([["This console","","","",esc(ago(a.fetchedAt))]]))
+   +door("system","Keys, crons and the night shift are laid out in the full tab.");
+}
+};
+/* ---------------- opening one ---------------- */
+const panel=$("panel"),scrim=$("scrim"),sheen=$("sheen");
+let openIdx=-1, openTok=0;
+function openRoom(i){
+  const r=ROOMS[i]; if(!r||!DASH[r.k]) return;
+  openIdx=i;
+  const b=nodes[i].getBoundingClientRect();
+  /* the panel grows out of the ball you pressed */
+  panel.style.setProperty("--ox",(b.left+b.width/2-innerWidth/2).toFixed(0)+"px");
+  panel.style.setProperty("--oy",(b.top+b.height/2-innerHeight/2).toFixed(0)+"px");
+  $("p-icon").innerHTML='<svg viewBox="0 0 24 24">'+IC[r.ic]+'</svg>';
+  $("p-title").textContent=r.n; $("p-sub").textContent=r.s;
+  /* THE PANEL OPENS BEFORE THE DATA ARRIVES, ON PURPOSE.
+     The animation is the answer to the tap and it must not wait on a network
+     round-trip -- a panel that opens 300ms late reads as a broken button. So it
+     opens on a spinner and fills when the reads land. The token check is what
+     stops a slow room from painting itself over a faster one you opened after
+     it: by the time these promises settle the reader may be two rooms away. */
+  const tok=++openTok;
+  $("p-body").innerHTML='<div class="load"><i></i><span>reading…</span></div>';
+  $("p-body").scrollTop=0;
+  Promise.all((NEEDS[r.k]||[]).map(get)).then(vals=>{
+    if(tok!==openTok) return;
+    let html;
+    try{ html=DASH[r.k].apply(null,vals); }
+    catch(err){ html=none("This room could not be drawn. "+esc(String(err&&err.message||err)))
+      +door(r.k,"The full tab may still work."); }
+    $("p-body").innerHTML=html;
+  });
+  requestAnimationFrame(()=>{scrim.classList.add("on");panel.classList.add("on");});
+  $("p-close").focus();
+}
+function closeRoom(){
+  scrim.classList.remove("on");panel.classList.remove("on");hideTip();
+  if(openIdx>=0&&nodes[openIdx]){kick(openIdx,2.4);nodes[openIdx].focus();}
+  openIdx=-1;
+}
+$("p-close").addEventListener("click",closeRoom);
+scrim.addEventListener("click",closeRoom);
+addEventListener("keydown",e=>{if(e.key==="Escape"&&openIdx>=0){e.preventDefault();closeRoom();}});
+/* the specular follows the pointer across the glass */
+panel.addEventListener("pointermove",e=>{
+  const b=panel.getBoundingClientRect();
+  sheen.style.setProperty("--mx",(((e.clientX-b.left)/b.width)*100).toFixed(1)+"%");
+  sheen.style.setProperty("--my",(((e.clientY-b.top)/b.height)*100).toFixed(1)+"%");
+});
+/* every plotted mark answers when you touch it */
+$("p-body").addEventListener("pointerover",e=>{
+  const m=e.target.closest("[data-v]"); if(!m)return;
+  showTip(e.clientX,e.clientY,"<b>"+m.dataset.v+(m.dataset.u?" "+m.dataset.u:"")+"</b>"
+    +(m.dataset.l?" · "+m.dataset.l:""));
+});
+$("p-body").addEventListener("pointerout",e=>{if(e.target.closest("[data-v]"))hideTip();});
+$("p-body").addEventListener("pointermove",e=>{
+  const m=e.target.closest("[data-v]"); if(m&&tipc.classList.contains("on")){
+    tipc.style.left=(e.clientX+12)+"px";tipc.style.top=(e.clientY-34)+"px";}});
+
+/* ---- input ---- */
+const stage=$("stage");
+stage.addEventListener("pointerdown",e=>{
+  stage.setPointerCapture(e.pointerId);drag=true;snapTo=null;moved=0;lastX=e.clientX;vel=0;S.thV*=.3;
+  const el=e.target.closest(".node"); if(el) kick(+el.dataset.i, 3.2);
+});
+stage.addEventListener("pointermove",e=>{
+  if(CANHOVER){cam.pxT=(e.clientX/innerWidth-.5)*2;cam.pyT=(e.clientY/innerHeight-.5)*2;}
+  if(!drag)return;
+  const dx=e.clientX-lastX;lastX=e.clientX;moved+=Math.abs(dx);
+  S.th+=dx*.0052;S.thV=clampV(dx*.9);vel=dx;
+});
+stage.addEventListener("pointerup",e=>{
+  const tap=moved<8;
+  if(drag){drag=false;S.thV=clampV(S.thV+vel*.55);}
+  if(!tap)return;
+  const el=e.target.closest(".node");
+  if(el){const i=+el.dataset.i;kick(i,4.5);tick(1);openRoom(i);}
+});
+stage.addEventListener("pointercancel",()=>{drag=false;});
+/* THE WHEEL WAS A PUMP. IT IS NOW A RATCHET.
+   It used to add a fixed impulse on every wheel event -- but a trackpad flick is
+   not one event, it is forty, and forty impulses stacked into a spin no eye could
+   follow. Now the deltas are normalised across the three deltaModes, banked, and
+   spent one notch at a time with a floor on how often a notch may be spent. One
+   mouse detent is one room. One flick is two or three. Nothing is a blur. */
+const WHEEL_NOTCH=110, WHEEL_GAP=150, WHEEL_IDLE=260;
+let wAcc=0, wLast=0, wStep=0, wSign=0, kStep=0;
+/* A QUEUE THAT CANNOT OUTRUN THE DIAL.
+   Thirty key-repeats used to mean a thirty-notch sprint at top speed -- the dial
+   arriving somewhere you never chose, minutes of travel banked from one held key.
+   Steps still queue, so no deliberate press is ever swallowed, but the target may
+   never sit more than LOOKAHEAD notches from where the dial actually is. Hold the
+   key and it advances steadily; let go and it lands within two rooms. */
+function step(dir){
+  const per=Math.PI*2/(nodes.length||1);
+  const cur=Math.round(-S.th/per);
+  const want=((snapTo===null)?cur:snapTo)+dir;
+  snapTo=Math.max(cur-LOOKAHEAD,Math.min(cur+LOOKAHEAD,want));
+}
+stage.addEventListener("wheel",e=>{
+  e.preventDefault();
+  if(openIdx>=0)return;
+  const now=performance.now();
+  const unit=e.deltaMode===1?16:e.deltaMode===2?innerHeight:1;
+  const raw=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX;
+  const d=raw*unit, sg=d<0?-1:1;
+  if(sg!==wSign||now-wLast>WHEEL_IDLE){wAcc=0;wSign=sg;}
+  wLast=now; wAcc+=d;
+  if(Math.abs(wAcc)<WHEEL_NOTCH)return;
+  /* keep the bank primed when rate-limited, so a held scroll still advances
+     steadily instead of swallowing the gesture */
+  if(now-wStep<WHEEL_GAP){wAcc=sg*WHEEL_NOTCH;return;}
+  wStep=now; wAcc=0; step(sg);
+},{passive:false});
+/* THE HOVER. This is the one he asked for: a nudge, and the ball jiggles. */
+rig.addEventListener("pointerover",e=>{
+  const el=e.target.closest(".node"); if(!el||!CANHOVER)return;
+  if(el._hot)return; el._hot=1; kick(+el.dataset.i, 3.1);
+});
+rig.addEventListener("pointerout",e=>{
+  const el=e.target.closest(".node"); if(!el)return;
+  if(el.contains(e.relatedTarget))return;
+  el._hot=0; kick(+el.dataset.i, -1.4);
+});
+addEventListener("keydown",e=>{
+  const n=nodes.length||1,per=Math.PI*2/n;
+  const kd=(e.key==="ArrowRight"||e.key==="ArrowDown")?1
+          :(e.key==="ArrowLeft" ||e.key==="ArrowUp"  )?-1:0;
+  if(kd){ e.preventDefault();
+    /* auto-repeat fires ~30/s; a person tapping deliberately manages six. The
+       same floor the wheel uses keeps both at a pace the eye can follow. */
+    const t=performance.now();
+    if(t-kStep>=WHEEL_GAP){ kStep=t; step(kd); } }
+  if(e.key==="Enter"||e.key===" "){if(openIdx>=0)return;e.preventDefault();kick(focus,4.5);tick(1);openRoom(focus);}
+});
+addEventListener("resize",()=>{sizeSky();metrics();});
+sizeSky();render();requestAnimationFrame(frame);
+
+/* ===================================================================
+   BOOT.
+   Four cheap reads decide everything the dial can say before you touch it:
+   the money map, the counter, the letters and the social dial. They run at
+   once, and the curtain lifts on the first of them to answer -- not the last,
+   because a Stripe list can take a second and there is no reason to hold a
+   blank screen for it. Anything still in flight fills itself in when it lands.
+   =================================================================== */
+function lift(){ const b=$("boot"); if(b&&!b.classList.contains("off")) b.classList.add("off"); }
+function refresh(){
+  paintVits(); paintNodes(); paintHub();
+}
+(function boot(){
+  render();
+  const jobs=[
+    get("/api/admin-data").then(j=>{A=j;}),
+    get("/api/visitors").then(j=>{V=j;}),
+    get("/api/inbox?limit=100").then(j=>{IB=j;}),
+    get("/api/social?action=dials").then(j=>{SO=j;})
+  ];
+  jobs.forEach(p=>p.then(()=>{lift();refresh();}));
+  Promise.all(jobs).then(()=>{lift();refresh();});
+  /* a locked console never reaches here -- get() sends it to /admin -- but a
+     dead network would, so the curtain lifts on a timer no matter what. */
+  setTimeout(lift,6000);
+  /* DEEP LINKS, BOTH WAYS IN.
+     /console#giving turns the dial to Giving and opens it. The hashchange
+     listener matters as much as the boot one: a link to /console#giving
+     clicked while already on /console is a same-document navigation, so the
+     page never reloads and boot never runs again. Without this, that link
+     would silently do nothing -- which is exactly the bug the doors in the
+     workbench would have walked into. */
+  function fromHash(){
+    const h=(location.hash||"").replace("#","").trim();
+    if(!h) return;
+    const i=ROOMS.findIndex(r=>r.k===h||r.pane===h);
+    if(i<0) return;
+    const per=Math.PI*2/ROOMS.length;
+    S.th=-i*per; S.thV=0; snapTo=null; J.detent=i; focus=i; paintHub();
+    openRoom(i);
+  }
+  addEventListener("hashchange",fromHash);
+  if(location.hash) setTimeout(fromHash,700);
+})();
+</script>
+
+</body>
+</html>
