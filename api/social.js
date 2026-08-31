@@ -40,6 +40,8 @@
 //    comes back, BEFORE turning the schedule on.
 
 import { kv, kvReady } from "./_kv.js";
+import { planDay, buildSlot, dueNow, SLOT_IDS } from "./_schedule.js";
+import * as CH from "./_channels.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
 import { ownerGate } from "./_owner.js";
@@ -768,6 +770,113 @@ export async function runDaily(host, date, opts = {}) {
   return out;
 }
 
+/* ===========================================================================
+   THE DISPATCHER
+   One post a day became four or five, so the question changed from "has today
+   been posted?" to "which of today's slots are due, and which have already
+   gone?". The record is per slot, and per channel inside that, because a
+   Facebook success and a LinkedIn failure in the same slot must not be one
+   verdict -- the half that failed has to be retryable without re-sending the
+   half that worked.
+
+   The cap in dueNow() is the thing standing between a recovered outage and an
+   account that looks automated. A cron down for nine hours owes five posts.
+   Sending five at once is how the network decides what you are.
+=========================================================================== */
+const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
+
+async function readSlot(date, slot) {
+  if (!kvReady()) return null;
+  try { const r = (await kv([["GET", K_SLOT(date, slot)]]))[0];
+    return r ? (typeof r === "string" ? JSON.parse(r) : r) : null; } catch { return null; }
+}
+async function writeSlot(date, slot, rec) {
+  if (!kvReady()) return;
+  try { await kv([["SET", K_SLOT(date, slot), JSON.stringify(rec)],
+                  ["LPUSH", K_LOG, JSON.stringify({ at: rec.at, date, slot, state: rec.state })],
+                  ["LTRIM", K_LOG, "0", "200"]]); } catch { }
+}
+
+/* which channels are live right now, minus the ones that must never auto-send */
+export function liveChannels() {
+  return CH.ALL.filter(c => !CH.draftOnly.has(c) && CH.configured[c] && CH.configured[c]());
+}
+
+async function sendOne(ch, shaped, post) {
+  if (ch === "facebook")  return await postFacebook({ ...post, caption: shaped.text });
+  if (ch === "instagram") return await postInstagram({ ...post, caption: shaped.text });
+  const fn = CH.SENDERS[ch];
+  if (!fn) return { ok: false, err: "no sender for " + ch };
+  return await fn(shaped);
+}
+
+export async function runDue(host, date, now, opts = {}) {
+  const D = await dials();
+  const out = { date, mode: D.mode, at: (now || new Date()).toISOString(), ran: [], skipped: "" };
+
+  if (!opts.force) {
+    if (D.mode === "off") { out.skipped = "the machine is off"; return out; }
+    if (!D.storeOk) { out.skipped = "the settings could not be read, so nothing was sent"; return out; }
+  }
+
+  const plan = await planDay(date, opts);
+  out.verified = plan.verified;
+  if (!plan.verified) out.note = "the calendar could not be verified, so nothing dated was planned";
+
+  const sent = [];
+  for (const id of plan.slots) { const r = await readSlot(date, id); if (r && r.state === "sent") sent.push(id); }
+
+  const due = dueNow(plan.slots, now || new Date(), sent, { cap: opts.cap == null ? 1 : opts.cap });
+  if (!due.length) { out.skipped = "nothing is due"; return out; }
+
+  const base = "https://" + publicHost(host);
+  const idx = opts.index || null;
+  for (const slot of due) {
+    let post;
+    if (slot.id === "light") {
+      const c = await compose(host, date, { polish: D.polish });
+      if (!c) { out.ran.push({ slot: "light", skipped: "the library is not reachable" }); continue; }
+      post = { lvl: (c.light && c.light.lvl) || "editorial", title: c.light.title,
+        oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
+        tags: [], link: c.link, image: c.image };
+    } else {
+      post = buildSlot(slot.id, {
+        date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
+        words: idx && idx.words, path: idx && idx.path,
+        link: base + "/?light=" + date, image: base + "/api/card?date=" + date + "&fmt=png"
+      });
+    }
+    if (!post) { out.ran.push({ slot: slot.id, skipped: "nothing to say" }); continue; }
+
+    if (opts.dry) { out.ran.push({ slot: slot.id, dry: true, post }); continue; }
+
+    if (D.mode === "approve" && !opts.force) {
+      await writeSlot(date, slot.id, { at: out.at, state: "queued", slot: slot.id, post });
+      if (kvReady()) { try { await kv([["LPUSH", K_Q, date + "#" + slot.id], ["LTRIM", K_Q, "0", "60"]]); } catch { } }
+      out.ran.push({ slot: slot.id, state: "queued" });
+      continue;
+    }
+
+    const results = {};
+    for (const ch of liveChannels()) {
+      const shaped = CH.shape(post, ch);
+      if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
+      try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
+      catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
+    }
+    /* reddit is composed and kept, never sent */
+    const rd = CH.shape(post, "reddit");
+    results.reddit = await CH.sendReddit(rd);
+
+    const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
+    const rec = { at: out.at, slot: slot.id, state: anySent ? "sent" : "failed",
+      title: post.title, lvl: post.lvl, results };
+    await writeSlot(date, slot.id, rec);
+    out.ran.push({ slot: slot.id, state: rec.state, results });
+  }
+  return out;
+}
+
 export default async function handler(req, res) {
   const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
   const q = req.query || {};
@@ -794,8 +903,21 @@ export default async function handler(req, res) {
        like the page had hung, so the dials answer on their own. */
     if (action === "dials") return json(res, 200, {
       ok: true, dials: await dials(),
-      configured: { fb: fbConfigured(), ig: igConfigured() }
+      configured: { fb: fbConfigured(), ig: igConfigured() },
+      channels: CH.ALL.map(c => ({ id: c, live: CH.configured[c] ? CH.configured[c]() : false,
+        draftOnly: CH.draftOnly.has(c), spec: CH.SPEC[c] })),
+      slots: SLOT_IDS
     });
+    if (action === "plan") return json(res, 200, { ok: true, plan: await planDay(date) });
+    /* the hourly cron lands here. It asks one question -- what is due that has
+       not gone? -- and on most hours the answer is nothing, which costs a KV
+       read and stops. */
+    if (action === "due") {
+      let index = null;
+      try { const r = await fetch("https://" + publicHost(host) + "/assets/menu-index.json");
+            if (r.ok) index = await r.json(); } catch { }
+      return json(res, 200, { ok: true, due: await runDue(host, date, new Date(), { index }) });
+    }
     const post = await compose(host, date, { polish: String(q.polish || "1") !== "0" });
     return json(res, 200, {
       ok: !!post, preview: post, dials: await dials(), tokens: await tokenClock(),
