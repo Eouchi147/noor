@@ -216,6 +216,73 @@ h2{
 }
 .step button:hover,.step button:focus-visible{border-color:var(--gold-dim); color:var(--gold); outline:none}
 
+/* ---- the opened Name: a reading surface, not a label ---- */
+.panel{width:min(41rem,100%); max-height:min(92svh,54rem); grid-template-rows:auto auto auto auto 1fr auto auto}
+.panel .a{font-size:clamp(2.5rem,9vw,3.6rem); line-height:1.62; padding-top:.12em}
+.panel .t{font-size:clamp(1.45rem,5.5vw,1.9rem)}
+.panel .m{color:var(--gold); font-size:.95rem}
+.panel .body{
+  text-align:left; overflow-y:auto; overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch; min-height:0; min-width:0;
+  display:grid; gap:1.15rem; padding:1.15rem 0 1.9rem;
+  border-top:1px solid var(--rule);
+  mask-image:linear-gradient(#000 calc(100% - 1.6rem), transparent);
+}
+.panel .body:focus-visible{outline:1px solid var(--gold-dim); outline-offset:.4rem; border-radius:6px}
+.panel .root{
+  margin:0; display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .85rem;
+  font-size:.82rem; color:var(--dim); min-width:0;
+}
+.panel .rc{
+  font-family:Amiri,serif; direction:rtl; font-size:1.35rem; color:var(--gold);
+  letter-spacing:.12em; white-space:nowrap;
+}
+.panel .rg{overflow-wrap:anywhere; line-height:1.5; flex:1 1 12rem; min-width:0}
+.panel .deep{
+  margin:0; color:#D8D5C9; line-height:1.72; font-size:.97rem;
+  overflow-wrap:anywhere; text-wrap:pretty;
+}
+.panel .qref{
+  direction:ltr; text-align:left;
+  margin:0; padding:1.1rem 1.15rem; border-radius:14px; min-width:0;
+  border:1px solid var(--rule); border-left:2px solid var(--gold-dim);
+  background:linear-gradient(180deg,rgba(232,200,116,.055),transparent);
+  display:grid; gap:.7rem;
+}
+.panel .av{
+  margin:0; font-family:Amiri,serif; direction:rtl; text-align:right;
+  font-size:clamp(1.15rem,4.2vw,1.4rem); line-height:2.1; color:var(--gold-hi);
+  overflow-wrap:anywhere;
+}
+.panel .ae{margin:0; font-family:"Cormorant Garamond",serif; font-size:1.06rem;
+  line-height:1.62; color:#E4E1D6; overflow-wrap:anywhere;
+  direction:ltr; unicode-bidi:isolate; text-align:left}
+.panel .qref cite{
+  font-style:normal; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--dim); display:grid; gap:.3rem; min-width:0;
+  direction:ltr; unicode-bidi:isolate;
+}
+.panel .qref cite .src{
+  color:var(--gold-dim); overflow-wrap:anywhere; letter-spacing:.1em;
+  text-transform:none; font-size:.76rem;
+}
+.panel .turn{
+  border-top:1px solid var(--rule); padding-top:1rem; display:grid; gap:.4rem; min-width:0;
+}
+.panel .turn .lbl{
+  margin:0; font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+}
+.panel .turn p+p{margin:0; color:#C6C3B8; line-height:1.65; font-size:.94rem; overflow-wrap:anywhere}
+.panel .tally{margin:0; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--dim)}
+@media (max-width:30rem){
+  .veil{padding:.6rem}
+  .panel{padding:2.9rem 1.15rem 1.5rem; border-radius:18px; gap:.8rem; max-height:94svh}
+  .panel .body{gap:.95rem}
+  .panel .qref{padding:.9rem .85rem}
+  .step button{padding:.5rem .85rem; font-size:.78rem}
+}
+@media (prefers-reduced-motion:reduce){ .panel{transition:none} }
+
 /* ---------------- the three doors ---------------- */
 .doors{display:grid; gap:1rem; grid-template-columns:1fr; margin-top:2.4rem}
 @media (min-width:48rem){ .doors{grid-template-columns:repeat(3,1fr)} }
@@ -246,11 +313,13 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
 
 .draft{
   position:fixed; z-index:60; bottom:1rem; left:1rem; pointer-events:none;
+  transition:opacity .3s;
   background:linear-gradient(rgba(232,200,116,.12),rgba(232,200,116,.12)), #0A0D18;
   border:1px solid var(--gold-dim); color:var(--gold);
   font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
   padding:.45rem .85rem; border-radius:2rem; backdrop-filter:blur(8px);
 }
+body.reading .draft{opacity:0}
 
 /* ---------- what He is not ---------- */
 .nots{display:grid; gap:.8rem; grid-template-columns:1fr; margin-top:2.6rem}
@@ -740,6 +809,11 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
     names are ninety-nine is agreed upon; the list itself is a narration, and scholars have differed
     over which ninety-nine it names. The Arabic is the name. The English beneath it is a translation,
     and every translation of a name of God is a smaller thing than the name.</p>
+    <p class="note">Open any name and it will tell you where it comes from. Seventy-four of them are
+    used of God in the Qur'an, and the verse shown is one place the word itself appears. The other
+    twenty-five reach us through the enumeration rather than as words the Book applies to Him; for
+    those, the verse shown is where the Qur'an says the same thing in other words, usually as a verb.
+    Every reference in this room was checked against the text of the Qur'an itself, line by line.</p>
   </div>
 </section>
 
@@ -862,10 +936,26 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
     <p class="a ar" id="p-a"></p>
     <p class="t" id="p-t"></p>
     <p class="m" id="p-m"></p>
+
+    <div class="body" id="p-body" tabindex="0">
+      <p class="root"><span class="rc ar" id="p-rc"></span><span class="rg" id="p-rg"></span></p>
+      <p class="deep" id="p-d"></p>
+      <figure class="qref">
+        <p class="av ar" id="p-va"></p>
+        <p class="ae" id="p-ve"></p>
+        <cite><span id="p-vr"></span><span class="src" id="p-vs"></span></cite>
+      </figure>
+      <div class="turn">
+        <p class="lbl">What it asks of you</p>
+        <p id="p-w"></p>
+      </div>
+    </div>
+
     <div class="step">
       <button id="prev">&larr; Before</button>
       <button id="next">After &rarr;</button>
     </div>
+    <p class="tally" id="p-n"></p>
   </div>
 </div>
 
@@ -874,105 +964,501 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <script>
 /* The list, in one place, so a correction is one line and never a hunt. */
 const NAMES = [
-["الرَّحْمَٰن","Ar-Rahman","The Most Merciful, whose mercy reaches all that is"],
-["الرَّحِيم","Ar-Raheem","The Bestower of Mercy, especially upon those who believe"],
-["الْمَلِك","Al-Malik","The King, who owns without being owned"],
-["الْقُدُّوس","Al-Quddus","The Most Holy, free of every defect"],
-["السَّلَام","As-Salam","The Source of Peace, and free of all that disturbs it"],
-["الْمُؤْمِن","Al-Mu'min","The Granter of Security"],
-["الْمُهَيْمِن","Al-Muhaymin","The Guardian who watches over all"],
-["الْعَزِيز","Al-'Aziz","The Almighty, whom nothing overcomes"],
-["الْجَبَّار","Al-Jabbar","The Compeller, who sets the broken right"],
-["الْمُتَكَبِّر","Al-Mutakabbir","The Supreme in Greatness"],
-["الْخَالِق","Al-Khaliq","The Creator"],
-["الْبَارِئ","Al-Bari'","The Originator, who makes from nothing"],
-["الْمُصَوِّر","Al-Musawwir","The Fashioner of Forms"],
-["الْغَفَّار","Al-Ghaffar","The Ever-Forgiving"],
-["الْقَهَّار","Al-Qahhar","The All-Subduing"],
-["الْوَهَّاب","Al-Wahhab","The Bestower, who gives without being asked"],
-["الرَّزَّاق","Ar-Razzaq","The Provider"],
-["الْفَتَّاح","Al-Fattah","The Opener, who opens what was closed"],
-["الْعَلِيم","Al-'Alim","The All-Knowing"],
-["الْقَابِض","Al-Qabid","The Withholder"],
-["الْبَاسِط","Al-Basit","The Extender"],
-["الْخَافِض","Al-Khafid","The Abaser"],
-["الرَّافِع","Ar-Rafi'","The Exalter"],
-["الْمُعِزّ","Al-Mu'izz","The Giver of Honour"],
-["الْمُذِلّ","Al-Mudhill","The Giver of Dishonour"],
-["السَّمِيع","As-Sami'","The All-Hearing"],
-["الْبَصِير","Al-Basir","The All-Seeing"],
-["الْحَكَم","Al-Hakam","The Judge, whose ruling is final"],
-["الْعَدْل","Al-'Adl","The Utterly Just"],
-["اللَّطِيف","Al-Latif","The Subtle and the Gentle, whose kindness reaches unseen"],
-["الْخَبِير","Al-Khabir","The All-Aware"],
-["الْحَلِيم","Al-Halim","The Forbearing, who does not hasten to punish"],
-["الْعَظِيم","Al-'Azim","The Magnificent"],
-["الْغَفُور","Al-Ghafur","The Much-Forgiving"],
-["الشَّكُور","Ash-Shakur","The Most Appreciative, who repays little with much"],
-["الْعَلِيّ","Al-'Ali","The Most High"],
-["الْكَبِير","Al-Kabir","The Most Great"],
-["الْحَفِيظ","Al-Hafiz","The Preserver"],
-["الْمُقِيت","Al-Muqit","The Sustainer, who gives each thing its measure"],
-["الْحَسِيب","Al-Hasib","The Reckoner, who is enough"],
-["الْجَلِيل","Al-Jalil","The Majestic"],
-["الْكَرِيم","Al-Karim","The Most Generous"],
-["الرَّقِيب","Ar-Raqib","The Watchful"],
-["الْمُجِيب","Al-Mujib","The Responsive, who answers the one who calls"],
-["الْوَاسِع","Al-Wasi'","The All-Encompassing"],
-["الْحَكِيم","Al-Hakim","The All-Wise"],
-["الْوَدُود","Al-Wadud","The Most Loving"],
-["الْمَجِيد","Al-Majid","The Most Glorious"],
-["الْبَاعِث","Al-Ba'ith","The Resurrector"],
-["الشَّهِيد","Ash-Shahid","The Witness, from whom nothing is hidden"],
-["الْحَقّ","Al-Haqq","The Truth, and the only thing that does not pass"],
-["الْوَكِيل","Al-Wakil","The Trustee, to whom affairs are handed"],
-["الْقَوِيّ","Al-Qawiyy","The All-Strong"],
-["الْمَتِين","Al-Matin","The Firm, whose strength does not tire"],
-["الْوَلِيّ","Al-Waliyy","The Protecting Friend"],
-["الْحَمِيد","Al-Hamid","The Praiseworthy"],
-["الْمُحْصِي","Al-Muhsi","The One who counts all things"],
-["الْمُبْدِئ","Al-Mubdi'","The Originator, who begins"],
-["الْمُعِيد","Al-Mu'id","The Restorer, who begins it again"],
-["الْمُحْيِي","Al-Muhyi","The Giver of Life"],
-["الْمُمِيت","Al-Mumit","The Bringer of Death"],
-["الْحَيّ","Al-Hayy","The Ever-Living"],
-["الْقَيُّوم","Al-Qayyum","The Self-Subsisting, upon whom all else stands"],
-["الْوَاجِد","Al-Wajid","The Finder, who lacks nothing"],
-["الْمَاجِد","Al-Majid","The Noble"],
-["الْوَاحِد","Al-Wahid","The One"],
-["الْأَحَد","Al-Ahad","The Unique, who has no second"],
-["الصَّمَد","As-Samad","The Eternal Refuge, needing none, needed by all"],
-["الْقَادِر","Al-Qadir","The All-Powerful"],
-["الْمُقْتَدِر","Al-Muqtadir","The Determiner, who brings power to bear"],
-["الْمُقَدِّم","Al-Muqaddim","The Expediter, who brings forward"],
-["الْمُؤَخِّر","Al-Mu'akhkhir","The Delayer, who holds back"],
-["الْأَوَّل","Al-Awwal","The First, before whom there is nothing"],
-["الْآخِر","Al-Akhir","The Last, after whom there is nothing"],
-["الظَّاهِر","Az-Zahir","The Manifest, above whom there is nothing"],
-["الْبَاطِن","Al-Batin","The Hidden, nearer than anything"],
-["الْوَالِي","Al-Wali","The Governor of all that happens"],
-["الْمُتَعَالِي","Al-Muta'ali","The Most Exalted"],
-["الْبَرّ","Al-Barr","The Source of Goodness"],
-["التَّوَّاب","At-Tawwab","The Ever-Relenting, who turns to the one who turns"],
-["الْمُنْتَقِم","Al-Muntaqim","The Avenger of wrong"],
-["الْعَفُوّ","Al-'Afuww","The Pardoner, who erases the trace"],
-["الرَّءُوف","Ar-Ra'uf","The Most Kind"],
-["مَالِكُ الْمُلْك","Malik al-Mulk","Owner of all sovereignty"],
-["ذُو الْجَلَالِ وَالْإِكْرَام","Dhul-Jalali wal-Ikram","Lord of Majesty and Honour"],
-["الْمُقْسِط","Al-Muqsit","The Equitable"],
-["الْجَامِع","Al-Jami'","The Gatherer, who will bring all together"],
-["الْغَنِيّ","Al-Ghani","The Self-Sufficient"],
-["الْمُغْنِي","Al-Mughni","The Enricher"],
-["الْمَانِع","Al-Mani'","The Withholder"],
-["الضَّارّ","Ad-Darr","The One who allows harm"],
-["النَّافِع","An-Nafi'","The One who brings benefit"],
-["النُّور","An-Nur","The Light"],
-["الْهَادِي","Al-Hadi","The Guide"],
-["الْبَدِيع","Al-Badi'","The Incomparable Originator"],
-["الْبَاقِي","Al-Baqi","The Everlasting"],
-["الْوَارِث","Al-Warith","The Inheritor of all"],
-["الرَّشِيد","Ar-Rashid","The Guide to what is right"],
-["الصَّبُور","As-Sabur","The Most Patient"]
+["الرَّحْمَٰن","Ar-Rahman","The Most Merciful, whose mercy reaches all that is",
+ ["ر ح م","rahim — the womb; and from it, the mercy that has no cause outside itself",
+  "Ar-Rahman is not a merciful being. It is mercy in the intensive form, the form Arabic keeps for a quality so full it overflows the one who has it. The root is the word for womb, which shelters what cannot yet ask to be sheltered, and this is the mercy the Book means: mercy before the request, before the deserving, before the one receiving it is even aware there is anyone to thank. It falls on the believer and the denier alike, on the field of the man who curses the rain. Every surah but one opens by naming Him this way, so the mercy is not a chapter of the Book, it is the doorway you pass through to reach every other chapter.",
+  "55:1","ٱلرَّحۡمَٰنُ","The All-Merciful.",0,
+  "Stop auditing whether you have earned the day you were given. You did not. Receive it, and let the mercy you have been shown set the floor for the mercy you show."]],
+["الرَّحِيم","Ar-Raheem","The Bestower of Mercy, especially upon those who believe",
+ ["ر ح م","the same root as Ar-Rahman, in the form of a quality that settles and stays",
+  "The two mercies are paired in the opening line of the Book and they are not a repetition. Ar-Rahman is the wide mercy that covers all that exists; Ar-Raheem is the mercy that stays, the one the Qur'an attaches again and again to those who turn toward Him. One is the rain over everything; the other is what grows where the ground was prepared. Read together they answer the two fears a person actually has: that he is outside the circle, and that being inside it might not last.",
+  "2:163","وَإِلَٰهُكُمۡ إِلَٰهٞ وَٰحِدٞۖ لَّآ إِلَٰهَ إِلَّا هُوَ ٱلرَّحۡمَٰنُ ٱلرَّحِيمُ","And your God is one God. There is no god but Him, the All-Merciful, the Ever-Merciful.",0,
+  "Do the small thing that keeps you inside the second mercy: return, ask, and return again. It is the returning that is being described here, not the arriving."]],
+["الْمَلِك","Al-Malik","The King, who owns without being owned",
+ ["م ل ك","malaka — to own, to have real disposal over a thing",
+  "A king in Arabic is not merely the one who rules but the one who owns, whose command over a thing runs all the way down. Human kingship is always borrowed and always partial: a king owns land he did not make and will not keep, and cannot command his own heartbeat. His is the only ownership with nothing on loan in it. He owns the ones who obey and the ones who refuse, the moment of holding power and the moment of losing it. On the Day the question is asked aloud, whose is the kingdom today, no one answers, and He answers Himself.",
+  "20:114","فَتَعَٰلَى ٱللَّهُ ٱلۡمَلِكُ ٱلۡحَقُّۗ","So exalted is God, the True King.",0,
+  "Hold your titles loosely. Everything on your business card is on loan and the term is not disclosed."]],
+["الْقُدُّوس","Al-Quddus","The Most Holy, free of every defect",
+ ["ق د س","qadusa — to be pure, set utterly apart; the root behind the word for sanctity",
+  "Al-Quddus does not mean very good. It means removed from the whole category of defect, so far outside it that the comparison never begins. Every word we have for praise was built by people describing creatures, which means every word arrives already too small. So this Name works by subtraction: no need, no flaw, no tiredness, no partner, no shadow. The Book pairs it with the King, because power without purity is the most ordinary catastrophe in human history, and here they are the same thing.",
+  "62:1","يُسَبِّحُ لِلَّهِ مَا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِ ٱلۡمَلِكِ ٱلۡقُدُّوسِ ٱلۡعَزِيزِ ٱلۡحَكِيمِ","All that is in the heavens and all that is on the earth glorifies God, the King, the Most Holy, the Almighty, the Wise.",0,
+  "Purify one intention today rather than adding one more good deed. He is approached by subtraction more often than by addition."]],
+["السَّلَام","As-Salam","The Source of Peace, and free of all that disturbs it",
+ ["س ل م","salima — to be whole, intact, free of injury; the root of Islam and of the greeting",
+  "As-Salam is the Name that says He is free of every wound. Not that He grants peace, though He does, but that He Himself is untouched by the things that break peace in us: fear, loss, need, decay. Because He is whole, what comes from Him can make whole. This is why the greeting Muslims exchange is a word for Him, why the prayer ends by saying it twice, and why the home of the ones who arrive is called Dar as-Salam, the House of Peace.",
+  "59:23","هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ","He is God, other than whom there is no god: the King, the Most Holy, the Peace, the Giver of Security, the Guardian over all, the Almighty, the Compeller, the Supreme. Glory be to God, far above all they set beside Him.",0,
+  "Say the greeting properly to someone you have been avoiding. The word you are handing them is one of His Names."]],
+["الْمُؤْمِن","Al-Mu'min","The Granter of Security",
+ ["ا م ن","amina — to be safe; the root of iman, faith, and of amanah, a trust",
+  "The same root gives us faith and safety, and that is not an accident of language. Al-Mu'min is the One who gives security, and also the One who confirms the truth of what He has said, who stands behind His own promise the way a guarantor stands behind a debt. Faith in Arabic is not primarily an opinion about the unseen; it is entering into safety with someone who has given His word. He never breaks it, and the whole structure rests there.",
+  "59:23","هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ","He is God, other than whom there is no god: the King, the Most Holy, the Peace, the Giver of Security, the Guardian over all, the Almighty, the Compeller, the Supreme. Glory be to God, far above all they set beside Him.",0,
+  "Where you are afraid, name the thing precisely, then ask whether it can reach past Him to get to you. Most fears do not survive being stated out loud in front of this Name."]],
+["الْمُهَيْمِن","Al-Muhaymin","The Guardian who watches over all",
+ ["ه م ن","haymana — to watch over, to stand guard above, to have charge of",
+  "Al-Muhaymin is the guardian who is over the thing, not beside it. The Qur'an uses the same word of itself in relation to the scriptures before it: standing over them as witness and criterion. Applied to Him it gathers three things at once — He sees all of it, He preserves all of it, He has authority over all of it. A watchman who cannot act is only a spectator; a ruler who cannot see rules blind. Here nothing is missing.",
+  "59:23","هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ","He is God, other than whom there is no god: the King, the Most Holy, the Peace, the Giver of Security, the Guardian over all, the Almighty, the Compeller, the Supreme. Glory be to God, far above all they set beside Him.",0,
+  "Behave in the empty room the way you behave in the full one. There is no empty room."]],
+["الْعَزِيز","Al-'Aziz","The Almighty, whom nothing overcomes",
+ ["ع ز ز","'azza — to be strong, rare, precious, and unreachable",
+  "The root holds two ideas that English separates: strength and preciousness. What is truly strong cannot be worn down; what is truly precious cannot be replaced. Al-'Aziz is the One nothing overcomes and nothing is like. The Qur'an almost always pairs it with another Name — the Mighty, the Wise; the Mighty, the Forgiving — because raw might unqualified is exactly what people fear in their rulers, and He does not present Himself that way even once.",
+  "3:6","هُوَ ٱلَّذِي يُصَوِّرُكُمۡ فِي ٱلۡأَرۡحَامِ كَيۡفَ يَشَآءُۚ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ","It is He who shapes you in the wombs however He wills. There is no god but Him, the Almighty, the Wise.",0,
+  "When you are wronged and cannot answer, take the case to the One nobody overrules. Then stop rehearsing the argument."]],
+["الْجَبَّار","Al-Jabbar","The Compeller, who sets the broken right",
+ ["ج ب ر","jabara — to set a broken bone; and from there, to compel",
+  "This Name frightens people who meet it only in translation, because The Compeller sounds like a tyrant. The root's first and plainest use in Arabic is the setting of a fracture, which is why the splint is called jabirah and why the algebra of restoring a broken equation carries the same word. He compels the way a bone is compelled: by force, against the limb's own drift, and toward wholeness. Both meanings are true of Him. His will is not negotiated, and the direction it moves in is repair.",
+  "59:23","هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ","He is God, other than whom there is no god: the King, the Most Holy, the Peace, the Giver of Security, the Guardian over all, the Almighty, the Compeller, the Supreme. Glory be to God, far above all they set beside Him.",0,
+  "When you are being made to accept something you did not choose, ask what is being set. The answer sometimes takes years and is sometimes withheld."]],
+["الْمُتَكَبِّر","Al-Mutakabbir","The Supreme in Greatness",
+ ["ك ب ر","kabura — to be great; the form here means to hold oneself great",
+  "In every other mouth this word is a vice. The Qur'an uses the same root for the arrogance of Pharaoh and of Iblis, and says the gates of heaven are not opened to those who treat its signs with this. It is a vice in us for one reason: it is a false claim. In Him alone the claim is simply accurate. That is the whole of the difference, and it is worth sitting with, because it means pride is not wrong for being unpleasant. It is wrong for being untrue.",
+  "59:23","هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ","He is God, other than whom there is no god: the King, the Most Holy, the Peace, the Giver of Security, the Guardian over all, the Almighty, the Compeller, the Supreme. Glory be to God, far above all they set beside Him.",0,
+  "Notice the next time you want credit. Ask what part of the chain that produced the thing you did was actually yours."]],
+["الْخَالِق","Al-Khaliq","The Creator",
+ ["خ ل ق","khalaqa — to measure out and bring into being according to a proportion",
+  "The Arabic does not mean to make something out of nothing in the vague sense; it carries measure in it, the sense of a thing determined and proportioned before it exists. The three Names in this verse are one act described in three motions, and the order is the point: Al-Khaliq decrees and proportions, Al-Bari' brings out into existence, Al-Musawwir gives the particular face. Nothing in you is generic. It was measured.",
+  "59:24","هُوَ ٱللَّهُ ٱلۡخَٰلِقُ ٱلۡبَارِئُ ٱلۡمُصَوِّرُۖ لَهُ ٱلۡأَسۡمَآءُ ٱلۡحُسۡنَىٰۚ يُسَبِّحُ لَهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۖ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ","He is God: the Creator, the Originator, the Fashioner. To Him belong the most beautiful names. All that is in the heavens and the earth glorifies Him, and He is the Almighty, the Wise.",0,
+  "Look at one thing you did not design — your hands, the fact that you heal, the fact that you sleep. It was proportioned before you arrived."]],
+["الْبَارِئ","Al-Bari'","The Originator, who makes from nothing",
+ ["ب ر ا","bara'a — to bring forth, to make free and separate from what it came from",
+  "Al-Bari' is the second motion: what was measured now stands apart, distinct, actually there. The root also gives the word for being cleared of a debt or a charge, and the sense of separation runs through both. He makes a thing that is genuinely other than Himself. This is the line the Book never lets blur — the creation is not a piece of Him, not an emanation, not a lesser portion of the divine. It is made, and it is other.",
+  "59:24","هُوَ ٱللَّهُ ٱلۡخَٰلِقُ ٱلۡبَارِئُ ٱلۡمُصَوِّرُۖ لَهُ ٱلۡأَسۡمَآءُ ٱلۡحُسۡنَىٰۚ يُسَبِّحُ لَهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۖ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ","He is God: the Creator, the Originator, the Fashioner. To Him belong the most beautiful names. All that is in the heavens and the earth glorifies Him, and He is the Almighty, the Wise.",0,
+  "You are not a fragment of God and you are not an accident. Both of those are easier to believe than the truth, which is that you were brought forth on purpose and are not Him."]],
+["الْمُصَوِّر","Al-Musawwir","The Fashioner of Forms",
+ ["ص و ر","sawwara — to give form, shape, a face; surah, an image or a likeness",
+  "The third motion is the particular. Not that a human being exists, but that this one has this face, and no other face in the history of the world has been quite it. The Qur'an says He forms you in the wombs however He wills, and the verb is unhurried. Modern eyes should sit with that: the same species, the same code, and no repetition. He is not a factory. He is an artist who has never made the same thing twice.",
+  "59:24","هُوَ ٱللَّهُ ٱلۡخَٰلِقُ ٱلۡبَارِئُ ٱلۡمُصَوِّرُۖ لَهُ ٱلۡأَسۡمَآءُ ٱلۡحُسۡنَىٰۚ يُسَبِّحُ لَهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۖ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ","He is God: the Creator, the Originator, the Fashioner. To Him belong the most beautiful names. All that is in the heavens and the earth glorifies Him, and He is the Almighty, the Wise.",0,
+  "Stop wishing you had been issued different equipment. The form was chosen, including the parts you would have edited."]],
+["الْغَفَّار","Al-Ghaffar","The Ever-Forgiving",
+ ["غ ف ر","ghafara — to cover, to veil over; the root of the word for a helmet",
+  "The root is not erasure but covering. To forgive in Arabic is to place something over the fault so it no longer shows and no longer harms. Al-Ghaffar is the intensive form: the One who does this over and over, without the covering wearing thin. The Book keeps this Name close to the ones who keep failing, because the form is chosen precisely for the repeat offender. He is not described as having forgiven. He is described as forgiving, again.",
+  "38:66","رَبُّ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِ وَمَا بَيۡنَهُمَا ٱلۡعَزِيزُ ٱلۡغَفَّـٰرُ","Lord of the heavens and the earth and all that lies between them, the Almighty, the Ever-Forgiving.",0,
+  "Ask again for the thing you have already asked forgiveness for and gone back to. The form of this Name was chosen with you in mind."]],
+["الْقَهَّار","Al-Qahhar","The All-Subduing",
+ ["ق ه ر","qahara — to overpower completely, to subdue so that nothing is left standing against",
+  "Al-Qahhar names the end of every contest. Not that He wins arguments, but that nothing has independent standing against Him at all: not the tyrant, not the illness, not death, not the one who denies Him and dies comfortable in his bed. The Qur'an nearly always pairs it with The One, and the pairing is the argument — there is no second power for the defeated to appeal to.",
+  "39:4","لَّوۡ أَرَادَ ٱللَّهُ أَن يَتَّخِذَ وَلَدٗا لَّٱصۡطَفَىٰ مِمَّا يَخۡلُقُ مَا يَشَآءُۚ سُبۡحَٰنَهُۥۖ هُوَ ٱللَّهُ ٱلۡوَٰحِدُ ٱلۡقَهَّارُ","Had God willed to take a son, He would have chosen from what He creates whatever He willed. Glory be to Him. He is God, the One, the All-Subduing.",0,
+  "Whatever currently looks unstoppable is already subdued. Behave accordingly and stop negotiating with it in your head."]],
+["الْوَهَّاب","Al-Wahhab","The Bestower, who gives without being asked",
+ ["و ه ب","wahaba — to give as a gift, with no exchange and no expectation of return",
+  "Arabic has several words for giving, and this is the one with no transaction in it. A hibah is a gift, not a payment, not a wage, not a loan. Al-Wahhab gives in the intensive: constantly, to those who ask and those who do not, of things nobody could have earned — a child to the barren, understanding to the slow, an opening after years of a closed door. The Qur'an puts this Name in the mouths of people praying, which is where it belongs.",
+  "38:9","أَمۡ عِندَهُمۡ خَزَآئِنُ رَحۡمَةِ رَبِّكَ ٱلۡعَزِيزِ ٱلۡوَهَّابِ","Or do they hold the treasuries of the mercy of your Lord, the Almighty, the Bestower?",0,
+  "Ask Him for something you have no case for. This Name is not about your case."]],
+["الرَّزَّاق","Ar-Razzaq","The Provider",
+ ["ر ز ق","razaqa — to provide what sustains; rizq covers food, wealth, knowledge, a good companion",
+  "Rizq is wider than money. It is everything that comes to you and keeps you going, including the things you did not ask for and did not see coming. The intensive form says the providing does not pause: for every mouth, believing or not, including the animal under the stone. The Qur'an ties this Name to strength in the same breath, and the pairing is deliberate — provision that can be interrupted is not provision, it is luck.",
+  "51:58","إِنَّ ٱللَّهَ هُوَ ٱلرَّزَّاقُ ذُو ٱلۡقُوَّةِ ٱلۡمَتِينُ","It is God who is the Provider, the Owner of strength, the Firm.",0,
+  "Do your work honestly and then stop treating the outcome as yours to force. The provider is not your employer and never was."]],
+["الْفَتَّاح","Al-Fattah","The Opener, who opens what was closed",
+ ["ف ت ح","fataha — to open; also to judge between disputants, and to grant victory",
+  "One root, three meanings, and they are the same act seen from three sides. He opens what was shut — a womb, a way out, a locked understanding. He opens a case that people could not settle, which is why the word for a decisive judgement is from here. And He opens the way for those who had none, which is why victory carries the same name. Nothing in your life is sealed except by His leaving it sealed.",
+  "34:26","قُلۡ يَجۡمَعُ بَيۡنَنَا رَبُّنَا ثُمَّ يَفۡتَحُ بَيۡنَنَا بِٱلۡحَقِّ وَهُوَ ٱلۡفَتَّاحُ ٱلۡعَلِيمُ","Say: our Lord will bring us together, then open the matter between us in truth. He is the Opener, the All-Knowing.",0,
+  "Stop trying to force the door. Ask the One who holds every key, and keep pushing on the doors that are already ajar."]],
+["الْعَلِيم","Al-'Alim","The All-Knowing",
+ ["ع ل م","'alima — to know; the root of 'ilm, knowledge, and 'alam, a sign or marker",
+  "His knowledge is not large. It is different in kind. Ours is assembled — gathered by senses, stored, retrieved, and always in the past tense. His is not acquired, never absent, and includes what has not happened and what would have happened had you chosen otherwise. The Qur'an says He knows the whisper and what is more hidden than the whisper. That is a claim about His knowing, not about the loudness of your secret.",
+  "2:32","قَالُواْ سُبۡحَٰنَكَ لَا عِلۡمَ لَنَآ إِلَّا مَا عَلَّمۡتَنَآۖ إِنَّكَ أَنتَ ٱلۡعَلِيمُ ٱلۡحَكِيمُ","They said: glory be to You, we have no knowledge but what You have taught us. It is You who are the All-Knowing, the All-Wise.",0,
+  "You will not be understood completely by anyone alive. You already are, by Him. Let that settle both the loneliness and the pretending."]],
+["الْقَابِض","Al-Qabid","The Withholder",
+ ["ق ب ض","qabada — to close the hand, to grasp, to take hold and withhold",
+  "The image is a hand closing. He constricts: the provision narrows, the chest tightens, the way that was open is not. The Qur'an puts this and its opposite in a single half-verse, one hand closing and opening, because they are one act and one actor. A narrowing that comes from Him is not the absence of His giving; it is a different form of it. Souls are taken with this same word.",
+  "2:245","وَٱللَّهُ يَقۡبِضُ وَيَبۡصُۜطُ وَإِلَيۡهِ تُرۡجَعُونَ","And it is God who withholds and who gives in abundance, and to Him you are returned.",1,
+  "When it tightens, do not go looking for who did it to you. Ask what the closing hand is holding you back from."]],
+["الْبَاسِط","Al-Basit","The Extender",
+ ["ب س ط","basata — to spread out, to open the hand flat, to expand",
+  "The open palm. He expands: the provision widens, the chest opens, the road runs. The Book warns in the same breath against reading the expansion as approval and the constriction as punishment, since He gives abundantly to people He is not pleased with, and withholds from people He loves. The two Names are a pair and must be held as a pair, or each one alone becomes a superstition.",
+  "2:245","وَٱللَّهُ يَقۡبِضُ وَيَبۡصُۜطُ وَإِلَيۡهِ تُرۡجَعُونَ","And it is God who withholds and who gives in abundance, and to Him you are returned.",1,
+  "On the wide days, give some of it away while it is still wide. That is what the open hand is for."]],
+["الْخَافِض","Al-Khafid","The Abaser",
+ ["خ ف ض","khafada — to lower, to bring down; also to lower the wing, meaning to be gentle",
+  "He brings down the ones who raised themselves. Every history is a list of this. But the same root gives the Qur'an's instruction to lower the wing of humility to your parents and to the believers, so the lowering is not only a punishment — it is also the posture of the one who is safe. He lowers the arrogant, and He lowers the heads of those who come to Him, and only one of the two is a fall.",
+  "56:3","خَافِضَةٞ رَّافِعَةٌ","Bringing low, lifting high.",1,
+  "Choose the lowering. The people who are brought down are the ones who would not go down on their own."]],
+["الرَّافِع","Ar-Rafi'","The Exalter",
+ ["ر ف ع","rafa'a — to raise, to lift up in rank or in place",
+  "He raises, and He does not use our criteria. The Qur'an says He raises in degrees those who believe and those given knowledge, and that the noblest among you is the most mindful — not the wealthiest, not the most followed. The historical record keeps embarrassing the rankings: the ones remembered were shepherds, orphans, freed slaves, a man who could not read. He raises whom He wills, and the wills is the part we keep trying to edit.",
+  "58:11","يَرۡفَعِ ٱللَّهُ ٱلَّذِينَ ءَامَنُواْ مِنكُمۡ وَٱلَّذِينَ أُوتُواْ ٱلۡعِلۡمَ دَرَجَٰتٖۚ","God raises in rank those of you who believe, and those who are given knowledge.",1,
+  "Stop building the case for your own promotion. Build the thing that is worth raising."]],
+["الْمُعِزّ","Al-Mu'izz","The Giver of Honour",
+ ["ع ز ز","the same root as Al-'Aziz — strength and preciousness, here in the causative",
+  "He makes honoured. Not popular, not comfortable — honoured, given real weight. The Qur'an's example is deliberately hard: the Prophet's community spent years despised in Makkah, and the honour arrived without the despising being removed first. Honour from Him and status among people are two different currencies with no fixed exchange rate, and the Book is blunt that only one of them will still be valid later.",
+  "3:26","وَتُعِزُّ مَن تَشَآءُ وَتُذِلُّ مَن تَشَآءُۖ بِيَدِكَ ٱلۡخَيۡرُۖ","You honour whom You will and You humble whom You will. In Your hand is all good.",1,
+  "If you are choosing between being respected and being right, you already know which of the two He deals in."]],
+["الْمُذِلّ","Al-Mudhill","The Giver of Dishonour",
+ ["ذ ل ل","dhalla — to be lowly, humbled, made submissive",
+  "He humbles. The verse pairs it with the giving of honour inside a single sentence spoken by a man asking for sovereignty, which is where the pair belongs: both hands are His, and the same hand does both. Read alone this Name breeds either fear or cruelty. Read with its pair it says something quieter — that no humiliation you are suffering is permanent, and no elevation you are enjoying is owned.",
+  "3:26","وَتُعِزُّ مَن تَشَآءُ وَتُذِلُّ مَن تَشَآءُۖ بِيَدِكَ ٱلۡخَيۡرُۖ","You honour whom You will and You humble whom You will. In Your hand is all good.",1,
+  "Never take part in humbling someone. It is not your Name to carry, and the One whose it is watches you doing it."]],
+["السَّمِيع","As-Sami'","The All-Hearing",
+ ["س م ع","sami'a — to hear, and to hear in the sense of responding",
+  "In Arabic, hearing is not passive. The word in the prayer, sami'a Allahu li-man hamidah, does not mean God detected the sound; it means He responded to it. As-Sami' hears every language at once, hears what is said and what is only formed and swallowed, hears the prayer of the person who has no words left. Distance does not apply. Volume does not apply. The Qur'an gives the case of the woman who argued with the Prophet about her husband and complained to God, and says He heard her — and the surah is named for the argument.",
+  "2:127","وَإِذۡ يَرۡفَعُ إِبۡرَٰهِـۧمُ ٱلۡقَوَاعِدَ مِنَ ٱلۡبَيۡتِ وَإِسۡمَٰعِيلُ رَبَّنَا تَقَبَّلۡ مِنَّآۖ إِنَّكَ أَنتَ ٱلسَّمِيعُ ٱلۡعَلِيمُ","And when Abraham was raising the foundations of the House, and Ishmael with him: our Lord, accept this from us. You are the All-Hearing, the All-Knowing.",0,
+  "Say the thing out loud, even badly. He is not evaluating your phrasing."]],
+["الْبَصِير","Al-Basir","The All-Seeing",
+ ["ب ص ر","basura — to see, to perceive with insight as well as with the eye",
+  "The root covers sight and insight, so this is not surveillance. He sees the act and He sees what the act was for, which is the only way justice is possible at all: two identical actions with different intentions are not the same action, and only a seeing that reaches the intention can tell them apart. He sees the good you did that nobody credited you for, and the good you did that was actually about being seen.",
+  "17:1","سُبۡحَٰنَ ٱلَّذِيٓ أَسۡرَىٰ بِعَبۡدِهِۦ لَيۡلٗا مِّنَ ٱلۡمَسۡجِدِ ٱلۡحَرَامِ إِلَى ٱلۡمَسۡجِدِ ٱلۡأَقۡصَا ٱلَّذِي بَٰرَكۡنَا حَوۡلَهُۥ لِنُرِيَهُۥ مِنۡ ءَايَٰتِنَآۚ إِنَّهُۥ هُوَ ٱلسَّمِيعُ ٱلۡبَصِيرُ","Glory be to the One who carried His servant by night from the Sacred Mosque to the Farthest Mosque, whose surroundings We have blessed, to show him of Our signs. He is the All-Hearing, the All-Seeing.",0,
+  "Do one thing today that no one will ever know about. It is the cleanest way to feel the weight of this Name."]],
+["الْحَكَم","Al-Hakam","The Judge, whose ruling is final",
+ ["ح ك م","hakama — to judge, to decide; the same root as hikmah, wisdom, and the bridle of a horse",
+  "Al-Hakam is the One whose ruling ends the matter. The root's oldest sense is restraint — the bridle that stops a horse from bolting — and that is what a judgement does: it stops the case running. Every human verdict is provisional, appealable, sometimes bought. His is the last word on every dispute, including the ones no court ever heard: the inheritance quietly taken, the reputation destroyed by a rumour with no author, the wrong nobody can prove.",
+  "6:114","أَفَغَيۡرَ ٱللَّهِ أَبۡتَغِي حَكَمٗا وَهُوَ ٱلَّذِيٓ أَنزَلَ إِلَيۡكُمُ ٱلۡكِتَٰبَ مُفَصَّلٗاۚ","Shall I seek a judge other than God, when it is He who sent down to you the Book, set out in detail?",0,
+  "If you have a case that no one on earth will hear, file it here and stop carrying it. If you are the one being complained about, settle before the hearing."]],
+["الْعَدْل","Al-'Adl","The Utterly Just",
+ ["ع د ل","'adala — to be even, balanced, to put a thing exactly in its place",
+  "Justice in Arabic is a word about balance, about a thing being placed exactly where it belongs. He does not wrong anyone by the weight of a single atom — and the verse continues, if there is a good deed He multiplies it. That asymmetry is the shape of His justice: exact in what is owed, extravagant in what is given. The Name itself is not used of God in the Qur'an as a noun; the meaning is stated instead, and stated flatly.",
+  "4:40","إِنَّ ٱللَّهَ لَا يَظۡلِمُ مِثۡقَالَ ذَرَّةٖۖ وَإِن تَكُ حَسَنَةٗ يُضَٰعِفۡهَا وَيُؤۡتِ مِن لَّدُنۡهُ أَجۡرًا عَظِيمٗا","God does not wrong anyone by the weight of an atom, and if there is a good deed He multiplies it, and gives from Himself a great reward.",1,
+  "Be exact where you owe, generous where you give. You will not be judged by a standard you were never shown."]],
+["اللَّطِيف","Al-Latif","The Subtle and the Gentle, whose kindness reaches unseen",
+ ["ل ط ف","latufa — to be fine, subtle, imperceptibly small; and to be gentle",
+  "Two meanings, and the Name holds both. He is subtle: His knowledge reaches into what is too fine to be seen, and His acting is so quiet it is usually only visible looking backwards. And He is gentle: the reaching is kind. Put together, Al-Latif names the help you did not notice arriving — the delay that saved you, the door that closed, the person who happened to say the thing. The Qur'an pairs it with The Aware, so the subtlety is never absent-mindedness.",
+  "67:14","أَلَا يَعۡلَمُ مَنۡ خَلَقَ وَهُوَ ٱللَّطِيفُ ٱلۡخَبِيرُ","Would He who created not know? And He is the Subtle, the All-Aware.",0,
+  "Go back over a year you thought was wasted and look for the fine work. It is usually there, and usually was not visible at the time."]],
+["الْخَبِير","Al-Khabir","The All-Aware",
+ ["خ ب ر","khabara — to know a thing from the inside, by testing and experience; khabar, a report",
+  "'Alim is knowledge of the thing; Khabir is knowledge of what is inside it. The root carries the sense of knowing by having gone into — the way a person who has worked the land knows the soil differently from a person who has read about it. He knows the inner state: the motive under the stated reason, the fear under the anger, the good intention inside the clumsy act. This is a comfort more often than it is a threat.",
+  "67:14","أَلَا يَعۡلَمُ مَنۡ خَلَقَ وَهُوَ ٱللَّطِيفُ ٱلۡخَبِيرُ","Would He who created not know? And He is the Subtle, the All-Aware.",0,
+  "Stop explaining yourself to people who will never see inside. The One who reads the inside has already read it."]],
+["الْحَلِيم","Al-Halim","The Forbearing, who does not hasten to punish",
+ ["ح ل م","haluma — to be forbearing, slow to anger, deliberate under provocation",
+  "Hilm is not the absence of anger; it is power that declines to move at speed. He sees the wrong as it happens and does not strike, and the delay is not weakness or indifference — it is room. Every person reading this has been given that room at some point and used it badly at least once. The Qur'an notes it plainly: if He seized people for what they have earned, He would not leave a single creature on the earth.",
+  "2:263","۞قَوۡلٞ مَّعۡرُوفٞ وَمَغۡفِرَةٌ خَيۡرٞ مِّن صَدَقَةٖ يَتۡبَعُهَآ أَذٗىۗ وَٱللَّهُ غَنِيٌّ حَلِيمٞ","A kind word and a pardon are better than a charity followed by injury. And God is Free of need, Forbearing.",0,
+  "The room you are standing in was given to you. Extend the same delay to the person who wronged you last week."]],
+["الْعَظِيم","Al-'Azim","The Magnificent",
+ ["ع ظ م","'azuma — to be great; from 'azm, the bone, the solid core of a thing",
+  "The root is the word for bone, the hard structure everything else hangs on. Greatness here is not size and not volume; it is the weight that things have to be measured against. The verse of the Throne, the most quoted verse in the Book, ends on this Name, after four lines describing knowledge, dominion, and a throne wider than the heavens — and the summary is not a description. It is a refusal to describe.",
+  "2:255","وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَۖ وَلَا يَـُٔودُهُۥ حِفۡظُهُمَاۚ وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ","His seat spans the heavens and the earth, and keeping them does not weary Him. And He is the Most High, the Magnificent.",0,
+  "Put your problem next to the Throne verse and read it once. This is not to belittle the problem. It is to get it into scale."]],
+["الْغَفُور","Al-Ghafur","The Much-Forgiving",
+ ["غ ف ر","the same root as Al-Ghaffar — to cover over so that the fault no longer shows",
+  "Ghaffar is the intensive of repetition, Ghafur is the intensive of extent: the covering is total. Not managed, not conditional, not a suspended sentence. The Qur'an's most extreme statement of it tells those who have wronged themselves beyond all measure not to despair, because He forgives all sins, all of them. Despair is treated by the Book as its own error, and this Name is the argument against it.",
+  "34:2","يَعۡلَمُ مَا يَلِجُ فِي ٱلۡأَرۡضِ وَمَا يَخۡرُجُ مِنۡهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعۡرُجُ فِيهَاۚ وَهُوَ ٱلرَّحِيمُ ٱلۡغَفُورُ","He knows what goes into the earth and what comes out of it, what comes down from the sky and what goes up into it. And He is the Ever-Merciful, the Much-Forgiving.",0,
+  "Whatever you think is past forgiving — that specific thing, the one that came to mind just now — is inside the word all."]],
+["الشَّكُور","Ash-Shakur","The Most Appreciative, who repays little with much",
+ ["ش ك ر","shakara — to be grateful; of an animal, to give much milk on little fodder",
+  "The root's agricultural sense is the key: a beast described as shakur gives far more than the feed would explain. He is the One who repays a little with much and thanks the one who owed Him everything. A moment of restraint no one saw, a coin given quietly, a good intention that never got to act — the Book says these are received, kept, and multiplied. The exchange rate is not fair. It is deliberately not fair.",
+  "42:23","وَمَن يَقۡتَرِفۡ حَسَنَةٗ نَّزِدۡ لَهُۥ فِيهَا حُسۡنًاۚ إِنَّ ٱللَّهَ غَفُورٞ شَكُورٌ","Whoever earns a good deed, We increase for him the good of it. God is Much-Forgiving, Most Appreciative.",0,
+  "Do the small good you have been dismissing as too small to matter. The smallness is not a problem for this Name."]],
+["الْعَلِيّ","Al-'Ali","The Most High",
+ ["ع ل و","'ala — to be high, to rise above",
+  "His highness is not a position in space, and the Book is careful about this: vision does not reach Him, nothing is like Him, He is not contained. What the Name says is that He is above every kind of deficiency and above the reach of every comparison. He is above needing you, above being affected by your praise or wounded by your denial. That is what makes turning to Him different from every other relationship you have.",
+  "2:255","وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَۖ وَلَا يَـُٔودُهُۥ حِفۡظُهُمَاۚ وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ","His seat spans the heavens and the earth, and keeping them does not weary Him. And He is the Most High, the Magnificent.",0,
+  "You cannot flatter Him and you cannot injure Him. Speak accordingly — plainly, and without performance."]],
+["الْكَبِير","Al-Kabir","The Most Great",
+ ["ك ب ر","the same root as Al-Mutakabbir — greatness, here as a plain statement",
+  "Al-Kabir names greatness that does not depend on anything being compared to it. Ours is always relative: bigger than, richer than, ahead of. Remove the others and it evaporates. His does not scale against anything, which is why the word Muslims say most often in a day is not a comparison either — Allahu akbar has no second term. It is left open on purpose. Greater than whatever you were about to put there.",
+  "22:62","ذَٰلِكَ بِأَنَّ ٱللَّهَ هُوَ ٱلۡحَقُّ وَأَنَّ مَا يَدۡعُونَ مِن دُونِهِۦ هُوَ ٱلۡبَٰطِلُ وَأَنَّ ٱللَّهَ هُوَ ٱلۡعَلِيُّ ٱلۡكَبِيرُ","That is because God is the Truth, and what they call upon besides Him is falsehood, and because God is the Most High, the Most Great.",0,
+  "Say it at the start of the prayer and mean the open ending. Greater than the thing you walked in worrying about."]],
+["الْحَفِيظ","Al-Hafiz","The Preserver",
+ ["ح ف ظ","hafiza — to guard, to preserve, to keep something from being lost; the root behind memorising",
+  "To preserve is to keep a thing exactly as it was. He preserves the Book, which is why a boy in Indonesia and an old man in Morocco recite the same consonants. He preserves deeds, so nothing done is lost, and nothing done to you is lost either. And He preserves people, which is the part that goes unnoticed, because a danger that never arrived leaves no trace and gets no thanks.",
+  "11:57","فَإِن تَوَلَّوۡاْ فَقَدۡ أَبۡلَغۡتُكُم مَّآ أُرۡسِلۡتُ بِهِۦٓ إِلَيۡكُمۡۚ وَيَسۡتَخۡلِفُ رَبِّي قَوۡمًا غَيۡرَكُمۡ وَلَا تَضُرُّونَهُۥ شَيۡـًٔاۚ إِنَّ رَبِّي عَلَىٰ كُلِّ شَيۡءٍ حَفِيظٞ","If they turn away: I have delivered to you what I was sent with. My Lord will put another people in your place, and you cannot harm Him at all. My Lord is Guardian over all things.",0,
+  "Assume you have been protected from things you will never learn about. Live as someone who has been carried, not someone who has been lucky."]],
+["الْمُقِيت","Al-Muqit","The Sustainer, who gives each thing its measure",
+ ["ق و ت","qata — to nourish, to give the measured daily food; qut, the ration that keeps a body alive",
+  "Qut is not a feast; it is the exact amount that keeps a living thing alive. Al-Muqit is the One who apportions that measure to every creature, watches over it, and has the power to deliver it. The Name gathers three things Arabic keeps together and English splits: nourishment, capability, and custody. He knows the ration you need, He is able to send it, and He is the one keeping the account.",
+  "4:85","مَّن يَشۡفَعۡ شَفَٰعَةً حَسَنَةٗ يَكُن لَّهُۥ نَصِيبٞ مِّنۡهَاۖ وَمَن يَشۡفَعۡ شَفَٰعَةٗ سَيِّئَةٗ يَكُن لَّهُۥ كِفۡلٞ مِّنۡهَاۗ وَكَانَ ٱللَّهُ عَلَىٰ كُلِّ شَيۡءٖ مُّقِيتٗا","Whoever intercedes for a good cause has a share in it, and whoever intercedes for an evil one carries part of its burden. And God has always been Keeper over all things.",0,
+  "You are being fed by measure, not by abundance, and the measure is not an oversight. Eat it with thanks and stop comparing rations."]],
+["الْحَسِيب","Al-Hasib","The Reckoner, who is enough",
+ ["ح س ب","hasaba — to count, to reckon, to settle an account; and hasb, enough",
+  "Two meanings, and both are in the Name. He is the Reckoner who counts everything precisely, and He is the One who is enough. The second is why the Name comforts rather than frightens: the same word that says every deed is being tallied says that He, alone, suffices. When the Prophet's community was told that a great army had gathered against them, the answer recorded in the Book is a sentence built from this root — God is enough for us.",
+  "4:6","فَإِذَا دَفَعۡتُمۡ إِلَيۡهِمۡ أَمۡوَٰلَهُمۡ فَأَشۡهِدُواْ عَلَيۡهِمۡۚ وَكَفَىٰ بِٱللَّهِ حَسِيبٗا","So when you hand over their property to them, have it witnessed. And God is enough as a Reckoner.",0,
+  "Say the accounting matters and then act as though the auditor is also your defence. Both are true, and only one of them is news."]],
+["الْجَلِيل","Al-Jalil","The Majestic",
+ ["ج ل ل","jalla — to be majestic, weighty, exalted beyond triviality",
+  "Jalal is majesty of the kind that produces awe rather than affection — the aspect of God the Qur'an sets beside beauty and generosity, never alone. The Book does not use Al-Jalil as a noun; it says Dhu-l-Jalali wa-l-Ikram, the Owner of Majesty and Honour, and it says it twice in one surah, both times attached to what remains when everything else has gone. Majesty in the Qur'an is never separated from generosity, and the pairing is the whole doctrine.",
+  "55:27","وَيَبۡقَىٰ وَجۡهُ رَبِّكَ ذُو ٱلۡجَلَٰلِ وَٱلۡإِكۡرَامِ","And there remains the Face of your Lord, Owner of Majesty and Honour.",1,
+  "Let awe and warmth sit in the same prayer. A faith with only one of them turns into either terror or sentiment."]],
+["الْكَرِيم","Al-Karim","The Most Generous",
+ ["ك ر م","karuma — to be noble, generous; karam is generosity as a quality of character, not an act",
+  "Karam in Arabic is not a behaviour, it is a nature: the noble person gives because of what he is, not because of who is watching or who asked. Al-Karim gives before being asked, gives more than was asked, gives to the one who has no claim, and does not remind the recipient afterwards. That last part is why the Qur'an tells those who give charity not to follow it with reproach — the standard being set is His.",
+  "82:6","يَـٰٓأَيُّهَا ٱلۡإِنسَٰنُ مَا غَرَّكَ بِرَبِّكَ ٱلۡكَرِيمِ","O man, what has deceived you about your Lord, the Generous?",0,
+  "Give once this week without telling anyone, and then do not bring it up later. The not-bringing-up is the harder half and the actual point."]],
+["الرَّقِيب","Ar-Raqib","The Watchful",
+ ["ر ق ب","raqaba — to watch closely; raqabah, the neck, from watching over it",
+  "The root is physical: the neck, and the watcher who keeps his eye on it. Ar-Raqib is the One who watches continuously — not sampling, not checking in. The Qur'an places this Name in the mouth of Jesus on the Day of Judgement, saying that while he was among them he was a witness, and when God took him, God was the Watcher over them. The switch is the point. Human oversight ends. This does not.",
+  "4:1","وَٱتَّقُواْ ٱللَّهَ ٱلَّذِي تَسَآءَلُونَ بِهِۦ وَٱلۡأَرۡحَامَۚ إِنَّ ٱللَّهَ كَانَ عَلَيۡكُمۡ رَقِيبٗا","And be mindful of God, in whose name you ask of one another, and of the ties of kinship. God has always been Watchful over you.",0,
+  "The thing you do when the door closes is the thing you actually are. Start there rather than with the public version."]],
+["الْمُجِيب","Al-Mujib","The Responsive, who answers the one who calls",
+ ["ج و ب","ajaba — to answer, to respond to a call",
+  "He answers. The Qur'an's phrasing is careful and often missed: I respond to the call of the caller when he calls Me. It does not say the answer will be the thing requested, and the Book is honest that you may hate what is good for you and love what is not. The reports describe three doors: the thing itself, something better in its place, or the whole weight of it held over for later. The one thing the Book does not allow is the call going nowhere.",
+  "11:61","فَٱسۡتَغۡفِرُوهُ ثُمَّ تُوبُوٓاْ إِلَيۡهِۚ إِنَّ رَبِّي قَرِيبٞ مُّجِيبٞ","Ask His forgiveness, then turn back to Him. My Lord is near, and answers.",0,
+  "Ask for the specific thing, in your own words, in your own language, and then accept that the answer may arrive in a form you did not submit."]],
+["الْوَاسِع","Al-Wasi'","The All-Encompassing",
+ ["و س ع","wasi'a — to be wide, to have room, to encompass",
+  "Wideness is the idea: His mercy has room, His knowledge has room, His giving has room. The Name answers a fear people rarely say out loud — that there might not be enough left for them, that they came too late or asked too often or used up their allowance. The verse says wherever you turn, there is the Face of God. There is no direction in which He runs out.",
+  "2:115","وَلِلَّهِ ٱلۡمَشۡرِقُ وَٱلۡمَغۡرِبُۚ فَأَيۡنَمَا تُوَلُّواْ فَثَمَّ وَجۡهُ ٱللَّهِۚ إِنَّ ٱللَّهَ وَٰسِعٌ عَلِيمٞ","To God belong the east and the west; wherever you turn, there is the Face of God. God is All-Encompassing, All-Knowing.",0,
+  "Ask big. You are not drawing down a limited fund, and treating it as one is its own kind of insult."]],
+["الْحَكِيم","Al-Hakim","The All-Wise",
+ ["ح ك م","the same root as Al-Hakam — judgement, and from it hikmah, wisdom",
+  "Wisdom in Arabic is knowledge that knows what to do. He is not only aware of everything; He places everything, and places it rightly, including the parts that look to us like errors in the design. The Qur'an pairs this Name with 'Alim more than any other pairing in the Book, and the pairing is doing real work: knowing without wisdom is data, and wisdom without knowing is guesswork.",
+  "2:32","قَالُواْ سُبۡحَٰنَكَ لَا عِلۡمَ لَنَآ إِلَّا مَا عَلَّمۡتَنَآۖ إِنَّكَ أَنتَ ٱلۡعَلِيمُ ٱلۡحَكِيمُ","They said: glory be to You, we have no knowledge but what You have taught us. It is You who are the All-Knowing, the All-Wise.",0,
+  "When something makes no sense, hold the two Names together. He knows what you cannot see, and He placed it on purpose. That is not an explanation and it was never offered as one."]],
+["الْوَدُود","Al-Wadud","The Most Loving",
+ ["و د د","wadda — to love with affection and tenderness; wudd is love that shows",
+  "Arabic has several words for love and this is the warm one — affection that is expressed, not merely felt. It is used for what is between spouses. The Qur'an says He is Al-Ghafur, Al-Wadud, in that order, in a surah about believers being burned alive for their faith: forgiving, and affectionate. Not tolerating. Not permitting. Fond of. This is the Name that most often surprises people who thought they knew what the Book said about God.",
+  "85:14","وَهُوَ ٱلۡغَفُورُ ٱلۡوَدُودُ","And He is the Much-Forgiving, the Most Loving.",0,
+  "Consider that you might be loved rather than merely permitted. Most people's spiritual life changes shape when that lands."]],
+["الْمَجِيد","Al-Majid","The Most Glorious",
+ ["م ج د","majuda — to be glorious, noble, abundant in honour",
+  "Majd is glory that combines two things: honour so complete it cannot be added to, and generosity so wide it cannot be exhausted. Arabic uses the word for a lineage that is noble and a giving that is lavish, and Al-Majid is both at once. The verse attaches it to the Throne — the Owner of the Glorious Throne — placing the greatest created thing next to the One who owns it, so the scale of the second is read off the first.",
+  "85:15","ذُو ٱلۡعَرۡشِ ٱلۡمَجِيدُ","Owner of the Throne, the Glorious.",0,
+  "Glory and generosity are the same trait in Him. If yours have come apart, one of them is fake."]],
+["الْبَاعِث","Al-Ba'ith","The Resurrector",
+ ["ب ع ث","ba'atha — to send out, to rouse from sleep, to raise up",
+  "The same verb sends a messenger and raises a body from a grave, and the Book uses them side by side deliberately. Resurrection in the Qur'an is not argued as magic; it is argued as a second instance of something already done once. The one who made you the first time is not stretched by the second. This is the Name behind the argument, and it is why the Qur'an keeps pointing at dead ground turning green after rain.",
+  "22:7","وَأَنَّ ٱلسَّاعَةَ ءَاتِيَةٞ لَّا رَيۡبَ فِيهَا وَأَنَّ ٱللَّهَ يَبۡعَثُ مَن فِي ٱلۡقُبُورِ","And that the Hour is coming, no doubt of it, and that God will raise up those who are in the graves.",1,
+  "Live as though nothing is finally lost — not the good you did that nobody saw, and not the person you buried."]],
+["الشَّهِيد","Ash-Shahid","The Witness, from whom nothing is hidden",
+ ["ش ه د","shahida — to witness, to be present at; shahadah, both testimony and martyrdom",
+  "To witness in Arabic requires presence: a witness is someone who was there. He was present at everything, which makes His testimony unlike any other. Nothing was outside the room. This is the root of the word a Muslim says to enter Islam and the word for the one who dies for it, and the connection is not decorative — both are a person putting their whole weight behind a statement about what is real.",
+  "4:79","مَّآ أَصَابَكَ مِنۡ حَسَنَةٖ فَمِنَ ٱللَّهِۖ وَمَآ أَصَابَكَ مِن سَيِّئَةٖ فَمِن نَّفۡسِكَۚ وَأَرۡسَلۡنَٰكَ لِلنَّاسِ رَسُولٗاۚ وَكَفَىٰ بِٱللَّهِ شَهِيدٗا","Whatever good reaches you is from God, and whatever harm reaches you is from yourself. We sent you to people as a messenger. And God is enough as a Witness.",0,
+  "Where you were wronged in private, there was a witness. Where you wronged someone in private, there was a witness. It is the same sentence."]],
+["الْحَقّ","Al-Haqq","The Truth, and the only thing that does not pass",
+ ["ح ق ق","haqqa — to be real, established, true; haqq is both truth and a right that is owed",
+  "One word in Arabic carries truth, reality, and what is rightfully owed, and the overlap is the doctrine. He is the Real — the only thing that exists without borrowing existence from something else. Everything you can point to is on loan and returning. The Qur'an says everything perishes but His Face, and this Name is where that sits. Al-Haqq is also the standard against which claims are measured, which is why the same word means a right.",
+  "22:6","ذَٰلِكَ بِأَنَّ ٱللَّهَ هُوَ ٱلۡحَقُّ وَأَنَّهُۥ يُحۡيِ ٱلۡمَوۡتَىٰ وَأَنَّهُۥ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ","That is because God is the Truth, and because He gives life to the dead, and because He is able to do all things.",0,
+  "Ask what in your week you are treating as permanent. Then ask what it is standing on."]],
+["الْوَكِيل","Al-Wakil","The Trustee, to whom affairs are handed",
+ ["و ك ل","wakala — to entrust an affair to someone; a wakil is an agent who acts on your behalf",
+  "A wakil in Arabic law is someone you appoint to handle a matter you cannot handle — with real authority, not advice. Tawakkul, the state the Book keeps commanding, is not passivity: you appoint the agent and then you do your part without carrying what is not yours. The Prophet's community said the sentence in this verse when a much larger force was reported to be marching on them, and the Book records that it increased them in faith, not in calm.",
+  "3:173","ٱلَّذِينَ قَالَ لَهُمُ ٱلنَّاسُ إِنَّ ٱلنَّاسَ قَدۡ جَمَعُواْ لَكُمۡ فَٱخۡشَوۡهُمۡ فَزَادَهُمۡ إِيمَٰنٗا وَقَالُواْ حَسۡبُنَا ٱللَّهُ وَنِعۡمَ ٱلۡوَكِيلُ","Those to whom people said: they have gathered against you, so fear them. It only increased them in faith, and they said: God is enough for us, and the best of trustees.",0,
+  "Do your part fully, hand over the outcome completely, and stop taking the file back every few hours to check on it."]],
+["الْقَوِيّ","Al-Qawiyy","The All-Strong",
+ ["ق و ي","qawiya — to be strong, to have power that acts",
+  "Strength that is exercised. The Qur'an tends to place this Name where people are afraid of someone else's power — the tyrant, the army, the crowd — and the placement is the argument: the strength you are afraid of is delegated and revocable. The verse pairs it with subtlety, so the power is not blunt. He is gentle with His servants, and He is the Strong. Both in one line.",
+  "42:19","ٱللَّهُ لَطِيفُۢ بِعِبَادِهِۦ يَرۡزُقُ مَن يَشَآءُۖ وَهُوَ ٱلۡقَوِيُّ ٱلۡعَزِيزُ","God is subtle with His servants; He provides for whom He wills. And He is the Strong, the Almighty.",0,
+  "Fear of a powerful person is a category error you can correct in one sentence. Say the sentence."]],
+["الْمَتِين","Al-Matin","The Firm, whose strength does not tire",
+ ["م ت ن","matuna — to be firm, solid, tough; matn is the back or the solid body of a thing",
+  "Where Al-Qawiyy is strength that acts, Al-Matin is strength that does not tire and does not thin out. The root describes the solid part: the back of an animal, the body of a text as distinct from its chain of transmitters. Human strength always has a term — the athlete slows, the empire ends, the will erodes. The verse pairs it with the Provider, and it is the pairing that matters, because provision that could run out is not provision.",
+  "51:58","إِنَّ ٱللَّهَ هُوَ ٱلرَّزَّاقُ ذُو ٱلۡقُوَّةِ ٱلۡمَتِينُ","It is God who is the Provider, the Owner of strength, the Firm.",0,
+  "You are leaning on something that does not have a bad day. Lean harder."]],
+["الْوَلِيّ","Al-Waliyy","The Protecting Friend",
+ ["و ل ي","waliya — to be near, to be adjacent; a wali is a near ally, a guardian, a friend who protects",
+  "Wali is not a distant patron. The root means nearness — the one standing next to you, close enough to act. It is the word for the guardian at a marriage, for the ally in a treaty, for the near friend. He is the Protecting Friend of those who believe, bringing them out of darkness into light, and the same word describes what the false powers are not, no matter what they promise.",
+  "42:9","أَمِ ٱتَّخَذُواْ مِن دُونِهِۦٓ أَوۡلِيَآءَۖ فَٱللَّهُ هُوَ ٱلۡوَلِيُّ وَهُوَ يُحۡيِ ٱلۡمَوۡتَىٰ وَهُوَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ","Or have they taken protectors besides Him? God is the Protector, and He gives life to the dead, and He is able to do all things.",0,
+  "Count your protectors honestly, then notice which of them will still be there when it costs them something."]],
+["الْحَمِيد","Al-Hamid","The Praiseworthy",
+ ["ح م د","hamida — to praise; hamd is praise given for what a thing is, not only for what it gave you",
+  "Arabic separates thanking from praising. Shukr is a response to a benefit received; hamd is owed for what a thing is in itself, benefit or not. He is Al-Hamid whether or not you are grateful this morning, and whether or not anyone praises. The Book opens with this word and the surah is said in every unit of every prayer, which means a Muslim says it more often than any other sentence they will ever say.",
+  "31:26","لِلَّهِ مَا فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۚ إِنَّ ٱللَّهَ هُوَ ٱلۡغَنِيُّ ٱلۡحَمِيدُ","To God belongs all that is in the heavens and the earth. God is the Free of need, the Praiseworthy.",0,
+  "Praise Him once today for something that has not benefited you at all. That is what the word actually means."]],
+["الْمُحْصِي","Al-Muhsi","The One who counts all things",
+ ["ح ص ي","ahsa — to count exactly, to enumerate; from the pebbles once used for counting",
+  "The root comes from counting with stones, one pebble per item, which is as concrete as counting gets. He has enumerated all things in number. Not estimated. The Qur'an applies this to what is inside a person's own record — they will say, what is this book that leaves out nothing small or great but has counted it? Nothing is too minor to have been recorded, in either direction.",
+  "72:28","لِّيَعۡلَمَ أَن قَدۡ أَبۡلَغُواْ رِسَٰلَٰتِ رَبِّهِمۡ وَأَحَاطَ بِمَا لَدَيۡهِمۡ وَأَحۡصَىٰ كُلَّ شَيۡءٍ عَدَدَۢا","That He may know they have delivered the messages of their Lord. He encompasses what is with them, and has counted all things in number.",1,
+  "The kindness nobody noticed was counted. So was the other thing. Both facts are the same fact."]],
+["الْمُبْدِئ","Al-Mubdi'","The Originator, who begins",
+ ["ب د ا","bada'a — to begin, to do a thing for the first time with no model to copy",
+  "To begin without precedent. The Qur'an uses this verb as a challenge: is there any of your partners who begins creation and then repeats it? The question is rhetorical because beginning is the hardest claim to fake. Everything humans make is a rearrangement of what was already here. He began it, and the word carries no prior model, no material, no template.",
+  "10:34","قُلۡ هَلۡ مِن شُرَكَآئِكُم مَّن يَبۡدَؤُاْ ٱلۡخَلۡقَ ثُمَّ يُعِيدُهُۥۚ قُلِ ٱللَّهُ يَبۡدَؤُاْ ٱلۡخَلۡقَ ثُمَّ يُعِيدُهُۥۖ فَأَنَّىٰ تُؤۡفَكُونَ","Say: is there any of your partners who begins creation and then repeats it? Say: God begins creation and then repeats it. How then are you turned away?",1,
+  "Whatever you are building, you are rearranging. That is not a criticism; it is the correct job description."]],
+["الْمُعِيد","Al-Mu'id","The Restorer, who begins it again",
+ ["ع و د","'ada — to return, to do again; the root of 'id, the festival that comes back around",
+  "The second half of the same verse. He begins, then He repeats it — and the repetition is easier, the Book says, though both are equal to Him. This is the Qur'an's standing argument for the resurrection, made from ordinary observation rather than from mystery: you have already seen Him do the difficult version of this. The word is the same root as 'Id, the day that comes back around every year.",
+  "10:34","قُلۡ هَلۡ مِن شُرَكَآئِكُم مَّن يَبۡدَؤُاْ ٱلۡخَلۡقَ ثُمَّ يُعِيدُهُۥۚ قُلِ ٱللَّهُ يَبۡدَؤُاْ ٱلۡخَلۡقَ ثُمَّ يُعِيدُهُۥۖ فَأَنَّىٰ تُؤۡفَكُونَ","Say: is there any of your partners who begins creation and then repeats it? Say: God begins creation and then repeats it. How then are you turned away?",1,
+  "Nothing is over. Not the year you wasted, and not the person you lost."]],
+["الْمُحْيِي","Al-Muhyi","The Giver of Life",
+ ["ح ي ي","hayya — to live; the root of hayah, life, and of haya', the modesty that keeps a soul alive",
+  "He gives life, and the Qur'an keeps pointing at the same evidence: look at dead ground after rain. Life is the thing no one has ever manufactured from nothing, only ever transferred from something already living. He gives it to the earth every spring, to the body in the womb, to a heart that had gone hard and then unaccountably softened. The last of those is the one the Book treats as the real miracle.",
+  "30:50","فَٱنظُرۡ إِلَىٰٓ ءَاثَٰرِ رَحۡمَتِ ٱللَّهِ كَيۡفَ يُحۡيِ ٱلۡأَرۡضَ بَعۡدَ مَوۡتِهَآۚ إِنَّ ذَٰلِكَ لَمُحۡيِ ٱلۡمَوۡتَىٰۖ وَهُوَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ","So look at the traces of God's mercy, how He gives life to the earth after its death. That same One gives life to the dead, and He is able to do all things.",0,
+  "If something in you has gone dead — a prayer, a relationship, an ability to feel — it is in the category of things He is described as reviving."]],
+["الْمُمِيت","Al-Mumit","The Bringer of Death",
+ ["م و ت","mata — to die; and the causative, to bring death",
+  "Death in the Qur'an is not the failure of a system; it is an act, appointed and precise. Every soul tastes it, at a term that does not move forward or back by an hour. It is placed beside life in a single verse — indeed We give life and cause death — and the pairing removes death from the category of accident. It is not what happens when He looks away.",
+  "15:23","وَإِنَّا لَنَحۡنُ نُحۡيِۦ وَنُمِيتُ وَنَحۡنُ ٱلۡوَٰرِثُونَ","It is We who give life and give death, and it is We who inherit.",1,
+  "Nothing can kill you before your term, and nothing can delay it. That is either the most frightening sentence in this room or the most freeing, and it is the same sentence."]],
+["الْحَيّ","Al-Hayy","The Ever-Living",
+ ["ح ي ي","the same root as Al-Muhyi — life, here as His own attribute",
+  "He is alive — not granted life, not sustained in it, not able to lose it. Everything else that lives is borrowing, and the loan is called back. The Throne verse opens with this Name and immediately says neither drowsiness nor sleep takes Him, which is the Book's way of ruling out the smallest lapse: not even the gap between two thoughts. There is no moment in which the universe is unattended.",
+  "2:255","ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ","God, there is no god but Him, the Ever-Living, the Self-Subsisting. No drowsiness takes Him, nor sleep.",0,
+  "There is no hour at which He is off duty. Pray at three in the morning if that is when you are awake."]],
+["الْقَيُّوم","Al-Qayyum","The Self-Subsisting, upon whom all else stands",
+ ["ق و م","qama — to stand; qayyum is the one who stands and by whom everything else stands",
+  "The form is intensive twice over. He stands by Himself, needing nothing to hold Him up, and everything else stands by Him. Remove Him from the picture for an instant and there is no picture. The Throne verse pairs it with Al-Hayy and the two together are the Qur'an's tightest statement of what God is: alive without being given life, and holding without being held.",
+  "2:255","ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ","God, there is no god but Him, the Ever-Living, the Self-Subsisting. No drowsiness takes Him, nor sleep.",0,
+  "You are not self-made. Nothing is. The only question is whether you know what you are standing on."]],
+["الْوَاجِد","Al-Wajid","The Finder, who lacks nothing",
+ ["و ج د","wajada — to find; and from it, to have, to lack nothing",
+  "The Name is not in the Qur'an as a noun, and the closest thing the Book says instead is stated flatly: you are the ones in need of God, and God is the Free of need. Al-Wajid names that lack of lack. He finds whatever He wills whenever He wills, because nothing is absent from Him and nothing has to be procured. Every need you have ever felt is evidence of what He does not have.",
+  "47:38","وَٱللَّهُ ٱلۡغَنِيُّ وَأَنتُمُ ٱلۡفُقَرَآءُۚ","God is the Free of need, and you are the poor.",1,
+  "Notice what you need in a day — food, sleep, reassurance, air. That inventory is the negative image of this Name."]],
+["الْمَاجِد","Al-Majid","The Noble",
+ ["م ج د","the same root as Al-Majid at number forty-eight, in a different form",
+  "Two Names from one root sit in this list, and the pair is a good example of why the enumeration should be read carefully rather than as a list of ninety-nine separate facts. Both say glory joined to generosity. The verse where the word is used of God is spoken by angels to a woman being told, in old age, that she will have a child — indeed He is Praiseworthy and Glorious. The setting is not accidental. Glory is being demonstrated as kindness.",
+  "11:73","قَالُوٓاْ أَتَعۡجَبِينَ مِنۡ أَمۡرِ ٱللَّهِۖ رَحۡمَتُ ٱللَّهِ وَبَرَكَٰتُهُۥ عَلَيۡكُمۡ أَهۡلَ ٱلۡبَيۡتِۚ إِنَّهُۥ حَمِيدٞ مَّجِيدٞ","They said: are you astonished at the command of God? The mercy of God and His blessings be upon you, people of the house. He is Praiseworthy, Glorious.",1,
+  "Where you are most sure you have been passed over, that is exactly where the Book keeps setting this scene."]],
+["الْوَاحِد","Al-Wahid","The One",
+ ["و ح د","wahada — to be one, single, without a second of the same kind",
+  "Wahid is one in the sense of unique in rank: there is no other of this kind. The Qur'an pairs it almost every time with Al-Qahhar, and the pairing does the argument's work — oneness that could be contested would not be oneness. The question in the Book is put to a prisoner by a fellow prisoner: are many different lords better, or the One, the Prevailing? It is the plainest form of the whole case.",
+  "39:4","لَّوۡ أَرَادَ ٱللَّهُ أَن يَتَّخِذَ وَلَدٗا لَّٱصۡطَفَىٰ مِمَّا يَخۡلُقُ مَا يَشَآءُۚ سُبۡحَٰنَهُۥۖ هُوَ ٱللَّهُ ٱلۡوَٰحِدُ ٱلۡقَهَّارُ","Had God willed to take a son, He would have chosen from what He creates whatever He willed. Glory be to Him. He is God, the One, the All-Subduing.",0,
+  "Count how many things you actually serve in a week. Oneness is a practical claim before it is a theological one."]],
+["الْأَحَد","Al-Ahad","The Unique, who has no second",
+ ["ا ح د","ahad — one, in the sense that admits no parts and no second at all",
+  "Wahid and Ahad are not synonyms. Ahad is the more absolute: not one of a series, not one that could be joined by a second, not one that has parts. It is used of Him in the surah that the Prophet is reported to have called equal to a third of the Qur'an, and the surah is four lines long. He is One. He begets not and is not begotten. And there is nothing comparable to Him.",
+  "112:1","قُلۡ هُوَ ٱللَّهُ أَحَدٌ","Say: He is God, One.",0,
+  "Every idol anyone has ever built failed on this line. Check which of yours is standing on it."]],
+["الصَّمَد","As-Samad","The Eternal Refuge, needing none, needed by all",
+ ["ص م د","samad — solid all the way through, with no hollow; and the one everything turns to in need",
+  "Two ancient meanings, both preserved. A rock called samad is one with no cavity, nothing missing inside it. And the samad of a tribe is the one everyone goes to when something has gone wrong. Put together: He is full, and He is the destination of every need. The Qur'an uses the word exactly once, in the four-line surah about who He is, and it is the only line there that is a positive description rather than a denial.",
+  "112:2","ٱللَّهُ ٱلصَّمَدُ","God, the Eternal Refuge.",0,
+  "Notice who you go to first when the news is bad. That is your actual samad, and it may not be Him yet."]],
+["الْقَادِر","Al-Qadir","The All-Powerful",
+ ["ق د ر","qadara — to have power over; and to measure out a precise amount",
+  "The root joins power and measure, which is the whole idea: His power is never crude. He is able over all things, and the ability is exercised by exact decree, not by force applied at random. The Book keeps returning to it — He is over all things Qadir — as the closing note of arguments about resurrection, about provision, about the impossible situation. It is the sentence that ends the objection.",
+  "6:65","قُلۡ هُوَ ٱلۡقَادِرُ عَلَىٰٓ أَن يَبۡعَثَ عَلَيۡكُمۡ عَذَابٗا مِّن فَوۡقِكُمۡ أَوۡ مِن تَحۡتِ أَرۡجُلِكُمۡ","Say: He is the One with the power to send upon you a punishment from above you, or from beneath your feet.",0,
+  "Take the thing you have privately filed as impossible and reopen the file. Impossible is a statement about you."]],
+["الْمُقْتَدِر","Al-Muqtadir","The Determiner, who brings power to bear",
+ ["ق د ر","the same root as Al-Qadir, in a form that means power actually brought to bear",
+  "Where Qadir is the ability, Muqtadir is the ability exercised — power that has arrived. The Qur'an uses it in two very different settings, and both belong: the seizure of nations that denied every sign, and the seat of truth with the Sovereign, Perfect in Ability, for those who kept faith. Same Name, same power, two destinations. The Book almost never lets a Name of might stand without showing where it lands.",
+  "54:42","كَذَّبُواْ بِـَٔايَٰتِنَا كُلِّهَا فَأَخَذۡنَٰهُمۡ أَخۡذَ عَزِيزٖ مُّقۡتَدِرٍ","They denied Our signs, every one of them, so We seized them with the seizing of One Almighty, Perfect in power.",0,
+  "Ability that never acts is a rumour. His has a record, and the record runs both ways."]],
+["الْمُقَدِّم","Al-Muqaddim","The Expediter, who brings forward",
+ ["ق د م","qaddama — to put forward, to advance a thing ahead of another",
+  "He brings forward. Which nation rises now and which waits; which prayer is answered this year; which person, unqualified in every visible way, is put in front. The Qur'an says of a fixed term that they cannot advance it by an hour nor delay it, and the sentence sets the limit of human scheduling. This Name and its pair are not in the Book as nouns; they come to us from the enumeration narrated from the Prophet, and they are usually read together.",
+  "16:61","فَإِذَا جَآءَ أَجَلُهُمۡ لَا يَسۡتَـٔۡخِرُونَ سَاعَةٗ وَلَا يَسۡتَقۡدِمُونَ","And when their term comes they cannot delay it by an hour, nor bring it forward.",1,
+  "You are not the scheduler. Do the work now and let the placing be done by the One who can see the whole queue."]],
+["الْمُؤَخِّر","Al-Mu'akhkhir","The Delayer, who holds back",
+ ["ا خ ر","akhkhara — to put back, to defer, to delay",
+  "He defers. The verse is severe and merciful in the same breath: if He took people to task for their wrongdoing, He would not leave a single creature on the earth — but He defers them to an appointed term. Every delay you have been given is this Name at work, including the ones you took for a sign that nothing was being noticed.",
+  "16:61","وَلَوۡ يُؤَاخِذُ ٱللَّهُ ٱلنَّاسَ بِظُلۡمِهِم مَّا تَرَكَ عَلَيۡهَا مِن دَآبَّةٖ وَلَٰكِن يُؤَخِّرُهُمۡ إِلَىٰٓ أَجَلٖ مُّسَمّٗىۖ","Were God to take people to task for their wrongdoing, He would not leave a single creature on the earth; but He defers them to an appointed term.",1,
+  "Your reprieve is not an acquittal, and it is not nothing either. Use it for the thing you have been putting off."]],
+["الْأَوَّل","Al-Awwal","The First, before whom there is nothing",
+ ["ا و ل","awwal — first, prior; the beginning of a sequence",
+  "He is the First, and the Name is not about being early. It means there was no before. Everything else that exists has a moment on the far side of which it was not. Ask what came before Him and the question fails, the way asking what is north of the North Pole fails. This Name and the three that follow arrive in one verse, four in a row, and they are meant to be read as one sentence.",
+  "57:3","هُوَ ٱلۡأَوَّلُ وَٱلۡأٓخِرُ وَٱلظَّـٰهِرُ وَٱلۡبَاطِنُۖ وَهُوَ بِكُلِّ شَيۡءٍ عَلِيمٌ","He is the First and the Last, the Manifest and the Hidden, and He knows all things.",0,
+  "Trace anything back far enough and you arrive at a beginning that has no beginning. Sit there for a minute before moving on."]],
+["الْآخِر","Al-Akhir","The Last, after whom there is nothing",
+ ["ا خ ر","akhir — last, final; the end of a sequence",
+  "He is the Last, and again it is not about lateness. It means there is no after. Everything you can name has a term, including the sun, including this planet, including the memory of your name. He remains when the sequence has run out. The Book says everything upon the earth will perish, and there remains the Face of your Lord, Owner of Majesty and Honour — and it is the same claim as this Name.",
+  "57:3","هُوَ ٱلۡأَوَّلُ وَٱلۡأٓخِرُ وَٱلظَّـٰهِرُ وَٱلۡبَاطِنُۖ وَهُوَ بِكُلِّ شَيۡءٍ عَلِيمٌ","He is the First and the Last, the Manifest and the Hidden, and He knows all things.",0,
+  "Whatever you are afraid of losing, you will lose. The Name is not cruelty; it is a corrected inventory."]],
+["الظَّاهِر","Az-Zahir","The Manifest, above whom there is nothing",
+ ["ظ ه ر","zahara — to appear, to become manifest, to be uppermost",
+  "He is the Manifest: nothing is above Him, and nothing is more evident. The Qur'an's argument for God is almost never a syllogism; it is a series of instructions to look — at the camel, at rain, at your own sleeping and waking. The evidence is not scarce. It is so continuous that it is easy to stop seeing, the way a person stops hearing a river he lives beside.",
+  "57:3","هُوَ ٱلۡأَوَّلُ وَٱلۡأٓخِرُ وَٱلظَّـٰهِرُ وَٱلۡبَاطِنُۖ وَهُوَ بِكُلِّ شَيۡءٍ عَلِيمٌ","He is the First and the Last, the Manifest and the Hidden, and He knows all things.",0,
+  "Go outside and look at one ordinary thing until it stops being ordinary. That is the whole method the Book keeps recommending."]],
+["الْبَاطِن","Al-Batin","The Hidden, nearer than anything",
+ ["ب ط ن","batana — to be hidden, to be inside; batn, the belly, the interior of a thing",
+  "He is the Hidden, and the word means inward rather than absent. He is nearer than the jugular vein, and no eye reaches Him. The two Names are given together in one verse — the Manifest and the Hidden — and they are not in tension. The most obvious thing in existence is also the one thing that cannot be looked at directly, and holding both is closer to honesty than choosing one.",
+  "57:3","هُوَ ٱلۡأَوَّلُ وَٱلۡأٓخِرُ وَٱلظَّـٰهِرُ وَٱلۡبَاطِنُۖ وَهُوَ بِكُلِّ شَيۡءٍ عَلِيمٌ","He is the First and the Last, the Manifest and the Hidden, and He knows all things.",0,
+  "He is not far away and difficult to reach. He is close and difficult to see. Those call for different responses."]],
+["الْوَالِي","Al-Wali","The Governor of all that happens",
+ ["و ل ي","the same root as Al-Waliyy — nearness; here in the sense of the one who governs",
+  "Wali in this form is the one who has charge of an affair and runs it — the governor, the one whose decision actually moves things. The verse says of a people whose ruin has been decided that they have, besides Him, no wali at all. Everything that happens is under a governance, and the governance is not shared. This is the Name that stands behind the Qur'an's insistence that nothing is loose.",
+  "13:11","وَإِذَآ أَرَادَ ٱللَّهُ بِقَوۡمٖ سُوٓءٗا فَلَا مَرَدَّ لَهُۥۚ وَمَا لَهُم مِّن دُونِهِۦ مِن وَالٍ","And when God intends harm for a people there is no turning it back, and they have no protector besides Him.",0,
+  "Nothing in your life is unmanaged, including the parts that look like chaos from where you are standing."]],
+["الْمُتَعَالِي","Al-Muta'ali","The Most Exalted",
+ ["ع ل و","the same root as Al-'Ali — height, in a form that intensifies it",
+  "The Qur'anic form is al-Muta'al, without the final letter the enumeration usually gives it, and it appears once, at the end of a verse about knowing the unseen and the witnessed. He is above being reached, above being compared, above the descriptions we build out of created parts and then apply to Him. Every theology that got into trouble did so by forgetting this line, in one direction or the other.",
+  "13:9","عَٰلِمُ ٱلۡغَيۡبِ وَٱلشَّهَٰدَةِ ٱلۡكَبِيرُ ٱلۡمُتَعَالِ","Knower of the unseen and the seen, the Most Great, the Most Exalted.",0,
+  "When you find yourself picturing Him, stop. The picture is made of things He made."]],
+["الْبَرّ","Al-Barr","The Source of Goodness",
+ ["ب ر ر","barra — to be good, kind, dutiful; birr is the goodness owed to parents, and the word for dry land",
+  "Birr is the Qur'an's word for goodness that is done, not felt — the goodness owed to parents, the righteousness the Book defines by a list of actions rather than a state of mind. Al-Barr is the source of it. The verse where the Name appears is spoken by people already safe, remembering what they used to do: we used to call upon Him; indeed it is He who is the Beneficent, the Merciful. The Name is remembered from the far side.",
+  "52:28","إِنَّا كُنَّا مِن قَبۡلُ نَدۡعُوهُۖ إِنَّهُۥ هُوَ ٱلۡبَرُّ ٱلرَّحِيمُ","We used to call upon Him before. He is the Source of Goodness, the Ever-Merciful.",0,
+  "Do the birr you owe. Start with whichever parent is harder to call."]],
+["التَّوَّاب","At-Tawwab","The Ever-Relenting, who turns to the one who turns",
+ ["ت و ب","taba — to turn back, to return; the same verb is used of the servant and of God",
+  "The word is the same in both directions, and that is the entire teaching. The servant turns back to God; God turns toward the servant. The Qur'an even puts God's turning first — He turned to them so that they might turn to Him — which reverses the order everyone assumes. The intensive form means He does this repeatedly, without the door narrowing on the fourth or the fortieth time.",
+  "2:37","فَتَلَقَّىٰٓ ءَادَمُ مِن رَّبِّهِۦ كَلِمَٰتٖ فَتَابَ عَلَيۡهِۚ إِنَّهُۥ هُوَ ٱلتَّوَّابُ ٱلرَّحِيمُ","Then Adam received words from his Lord, and He turned to him. He is the Ever-Relenting, the Ever-Merciful.",0,
+  "The turning began on His side. Yours is a response to something already in motion, which is why it is easier than it looks from outside."]],
+["الْمُنْتَقِم","Al-Muntaqim","The Avenger of wrong",
+ ["ن ق م","naqama — to take retribution, to exact what is due for a wrong",
+  "This Name never appears in the Qur'an detached from a cause. It is always retribution from the criminals, after the signs, after the reminder, after the deferral. The Book does not present a God who is angry by temperament; it presents one who is slow, who defers to an appointed term, and who does not let the account be closed unpaid. Justice without this is sentiment, and every victim knows the difference.",
+  "32:22","وَمَنۡ أَظۡلَمُ مِمَّن ذُكِّرَ بِـَٔايَٰتِ رَبِّهِۦ ثُمَّ أَعۡرَضَ عَنۡهَآۚ إِنَّا مِنَ ٱلۡمُجۡرِمِينَ مُنتَقِمُونَ","And who does greater wrong than one who is reminded of the signs of his Lord and then turns away from them? We will exact retribution from the criminals.",0,
+  "If you were wronged and nothing happened, nothing has happened yet. That is not an invitation to take it up yourself."]],
+["الْعَفُوّ","Al-'Afuww","The Pardoner, who erases the trace",
+ ["ع ف و","'afa — to efface, to wipe out a trace; the wind is said to 'afa the tracks in sand",
+  "The image is desert wind erasing footprints. Ghafara covers the fault; 'afa removes it. This is the further of the two — not concealment but effacement, so that nothing remains to be concealed. It is the word in the supplication reported to have been taught to 'A'ishah for the Night of Decree, asking the One who loves to efface, to efface. The Name is the reason the request is made at all.",
+  "22:60","۞ذَٰلِكَۖ وَمَنۡ عَاقَبَ بِمِثۡلِ مَا عُوقِبَ بِهِۦ ثُمَّ بُغِيَ عَلَيۡهِ لَيَنصُرَنَّهُ ٱللَّهُۚ إِنَّ ٱللَّهَ لَعَفُوٌّ غَفُورٞ","And whoever answers an injury with its like, and is then wronged again, God will surely help him. God is Pardoning, Much-Forgiving.",0,
+  "There is a category of erasure available that is more than being let off. Ask for that one by its own name."]],
+["الرَّءُوف","Ar-Ra'uf","The Most Kind",
+ ["ر ا ف","ra'afa — to be compassionate in the tender, immediate sense; ra'fah is softness toward suffering",
+  "Ra'fah is the softest word in this family. Rahmah is wide; ra'fah is the wince at another's pain, the tenderness that moves before thinking. The Qur'an uses it of Him toward people in general, not only toward believers, and it uses it in the middle of a verse about a change of direction in prayer that confused everyone — reassuring them that the prayers already offered were not wasted. The tenderness is over a technicality.",
+  "2:143","وَمَا كَانَ ٱللَّهُ لِيُضِيعَ إِيمَٰنَكُمۡۚ إِنَّ ٱللَّهَ بِٱلنَّاسِ لَرَءُوفٞ رَّحِيمٞ","God would never let your faith go to waste. God is Tender with people, Ever-Merciful.",0,
+  "He is tender about the small things you are afraid did not count. They counted."]],
+["مَالِكُ الْمُلْك","Malik al-Mulk","Owner of all sovereignty",
+ ["م ل ك","the same root as Al-Malik — ownership, here as the phrase Owner of all sovereignty",
+  "This is not a single word but a phrase, and it comes from a prayer the Book puts in the Prophet's mouth: Say, O God, Owner of Sovereignty, You give sovereignty to whom You will and take it from whom You will. Four verbs follow in pairs — give and take, honour and humble — and the prayer ends with in Your hand is all good. Not half. The taking is inside the good, and the sentence does not flinch from saying so.",
+  "3:26","قُلِ ٱللَّهُمَّ مَٰلِكَ ٱلۡمُلۡكِ تُؤۡتِي ٱلۡمُلۡكَ مَن تَشَآءُ","Say: O God, Owner of all sovereignty, You give sovereignty to whom You will.",0,
+  "Read the whole verse when a door closes on you. It is one of the few places the Book puts giving and taking in one hand and calls the hand good."]],
+["ذُو الْجَلَالِ وَالْإِكْرَام","Dhul-Jalali wal-Ikram","Lord of Majesty and Honour",
+ ["ج ل ل / ك ر م","majesty joined to honour and generosity, as a single title",
+  "The Qur'an gives this title twice in one surah, and both times at the point where everything else has been removed. Everyone on the earth will perish, and there remains the Face of your Lord, Owner of Majesty and Honour. The surah is the one that asks, seventy-eight times, which of the favours of your Lord will you deny. Majesty and generosity are named as one thing because in Him they are one thing.",
+  "55:78","تَبَٰرَكَ ٱسۡمُ رَبِّكَ ذِي ٱلۡجَلَٰلِ وَٱلۡإِكۡرَامِ","Blessed is the name of your Lord, Owner of Majesty and Honour.",0,
+  "If your idea of God has majesty without generosity, or generosity without majesty, this verse is the correction."]],
+["الْمُقْسِط","Al-Muqsit","The Equitable",
+ ["ق س ط","qasata — in this form, to act with equity; qist is the fair share, weighed out",
+  "Qist is the fair portion — the word used for balancing scales and for giving each party what is due. The Name itself is not applied to God as a noun in the Qur'an; what the Book says instead is that He loves those who act with equity, and it says it three times. The Name is drawn from the enumeration, and its meaning is stated in the Book as a preference — which is a stronger thing than a description.",
+  "49:9","فَأَصۡلِحُواْ بَيۡنَهُمَا بِٱلۡعَدۡلِ وَأَقۡسِطُوٓاْۖ إِنَّ ٱللَّهَ يُحِبُّ ٱلۡمُقۡسِطِينَ","Make peace between them justly, and be equitable. God loves those who are equitable.",1,
+  "He loves equity in you. Not tolerates. That should change how you split something small this week."]],
+["الْجَامِع","Al-Jami'","The Gatherer, who will bring all together",
+ ["ج م ع","jama'a — to gather, to bring together what was scattered",
+  "He gathers. The verse is a prayer said by people of understanding: our Lord, You will gather the people for a Day about which there is no doubt. The scattering is total — bodies to dust, families across centuries, deeds forgotten by everyone including the doer — and the gathering is described as certain. The same Name is also read of the smaller gatherings: the reunion, the reconciliation, the scattered heart pulled back into one piece.",
+  "3:9","رَبَّنَآ إِنَّكَ جَامِعُ ٱلنَّاسِ لِيَوۡمٖ لَّا رَيۡبَ فِيهِۚ إِنَّ ٱللَّهَ لَا يُخۡلِفُ ٱلۡمِيعَادَ","Our Lord, You are the Gatherer of mankind for a Day of which there is no doubt. God does not break His promise.",0,
+  "What has been scattered in your life is not beyond gathering. That is a claim about Him, not optimism about you."]],
+["الْغَنِيّ","Al-Ghani","The Self-Sufficient",
+ ["غ ن ي","ghaniya — to be free of need, to be rich in the sense of requiring nothing",
+  "The Arabic for rich is not about having much; it is about needing nothing. On that definition no created thing has ever been rich. The verse states the relation without softening it: you are the ones in need of God, and God is the Free of need, the Praiseworthy. And it adds the second Name, because a self-sufficiency without praiseworthiness would be indifference. He needs nothing from you and is good to you anyway.",
+  "35:15","۞يَـٰٓأَيُّهَا ٱلنَّاسُ أَنتُمُ ٱلۡفُقَرَآءُ إِلَى ٱللَّهِۖ وَٱللَّهُ هُوَ ٱلۡغَنِيُّ ٱلۡحَمِيدُ","O people, you are the ones in need of God, and God is the Free of need, the Praiseworthy.",0,
+  "Your worship adds nothing to Him. Knowing that is what stops it becoming a transaction."]],
+["الْمُغْنِي","Al-Mughni","The Enricher",
+ ["غ ن ي","the same root as Al-Ghani, in the causative — to make someone free of need",
+  "He is the One who enriches. The verse is two words in Arabic and includes both halves — He gives wealth and He gives contentment with it, which are separate gifts and rarely arrive together. The Book's teaching on this is consistent: richness is not in the quantity of possessions. A person can be given much and stay poor, and a person can be given little and be free.",
+  "53:48","وَأَنَّهُۥ هُوَ أَغۡنَىٰ وَأَقۡنَىٰ","And that it is He who gives wealth and gives what suffices.",1,
+  "Ask for the second gift as explicitly as you ask for the first. Most people only ever request the one that does not work on its own."]],
+["الْمَانِع","Al-Mani'","The Withholder",
+ ["م ن ع","mana'a — to prevent, to withhold, to deny access",
+  "He withholds, and the verse makes it symmetrical: what He opens to people of mercy, none can withhold; what He withholds, none can release. Both halves are needed. Without the first, the withholding looks like the last word. Without the second, the giving looks like something you arranged. The Name is not in the Qur'an as a noun; the sentence is, and it says the same thing in both directions.",
+  "35:2","مَّا يَفۡتَحِ ٱللَّهُ لِلنَّاسِ مِن رَّحۡمَةٖ فَلَا مُمۡسِكَ لَهَاۖ وَمَا يُمۡسِكۡ فَلَا مُرۡسِلَ لَهُۥ مِنۢ بَعۡدِهِۦۚ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ","Whatever mercy God opens to people, none can hold back; and whatever He holds back, none can release after Him. And He is the Almighty, the Wise.",1,
+  "Whatever has been kept from you was kept, not lost, and no one else is holding it."]],
+["الضَّارّ","Ad-Darr","The One who allows harm",
+ ["ض ر ر","darra — to harm; darr is affliction, the opposite of benefit",
+  "This is the hardest Name in the list and the enumeration puts it deliberately next to its opposite. The Qur'an's own sentence is careful: if God touches you with adversity, there is no remover of it except Him. What it establishes is not that He wills your suffering as suffering, but that harm has no independent power source. There is no rival kingdom of misfortune. Which is why the same verse ends by saying He is over all things competent — the removal is with the same hand.",
+  "6:17","وَإِن يَمۡسَسۡكَ ٱللَّهُ بِضُرّٖ فَلَا كَاشِفَ لَهُۥٓ إِلَّا هُوَۖ وَإِن يَمۡسَسۡكَ بِخَيۡرٖ فَهُوَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ","If God touches you with harm, none can lift it but He; and if He touches you with good, He is able to do all things.",1,
+  "Take your affliction to the only one who can lift it, which is the same one who permitted it. That is uncomfortable and it is the whole of tawhid."]],
+["النَّافِع","An-Nafi'","The One who brings benefit",
+ ["ن ف ع","nafa'a — to benefit, to be of use",
+  "And the other half. The verse pairs them exactly: if He touches you with adversity, none can remove it but He, and if He intends good for you, none can repel His bounty. Read alone, either Name distorts. Read as a pair, they say one thing — nothing reaches you around Him, in either direction, and there is no second address to appeal to or to blame.",
+  "10:107","وَإِن يَمۡسَسۡكَ ٱللَّهُ بِضُرّٖ فَلَا كَاشِفَ لَهُۥٓ إِلَّا هُوَۖ وَإِن يُرِدۡكَ بِخَيۡرٖ فَلَا رَآدَّ لِفَضۡلِهِۦۚ","If God touches you with harm, none can lift it but He; and if He wills good for you, none can turn back His bounty.",1,
+  "Stop attributing your good to your competence and your harm to other people. It is one hand, and the hand is not hostile."]],
+["النُّور","An-Nur","The Light",
+ ["ن و ر","nur — light; that by which other things are seen",
+  "God is the Light of the heavens and the earth. Then the verse does not explain; it gives an image — a niche, a lamp, glass like a brilliant star, oil from a blessed tree that would almost glow untouched by fire — light upon light. The Book chose a parable where an argument would have been possible, which is itself the teaching. Light is not one visible thing among others. It is the condition under which anything is visible at all.",
+  "24:35","۞ٱللَّهُ نُورُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۚ مَثَلُ نُورِهِۦ كَمِشۡكَوٰةٖ فِيهَا مِصۡبَاحٌۖ","God is the Light of the heavens and the earth. The likeness of His light is a niche, and in it a lamp.",0,
+  "You do not look at light. You look by it. Try reading a day that way."]],
+["الْهَادِي","Al-Hadi","The Guide",
+ ["ه د ي","hada — to guide, to show the way and to lead along it",
+  "Arabic distinguishes showing the road from taking someone down it, and He does both. The Qur'an is explicit that the Prophet himself could not guide whom he loved, only God guides — which removes the burden of converting anyone from every believer's shoulders. Guidance is asked for seventeen times a day in the opening surah, and the fact that it is asked for daily by people who already have it says something about what it is.",
+  "25:31","وَكَذَٰلِكَ جَعَلۡنَا لِكُلِّ نَبِيٍّ عَدُوّٗا مِّنَ ٱلۡمُجۡرِمِينَۗ وَكَفَىٰ بِرَبِّكَ هَادِيٗا وَنَصِيرٗا","And so We appointed for every prophet an enemy from among the criminals. And your Lord is enough as a Guide and a Helper.",0,
+  "You cannot guide anyone, including yourself. You can ask, and you can stop standing in the way."]],
+["الْبَدِيع","Al-Badi'","The Incomparable Originator",
+ ["ب د ع","bada'a — to originate something with no prior example; the root behind bid'ah, innovation",
+  "To originate without a model. The word means invention in the strict sense — not assembling what exists, but bringing about what had no precedent. The Qur'an says it of the heavens and the earth, and then adds the mechanism, which is not a mechanism: when He decrees a matter, He says to it Be, and it is. The same root gives the word for innovation in religion, which is condemned for exactly this reason. Origination is His.",
+  "2:117","بَدِيعُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۖ وَإِذَا قَضَىٰٓ أَمۡرٗا فَإِنَّمَا يَقُولُ لَهُۥ كُن فَيَكُونُ","Originator of the heavens and the earth. When He decrees a thing, He only says to it: Be, and it is.",0,
+  "Originality is not available to you and is not required of you. Faithfulness is."]],
+["الْبَاقِي","Al-Baqi","The Everlasting",
+ ["ب ق ي","baqiya — to remain, to be left over when the rest has gone",
+  "He remains. The verse is one of the most quoted in the Book: everyone upon the earth will perish, and there remains the Face of your Lord, Owner of Majesty and Honour. Baqi is not merely long-lasting; it is what is still there when duration itself has run out. Everything you can invest in has a term. The Qur'an calls the good deed al-baqiyat as-salihat, the enduring good things, using this same root.",
+  "55:27","وَيَبۡقَىٰ وَجۡهُ رَبِّكَ ذُو ٱلۡجَلَٰلِ وَٱلۡإِكۡرَامِ","And there remains the Face of your Lord, Owner of Majesty and Honour.",1,
+  "Put something this month into the column that survives. You already know which of your activities are in the other one."]],
+["الْوَارِث","Al-Warith","The Inheritor of all",
+ ["و ر ث","waritha — to inherit, to receive what remains after the owner has gone",
+  "He inherits everything, and this is a strange thing to say about God until you see what it does. An heir is who a thing goes to when its holder is finished. The verse says We give life and cause death, and We are the Inheritor — so everything currently held by anyone is in transit, and the destination is named. Your house, your work, your reputation, your body. All of it has one heir at the end of the chain.",
+  "15:23","وَإِنَّا لَنَحۡنُ نُحۡيِۦ وَنُمِيتُ وَنَحۡنُ ٱلۡوَٰرِثُونَ","It is We who give life and give death, and it is We who inherit.",0,
+  "You are a tenant of everything you own. Behave like one, and be generous with what was never yours."]],
+["الرَّشِيد","Ar-Rashid","The Guide to what is right",
+ ["ر ش د","rashada — to be rightly guided, to have sound judgement; rushd is maturity and good sense",
+  "Rushd is guidance from the inside: the settled good judgement of someone who no longer needs supervising. The Qur'an uses the word at the point where it forbids compulsion in religion — there is no compulsion, the right course has become clear from error — and the connection is deliberate. Rushd cannot be installed by force; if it could, it would not be rushd. The Name is from the enumeration; the meaning is the Book's.",
+  "2:256","لَآ إِكۡرَاهَ فِي ٱلدِّينِۖ قَد تَّبَيَّنَ ٱلرُّشۡدُ مِنَ ٱلۡغَيِّۚ","There is no compulsion in religion. Right guidance has become clear from error.",1,
+  "You cannot force sound judgement into anyone, including your children. You can make it clear and then let it be chosen."]],
+["الصَّبُور","As-Sabur","The Most Patient",
+ ["ص ب ر","sabara — to be patient, to restrain oneself, to hold steady under what is hard",
+  "Sabr is not endurance because there is no alternative; it is restraint by choice, holding a position that could be abandoned. In Him the Name means He does not hasten — not from weakness, since His power is immediate, and not from indifference, since nothing escapes Him, but because the term is appointed and He keeps it. If He took people to task for what they have earned, the verse says, He would not leave a single creature on the ground.",
+  "35:45","وَلَوۡ يُؤَاخِذُ ٱللَّهُ ٱلنَّاسَ بِمَا كَسَبُواْ مَا تَرَكَ عَلَىٰ ظَهۡرِهَا مِن دَآبَّةٖ وَلَٰكِن يُؤَخِّرُهُمۡ إِلَىٰٓ أَجَلٖ مُّسَمّٗىۖ","Were God to take people to task for what they have earned, He would not leave a single creature on the face of the earth; but He defers them to an appointed term.",1,
+  "His patience with you has a term and is not indifference. Use the part of it you are standing in."]]
 ];
 
 /* ---- the field of light: no shape, ever, only light ---- */
@@ -1035,8 +1521,10 @@ q.addEventListener("input", () => {
   const v = q.value.trim().toLowerCase();
   let n = 0;
   list.querySelectorAll(".name").forEach(b => {
-    const [a, t, m] = NAMES[+b.dataset.i];
-    const hit = !v || (t + " " + m).toLowerCase().includes(v) || a.includes(q.value.trim());
+    const [a, t, m, x] = NAMES[+b.dataset.i];
+    const deep = Array.isArray(x) ? (x[1] + " " + x[2] + " " + x[5] + " " + x[7]) : "";
+    const hit = !v || (t + " " + m + " " + deep).toLowerCase().includes(v)
+                || a.includes(q.value.trim()) || (Array.isArray(x) && x[0].includes(q.value.trim()));
     b.hidden = !hit; if (hit) n++;
   });
   countEl.textContent = n === 99 ? "99 names" : n + (n === 1 ? " name" : " names");
@@ -1045,21 +1533,51 @@ q.addEventListener("input", () => {
 /* ---- the panel ---- */
 const veil = document.getElementById("veil");
 let at = 0, opener = null;
-function show(i){
+const P = id => document.getElementById(id);
+const IN_QURAN = "this Name is in the Qur\u2019an";
+const FROM_LIST = "from the enumeration \u00b7 the verse carries the meaning";
+function show(i, push){
   at = (i + 99) % 99;
-  const [a, t, m] = NAMES[at];
-  document.getElementById("p-i").textContent = "The " + ordinal(at + 1) + " name";
-  document.getElementById("p-a").textContent = a;
-  document.getElementById("p-t").textContent = t;
-  document.getElementById("p-m").textContent = m;
+  const [a, t, m, x] = NAMES[at];
+  P("p-i").textContent = "The " + ordinal(at + 1) + " name";
+  P("p-a").textContent = a;
+  P("p-t").textContent = t;
+  P("p-m").textContent = m;
+  /* x may be absent if this file is ever half-updated; the panel still opens. */
+  const has = Array.isArray(x) && x.length >= 8;
+  P("p-body").hidden = !has;
+  if (has){
+    P("p-rc").textContent = x[0];
+    P("p-rg").textContent = x[1];
+    P("p-d").textContent  = x[2];
+    P("p-va").textContent = x[4];
+    P("p-ve").textContent = x[5];
+    P("p-vr").textContent = "Qur\u2019an " + x[3];
+    P("p-vs").textContent = x[6] ? FROM_LIST : IN_QURAN;
+    P("p-w").textContent  = x[7];
+    P("p-body").scrollTop = 0;
+  }
+  P("p-n").textContent = (at + 1) + " of 99";
   veil.classList.add("on");
-  document.getElementById("shut").focus();
+  document.body.classList.add("reading");
+  document.documentElement.style.overflow = "hidden";
+  P("shut").focus();
+  if (push !== false){
+    const h = "#" + (at + 1);
+    if (location.hash !== h) history.replaceState(null, "", h);
+  }
 }
 function ordinal(n){
   const s = ["th","st","nd","rd"], v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
-function hide(){ veil.classList.remove("on"); if (opener) opener.focus(); }
+function hide(){
+  veil.classList.remove("on");
+  document.body.classList.remove("reading");
+  document.documentElement.style.overflow = "";
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  if (opener) opener.focus();
+}
 list.addEventListener("click", e => {
   const b = e.target.closest(".name"); if (!b) return;
   opener = b; show(+b.dataset.i);
@@ -1074,6 +1592,13 @@ addEventListener("keydown", e => {
   if (e.key === "ArrowLeft") show(at - 1);
   if (e.key === "ArrowRight") show(at + 1);
 });
+/* a Name can be linked to: /allah#4 opens the fourth */
+function fromHash(){
+  const k = parseInt(String(location.hash || "").slice(1), 10);
+  if (k >= 1 && k <= 99){ opener = list.querySelector('.name[data-i="' + (k - 1) + '"]'); show(k - 1, false); }
+}
+addEventListener("hashchange", () => { if (!veil.classList.contains("on")) fromHash(); });
+fromHash();
 /* ---- what He is not: the Book's own denials, each one a verse ---- */
 const NOTS = [
 ["لَيْسَ كَمِثْلِهِۦ شَىْءٌۭ",
