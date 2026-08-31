@@ -39,6 +39,7 @@
 //    none. Preview, then Post once by hand from the console, and read what
 //    comes back, BEFORE turning the schedule on.
 
+import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
 import { planDay, buildSlot, dueNow, SLOT_IDS } from "./_schedule.js";
 import * as CH from "./_channels.js";
@@ -900,8 +901,31 @@ export default async function handler(req, res) {
      back 401, the Social room rendered empty, and the empty state blamed
      ADMIN_SECRET -- which was set, and had been since the fifth of August.
      One check now, in _owner.js, shared rather than reinvented per route. */
+  /* WHO IS ALLOWED TO DRIVE THIS — AND THE HOLE THAT WAS IN IT.
+     ownerGate accepts two proofs: the console's signed cookie, or the secret in
+     a header. A Vercel cron has neither. It arrives as an anonymous GET with a
+     signature header and a vercel-cron user agent, and nothing else.
+
+     So the hourly job that sends the day's posts was answered 401 every hour
+     from the moment it shipped, and not one of the four daily slots ever ran.
+     The calendar was right, the schedule was right, the posts were composed
+     correctly — and the delivery was locked behind a door built for a person.
+
+     api/warm.js already knew how to recognise a cron; this route did not, and
+     the two were never compared. Now the cron is admitted for exactly one
+     action, `due`, which only sends what the schedule already says is owed.
+     Every other action stays owner-only. */
+  const q0 = req.query || {};
+  const fromVercelCron = !!req.headers["x-vercel-signature"]
+    || /vercel-cron/i.test(String(req.headers["user-agent"] || ""));
+  const bearer = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "");
+  const cronSecret = process.env.CRON_SECRET || "";
+  const bearerOk = !!cronSecret && bearer.length === cronSecret.length
+    && crypto.timingSafeEqual(Buffer.from(bearer), Buffer.from(cronSecret));
+  const cronMayRun = String(q0.action || "") === "due" && (fromVercelCron || bearerOk);
+
   const gate = ownerGate(req);
-  if (!gate.ok) return json(res, gate.code, { ok: false, reason: gate.reason });
+  if (!gate.ok && !cronMayRun) return json(res, gate.code, { ok: false, reason: gate.reason });
 
   if (req.method === "GET") {
     const action = String(q.action || "preview");
