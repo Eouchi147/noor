@@ -786,6 +786,38 @@ export async function runDaily(host, date, opts = {}) {
 =========================================================================== */
 const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
 const K_RED = "nsoc:reddit:last";
+const K_SAID = "nsoc:said";        /* the last things actually published */
+
+/* ---------------------------------------------------------------------------
+   what has already been said
+
+   The slot record answers "has this slot gone today". It cannot answer "have we
+   published this exact post before", and on the morning the picker was stuck
+   that was the question that mattered: the same card went out three days
+   running and every one of them was a fresh, legitimate, unsent slot.
+
+   So the poster keeps a short list of what it has actually published and
+   refuses to say the same thing twice inside a fortnight. It is deliberately
+   the last check rather than the first -- the picker upstream should make this
+   unreachable -- and if the store cannot answer, the send still goes ahead,
+   because a poster that stays silent whenever the store hiccups is its own
+   kind of failure.
+--------------------------------------------------------------------------- */
+const SAID_KEEP = 40;
+function saidKey(post) {
+  const k = String((post && (post.key || post.title)) || "").toLowerCase().trim();
+  return k.replace(/\s+/g, " ").slice(0, 120);
+}
+async function recentlySaid() {
+  if (!kvReady()) return [];
+  try { const r = await kv([["LRANGE", K_SAID, "0", String(SAID_KEEP)]]); return (r && r[0]) || []; }
+  catch { return []; }
+}
+async function noteSaid(key) {
+  if (!kvReady() || !key) return;
+  try { await kv([["LPUSH", K_SAID, key], ["LTRIM", K_SAID, "0", String(SAID_KEEP - 1)],
+                  ["EXPIRE", K_SAID, "7776000"]]); } catch { }
+}
 
 async function readSlot(date, slot) {
   if (!kvReady()) return null;
@@ -851,7 +883,14 @@ export async function sendSlot(host, date, slotId, opts = {}) {
 
   const post = await composeSlot(host, date, slotId, opts);
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
+
+  /* a preview is always allowed to render, including of something already said */
   if (opts.dry) return { ...out, ok: true, dry: true, post };
+
+  const key = saidKey(post);
+  if (!opts.force && key && (await recentlySaid()).includes(key))
+    return { ...out, ok: false, repeat: true, title: post.title,
+             error: "this has already been published recently, so it was not sent again" };
 
   const results = {};
   for (const ch of liveChannels()) {
@@ -871,6 +910,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   const rec = { at: out.at, slot: slotId, state: anySent ? "sent" : "failed",
     title: post.title, lvl: post.lvl, results };
   await writeSlot(date, slotId, rec);
+  if (anySent) await noteSaid(key);
   return { ...out, ok: anySent, state: rec.state, title: post.title, results };
 }
 

@@ -86,8 +86,15 @@ console.log('\n=== 2. the calendar actually anchors ===');
 {
   const dated = LIB.lights.filter(l => l.w && l.w.m && l.w.d);
   ok(dated.length > 10, LIB.lights.length + ' cards, ' + dated.length + ' anchored to an exact day');
+
+  /* A card anchored on BOTH calendars -- Badr is 17 Ramadan and also 13 March --
+     is no longer shown on both. It used to be, seventeen days apart, and the
+     second showing read to a follower as the machine repeating itself. The
+     Islamic date is the one this library keeps, so that is the one it lands on
+     and its Western date is left alone. */
+  const gregOnly = dated.filter(l => !(l.h && l.hd));
   let hit = 0, yielded = 0;
-  for (const L of dated.slice(0, 12)) {
+  for (const L of gregOnly.slice(0, 12)) {
     STORE.clear();
     const d = '2026-' + String(L.w.m).padStart(2, '0') + '-' + String(L.w.d).padStart(2, '0');
     const got = await M.chooseLight('h', d, {});
@@ -98,10 +105,32 @@ console.log('\n=== 2. the calendar actually anchors ===');
     const h = M.hijriOf(d), won = LIB.lights.find(x => x.id === got.id);
     if (won && won.h === h.m && won.hd === h.d) yielded++;
   }
-  ok(hit + yielded === 12,
-     'a card anchored to a date is shown on that date (' + hit + '/12, ' +
+  const n = Math.min(12, gregOnly.length);
+  ok(hit + yielded === n,
+     'a card anchored to a Western date only is shown on that date (' + hit + '/' + n + ', ' +
      yielded + ' yielded to an Islamic day)');
-  ok(yielded > 0 || hit === 12, 'and when it yields, it yields only to the hijri calendar');
+  ok(yielded > 0 || hit === n, 'and when it yields, it yields only to the hijri calendar');
+
+  /* and the dual-anchored ones land on the Islamic date instead */
+  const both = dated.filter(l => l.h && l.hd).slice(0, 6);
+  let onHijri = 0;
+  for (const L of both) {
+    STORE.clear();
+    let found = false;
+    /* walk the year and see which morning it comes up on */
+    for (let i = 0; i < 365 && !found; i++) {
+      const d = new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10);
+      const h = M.hijriOf(d);
+      if (h.m === L.h && h.d === L.hd) {
+        const got = await M.chooseLight('h', d, {});
+        if (got.id === L.id) onHijri++;
+        found = true;
+      }
+    }
+    if (!found) onHijri++;             /* that hijri day did not fall in 2026 */
+  }
+  ok(both.length === 0 || onHijri === both.length,
+     'a card anchored on both calendars lands on the Islamic one (' + onHijri + '/' + both.length + ')');
 }
 
 console.log('\n=== 2b. the Islamic day outranks the Western one ===');

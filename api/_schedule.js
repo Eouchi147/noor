@@ -36,12 +36,36 @@ export const SLOTS = [
 export const SLOT_IDS = SLOTS.map(s => s.id);
 
 /* a small stable hash, so a given date always picks the same item */
+/* ---------------------------------------------------------------------------
+   picking without repeating
+
+   This was a hash of the date modulo the list length, which is a fresh throw of
+   the dice every morning: nothing stopped two throws landing on the same face a
+   week apart, and with seventy-one chapters in the Path the collisions were not
+   rare. A reader who follows the account daily notices a repeat long before the
+   arithmetic says one was due.
+
+   A stride that shares no factor with the length walks the whole list before it
+   returns to any item, so every word and every chapter is used once before any
+   is used twice, and the order still depends only on the date -- two servers
+   waking on the same morning still agree.
+--------------------------------------------------------------------------- */
+function hash32(s) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
 function pick(list, dateStr, salt) {
   if (!list || !list.length) return null;
-  let h = 2166136261;
-  const s = dateStr + "|" + salt;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return list[Math.abs(h) % list.length];
+  const n = list.length;
+  if (n === 1) return list[0];
+  const day = Math.floor(Date.parse(String(dateStr) + "T00:00:00Z") / 86400000);
+  if (!isFinite(day)) return list[hash32(String(dateStr) + "|" + salt) % n];
+  let stride = (hash32(salt + "|stride") % (n - 1)) + 1;
+  while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
+  const off = hash32(salt + "|offset") % n;
+  return list[(((day * stride + off) % n) + n) % n];
 }
 
 const BASE_TAGS = ["#Islam", "#NoorCodexOfLight"];

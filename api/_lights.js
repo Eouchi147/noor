@@ -105,11 +105,25 @@ export async function library(host) {
 }
 export const libraryInfo = () => ({ n: LIB.lights.length, ageMs: LIB.at ? Date.now() - LIB.at : null, err: LIB.err });
 
-/* a stable number per id per year, so the order varies between years but two
-   servers answering the same morning always agree */
-function jitter(id, year) {
+/* A stable number per id per DAY.
+
+   THE BUG THIS FIXES
+
+   This was seeded on the year. Every rule in scoreLights that can lift a card
+   above the general pool -- the month, the hijri month, the season -- holds
+   steady for weeks at a time, so the whole ranking was frozen for weeks and
+   the only thing that made Tuesday differ from Monday was the seen ring in the
+   store. When the store did not answer, the same card won every morning.
+
+   Observed on Noor's own Instagram, 25-27 August 2026: the card
+   prophet-death-632 published three mornings running, word for word.
+
+   Seeding on the date rotates the order within each tier, so an ordinary day
+   moves through the library on its own. Two servers answering the same morning
+   still agree, because the same date gives the same number. */
+function jitter(id, day) {
   let h = 2166136261;
-  const s = id + ":" + year;
+  const s = id + ":" + day;
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
   return (h >>> 0) % 100;
 }
@@ -122,11 +136,16 @@ const SEASON_TAGS = {
   3: ["mawlid", "seerah", "prophet"]
 };
 
-export function scoreLights(lights, dateStr, seen) {
+/* `seen` is what was actually published -- a fact, and nothing outranks it.
+   `soft` is what the replay below believes was published, which is an inference
+   drawn when the store has lost its memory. An inference may not push a card
+   off its own anniversary; a fact may. */
+export function scoreLights(lights, dateStr, seen, soft) {
   const [Y, M, D] = String(dateStr).split("-").map(Number);
   const h = hijriOf(dateStr);
   const season = SEASON_TAGS[h.m] || [];
   const skip = new Set(seen || []);
+  const softSkip = new Set(soft || []);
   return lights.map(L => {
     let s = 20, why = "the general pool";
     /* Every rule below both raises the score and names itself, and it may only
@@ -137,8 +156,20 @@ export function scoreLights(lights, dateStr, seen) {
     const lift = (n, r) => { if (n > s) { s = n; why = r; } };
     const w = L.w || {};
 
-    if (w.m === M && w.d === D) lift(1000, "this exact day");
-    else if (w.m === M) lift(260, "this month in history");
+    /* A card pinned to one day of the year is kept for that day. It used to be
+       eligible on every other morning too, on the strength of its month, so it
+       could win the generic slot on 2 September and its own anniversary on the
+       3rd -- the same post, two mornings running. Reserving it costs the pool
+       twenty-seven cards out of hundreds and makes that impossible. */
+    const pinnedG = !!(w.m && w.d);
+    const pinnedH = !!(L.h && L.hd);
+
+    /* A card anchored on both calendars -- Badr is 17 Ramadan and 13 March --
+       used to land on each of them, seventeen days apart, and the second one
+       read as a repeat. The Islamic day is the one this library keeps, so a
+       card that has one is not also spent on its Western date. */
+    if (w.m === M && w.d === D && !pinnedH) lift(1000, "this exact day");
+    else if (w.m === M && !pinnedG) lift(260, "this month in history");
 
     /* The Islamic day outranks the Gregorian one. A reader keeping Ashura or
        the last ten nights is living in the hijri calendar that morning, and a
@@ -148,10 +179,15 @@ export function scoreLights(lights, dateStr, seen) {
        scores well above a plain month match. */
     if (L.h === h.m && L.hd) {
       const nm = L.hd + " " + hijriName(h.m);
+      /* The day itself, and only the day itself. This used to fire on the day
+         either side as well, to cover the tabular calendar sitting a day off
+         the sighted moon -- but it meant one card could hold three consecutive
+         mornings, which is what a reader sees as the machine being stuck. The
+         lead slot announces what is coming, and it reads the verified Umm
+         al-Qura date rather than this one, so nothing is lost by landing once. */
       if (L.hd === h.d) lift(1200, nm);
-      else if (Math.abs(L.hd - h.d) === 1) lift(620, "around " + nm);
     }
-    if (L.h === h.m) lift(210, "the month of " + hijriName(h.m));
+    if (L.h === h.m && !pinnedH) lift(210, "the month of " + hijriName(h.m));
     if (season.length && (L.tags || []).some(t => season.includes(t))) lift(130, "the season");
 
     /* an anniversary of a round number is worth surfacing */
@@ -159,10 +195,75 @@ export function scoreLights(lights, dateStr, seen) {
       s += 90;
       if (why === "the general pool") why = (Y - w.y) + " years ago this year";
     }
-    s += jitter(L.id, Y) / 100;                 /* breaks ties without breaking agreement */
+    s += jitter(L.id, dateStr) / 100;           /* breaks ties without breaking agreement */
+    const itsDay = (pinnedG && w.m === M && w.d === D) || (pinnedH && L.h === h.m && L.hd === h.d);
+    /* held back for the day it belongs to -- but still reachable if the whole
+       library has been spent, because silence is worse than an early anniversary */
+    if ((pinnedG || pinnedH) && !itsDay) s -= 400;
     if (skip.has(L.id)) s -= 5000;              /* shown lately: only if nothing else is left */
+    else if (softSkip.has(L.id) && !itsDay) s -= 5000;
     return { L, s, why };
   }).sort((a, b) => b.s - a.s);
+}
+
+/* ---------------------------------------------------------------------------
+   the memory that needs no store
+
+   The ring below lives in the key store, and on the morning the store went
+   quiet the picker lost every trace of what it had already published. It went
+   on choosing the highest-scoring card, which does not change from one ordinary
+   day to the next, and the same card went out three days running.
+
+   The picker is a pure function of the date, so the past is not actually lost:
+   it can be recomputed. This replays the previous weeks forward from a fixed
+   point, feeding each day's answer into the next as memory, and hands back what
+   the picker would have chosen. No store, no network, and every server that
+   asks on the same morning gets the same list.
+
+   It is used together with the ring, never instead of it: the union of the two
+   is what a card has to avoid. Excluding a few cards too many costs nothing
+   against a library of hundreds. Missing one costs a repeat.
+--------------------------------------------------------------------------- */
+/* three months. With hundreds of cards in the library there is no reason for a
+   reader to meet the same one twice in a season. */
+const LOOKBACK = 90;
+const WARM = 90;
+const EPOCH = Math.floor(Date.UTC(2026, 0, 1) / 86400000);
+const MAX_REPLAY = 1200;      /* a ceiling on the work, years away */
+const RCACHE = new Map();
+export function replaySeen(lights, dateStr, upTo = LOOKBACK) {
+  if (!Array.isArray(lights) || !lights.length) return [];
+  const key = dateStr + "|" + lights.length + "|" + upTo;
+  const hit = RCACHE.get(key);
+  if (hit) return hit;
+  const t0 = Date.parse(String(dateStr) + "T00:00:00Z");
+  if (!isFinite(t0)) return [];
+  const seen = [];
+  /* Start on a fixed grid, further back than we intend to keep.
+
+     Replaying from a standing start at exactly the window's edge meant Tuesday
+     and Wednesday began their reconstruction on different days, inferred
+     slightly different histories, and the difference propagated until a card
+     came back weeks early. Quantising the start to a grid means every date
+     inside a block replays from the same morning, so one day's memory is the
+     previous day's memory with one more entry on it -- which is what a memory
+     is supposed to be. The warm-up is thrown away; only the last `upTo` count. */
+  const today = Math.floor(t0 / 86400000);
+  /* From one fixed morning, always. The picker feeds each day's answer into the
+     next, so the sequence never re-synchronises after a different start: two
+     reconstructions that begin on different days stay different forever, and a
+     card that one of them has already spent looks unused to the other. Starting
+     everyone from the same morning is the only thing that makes the inferred
+     history agree with itself, which is the whole point of inferring it. */
+  const from = Math.max(EPOCH, today - MAX_REPLAY);
+  for (let i = today - from; i >= 1; i--) {
+    const d = new Date((today - i) * 86400000).toISOString().slice(0, 10);
+    const top = scoreLights(lights, d, [], seen)[0];
+    if (top) { seen.unshift(top.L.id); if (seen.length > upTo) seen.length = upTo; }
+  }
+  if (RCACHE.size > 24) RCACHE.clear();
+  RCACHE.set(key, seen);
+  return seen;
 }
 
 async function readSeen(n) {
@@ -323,8 +424,16 @@ export async function chooseLight(host, dateStr, opts = {}) {
     }
   }
 
-  const seen = memory ? await readSeen(lights.length) : [];
-  const ranked = scoreLights(lights, dateStr, seen);
+  /* The ring is the record of what actually went out, and when it is healthy it
+     is the better answer -- it knows about the Lantern's overrides, which the
+     replay cannot. The replay is there for the case that caused this: a ring
+     that has lost its contents, where without help the picker publishes the
+     same card every morning. So the replay fills the gap rather than piling on
+     top; unioning both when the ring is already full excluded most of the
+     library and pushed anniversaries off their own day. */
+  const ring = (memory ? await readSeen(lights.length) : []) || [];
+  const soft = (memory && ring.length < LOOKBACK) ? replaySeen(lights, dateStr) : [];
+  const ranked = scoreLights(lights, dateStr, ring, soft);
   const top = ranked.slice(0, 6);
   let chosen = top[0], why = top[0].why, editor = "", doubt = "";
 
