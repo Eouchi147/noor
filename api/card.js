@@ -40,6 +40,7 @@
 //    the honorific. Only the drawing spells it out.
 
 import { chooseLight } from "./_lights.js";
+import { planDay, buildSlot, SLOT_IDS } from "./_schedule.js";
 import { REGULAR, BOLD, FAMILY, COVERAGE } from "./_cardfont.js";
 import { fitSentences } from "./_prose.js";
 
@@ -267,17 +268,83 @@ export async function fontReport() {
   return out;
 }
 
+/* ---------------------------------------------------------------------------
+   one picture per post
+
+   THE BUG THIS FIXES
+
+   This endpoint only ever drew the day's light. The poster then handed the SAME
+   url to every slot it sent, so the dawn reminder, the word of the day and the
+   chapter of the Path all went out wearing the light's card. Three or four
+   posts a day, all different in their words, all identical in the one thing
+   Instagram actually shows. To a follower that is the same post over and over,
+   and it is what the owner saw on his own feed.
+
+   Now a slot can ask for its own card: /api/card?date=YYYY-MM-DD&slot=dawn.
+   The slot is composed exactly as the poster composes it, so the picture and
+   the caption can never drift apart. If the slot cannot be built -- an
+   unverified calendar, an index that did not answer -- it falls back to the
+   light rather than posting with a broken image.
+--------------------------------------------------------------------------- */
+const SLOT_EYEBROW = { dawn: "TODAY", lead: "COMING UP", word: "A WORD", dusk: "THE PATH" };
+
+async function slotCard(host, date, slot) {
+  if (!SLOT_IDS.includes(slot) || slot === "light") return null;
+  let plan; try { plan = await planDay(date); } catch { return null; }
+  if (!plan) return null;
+  let index = null;
+  try {
+    const r = await fetch("https://" + String(host).replace(/^https?:\/\//, "") + "/assets/menu-index.json");
+    if (r.ok) index = await r.json();
+  } catch { }
+  const post = buildSlot(slot, {
+    date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
+    words: index && index.words, path: index && index.path, link: "", image: ""
+  });
+  if (!post || !post.title) return null;
+  /* The body of a slot is built for a caption, where it opens by restating the
+     title and the date because the caption has no headline of its own. A card
+     HAS a headline and a footer, so those lines are dropped here rather than
+     printed twice -- "Khulafa Rashidun Khulafa Rashidun The four caliphs…" */
+  const hd = plan.hijri ? (plan.hijri.d + " " + plan.hijri.name + " " + plan.hijri.y) : "";
+  const norm = t => String(t || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const lines = String(post.body || post.oneLine || "").split(/\n+/);
+  while (lines.length > 1) {
+    const first = lines[0].trim();
+    const isTitle  = norm(first) === norm(post.title);
+    /* month names have spaces in them: "18 Rabi al-Awwal 1448." */
+    const isDate   = /^\d{1,2}\s+[^\d]{2,30}\s+\d{3,4}\s*\.?$/.test(first);
+    const isArabic = first.length > 0 && !/[A-Za-z]/.test(first);
+    if (isTitle || isDate || isArabic) lines.shift(); else break;
+  }
+  const body = lines.join(" ").replace(/\s+/g, " ").trim();
+  return { title: post.title, story: body,
+           category: SLOT_EYEBROW[slot] || "NOOR",
+           detail: [hd, post.key ? "" : ""].filter(Boolean).join(" · ") || hd };
+}
+
 export default async function handler(req, res) {
   const q = req.query || {};
   const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
   let date = String(q.date || "").slice(0, 10);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) date = new Date().toISOString().slice(0, 10);
+  const story = String(q.shape || "") === "story";
+
+  /* a slot asking for its own picture */
+  const slot = String(q.slot || "");
+  if (slot && slot !== "light") {
+    const card = await slotCard(host, date, slot);
+    if (card) {
+      const svgS = cardSVG(card, { story });
+      return await send(req, res, svgS, q);
+    }
+    /* fall through to the light rather than answer with nothing */
+  }
 
   /* peek: reading the card must never consume a light from the shuffle bag */
   const light = await chooseLight(host, date, { useLantern: false, peek: true });
   if (!light) { res.setHeader("Cache-Control", "no-store"); return res.status(503).send("the library is not reachable"); }
 
-  const story = String(q.shape || "") === "story";
   const svg = cardSVG(light, { story });
 
   if (String(q.debug || "")) {
@@ -285,7 +352,10 @@ export default async function handler(req, res) {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     return res.status(200).send(JSON.stringify(await fontReport(), null, 1));
   }
+  return await send(req, res, svg, q);
+}
 
+async function send(req, res, svg, q) {
   if (String(q.fmt || "") === "png") {
     /* No silent fallback. A caller asking for a PNG is almost always Meta, and
        Meta will reject an SVG. If the rasteriser cannot run, that is a 503 the

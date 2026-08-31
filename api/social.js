@@ -868,7 +868,10 @@ export async function composeSlot(host, date, slotId, opts = {}) {
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
-    link: base + "/?light=" + date, image: base + "/api/card?date=" + date + "&fmt=png"
+    link: base + "/?light=" + date,
+    /* its OWN card, not the day's light. Handing one url to every slot is what
+       made four different posts a day look like one post four times. */
+    image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slotId) + "&fmt=png"
   });
 }
 
@@ -947,7 +950,8 @@ export async function runDue(host, date, now, opts = {}) {
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
-        link: base + "/?light=" + date, image: base + "/api/card?date=" + date + "&fmt=png"
+        link: base + "/?light=" + date,
+        image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slot.id) + "&fmt=png"
       });
     }
     if (!post) { out.ran.push({ slot: slot.id, skipped: "nothing to say" }); continue; }

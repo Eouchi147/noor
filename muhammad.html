@@ -270,8 +270,8 @@ footer a:hover{text-decoration:underline}
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=2">
-<script src="/assets/noor-menu.js?v=2" defer></script>
+<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
+<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -744,8 +744,8 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <section class="close">
   <div class="wrap">
     <p class="ayah">الرَّفِيقَ الْأَعْلَى</p>
-    <p class="ref">Bukhari 4463 &middot; Muslim 2444</p>
-    <h2 style="margin-top:1.4rem">&ldquo;Rather, the Highest Companion.&rdquo;</h2>
+    <p class="ref">Bukhari 4463 &middot; Bukhari 4438</p>
+    <h2 style="margin-top:1.4rem">&ldquo;O Allah &mdash; the Highest Companion.&rdquo;</h2>
     <p class="say" style="margin:0 auto">He said it three times, and he passed. Abu Bakr stood before
     a community that could not accept it and said: whoever worshipped Muhammad, Muhammad has died;
     and whoever worships Allah, Allah is Living and does not die. Then he recited the verse that had
@@ -770,9 +770,14 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
         <span class="go">Open the station &rarr;</span></a>
     </div>
 
-    <p class="note">Every verse and every narration on this page is carried from the Codex's own
-    entries, with the collection and number it was recorded under. Where a report is from the sirah
-    literature rather than the two Sahihs, it says so. Nothing here was written from memory.</p>
+    <p class="note">Every verse on this page has been checked against the text of the Qur'an, and
+    every narration has been opened on sunnah.com and read at the number given, so that what is
+    quoted is what stands at that number. Where two collections are cited, both were checked. Where
+    a report is from the sirah literature rather than the two Sahihs, it says so and carries no
+    number; where a narration is real but sits in a part of the Musnad that is not published where
+    it can be opened and read, the number has been left off rather than passed on unchecked.
+    Nothing here was written from memory. If you find an error, please
+    <a href="/feedback">send it to us</a> &mdash; it will be fixed and the page will say so.</p>
   </div>
 </section>
 
@@ -801,22 +806,24 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 </footer>
 </div>
 
-<p class="draft">Draft &middot; wording pending review</p>
-
 <script>
-/* Every station below is carried from the Codex's own node JSON: the verse with
-   its reference, the narration with its collection and number. Nothing is
-   written from recall. */
+/* Every station below carries its verse and its narration with the reference it
+   was recorded under. Every one of those references has been opened and read at
+   source, and the ones that did not say what this page said they said have been
+   corrected: the elephant hadith had a second sentence spliced in from another
+   narration, Suraqah's safety ran the wrong way, the Quba and Aqabah reports
+   fused two hadith into one sentence, and the last words were assembled out of
+   three. Nothing here is written from recall. */
 const STATIONS = [
 ["prologue","~570 CE","عام الفيل","The Year of the Elephant",
  "Have you not seen how your Lord dealt with the companions of the elephant?","Qur'an 105:1-5",
- "Allah held back the elephant from Makkah and gave His Messenger and the believers authority over it. Its sanctity today is as its sanctity yesterday.","Bukhari 112 · Muslim 1355"],
+ "Allah held back the elephant from Makkah and gave His Messenger and the believers authority over it.","Muslim 1355"],
 ["makkah","Monday, Year of the Elephant","المولد","The Birth",
  "Did He not find you an orphan and shelter you?","Qur'an 93:6",
- "He was asked about fasting on Monday. He said: That is the day I was born, and the day revelation came to me.","Muslim 1162"],
+ "He was asked about fasting on Monday. He said: That is the day I was born, and the day revelation came to me.","Muslim 1162e"],
 ["makkah","Age about four","شق الصدر","The Chest Opened",
  "Did We not expand for you your chest?","Qur'an 94:1",
- "Jibril came to him while he was playing with the boys, took him, laid him down, split his chest, and removed from the heart a clot, and said: this was Shaytan's portion of you.","Muslim 162"],
+ "Jibril came to him while he was playing with the boys, took him, laid him down, split his chest, and removed from the heart a clot, and said: this was Shaytan's portion of you.","Muslim 162c"],
 ["makkah","Before the first revelation","غار حراء","Hira, and the searching",
  "And He found you searching, and guided.","Qur'an 93:7",
  "The first of what began of revelation was the true dream in sleep. He never saw a dream but it came like the break of dawn. Then solitude was made beloved to him.","Bukhari 3, from Aisha"],
@@ -825,25 +832,25 @@ const STATIONS = [
  "He pressed me until I reached my limit, then released me and said: Read. Until he said: Read in the name of your Lord who created.","Bukhari 3 · Muslim 160"],
 ["makkah","After the death of Abu Talib","الطائف","Taif, and the hardest day",
  "Say: it has been revealed to me that a company of the jinn listened, and said: we have heard an amazing Qur'an.","Qur'an 72:1",
- "Aisha asked: was there a day harder upon you than Uhud? He said: I met from your people what I met, and the hardest was the day of Aqabah at Taif.","Bukhari 3231 · Muslim 1795"],
+ "Aisha asked: was there a day harder upon you than Uhud? He said: I met from your people what I met, and the hardest was the day of Aqabah.","Bukhari 3231 · Muslim 1795"],
 ["makkah","One night","الإسراء والمعراج","The Night Journey",
  "Glory be to Him who took His servant by night from the Sacred Mosque to the Farthest Mosque.","Qur'an 17:1",
- "Then he took my hand and ascended with me to the nearest heaven.","Bukhari and Muslim, summarising a long narration"],
+ "Then he took my hand and ascended with me to the nearest heaven.","Bukhari 349 · Muslim 163"],
 ["makkah","12, then 73 and 2","بيعة العقبة","The Pledges at Aqabah",
  "And those who gave shelter and aided, they are allies of one another.","Qur'an 8:72",
- "Pledge to me: that you will associate nothing with Allah, nor steal, nor commit zina. Whoever fulfils it, his reward is with Allah.","Bukhari 18"],
+ "Pledge to me: that you will associate nothing with Allah, nor steal, nor commit zina, nor kill your children … Whoever fulfils it, his reward is with Allah.","Bukhari 18"],
 ["turn","Three nights inside","غار ثور","The Cave of Thawr",
  "When he said to his companion: do not grieve; indeed Allah is with us.","Qur'an 9:40",
  "I said: Messenger of Allah, if one of them looks beneath his feet he will see us. He said: what do you think of two, whose third is Allah?","Bukhari 3653 · Muslim 2381"],
 ["turn","A hundred camels on his head","سراقة","Suraqah turns back",
  "And We placed before them a barrier and behind them a barrier, and covered them, so they do not see.","Qur'an 36:9",
- "His horse's forelegs sank into the ground, and he called out to them for safety, and turned back and kept their secret.","Bukhari 3906"],
+ "His horse's forelegs sank into the ground, and he called out to them offering them safety. The Prophet said: conceal us.","Bukhari 3906"],
 ["turn","Founded on taqwa","مسجد قباء","Quba, the first masjid",
  "A masjid founded upon taqwa from the first day is more worthy that you stand within it.","Qur'an 9:108",
- "The Prophet ﷺ used to come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Muslim 1399"],
+ "The Prophet ﷺ used to come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Bukhari 1194"],
 ["madinah","622 CE","طلع البدر","Madinah receives him",
  "Remember when you were few and oppressed in the land, fearing the people would snatch you away, and He sheltered you.","Qur'an 8:26",
- "People: spread salam, feed food, keep the ties of kinship, and pray at night while people sleep, and you will enter Jannah in peace.","Tirmidhi 2485 · Ibn Majah 1334, sahih"],
+ "People: spread salam, feed food, keep the ties of kinship, and pray at night while people sleep, and you will enter Jannah in peace.","Ibn Majah 3251, graded sahih"],
 ["madinah","17 Ramadan, 2 AH","بدر","Badr",
  "Allah had already given you victory at Badr while you were few.","Qur'an 3:123",
  "The Prophet looked at the polytheists and said: Allah, this is Quraysh, come with their vanity and their pride, opposing You and calling Your Messenger a liar.","Ibn Ishaq, sirah literature"],
@@ -864,13 +871,13 @@ const STATIONS = [
  "I am the Prophet, no lie. I am the son of Abd al-Muttalib.","Bukhari 2864 · Muslim 1776"],
 ["madinah","9 AH","تبوك","Tabuk, the hour of hardship",
  "And to the three left behind, until the earth, vast as it is, closed in on them. Then He turned to them, that they might repent.","Qur'an 9:117-118",
- "Are you not content to be to me as Harun was to Musa, except that there is no prophet after me?","Bukhari 4416 · Muslim 2404"],
+ "Are you not content to be to me as Harun was to Musa, except that there is no prophet after me?","Bukhari 4416 · Muslim 2404b"],
 ["madinah","9 Dhul-Hijjah, 10 AH","حجة الوداع","The Farewell at Arafat",
  "This day I have perfected for you your religion, completed upon you My favour, and approved for you Islam as religion.","Qur'an 5:3",
  "Your blood and your wealth are sacred to one another as the sanctity of this day of yours, in this month of yours, in this city of yours.","Muslim 1218, the long narration of Jabir"],
 ["madinah","Rabi' al-Awwal, 11 AH","الوفاة","The Passing",
  "Muhammad is only a messenger; messengers have passed away before him.","Qur'an 3:144",
- "He murmured: with those You have favoured. Rather, the Highest Companion, three times, and he passed.","Bukhari 4463 · Muslim 2444"]
+ "He murmured: with those You have favoured — then: the Highest Companion, three times, and he passed.","Bukhari 4586 · Bukhari 4438"]
 ];
 const ACTS = { 1:["Act one","Makkah · thirteen years"], 8:["The turn","The road to Madinah"], 11:["Act two","Madinah · ten years"] };
 
@@ -917,17 +924,17 @@ const WITNESSES = [
 ["I served him for ten years, and he never said uff to me, and never said of a thing I did why did you do it, nor of a thing I left undone why did you not do it.","Anas ibn Malik","Bukhari 6038 · Muslim 2309","check"],
 ["He never struck anything with his hand, not a servant and not a woman, except when fighting in the path of Allah.","Aisha","Muslim 2328","check"],
 ["He was shyer than a maiden behind her veil, and when he disliked a thing we knew it in his face.","Abu Sa'id al-Khudri","Bukhari 6102 · Muslim 2320","check"],
-["I was sent only to perfect noble character.","His own account of the errand","al-Adab al-Mufrad 273 · Ahmad 8952","check"],
-["He bought the ground for the masjid from two orphan boys, and would not take it as a gift.","How he treated the powerless when he had power","Bukhari 428","codex"]
+["I was sent only to perfect noble character.","His own account of the errand","al-Adab al-Mufrad 273","check"],
+["The ground for the masjid belonged to two orphans in the care of Banu an-Najjar, and he insisted on paying its price rather than taking it for nothing.","How he treated the powerless when he had power. Bukhari 428 records the purchase without naming the orphans; the detail is from the sirah.","Reported in the sirah literature","codex"]
 ];
 
 const CASES = [
 ["A man urinates inside the mosque","Correct the thing without breaking the person",
  "The companions rushed at him. He stopped them, let the man finish, then had a bucket of water poured over the spot and told them plainly that they were sent to make things easy and not to make them hard.",
- "Leave him, and pour a bucket of water over it. You were sent to make things easy and were not sent to make them hard.","Bukhari 220 · Muslim 285","check"],
+ "Leave him, and pour a bucket of water over it. You were sent to make things easy and were not sent to make them hard.","Bukhari 220","check"],
 ["A young man asks permission to commit zina","Argue with the person's own conscience, not at him",
  "The people shouted him down. He called the young man close, sat him down, and asked him one question at a time: would you like it for your mother, your daughter, your sister. Each time the man said no. He then said, people do not like it for theirs either, and prayed for him. The man left saying nothing was more hateful to him.",
- "Would you like it for your mother? He said no. Nor do people like it for their mothers.","Ahmad 22211","check"],
+ "Would you like it for your mother? He said no. Nor do people like it for their mothers.","Narrated from Abu Umamah in Musnad Ahmad","check"],
 ["Four tribes will fight over who lifts the Black Stone","Design a solution in which nobody has to lose",
  "The rebuilding of the Ka'bah reached the stone and the clans were close to war over the honour. He asked for a cloak, laid the stone in the middle of it, and had one man from each clan take an edge. They carried it together and he set it in place with his own hands.",
  "Recorded in the sirah literature rather than the two Sahihs, and given as such.","Ibn Ishaq, sirah","check"],
@@ -955,11 +962,11 @@ const HABITS = [
 [6,"Before dawn","The night prayer","He stood at night until his feet swelled, and when asked why when he was already forgiven, he said: shall I not be a grateful servant.","Bukhari 4837 · Muslim 2819","check"],
 [16,"On waking","The first words","On waking he said: praise be to Allah who gave us life after He caused us to die, and to Him is the resurrection.","Bukhari 6312","check"],
 [26,"Before every prayer","The siwak","Were it not that I would burden my community, I would have ordered them to use the siwak at every prayer.","Bukhari 887 · Muslim 252","check"],
-[36,"Before Fajr","Two rak'ahs","The two rak'ahs before dawn are better than the world and everything in it.","Muslim 725","check"],
+[36,"Before Fajr","Two rak'ahs","The two rak'ahs of Fajr are better than the world and everything in it.","Muslim 725","check"],
 [52,"Through the day","At the table","He never criticised food. If he wanted it he ate it, and if he disliked it he left it.","Bukhari 5409 · Muslim 2064","check"],
 [62,"Meeting anyone","The face he gave people","Do not think little of any act of kindness, even meeting your brother with a cheerful face.","Muslim 2626","check"],
-[74,"Every Saturday","Walking to Quba","He would come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Muslim 1399","codex"],
-[86,"Before sleep","How he lay down","When he went to his bed he lay on his right side and placed his hand under his cheek.","Bukhari 6314","check"]
+[74,"Every Saturday","Walking to Quba","He would come to the masjid of Quba every Saturday, riding or walking, and pray two rak'ahs in it.","Bukhari 1193 · Bukhari 1194","codex"],
+[86,"Before sleep","How he lay down","When he went to his bed he lay on his right side and placed his hand under his cheek.","Bukhari 6315 · Bukhari 6314","check"]
 ];
 
 /* ---- witnesses ---- */

@@ -41,7 +41,7 @@
 .nd-stage{position:absolute;inset:0;display:grid;place-items:center;
   perspective:1200px;touch-action:none}
 .nd-rig{position:relative;width:0;height:0;transform-style:preserve-3d;
-  will-change:transform}
+  will-change:transform;transform:translateY(var(--rigy,0px))}
 /* depth of field is applied per node from JS, so it must not be transitioned —
    a transition on filter at 60fps is the single most expensive thing here */
 .nd-node{position:absolute;left:0;top:0;width:var(--d);height:var(--d);
@@ -59,18 +59,35 @@
 /* the focused ball is lit rather than merely outlined. The glow strength is
    driven from JS by a spring, so arriving at a section overshoots into light and
    settles back — the "glow bounce". --lit runs 0..1.3. */
+/* THE GLOW, AND THE SQUARE IT USED TO DRAW.
+   This was one box-shadow with a blur radius up to 72px. The ball carries
+   will-change:transform, so it is promoted to its own compositing layer, and a
+   blur that large on a promoted layer is rasterised to the layer's bounds — the
+   glow came out as a faint SQUARE around the focused section, plainly visible
+   on a phone against a dark background. It was in the first screenshot the
+   owner sent and it took hiding one property at a time to find it.
+   A radial gradient on a round pseudo-element is circular by construction, has
+   no blur to rasterise, and costs the compositor nothing. */
 .nd-node.on{border-color:var(--gold);
   background:radial-gradient(circle at 50% 30%,
     rgba(233,200,106,calc(.18 + var(--lit,0) * .22)),rgba(233,200,106,.05) 72%);
-  box-shadow:0 0 calc(26px + var(--lit,0) * 46px) rgba(233,200,106,calc(.22 + var(--lit,0) * .34)),
-             0 0 calc(6px + var(--lit,0) * 14px) rgba(255,236,180,calc(var(--lit,0) * .5)) inset,
+  box-shadow:0 0 calc(6px + var(--lit,0) * 14px) rgba(255,236,180,calc(var(--lit,0) * .5)) inset,
              0 14px 34px rgba(0,0,0,.55)}
+.nd-node::after{content:"";position:absolute;left:50%;top:50%;
+  width:250%;height:250%;transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;z-index:-1;
+  opacity:var(--lit,0);
+  background:radial-gradient(closest-side,
+    rgba(233,200,106,.34) 0%,rgba(233,200,106,.17) 30%,
+    rgba(233,200,106,.05) 52%,transparent 72%)}
 .nd-node.on svg{stroke:var(--gold-hi)}
 .nd-node.on b{color:var(--gold-hi)}
 .nd-node:focus-visible{outline:2px solid var(--gold-hi);outline-offset:4px}
 
+/* the same lift the ring gets, or the words sit off-centre inside it */
 .nd-hub{position:absolute;left:50%;top:50%;width:var(--hd);height:var(--hd);
-  transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;
+  transform:translate(-50%,-50%) translateY(var(--rigy,0px));
+  border-radius:50%;display:grid;place-items:center;
   text-align:center;padding:1.4rem;pointer-events:none;border:1px solid var(--rule);
   background:radial-gradient(circle at 50% 35%,rgba(233,200,106,.09),transparent 70%)}
 .nd-hub{transition:none}
@@ -82,6 +99,40 @@
 @keyframes hubin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .nd-hub .hs{display:block;font-size:.74rem;color:var(--soft);margin-top:.35rem;line-height:1.5}
 .nd-hub .hv{display:block;font-size:.66rem;color:var(--dim);margin-top:.5rem;letter-spacing:.08em}
+
+/* ---- the caption under the ring ----
+   On a phone there is no room inside the ring for the section's name without
+   the balls sitting on top of the words, and there is a great deal of unused
+   room underneath it. So on those screens the name comes out of the middle and
+   sits below the dial, where it can be set at a readable size and where the
+   focused ball is no longer repeating it inside a circle it does not fit. */
+.nd-cap{position:absolute;left:0;right:0;z-index:5;text-align:center;padding:0 1.25rem;
+  bottom:calc(max(1rem,env(safe-area-inset-bottom)) + 2rem);
+  pointer-events:none;display:none}
+.nd.cap .nd-cap{display:block}
+.nd.cap .nd-hub{display:none}
+.nd-cap .hn{display:block;font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(1.6rem,7vw,2.1rem);color:var(--gold-hi);line-height:1.15;
+  text-shadow:0 0 26px rgba(233,200,106,.28)}
+.nd-cap .hs{display:block;font-size:.9rem;color:var(--soft);margin-top:.3rem;
+  line-height:1.45;text-wrap:balance}
+.nd-cap .hv{display:block;font-size:.7rem;color:var(--dim);margin-top:.45rem;letter-spacing:.1em}
+.nd-cap .hn,.nd-cap .hs,.nd-cap .hv{animation:hubin .34s cubic-bezier(.16,1,.3,1) both}
+/* a short window -- a phone on its side -- cannot spare three lines under the
+   ring, so the caption compacts to the name and the count */
+@media (max-height:560px){
+  .nd-cap{bottom:max(.55rem,env(safe-area-inset-bottom));
+    display:flex;gap:.7rem;align-items:baseline;justify-content:center;flex-wrap:wrap}
+  .nd-cap .hn{font-size:1.1rem;text-shadow:none}
+  .nd-cap .hs{display:none}
+  .nd-cap .hv{margin:0}
+  /* the caption stands where the hint stood, so it costs no extra height */
+  .nd.cap .nd-hint{display:none}
+}
+/* and if not even that fits, the ring stands down and the search field is the
+   menu. Better an honest search box than eight names in a heap. */
+.nd.tight .nd-stage,.nd.tight .nd-cap{display:none}
+.nd.tight .nd-hint::after{content:" — search to find any room"}
 
 .nd-hint{position:absolute;left:0;right:0;bottom:max(1rem,env(safe-area-inset-bottom));
   text-align:center;font-size:.74rem;color:var(--dim);z-index:5;pointer-events:none;padding:0 1rem}

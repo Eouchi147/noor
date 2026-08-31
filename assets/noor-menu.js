@@ -56,7 +56,7 @@ function buildShell(){
   d.innerHTML=
    '<canvas id="ndsky" aria-hidden="true"></canvas>'
   +'<div class="nd-bloom" id="ndbloom" aria-hidden="true"></div>'
-  +'<div class="nd-top"><label class="nd-find">'
+  +'<div class="nd-top" id="ndtop"><label class="nd-find">'
   +'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">'
   +'<circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg>'
   +'<input id="ndq" type="search" autocomplete="off" spellcheck="false" '
@@ -65,6 +65,7 @@ function buildShell(){
   +'<div class="nd-stage" id="ndstage"><div class="nd-rig" id="ndrig"></div>'
   +'<div class="nd-hub" id="ndhub" aria-live="polite"></div></div>'
   +'<div class="nd-res" id="ndres"><div class="wrap" id="ndreswrap"></div></div>'
+  +'<div class="nd-cap" id="ndcap" aria-hidden="true"></div>'
   +'<p class="nd-hint" id="ndhint"></p>'
   +'<div class="nd-scrim" id="ndscrim"></div>'
   +'<div class="nd-panel" id="ndpanel" role="dialog" aria-modal="true" aria-labelledby="ndptitle">'
@@ -169,7 +170,12 @@ function bakeHaze(){
   g2.fillStyle=wash;g2.fillRect(0,0,HZW,HZH);
   g2.globalCompositeOperation="lighter";
   for(const h of HAZE){
-    const X=(h.x+pad/(1+pad*2))*HZW, Y=(h.y+pad/(1+pad*2))*HZH, RR=h.r*D*.5;
+    /* the cloud's place is a fraction of the VIEWPORT, and the bitmap is the
+       viewport plus padding on both sides, so the fraction has to be mapped
+       through that. It was being multiplied by the padded width instead of
+       divided by it, which threw the clouds 1.7x further apart than intended
+       and pushed two of them off the bitmap altogether. */
+    const X=((h.x+pad)/(1+pad*2))*HZW, Y=((h.y+pad)/(1+pad*2))*HZH, RR=h.r*D*.5;
     const hg=g2.createRadialGradient(X,Y,0,X,Y,RR);
     hg.addColorStop(0,"rgba("+h.c+","+h.a+")");
     hg.addColorStop(.55,"rgba("+h.c+","+(h.a*.34).toFixed(3)+")");
@@ -276,17 +282,184 @@ function judgeQuality(){
     else    { for(const L of LAYERS) L.st.length=Math.floor(L.st.length*.65); }
   }
 }
-let nodes=[],focus=0,R=0,ND=0,snapTo=null,born=0,running=false,rafId=0,openedAt=0;
+let nodes=[],focus=0,R=0,ND=0,snapTo=null,born=0,running=false,rafId=0,openedAt=0,downEl=null;
+
+/* ---------------------------------------------------------------------------
+   metrics — the geometry, measured against the space that is actually free
+
+   THE BUG THIS FIXES
+
+   The ring radius was computed from the viewport, and the hub in the middle of
+   it was sized from the ball diameter. The two numbers never spoke to each
+   other, so on every phone the ring closed over the hub: the balls sat on top
+   of the words in the middle. Measured before the fix, the overlap was 19px on
+   an iPhone 14, 20px on a Pro Max, 37px on an SE and 41px in landscape. Not one
+   phone size was clear of it, and on the same screens a third of the height sat
+   empty above and below the ring.
+
+   Now the box is worked out first — the viewport minus the search bar, minus
+   the hint, minus the caption if there is one — and the ring is fitted into
+   that box in both axes. The hub is then given whatever room is genuinely left
+   inside the ring, and if that is not enough for the words to be read, the hub
+   is dropped and the section's name moves to a caption under the ring, where
+   there was empty space anyway. Nothing is allowed to overlap anything.
+--------------------------------------------------------------------------- */
+const CLR = 14;          /* clear air between the ring's inner edge and the hub */
+const FOCUS_SCALE = 1.18;   /* what layout() gives the ball in focus */
+const NEAR_SCALE  = 1.12;   /* and the near half of the ring, at its closest */
+const HUB_MIN = 196;
+const CAP_GAP = 34;      /* the air the caption keeps above the hint line */
+const SLACK   = 16;      /* the box is never filled to its last pixel */
+const MIN_BALL= 52;      /* below this a section cannot be read or aimed at */
+const LEAN    = .05;     /* what the five-degree lean adds to the vertical reach */
+const COS_MAX = .94;     /* the roundest the ring is ever drawn */
+const COS_MIN = .20;     /* and the flattest, before it stops reading as a ring */
+const BALL_GAP= 8;       /* clear air between one section and the next */     /* below this the three lines cannot be set well */
+let CAPTION=false, capH=0, RIGY=0, TOOTIGHT=false;
 
 function metrics(){
-  const w=innerWidth,h=innerHeight,small=Math.min(w,h);
-  ND=COARSE?Math.max(78,Math.min(104,small*.215)):Math.max(92,Math.min(124,small*.155));
-  const M=ND*.5*1.55;
-  R=Math.min(w*.5-M,(h*.5-M)/Math.cos(.34)*.9,300);
-  R=Math.max(R,ND*1.3);
-  document.documentElement.style.setProperty("--d",ND+"px");
-  document.documentElement.style.setProperty("--hd",(ND*2.1)+"px");
+  const w = innerWidth, h = innerHeight;
+  const topH  = ($("ndtop") && $("ndtop").offsetHeight) || 64;
+  const hintH = ($("ndhint") && $("ndhint").offsetHeight) || 26;
+  const availW = w - 12;
+  let capBlock = 0;
+
+  /* WHERE TWO BALLS ACTUALLY LAND, INCLUDING THE PERSPECTIVE.
+
+     Eight balls evenly spaced in ANGLE are not evenly spaced on screen: they
+     bunch at the ends of the long axis. Worse, the rig is leaned back under a
+     1200px perspective, so the near half is magnified and the far half is
+     pushed together — and the flatter the ring, the deeper it runs and the more
+     violent that is. A flat-ellipse estimate said a landscape phone was fine
+     while all eight balls sat in one heap at the back.
+
+     So this projects the ring the way the browser will, gives every ball the
+     size layout() will give it, and answers with the smallest gap between two
+     neighbours. Positive means they clear each other. */
+  const P = 1200;
+  const gapAt = (r, cosT, nd) => {
+    const sinT = Math.sqrt(Math.max(0, 1 - cosT * cosT));
+    const zr = r * sinT || 1;
+    const pts = [];
+    for (let i = 0; i < 8; i++){
+      const ang = -Math.PI/2 + (i/8) * Math.PI * 2;
+      const z = -Math.sin(ang) * r * sinT;
+      const k = P / (P - z);
+      const near = (z + zr) / (2 * zr);
+      const scale = (.82 + near * .3) * FOCUS_SCALE;   /* worst case: it has focus */
+      pts.push({ x: Math.cos(ang) * r * k, y: Math.sin(ang) * r * cosT * k,
+                 rad: nd * .5 * scale * k });
+    }
+    let m = Infinity;
+    for (let i = 0; i < 8; i++){
+      const j = (i + 1) % 8;
+      const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y) - (pts[i].rad + pts[j].rad);
+      if (d < m) m = d;
+    }
+    return m;
+  };
+  /* Where the ring's top and bottom actually land once projected, relative to
+     the rig's own origin. These are not symmetric -- the near half is magnified
+     and hangs lower -- so centring the ring on its geometric middle leaves it
+     sitting high, and on an iPad in landscape that put it six pixels under the
+     search bar. The box is centred on what is drawn, not on the maths. */
+  const spanAt = (r, cosT, nd) => {
+    const sinT = Math.sqrt(Math.max(0, 1 - cosT * cosT));
+    let top = Infinity, bot = -Infinity;
+    for (let i = 0; i < 8; i++){
+      const ang = -Math.PI/2 + (i/8) * Math.PI * 2;
+      const z = -Math.sin(ang) * r * sinT, k = P / (P - z);
+      const near = (z + (r * sinT || 1)) / (2 * (r * sinT || 1));
+      const rad = nd * .5 * (.82 + near * .3) * FOCUS_SCALE * k;
+      const y = Math.sin(ang) * r * cosT * k;
+      top = Math.min(top, y - rad); bot = Math.max(bot, y + rad);
+    }
+    return { top, bot, h: bot - top };
+  };
+
+  /* Round first. A round ring keeps its balls at similar depths, which is both
+     better looking and far kinder to the projection; it is laid back only as
+     far as a short window forces. Choosing the flattest that fit was backwards,
+     and it is what produced the heap. */
+  const TILTS = [.94, .88, .80, .72, .64, .56, .48, .40, .32];
+
+  const fit = reserve => {
+    const availH = Math.max(110, h - topH - hintH - reserve - SLACK);
+    const small  = Math.min(availW, availH);
+    let nd = COARSE ? Math.max(72, Math.min(104, small * .215))
+                    : Math.max(92, Math.min(124, small * .155));
+    for (let k = 0; k < 16; k++){
+      const dr = nd * FOCUS_SCALE * NEAR_SCALE;
+      const rw = (availW - dr) / 2;
+      if (rw > 8){
+        for (const cosT of TILTS){
+          const r = Math.min(rw, 300);
+          if (r <= 8) continue;
+          if (spanAt(r, cosT, nd).h > availH) continue;
+          if (gapAt(r, cosT, nd) >= BALL_GAP)
+            return { nd, r, tilt: Math.acos(cosT), span: spanAt(r, cosT, nd) };
+        }
+        /* the width-limited radius did not fit; try trimming the radius too */
+        for (const cosT of TILTS){
+          for (let f = .92; f >= .5; f -= .08){
+            const r = Math.min(rw, 300) * f;
+            if (r <= 8) continue;
+            if (spanAt(r, cosT, nd).h > availH) continue;
+            if (gapAt(r, cosT, nd) >= BALL_GAP)
+              return { nd, r, tilt: Math.acos(cosT), span: spanAt(r, cosT, nd) };
+          }
+        }
+      }
+      if (nd <= MIN_BALL) break;
+      nd = Math.max(MIN_BALL, nd * .9);
+    }
+    /* Nothing legible fits. Rather than draw a heap, say so: the caller hides
+       the ring and the search field carries the whole menu. */
+    return null;
+  };
+
+  let g = fit(0);
+  let room = g ? 2 * (g.r * Math.cos(g.tilt) - g.nd * .5 * FOCUS_SCALE * NEAR_SCALE - CLR) : 0;
+  CAPTION = !g || room < HUB_MIN;
+  if (CAPTION && g){
+    /* The caption needs room under the ring, and on a short screen there may not
+       be enough for both. Ask for the whole block, then for a compact one, and
+       only if neither leaves a ring worth drawing give the caption up -- rather
+       than drawing it on top of the ring, which is what used to happen. */
+    room = 0;
+    /* On a short window -- a phone turned on its side -- there is no room for a
+       block of text under the ring AND a ring worth looking at. There the
+       caption becomes one line and takes the place of the hint, which costs no
+       height at all, because the hint's line was already being reserved. */
+    if (h < 560){ capBlock = 0; }
+    else {
+      const want = (capH || 84) + CAP_GAP;
+      let g2 = fit(want);
+      if (g2){ capBlock = want; g = g2; }
+      else {
+        const tighter = Math.round(want * .58);
+        g2 = fit(tighter);
+        if (g2){ capBlock = tighter; g = g2; }
+        else { CAPTION = false; capBlock = 0; }
+      }
+    }
+  }
+
+  TOOTIGHT = !g;
+  const nd = $("nd");
+  if (nd){ nd.classList.toggle("cap", CAPTION && !TOOTIGHT); nd.classList.toggle("tight", TOOTIGHT); }
+  if (!g){ ND = MIN_BALL; R = 0; RIGY = 0; return; }
+
+  ND = g.nd; R = g.r; TILT = g.tilt;
+  const root = document.documentElement.style;
+  root.setProperty("--d", ND.toFixed(1) + "px");
+  root.setProperty("--hd", (CAPTION ? 0 : Math.min(room, ND * 2.7, 300)).toFixed(1) + "px");
+  /* put the middle of what is DRAWN in the middle of the free box */
+  const boxTop = topH, boxBot = h - hintH - (CAPTION ? capBlock : 0);
+  RIGY = (boxTop + boxBot) / 2 - h / 2 - (g.span ? (g.span.top + g.span.bot) / 2 : 0);
+  root.setProperty("--rigy", RIGY.toFixed(1) + "px");
 }
+
 function render(){
   metrics();
   $("ndrig").innerHTML=RING.map((s,i)=>
@@ -304,11 +477,22 @@ function render(){
 }
 function paintHub(){
   const s=RING[focus]; if(!s)return;
-  $("ndhub").innerHTML='<span><span class="hn">'+esc(s.n)+'</span>'
+  const body='<span class="hn">'+esc(s.n)+'</span>'
     +'<span class="hs">'+esc(s.s)+'</span>'
-    +'<span class="hv">'+s.n_+' rooms</span></span>';
+    +'<span class="hv">'+s.n_+' rooms</span>';
+  $("ndhub").innerHTML='<span>'+body+'</span>';
+  const cap=$("ndcap");
+  if(cap){
+    cap.innerHTML=body;
+    /* the caption's height feeds back into the geometry: a subtitle that wraps
+       to two lines has to take that room from the ring, not from the reader */
+    if(CAPTION){
+      const hNow=cap.offsetHeight;
+      if(Math.abs(hNow-capH)>2){ capH=hNow; metrics(); }
+    }
+  }
 }
-const TILT=.34;
+let TILT=.34;
 function layout(T){
   const n=nodes.length;if(!n)return;
   const age=(T*1000-born)/1000;
@@ -414,8 +598,14 @@ function frame(now){
   const since=(now-openedAt)/1000;
   const dolly=REDUCE?1:(since<1.1?(1-Math.pow(1-Math.min(1,since/1.1),3))*.14+.86:1);
   const lean=REDUCE?0:1;
+  /* RIGY comes first, and it is written here rather than left to the
+     stylesheet, because this line sets style.transform inline every frame and
+     an inline transform beats the sheet: the rule that was meant to lift the
+     ring clear of the search bar was being overwritten sixty times a second
+     and never applied once. */
   $("ndrig").style.transform=
-     "translateZ("+((dolly-1)*260).toFixed(1)+"px) scale("+dolly.toFixed(4)+") "
+     "translateY("+RIGY.toFixed(1)+"px) "
+    +"translateZ("+((dolly-1)*260).toFixed(1)+"px) scale("+dolly.toFixed(4)+") "
     +"rotateX("+((-cam.py*7-5)*lean).toFixed(2)+"deg) "
     +"rotateY("+((cam.px*9)*lean).toFixed(2)+"deg)";
 
@@ -520,7 +710,10 @@ function wire(){
   stage.addEventListener("pointerdown",e=>{
     if(openIdx>=0)return;
     stage.setPointerCapture(e.pointerId);drag=true;snapTo=null;moved=0;lastX=e.clientX;vel=0;S.thV*=.3;
-    const el=e.target.closest(".nd-node"); if(el)nodes[+el.dataset.i]._wv+=3.2;
+    const el=e.target.closest(".nd-node");
+    /* remembered, because of the bug described at pointerup */
+    downEl=el||null;
+    if(el)nodes[+el.dataset.i]._wv+=3.2;
   });
   stage.addEventListener("pointermove",e=>{
     if(CANHOVER){cam.pxT=(e.clientX/innerWidth-.5)*2;cam.pyT=(e.clientY/innerHeight-.5)*2;}
@@ -528,14 +721,40 @@ function wire(){
     const dx=e.clientX-lastX;lastX=e.clientX;moved+=Math.abs(dx);
     S.th+=dx*(COARSE?.0043:.0052);S.thV=clampV(dx*TRACK);vel=dx;
   });
+  /* ---------------------------------------------------------------------------
+     TAPPING A SECTION, WHICH DID NOTHING AT ALL
+
+     pointerdown calls stage.setPointerCapture, and once a pointer is captured
+     every later event for it is dispatched to the capture element. So on
+     pointerup e.target was ALWAYS .nd-stage, never the ball, and
+     e.target.closest(".nd-node") was always null. The section never opened.
+
+     And because the click handler below cancels a plain left click so the
+     anchor does not navigate instead, nothing happened either way: the dial's
+     one job -- tap a section, see its rooms -- was dead on every device from
+     the day it shipped. It was found by testing the tap rather than the layout.
+
+     The ball the press landed on is remembered at pointerdown, and where the
+     finger came up is hit-tested as a fallback, since hit testing is not
+     affected by capture.
+  --------------------------------------------------------------------------- */
   stage.addEventListener("pointerup",e=>{
     const tap=moved<8;
     if(drag){drag=false;S.thV=clampV(S.thV+vel*FLING);}
-    if(!tap)return;
-    const el=e.target.closest(".nd-node");
-    if(el){e.preventDefault();const i=+el.dataset.i;nodes[i]._wv+=4.5;openSection(i);}
+    if(!tap){downEl=null;return;}
+    let el=downEl;
+    if(!el){
+      const under=document.elementFromPoint(e.clientX,e.clientY);
+      el=under&&under.closest?under.closest(".nd-node"):null;
+    }
+    downEl=null;
+    if(el&&el.dataset&&el.dataset.i!=null){
+      e.preventDefault();
+      const i=+el.dataset.i; if(nodes[i])nodes[i]._wv+=4.5;
+      openSection(i);
+    }
   });
-  stage.addEventListener("pointercancel",()=>{drag=false;});
+  stage.addEventListener("pointercancel",()=>{drag=false;downEl=null;});
   /* an anchor still navigates on a real click (middle/⌘ included); a plain left
      click is intercepted above and opens the section instead */
   $("ndrig").addEventListener("click",e=>{
