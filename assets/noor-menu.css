@@ -17,7 +17,8 @@
 }
 .nm-root.nm-on{display:grid; opacity:1}
 .nm-root *,.nm-root *::before,.nm-root *::after{box-sizing:border-box}
-.nm-root button{font:inherit; color:inherit; background:none; border:0; cursor:pointer; margin:0}
+.nm-root :where(button){font:inherit; color:inherit; background:none; border:0;
+  cursor:pointer; margin:0; padding:0}
 .nm-ar{font-family:Amiri,serif; direction:rtl}
 html.nm-open,body.nm-open{overflow:hidden!important}
 
@@ -102,6 +103,9 @@ html.nm-open,body.nm-open{overflow:hidden!important}
   bottom:max(.8rem,env(safe-area-inset-bottom));
   display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; pointer-events:none}
 .nm-tools > *{pointer-events:auto}
+.nm-tools{transition:opacity .25s, transform .25s}
+.nm-sky[data-sheet=open] .nm-tools{opacity:0; transform:translateY(1.4rem); pointer-events:none}
+.nm-sky[data-sheet=open] .nm-near{opacity:0}
 .nm-tool{border:1px solid var(--nm-rule); border-radius:2rem; padding:.36rem .78rem;
   font-size:.72rem; color:var(--nm-soft); background:rgba(6,7,12,.72);
   backdrop-filter:blur(8px); transition:.2s; min-width:2.2rem}
@@ -131,6 +135,105 @@ html.nm-open,body.nm-open{overflow:hidden!important}
 .nm-open .nm-k{font-size:.62rem; border:1px solid currentColor; border-radius:5px;
   padding:.05rem .3rem; opacity:.5}
 @media (max-width:40rem){ .nm-open .nm-lbl,.nm-open .nm-k{display:none} .nm-open{padding:.42rem .5rem} }
+
+
+/* =========================================================================
+   TOUCH.
+
+   A finger is about 9mm across and cannot hover. The desktop model -- point
+   at a light, read its name, then click -- has no translation: by the time
+   your finger is on a 2px star you cannot see the star, and a tap that
+   navigates immediately means a near-miss takes you to the wrong page with
+   no way to notice before it happens.
+
+   So touch gets its own model. A tap selects a NEIGHBOURHOOD rather than a
+   point: the nearest light opens a sheet naming it, and anything else that
+   was under your thumb is offered beside it as a chip. Imprecision stops
+   being a failure and becomes the thing that shows you your options. Nothing
+   navigates until you press Open.
+
+   And because you cannot hover, the map names whatever is nearest the middle
+   of the screen as you pan, so you always know where you are without
+   touching anything at all.
+   ========================================================================= */
+@media (hover:none){
+  .nm-tool{padding:.6rem 1rem; font-size:.8rem; min-height:44px; min-width:44px;
+    display:inline-flex; align-items:center; justify-content:center}
+  .nm-mode{min-height:44px; display:inline-flex; align-items:center}
+  .nm-shut{width:44px; height:44px}
+  .nm-field{padding:.62rem .7rem}
+  .nm-row{min-height:52px; align-content:center}
+  .nm-door{min-height:52px}
+  .nm-tools{gap:.5rem}
+  .nm-tip{display:none}          /* there is no hover to show it with */
+}
+
+/* what is under the middle of the screen, named, while you move */
+.nm-focus{position:absolute; left:50%; top:50%; z-index:2; pointer-events:none;
+  transform:translate(-50%,-50%); width:5.2rem; height:5.2rem; border-radius:50%;
+  border:1px solid rgba(232,200,116,.28); opacity:0; transition:opacity .3s}
+.nm-focus.nm-on{opacity:1}
+.nm-focus::after{content:""; position:absolute; inset:38%; border-radius:50%;
+  background:rgba(232,200,116,.5)}
+.nm-near{position:absolute; left:50%; bottom:5.4rem; z-index:3; pointer-events:none;
+  transform:translate(-50%,6px); max-width:min(20rem,86vw); text-align:center;
+  background:rgba(6,7,12,.86); border:1px solid var(--nm-rule); border-radius:2rem;
+  padding:.4rem .95rem; font-size:.8rem; color:var(--nm-ink);
+  backdrop-filter:blur(8px); opacity:0; transition:opacity .25s, transform .25s;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.nm-near.nm-on{opacity:1; transform:translate(-50%,0)}
+.nm-near b{color:var(--nm-gold-hi); font-weight:600}
+
+/* the sheet a tap opens */
+.nm-sheet{position:absolute; left:0; right:0; bottom:0; z-index:9;
+  background:linear-gradient(180deg,rgba(12,16,34,.97),rgba(6,7,12,.99));
+  border-top:1px solid var(--nm-gold-dim); border-radius:18px 18px 0 0;
+  padding:.6rem clamp(.9rem,4vw,1.3rem) max(1rem,env(safe-area-inset-bottom));
+  transform:translateY(110%); transition:transform .34s cubic-bezier(.22,1,.32,1);
+  box-shadow:0 -18px 50px rgba(0,0,0,.5); touch-action:none}
+.nm-sheet.nm-on{transform:none}
+.nm-grab{width:2.4rem; height:.25rem; border-radius:2rem; background:rgba(232,200,116,.34);
+  margin:.15rem auto .7rem}
+.nm-sheet .nm-eyebrow{font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--nm-gold); margin:0 0 .2rem}
+.nm-sheet .nm-eyebrow,
+.nm-sheet h3{padding-right:48px}
+.nm-sheet h3{margin:0; font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
+  font-size:1.5rem; line-height:1.2; color:var(--nm-ink)}
+.nm-sheet h3 .nm-ar{display:block; font-size:1.25rem; color:var(--nm-gold); margin-bottom:.15rem}
+.nm-sheet p.nm-sd{margin:.45rem 0 0; font-size:.88rem; line-height:1.5; color:var(--nm-soft);
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden}
+/* the one thing on this sheet that commits you to anything, so it is the one
+   thing that looks pressable. A hairline at .16 alpha reads as nothing at 2x. */
+.nm-go{display:flex; align-items:center; justify-content:center; gap:.5rem; width:100%;
+  min-height:52px; margin-top:1rem; border-radius:13px;
+  background:linear-gradient(180deg,rgba(232,200,116,.26),rgba(232,200,116,.15));
+  border:1px solid rgba(232,200,116,.62); color:#FFF6DC; font-size:1rem;
+  font-weight:600; letter-spacing:.01em;
+  box-shadow:0 2px 14px rgba(232,200,116,.12), inset 0 1px 0 rgba(255,255,255,.08);
+  transition:background .18s, transform .09s, box-shadow .18s}
+.nm-go:active{transform:scale(.982);
+  background:linear-gradient(180deg,rgba(232,200,116,.38),rgba(232,200,116,.24));
+  box-shadow:0 1px 6px rgba(232,200,116,.18)}
+.nm-alts{margin:.75rem 0 0}
+.nm-alts p{margin:0 0 .4rem; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--nm-dim)}
+.nm-altrow{display:flex; gap:.45rem; overflow-x:auto; scrollbar-width:none;
+  padding-bottom:.25rem; -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 1.6rem),transparent);
+  mask-image:linear-gradient(to right,#000 calc(100% - 1.6rem),transparent)}
+.nm-altrow::-webkit-scrollbar{display:none}
+.nm-alt{flex:0 0 auto; max-width:11rem; min-height:44px; border:1px solid rgba(232,200,116,.34);
+  background:rgba(255,254,247,.05); border-radius:2rem; padding:.45rem .95rem;
+  font-size:.84rem; color:var(--nm-ink); white-space:nowrap; overflow:hidden;
+  text-overflow:ellipsis; transition:background .18s, border-color .18s, transform .09s}
+.nm-alt:active{background:rgba(232,200,116,.2); border-color:var(--nm-gold);
+  color:var(--nm-gold-hi); transform:scale(.97)}
+.nm-sheet .nm-x{position:absolute; right:.5rem; top:.4rem; width:44px; height:44px;
+  color:var(--nm-dim); font-size:1.3rem; line-height:1}
+
+@media (prefers-reduced-motion:reduce){
+  .nm-sheet,.nm-near,.nm-focus{transition-duration:.001ms!important}
+}
 
 @media (prefers-reduced-motion:reduce){
   .nm-root,.nm-row,.nm-door,.nm-tip,.nm-crumb,.nm-tool{transition-duration:.001ms!important}

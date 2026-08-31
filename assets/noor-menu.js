@@ -54,6 +54,10 @@
     +   '<div class="nm-rail"></div>'
     +   '<div class="nm-sky"><canvas></canvas>'
     +     '<div class="nm-tip" role="status"></div><div class="nm-crumb"></div>'
+    +     '<div class="nm-focus"></div><div class="nm-near"></div>'
+    +     '<div class="nm-sheet" role="dialog" aria-label="What you touched">'
+    +       '<button class="nm-x" data-nm="dismiss" aria-label="Dismiss">&times;</button>'
+    +       '<div class="nm-grab"></div><div class="nm-sbody"></div></div>'
     +     '<div class="nm-tools">'
     +       '<button class="nm-tool" data-nm="whole">&larr; Whole library</button>'
     +       '<button class="nm-tool" data-nm="in" aria-label="Zoom in">+</button>'
@@ -64,6 +68,10 @@
     + '<div class="nm-sr"><nav aria-label="Everything in the library"><ul></ul></nav></div>'
     + '<p class="nm-sr" role="status" aria-live="polite"></p>';
   var qEl, railEl, bodyEl, skyEl, C, X, tipEl, crumbEl, sayEl, srEl;
+  var focusEl, nearEl, sheetEl, sbodyEl;
+  /* a finger cannot hover, so touch gets a different model entirely */
+  var TOUCH = matchMedia("(hover:none)").matches || navigator.maxTouchPoints > 0;
+  var picked = null, alts = [], nearest = null, lastTap = 0, tapXY = null;
 
   /* ------------------------------------------------------------- the list */
   var THINGS = [], SPINE = [], SECTIONS = [], matched = null, ready = false, loading = null;
@@ -301,7 +309,9 @@
       }
       if (o === hover){ alpha = 1; scale *= 1.55; }
       var won = matched && o.lit;
-      var r = Math.max(won ? 2.2 : .65, o.r*cam.z*scale);
+      /* a 1.6px star is invisible under a thumb; on touch nothing goes below 2.6 */
+      var floor = won ? 2.6 : (TOUCH ? 1.9 : .65);
+      var r = Math.max(floor, o.r*cam.z*scale*(TOUCH ? 1.22 : 1));
       if (!o.tiny || won || o === hover){
         var gr = X.createRadialGradient(x,y,0,x,y,r*5.5);
         gr.addColorStop(0,o.c); gr.addColorStop(1,"rgba(0,0,0,0)");
@@ -310,6 +320,10 @@
       }
       X.globalAlpha = alpha < 0 ? 0 : (alpha > 1 ? 1 : alpha);
       X.fillStyle = o.c; X.beginPath(); X.arc(x,y,r,0,6.2832); X.fill();
+      if (o === picked){
+        X.globalAlpha = .9; X.strokeStyle = "#FFF0C4"; X.lineWidth = 1.6;
+        X.beginPath(); X.arc(x,y,r+9+Math.sin(T*4)*1.6,0,6.2832); X.stroke();
+      }
     }
     X.globalAlpha = 1; X.textAlign = "center";
 
@@ -343,6 +357,7 @@
     X.restore(); X.globalAlpha = 1;
   }
 
+  var nearT = 0;
   function loop(now){
     raf = requestAnimationFrame(loop);
     if (!ready || !VW) return;
@@ -351,18 +366,67 @@
     var n = 0;
     while (acc > 1/120 && n++ < 6){ step(1/120); acc -= 1/120; }
     paint(now/1000);
+
+    /* on touch there is no cursor to follow, so the middle of the screen is
+       the cursor: whatever is nearest it is named, continuously */
+    if (TOUCH && now - nearT > 120){
+      nearT = now;
+      var open_ = sheetEl.classList.contains("nm-on");
+      var f = open_ ? null : findNearest();
+      if (f !== nearest){
+        nearest = f;
+        if (f){ nearEl.innerHTML = "<b>"+esc(f.t)+"</b>"
+            + (f.count ? " · " + esc(f.count) : (f.d ? " · " + esc(String(f.d).slice(0,46)) : ""));
+          nearEl.classList.add("nm-on"); }
+        else nearEl.classList.remove("nm-on");
+      }
+      focusEl.classList.toggle("nm-on", !!f && !open_);
+      if (!open_) hover = f;
+    }
   }
 
-  function pick(px,py){
+  function pick(px,py,radius){
     var best=null, bd=1e9;
     for (var i=0;i<THINGS.length;i++){
       var o = THINGS[i];
       if (matched && !o.lit) continue;
       var dx = sx(o)-px, dy = sy(o)-py, d = dx*dx+dy*dy;
-      var rad = Math.max(o.big?18:12, o.r*cam.z+9); rad *= rad;
+      var rad = radius || Math.max(o.big?18:12, o.r*cam.z+9); rad *= rad;
       if (d < rad && d < bd){ bd = d; best = o; }
     }
     return best;
+  }
+
+  /* WHAT WAS UNDER THE THUMB.
+     Not one light: everything inside a finger's width of it, nearest first.
+     The first becomes the sheet's subject and the rest become chips, so a
+     near-miss shows you your options instead of opening the wrong page. */
+  var TAP_R = 34;
+  function around(px,py){
+    var out = [];
+    for (var i=0;i<THINGS.length;i++){
+      var o = THINGS[i];
+      if (matched && !o.lit) continue;
+      var dx = sx(o)-px, dy = sy(o)-py, d = Math.sqrt(dx*dx+dy*dy);
+      var reach = Math.max(TAP_R, o.r*cam.z + 16);
+      if (d < reach) out.push([d,o]);
+    }
+    out.sort(function(a,b){ return a[0]-b[0]; });
+    return out.slice(0,6).map(function(p){ return p[1]; });
+  }
+
+  /* the light nearest the middle of the screen, so panning always says where
+     you are without anything being touched */
+  function findNearest(){
+    var cxp = VW/2, cyp = VH/2, best = null, bd = 1e9;
+    for (var i=0;i<THINGS.length;i++){
+      var o = THINGS[i];
+      if (matched && !o.lit) continue;
+      if (o.tiny && cam.z < 0.8) continue;      /* a haze has no single name */
+      var dx = sx(o)-cxp, dy = sy(o)-cyp, d = dx*dx+dy*dy;
+      if (d < bd){ bd = d; best = o; }
+    }
+    return bd < 130*130 ? best : null;
   }
   function tipAt(o,px,py){
     if (!o){ tipEl.classList.remove("nm-on"); return; }
@@ -370,6 +434,38 @@
     tipEl.style.left = px+"px"; tipEl.style.top = py+"px"; tipEl.classList.add("nm-on");
   }
   function enter(o){ if (o) location.href = o.u; }
+
+  function openSheet(list){
+    picked = list[0]; alts = list.slice(1);
+    hover = picked;
+    sbodyEl.innerHTML =
+      '<p class="nm-eyebrow">' + esc(picked.kind) + '</p>'
+      + '<h3>' + (picked.a ? '<span class="nm-ar">'+esc(picked.a)+'</span>' : '')
+      + esc(picked.t) + '</h3>'
+      + (picked.d ? '<p class="nm-sd">'+esc(picked.d)+'</p>' : '')
+      + '<button class="nm-go" data-nm="open">'
+      + (picked.big ? 'Fly into ' + esc(picked.t) : 'Open') + ' &rarr;</button>'
+      + (alts.length
+          ? '<div class="nm-alts"><p>Also under your thumb</p><div class="nm-altrow">'
+            + alts.map(function(o,i){ return '<button class="nm-alt" data-alt="'+i+'">'
+              + esc(o.t) + '</button>'; }).join("") + '</div></div>'
+          : '');
+    sheetEl.classList.add("nm-on");
+    skyEl.dataset.sheet = "open";
+    sayEl.textContent = picked.t + ". " + (alts.length ? alts.length + " others nearby." : "");
+    /* the sheet must never cover the light it is describing */
+    requestAnimationFrame(function(){
+      var lid = VH - sheetEl.getBoundingClientRect().height - 24;
+      var y = sy(picked);
+      if (y > lid) aim.y = cam.y - (y - lid)/cam.z;
+      if (y < 70) aim.y = cam.y + (70 - y)/cam.z;
+    });
+  }
+  function shutSheet(){
+    sheetEl.classList.remove("nm-on");
+    if (skyEl) skyEl.dataset.sheet = "shut";
+    picked = null; alts = [];
+  }
 
   /* ------------------------------------------------------- pointer input */
   function local(e){ var r = C.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
@@ -419,9 +515,36 @@
       dragging = false; C.classList.remove("nm-drag");
     }
     if (!tap) return;
-    var h = pick(L[0],L[1]); if (!h) return;
-    if (h.big){ flyTo(h); return; }
-    hover = h; enter(h);
+
+    if (e.pointerType === "mouse"){
+      var h = pick(L[0],L[1]); if (!h) return;
+      if (h.big){ flyTo(h); return; }
+      hover = h; enter(h); return;
+    }
+
+    /* --- touch --- */
+    var now = performance.now();
+    if (tapXY && now - lastTap < 300
+        && Math.abs(tapXY[0]-L[0]) < 34 && Math.abs(tapXY[1]-L[1]) < 34){
+      /* double tap zooms where you tapped, the way every map does */
+      lastTap = 0; shutSheet();
+      var wx2 = (L[0]-VW/2)/cam.z - cam.x, wy2 = (L[1]-VH/2)/cam.z - cam.y;
+      aim.z = Math.min(ZMAX, cam.z*2); aim.x = -wx2; aim.y = -wy2;
+      return;
+    }
+    lastTap = now; tapXY = L;
+
+    var near = around(L[0],L[1]);
+    if (!near.length){
+      /* nothing within reach: an empty tap dismisses rather than doing nothing */
+      if (sheetEl.classList.contains("nm-on")) shutSheet();
+      else { /* tapping the haze zooms into it instead of failing */
+        var wx3 = (L[0]-VW/2)/cam.z - cam.x, wy3 = (L[1]-VH/2)/cam.z - cam.y;
+        if (cam.z < 0.75){ aim.z = Math.min(ZMAX, cam.z*1.9); aim.x = -wx3; aim.y = -wy3; }
+      }
+      return;
+    }
+    openSheet(near);
   }
   function onCancel(e){
     if (pointers[e.pointerId]){ delete pointers[e.pointerId]; nP = Math.max(0,nP-1); }
@@ -439,7 +562,7 @@
   }
   function onType(){
     if (!ready) return;
-    runSearch(qEl.value); drawRail();
+    runSearch(qEl.value); drawRail(); shutSheet();
     if (phone()) show(qEl.value.trim() ? "list" : "map");
     if (matched && matched.length){
       var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
@@ -453,7 +576,7 @@
     document.documentElement.classList.add("nm-open");
     document.body.classList.add("nm-open");
     load().then(function(){
-      drawRail(); size(); whole(true);
+      drawRail(); size(); whole(true); shutSheet();
       if (!phone()) qEl.focus();
     });
     requestAnimationFrame(function(){ size(); });
@@ -475,6 +598,10 @@
     C = skyEl.querySelector("canvas"); X = C.getContext("2d");
     tipEl = root.querySelector(".nm-tip");
     crumbEl = root.querySelector(".nm-crumb");
+    focusEl = root.querySelector(".nm-focus");
+    nearEl = root.querySelector(".nm-near");
+    sheetEl = root.querySelector(".nm-sheet");
+    sbodyEl = root.querySelector(".nm-sbody");
     srEl = root.querySelector(".nm-sr ul");
     sayEl = root.querySelector("p.nm-sr");
 
@@ -487,11 +614,22 @@
       var b = e.target.closest("[data-nm]");
       if (b){ var k = b.dataset.nm;
         if (k === "shut") close();
+        else if (k === "dismiss") shutSheet();
+        else if (k === "open"){
+          if (!picked) return;
+          if (picked.big){ var p2 = picked; shutSheet(); flyTo(p2); }
+          else enter(picked);
+        }
         else if (k === "map" || k === "list") show(k);
         else if (k === "whole") whole(false);
         else if (k === "in")  aim.z = Math.min(ZMAX, aim.z*1.45);
         else if (k === "out") aim.z = Math.max(ZMIN, aim.z/1.45);
         return; }
+      var alt = e.target.closest(".nm-alt");
+      if (alt){ var i = +alt.dataset.alt, chosen = alts[i];
+        if (chosen){ var rest = [chosen].concat(
+          [picked].concat(alts).filter(function(o){ return o !== chosen; }));
+          openSheet(rest); } return; }
       var d = e.target.closest(".nm-door");
       if (d){ var s = THINGS.filter(function(o){ return o.big && o.sec === +d.dataset.sec; })[0];
         if (s){ show("map"); requestAnimationFrame(function(){ size(); flyTo(s); }); } return; }
@@ -500,6 +638,22 @@
     });
     railEl.addEventListener("mouseover", function(e){
       var r = e.target.closest(".nm-row"); if (r) hover = THINGS[+r.dataset.i]; });
+
+    /* a sheet you can push back down, because that is what a sheet is for */
+    var sy0 = 0, sdrag = false;
+    sheetEl.addEventListener("pointerdown", function(e){
+      if (e.target.closest("button")) return;
+      sy0 = e.clientY; sdrag = true; sheetEl.style.transition = "none"; });
+    sheetEl.addEventListener("pointermove", function(e){
+      if (!sdrag) return;
+      var dy = Math.max(0, e.clientY - sy0);
+      sheetEl.style.transform = "translateY("+dy+"px)"; });
+    function sheetUp(e){
+      if (!sdrag) return; sdrag = false;
+      sheetEl.style.transition = ""; sheetEl.style.transform = "";
+      if (e.clientY - sy0 > 60) shutSheet(); }
+    sheetEl.addEventListener("pointerup", sheetUp);
+    sheetEl.addEventListener("pointercancel", sheetUp);
 
     C.addEventListener("pointerdown", onDown);
     C.addEventListener("pointermove", onMove);
@@ -525,7 +679,11 @@
           e.preventDefault(); opener = document.activeElement; open(); }
         return;
       }
-      if (e.key === "Escape"){ if (qEl.value){ qEl.value=""; onType(); } else close(); return; }
+      if (e.key === "Escape"){
+        if (sheetEl.classList.contains("nm-on")) shutSheet();
+        else if (qEl.value){ qEl.value=""; onType(); }
+        else close();
+        return; }
       if (e.key === "ArrowDown" || e.key === "ArrowUp"){
         var rows = [].slice.call(root.querySelectorAll(".nm-row")); if (!rows.length) return;
         e.preventDefault();
