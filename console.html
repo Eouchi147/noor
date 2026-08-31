@@ -255,6 +255,37 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;margin
 .boot .ar{font-family:Amiri,serif;font-size:2.4rem;color:var(--gold);
   text-shadow:0 0 34px rgba(232,200,116,.45)}
 .boot p{margin:0;font-size:.78rem;color:var(--dim);letter-spacing:.06em}
+
+/* ================= NOTHING MAY PUSH A PANEL SIDEWAYS =================
+   A grid or flex child defaults to min-width:auto, which is a polite way of
+   saying it will not shrink below its own longest word. Two of these rooms
+   carry words no phone is wide enough for -- "deepseek/deepseek-r1:free" in
+   the Lantern and "env LANTERN_KEYED_PER_DAY" in the Controls -- and each was
+   dragging its whole panel 163px off the side of a 390px screen, taking the
+   stat tiles with it. Every box below is told it may shrink, and every string
+   that can be a long machine name is told it may break. The hidden overflow on
+   the body is the backstop, not the fix: if something new ever arrives that is
+   still too wide, it gets clipped instead of moving the whole room sideways. */
+.grid>*,.card,.stat,.rows,.row,.door,.none{min-width:0;max-width:100%}
+.stat b,.stat span,.row .t,.row .v,.none,.door p,.card>h3{overflow-wrap:anywhere}
+.row .v{flex:0 1 auto;text-align:end}
+.pb{overflow-x:hidden}
+
+/* ---- and on a phone the rooms stop pretending to be a desktop ----
+   Four stat tiles across 390px were never four tiles, they were four slivers.
+   One column below 30rem, and a row that runs out of width puts its value on
+   the next line rather than shouldering the label off the screen. */
+@media (max-width:30rem){
+  .g3,.g4{grid-template-columns:1fr}
+  .row{flex-wrap:wrap;row-gap:.2rem;padding:.6rem .7rem}
+  .row .t{flex:1 1 100%}
+  .row .v{margin-inline-start:auto}
+  .pb{padding:.9rem .9rem 1.4rem}
+  .stat b{font-size:clamp(1.35rem,7vw,1.9rem)}
+}
+.mono{margin:0;font-size:.86rem;line-height:1.35;color:var(--ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+.sub{margin:.25rem 0 0;font-size:.68rem;color:var(--dim)}
 </style>
 </head>
 <body>
@@ -516,7 +547,20 @@ const GOO_K=210, GOO_C=7.2, GOO_WMAX=.45, GOO_VMAX=9;
    is a fast, legible spin instead of a blur. LAGF is how far the label trails the
    ball it belongs to, and it is a fraction of the ball, never a free multiple of
    speed: at any velocity the label stays inside its own skin. */
-const MAXV=6.2, LAGF=.12, COAST=.958, LOOKAHEAD=2;
+/* A FINGER IS NOT A MOUSE WHEEL.
+   A wheel gives small, countable increments. A thumb gives one long shove and
+   then lets go, and whatever speed it handed over is what you are left reading.
+   So every constant that governs speed now has a touch value and a pointer
+   value: on a phone the ceiling is a third lower, the fling carries less of the
+   thumb's speed, the drag tracks less eagerly, and the coast bleeds off sooner.
+   The dial should feel like it is being turned, not thrown. */
+const MAXV   = TOUCH ? 3.9  : 6.2;
+const COAST  = TOUCH ? .944 : .958;
+const FLING  = TOUCH ? .34  : .55;
+const TRACK  = TOUCH ? .58  : .90;
+const SNAP_K = TOUCH ? 118  : 165;
+const SNAP_C = TOUCH ? 14.6 : 15.4;
+const LAGF=.12, LOOKAHEAD=2;
 const clampV=v=>v>MAXV?MAXV:(v<-MAXV?-MAXV:v);
 let snapTo=null;
 function kick(i,amount){ if(nodes[i]) nodes[i]._wv += amount; }
@@ -623,8 +667,8 @@ function frame(now){
          was going to, leans back, and settles. That tenth is the whole difference
          between a value changing and a thing landing. It stays well under half a
          notch, so the room under the reticle never flickers to its neighbour. */
-      S.thV+=(165*err-15.4*S.thV)*h;
-      if(Math.hypot(err,S.thV/12.8)<.004){S.th=-goal*per;S.thV=0;snapTo=null;}
+      S.thV+=(SNAP_K*err-SNAP_C*S.thV)*h;
+      if(Math.hypot(err,S.thV/Math.sqrt(SNAP_K))<.004){S.th=-goal*per;S.thV=0;snapTo=null;}
     } else {
       /* GRIP, AND THE DAMPING THAT COMES WITH IT.
          grip is near zero while the dial is flying -- the notches let a fling pass
@@ -823,7 +867,10 @@ lantern:(nt,a)=>{
   const head='<div class="grid g4">'
    +card("The key", stat(keyed===null?em:(keyed?"Set":"Missing"),
         keyed?"OPENROUTER_API_KEY":"add it in Vercel",""))
-   +card("Model", stat(a?trim(a.lanternModel||em,18):em,"first in the chain",""))
+   /* the model name is a machine string, not a figure -- it went in the big
+      number slot and behaved exactly as a 40-character "number" would */
+   +card("Model", '<p class="mono">'+esc(a?trim(a.lanternModel||em,44):em)
+        +'</p><p class="sub">first in the chain</p>')
    +card("Paid models", stat(a?(a.lanternPaidAllowed?"Allowed":"Free only"):em,"spending policy",""))
    +card("Warning", stat(a&&a.lanternWarning?"Yes":"None",
         a&&a.lanternWarning?trim(a.lanternWarning,30):"nothing flagged",""))
@@ -1155,11 +1202,11 @@ stage.addEventListener("pointermove",e=>{
   if(CANHOVER){cam.pxT=(e.clientX/innerWidth-.5)*2;cam.pyT=(e.clientY/innerHeight-.5)*2;}
   if(!drag)return;
   const dx=e.clientX-lastX;lastX=e.clientX;moved+=Math.abs(dx);
-  S.th+=dx*.0052;S.thV=clampV(dx*.9);vel=dx;
+  S.th+=dx*(TOUCH?.0043:.0052);S.thV=clampV(dx*TRACK);vel=dx;
 });
 stage.addEventListener("pointerup",e=>{
   const tap=moved<8;
-  if(drag){drag=false;S.thV=clampV(S.thV+vel*.55);}
+  if(drag){drag=false;S.thV=clampV(S.thV+vel*FLING);}
   if(!tap)return;
   const el=e.target.closest(".node");
   if(el){const i=+el.dataset.i;kick(i,4.5);tick(1);openRoom(i);}
@@ -1171,7 +1218,7 @@ stage.addEventListener("pointercancel",()=>{drag=false;});
    follow. Now the deltas are normalised across the three deltaModes, banked, and
    spent one notch at a time with a floor on how often a notch may be spent. One
    mouse detent is one room. One flick is two or three. Nothing is a blur. */
-const WHEEL_NOTCH=110, WHEEL_GAP=150, WHEEL_IDLE=260;
+const WHEEL_NOTCH=120, WHEEL_GAP=175, WHEEL_IDLE=260;
 let wAcc=0, wLast=0, wStep=0, wSign=0, kStep=0;
 /* A QUEUE THAT CANNOT OUTRUN THE DIAL.
    Thirty key-repeats used to mean a thirty-notch sprint at top speed -- the dial
