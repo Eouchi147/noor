@@ -37,6 +37,11 @@
 --------------------------------------------------------------------------- */
 
 const env = k => (process.env[k] || "").trim();
+/* LinkedIn versions live about twelve months and the header is mandatory on
+   every call -- there is no default. 202508 sunsets in August 2026, so the
+   shipped value was already past its own expiry. Kept as an env override so a
+   future bump needs a Vercel variable, not a deploy. */
+const LI_VERSION = env("LI_VERSION") || "202608";
 /* trims to a length WITHOUT flattening the post. The first version collapsed
    every run of whitespace, newlines included, which turned a structured post
    with a heading, a body and a bulleted list into one grey paragraph on every
@@ -68,12 +73,19 @@ export function shape(p, ch) {
   const link = p.link || "";
 
   if (ch === "x") {
-    /* 280 is not a truncated caption, it is a different sentence. Lead with the
-       one thing worth knowing, then the link. The link costs 23 characters
-       whatever its length, so budget for it rather than measuring it. */
-    const room = 280 - 24 - (tags ? tags.length + 1 : 0);
+    /* 280 is not a truncated caption, it is a different sentence.
+       And on X the link is not free in the ordinary sense: since the 2026 move
+       to pay-per-use, a post CONTAINING a URL is billed at $0.20 where a post
+       without one is $0.015 -- thirteen times more, for one field. Four posts a
+       day is the difference between about $24 a month and about $1.80. So the
+       link is a switch, not an assumption. Default keeps it, because a library
+       post nobody can follow is worth less than the saving; X_OMIT_LINK=1 turns
+       it off for anyone who would rather have the money. */
+    const withLink = env("X_OMIT_LINK") !== "1";
+    const room = 280 - (withLink ? 24 : 0) - (tags ? tags.length + 1 : 0);
     const lead = p.oneLine || p.title;
-    return { text: cut(lead, room) + "\n" + link + (tags ? " " + tags : ""), image: p.image || null };
+    return { text: cut(lead, room) + (withLink ? "\n" + link : "") + (tags ? " " + tags : ""),
+             image: p.image || null };
   }
 
   if (ch === "pinterest") {
@@ -124,7 +136,13 @@ export const configured = {
   instagram: () => !!(env("IG_USER_ID") && (env("IG_TOKEN") || env("IG_ACCESS_TOKEN") || env("FB_PAGE_TOKEN"))),
   linkedin:  () => !!(env("LI_ORG_URN") && env("LI_TOKEN")),
   pinterest: () => !!(env("PIN_BOARD_ID") && env("PIN_TOKEN")),
-  x:         () => !!(env("X_TOKEN") || (env("X_API_KEY") && env("X_API_SECRET") && env("X_ACCESS_TOKEN") && env("X_ACCESS_SECRET"))),
+  /* X is double-gated on purpose. Every post there is billed, and a post
+     carrying a link is billed at thirteen times the base rate, so a token
+     sitting in the environment must not be enough to start spending. It takes
+     a token AND X_ENABLE=1. A retry loop on a broken cron is a billable event;
+     this is the switch that means one cannot happen by accident. */
+  x:         () => env("X_ENABLE") === "1" &&
+                   !!(env("X_TOKEN") || (env("X_API_KEY") && env("X_API_SECRET") && env("X_ACCESS_TOKEN") && env("X_ACCESS_SECRET"))),
   /* deliberately never "configured" for sending. See the note at the top. */
   reddit:    () => false
 };
@@ -153,18 +171,49 @@ export async function sendLinkedIn(shaped, opts = {}) {
     author: urn, commentary: shaped.text, visibility: "PUBLIC",
     distribution: { feedDistribution: "MAIN_FEED", targetEntities: [], thirdPartyDistributionChannels: [] },
     lifecycleState: "PUBLISHED", isReshareDisabledByAuthor: false
-  }, { Authorization: "Bearer " + tok, "LinkedIn-Version": "202411", "X-Restli-Protocol-Version": "2.0.0" }, opts.fetch);
+  }, { Authorization: "Bearer " + tok, "LinkedIn-Version": LI_VERSION, "X-Restli-Protocol-Version": "2.0.0" }, opts.fetch);
   return r.ok ? { ok: true, id: (r.j && r.j.id) || "posted" } : r;
 }
 
+/* A Pinterest access token dies after 30 days. The refresh token rolls on a
+   60-day window that renews each time it is used, so a site that posts daily
+   never falls out -- but only if something actually performs the refresh. This
+   does it inline on the first 401 rather than leaving a cron to fail silently
+   for a month. The new access token is held in memory for this lambda; the
+   rotating refresh token is reported back so the console can show that it
+   changed and needs storing. */
+let PIN_MEM = { tok: "", at: 0 };
+async function pinRefresh(fetcher) {
+  const id = env("PIN_APP_ID"), sec = env("PIN_APP_SECRET"), rt = env("PIN_REFRESH_TOKEN");
+  if (!id || !sec || !rt) return null;
+  try {
+    const r = await (fetcher || fetch)("https://api.pinterest.com/v5/oauth/token", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded",
+                 Authorization: "Basic " + Buffer.from(id + ":" + sec).toString("base64") },
+      body: "grant_type=refresh_token&refresh_token=" + encodeURIComponent(rt)
+    });
+    if (!r.ok) return null;
+    const j = await r.json();
+    if (j && j.access_token) { PIN_MEM = { tok: j.access_token, at: Date.now() }; return j.access_token; }
+  } catch { }
+  return null;
+}
+
 export async function sendPinterest(shaped, opts = {}) {
-  const board = env("PIN_BOARD_ID"), tok = env("PIN_TOKEN");
+  const board = env("PIN_BOARD_ID");
+  let tok = (PIN_MEM.tok && Date.now() - PIN_MEM.at < 20 * 86400000) ? PIN_MEM.tok : env("PIN_TOKEN");
   if (!board || !tok) return { ok: false, err: "pinterest is not configured" };
   if (!shaped.image) return { ok: false, err: "pinterest needs an image and none was built" };
-  const r = await jsonPost("https://api.pinterest.com/v5/pins", {
+  const body = {
     board_id: board, title: shaped.title, description: shaped.text, link: shaped.link,
     media_source: { source_type: "image_url", url: shaped.image }
-  }, { Authorization: "Bearer " + tok }, opts.fetch);
+  };
+  let r = await jsonPost("https://api.pinterest.com/v5/pins", body, { Authorization: "Bearer " + tok }, opts.fetch);
+  if (!r.ok && /401|expired|unauthor/i.test(String(r.err))) {
+    const fresh = await pinRefresh(opts.fetch);
+    if (fresh) r = await jsonPost("https://api.pinterest.com/v5/pins", body, { Authorization: "Bearer " + fresh }, opts.fetch);
+  }
   return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned" } : r;
 }
 
@@ -176,12 +225,61 @@ export async function sendX(shaped, opts = {}) {
   return r.ok ? { ok: true, id: (r.j && r.j.data && r.j.data.id) || "posted" } : r;
 }
 
-/* reddit never sends. It hands back a draft with the reason attached, so the
-   console can show it and a person can post it properly. */
-export async function sendReddit(shaped) {
-  return { ok: false, draft: true, err: "held as a draft on purpose",
-    why: "Automated posting to Reddit is flagged as spam sitewide within minutes and shadowbans are rarely reversed. Post this by hand, in one subreddit where you already take part.",
-    title: shaped.title, text: shaped.text };
+/* ===========================================================================
+   REDDIT · THE ONE-CLICK HAND-OFF
+
+   The problem with automating Reddit is not the API, which permits posting.
+   It is that Reddit's spam model reads *pattern* -- same domain, on a
+   schedule, across subreddits you do not moderate -- and answers with a
+   sitewide shadowban you cannot see. Your posts look normal to you and are
+   invisible to everyone else, sometimes for weeks. Worse, it can escalate to
+   a domain ban on noorcodex.com, which silently punishes every reader who
+   ever links the site in good faith.
+
+   Rate-limiting an automated poster does not fix this. A bot posting once a
+   week is still a bot posting on a schedule, and the pattern is the thing
+   being detected.
+
+   So this does not post at all. It builds a Reddit submit URL with the title
+   and body already filled in, and hands it over. You click it, you are on
+   Reddit in your own session, you read the room, you press submit. To Reddit
+   that is a person posting, because it is. There is no automation to detect.
+
+   Two guards remain, both about you rather than about Reddit's filter:
+   a subreddit allowlist, so a draft can only ever be aimed somewhere you
+   actually take part; and a cooling-off period, because the community norm is
+   roughly one self-promotional post per nine genuine contributions and a
+   fortnight between links is a rhythm that respects it.
+=========================================================================== */
+export const redditSubs = () =>
+  env("REDDIT_SUBS").split(",").map(x => x.trim().replace(/^\/?r\//, "")).filter(Boolean);
+export const redditEveryDays = () => {
+  const n = parseInt(env("REDDIT_EVERY_DAYS"), 10);
+  return Number.isFinite(n) && n > 0 ? n : 14;
+};
+export function redditSubmitUrl(sub, title, text) {
+  return "https://www.reddit.com/r/" + encodeURIComponent(sub) + "/submit"
+    + "?title=" + encodeURIComponent(String(title).slice(0, 300))
+    + "&text=" + encodeURIComponent(String(text).slice(0, 40000));
+}
+export async function sendReddit(shaped, opts = {}) {
+  const subs = redditSubs();
+  const every = redditEveryDays();
+  const last = opts.lastRedditAt ? Date.parse(opts.lastRedditAt) : 0;
+  const daysSince = last ? (Date.now() - last) / 86400000 : Infinity;
+  const cooling = daysSince < every;
+  return {
+    ok: false, draft: true,
+    err: cooling
+      ? "holding — " + Math.ceil(every - daysSince) + " more day(s) before the next one"
+      : (subs.length ? "ready for you to post" : "ready, but no subreddit is set"),
+    why: "Nothing is posted to Reddit automatically. Automated posting is read as spam and answered with a shadowban you cannot see. This is a draft with a one-click link; you post it yourself.",
+    cooling, daysSince: Number.isFinite(daysSince) ? Math.floor(daysSince) : null, every,
+    title: shaped.title, text: shaped.text,
+    /* one link per allowed subreddit, already filled in */
+    links: cooling ? [] : subs.map(sr => ({ sub: sr, url: redditSubmitUrl(sr, shaped.title, shaped.text) })),
+    hint: subs.length ? "" : "Set REDDIT_SUBS to the subreddits you actually take part in, comma separated."
+  };
 }
 
 export const SENDERS = { linkedin: sendLinkedIn, pinterest: sendPinterest, x: sendX, reddit: sendReddit };

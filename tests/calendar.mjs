@@ -152,5 +152,52 @@ console.log("\n=== 10. a partial outage costs one day, not the calendar ===");
   ok(plan.slots.includes("dawn"), "and today's dated post still runs");
 }
 
+console.log("\n=== 11. X cannot spend money by accident ===");
+{
+  const keep = { ...process.env };
+  delete process.env.X_ENABLE; process.env.X_TOKEN = "a-real-looking-token";
+  ok(CH.configured.x() === false, "a token alone does NOT switch X on");
+  process.env.X_ENABLE = "1";
+  ok(CH.configured.x() === true, "it takes the token AND X_ENABLE=1");
+  delete process.env.X_TOKEN;
+  ok(CH.configured.x() === false, "and X_ENABLE alone is not enough either");
+  process.env = keep;
+}
+
+console.log("\n=== 12. reddit is a hand-off, not a rate-limited bot ===");
+{
+  const keep = { ...process.env };
+  process.env.REDDIT_SUBS = " r/islam, muslim ,r/AskMuslims ";
+  process.env.REDDIT_EVERY_DAYS = "14";
+  ok(JSON.stringify(CH.redditSubs()) === JSON.stringify(["islam","muslim","AskMuslims"]),
+     "the allowlist tolerates r/ prefixes and stray spaces");
+
+  const shaped = { title: "The Day of Arafah", text: "The pilgrims stand at Arafah." };
+  const fresh = await CH.sendReddit(shaped, {});
+  ok(fresh.ok === false && fresh.draft === true, "it never reports a send");
+  ok(fresh.links.length === 3, "one ready-made link per allowed subreddit");
+  for (const l of fresh.links) {
+    ok(/^https:\/\/www\.reddit\.com\/r\/[A-Za-z0-9_]+\/submit\?title=/.test(l.url),
+       "r/" + l.sub + " link is a real reddit submit URL");
+    ok(l.url.includes(encodeURIComponent("The Day of Arafah")), "r/" + l.sub + " link carries the title");
+  }
+  /* the whole point: no API call is made, so there is no bot to detect */
+  ok(!/oauth\.reddit\.com/.test(fs.readFileSync("api/_channels.js", "utf8")),
+     "nothing in the code posts to reddit's API at all");
+
+  const cooling = await CH.sendReddit(shaped, { lastRedditAt: new Date(Date.now() - 3 * 86400000).toISOString() });
+  ok(cooling.cooling === true && cooling.links.length === 0,
+     "inside the cooling period the links are withheld, not just labelled");
+  ok(/11 more day/.test(cooling.err), "and it says how long is left — " + cooling.err);
+
+  const after = await CH.sendReddit(shaped, { lastRedditAt: new Date(Date.now() - 20 * 86400000).toISOString() });
+  ok(after.cooling === false && after.links.length === 3, "past the window the links come back");
+
+  process.env.REDDIT_SUBS = "";
+  const none = await CH.sendReddit(shaped, {});
+  ok(none.links.length === 0 && /no subreddit/i.test(none.err), "with no allowlist there is nowhere to aim");
+  process.env = keep;
+}
+
 console.log("\n" + pass + " passed, " + fail + " failed");
 process.exit(fail ? 1 : 0);

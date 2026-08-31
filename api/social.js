@@ -784,6 +784,7 @@ export async function runDaily(host, date, opts = {}) {
    Sending five at once is how the network decides what you are.
 =========================================================================== */
 const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
+const K_RED = "nsoc:reddit:last";
 
 async function readSlot(date, slot) {
   if (!kvReady()) return null;
@@ -864,9 +865,17 @@ export async function runDue(host, date, now, opts = {}) {
       try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
       catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
     }
-    /* reddit is composed and kept, never sent */
+    /* Reddit is composed and kept, never sent. What is paced here is how often
+       a draft is OFFERED -- there is no way to know when he actually posts one,
+       and guessing would be worse than pacing the offer. If he skips one, the
+       next comes round on the same rhythm and nothing is lost. */
     const rd = CH.shape(post, "reddit");
-    results.reddit = await CH.sendReddit(rd);
+    let lastRedditAt = null;
+    if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
+    results.reddit = await CH.sendReddit(rd, { lastRedditAt });
+    if (results.reddit.links && results.reddit.links.length && kvReady()) {
+      try { await kv([["SET", K_RED, out.at]]); } catch { }
+    }
 
     const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
     const rec = { at: out.at, slot: slot.id, state: anySent ? "sent" : "failed",
@@ -909,6 +918,20 @@ export default async function handler(req, res) {
       slots: SLOT_IDS
     });
     if (action === "plan") return json(res, 200, { ok: true, plan: await planDay(date) });
+    /* the Reddit drafts waiting for a human, with their one-click links */
+    if (action === "reddit") {
+      let last = null;
+      if (kvReady()) { try { last = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
+      const held = [];
+      for (const id of SLOT_IDS) {
+        const r = await readSlot(date, id);
+        if (r && r.results && r.results.reddit && r.results.reddit.links && r.results.reddit.links.length)
+          held.push({ slot: id, title: r.results.reddit.title,
+                      text: r.results.reddit.text, links: r.results.reddit.links });
+      }
+      return json(res, 200, { ok: true, lastOfferedAt: last,
+        everyDays: CH.redditEveryDays(), subs: CH.redditSubs(), held });
+    }
     /* the hourly cron lands here. It asks one question -- what is due that has
        not gone? -- and on most hours the answer is nothing, which costs a KV
        read and stops. */
