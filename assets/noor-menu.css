@@ -1,240 +1,205 @@
 /* NOOR · the menu
-   ---------------------------------------------------------------------------
-   One surface, two drawings of a single list. The rail and the sky read from
-   the same array, so a thing cannot be lit in one and missing from the other.
-   Everything here is scoped under .nm- so it cannot touch a page's own styles.
-   --------------------------------------------------------------------------- */
+   ===========================================================================
+   A force-directed field of dots is a visualisation pattern, not a navigation
+   one: past a couple of hundred nodes it becomes what the community calls a
+   hairball, and on a touch screen free pan-and-zoom fights the tap -- every
+   finger-down is ambiguous, and an unlabelled dot cannot be read before it is
+   committed to. The Tube map works with a thumb precisely because it does
+   none of that: fixed layout, every station named, no infinite zoom.
+
+   So the sky is now paint. It sits behind the menu, drifts, and takes no
+   input at all. In front of it sits ordinary, boring, reliable UI, and each
+   kind of content gets the pattern that actually fits its shape:
+
+     the 42 rooms   →  shelves          (App Store, Netflix)
+     the 71 chapters →  a lit path      (Duolingo's home screen, the Tube map)
+     the 114 surahs →  a numbered grid  (a keypad)
+     the 523 words  →  an A-Z rail      (iOS Contacts)
+
+   Nothing here scrolls sideways except a shelf, nothing zooms, and every
+   target is at least 48px with its name written on it.
+   =========================================================================== */
 .nm-root{
   --nm-void:#06070C; --nm-gold:#E8C874; --nm-gold-hi:#FFF0C4;
   --nm-gold-dim:rgba(232,200,116,.42); --nm-rule:rgba(232,200,116,.16);
-  --nm-panel:rgba(255,254,247,.04); --nm-ink:#F3EFE2; --nm-soft:#C6C3B8; --nm-dim:#8C8F9E;
+  --nm-panel:rgba(255,254,247,.045); --nm-ink:#F3EFE2; --nm-soft:#C6C3B8; --nm-dim:#8C8F9E;
   position:fixed; inset:0; z-index:2000; display:none;
   grid-template-rows:auto 1fr; max-width:100vw; overflow:hidden;
   background:radial-gradient(120% 80% at 50% 0%,#0D1330,#06070C);
   color:var(--nm-ink); font:400 15px/1.6 Inter,system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  opacity:0; transition:opacity .22s ease;
+  -webkit-font-smoothing:antialiased; opacity:0; transition:opacity .2s ease;
 }
 .nm-root.nm-on{display:grid; opacity:1}
 .nm-root *,.nm-root *::before,.nm-root *::after{box-sizing:border-box}
 .nm-root :where(button){font:inherit; color:inherit; background:none; border:0;
-  cursor:pointer; margin:0; padding:0}
+  cursor:pointer; margin:0; padding:0; text-align:left}
 .nm-ar{font-family:Amiri,serif; direction:rtl}
 html.nm-open,body.nm-open{overflow:hidden!important}
 
-/* ---- the head ---- */
-.nm-head{display:flex; align-items:center; gap:.7rem;
-  padding:.75rem clamp(.8rem,3vw,1.4rem); padding-top:max(.75rem,env(safe-area-inset-top));
-  border-bottom:1px solid var(--nm-rule); background:rgba(6,7,12,.72); backdrop-filter:blur(12px)}
-.nm-field{flex:1 1 0; min-width:0; display:flex; align-items:center; gap:.7rem;
-  border:1px solid var(--nm-gold-dim); border-radius:12px; padding:.6rem .85rem;
-  background:rgba(255,254,247,.05); transition:border-color .2s, box-shadow .2s}
+/* the sky, which is now only a painting */
+.nm-canvas{position:absolute; inset:0; z-index:0; pointer-events:none}
+
+/* ---------------- head ---------------- */
+.nm-head{position:relative; z-index:3; display:flex; align-items:center; gap:.6rem;
+  padding:.7rem clamp(.7rem,3vw,1.2rem); padding-top:max(.7rem,env(safe-area-inset-top));
+  border-bottom:1px solid var(--nm-rule); background:rgba(6,7,12,.8); backdrop-filter:blur(14px)}
+.nm-field{flex:1 1 0; min-width:0; display:flex; align-items:center; gap:.6rem;
+  border:1px solid var(--nm-gold-dim); border-radius:12px; padding:.55rem .8rem;
+  background:rgba(255,254,247,.06); transition:border-color .2s, box-shadow .2s; min-height:48px}
 .nm-field:focus-within{border-color:var(--nm-gold); box-shadow:0 0 0 3px rgba(232,200,116,.1)}
 .nm-field svg{flex:0 0 auto; color:var(--nm-gold)}
 .nm-field input{flex:1 1 0; width:0; min-width:0; background:none; border:0; outline:none;
   color:var(--nm-ink); font:inherit; font-size:1rem}
 .nm-field input::placeholder{color:var(--nm-dim)}
-.nm-field input::-webkit-search-cancel-button{filter:invert(.6)}
-.nm-shut{flex:0 0 auto; border:1px solid var(--nm-rule); border-radius:10px;
-  width:2.3rem; height:2.3rem; color:var(--nm-soft); font-size:1.15rem; line-height:1;
-  transition:.2s}
+.nm-shut{flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--nm-rule); border-radius:12px; width:48px; height:48px;
+  color:var(--nm-soft); font-size:1.3rem; line-height:1}
 .nm-shut:hover,.nm-shut:focus-visible{border-color:var(--nm-gold-dim); color:var(--nm-gold-hi); outline:none}
-.nm-modes{display:none; gap:.3rem; flex:0 0 auto}
-.nm-mode{border:1px solid var(--nm-rule); border-radius:2rem; padding:.45rem .8rem;
-  font-size:.76rem; color:var(--nm-soft); transition:.2s}
-.nm-mode[aria-pressed=true]{background:rgba(232,200,116,.14); border-color:var(--nm-gold-dim); color:var(--nm-gold-hi)}
 
-/* ---- the body ---- */
-.nm-body{position:relative; min-width:0; min-height:0; display:grid; overflow:hidden}
-@media (min-width:64rem){ .nm-body{grid-template-columns:24rem 1fr} }
-@media (min-width:40rem) and (max-width:63.99rem){
-  .nm-body{grid-template-rows:44vh 1fr} .nm-rail{order:2} .nm-sky{order:1} }
-@media (max-width:39.99rem){
-  .nm-body{grid-template-rows:1fr}
-  .nm-rail,.nm-sky{grid-area:1/1}
-  .nm-modes{display:flex}
-  .nm-body[data-show=map] .nm-rail{display:none}
-  .nm-body[data-show=list] .nm-sky{visibility:hidden}
-}
-.nm-rail{min-height:0; overflow:auto; overscroll-behavior:contain;
-  padding:1rem clamp(.8rem,3vw,1.2rem) 2rem;
-  padding-bottom:max(2rem,env(safe-area-inset-bottom));
-  border-right:1px solid var(--nm-rule); scrollbar-width:thin; -webkit-overflow-scrolling:touch}
-@media (max-width:63.99rem){ .nm-rail{border-right:0; border-top:1px solid var(--nm-rule)} }
+/* ---------------- the scrolling page ---------------- */
+.nm-page{position:relative; z-index:2; min-height:0; overflow-y:auto; overflow-x:hidden;
+  overscroll-behavior:contain; -webkit-overflow-scrolling:touch; scroll-behavior:smooth;
+  padding-bottom:max(3rem,env(safe-area-inset-bottom))}
+.nm-wrap{max-width:60rem; margin:0 auto; padding:0 clamp(.9rem,4vw,1.6rem)}
 
+/* jump chips: the hub, so no zone is ever more than one tap away */
+.nm-jump{position:sticky; top:0; z-index:4; display:flex; gap:.4rem; overflow-x:auto;
+  scrollbar-width:none; padding:.7rem clamp(.9rem,4vw,1.6rem);
+  background:linear-gradient(180deg,rgba(6,7,12,.94),rgba(6,7,12,.7) 70%,transparent);
+  backdrop-filter:blur(6px)}
+.nm-jump::-webkit-scrollbar{display:none}
+.nm-jc{flex:0 0 auto; min-height:40px; display:inline-flex; align-items:center;
+  border:1px solid var(--nm-rule); border-radius:2rem; padding:.4rem .95rem;
+  font-size:.82rem; color:var(--nm-soft); background:rgba(6,7,12,.6); transition:.2s}
+.nm-jc:hover,.nm-jc:focus-visible{border-color:var(--nm-gold-dim); color:var(--nm-gold-hi); outline:none}
+.nm-jc[aria-current=true]{background:rgba(232,200,116,.15); border-color:var(--nm-gold-dim); color:var(--nm-gold-hi)}
+
+.nm-zone{padding:1.6rem 0 .4rem; scroll-margin-top:4rem}
+.nm-zt{display:flex; align-items:baseline; gap:.7rem; margin:0 0 .2rem}
+.nm-zt h2{margin:0; font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
+  font-size:clamp(1.5rem,4.5vw,2rem); color:var(--nm-ink)}
+.nm-zt span{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--nm-gold)}
+.nm-zs{margin:0 0 1.1rem; color:var(--nm-dim); font-size:.85rem; max-width:34rem}
+
+/* ---------------- 1 · shelves (App Store / Netflix) ---------------- */
+.nm-shelf{margin-bottom:1.5rem}
+.nm-sh{display:flex; align-items:baseline; justify-content:space-between; gap:.6rem;
+  margin:0 0 .55rem}
+.nm-sh b{font-weight:600; font-size:.95rem; color:var(--nm-ink)}
+.nm-sh em{font-style:normal; font-size:.72rem; color:var(--nm-dim)}
+.nm-rail{display:flex; gap:.6rem; overflow-x:auto; scroll-snap-type:x proximity;
+  scrollbar-width:none; padding:.15rem .15rem .4rem;
+  margin-inline:calc(clamp(.9rem,4vw,1.6rem) * -1); padding-inline:clamp(.9rem,4vw,1.6rem)}
+.nm-rail::-webkit-scrollbar{display:none}
+.nm-card{flex:0 0 auto; scroll-snap-align:start; width:min(15rem,72vw); min-height:112px;
+  display:flex; flex-direction:column; gap:.25rem; justify-content:flex-end;
+  border:1px solid var(--nm-rule); border-radius:15px; padding:.85rem .9rem;
+  background:linear-gradient(160deg,rgba(255,254,247,.075),rgba(255,254,247,.02));
+  transition:border-color .2s, background .2s, transform .12s}
+.nm-card:hover,.nm-card:focus-visible{border-color:var(--nm-gold-dim);
+  background:linear-gradient(160deg,rgba(232,200,116,.13),rgba(232,200,116,.03)); outline:none}
+.nm-card:active{transform:scale(.985)}
+.nm-card b{font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
+  font-size:1.22rem; line-height:1.2; color:var(--nm-ink)}
+.nm-card span{font-size:.76rem; line-height:1.4; color:var(--nm-dim);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+
+/* ---------------- 2 · the path (Duolingo / the Tube map) ---------------- */
+.nm-path{position:relative; padding-left:56px}
+.nm-spine{position:absolute; left:0; top:0; width:56px; height:100%; pointer-events:none}
+.nm-era{position:sticky; top:3.4rem; z-index:3; margin:1.3rem 0 .5rem -56px;
+  padding:.3rem 0 .3rem 56px; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase;
+  background:linear-gradient(180deg,rgba(6,7,12,.95),rgba(6,7,12,.72));
+  backdrop-filter:blur(6px)}
+.nm-era:first-child{margin-top:0}
+.nm-step{position:relative; display:block; width:100%; min-height:56px;
+  padding:.6rem .8rem .6rem .2rem; border-radius:12px; border:1px solid transparent;
+  transition:background .16s, border-color .16s}
+.nm-step:hover,.nm-step:focus-visible{background:rgba(232,200,116,.09);
+  border-color:var(--nm-rule); outline:none}
+.nm-step b{display:block; font-weight:500; font-size:.95rem; line-height:1.35; color:var(--nm-ink)}
+.nm-step i{font-style:normal; display:block; font-size:.74rem; color:var(--nm-dim); margin-top:.1rem}
+.nm-step .nm-ar{position:absolute; right:.7rem; top:50%; transform:translateY(-50%);
+  color:var(--nm-gold); font-size:1rem; opacity:.55; max-width:38%;
+  overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+@media (max-width:26rem){ .nm-step .nm-ar{display:none} }
+
+/* ---------------- 3 · the Mushaf (a keypad) ---------------- */
+.nm-grid{display:grid; gap:.45rem; grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}
+.nm-cell{min-height:54px; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--nm-rule); border-radius:11px; font-size:.9rem;
+  font-variant-numeric:tabular-nums; color:var(--nm-soft);
+  background:rgba(255,254,247,.03); transition:.16s}
+.nm-cell:hover,.nm-cell:focus-visible{border-color:var(--nm-gold-dim);
+  background:rgba(232,200,116,.12); color:var(--nm-gold-hi); outline:none}
+.nm-cell:active{transform:scale(.94)}
+
+/* ---------------- 4 · the words (iOS Contacts) ---------------- */
+.nm-words{position:relative; padding-right:30px}
+.nm-letter{position:sticky; top:3.4rem; z-index:3; margin:1rem 0 .3rem;
+  padding:.25rem 0; font-size:.7rem; letter-spacing:.2em; color:var(--nm-gold);
+  background:linear-gradient(180deg,rgba(6,7,12,.95),rgba(6,7,12,.7)); backdrop-filter:blur(6px)}
+.nm-word{display:flex; align-items:center; gap:.7rem; width:100%; min-height:52px;
+  padding:.5rem .6rem; border-radius:11px; border:1px solid transparent; transition:.16s}
+.nm-word:hover,.nm-word:focus-visible{background:rgba(232,200,116,.09);
+  border-color:var(--nm-rule); outline:none}
+.nm-word .nm-t{flex:1 1 auto; min-width:0}
+.nm-word b{display:block; font-weight:500; font-size:.94rem}
+.nm-word span{display:block; font-size:.76rem; color:var(--nm-dim);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.nm-word .nm-ar{flex:0 0 auto; color:var(--nm-gold); font-size:1rem; opacity:.7}
+/* the rail your thumb drags down */
+/* The rail belongs to the VIEWPORT, not to the list. Anchored to the list it
+   sat at the top of a 30,000px column and scrolled away on the first flick --
+   which is not what iOS Contacts does, and not what a thumb expects. It is
+   fixed to the right edge, vertically centred, and only present while the
+   words are actually on screen. */
+.nm-az{position:fixed; right:2px; top:50%; transform:translateY(-50%);
+  width:26px; display:flex; flex-direction:column; align-items:center;
+  z-index:2050; user-select:none; touch-action:none; -webkit-user-select:none;
+  padding:.3rem 0; border-radius:2rem; background:rgba(6,7,12,.55);
+  backdrop-filter:blur(6px); opacity:0; pointer-events:none; transition:opacity .25s}
+.nm-az.nm-on{opacity:1; pointer-events:auto}
+.nm-az b{flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+  width:26px; height:20px; font-size:.62rem; font-weight:600; color:var(--nm-dim);
+  cursor:pointer}
+.nm-az b.nm-hot{color:var(--nm-gold-hi)}
+.nm-bubble{position:fixed; z-index:2100; right:44px; width:64px; height:64px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:1.7rem; font-weight:600;
+  color:#0B0E18; background:var(--nm-gold-hi); box-shadow:0 8px 28px rgba(0,0,0,.5);
+  opacity:0; transform:scale(.7); transition:opacity .14s, transform .14s; pointer-events:none}
+.nm-bubble.nm-on{opacity:1; transform:scale(1)}
+
+/* ---------------- results, when something is typed ---------------- */
 .nm-grp{font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--nm-gold);
-  margin:1.1rem 0 .4rem; padding-bottom:.28rem; border-bottom:1px solid var(--nm-rule)}
-.nm-grp:first-child{margin-top:0}
-.nm-row{display:grid; grid-template-columns:auto 1fr; gap:.7rem; align-items:baseline;
-  width:100%; text-align:left; padding:.5rem .55rem; border-radius:9px;
-  border:1px solid transparent; transition:background .15s, border-color .15s, transform .15s}
-.nm-row:hover,.nm-row.nm-sel{background:rgba(232,200,116,.1); border-color:var(--nm-rule); transform:translateX(2px)}
-.nm-row:focus-visible{outline:2px solid var(--nm-gold); outline-offset:1px}
-.nm-row .nm-a{color:var(--nm-gold); font-family:Amiri,serif; direction:rtl; font-size:.98rem}
-.nm-row .nm-t{font-weight:500; font-size:.94rem}
+  margin:1.3rem 0 .4rem; padding-bottom:.28rem; border-bottom:1px solid var(--nm-rule)}
+.nm-grp:first-child{margin-top:.4rem}
+.nm-row{display:flex; align-items:center; gap:.75rem; width:100%; min-height:56px;
+  padding:.55rem .6rem; border-radius:11px; border:1px solid transparent; transition:.16s}
+.nm-row:hover,.nm-row.nm-sel,.nm-row:focus-visible{background:rgba(232,200,116,.1);
+  border-color:var(--nm-rule); outline:none}
+.nm-row .nm-a{flex:0 0 auto; color:var(--nm-gold); font-family:Amiri,serif; direction:rtl; font-size:1rem}
+.nm-row .nm-c{flex:1 1 auto; min-width:0}
+.nm-row .nm-t{display:block; font-weight:500; font-size:.95rem}
 .nm-row .nm-d{display:-webkit-box; color:var(--nm-dim); font-size:.78rem; line-height:1.45;
-  overflow:hidden; -webkit-line-clamp:2; -webkit-box-orient:vertical}
-.nm-hit{color:var(--nm-gold-hi); background:rgba(232,200,116,.16); border-radius:3px}
-.nm-tally{color:var(--nm-dim); font-size:.78rem; padding:.9rem .5rem 0}
+  -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.nm-hit{color:var(--nm-gold-hi); background:rgba(232,200,116,.18); border-radius:3px}
+.nm-tally{color:var(--nm-dim); font-size:.8rem; padding:1rem .5rem 2rem}
 
-.nm-doors{display:grid; gap:.5rem; grid-template-columns:1fr}
-@media (min-width:40rem) and (max-width:63.99rem){ .nm-doors{grid-template-columns:1fr 1fr} }
-.nm-door{display:grid; gap:.15rem; text-align:left; background:var(--nm-panel);
-  border:1px solid var(--nm-rule); border-radius:12px; padding:.7rem .85rem;
-  transition:border-color .22s, background .22s, transform .22s}
-.nm-door:hover,.nm-door:focus-visible{border-color:var(--nm-gold-dim);
-  background:rgba(232,200,116,.08); transform:translateY(-2px); outline:none}
-.nm-door b{font-family:"Cormorant Garamond",Georgia,serif; font-weight:400; font-size:1.18rem}
-.nm-door span{font-size:.74rem; color:var(--nm-dim); line-height:1.4}
-.nm-door i{font-style:normal; font-size:.62rem; color:var(--nm-gold); letter-spacing:.09em}
-
-/* ---- the sky ---- */
-.nm-sky{position:relative; min-width:0; min-height:0; overflow:hidden; touch-action:none}
-.nm-sky canvas{display:block; width:100%; height:100%; cursor:grab}
-.nm-sky canvas.nm-drag{cursor:grabbing}
-.nm-tip{position:absolute; pointer-events:none; z-index:4;
-  transform:translate(-50%,calc(-100% - 14px)) scale(.96);
-  background:rgba(6,7,12,.94); border:1px solid var(--nm-gold-dim); border-radius:10px;
-  padding:.45rem .7rem; font-size:.82rem; max-width:17rem; opacity:0;
-  transition:opacity .14s, transform .14s cubic-bezier(.2,1.4,.4,1)}
-.nm-tip.nm-on{opacity:1; transform:translate(-50%,calc(-100% - 14px)) scale(1)}
-.nm-tip small{display:block; color:var(--nm-dim); font-size:.7rem; margin-top:.15rem; line-height:1.4}
-.nm-tools{position:absolute; left:.8rem; right:.8rem; z-index:3;
-  bottom:max(.8rem,env(safe-area-inset-bottom));
-  display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; pointer-events:none}
-.nm-tools > *{pointer-events:auto}
-.nm-tools{transition:opacity .25s, transform .25s}
-.nm-sky[data-sheet=open] .nm-tools{opacity:0; transform:translateY(1.4rem); pointer-events:none}
-.nm-sky[data-sheet=open] .nm-near{opacity:0}
-.nm-tool{border:1px solid var(--nm-rule); border-radius:2rem; padding:.36rem .78rem;
-  font-size:.72rem; color:var(--nm-soft); background:rgba(6,7,12,.72);
-  backdrop-filter:blur(8px); transition:.2s; min-width:2.2rem}
-.nm-tool:hover,.nm-tool:focus-visible{border-color:var(--nm-gold-dim); color:var(--nm-gold-hi); outline:none}
-.nm-tool:active{transform:scale(.94)}
-.nm-hint{margin-left:auto; font-size:.68rem; color:var(--nm-dim); background:rgba(6,7,12,.72);
-  border-radius:2rem; padding:.36rem .78rem; backdrop-filter:blur(8px)}
-@media (max-width:52rem){ .nm-hint{display:none} }
-.nm-crumb{position:absolute; left:.8rem; top:.8rem; z-index:3; font-size:.74rem;
-  color:var(--nm-gold-hi); background:rgba(6,7,12,.78); border:1px solid var(--nm-gold-dim);
-  border-radius:2rem; padding:.34rem .8rem; backdrop-filter:blur(8px);
-  opacity:0; transform:translateY(-6px); transition:opacity .25s, transform .25s; pointer-events:none}
-.nm-crumb.nm-on{opacity:1; transform:none}
-
-/* the plain list a screen reader gets, since a canvas says nothing */
 .nm-sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
-.nm-sr:focus-within{position:static; width:auto; height:auto; clip:auto; white-space:normal;
-  padding:1rem; background:#06070C}
 
-/* the button that opens all this, in the site header */
-.nm-open{display:inline-flex; align-items:center; gap:.55rem; border:1px solid rgba(44,36,22,.18);
-  border-radius:2rem; padding:.38rem .8rem; font-size:.82rem; color:inherit; background:none;
-  cursor:pointer; transition:border-color .2s, background .2s}
+/* the button in the site header */
+.nm-open{display:inline-flex; align-items:center; gap:.55rem;
+  border:1px solid rgba(44,36,22,.18); border-radius:2rem; padding:.38rem .8rem;
+  font-size:.82rem; color:inherit; background:none; cursor:pointer; transition:.2s}
 .nm-open:hover,.nm-open:focus-visible{border-color:rgba(201,162,39,.7);
   background:rgba(201,162,39,.09); outline:none}
 .nm-open .nm-k{font-size:.62rem; border:1px solid currentColor; border-radius:5px;
   padding:.05rem .3rem; opacity:.5}
 @media (max-width:40rem){ .nm-open .nm-lbl,.nm-open .nm-k{display:none} .nm-open{padding:.42rem .5rem} }
 
-
-/* =========================================================================
-   TOUCH.
-
-   A finger is about 9mm across and cannot hover. The desktop model -- point
-   at a light, read its name, then click -- has no translation: by the time
-   your finger is on a 2px star you cannot see the star, and a tap that
-   navigates immediately means a near-miss takes you to the wrong page with
-   no way to notice before it happens.
-
-   So touch gets its own model. A tap selects a NEIGHBOURHOOD rather than a
-   point: the nearest light opens a sheet naming it, and anything else that
-   was under your thumb is offered beside it as a chip. Imprecision stops
-   being a failure and becomes the thing that shows you your options. Nothing
-   navigates until you press Open.
-
-   And because you cannot hover, the map names whatever is nearest the middle
-   of the screen as you pan, so you always know where you are without
-   touching anything at all.
-   ========================================================================= */
-@media (hover:none){
-  .nm-tool{padding:.6rem 1rem; font-size:.8rem; min-height:44px; min-width:44px;
-    display:inline-flex; align-items:center; justify-content:center}
-  .nm-mode{min-height:44px; display:inline-flex; align-items:center}
-  .nm-shut{width:44px; height:44px}
-  .nm-field{padding:.62rem .7rem}
-  .nm-row{min-height:52px; align-content:center}
-  .nm-door{min-height:52px}
-  .nm-tools{gap:.5rem}
-  .nm-tip{display:none}          /* there is no hover to show it with */
-}
-
-/* what is under the middle of the screen, named, while you move */
-.nm-focus{position:absolute; left:50%; top:50%; z-index:2; pointer-events:none;
-  transform:translate(-50%,-50%); width:5.2rem; height:5.2rem; border-radius:50%;
-  border:1px solid rgba(232,200,116,.28); opacity:0; transition:opacity .3s}
-.nm-focus.nm-on{opacity:1}
-.nm-focus::after{content:""; position:absolute; inset:38%; border-radius:50%;
-  background:rgba(232,200,116,.5)}
-.nm-near{position:absolute; left:50%; bottom:5.4rem; z-index:3; pointer-events:none;
-  transform:translate(-50%,6px); max-width:min(20rem,86vw); text-align:center;
-  background:rgba(6,7,12,.86); border:1px solid var(--nm-rule); border-radius:2rem;
-  padding:.4rem .95rem; font-size:.8rem; color:var(--nm-ink);
-  backdrop-filter:blur(8px); opacity:0; transition:opacity .25s, transform .25s;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.nm-near.nm-on{opacity:1; transform:translate(-50%,0)}
-.nm-near b{color:var(--nm-gold-hi); font-weight:600}
-
-/* the sheet a tap opens */
-.nm-sheet{position:absolute; left:0; right:0; bottom:0; z-index:9;
-  background:linear-gradient(180deg,rgba(12,16,34,.97),rgba(6,7,12,.99));
-  border-top:1px solid var(--nm-gold-dim); border-radius:18px 18px 0 0;
-  padding:.6rem clamp(.9rem,4vw,1.3rem) max(1rem,env(safe-area-inset-bottom));
-  transform:translateY(110%); transition:transform .34s cubic-bezier(.22,1,.32,1);
-  box-shadow:0 -18px 50px rgba(0,0,0,.5); touch-action:none}
-.nm-sheet.nm-on{transform:none}
-.nm-grab{width:2.4rem; height:.25rem; border-radius:2rem; background:rgba(232,200,116,.34);
-  margin:.15rem auto .7rem}
-.nm-sheet .nm-eyebrow{font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--nm-gold); margin:0 0 .2rem}
-.nm-sheet .nm-eyebrow,
-.nm-sheet h3{padding-right:48px}
-.nm-sheet h3{margin:0; font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
-  font-size:1.5rem; line-height:1.2; color:var(--nm-ink)}
-.nm-sheet h3 .nm-ar{display:block; font-size:1.25rem; color:var(--nm-gold); margin-bottom:.15rem}
-.nm-sheet p.nm-sd{margin:.45rem 0 0; font-size:.88rem; line-height:1.5; color:var(--nm-soft);
-  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden}
-/* the one thing on this sheet that commits you to anything, so it is the one
-   thing that looks pressable. A hairline at .16 alpha reads as nothing at 2x. */
-.nm-go{display:flex; align-items:center; justify-content:center; gap:.5rem; width:100%;
-  min-height:52px; margin-top:1rem; border-radius:13px;
-  background:linear-gradient(180deg,rgba(232,200,116,.26),rgba(232,200,116,.15));
-  border:1px solid rgba(232,200,116,.62); color:#FFF6DC; font-size:1rem;
-  font-weight:600; letter-spacing:.01em;
-  box-shadow:0 2px 14px rgba(232,200,116,.12), inset 0 1px 0 rgba(255,255,255,.08);
-  transition:background .18s, transform .09s, box-shadow .18s}
-.nm-go:active{transform:scale(.982);
-  background:linear-gradient(180deg,rgba(232,200,116,.38),rgba(232,200,116,.24));
-  box-shadow:0 1px 6px rgba(232,200,116,.18)}
-.nm-alts{margin:.75rem 0 0}
-.nm-alts p{margin:0 0 .4rem; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--nm-dim)}
-.nm-altrow{display:flex; gap:.45rem; overflow-x:auto; scrollbar-width:none;
-  padding-bottom:.25rem; -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 1.6rem),transparent);
-  mask-image:linear-gradient(to right,#000 calc(100% - 1.6rem),transparent)}
-.nm-altrow::-webkit-scrollbar{display:none}
-.nm-alt{flex:0 0 auto; max-width:11rem; min-height:44px; border:1px solid rgba(232,200,116,.34);
-  background:rgba(255,254,247,.05); border-radius:2rem; padding:.45rem .95rem;
-  font-size:.84rem; color:var(--nm-ink); white-space:nowrap; overflow:hidden;
-  text-overflow:ellipsis; transition:background .18s, border-color .18s, transform .09s}
-.nm-alt:active{background:rgba(232,200,116,.2); border-color:var(--nm-gold);
-  color:var(--nm-gold-hi); transform:scale(.97)}
-.nm-sheet .nm-x{position:absolute; right:.5rem; top:.4rem; width:44px; height:44px;
-  color:var(--nm-dim); font-size:1.3rem; line-height:1}
-
 @media (prefers-reduced-motion:reduce){
-  .nm-sheet,.nm-near,.nm-focus{transition-duration:.001ms!important}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .nm-root,.nm-row,.nm-door,.nm-tip,.nm-crumb,.nm-tool{transition-duration:.001ms!important}
+  .nm-root,.nm-card,.nm-step,.nm-word,.nm-row,.nm-cell,.nm-bubble{transition-duration:.001ms!important}
+  .nm-page{scroll-behavior:auto}
 }

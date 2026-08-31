@@ -1,18 +1,23 @@
 /* NOOR · the menu
    ===========================================================================
-   The command bar and the map are not two features that agree with each other.
-   They are two drawings of one array: every row in the rail IS a light in the
-   sky, the same object. A thing therefore cannot be lit in one and missing
-   from the other, which is the whole design.
+   The first two versions of this were a pan-and-zoom star map. It photographed
+   beautifully and it did not work, for two reasons that are well documented
+   rather than particular to us:
+
+     · a force-directed field collapses into a "hairball" somewhere past two
+       hundred nodes, and we have 758;
+     · on a touch screen, free pan-and-zoom fights the tap. Every finger-down
+       is ambiguous, and an unlabelled 2px dot cannot be read before it is
+       committed to.
+
+   The Tube map works with a thumb because it does neither: fixed layout, every
+   station named, no infinite zoom. So the sky here is now a painting behind
+   the menu, taking no input at all, and in front of it each kind of content
+   gets the pattern that fits its shape -- shelves for a small set, a lit path
+   for a sequence, a keypad for numbers, an A-Z rail for an alphabet.
 
    The index is fetched once, on first open, so 54 pages do not each carry
    120KB of it.
-
-   The motion is a spring system rather than a set of CSS transitions. A camera
-   that springs, keeps momentum when you let go of it and pulls back when you
-   over-zoom feels like a thing with weight; one that eases linearly feels like
-   a slideshow. Every light also has its own small spring, so the field parts
-   around the cursor and settles again after.
    =========================================================================== */
 (function () {
   "use strict";
@@ -20,110 +25,54 @@
 
   var INDEX = "/assets/menu-index.json?v=1";
   var REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var NARROW = matchMedia("(max-width:39.99rem)");
-  var ZMIN = 0.1, ZMAX = 3.6;
 
   function fold(s){
     return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
-      .replace(/['’ʻʼ`]/g,"").replace(/[^a-z0-9؀-ۿ ]+/g," ")
-      .replace(/\s+/g," ").trim();
+      .replace(/['’ʻʼ`]/g,"").replace(/[^a-z0-9؀-ۿ ]+/g," ").replace(/\s+/g," ").trim();
   }
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"]/g,function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; });
   }
 
-  /* ---------------------------------------------------------------- shell */
   var root = document.createElement("div");
   root.className = "nm-root"; root.setAttribute("role","dialog");
-  root.setAttribute("aria-modal","true"); root.setAttribute("aria-label","Search the library");
+  root.setAttribute("aria-modal","true"); root.setAttribute("aria-label","The library");
   root.innerHTML =
-    '<div class="nm-head">'
-    + '<label class="nm-field">'
-    +   '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'
-    +   '<circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>'
-    +   '<input id="nm-q" type="search" autocomplete="off" spellcheck="false" aria-label="Search the library">'
-    + '</label>'
-    + '<div class="nm-modes" role="group" aria-label="View">'
-    +   '<button class="nm-mode" data-nm="list" aria-pressed="false">List</button>'
-    +   '<button class="nm-mode" data-nm="map" aria-pressed="true">Map</button>'
+      '<canvas class="nm-canvas" aria-hidden="true"></canvas>'
+    + '<div class="nm-head">'
+    +   '<label class="nm-field">'
+    +     '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'
+    +     '<circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>'
+    +     '<input id="nm-q" type="search" autocomplete="off" spellcheck="false" aria-label="Search the library">'
+    +   '</label>'
+    +   '<button class="nm-shut" data-nm="shut" aria-label="Close">&times;</button>'
     + '</div>'
-    + '<button class="nm-shut" data-nm="shut" aria-label="Close">&times;</button>'
-    + '</div>'
-    + '<div class="nm-body" data-show="map">'
-    +   '<div class="nm-rail"></div>'
-    +   '<div class="nm-sky"><canvas></canvas>'
-    +     '<div class="nm-tip" role="status"></div><div class="nm-crumb"></div>'
-    +     '<div class="nm-focus"></div><div class="nm-near"></div>'
-    +     '<div class="nm-sheet" role="dialog" aria-label="What you touched">'
-    +       '<button class="nm-x" data-nm="dismiss" aria-label="Dismiss">&times;</button>'
-    +       '<div class="nm-grab"></div><div class="nm-sbody"></div></div>'
-    +     '<div class="nm-tools">'
-    +       '<button class="nm-tool" data-nm="whole">&larr; Whole library</button>'
-    +       '<button class="nm-tool" data-nm="in" aria-label="Zoom in">+</button>'
-    +       '<button class="nm-tool" data-nm="out" aria-label="Zoom out">&minus;</button>'
-    +       '<span class="nm-hint">drag to pan &middot; scroll to zoom &middot; click a constellation to fly in</span>'
-    +     '</div></div>'
-    + '</div>'
-    + '<div class="nm-sr"><nav aria-label="Everything in the library"><ul></ul></nav></div>'
+    + '<div class="nm-page"><nav class="nm-jump"></nav><div class="nm-body"></div></div>'
+    + '<div class="nm-bubble" aria-hidden="true"></div>'
     + '<p class="nm-sr" role="status" aria-live="polite"></p>';
-  var qEl, railEl, bodyEl, skyEl, C, X, tipEl, crumbEl, sayEl, srEl;
-  var focusEl, nearEl, sheetEl, sbodyEl;
-  /* a finger cannot hover, so touch gets a different model entirely */
-  var TOUCH = matchMedia("(hover:none)").matches || navigator.maxTouchPoints > 0;
-  var picked = null, alts = [], nearest = null, lastTap = 0, tapXY = null;
 
-  /* ------------------------------------------------------------- the list */
-  var THINGS = [], SPINE = [], SECTIONS = [], matched = null, ready = false, loading = null;
+  var qEl, pageEl, bodyEl, jumpEl, bubbleEl, sayEl, cv, cx;
+  var D = null, THINGS = [], matched = null, ready = false, loading = null;
+  var ORDER = ["Rooms","Words of the Path","The Path","Surahs"];
   var ERAC = { bidaya:"#8FB8FF", qisas:"#E8C874", jahiliyyah:"#8C8F9E",
     seerah:"#FFF0C4", khulafa:"#F0C9A0", umam:"#C8A2E8", nihaya:"#F08A8A" };
-  var RING = [[-360,-300],[360,-300],[-455,-95],[455,-95],[-455,110],[455,110],[-360,310],[360,310]];
-  var ORDER = ["Rooms","Words of the Path","The Path","Surahs","Sections"];
 
-  function build(D){
-    SECTIONS = D.sections;
-    D.path.forEach(function(n,i){
-      var f = i/(D.path.length-1);
-      THINGS.push({ kind:"The Path", t:n.t, a:n.a, d:"chapter "+n.i+" · "+(D.eras[n.p]||n.p),
-        u:"/#node-"+n.i, hx:Math.sin(f*Math.PI*2)*30, hy:-340+f*700, r:3.4,
-        c:ERAC[n.p]||"#E8C874", spine:i, depth:1 });
-    });
-    D.sections.forEach(function(s,i){
-      var c = RING[i % RING.length], cx = c[0], cy = c[1];
-      THINGS.push({ kind:"Sections", t:s.n, d:s.s, u:s.items[0].u, hx:cx, hy:cy, r:9,
-        c:"#E8C874", big:true, label:s.n, count:s.items.length+" rooms", sec:i, depth:1 });
-      s.items.forEach(function(it,j){
-        var a = (j/s.items.length)*Math.PI*2 + i*0.7, rad = 58+(j%3)*15;
-        THINGS.push({ kind:"Rooms", t:it.t, d:it.d, u:it.u, sec:i, ang:a, rad:rad,
-          cx:cx, cy:cy, hx:cx+Math.cos(a)*rad, hy:cy+Math.sin(a)*(rad*0.8), r:3.2,
-          c:"#DCD8CB", depth:1, spin:(i%2?1:-1)*0.012 });
-      });
-    });
-    for (var k=1;k<=114;k++){
-      var a2 = k*0.38, rr2 = 7*Math.sqrt(k)*1.5;
-      THINGS.push({ kind:"Surahs", t:"Surah "+k, d:"open the Mushaf at "+k, u:"/quran?surah="+k,
-        hx:-360+Math.cos(a2)*rr2*1.25, hy:-560+Math.sin(a2)*rr2*.7, r:1.7,
-        c:"rgba(143,184,255,.75)", tiny:true, depth:.94 });
-    }
-    D.words.forEach(function(w,i){
-      var a3 = i*2.39996, rr3 = 26*Math.sqrt(i);
-      THINGS.push({ kind:"Words of the Path", t:w.t, a:w.a, d:w.s, u:"/dictionary#"+w.i,
-        hx:Math.cos(a3)*rr3*.95, hy:640+Math.sin(a3)*rr3*.42, r:1.6,
-        c:"rgba(214,210,198,.7)", tiny:true, depth:.86 });
-    });
-    THINGS.forEach(function(o){
-      o.f = fold(o.t+" "+(o.d||"")) + " " + (o.a||"");
-      o.ph = Math.random()*6.2832;
-      o.x = o.hx; o.y = o.hy;      /* where it is */
-      o.vx = 0; o.vy = 0;          /* how fast it is going there */
-      o.lit = 1; o.flare = 1; o.pop = 0; o.vpop = 0;
-    });
-    SPINE = THINGS.filter(function(o){ return o.spine !== undefined; });
-    srEl.innerHTML = THINGS.map(function(o){
-      return '<li><a href="'+esc(o.u)+'">'+esc(o.t)+' — '+esc(o.d||"")+'</a></li>'; }).join("");
+  /* ---------------------------------------------------------------- data */
+  function build(j){
+    D = j;
+    j.sections.forEach(function(s){ s.items.forEach(function(it){
+      THINGS.push({kind:"Rooms", t:it.t, d:it.d, u:it.u}); }); });
+    j.path.forEach(function(n){
+      THINGS.push({kind:"The Path", t:n.t, a:n.a, u:"/#node-"+n.i,
+        d:"chapter "+n.i+" · "+(j.eras[n.p]||n.p)}); });
+    for (var i=1;i<=114;i++)
+      THINGS.push({kind:"Surahs", t:"Surah "+i, d:"open the Mushaf at "+i, u:"/quran?surah="+i});
+    j.words.forEach(function(w){
+      THINGS.push({kind:"Words of the Path", t:w.t, a:w.a, d:w.s, u:"/dictionary#"+w.i}); });
+    THINGS.forEach(function(o){ o.f = fold(o.t+" "+(o.d||"")) + " " + (o.a||""); });
     ready = true;
   }
-
   function load(){
     if (ready) return Promise.resolve();
     if (loading) return loading;
@@ -134,18 +83,14 @@
     return loading;
   }
 
-  /* ---------------------------------------------------------- the search */
+  /* -------------------------------------------------------------- search */
   function runSearch(v){
     var q = fold(v);
-    if (!q){ matched = null; THINGS.forEach(function(o){ o.lit = 1; }); return; }
+    if (!q){ matched = null; return; }
     var hits = [];
     for (var i=0;i<THINGS.length;i++){
       var o = THINGS[i], at = o.f.indexOf(q);
-      var was = o.lit; o.lit = at < 0 ? 0 : 1;
       if (at < 0) continue;
-      /* a new match gets a shove, so the eye is caught by movement, not only light */
-      if (!was){ var a = Math.random()*6.2832, s = 26+Math.random()*22;
-        o.vx += Math.cos(a)*s; o.vy += Math.sin(a)*s; o.vpop += 7; }
       var starts = at === 0 || o.f.charAt(at-1) === " ";
       hits.push([(starts?0:1)*100 + ORDER.indexOf(o.kind)*10 + Math.min(at,9), i, o]);
     }
@@ -160,426 +105,245 @@
       + "</span>" + esc(text.slice(i+q.length));
   }
 
-  /* ------------------------------------------------------------ the rail */
-  function drawRail(){
-    var v = qEl.value.trim();
-    if (!ready){ railEl.innerHTML = "<p class='nm-tally'>Opening the library&hellip;</p>"; return; }
-    if (!matched){
-      railEl.innerHTML = "<p class='nm-grp'>The library</p><div class='nm-doors'>"
-        + SECTIONS.map(function(s,i){ return "<button class='nm-door' data-sec='"+i+"'><b>"
-          + esc(s.n)+"</b><span>"+esc(s.s)+"</span><i>"+s.items.length+" rooms</i></button>"; }).join("")
-        + "</div><p class='nm-tally'>"+THINGS.length+" places in the library. Type to narrow it, "
-        + "or press a section to fly there on the map.</p>";
-      sayEl.textContent = ""; return;
+  /* ------------------------------------------------------------ browsing */
+  var ZONES = [["rooms","The rooms"],["path","The Path"],["quran","The Mushaf"],["words","The words"]];
+
+  function drawJump(){
+    jumpEl.innerHTML = matched ? "" : ZONES.map(function(z){
+      return '<button class="nm-jc" data-jump="'+z[0]+'">'+esc(z[1])+'</button>'; }).join("");
+  }
+
+  function shelves(){
+    return '<section class="nm-zone" id="nm-z-rooms"><div class="nm-wrap">'
+      + '<p class="nm-zt"><span>Eight sections</span></p>'
+      + '<div class="nm-zt"><h2>The rooms</h2></div>'
+      + '<p class="nm-zs">Every room in the house, grouped so each one has a single obvious home.</p>'
+      + D.sections.map(function(s){
+          return '<div class="nm-shelf"><p class="nm-sh"><b>'+esc(s.n)+'</b><em>'
+            + s.items.length+' rooms</em></p><div class="nm-rail">'
+            + s.items.map(function(it){
+                return '<button class="nm-card" data-u="'+esc(it.u)+'"><b>'+esc(it.t)
+                  + '</b><span>'+esc(it.d)+'</span></button>'; }).join("")
+            + '</div></div>'; }).join("")
+      + '</div></section>';
+  }
+
+  function pathZone(){
+    var out = '<section class="nm-zone" id="nm-z-path"><div class="nm-wrap">'
+      + '<div class="nm-zt"><h2>The Path</h2><span>' + D.path.length + ' chapters</span></div>'
+      + '<p class="nm-zs">Creation to the Hour, in the order it happened. Scroll down through it.</p>'
+      + '<div class="nm-path"><svg class="nm-spine" aria-hidden="true"></svg>';
+    var era = null;
+    D.path.forEach(function(n){
+      if (n.p !== era){
+        era = n.p;
+        out += '<p class="nm-era" style="color:'+(ERAC[era]||"#E8C874")+'">'
+             + esc(D.eras[era]||era) + '</p>';
+      }
+      out += '<button class="nm-step" data-u="/#node-'+n.i+'" data-era="'+esc(n.p)+'">'
+           + '<b>'+esc(n.t)+'</b><i>Chapter '+n.i+'</i>'
+           + (n.a ? '<span class="nm-ar">'+esc(n.a)+'</span>' : '')
+           + '</button>';
+    });
+    return out + '</div></div></section>';
+  }
+
+  function quranZone(){
+    var cells = "";
+    for (var i=1;i<=114;i++)
+      cells += '<button class="nm-cell" data-u="/quran?surah='+i+'" aria-label="Surah '+i+'">'+i+'</button>';
+    return '<section class="nm-zone" id="nm-z-quran"><div class="nm-wrap">'
+      + '<div class="nm-zt"><h2>The Mushaf</h2><span>114 surahs</span></div>'
+      + '<p class="nm-zs">Every surah by number, with recitation for each ayah.</p>'
+      + '<div class="nm-grid">'+cells+'</div></div></section>';
+  }
+
+  function wordsZone(){
+    var by = {}, letters = [];
+    D.words.forEach(function(w){
+      var L = (fold(w.t)[0]||"#").toUpperCase();
+      if (!/[A-Z]/.test(L)) L = "#";
+      if (!by[L]){ by[L] = []; letters.push(L); }
+      by[L].push(w);
+    });
+    letters.sort();
+    var out = '<section class="nm-zone" id="nm-z-words"><div class="nm-wrap">'
+      + '<div class="nm-zt"><h2>The words</h2><span>' + D.words.length + '</span></div>'
+      + '<p class="nm-zs">Every word this library uses, defined. Drag the letters down the '
+      + 'right-hand edge to move through them.</p><div class="nm-words">'
+      + '<div class="nm-az" aria-hidden="true">'
+      + letters.map(function(L){ return '<b data-l="'+L+'">'+L+'</b>'; }).join("") + '</div>';
+    letters.forEach(function(L){
+      out += '<p class="nm-letter" id="nm-l-'+L+'">'+L+'</p>';
+      by[L].forEach(function(w){
+        out += '<button class="nm-word" data-u="/dictionary#'+esc(w.i)+'">'
+          + '<span class="nm-t"><b>'+esc(w.t)+'</b><span>'+esc(w.s)+'</span></span>'
+          + (w.a ? '<span class="nm-ar">'+esc(w.a)+'</span>' : '') + '</button>';
+      });
+    });
+    return out + '</div></div></section>';
+  }
+
+  function drawBrowse(){
+    bodyEl.innerHTML = shelves() + pathZone() + quranZone() + wordsZone();
+    drawSpine();
+    sayEl.textContent = "";
+  }
+
+  /* the lit rail beside the Path: drawn from where the steps actually landed,
+     so it can never disagree with the layout */
+  function drawSpine(){
+    var wrap = bodyEl.querySelector(".nm-path"); if (!wrap) return;
+    var svg = wrap.querySelector(".nm-spine");
+    var steps = [].slice.call(wrap.querySelectorAll(".nm-step"));
+    if (!steps.length) return;
+    var top = wrap.getBoundingClientRect().top, H = wrap.offsetHeight;
+    svg.setAttribute("viewBox", "0 0 56 " + H);
+    svg.setAttribute("width", 56); svg.setAttribute("height", H);
+    var pts = steps.map(function(b,i){
+      var r = b.getBoundingClientRect();
+      return [28 + Math.sin(i*0.55)*13, r.top - top + r.height/2, b.dataset.era];
+    });
+    var d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
+    for (var i=1;i<pts.length;i++){
+      var a = pts[i-1], b = pts[i], my = (a[1]+b[1])/2;
+      d += " C" + a[0].toFixed(1) + " " + my.toFixed(1) + "," + b[0].toFixed(1) + " "
+         + my.toFixed(1) + "," + b[0].toFixed(1) + " " + b[1].toFixed(1);
     }
+    var dots = pts.map(function(p){
+      return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="'
+        + (ERAC[p[2]]||"#E8C874") + '"/>'
+      + '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="9" fill="'
+        + (ERAC[p[2]]||"#E8C874") + '" opacity=".18"/>'; }).join("");
+    svg.innerHTML = '<path d="'+d+'" fill="none" stroke="rgba(232,200,116,.28)" stroke-width="2"/>' + dots;
+  }
+
+  function drawResults(){
+    var v = qEl.value.trim();
+    if (!matched){ drawJump(); drawBrowse(); return; }
+    drawJump();
+    var oldAz = root.querySelector(".nm-az");
+    if (oldAz && oldAz.parentNode === root) oldAz.remove();
+    if (azObs){ azObs.disconnect(); azObs = null; }
     if (!matched.length){
-      railEl.innerHTML = "<p class='nm-tally'>Nothing by that name. Try fewer letters.</p>";
+      bodyEl.innerHTML = '<div class="nm-wrap"><p class="nm-tally">Nothing by that name. '
+        + 'Try fewer letters.</p></div>';
       sayEl.textContent = "No matches"; return;
     }
     var by = {}, i;
-    for (i=0;i<Math.min(60,matched.length);i++){
+    for (i=0;i<Math.min(80,matched.length);i++){
       var o = matched[i]; (by[o.kind] = by[o.kind] || []).push(o);
     }
-    var h = "";
+    var h = '<div class="nm-wrap">';
     ORDER.forEach(function(k){
       var g = by[k]; if (!g) return;
-      h += "<p class='nm-grp'>"+esc(k)+"</p>";
-      g.slice(0,8).forEach(function(o){
-        h += "<button class='nm-row' data-i='"+THINGS.indexOf(o)+"'><span class='nm-a'>"
-          + esc(o.a||"")+"</span><span><span class='nm-t'>"+mark(o.t,v)
-          + "</span><span class='nm-d'>"+esc(o.d||"")+"</span></span></button>";
+      h += '<p class="nm-grp">'+esc(k)+'</p>';
+      g.slice(0,10).forEach(function(o){
+        h += '<button class="nm-row" data-u="'+esc(o.u)+'">'
+          + (o.a ? '<span class="nm-a">'+esc(o.a)+'</span>' : '')
+          + '<span class="nm-c"><span class="nm-t">'+mark(o.t,v)+'</span>'
+          + '<span class="nm-d">'+esc(o.d||"")+'</span></span></button>';
       });
     });
-    railEl.innerHTML = h + "<p class='nm-tally'>"+matched.length+" of "+THINGS.length+" lit.</p>";
+    h += '<p class="nm-tally">'+matched.length+' of '+THINGS.length+' in the library.</p></div>';
+    bodyEl.innerHTML = h;
+    pageEl.scrollTop = 0;
     sayEl.textContent = matched.length + " matches";
   }
 
-  /* ======================= the sky, and its physics ======================= */
-  var VW=0, VH=0, hover=null, dragging=false, moved=0, last=0, acc=0, raf=0;
-  var cam = { x:0, y:0, z:.5, vx:0, vy:0, vz:0 };
-  var aim = { x:0, y:0, z:.5 };
-  var pointers = {}, nP = 0, pinch0 = 0, z0 = 1, mx = -1e5, my = -1e5, onCanvas = false;
-  var vhist = [];
-  var spread = -1;              /* which constellation has been flown into */
-
-  function bounds(){
-    var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
-    THINGS.forEach(function(o){
-      if(o.hx<x0)x0=o.hx; if(o.hx>x1)x1=o.hx; if(o.hy<y0)y0=o.hy; if(o.hy>y1)y1=o.hy; });
-    return [x0,x1,y0,y1];
-  }
-  function frameTo(x0,x1,y0,y1,maxZ){
-    var pad = VW < 640 ? 30 : 74;
-    var z = Math.min((VW-pad*2)/Math.max(80,x1-x0), (VH-pad*2)/Math.max(80,y1-y0));
-    aim.z = Math.max(0.14, Math.min(maxZ||1.1, z));
-    aim.x = -(x0+x1)/2; aim.y = -(y0+y1)/2;
-  }
-  function whole(snap){
-    var b = bounds(); frameTo(b[0],b[1],b[2],b[3],1.1);
-    spread = -1; crumb("");
-    if (snap){ cam.x=aim.x; cam.y=aim.y; cam.z=aim.z; cam.vx=cam.vy=cam.vz=0; }
-  }
-  function flyTo(o){
-    aim.z = Math.min(2.1, Math.max(1.15, VW<640?1.0:1.55));
-    aim.x = -o.hx; aim.y = -o.hy; cam.vx = cam.vy = 0;
-    spread = o.sec; crumb(o.label || o.t);
-  }
-  function crumb(s){ crumbEl.textContent = s || ""; crumbEl.classList.toggle("nm-on", !!s); }
-  function size(){
-    var r = skyEl.getBoundingClientRect(); if (!r.width || !r.height) return;
-    var d = Math.min(devicePixelRatio||1, 2);
-    VW = r.width; VH = r.height;
-    C.width = Math.round(VW*d); C.height = Math.round(VH*d);
-    X.setTransform(d,0,0,d,0,0);
-  }
-  /* one transform, used by the drawing and by the hit test, so they cannot disagree */
-  function sx(o){ return VW/2 + (o.x + cam.x)*cam.z*(o.depth||1); }
-  function sy(o){ return VH/2 + (o.y + cam.y)*cam.z*(o.depth||1); }
-
-  /* --- the integrator: fixed steps, so the feel does not change with framerate --- */
-  var K_CAM = 150, D_CAM = 21;      /* stiff, just under critically damped: a little overshoot */
-  var K_NODE = 62, D_NODE = 9;      /* looser, so a light drifts back rather than snapping */
-  function step(h){
-    var i, o, dx, dy, d2, f;
-
-    /* the camera springs at its aim, and rubber-bands if zoom is out of range */
-    var az = aim.z;
-    if (az < ZMIN) az = ZMIN; if (az > ZMAX) az = ZMAX;
-    cam.vx += (K_CAM*(aim.x-cam.x) - D_CAM*cam.vx)*h;
-    cam.vy += (K_CAM*(aim.y-cam.y) - D_CAM*cam.vy)*h;
-    cam.vz += (K_CAM*(az-cam.z)     - D_CAM*cam.vz)*h;
-    cam.x += cam.vx*h; cam.y += cam.vy*h; cam.z += cam.vz*h;
-    if (cam.z < ZMIN*0.85){ cam.z = ZMIN*0.85; cam.vz = 0; }
-
-    /* every light is on a spring back to where it belongs */
-    var pushing = onCanvas && !dragging && !REDUCE;
-    var wx = 0, wy = 0;
-    if (pushing){ wx = (mx - VW/2)/cam.z - cam.x; wy = (my - VH/2)/cam.z - cam.y; }
-    for (i=0;i<THINGS.length;i++){
-      o = THINGS[i];
-      var hx = o.hx, hy = o.hy;
-      /* a constellation that has been opened spreads its rooms into a readable ring */
-      if (o.rad !== undefined){
-        var g = (spread === o.sec) ? 1.75 : 1;
-        hx = o.cx + Math.cos(o.ang)*o.rad*g;
-        hy = o.cy + Math.sin(o.ang)*o.rad*0.8*g;
-      }
-      o.vx += (K_NODE*(hx-o.x) - D_NODE*o.vx)*h;
-      o.vy += (K_NODE*(hy-o.y) - D_NODE*o.vy)*h;
-      /* and the field parts around the cursor */
-      if (pushing && !o.big){
-        dx = o.x - wx; dy = o.y - wy; d2 = dx*dx + dy*dy;
-        var R = 120/cam.z;
-        if (d2 < R*R && d2 > 1){
-          f = (1 - Math.sqrt(d2)/R); f = f*f*680;
-          var inv = 1/Math.sqrt(d2);
-          o.vx += dx*inv*f*h; o.vy += dy*inv*f*h;
-        }
-      }
-      o.x += o.vx*h; o.y += o.vy*h;
-      /* how bright, and how big, it wants to be */
-      var want = matched ? (o.lit?1:0) : 1;
-      o.flare += (want - o.flare)*Math.min(1, 9*h);
-      var pw = (o===hover?1:0) + (matched && o.lit?1:0);
-      o.vpop += (K_NODE*1.6*(pw-o.pop) - D_NODE*0.8*o.vpop)*h;
-      o.pop += o.vpop*h;
+  /* ------------------------------------------------------- the A-Z rail */
+  var azObs = null;
+  function azSetup(){
+    var az = bodyEl.querySelector(".nm-az");
+    if (az) root.appendChild(az);                 /* fixed to the viewport, not the list */
+    else az = root.querySelector(".nm-az");
+    if (!az) return;
+    /* and it is only there while the words are */
+    if (azObs) azObs.disconnect();
+    var zone = bodyEl.querySelector("#nm-z-words");
+    if (zone && window.IntersectionObserver){
+      azObs = new IntersectionObserver(function(es){
+        az.classList.toggle("nm-on", es[0].isIntersecting); }, {root: pageEl, threshold: 0});
+      azObs.observe(zone);
+    } else az.classList.add("nm-on");
+    var letters = [].slice.call(az.querySelectorAll("b"));
+    function pickAt(clientY){
+      var best = null, bd = 1e9;
+      letters.forEach(function(b){
+        var r = b.getBoundingClientRect(), d = Math.abs(r.top + r.height/2 - clientY);
+        if (d < bd){ bd = d; best = b; }
+      });
+      return best;
     }
-  }
-
-  function paint(T){
-    X.clearRect(0,0,VW,VH);
-    var i, o, x, y;
-
-    X.beginPath();
-    for (i=0;i<SPINE.length;i++){ o = SPINE[i]; x = sx(o); y = sy(o); i?X.lineTo(x,y):X.moveTo(x,y); }
-    X.strokeStyle = matched ? "rgba(232,200,116,.08)" : "rgba(232,200,116,.2)";
-    X.lineWidth = 1.2; X.stroke();
-    var pulse = REDUCE ? -1 : (T*0.055) % 1.35;
-
-    for (i=0;i<THINGS.length;i++){
-      o = THINGS[i]; x = sx(o); y = sy(o);
-      if (x < -60 || x > VW+60 || y < -60 || y > VH+60) continue;
-      var alpha = 0.14 + o.flare*0.86, scale = 1 + Math.max(0,o.pop)*0.9;
-      if (!REDUCE){
-        alpha *= 0.78 + Math.sin(T*0.9 + o.ph)*0.22;
-        if (o.spine !== undefined){
-          var dd = Math.abs(o.spine/(SPINE.length-1) - pulse);
-          if (dd < 0.06){ var g = 1-dd/0.06; alpha = Math.min(1, alpha+g*0.9); scale += g*1.5; }
-        }
-      }
-      if (o === hover){ alpha = 1; scale *= 1.55; }
-      var won = matched && o.lit;
-      /* a 1.6px star is invisible under a thumb; on touch nothing goes below 2.6 */
-      var floor = won ? 2.6 : (TOUCH ? 1.9 : .65);
-      var r = Math.max(floor, o.r*cam.z*scale*(TOUCH ? 1.22 : 1));
-      if (!o.tiny || won || o === hover){
-        var gr = X.createRadialGradient(x,y,0,x,y,r*5.5);
-        gr.addColorStop(0,o.c); gr.addColorStop(1,"rgba(0,0,0,0)");
-        X.globalAlpha = alpha*0.5; X.fillStyle = gr;
-        X.beginPath(); X.arc(x,y,r*5.5,0,6.2832); X.fill();
-      }
-      X.globalAlpha = alpha < 0 ? 0 : (alpha > 1 ? 1 : alpha);
-      X.fillStyle = o.c; X.beginPath(); X.arc(x,y,r,0,6.2832); X.fill();
-      if (o === picked){
-        X.globalAlpha = .9; X.strokeStyle = "#FFF0C4"; X.lineWidth = 1.6;
-        X.beginPath(); X.arc(x,y,r+9+Math.sin(T*4)*1.6,0,6.2832); X.stroke();
-      }
+    function goTo(b, y){
+      if (!b) return;
+      letters.forEach(function(x){ x.classList.toggle("nm-hot", x === b); });
+      var head = bodyEl.querySelector("#nm-l-" + b.dataset.l);
+      if (head) head.scrollIntoView({block:"start", behavior:"auto"});
+      bubbleEl.textContent = b.dataset.l;
+      bubbleEl.style.top = (y - 32) + "px";
+      bubbleEl.classList.add("nm-on");
     }
-    X.globalAlpha = 1; X.textAlign = "center";
-
-    for (i=0;i<THINGS.length;i++){
-      o = THINGS[i];
-      var named = o.big || (o.flare > .55 && o.kind !== "Sections"
-        && (matched ? matched.length <= 24 : cam.z > 1.25));
-      if (!named) continue;
-      x = sx(o); y = sy(o);
-      if (x<-130||x>VW+130||y<-60||y>VH+80) continue;
-      var fs = o.big ? Math.max(11,Math.min(18,15*cam.z)) : Math.max(9,Math.min(13,11*cam.z));
-      X.save(); X.shadowColor = "rgba(6,7,12,.96)"; X.shadowBlur = 9;
-      X.globalAlpha = o.big ? (matched ? .32 + o.flare*.68 : 1) : o.flare;
-      X.font = "600 "+fs.toFixed(0)+"px Inter,system-ui,sans-serif";
-      X.fillStyle = o === hover ? "#FFF0C4" : "#EFE9D8";
-      var ty = y + Math.max(.7,o.r*cam.z) + fs + 9;
-      X.fillText(o.label || o.t, x, ty);
-      if (o.count){
-        X.font = "500 "+(fs*.7).toFixed(0)+"px Inter,system-ui,sans-serif";
-        X.fillStyle = "rgba(232,200,116,.75)"; X.fillText(o.count, x, ty+fs*1.05);
-      }
-      X.restore();
-    }
-    X.globalAlpha = matched ? .3 : .85;
-    X.save(); X.shadowColor="rgba(6,7,12,.96)"; X.shadowBlur=9;
-    X.font = "600 "+Math.max(10,Math.min(14,12*cam.z)).toFixed(0)+"px Inter,system-ui,sans-serif";
-    X.fillStyle = "rgba(232,200,116,.85)";
-    var e1 = {x:0,y:640,depth:.86}, e2 = {x:-360,y:-560,depth:.94};
-    X.fillText("The Encyclopedia · 523 words", sx(e1), sy(e1)+Math.max(24,170*cam.z));
-    X.fillText("The Mushaf · 114 surahs", sx(e2), sy(e2)-Math.max(20,86*cam.z));
-    X.restore(); X.globalAlpha = 1;
-  }
-
-  var nearT = 0;
-  function loop(now){
-    raf = requestAnimationFrame(loop);
-    if (!ready || !VW) return;
-    var dt = Math.min(0.05, (now - last)/1000 || 0.016); last = now;
-    acc += dt;
-    var n = 0;
-    while (acc > 1/120 && n++ < 6){ step(1/120); acc -= 1/120; }
-    paint(now/1000);
-
-    /* on touch there is no cursor to follow, so the middle of the screen is
-       the cursor: whatever is nearest it is named, continuously */
-    if (TOUCH && now - nearT > 120){
-      nearT = now;
-      var open_ = sheetEl.classList.contains("nm-on");
-      var f = open_ ? null : findNearest();
-      if (f !== nearest){
-        nearest = f;
-        if (f){ nearEl.innerHTML = "<b>"+esc(f.t)+"</b>"
-            + (f.count ? " · " + esc(f.count) : (f.d ? " · " + esc(String(f.d).slice(0,46)) : ""));
-          nearEl.classList.add("nm-on"); }
-        else nearEl.classList.remove("nm-on");
-      }
-      focusEl.classList.toggle("nm-on", !!f && !open_);
-      if (!open_) hover = f;
-    }
-  }
-
-  function pick(px,py,radius){
-    var best=null, bd=1e9;
-    for (var i=0;i<THINGS.length;i++){
-      var o = THINGS[i];
-      if (matched && !o.lit) continue;
-      var dx = sx(o)-px, dy = sy(o)-py, d = dx*dx+dy*dy;
-      var rad = radius || Math.max(o.big?18:12, o.r*cam.z+9); rad *= rad;
-      if (d < rad && d < bd){ bd = d; best = o; }
-    }
-    return best;
-  }
-
-  /* WHAT WAS UNDER THE THUMB.
-     Not one light: everything inside a finger's width of it, nearest first.
-     The first becomes the sheet's subject and the rest become chips, so a
-     near-miss shows you your options instead of opening the wrong page. */
-  var TAP_R = 34;
-  function around(px,py){
-    var out = [];
-    for (var i=0;i<THINGS.length;i++){
-      var o = THINGS[i];
-      if (matched && !o.lit) continue;
-      var dx = sx(o)-px, dy = sy(o)-py, d = Math.sqrt(dx*dx+dy*dy);
-      var reach = Math.max(TAP_R, o.r*cam.z + 16);
-      if (d < reach) out.push([d,o]);
-    }
-    out.sort(function(a,b){ return a[0]-b[0]; });
-    return out.slice(0,6).map(function(p){ return p[1]; });
-  }
-
-  /* the light nearest the middle of the screen, so panning always says where
-     you are without anything being touched */
-  function findNearest(){
-    var cxp = VW/2, cyp = VH/2, best = null, bd = 1e9;
-    for (var i=0;i<THINGS.length;i++){
-      var o = THINGS[i];
-      if (matched && !o.lit) continue;
-      if (o.tiny && cam.z < 0.8) continue;      /* a haze has no single name */
-      var dx = sx(o)-cxp, dy = sy(o)-cyp, d = dx*dx+dy*dy;
-      if (d < bd){ bd = d; best = o; }
-    }
-    return bd < 130*130 ? best : null;
-  }
-  function tipAt(o,px,py){
-    if (!o){ tipEl.classList.remove("nm-on"); return; }
-    tipEl.innerHTML = "<b>"+esc(o.t)+"</b><small>"+esc(o.d||"")+"</small>";
-    tipEl.style.left = px+"px"; tipEl.style.top = py+"px"; tipEl.classList.add("nm-on");
-  }
-  function enter(o){ if (o) location.href = o.u; }
-
-  function openSheet(list){
-    picked = list[0]; alts = list.slice(1);
-    hover = picked;
-    sbodyEl.innerHTML =
-      '<p class="nm-eyebrow">' + esc(picked.kind) + '</p>'
-      + '<h3>' + (picked.a ? '<span class="nm-ar">'+esc(picked.a)+'</span>' : '')
-      + esc(picked.t) + '</h3>'
-      + (picked.d ? '<p class="nm-sd">'+esc(picked.d)+'</p>' : '')
-      + '<button class="nm-go" data-nm="open">'
-      + (picked.big ? 'Fly into ' + esc(picked.t) : 'Open') + ' &rarr;</button>'
-      + (alts.length
-          ? '<div class="nm-alts"><p>Also under your thumb</p><div class="nm-altrow">'
-            + alts.map(function(o,i){ return '<button class="nm-alt" data-alt="'+i+'">'
-              + esc(o.t) + '</button>'; }).join("") + '</div></div>'
-          : '');
-    sheetEl.classList.add("nm-on");
-    skyEl.dataset.sheet = "open";
-    sayEl.textContent = picked.t + ". " + (alts.length ? alts.length + " others nearby." : "");
-    /* the sheet must never cover the light it is describing */
-    requestAnimationFrame(function(){
-      var lid = VH - sheetEl.getBoundingClientRect().height - 24;
-      var y = sy(picked);
-      if (y > lid) aim.y = cam.y - (y - lid)/cam.z;
-      if (y < 70) aim.y = cam.y + (70 - y)/cam.z;
+    var live = false;
+    az.addEventListener("pointerdown", function(e){
+      live = true; az.setPointerCapture(e.pointerId);
+      pageEl.style.scrollBehavior = "auto";
+      goTo(pickAt(e.clientY), e.clientY); e.preventDefault();
     });
-  }
-  function shutSheet(){
-    sheetEl.classList.remove("nm-on");
-    if (skyEl) skyEl.dataset.sheet = "shut";
-    picked = null; alts = [];
+    az.addEventListener("pointermove", function(e){
+      if (!live) return; goTo(pickAt(e.clientY), e.clientY); e.preventDefault();
+    });
+    function end(){
+      if (!live) return; live = false;
+      pageEl.style.scrollBehavior = "";
+      bubbleEl.classList.remove("nm-on");
+      letters.forEach(function(x){ x.classList.remove("nm-hot"); });
+    }
+    az.addEventListener("pointerup", end);
+    az.addEventListener("pointercancel", end);
   }
 
-  /* ------------------------------------------------------- pointer input */
-  function local(e){ var r = C.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
-  function onDown(e){
-    C.setPointerCapture(e.pointerId);
-    pointers[e.pointerId] = {x:e.clientX,y:e.clientY}; nP++;
-    if (nP === 2){ var p = vals(); pinch0 = Math.hypot(p[0].x-p[1].x, p[0].y-p[1].y); z0 = cam.z; }
-    else { dragging = true; moved = 0; vhist.length = 0; C.classList.add("nm-drag");
-           cam.vx = cam.vy = 0; }
+  /* --------------------------------------------------- the sky, as paint */
+  var motes = [], W = 0, H = 0, raf = 0;
+  function sizeSky(){
+    var r = root.getBoundingClientRect(); if (!r.width) return;
+    var d = Math.min(devicePixelRatio||1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W*d); cv.height = Math.round(H*d);
+    cx.setTransform(d,0,0,d,0,0);
+    var n = Math.round(Math.min(150, W/7));
+    motes = [];
+    for (var i=0;i<n;i++) motes.push({
+      x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.4+.3,
+      s:Math.random()*.14+.02, o:Math.random()*.45+.12, p:Math.random()*6.283 });
   }
-  function vals(){ var a=[]; for (var k in pointers) a.push(pointers[k]); return a; }
-  function onMove(e){
-    var L = local(e); mx = L[0]; my = L[1];
-    var prev = pointers[e.pointerId];
-    if (prev) pointers[e.pointerId] = {x:e.clientX,y:e.clientY};
-    if (nP === 2 && pinch0){
-      var p = vals(), d = Math.hypot(p[0].x-p[1].x, p[0].y-p[1].y);
-      aim.z = Math.max(ZMIN*0.7, Math.min(ZMAX*1.15, z0*(d/pinch0)));
-      cam.z = aim.z; return;
+  function sky(t){
+    raf = requestAnimationFrame(sky);
+    if (!W) return;
+    cx.clearRect(0,0,W,H);
+    var g = cx.createRadialGradient(W/2, H*.12, 0, W/2, H*.12, Math.max(W,H)*.8);
+    g.addColorStop(0,"rgba(232,200,116,.07)"); g.addColorStop(1,"rgba(232,200,116,0)");
+    cx.fillStyle = g; cx.fillRect(0,0,W,H);
+    for (var i=0;i<motes.length;i++){
+      var m = motes[i];
+      if (!REDUCE){ m.y -= m.s; m.p += .008; if (m.y < -6){ m.y = H+6; m.x = Math.random()*W; } }
+      var o = m.o * (REDUCE ? 1 : (.55 + Math.sin(m.p)*.45));
+      cx.beginPath(); cx.arc(m.x, m.y, m.r, 0, 6.2832);
+      cx.fillStyle = "rgba(255,240,196," + o.toFixed(3) + ")"; cx.fill();
     }
-    if (dragging && prev){
-      var ddx = (e.clientX-prev.x)/cam.z, ddy = (e.clientY-prev.y)/cam.z;
-      cam.x += ddx; cam.y += ddy; aim.x = cam.x; aim.y = cam.y;
-      moved += Math.abs(e.clientX-prev.x) + Math.abs(e.clientY-prev.y);
-      vhist.push([performance.now(), ddx, ddy]);
-      if (vhist.length > 6) vhist.shift();
-      return;
-    }
-    if (e.pointerType === "touch") return;
-    var h = pick(mx,my);
-    if (h !== hover){ hover = h; tipAt(h,mx,my); }
-    else if (h) { tipEl.style.left = mx+"px"; tipEl.style.top = my+"px"; }
-  }
-  function onUp(e){
-    var L = local(e), tap = moved < 8 && nP === 1;
-    if (pointers[e.pointerId]){ delete pointers[e.pointerId]; nP = Math.max(0,nP-1); }
-    if (nP < 2) pinch0 = 0;
-    if (nP === 0){
-      if (dragging && !tap && vhist.length > 1){
-        /* let go of it and it keeps going, then slows: momentum from the last few frames */
-        var t0 = vhist[0][0], t1 = vhist[vhist.length-1][0], sx2=0, sy2=0;
-        vhist.forEach(function(v){ sx2 += v[1]; sy2 += v[2]; });
-        var ms = Math.max(16, t1-t0);
-        cam.vx = sx2/ms*1000*0.55; cam.vy = sy2/ms*1000*0.55;
-        aim.x = cam.x + cam.vx*0.34; aim.y = cam.y + cam.vy*0.34;
-      }
-      dragging = false; C.classList.remove("nm-drag");
-    }
-    if (!tap) return;
-
-    if (e.pointerType === "mouse"){
-      var h = pick(L[0],L[1]); if (!h) return;
-      if (h.big){ flyTo(h); return; }
-      hover = h; enter(h); return;
-    }
-
-    /* --- touch --- */
-    var now = performance.now();
-    if (tapXY && now - lastTap < 300
-        && Math.abs(tapXY[0]-L[0]) < 34 && Math.abs(tapXY[1]-L[1]) < 34){
-      /* double tap zooms where you tapped, the way every map does */
-      lastTap = 0; shutSheet();
-      var wx2 = (L[0]-VW/2)/cam.z - cam.x, wy2 = (L[1]-VH/2)/cam.z - cam.y;
-      aim.z = Math.min(ZMAX, cam.z*2); aim.x = -wx2; aim.y = -wy2;
-      return;
-    }
-    lastTap = now; tapXY = L;
-
-    var near = around(L[0],L[1]);
-    if (!near.length){
-      /* nothing within reach: an empty tap dismisses rather than doing nothing */
-      if (sheetEl.classList.contains("nm-on")) shutSheet();
-      else { /* tapping the haze zooms into it instead of failing */
-        var wx3 = (L[0]-VW/2)/cam.z - cam.x, wy3 = (L[1]-VH/2)/cam.z - cam.y;
-        if (cam.z < 0.75){ aim.z = Math.min(ZMAX, cam.z*1.9); aim.x = -wx3; aim.y = -wy3; }
-      }
-      return;
-    }
-    openSheet(near);
-  }
-  function onCancel(e){
-    if (pointers[e.pointerId]){ delete pointers[e.pointerId]; nP = Math.max(0,nP-1); }
-    if (nP === 0){ dragging = false; C.classList.remove("nm-drag"); }
   }
 
   /* -------------------------------------------------------- open / close */
   var opener = null, typeT = 0;
-  function phone(){ return NARROW.matches; }
-  function show(which){
-    bodyEl.dataset.show = which;
-    root.querySelector('[data-nm=map]').setAttribute("aria-pressed", which==="map");
-    root.querySelector('[data-nm=list]').setAttribute("aria-pressed", which==="list");
-    if (which === "map") requestAnimationFrame(function(){ size(); });
-  }
-  function onType(){
-    if (!ready) return;
-    runSearch(qEl.value); drawRail(); shutSheet();
-    if (phone()) show(qEl.value.trim() ? "list" : "map");
-    if (matched && matched.length){
-      var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
-      matched.forEach(function(o){
-        if(o.hx<x0)x0=o.hx; if(o.hx>x1)x1=o.hx; if(o.hy<y0)y0=o.hy; if(o.hy>y1)y1=o.hy; });
-      frameTo(x0,x1,y0,y1,2.4); spread = -1; crumb("");
-    } else if (!matched) whole(false);
-  }
   function open(){
     root.classList.add("nm-on");
     document.documentElement.classList.add("nm-open");
     document.body.classList.add("nm-open");
+    sizeSky();
     load().then(function(){
-      drawRail(); size(); whole(true); shutSheet();
-      if (!phone()) qEl.focus();
+      if (!bodyEl.innerHTML.trim()){ drawJump(); drawBrowse(); azSetup(); }
+      if (!matchMedia("(max-width:39.99rem)").matches) qEl.focus();
     });
-    requestAnimationFrame(function(){ size(); });
   }
   function close(){
     root.classList.remove("nm-on");
@@ -588,102 +352,58 @@
     if (opener) opener.focus();
   }
 
-  /* ------------------------------------------------------------- wiring */
   function init(){
     document.body.appendChild(root);
     qEl = root.querySelector("#nm-q");
-    railEl = root.querySelector(".nm-rail");
+    pageEl = root.querySelector(".nm-page");
     bodyEl = root.querySelector(".nm-body");
-    skyEl = root.querySelector(".nm-sky");
-    C = skyEl.querySelector("canvas"); X = C.getContext("2d");
-    tipEl = root.querySelector(".nm-tip");
-    crumbEl = root.querySelector(".nm-crumb");
-    focusEl = root.querySelector(".nm-focus");
-    nearEl = root.querySelector(".nm-near");
-    sheetEl = root.querySelector(".nm-sheet");
-    sbodyEl = root.querySelector(".nm-sbody");
-    srEl = root.querySelector(".nm-sr ul");
-    sayEl = root.querySelector("p.nm-sr");
+    jumpEl = root.querySelector(".nm-jump");
+    bubbleEl = root.querySelector(".nm-bubble");
+    sayEl = root.querySelector(".nm-sr");
+    cv = root.querySelector(".nm-canvas"); cx = cv.getContext("2d");
 
-    function setPh(){ qEl.placeholder = phone() ? "Search the library"
-      : "A word, a surah, a prophet, a room…"; }
-    NARROW.addEventListener ? NARROW.addEventListener("change", setPh) : NARROW.addListener(setPh);
-    setPh();
+    function setPh(){
+      qEl.placeholder = matchMedia("(max-width:39.99rem)").matches
+        ? "Search the library" : "A word, a surah, a prophet, a room…"; }
+    setPh(); addEventListener("resize", setPh);
 
     root.addEventListener("click", function(e){
       var b = e.target.closest("[data-nm]");
-      if (b){ var k = b.dataset.nm;
-        if (k === "shut") close();
-        else if (k === "dismiss") shutSheet();
-        else if (k === "open"){
-          if (!picked) return;
-          if (picked.big){ var p2 = picked; shutSheet(); flyTo(p2); }
-          else enter(picked);
-        }
-        else if (k === "map" || k === "list") show(k);
-        else if (k === "whole") whole(false);
-        else if (k === "in")  aim.z = Math.min(ZMAX, aim.z*1.45);
-        else if (k === "out") aim.z = Math.max(ZMIN, aim.z/1.45);
-        return; }
-      var alt = e.target.closest(".nm-alt");
-      if (alt){ var i = +alt.dataset.alt, chosen = alts[i];
-        if (chosen){ var rest = [chosen].concat(
-          [picked].concat(alts).filter(function(o){ return o !== chosen; }));
-          openSheet(rest); } return; }
-      var d = e.target.closest(".nm-door");
-      if (d){ var s = THINGS.filter(function(o){ return o.big && o.sec === +d.dataset.sec; })[0];
-        if (s){ show("map"); requestAnimationFrame(function(){ size(); flyTo(s); }); } return; }
-      var r = e.target.closest(".nm-row");
-      if (r) enter(THINGS[+r.dataset.i]);
+      if (b && b.dataset.nm === "shut"){ close(); return; }
+      var j = e.target.closest("[data-jump]");
+      if (j){
+        var z = bodyEl.querySelector("#nm-z-" + j.dataset.jump);
+        if (z) z.scrollIntoView({block:"start"});
+        [].forEach.call(jumpEl.children, function(c){
+          c.setAttribute("aria-current", c === j ? "true" : "false"); });
+        return;
+      }
+      var go = e.target.closest("[data-u]");
+      if (go){ location.href = go.dataset.u; }
     });
-    railEl.addEventListener("mouseover", function(e){
-      var r = e.target.closest(".nm-row"); if (r) hover = THINGS[+r.dataset.i]; });
-
-    /* a sheet you can push back down, because that is what a sheet is for */
-    var sy0 = 0, sdrag = false;
-    sheetEl.addEventListener("pointerdown", function(e){
-      if (e.target.closest("button")) return;
-      sy0 = e.clientY; sdrag = true; sheetEl.style.transition = "none"; });
-    sheetEl.addEventListener("pointermove", function(e){
-      if (!sdrag) return;
-      var dy = Math.max(0, e.clientY - sy0);
-      sheetEl.style.transform = "translateY("+dy+"px)"; });
-    function sheetUp(e){
-      if (!sdrag) return; sdrag = false;
-      sheetEl.style.transition = ""; sheetEl.style.transform = "";
-      if (e.clientY - sy0 > 60) shutSheet(); }
-    sheetEl.addEventListener("pointerup", sheetUp);
-    sheetEl.addEventListener("pointercancel", sheetUp);
-
-    C.addEventListener("pointerdown", onDown);
-    C.addEventListener("pointermove", onMove);
-    C.addEventListener("pointerup", onUp);
-    C.addEventListener("pointercancel", onCancel);
-    C.addEventListener("pointerenter", function(){ onCanvas = true; });
-    C.addEventListener("pointerleave", function(){ onCanvas = false;
-      if (!dragging){ hover = null; tipEl.classList.remove("nm-on"); } });
-    C.addEventListener("wheel", function(e){
-      e.preventDefault();
-      aim.z = Math.max(ZMIN*0.7, Math.min(ZMAX*1.15, aim.z*Math.exp(-e.deltaY*0.0014)));
-    }, {passive:false});
 
     qEl.addEventListener("input", function(){
-      clearTimeout(typeT); typeT = setTimeout(onType, 80); });
+      clearTimeout(typeT);
+      typeT = setTimeout(function(){
+        runSearch(qEl.value); drawResults();
+        if (!matched) azSetup();
+      }, 90);
+    });
 
     addEventListener("keydown", function(e){
-      var open_ = root.classList.contains("nm-on");
+      var isOpen = root.classList.contains("nm-on");
       var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)
         || document.activeElement.isContentEditable;
-      if (!open_){
+      if (!isOpen){
         if ((e.key === "/" && !typing) || (e.key === "k" && (e.metaKey||e.ctrlKey))){
           e.preventDefault(); opener = document.activeElement; open(); }
         return;
       }
       if (e.key === "Escape"){
-        if (sheetEl.classList.contains("nm-on")) shutSheet();
-        else if (qEl.value){ qEl.value=""; onType(); }
+        if (qEl.value){ qEl.value = ""; runSearch(""); drawResults(); azSetup(); }
         else close();
-        return; }
+        return;
+      }
       if (e.key === "ArrowDown" || e.key === "ArrowUp"){
         var rows = [].slice.call(root.querySelectorAll(".nm-row")); if (!rows.length) return;
         e.preventDefault();
@@ -691,25 +411,28 @@
         i = e.key === "ArrowDown" ? Math.min(rows.length-1,i+1) : Math.max(0,i-1);
         rows.forEach(function(r){ r.classList.remove("nm-sel"); });
         rows[i].classList.add("nm-sel"); rows[i].scrollIntoView({block:"nearest"});
-        hover = THINGS[+rows[i].dataset.i];
       }
       if (e.key === "Enter"){
-        var s = root.querySelector(".nm-row.nm-sel"); if (s) enter(THINGS[+s.dataset.i]); }
+        var s = root.querySelector(".nm-row.nm-sel");
+        if (s) location.href = s.dataset.u;
+      }
     });
-    addEventListener("resize", function(){ if (root.classList.contains("nm-on")) size(); });
 
-    /* CAPTURE, not bubble. The magnifier in the header already had a handler
-       bound to it by noor-search.js, which opens the old drawer. Listening on
-       the way down and stopping there means the menu answers the click and the
-       drawer never hears it -- without either file having to know about the
-       other, and with the old drawer left intact as a fallback. */
+    addEventListener("resize", function(){
+      if (!root.classList.contains("nm-on")) return;
+      sizeSky(); if (!matched) drawSpine();
+    });
+
+    /* the magnifier already has a handler from noor-search.js, so this listens
+       on the way down and stops there: one of them answers, not both */
     document.addEventListener("click", function(e){
       var b = e.target.closest("[data-nm-open]");
       if (!b) return;
       e.preventDefault(); e.stopPropagation();
       opener = b; open();
     }, true);
-    raf = requestAnimationFrame(loop);
+
+    raf = requestAnimationFrame(sky);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
