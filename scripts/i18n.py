@@ -58,6 +58,44 @@ LANGS = ["ar", "ur", "fr", "es", "de", "ru", "tr", "id", "hi", "bn", "fa", "prs"
          "pa", "ps", "ha", "so", "ku", "sw", "zh", "ja", "ko"]
 
 
+def part_files(code):
+    """Every part file a wave may have left behind, under either layout."""
+    files = []
+    for d in glob.glob(os.path.join(T, "_%s*" % code)) + glob.glob(os.path.join(T, "%sparts" % code)):
+        if not os.path.isdir(d):
+            continue
+        for root_, _dirs, names in os.walk(d):
+            files += [os.path.join(root_, n) for n in sorted(names)]
+    return files
+
+
+def pending(code, have):
+    """Part files whose work is NOT already in the pack.
+
+    The old count called every part file "in flight", so a language read as
+    unfinished for weeks after its parts had been folded in. What matters is
+    whether the pack already carries the text, so that is what is counted."""
+    carried = set(str(v).strip() for v in have.values())
+    n = 0
+    for f in part_files(code):
+        try:
+            txt = io.open(f, encoding="utf-8").read()
+        except Exception:
+            continue
+        vals = []
+        if txt.lstrip().startswith("{"):
+            try:
+                vals = [str(v).strip() for v in json.loads(txt).values()]
+            except Exception:
+                vals = []
+        else:
+            vals = [ln.split("|", 1)[1].strip() for ln in txt.splitlines() if "|" in ln]
+        vals = [v for v in vals if v]
+        if vals and sum(1 for v in vals if v in carried) < 0.9 * len(vals):
+            n += 1
+    return n
+
+
 def cmd_status():
     C = corpus()
     total_w = sum(len(v.split()) for v in C.values())
@@ -67,7 +105,7 @@ def cmd_status():
         s = pack(code)
         have = sum(1 for k in C if k in s and str(s[k]).strip())
         w = sum(len(C[k].split()) for k in C if k in s and str(s[k]).strip())
-        parts = len(glob.glob(os.path.join(T, "_%s*" % code, "*"))) + len(glob.glob(os.path.join(T, "_%sparts" % code, "*")))
+        parts = pending(code, s)
         bar = "#" * int(round(28 * have / len(C))) + "." * (28 - int(round(28 * have / len(C))))
         print("  %-4s %s %5d/%d strings  %3d%% of words%s"
               % (code, bar, have, len(C), round(100 * w / total_w), ("  (%d parts in flight)" % parts) if parts else ""))
@@ -101,36 +139,27 @@ def cmd_merge(code):
     s = pack(code)
     before = len(s)
     got = 0
-    # agents choose their own layout under _<code>parts, sometimes nesting a
-    # chunks/ directory inside it. Walk the whole tree rather than assume.
-    files = []
-    for d in glob.glob(os.path.join(T, "_%s*" % code)):
-        for root_, _dirs, names in os.walk(d):
-            files += [os.path.join(root_, n) for n in sorted(names)]
+    skipped = []
+    files = part_files(code)
     for f in files:
-        if True:
+        try:
+            txt = io.open(f, encoding="utf-8").read().strip()
+        except Exception:
+            continue
+        if txt.startswith("{"):
             try:
-                txt = io.open(f, encoding="utf-8").read().strip()
+                for k, v in json.loads(txt).items():
+                    if k in C and str(v).strip():
+                        s[k] = v; got += 1
             except Exception:
-                continue
-            if txt.startswith("{"):
-                try:
-                    for k, v in json.loads(txt).items():
-                        if k in C and str(v).strip():
-                            s[k] = v; got += 1
-                except Exception:
-                    pass
-            else:                                   # "index|translation" lines
-                for line in txt.splitlines():
-                    if "|" not in line:
-                        continue
-                    idx, val = line.split("|", 1)
-                    idx = idx.strip()
-                    if idx.isdigit():
-                        keys = list(C)
-                        i = int(idx)
-                        if i < len(keys) and val.strip():
-                            s[keys[i]] = val.strip(); got += 1
+                pass
+        else:
+            # "index|translation" lines. The index counted positions in a job
+            # file that no longer exists, not positions in the corpus, so
+            # folding them in by corpus order scatters finished translations
+            # onto unrelated keys. This branch used to do exactly that.
+            skipped.append(os.path.relpath(f, ROOT))
+
     for k, v in C.items():
         if k not in s and passthrough(v):
             s[k] = v
@@ -144,6 +173,12 @@ def cmd_merge(code):
     write(code, s)
     print("%s: %d -> %d strings (+%d from parts), dropped %d stray, fixed %d dashes, %d%% of corpus"
           % (code, before, len(s), got, len(bad), dash, round(100 * len(s) / len(C))))
+    if skipped:
+        print("  %d part file(s) skipped: they are keyed by position in a job file,"
+              % len(skipped))
+        print("  not by string, so they can only be folded in beside that job file.")
+        for f in skipped[:6]:
+            print("    " + f)
 
 
 if __name__ == "__main__":

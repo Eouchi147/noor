@@ -1,1 +1,2542 @@
-{"tranche":"f","surahs":[{"n":89,"verses":{"1":{"words":[{"a":"وَٱلْفَجْرِ","t":"wal-fajr","g":"by the dawn"}],"sense":"One word makes the whole verse. Allah swears by the daybreak, the moment the dark is cut and the light gets through, and the surah that follows will be about things being broken open and shown for what they are.","notes":[{"t":"Fajr comes from the root f-j-r, which means to split something so that what was inside comes out. The same root is used of water bursting from rock and of a canal being cut. The dawn is named in Arabic for the tearing of the night, not for the arrival of the sun.","lvl":"editorial"},{"t":"Which dawn is sworn by is not settled. Daybreak in general, the dawn of the tenth of Dhul-Hijjah, the dawn of the first of Muharram and the dawn prayer itself have all been held by early exegetes.","lvl":"debated","src":"at-Tabari and Ibn Kathir record the several positions without deciding one"},{"t":"The surah opens with four oaths in four verses before it says anything at all about what it is arguing. The oaths are all pieces of time and all of them are recurring.","lvl":"editorial"}],"links":[{"ref":"113:1","why":"Lord of the daybreak, built on the other Arabic root for splitting"},{"ref":"81:18","why":"another oath by the morning, described as breathing"}]},"2":{"words":[{"a":"وَلَيَالٍ","t":"wa-layālin","g":"and by nights"},{"a":"عَشْرٍ","t":"ʿashr","g":"ten"}],"sense":"Ten nights, and the Arabic leaves both words indefinite so that no calendar date is written into the text. The reader is told there are ten of them and not told, in the surah itself, which ten.","notes":[{"t":"Most exegetes read these as the first ten nights of Dhul-Hijjah. Others read them as the last ten of Ramadan, and a smaller group as the first ten of Muharram. The wording supports all three because it names none.","lvl":"debated","src":"at-Tabari records all three readings; Ibn Kathir prefers the ten of Dhul-Hijjah"},{"t":"The Prophet ﷺ said that there are no days in which righteous deeds are more beloved to Allah than the first ten days of Dhul-Hijjah. This is the strongest external support for the majority reading.","lvl":"sunnah","src":"Bukhari, Book of the Two Eids, from Ibn ʿAbbās"},{"t":"Nights rather than days. The Arabic month is counted by its nights, and the acts these ten are known for, standing in prayer and setting out for the pilgrimage, are night work.","lvl":"editorial"}],"links":[{"ref":"97:3","why":"one night the Qur'an does count, and rates above a thousand months"},{"ref":"2:203","why":"remember Allah during appointed numbered days"}]},"3":{"words":[{"a":"وَٱلشَّفْعِ","t":"wash-shafʿ","g":"and by the even"},{"a":"وَٱلْوَتْرِ","t":"wal-watr","g":"and the odd"}],"sense":"An oath by the even and the odd. Between them the two categories take in every number there is, so the oath covers everything countable without naming a single thing.","notes":[{"t":"The identifications offered by the early exegetes run to a dozen and more: creation is even and the Creator is odd; the days of sacrifice against the day of Arafah; the prayers, some with even units and some odd; Adam and his wife against Allah. No consensus formed.","lvl":"debated","src":"at-Tabari lists the positions at length and settles on none"},{"t":"Shafʿ means paired, from a verb meaning to join a second thing to a first. The word shafaaʿa, intercession, is from the same root: an intercessor is a second party added to your case.","lvl":"editorial"},{"t":"Watr is the word behind the witr prayer, the odd unit that closes the night. The name of the prayer is the name of the number.","lvl":"editorial"}],"links":[{"ref":"51:49","why":"of every thing We created pairs, so that you might remember"},{"ref":"36:36","why":"pairs in what the earth grows, in themselves, and in what they do not know"}]},"4":{"words":[{"a":"وَٱلَّيْلِ","t":"wal-layli","g":"and by the night"},{"a":"إِذَا","t":"idhā","g":"when"},{"a":"يَسْرِ","t":"yasri","g":"it travels on"}],"sense":"The night is given a verb that belongs to people. Sara is what a caravan does after dark, moving while the world sleeps, and the night is described doing the thing that is done inside it.","notes":[{"t":"Yasri is from sara, to travel by night, the verb behind the word israa. Applying it to the night itself makes the night a traveller rather than a container, something passing through rather than something you sit inside.","lvl":"editorial"},{"t":"The final yaa of yasri is dropped in the written text to match the rhyme of the surah. The canonical readers differ over whether to restore it when joining the verse to what follows.","lvl":"debated","src":"the ten readings differ on restoring the yāʾ; Hafs stops on yasri without it"},{"t":"Three of the four oaths are on the boundary between light and dark, and the fourth is on number. The surah begins by pointing at things that pass whether or not anyone watches them.","lvl":"editorial"}],"links":[{"ref":"92:1","why":"an oath by the night when it covers over"},{"ref":"81:17","why":"an oath by the night as it draws to a close"}]},"5":{"words":[{"a":"هَلْ","t":"hal","g":"is there"},{"a":"فِى","t":"fī","g":"in"},{"a":"ذَٰلِكَ","t":"dhālika","g":"that"},{"a":"قَسَمٌ","t":"qasamun","g":"an oath"},{"a":"لِّذِى","t":"li-dhī","g":"for one possessing"},{"a":"حِجْرٍ","t":"ḥijr","g":"restraint of mind"}],"sense":"The oaths close with a question instead of a conclusion. Is that an oath for a person with a mind. Nothing is proved and nothing is defended; the reader is handed the four things sworn by and asked whether they carry weight.","notes":[{"t":"Hijr is not the ordinary word for intellect. It means a stone enclosure, a fenced place, and by extension the faculty that holds a person back from what he would otherwise do. Arabic names intelligence here by its power of restraint rather than by its power of thought.","lvl":"editorial"},{"t":"The related word hijr appears in the Qur'an for a barrier and in the name of the rock city of Thamud, whose people are named two verses later. The word for a mind that fences you in and the word for a valley fenced in by cliffs are the same.","lvl":"editorial"},{"t":"The Qur'an addresses those of understanding often, and it usually asks them to look at things already in front of them rather than to accept a claim on authority.","lvl":"quran","src":"3:190"}],"links":[{"ref":"3:190","why":"signs in the night and the day for those of understanding"},{"ref":"38:29","why":"a Book sent down so that those of understanding would reflect"}]},"6":{"words":[{"a":"أَلَمْ","t":"a-lam","g":"have you not"},{"a":"تَرَ","t":"tara","g":"seen"},{"a":"كَيْفَ","t":"kayfa","g":"how"},{"a":"فَعَلَ","t":"faʿala","g":"dealt"},{"a":"رَبُّكَ","t":"rabbuka","g":"your Lord"},{"a":"بِعَادٍ","t":"bi-ʿād","g":"with Aad"}],"sense":"The oaths end and history begins. Three parties will be named in the next five verses, and the first is Aad, the people of Hud, who lived in the sand tracts of southern Arabia and were taken by a wind.","notes":[{"t":"Have you not seen is addressed to someone who did not witness any of it. Seeing here means knowing by ruin and report, which is how the Qur'an ordinarily asks a reader to look at a nation that is gone.","lvl":"editorial"},{"t":"The verb is faʿala, plainly did or dealt. The verse does not yet say destroyed. It says look at what happened, and leaves the naming of it until verse thirteen.","lvl":"editorial"},{"t":"The Qur'an gives Aad a prophet, Hud, and a punishment, a violent cold wind loosed against them for seven nights and eight days.","lvl":"quran","src":"69:6-7"}],"links":[{"ref":"7:65","why":"Hud sent to his people Aad, and what he said to them"},{"ref":"46:24","why":"they saw the cloud and thought it was rain coming to them"}]},"7":{"words":[{"a":"إِرَمَ","t":"Irama","g":"Iram"},{"a":"ذَاتِ","t":"dhāti","g":"possessor of"},{"a":"ٱلْعِمَادِ","t":"al-ʿimād","g":"the pillars"}],"sense":"Aad is narrowed to a particular name and a particular mark. Iram of the pillars. The verse identifies them by what they built, which is exactly what they would have wanted to be identified by.","notes":[{"t":"Whether Iram is the name of an ancestor, of a branch of the tribe, or of a city they built, the early exegetes did not agree. All three readings are transmitted and the grammar of the verse supports each.","lvl":"debated","src":"at-Tabari records the tribal and the place readings side by side"},{"t":"Imad is a tent pole or a column. Some read the pillars as tall stone architecture, others as the tent poles of a people who moved, and others as the height of the men themselves. The Qur'an itself does not say.","lvl":"debated","src":"at-Tabari and Ibn Kathir collect the three readings from the early generations"},{"t":"Iram appears once in the whole Qur'an, here. A proper noun used a single time is a marker that the audience was expected to recognise it without explanation.","lvl":"editorial"}],"links":[{"ref":"26:128","why":"do you build on every high place a monument for vanity"},{"ref":"41:15","why":"Aad said, who is stronger than us in might"}]},"8":{"words":[{"a":"ٱلَّتِى","t":"allatī","g":"which"},{"a":"لَمْ","t":"lam","g":"not"},{"a":"يُخْلَقْ","t":"yukhlaq","g":"was created"},{"a":"مِثْلُهَا","t":"mithluhā","g":"the like of it"},{"a":"فِى","t":"fī","g":"in"},{"a":"ٱلْبِلَٰدِ","t":"al-bilād","g":"the lands"}],"sense":"Nothing like it had been made anywhere. The verse concedes the achievement in full and in the plainest terms before it says a word about what became of them.","notes":[{"t":"The Qur'an grants the claim rather than disputing it. The argument that follows does not need Iram to have been overrated; it works better if the city was everything its builders said it was.","lvl":"editorial"},{"t":"Al-bilad, the lands, is the same word used three verses later for where they transgressed. What they excelled in and what they spoiled are given the same name.","lvl":"editorial"},{"t":"Yukhlaq is passive, was created, which quietly puts the building of the city inside the category of things Allah brings about rather than things men achieve unaided.","lvl":"editorial"}],"links":[{"ref":"40:82","why":"they were greater than these in strength and in traces left on the earth"},{"ref":"30:9","why":"they cultivated the earth and built it up more than these have"}]},"9":{"words":[{"a":"وَثَمُودَ","t":"wa-Thamūda","g":"and Thamud"},{"a":"ٱلَّذِينَ","t":"alladhīna","g":"who"},{"a":"جَابُوا۟","t":"jābū","g":"hollowed out"},{"a":"ٱلصَّخْرَ","t":"aṣ-ṣakhra","g":"the rock"},{"a":"بِٱلْوَادِ","t":"bil-wād","g":"in the valley"}],"sense":"The second party, and again they are identified by their engineering. Thamud cut their houses out of the cliff faces of a valley in the north of Arabia, and the facades are still standing there.","notes":[{"t":"Jaba means to cut through a thing and hollow it, used of boring a hole and of crossing a desert by cutting across it. The verse does not say they carved decoration; it says they took the inside out of the rock.","lvl":"editorial"},{"t":"On the march to Tabuk the Prophet ﷺ passed the dwellings of Thamud at al-Hijr and told his companions not to enter the homes of a punished people except in tears, lest what struck them strike those who came to look.","lvl":"sunnah","src":"Bukhari, Book of the Prophets, on the army passing al-Hijr, from Ibn ʿUmar"},{"t":"Aad built upward and Thamud cut inward. Both are named for permanence, and both are given one clause each in a surah about what does not last.","lvl":"editorial"}],"links":[{"ref":"7:74","why":"you carve houses out of the mountains with skill"},{"ref":"91:11","why":"Thamud denied through their transgression, and what followed"}]},"10":{"words":[{"a":"وَفِرْعَوْنَ","t":"wa-Firʿawna","g":"and Pharaoh"},{"a":"ذِى","t":"dhī","g":"possessor of"},{"a":"ٱلْأَوْتَادِ","t":"al-awtād","g":"the stakes"}],"sense":"The third party is a single man rather than a nation, and he gets an epithet the Qur'an uses only of him. Pharaoh of the stakes.","notes":[{"t":"Awtad is the plural of watad, a tent peg. The readings offered are that his armies pegged down his rule, that his monuments stood like pegs in the ground, and that he pinned people to the ground on stakes when he tortured them. All three are old.","lvl":"debated","src":"at-Tabari transmits each of the three readings from early authorities"},{"t":"The Qur'an uses the same word for the mountains, which it calls pegs for the earth. Whatever the stakes of Pharaoh were, the vocabulary is the vocabulary of fixing something down so it cannot move.","lvl":"quran","src":"78:7"},{"t":"Three names, three eras, three regions. Aad in the south, Thamud in the north, Pharaoh in Egypt. The surah is showing a pattern rather than telling three stories.","lvl":"editorial"}],"links":[{"ref":"38:12","why":"the only other place the Qur'an calls him Pharaoh of the stakes"},{"ref":"79:24","why":"Pharaoh said, I am your lord, the most high"}]},"11":{"words":[{"a":"ٱلَّذِينَ","t":"alladhīna","g":"those who"},{"a":"طَغَوْا۟","t":"ṭaghaw","g":"transgressed"},{"a":"فِى","t":"fī","g":"in"},{"a":"ٱلْبِلَٰدِ","t":"al-bilād","g":"the lands"}],"sense":"One relative clause is made to carry all three parties. Whatever else separated them, the charge is identical, and it is stated in four words.","notes":[{"t":"Tagha is a water word before it is a moral one. It is what a river does when it rises past its banks. The Qur'an uses it of the flood in the time of Nuh, and the picture underneath the moral term is of something that has left its channel.","lvl":"editorial"},{"t":"The charge is not disbelief here, though the Qur'an charges these nations with that elsewhere. It is transgression in the lands, a thing done to a place and to the people in it.","lvl":"editorial"},{"t":"The Qur'an states the mechanism of transgression directly in another surah: man transgresses when he sees himself as needing nobody.","lvl":"quran","src":"96:6-7"}],"links":[{"ref":"69:11","why":"when the water transgressed its bounds, We carried you in the sailing ship"},{"ref":"96:6","why":"no indeed, man transgresses when he sees himself self-sufficient"}]},"12":{"words":[{"a":"فَأَكْثَرُوا۟","t":"fa-aktharū","g":"and they multiplied"},{"a":"فِيهَا","t":"fīhā","g":"therein"},{"a":"ٱلْفَسَادَ","t":"al-fasād","g":"the corruption"}],"sense":"Transgression is the first step and this is the second. They did not merely spoil something, they increased the spoiling, which means it had time to become normal and to be organised.","notes":[{"t":"Fasad is spoilage, the state of a thing that was sound and has gone off. Arabic uses it of meat, of a wound and of a state. It is not the word for an attack from outside but for rot on the inside.","lvl":"editorial"},{"t":"The verb is aktharu, they made it much. The offence named is scale, which is the offence a whole civilisation is capable of and a single person mostly is not.","lvl":"editorial"},{"t":"The Qur'an ties corruption on land and sea to what human hands have earned, and gives the reason: so that He may let them taste part of what they did, and so they might turn back.","lvl":"quran","src":"30:41"}],"links":[{"ref":"30:41","why":"corruption appeared on land and sea by what men's hands earned"},{"ref":"2:205","why":"he strives to spread corruption in the land, and Allah does not love corruption"}]},"13":{"words":[{"a":"فَصَبَّ","t":"fa-ṣabba","g":"so He poured down"},{"a":"عَلَيْهِمْ","t":"ʿalayhim","g":"upon them"},{"a":"رَبُّكَ","t":"rabbuka","g":"your Lord"},{"a":"سَوْطَ","t":"sawṭa","g":"a lash of"},{"a":"عَذَابٍ","t":"ʿadhāb","g":"punishment"}],"sense":"Two images are welded together. Poured is what you do with liquid; a lash is what you swing. The punishment is described as both falling on them from above and striking them.","notes":[{"t":"Sabba is the verb for pouring water out of a vessel. Putting it with sawt, a whip, gives a sentence that no English rendering keeps intact, because English will not let a whip be poured.","lvl":"editorial"},{"t":"Some lexicographers connect sawt to the verb sata, to stir and mix, so that a sawt of punishment is a measure of it blended together. The whip reading and the mixture reading are both current.","lvl":"debated","src":"az-Zamakhshari notes both derivations in al-Kashshaf"},{"t":"Your Lord, said to the Prophet ﷺ, is the same phrase used in verse six and again in verse fourteen. The three destroyed parties are framed on both sides by the relationship of one man to his Lord.","lvl":"editorial"}],"links":[{"ref":"11:82","why":"the town turned upside down and stones of hard clay rained on it"},{"ref":"105:4","why":"birds pelting them with stones of baked clay"}]},"14":{"words":[{"a":"إِنَّ","t":"inna","g":"indeed"},{"a":"رَبَّكَ","t":"rabbaka","g":"your Lord"},{"a":"لَبِٱلْمِرْصَادِ","t":"la-bil-mirṣād","g":"is at the place of watch"}],"sense":"The history closes on one line, and it is not a threat so much as a location. Your Lord is at the lookout. The road the nations were travelling had a watchpost on it, and it still does.","notes":[{"t":"Mirsad is a noun of place from the verb rasada, to watch for something and wait for it to pass. It names a post on a route where a watcher sits. The verse does not say Allah is angry; it says where He is with respect to the road.","lvl":"editorial"},{"t":"The Qur'an uses a word from the same root for Hell itself, calling it a place lying in wait. The verse here and that one describe the same arrangement from two ends.","lvl":"quran","src":"78:21"},{"t":"Fourteen verses in, the surah has said nothing yet about its actual subject, which is a man's reading of his own comfort. The history of the three nations turns out to be the setup.","lvl":"editorial"}],"links":[{"ref":"78:21","why":"Hell described with the same root, as a place lying in wait"},{"ref":"4:1","why":"Allah is ever watchful over you"}]},"15":{"words":[{"a":"فَأَمَّا","t":"fa-ammā","g":"as for"},{"a":"ٱلْإِنسَٰنُ","t":"al-insānu","g":"man"},{"a":"إِذَا","t":"idhā","g":"when"},{"a":"مَا","t":"mā","g":"ever"},{"a":"ٱبْتَلَىٰهُ","t":"ibtalāhu","g":"tests him"},{"a":"رَبُّهُۥ","t":"rabbuhu","g":"his Lord"},{"a":"فَأَكْرَمَهُۥ","t":"fa-akramahu","g":"and honours him"},{"a":"وَنَعَّمَهُۥ","t":"wa-naʿʿamahu","g":"and gives him ease"},{"a":"فَيَقُولُ","t":"fa-yaqūlu","g":"he says"},{"a":"رَبِّىٓ","t":"rabbī","g":"my Lord"},{"a":"أَكْرَمَنِ","t":"akraman","g":"has honoured me"}],"sense":"The subject arrives. When Allah tests a man by giving him honour and comfort, the man reports the honour and drops the test. What he says is true as far as it goes, and it goes only halfway.","notes":[{"t":"The governing verb is ibtala, to test. The honouring and the ease are not the alternative to the test, they are the content of it. The verse says the gift is the examination.","lvl":"quran"},{"t":"He is not accused of lying. My Lord has honoured me is an accurate description of what happened. The fault is that he has read a result off a process still running.","lvl":"editorial"},{"t":"Al-insan, man, with the article and in the singular, is how the Qur'an usually introduces a habit of the species rather than a particular individual.","lvl":"editorial"}],"links":[{"ref":"21:35","why":"We test you with evil and with good as a trial, and to Us you will be returned"},{"ref":"8:28","why":"know that your wealth and your children are a test"}]},"16":{"words":[{"a":"وَأَمَّآ","t":"wa-ammā","g":"but as for"},{"a":"إِذَا","t":"idhā","g":"when"},{"a":"مَا","t":"mā","g":"ever"},{"a":"ٱبْتَلَىٰهُ","t":"ibtalāhu","g":"He tests him"},{"a":"فَقَدَرَ","t":"fa-qadara","g":"and measures out narrowly"},{"a":"عَلَيْهِ","t":"ʿalayhi","g":"for him"},{"a":"رِزْقَهُۥ","t":"rizqahu","g":"his provision"},{"a":"فَيَقُولُ","t":"fa-yaqūlu","g":"he says"},{"a":"رَبِّىٓ","t":"rabbī","g":"my Lord"},{"a":"أَهَٰنَنِ","t":"ahānan","g":"has humiliated me"}],"sense":"Same verb, opposite verdict. When the provision is measured out tight, the man calls it humiliation. The two verses together describe someone who has decided that money is the language his Lord speaks to him in.","notes":[{"t":"The two halves are not symmetrical, and the asymmetry is the argument. In the first case Allah is described as honouring, so the man's word honoured at least echoes the text. In the second Allah is described only as measuring. The word humiliated is supplied entirely by the man.","lvl":"editorial"},{"t":"Qadara here is not to decree but to restrict, to portion out with a short measure. The Qur'an uses the same verb for one who is given his provision in a narrow amount and is told to spend from what he has.","lvl":"quran","src":"65:7"},{"t":"Some canonical readers recite qaddara with a doubled daal, which strengthens the sense of measuring out deliberately rather than merely limiting.","lvl":"debated","src":"the ten readings; Ibn ʿĀmir and others read qaddara, Hafs reads qadara"}],"links":[{"ref":"17:30","why":"your Lord extends provision for whom He wills and restricts it"},{"ref":"65:7","why":"the one whose provision is straitened is told what to do rather than told what it means"}]},"17":{"words":[{"a":"كَلَّا","t":"kallā","g":"no"},{"a":"بَل","t":"bal","g":"rather"},{"a":"لَّا","t":"lā","g":"you do not"},{"a":"تُكْرِمُونَ","t":"tukrimūna","g":"honour"},{"a":"ٱلْيَتِيمَ","t":"al-yatīm","g":"the orphan"}],"sense":"The rebuttal comes as a single word of refusal and then changes the subject from theology to conduct. It also changes person. Up to here it was he; from here it is you.","notes":[{"t":"Kalla rejects both of the previous verdicts at once, the one about honour and the one about humiliation. It does not correct the definitions; it says the whole scale is wrong.","lvl":"editorial"},{"t":"The root k-r-m runs through three verses. He says his Lord honoured him, and he is told that he does not honour the one person in front of him who has no protector. The word he wants applied to himself is the word he withholds.","lvl":"editorial"},{"t":"The charge is not cruelty to the orphan but failure to honour him. Omission is enough to be named here, which sets a floor much higher than not doing harm.","lvl":"editorial"}],"links":[{"ref":"93:9","why":"as for the orphan, do not treat him harshly, said to the Prophet ﷺ who had been one"},{"ref":"107:2","why":"the one who denies the reckoning is the one who pushes the orphan away"}]},"18":{"words":[{"a":"وَلَا","t":"wa-lā","g":"and you do not"},{"a":"تَحَٰٓضُّونَ","t":"taḥāḍḍūna","g":"urge one another"},{"a":"عَلَىٰ","t":"ʿalā","g":"toward"},{"a":"طَعَامِ","t":"ṭaʿāmi","g":"the feeding of"},{"a":"ٱلْمِسْكِينِ","t":"al-miskīn","g":"the poor person"}],"sense":"The second charge is not that they fail to feed the poor. It is that they do not push each other to do it. The failure named is in the conversation a society has with itself, not in one person's account book.","notes":[{"t":"Tahaadduna is a reciprocal form, each urging the other and being urged in turn. A person could satisfy the previous charge privately. This one cannot be satisfied alone.","lvl":"editorial"},{"t":"The canonical readers differ between tahaadduna, urging one another, and tahudduna, simply urging. The reciprocal sense belongs to the reading of Hafs that this Mushaf follows.","lvl":"debated","src":"the ten readings; ʿĀsim and others read taḥāḍḍūna, Nafiʿ and Ibn ʿĀmir read taḥuḍḍūna"},{"t":"Miskin is from sukun, stillness. The word describes a person whose need has brought him to a stop, which is why the Qur'an usually pairs him with feeding rather than with employment.","lvl":"editorial"}],"links":[{"ref":"107:3","why":"and he does not urge the feeding of the poor, the same charge in the same words"},{"ref":"69:34","why":"the reason given for a man's fate on the Day is that he did not urge this"}]},"19":{"words":[{"a":"وَتَأْكُلُونَ","t":"wa-taʾkulūna","g":"and you devour"},{"a":"ٱلتُّرَاثَ","t":"at-turātha","g":"the inheritance"},{"a":"أَكْلًا","t":"aklan","g":"a devouring"},{"a":"لَّمًّا","t":"lammā","g":"that gathers up everything"}],"sense":"The third charge is about estates. Inheritance is eaten whole, with no line drawn between the portion that belongs to the eater and the portion that belongs to somebody weaker who cannot press a claim.","notes":[{"t":"Lamm means to gather a thing up completely, sweeping the whole heap together. The word does not accuse them of taking what is not theirs so much as of not sorting it, which comes to the same result and feels cleaner while you do it.","lvl":"editorial"},{"t":"Turath is what the dead leave behind. The charge sits directly after the orphan, and an orphan is precisely the party in an estate who cannot argue for a share.","lvl":"editorial"},{"t":"The Qur'an elsewhere states the consequence in the plainest physical terms: those who consume the property of orphans unjustly are consuming fire into their bellies.","lvl":"quran","src":"4:10"}],"links":[{"ref":"4:10","why":"consuming the wealth of orphans described as swallowing fire"},{"ref":"4:7","why":"fixed shares assigned to men and to women out of what is left"}]},"20":{"words":[{"a":"وَتُحِبُّونَ","t":"wa-tuḥibbūna","g":"and you love"},{"a":"ٱلْمَالَ","t":"al-māla","g":"wealth"},{"a":"حُبًّا","t":"ḥubban","g":"with a love"},{"a":"جَمًّا","t":"jammā","g":"heaped up"}],"sense":"The fourth charge names the engine behind the other three. Not that they have wealth, and not that they use it badly, but that they love it, and that the love has piled up past any level it could be spent at.","notes":[{"t":"Jamm is used of water that has collected in a well until it fills it, standing rather than flowing. The image is of an affection that has pooled with nowhere to go out.","lvl":"editorial"},{"t":"The four charges run in a deliberate order. Two are refusals to give, the orphan and the poor, and two are appetites to take, the estate and the money. The last one explains the first three.","lvl":"editorial"},{"t":"The Qur'an makes the same charge in the same vocabulary elsewhere, saying man is intense in his love of wealth, and there too the statement follows a description of ingratitude.","lvl":"quran","src":"100:8"}],"links":[{"ref":"100:8","why":"and indeed he is intense in love of wealth"},{"ref":"102:1","why":"competing for increase distracted you until you visited the graves"}]},"21":{"words":[{"a":"كَلَّآ","t":"kallā","g":"no"},{"a":"إِذَا","t":"idhā","g":"when"},{"a":"دُكَّتِ","t":"dukkati","g":"is pounded"},{"a":"ٱلْأَرْضُ","t":"al-arḍu","g":"the earth"},{"a":"دَكًّا","t":"dakkan","g":"a pounding"},{"a":"دَكًّا","t":"dakkā","g":"and a pounding"}],"sense":"The second refusal, and this time the surah answers by moving the scene. The earth is beaten flat, blow after blow, and every structure the surah has been discussing goes with it.","notes":[{"t":"Dakk is to strike a raised thing until it is level with the ground. The word is repeated, which in Arabic makes it repeated blows rather than one, and the whole line comes down on hard consonants.","lvl":"editorial"},{"t":"The same verb is used of what happened to the mountain when Musa asked to see his Lord, which is the Qur'an's one worked example of what this pounding looks like.","lvl":"quran","src":"7:143"},{"t":"Iram was pillars and Thamud was cut rock and Pharaoh had stakes driven into the ground. The Day is described first as the flattening of exactly the kind of thing they built.","lvl":"editorial"}],"links":[{"ref":"69:14","why":"the earth and the mountains lifted and crushed with a single blow"},{"ref":"7:143","why":"the mountain levelled, and Musa fell unconscious"}]},"22":{"words":[{"a":"وَجَآءَ","t":"wa-jāʾa","g":"and comes"},{"a":"رَبُّكَ","t":"rabbuka","g":"your Lord"},{"a":"وَٱلْمَلَكُ","t":"wal-malaku","g":"and the angels"},{"a":"صَفًّا","t":"ṣaffan","g":"rank"},{"a":"صَفًّا","t":"ṣaffā","g":"upon rank"}],"sense":"The court assembles. Your Lord comes, and the angels come in rows, which is how an army or a congregation stands rather than how a crowd arrives.","notes":[{"t":"Al-malak is singular in form and collective in sense here, one word covering the whole order of them, and then it is arranged in rows by the repeated saffan. The grammar makes them countless and organised at once.","lvl":"editorial"},{"t":"On the coming of the Lord, the earliest generations affirmed the wording and did not describe how. Later schools differed over whether to leave it at that or to read it as His command and His judgement arriving.","lvl":"debated","src":"at-Tabari and Ibn Kathir transmit both approaches; the Athari and Ashʿari schools differ on the method"},{"t":"Ranks are how the Qur'an keeps describing the assembly of that Day, and it is also the shape a congregation takes five times daily, which makes the scene familiar before it is frightening.","lvl":"editorial"}],"links":[{"ref":"78:38","why":"the day the Spirit and the angels stand in rank and no one speaks except by permission"},{"ref":"2:210","why":"do they wait for Allah to come to them in canopies of cloud, with the angels"}]},"23":{"words":[{"a":"وَجِا۟يٓءَ","t":"wa-jīʾa","g":"and is brought"},{"a":"يَوْمَئِذٍۭ","t":"yawmaʾidhin","g":"that day"},{"a":"بِجَهَنَّمَ","t":"bi-jahannama","g":"Hell"},{"a":"يَوْمَئِذٍ","t":"yawmaʾidhin","g":"that day"},{"a":"يَتَذَكَّرُ","t":"yatadhakkaru","g":"will remember"},{"a":"ٱلْإِنسَٰنُ","t":"al-insānu","g":"man"},{"a":"وَأَنَّىٰ","t":"wa-annā","g":"and how"},{"a":"لَهُ","t":"lahu","g":"will it help him"},{"a":"ٱلذِّكْرَىٰ","t":"adh-dhikrā","g":"the remembering"}],"sense":"Hell is brought forward rather than arrived at, and at the sight of it the man remembers. The surah has spent twenty verses asking him to remember while remembering is still worth something.","notes":[{"t":"The verb is passive. Hell is brought, which makes it an object under orders rather than a destination waiting at the end of a road. Nobody is described as walking toward it.","lvl":"quran"},{"t":"A report describes Hell being brought on that Day with seventy thousand reins, each rein held by seventy thousand angels dragging it. Whatever the scale of the figure, the picture matches the passive verb of the verse.","lvl":"sunnah","src":"Muslim, Book of Paradise and the Description of its Delights, from Ibn Masʿūd"},{"t":"Yatadhakkaru is the same root as dhikr, remembrance. The failure the surah has been describing was never ignorance. Everything he needed was already in him, and it surfaces at the moment it stops being useful.","lvl":"editorial"}],"links":[{"ref":"79:36","why":"Hellfire displayed for whoever sees"},{"ref":"39:56","why":"lest a soul say, oh my regret for what I neglected toward Allah"}]},"24":{"words":[{"a":"يَقُولُ","t":"yaqūlu","g":"he says"},{"a":"يَٰلَيْتَنِى","t":"yā-laytanī","g":"if only I"},{"a":"قَدَّمْتُ","t":"qaddamtu","g":"had sent ahead"},{"a":"لِحَيَاتِى","t":"li-ḥayātī","g":"for my life"}],"sense":"His one sentence on that Day. He does not ask to go back and he does not argue; he says he wishes he had sent something on ahead. And he calls the place he has arrived at my life.","notes":[{"t":"Qaddama is to send forward, the word used for supplies dispatched ahead of a traveller so that they are waiting when he gets there. The regret is about logistics, not about belief.","lvl":"editorial"},{"t":"For my life, with the possessive fixed on the world he has just entered. Standing there, he does not call the seventy years behind him his life. The Qur'an has him reclassify both worlds in two words.","lvl":"editorial"},{"t":"The Qur'an gives the same instruction in the present tense to the living: let every soul look at what it has sent forward for tomorrow.","lvl":"quran","src":"59:18"}],"links":[{"ref":"59:18","why":"the instruction phrased in the same vocabulary while there is still time"},{"ref":"78:40","why":"the day a man looks at what his hands sent forth, and the disbeliever says, if only I were dust"}]},"25":{"words":[{"a":"فَيَوْمَئِذٍ","t":"fa-yawmaʾidhin","g":"so that day"},{"a":"لَّا","t":"lā","g":"not"},{"a":"يُعَذِّبُ","t":"yuʿadhdhibu","g":"will punish"},{"a":"عَذَابَهُۥٓ","t":"ʿadhābahu","g":"as He punishes"},{"a":"أَحَدٌ","t":"aḥad","g":"anyone"}],"sense":"No one punishes the way He punishes on that Day. The comparison is with every cruelty human beings have managed, and the verse says all of it falls short of the measure.","notes":[{"t":"Two canonical readings stand here and both are recited. Hafs reads the active, no one punishes as He punishes. Al-Kisaaʾi and Yaʿqub read the passive, no one is punished as he is punished, which turns the verse onto the man rather than onto Allah.","lvl":"debated","src":"the ten readings; Hafs reads yuʿadhdhibu, al-Kisāʾī and Yaʿqūb read yuʿadhdhabu"},{"t":"The surah opened with three tyrants who were expert at punishing people. Pharaoh had his stakes. The verse says the whole apparatus of human cruelty does not reach the scale being described.","lvl":"editorial"},{"t":"Ahad, anyone, is the same word Surah al-Ikhlas uses to say that nothing is equivalent to Him. Here it does the same work in the other direction.","lvl":"editorial"}],"links":[{"ref":"40:46","why":"the people of Pharaoh made to enter the severest punishment"},{"ref":"78:30","why":"so taste, We will never increase you except in punishment"}]},"26":{"words":[{"a":"وَلَا","t":"wa-lā","g":"and not"},{"a":"يُوثِقُ","t":"yūthiqu","g":"will bind"},{"a":"وَثَاقَهُۥٓ","t":"wathāqahu","g":"as He binds"},{"a":"أَحَدٌ","t":"aḥad","g":"anyone"}],"sense":"The second half of the same statement. No one ties the way He ties. Punishment and restraint are named separately, because a person can be hurt and still be free to move.","notes":[{"t":"Wathaq is the rope or the fetter itself, from a root meaning to make firm. The related word mithaq, a covenant, is the same idea applied to an agreement: something tied so it holds.","lvl":"editorial"},{"t":"The alternative reading runs through both verses together. Hafs has the active in each, and the readers who take the passive take it in both, so the pair stays consistent whichever way it is recited.","lvl":"debated","src":"the ten readings; al-Kisāʾī and Yaʿqūb read yūthaqu alongside yuʿadhdhabu"},{"t":"The man in verse twenty was described as loving wealth in a heap and gathering estates up whole. The two verses that answer him are about being held down and unable to gather anything.","lvl":"editorial"}],"links":[{"ref":"69:30","why":"seize him and fetter him, then a chain of seventy cubits"},{"ref":"76:4","why":"chains, shackles and a blaze prepared for those who deny"}]},"27":{"words":[{"a":"يَٰٓأَيَّتُهَا","t":"yā-ayyatuhā","g":"O you"},{"a":"ٱلنَّفْسُ","t":"an-nafsu","g":"soul"},{"a":"ٱلْمُطْمَئِنَّةُ","t":"al-muṭmaʾinnah","g":"at rest"}],"sense":"In the middle of the assembly and the fetters, the surah turns and speaks to somebody directly. It does not say the believing soul or the obedient soul. It says the settled one, and the description is about the state it is in rather than the record it holds.","notes":[{"t":"Itmaʾanna is used of ground that has stopped shifting and of a person who has stopped looking over his shoulder. It describes rest that follows agitation, not rest that never knew any.","lvl":"editorial"},{"t":"Where this address is spoken is discussed among the exegetes. Some place it at death, when the soul is taken, and some place it on the Day of Resurrection. Both are transmitted from the early generations and the wording carries either.","lvl":"debated","src":"at-Tabari records both the moment of death and the Day of Resurrection"},{"t":"The Qur'an names other states of the same nafs elsewhere: the one that commands evil, and the one that reproaches itself. This one is a third name for the same thing, not a different creature.","lvl":"quran","src":"12:53 and 75:2"}],"links":[{"ref":"13:28","why":"it is in the remembrance of Allah that hearts come to rest, the same root"},{"ref":"75:2","why":"the reproaching soul, the state this one has come through"}]},"28":{"words":[{"a":"ٱرْجِعِىٓ","t":"irjiʿī","g":"return"},{"a":"إِلَىٰ","t":"ilā","g":"to"},{"a":"رَبِّكِ","t":"rabbiki","g":"your Lord"},{"a":"رَاضِيَةً","t":"rāḍiyatan","g":"well pleased"},{"a":"مَّرْضِيَّةً","t":"marḍiyyah","g":"and pleasing"}],"sense":"Return, which is a word you only use of a place something came from. And return in two conditions at once: content with Him, and accepted by Him. Either one alone would leave the sentence unfinished.","notes":[{"t":"Raadiya and mardiyya are the active and passive of one root set next to each other. The soul is pleased and is pleased with. The Qur'an puts both halves in because a person can be satisfied with an outcome that is not satisfactory, and can be acceptable while resenting the terms.","lvl":"editorial"},{"t":"The verbs and adjectives are feminine because nafs is a feminine noun in Arabic, not because the one addressed is a woman. The address is open to anyone.","lvl":"editorial"},{"t":"The Qur'an uses the same pair of words for the settlement between Allah and the truthful, and between Allah and those who followed the first believers sincerely.","lvl":"quran","src":"5:119 and 98:8"}],"links":[{"ref":"98:8","why":"Allah is pleased with them and they are pleased with Him, the same two words"},{"ref":"5:119","why":"the same settlement stated of the truthful on the Day"}]},"29":{"words":[{"a":"فَٱدْخُلِى","t":"fa-dkhulī","g":"so enter"},{"a":"فِى","t":"fī","g":"among"},{"a":"عِبَٰدِى","t":"ʿibādī","g":"My servants"}],"sense":"Two commands close the surah and this is the first of them. Enter among My servants comes before enter My Garden, so the company is named before the place.","notes":[{"t":"The order is not incidental. A soul is admitted to a body of people first and to a location second, which is the reverse of how paradise is usually imagined.","lvl":"editorial"},{"t":"Ibaadi, My servants, with the possessive attached. The Arabic word for one owned is used here as the honour, and the same construction is what the Qur'an uses when it says Satan has no authority over them.","lvl":"editorial"},{"t":"The surah began by describing three parties who ruled and built and pinned people down. It ends by describing servitude as the thing worth being admitted to.","lvl":"editorial"}],"links":[{"ref":"15:42","why":"over My servants you have no authority"},{"ref":"25:63","why":"the servants of the Most Merciful walk on the earth without weight"}]},"30":{"words":[{"a":"وَٱدْخُلِى","t":"wa-dkhulī","g":"and enter"},{"a":"جَنَّتِى","t":"jannatī","g":"My Garden"}],"sense":"Two words end it. Not a garden and not the Garden, but My Garden, which attaches the destination to the owner rather than describing what is in it.","notes":[{"t":"Janna is from a root meaning to cover and conceal, the same root as jinn and as junna, a shield. A garden is named in Arabic for the way its foliage hides what is under it.","lvl":"editorial"},{"t":"The surah gives no description of the Garden at all. After thirty verses of ruined cities, poured punishment, flattened earth and chains, the last word is a possessive pronoun and the door is open.","lvl":"editorial"},{"t":"The whole surah is a movement from an oath by the dawn to an invitation, and the invitation is issued in the singular to one soul rather than to a nation.","lvl":"editorial"}],"links":[{"ref":"39:73","why":"peace be upon you, you have done well, so enter it to remain"},{"ref":"43:70","why":"enter the Garden, you and your spouses, made glad"}]}}},{"n":104,"verses":{"1":{"words":[{"a":"وَيْلٌ","t":"waylun","g":"woe"},{"a":"لِّكُلِّ","t":"li-kulli","g":"to every"},{"a":"هُمَزَةٍ","t":"humazatin","g":"habitual scorner"},{"a":"لُّمَزَةٍ","t":"lumazah","g":"habitual faultfinder"}],"sense":"The surah opens with a threat, and the target is not a crime but a manner of speaking about people. Two words are used, and both are built to say that the man does this as a matter of course rather than in a bad moment.","notes":[{"t":"Humaza and lumaza are on the pattern fuʿala, which in Arabic makes a habit into a description, the way we might call someone a gossip rather than say he gossiped. It is the pattern used for someone who does a thing so often it has become what he is.","lvl":"editorial"},{"t":"The early exegetes assigned the two words in opposite ways. Some read humaza as scorn by gesture and lumaza as scorn by tongue, some read humaza as behind the back and lumaza as to the face, and some reverse both. The pair is agreed on, the split is not.","lvl":"debated","src":"at-Tabari transmits contradictory assignments from Ibn ʿAbbās, Mujāhid and Qatāda"},{"t":"The Prophet ﷺ defined backbiting when asked, saying it is mentioning your brother with what he would dislike, and when told that it might be true, he answered that if it is true you have backbitten him and if it is not you have slandered him.","lvl":"sunnah","src":"Muslim, Book of Righteousness and Good Manners, from Abu Hurayra"}],"links":[{"ref":"49:11","why":"do not ridicule one another, nor insult one another, nor call each other by offensive nicknames"},{"ref":"68:11","why":"a scorner going about with slander, in a list of a man's disqualifications"}]},"2":{"words":[{"a":"ٱلَّذِى","t":"alladhī","g":"the one who"},{"a":"جَمَعَ","t":"jamaʿa","g":"amassed"},{"a":"مَالًا","t":"mālan","g":"wealth"},{"a":"وَعَدَّدَهُۥ","t":"wa-ʿaddadah","g":"and counted it over"}],"sense":"The scorner is now identified by what he does with money. Two verbs: he gathered it, and then he counted it. The second is the one the surah is interested in.","notes":[{"t":"Gathering is an activity with an end. Counting has none, and it is what a man does with a pile once he has stopped needing it for anything. The verse puts the two verbs in that order and lets the second sit.","lvl":"editorial"},{"t":"The relative clause joins verse one to verse two and gives the surah its argument. A man who counts is a man who ranks, and ranking is where contempt for other people comes from. The mockery in verse one and the money in verse two are the same habit at two ends.","lvl":"editorial"},{"t":"Canonical readers differ between jamaʿa, gathered, and jammaʿa with a doubled meem, which means gathered repeatedly and in quantity. Hafs, the reading of this Mushaf, has jamaʿa.","lvl":"debated","src":"the ten readings; Ibn ʿĀmir, Hamza and al-Kisāʾī read jammaʿa"}],"links":[{"ref":"102:1","why":"competing to have more distracted you, the same appetite named directly"},{"ref":"3:180","why":"let not those who hoard what Allah gave them think it is good for them"}]},"3":{"words":[{"a":"يَحْسَبُ","t":"yaḥsabu","g":"he reckons"},{"a":"أَنَّ","t":"anna","g":"that"},{"a":"مَالَهُۥٓ","t":"mālahu","g":"his wealth"},{"a":"أَخْلَدَهُۥ","t":"akhladah","g":"has made him last forever"}],"sense":"The delusion is stated in the past tense. He does not think his money will keep him alive; he thinks it already has, that he has somehow been moved out of the category of things that end.","notes":[{"t":"Akhlada is past, has made him immortal, not will make him. Nobody says this out loud. The verse is describing the assumption a man acts on rather than the belief he would defend if asked.","lvl":"editorial"},{"t":"Yahsabu is from hisab, reckoning, the same activity as the counting in the previous verse. A man who has spent his life counting is shown to have got the one sum wrong that was going to be checked.","lvl":"editorial"},{"t":"The Prophet ﷺ said that the son of Adam says my wealth, my wealth, when his wealth is only what he ate and used up, or wore and wore out, or gave away and so sent ahead.","lvl":"sunnah","src":"Muslim, Book of Renunciation, from ʿAbdullāh ibn ash-Shikhkhīr"}],"links":[{"ref":"18:35","why":"the man in the garden who said, I do not think this will ever perish"},{"ref":"92:11","why":"his wealth will not avail him when he falls"}]},"4":{"words":[{"a":"كَلَّا","t":"kallā","g":"no"},{"a":"لَيُنۢبَذَنَّ","t":"la-yunbadhanna","g":"he will surely be flung"},{"a":"فِى","t":"fī","g":"into"},{"a":"ٱلْحُطَمَةِ","t":"al-ḥuṭamah","g":"the Crusher"}],"sense":"The refusal, and then the reversal. The man who spent his life gathering things up is himself thrown away, and the word used for throwing is the one you use for rubbish.","notes":[{"t":"Nabadha is to toss aside something with no further use, the verb for discarding a date stone once the fruit is eaten. It is set directly against jamaʿa in verse two. He gathered, and he is discarded.","lvl":"editorial"},{"t":"Hutamah is on the same intensive pattern as humaza and lumaza in verse one, and it is built on a verb meaning to smash something to fragments. The man who broke people down by name meets a thing named for breaking down.","lvl":"editorial"},{"t":"The emphatic laam and the heavy nun on the verb make it a sworn certainty in Arabic rather than a prediction. The verse is constructed to leave no room in it.","lvl":"editorial"}],"links":[{"ref":"101:9","why":"the one whose scales are light, his refuge will be an abyss"},{"ref":"3:187","why":"they flung the covenant behind their backs, the same verb of discarding"}]},"5":{"words":[{"a":"وَمَآ","t":"wa-mā","g":"and what"},{"a":"أَدْرَىٰكَ","t":"adrāka","g":"can make you know"},{"a":"مَا","t":"mā","g":"what"},{"a":"ٱلْحُطَمَةُ","t":"al-ḥuṭamah","g":"the Crusher is"}],"sense":"The Qur'an stops and asks the reader whether he knows what has just been named. The question is a signal that the word in the previous verse cannot be understood from ordinary experience.","notes":[{"t":"The Qur'an distinguishes two formulas closely. When it says maa adraaka, what can make you know, an explanation follows. When it says maa yudreeka, what will make you know, it does not, and the matter is left with Allah. Here it is the first, and the next three verses answer.","lvl":"editorial"},{"t":"The address is second person singular, aimed at the Prophet ﷺ and through him at each reader in turn. The surah has been describing a man in the third person, and this line breaks off to face you.","lvl":"editorial"},{"t":"The same formula introduces the Night of Decree, the Striking Hour and the Day of Judgement. It is the Qur'an's marker for something outside the range of report.","lvl":"quran","src":"97:2 and 101:10"}],"links":[{"ref":"101:10","why":"and what can make you know what it is, with the same answer structure following"},{"ref":"97:2","why":"and what can make you know what the Night of Decree is"}]},"6":{"words":[{"a":"نَارُ","t":"nāru","g":"the fire of"},{"a":"ٱللَّهِ","t":"llāhi","g":"Allah"},{"a":"ٱلْمُوقَدَةُ","t":"al-mūqadah","g":"the kindled"}],"sense":"The answer starts by attaching the fire to a name. Not a fire but the fire of Allah, kindled, which makes it a thing lit on purpose and kept lit rather than an element that happens to be there.","notes":[{"t":"Fire is attached to the divine name in very few places in the Qur'an. The construction takes the fire out of the category of natural forces and puts it in the category of things that are commanded.","lvl":"editorial"},{"t":"Al-muuqada is a passive participle, kindled by someone. Arabic participles of this form describe a standing state, so the fire is not lit once but held in the lit condition.","lvl":"editorial"},{"t":"The surah has been about a man who accumulated. The answer to what the Crusher is begins by naming an owner, which is the one relation to property the man never considered applying to himself.","lvl":"editorial"}],"links":[{"ref":"2:24","why":"the Fire whose fuel is people and stones"},{"ref":"111:3","why":"another short surah closing on a man, his wealth and a kindled fire"}]},"7":{"words":[{"a":"ٱلَّتِى","t":"allatī","g":"which"},{"a":"تَطَّلِعُ","t":"taṭṭaliʿu","g":"mounts up over"},{"a":"عَلَى","t":"ʿalā","g":"upon"},{"a":"ٱلْأَفْـِٔدَةِ","t":"al-afʾidah","g":"the hearts"}],"sense":"The fire is described by where it goes. It climbs until it is over the hearts and looks down into them, which is a strange thing to say about burning and is exactly the point.","notes":[{"t":"Ittalaʿa means to climb something until you can see over the top of it, the verb for cresting a ridge and looking down the other side. Applied to fire it gives a picture of the flame reaching a vantage point rather than merely spreading.","lvl":"editorial"},{"t":"Fuʾaad, plural afʾida, is the inner heart, and the Qur'an uses it for the seat of intention and attention rather than for the pump. The organ named is the one that held the contempt in verse one and the reckoning in verse three.","lvl":"editorial"},{"t":"The whole surah is about interior states. Scorn, counting, assuming. The punishment described is the only one that would reach them.","lvl":"editorial"}],"links":[{"ref":"22:46","why":"it is not the eyes that go blind but the hearts inside the chests"},{"ref":"6:110","why":"We turn away their hearts and their sight, the same word for heart"}]},"8":{"words":[{"a":"إِنَّهَا","t":"innahā","g":"indeed it"},{"a":"عَلَيْهِم","t":"ʿalayhim","g":"over them"},{"a":"مُّؤْصَدَةٌ","t":"muʾṣadah","g":"closed and fastened"}],"sense":"The lid goes on. The fire is not only around them, it is shut over them, and the word carries the sense of a door pulled to and secured rather than merely closed.","notes":[{"t":"Awsada is to shut a door and fasten it. The participle describes the finished state, so the verse is not a scene of shutting but a report of something already sealed.","lvl":"editorial"},{"t":"The word occurs in only one other place in the Qur'an, at the end of Surah al-Balad, and there too it closes a passage about a man who had wealth and did not use it on the orphan or the poor.","lvl":"quran","src":"90:20"},{"t":"A man who counted his money in private and mocked people behind their backs is given an enclosure. The surah has been describing a closed life, and it ends by making it literal.","lvl":"editorial"}],"links":[{"ref":"90:20","why":"the only other use of the word, at the end of a surah on the same failure"},{"ref":"18:29","why":"a fire whose walls will enclose them"}]},"9":{"words":[{"a":"فِى","t":"fī","g":"in"},{"a":"عَمَدٍ","t":"ʿamadin","g":"columns"},{"a":"مُّمَدَّدَةٍ","t":"mumaddadah","g":"outstretched"}],"sense":"The last two words of the surah are columns, stretched out. Whatever they are exactly, the man who spent nine verses building himself a standing has ended up inside somebody else's structure.","notes":[{"t":"ʿAmad is a plural of ʿimad, and ʿimad is the word Surah al-Fajr uses for the pillars of Iram, the city nothing like which had been built. The pillars a people raise and the pillars that hold their door shut are the same word.","lvl":"editorial"},{"t":"Whether the columns are bars fastening the door from outside, or pillars to which the occupants are bound, the exegetes did not settle. Both readings are old and the Arabic supports each.","lvl":"debated","src":"at-Tabari records both the fastening and the binding readings"},{"t":"Canonical readers differ between ʿamad and ʿumud, two plurals of the same singular with no difference in meaning. Hafs reads ʿamad.","lvl":"debated","src":"the ten readings; Hamza, al-Kisāʾī and Abu Bakr read ʿumud"}],"links":[{"ref":"89:7","why":"Iram of the pillars, the same word used of what a proud people built"},{"ref":"4:145","why":"the hypocrites in the lowest level of the Fire, another description by position"}]}}},{"n":109,"verses":{"1":{"words":[{"a":"قُلْ","t":"qul","g":"say"},{"a":"يَٰٓأَيُّهَا","t":"yā-ayyuhā","g":"O you"},{"a":"ٱلْكَٰفِرُونَ","t":"al-kāfirūn","g":"who cover the truth"}],"sense":"The surah begins with an order to speak and then supplies the words. What follows is not the Prophet ﷺ's own position being explained; it is a message handed to him to read out to people standing in front of him.","notes":[{"t":"Kafara means to cover something over. Classical Arabic calls the farmer who buries seed a kafir of the seed, and calls the night a kafir because it covers the day. Disbelief in the Qur'an's vocabulary is covering something that has already been shown.","lvl":"editorial"},{"t":"The address is definite, al-kafirun, and the exegetes read it as aimed at a specific group of Quraysh who had put a proposal to the Prophet ﷺ, not as a form of address to every non-Muslim in every era.","lvl":"debated","src":"at-Tabari and Ibn Kathir report the address as directed at named individuals of Quraysh"},{"t":"Five surahs of the Qur'an open on the command Say. Four of them are short declarations of creed or refuge, and this is the one that draws a line between two parties.","lvl":"quran","src":"72:1, 109:1, 112:1, 113:1, 114:1"}],"links":[{"ref":"112:1","why":"the other short surah opening on Say, and the one paired with it in practice"},{"ref":"6:56","why":"Say, I am forbidden to worship those you call on besides Allah"}]},"2":{"words":[{"a":"لَآ","t":"lā","g":"not"},{"a":"أَعْبُدُ","t":"aʿbudu","g":"do I worship"},{"a":"مَا","t":"mā","g":"what"},{"a":"تَعْبُدُونَ","t":"taʿbudūn","g":"you worship"}],"sense":"The first denial, in the present tense. I do not worship what you worship. It refuses the object rather than the act; both parties worship, and the whole difference is in what.","notes":[{"t":"The Arabic is maa, what, rather than man, whom. The objects of their worship are referred to with the pronoun used for things. The choice is not neutral and would have been heard.","lvl":"editorial"},{"t":"The verb rather than a noun. He does not say I am not one of your religion, which would be a statement about membership. He says I do not do that, which is a statement about practice.","lvl":"editorial"},{"t":"The Prophet ﷺ used to recite this surah together with al-Ikhlas in the two units before the dawn prayer, so that the two shortest statements of what is worshipped and what is not were said at the start of every day.","lvl":"sunnah","src":"Muslim, Book of the Prayer of Travellers, on the two rakʿahs of Fajr, from Abu Hurayra"}],"links":[{"ref":"10:104","why":"Say, if you are in doubt about my religion, I do not worship what you worship besides Allah"},{"ref":"39:64","why":"Say, is it other than Allah you order me to worship"}]},"3":{"words":[{"a":"وَلَآ","t":"wa-lā","g":"and not"},{"a":"أَنتُمْ","t":"antum","g":"are you"},{"a":"عَٰبِدُونَ","t":"ʿābidūna","g":"worshippers of"},{"a":"مَآ","t":"mā","g":"what"},{"a":"أَعْبُدُ","t":"aʿbud","g":"I worship"}],"sense":"The mirror image, and the grammar shifts. Where the last verse used a verb of him, this one uses a noun of them. Not you do not worship, but you are not worshippers, which describes a standing condition rather than a current act.","notes":[{"t":"ʿAabidoon is an active participle, and Arabic participles state a settled description. The line is not reporting what they failed to do this morning; it is saying what kind of party they are with respect to this object.","lvl":"editorial"},{"t":"The same neutral word maa is used for the true object of worship as for theirs, which keeps the two halves of the sentence exactly parallel and makes the whole weight fall on who is worshipping what.","lvl":"editorial"},{"t":"Nothing in the surah insults their gods by name. The Qur'an elsewhere forbids abusing what other people call on, lest they abuse Allah in ignorance, and this surah observes that restraint while refusing everything.","lvl":"quran","src":"6:108"}],"links":[{"ref":"6:108","why":"do not insult those they invoke besides Allah, so they do not insult Allah in enmity"},{"ref":"26:75","why":"Ibrahim asking his people, have you seen what you have been worshipping"}]},"4":{"words":[{"a":"وَلَآ","t":"wa-lā","g":"and not"},{"a":"أَنَا۠","t":"anā","g":"am I"},{"a":"عَابِدٌ","t":"ʿābidun","g":"a worshipper of"},{"a":"مَّا","t":"mā","g":"what"},{"a":"عَبَدتُّمْ","t":"ʿabattum","g":"you have worshipped"}],"sense":"The third denial, and now the tense moves. What you have worshipped, in the past. The line closes off any suggestion that he ever had a share in it before the message came.","notes":[{"t":"ʿAbadtum is past tense, and it is the one clear change of tense in the four denials. Verse two ruled out the present; this rules out the record. There is no earlier period being appealed to.","lvl":"editorial"},{"t":"The exegetes who studied the repetition read verses two and three as covering the present and verses four and five as covering the past and what will follow. Others read the second pair as emphasis alone, which is ordinary Arabic practice.","lvl":"debated","src":"az-Zamakhshari and Ibn Kathir set out both explanations"},{"t":"The Qur'an gives the same refusal in a longer form elsewhere, telling the Prophet ﷺ to say that his prayer, his rites, his living and his dying belong to the Lord of the worlds.","lvl":"quran","src":"6:162"}],"links":[{"ref":"6:162","why":"my prayer, my rites, my living and my dying are for the Lord of the worlds"},{"ref":"10:41","why":"you are clear of what I do and I am clear of what you do"}]},"5":{"words":[{"a":"وَلَآ","t":"wa-lā","g":"and not"},{"a":"أَنتُمْ","t":"antum","g":"are you"},{"a":"عَٰبِدُونَ","t":"ʿābidūna","g":"worshippers of"},{"a":"مَآ","t":"mā","g":"what"},{"a":"أَعْبُدُ","t":"aʿbud","g":"I worship"}],"sense":"The line from verse three comes back word for word. Nothing is added and nothing is softened. The repetition is the door being shut a second time on the same hinge.","notes":[{"t":"Exact repetition inside a surah is not unusual in the Qur'an; Surah ar-Rahman repeats one verse thirty-one times. What is unusual here is that the repeated line is a refusal, and that it comes back after only one intervening verse.","lvl":"editorial"},{"t":"Many grammarians read the second occurrence as carrying a future sense, nor will you ever be, which completes the coverage of past, present and future across the four denials. Others hold that it is emphasis and nothing more.","lvl":"debated","src":"the exegetes differ; at-Tabari reports the emphasis reading and later commentators develop the tense reading"},{"t":"The surah spends four of its six verses saying the same thing from two sides. The design refuses the middle position it is answering, which was an offer to share worship in alternate years.","lvl":"editorial"}],"links":[{"ref":"55:13","why":"the Qur'an's other worked case of a line repeated deliberately"},{"ref":"2:6","why":"it is the same to them whether you warn them or do not warn them"}]},"6":{"words":[{"a":"لَكُمْ","t":"lakum","g":"for you"},{"a":"دِينُكُمْ","t":"dīnukum","g":"your religion"},{"a":"وَلِىَ","t":"wa-liya","g":"and for me"},{"a":"دِينِ","t":"dīn","g":"my religion"}],"sense":"The settlement, in four words with no verb in it. Two parties, two religions, and no shared one. The verse states a separation rather than granting a permission.","notes":[{"t":"This is not indifference about truth. Five verses have just refused to merge the two practices, and this line says what is left after the refusal, which is that each party keeps its own and neither performs the other's.","lvl":"editorial"},{"t":"Some held that the verse was abrogated by the later verses of fighting. Many exegetes rejected this, on the ground that it reports a fact about who worships what rather than issuing a ruling that could be replaced.","lvl":"debated","src":"the claim of abrogation is recorded and rejected by Ibn Kathir among others"},{"t":"The final word is written diin without its yaa, matching the rhyme of the surah. The Mushaf's spelling follows the recitation here rather than the ordinary grammar of the possessive.","lvl":"editorial"}],"links":[{"ref":"2:256","why":"there is no compulsion in religion, the ruling that matches this statement"},{"ref":"10:41","why":"the same separation stated as a formula of disavowal"}]}}},{"n":110,"verses":{"1":{"words":[{"a":"إِذَا","t":"idhā","g":"when"},{"a":"جَآءَ","t":"jāʾa","g":"comes"},{"a":"نَصْرُ","t":"naṣru","g":"the help of"},{"a":"ٱللَّهِ","t":"llāhi","g":"Allah"},{"a":"وَٱلْفَتْحُ","t":"wal-fatḥ","g":"and the opening"}],"sense":"A condition is opened and left hanging. When the help of Allah comes, and the opening. The sentence will not be completed until the third verse, and what completes it is not what a reader expects.","notes":[{"t":"Arabic has two particles for a condition. In is used when the thing may or may not happen, and idhaa when it will happen and only the timing is open. The surah uses idhaa, so the victory is not being promised, it is being scheduled.","lvl":"editorial"},{"t":"Fath is literally an opening, the word for unlocking a door. Most exegetes read al-fath here as the opening of Makkah, which is how Arabic came to name that event.","lvl":"debated","src":"at-Tabari and Ibn Kathir take al-fatḥ as the conquest of Makkah; a minority read it generally"},{"t":"The help is attributed to Allah before the outcome is named, so the grammar puts the agent first and the achievement second. Nobody is congratulated in this verse.","lvl":"quran"}],"links":[{"ref":"48:1","why":"indeed We have opened for you a clear opening, the same word as a title"},{"ref":"61:13","why":"help from Allah and an opening near at hand"}]},"2":{"words":[{"a":"وَرَأَيْتَ","t":"wa-raʾayta","g":"and you see"},{"a":"ٱلنَّاسَ","t":"an-nāsa","g":"the people"},{"a":"يَدْخُلُونَ","t":"yadkhulūna","g":"entering"},{"a":"فِى","t":"fī","g":"into"},{"a":"دِينِ","t":"dīni","g":"the religion of"},{"a":"ٱللَّهِ","t":"llāhi","g":"Allah"},{"a":"أَفْوَاجًا","t":"afwājā","g":"in throngs"}],"sense":"The second half of the condition. Not only the city opened, but people arriving in groups, which is a different thing from a city changing hands and is the part the surah counts.","notes":[{"t":"Afwaaj is the plural of fawj, a band or troop of people moving together. Arrival by delegation rather than one convert at a time, which is exactly what the years after the opening of Makkah looked like.","lvl":"editorial"},{"t":"The verb is second person singular, and you see. The whole scene is put in front of one man who had begun with a handful of followers and had been driven out of the city now described as open.","lvl":"editorial"},{"t":"The Qur'an says elsewhere that the purpose is for the religion to be made to prevail, and it says it in the same period. The scene here is that statement arriving.","lvl":"quran","src":"61:9"}],"links":[{"ref":"61:9","why":"He sent His Messenger with guidance so as to make it prevail over all religion"},{"ref":"48:1","why":"the opening announced before it happened, in the surah named for it"}]},"3":{"words":[{"a":"فَسَبِّحْ","t":"fa-sabbiḥ","g":"then declare Him free of fault"},{"a":"بِحَمْدِ","t":"bi-ḥamdi","g":"with the praise of"},{"a":"رَبِّكَ","t":"rabbika","g":"your Lord"},{"a":"وَٱسْتَغْفِرْهُ","t":"wa-staghfirhu","g":"and ask His forgiveness"},{"a":"إِنَّهُۥ","t":"innahu","g":"indeed He"},{"a":"كَانَ","t":"kāna","g":"is"},{"a":"تَوَّابًا","t":"tawwābā","g":"ever returning in acceptance"}],"sense":"Here is what the condition was building to. On the day the thing you were promised arrives, glorify your Lord and ask Him to forgive you. Not celebrate, and not take stock. Ask forgiveness at the moment of the win.","notes":[{"t":"Tasbih means declaring Allah free of any fault, and it is the natural response to a success, because a success is where a person is most tempted to attach some of the credit to himself. Istighfar at that same moment covers whatever attached anyway.","lvl":"editorial"},{"t":"Ibn ʿAbbas said that ʿUmar used to seat him among the veterans of Badr, and when ʿUmar asked them what this surah meant, some said it was about being commanded to praise and seek forgiveness when given victory. Ibn ʿAbbas said it announced the approaching death of the Prophet ﷺ, and ʿUmar said he knew of it only what Ibn ʿAbbas knew.","lvl":"sunnah","src":"Bukhari, Book of Tafsīr, Sūrat an-Naṣr, from Ibn ʿAbbās"},{"t":"ʿAaʾisha reported that the Prophet ﷺ used to say often in his bowing and prostration, glory be to You O Allah our Lord and with Your praise, O Allah forgive me, acting on what this surah told him to do.","lvl":"sunnah","src":"Bukhari and Muslim, chapters on bowing and prostration, from ʿĀʾisha"}],"links":[{"ref":"15:98","why":"so glorify your Lord with praise and be among those who prostrate"},{"ref":"40:55","why":"ask forgiveness for your sin and glorify your Lord with praise, morning and evening"}]}}}]}
+{
+ "tranche": "f",
+ "surahs": [
+  {
+   "n": 89,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "وَٱلْفَجْرِ",
+       "t": "wal-fajr",
+       "g": "by the dawn"
+      }
+     ],
+     "sense": "One word makes the whole verse. Allah swears by the daybreak, the moment the dark is cut and the light gets through, and the surah that follows will be about things being broken open and shown for what they are.",
+     "notes": [
+      {
+       "t": "Fajr comes from the root f-j-r, which means to split something so that what was inside comes out. The same root is used of water bursting from rock and of a canal being cut. The dawn is named in Arabic for the tearing of the night, not for the arrival of the sun.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Which dawn is sworn by is not settled. Daybreak in general, the dawn of the tenth of Dhul-Hijjah, the dawn of the first of Muharram and the dawn prayer itself have all been held by early exegetes.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir record the several positions without deciding one"
+      },
+      {
+       "t": "The surah opens with four oaths in four verses before it says anything at all about what it is arguing. The oaths are all pieces of time and all of them are recurring.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "113:1",
+       "why": "Lord of the daybreak, built on the other Arabic root for splitting"
+      },
+      {
+       "ref": "81:18",
+       "why": "another oath by the morning, described as breathing"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "وَلَيَالٍ",
+       "t": "wa-layālin",
+       "g": "and by nights"
+      },
+      {
+       "a": "عَشْرٍ",
+       "t": "ʿashr",
+       "g": "ten"
+      }
+     ],
+     "sense": "Ten nights, and the Arabic leaves both words indefinite so that no calendar date is written into the text. The reader is told there are ten of them and not told, in the surah itself, which ten.",
+     "notes": [
+      {
+       "t": "Most exegetes read these as the first ten nights of Dhul-Hijjah. Others read them as the last ten of Ramadan, and a smaller group as the first ten of Muharram. The wording supports all three because it names none.",
+       "lvl": "debated",
+       "src": "at-Tabari records all three readings; Ibn Kathir prefers the ten of Dhul-Hijjah"
+      },
+      {
+       "t": "The Prophet ﷺ said that there are no days in which righteous deeds are more beloved to Allah than the first ten days of Dhul-Hijjah. This is the strongest external support for the majority reading.",
+       "lvl": "sunnah",
+       "src": "Bukhari, Book of the Two Eids, from Ibn ʿAbbās"
+      },
+      {
+       "t": "Nights rather than days. The Arabic month is counted by its nights, and the acts these ten are known for, standing in prayer and setting out for the pilgrimage, are night work.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "97:3",
+       "why": "one night the Qur'an does count, and rates above a thousand months"
+      },
+      {
+       "ref": "2:203",
+       "why": "remember Allah during appointed numbered days"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَٱلشَّفْعِ",
+       "t": "wash-shafʿ",
+       "g": "and by the even"
+      },
+      {
+       "a": "وَٱلْوَتْرِ",
+       "t": "wal-watr",
+       "g": "and the odd"
+      }
+     ],
+     "sense": "An oath by the even and the odd. Between them the two categories take in every number there is, so the oath covers everything countable without naming a single thing.",
+     "notes": [
+      {
+       "t": "The identifications offered by the early exegetes run to a dozen and more: creation is even and the Creator is odd; the days of sacrifice against the day of Arafah; the prayers, some with even units and some odd; Adam and his wife against Allah. No consensus formed.",
+       "lvl": "debated",
+       "src": "at-Tabari lists the positions at length and settles on none"
+      },
+      {
+       "t": "Shafʿ means paired, from a verb meaning to join a second thing to a first. The word shafaaʿa, intercession, is from the same root: an intercessor is a second party added to your case.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Watr is the word behind the witr prayer, the odd unit that closes the night. The name of the prayer is the name of the number.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "51:49",
+       "why": "of every thing We created pairs, so that you might remember"
+      },
+      {
+       "ref": "36:36",
+       "why": "pairs in what the earth grows, in themselves, and in what they do not know"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "وَٱلَّيْلِ",
+       "t": "wal-layli",
+       "g": "and by the night"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "يَسْرِ",
+       "t": "yasri",
+       "g": "it travels on"
+      }
+     ],
+     "sense": "The night is given a verb that belongs to people. Sara is what a caravan does after dark, moving while the world sleeps, and the night is described doing the thing that is done inside it.",
+     "notes": [
+      {
+       "t": "Yasri is from sara, to travel by night, the verb behind the word israa. Applying it to the night itself makes the night a traveller rather than a container, something passing through rather than something you sit inside.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The final yaa of yasri is dropped in the written text to match the rhyme of the surah. The canonical readers differ over whether to restore it when joining the verse to what follows.",
+       "lvl": "debated",
+       "src": "the ten readings differ on restoring the yāʾ; Hafs stops on yasri without it"
+      },
+      {
+       "t": "Three of the four oaths are on the boundary between light and dark, and the fourth is on number. The surah begins by pointing at things that pass whether or not anyone watches them.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "92:1",
+       "why": "an oath by the night when it covers over"
+      },
+      {
+       "ref": "81:17",
+       "why": "an oath by the night as it draws to a close"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "هَلْ",
+       "t": "hal",
+       "g": "is there"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "قَسَمٌ",
+       "t": "qasamun",
+       "g": "an oath"
+      },
+      {
+       "a": "لِّذِى",
+       "t": "li-dhī",
+       "g": "for one possessing"
+      },
+      {
+       "a": "حِجْرٍ",
+       "t": "ḥijr",
+       "g": "restraint of mind"
+      }
+     ],
+     "sense": "The oaths close with a question instead of a conclusion. Is that an oath for a person with a mind. Nothing is proved and nothing is defended; the reader is handed the four things sworn by and asked whether they carry weight.",
+     "notes": [
+      {
+       "t": "Hijr is not the ordinary word for intellect. It means a stone enclosure, a fenced place, and by extension the faculty that holds a person back from what he would otherwise do. Arabic names intelligence here by its power of restraint rather than by its power of thought.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The related word hijr appears in the Qur'an for a barrier and in the name of the rock city of Thamud, whose people are named two verses later. The word for a mind that fences you in and the word for a valley fenced in by cliffs are the same.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an addresses those of understanding often, and it usually asks them to look at things already in front of them rather than to accept a claim on authority.",
+       "lvl": "quran",
+       "src": "3:190"
+      }
+     ],
+     "links": [
+      {
+       "ref": "3:190",
+       "why": "signs in the night and the day for those of understanding"
+      },
+      {
+       "ref": "38:29",
+       "why": "a Book sent down so that those of understanding would reflect"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "a-lam",
+       "g": "have you not"
+      },
+      {
+       "a": "تَرَ",
+       "t": "tara",
+       "g": "seen"
+      },
+      {
+       "a": "كَيْفَ",
+       "t": "kayfa",
+       "g": "how"
+      },
+      {
+       "a": "فَعَلَ",
+       "t": "faʿala",
+       "g": "dealt"
+      },
+      {
+       "a": "رَبُّكَ",
+       "t": "rabbuka",
+       "g": "your Lord"
+      },
+      {
+       "a": "بِعَادٍ",
+       "t": "bi-ʿād",
+       "g": "with Aad"
+      }
+     ],
+     "sense": "The oaths end and history begins. Three parties will be named in the next five verses, and the first is Aad, the people of Hud, who lived in the sand tracts of southern Arabia and were taken by a wind.",
+     "notes": [
+      {
+       "t": "Have you not seen is addressed to someone who did not witness any of it. Seeing here means knowing by ruin and report, which is how the Qur'an ordinarily asks a reader to look at a nation that is gone.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb is faʿala, plainly did or dealt. The verse does not yet say destroyed. It says look at what happened, and leaves the naming of it until verse thirteen.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an gives Aad a prophet, Hud, and a punishment, a violent cold wind loosed against them for seven nights and eight days.",
+       "lvl": "quran",
+       "src": "69:6-7"
+      }
+     ],
+     "links": [
+      {
+       "ref": "7:65",
+       "why": "Hud sent to his people Aad, and what he said to them"
+      },
+      {
+       "ref": "46:24",
+       "why": "they saw the cloud and thought it was rain coming to them"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "إِرَمَ",
+       "t": "Irama",
+       "g": "Iram"
+      },
+      {
+       "a": "ذَاتِ",
+       "t": "dhāti",
+       "g": "possessor of"
+      },
+      {
+       "a": "ٱلْعِمَادِ",
+       "t": "al-ʿimād",
+       "g": "the pillars"
+      }
+     ],
+     "sense": "Aad is narrowed to a particular name and a particular mark. Iram of the pillars. The verse identifies them by what they built, which is exactly what they would have wanted to be identified by.",
+     "notes": [
+      {
+       "t": "Whether Iram is the name of an ancestor, of a branch of the tribe, or of a city they built, the early exegetes did not agree. All three readings are transmitted and the grammar of the verse supports each.",
+       "lvl": "debated",
+       "src": "at-Tabari records the tribal and the place readings side by side"
+      },
+      {
+       "t": "Imad is a tent pole or a column. Some read the pillars as tall stone architecture, others as the tent poles of a people who moved, and others as the height of the men themselves. The Qur'an itself does not say.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir collect the three readings from the early generations"
+      },
+      {
+       "t": "Iram appears once in the whole Qur'an, here. A proper noun used a single time is a marker that the audience was expected to recognise it without explanation.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "26:128",
+       "why": "do you build on every high place a monument for vanity"
+      },
+      {
+       "ref": "41:15",
+       "why": "Aad said, who is stronger than us in might"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "ٱلَّتِى",
+       "t": "allatī",
+       "g": "which"
+      },
+      {
+       "a": "لَمْ",
+       "t": "lam",
+       "g": "not"
+      },
+      {
+       "a": "يُخْلَقْ",
+       "t": "yukhlaq",
+       "g": "was created"
+      },
+      {
+       "a": "مِثْلُهَا",
+       "t": "mithluhā",
+       "g": "the like of it"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلْبِلَٰدِ",
+       "t": "al-bilād",
+       "g": "the lands"
+      }
+     ],
+     "sense": "Nothing like it had been made anywhere. The verse concedes the achievement in full and in the plainest terms before it says a word about what became of them.",
+     "notes": [
+      {
+       "t": "The Qur'an grants the claim rather than disputing it. The argument that follows does not need Iram to have been overrated; it works better if the city was everything its builders said it was.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Al-bilad, the lands, is the same word used three verses later for where they transgressed. What they excelled in and what they spoiled are given the same name.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Yukhlaq is passive, was created, which quietly puts the building of the city inside the category of things Allah brings about rather than things men achieve unaided.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "40:82",
+       "why": "they were greater than these in strength and in traces left on the earth"
+      },
+      {
+       "ref": "30:9",
+       "why": "they cultivated the earth and built it up more than these have"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "وَثَمُودَ",
+       "t": "wa-Thamūda",
+       "g": "and Thamud"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "جَابُوا۟",
+       "t": "jābū",
+       "g": "hollowed out"
+      },
+      {
+       "a": "ٱلصَّخْرَ",
+       "t": "aṣ-ṣakhra",
+       "g": "the rock"
+      },
+      {
+       "a": "بِٱلْوَادِ",
+       "t": "bil-wād",
+       "g": "in the valley"
+      }
+     ],
+     "sense": "The second party, and again they are identified by their engineering. Thamud cut their houses out of the cliff faces of a valley in the north of Arabia, and the facades are still standing there.",
+     "notes": [
+      {
+       "t": "Jaba means to cut through a thing and hollow it, used of boring a hole and of crossing a desert by cutting across it. The verse does not say they carved decoration; it says they took the inside out of the rock.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "On the march to Tabuk the Prophet ﷺ passed the dwellings of Thamud at al-Hijr and told his companions not to enter the homes of a punished people except in tears, lest what struck them strike those who came to look.",
+       "lvl": "sunnah",
+       "src": "Bukhari, Book of the Prophets, on the army passing al-Hijr, from Ibn ʿUmar"
+      },
+      {
+       "t": "Aad built upward and Thamud cut inward. Both are named for permanence, and both are given one clause each in a surah about what does not last.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "7:74",
+       "why": "you carve houses out of the mountains with skill"
+      },
+      {
+       "ref": "91:11",
+       "why": "Thamud denied through their transgression, and what followed"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "وَفِرْعَوْنَ",
+       "t": "wa-Firʿawna",
+       "g": "and Pharaoh"
+      },
+      {
+       "a": "ذِى",
+       "t": "dhī",
+       "g": "possessor of"
+      },
+      {
+       "a": "ٱلْأَوْتَادِ",
+       "t": "al-awtād",
+       "g": "the stakes"
+      }
+     ],
+     "sense": "The third party is a single man rather than a nation, and he gets an epithet the Qur'an uses only of him. Pharaoh of the stakes.",
+     "notes": [
+      {
+       "t": "Awtad is the plural of watad, a tent peg. The readings offered are that his armies pegged down his rule, that his monuments stood like pegs in the ground, and that he pinned people to the ground on stakes when he tortured them. All three are old.",
+       "lvl": "debated",
+       "src": "at-Tabari transmits each of the three readings from early authorities"
+      },
+      {
+       "t": "The Qur'an uses the same word for the mountains, which it calls pegs for the earth. Whatever the stakes of Pharaoh were, the vocabulary is the vocabulary of fixing something down so it cannot move.",
+       "lvl": "quran",
+       "src": "78:7"
+      },
+      {
+       "t": "Three names, three eras, three regions. Aad in the south, Thamud in the north, Pharaoh in Egypt. The surah is showing a pattern rather than telling three stories.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "38:12",
+       "why": "the only other place the Qur'an calls him Pharaoh of the stakes"
+      },
+      {
+       "ref": "79:24",
+       "why": "Pharaoh said, I am your lord, the most high"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "طَغَوْا۟",
+       "t": "ṭaghaw",
+       "g": "transgressed"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلْبِلَٰدِ",
+       "t": "al-bilād",
+       "g": "the lands"
+      }
+     ],
+     "sense": "One relative clause is made to carry all three parties. Whatever else separated them, the charge is identical, and it is stated in four words.",
+     "notes": [
+      {
+       "t": "Tagha is a water word before it is a moral one. It is what a river does when it rises past its banks. The Qur'an uses it of the flood in the time of Nuh, and the picture underneath the moral term is of something that has left its channel.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The charge is not disbelief here, though the Qur'an charges these nations with that elsewhere. It is transgression in the lands, a thing done to a place and to the people in it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an states the mechanism of transgression directly in another surah: man transgresses when he sees himself as needing nobody.",
+       "lvl": "quran",
+       "src": "96:6-7"
+      }
+     ],
+     "links": [
+      {
+       "ref": "69:11",
+       "why": "when the water transgressed its bounds, We carried you in the sailing ship"
+      },
+      {
+       "ref": "96:6",
+       "why": "no indeed, man transgresses when he sees himself self-sufficient"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "فَأَكْثَرُوا۟",
+       "t": "fa-aktharū",
+       "g": "and they multiplied"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "therein"
+      },
+      {
+       "a": "ٱلْفَسَادَ",
+       "t": "al-fasād",
+       "g": "the corruption"
+      }
+     ],
+     "sense": "Transgression is the first step and this is the second. They did not merely spoil something, they increased the spoiling, which means it had time to become normal and to be organised.",
+     "notes": [
+      {
+       "t": "Fasad is spoilage, the state of a thing that was sound and has gone off. Arabic uses it of meat, of a wound and of a state. It is not the word for an attack from outside but for rot on the inside.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb is aktharu, they made it much. The offence named is scale, which is the offence a whole civilisation is capable of and a single person mostly is not.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an ties corruption on land and sea to what human hands have earned, and gives the reason: so that He may let them taste part of what they did, and so they might turn back.",
+       "lvl": "quran",
+       "src": "30:41"
+      }
+     ],
+     "links": [
+      {
+       "ref": "30:41",
+       "why": "corruption appeared on land and sea by what men's hands earned"
+      },
+      {
+       "ref": "2:205",
+       "why": "he strives to spread corruption in the land, and Allah does not love corruption"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "فَصَبَّ",
+       "t": "fa-ṣabba",
+       "g": "so He poured down"
+      },
+      {
+       "a": "عَلَيْهِمْ",
+       "t": "ʿalayhim",
+       "g": "upon them"
+      },
+      {
+       "a": "رَبُّكَ",
+       "t": "rabbuka",
+       "g": "your Lord"
+      },
+      {
+       "a": "سَوْطَ",
+       "t": "sawṭa",
+       "g": "a lash of"
+      },
+      {
+       "a": "عَذَابٍ",
+       "t": "ʿadhāb",
+       "g": "punishment"
+      }
+     ],
+     "sense": "Two images are welded together. Poured is what you do with liquid; a lash is what you swing. The punishment is described as both falling on them from above and striking them.",
+     "notes": [
+      {
+       "t": "Sabba is the verb for pouring water out of a vessel. Putting it with sawt, a whip, gives a sentence that no English rendering keeps intact, because English will not let a whip be poured.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Some lexicographers connect sawt to the verb sata, to stir and mix, so that a sawt of punishment is a measure of it blended together. The whip reading and the mixture reading are both current.",
+       "lvl": "debated",
+       "src": "az-Zamakhshari notes both derivations in al-Kashshaf"
+      },
+      {
+       "t": "Your Lord, said to the Prophet ﷺ, is the same phrase used in verse six and again in verse fourteen. The three destroyed parties are framed on both sides by the relationship of one man to his Lord.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "11:82",
+       "why": "the town turned upside down and stones of hard clay rained on it"
+      },
+      {
+       "ref": "105:4",
+       "why": "birds pelting them with stones of baked clay"
+      }
+     ]
+    },
+    "14": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "رَبَّكَ",
+       "t": "rabbaka",
+       "g": "your Lord"
+      },
+      {
+       "a": "لَبِٱلْمِرْصَادِ",
+       "t": "la-bil-mirṣād",
+       "g": "is at the place of watch"
+      }
+     ],
+     "sense": "The history closes on one line, and it is not a threat so much as a location. Your Lord is at the lookout. The road the nations were travelling had a watchpost on it, and it still does.",
+     "notes": [
+      {
+       "t": "Mirsad is a noun of place from the verb rasada, to watch for something and wait for it to pass. It names a post on a route where a watcher sits. The verse does not say Allah is angry; it says where He is with respect to the road.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses a word from the same root for Hell itself, calling it a place lying in wait. The verse here and that one describe the same arrangement from two ends.",
+       "lvl": "quran",
+       "src": "78:21"
+      },
+      {
+       "t": "Fourteen verses in, the surah has said nothing yet about its actual subject, which is a man's reading of his own comfort. The history of the three nations turns out to be the setup.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:21",
+       "why": "Hell described with the same root, as a place lying in wait"
+      },
+      {
+       "ref": "4:1",
+       "why": "Allah is ever watchful over you"
+      }
+     ]
+    },
+    "15": {
+     "words": [
+      {
+       "a": "فَأَمَّا",
+       "t": "fa-ammā",
+       "g": "as for"
+      },
+      {
+       "a": "ٱلْإِنسَٰنُ",
+       "t": "al-insānu",
+       "g": "man"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "ever"
+      },
+      {
+       "a": "ٱبْتَلَىٰهُ",
+       "t": "ibtalāhu",
+       "g": "tests him"
+      },
+      {
+       "a": "رَبُّهُۥ",
+       "t": "rabbuhu",
+       "g": "his Lord"
+      },
+      {
+       "a": "فَأَكْرَمَهُۥ",
+       "t": "fa-akramahu",
+       "g": "and honours him"
+      },
+      {
+       "a": "وَنَعَّمَهُۥ",
+       "t": "wa-naʿʿamahu",
+       "g": "and gives him ease"
+      },
+      {
+       "a": "فَيَقُولُ",
+       "t": "fa-yaqūlu",
+       "g": "he says"
+      },
+      {
+       "a": "رَبِّىٓ",
+       "t": "rabbī",
+       "g": "my Lord"
+      },
+      {
+       "a": "أَكْرَمَنِ",
+       "t": "akraman",
+       "g": "has honoured me"
+      }
+     ],
+     "sense": "The subject arrives. When Allah tests a man by giving him honour and comfort, the man reports the honour and drops the test. What he says is true as far as it goes, and it goes only halfway.",
+     "notes": [
+      {
+       "t": "The governing verb is ibtala, to test. The honouring and the ease are not the alternative to the test, they are the content of it. The verse says the gift is the examination.",
+       "lvl": "quran"
+      },
+      {
+       "t": "He is not accused of lying. My Lord has honoured me is an accurate description of what happened. The fault is that he has read a result off a process still running.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Al-insan, man, with the article and in the singular, is how the Qur'an usually introduces a habit of the species rather than a particular individual.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "21:35",
+       "why": "We test you with evil and with good as a trial, and to Us you will be returned"
+      },
+      {
+       "ref": "8:28",
+       "why": "know that your wealth and your children are a test"
+      }
+     ]
+    },
+    "16": {
+     "words": [
+      {
+       "a": "وَأَمَّآ",
+       "t": "wa-ammā",
+       "g": "but as for"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "ever"
+      },
+      {
+       "a": "ٱبْتَلَىٰهُ",
+       "t": "ibtalāhu",
+       "g": "He tests him"
+      },
+      {
+       "a": "فَقَدَرَ",
+       "t": "fa-qadara",
+       "g": "and measures out narrowly"
+      },
+      {
+       "a": "عَلَيْهِ",
+       "t": "ʿalayhi",
+       "g": "for him"
+      },
+      {
+       "a": "رِزْقَهُۥ",
+       "t": "rizqahu",
+       "g": "his provision"
+      },
+      {
+       "a": "فَيَقُولُ",
+       "t": "fa-yaqūlu",
+       "g": "he says"
+      },
+      {
+       "a": "رَبِّىٓ",
+       "t": "rabbī",
+       "g": "my Lord"
+      },
+      {
+       "a": "أَهَٰنَنِ",
+       "t": "ahānan",
+       "g": "has humiliated me"
+      }
+     ],
+     "sense": "Same verb, opposite verdict. When the provision is measured out tight, the man calls it humiliation. The two verses together describe someone who has decided that money is the language his Lord speaks to him in.",
+     "notes": [
+      {
+       "t": "The two halves are not symmetrical, and the asymmetry is the argument. In the first case Allah is described as honouring, so the man's word honoured at least echoes the text. In the second Allah is described only as measuring. The word humiliated is supplied entirely by the man.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Qadara here is not to decree but to restrict, to portion out with a short measure. The Qur'an uses the same verb for one who is given his provision in a narrow amount and is told to spend from what he has.",
+       "lvl": "quran",
+       "src": "65:7"
+      },
+      {
+       "t": "Some canonical readers recite qaddara with a doubled daal, which strengthens the sense of measuring out deliberately rather than merely limiting.",
+       "lvl": "debated",
+       "src": "the ten readings; Ibn ʿĀmir and others read qaddara, Hafs reads qadara"
+      }
+     ],
+     "links": [
+      {
+       "ref": "17:30",
+       "why": "your Lord extends provision for whom He wills and restricts it"
+      },
+      {
+       "ref": "65:7",
+       "why": "the one whose provision is straitened is told what to do rather than told what it means"
+      }
+     ]
+    },
+    "17": {
+     "words": [
+      {
+       "a": "كَلَّا",
+       "t": "kallā",
+       "g": "no"
+      },
+      {
+       "a": "بَل",
+       "t": "bal",
+       "g": "rather"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "you do not"
+      },
+      {
+       "a": "تُكْرِمُونَ",
+       "t": "tukrimūna",
+       "g": "honour"
+      },
+      {
+       "a": "ٱلْيَتِيمَ",
+       "t": "al-yatīm",
+       "g": "the orphan"
+      }
+     ],
+     "sense": "The rebuttal comes as a single word of refusal and then changes the subject from theology to conduct. It also changes person. Up to here it was he; from here it is you.",
+     "notes": [
+      {
+       "t": "Kalla rejects both of the previous verdicts at once, the one about honour and the one about humiliation. It does not correct the definitions; it says the whole scale is wrong.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The root k-r-m runs through three verses. He says his Lord honoured him, and he is told that he does not honour the one person in front of him who has no protector. The word he wants applied to himself is the word he withholds.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The charge is not cruelty to the orphan but failure to honour him. Omission is enough to be named here, which sets a floor much higher than not doing harm.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "93:9",
+       "why": "as for the orphan, do not treat him harshly, said to the Prophet ﷺ who had been one"
+      },
+      {
+       "ref": "107:2",
+       "why": "the one who denies the reckoning is the one who pushes the orphan away"
+      }
+     ]
+    },
+    "18": {
+     "words": [
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and you do not"
+      },
+      {
+       "a": "تَحَٰٓضُّونَ",
+       "t": "taḥāḍḍūna",
+       "g": "urge one another"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "toward"
+      },
+      {
+       "a": "طَعَامِ",
+       "t": "ṭaʿāmi",
+       "g": "the feeding of"
+      },
+      {
+       "a": "ٱلْمِسْكِينِ",
+       "t": "al-miskīn",
+       "g": "the poor person"
+      }
+     ],
+     "sense": "The second charge is not that they fail to feed the poor. It is that they do not push each other to do it. The failure named is in the conversation a society has with itself, not in one person's account book.",
+     "notes": [
+      {
+       "t": "Tahaadduna is a reciprocal form, each urging the other and being urged in turn. A person could satisfy the previous charge privately. This one cannot be satisfied alone.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The canonical readers differ between tahaadduna, urging one another, and tahudduna, simply urging. The reciprocal sense belongs to the reading of Hafs that this Mushaf follows.",
+       "lvl": "debated",
+       "src": "the ten readings; ʿĀsim and others read taḥāḍḍūna, Nafiʿ and Ibn ʿĀmir read taḥuḍḍūna"
+      },
+      {
+       "t": "Miskin is from sukun, stillness. The word describes a person whose need has brought him to a stop, which is why the Qur'an usually pairs him with feeding rather than with employment.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "107:3",
+       "why": "and he does not urge the feeding of the poor, the same charge in the same words"
+      },
+      {
+       "ref": "69:34",
+       "why": "the reason given for a man's fate on the Day is that he did not urge this"
+      }
+     ]
+    },
+    "19": {
+     "words": [
+      {
+       "a": "وَتَأْكُلُونَ",
+       "t": "wa-taʾkulūna",
+       "g": "and you devour"
+      },
+      {
+       "a": "ٱلتُّرَاثَ",
+       "t": "at-turātha",
+       "g": "the inheritance"
+      },
+      {
+       "a": "أَكْلًا",
+       "t": "aklan",
+       "g": "a devouring"
+      },
+      {
+       "a": "لَّمًّا",
+       "t": "lammā",
+       "g": "that gathers up everything"
+      }
+     ],
+     "sense": "The third charge is about estates. Inheritance is eaten whole, with no line drawn between the portion that belongs to the eater and the portion that belongs to somebody weaker who cannot press a claim.",
+     "notes": [
+      {
+       "t": "Lamm means to gather a thing up completely, sweeping the whole heap together. The word does not accuse them of taking what is not theirs so much as of not sorting it, which comes to the same result and feels cleaner while you do it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Turath is what the dead leave behind. The charge sits directly after the orphan, and an orphan is precisely the party in an estate who cannot argue for a share.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an elsewhere states the consequence in the plainest physical terms: those who consume the property of orphans unjustly are consuming fire into their bellies.",
+       "lvl": "quran",
+       "src": "4:10"
+      }
+     ],
+     "links": [
+      {
+       "ref": "4:10",
+       "why": "consuming the wealth of orphans described as swallowing fire"
+      },
+      {
+       "ref": "4:7",
+       "why": "fixed shares assigned to men and to women out of what is left"
+      }
+     ]
+    },
+    "20": {
+     "words": [
+      {
+       "a": "وَتُحِبُّونَ",
+       "t": "wa-tuḥibbūna",
+       "g": "and you love"
+      },
+      {
+       "a": "ٱلْمَالَ",
+       "t": "al-māla",
+       "g": "wealth"
+      },
+      {
+       "a": "حُبًّا",
+       "t": "ḥubban",
+       "g": "with a love"
+      },
+      {
+       "a": "جَمًّا",
+       "t": "jammā",
+       "g": "heaped up"
+      }
+     ],
+     "sense": "The fourth charge names the engine behind the other three. Not that they have wealth, and not that they use it badly, but that they love it, and that the love has piled up past any level it could be spent at.",
+     "notes": [
+      {
+       "t": "Jamm is used of water that has collected in a well until it fills it, standing rather than flowing. The image is of an affection that has pooled with nowhere to go out.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The four charges run in a deliberate order. Two are refusals to give, the orphan and the poor, and two are appetites to take, the estate and the money. The last one explains the first three.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an makes the same charge in the same vocabulary elsewhere, saying man is intense in his love of wealth, and there too the statement follows a description of ingratitude.",
+       "lvl": "quran",
+       "src": "100:8"
+      }
+     ],
+     "links": [
+      {
+       "ref": "100:8",
+       "why": "and indeed he is intense in love of wealth"
+      },
+      {
+       "ref": "102:1",
+       "why": "competing for increase distracted you until you visited the graves"
+      }
+     ]
+    },
+    "21": {
+     "words": [
+      {
+       "a": "كَلَّآ",
+       "t": "kallā",
+       "g": "no"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "دُكَّتِ",
+       "t": "dukkati",
+       "g": "is pounded"
+      },
+      {
+       "a": "ٱلْأَرْضُ",
+       "t": "al-arḍu",
+       "g": "the earth"
+      },
+      {
+       "a": "دَكًّا",
+       "t": "dakkan",
+       "g": "a pounding"
+      },
+      {
+       "a": "دَكًّا",
+       "t": "dakkā",
+       "g": "and a pounding"
+      }
+     ],
+     "sense": "The second refusal, and this time the surah answers by moving the scene. The earth is beaten flat, blow after blow, and every structure the surah has been discussing goes with it.",
+     "notes": [
+      {
+       "t": "Dakk is to strike a raised thing until it is level with the ground. The word is repeated, which in Arabic makes it repeated blows rather than one, and the whole line comes down on hard consonants.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same verb is used of what happened to the mountain when Musa asked to see his Lord, which is the Qur'an's one worked example of what this pounding looks like.",
+       "lvl": "quran",
+       "src": "7:143"
+      },
+      {
+       "t": "Iram was pillars and Thamud was cut rock and Pharaoh had stakes driven into the ground. The Day is described first as the flattening of exactly the kind of thing they built.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "69:14",
+       "why": "the earth and the mountains lifted and crushed with a single blow"
+      },
+      {
+       "ref": "7:143",
+       "why": "the mountain levelled, and Musa fell unconscious"
+      }
+     ]
+    },
+    "22": {
+     "words": [
+      {
+       "a": "وَجَآءَ",
+       "t": "wa-jāʾa",
+       "g": "and comes"
+      },
+      {
+       "a": "رَبُّكَ",
+       "t": "rabbuka",
+       "g": "your Lord"
+      },
+      {
+       "a": "وَٱلْمَلَكُ",
+       "t": "wal-malaku",
+       "g": "and the angels"
+      },
+      {
+       "a": "صَفًّا",
+       "t": "ṣaffan",
+       "g": "rank"
+      },
+      {
+       "a": "صَفًّا",
+       "t": "ṣaffā",
+       "g": "upon rank"
+      }
+     ],
+     "sense": "The court assembles. Your Lord comes, and the angels come in rows, which is how an army or a congregation stands rather than how a crowd arrives.",
+     "notes": [
+      {
+       "t": "Al-malak is singular in form and collective in sense here, one word covering the whole order of them, and then it is arranged in rows by the repeated saffan. The grammar makes them countless and organised at once.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "On the coming of the Lord, the earliest generations affirmed the wording and did not describe how. Later schools differed over whether to leave it at that or to read it as His command and His judgement arriving.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir transmit both approaches; the Athari and Ashʿari schools differ on the method"
+      },
+      {
+       "t": "Ranks are how the Qur'an keeps describing the assembly of that Day, and it is also the shape a congregation takes five times daily, which makes the scene familiar before it is frightening.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:38",
+       "why": "the day the Spirit and the angels stand in rank and no one speaks except by permission"
+      },
+      {
+       "ref": "2:210",
+       "why": "do they wait for Allah to come to them in canopies of cloud, with the angels"
+      }
+     ]
+    },
+    "23": {
+     "words": [
+      {
+       "a": "وَجِا۟ىٓءَ",
+       "t": "wa-jīʾa",
+       "g": "and is brought"
+      },
+      {
+       "a": "يَوْمَئِذٍ",
+       "t": "yawmaʾidhin",
+       "g": "that day"
+      },
+      {
+       "a": "بِجَهَنَّمَ",
+       "t": "bi-jahannama",
+       "g": "Hell"
+      },
+      {
+       "a": "يَوْمَئِذٍ",
+       "t": "yawmaʾidhin",
+       "g": "that day"
+      },
+      {
+       "a": "يَتَذَكَّرُ",
+       "t": "yatadhakkaru",
+       "g": "will remember"
+      },
+      {
+       "a": "ٱلْإِنسَٰنُ",
+       "t": "al-insānu",
+       "g": "man"
+      },
+      {
+       "a": "وَأَنَّىٰ",
+       "t": "wa-annā",
+       "g": "and how"
+      },
+      {
+       "a": "لَهُ",
+       "t": "lahu",
+       "g": "will it help him"
+      },
+      {
+       "a": "ٱلذِّكْرَىٰ",
+       "t": "adh-dhikrā",
+       "g": "the remembering"
+      }
+     ],
+     "sense": "Hell is brought forward rather than arrived at, and at the sight of it the man remembers. The surah has spent twenty verses asking him to remember while remembering is still worth something.",
+     "notes": [
+      {
+       "t": "The verb is passive. Hell is brought, which makes it an object under orders rather than a destination waiting at the end of a road. Nobody is described as walking toward it.",
+       "lvl": "quran"
+      },
+      {
+       "t": "A report describes Hell being brought on that Day with seventy thousand reins, each rein held by seventy thousand angels dragging it. Whatever the scale of the figure, the picture matches the passive verb of the verse.",
+       "lvl": "sunnah",
+       "src": "Muslim, Book of Paradise and the Description of its Delights, from Ibn Masʿūd"
+      },
+      {
+       "t": "Yatadhakkaru is the same root as dhikr, remembrance. The failure the surah has been describing was never ignorance. Everything he needed was already in him, and it surfaces at the moment it stops being useful.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "79:36",
+       "why": "Hellfire displayed for whoever sees"
+      },
+      {
+       "ref": "39:56",
+       "why": "lest a soul say, oh my regret for what I neglected toward Allah"
+      }
+     ]
+    },
+    "24": {
+     "words": [
+      {
+       "a": "يَقُولُ",
+       "t": "yaqūlu",
+       "g": "he says"
+      },
+      {
+       "a": "يَٰلَيْتَنِى",
+       "t": "yā-laytanī",
+       "g": "if only I"
+      },
+      {
+       "a": "قَدَّمْتُ",
+       "t": "qaddamtu",
+       "g": "had sent ahead"
+      },
+      {
+       "a": "لِحَيَاتِى",
+       "t": "li-ḥayātī",
+       "g": "for my life"
+      }
+     ],
+     "sense": "His one sentence on that Day. He does not ask to go back and he does not argue; he says he wishes he had sent something on ahead. And he calls the place he has arrived at my life.",
+     "notes": [
+      {
+       "t": "Qaddama is to send forward, the word used for supplies dispatched ahead of a traveller so that they are waiting when he gets there. The regret is about logistics, not about belief.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "For my life, with the possessive fixed on the world he has just entered. Standing there, he does not call the seventy years behind him his life. The Qur'an has him reclassify both worlds in two words.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an gives the same instruction in the present tense to the living: let every soul look at what it has sent forward for tomorrow.",
+       "lvl": "quran",
+       "src": "59:18"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:18",
+       "why": "the instruction phrased in the same vocabulary while there is still time"
+      },
+      {
+       "ref": "78:40",
+       "why": "the day a man looks at what his hands sent forth, and the disbeliever says, if only I were dust"
+      }
+     ]
+    },
+    "25": {
+     "words": [
+      {
+       "a": "فَيَوْمَئِذٍ",
+       "t": "fa-yawmaʾidhin",
+       "g": "so that day"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يُعَذِّبُ",
+       "t": "yuʿadhdhibu",
+       "g": "will punish"
+      },
+      {
+       "a": "عَذَابَهُۥٓ",
+       "t": "ʿadhābahu",
+       "g": "as He punishes"
+      },
+      {
+       "a": "أَحَدٌ",
+       "t": "aḥad",
+       "g": "anyone"
+      }
+     ],
+     "sense": "No one punishes the way He punishes on that Day. The comparison is with every cruelty human beings have managed, and the verse says all of it falls short of the measure.",
+     "notes": [
+      {
+       "t": "Two canonical readings stand here and both are recited. Hafs reads the active, no one punishes as He punishes. Al-Kisaaʾi and Yaʿqub read the passive, no one is punished as he is punished, which turns the verse onto the man rather than onto Allah.",
+       "lvl": "debated",
+       "src": "the ten readings; Hafs reads yuʿadhdhibu, al-Kisāʾī and Yaʿqūb read yuʿadhdhabu"
+      },
+      {
+       "t": "The surah opened with three tyrants who were expert at punishing people. Pharaoh had his stakes. The verse says the whole apparatus of human cruelty does not reach the scale being described.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ahad, anyone, is the same word Surah al-Ikhlas uses to say that nothing is equivalent to Him. Here it does the same work in the other direction.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "40:46",
+       "why": "the people of Pharaoh made to enter the severest punishment"
+      },
+      {
+       "ref": "78:30",
+       "why": "so taste, We will never increase you except in punishment"
+      }
+     ]
+    },
+    "26": {
+     "words": [
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يُوثِقُ",
+       "t": "yūthiqu",
+       "g": "will bind"
+      },
+      {
+       "a": "وَثَاقَهُۥٓ",
+       "t": "wathāqahu",
+       "g": "as He binds"
+      },
+      {
+       "a": "أَحَدٌ",
+       "t": "aḥad",
+       "g": "anyone"
+      }
+     ],
+     "sense": "The second half of the same statement. No one ties the way He ties. Punishment and restraint are named separately, because a person can be hurt and still be free to move.",
+     "notes": [
+      {
+       "t": "Wathaq is the rope or the fetter itself, from a root meaning to make firm. The related word mithaq, a covenant, is the same idea applied to an agreement: something tied so it holds.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The alternative reading runs through both verses together. Hafs has the active in each, and the readers who take the passive take it in both, so the pair stays consistent whichever way it is recited.",
+       "lvl": "debated",
+       "src": "the ten readings; al-Kisāʾī and Yaʿqūb read yūthaqu alongside yuʿadhdhabu"
+      },
+      {
+       "t": "The man in verse twenty was described as loving wealth in a heap and gathering estates up whole. The two verses that answer him are about being held down and unable to gather anything.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "69:30",
+       "why": "seize him and fetter him, then a chain of seventy cubits"
+      },
+      {
+       "ref": "76:4",
+       "why": "chains, shackles and a blaze prepared for those who deny"
+      }
+     ]
+    },
+    "27": {
+     "words": [
+      {
+       "a": "يَٰٓأَيَّتُهَا",
+       "t": "yā-ayyatuhā",
+       "g": "O you"
+      },
+      {
+       "a": "ٱلنَّفْسُ",
+       "t": "an-nafsu",
+       "g": "soul"
+      },
+      {
+       "a": "ٱلْمُطْمَئِنَّةُ",
+       "t": "al-muṭmaʾinnah",
+       "g": "at rest"
+      }
+     ],
+     "sense": "In the middle of the assembly and the fetters, the surah turns and speaks to somebody directly. It does not say the believing soul or the obedient soul. It says the settled one, and the description is about the state it is in rather than the record it holds.",
+     "notes": [
+      {
+       "t": "Itmaʾanna is used of ground that has stopped shifting and of a person who has stopped looking over his shoulder. It describes rest that follows agitation, not rest that never knew any.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Where this address is spoken is discussed among the exegetes. Some place it at death, when the soul is taken, and some place it on the Day of Resurrection. Both are transmitted from the early generations and the wording carries either.",
+       "lvl": "debated",
+       "src": "at-Tabari records both the moment of death and the Day of Resurrection"
+      },
+      {
+       "t": "The Qur'an names other states of the same nafs elsewhere: the one that commands evil, and the one that reproaches itself. This one is a third name for the same thing, not a different creature.",
+       "lvl": "quran",
+       "src": "12:53 and 75:2"
+      }
+     ],
+     "links": [
+      {
+       "ref": "13:28",
+       "why": "it is in the remembrance of Allah that hearts come to rest, the same root"
+      },
+      {
+       "ref": "75:2",
+       "why": "the reproaching soul, the state this one has come through"
+      }
+     ]
+    },
+    "28": {
+     "words": [
+      {
+       "a": "ٱرْجِعِىٓ",
+       "t": "irjiʿī",
+       "g": "return"
+      },
+      {
+       "a": "إِلَىٰ",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "رَبِّكِ",
+       "t": "rabbiki",
+       "g": "your Lord"
+      },
+      {
+       "a": "رَاضِيَةً",
+       "t": "rāḍiyatan",
+       "g": "well pleased"
+      },
+      {
+       "a": "مَّرْضِيَّةً",
+       "t": "marḍiyyah",
+       "g": "and pleasing"
+      }
+     ],
+     "sense": "Return, which is a word you only use of a place something came from. And return in two conditions at once: content with Him, and accepted by Him. Either one alone would leave the sentence unfinished.",
+     "notes": [
+      {
+       "t": "Raadiya and mardiyya are the active and passive of one root set next to each other. The soul is pleased and is pleased with. The Qur'an puts both halves in because a person can be satisfied with an outcome that is not satisfactory, and can be acceptable while resenting the terms.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verbs and adjectives are feminine because nafs is a feminine noun in Arabic, not because the one addressed is a woman. The address is open to anyone.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses the same pair of words for the settlement between Allah and the truthful, and between Allah and those who followed the first believers sincerely.",
+       "lvl": "quran",
+       "src": "5:119 and 98:8"
+      }
+     ],
+     "links": [
+      {
+       "ref": "98:8",
+       "why": "Allah is pleased with them and they are pleased with Him, the same two words"
+      },
+      {
+       "ref": "5:119",
+       "why": "the same settlement stated of the truthful on the Day"
+      }
+     ]
+    },
+    "29": {
+     "words": [
+      {
+       "a": "فَٱدْخُلِى",
+       "t": "fa-dkhulī",
+       "g": "so enter"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "among"
+      },
+      {
+       "a": "عِبَٰدِى",
+       "t": "ʿibādī",
+       "g": "My servants"
+      }
+     ],
+     "sense": "Two commands close the surah and this is the first of them. Enter among My servants comes before enter My Garden, so the company is named before the place.",
+     "notes": [
+      {
+       "t": "The order is not incidental. A soul is admitted to a body of people first and to a location second, which is the reverse of how paradise is usually imagined.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ibaadi, My servants, with the possessive attached. The Arabic word for one owned is used here as the honour, and the same construction is what the Qur'an uses when it says Satan has no authority over them.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah began by describing three parties who ruled and built and pinned people down. It ends by describing servitude as the thing worth being admitted to.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "15:42",
+       "why": "over My servants you have no authority"
+      },
+      {
+       "ref": "25:63",
+       "why": "the servants of the Most Merciful walk on the earth without weight"
+      }
+     ]
+    },
+    "30": {
+     "words": [
+      {
+       "a": "وَٱدْخُلِى",
+       "t": "wa-dkhulī",
+       "g": "and enter"
+      },
+      {
+       "a": "جَنَّتِى",
+       "t": "jannatī",
+       "g": "My Garden"
+      }
+     ],
+     "sense": "Two words end it. Not a garden and not the Garden, but My Garden, which attaches the destination to the owner rather than describing what is in it.",
+     "notes": [
+      {
+       "t": "Janna is from a root meaning to cover and conceal, the same root as jinn and as junna, a shield. A garden is named in Arabic for the way its foliage hides what is under it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah gives no description of the Garden at all. After thirty verses of ruined cities, poured punishment, flattened earth and chains, the last word is a possessive pronoun and the door is open.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The whole surah is a movement from an oath by the dawn to an invitation, and the invitation is issued in the singular to one soul rather than to a nation.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "39:73",
+       "why": "peace be upon you, you have done well, so enter it to remain"
+      },
+      {
+       "ref": "43:70",
+       "why": "enter the Garden, you and your spouses, made glad"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 104,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "وَيْلٌ",
+       "t": "waylun",
+       "g": "woe"
+      },
+      {
+       "a": "لِّكُلِّ",
+       "t": "li-kulli",
+       "g": "to every"
+      },
+      {
+       "a": "هُمَزَةٍ",
+       "t": "humazatin",
+       "g": "habitual scorner"
+      },
+      {
+       "a": "لُّمَزَةٍ",
+       "t": "lumazah",
+       "g": "habitual faultfinder"
+      }
+     ],
+     "sense": "The surah opens with a threat, and the target is not a crime but a manner of speaking about people. Two words are used, and both are built to say that the man does this as a matter of course rather than in a bad moment.",
+     "notes": [
+      {
+       "t": "Humaza and lumaza are on the pattern fuʿala, which in Arabic makes a habit into a description, the way we might call someone a gossip rather than say he gossiped. It is the pattern used for someone who does a thing so often it has become what he is.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The early exegetes assigned the two words in opposite ways. Some read humaza as scorn by gesture and lumaza as scorn by tongue, some read humaza as behind the back and lumaza as to the face, and some reverse both. The pair is agreed on, the split is not.",
+       "lvl": "debated",
+       "src": "at-Tabari transmits contradictory assignments from Ibn ʿAbbās, Mujāhid and Qatāda"
+      },
+      {
+       "t": "The Prophet ﷺ defined backbiting when asked, saying it is mentioning your brother with what he would dislike, and when told that it might be true, he answered that if it is true you have backbitten him and if it is not you have slandered him.",
+       "lvl": "sunnah",
+       "src": "Muslim, Book of Righteousness and Good Manners, from Abu Hurayra"
+      }
+     ],
+     "links": [
+      {
+       "ref": "49:11",
+       "why": "do not ridicule one another, nor insult one another, nor call each other by offensive nicknames"
+      },
+      {
+       "ref": "68:11",
+       "why": "a scorner going about with slander, in a list of a man's disqualifications"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "ٱلَّذِى",
+       "t": "alladhī",
+       "g": "the one who"
+      },
+      {
+       "a": "جَمَعَ",
+       "t": "jamaʿa",
+       "g": "amassed"
+      },
+      {
+       "a": "مَالًا",
+       "t": "mālan",
+       "g": "wealth"
+      },
+      {
+       "a": "وَعَدَّدَهُۥ",
+       "t": "wa-ʿaddadah",
+       "g": "and counted it over"
+      }
+     ],
+     "sense": "The scorner is now identified by what he does with money. Two verbs: he gathered it, and then he counted it. The second is the one the surah is interested in.",
+     "notes": [
+      {
+       "t": "Gathering is an activity with an end. Counting has none, and it is what a man does with a pile once he has stopped needing it for anything. The verse puts the two verbs in that order and lets the second sit.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The relative clause joins verse one to verse two and gives the surah its argument. A man who counts is a man who ranks, and ranking is where contempt for other people comes from. The mockery in verse one and the money in verse two are the same habit at two ends.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Canonical readers differ between jamaʿa, gathered, and jammaʿa with a doubled meem, which means gathered repeatedly and in quantity. Hafs, the reading of this Mushaf, has jamaʿa.",
+       "lvl": "debated",
+       "src": "the ten readings; Ibn ʿĀmir, Hamza and al-Kisāʾī read jammaʿa"
+      }
+     ],
+     "links": [
+      {
+       "ref": "102:1",
+       "why": "competing to have more distracted you, the same appetite named directly"
+      },
+      {
+       "ref": "3:180",
+       "why": "let not those who hoard what Allah gave them think it is good for them"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "يَحْسَبُ",
+       "t": "yaḥsabu",
+       "g": "he reckons"
+      },
+      {
+       "a": "أَنَّ",
+       "t": "anna",
+       "g": "that"
+      },
+      {
+       "a": "مَالَهُۥٓ",
+       "t": "mālahu",
+       "g": "his wealth"
+      },
+      {
+       "a": "أَخْلَدَهُۥ",
+       "t": "akhladah",
+       "g": "has made him last forever"
+      }
+     ],
+     "sense": "The delusion is stated in the past tense. He does not think his money will keep him alive; he thinks it already has, that he has somehow been moved out of the category of things that end.",
+     "notes": [
+      {
+       "t": "Akhlada is past, has made him immortal, not will make him. Nobody says this out loud. The verse is describing the assumption a man acts on rather than the belief he would defend if asked.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Yahsabu is from hisab, reckoning, the same activity as the counting in the previous verse. A man who has spent his life counting is shown to have got the one sum wrong that was going to be checked.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Prophet ﷺ said that the son of Adam says my wealth, my wealth, when his wealth is only what he ate and used up, or wore and wore out, or gave away and so sent ahead.",
+       "lvl": "sunnah",
+       "src": "Muslim, Book of Renunciation, from ʿAbdullāh ibn ash-Shikhkhīr"
+      }
+     ],
+     "links": [
+      {
+       "ref": "18:35",
+       "why": "the man in the garden who said, I do not think this will ever perish"
+      },
+      {
+       "ref": "92:11",
+       "why": "his wealth will not avail him when he falls"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "كَلَّا",
+       "t": "kallā",
+       "g": "no"
+      },
+      {
+       "a": "لَيُنبَذَنَّ",
+       "t": "la-yunbadhanna",
+       "g": "he will surely be flung"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "into"
+      },
+      {
+       "a": "ٱلْحُطَمَةِ",
+       "t": "al-ḥuṭamah",
+       "g": "the Crusher"
+      }
+     ],
+     "sense": "The refusal, and then the reversal. The man who spent his life gathering things up is himself thrown away, and the word used for throwing is the one you use for rubbish.",
+     "notes": [
+      {
+       "t": "Nabadha is to toss aside something with no further use, the verb for discarding a date stone once the fruit is eaten. It is set directly against jamaʿa in verse two. He gathered, and he is discarded.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Hutamah is on the same intensive pattern as humaza and lumaza in verse one, and it is built on a verb meaning to smash something to fragments. The man who broke people down by name meets a thing named for breaking down.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The emphatic laam and the heavy nun on the verb make it a sworn certainty in Arabic rather than a prediction. The verse is constructed to leave no room in it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "101:9",
+       "why": "the one whose scales are light, his refuge will be an abyss"
+      },
+      {
+       "ref": "3:187",
+       "why": "they flung the covenant behind their backs, the same verb of discarding"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "أَدْرَىٰكَ",
+       "t": "adrāka",
+       "g": "can make you know"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "ٱلْحُطَمَةُ",
+       "t": "al-ḥuṭamah",
+       "g": "the Crusher is"
+      }
+     ],
+     "sense": "The Qur'an stops and asks the reader whether he knows what has just been named. The question is a signal that the word in the previous verse cannot be understood from ordinary experience.",
+     "notes": [
+      {
+       "t": "The Qur'an distinguishes two formulas closely. When it says maa adraaka, what can make you know, an explanation follows. When it says maa yudreeka, what will make you know, it does not, and the matter is left with Allah. Here it is the first, and the next three verses answer.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The address is second person singular, aimed at the Prophet ﷺ and through him at each reader in turn. The surah has been describing a man in the third person, and this line breaks off to face you.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same formula introduces the Night of Decree, the Striking Hour and the Day of Judgement. It is the Qur'an's marker for something outside the range of report.",
+       "lvl": "quran",
+       "src": "97:2 and 101:10"
+      }
+     ],
+     "links": [
+      {
+       "ref": "101:10",
+       "why": "and what can make you know what it is, with the same answer structure following"
+      },
+      {
+       "ref": "97:2",
+       "why": "and what can make you know what the Night of Decree is"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "نَارُ",
+       "t": "nāru",
+       "g": "the fire of"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "ٱلْمُوقَدَةُ",
+       "t": "al-mūqadah",
+       "g": "the kindled"
+      }
+     ],
+     "sense": "The answer starts by attaching the fire to a name. Not a fire but the fire of Allah, kindled, which makes it a thing lit on purpose and kept lit rather than an element that happens to be there.",
+     "notes": [
+      {
+       "t": "Fire is attached to the divine name in very few places in the Qur'an. The construction takes the fire out of the category of natural forces and puts it in the category of things that are commanded.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Al-muuqada is a passive participle, kindled by someone. Arabic participles of this form describe a standing state, so the fire is not lit once but held in the lit condition.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah has been about a man who accumulated. The answer to what the Crusher is begins by naming an owner, which is the one relation to property the man never considered applying to himself.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:24",
+       "why": "the Fire whose fuel is people and stones"
+      },
+      {
+       "ref": "111:3",
+       "why": "another short surah closing on a man, his wealth and a kindled fire"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "ٱلَّتِى",
+       "t": "allatī",
+       "g": "which"
+      },
+      {
+       "a": "تَطَّلِعُ",
+       "t": "taṭṭaliʿu",
+       "g": "mounts up over"
+      },
+      {
+       "a": "عَلَى",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "ٱلْأَفْـِٔدَةِ",
+       "t": "al-afʾidah",
+       "g": "the hearts"
+      }
+     ],
+     "sense": "The fire is described by where it goes. It climbs until it is over the hearts and looks down into them, which is a strange thing to say about burning and is exactly the point.",
+     "notes": [
+      {
+       "t": "Ittalaʿa means to climb something until you can see over the top of it, the verb for cresting a ridge and looking down the other side. Applied to fire it gives a picture of the flame reaching a vantage point rather than merely spreading.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Fuʾaad, plural afʾida, is the inner heart, and the Qur'an uses it for the seat of intention and attention rather than for the pump. The organ named is the one that held the contempt in verse one and the reckoning in verse three.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The whole surah is about interior states. Scorn, counting, assuming. The punishment described is the only one that would reach them.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "22:46",
+       "why": "it is not the eyes that go blind but the hearts inside the chests"
+      },
+      {
+       "ref": "6:110",
+       "why": "We turn away their hearts and their sight, the same word for heart"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "إِنَّهَا",
+       "t": "innahā",
+       "g": "indeed it"
+      },
+      {
+       "a": "عَلَيْهِم",
+       "t": "ʿalayhim",
+       "g": "over them"
+      },
+      {
+       "a": "مُّؤْصَدَةٌ",
+       "t": "muʾṣadah",
+       "g": "closed and fastened"
+      }
+     ],
+     "sense": "The lid goes on. The fire is not only around them, it is shut over them, and the word carries the sense of a door pulled to and secured rather than merely closed.",
+     "notes": [
+      {
+       "t": "Awsada is to shut a door and fasten it. The participle describes the finished state, so the verse is not a scene of shutting but a report of something already sealed.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The word occurs in only one other place in the Qur'an, at the end of Surah al-Balad, and there too it closes a passage about a man who had wealth and did not use it on the orphan or the poor.",
+       "lvl": "quran",
+       "src": "90:20"
+      },
+      {
+       "t": "A man who counted his money in private and mocked people behind their backs is given an enclosure. The surah has been describing a closed life, and it ends by making it literal.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "90:20",
+       "why": "the only other use of the word, at the end of a surah on the same failure"
+      },
+      {
+       "ref": "18:29",
+       "why": "a fire whose walls will enclose them"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "عَمَدٍ",
+       "t": "ʿamadin",
+       "g": "columns"
+      },
+      {
+       "a": "مُّمَدَّدَةٍ",
+       "t": "mumaddadah",
+       "g": "outstretched"
+      }
+     ],
+     "sense": "The last two words of the surah are columns, stretched out. Whatever they are exactly, the man who spent nine verses building himself a standing has ended up inside somebody else's structure.",
+     "notes": [
+      {
+       "t": "ʿAmad is a plural of ʿimad, and ʿimad is the word Surah al-Fajr uses for the pillars of Iram, the city nothing like which had been built. The pillars a people raise and the pillars that hold their door shut are the same word.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Whether the columns are bars fastening the door from outside, or pillars to which the occupants are bound, the exegetes did not settle. Both readings are old and the Arabic supports each.",
+       "lvl": "debated",
+       "src": "at-Tabari records both the fastening and the binding readings"
+      },
+      {
+       "t": "Canonical readers differ between ʿamad and ʿumud, two plurals of the same singular with no difference in meaning. Hafs reads ʿamad.",
+       "lvl": "debated",
+       "src": "the ten readings; Hamza, al-Kisāʾī and Abu Bakr read ʿumud"
+      }
+     ],
+     "links": [
+      {
+       "ref": "89:7",
+       "why": "Iram of the pillars, the same word used of what a proud people built"
+      },
+      {
+       "ref": "4:145",
+       "why": "the hypocrites in the lowest level of the Fire, another description by position"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 109,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "قُلْ",
+       "t": "qul",
+       "g": "say"
+      },
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O you"
+      },
+      {
+       "a": "ٱلْكَٰفِرُونَ",
+       "t": "al-kāfirūn",
+       "g": "who cover the truth"
+      }
+     ],
+     "sense": "The surah begins with an order to speak and then supplies the words. What follows is not the Prophet ﷺ's own position being explained; it is a message handed to him to read out to people standing in front of him.",
+     "notes": [
+      {
+       "t": "Kafara means to cover something over. Classical Arabic calls the farmer who buries seed a kafir of the seed, and calls the night a kafir because it covers the day. Disbelief in the Qur'an's vocabulary is covering something that has already been shown.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The address is definite, al-kafirun, and the exegetes read it as aimed at a specific group of Quraysh who had put a proposal to the Prophet ﷺ, not as a form of address to every non-Muslim in every era.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir report the address as directed at named individuals of Quraysh"
+      },
+      {
+       "t": "Five surahs of the Qur'an open on the command Say. Four of them are short declarations of creed or refuge, and this is the one that draws a line between two parties.",
+       "lvl": "quran",
+       "src": "72:1, 109:1, 112:1, 113:1, 114:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "112:1",
+       "why": "the other short surah opening on Say, and the one paired with it in practice"
+      },
+      {
+       "ref": "6:56",
+       "why": "Say, I am forbidden to worship those you call on besides Allah"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "لَآ",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "أَعْبُدُ",
+       "t": "aʿbudu",
+       "g": "do I worship"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "تَعْبُدُونَ",
+       "t": "taʿbudūn",
+       "g": "you worship"
+      }
+     ],
+     "sense": "The first denial, in the present tense. I do not worship what you worship. It refuses the object rather than the act; both parties worship, and the whole difference is in what.",
+     "notes": [
+      {
+       "t": "The Arabic is maa, what, rather than man, whom. The objects of their worship are referred to with the pronoun used for things. The choice is not neutral and would have been heard.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb rather than a noun. He does not say I am not one of your religion, which would be a statement about membership. He says I do not do that, which is a statement about practice.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Prophet ﷺ used to recite this surah together with al-Ikhlas in the two units before the dawn prayer, so that the two shortest statements of what is worshipped and what is not were said at the start of every day.",
+       "lvl": "sunnah",
+       "src": "Muslim, Book of the Prayer of Travellers, on the two rakʿahs of Fajr, from Abu Hurayra"
+      }
+     ],
+     "links": [
+      {
+       "ref": "10:104",
+       "why": "Say, if you are in doubt about my religion, I do not worship what you worship besides Allah"
+      },
+      {
+       "ref": "39:64",
+       "why": "Say, is it other than Allah you order me to worship"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَنتُمْ",
+       "t": "antum",
+       "g": "are you"
+      },
+      {
+       "a": "عَٰبِدُونَ",
+       "t": "ʿābidūna",
+       "g": "worshippers of"
+      },
+      {
+       "a": "مَآ",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "أَعْبُدُ",
+       "t": "aʿbud",
+       "g": "I worship"
+      }
+     ],
+     "sense": "The mirror image, and the grammar shifts. Where the last verse used a verb of him, this one uses a noun of them. Not you do not worship, but you are not worshippers, which describes a standing condition rather than a current act.",
+     "notes": [
+      {
+       "t": "ʿAabidoon is an active participle, and Arabic participles state a settled description. The line is not reporting what they failed to do this morning; it is saying what kind of party they are with respect to this object.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same neutral word maa is used for the true object of worship as for theirs, which keeps the two halves of the sentence exactly parallel and makes the whole weight fall on who is worshipping what.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Nothing in the surah insults their gods by name. The Qur'an elsewhere forbids abusing what other people call on, lest they abuse Allah in ignorance, and this surah observes that restraint while refusing everything.",
+       "lvl": "quran",
+       "src": "6:108"
+      }
+     ],
+     "links": [
+      {
+       "ref": "6:108",
+       "why": "do not insult those they invoke besides Allah, so they do not insult Allah in enmity"
+      },
+      {
+       "ref": "26:75",
+       "why": "Ibrahim asking his people, have you seen what you have been worshipping"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَنَا۠",
+       "t": "anā",
+       "g": "am I"
+      },
+      {
+       "a": "عَابِدٌ",
+       "t": "ʿābidun",
+       "g": "a worshipper of"
+      },
+      {
+       "a": "مَّا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "عَبَدتُّمْ",
+       "t": "ʿabattum",
+       "g": "you have worshipped"
+      }
+     ],
+     "sense": "The third denial, and now the tense moves. What you have worshipped, in the past. The line closes off any suggestion that he ever had a share in it before the message came.",
+     "notes": [
+      {
+       "t": "ʿAbadtum is past tense, and it is the one clear change of tense in the four denials. Verse two ruled out the present; this rules out the record. There is no earlier period being appealed to.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The exegetes who studied the repetition read verses two and three as covering the present and verses four and five as covering the past and what will follow. Others read the second pair as emphasis alone, which is ordinary Arabic practice.",
+       "lvl": "debated",
+       "src": "az-Zamakhshari and Ibn Kathir set out both explanations"
+      },
+      {
+       "t": "The Qur'an gives the same refusal in a longer form elsewhere, telling the Prophet ﷺ to say that his prayer, his rites, his living and his dying belong to the Lord of the worlds.",
+       "lvl": "quran",
+       "src": "6:162"
+      }
+     ],
+     "links": [
+      {
+       "ref": "6:162",
+       "why": "my prayer, my rites, my living and my dying are for the Lord of the worlds"
+      },
+      {
+       "ref": "10:41",
+       "why": "you are clear of what I do and I am clear of what you do"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَنتُمْ",
+       "t": "antum",
+       "g": "are you"
+      },
+      {
+       "a": "عَٰبِدُونَ",
+       "t": "ʿābidūna",
+       "g": "worshippers of"
+      },
+      {
+       "a": "مَآ",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "أَعْبُدُ",
+       "t": "aʿbud",
+       "g": "I worship"
+      }
+     ],
+     "sense": "The line from verse three comes back word for word. Nothing is added and nothing is softened. The repetition is the door being shut a second time on the same hinge.",
+     "notes": [
+      {
+       "t": "Exact repetition inside a surah is not unusual in the Qur'an; Surah ar-Rahman repeats one verse thirty-one times. What is unusual here is that the repeated line is a refusal, and that it comes back after only one intervening verse.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Many grammarians read the second occurrence as carrying a future sense, nor will you ever be, which completes the coverage of past, present and future across the four denials. Others hold that it is emphasis and nothing more.",
+       "lvl": "debated",
+       "src": "the exegetes differ; at-Tabari reports the emphasis reading and later commentators develop the tense reading"
+      },
+      {
+       "t": "The surah spends four of its six verses saying the same thing from two sides. The design refuses the middle position it is answering, which was an offer to share worship in alternate years.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "55:13",
+       "why": "the Qur'an's other worked case of a line repeated deliberately"
+      },
+      {
+       "ref": "2:6",
+       "why": "it is the same to them whether you warn them or do not warn them"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "for you"
+      },
+      {
+       "a": "دِينُكُمْ",
+       "t": "dīnukum",
+       "g": "your religion"
+      },
+      {
+       "a": "وَلِىَ",
+       "t": "wa-liya",
+       "g": "and for me"
+      },
+      {
+       "a": "دِينِ",
+       "t": "dīn",
+       "g": "my religion"
+      }
+     ],
+     "sense": "The settlement, in four words with no verb in it. Two parties, two religions, and no shared one. The verse states a separation rather than granting a permission.",
+     "notes": [
+      {
+       "t": "This is not indifference about truth. Five verses have just refused to merge the two practices, and this line says what is left after the refusal, which is that each party keeps its own and neither performs the other's.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Some held that the verse was abrogated by the later verses of fighting. Many exegetes rejected this, on the ground that it reports a fact about who worships what rather than issuing a ruling that could be replaced.",
+       "lvl": "debated",
+       "src": "the claim of abrogation is recorded and rejected by Ibn Kathir among others"
+      },
+      {
+       "t": "The final word is written diin without its yaa, matching the rhyme of the surah. The Mushaf's spelling follows the recitation here rather than the ordinary grammar of the possessive.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:256",
+       "why": "there is no compulsion in religion, the ruling that matches this statement"
+      },
+      {
+       "ref": "10:41",
+       "why": "the same separation stated as a formula of disavowal"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 110,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "جَآءَ",
+       "t": "jāʾa",
+       "g": "comes"
+      },
+      {
+       "a": "نَصْرُ",
+       "t": "naṣru",
+       "g": "the help of"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "وَٱلْفَتْحُ",
+       "t": "wal-fatḥ",
+       "g": "and the opening"
+      }
+     ],
+     "sense": "A condition is opened and left hanging. When the help of Allah comes, and the opening. The sentence will not be completed until the third verse, and what completes it is not what a reader expects.",
+     "notes": [
+      {
+       "t": "Arabic has two particles for a condition. In is used when the thing may or may not happen, and idhaa when it will happen and only the timing is open. The surah uses idhaa, so the victory is not being promised, it is being scheduled.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Fath is literally an opening, the word for unlocking a door. Most exegetes read al-fath here as the opening of Makkah, which is how Arabic came to name that event.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir take al-fatḥ as the conquest of Makkah; a minority read it generally"
+      },
+      {
+       "t": "The help is attributed to Allah before the outcome is named, so the grammar puts the agent first and the achievement second. Nobody is congratulated in this verse.",
+       "lvl": "quran"
+      }
+     ],
+     "links": [
+      {
+       "ref": "48:1",
+       "why": "indeed We have opened for you a clear opening, the same word as a title"
+      },
+      {
+       "ref": "61:13",
+       "why": "help from Allah and an opening near at hand"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "وَرَأَيْتَ",
+       "t": "wa-raʾayta",
+       "g": "and you see"
+      },
+      {
+       "a": "ٱلنَّاسَ",
+       "t": "an-nāsa",
+       "g": "the people"
+      },
+      {
+       "a": "يَدْخُلُونَ",
+       "t": "yadkhulūna",
+       "g": "entering"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "into"
+      },
+      {
+       "a": "دِينِ",
+       "t": "dīni",
+       "g": "the religion of"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "أَفْوَاجًا",
+       "t": "afwājā",
+       "g": "in throngs"
+      }
+     ],
+     "sense": "The second half of the condition. Not only the city opened, but people arriving in groups, which is a different thing from a city changing hands and is the part the surah counts.",
+     "notes": [
+      {
+       "t": "Afwaaj is the plural of fawj, a band or troop of people moving together. Arrival by delegation rather than one convert at a time, which is exactly what the years after the opening of Makkah looked like.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb is second person singular, and you see. The whole scene is put in front of one man who had begun with a handful of followers and had been driven out of the city now described as open.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an says elsewhere that the purpose is for the religion to be made to prevail, and it says it in the same period. The scene here is that statement arriving.",
+       "lvl": "quran",
+       "src": "61:9"
+      }
+     ],
+     "links": [
+      {
+       "ref": "61:9",
+       "why": "He sent His Messenger with guidance so as to make it prevail over all religion"
+      },
+      {
+       "ref": "48:1",
+       "why": "the opening announced before it happened, in the surah named for it"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "فَسَبِّحْ",
+       "t": "fa-sabbiḥ",
+       "g": "then declare Him free of fault"
+      },
+      {
+       "a": "بِحَمْدِ",
+       "t": "bi-ḥamdi",
+       "g": "with the praise of"
+      },
+      {
+       "a": "رَبِّكَ",
+       "t": "rabbika",
+       "g": "your Lord"
+      },
+      {
+       "a": "وَٱسْتَغْفِرْهُ",
+       "t": "wa-staghfirhu",
+       "g": "and ask His forgiveness"
+      },
+      {
+       "a": "إِنَّهُۥ",
+       "t": "innahu",
+       "g": "indeed He"
+      },
+      {
+       "a": "كَانَ",
+       "t": "kāna",
+       "g": "is"
+      },
+      {
+       "a": "تَوَّابًا",
+       "t": "tawwābā",
+       "g": "ever returning in acceptance"
+      }
+     ],
+     "sense": "Here is what the condition was building to. On the day the thing you were promised arrives, glorify your Lord and ask Him to forgive you. Not celebrate, and not take stock. Ask forgiveness at the moment of the win.",
+     "notes": [
+      {
+       "t": "Tasbih means declaring Allah free of any fault, and it is the natural response to a success, because a success is where a person is most tempted to attach some of the credit to himself. Istighfar at that same moment covers whatever attached anyway.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ibn ʿAbbas said that ʿUmar used to seat him among the veterans of Badr, and when ʿUmar asked them what this surah meant, some said it was about being commanded to praise and seek forgiveness when given victory. Ibn ʿAbbas said it announced the approaching death of the Prophet ﷺ, and ʿUmar said he knew of it only what Ibn ʿAbbas knew.",
+       "lvl": "sunnah",
+       "src": "Bukhari, Book of Tafsīr, Sūrat an-Naṣr, from Ibn ʿAbbās"
+      },
+      {
+       "t": "ʿAaʾisha reported that the Prophet ﷺ used to say often in his bowing and prostration, glory be to You O Allah our Lord and with Your praise, O Allah forgive me, acting on what this surah told him to do.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, chapters on bowing and prostration, from ʿĀʾisha"
+      }
+     ],
+     "links": [
+      {
+       "ref": "15:98",
+       "why": "so glorify your Lord with praise and be among those who prostrate"
+      },
+      {
+       "ref": "40:55",
+       "why": "ask forgiveness for your sin and glorify your Lord with praise, morning and evening"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

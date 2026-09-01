@@ -1,905 +1,2545 @@
 {
-"tranche": "d",
-"surahs": [
-{
-"n": 78,
-"verses": {
-"1": {
-  "words": [
-    {"a": "عَمَّ", "t": "ʿamma", "g": "about what"},
-    {"a": "يَتَسَآءَلُونَ", "t": "yatasāʾalūn", "g": "are they asking one another"}
-  ],
-  "sense": "The surah opens on a question about a question. People were arguing among themselves about something, and instead of naming it in the first line the verse points at the noise they are making and asks what all of it is for. The verb is the reciprocal form, people questioning each other back and forth, not people asking someone who knows.",
-  "notes": [
-    {"t": "ʿAmma is ʿan and mā run together with the alif of mā dropped. Arabic does the same shortening in fīma, mimma and bima, and it always happens in questions, which makes the question land faster than the full form would.", "lvl": "editorial"},
-    {"t": "The surah has more than one name in the early lists: an-Nabaʾ, ʿAmma, and at-Tasaʾul, each taken from these first two verses. Naming a surah after its opening words rather than its subject is the older habit.", "lvl": "editorial"},
-    {"t": "The Qur'an elsewhere reports the words the disputers actually used, that there is nothing but this present life and they will not be raised, which fills in what the question here leaves unsaid.", "lvl": "quran", "src": "6:29"}
-  ],
-  "links": [
-    {"ref": "38:67-68", "why": "the same phrase, a tremendous piece of news, and the same audience turning away from it"},
-    {"ref": "6:29", "why": "the denial that the argument was about, quoted in their own words"}
-  ]
-},
-"2": {
-  "words": [
-    {"a": "عَنِ", "t": "ʿani", "g": "about"},
-    {"a": "ٱلنَّبَإِ", "t": "an-nabaʾi", "g": "the news"},
-    {"a": "ٱلْعَظِيمِ", "t": "al-ʿaẓīm", "g": "the tremendous"}
-  ],
-  "sense": "The answer to the question is given as a description rather than a name. It is news, something reported by someone who was there, and it is described as immense. The verse still does not say what it is, which keeps the reader in the position of the person who has just heard it and not yet believed it.",
-  "notes": [
-    {"t": "Nabaʾ is not the ordinary word for information. The lexicographers restrict it to news that carries weight and that the hearer did not have, which is why the Qur'an uses it for the reports of the earlier peoples and for this.", "lvl": "editorial"},
-    {"t": "What the tremendous news is has more than one answer in the classical commentaries: the raising of the dead, the Qur'an itself, and the message the Prophet ﷺ was sent with. The surah answers it from verse 17 onward by describing the Day, which is why most exegetes settle on the resurrection.", "lvl": "debated", "src": "at-Tabari records the several positions; Ibn Kathir prefers the resurrection"},
-    {"t": "The same word carries the same weight in Surah Sad, where the Prophet ﷺ is told to say that he brings a tremendous piece of news and that they are turning away from it.", "lvl": "quran", "src": "38:67-68"}
-  ],
-  "links": [
-    {"ref": "38:67-68", "why": "the phrase used again of the message itself"},
-    {"ref": "56:47-50", "why": "the objection stated and answered in another surah"}
-  ]
-},
-"3": {
-  "words": [
-    {"a": "ٱلَّذِى", "t": "alladhī", "g": "the one which"},
-    {"a": "هُمْ", "t": "hum", "g": "they"},
-    {"a": "فِيهِ", "t": "fīhi", "g": "concerning it"},
-    {"a": "مُخْتَلِفُونَ", "t": "mukhtalifūn", "g": "are in disagreement"}
-  ],
-  "sense": "The dispute is not only between the deniers and the believers. It is among the deniers themselves, who could not agree on what happens after death and so held several incompatible positions at once. Disagreement is offered here as a symptom, not as a neutral fact.",
-  "notes": [
-    {"t": "Mukhtalifūn is the active participle, so the verse describes a settled state rather than an argument that flared up once. They are people who are in disagreement, which is what they do.", "lvl": "editorial"},
-    {"t": "The Qur'an makes the point about itself elsewhere: if this were from other than Allah they would have found in it much contradiction. Consistency is used as a mark of a single source, and its absence as a mark of guesswork.", "lvl": "quran", "src": "4:82"},
-    {"t": "Some exegetes read the disagreement as running between the deniers and the believers, others as running among the deniers only. The grammar allows both, and the surah goes on to address the deniers alone.", "lvl": "debated", "src": "the classical commentaries record both readings without resolving them"}
-  ],
-  "links": [
-    {"ref": "4:82", "why": "contradiction offered as the test of where a book comes from"},
-    {"ref": "51:8", "why": "you are in a statement that differs, said to the same objectors"}
-  ]
-},
-"4": {
-  "words": [
-    {"a": "كَلَّا", "t": "kallā", "g": "no indeed"},
-    {"a": "سَيَعْلَمُونَ", "t": "sayaʿlamūn", "g": "they are going to know"}
-  ],
-  "sense": "The argument is cut off rather than answered. Kalla stops the speaker mid-sentence, and what follows is not a proof but a date. They will find out, and the finding out is put in the future tense with the prefix that means soon.",
-  "notes": [
-    {"t": "The particle sa- on a verb means shortly, and the Arabs used sawfa for the more distant future. Using the shorter one about the Day of Judgement treats it as near, which the surah says outright in its final verse.", "lvl": "editorial"},
-    {"t": "Kalla appears only in the second half of the Qur'an, in the surahs revealed to a hostile audience, and it functions as a rebuke rather than a simple no. Translating it as no loses the interruption.", "lvl": "editorial"},
-    {"t": "The verse does not argue the resurrection here. It asserts that the knowledge is coming, and the argument is made instead by the sixteen verses of creation that follow.", "lvl": "quran"}
-  ],
-  "links": [
-    {"ref": "102:3-4", "why": "the same phrase doubled, no indeed, you are going to know"},
-    {"ref": "78:40", "why": "the closing verse names the punishment as near, matching the tense used here"}
-  ]
-},
-"5": {
-  "words": [
-    {"a": "ثُمَّ", "t": "thumma", "g": "then again"},
-    {"a": "كَلَّا", "t": "kallā", "g": "no indeed"},
-    {"a": "سَيَعْلَمُونَ", "t": "sayaʿlamūn", "g": "they are going to know"}
-  ],
-  "sense": "The whole sentence is repeated with one word added at the front. Nothing new is said, and the repetition is the point: the second telling makes the first heavier rather than adding to it.",
-  "notes": [
-    {"t": "The commentaries split over whether the two verses are one statement said twice for emphasis, or two separate occasions of knowing, the first at death and the second when the dead are raised. Both readings are old and the wording supports either.", "lvl": "debated", "src": "the classical tafsirs record both; at-Tabari lists them without deciding"},
-    {"t": "Thumma normally means afterwards with a gap. Placed in front of an identical sentence it produces distance between the two warnings rather than sequence in time, the way a speaker pauses before saying a thing again.", "lvl": "editorial"},
-    {"t": "The same doubling with the same particle occurs in Surah at-Takathur, which suggests a fixed rhetorical pattern rather than an accident of this passage.", "lvl": "quran", "src": "102:3-4"}
-  ],
-  "links": [
-    {"ref": "102:3-4", "why": "the identical doubling in another surah of warning"},
-    {"ref": "15:3", "why": "leave them to eat and enjoy themselves, for they will come to know"}
-  ]
-},
-"6": {
-  "words": [
-    {"a": "أَلَمْ", "t": "alam", "g": "have We not"},
-    {"a": "نَجْعَلِ", "t": "najʿali", "g": "made"},
-    {"a": "ٱلْأَرْضَ", "t": "al-arḍa", "g": "the earth"},
-    {"a": "مِهَٰدًا", "t": "mihādan", "g": "a spread bed"}
-  ],
-  "sense": "The proof of the coming Day begins here, and it begins under the reader's feet. The question is rhetorical and expects a yes, and everything from this verse to verse 16 is a single list of things already given, offered as evidence that the giver can do the thing being denied.",
-  "notes": [
-    {"t": "Mihād is from the same root as mahd, the cradle a child is laid in, and the verb mahhada, to smooth out a bed before lying on it. The image is not of a flat earth but of a surface prepared for someone who is going to rest on it.", "lvl": "editorial"},
-    {"t": "From this verse to the end of the surah almost every line closes on a long ā followed by a single consonant and tanwin: mihādan, awtādan, azwājan, subātan. The rhyme is unbroken for thirty-five verses, which is why the surah is easy to memorise and hard to recite carelessly.", "lvl": "editorial"},
-    {"t": "The same description of the earth is given in two other places with the same verb, which makes it a settled Qur'anic way of speaking about the ground rather than a one-off image.", "lvl": "quran", "src": "20:53 and 43:10"}
-  ],
-  "links": [
-    {"ref": "20:53", "why": "the earth made a bed, and paths opened through it"},
-    {"ref": "71:19", "why": "Nuh makes the same argument from the earth spread out"}
-  ]
-},
-"7": {
-  "words": [
-    {"a": "وَٱلْجِبَالَ", "t": "wal-jibāla", "g": "and the mountains"},
-    {"a": "أَوْتَادًا", "t": "awtādan", "g": "pegs"}
-  ],
-  "sense": "The bed of the previous verse is held in place. A watad is the tent peg driven into the ground so the cloth above does not move, and the word is chosen for people who slept under tents and knew exactly what happens when a peg comes loose.",
-  "notes": [
-    {"t": "The Qur'an states the purpose of the mountains twice elsewhere in the same terms, that the earth should not sway with its people. The function given is stability, and the peg here is the picture of it.", "lvl": "quran", "src": "16:15 and 21:31"},
-    {"t": "Watad is a homely word, not a geological one. It carries the tent, the mallet and the ground all at once, and it is used of Pharaoh in another surah as a description of a man whose power seemed immovable.", "lvl": "editorial"},
-    {"t": "The list is running in pairs at this point: earth then mountains, then human beings then sleep, then night then day. Each pair holds a thing and the thing that steadies it.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "16:15", "why": "the stated reason mountains were set into the earth"},
-    {"ref": "89:10", "why": "Pharaoh described with the same word, the owner of the pegs"}
-  ]
-},
-"8": {
-  "words": [
-    {"a": "وَخَلَقْنَٰكُمْ", "t": "wa-khalaqnākum", "g": "and We created you"},
-    {"a": "أَزْوَٰجًا", "t": "azwājan", "g": "in pairs"}
-  ],
-  "sense": "After the ground and the mountains the list turns to the listener. You were made in twos, and the verse is speaking to a person who is himself half of a pair and did not arrange it.",
-  "notes": [
-    {"t": "Zawj in Arabic is one of a pair, not the pair itself, so azwāj means the members, each of whom needs the other to be complete. English husband and wife each translate the same word.", "lvl": "editorial"},
-    {"t": "The Qur'an generalises the pairing beyond human beings: of every thing We created two mates, so that you might remember. The verse here is the local case of a stated rule.", "lvl": "quran", "src": "51:49"},
-    {"t": "Some exegetes read azwājan more broadly as kinds and sorts, male and female, tall and short, wretched and fortunate. The narrower reading of male and female is the more common one and fits the surrounding list of physical gifts.", "lvl": "debated", "src": "the early exegetes are recorded on both sides in at-Tabari"}
-  ],
-  "links": [
-    {"ref": "51:49", "why": "pairing stated as a universal rule of creation"},
-    {"ref": "53:45", "why": "He created the two mates, the male and the female"}
-  ]
-},
-"9": {
-  "words": [
-    {"a": "وَجَعَلْنَا", "t": "wa-jaʿalnā", "g": "and We made"},
-    {"a": "نَوْمَكُمْ", "t": "nawmakum", "g": "your sleep"},
-    {"a": "سُبَاتًا", "t": "subātan", "g": "a cutting off"}
-  ],
-  "sense": "Sleep is named as a gift, which is not how a person who wants more hours in the day thinks of it. The word chosen does not mean rest so much as being severed, the daily interruption of everything you were doing.",
-  "notes": [
-    {"t": "Subāt comes from a root meaning to cut off, and the Sabbath, as-sabt, is named from the same root because it cuts the week. Sleep is being described by what it stops rather than by what it restores.", "lvl": "editorial"},
-    {"t": "Placing sleep in an argument about resurrection is deliberate. A person who lies down unconscious every night and is returned to himself every morning has already been shown the mechanism he says is impossible.", "lvl": "editorial"},
-    {"t": "The Qur'an makes the link explicit in another place: Allah takes the souls at the time of their death, and those that have not died during their sleep.", "lvl": "quran", "src": "39:42"}
-  ],
-  "links": [
-    {"ref": "39:42", "why": "sleep described as a taking of the soul, the same argument made directly"},
-    {"ref": "25:47", "why": "night, sleep and the day given together in one verse"}
-  ]
-},
-"10": {
-  "words": [
-    {"a": "وَجَعَلْنَا", "t": "wa-jaʿalnā", "g": "and We made"},
-    {"a": "ٱلَّيْلَ", "t": "al-layla", "g": "the night"},
-    {"a": "لِبَاسًا", "t": "libāsan", "g": "a garment"}
-  ],
-  "sense": "Night is described as clothing rather than as darkness. A garment covers what should not be seen, keeps in warmth, and is put on and taken off on a schedule, and the night does all three for the whole earth at once.",
-  "notes": [
-    {"t": "Libās is the ordinary word for the clothes on a person's back, and the Qur'an uses it of spouses as well, that they are a garment for one another. The metaphor is consistent: what covers you is also close to you.", "lvl": "editorial"},
-    {"t": "The same image appears in Surah al-Furqan with the same word, which places this among the Qur'an's fixed ways of describing the night rather than among its single images.", "lvl": "quran", "src": "25:47"},
-    {"t": "Nothing in the list so far is unusual. Ground, mountains, marriage, sleep and nightfall are the most ordinary facts available, and the argument depends on their being ordinary.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "25:47", "why": "the night made a covering, in the same words"},
-    {"ref": "2:187", "why": "the same word used of husbands and wives"}
-  ]
-},
-"11": {
-  "words": [
-    {"a": "وَجَعَلْنَا", "t": "wa-jaʿalnā", "g": "and We made"},
-    {"a": "ٱلنَّهَارَ", "t": "an-nahāra", "g": "the daytime"},
-    {"a": "مَعَاشًا", "t": "maʿāshan", "g": "a time for living"}
-  ],
-  "sense": "The day is given a job. Maʿāsh is where and when a person earns what he lives on, so the verse describes daylight in terms of work and bread rather than in terms of light.",
-  "notes": [
-    {"t": "The root ʿ-y-sh gives ʿaysh, the living a person makes, and maʿīsha, a livelihood. The noun form here is the one Arabic uses for the place or time of an action, so daytime is the site of earning.", "lvl": "editorial"},
-    {"t": "Read against verse 10, the two verses divide the day into being covered and being at work, and neither half was arranged by the person living inside it.", "lvl": "editorial"},
-    {"t": "The Qur'an states the pairing as a mercy in another place: out of His mercy He made for you the night and the day, so that you may rest in one and seek His bounty in the other.", "lvl": "quran", "src": "28:73"}
-  ],
-  "links": [
-    {"ref": "28:73", "why": "rest and earning assigned to night and day and called a mercy"},
-    {"ref": "17:12", "why": "the sign of the day made visible so that you may seek bounty from your Lord"}
-  ]
-},
-"12": {
-  "words": [
-    {"a": "وَبَنَيْنَا", "t": "wa-banaynā", "g": "and We built"},
-    {"a": "فَوْقَكُمْ", "t": "fawqakum", "g": "above you"},
-    {"a": "سَبْعًا", "t": "sabʿan", "g": "seven"},
-    {"a": "شِدَادًا", "t": "shidādan", "g": "firm ones"}
-  ],
-  "sense": "The list moves from the ground upward. The verb is the one used for putting up a building, and what is above the reader is described as constructed, held together and strong, rather than as empty space.",
-  "notes": [
-    {"t": "The noun the seven describes is left out. Arabic can drop it when the number alone is enough, and every other place in the Qur'an that counts seven above the earth counts heavens, so the ellipsis is not obscure.", "lvl": "quran", "src": "67:3 and 71:15"},
-    {"t": "Shidād is the plural of shadīd, strong and tightly held. Applied to a structure it means one that does not sag, and the Qur'an says elsewhere that you will see no fault in it however hard you look.", "lvl": "editorial"},
-    {"t": "The word banaynā, We built, treats the sky as workmanship. It is the same verb used of houses and walls, and choosing it puts a maker behind the roof rather than a process.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "67:3", "why": "seven heavens in layers, with the challenge to find a flaw in them"},
-    {"ref": "71:15", "why": "Nuh making the same argument from the seven above"}
-  ]
-},
-"13": {
-  "words": [
-    {"a": "وَجَعَلْنَا", "t": "wa-jaʿalnā", "g": "and We made"},
-    {"a": "سِرَاجًا", "t": "sirājan", "g": "a lamp"},
-    {"a": "وَهَّاجًا", "t": "wahhājan", "g": "blazing"}
-  ],
-  "sense": "One object is hung in the structure just built. It is called a lamp, which is a thing someone lights and puts up in a room, and the second word says it burns fiercely and gives heat as well as light.",
-  "notes": [
-    {"t": "The Qur'an consistently calls the sun a sirāj and the moon a nūr or a munīr, a reflected light. The distinction is kept every time the two are named together.", "lvl": "quran", "src": "71:16 and 25:61"},
-    {"t": "Wahhāj is the intensive form of a root meaning to flare up. It carries burning as well as shining, which separates the sun in this verse from an ordinary lamp that only lights a room.", "lvl": "editorial"},
-    {"t": "The sun is not named. Calling it a lamp instead keeps it inside the argument as a made thing, which is the whole purpose of the list.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "71:16", "why": "the sun a lamp and the moon a light, in the same pairing"},
-    {"ref": "25:61", "why": "a lamp and an illuminating moon placed in the sky"}
-  ]
-},
-"14": {
-  "words": [
-    {"a": "وَأَنزَلْنَا", "t": "wa-anzalnā", "g": "and We sent down"},
-    {"a": "مِنَ", "t": "mina", "g": "from"},
-    {"a": "ٱلْمُعْصِرَٰتِ", "t": "al-muʿṣirāt", "g": "the wringing clouds"},
-    {"a": "مَآءً", "t": "māʾan", "g": "water"},
-    {"a": "ثَجَّاجًا", "t": "thajjājan", "g": "poured out in torrents"}
-  ],
-  "sense": "Heat in the previous verse becomes rain in this one, which is the actual order of the thing described. The water does not drip. Thajjāj is the word for a downpour that keeps coming, and it is the same root used of blood gushing from a slaughtered animal.",
-  "notes": [
-    {"t": "Al-muʿṣirāt is read two ways by the early exegetes, as the clouds that are squeezed until they release, and as the winds that squeeze them. The root ʿ-ṣ-r is the one behind ʿaṣīr, pressed juice, and the picture is the same either way.", "lvl": "debated", "src": "reports from the early exegetes give both clouds and winds; at-Tabari lists both"},
-    {"t": "Thajjāj occurs once in the whole Qur'an. It is the intensive form of a verb used of blood running from a cut and of a valley filling, so the water is described by its volume and its continuing rather than by its wetness.", "lvl": "editorial"},
-    {"t": "The Qur'an turns the same fact into a direct challenge in Surah al-Waqiʿa: have you seen the water you drink, did you send it down from the clouds or did We.", "lvl": "quran", "src": "56:68-70"}
-  ],
-  "links": [
-    {"ref": "56:68-70", "why": "the same gift put as a question the listener cannot answer"},
-    {"ref": "30:48", "why": "the winds driving clouds and the rain falling from between them"}
-  ]
-},
-"15": {
-  "words": [
-    {"a": "لِّنُخْرِجَ", "t": "linukhrija", "g": "so that We bring out"},
-    {"a": "بِهِۦ", "t": "bihi", "g": "by means of it"},
-    {"a": "حَبًّا", "t": "ḥabban", "g": "grain"},
-    {"a": "وَنَبَاتًا", "t": "wa-nabātan", "g": "and growth"}
-  ],
-  "sense": "The rain is given a purpose, and the purpose is food. The verb is the one used for bringing a thing out of a place it was hidden in, which is exactly the argument the surah is making about the dead.",
-  "notes": [
-    {"t": "Nukhrij, We bring out, is the same verb the Qur'an uses for the raising of the dead from the earth. A reader who accepts that grain comes out of buried ground has already accepted the mechanism.", "lvl": "editorial"},
-    {"t": "Grain is named first and separately from nabāt, general growth, which puts the human staple ahead of everything else that comes up with it.", "lvl": "editorial"},
-    {"t": "The Qur'an makes the resurrection argument from rain and dead ground explicitly in more than one place, saying that in the same way the dead will be brought out.", "lvl": "quran", "src": "7:57"}
-  ],
-  "links": [
-    {"ref": "7:57", "why": "rain revives dead land, and the verse draws the conclusion about the dead"},
-    {"ref": "80:24-32", "why": "a longer inventory of what comes out of the split ground"}
-  ]
-},
-"16": {
-  "words": [
-    {"a": "وَجَنَّٰتٍ", "t": "wa-jannātin", "g": "and gardens"},
-    {"a": "أَلْفَافًا", "t": "alfāfan", "g": "densely tangled"}
-  ],
-  "sense": "The list of creation closes on abundance rather than on necessity. Grain keeps a person alive; a thick garden is more than keeping alive, and the surah ends its evidence there.",
-  "notes": [
-    {"t": "Alfāf describes growth so close together that the branches interlace and you cannot tell one tree from the next. The grammarians differ over its singular, and some hold it has none, which is unusual enough to be worth noticing.", "lvl": "debated", "src": "the grammarians differ; some derive it from lafīf, others say the word has no attested singular"},
-    {"t": "Jannah means a garden because the root j-n-n means to cover and conceal, so a garden is a place whose ground you cannot see. The same root gives jinn and junūn.", "lvl": "editorial"},
-    {"t": "Eleven verses of evidence end here. The surah does not draw a conclusion from them in so many words; verse 17 simply begins on the Day, as though the list had already settled the matter.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "6:99", "why": "an inventory of what the rain brings out, ending in gardens"},
-    {"ref": "78:32", "why": "the walled gardens promised later in this surah, using a different word"}
-  ]
-},
-"17": {
-  "words": [
-    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
-    {"a": "يَوْمَ", "t": "yawma", "g": "the Day of"},
-    {"a": "ٱلْفَصْلِ", "t": "al-faṣli", "g": "the Separation"},
-    {"a": "كَانَ", "t": "kāna", "g": "has been"},
-    {"a": "مِيقَٰتًا", "t": "mīqātan", "g": "an appointed time"}
-  ],
-  "sense": "The subject changes without transition. The Day the deniers were arguing about is now named, and the first thing said about it is that its time was fixed, not that it is terrible. It is on a calendar that was written before anyone objected.",
-  "notes": [
-    {"t": "Kāna is the past tense used of a future event. Arabic does this to report something already settled, so the sense is that the appointment has long been made, not that the Day has already happened.", "lvl": "editorial"},
-    {"t": "Faṣl means cutting apart, and the same root gives the joint between two bones and the decisive word that ends a dispute. The Day is named for what it does to the disagreement in verse 3.", "lvl": "editorial"},
-    {"t": "Mīqāt is the word used for the fixed times of prayer and for the boundary stations where a pilgrim enters ihram. It always means a limit set by someone else, never one you choose.", "lvl": "quran", "src": "7:142"}
-  ],
-  "links": [
-    {"ref": "77:13-14", "why": "the Day of Separation named and then asked about"},
-    {"ref": "37:21", "why": "this is the Day of Separation which you used to deny"}
-  ]
-},
-"18": {
-  "words": [
-    {"a": "يَوْمَ", "t": "yawma", "g": "the Day when"},
-    {"a": "يُنفَخُ", "t": "yunfakhu", "g": "is blown"},
-    {"a": "فِى", "t": "fī", "g": "into"},
-    {"a": "ٱلصُّورِ", "t": "aṣ-ṣūri", "g": "the Horn"},
-    {"a": "فَتَأْتُونَ", "t": "fa-taʾtūna", "g": "and you come"},
-    {"a": "أَفْوَاجًا", "t": "afwājan", "g": "in crowds"}
-  ],
-  "sense": "One sound starts it, and the response is a mass movement. Afwāj is the word for troops arriving group after group, so the picture is not of individuals waking one by one but of whole populations coming forward at once.",
-  "notes": [
-    {"t": "The verb is passive, is blown, and the blower is not named here. The Qur'an leaves the agent out in most of the horn verses, which keeps the attention on the sound and on what follows it.", "lvl": "editorial"},
-    {"t": "The Qur'an describes more than one blast of the horn, one at which those in the heavens and the earth fall down and another after which they stand looking on.", "lvl": "quran", "src": "39:68"},
-    {"t": "The same word afwāj is used in Surah an-Nasr of people entering the religion of Allah in crowds. The Qur'an uses it for both directions of the same motion, toward faith and toward the reckoning.", "lvl": "quran", "src": "110:2"}
-  ],
-  "links": [
-    {"ref": "39:68", "why": "the two blasts described in sequence"},
-    {"ref": "36:51", "why": "the horn blown and the dead hurrying out of the graves"}
-  ]
-},
-"19": {
-  "words": [
-    {"a": "وَفُتِحَتِ", "t": "wa-futiḥati", "g": "and is opened"},
-    {"a": "ٱلسَّمَآءُ", "t": "as-samāʾu", "g": "the sky"},
-    {"a": "فَكَانَتْ", "t": "fa-kānat", "g": "and it becomes"},
-    {"a": "أَبْوَٰبًا", "t": "abwāban", "g": "gateways"}
-  ],
-  "sense": "What was built in verse 12 as a firm structure is opened in this one. The sky does not have doors put in it; it becomes doors, which is a stronger statement, and the building described earlier stops being a roof.",
-  "notes": [
-    {"t": "The surah is now undoing its own list in order. The sky built firm in verse 12 opens here, the mountains pegged down in verse 7 are set moving in verse 20. The evidence and its unmaking are the same items.", "lvl": "editorial"},
-    {"t": "It says the sky became gateways, not that gateways were opened in it. Arabic could easily have said the second, and the first makes the opening total rather than partial.", "lvl": "editorial"},
-    {"t": "Other surahs describe the same event with different verbs, split apart and torn open, which gives the picture from more than one angle without disagreeing.", "lvl": "quran", "src": "82:1 and 84:1"}
-  ],
-  "links": [
-    {"ref": "82:1", "why": "when the sky is torn open, the same moment named differently"},
-    {"ref": "69:16", "why": "the sky split, and frail on that day"}
-  ]
-},
-"20": {
-  "words": [
-    {"a": "وَسُيِّرَتِ", "t": "wa-suyyirati", "g": "and are set moving"},
-    {"a": "ٱلْجِبَالُ", "t": "al-jibālu", "g": "the mountains"},
-    {"a": "فَكَانَتْ", "t": "fa-kānat", "g": "and they become"},
-    {"a": "سَرَابًا", "t": "sarāban", "g": "a mirage"}
-  ],
-  "sense": "The pegs come out. The mountains move, and then they turn into the one thing in the desert that looks solid from a distance and is not there when you arrive.",
-  "notes": [
-    {"t": "Sarāb is the shimmer on hot ground that a traveller mistakes for water. Applying it to mountains says that the most immovable object a person knows will end up in the category of things that were never really there.", "lvl": "editorial"},
-    {"t": "The Qur'an uses the same word for the deeds of those who denied, which a man takes for water until he reaches it and finds nothing. The vocabulary of the two passages is deliberate.", "lvl": "quran", "src": "24:39"},
-    {"t": "When the Prophet ﷺ was asked about the mountains, the answer given in the Qur'an was that his Lord would scatter them as dust and leave the ground level, with no crookedness visible in it.", "lvl": "quran", "src": "20:105-107"}
-  ],
-  "links": [
-    {"ref": "24:39", "why": "the same mirage used of deeds that turn out to be nothing"},
-    {"ref": "27:88", "why": "the mountains you think are fixed passing like clouds"}
-  ]
-},
-"21": {
-  "words": [
-    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
-    {"a": "جَهَنَّمَ", "t": "jahannama", "g": "Hell"},
-    {"a": "كَانَتْ", "t": "kānat", "g": "has been"},
-    {"a": "مِرْصَادًا", "t": "mirṣādan", "g": "a place of ambush"}
-  ],
-  "sense": "The scene arrives at a fixed position on the road. Mirṣād is the lookout where someone waits for a traveller who does not know he is being waited for, and the verse says the waiting started long ago.",
-  "notes": [
-    {"t": "The root r-ṣ-d gives raṣad, a watcher posted to observe, and the noun form here names the place the watching is done from. It is a hunting and raiding word before it is a religious one.", "lvl": "editorial"},
-    {"t": "The Qur'an uses the same root of Allah in Surah al-Fajr, that your Lord is ever on the lookout. The vocabulary of watching is used at both ends of the account.", "lvl": "quran", "src": "89:14"},
-    {"t": "Kānat again puts a future thing in the past tense. Read with verse 17, the Day and the place are both described as long since arranged.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "89:14", "why": "your Lord is ever watchful, the same root used of the watcher rather than the place"},
-    {"ref": "19:71", "why": "there is not one of you but will pass over it"}
-  ]
-},
-"22": {
-  "words": [
-    {"a": "لِّلطَّٰغِينَ", "t": "liṭ-ṭāghīna", "g": "for those who overstepped"},
-    {"a": "مَـَٔابًا", "t": "maʾāban", "g": "a place of return"}
-  ],
-  "sense": "The ambush of the previous verse is now given its target and a second, stranger name. It is called a place of return, as though the people arriving there were coming home rather than being caught.",
-  "notes": [
-    {"t": "Ṭāghīn is from ṭaghā, to exceed the limit, the verb used of water rising over its banks. It names a behaviour, going past what you were given, rather than a doctrine.", "lvl": "editorial"},
-    {"t": "The word maʾāb returns in verse 39, where whoever wishes may take a way of return to his Lord. The same noun is used for both destinations, and the surah leaves the reader to notice which one he is walking toward.", "lvl": "quran", "src": "78:39"},
-    {"t": "Maʾāb is from āba, to come back. Calling the Fire a return implies the person is going where his own conduct already pointed, which is the argument the next four verses spell out.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "78:39", "why": "the same word used of the return to the Lord, deliberately mirrored"},
-    {"ref": "79:37-39", "why": "whoever transgressed and preferred the life of this world, the Blaze is the refuge"}
-  ]
-},
-"23": {
-  "words": [
-    {"a": "لَّٰبِثِينَ", "t": "lābithīna", "g": "remaining"},
-    {"a": "فِيهَآ", "t": "fīhā", "g": "in it"},
-    {"a": "أَحْقَابًا", "t": "aḥqāban", "g": "for ages on end"}
-  ],
-  "sense": "The stay is measured in a unit nobody can convert. Ḥuqub is a long stretch of time whose length the Arabs did not fix, and the plural piles those stretches one after another.",
-  "notes": [
-    {"t": "The early exegetes gave several figures for one ḥuqub, from eighty years upward, and none of the figures rests on a report from the Prophet ﷺ. The honest position is that the word means a very long age and that its length was not disclosed.", "lvl": "debated", "src": "at-Tabari collects several numbers from the early exegetes and settles on none"},
-    {"t": "Some readers have taken the verse to imply an end to the punishment. The surah answers that seven verses later, where they are told they will be increased in nothing but punishment, and the mainstream reading is that each age is followed by another without a last one.", "lvl": "debated", "src": "the question is discussed in the classical commentaries; the majority read the ages as unending"},
-    {"t": "Lābithīn, remaining, is weaker than khālidīn, abiding forever, which the Qur'an uses elsewhere of the same people. The choice of the milder word here is what created the discussion.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "78:30", "why": "the answer the surah itself gives to the question of an end"},
-    {"ref": "43:74-77", "why": "the request for an end and the reply given to it"}
-  ]
-},
-"24": {
-  "words": [
-    {"a": "لَّا", "t": "lā", "g": "not"},
-    {"a": "يَذُوقُونَ", "t": "yadhūqūna", "g": "will they taste"},
-    {"a": "فِيهَا", "t": "fīhā", "g": "in it"},
-    {"a": "بَرْدًا", "t": "bardan", "g": "coolness"},
-    {"a": "وَلَا", "t": "wa-lā", "g": "and not"},
-    {"a": "شَرَابًا", "t": "sharāban", "g": "any drink"}
-  ],
-  "sense": "Two things are withheld, and both are the things a person in heat asks for first. The verb is to taste, which is odd for coolness, and it makes the absence something felt on the tongue rather than merely known.",
-  "notes": [
-    {"t": "Bard is coolness, and some of the early exegetes read it here as sleep, a use the Arabs made of the word because sleep cools a person. On that reading the verse denies rest as well as relief.", "lvl": "debated", "src": "reports from the early exegetes give both coolness and sleep; at-Tabari records the two"},
-    {"t": "The Qur'an addresses the fire itself in the story of Ibrahim with the same word, be coolness and peace. The word denied here is the word that was granted there.", "lvl": "quran", "src": "21:69"},
-    {"t": "The verse is stated as an absolute negative, and the exception that follows in verse 25 is worse than the absence would have been. The two verses are built to work in that order.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "21:69", "why": "the same word commanded of the fire in Ibrahim's case"},
-    {"ref": "7:50", "why": "the people of the Fire calling to the people of the Garden for water"}
-  ]
-},
-"25": {
-  "words": [
-    {"a": "إِلَّا", "t": "illā", "g": "except"},
-    {"a": "حَمِيمًا", "t": "ḥamīman", "g": "scalding water"},
-    {"a": "وَغَسَّاقًا", "t": "wa-ghassāqan", "g": "and a foul dark discharge"}
-  ],
-  "sense": "The exception is granted in the same category it was denied in. They asked for coolness and drink; they are given a drink, and it is boiling, and a second thing whose name the Arabs used for what runs out of a wound.",
-  "notes": [
-    {"t": "Ḥamīm is water at the limit of heat, from a root that also gives ḥammām, the bath house. Ghassāq is derived by the lexicographers from a root meaning to flow and to be intensely cold or dark, and the commentaries describe it as the discharge of the bodies of the punished.", "lvl": "editorial"},
-    {"t": "The canonical readings differ over whether the sin of ghassāq is doubled. Hafs from Asim, the reading this Mushaf follows, doubles it; other established readings read it light. The meaning is not affected.", "lvl": "debated", "src": "the ten canonical readings; Hafs reads ghassāq with the doubled sīn"},
-    {"t": "The same pair appears together in Surah Sad, which shows the two are a fixed formula rather than an image invented for this passage.", "lvl": "quran", "src": "38:57"}
-  ],
-  "links": [
-    {"ref": "38:57", "why": "the same two named together in one verse"},
-    {"ref": "14:16-17", "why": "the drink of pus, described in more detail"}
-  ]
-},
-"26": {
-  "words": [
-    {"a": "جَزَآءً", "t": "jazāʾan", "g": "as a recompense"},
-    {"a": "وِفَاقًا", "t": "wifāqan", "g": "exactly fitting"}
-  ],
-  "sense": "Two words close the account. Whatever the reader thought of the four verses he has just read, the verse insists the amount matches, and it uses the word for two things that agree with each other.",
-  "notes": [
-    {"t": "Wifāq is from the root behind muwāfaqa, agreement, and it names a fit rather than a severity. The claim is not that the punishment is heavy but that it is the size of what was done.", "lvl": "editorial"},
-    {"t": "The Qur'an states the rule directly elsewhere: the recompense of an evil is an evil like it. Nothing is added beyond the deed, while good is multiplied.", "lvl": "quran", "src": "42:40"},
-    {"t": "The same word jazāʾan opens verse 36, where the reward of the God-fearing is summed up. The surah gives each half of the Day one summary line, and only the second one names the Lord who is giving.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "42:40", "why": "the recompense of an evil is an evil the like of it"},
-    {"ref": "78:36", "why": "the matching summary line on the other side of the Day"}
-  ]
-},
-"27": {
-  "words": [
-    {"a": "إِنَّهُمْ", "t": "innahum", "g": "indeed they"},
-    {"a": "كَانُوا۟", "t": "kānū", "g": "used to"},
-    {"a": "لَا", "t": "lā", "g": "not"},
-    {"a": "يَرْجُونَ", "t": "yarjūna", "g": "expect"},
-    {"a": "حِسَابًا", "t": "ḥisāban", "g": "any reckoning"}
-  ],
-  "sense": "The reason is given, and it is not a crime but an assumption. They lived without expecting to be audited, and everything else followed from that. The verse describes a habit of mind rather than an act.",
-  "notes": [
-    {"t": "Rajā normally means to hope for. Used with a negative and about something unwelcome it means to reckon on or anticipate, and the Qur'an uses it that way in more than one place.", "lvl": "editorial"},
-    {"t": "Nuh puts the same charge to his people in almost the same words, asking what is wrong with you that you do not attribute to Allah any gravity.", "lvl": "quran", "src": "71:13"},
-    {"t": "Ḥisāb is an accountant's word, the running of a sum. The Qur'an prefers it to words for trial or verdict, which keeps the emphasis on totalling what is there rather than on argument.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "71:13", "why": "the same reproach made by Nuh to his people"},
-    {"ref": "84:14", "why": "he thought he would never return, given as the cause"}
-  ]
-},
-"28": {
-  "words": [
-    {"a": "وَكَذَّبُوا۟", "t": "wa-kadhdhabū", "g": "and they denied"},
-    {"a": "بِـَٔايَٰتِنَا", "t": "bi-āyātinā", "g": "Our signs"},
-    {"a": "كِذَّابًا", "t": "kidhdhāban", "g": "with a flat denial"}
-  ],
-  "sense": "The second charge follows the first. Not expecting a reckoning was passive; this is active, calling the signs lies, and the verse doubles the verb with its own noun so the denial is emphatic rather than casual.",
-  "notes": [
-    {"t": "Kidhdhāb as a verbal noun of the second form is rare in Arabic and appears in the Qur'an only in this surah, here and in verse 35. Some grammarians noted it as a form of the dialect of Yemen.", "lvl": "debated", "src": "the grammarians discuss the form; some attribute it to a particular dialect"},
-    {"t": "Āyāt covers both the verses recited and the signs in the world, and the surah has just spent eleven verses on the second kind. What they denied includes the earth, the rain and the sky, not only the recitation.", "lvl": "editorial"},
-    {"t": "Placing the verbal noun after its own verb is the standard Arabic way of saying that the action was done thoroughly. English has to add a word like utterly to get the same force.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "78:35", "why": "the same rare word used again, in the opposite setting"},
-    {"ref": "45:11", "why": "those who denied the signs of their Lord and what awaits them"}
-  ]
-},
-"29": {
-  "words": [
-    {"a": "وَكُلَّ", "t": "wa-kulla", "g": "and every"},
-    {"a": "شَىْءٍ", "t": "shayʾin", "g": "thing"},
-    {"a": "أَحْصَيْنَٰهُ", "t": "aḥṣaynāhu", "g": "We have counted it"},
-    {"a": "كِتَٰبًا", "t": "kitāban", "g": "in a written record"}
-  ],
-  "sense": "The reckoning they did not expect has been running the whole time. The verb is not remembered or observed but counted, item by item, and the count has been written down.",
-  "notes": [
-    {"t": "Aḥṣā is to enumerate exactly, from ḥaṣā, pebbles, because the Arabs counted with stones. It is the verb used for a tally that leaves nothing out rather than for a general awareness.", "lvl": "editorial"},
-    {"t": "The Qur'an puts the same claim in the mouths of the people reading their record on that Day: what is this book, it leaves out nothing small or large but has recorded it.", "lvl": "quran", "src": "18:49"},
-    {"t": "The verse answers verse 27 directly. They did not expect a reckoning, and the reckoning was being kept without their participation.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "18:49", "why": "the record described by the people who have just opened it"},
-    {"ref": "36:12", "why": "everything enumerated in a clear register"}
-  ]
-},
-"30": {
-  "words": [
-    {"a": "فَذُوقُوا۟", "t": "fa-dhūqū", "g": "so taste"},
-    {"a": "فَلَن", "t": "fa-lan", "g": "for never"},
-    {"a": "نَّزِيدَكُمْ", "t": "nazīdakum", "g": "will We increase you"},
-    {"a": "إِلَّا", "t": "illā", "g": "except"},
-    {"a": "عَذَابًا", "t": "ʿadhāban", "g": "in punishment"}
-  ],
-  "sense": "The surah stops describing and speaks to them. It is the only line in this section addressed directly to the people in it, and what it tells them is the one thing they would most want denied: that the direction of travel does not change.",
-  "notes": [
-    {"t": "Lan is the particle of emphatic negation about the future, stronger than the ordinary lā. Placed before an increase that has only one possible content, it closes the question verse 23 seemed to leave open.", "lvl": "editorial"},
-    {"t": "The verb is to increase, not to continue. What is denied is not relief but any change of kind in what is added, which is a harder thing to hear.", "lvl": "editorial"},
-    {"t": "Taste is the same verb used in verse 24, where they will not taste coolness. The command here hands them the word they were refused.", "lvl": "quran", "src": "78:24"}
-  ],
-  "links": [
-    {"ref": "78:24", "why": "the same verb used in the denial that this command answers"},
-    {"ref": "17:97", "why": "every time it subsides We increase them in blaze"}
-  ]
-},
-"31": {
-  "words": [
-    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
-    {"a": "لِلْمُتَّقِينَ", "t": "lil-muttaqīna", "g": "for those who guarded themselves"},
-    {"a": "مَفَازًا", "t": "mafāzan", "g": "a place of escape and triumph"}
-  ],
-  "sense": "The surah turns without a bridge. The same construction that opened verse 21 about Hell opens this one about the other party, and the first thing named is not a garden but a getting away.",
-  "notes": [
-    {"t": "Mafāz carries two senses at once, the place where you win and the place where you escape. Both are live in the word, and the Qur'an uses the related verb of the man who is kept away from the Fire and admitted to the Garden.", "lvl": "editorial"},
-    {"t": "Muttaqīn is from wiqāya, a shield or guard, so a muttaqi is someone who has put something between himself and harm. It is a word about caution rather than about piety in the abstract.", "lvl": "editorial"},
-    {"t": "The Qur'an defines success in the same terms: whoever is drawn away from the Fire and admitted to the Garden has succeeded.", "lvl": "quran", "src": "3:185"}
-  ],
-  "links": [
-    {"ref": "3:185", "why": "success defined as being kept from the Fire and let into the Garden"},
-    {"ref": "23:111", "why": "I have rewarded them today for their patience, they are the ones who attained"}
-  ]
-},
-"32": {
-  "words": [
-    {"a": "حَدَآئِقَ", "t": "ḥadāʾiqa", "g": "walled gardens"},
-    {"a": "وَأَعْنَٰبًا", "t": "wa-aʿnāban", "g": "and grapevines"}
-  ],
-  "sense": "The escape is unpacked into four short items over four verses, and it starts with what a person in a dry country pictures when he pictures relief: enclosed green ground and vines.",
-  "notes": [
-    {"t": "Ḥadīqa is a garden with a wall around it, from a root meaning to encircle. It is a stronger word than jannah, which the surah used in verse 16 of the gardens of this world.", "lvl": "editorial"},
-    {"t": "Grapes are singled out because in Arabia they were the fruit of settled, watered land and of some expense. The list is calibrated to what its first hearers would recognise as plenty.", "lvl": "editorial"},
-    {"t": "The Qur'an uses the same walled-garden word in Surah an-Naml as an argument, asking who sent down water from the sky and grew with it gardens of delight, which you could never grow.", "lvl": "quran", "src": "27:60"}
-  ],
-  "links": [
-    {"ref": "27:60", "why": "the same word for gardens used as a challenge in this world"},
-    {"ref": "78:16", "why": "the tangled gardens of this world, set against the walled ones here"}
-  ]
-},
-"33": {
-  "words": [
-    {"a": "وَكَوَاعِبَ", "t": "wa-kawāʿiba", "g": "and full-figured companions"},
-    {"a": "أَتْرَابًا", "t": "atrāban", "g": "of one age"}
-  ],
-  "sense": "The second item is company. Two words describe them, one about their being young and grown, the other about their being of the same age as each other and as those they are with, so that nobody in the Garden is out of step with anyone else.",
-  "notes": [
-    {"t": "The classical exegetes read kawāʿib of young women whose figures have formed, from kaʿb, a rounded protrusion. A number of modern translators render it more generally as youthful companions, and the difference is one of directness rather than of doctrine.", "lvl": "debated", "src": "the classical commentaries are explicit; several modern renderings prefer a general sense"},
-    {"t": "Atrāb comes from turāb, dust, because children who played in the same dust grew up together. The word for equal in age is built on the ground they shared.", "lvl": "editorial"},
-    {"t": "The Qur'an uses atrāb of the people of the Garden elsewhere as well, which suggests the sameness of age is a description of the place rather than of one group in it.", "lvl": "quran", "src": "56:37"}
-  ],
-  "links": [
-    {"ref": "56:35-37", "why": "companions made anew, of equal age, described at more length"},
-    {"ref": "38:52", "why": "the same equality of age named among the rewards"}
-  ]
-},
-"34": {
-  "words": [
-    {"a": "وَكَأْسًا", "t": "wa-kaʾsan", "g": "and a cup"},
-    {"a": "دِهَاقًا", "t": "dihāqan", "g": "filled to the brim"}
-  ],
-  "sense": "The third item answers verse 24 exactly. There they would not taste any drink; here the cup is not merely provided but full, with the word for a vessel filled until nothing more will go in.",
-  "notes": [
-    {"t": "Kaʾs in Arabic means the cup only when there is something in it. An empty vessel is called by another word, so the drink is inside the noun before the adjective arrives.", "lvl": "editorial"},
-    {"t": "The early exegetes give dihāq as full to overflowing, and some as clear and continuous. Either way it names an abundance rather than a flavour, and the surah never says what the cup contains.", "lvl": "debated", "src": "the early exegetes give more than one sense; at-Tabari records them"},
-    {"t": "Other surahs say what is absent from the drink of the Garden rather than what is in it: no headache, no intoxication, no idle talk over it. The absence is the description.", "lvl": "quran", "src": "37:47 and 52:23"}
-  ],
-  "links": [
-    {"ref": "37:45-47", "why": "a cup passed round with nothing harmful in it"},
-    {"ref": "78:24", "why": "the drink refused on the other side of the Day"}
-  ]
-},
-"35": {
-  "words": [
-    {"a": "لَّا", "t": "lā", "g": "not"},
-    {"a": "يَسْمَعُونَ", "t": "yasmaʿūna", "g": "will they hear"},
-    {"a": "فِيهَا", "t": "fīhā", "g": "in it"},
-    {"a": "لَغْوًا", "t": "laghwan", "g": "empty talk"},
-    {"a": "وَلَا", "t": "wa-lā", "g": "nor"},
-    {"a": "كِذَّٰبًا", "t": "kidhdhāban", "g": "any lying"}
-  ],
-  "sense": "The fourth item is not a thing but a quality of the conversation. Nothing pointless is said there and nothing false, which is a stranger reward than gardens and is the last one the surah lists.",
-  "notes": [
-    {"t": "Laghw is speech with no content, the filler that occupies a gathering. The Qur'an also uses it of oaths sworn without intent, so the word covers the whole class of words that do not mean anything.", "lvl": "editorial"},
-    {"t": "The word kidhdhāb closes verse 28 as well, where it named the denial that put people in the Fire. The same rare word ends the description of the Fire's cause and the Garden's peace, and the surah uses it nowhere else.", "lvl": "quran", "src": "78:28"},
-    {"t": "Reading verses 32 to 35 together, the reward moves outward from things to company to drink to the air of the place. The last item is the only one that could not be bought anywhere.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "56:25-26", "why": "no idle or sinful talk there, only the saying of peace"},
-    {"ref": "19:62", "why": "they hear no idle speech in it, only peace"}
-  ]
-},
-"36": {
-  "words": [
-    {"a": "جَزَآءً", "t": "jazāʾan", "g": "as a recompense"},
-    {"a": "مِّن", "t": "min", "g": "from"},
-    {"a": "رَّبِّكَ", "t": "rabbika", "g": "your Lord"},
-    {"a": "عَطَآءً", "t": "ʿaṭāʾan", "g": "a gift"},
-    {"a": "حِسَابًا", "t": "ḥisāban", "g": "sufficient and reckoned"}
-  ],
-  "sense": "The reward is summed up the way the punishment was, but with two differences. The Lord is named as the one giving, and the word gift is added to the word recompense, so that what was earned and what was given free are said in the same breath.",
-  "notes": [
-    {"t": "Ḥisāb here is read by many exegetes as enough, from the Arabic usage aḥsabani, it sufficed me. Others keep the sense of reckoned, an amount worked out precisely. Both readings are old and the word carries the two.", "lvl": "debated", "src": "the classical commentaries record sufficient and calculated as the two main readings"},
-    {"t": "Recompense is what a person is owed and a gift is what he is not. Putting the two nouns side by side without a conjunction makes the Garden both at once, which no single English word does.", "lvl": "editorial"},
-    {"t": "The Qur'an says elsewhere that Allah's pleasure is greater than the gardens themselves, which is the same move this verse makes by naming the giver in the middle of the list of gifts.", "lvl": "quran", "src": "9:72"}
-  ],
-  "links": [
-    {"ref": "9:72", "why": "the pleasure of Allah named as greater than the gardens listed before it"},
-    {"ref": "78:26", "why": "the matching one-line summary given to the punishment"}
-  ]
-},
-"37": {
-  "words": [
-    {"a": "رَّبِّ", "t": "rabbi", "g": "Lord of"},
-    {"a": "ٱلسَّمَٰوَٰتِ", "t": "as-samāwāti", "g": "the heavens"},
-    {"a": "وَٱلْأَرْضِ", "t": "wal-arḍi", "g": "and the earth"},
-    {"a": "وَمَا", "t": "wa-mā", "g": "and whatever is"},
-    {"a": "بَيْنَهُمَا", "t": "baynahumā", "g": "between them"},
-    {"a": "ٱلرَّحْمَٰنِ", "t": "ar-raḥmāni", "g": "the Most Merciful"},
-    {"a": "لَا", "t": "lā", "g": "not"},
-    {"a": "يَمْلِكُونَ", "t": "yamlikūna", "g": "do they have any power over"},
-    {"a": "مِنْهُ", "t": "minhu", "g": "from Him"},
-    {"a": "خِطَابًا", "t": "khiṭāban", "g": "any address"}
-  ],
-  "sense": "Your Lord in the previous verse is now expanded into three clauses of ownership, and then a fourth word that is a name of mercy. Immediately after that name comes the statement that nobody there has the standing to open their mouth to Him.",
-  "notes": [
-    {"t": "Ar-Rahman is placed in the middle of a verse about total authority and total silence, and it is the same name that appears again in verse 38 as the one who grants permission to speak. The surah keeps the mercy attached to the power rather than opposite it.", "lvl": "editorial"},
-    {"t": "Khiṭāb is address, speaking to someone. What is denied is not permission to plead but the standing to begin a conversation at all, which verse 38 then modifies by exception.", "lvl": "editorial"},
-    {"t": "The canonical readings differ over whether Rabb here is in the genitive, continuing the description of your Lord from verse 36, or in the nominative, starting a fresh sentence. Hafs, whose reading this Mushaf follows, has the genitive.", "lvl": "debated", "src": "the ten canonical readings differ on the case ending; Hafs reads rabbi"}
-  ],
-  "links": [
-    {"ref": "20:108", "why": "voices humbled before the Most Merciful, so you hear only a faint sound"},
-    {"ref": "40:16", "why": "to whom does the sovereignty belong today, asked and answered on that Day"}
-  ]
-},
-"38": {
-  "words": [
-    {"a": "يَوْمَ", "t": "yawma", "g": "on the Day when"},
-    {"a": "يَقُومُ", "t": "yaqūmu", "g": "will stand"},
-    {"a": "ٱلرُّوحُ", "t": "ar-rūḥu", "g": "the Spirit"},
-    {"a": "وَٱلْمَلَٰٓئِكَةُ", "t": "wal-malāʾikatu", "g": "and the angels"},
-    {"a": "صَفًّا", "t": "ṣaffan", "g": "in ranks"},
-    {"a": "لَّا", "t": "lā", "g": "not"},
-    {"a": "يَتَكَلَّمُونَ", "t": "yatakallamūna", "g": "will they speak"},
-    {"a": "إِلَّا", "t": "illā", "g": "except"},
-    {"a": "مَنْ", "t": "man", "g": "whoever"},
-    {"a": "أَذِنَ", "t": "adhina", "g": "has given leave"},
-    {"a": "لَهُ", "t": "lahu", "g": "to him"},
-    {"a": "ٱلرَّحْمَٰنُ", "t": "ar-raḥmānu", "g": "the Most Merciful"},
-    {"a": "وَقَالَ", "t": "wa-qāla", "g": "and he says"},
-    {"a": "صَوَابًا", "t": "ṣawāban", "g": "what is right"}
-  ],
-  "sense": "The silence of the previous verse is shown rather than stated. Ranks of angels are standing, and the exception to the silence has two conditions: leave must be given, and the one who speaks must say something correct. Permission alone is not enough.",
-  "notes": [
-    {"t": "Who ar-Rūh is here has more than one answer among the early exegetes. Most identify him as Jibril, named separately from the angels for his rank; others hold he is a created being of another order, and a further reading takes it as the souls of human beings.", "lvl": "debated", "src": "at-Tabari records several identifications; the majority position names Jibril"},
-    {"t": "The second condition, and says what is right, is easy to read past. Even after leave is granted the speech must be true, which rules out the pleading and excuse-making the Qur'an describes elsewhere on that Day.", "lvl": "editorial"},
-    {"t": "The Qur'an sets the same limit on intercession in more than one place, that it benefits no one except those the Most Merciful permits and whose word He is pleased with.", "lvl": "quran", "src": "20:109"}
-  ],
-  "links": [
-    {"ref": "20:109", "why": "the same two conditions on speaking, permission and an accepted word"},
-    {"ref": "70:4", "why": "the angels and the Spirit named together in the same pairing"}
-  ]
-},
-"39": {
-  "words": [
-    {"a": "ذَٰلِكَ", "t": "dhālika", "g": "that is"},
-    {"a": "ٱلْيَوْمُ", "t": "al-yawmu", "g": "the Day"},
-    {"a": "ٱلْحَقُّ", "t": "al-ḥaqqu", "g": "the real one"},
-    {"a": "فَمَن", "t": "fa-man", "g": "so whoever"},
-    {"a": "شَآءَ", "t": "shāʾa", "g": "wills"},
-    {"a": "ٱتَّخَذَ", "t": "ittakhadha", "g": "let him take"},
-    {"a": "إِلَىٰ", "t": "ilā", "g": "to"},
-    {"a": "رَبِّهِۦ", "t": "rabbihi", "g": "his Lord"},
-    {"a": "مَـَٔابًا", "t": "maʾāban", "g": "a place of return"}
-  ],
-  "sense": "The description ends and the reader is handed a decision. The Day is called the real one, which quietly reclassifies the day he is currently living in, and then the choice is left with him in the plainest terms the language has.",
-  "notes": [
-    {"t": "Maʾāb repeats the word used in verse 22 of Hell as the place of return for those who overstepped. The surah offers the same noun twice, once as a destination arrived at and once as one taken deliberately.", "lvl": "quran", "src": "78:22"},
-    {"t": "Whoever wills is not an invitation to indifference. The Qur'an uses the same formula in two other surahs, always after a warning and always with the outcome already described, so the choice is offered with its consequences visible.", "lvl": "quran", "src": "73:19 and 76:29"},
-    {"t": "Calling that Day al-ḥaqq, the real, sets it against this one without naming this one. The comparison is left for the reader to make, and it is the last thing the surah asks of him before its final verse.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "73:19", "why": "the identical closing formula after a warning"},
-    {"ref": "78:22", "why": "the same word used of the other destination"}
-  ]
-},
-"40": {
-  "words": [
-    {"a": "إِنَّآ", "t": "innā", "g": "indeed We"},
-    {"a": "أَنذَرْنَٰكُمْ", "t": "andharnākum", "g": "have warned you"},
-    {"a": "عَذَابًا", "t": "ʿadhāban", "g": "of a punishment"},
-    {"a": "قَرِيبًا", "t": "qarīban", "g": "near at hand"},
-    {"a": "يَوْمَ", "t": "yawma", "g": "on the Day when"},
-    {"a": "يَنظُرُ", "t": "yanẓuru", "g": "will look at"},
-    {"a": "ٱلْمَرْءُ", "t": "al-marʾu", "g": "the man"},
-    {"a": "مَا", "t": "mā", "g": "what"},
-    {"a": "قَدَّمَتْ", "t": "qaddamat", "g": "have sent ahead"},
-    {"a": "يَدَاهُ", "t": "yadāhu", "g": "his two hands"},
-    {"a": "وَيَقُولُ", "t": "wa-yaqūlu", "g": "and will say"},
-    {"a": "ٱلْكَافِرُ", "t": "al-kāfiru", "g": "the denier"},
-    {"a": "يَٰلَيْتَنِى", "t": "yā-laytanī", "g": "if only I"},
-    {"a": "كُنتُ", "t": "kuntu", "g": "had been"},
-    {"a": "تُرَٰبًۢا", "t": "turāban", "g": "dust"}
-  ],
-  "sense": "The surah ends with a sentence spoken by someone who is looking at his own record. The punishment is called near, the deeds are described as having been sent on ahead by his hands, and the last words in the surah are a wish to have been dirt instead of a person.",
-  "notes": [
-    {"t": "Qaddamat, sent ahead, treats deeds as luggage forwarded to a destination the person has not reached yet. It is the Qur'an's usual way of describing action, and it makes the Day a place where you collect rather than a place where you are told.", "lvl": "editorial"},
-    {"t": "Who the kāfir in this verse is has been read in more than one way by the early exegetes, and some took the wish about dust to follow the settling of accounts among the animals. The plain reading, that it is the human denier of the surah's opening, is the one most exegetes hold.", "lvl": "debated", "src": "at-Tabari and the classical commentaries record more than one identification"},
-    {"t": "The surah began with people arguing about a report and ends with one of them wishing he had been made of the material the earth in verse 6 was spread from. The last word of the surah is the ground it started on.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "3:30", "why": "the Day every soul finds what it did brought present before it"},
-    {"ref": "21:1", "why": "their reckoning has drawn near while they turn away, the same nearness asserted"}
-  ]
-}
-}
-},
-{
-"n": 97,
-"verses": {
-"1": {
-  "words": [
-    {"a": "إِنَّآ", "t": "innā", "g": "indeed We"},
-    {"a": "أَنزَلْنَٰهُ", "t": "anzalnāhu", "g": "sent it down"},
-    {"a": "فِى", "t": "fī", "g": "in"},
-    {"a": "لَيْلَةِ", "t": "laylati", "g": "the Night of"},
-    {"a": "ٱلْقَدْرِ", "t": "al-qadr", "g": "Decree and worth"}
-  ],
-  "sense": "The surah opens with a pronoun and no antecedent. It is never named in the five verses, and every reader is expected to know from the sentence alone that the it is the Qur'an. The surah is about a night, and it introduces the night by way of what happened on it.",
-  "notes": [
-    {"t": "Qadr carries two senses that the surah uses both of. It is the measuring out of what will be, from the root of qadar, and it is worth or standing, as in a person of high qadr. Neither meaning excludes the other here.", "lvl": "editorial"},
-    {"t": "The Qur'an names the night twice more without this title: a blessed night in Surah ad-Dukhan, and the month of Ramadan in Surah al-Baqara. Read together the three passages place the night inside Ramadan.", "lvl": "quran", "src": "44:3 and 2:185"},
-    {"t": "The early exegetes distinguish two descents: the Qur'an as a whole to the lowest heaven on this night, and then in portions to the Prophet ﷺ over twenty-three years. The distinction rests on reports from Ibn Abbas rather than on a statement of the Prophet ﷺ.", "lvl": "debated", "src": "reports from Ibn ʿAbbās collected in the tafsirs; the wording of them varies"}
-  ],
-  "links": [
-    {"ref": "44:3", "why": "the same night named as blessed, with the same verb"},
-    {"ref": "2:185", "why": "the month in which the Qur'an was sent down"}
-  ]
-},
-"2": {
-  "words": [
-    {"a": "وَمَآ", "t": "wa-mā", "g": "and what"},
-    {"a": "أَدْرَىٰكَ", "t": "adrāka", "g": "could have made you know"},
-    {"a": "مَا", "t": "mā", "g": "what"},
-    {"a": "لَيْلَةُ", "t": "laylatu", "g": "the Night of"},
-    {"a": "ٱلْقَدْرِ", "t": "al-qadr", "g": "Decree is"}
-  ],
-  "sense": "Having named the night the surah stops and asks whether the name told you anything. The question is put to the Prophet ﷺ himself, which says that this is not knowable by looking, only by being told.",
-  "notes": [
-    {"t": "The Qur'an uses two similar formulas and keeps them apart. Wa mā adrāka is always followed by an explanation; wa mā yudrīka, what will make you know, is used of things left undisclosed, such as the hour of the Day.", "lvl": "quran", "src": "33:63"},
-    {"t": "The night is named three times in five verses, which in a surah this short is close to a third of its words. Repeating a proper noun instead of using a pronoun keeps each sentence standing on its own.", "lvl": "editorial"},
-    {"t": "The verb darā is to know by picking up traces, the way a tracker reads ground. Denying that route to knowledge is the point of the question: there was nothing on the surface of that night to read.", "lvl": "editorial"}
-  ],
-  "links": [
-    {"ref": "101:10", "why": "the same formula used to introduce something about to be explained"},
-    {"ref": "82:17-18", "why": "the question doubled before the Day of Recompense is described"}
-  ]
-},
-"3": {
-  "words": [
-    {"a": "لَيْلَةُ", "t": "laylatu", "g": "the Night of"},
-    {"a": "ٱلْقَدْرِ", "t": "al-qadri", "g": "Decree"},
-    {"a": "خَيْرٌ", "t": "khayrun", "g": "is better"},
-    {"a": "مِّنْ", "t": "min", "g": "than"},
-    {"a": "أَلْفِ", "t": "alfi", "g": "a thousand"},
-    {"a": "شَهْرٍ", "t": "shahr", "g": "months"}
-  ],
-  "sense": "The answer to the question is a comparison, not a description. A thousand months is a little over eighty-three years, which is longer than most lives, so the verse measures one night against more than a lifetime of ordinary ones.",
-  "notes": [
-    {"t": "The Prophet ﷺ said that whoever stands in prayer during the Night of Decree out of faith and seeking the reward will have what came before of his sins forgiven. The report is in the chapter Bukhari devotes to the night prayer of Ramadan.", "lvl": "sunnah", "src": "Bukhari 2014"},
-    {"t": "The verse does not say better in what respect, and the commentaries fill it in as the worth of worship done on it. The text itself leaves the comparison open, which is why it is usually quoted whole rather than paraphrased.", "lvl": "editorial"},
-    {"t": "A thousand in Arabic is a real number and also the largest round figure in common use, so the phrase can be read as an exact ratio or as a way of saying beyond counting. The commentaries take it both ways.", "lvl": "debated", "src": "the classical commentaries divide over whether the thousand is exact or indefinite"}
-  ],
-  "links": [
-    {"ref": "2:185", "why": "the month this night sits inside, and the reason given for fasting it"},
-    {"ref": "44:3-4", "why": "the same night described as the one on which every wise matter is made distinct"}
-  ]
-},
-"4": {
-  "words": [
-    {"a": "تَنَزَّلُ", "t": "tanazzalu", "g": "come down"},
-    {"a": "ٱلْمَلَٰٓئِكَةُ", "t": "al-malāʾikatu", "g": "the angels"},
-    {"a": "وَٱلرُّوحُ", "t": "war-rūḥu", "g": "and the Spirit"},
-    {"a": "فِيهَا", "t": "fīhā", "g": "in it"},
-    {"a": "بِإِذْنِ", "t": "bi-idhni", "g": "by the leave of"},
-    {"a": "رَبِّهِم", "t": "rabbihim", "g": "their Lord"},
-    {"a": "مِّن", "t": "min", "g": "with"},
-    {"a": "كُلِّ", "t": "kulli", "g": "every"},
-    {"a": "أَمْرٍ", "t": "amr", "g": "command"}
-  ],
-  "sense": "The traffic on that night runs downward. Angels descend, and one of them is named separately, and they come carrying instructions rather than on their own errand. The verse says by the leave of their Lord, which rules out the descent being their own idea.",
-  "notes": [
-    {"t": "Tanazzalu is a form of the verb that carries repetition and gradualness, so the descent is described as continuing through the night rather than happening at one moment.", "lvl": "editorial"},
-    {"t": "Ar-Rūh is most commonly identified as Jibril, named apart from the angels as the Qur'an does in other places. Other identifications are recorded from the early exegetes and none of them rests on a statement of the Prophet ﷺ.", "lvl": "debated", "src": "at-Tabari records several identifications; the majority name Jibril"},
-    {"t": "Min kulli amr is read as with every command, and also as concerning every matter. Surah ad-Dukhan describes the same night as one on which every wise matter is made distinct, which supports the second reading.", "lvl": "quran", "src": "44:4"}
-  ],
-  "links": [
-    {"ref": "44:4", "why": "every wise matter separated out on that night"},
-    {"ref": "16:2", "why": "He sends down the angels with the Spirit of His command"}
-  ]
-},
-"5": {
-  "words": [
-    {"a": "سَلَٰمٌ", "t": "salāmun", "g": "peace"},
-    {"a": "هِىَ", "t": "hiya", "g": "it is"},
-    {"a": "حَتَّىٰ", "t": "ḥattā", "g": "until"},
-    {"a": "مَطْلَعِ", "t": "maṭlaʿi", "g": "the rising of"},
-    {"a": "ٱلْفَجْرِ", "t": "al-fajr", "g": "the dawn"}
-  ],
-  "sense": "The last verse gives the night a single quality and an end time. It is peace, said as a noun rather than an adjective, and it runs out at first light, which is the ordinary end of a night and not a special one.",
-  "notes": [
-    {"t": "Salāmun hiya puts the noun before the pronoun, which in Arabic makes peace the whole content of the night rather than one of its features. English has to say it is peace and loses the order.", "lvl": "editorial"},
-    {"t": "The canonical readings differ over maṭlaʿ and maṭliʿ, the first naming the time of the rising and the second the place. Hafs from Asim, the reading this Mushaf follows, has maṭlaʿ.", "lvl": "debated", "src": "the ten canonical readings; Hafs reads maṭlaʿ with a fatḥa on the lām"},
-    {"t": "Aisha asked the Prophet ﷺ what to say if she knew which night it was, and he told her to say: O Allah, You are pardoning and love to pardon, so pardon me.", "lvl": "sunnah", "src": "Tirmidhi 3513, graded hasan sahih by at-Tirmidhi"}
-  ],
-  "links": [
-    {"ref": "36:58", "why": "peace, a word from a Lord who is merciful"},
-    {"ref": "13:24", "why": "peace be upon you for what you endured, spoken by the angels"}
-  ]
-}
-}
-},
-{
-"n": 108,
-"verses": {
-"1": {
-  "words": [
-    {"a": "إِنَّآ", "t": "innā", "g": "indeed We"},
-    {"a": "أَعْطَيْنَٰكَ", "t": "aʿṭaynāka", "g": "have given you"},
-    {"a": "ٱلْكَوْثَرَ", "t": "al-kawthar", "g": "the abundance"}
-  ],
-  "sense": "The shortest surah in the Qur'an opens by telling one man that something has already been handed to him. The verb is in the past, so the gift is not promised or conditional, and the thing given is named with a word that means a great deal of something.",
-  "notes": [
-    {"t": "Kawthar is built on the root k-th-r, much, in a pattern Arabic uses for the extreme of a quality. The word occurs once in the Qur'an and nowhere else in it, and it has no plural.", "lvl": "editorial"},
-    {"t": "Anas ibn Malik reported that the Prophet ﷺ dozed briefly among them, raised his head smiling, and said a surah had just been sent down to him. He recited it, then asked whether they knew what al-Kawthar was, and said it is a river his Lord had promised him, on which there is much good, and a basin his community will come to on the Day of Resurrection.", "lvl": "sunnah", "src": "Muslim 400"},
-    {"t": "Some of the early exegetes read al-kawthar more widely as every abundance given to the Prophet ﷺ, prophethood, the Qur'an, and his following, rather than the river alone. The report from Anas names the river, and the wider reading is offered as an addition rather than a replacement.", "lvl": "debated", "src": "the classical commentaries record both the river and the general sense"}
-  ],
-  "links": [
-    {"ref": "93:5", "why": "your Lord is going to give you, and you will be content, said to the same man"},
-    {"ref": "94:1", "why": "another short surah addressed to him listing what he was already given"}
-  ]
-},
-"2": {
-  "words": [
-    {"a": "فَصَلِّ", "t": "fa-ṣalli", "g": "so pray"},
-    {"a": "لِرَبِّكَ", "t": "li-rabbika", "g": "to your Lord"},
-    {"a": "وَٱنْحَرْ", "t": "wanḥar", "g": "and sacrifice"}
-  ],
-  "sense": "The gift is followed by an instruction, and the instruction is two acts of worship that cost something. Pray, and slaughter an animal, both of them done for the Lord who gave, which is the whole content of the response asked for.",
-  "notes": [
-    {"t": "Li-rabbika, to your Lord, is placed between the two verbs so that it governs both. The prayer and the sacrifice are directed to one recipient, which is the point being made to an audience that offered both to other things.", "lvl": "editorial"},
-    {"t": "Naḥara specifically means to slaughter a camel by piercing the naḥr, the base of the throat, as against dhabaḥa for sheep and cattle. The verse uses the more costly of the two.", "lvl": "editorial"},
-    {"t": "The classical commentaries record more than one reading of wanḥar, chiefly the sacrifice, and also placing the hands at the naḥr during prayer, and facing the qibla. The great majority take it as the sacrifice, which the pairing with prayer and the parallel in Surah al-Anʿam supports.", "lvl": "debated", "src": "the classical commentaries record the several views; the majority read it as the sacrifice"}
-  ],
-  "links": [
-    {"ref": "6:162", "why": "my prayer and my sacrifice are for Allah, the same pairing said in the first person"},
-    {"ref": "22:37", "why": "neither the flesh nor the blood reaches Allah, but the God-consciousness from you does"}
-  ]
-},
-"3": {
-  "words": [
-    {"a": "إِنَّ", "t": "inna", "g": "indeed"},
-    {"a": "شَانِئَكَ", "t": "shāniʾaka", "g": "the one who hates you"},
-    {"a": "هُوَ", "t": "huwa", "g": "he is"},
-    {"a": "ٱلْأَبْتَرُ", "t": "al-abtar", "g": "the one cut off"}
-  ],
-  "sense": "The surah closes by handing an insult back. Someone had called the Prophet ﷺ cut off, meaning left without a son to carry his name, and the verse returns the exact word to the person who used it, with the definite article added so that it becomes a title.",
-  "notes": [
-    {"t": "Abtar is used of an animal whose tail has been docked, and then of a man with no male descendant and of anything left incomplete. The definite article on it here turns a description into the man's name.", "lvl": "editorial"},
-    {"t": "The occasion reported is that a leading Meccan called the Prophet ﷺ abtar after his sons died in infancy. The reports name different men, al-As ibn Wa'il among them, and their wordings and chains differ, so the identity of the speaker is not settled even though the situation is well attested.", "lvl": "debated", "src": "reports collected by at-Tabari and Ibn Kathir name different men and differ in wording"},
-    {"t": "Shāniʾ is not the ordinary word for enemy. It names the one who feels hatred, from the root the Qur'an uses in Surah al-Ma'ida when it warns that hatred of a people must not push you into injustice.", "lvl": "quran", "src": "5:2"}
-  ],
-  "links": [
-    {"ref": "5:2", "why": "the same root for hatred, there turned into a warning to the believers"},
-    {"ref": "33:40", "why": "he is not the father of any of your men but the Messenger of Allah and the seal of the prophets"}
-  ]
-}
-}
-}
-]
+ "tranche": "d",
+ "surahs": [
+  {
+   "n": 78,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "عَمَّ",
+       "t": "ʿamma",
+       "g": "about what"
+      },
+      {
+       "a": "يَتَسَآءَلُونَ",
+       "t": "yatasāʾalūn",
+       "g": "are they asking one another"
+      }
+     ],
+     "sense": "The surah opens on a question about a question. People were arguing among themselves about something, and instead of naming it in the first line the verse points at the noise they are making and asks what all of it is for. The verb is the reciprocal form, people questioning each other back and forth, not people asking someone who knows.",
+     "notes": [
+      {
+       "t": "ʿAmma is ʿan and mā run together with the alif of mā dropped. Arabic does the same shortening in fīma, mimma and bima, and it always happens in questions, which makes the question land faster than the full form would.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The surah has more than one name in the early lists: an-Nabaʾ, ʿAmma, and at-Tasaʾul, each taken from these first two verses. Naming a surah after its opening words rather than its subject is the older habit.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an elsewhere reports the words the disputers actually used, that there is nothing but this present life and they will not be raised, which fills in what the question here leaves unsaid.",
+       "lvl": "quran",
+       "src": "6:29"
+      }
+     ],
+     "links": [
+      {
+       "ref": "38:67-68",
+       "why": "the same phrase, a tremendous piece of news, and the same audience turning away from it"
+      },
+      {
+       "ref": "6:29",
+       "why": "the denial that the argument was about, quoted in their own words"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "عَنِ",
+       "t": "ʿani",
+       "g": "about"
+      },
+      {
+       "a": "ٱلنَّبَإِ",
+       "t": "an-nabaʾi",
+       "g": "the news"
+      },
+      {
+       "a": "ٱلْعَظِيمِ",
+       "t": "al-ʿaẓīm",
+       "g": "the tremendous"
+      }
+     ],
+     "sense": "The answer to the question is given as a description rather than a name. It is news, something reported by someone who was there, and it is described as immense. The verse still does not say what it is, which keeps the reader in the position of the person who has just heard it and not yet believed it.",
+     "notes": [
+      {
+       "t": "Nabaʾ is not the ordinary word for information. The lexicographers restrict it to news that carries weight and that the hearer did not have, which is why the Qur'an uses it for the reports of the earlier peoples and for this.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "What the tremendous news is has more than one answer in the classical commentaries: the raising of the dead, the Qur'an itself, and the message the Prophet ﷺ was sent with. The surah answers it from verse 17 onward by describing the Day, which is why most exegetes settle on the resurrection.",
+       "lvl": "debated",
+       "src": "at-Tabari records the several positions; Ibn Kathir prefers the resurrection"
+      },
+      {
+       "t": "The same word carries the same weight in Surah Sad, where the Prophet ﷺ is told to say that he brings a tremendous piece of news and that they are turning away from it.",
+       "lvl": "quran",
+       "src": "38:67-68"
+      }
+     ],
+     "links": [
+      {
+       "ref": "38:67-68",
+       "why": "the phrase used again of the message itself"
+      },
+      {
+       "ref": "56:47-50",
+       "why": "the objection stated and answered in another surah"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "ٱلَّذِى",
+       "t": "alladhī",
+       "g": "the one which"
+      },
+      {
+       "a": "هُمْ",
+       "t": "hum",
+       "g": "they"
+      },
+      {
+       "a": "فِيهِ",
+       "t": "fīhi",
+       "g": "concerning it"
+      },
+      {
+       "a": "مُخْتَلِفُونَ",
+       "t": "mukhtalifūn",
+       "g": "are in disagreement"
+      }
+     ],
+     "sense": "The dispute is not only between the deniers and the believers. It is among the deniers themselves, who could not agree on what happens after death and so held several incompatible positions at once. Disagreement is offered here as a symptom, not as a neutral fact.",
+     "notes": [
+      {
+       "t": "Mukhtalifūn is the active participle, so the verse describes a settled state rather than an argument that flared up once. They are people who are in disagreement, which is what they do.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an makes the point about itself elsewhere: if this were from other than Allah they would have found in it much contradiction. Consistency is used as a mark of a single source, and its absence as a mark of guesswork.",
+       "lvl": "quran",
+       "src": "4:82"
+      },
+      {
+       "t": "Some exegetes read the disagreement as running between the deniers and the believers, others as running among the deniers only. The grammar allows both, and the surah goes on to address the deniers alone.",
+       "lvl": "debated",
+       "src": "the classical commentaries record both readings without resolving them"
+      }
+     ],
+     "links": [
+      {
+       "ref": "4:82",
+       "why": "contradiction offered as the test of where a book comes from"
+      },
+      {
+       "ref": "51:8",
+       "why": "you are in a statement that differs, said to the same objectors"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "كَلَّا",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "سَيَعْلَمُونَ",
+       "t": "sayaʿlamūn",
+       "g": "they are going to know"
+      }
+     ],
+     "sense": "The argument is cut off rather than answered. Kalla stops the speaker mid-sentence, and what follows is not a proof but a date. They will find out, and the finding out is put in the future tense with the prefix that means soon.",
+     "notes": [
+      {
+       "t": "The particle sa- on a verb means shortly, and the Arabs used sawfa for the more distant future. Using the shorter one about the Day of Judgement treats it as near, which the surah says outright in its final verse.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Kalla appears only in the second half of the Qur'an, in the surahs revealed to a hostile audience, and it functions as a rebuke rather than a simple no. Translating it as no loses the interruption.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verse does not argue the resurrection here. It asserts that the knowledge is coming, and the argument is made instead by the sixteen verses of creation that follow.",
+       "lvl": "quran"
+      }
+     ],
+     "links": [
+      {
+       "ref": "102:3-4",
+       "why": "the same phrase doubled, no indeed, you are going to know"
+      },
+      {
+       "ref": "78:40",
+       "why": "the closing verse names the punishment as near, matching the tense used here"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then again"
+      },
+      {
+       "a": "كَلَّا",
+       "t": "kallā",
+       "g": "no indeed"
+      },
+      {
+       "a": "سَيَعْلَمُونَ",
+       "t": "sayaʿlamūn",
+       "g": "they are going to know"
+      }
+     ],
+     "sense": "The whole sentence is repeated with one word added at the front. Nothing new is said, and the repetition is the point: the second telling makes the first heavier rather than adding to it.",
+     "notes": [
+      {
+       "t": "The commentaries split over whether the two verses are one statement said twice for emphasis, or two separate occasions of knowing, the first at death and the second when the dead are raised. Both readings are old and the wording supports either.",
+       "lvl": "debated",
+       "src": "the classical tafsirs record both; at-Tabari lists them without deciding"
+      },
+      {
+       "t": "Thumma normally means afterwards with a gap. Placed in front of an identical sentence it produces distance between the two warnings rather than sequence in time, the way a speaker pauses before saying a thing again.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same doubling with the same particle occurs in Surah at-Takathur, which suggests a fixed rhetorical pattern rather than an accident of this passage.",
+       "lvl": "quran",
+       "src": "102:3-4"
+      }
+     ],
+     "links": [
+      {
+       "ref": "102:3-4",
+       "why": "the identical doubling in another surah of warning"
+      },
+      {
+       "ref": "15:3",
+       "why": "leave them to eat and enjoy themselves, for they will come to know"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "alam",
+       "g": "have We not"
+      },
+      {
+       "a": "نَجْعَلِ",
+       "t": "najʿali",
+       "g": "made"
+      },
+      {
+       "a": "ٱلْأَرْضَ",
+       "t": "al-arḍa",
+       "g": "the earth"
+      },
+      {
+       "a": "مِهَٰدًا",
+       "t": "mihādan",
+       "g": "a spread bed"
+      }
+     ],
+     "sense": "The proof of the coming Day begins here, and it begins under the reader's feet. The question is rhetorical and expects a yes, and everything from this verse to verse 16 is a single list of things already given, offered as evidence that the giver can do the thing being denied.",
+     "notes": [
+      {
+       "t": "Mihād is from the same root as mahd, the cradle a child is laid in, and the verb mahhada, to smooth out a bed before lying on it. The image is not of a flat earth but of a surface prepared for someone who is going to rest on it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "From this verse to the end of the surah almost every line closes on a long ā followed by a single consonant and tanwin: mihādan, awtādan, azwājan, subātan. The rhyme is unbroken for thirty-five verses, which is why the surah is easy to memorise and hard to recite carelessly.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same description of the earth is given in two other places with the same verb, which makes it a settled Qur'anic way of speaking about the ground rather than a one-off image.",
+       "lvl": "quran",
+       "src": "20:53 and 43:10"
+      }
+     ],
+     "links": [
+      {
+       "ref": "20:53",
+       "why": "the earth made a bed, and paths opened through it"
+      },
+      {
+       "ref": "71:19",
+       "why": "Nuh makes the same argument from the earth spread out"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "وَٱلْجِبَالَ",
+       "t": "wal-jibāla",
+       "g": "and the mountains"
+      },
+      {
+       "a": "أَوْتَادًا",
+       "t": "awtādan",
+       "g": "pegs"
+      }
+     ],
+     "sense": "The bed of the previous verse is held in place. A watad is the tent peg driven into the ground so the cloth above does not move, and the word is chosen for people who slept under tents and knew exactly what happens when a peg comes loose.",
+     "notes": [
+      {
+       "t": "The Qur'an states the purpose of the mountains twice elsewhere in the same terms, that the earth should not sway with its people. The function given is stability, and the peg here is the picture of it.",
+       "lvl": "quran",
+       "src": "16:15 and 21:31"
+      },
+      {
+       "t": "Watad is a homely word, not a geological one. It carries the tent, the mallet and the ground all at once, and it is used of Pharaoh in another surah as a description of a man whose power seemed immovable.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The list is running in pairs at this point: earth then mountains, then human beings then sleep, then night then day. Each pair holds a thing and the thing that steadies it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "16:15",
+       "why": "the stated reason mountains were set into the earth"
+      },
+      {
+       "ref": "89:10",
+       "why": "Pharaoh described with the same word, the owner of the pegs"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "وَخَلَقْنَٰكُمْ",
+       "t": "wa-khalaqnākum",
+       "g": "and We created you"
+      },
+      {
+       "a": "أَزْوَٰجًا",
+       "t": "azwājan",
+       "g": "in pairs"
+      }
+     ],
+     "sense": "After the ground and the mountains the list turns to the listener. You were made in twos, and the verse is speaking to a person who is himself half of a pair and did not arrange it.",
+     "notes": [
+      {
+       "t": "Zawj in Arabic is one of a pair, not the pair itself, so azwāj means the members, each of whom needs the other to be complete. English husband and wife each translate the same word.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an generalises the pairing beyond human beings: of every thing We created two mates, so that you might remember. The verse here is the local case of a stated rule.",
+       "lvl": "quran",
+       "src": "51:49"
+      },
+      {
+       "t": "Some exegetes read azwājan more broadly as kinds and sorts, male and female, tall and short, wretched and fortunate. The narrower reading of male and female is the more common one and fits the surrounding list of physical gifts.",
+       "lvl": "debated",
+       "src": "the early exegetes are recorded on both sides in at-Tabari"
+      }
+     ],
+     "links": [
+      {
+       "ref": "51:49",
+       "why": "pairing stated as a universal rule of creation"
+      },
+      {
+       "ref": "53:45",
+       "why": "He created the two mates, the male and the female"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "وَجَعَلْنَا",
+       "t": "wa-jaʿalnā",
+       "g": "and We made"
+      },
+      {
+       "a": "نَوْمَكُمْ",
+       "t": "nawmakum",
+       "g": "your sleep"
+      },
+      {
+       "a": "سُبَاتًا",
+       "t": "subātan",
+       "g": "a cutting off"
+      }
+     ],
+     "sense": "Sleep is named as a gift, which is not how a person who wants more hours in the day thinks of it. The word chosen does not mean rest so much as being severed, the daily interruption of everything you were doing.",
+     "notes": [
+      {
+       "t": "Subāt comes from a root meaning to cut off, and the Sabbath, as-sabt, is named from the same root because it cuts the week. Sleep is being described by what it stops rather than by what it restores.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Placing sleep in an argument about resurrection is deliberate. A person who lies down unconscious every night and is returned to himself every morning has already been shown the mechanism he says is impossible.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an makes the link explicit in another place: Allah takes the souls at the time of their death, and those that have not died during their sleep.",
+       "lvl": "quran",
+       "src": "39:42"
+      }
+     ],
+     "links": [
+      {
+       "ref": "39:42",
+       "why": "sleep described as a taking of the soul, the same argument made directly"
+      },
+      {
+       "ref": "25:47",
+       "why": "night, sleep and the day given together in one verse"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "وَجَعَلْنَا",
+       "t": "wa-jaʿalnā",
+       "g": "and We made"
+      },
+      {
+       "a": "ٱلَّيْلَ",
+       "t": "al-layla",
+       "g": "the night"
+      },
+      {
+       "a": "لِبَاسًا",
+       "t": "libāsan",
+       "g": "a garment"
+      }
+     ],
+     "sense": "Night is described as clothing rather than as darkness. A garment covers what should not be seen, keeps in warmth, and is put on and taken off on a schedule, and the night does all three for the whole earth at once.",
+     "notes": [
+      {
+       "t": "Libās is the ordinary word for the clothes on a person's back, and the Qur'an uses it of spouses as well, that they are a garment for one another. The metaphor is consistent: what covers you is also close to you.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same image appears in Surah al-Furqan with the same word, which places this among the Qur'an's fixed ways of describing the night rather than among its single images.",
+       "lvl": "quran",
+       "src": "25:47"
+      },
+      {
+       "t": "Nothing in the list so far is unusual. Ground, mountains, marriage, sleep and nightfall are the most ordinary facts available, and the argument depends on their being ordinary.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "25:47",
+       "why": "the night made a covering, in the same words"
+      },
+      {
+       "ref": "2:187",
+       "why": "the same word used of husbands and wives"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "وَجَعَلْنَا",
+       "t": "wa-jaʿalnā",
+       "g": "and We made"
+      },
+      {
+       "a": "ٱلنَّهَارَ",
+       "t": "an-nahāra",
+       "g": "the daytime"
+      },
+      {
+       "a": "مَعَاشًا",
+       "t": "maʿāshan",
+       "g": "a time for living"
+      }
+     ],
+     "sense": "The day is given a job. Maʿāsh is where and when a person earns what he lives on, so the verse describes daylight in terms of work and bread rather than in terms of light.",
+     "notes": [
+      {
+       "t": "The root ʿ-y-sh gives ʿaysh, the living a person makes, and maʿīsha, a livelihood. The noun form here is the one Arabic uses for the place or time of an action, so daytime is the site of earning.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Read against verse 10, the two verses divide the day into being covered and being at work, and neither half was arranged by the person living inside it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an states the pairing as a mercy in another place: out of His mercy He made for you the night and the day, so that you may rest in one and seek His bounty in the other.",
+       "lvl": "quran",
+       "src": "28:73"
+      }
+     ],
+     "links": [
+      {
+       "ref": "28:73",
+       "why": "rest and earning assigned to night and day and called a mercy"
+      },
+      {
+       "ref": "17:12",
+       "why": "the sign of the day made visible so that you may seek bounty from your Lord"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "وَبَنَيْنَا",
+       "t": "wa-banaynā",
+       "g": "and We built"
+      },
+      {
+       "a": "فَوْقَكُمْ",
+       "t": "fawqakum",
+       "g": "above you"
+      },
+      {
+       "a": "سَبْعًا",
+       "t": "sabʿan",
+       "g": "seven"
+      },
+      {
+       "a": "شِدَادًا",
+       "t": "shidādan",
+       "g": "firm ones"
+      }
+     ],
+     "sense": "The list moves from the ground upward. The verb is the one used for putting up a building, and what is above the reader is described as constructed, held together and strong, rather than as empty space.",
+     "notes": [
+      {
+       "t": "The noun the seven describes is left out. Arabic can drop it when the number alone is enough, and every other place in the Qur'an that counts seven above the earth counts heavens, so the ellipsis is not obscure.",
+       "lvl": "quran",
+       "src": "67:3 and 71:15"
+      },
+      {
+       "t": "Shidād is the plural of shadīd, strong and tightly held. Applied to a structure it means one that does not sag, and the Qur'an says elsewhere that you will see no fault in it however hard you look.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The word banaynā, We built, treats the sky as workmanship. It is the same verb used of houses and walls, and choosing it puts a maker behind the roof rather than a process.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "67:3",
+       "why": "seven heavens in layers, with the challenge to find a flaw in them"
+      },
+      {
+       "ref": "71:15",
+       "why": "Nuh making the same argument from the seven above"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "وَجَعَلْنَا",
+       "t": "wa-jaʿalnā",
+       "g": "and We made"
+      },
+      {
+       "a": "سِرَاجًا",
+       "t": "sirājan",
+       "g": "a lamp"
+      },
+      {
+       "a": "وَهَّاجًا",
+       "t": "wahhājan",
+       "g": "blazing"
+      }
+     ],
+     "sense": "One object is hung in the structure just built. It is called a lamp, which is a thing someone lights and puts up in a room, and the second word says it burns fiercely and gives heat as well as light.",
+     "notes": [
+      {
+       "t": "The Qur'an consistently calls the sun a sirāj and the moon a nūr or a munīr, a reflected light. The distinction is kept every time the two are named together.",
+       "lvl": "quran",
+       "src": "71:16 and 25:61"
+      },
+      {
+       "t": "Wahhāj is the intensive form of a root meaning to flare up. It carries burning as well as shining, which separates the sun in this verse from an ordinary lamp that only lights a room.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The sun is not named. Calling it a lamp instead keeps it inside the argument as a made thing, which is the whole purpose of the list.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "71:16",
+       "why": "the sun a lamp and the moon a light, in the same pairing"
+      },
+      {
+       "ref": "25:61",
+       "why": "a lamp and an illuminating moon placed in the sky"
+      }
+     ]
+    },
+    "14": {
+     "words": [
+      {
+       "a": "وَأَنزَلْنَا",
+       "t": "wa-anzalnā",
+       "g": "and We sent down"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "from"
+      },
+      {
+       "a": "ٱلْمُعْصِرَٰتِ",
+       "t": "al-muʿṣirāt",
+       "g": "the wringing clouds"
+      },
+      {
+       "a": "مَآءً",
+       "t": "māʾan",
+       "g": "water"
+      },
+      {
+       "a": "ثَجَّاجًا",
+       "t": "thajjājan",
+       "g": "poured out in torrents"
+      }
+     ],
+     "sense": "Heat in the previous verse becomes rain in this one, which is the actual order of the thing described. The water does not drip. Thajjāj is the word for a downpour that keeps coming, and it is the same root used of blood gushing from a slaughtered animal.",
+     "notes": [
+      {
+       "t": "Al-muʿṣirāt is read two ways by the early exegetes, as the clouds that are squeezed until they release, and as the winds that squeeze them. The root ʿ-ṣ-r is the one behind ʿaṣīr, pressed juice, and the picture is the same either way.",
+       "lvl": "debated",
+       "src": "reports from the early exegetes give both clouds and winds; at-Tabari lists both"
+      },
+      {
+       "t": "Thajjāj occurs once in the whole Qur'an. It is the intensive form of a verb used of blood running from a cut and of a valley filling, so the water is described by its volume and its continuing rather than by its wetness.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an turns the same fact into a direct challenge in Surah al-Waqiʿa: have you seen the water you drink, did you send it down from the clouds or did We.",
+       "lvl": "quran",
+       "src": "56:68-70"
+      }
+     ],
+     "links": [
+      {
+       "ref": "56:68-70",
+       "why": "the same gift put as a question the listener cannot answer"
+      },
+      {
+       "ref": "30:48",
+       "why": "the winds driving clouds and the rain falling from between them"
+      }
+     ]
+    },
+    "15": {
+     "words": [
+      {
+       "a": "لِّنُخْرِجَ",
+       "t": "linukhrija",
+       "g": "so that We bring out"
+      },
+      {
+       "a": "بِهِۦ",
+       "t": "bihi",
+       "g": "by means of it"
+      },
+      {
+       "a": "حَبًّا",
+       "t": "ḥabban",
+       "g": "grain"
+      },
+      {
+       "a": "وَنَبَاتًا",
+       "t": "wa-nabātan",
+       "g": "and growth"
+      }
+     ],
+     "sense": "The rain is given a purpose, and the purpose is food. The verb is the one used for bringing a thing out of a place it was hidden in, which is exactly the argument the surah is making about the dead.",
+     "notes": [
+      {
+       "t": "Nukhrij, We bring out, is the same verb the Qur'an uses for the raising of the dead from the earth. A reader who accepts that grain comes out of buried ground has already accepted the mechanism.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Grain is named first and separately from nabāt, general growth, which puts the human staple ahead of everything else that comes up with it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an makes the resurrection argument from rain and dead ground explicitly in more than one place, saying that in the same way the dead will be brought out.",
+       "lvl": "quran",
+       "src": "7:57"
+      }
+     ],
+     "links": [
+      {
+       "ref": "7:57",
+       "why": "rain revives dead land, and the verse draws the conclusion about the dead"
+      },
+      {
+       "ref": "80:24-32",
+       "why": "a longer inventory of what comes out of the split ground"
+      }
+     ]
+    },
+    "16": {
+     "words": [
+      {
+       "a": "وَجَنَّٰتٍ",
+       "t": "wa-jannātin",
+       "g": "and gardens"
+      },
+      {
+       "a": "أَلْفَافًا",
+       "t": "alfāfan",
+       "g": "densely tangled"
+      }
+     ],
+     "sense": "The list of creation closes on abundance rather than on necessity. Grain keeps a person alive; a thick garden is more than keeping alive, and the surah ends its evidence there.",
+     "notes": [
+      {
+       "t": "Alfāf describes growth so close together that the branches interlace and you cannot tell one tree from the next. The grammarians differ over its singular, and some hold it has none, which is unusual enough to be worth noticing.",
+       "lvl": "debated",
+       "src": "the grammarians differ; some derive it from lafīf, others say the word has no attested singular"
+      },
+      {
+       "t": "Jannah means a garden because the root j-n-n means to cover and conceal, so a garden is a place whose ground you cannot see. The same root gives jinn and junūn.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Eleven verses of evidence end here. The surah does not draw a conclusion from them in so many words; verse 17 simply begins on the Day, as though the list had already settled the matter.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "6:99",
+       "why": "an inventory of what the rain brings out, ending in gardens"
+      },
+      {
+       "ref": "78:32",
+       "why": "the walled gardens promised later in this surah, using a different word"
+      }
+     ]
+    },
+    "17": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "the Day of"
+      },
+      {
+       "a": "ٱلْفَصْلِ",
+       "t": "al-faṣli",
+       "g": "the Separation"
+      },
+      {
+       "a": "كَانَ",
+       "t": "kāna",
+       "g": "has been"
+      },
+      {
+       "a": "مِيقَٰتًا",
+       "t": "mīqātan",
+       "g": "an appointed time"
+      }
+     ],
+     "sense": "The subject changes without transition. The Day the deniers were arguing about is now named, and the first thing said about it is that its time was fixed, not that it is terrible. It is on a calendar that was written before anyone objected.",
+     "notes": [
+      {
+       "t": "Kāna is the past tense used of a future event. Arabic does this to report something already settled, so the sense is that the appointment has long been made, not that the Day has already happened.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Faṣl means cutting apart, and the same root gives the joint between two bones and the decisive word that ends a dispute. The Day is named for what it does to the disagreement in verse 3.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Mīqāt is the word used for the fixed times of prayer and for the boundary stations where a pilgrim enters ihram. It always means a limit set by someone else, never one you choose.",
+       "lvl": "quran",
+       "src": "7:142"
+      }
+     ],
+     "links": [
+      {
+       "ref": "77:13-14",
+       "why": "the Day of Separation named and then asked about"
+      },
+      {
+       "ref": "37:21",
+       "why": "this is the Day of Separation which you used to deny"
+      }
+     ]
+    },
+    "18": {
+     "words": [
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "the Day when"
+      },
+      {
+       "a": "يُنفَخُ",
+       "t": "yunfakhu",
+       "g": "is blown"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "into"
+      },
+      {
+       "a": "ٱلصُّورِ",
+       "t": "aṣ-ṣūri",
+       "g": "the Horn"
+      },
+      {
+       "a": "فَتَأْتُونَ",
+       "t": "fa-taʾtūna",
+       "g": "and you come"
+      },
+      {
+       "a": "أَفْوَاجًا",
+       "t": "afwājan",
+       "g": "in crowds"
+      }
+     ],
+     "sense": "One sound starts it, and the response is a mass movement. Afwāj is the word for troops arriving group after group, so the picture is not of individuals waking one by one but of whole populations coming forward at once.",
+     "notes": [
+      {
+       "t": "The verb is passive, is blown, and the blower is not named here. The Qur'an leaves the agent out in most of the horn verses, which keeps the attention on the sound and on what follows it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an describes more than one blast of the horn, one at which those in the heavens and the earth fall down and another after which they stand looking on.",
+       "lvl": "quran",
+       "src": "39:68"
+      },
+      {
+       "t": "The same word afwāj is used in Surah an-Nasr of people entering the religion of Allah in crowds. The Qur'an uses it for both directions of the same motion, toward faith and toward the reckoning.",
+       "lvl": "quran",
+       "src": "110:2"
+      }
+     ],
+     "links": [
+      {
+       "ref": "39:68",
+       "why": "the two blasts described in sequence"
+      },
+      {
+       "ref": "36:51",
+       "why": "the horn blown and the dead hurrying out of the graves"
+      }
+     ]
+    },
+    "19": {
+     "words": [
+      {
+       "a": "وَفُتِحَتِ",
+       "t": "wa-futiḥati",
+       "g": "and is opened"
+      },
+      {
+       "a": "ٱلسَّمَآءُ",
+       "t": "as-samāʾu",
+       "g": "the sky"
+      },
+      {
+       "a": "فَكَانَتْ",
+       "t": "fa-kānat",
+       "g": "and it becomes"
+      },
+      {
+       "a": "أَبْوَٰبًا",
+       "t": "abwāban",
+       "g": "gateways"
+      }
+     ],
+     "sense": "What was built in verse 12 as a firm structure is opened in this one. The sky does not have doors put in it; it becomes doors, which is a stronger statement, and the building described earlier stops being a roof.",
+     "notes": [
+      {
+       "t": "The surah is now undoing its own list in order. The sky built firm in verse 12 opens here, the mountains pegged down in verse 7 are set moving in verse 20. The evidence and its unmaking are the same items.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "It says the sky became gateways, not that gateways were opened in it. Arabic could easily have said the second, and the first makes the opening total rather than partial.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Other surahs describe the same event with different verbs, split apart and torn open, which gives the picture from more than one angle without disagreeing.",
+       "lvl": "quran",
+       "src": "82:1 and 84:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "82:1",
+       "why": "when the sky is torn open, the same moment named differently"
+      },
+      {
+       "ref": "69:16",
+       "why": "the sky split, and frail on that day"
+      }
+     ]
+    },
+    "20": {
+     "words": [
+      {
+       "a": "وَسُيِّرَتِ",
+       "t": "wa-suyyirati",
+       "g": "and are set moving"
+      },
+      {
+       "a": "ٱلْجِبَالُ",
+       "t": "al-jibālu",
+       "g": "the mountains"
+      },
+      {
+       "a": "فَكَانَتْ",
+       "t": "fa-kānat",
+       "g": "and they become"
+      },
+      {
+       "a": "سَرَابًا",
+       "t": "sarāban",
+       "g": "a mirage"
+      }
+     ],
+     "sense": "The pegs come out. The mountains move, and then they turn into the one thing in the desert that looks solid from a distance and is not there when you arrive.",
+     "notes": [
+      {
+       "t": "Sarāb is the shimmer on hot ground that a traveller mistakes for water. Applying it to mountains says that the most immovable object a person knows will end up in the category of things that were never really there.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses the same word for the deeds of those who denied, which a man takes for water until he reaches it and finds nothing. The vocabulary of the two passages is deliberate.",
+       "lvl": "quran",
+       "src": "24:39"
+      },
+      {
+       "t": "When the Prophet ﷺ was asked about the mountains, the answer given in the Qur'an was that his Lord would scatter them as dust and leave the ground level, with no crookedness visible in it.",
+       "lvl": "quran",
+       "src": "20:105-107"
+      }
+     ],
+     "links": [
+      {
+       "ref": "24:39",
+       "why": "the same mirage used of deeds that turn out to be nothing"
+      },
+      {
+       "ref": "27:88",
+       "why": "the mountains you think are fixed passing like clouds"
+      }
+     ]
+    },
+    "21": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "جَهَنَّمَ",
+       "t": "jahannama",
+       "g": "Hell"
+      },
+      {
+       "a": "كَانَتْ",
+       "t": "kānat",
+       "g": "has been"
+      },
+      {
+       "a": "مِرْصَادًا",
+       "t": "mirṣādan",
+       "g": "a place of ambush"
+      }
+     ],
+     "sense": "The scene arrives at a fixed position on the road. Mirṣād is the lookout where someone waits for a traveller who does not know he is being waited for, and the verse says the waiting started long ago.",
+     "notes": [
+      {
+       "t": "The root r-ṣ-d gives raṣad, a watcher posted to observe, and the noun form here names the place the watching is done from. It is a hunting and raiding word before it is a religious one.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses the same root of Allah in Surah al-Fajr, that your Lord is ever on the lookout. The vocabulary of watching is used at both ends of the account.",
+       "lvl": "quran",
+       "src": "89:14"
+      },
+      {
+       "t": "Kānat again puts a future thing in the past tense. Read with verse 17, the Day and the place are both described as long since arranged.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "89:14",
+       "why": "your Lord is ever watchful, the same root used of the watcher rather than the place"
+      },
+      {
+       "ref": "19:71",
+       "why": "there is not one of you but will pass over it"
+      }
+     ]
+    },
+    "22": {
+     "words": [
+      {
+       "a": "لِّلطَّٰغِينَ",
+       "t": "liṭ-ṭāghīna",
+       "g": "for those who overstepped"
+      },
+      {
+       "a": "مَـَٔابًا",
+       "t": "maʾāban",
+       "g": "a place of return"
+      }
+     ],
+     "sense": "The ambush of the previous verse is now given its target and a second, stranger name. It is called a place of return, as though the people arriving there were coming home rather than being caught.",
+     "notes": [
+      {
+       "t": "Ṭāghīn is from ṭaghā, to exceed the limit, the verb used of water rising over its banks. It names a behaviour, going past what you were given, rather than a doctrine.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The word maʾāb returns in verse 39, where whoever wishes may take a way of return to his Lord. The same noun is used for both destinations, and the surah leaves the reader to notice which one he is walking toward.",
+       "lvl": "quran",
+       "src": "78:39"
+      },
+      {
+       "t": "Maʾāb is from āba, to come back. Calling the Fire a return implies the person is going where his own conduct already pointed, which is the argument the next four verses spell out.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:39",
+       "why": "the same word used of the return to the Lord, deliberately mirrored"
+      },
+      {
+       "ref": "79:37-39",
+       "why": "whoever transgressed and preferred the life of this world, the Blaze is the refuge"
+      }
+     ]
+    },
+    "23": {
+     "words": [
+      {
+       "a": "لَّٰبِثِينَ",
+       "t": "lābithīna",
+       "g": "remaining"
+      },
+      {
+       "a": "فِيهَآ",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "أَحْقَابًا",
+       "t": "aḥqāban",
+       "g": "for ages on end"
+      }
+     ],
+     "sense": "The stay is measured in a unit nobody can convert. Ḥuqub is a long stretch of time whose length the Arabs did not fix, and the plural piles those stretches one after another.",
+     "notes": [
+      {
+       "t": "The early exegetes gave several figures for one ḥuqub, from eighty years upward, and none of the figures rests on a report from the Prophet ﷺ. The honest position is that the word means a very long age and that its length was not disclosed.",
+       "lvl": "debated",
+       "src": "at-Tabari collects several numbers from the early exegetes and settles on none"
+      },
+      {
+       "t": "Some readers have taken the verse to imply an end to the punishment. The surah answers that seven verses later, where they are told they will be increased in nothing but punishment, and the mainstream reading is that each age is followed by another without a last one.",
+       "lvl": "debated",
+       "src": "the question is discussed in the classical commentaries; the majority read the ages as unending"
+      },
+      {
+       "t": "Lābithīn, remaining, is weaker than khālidīn, abiding forever, which the Qur'an uses elsewhere of the same people. The choice of the milder word here is what created the discussion.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:30",
+       "why": "the answer the surah itself gives to the question of an end"
+      },
+      {
+       "ref": "43:74-77",
+       "why": "the request for an end and the reply given to it"
+      }
+     ]
+    },
+    "24": {
+     "words": [
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَذُوقُونَ",
+       "t": "yadhūqūna",
+       "g": "will they taste"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "بَرْدًا",
+       "t": "bardan",
+       "g": "coolness"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "شَرَابًا",
+       "t": "sharāban",
+       "g": "any drink"
+      }
+     ],
+     "sense": "Two things are withheld, and both are the things a person in heat asks for first. The verb is to taste, which is odd for coolness, and it makes the absence something felt on the tongue rather than merely known.",
+     "notes": [
+      {
+       "t": "Bard is coolness, and some of the early exegetes read it here as sleep, a use the Arabs made of the word because sleep cools a person. On that reading the verse denies rest as well as relief.",
+       "lvl": "debated",
+       "src": "reports from the early exegetes give both coolness and sleep; at-Tabari records the two"
+      },
+      {
+       "t": "The Qur'an addresses the fire itself in the story of Ibrahim with the same word, be coolness and peace. The word denied here is the word that was granted there.",
+       "lvl": "quran",
+       "src": "21:69"
+      },
+      {
+       "t": "The verse is stated as an absolute negative, and the exception that follows in verse 25 is worse than the absence would have been. The two verses are built to work in that order.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "21:69",
+       "why": "the same word commanded of the fire in Ibrahim's case"
+      },
+      {
+       "ref": "7:50",
+       "why": "the people of the Fire calling to the people of the Garden for water"
+      }
+     ]
+    },
+    "25": {
+     "words": [
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "حَمِيمًا",
+       "t": "ḥamīman",
+       "g": "scalding water"
+      },
+      {
+       "a": "وَغَسَّاقًا",
+       "t": "wa-ghassāqan",
+       "g": "and a foul dark discharge"
+      }
+     ],
+     "sense": "The exception is granted in the same category it was denied in. They asked for coolness and drink; they are given a drink, and it is boiling, and a second thing whose name the Arabs used for what runs out of a wound.",
+     "notes": [
+      {
+       "t": "Ḥamīm is water at the limit of heat, from a root that also gives ḥammām, the bath house. Ghassāq is derived by the lexicographers from a root meaning to flow and to be intensely cold or dark, and the commentaries describe it as the discharge of the bodies of the punished.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The canonical readings differ over whether the sin of ghassāq is doubled. Hafs from Asim, the reading this Mushaf follows, doubles it; other established readings read it light. The meaning is not affected.",
+       "lvl": "debated",
+       "src": "the ten canonical readings; Hafs reads ghassāq with the doubled sīn"
+      },
+      {
+       "t": "The same pair appears together in Surah Sad, which shows the two are a fixed formula rather than an image invented for this passage.",
+       "lvl": "quran",
+       "src": "38:57"
+      }
+     ],
+     "links": [
+      {
+       "ref": "38:57",
+       "why": "the same two named together in one verse"
+      },
+      {
+       "ref": "14:16-17",
+       "why": "the drink of pus, described in more detail"
+      }
+     ]
+    },
+    "26": {
+     "words": [
+      {
+       "a": "جَزَآءً",
+       "t": "jazāʾan",
+       "g": "as a recompense"
+      },
+      {
+       "a": "وِفَاقًا",
+       "t": "wifāqan",
+       "g": "exactly fitting"
+      }
+     ],
+     "sense": "Two words close the account. Whatever the reader thought of the four verses he has just read, the verse insists the amount matches, and it uses the word for two things that agree with each other.",
+     "notes": [
+      {
+       "t": "Wifāq is from the root behind muwāfaqa, agreement, and it names a fit rather than a severity. The claim is not that the punishment is heavy but that it is the size of what was done.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an states the rule directly elsewhere: the recompense of an evil is an evil like it. Nothing is added beyond the deed, while good is multiplied.",
+       "lvl": "quran",
+       "src": "42:40"
+      },
+      {
+       "t": "The same word jazāʾan opens verse 36, where the reward of the God-fearing is summed up. The surah gives each half of the Day one summary line, and only the second one names the Lord who is giving.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "42:40",
+       "why": "the recompense of an evil is an evil the like of it"
+      },
+      {
+       "ref": "78:36",
+       "why": "the matching summary line on the other side of the Day"
+      }
+     ]
+    },
+    "27": {
+     "words": [
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "indeed they"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "used to"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَرْجُونَ",
+       "t": "yarjūna",
+       "g": "expect"
+      },
+      {
+       "a": "حِسَابًا",
+       "t": "ḥisāban",
+       "g": "any reckoning"
+      }
+     ],
+     "sense": "The reason is given, and it is not a crime but an assumption. They lived without expecting to be audited, and everything else followed from that. The verse describes a habit of mind rather than an act.",
+     "notes": [
+      {
+       "t": "Rajā normally means to hope for. Used with a negative and about something unwelcome it means to reckon on or anticipate, and the Qur'an uses it that way in more than one place.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Nuh puts the same charge to his people in almost the same words, asking what is wrong with you that you do not attribute to Allah any gravity.",
+       "lvl": "quran",
+       "src": "71:13"
+      },
+      {
+       "t": "Ḥisāb is an accountant's word, the running of a sum. The Qur'an prefers it to words for trial or verdict, which keeps the emphasis on totalling what is there rather than on argument.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "71:13",
+       "why": "the same reproach made by Nuh to his people"
+      },
+      {
+       "ref": "84:14",
+       "why": "he thought he would never return, given as the cause"
+      }
+     ]
+    },
+    "28": {
+     "words": [
+      {
+       "a": "وَكَذَّبُوا۟",
+       "t": "wa-kadhdhabū",
+       "g": "and they denied"
+      },
+      {
+       "a": "بِـَٔايَٰتِنَا",
+       "t": "bi-āyātinā",
+       "g": "Our signs"
+      },
+      {
+       "a": "كِذَّابًا",
+       "t": "kidhdhāban",
+       "g": "with a flat denial"
+      }
+     ],
+     "sense": "The second charge follows the first. Not expecting a reckoning was passive; this is active, calling the signs lies, and the verse doubles the verb with its own noun so the denial is emphatic rather than casual.",
+     "notes": [
+      {
+       "t": "Kidhdhāb as a verbal noun of the second form is rare in Arabic and appears in the Qur'an only in this surah, here and in verse 35. Some grammarians noted it as a form of the dialect of Yemen.",
+       "lvl": "debated",
+       "src": "the grammarians discuss the form; some attribute it to a particular dialect"
+      },
+      {
+       "t": "Āyāt covers both the verses recited and the signs in the world, and the surah has just spent eleven verses on the second kind. What they denied includes the earth, the rain and the sky, not only the recitation.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Placing the verbal noun after its own verb is the standard Arabic way of saying that the action was done thoroughly. English has to add a word like utterly to get the same force.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:35",
+       "why": "the same rare word used again, in the opposite setting"
+      },
+      {
+       "ref": "45:11",
+       "why": "those who denied the signs of their Lord and what awaits them"
+      }
+     ]
+    },
+    "29": {
+     "words": [
+      {
+       "a": "وَكُلَّ",
+       "t": "wa-kulla",
+       "g": "and every"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "thing"
+      },
+      {
+       "a": "أَحْصَيْنَٰهُ",
+       "t": "aḥṣaynāhu",
+       "g": "We have counted it"
+      },
+      {
+       "a": "كِتَٰبًا",
+       "t": "kitāban",
+       "g": "in a written record"
+      }
+     ],
+     "sense": "The reckoning they did not expect has been running the whole time. The verb is not remembered or observed but counted, item by item, and the count has been written down.",
+     "notes": [
+      {
+       "t": "Aḥṣā is to enumerate exactly, from ḥaṣā, pebbles, because the Arabs counted with stones. It is the verb used for a tally that leaves nothing out rather than for a general awareness.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an puts the same claim in the mouths of the people reading their record on that Day: what is this book, it leaves out nothing small or large but has recorded it.",
+       "lvl": "quran",
+       "src": "18:49"
+      },
+      {
+       "t": "The verse answers verse 27 directly. They did not expect a reckoning, and the reckoning was being kept without their participation.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "18:49",
+       "why": "the record described by the people who have just opened it"
+      },
+      {
+       "ref": "36:12",
+       "why": "everything enumerated in a clear register"
+      }
+     ]
+    },
+    "30": {
+     "words": [
+      {
+       "a": "فَذُوقُوا۟",
+       "t": "fa-dhūqū",
+       "g": "so taste"
+      },
+      {
+       "a": "فَلَن",
+       "t": "fa-lan",
+       "g": "for never"
+      },
+      {
+       "a": "نَّزِيدَكُمْ",
+       "t": "nazīdakum",
+       "g": "will We increase you"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "عَذَابًا",
+       "t": "ʿadhāban",
+       "g": "in punishment"
+      }
+     ],
+     "sense": "The surah stops describing and speaks to them. It is the only line in this section addressed directly to the people in it, and what it tells them is the one thing they would most want denied: that the direction of travel does not change.",
+     "notes": [
+      {
+       "t": "Lan is the particle of emphatic negation about the future, stronger than the ordinary lā. Placed before an increase that has only one possible content, it closes the question verse 23 seemed to leave open.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb is to increase, not to continue. What is denied is not relief but any change of kind in what is added, which is a harder thing to hear.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Taste is the same verb used in verse 24, where they will not taste coolness. The command here hands them the word they were refused.",
+       "lvl": "quran",
+       "src": "78:24"
+      }
+     ],
+     "links": [
+      {
+       "ref": "78:24",
+       "why": "the same verb used in the denial that this command answers"
+      },
+      {
+       "ref": "17:97",
+       "why": "every time it subsides We increase them in blaze"
+      }
+     ]
+    },
+    "31": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "لِلْمُتَّقِينَ",
+       "t": "lil-muttaqīna",
+       "g": "for those who guarded themselves"
+      },
+      {
+       "a": "مَفَازًا",
+       "t": "mafāzan",
+       "g": "a place of escape and triumph"
+      }
+     ],
+     "sense": "The surah turns without a bridge. The same construction that opened verse 21 about Hell opens this one about the other party, and the first thing named is not a garden but a getting away.",
+     "notes": [
+      {
+       "t": "Mafāz carries two senses at once, the place where you win and the place where you escape. Both are live in the word, and the Qur'an uses the related verb of the man who is kept away from the Fire and admitted to the Garden.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Muttaqīn is from wiqāya, a shield or guard, so a muttaqi is someone who has put something between himself and harm. It is a word about caution rather than about piety in the abstract.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an defines success in the same terms: whoever is drawn away from the Fire and admitted to the Garden has succeeded.",
+       "lvl": "quran",
+       "src": "3:185"
+      }
+     ],
+     "links": [
+      {
+       "ref": "3:185",
+       "why": "success defined as being kept from the Fire and let into the Garden"
+      },
+      {
+       "ref": "23:111",
+       "why": "I have rewarded them today for their patience, they are the ones who attained"
+      }
+     ]
+    },
+    "32": {
+     "words": [
+      {
+       "a": "حَدَآئِقَ",
+       "t": "ḥadāʾiqa",
+       "g": "walled gardens"
+      },
+      {
+       "a": "وَأَعْنَٰبًا",
+       "t": "wa-aʿnāban",
+       "g": "and grapevines"
+      }
+     ],
+     "sense": "The escape is unpacked into four short items over four verses, and it starts with what a person in a dry country pictures when he pictures relief: enclosed green ground and vines.",
+     "notes": [
+      {
+       "t": "Ḥadīqa is a garden with a wall around it, from a root meaning to encircle. It is a stronger word than jannah, which the surah used in verse 16 of the gardens of this world.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Grapes are singled out because in Arabia they were the fruit of settled, watered land and of some expense. The list is calibrated to what its first hearers would recognise as plenty.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses the same walled-garden word in Surah an-Naml as an argument, asking who sent down water from the sky and grew with it gardens of delight, which you could never grow.",
+       "lvl": "quran",
+       "src": "27:60"
+      }
+     ],
+     "links": [
+      {
+       "ref": "27:60",
+       "why": "the same word for gardens used as a challenge in this world"
+      },
+      {
+       "ref": "78:16",
+       "why": "the tangled gardens of this world, set against the walled ones here"
+      }
+     ]
+    },
+    "33": {
+     "words": [
+      {
+       "a": "وَكَوَاعِبَ",
+       "t": "wa-kawāʿiba",
+       "g": "and full-figured companions"
+      },
+      {
+       "a": "أَتْرَابًا",
+       "t": "atrāban",
+       "g": "of one age"
+      }
+     ],
+     "sense": "The second item is company. Two words describe them, one about their being young and grown, the other about their being of the same age as each other and as those they are with, so that nobody in the Garden is out of step with anyone else.",
+     "notes": [
+      {
+       "t": "The classical exegetes read kawāʿib of young women whose figures have formed, from kaʿb, a rounded protrusion. A number of modern translators render it more generally as youthful companions, and the difference is one of directness rather than of doctrine.",
+       "lvl": "debated",
+       "src": "the classical commentaries are explicit; several modern renderings prefer a general sense"
+      },
+      {
+       "t": "Atrāb comes from turāb, dust, because children who played in the same dust grew up together. The word for equal in age is built on the ground they shared.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an uses atrāb of the people of the Garden elsewhere as well, which suggests the sameness of age is a description of the place rather than of one group in it.",
+       "lvl": "quran",
+       "src": "56:37"
+      }
+     ],
+     "links": [
+      {
+       "ref": "56:35-37",
+       "why": "companions made anew, of equal age, described at more length"
+      },
+      {
+       "ref": "38:52",
+       "why": "the same equality of age named among the rewards"
+      }
+     ]
+    },
+    "34": {
+     "words": [
+      {
+       "a": "وَكَأْسًا",
+       "t": "wa-kaʾsan",
+       "g": "and a cup"
+      },
+      {
+       "a": "دِهَاقًا",
+       "t": "dihāqan",
+       "g": "filled to the brim"
+      }
+     ],
+     "sense": "The third item answers verse 24 exactly. There they would not taste any drink; here the cup is not merely provided but full, with the word for a vessel filled until nothing more will go in.",
+     "notes": [
+      {
+       "t": "Kaʾs in Arabic means the cup only when there is something in it. An empty vessel is called by another word, so the drink is inside the noun before the adjective arrives.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The early exegetes give dihāq as full to overflowing, and some as clear and continuous. Either way it names an abundance rather than a flavour, and the surah never says what the cup contains.",
+       "lvl": "debated",
+       "src": "the early exegetes give more than one sense; at-Tabari records them"
+      },
+      {
+       "t": "Other surahs say what is absent from the drink of the Garden rather than what is in it: no headache, no intoxication, no idle talk over it. The absence is the description.",
+       "lvl": "quran",
+       "src": "37:47 and 52:23"
+      }
+     ],
+     "links": [
+      {
+       "ref": "37:45-47",
+       "why": "a cup passed round with nothing harmful in it"
+      },
+      {
+       "ref": "78:24",
+       "why": "the drink refused on the other side of the Day"
+      }
+     ]
+    },
+    "35": {
+     "words": [
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَسْمَعُونَ",
+       "t": "yasmaʿūna",
+       "g": "will they hear"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "لَغْوًا",
+       "t": "laghwan",
+       "g": "empty talk"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "nor"
+      },
+      {
+       "a": "كِذَّٰبًا",
+       "t": "kidhdhāban",
+       "g": "any lying"
+      }
+     ],
+     "sense": "The fourth item is not a thing but a quality of the conversation. Nothing pointless is said there and nothing false, which is a stranger reward than gardens and is the last one the surah lists.",
+     "notes": [
+      {
+       "t": "Laghw is speech with no content, the filler that occupies a gathering. The Qur'an also uses it of oaths sworn without intent, so the word covers the whole class of words that do not mean anything.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The word kidhdhāb closes verse 28 as well, where it named the denial that put people in the Fire. The same rare word ends the description of the Fire's cause and the Garden's peace, and the surah uses it nowhere else.",
+       "lvl": "quran",
+       "src": "78:28"
+      },
+      {
+       "t": "Reading verses 32 to 35 together, the reward moves outward from things to company to drink to the air of the place. The last item is the only one that could not be bought anywhere.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "56:25-26",
+       "why": "no idle or sinful talk there, only the saying of peace"
+      },
+      {
+       "ref": "19:62",
+       "why": "they hear no idle speech in it, only peace"
+      }
+     ]
+    },
+    "36": {
+     "words": [
+      {
+       "a": "جَزَآءً",
+       "t": "jazāʾan",
+       "g": "as a recompense"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "رَّبِّكَ",
+       "t": "rabbika",
+       "g": "your Lord"
+      },
+      {
+       "a": "عَطَآءً",
+       "t": "ʿaṭāʾan",
+       "g": "a gift"
+      },
+      {
+       "a": "حِسَابًا",
+       "t": "ḥisāban",
+       "g": "sufficient and reckoned"
+      }
+     ],
+     "sense": "The reward is summed up the way the punishment was, but with two differences. The Lord is named as the one giving, and the word gift is added to the word recompense, so that what was earned and what was given free are said in the same breath.",
+     "notes": [
+      {
+       "t": "Ḥisāb here is read by many exegetes as enough, from the Arabic usage aḥsabani, it sufficed me. Others keep the sense of reckoned, an amount worked out precisely. Both readings are old and the word carries the two.",
+       "lvl": "debated",
+       "src": "the classical commentaries record sufficient and calculated as the two main readings"
+      },
+      {
+       "t": "Recompense is what a person is owed and a gift is what he is not. Putting the two nouns side by side without a conjunction makes the Garden both at once, which no single English word does.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an says elsewhere that Allah's pleasure is greater than the gardens themselves, which is the same move this verse makes by naming the giver in the middle of the list of gifts.",
+       "lvl": "quran",
+       "src": "9:72"
+      }
+     ],
+     "links": [
+      {
+       "ref": "9:72",
+       "why": "the pleasure of Allah named as greater than the gardens listed before it"
+      },
+      {
+       "ref": "78:26",
+       "why": "the matching one-line summary given to the punishment"
+      }
+     ]
+    },
+    "37": {
+     "words": [
+      {
+       "a": "رَّبِّ",
+       "t": "rabbi",
+       "g": "Lord of"
+      },
+      {
+       "a": "ٱلسَّمَٰوَٰتِ",
+       "t": "as-samāwāti",
+       "g": "the heavens"
+      },
+      {
+       "a": "وَٱلْأَرْضِ",
+       "t": "wal-arḍi",
+       "g": "and the earth"
+      },
+      {
+       "a": "وَمَا",
+       "t": "wa-mā",
+       "g": "and whatever is"
+      },
+      {
+       "a": "بَيْنَهُمَا",
+       "t": "baynahumā",
+       "g": "between them"
+      },
+      {
+       "a": "ٱلرَّحْمَٰنِ",
+       "t": "ar-raḥmāni",
+       "g": "the Most Merciful"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَمْلِكُونَ",
+       "t": "yamlikūna",
+       "g": "do they have any power over"
+      },
+      {
+       "a": "مِنْهُ",
+       "t": "minhu",
+       "g": "from Him"
+      },
+      {
+       "a": "خِطَابًا",
+       "t": "khiṭāban",
+       "g": "any address"
+      }
+     ],
+     "sense": "Your Lord in the previous verse is now expanded into three clauses of ownership, and then a fourth word that is a name of mercy. Immediately after that name comes the statement that nobody there has the standing to open their mouth to Him.",
+     "notes": [
+      {
+       "t": "Ar-Rahman is placed in the middle of a verse about total authority and total silence, and it is the same name that appears again in verse 38 as the one who grants permission to speak. The surah keeps the mercy attached to the power rather than opposite it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Khiṭāb is address, speaking to someone. What is denied is not permission to plead but the standing to begin a conversation at all, which verse 38 then modifies by exception.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The canonical readings differ over whether Rabb here is in the genitive, continuing the description of your Lord from verse 36, or in the nominative, starting a fresh sentence. Hafs, whose reading this Mushaf follows, has the genitive.",
+       "lvl": "debated",
+       "src": "the ten canonical readings differ on the case ending; Hafs reads rabbi"
+      }
+     ],
+     "links": [
+      {
+       "ref": "20:108",
+       "why": "voices humbled before the Most Merciful, so you hear only a faint sound"
+      },
+      {
+       "ref": "40:16",
+       "why": "to whom does the sovereignty belong today, asked and answered on that Day"
+      }
+     ]
+    },
+    "38": {
+     "words": [
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the Day when"
+      },
+      {
+       "a": "يَقُومُ",
+       "t": "yaqūmu",
+       "g": "will stand"
+      },
+      {
+       "a": "ٱلرُّوحُ",
+       "t": "ar-rūḥu",
+       "g": "the Spirit"
+      },
+      {
+       "a": "وَٱلْمَلَٰٓئِكَةُ",
+       "t": "wal-malāʾikatu",
+       "g": "and the angels"
+      },
+      {
+       "a": "صَفًّا",
+       "t": "ṣaffan",
+       "g": "in ranks"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَتَكَلَّمُونَ",
+       "t": "yatakallamūna",
+       "g": "will they speak"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "مَنْ",
+       "t": "man",
+       "g": "whoever"
+      },
+      {
+       "a": "أَذِنَ",
+       "t": "adhina",
+       "g": "has given leave"
+      },
+      {
+       "a": "لَهُ",
+       "t": "lahu",
+       "g": "to him"
+      },
+      {
+       "a": "ٱلرَّحْمَٰنُ",
+       "t": "ar-raḥmānu",
+       "g": "the Most Merciful"
+      },
+      {
+       "a": "وَقَالَ",
+       "t": "wa-qāla",
+       "g": "and he says"
+      },
+      {
+       "a": "صَوَابًا",
+       "t": "ṣawāban",
+       "g": "what is right"
+      }
+     ],
+     "sense": "The silence of the previous verse is shown rather than stated. Ranks of angels are standing, and the exception to the silence has two conditions: leave must be given, and the one who speaks must say something correct. Permission alone is not enough.",
+     "notes": [
+      {
+       "t": "Who ar-Rūh is here has more than one answer among the early exegetes. Most identify him as Jibril, named separately from the angels for his rank; others hold he is a created being of another order, and a further reading takes it as the souls of human beings.",
+       "lvl": "debated",
+       "src": "at-Tabari records several identifications; the majority position names Jibril"
+      },
+      {
+       "t": "The second condition, and says what is right, is easy to read past. Even after leave is granted the speech must be true, which rules out the pleading and excuse-making the Qur'an describes elsewhere on that Day.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an sets the same limit on intercession in more than one place, that it benefits no one except those the Most Merciful permits and whose word He is pleased with.",
+       "lvl": "quran",
+       "src": "20:109"
+      }
+     ],
+     "links": [
+      {
+       "ref": "20:109",
+       "why": "the same two conditions on speaking, permission and an accepted word"
+      },
+      {
+       "ref": "70:4",
+       "why": "the angels and the Spirit named together in the same pairing"
+      }
+     ]
+    },
+    "39": {
+     "words": [
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that is"
+      },
+      {
+       "a": "ٱلْيَوْمُ",
+       "t": "al-yawmu",
+       "g": "the Day"
+      },
+      {
+       "a": "ٱلْحَقُّ",
+       "t": "al-ḥaqqu",
+       "g": "the real one"
+      },
+      {
+       "a": "فَمَن",
+       "t": "fa-man",
+       "g": "so whoever"
+      },
+      {
+       "a": "شَآءَ",
+       "t": "shāʾa",
+       "g": "wills"
+      },
+      {
+       "a": "ٱتَّخَذَ",
+       "t": "ittakhadha",
+       "g": "let him take"
+      },
+      {
+       "a": "إِلَىٰ",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "رَبِّهِۦ",
+       "t": "rabbihi",
+       "g": "his Lord"
+      },
+      {
+       "a": "مَـَٔابًا",
+       "t": "maʾāban",
+       "g": "a place of return"
+      }
+     ],
+     "sense": "The description ends and the reader is handed a decision. The Day is called the real one, which quietly reclassifies the day he is currently living in, and then the choice is left with him in the plainest terms the language has.",
+     "notes": [
+      {
+       "t": "Maʾāb repeats the word used in verse 22 of Hell as the place of return for those who overstepped. The surah offers the same noun twice, once as a destination arrived at and once as one taken deliberately.",
+       "lvl": "quran",
+       "src": "78:22"
+      },
+      {
+       "t": "Whoever wills is not an invitation to indifference. The Qur'an uses the same formula in two other surahs, always after a warning and always with the outcome already described, so the choice is offered with its consequences visible.",
+       "lvl": "quran",
+       "src": "73:19 and 76:29"
+      },
+      {
+       "t": "Calling that Day al-ḥaqq, the real, sets it against this one without naming this one. The comparison is left for the reader to make, and it is the last thing the surah asks of him before its final verse.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "73:19",
+       "why": "the identical closing formula after a warning"
+      },
+      {
+       "ref": "78:22",
+       "why": "the same word used of the other destination"
+      }
+     ]
+    },
+    "40": {
+     "words": [
+      {
+       "a": "إِنَّآ",
+       "t": "innā",
+       "g": "indeed We"
+      },
+      {
+       "a": "أَنذَرْنَٰكُمْ",
+       "t": "andharnākum",
+       "g": "have warned you"
+      },
+      {
+       "a": "عَذَابًا",
+       "t": "ʿadhāban",
+       "g": "of a punishment"
+      },
+      {
+       "a": "قَرِيبًا",
+       "t": "qarīban",
+       "g": "near at hand"
+      },
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the Day when"
+      },
+      {
+       "a": "يَنظُرُ",
+       "t": "yanẓuru",
+       "g": "will look at"
+      },
+      {
+       "a": "ٱلْمَرْءُ",
+       "t": "al-marʾu",
+       "g": "the man"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "قَدَّمَتْ",
+       "t": "qaddamat",
+       "g": "have sent ahead"
+      },
+      {
+       "a": "يَدَاهُ",
+       "t": "yadāhu",
+       "g": "his two hands"
+      },
+      {
+       "a": "وَيَقُولُ",
+       "t": "wa-yaqūlu",
+       "g": "and will say"
+      },
+      {
+       "a": "ٱلْكَافِرُ",
+       "t": "al-kāfiru",
+       "g": "the denier"
+      },
+      {
+       "a": "يَٰلَيْتَنِى",
+       "t": "yā-laytanī",
+       "g": "if only I"
+      },
+      {
+       "a": "كُنتُ",
+       "t": "kuntu",
+       "g": "had been"
+      },
+      {
+       "a": "تُرَٰبًا",
+       "t": "turāban",
+       "g": "dust"
+      }
+     ],
+     "sense": "The surah ends with a sentence spoken by someone who is looking at his own record. The punishment is called near, the deeds are described as having been sent on ahead by his hands, and the last words in the surah are a wish to have been dirt instead of a person.",
+     "notes": [
+      {
+       "t": "Qaddamat, sent ahead, treats deeds as luggage forwarded to a destination the person has not reached yet. It is the Qur'an's usual way of describing action, and it makes the Day a place where you collect rather than a place where you are told.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Who the kāfir in this verse is has been read in more than one way by the early exegetes, and some took the wish about dust to follow the settling of accounts among the animals. The plain reading, that it is the human denier of the surah's opening, is the one most exegetes hold.",
+       "lvl": "debated",
+       "src": "at-Tabari and the classical commentaries record more than one identification"
+      },
+      {
+       "t": "The surah began with people arguing about a report and ends with one of them wishing he had been made of the material the earth in verse 6 was spread from. The last word of the surah is the ground it started on.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "3:30",
+       "why": "the Day every soul finds what it did brought present before it"
+      },
+      {
+       "ref": "21:1",
+       "why": "their reckoning has drawn near while they turn away, the same nearness asserted"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 97,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "إِنَّآ",
+       "t": "innā",
+       "g": "indeed We"
+      },
+      {
+       "a": "أَنزَلْنَٰهُ",
+       "t": "anzalnāhu",
+       "g": "sent it down"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "لَيْلَةِ",
+       "t": "laylati",
+       "g": "the Night of"
+      },
+      {
+       "a": "ٱلْقَدْرِ",
+       "t": "al-qadr",
+       "g": "Decree and worth"
+      }
+     ],
+     "sense": "The surah opens with a pronoun and no antecedent. It is never named in the five verses, and every reader is expected to know from the sentence alone that the it is the Qur'an. The surah is about a night, and it introduces the night by way of what happened on it.",
+     "notes": [
+      {
+       "t": "Qadr carries two senses that the surah uses both of. It is the measuring out of what will be, from the root of qadar, and it is worth or standing, as in a person of high qadr. Neither meaning excludes the other here.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an names the night twice more without this title: a blessed night in Surah ad-Dukhan, and the month of Ramadan in Surah al-Baqara. Read together the three passages place the night inside Ramadan.",
+       "lvl": "quran",
+       "src": "44:3 and 2:185"
+      },
+      {
+       "t": "The early exegetes distinguish two descents: the Qur'an as a whole to the lowest heaven on this night, and then in portions to the Prophet ﷺ over twenty-three years. The distinction rests on reports from Ibn Abbas rather than on a statement of the Prophet ﷺ.",
+       "lvl": "debated",
+       "src": "reports from Ibn ʿAbbās collected in the tafsirs; the wording of them varies"
+      }
+     ],
+     "links": [
+      {
+       "ref": "44:3",
+       "why": "the same night named as blessed, with the same verb"
+      },
+      {
+       "ref": "2:185",
+       "why": "the month in which the Qur'an was sent down"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "أَدْرَىٰكَ",
+       "t": "adrāka",
+       "g": "could have made you know"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "لَيْلَةُ",
+       "t": "laylatu",
+       "g": "the Night of"
+      },
+      {
+       "a": "ٱلْقَدْرِ",
+       "t": "al-qadr",
+       "g": "Decree is"
+      }
+     ],
+     "sense": "Having named the night the surah stops and asks whether the name told you anything. The question is put to the Prophet ﷺ himself, which says that this is not knowable by looking, only by being told.",
+     "notes": [
+      {
+       "t": "The Qur'an uses two similar formulas and keeps them apart. Wa mā adrāka is always followed by an explanation; wa mā yudrīka, what will make you know, is used of things left undisclosed, such as the hour of the Day.",
+       "lvl": "quran",
+       "src": "33:63"
+      },
+      {
+       "t": "The night is named three times in five verses, which in a surah this short is close to a third of its words. Repeating a proper noun instead of using a pronoun keeps each sentence standing on its own.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verb darā is to know by picking up traces, the way a tracker reads ground. Denying that route to knowledge is the point of the question: there was nothing on the surface of that night to read.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "101:10",
+       "why": "the same formula used to introduce something about to be explained"
+      },
+      {
+       "ref": "82:17-18",
+       "why": "the question doubled before the Day of Recompense is described"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "لَيْلَةُ",
+       "t": "laylatu",
+       "g": "the Night of"
+      },
+      {
+       "a": "ٱلْقَدْرِ",
+       "t": "al-qadri",
+       "g": "Decree"
+      },
+      {
+       "a": "خَيْرٌ",
+       "t": "khayrun",
+       "g": "is better"
+      },
+      {
+       "a": "مِّنْ",
+       "t": "min",
+       "g": "than"
+      },
+      {
+       "a": "أَلْفِ",
+       "t": "alfi",
+       "g": "a thousand"
+      },
+      {
+       "a": "شَهْرٍ",
+       "t": "shahr",
+       "g": "months"
+      }
+     ],
+     "sense": "The answer to the question is a comparison, not a description. A thousand months is a little over eighty-three years, which is longer than most lives, so the verse measures one night against more than a lifetime of ordinary ones.",
+     "notes": [
+      {
+       "t": "The Prophet ﷺ said that whoever stands in prayer during the Night of Decree out of faith and seeking the reward will have what came before of his sins forgiven. The report is in the chapter Bukhari devotes to the night prayer of Ramadan.",
+       "lvl": "sunnah",
+       "src": "Bukhari 2014"
+      },
+      {
+       "t": "The verse does not say better in what respect, and the commentaries fill it in as the worth of worship done on it. The text itself leaves the comparison open, which is why it is usually quoted whole rather than paraphrased.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A thousand in Arabic is a real number and also the largest round figure in common use, so the phrase can be read as an exact ratio or as a way of saying beyond counting. The commentaries take it both ways.",
+       "lvl": "debated",
+       "src": "the classical commentaries divide over whether the thousand is exact or indefinite"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:185",
+       "why": "the month this night sits inside, and the reason given for fasting it"
+      },
+      {
+       "ref": "44:3-4",
+       "why": "the same night described as the one on which every wise matter is made distinct"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "تَنَزَّلُ",
+       "t": "tanazzalu",
+       "g": "come down"
+      },
+      {
+       "a": "ٱلْمَلَٰٓئِكَةُ",
+       "t": "al-malāʾikatu",
+       "g": "the angels"
+      },
+      {
+       "a": "وَٱلرُّوحُ",
+       "t": "war-rūḥu",
+       "g": "and the Spirit"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "بِإِذْنِ",
+       "t": "bi-idhni",
+       "g": "by the leave of"
+      },
+      {
+       "a": "رَبِّهِم",
+       "t": "rabbihim",
+       "g": "their Lord"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "with"
+      },
+      {
+       "a": "كُلِّ",
+       "t": "kulli",
+       "g": "every"
+      },
+      {
+       "a": "أَمْرٍ",
+       "t": "amr",
+       "g": "command"
+      }
+     ],
+     "sense": "The traffic on that night runs downward. Angels descend, and one of them is named separately, and they come carrying instructions rather than on their own errand. The verse says by the leave of their Lord, which rules out the descent being their own idea.",
+     "notes": [
+      {
+       "t": "Tanazzalu is a form of the verb that carries repetition and gradualness, so the descent is described as continuing through the night rather than happening at one moment.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Ar-Rūh is most commonly identified as Jibril, named apart from the angels as the Qur'an does in other places. Other identifications are recorded from the early exegetes and none of them rests on a statement of the Prophet ﷺ.",
+       "lvl": "debated",
+       "src": "at-Tabari records several identifications; the majority name Jibril"
+      },
+      {
+       "t": "Min kulli amr is read as with every command, and also as concerning every matter. Surah ad-Dukhan describes the same night as one on which every wise matter is made distinct, which supports the second reading.",
+       "lvl": "quran",
+       "src": "44:4"
+      }
+     ],
+     "links": [
+      {
+       "ref": "44:4",
+       "why": "every wise matter separated out on that night"
+      },
+      {
+       "ref": "16:2",
+       "why": "He sends down the angels with the Spirit of His command"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "سَلَٰمٌ",
+       "t": "salāmun",
+       "g": "peace"
+      },
+      {
+       "a": "هِىَ",
+       "t": "hiya",
+       "g": "it is"
+      },
+      {
+       "a": "حَتَّىٰ",
+       "t": "ḥattā",
+       "g": "until"
+      },
+      {
+       "a": "مَطْلَعِ",
+       "t": "maṭlaʿi",
+       "g": "the rising of"
+      },
+      {
+       "a": "ٱلْفَجْرِ",
+       "t": "al-fajr",
+       "g": "the dawn"
+      }
+     ],
+     "sense": "The last verse gives the night a single quality and an end time. It is peace, said as a noun rather than an adjective, and it runs out at first light, which is the ordinary end of a night and not a special one.",
+     "notes": [
+      {
+       "t": "Salāmun hiya puts the noun before the pronoun, which in Arabic makes peace the whole content of the night rather than one of its features. English has to say it is peace and loses the order.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The canonical readings differ over maṭlaʿ and maṭliʿ, the first naming the time of the rising and the second the place. Hafs from Asim, the reading this Mushaf follows, has maṭlaʿ.",
+       "lvl": "debated",
+       "src": "the ten canonical readings; Hafs reads maṭlaʿ with a fatḥa on the lām"
+      },
+      {
+       "t": "Aisha asked the Prophet ﷺ what to say if she knew which night it was, and he told her to say: O Allah, You are pardoning and love to pardon, so pardon me.",
+       "lvl": "sunnah",
+       "src": "Tirmidhi 3513, graded hasan sahih by at-Tirmidhi"
+      }
+     ],
+     "links": [
+      {
+       "ref": "36:58",
+       "why": "peace, a word from a Lord who is merciful"
+      },
+      {
+       "ref": "13:24",
+       "why": "peace be upon you for what you endured, spoken by the angels"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 108,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "إِنَّآ",
+       "t": "innā",
+       "g": "indeed We"
+      },
+      {
+       "a": "أَعْطَيْنَٰكَ",
+       "t": "aʿṭaynāka",
+       "g": "have given you"
+      },
+      {
+       "a": "ٱلْكَوْثَرَ",
+       "t": "al-kawthar",
+       "g": "the abundance"
+      }
+     ],
+     "sense": "The shortest surah in the Qur'an opens by telling one man that something has already been handed to him. The verb is in the past, so the gift is not promised or conditional, and the thing given is named with a word that means a great deal of something.",
+     "notes": [
+      {
+       "t": "Kawthar is built on the root k-th-r, much, in a pattern Arabic uses for the extreme of a quality. The word occurs once in the Qur'an and nowhere else in it, and it has no plural.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Anas ibn Malik reported that the Prophet ﷺ dozed briefly among them, raised his head smiling, and said a surah had just been sent down to him. He recited it, then asked whether they knew what al-Kawthar was, and said it is a river his Lord had promised him, on which there is much good, and a basin his community will come to on the Day of Resurrection.",
+       "lvl": "sunnah",
+       "src": "Muslim 400"
+      },
+      {
+       "t": "Some of the early exegetes read al-kawthar more widely as every abundance given to the Prophet ﷺ, prophethood, the Qur'an, and his following, rather than the river alone. The report from Anas names the river, and the wider reading is offered as an addition rather than a replacement.",
+       "lvl": "debated",
+       "src": "the classical commentaries record both the river and the general sense"
+      }
+     ],
+     "links": [
+      {
+       "ref": "93:5",
+       "why": "your Lord is going to give you, and you will be content, said to the same man"
+      },
+      {
+       "ref": "94:1",
+       "why": "another short surah addressed to him listing what he was already given"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "فَصَلِّ",
+       "t": "fa-ṣalli",
+       "g": "so pray"
+      },
+      {
+       "a": "لِرَبِّكَ",
+       "t": "li-rabbika",
+       "g": "to your Lord"
+      },
+      {
+       "a": "وَٱنْحَرْ",
+       "t": "wanḥar",
+       "g": "and sacrifice"
+      }
+     ],
+     "sense": "The gift is followed by an instruction, and the instruction is two acts of worship that cost something. Pray, and slaughter an animal, both of them done for the Lord who gave, which is the whole content of the response asked for.",
+     "notes": [
+      {
+       "t": "Li-rabbika, to your Lord, is placed between the two verbs so that it governs both. The prayer and the sacrifice are directed to one recipient, which is the point being made to an audience that offered both to other things.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Naḥara specifically means to slaughter a camel by piercing the naḥr, the base of the throat, as against dhabaḥa for sheep and cattle. The verse uses the more costly of the two.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The classical commentaries record more than one reading of wanḥar, chiefly the sacrifice, and also placing the hands at the naḥr during prayer, and facing the qibla. The great majority take it as the sacrifice, which the pairing with prayer and the parallel in Surah al-Anʿam supports.",
+       "lvl": "debated",
+       "src": "the classical commentaries record the several views; the majority read it as the sacrifice"
+      }
+     ],
+     "links": [
+      {
+       "ref": "6:162",
+       "why": "my prayer and my sacrifice are for Allah, the same pairing said in the first person"
+      },
+      {
+       "ref": "22:37",
+       "why": "neither the flesh nor the blood reaches Allah, but the God-consciousness from you does"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "شَانِئَكَ",
+       "t": "shāniʾaka",
+       "g": "the one who hates you"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "he is"
+      },
+      {
+       "a": "ٱلْأَبْتَرُ",
+       "t": "al-abtar",
+       "g": "the one cut off"
+      }
+     ],
+     "sense": "The surah closes by handing an insult back. Someone had called the Prophet ﷺ cut off, meaning left without a son to carry his name, and the verse returns the exact word to the person who used it, with the definite article added so that it becomes a title.",
+     "notes": [
+      {
+       "t": "Abtar is used of an animal whose tail has been docked, and then of a man with no male descendant and of anything left incomplete. The definite article on it here turns a description into the man's name.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The occasion reported is that a leading Meccan called the Prophet ﷺ abtar after his sons died in infancy. The reports name different men, al-As ibn Wa'il among them, and their wordings and chains differ, so the identity of the speaker is not settled even though the situation is well attested.",
+       "lvl": "debated",
+       "src": "reports collected by at-Tabari and Ibn Kathir name different men and differ in wording"
+      },
+      {
+       "t": "Shāniʾ is not the ordinary word for enemy. It names the one who feels hatred, from the root the Qur'an uses in Surah al-Ma'ida when it warns that hatred of a people must not push you into injustice.",
+       "lvl": "quran",
+       "src": "5:2"
+      }
+     ],
+     "links": [
+      {
+       "ref": "5:2",
+       "why": "the same root for hatred, there turned into a warning to the believers"
+      },
+      {
+       "ref": "33:40",
+       "why": "he is not the father of any of your men but the Messenger of Allah and the seal of the prophets"
+      }
+     ]
+    }
+   }
+  }
+ ]
 }
