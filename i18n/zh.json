@@ -1,11 +1,1 @@
-{
- "ui": {
-  "nav.hajj": "朝觐",
-  "m.hajj": "朝觐与副朝",
-  "m.hajjplan": "你的朝觐计划",
-  "m.ramadan": "斋月",
-  "m.eid": "开斋节与古尔邦节",
-  "m.protection": "护佑与光明",
-  "m.dictionary": "正道百科"
- }
-}
+{"ui":{"nav.hajj":"朝觐","m.hajj":"朝觐与副朝","m.hajjplan":"你的朝觐计划","m.ramadan":"斋月","m.eid":"开斋节与古尔邦节","m.protection":"护佑与光明","m.dictionary":"正道百科","m.allah":"真主的九十九个尊名","m.seerah":"先知传记 · 二十三年"}}

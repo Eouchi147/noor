@@ -1,11 +1,1 @@
-{
- "ui": {
-  "nav.hajj": "하지",
-  "m.hajj": "하지와 움라",
-  "m.hajjplan": "나의 순례 계획",
-  "m.ramadan": "라마단",
-  "m.eid": "두 이드 명절",
-  "m.protection": "보호와 빛",
-  "m.dictionary": "길의 백과사전"
- }
-}
+{"ui":{"nav.hajj":"하지","m.hajj":"하지와 움라","m.hajjplan":"나의 순례 계획","m.ramadan":"라마단","m.eid":"두 이드 명절","m.protection":"보호와 빛","m.dictionary":"길의 백과사전","m.allah":"알라의 아름다운 아흔아홉 이름","m.seerah":"시라(예언자 전기) · 이십삼 년"}}

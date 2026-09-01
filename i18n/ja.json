@@ -1,11 +1,1 @@
-{
- "ui": {
-  "nav.hajj": "ハッジ",
-  "m.hajj": "ハッジとウムラ",
-  "m.hajjplan": "あなたの巡礼計画",
-  "m.ramadan": "ラマダン",
-  "m.eid": "二つのイード",
-  "m.protection": "守りと光",
-  "m.dictionary": "道の百科事典"
- }
-}
+{"ui":{"nav.hajj":"ハッジ","m.hajj":"ハッジとウムラ","m.hajjplan":"あなたの巡礼計画","m.ramadan":"ラマダン","m.eid":"二つのイード","m.protection":"守りと光","m.dictionary":"道の百科事典","m.allah":"アッラーの九十九の御名","m.seerah":"シーラ（預言者伝）· 二十三年"}}
