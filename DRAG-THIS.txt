@@ -1,0 +1,121 @@
+NOOR v142 — everything, one commit
+==================================
+
+REPLACES v137, v138, v139, v140 AND v141. Commit this one and nothing else.
+74 files. GitHub takes 100 at a time, so it is one drag.
+
+  1.  github.com/Eouchi147/noor , on  main
+  2.  Add file  ->  Upload files
+  3.  Select EVERYTHING inside this folder — the loose .html files AND the
+      api, assets, tests, scripts, masjid and stories folders
+  4.  Commit message:   v142 · posts, pictures, the menu, the console
+  5.  Commit directly to main
+
+=========================================================================
+1 · THE HAMBURGER THAT DID NOTHING          (allah, kids, muhammad + fx)
+=========================================================================
+  You found it on the Names page. I swept all 565 pages of the site for it.
+
+    37 pages   the burger works
+     3 pages   the burger is DEAD  <- allah.html, kids.html, muhammad.html
+   525 pages   no burger at all
+
+  The three dead ones were not loading noor-fx.js, which is the file that
+  wires it. They load it now, and I checked the sheet opens, lists its links,
+  reports itself to a screen reader, and closes again.
+
+  The 525 are the dictionary term pages (/dictionary/abu-bakr and its like).
+  They are deliberately minimal SEO landing pages — about 6KB each, with links
+  home and into the encyclopedia. That is a design decision, not a fault, so I
+  left them alone. Say the word if you want the full header on them.
+
+=========================================================================
+2 · A PICTURE OF ITS OWN FOR EVERY POST     (api/_art.js, card.js, _lights.js)
+=========================================================================
+  Twelve motifs out of the Islamic geometric tradition — a rosette, the
+  eightfold seal, the lamp and its niche, an arch, strapwork, a hexagon field,
+  ripples, rays, a crescent, a sky, open leaves. Each card gets a large faint
+  watermark and a small crisp emblem, both a pure function of the card's own
+  words, so one card is always drawn the same way and two are not drawn alike.
+
+  THE LANTERN CHOOSES; IT DOES NOT DRAW. It is handed the twelve names and
+  what each is for, and it answers with one — and that answer is checked
+  against the list before anything is used. A model that could put arbitrary
+  SVG on a card published in your name could put anything there: a figure, a
+  face, the symbol of another faith. Choosing from a vetted vocabulary means
+  there are twelve drawings on this site and a person can look at all twelve.
+
+  If the Lantern is dark, the motif is read off the card's own words instead.
+
+  tests/art.mjs renders every motif at many seeds and reads the geometry of
+  every path for a horizontal stroke crossing a vertical one — the same test
+  the site-wide symbol guard runs, applied to art that only exists at run
+  time. 72 rendered samples, 0 crosses. The emblem is also proved to sit
+  above the title on the tightest possible card, so it can never land on the
+  words.
+
+=========================================================================
+3 · THE PULSE TAB, REBUILT                                 (admin.html)
+=========================================================================
+  It opened on a chart of yesterday's readers — a real number and the wrong
+  first question. It now opens with a briefing, worst first:
+
+    NEEDS YOU   failed sends, then owed posts, then an unverified calendar,
+                then waiting messages, then cards the Lantern held back —
+                each with a button that takes you to the tab that can act
+    TODAY       the verified hijri date, what today is, how much of the day
+                has gone out, and the five slots hour by hour with their state
+    THE NUMBERS the readers and gifts, where they were
+    COMING UP   the next observances and how long there is
+
+  A quiet day says so rather than showing an empty box, and a dead endpoint
+  says it is dead rather than going blank. tests/pulse.mjs holds all of that.
+
+=========================================================================
+4 · THE DIAL IS BACK, IN THE CONSOLE       (assets/noor-console-dial.js)
+=========================================================================
+  It is not a ring. A ring of twelve cannot fit a wide, short strip and no
+  tuning of the numbers makes it: sections spaced evenly in angle bunch at the
+  ends, so twelve of them need about 600px of height. The console does not
+  have 600px to give its own navigation.
+
+  So it is a shallow ARC — a tuning dial, which is what the word means. Drag
+  it, spin the wheel, use the arrows, or tap. Tap the section in the middle to
+  open it. It drives the tabs that were already there, so the list down the
+  side and the keyboard shortcuts keep working, and with this file missing the
+  console is exactly what it was. That last one is a test.
+
+  Everything the public dial got wrong is a test here, because all of it was
+  found in production rather than in a test: the tap that did nothing, the
+  overlap, the pile-up, the square glow.
+
+=========================================================================
+TESTS
+=========================================================================
+  node tests/art.mjs          36   the drawings, and that none draws a cross
+  node tests/cards.mjs        24   every slot draws its own picture
+  node tests/norepeat.mjs     12   no card twice, with Redis switched off
+  node tests/names.mjs      1400   the 99 Names
+  node tests/seerah.mjs       71   one check per corrected citation
+  node tests/lights.mjs       25   the picker
+  node tests/symbols.mjs           the symbol guard, still clean
+
+  These three need playwright and a local server on :8231 —
+      python3 -m http.server 8231 &
+  node tests/menu.mjs        122   the public dial, 11 sizes, both orientations
+  node tests/consoledial.mjs  36   the console dial
+  node tests/pulse.mjs        16   the briefing
+
+  tests/social.mjs still shows 3 failures. They predate all of this — its mock
+  Lantern stopped answering — and I have not touched them.
+
+=========================================================================
+NOT DONE, AND WORTH SAYING
+=========================================================================
+  The 525 dictionary pages keep their minimal header (see 1 above).
+
+  The illustrations are geometry, not scenes. A model that draws freely is a
+  model that can draw anything, and I would not put that on a card going out
+  under your name without you seeing every possible output first. If you want
+  richer art, the honest next step is more hand-built motifs — say how many
+  and what they should be of, and they go through the same geometry guard.

@@ -41,6 +41,7 @@
 
 import { chooseLight } from "./_lights.js";
 import { planDay, buildSlot, SLOT_IDS } from "./_schedule.js";
+import { ornament, motifFor } from "./_art.js";
 import { REGULAR, BOLD, FAMILY, COVERAGE } from "./_cardfont.js";
 import { fitSentences } from "./_prose.js";
 
@@ -110,6 +111,25 @@ export function cardSVG(light, opts = {}) {
   const cat = D((light.category || "Light").toUpperCase());
   const det = D(light.detail || "");
   const titleY = midY - (title.length * 62) / 2 - (body.length * 21);
+
+  /* THE ORNAMENT.
+     Two drawings, both geometry, both a pure function of this card's own words
+     so the same card is always drawn the same way and two cards are not drawn
+     alike. The large one is a watermark and sits behind everything at an
+     opacity that cannot compete with a sentence. The small one is the card's
+     emblem, and it is fitted to the gap that actually exists between the
+     eyebrow and the first line of the title -- measured, not guessed, so a
+     three-line title with a long body can never have a drawing sitting on it. */
+  const seed = light.id || light.title || "noor";
+  const motif = light.motif || motifFor((light.title || "") + " " + (light.story || ""), seed);
+  const gapTop = 172, gapBot = titleY - 46;
+  const gap = gapBot - gapTop;
+  const emblem = gap >= 92
+    ? ornament(motif, { cx: W / 2, cy: gapTop + gap / 2,
+        size: Math.min(104, gap * .82), seed, opacity: .5, width: 2.6 })
+    : "";
+  const wash = ornament(motif, { cx: W / 2, cy: opts.story ? H * .42 : midY,
+    size: Math.min(W, H) * .62, seed, opacity: .06, width: 3.2 });
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(light.title)}">
 <defs>
   <linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="${H}">
@@ -121,11 +141,13 @@ export function cardSVG(light, opts = {}) {
 </defs>
 <rect width="${W}" height="${H}" fill="url(#bg)"/>
 <rect width="${W}" height="${H}" fill="url(#glow)"/>
+${wash}
 <g opacity=".5" stroke="rgba(244,212,106,.35)" fill="none" stroke-width="2">
   <rect x="44" y="44" width="${W - 88}" height="${H - 88}" rx="34"/>
 </g>
 <text x="${W / 2}" y="150" text-anchor="middle" font-family="${FAMILY}"
       font-size="26" font-weight="800" letter-spacing="7" fill="rgba(244,212,106,.85)">${esc(cat)}</text>
+${emblem}
 ${title.map((l, i) => `<text x="${W / 2}" y="${titleY + i * 62}" text-anchor="middle" font-family="${FAMILY}" font-size="54" font-weight="800" fill="#FFFEF7">${esc(l)}</text>`).join("\n")}
 <line x1="${W / 2 - 60}" y1="${titleY + title.length * 62 + 6}" x2="${W / 2 + 60}" y2="${titleY + title.length * 62 + 6}" stroke="rgba(244,212,106,.6)" stroke-width="3" stroke-linecap="round"/>
 ${body.map((l, i) => `<text x="${W / 2}" y="${titleY + title.length * 62 + 74 + i * 42}" text-anchor="middle" font-family="${FAMILY}" font-size="30" fill="rgba(255,254,247,.86)">${esc(l)}</text>`).join("\n")}

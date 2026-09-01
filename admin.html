@@ -428,6 +428,86 @@ h2.sec:first-child{margin-top:.2rem}
 .hchip b{font-family:var(--mono);font-weight:700;letter-spacing:-.02em}
 
 /* ---- controls ---- */
+/* ---- the console dial --------------------------------------------------
+   A ring of the console's own tabs. It drives the tabs; it does not replace
+   them, so the list and the keyboard shortcuts keep working and the console is
+   unharmed if this file never arrives. Hidden on a narrow screen, where the
+   tab list is the better control and the ring would only take the room. */
+/* #dash is a wrapping flex row -- a tab column beside a pane. Without a basis
+   of its own the dial was a flex item with no content and came out zero pixels
+   wide, which is why it drew nothing at all and looked like it had been
+   removed. It gets a full-width row above the columns. */
+#cdial{flex:0 0 100%;width:100%;
+  position:relative;height:clamp(190px,22vh,260px);margin:0;display:none;outline:none;
+  border:1px solid rgba(255,254,247,.07);border-radius:16px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 12%,rgba(201,162,39,.07),transparent 62%)}
+#cdial:focus-visible{border-color:rgba(201,162,39,.5)}
+@media (min-width:900px){#cdial{display:block}}
+#cdial.cd-tight{display:none}
+/* the sweep runs wider than the panel, so it is faded at both ends rather than
+   cut: a section riding off the edge should look like it is leaving, not like
+   it has been sliced in half */
+.cd-stage{position:absolute;inset:0;display:grid;place-items:center;perspective:1200px;touch-action:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.cd-rig{position:relative;width:0;height:0;transform-style:preserve-3d}
+.cd-node{position:absolute;left:0;top:0;width:var(--cd,68px);height:var(--cd,68px);
+  margin:calc(var(--cd,68px)/-2);border-radius:50%;border:1px solid rgba(255,254,247,.14);
+  background:radial-gradient(circle at 50% 30%,rgba(255,254,247,.09),rgba(255,254,247,.02) 72%);
+  color:var(--txt-2);font:inherit;font-size:.62rem;font-weight:650;line-height:1.15;
+  display:grid;place-items:center;padding:.3rem;cursor:pointer;text-align:center;
+  will-change:transform,opacity}
+.cd-node span{pointer-events:none;overflow-wrap:anywhere}
+.cd-node.on{border-color:rgba(201,162,39,.75);color:var(--gold-hi)}
+/* a round gradient, never a big blurred shadow: on a promoted layer that
+   rasterises to the layer box and draws a visible square */
+.cd-node::after{content:"";position:absolute;left:50%;top:50%;width:240%;height:240%;
+  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:-1;
+  opacity:var(--lit,0);
+  background:radial-gradient(closest-side,rgba(244,212,106,.30) 0%,rgba(244,212,106,.13) 34%,transparent 70%)}
+.cd-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:1.35rem;color:var(--gold-hi);
+  pointer-events:none;text-align:center;max-width:44%;line-height:1.15}
+@media (prefers-reduced-motion:reduce){.cd-node{transition:none}}
+
+/* ---- the briefing ------------------------------------------------------
+   The Pulse tab opened on a traffic chart, which answers "how many people came
+   yesterday" -- a question nobody has first thing in the morning. What the
+   owner actually needs on opening the console is: is anything broken, is
+   anything owed, and what is today. So that goes first, and the numbers keep
+   their place underneath. */
+.brief .row{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem 0;
+  border-bottom:1px solid rgba(255,254,247,.07)}
+.brief .row:last-child{border-bottom:0}
+.brief .dot{flex:none;width:.55rem;height:.55rem;border-radius:50%;margin-top:.42rem}
+.brief .dot.hot{background:#E86A5A;box-shadow:0 0 12px rgba(232,106,90,.6)}
+.brief .dot.warm{background:var(--gold-hi);box-shadow:0 0 12px rgba(244,212,106,.45)}
+.brief .dot.cool{background:rgba(255,254,247,.28)}
+.brief .tx{min-width:0;flex:1 1 auto}
+.brief .tx b{display:block;font-size:.86rem;color:var(--txt);font-weight:650}
+.brief .tx span{display:block;font-size:.75rem;color:var(--txt-2);line-height:1.55;margin-top:.12rem;
+  overflow-wrap:anywhere}
+.brief .go{flex:none;font-size:.72rem;color:var(--gold-hi);border:1px solid rgba(201,162,39,.4);
+  border-radius:999px;padding:.2rem .6rem;text-decoration:none;background:none;cursor:pointer}
+.brief .go:hover{background:rgba(201,162,39,.12)}
+#brief-day .when{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;
+  padding:.5rem 0;border-bottom:1px solid rgba(255,254,247,.07)}
+#brief-day .when:last-child{border-bottom:0}
+#brief-day .hh{font-variant-numeric:tabular-nums;font-size:.74rem;color:var(--txt-2);letter-spacing:.04em}
+#brief-day .ti{font-size:.84rem;color:var(--txt);min-width:0;overflow-wrap:anywhere}
+#brief-day .st{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:999px;padding:.15rem .55rem;border:1px solid transparent;white-space:nowrap}
+#brief-day .st.sent{color:#7BD88F;border-color:rgba(123,216,143,.35)}
+#brief-day .st.due{color:#F4D46A;border-color:rgba(244,212,106,.45);background:rgba(244,212,106,.08)}
+#brief-day .st.waiting{color:var(--txt-2);border-color:rgba(255,254,247,.14)}
+#brief-day .st.failed{color:#E86A5A;border-color:rgba(232,106,90,.45)}
+#brief-day .hdr{font-size:.8rem;color:var(--txt);margin:0 0 .5rem;padding-bottom:.5rem;
+  border-bottom:1px solid rgba(255,254,247,.09)}
+#brief-day .hdr b{color:var(--gold-hi)}
+@media (max-width:640px){
+  #brief-day .when{grid-template-columns:auto 1fr;grid-template-areas:"h t" ". s";gap:.35rem .6rem}
+  #brief-day .hh{grid-area:h} #brief-day .ti{grid-area:t} #brief-day .st{grid-area:s;justify-self:start}
+}
 #dials-wrap{display:grid;gap:.55rem}
 .dgroup{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
 .dgroup > h3{
@@ -600,6 +680,8 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <div class="health" id="health" aria-label="System health"></div>
 
+<div id="cdial" aria-label="Console sections"></div>
+
 <div class="tabs" role="tablist">
 <button class="tab on" data-pane="pulse" role="tab">✦ Pulse</button>
 <button class="tab" data-pane="inbox" role="tab"><span data-ic=note></span> Inbox<span class="badge" id="ib-badge" hidden>0</span></button>
@@ -617,6 +699,17 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 
 <!-- ===================== PULSE ===================== -->
 <div class="pane on" id="pane-pulse">
+
+<!-- ===== the briefing: what today is asking of you, most urgent first ===== -->
+<div id="brief-now" class="brief" hidden>
+  <h2 class="sec" style="margin-top:0">Needs you</h2>
+  <div class="panel" id="brief-now-list"></div>
+</div>
+
+<h2 class="sec" id="brief-day-h">Today</h2>
+<div class="panel" id="brief-day"><p class="muted">Reading today…</p></div>
+
+<h2 class="sec">The numbers</h2>
 <div class="stats">
 <div class="stat"><div class="v" id="p-today">·</div><div class="l">People today</div></div>
 <div class="stat"><div class="v" id="p-views">·</div><div class="l">Views today</div></div>
@@ -648,6 +741,9 @@ Then redeploy (Deployments → ⋯ → Redeploy) and reload this page.
 <p class="muted" id="v-note" style="margin-top:.4rem"></p>
 </div>
 </div>
+
+<h2 class="sec" id="brief-next-h" hidden>Coming up</h2>
+<div class="panel brief" id="brief-next" hidden></div>
 
 <div class="two" style="margin-top:.8rem">
 <div>
@@ -1209,7 +1305,113 @@ document.querySelectorAll(".tab").forEach(function(t){
 });
 function openTabFromHash(){var h=(location.hash||"").replace("#","");var t=document.querySelector('.tab[data-pane="'+h+'"]');if(t)t.click()}
 
-function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();(window.__noorRooms||[]).forEach(function(f){try{f()}catch(e){}});openTabFromHash()}
+function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();loadBrief();(window.__noorRooms||[]).forEach(function(f){try{f()}catch(e){}});openTabFromHash()}
+
+/* ---------------------------------------------------------------------------
+   the briefing
+
+   The console used to open on a chart of yesterday's readers. Useful, but not
+   the first question of the morning. The first questions are: has anything
+   broken, does anything owe an answer, and what is today. So the tab now opens
+   with those, worst first, and the numbers keep their place below.
+
+   Everything here is read from endpoints the console already had; nothing new
+   is asked of the server. If one of them does not answer, its line says so
+   rather than the panel going blank -- a briefing that hides its own gaps is
+   worse than no briefing.
+--------------------------------------------------------------------------- */
+function briefRow(level,title,note,go,goHref){
+  return '<div class="row"><span class="dot '+level+'"></span><span class="tx"><b>'+esc(title)+'</b>'
+    +(note?'<span>'+esc(note)+'</span>':'')+'</span>'
+    +(go?'<button class="go" data-goto="'+esc(goHref)+'">'+esc(go)+'</button>':'')+'</div>';
+}
+function loadBrief(){
+  var day=null, err={};
+  var jobs=[
+    fetch("/api/social?action=today",{credentials:"same-origin"}).then(function(r){return r.json()})
+      .then(function(j){ day=j&&j.ok?j:null; }).catch(function(){ err.social=1; }),
+    fetch("/api/inbox",{credentials:"same-origin"}).then(function(r){return r.json()})
+      .then(function(j){ if(j&&j.ok) day=day||day, window.__ibNew=(j.counts&&j.counts.new)||0; })
+      .catch(function(){ err.inbox=1; }),
+    fetch("/api/admin-data?probe=lights",{credentials:"same-origin"}).then(function(r){return r.json()})
+      .then(function(j){ window.__doubts=(j&&j.doubts)||[]; }).catch(function(){})
+  ];
+  Promise.all(jobs).then(function(){ paintBrief(day,err); });
+}
+function paintBrief(day,err){
+  var now=[], D=$("brief-day");
+
+  /* ---- worst first ---- */
+  if(err.social) now.push(briefRow("hot","The posting desk did not answer",
+    "The console could not read today's plan. The Social tab will say more.","Open","social"));
+
+  if(day){
+    var slots=day.slots||[], plan=day.plan||{};
+    var owed=slots.filter(function(s){return s.state==="due"});
+    var failed=slots.filter(function(s){return s.state==="failed"});
+    if(failed.length) now.push(briefRow("hot",
+      failed.length+(failed.length===1?" post failed to send":" posts failed to send"),
+      failed.map(function(s){return s.id+" at "+String(s.at).padStart(2,"0")+":00"}).join(" · "),
+      "Open","social"));
+    if(owed.length) now.push(briefRow("warm",
+      owed.length+(owed.length===1?" post is owed":" posts are owed"),
+      "Due and not yet sent: "+owed.map(function(s){return s.id}).join(", "),
+      "Post","social"));
+    if(plan.verified===false) now.push(briefRow("hot","The calendar could not be verified",
+      "Nothing dated will be planned until Umm al-Qura answers again.","Open","social"));
+  }
+  if(window.__ibNew) now.push(briefRow("warm",
+    window.__ibNew+(window.__ibNew===1?" new message":" new messages"),
+    "Someone wrote in through the feedback page.","Read","inbox"));
+  if((window.__doubts||[]).length) now.push(briefRow("warm",
+    window.__doubts.length+" card"+(window.__doubts.length===1?"":"s")+" held back for checking",
+    String(window.__doubts[0].doubt||"").slice(0,120),"Review","lights"));
+
+  if(now.length){ $("brief-now").hidden=false; $("brief-now-list").innerHTML=now.join(""); }
+  else { $("brief-now").hidden=false;
+    $("brief-now-list").innerHTML=briefRow("cool","Nothing is waiting on you",
+      "No post is owed, nothing failed, and the desk is quiet.","",""); }
+
+  /* ---- today ---- */
+  if(!day){ D.innerHTML='<p class="muted">Today could not be read.</p>'; return; }
+  var plan=day.plan||{}, h=plan.hijri, hd=h?(h.d+" "+h.name+" "+h.y):"";
+  var obs=(plan.day&&plan.day.fixed&&plan.day.fixed.name)||"";
+  var rec=(plan.day&&plan.day.recurring&&plan.day.recurring[0]&&plan.day.recurring[0].name)||"";
+  var head='<p class="hdr">'+(hd?'<b>'+esc(hd)+'</b>':'')
+    +(obs?' · '+esc(obs):(rec?' · '+esc(rec):''))
+    +' · '+(day.slots||[]).filter(function(s){return s.state==="sent"}).length
+    +' of '+(day.slots||[]).length+' posts away</p>';
+  var rows=(day.slots||[]).map(function(s){
+    var st=s.state==="sent"?"sent":s.state==="failed"?"failed":s.state==="due"?"due":"waiting";
+    var label=st==="sent"?"sent":st==="failed"?"failed":st==="due"?"owed":"later";
+    return '<div class="when"><span class="hh">'+String(s.at).padStart(2,"0")+':00</span>'
+      +'<span class="ti">'+esc(s.title||s.id)+'</span>'
+      +'<span class="st '+st+'">'+label+'</span></div>';
+  }).join("");
+  D.innerHTML=head+(rows||'<p class="muted">Nothing is planned for today.</p>');
+
+  /* ---- coming up ---- */
+  var leads=(plan.leads||[]);
+  if(leads.length){
+    $("brief-next-h").hidden=false; $("brief-next").hidden=false;
+    $("brief-next").innerHTML=leads.slice(0,4).map(function(L){
+      var o=L.obs||{};
+      return briefRow("cool",o.name||"",
+        (L.days===1?"tomorrow":"in "+L.days+" days")+(o.what?" · "+String(o.what).slice(0,110):""),"","");
+    }).join("");
+  }
+}
+/* The console keeps itself to itself inside one closure. This is the one way
+   in, for the same reason __noorRooms exists: a test has to be able to hand the
+   briefing a day and see what it draws, and the alternative is a test that
+   proves nothing because it can only see the logged-out gate. */
+window.__noorBrief=function(){ return loadBrief(); };
+
+/* the buttons in the briefing move you to the tab that can act on the thing */
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest("[data-goto]"); if(!b)return;
+  var t=document.querySelector('.tab[data-pane="'+b.getAttribute("data-goto")+'"]'); if(t)t.click();
+});
 
 /* ---- pulse: visitors ---- */
 function bars(el,rows,nameFn){
@@ -3370,5 +3572,6 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
   });
 })();
 </script>
+<script src="/assets/noor-console-dial.js?v=1" defer></script>
 </body>
 </html>

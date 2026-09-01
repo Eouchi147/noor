@@ -36,6 +36,7 @@
 
 import { kv, kvReady } from "./_kv.js";
 import { askOpenRouter } from "./_models.js";
+import { MOTIF_NAMES, MOTIF_FOR, motifFor } from "./_art.js";
 
 /* How many ids we refuse to repeat. This was a fixed 200 and it was wrong:
    with 350 cards, a card that fell out of the ring on day 201 was picked again
@@ -368,19 +369,26 @@ async function lanternEdit(cands, dateStr) {
     `Today is ${day}, ${h.d} ${hijriName(h.m)} ${h.y} AH.\n\n` +
     `Six cards are eligible. Choose the ONE that fits today best, and then read it once more ` +
     `against the rules and say whether anything in it looks wrong.\n\n${list}\n\n` +
+    `Every card also carries a drawing. Choose which of these suits the one you picked:\n` +
+    MOTIF_NAMES.map(k => `   ${k} — ${MOTIF_FOR[k]}`).join("\n") + `\n\n` +
     `Reply with JSON only: {"pick":"<the id>","why":"<why it fits today, under 14 words>",` +
-    `"doubt":"<a specific factual doubt, or empty string if none>"}`;
+    `"doubt":"<a specific factual doubt, or empty string if none>",` +
+    `"motif":"<one name from the list above>"}`;
   const got = await askOpenRouter(
     [{ role: "system", content: sys }, { role: "user", content: user }],
-    { max_tokens: 220, temperature: 0.2, timeout: 8000, budget: 18000, maxTries: 3,
+    { max_tokens: 260, temperature: 0.2, timeout: 8000, budget: 18000, maxTries: 3,
       title: "NOOR Codex of Light · the day's light" });
   if (!got.text) return null;
   let p = null;
   try { p = JSON.parse(got.text); }
   catch { const m = got.text.match(/\{[\s\S]*\}/); if (m) { try { p = JSON.parse(m[0]); } catch { } } }
   if (!p || !p.pick) return null;
+  /* the motif is checked against the list before it is kept. A model may only
+     choose from the drawings this house has vetted; it may not invent one. */
+  const m = String(p.motif || "").trim().toLowerCase();
   return { pick: String(p.pick).trim(), why: String(p.why || "").slice(0, 90),
-           doubt: String(p.doubt || "").trim().slice(0, 200), model: got.model };
+           doubt: String(p.doubt || "").trim().slice(0, 200),
+           motif: MOTIF_NAMES.includes(m) ? m : "", model: got.model };
 }
 
 /* ---------------------------------------------------------------------------
@@ -389,12 +397,15 @@ async function lanternEdit(cands, dateStr) {
 /* Both paths out of chooseLight -- the record and a fresh pick -- must hand
    back the same shape, or a caller reading the record would quietly get a
    different object than a caller that picked. */
-function shapeLight(L, dateStr, why, editor, pool, ranked) {
+function shapeLight(L, dateStr, why, editor, pool, ranked, motif) {
   return {
     date: dateStr,
     source: editor ? "library+lantern" : "library",
     id: L.id, category: L.c || "Light", title: L.t, story: L.s, detail: L.d,
     kind: L.k, lvl: L.lvl, src: L.src || "",
+    /* the drawing this card carries: the Lantern's choice if it made one and
+       it was on the list, otherwise read off the card's own words */
+    motif: (MOTIF_NAMES.includes(String(motif)) ? motif : "") || motifFor(L.t + " " + L.s, L.id),
     why, editor, hijri: hijriOf(dateStr),
     pool, ranked
   };
@@ -420,7 +431,7 @@ export async function chooseLight(host, dateStr, opts = {}) {
       /* if the card has left the library since it was written down, fall
          through and pick again rather than answering with nothing */
       if (L) return shapeLight(L, dateStr, pinned.why, pinned.editor || "",
-                               lights.length, pinned.ranked || 0);
+                               lights.length, pinned.ranked || 0, pinned.motif);
     }
   }
 
@@ -435,7 +446,7 @@ export async function chooseLight(host, dateStr, opts = {}) {
   const soft = (memory && ring.length < LOOKBACK) ? replaySeen(lights, dateStr) : [];
   const ranked = scoreLights(lights, dateStr, ring, soft);
   const top = ranked.slice(0, 6);
-  let chosen = top[0], why = top[0].why, editor = "", doubt = "";
+  let chosen = top[0], why = top[0].why, editor = "", doubt = "", motif = "";
 
   if (opts.useLantern !== false) {
     try {
@@ -451,6 +462,7 @@ export async function chooseLight(host, dateStr, opts = {}) {
           if (next) { chosen = next; why = next.why; editor = "the first choice was held back for checking"; }
         } else if (found) {
           chosen = found; why = ed.why || found.why; editor = ed.model || "";
+          motif = ed.motif || "";
         }
       }
     } catch { /* the editor is optional; the picker is not */ }
@@ -462,7 +474,7 @@ export async function chooseLight(host, dateStr, opts = {}) {
      being pushed off it. */
   const today = new Date().toISOString().slice(0, 10);
   if (memory && dateStr === today) {
-    const won = await claimDay(dateStr, { id: chosen.L.id, why, editor, ranked: top.length });
+    const won = await claimDay(dateStr, { id: chosen.L.id, why, editor, ranked: top.length, motif });
     if (won) {
       await remember(chosen.L.id, lights.length);
     } else {
@@ -470,11 +482,11 @@ export async function chooseLight(host, dateStr, opts = {}) {
       const theirs = await readDay(dateStr);
       const L2 = theirs && lights.find(x => x.id === theirs.id);
       if (L2) return shapeLight(L2, dateStr, theirs.why, theirs.editor || "",
-                                lights.length, theirs.ranked || 0);
+                                lights.length, theirs.ranked || 0, theirs.motif);
     }
   } else if (memory && !opts.peek) {
     await remember(chosen.L.id, lights.length);
   }
 
-  return shapeLight(chosen.L, dateStr, why, editor, lights.length, top.length);
+  return shapeLight(chosen.L, dateStr, why, editor, lights.length, top.length, motif);
 }
