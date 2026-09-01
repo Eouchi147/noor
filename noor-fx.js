@@ -72,7 +72,9 @@ const UI_EN = {
   "words.title":"Words of the Path","words.sub":"The exact supplications spoken inside the story: who first said each one, what it did, and when the ummah says it now.",
   "words.verses":"The Words","words.verses.desc":"Eighteen sentences from the Path, sourced, translated, and ready for tonight.",
   "words.saidnow":"Say it now",
-  "atlas.open":"Open"
+  "atlas.open":"Open",
+  "m.allah":"The Ninety-Nine Names",
+  "m.seerah":"The Seerah · Twenty-Three Years"
 };
 const NOOR_I18N = {
   lang: localStorage.getItem("noor_lang") || "en",
