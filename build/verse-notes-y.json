@@ -1,0 +1,7809 @@
+{
+ "tranche": "y",
+ "surahs": [
+  {
+   "n": 58,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "قَدْ",
+       "t": "qad",
+       "g": "already"
+      },
+      {
+       "a": "سَمِعَ",
+       "t": "samiʿa",
+       "g": "has heard"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "قَوْلَ",
+       "t": "qawla",
+       "g": "the speech"
+      },
+      {
+       "a": "ٱلَّتِى",
+       "t": "allatī",
+       "g": "of the one who"
+      },
+      {
+       "a": "تُجَٰدِلُكَ",
+       "t": "tujādiluka",
+       "g": "disputes with you"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "concerning"
+      },
+      {
+       "a": "زَوْجِهَا",
+       "t": "zawjihā",
+       "g": "her husband"
+      },
+      {
+       "a": "وَتَشْتَكِىٓ",
+       "t": "wa-tashtakī",
+       "g": "and complains"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "يَسْمَعُ",
+       "t": "yasmaʿu",
+       "g": "hears"
+      },
+      {
+       "a": "تَحَاوُرَكُمَآ",
+       "t": "taḥāwurakumā",
+       "g": "your exchange"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "سَمِيعٌ",
+       "t": "samīʿun",
+       "g": "is hearing"
+      },
+      {
+       "a": "بَصِيرٌ",
+       "t": "baṣīr",
+       "g": "seeing"
+      }
+     ],
+     "sense": "The surah opens on a specific case rather than a general address: a woman has already brought her complaint, and Allah says He heard it before this verse was recited. The sentence pairs her plea to Allah with the exchange between her and her husband, and says Allah hears both.",
+     "notes": [
+      {
+       "t": "Qad with a past-tense verb sets the hearing as already complete before the recitation reaches the reader; the surah answers a report of anguish with a report of attention.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Allah had already ruled elsewhere that zihar does not make a wife a mother; this verse narrates the case that put that ruling to work.",
+       "lvl": "quran",
+       "src": "33:4"
+      },
+      {
+       "t": "A report names the woman as Khawla bint Tha'laba, with Aisha saying she caught only part of the plea while Allah heard it all; the chain is discussed by hadith critics.",
+       "lvl": "debated",
+       "src": "reports from Aisha, collected by Ibn Majah and others; grading disputed"
+      }
+     ],
+     "links": [
+      {
+       "ref": "33:4",
+       "why": "the general ruling that zihar does not make a wife a mother, stated before this narrower case"
+      },
+      {
+       "ref": "20:46",
+       "why": "Allah telling Musa and Harun He hears and sees them both, the same pairing of verbs"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "يُظَٰهِرُونَ",
+       "t": "yuẓāhirūna",
+       "g": "declare zihar against"
+      },
+      {
+       "a": "مِنكُم",
+       "t": "minkum",
+       "g": "among you"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "نِّسَآئِهِم",
+       "t": "nisāʾihim",
+       "g": "their wives"
+      },
+      {
+       "a": "مَّا",
+       "t": "mā",
+       "g": "not"
+      },
+      {
+       "a": "هُنَّ",
+       "t": "hunna",
+       "g": "they are"
+      },
+      {
+       "a": "أُمَّهَٰتِهِمْ",
+       "t": "ummahātihim",
+       "g": "their mothers"
+      },
+      {
+       "a": "إِنْ",
+       "t": "in",
+       "g": "not"
+      },
+      {
+       "a": "أُمَّهَٰتُهُمْ",
+       "t": "ummahātuhum",
+       "g": "their mothers"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "ٱلَّٰٓـِٔى",
+       "t": "allāʾī",
+       "g": "those who"
+      },
+      {
+       "a": "وَلَدْنَهُمْ",
+       "t": "wa-ladnahum",
+       "g": "gave birth to them"
+      },
+      {
+       "a": "وَإِنَّهُمْ",
+       "t": "wa-innahum",
+       "g": "and indeed they"
+      },
+      {
+       "a": "لَيَقُولُونَ",
+       "t": "layaqūlūna",
+       "g": "surely say"
+      },
+      {
+       "a": "مُنكَرًا",
+       "t": "munkaran",
+       "g": "a denounced thing"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "of"
+      },
+      {
+       "a": "ٱلْقَوْلِ",
+       "t": "al-qawli",
+       "g": "speech"
+      },
+      {
+       "a": "وَزُورًا",
+       "t": "wa-zūran",
+       "g": "and a falsehood"
+      },
+      {
+       "a": "وَإِنَّ",
+       "t": "wa-inna",
+       "g": "and indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "لَعَفُوٌّ",
+       "t": "laʿafuwwun",
+       "g": "is surely pardoning"
+      },
+      {
+       "a": "غَفُورٌ",
+       "t": "ghafūr",
+       "g": "forgiving"
+      }
+     ],
+     "sense": "Defines the practice the surah opened on: a husband likening his wife's body to his mother's, a pre-Islamic formula meant to put her out of reach without a real divorce. The verse denies the words any power, only the woman who gave birth to a man is his mother, and calls the formula itself denounced speech and falsehood, before closing on Allah's readiness to pardon it.",
+     "notes": [
+      {
+       "t": "Zihar invokes zahr, the back, the husband saying his wife is to him like his mother's back; the verse answers the formula on its own terms, by denying what it claims.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same denial appears there in a list of things speech alone does not make real, zihar and adopted sons among them.",
+       "lvl": "quran",
+       "src": "33:4"
+      },
+      {
+       "t": "Munkaran and zūran stack two words for wrong speech, one denounced by any fair judgment and the other simply untrue, before the sentence turns to Allah's readiness to forgive it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "33:4",
+       "why": "the same denial of zihar's effect, stated in general terms"
+      },
+      {
+       "ref": "33:37",
+       "why": "another place a spoken formula is denied the power to remake a relationship, there adoption"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَٱلَّذِينَ",
+       "t": "walladhīna",
+       "g": "and those who"
+      },
+      {
+       "a": "يُظَٰهِرُونَ",
+       "t": "yuẓāhirūna",
+       "g": "declare zihar against"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "نِّسَآئِهِمْ",
+       "t": "nisāʾihim",
+       "g": "their wives"
+      },
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "يَعُودُونَ",
+       "t": "yaʿūdūna",
+       "g": "go back on"
+      },
+      {
+       "a": "لِمَا",
+       "t": "limā",
+       "g": "what"
+      },
+      {
+       "a": "قَالُوا۟",
+       "t": "qālū",
+       "g": "they said"
+      },
+      {
+       "a": "فَتَحْرِيرُ",
+       "t": "fa-taḥrīru",
+       "g": "then the freeing"
+      },
+      {
+       "a": "رَقَبَةٍ",
+       "t": "raqabatin",
+       "g": "of a slave"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "before"
+      },
+      {
+       "a": "قَبْلِ",
+       "t": "qabli",
+       "g": "before"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "يَتَمَآسَّا",
+       "t": "yatamāssā",
+       "g": "they touch each other"
+      },
+      {
+       "a": "ذَٰلِكُمْ",
+       "t": "dhālikum",
+       "g": "that is"
+      },
+      {
+       "a": "تُوعَظُونَ",
+       "t": "tūʿaẓūna",
+       "g": "what you are exhorted"
+      },
+      {
+       "a": "بِهِۦ",
+       "t": "bihi",
+       "g": "by it"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "تَعْمَلُونَ",
+       "t": "taʿmalūna",
+       "g": "you do"
+      },
+      {
+       "a": "خَبِيرٌ",
+       "t": "khabīr",
+       "g": "is aware"
+      }
+     ],
+     "sense": "Sets the remedy. A man who pronounces the zihar formula and then wants to keep the marriage rather than let the words stand as a separation owes the freeing of a slave before the couple may touch each other again. The instruction is framed for the community as much as the man, and closes on Allah's awareness of what is done.",
+     "notes": [
+      {
+       "t": "\"Going back on what they said\" means resuming the marriage rather than repeating the zihar formula; the expiation is the price of undoing a divorce-like statement while keeping the wife.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The verse that follows sets out the two remaining steps of the same expiation, fasting and feeding, for whoever cannot free a slave.",
+       "lvl": "quran",
+       "src": "58:4"
+      },
+      {
+       "t": "Raqabah, \"a neck,\" stands for the whole person in the Qur'an's manumission language across several verses; the freeing is named by the part that would have carried a yoke.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:4",
+       "why": "the fallback steps of the same expiation when a slave cannot be freed"
+      },
+      {
+       "ref": "4:92",
+       "why": "the same wording for freeing a slave in expiation, there for an accidental killing"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "فَمَن",
+       "t": "fa-man",
+       "g": "then whoever"
+      },
+      {
+       "a": "لَّمْ",
+       "t": "lam",
+       "g": "does not"
+      },
+      {
+       "a": "يَجِدْ",
+       "t": "yajid",
+       "g": "find"
+      },
+      {
+       "a": "فَصِيَامُ",
+       "t": "fa-ṣiyāmu",
+       "g": "then a fast of"
+      },
+      {
+       "a": "شَهْرَيْنِ",
+       "t": "shahrayni",
+       "g": "two months"
+      },
+      {
+       "a": "مُتَتَابِعَيْنِ",
+       "t": "mutatābiʿayni",
+       "g": "consecutive"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "before"
+      },
+      {
+       "a": "قَبْلِ",
+       "t": "qabli",
+       "g": "before"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "يَتَمَآسَّا",
+       "t": "yatamāssā",
+       "g": "they touch each other"
+      },
+      {
+       "a": "فَمَن",
+       "t": "fa-man",
+       "g": "then whoever"
+      },
+      {
+       "a": "لَّمْ",
+       "t": "lam",
+       "g": "is not"
+      },
+      {
+       "a": "يَسْتَطِعْ",
+       "t": "yastaṭiʿ",
+       "g": "able"
+      },
+      {
+       "a": "فَإِطْعَامُ",
+       "t": "fa-iṭʿāmu",
+       "g": "then the feeding"
+      },
+      {
+       "a": "سِتِّينَ",
+       "t": "sittīna",
+       "g": "of sixty"
+      },
+      {
+       "a": "مِسْكِينًا",
+       "t": "miskīnan",
+       "g": "poor person"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that is"
+      },
+      {
+       "a": "لِتُؤْمِنُوا۟",
+       "t": "lituʾminū",
+       "g": "so that you believe"
+      },
+      {
+       "a": "بِٱللَّهِ",
+       "t": "billāhi",
+       "g": "in Allah"
+      },
+      {
+       "a": "وَرَسُولِهِۦ",
+       "t": "wa-rasūlihi",
+       "g": "and His messenger"
+      },
+      {
+       "a": "وَتِلْكَ",
+       "t": "wa-tilka",
+       "g": "and those are"
+      },
+      {
+       "a": "حُدُودُ",
+       "t": "ḥudūdu",
+       "g": "the limits"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "وَلِلْكَٰفِرِينَ",
+       "t": "wa-lilkāfirīna",
+       "g": "and for the deniers"
+      },
+      {
+       "a": "عَذَابٌ",
+       "t": "ʿadhābun",
+       "g": "a punishment"
+      },
+      {
+       "a": "أَلِيمٌ",
+       "t": "alīm",
+       "g": "painful"
+      }
+     ],
+     "sense": "Sets out the two fallback steps for whoever cannot free a slave: a fast of two consecutive months, then, if that too is beyond him, feeding sixty poor people. The stated purpose is belief made concrete in obedience to Allah and His messenger, and the whole sequence is named a boundary Allah has set, with a warning attached for those who reject it.",
+     "notes": [
+      {
+       "t": "The three steps run in strict order, freeing, fasting, feeding, each named only after the one before it is ruled out, so the verse legislates a ladder rather than a menu.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The preceding verse sets the first step, freeing a slave, for whoever is able.",
+       "lvl": "quran",
+       "src": "58:3"
+      },
+      {
+       "t": "Ḥudūd Allāh, \"the limits of Allah,\" is the Qur'an's term for a boundary set by revelation rather than reasoned out; naming the expiation this way closes off adjusting it by preference.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:3",
+       "why": "the first step of the same sequence, freeing a slave"
+      },
+      {
+       "ref": "4:92",
+       "why": "the same fasting expiation of two consecutive months for one who cannot free a slave"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "يُحَآدُّونَ",
+       "t": "yuḥāddūna",
+       "g": "oppose"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥ",
+       "t": "wa-rasūlahu",
+       "g": "and His messenger"
+      },
+      {
+       "a": "كُبِتُوا۟",
+       "t": "kubitū",
+       "g": "are disgraced"
+      },
+      {
+       "a": "كَمَا",
+       "t": "kamā",
+       "g": "as"
+      },
+      {
+       "a": "كُبِتَ",
+       "t": "kubita",
+       "g": "were disgraced"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "were"
+      },
+      {
+       "a": "قَبْلِهِمْ",
+       "t": "qablihim",
+       "g": "before them"
+      },
+      {
+       "a": "وَقَدْ",
+       "t": "wa-qad",
+       "g": "and certainly"
+      },
+      {
+       "a": "أَنزَلْنَآ",
+       "t": "anzalnā",
+       "g": "We have sent down"
+      },
+      {
+       "a": "ءَايَٰتٍ",
+       "t": "āyātin",
+       "g": "signs"
+      },
+      {
+       "a": "بَيِّنَٰتٍ",
+       "t": "bayyinātin",
+       "g": "clear"
+      },
+      {
+       "a": "وَلِلْكَٰفِرِينَ",
+       "t": "wa-lilkāfirīna",
+       "g": "and for the deniers"
+      },
+      {
+       "a": "عَذَابٌ",
+       "t": "ʿadhābun",
+       "g": "a punishment"
+      },
+      {
+       "a": "مُّهِينٌ",
+       "t": "muhīn",
+       "g": "humiliating"
+      }
+     ],
+     "sense": "Turns from one household to a general statement. Those who set themselves against Allah and His messenger meet the same disgrace earlier communities met, and this time it comes after Allah had sent clear signs, so the disgrace is not for lack of evidence. A humiliating punishment closes the sentence for those who reject it.",
+     "notes": [
+      {
+       "t": "Yuḥāddūna comes from ḥadd, a limit or edge, and pictures opposition as standing on the far side of a boundary from Allah and His messenger, the same root behind ḥudūd in the verse before it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same verb describes those who oppose Allah and His messenger, there named for the fire they earn.",
+       "lvl": "quran",
+       "src": "9:63"
+      },
+      {
+       "t": "Kubitū is repeated in its own clause, \"disgraced as ... were disgraced,\" binding this community's fate to earlier ones by the bare repetition of one verb.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "9:63",
+       "why": "the same verb for opposing Allah and His messenger, with the fire named as the outcome"
+      },
+      {
+       "ref": "40:5",
+       "why": "earlier communities plotting against their messenger before being seized, the precedent this verse invokes"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the day"
+      },
+      {
+       "a": "يَبْعَثُهُمُ",
+       "t": "yabʿathuhumu",
+       "g": "He resurrects them"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "جَمِيعًا",
+       "t": "jamīʿan",
+       "g": "all together"
+      },
+      {
+       "a": "فَيُنَبِّئُهُم",
+       "t": "fa-yunabbiʾuhum",
+       "g": "then He informs them"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "عَمِلُوٓا۟",
+       "t": "ʿamilū",
+       "g": "they did"
+      },
+      {
+       "a": "أَحْصَىٰهُ",
+       "t": "aḥṣāhu",
+       "g": "Allah has recorded it"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "وَنَسُوهُ",
+       "t": "wa-nasūhu",
+       "g": "while they forgot it"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "over"
+      },
+      {
+       "a": "كُلِّ",
+       "t": "kulli",
+       "g": "every"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "thing"
+      },
+      {
+       "a": "شَهِيدٌ",
+       "t": "shahīd",
+       "g": "is witness"
+      }
+     ],
+     "sense": "Extends the punishment named before into a scene: a day when Allah raises everyone at once and tells them what they did. Their own record survives their memory of it, since Allah kept count of what they let slip from mind, and the sentence closes on Allah as witness to everything, not only to this.",
+     "notes": [
+      {
+       "t": "Aḥṣāhu, \"He counted it,\" is accounting language, the same root used for a tally kept exactly; what the doers forgot, the ledger did not.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same day is described as people going out in scattered groups to be shown the result of their deeds.",
+       "lvl": "quran",
+       "src": "99:6"
+      },
+      {
+       "t": "The contrast sits in one line, Allah recorded it, they forgot it, with no verb of forgetting ever attached to Allah.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "99:6",
+       "why": "the same resurrection scene of deeds being shown rather than argued away"
+      },
+      {
+       "ref": "58:18",
+       "why": "the same opening line repeated almost word for word, there about people who swear falsely before Allah"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "alam",
+       "g": "have you not"
+      },
+      {
+       "a": "تَرَ",
+       "t": "tara",
+       "g": "seen"
+      },
+      {
+       "a": "أَنَّ",
+       "t": "anna",
+       "g": "that"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "يَعْلَمُ",
+       "t": "yaʿlamu",
+       "g": "knows"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "is in"
+      },
+      {
+       "a": "ٱلسَّمَٰوَٰتِ",
+       "t": "as-samāwāti",
+       "g": "the heavens"
+      },
+      {
+       "a": "وَمَا",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "is in"
+      },
+      {
+       "a": "ٱلْأَرْضِ",
+       "t": "al-arḍi",
+       "g": "the earth"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "not"
+      },
+      {
+       "a": "يَكُونُ",
+       "t": "yakūnu",
+       "g": "there is"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "of"
+      },
+      {
+       "a": "نَّجْوَىٰ",
+       "t": "najwā",
+       "g": "a secret conversation"
+      },
+      {
+       "a": "ثَلَٰثَةٍ",
+       "t": "thalāthatin",
+       "g": "of three"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "رَابِعُهُمْ",
+       "t": "rābiʿuhum",
+       "g": "is their fourth"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "خَمْسَةٍ",
+       "t": "khamsatin",
+       "g": "of five"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "سَادِسُهُمْ",
+       "t": "sādisuhum",
+       "g": "is their sixth"
+      },
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَدْنَىٰ",
+       "t": "adnā",
+       "g": "fewer"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "than"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَكْثَرَ",
+       "t": "akthara",
+       "g": "more"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "مَعَهُمْ",
+       "t": "maʿahum",
+       "g": "is with them"
+      },
+      {
+       "a": "أَيْنَ",
+       "t": "ayna",
+       "g": "wherever"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "-"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "they are"
+      },
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "يُنَبِّئُهُم",
+       "t": "yunabbiʾuhum",
+       "g": "He will inform them"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "عَمِلُوا۟",
+       "t": "ʿamilū",
+       "g": "they did"
+      },
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the day"
+      },
+      {
+       "a": "ٱلْقِيَٰمَةِ",
+       "t": "al-qiyāmati",
+       "g": "of resurrection"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "بِكُلِّ",
+       "t": "bikulli",
+       "g": "of every"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "thing"
+      },
+      {
+       "a": "عَلِيمٌ",
+       "t": "ʿalīm",
+       "g": "is knowing"
+      }
+     ],
+     "sense": "Opens with a rhetorical question that expects agreement rather than doubt. Allah's knowledge reaches every private conversation: no group of three or five or any other number meets in secret without Him present as one more among them, wherever they are. The verse ends where the one before it did, on a day when they are told what they did.",
+     "notes": [
+      {
+       "t": "Rābiʿuhum and sādisuhum, \"their fourth\" and \"their sixth,\" place Allah inside the count of the group rather than above it watching from outside; the language is one of presence, not surveillance.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Allah is described as nearer to a person than his own jugular vein, the same closeness stated without the arithmetic.",
+       "lvl": "quran",
+       "src": "50:16"
+      },
+      {
+       "t": "A companion verse asks whether they think their secret talk and private consultation go unheard; it does not, and messengers are named as present, recording it.",
+       "lvl": "quran",
+       "src": "43:80"
+      }
+     ],
+     "links": [
+      {
+       "ref": "43:80",
+       "why": "the same claim about secret talk being heard, with angels named as the ones recording it"
+      },
+      {
+       "ref": "58:8",
+       "why": "the case this general statement is about to be applied to, people returning to a forbidden secret conversation"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "alam",
+       "g": "have you not"
+      },
+      {
+       "a": "تَرَ",
+       "t": "tara",
+       "g": "seen"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "toward"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "نُهُوا۟",
+       "t": "nuhū",
+       "g": "were forbidden"
+      },
+      {
+       "a": "عَنِ",
+       "t": "ʿani",
+       "g": "from"
+      },
+      {
+       "a": "ٱلنَّجْوَىٰ",
+       "t": "an-najwā",
+       "g": "secret conversation"
+      },
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "يَعُودُونَ",
+       "t": "yaʿūdūna",
+       "g": "they return"
+      },
+      {
+       "a": "لِمَا",
+       "t": "limā",
+       "g": "to what"
+      },
+      {
+       "a": "نُهُوا۟",
+       "t": "nuhū",
+       "g": "they were forbidden"
+      },
+      {
+       "a": "عَنْهُ",
+       "t": "ʿanhu",
+       "g": "from it"
+      },
+      {
+       "a": "وَيَتَنَٰجَوْنَ",
+       "t": "wa-yatanājawna",
+       "g": "and they converse secretly"
+      },
+      {
+       "a": "بِٱلْإِثْمِ",
+       "t": "bil-ithmi",
+       "g": "in sin"
+      },
+      {
+       "a": "وَٱلْعُدْوَٰنِ",
+       "t": "wal-ʿudwāni",
+       "g": "and enmity"
+      },
+      {
+       "a": "وَمَعْصِيَتِ",
+       "t": "wa-maʿṣiyati",
+       "g": "and disobedience"
+      },
+      {
+       "a": "ٱلرَّسُولِ",
+       "t": "ar-rasūli",
+       "g": "to the messenger"
+      },
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "جَآءُوكَ",
+       "t": "jāʾūka",
+       "g": "they come to you"
+      },
+      {
+       "a": "حَيَّوْكَ",
+       "t": "ḥayyawka",
+       "g": "they greet you"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "with what"
+      },
+      {
+       "a": "لَمْ",
+       "t": "lam",
+       "g": "not"
+      },
+      {
+       "a": "يُحَيِّكَ",
+       "t": "yuḥayyika",
+       "g": "greets you"
+      },
+      {
+       "a": "بِهِ",
+       "t": "bihi",
+       "g": "with it"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "وَيَقُولُونَ",
+       "t": "wa-yaqūlūna",
+       "g": "and they say"
+      },
+      {
+       "a": "فِىٓ",
+       "t": "fī",
+       "g": "within"
+      },
+      {
+       "a": "أَنفُسِهِمْ",
+       "t": "anfusihim",
+       "g": "themselves"
+      },
+      {
+       "a": "لَوْلَا",
+       "t": "lawlā",
+       "g": "why does not"
+      },
+      {
+       "a": "يُعَذِّبُنَا",
+       "t": "yuʿadhdhibunā",
+       "g": "punish us"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "for what"
+      },
+      {
+       "a": "نَقُولُ",
+       "t": "naqūlu",
+       "g": "we say"
+      },
+      {
+       "a": "حَسْبُهُمْ",
+       "t": "ḥasbuhum",
+       "g": "sufficient for them"
+      },
+      {
+       "a": "جَهَنَّمُ",
+       "t": "jahannamu",
+       "g": "is Hell"
+      },
+      {
+       "a": "يَصْلَوْنَهَا",
+       "t": "yaṣlawnahā",
+       "g": "they will burn in it"
+      },
+      {
+       "a": "فَبِئْسَ",
+       "t": "fa-biʾsa",
+       "g": "and evil is"
+      },
+      {
+       "a": "ٱلْمَصِيرُ",
+       "t": "al-maṣīr",
+       "g": "the destination"
+      }
+     ],
+     "sense": "Names people who were told not to hold secret conversations and went straight back to it, now filling their private talk with sin, hostility and defiance of the Prophet. When they come to him they greet him with a phrase Allah never used as a greeting for him, then privately dare Allah to punish them for what they say. Hell is named as answer enough.",
+     "notes": [
+      {
+       "t": "The greeting they used is reported as a play on \"peace be upon you\" twisted into a word for death, a courtesy turned into an insult while still sounding like one.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A hadith describes some visitors greeting the Prophet ﷺ with this distorted greeting; Aisha caught the insult and answered it, and the Prophet ﷺ told her Allah loves gentleness. Exegetes link the incident to this verse.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, from Aisha"
+      },
+      {
+       "t": "Nuhū appears twice in the verse, so the return to secret talk is described as a return to a thing already named and already stopped once.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:9",
+       "why": "the positive instruction that follows, secret talk done in righteousness instead of sin"
+      },
+      {
+       "ref": "4:86",
+       "why": "the general rule on greetings, returning a greeting with one as good or better"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوٓا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "تَنَٰجَيْتُمْ",
+       "t": "tanājaytum",
+       "g": "you converse secretly"
+      },
+      {
+       "a": "فَلَا",
+       "t": "fa-lā",
+       "g": "then do not"
+      },
+      {
+       "a": "تَتَنَٰجَوْا۟",
+       "t": "tatanājaw",
+       "g": "converse secretly"
+      },
+      {
+       "a": "بِٱلْإِثْمِ",
+       "t": "bil-ithmi",
+       "g": "in sin"
+      },
+      {
+       "a": "وَٱلْعُدْوَٰنِ",
+       "t": "wal-ʿudwāni",
+       "g": "and enmity"
+      },
+      {
+       "a": "وَمَعْصِيَتِ",
+       "t": "wa-maʿṣiyati",
+       "g": "and disobedience"
+      },
+      {
+       "a": "ٱلرَّسُولِ",
+       "t": "ar-rasūli",
+       "g": "to the messenger"
+      },
+      {
+       "a": "وَتَنَٰجَوْا۟",
+       "t": "wa-tanājaw",
+       "g": "and converse secretly"
+      },
+      {
+       "a": "بِٱلْبِرِّ",
+       "t": "bil-birri",
+       "g": "in righteousness"
+      },
+      {
+       "a": "وَٱلتَّقْوَىٰ",
+       "t": "wat-taqwā",
+       "g": "and awareness of Allah"
+      },
+      {
+       "a": "وَٱتَّقُوا۟",
+       "t": "wa-taqū",
+       "g": "and fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "ٱلَّذِىٓ",
+       "t": "alladhī",
+       "g": "the One who"
+      },
+      {
+       "a": "إِلَيْهِ",
+       "t": "ilayhi",
+       "g": "to Him"
+      },
+      {
+       "a": "تُحْشَرُونَ",
+       "t": "tuḥsharūn",
+       "g": "you will be gathered"
+      }
+     ],
+     "sense": "Addresses the believers directly and turns the previous complaint into an instruction. Private conversation itself is not the problem; what fills it is. Believers are told not to fill their secret talk with sin, hostility and defiance of the Prophet, but with righteousness and awareness of Allah, who is where the gathering on the last day leads.",
+     "notes": [
+      {
+       "t": "Bi-l-birr wa-t-taqwā answers bi-l-ithm wa-l-ʿudwān phrase for phrase, the same grammatical slot filled with its opposite, so the verse corrects by substitution rather than by bare prohibition.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same pairing, birr and taqwā, is named as what believers should cooperate in, set against sin and enmity in the very next clause there too.",
+       "lvl": "quran",
+       "src": "5:2"
+      },
+      {
+       "t": "The verse closes on ḥashr, the gathering, tying private conversation now to public account later.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:8",
+       "why": "the conduct being corrected, the same three things named there as what a group's secret talk was carrying"
+      },
+      {
+       "ref": "5:2",
+       "why": "the same word pair, righteousness and awareness of Allah, set against sin and enmity"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "إِنَّمَا",
+       "t": "innamā",
+       "g": "only"
+      },
+      {
+       "a": "ٱلنَّجْوَىٰ",
+       "t": "an-najwā",
+       "g": "secret conversation"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "is from"
+      },
+      {
+       "a": "ٱلشَّيْطَٰنِ",
+       "t": "ash-shayṭāni",
+       "g": "Satan"
+      },
+      {
+       "a": "لِيَحْزُنَ",
+       "t": "liyaḥzuna",
+       "g": "that he may grieve"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "وَلَيْسَ",
+       "t": "wa-laysa",
+       "g": "and not"
+      },
+      {
+       "a": "بِضَآرِّهِمْ",
+       "t": "biḍārrihim",
+       "g": "it can harm them"
+      },
+      {
+       "a": "شَيْـًٔا",
+       "t": "shayʾan",
+       "g": "at all"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "بِإِذْنِ",
+       "t": "bi-idhni",
+       "g": "by permission"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "وَعَلَى",
+       "t": "wa-ʿalā",
+       "g": "and upon"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "فَلْيَتَوَكَّلِ",
+       "t": "falyatawakkali",
+       "g": "let put their trust"
+      },
+      {
+       "a": "ٱلْمُؤْمِنُونَ",
+       "t": "al-muʾminūn",
+       "g": "the believers"
+      }
+     ],
+     "sense": "Answers a worry the previous instruction could raise: what about the secret talk that is still sin, the whispering a believer sees but cannot hear? That kind is named as Satan's doing, meant only to cause grief, and it is denied any power to harm except by Allah's leave. Trust is placed with Allah rather than with tracking down what was said.",
+     "notes": [
+      {
+       "t": "Najwā narrows here to one kind only, the whispering meant to unsettle, distinct from the ordinary private conversation the two verses before it were regulating.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A grief the believers are told not to be troubled by, there the scheming of open enemies rather than whispering.",
+       "lvl": "quran",
+       "src": "3:120"
+      },
+      {
+       "t": "The verse ends on tawakkul, trust placed in Allah, the standard answer the Qur'an gives to a harm that cannot be traced to its source.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:9",
+       "why": "the instruction on ordinary secret talk this verse narrows away from"
+      },
+      {
+       "ref": "3:120",
+       "why": "a parallel reassurance that a scheme against believers cannot harm them without Allah's permission"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوٓا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "قِيلَ",
+       "t": "qīla",
+       "g": "it is said"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "to you"
+      },
+      {
+       "a": "تَفَسَّحُوا۟",
+       "t": "tafassaḥū",
+       "g": "make room"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلْمَجَٰلِسِ",
+       "t": "al-majālisi",
+       "g": "the assemblies"
+      },
+      {
+       "a": "فَٱفْسَحُوا۟",
+       "t": "fa-fsaḥū",
+       "g": "then make room"
+      },
+      {
+       "a": "يَفْسَحِ",
+       "t": "yafsaḥi",
+       "g": "will make room"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "for you"
+      },
+      {
+       "a": "وَإِذَا",
+       "t": "wa-idhā",
+       "g": "and when"
+      },
+      {
+       "a": "قِيلَ",
+       "t": "qīla",
+       "g": "it is said"
+      },
+      {
+       "a": "ٱنشُزُوا۟",
+       "t": "inshuzū",
+       "g": "rise up"
+      },
+      {
+       "a": "فَٱنشُزُوا۟",
+       "t": "fa-nshuzū",
+       "g": "then rise up"
+      },
+      {
+       "a": "يَرْفَعِ",
+       "t": "yarfaʿi",
+       "g": "will raise"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "مِنكُمْ",
+       "t": "minkum",
+       "g": "among you"
+      },
+      {
+       "a": "وَٱلَّذِينَ",
+       "t": "walladhīna",
+       "g": "and those who"
+      },
+      {
+       "a": "أُوتُوا۟",
+       "t": "ūtū",
+       "g": "were given"
+      },
+      {
+       "a": "ٱلْعِلْمَ",
+       "t": "al-ʿilma",
+       "g": "the knowledge"
+      },
+      {
+       "a": "دَرَجَٰتٍ",
+       "t": "darajātin",
+       "g": "in degrees"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "تَعْمَلُونَ",
+       "t": "taʿmalūna",
+       "g": "you do"
+      },
+      {
+       "a": "خَبِيرٌ",
+       "t": "khabīr",
+       "g": "is aware"
+      }
+     ],
+     "sense": "Moves to the manners of a sitting gathering, likely the Prophet's own assembly. Told to make room for someone else, believers are told to do it, and Allah answers with room made for them in turn. Told to rise and make way, they are told to do that too, and the verse closes by naming who is actually raised: those who believe, and further, those given knowledge, ranked in degrees.",
+     "notes": [
+      {
+       "t": "The verse runs two matched commands, make room and rise, each answered by Allah's own verb from the same root, fasaḥa answered by yafsaḥ, a courtesy repaid in kind rather than merely rewarded.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Knowledge is named there too as what sets a rank of standing before Allah apart, fear of Him rather than status among people.",
+       "lvl": "quran",
+       "src": "35:28"
+      },
+      {
+       "t": "Exegetes differ on whether \"rise up\" addresses making space at a crowded sitting or dispersing when the Prophet ﷺ wished to be alone, and whether the two commands describe one setting or two.",
+       "lvl": "debated",
+       "src": "reports collected by at-Tabari and others; readings differ"
+      }
+     ],
+     "links": [
+      {
+       "ref": "35:28",
+       "why": "knowledge named again as what marks people out before Allah, there paired with fear rather than rank"
+      },
+      {
+       "ref": "3:18",
+       "why": "another verse naming those with knowledge alongside Allah's own testimony, both singling the same group out"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "ءَامَنُوٓا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "نَٰجَيْتُمُ",
+       "t": "nājaytumu",
+       "g": "you privately consult"
+      },
+      {
+       "a": "ٱلرَّسُولَ",
+       "t": "ar-rasūla",
+       "g": "the messenger"
+      },
+      {
+       "a": "فَقَدِّمُوا۟",
+       "t": "fa-qaddimū",
+       "g": "then offer"
+      },
+      {
+       "a": "بَيْنَ",
+       "t": "bayna",
+       "g": "before"
+      },
+      {
+       "a": "يَدَىْ",
+       "t": "yaday",
+       "g": "-"
+      },
+      {
+       "a": "نَجْوَىٰكُمْ",
+       "t": "najwākum",
+       "g": "your private consultation"
+      },
+      {
+       "a": "صَدَقَةً",
+       "t": "ṣadaqatan",
+       "g": "a charity"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that is"
+      },
+      {
+       "a": "خَيْرٌ",
+       "t": "khayrun",
+       "g": "better"
+      },
+      {
+       "a": "لَّكُمْ",
+       "t": "lakum",
+       "g": "for you"
+      },
+      {
+       "a": "وَأَطْهَرُ",
+       "t": "wa-aṭharu",
+       "g": "and purer"
+      },
+      {
+       "a": "فَإِن",
+       "t": "fa-in",
+       "g": "but if"
+      },
+      {
+       "a": "لَّمْ",
+       "t": "lam",
+       "g": "not"
+      },
+      {
+       "a": "تَجِدُوا۟",
+       "t": "tajidū",
+       "g": "you find"
+      },
+      {
+       "a": "فَإِنَّ",
+       "t": "fa-inna",
+       "g": "then indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "غَفُورٌ",
+       "t": "ghafūrun",
+       "g": "Forgiving"
+      },
+      {
+       "a": "رَّحِيمٌ",
+       "t": "raḥīm",
+       "g": "Merciful"
+      }
+     ],
+     "sense": "Adds a condition to private audiences with the Prophet specifically: give something in charity before the consultation, not after. The verse frames this as better and purer for the one who does it, not as an obstacle, and closes by allowing that whoever finds nothing to give is not shut out, since Allah forgives, and is merciful.",
+     "notes": [
+      {
+       "t": "Bayna yaday, literally \"between the two hands of,\" is the Qur'an's ordinary idiom for what comes before something; the charity is timed strictly ahead of the meeting, not alongside it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The very next verse reports that this instruction was eased almost as soon as it was given.",
+       "lvl": "quran",
+       "src": "58:13"
+      },
+      {
+       "t": "Reports say the ruling stood only briefly, an hour or a day by some accounts, with only Ali ibn Abi Talib named as having acted on it in that window; sources differ on how long it lasted.",
+       "lvl": "debated",
+       "src": "reports collected in the tafsir literature, including from Ali ibn Abi Talib; details disputed"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:13",
+       "why": "the same instruction eased in the verse immediately after"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "ءَأَشْفَقْتُمْ",
+       "t": "a-ashfaqtum",
+       "g": "are you apprehensive"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "تُقَدِّمُوا۟",
+       "t": "tuqaddimū",
+       "g": "you offer"
+      },
+      {
+       "a": "بَيْنَ",
+       "t": "bayna",
+       "g": "before"
+      },
+      {
+       "a": "يَدَىْ",
+       "t": "yaday",
+       "g": "-"
+      },
+      {
+       "a": "نَجْوَىٰكُمْ",
+       "t": "najwākum",
+       "g": "your private consultation"
+      },
+      {
+       "a": "صَدَقَٰتٍ",
+       "t": "ṣadaqātin",
+       "g": "charities"
+      },
+      {
+       "a": "فَإِذْ",
+       "t": "fa-idh",
+       "g": "then since"
+      },
+      {
+       "a": "لَمْ",
+       "t": "lam",
+       "g": "not"
+      },
+      {
+       "a": "تَفْعَلُوا۟",
+       "t": "tafʿalū",
+       "g": "you did (it)"
+      },
+      {
+       "a": "وَتَابَ",
+       "t": "wa-tāba",
+       "g": "and has turned in mercy"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَيْكُمْ",
+       "t": "ʿalaykum",
+       "g": "to you"
+      },
+      {
+       "a": "فَأَقِيمُوا۟",
+       "t": "fa-aqīmū",
+       "g": "then establish"
+      },
+      {
+       "a": "ٱلصَّلَوٰةَ",
+       "t": "aṣ-ṣalāta",
+       "g": "the prayer"
+      },
+      {
+       "a": "وَءَاتُوا۟",
+       "t": "wa-ātū",
+       "g": "and give"
+      },
+      {
+       "a": "ٱلزَّكَوٰةَ",
+       "t": "az-zakāta",
+       "g": "the zakat"
+      },
+      {
+       "a": "وَأَطِيعُوا۟",
+       "t": "wa-aṭīʿū",
+       "g": "and obey"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥ",
+       "t": "wa-rasūlahu",
+       "g": "and His messenger"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "خَبِيرٌ",
+       "t": "khabīrun",
+       "g": "All-Aware"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "تَعْمَلُونَ",
+       "t": "taʿmalūn",
+       "g": "you do"
+      }
+     ],
+     "sense": "Names what actually happened: the requirement felt like a burden, few or none acted on it, and Allah eased it before it became a real difficulty. The instruction narrows back down to obligations already known, prayer, zakat, obedience to Allah and His messenger, and closes again on Allah's awareness of what is done.",
+     "notes": [
+      {
+       "t": "The question opens with the same phrase the previous verse used, ṣadaqah bayna yaday najwākum, now turned into a question about hesitation rather than a command.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The instruction this verse relaxes was given only one verse earlier.",
+       "lvl": "quran",
+       "src": "58:12"
+      },
+      {
+       "t": "Reports differ on who, if anyone, gave the charity before the rule was lifted; some name Ali ibn Abi Talib as the only one who acted on it, others report that no one did.",
+       "lvl": "debated",
+       "src": "reports in the tafsir literature; accounts differ"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:12",
+       "why": "the instruction being eased here, stated in full one verse before"
+      }
+     ]
+    },
+    "14": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "alam",
+       "g": "have you not"
+      },
+      {
+       "a": "تَرَ",
+       "t": "tara",
+       "g": "seen"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "toward"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "تَوَلَّوْا۟",
+       "t": "tawallaw",
+       "g": "take as allies"
+      },
+      {
+       "a": "قَوْمًا",
+       "t": "qawman",
+       "g": "a people"
+      },
+      {
+       "a": "غَضِبَ",
+       "t": "ghaḍiba",
+       "g": "has become angry"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَيْهِم",
+       "t": "ʿalayhim",
+       "g": "with them"
+      },
+      {
+       "a": "مَّا",
+       "t": "mā",
+       "g": "not"
+      },
+      {
+       "a": "هُم",
+       "t": "hum",
+       "g": "they are"
+      },
+      {
+       "a": "مِّنكُمْ",
+       "t": "minkum",
+       "g": "of you"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "مِنْهُمْ",
+       "t": "minhum",
+       "g": "of them"
+      },
+      {
+       "a": "وَيَحْلِفُونَ",
+       "t": "wa-yaḥlifūna",
+       "g": "and they swear"
+      },
+      {
+       "a": "عَلَى",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "ٱلْكَذِبِ",
+       "t": "al-kadhibi",
+       "g": "the lie"
+      },
+      {
+       "a": "وَهُمْ",
+       "t": "wa-hum",
+       "g": "while they"
+      },
+      {
+       "a": "يَعْلَمُونَ",
+       "t": "yaʿlamūn",
+       "g": "know"
+      }
+     ],
+     "sense": "Turns to a different group, people who have taken as allies a community Allah is angry with. The verse places them nowhere, not counted with the believers and not counted with the people they befriended either, and adds that they swear to a lie knowingly, not out of confusion.",
+     "notes": [
+      {
+       "t": "Exegetes differ on the identity of \"a people with whom Allah is angry,\" most naming the Jews of Medina and some naming hypocrites more broadly; the surah does not name them itself.",
+       "lvl": "debated",
+       "src": "readings recorded by at-Tabari and later exegetes"
+      },
+      {
+       "t": "\"Neither of you nor of them\" repeats the same preposition, minkum and minhum, so the sentence places the group by negation on both sides rather than by any positive description.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A related warning against taking Allah's enemies as allies, there addressed directly to the believers rather than described from outside.",
+       "lvl": "quran",
+       "src": "60:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:1",
+       "why": "the same warning against alliance with Allah's enemies, addressed directly rather than described"
+      },
+      {
+       "ref": "5:80",
+       "why": "people described taking others as allies against the believers, in similar language"
+      }
+     ]
+    },
+    "15": {
+     "words": [
+      {
+       "a": "أَعَدَّ",
+       "t": "aʿadda",
+       "g": "has prepared"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "لَهُمْ",
+       "t": "lahum",
+       "g": "for them"
+      },
+      {
+       "a": "عَذَابًا",
+       "t": "ʿadhāban",
+       "g": "a punishment"
+      },
+      {
+       "a": "شَدِيدًا",
+       "t": "shadīdan",
+       "g": "severe"
+      },
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "indeed they"
+      },
+      {
+       "a": "سَآءَ",
+       "t": "sāʾa",
+       "g": "evil is"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "كَانُوا۟",
+       "t": "kānū",
+       "g": "they used to"
+      },
+      {
+       "a": "يَعْمَلُونَ",
+       "t": "yaʿmalūn",
+       "g": "do"
+      }
+     ],
+     "sense": "States the consequence in the shortest terms the passage has used yet: a severe punishment, already prepared, and a plain judgment on what they have been doing.",
+     "notes": [
+      {
+       "t": "Aʿadda, \"has prepared,\" sets the punishment as already made ready rather than merely threatened, the same certainty of tense the surah opened with in qad samiʿa.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Sāʾa mā kānū yaʿmalūn is a fixed formula the Qur'an repeats after naming a group's wrongdoing elsewhere; it closes a case rather than adding new information to it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "9:9",
+       "why": "the same closing formula used for a different group who trade Allah's signs for a small price"
+      }
+     ]
+    },
+    "16": {
+     "words": [
+      {
+       "a": "ٱتَّخَذُوٓا۟",
+       "t": "ittakhadhū",
+       "g": "they have taken"
+      },
+      {
+       "a": "أَيْمَٰنَهُمْ",
+       "t": "aymānahum",
+       "g": "their oaths"
+      },
+      {
+       "a": "جُنَّةً",
+       "t": "junnatan",
+       "g": "as a cover"
+      },
+      {
+       "a": "فَصَدُّوا۟",
+       "t": "fa-ṣaddū",
+       "g": "so they turned away"
+      },
+      {
+       "a": "عَن",
+       "t": "ʿan",
+       "g": "from"
+      },
+      {
+       "a": "سَبِيلِ",
+       "t": "sabīli",
+       "g": "the way"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "فَلَهُمْ",
+       "t": "fa-lahum",
+       "g": "so for them"
+      },
+      {
+       "a": "عَذَابٌ",
+       "t": "ʿadhābun",
+       "g": "is a punishment"
+      },
+      {
+       "a": "مُّهِينٌ",
+       "t": "muhīn",
+       "g": "humiliating"
+      }
+     ],
+     "sense": "Names the mechanism behind the lie in the verse before: their oaths function as a shield, cover for turning people away from Allah's way while looking innocent under oath. A humiliating punishment answers a humiliation they tried to hide behind.",
+     "notes": [
+      {
+       "t": "Junnah is the ordinary word for a shield carried into battle; the image makes the oath a piece of equipment rather than a statement, used defensively.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same phrase, \"they have taken their oaths as a cover,\" describes the hypocrites there almost word for word.",
+       "lvl": "quran",
+       "src": "63:2"
+      }
+     ],
+     "links": [
+      {
+       "ref": "63:2",
+       "why": "the identical phrase describing the hypocrites' oaths, in the surah named for them"
+      }
+     ]
+    },
+    "17": {
+     "words": [
+      {
+       "a": "لَّن",
+       "t": "lan",
+       "g": "never"
+      },
+      {
+       "a": "تُغْنِىَ",
+       "t": "tughniya",
+       "g": "will avail"
+      },
+      {
+       "a": "عَنْهُمْ",
+       "t": "ʿanhum",
+       "g": "them"
+      },
+      {
+       "a": "أَمْوَٰلُهُمْ",
+       "t": "amwāluhum",
+       "g": "their wealth"
+      },
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "أَوْلَٰدُهُم",
+       "t": "awlāduhum",
+       "g": "their children"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "against"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "شَيْـًٔا",
+       "t": "shayʾan",
+       "g": "in anything"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "أَصْحَٰبُ",
+       "t": "aṣḥābu",
+       "g": "are the companions"
+      },
+      {
+       "a": "ٱلنَّارِ",
+       "t": "an-nāri",
+       "g": "of the Fire"
+      },
+      {
+       "a": "هُمْ",
+       "t": "hum",
+       "g": "they"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "خَٰلِدُونَ",
+       "t": "khālidūn",
+       "g": "abide forever"
+      }
+     ],
+     "sense": "Wealth and children, the two things this kind of person usually relies on, are named and denied any power against Allah. The sentence moves straight from that denial to their fate, named plainly as company kept in the Fire without end.",
+     "notes": [
+      {
+       "t": "Amwāl and awlād, wealth and children, appear together elsewhere in the Qur'an as the pair a person is tested by or leans on; this verse strips both of any use at once.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The identical claim, wealth and children availing nothing against Allah, is made about disbelievers in almost the same words.",
+       "lvl": "quran",
+       "src": "3:10"
+      }
+     ],
+     "links": [
+      {
+       "ref": "3:10",
+       "why": "the same claim about wealth and children in nearly identical wording"
+      }
+     ]
+    },
+    "18": {
+     "words": [
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the day"
+      },
+      {
+       "a": "يَبْعَثُهُمُ",
+       "t": "yabʿathuhumu",
+       "g": "He resurrects them"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "جَمِيعًا",
+       "t": "jamīʿan",
+       "g": "all together"
+      },
+      {
+       "a": "فَيَحْلِفُونَ",
+       "t": "fa-yaḥlifūna",
+       "g": "then they will swear"
+      },
+      {
+       "a": "لَهُۥ",
+       "t": "lahu",
+       "g": "to Him"
+      },
+      {
+       "a": "كَمَا",
+       "t": "kamā",
+       "g": "as"
+      },
+      {
+       "a": "يَحْلِفُونَ",
+       "t": "yaḥlifūna",
+       "g": "they swear"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "to you"
+      },
+      {
+       "a": "وَيَحْسَبُونَ",
+       "t": "wa-yaḥsabūna",
+       "g": "and they think"
+      },
+      {
+       "a": "أَنَّهُمْ",
+       "t": "annahum",
+       "g": "that they"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "are on"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "something"
+      },
+      {
+       "a": "أَلَآ",
+       "t": "alā",
+       "g": "unquestionably"
+      },
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "indeed they"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "they"
+      },
+      {
+       "a": "ٱلْكَٰذِبُونَ",
+       "t": "al-kādhibūn",
+       "g": "are the liars"
+      }
+     ],
+     "sense": "Returns to the resurrection scene named earlier, now filled in with what these people do there. They swear to Allah the way they swore to other people in life, still convinced the habit will hold up as it once did. The verse answers that conviction flatly: they are the liars.",
+     "notes": [
+      {
+       "t": "Alā, translated \"unquestionably,\" is an attention-word the Qur'an uses to mark a flat correction; it interrupts the sentence right before naming them liars.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same scene, oaths sworn before Allah on the resurrection day by people denying they associated partners with Him.",
+       "lvl": "quran",
+       "src": "6:23"
+      },
+      {
+       "t": "The verse repeats the earlier verse's opening line word for word before diverging, so the reader arrives at the same day twice, first as a general warning and now as this group's own moment in it.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:6",
+       "why": "the same day named at the start of both verses, before this one narrows to what these people do in it"
+      },
+      {
+       "ref": "6:23",
+       "why": "the same scene of an oath sworn before Allah on the day of resurrection"
+      }
+     ]
+    },
+    "19": {
+     "words": [
+      {
+       "a": "ٱسْتَحْوَذَ",
+       "t": "istaḥwadha",
+       "g": "has overcome"
+      },
+      {
+       "a": "عَلَيْهِمُ",
+       "t": "ʿalayhimu",
+       "g": "over them"
+      },
+      {
+       "a": "ٱلشَّيْطَٰنُ",
+       "t": "ash-shayṭānu",
+       "g": "Satan"
+      },
+      {
+       "a": "فَأَنسَىٰهُمْ",
+       "t": "fa-ansāhum",
+       "g": "so he made them forget"
+      },
+      {
+       "a": "ذِكْرَ",
+       "t": "dhikra",
+       "g": "the remembrance"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "حِزْبُ",
+       "t": "ḥizbu",
+       "g": "are the party"
+      },
+      {
+       "a": "ٱلشَّيْطَٰنِ",
+       "t": "ash-shayṭāni",
+       "g": "of Satan"
+      },
+      {
+       "a": "أَلَآ",
+       "t": "alā",
+       "g": "unquestionably"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "حِزْبَ",
+       "t": "ḥizba",
+       "g": "the party"
+      },
+      {
+       "a": "ٱلشَّيْطَٰنِ",
+       "t": "ash-shayṭāni",
+       "g": "of Satan"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "they"
+      },
+      {
+       "a": "ٱلْخَٰسِرُونَ",
+       "t": "al-khāsirūn",
+       "g": "are the losers"
+      }
+     ],
+     "sense": "Names what stands behind their forgetting: Satan has taken hold of them and pushed the remembrance of Allah out of reach. The verse gives them a name, party of Satan, and answers it with a verdict on that party as a whole, they are the losers, whatever they think they hold onto.",
+     "notes": [
+      {
+       "t": "Istaḥwadha ʿalā carries the sense of a full takeover, one party gaining complete mastery over another; the verb is stronger than ordinary influence.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "\"They are the enemy, so beware of them,\" a companion description of the same hypocrite party elsewhere in the Qur'an.",
+       "lvl": "quran",
+       "src": "63:4"
+      },
+      {
+       "t": "Ḥizb ash-shayṭān stands in direct opposition to a phrase the surah closes on at its very end, ḥizb Allāh, the party of Allah; the two names frame the second half of the surah.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:22",
+       "why": "the opposite party named at the close of the surah, the phrase this verse's naming sets up"
+      },
+      {
+       "ref": "63:4",
+       "why": "another description of the same hypocrite party as a standing enemy"
+      }
+     ]
+    },
+    "20": {
+     "words": [
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "يُحَآدُّونَ",
+       "t": "yuḥāddūna",
+       "g": "oppose"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥٓ",
+       "t": "wa-rasūlahu",
+       "g": "and His messenger"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "are among"
+      },
+      {
+       "a": "ٱلْأَذَلِّينَ",
+       "t": "al-adhallīn",
+       "g": "the most humiliated"
+      }
+     ],
+     "sense": "Repeats the verb from the earlier verse naming the same opposition and gives it a final ranking. Standing against Allah and His messenger is placed at the bottom, among the most humiliated, with no further description attached.",
+     "notes": [
+      {
+       "t": "Al-adhallīn is a superlative, not the ordinary word for lowly; the verse claims the extreme of the category rather than a place within it.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same charge, the same verb, opened the passage the surah has been building since; this verse gives it its final ranking.",
+       "lvl": "quran",
+       "src": "58:5"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:5",
+       "why": "the earlier verse naming the same charge, disgraced there rather than ranked lowest"
+      }
+     ]
+    },
+    "21": {
+     "words": [
+      {
+       "a": "كَتَبَ",
+       "t": "kataba",
+       "g": "has decreed"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "لَأَغْلِبَنَّ",
+       "t": "la-aghlibanna",
+       "g": "surely I will overcome"
+      },
+      {
+       "a": "أَنَا۠",
+       "t": "anā",
+       "g": "I"
+      },
+      {
+       "a": "وَرُسُلِىٓ",
+       "t": "wa-rusulī",
+       "g": "and My messengers"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "قَوِىٌّ",
+       "t": "qawiyyun",
+       "g": "All-Strong"
+      },
+      {
+       "a": "عَزِيزٌ",
+       "t": "ʿazīz",
+       "g": "All-Mighty"
+      }
+     ],
+     "sense": "States the decree behind the ranking just given, in Allah's own words rather than reported speech. Victory belongs to Allah and His messengers as a settled matter, not a hope, and the reason given is what Allah is in Himself, strong, and mighty.",
+     "notes": [
+      {
+       "t": "The verse shifts into direct speech, \"I will surely overcome,\" the only first-person quotation of Allah's decree in the surah, marking the claim as settled rather than described.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The identical promise, \"Our soldiers will be the victors,\" is stated as a general law near the end of As-Saffat.",
+       "lvl": "quran",
+       "src": "37:173"
+      },
+      {
+       "t": "Qawiyyun and ʿazīz, strong and mighty, are given as the reason for the decree rather than as separate praise, the cause named right after the claim.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "37:173",
+       "why": "the same promise of victory stated as a general law"
+      },
+      {
+       "ref": "5:56",
+       "why": "the party of Allah named as the victorious ones, the same theme this surah closes on"
+      }
+     ]
+    },
+    "22": {
+     "words": [
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "تَجِدُ",
+       "t": "tajidu",
+       "g": "you will find"
+      },
+      {
+       "a": "قَوْمًا",
+       "t": "qawman",
+       "g": "a people"
+      },
+      {
+       "a": "يُؤْمِنُونَ",
+       "t": "yuʾminūna",
+       "g": "who believe"
+      },
+      {
+       "a": "بِٱللَّهِ",
+       "t": "billāhi",
+       "g": "in Allah"
+      },
+      {
+       "a": "وَٱلْيَوْمِ",
+       "t": "wa-l-yawmi",
+       "g": "and the Day"
+      },
+      {
+       "a": "ٱلْءَاخِرِ",
+       "t": "al-ākhiri",
+       "g": "the Last"
+      },
+      {
+       "a": "يُوَآدُّونَ",
+       "t": "yuwāddūna",
+       "g": "loving"
+      },
+      {
+       "a": "مَنْ",
+       "t": "man",
+       "g": "one who"
+      },
+      {
+       "a": "حَآدَّ",
+       "t": "ḥādda",
+       "g": "opposes"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥ",
+       "t": "wa-rasūlahu",
+       "g": "and His messenger"
+      },
+      {
+       "a": "وَلَوْ",
+       "t": "wa-law",
+       "g": "even if"
+      },
+      {
+       "a": "كَانُوٓا۟",
+       "t": "kānū",
+       "g": "they were"
+      },
+      {
+       "a": "ءَابَآءَهُمْ",
+       "t": "ābāʾahum",
+       "g": "their fathers"
+      },
+      {
+       "a": "أَوْ",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "أَبْنَآءَهُمْ",
+       "t": "abnāʾahum",
+       "g": "their sons"
+      },
+      {
+       "a": "أَوْ",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "إِخْوَٰنَهُمْ",
+       "t": "ikhwānahum",
+       "g": "their brothers"
+      },
+      {
+       "a": "أَوْ",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "عَشِيرَتَهُمْ",
+       "t": "ʿashīratahum",
+       "g": "their clan"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "كَتَبَ",
+       "t": "kataba",
+       "g": "He has inscribed"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "قُلُوبِهِمُ",
+       "t": "qulūbihimu",
+       "g": "their hearts"
+      },
+      {
+       "a": "ٱلْإِيمَٰنَ",
+       "t": "al-īmāna",
+       "g": "faith"
+      },
+      {
+       "a": "وَأَيَّدَهُم",
+       "t": "wa-ayyadahum",
+       "g": "and strengthened them"
+      },
+      {
+       "a": "بِرُوحٍ",
+       "t": "birūḥin",
+       "g": "with a spirit"
+      },
+      {
+       "a": "مِّنْهُ",
+       "t": "minhu",
+       "g": "from Him"
+      },
+      {
+       "a": "وَيُدْخِلُهُمْ",
+       "t": "wa-yudkhiluhum",
+       "g": "and He will admit them"
+      },
+      {
+       "a": "جَنَّٰتٍ",
+       "t": "jannātin",
+       "g": "to gardens"
+      },
+      {
+       "a": "تَجْرِى",
+       "t": "tajrī",
+       "g": "flowing"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "تَحْتِهَا",
+       "t": "taḥtihā",
+       "g": "underneath them"
+      },
+      {
+       "a": "ٱلْأَنْهَٰرُ",
+       "t": "al-anhāru",
+       "g": "the rivers"
+      },
+      {
+       "a": "خَٰلِدِينَ",
+       "t": "khālidīna",
+       "g": "abide forever"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "رَضِىَ",
+       "t": "raḍiya",
+       "g": "is pleased"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَنْهُمْ",
+       "t": "ʿanhum",
+       "g": "with them"
+      },
+      {
+       "a": "وَرَضُوا۟",
+       "t": "wa-raḍū",
+       "g": "and they are pleased"
+      },
+      {
+       "a": "عَنْهُ",
+       "t": "ʿanhu",
+       "g": "with Him"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "حِزْبُ",
+       "t": "ḥizbu",
+       "g": "are the party"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "أَلَآ",
+       "t": "alā",
+       "g": "unquestionably"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "حِزْبَ",
+       "t": "ḥizba",
+       "g": "the party"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "they"
+      },
+      {
+       "a": "ٱلْمُفْلِحُونَ",
+       "t": "al-mufliḥūn",
+       "g": "are the successful"
+      }
+     ],
+     "sense": "Closes the surah on the opposite party from the one just named. Real belief in Allah and the last day rules out affection for anyone set against Allah and His messenger, and the verse insists on this even against the strongest ties a person has, parents, children, siblings, clan. What is given in return is named in full: faith written into the heart, strength from a spirit granted by Allah, gardens with rivers, and a mutual satisfaction between Allah and them.",
+     "notes": [
+      {
+       "t": "The verse lists four relations in ascending scope, father, son, brother, clan, the same ties Arabian kinship loyalty ran on, named to be set aside rather than dismissed as unimportant.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same list of family ties is named as something that must not be loved more than Allah and His messenger and struggle in His way.",
+       "lvl": "quran",
+       "src": "9:24"
+      },
+      {
+       "t": "A companion instruction not to take Allah's enemies and your own as allies out of affection, addressed to the believers directly.",
+       "lvl": "quran",
+       "src": "60:1"
+      },
+      {
+       "t": "Ḥizb Allāh closes the surah answering ḥizb ash-shayṭān from the earlier verse; the same sentence shape, alā inna ... humu, is used for both, so the surah's two possible endings are set in matching frames.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:19",
+       "why": "the opposite party named earlier, in the same closing sentence shape"
+      },
+      {
+       "ref": "9:24",
+       "why": "the same four kinship ties named as what must not outweigh Allah and His messenger"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 59,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "سَبَّحَ",
+       "t": "sabbaḥa",
+       "g": "glorifies"
+      },
+      {
+       "a": "لِلَّهِ",
+       "t": "lillāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "is in"
+      },
+      {
+       "a": "ٱلسَّمَٰوَٰتِ",
+       "t": "as-samāwāti",
+       "g": "the heavens"
+      },
+      {
+       "a": "وَمَا",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "is in"
+      },
+      {
+       "a": "ٱلْأَرْضِ",
+       "t": "al-arḍi",
+       "g": "the earth"
+      },
+      {
+       "a": "وَهُوَ",
+       "t": "wa-huwa",
+       "g": "and He"
+      },
+      {
+       "a": "ٱلْعَزِيزُ",
+       "t": "al-ʿazīzu",
+       "g": "the Mighty"
+      },
+      {
+       "a": "ٱلْحَكِيمُ",
+       "t": "al-ḥakīm",
+       "g": "the Wise"
+      }
+     ],
+     "sense": "The surah opens with a verb already glorifying before any subject is named: everything in the heavens and everything in the earth is doing it, without exception. The declaration precedes the surah's long account of a specific event, setting what follows inside a frame of Allah's power and wisdom. The same sentence closes the surah at its last verse.",
+     "notes": [
+      {
+       "t": "The verb is in the perfect tense, sabbaḥa rather than yusabbiḥu, so the glorifying is stated as a settled fact rather than an ongoing action described as it happens.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same sentence, word for word, opens the surah immediately before this one.",
+       "lvl": "quran",
+       "src": "57:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "57:1",
+       "why": "the identical opening sentence, one surah earlier"
+      },
+      {
+       "ref": "59:24",
+       "why": "the surah closes on the same pairing of names it opens on"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱلَّذِىٓ",
+       "t": "alladhī",
+       "g": "is the one who"
+      },
+      {
+       "a": "أَخْرَجَ",
+       "t": "akhraja",
+       "g": "drove out"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "كَفَرُوا۟",
+       "t": "kafarū",
+       "g": "disbelieved"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "among"
+      },
+      {
+       "a": "أَهْلِ",
+       "t": "ahli",
+       "g": "the people"
+      },
+      {
+       "a": "ٱلْكِتَٰبِ",
+       "t": "al-kitābi",
+       "g": "of the Book"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "دِيَٰرِهِمْ",
+       "t": "diyārihim",
+       "g": "their homes"
+      },
+      {
+       "a": "لِأَوَّلِ",
+       "t": "li-awwali",
+       "g": "at the first"
+      },
+      {
+       "a": "ٱلْحَشْرِ",
+       "t": "al-ḥashri",
+       "g": "gathering"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "not"
+      },
+      {
+       "a": "ظَنَنتُمْ",
+       "t": "ẓanantum",
+       "g": "did you think"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "يَخْرُجُوا۟",
+       "t": "yakhrujū",
+       "g": "they would leave"
+      },
+      {
+       "a": "وَظَنُّوٓا۟",
+       "t": "wa-ẓannū",
+       "g": "and they thought"
+      },
+      {
+       "a": "أَنَّهُم",
+       "t": "annahum",
+       "g": "that they"
+      },
+      {
+       "a": "مَّانِعَتُهُمْ",
+       "t": "māniʿatuhum",
+       "g": "would protect them"
+      },
+      {
+       "a": "حُصُونُهُم",
+       "t": "ḥuṣūnuhum",
+       "g": "their fortresses"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "from"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "فَأَتَىٰهُمُ",
+       "t": "fa-atāhumu",
+       "g": "but came upon them"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "حَيْثُ",
+       "t": "ḥaythu",
+       "g": "where"
+      },
+      {
+       "a": "لَمْ",
+       "t": "lam",
+       "g": "not"
+      },
+      {
+       "a": "يَحْتَسِبُوا۟",
+       "t": "yaḥtasibū",
+       "g": "they had reckoned"
+      },
+      {
+       "a": "وَقَذَفَ",
+       "t": "wa-qadhafa",
+       "g": "and He cast"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "into"
+      },
+      {
+       "a": "قُلُوبِهِمُ",
+       "t": "qulūbihimu",
+       "g": "their hearts"
+      },
+      {
+       "a": "ٱلرُّعْبَ",
+       "t": "ar-ruʿba",
+       "g": "terror"
+      },
+      {
+       "a": "يُخْرِبُونَ",
+       "t": "yukhribūna",
+       "g": "they wreck"
+      },
+      {
+       "a": "بُيُوتَهُم",
+       "t": "buyūtahum",
+       "g": "their houses"
+      },
+      {
+       "a": "بِأَيْدِيهِمْ",
+       "t": "bi-aydīhim",
+       "g": "with their own hands"
+      },
+      {
+       "a": "وَأَيْدِى",
+       "t": "wa-aydī",
+       "g": "and the hands"
+      },
+      {
+       "a": "ٱلْمُؤْمِنِينَ",
+       "t": "al-mu'minīna",
+       "g": "of the believers"
+      },
+      {
+       "a": "فَٱعْتَبِرُوا۟",
+       "t": "fa-ʿtabirū",
+       "g": "so take a lesson"
+      },
+      {
+       "a": "يَٰٓأُو۟لِى",
+       "t": "yāʾulī",
+       "g": "O you possessors"
+      },
+      {
+       "a": "ٱلْأَبْصَٰرِ",
+       "t": "al-abṣār",
+       "g": "of sight"
+      }
+     ],
+     "sense": "The verse names the event the surah is built around: the exile of Banu an-Nadir from Medina, called here the first gathering because a second and larger gathering of the People of the Book out of Arabia was still to come. Two expectations collapse in one sentence, the believers did not expect the exile, and the tribe did not expect their own fortresses to fail them. The houses come down by both sides' hands, theirs and the believers', and the verse ends by naming the reader directly, calling on whoever can see to look at what happened.",
+     "notes": [
+      {
+       "t": "Al-ḥashr, the gathering, is the surah's name and also names the Day of Judgment elsewhere in the Qur'an; using it here for a tribe's expulsion from Medina reads the event as a small preview of that larger gathering.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same collapse, fortresses no defense, terror cast into hearts, is described again for Banu Qurayza, a different Medinan Jewish tribe, later in the same year.",
+       "lvl": "quran",
+       "src": "33:26"
+      },
+      {
+       "t": "The verse closes by naming its audience directly, ulī al-abṣār, possessors of sight, the only imperative addressed to the reader in the whole account.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:8",
+       "why": "the same word for their expulsion from their homes, used again of the emigrants who suffered it themselves"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "وَلَوْلَآ",
+       "t": "wa-lawlā",
+       "g": "and had it not been"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "كَتَبَ",
+       "t": "kataba",
+       "g": "decreed"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَيْهِمُ",
+       "t": "ʿalayhimu",
+       "g": "for them"
+      },
+      {
+       "a": "ٱلْجَلَآءَ",
+       "t": "al-jalāʾa",
+       "g": "exile"
+      },
+      {
+       "a": "لَعَذَّبَهُمْ",
+       "t": "laʿadhdhabahum",
+       "g": "He would have punished them"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلدُّنْيَا",
+       "t": "ad-dunyā",
+       "g": "this world"
+      },
+      {
+       "a": "وَلَهُمْ",
+       "t": "walahum",
+       "g": "and for them"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلْءَاخِرَةِ",
+       "t": "al-ākhirati",
+       "g": "the hereafter"
+      },
+      {
+       "a": "عَذَابُ",
+       "t": "ʿadhābu",
+       "g": "is the punishment"
+      },
+      {
+       "a": "ٱلنَّارِ",
+       "t": "an-nār",
+       "g": "of the Fire"
+      }
+     ],
+     "sense": "The exile counts as mercy by comparison. Had Allah not already written banishment as their fate, a harsher punishment would have met them in this life, and the punishment of the Fire in the next one still stands regardless. The verse reframes what looked like a military outcome as something decreed beforehand.",
+     "notes": [
+      {
+       "t": "Al-jalāʾ, exile, is a civil term for leaving one's land, distinct from the words the Qur'an uses for war or killing; the verse insists this outcome was a decree, not simply the result of a siege.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same pairing is used elsewhere: disgrace in this world matched with a great punishment in the next, there for those who bar people from Allah's mosques.",
+       "lvl": "quran",
+       "src": "2:114"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:114",
+       "why": "the same pairing, disgrace in this world alongside punishment in the next"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "بِأَنَّهُمْ",
+       "t": "bi-annahum",
+       "g": "is because they"
+      },
+      {
+       "a": "شَآقُّوا۟",
+       "t": "shāqqū",
+       "g": "opposed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥ",
+       "t": "wa-rasūlahu",
+       "g": "and His Messenger"
+      },
+      {
+       "a": "وَمَن",
+       "t": "wa-man",
+       "g": "and whoever"
+      },
+      {
+       "a": "يُشَآقِّ",
+       "t": "yushāqqi",
+       "g": "opposes"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "فَإِنَّ",
+       "t": "fa-inna",
+       "g": "then indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "شَدِيدُ",
+       "t": "shadīdu",
+       "g": "is severe"
+      },
+      {
+       "a": "ٱلْعِقَابِ",
+       "t": "al-ʿiqāb",
+       "g": "in punishment"
+      }
+     ],
+     "sense": "The verse names the cause behind what has just been described: they set themselves against Allah and His Messenger, and that opposition, not merely the fighting, is what brought the outcome. The clause then widens from this one tribe to a general rule that applies to anyone in the same position.",
+     "notes": [
+      {
+       "t": "Shāqqa is to put oneself on the opposite side, shiqq, of someone, a term for a standing rift rather than a single act of disobedience.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same sentence, word for word, appears earlier in the Qur'an about a different confrontation, the disbelievers at Badr.",
+       "lvl": "quran",
+       "src": "8:13"
+      }
+     ],
+     "links": [
+      {
+       "ref": "8:13",
+       "why": "the identical sentence used earlier of the disbelievers at Badr"
+      },
+      {
+       "ref": "59:7",
+       "why": "the same closing phrase, severe in punishment, returns three verses later"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "whatever"
+      },
+      {
+       "a": "قَطَعْتُم",
+       "t": "qaṭaʿtum",
+       "g": "you cut down"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "of"
+      },
+      {
+       "a": "لِّينَةٍ",
+       "t": "līnatin",
+       "g": "palm tree"
+      },
+      {
+       "a": "أَوْ",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "تَرَكْتُمُوهَا",
+       "t": "taraktumūhā",
+       "g": "you left it"
+      },
+      {
+       "a": "قَآئِمَةً",
+       "t": "qāʾimatan",
+       "g": "standing"
+      },
+      {
+       "a": "عَلَىٰٓ",
+       "t": "ʿalā",
+       "g": "on"
+      },
+      {
+       "a": "أُصُولِهَا",
+       "t": "uṣūlihā",
+       "g": "its roots"
+      },
+      {
+       "a": "فَبِإِذْنِ",
+       "t": "fa-biʾidhni",
+       "g": "was by permission"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "وَلِيُخْزِىَ",
+       "t": "wa-liyukhziya",
+       "g": "and so He would disgrace"
+      },
+      {
+       "a": "ٱلْفَٰسِقِينَ",
+       "t": "al-fāsiqīn",
+       "g": "the defiantly disobedient"
+      }
+     ],
+     "sense": "The verse settles a question the siege had raised: cutting down productive palm trees was normally forbidden, so felling some of Banu an-Nadir's orchard while leaving the rest standing needed defending. Both choices, cutting and leaving, are placed under the same permission, so neither was a lapse. The disgrace named at the end belongs to the tribe, not to whoever felled the trees.",
+     "notes": [
+      {
+       "t": "Bukhari and Muslim record that the Prophet ﷺ ordered some palm trees of Banu an-Nadir burned and cut during the siege, which the besieged tribe protested as corruption; this verse answers that objection.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, Book of Maghāzī, from Ibn ʿUmar"
+      },
+      {
+       "t": "Līna is thought by some commentators to name a particular variety of date palm apart from the choicest kind, ʿajwa, and by others to cover palm trees in general; the exegetes differ on its exact scope.",
+       "lvl": "debated",
+       "src": "at-Tabari records both readings"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:2",
+       "why": "the same siege this verse's detail belongs to, narrated two verses earlier"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and whatever"
+      },
+      {
+       "a": "أَفَآءَ",
+       "t": "afāʾa",
+       "g": "restored"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "to"
+      },
+      {
+       "a": "رَسُولِهِۦ",
+       "t": "rasūlihi",
+       "g": "His Messenger"
+      },
+      {
+       "a": "مِنْهُمْ",
+       "t": "minhum",
+       "g": "from them"
+      },
+      {
+       "a": "فَمَآ",
+       "t": "fa-mā",
+       "g": "so not"
+      },
+      {
+       "a": "أَوْجَفْتُمْ",
+       "t": "awjaftum",
+       "g": "did you spur"
+      },
+      {
+       "a": "عَلَيْهِ",
+       "t": "ʿalayhi",
+       "g": "for it"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "any"
+      },
+      {
+       "a": "خَيْلٍ",
+       "t": "khaylin",
+       "g": "horse"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "or"
+      },
+      {
+       "a": "رِكَابٍ",
+       "t": "rikābin",
+       "g": "camel"
+      },
+      {
+       "a": "وَلَٰكِنَّ",
+       "t": "wa-lākinna",
+       "g": "but"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "يُسَلِّطُ",
+       "t": "yusalliṭu",
+       "g": "gives power"
+      },
+      {
+       "a": "رُسُلَهُۥ",
+       "t": "rusulahu",
+       "g": "to His messengers"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "over"
+      },
+      {
+       "a": "مَن",
+       "t": "man",
+       "g": "whom"
+      },
+      {
+       "a": "يَشَآءُ",
+       "t": "yashāʾu",
+       "g": "He wills"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "over"
+      },
+      {
+       "a": "كُلِّ",
+       "t": "kulli",
+       "g": "every"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "thing"
+      },
+      {
+       "a": "قَدِيرٌ",
+       "t": "qadīr",
+       "g": "is able"
+      }
+     ],
+     "sense": "The verse settles who the abandoned property of Banu an-Nadir belongs to. It came to the Prophet ﷺ without a battle, no cavalry charge, no camel drive, so the normal division of war spoils among the fighters does not apply, and the whole of it goes to him to distribute as fayʾ. The reason given is not tactics but Allah granting authority over whomever He wills.",
+     "notes": [
+      {
+       "t": "Fayʾ, from a root meaning to return, names property that comes to the Muslims without fighting, kept distinct throughout the surah from ghanīma, spoils taken in battle.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The Qur'an settles ownership of battle spoils the same way, as belonging to Allah and the Messenger to distribute, at the opening of Surah al-Anfal.",
+       "lvl": "quran",
+       "src": "8:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:7",
+       "why": "the distribution of this same fayʾ, spelled out by name in the next verse"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "مَّآ",
+       "t": "mā",
+       "g": "whatever"
+      },
+      {
+       "a": "أَفَآءَ",
+       "t": "afāʾa",
+       "g": "restored"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "to"
+      },
+      {
+       "a": "رَسُولِهِۦ",
+       "t": "rasūlihi",
+       "g": "His Messenger"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "أَهْلِ",
+       "t": "ahli",
+       "g": "the people"
+      },
+      {
+       "a": "ٱلْقُرَىٰ",
+       "t": "al-qurā",
+       "g": "of the towns"
+      },
+      {
+       "a": "فَلِلَّهِ",
+       "t": "fa-lillahi",
+       "g": "is for Allah"
+      },
+      {
+       "a": "وَلِلرَّسُولِ",
+       "t": "wa-lilrrasūli",
+       "g": "and the Messenger"
+      },
+      {
+       "a": "وَلِذِى",
+       "t": "wa-lidhī",
+       "g": "and for those"
+      },
+      {
+       "a": "ٱلْقُرْبَىٰ",
+       "t": "al-qurbā",
+       "g": "near of kin"
+      },
+      {
+       "a": "وَٱلْيَتَٰمَىٰ",
+       "t": "wal-yatāmā",
+       "g": "and the orphans"
+      },
+      {
+       "a": "وَٱلْمَسَٰكِينِ",
+       "t": "wal-masākīni",
+       "g": "and the needy"
+      },
+      {
+       "a": "وَٱبْنِ",
+       "t": "wa-bni",
+       "g": "and the son"
+      },
+      {
+       "a": "ٱلسَّبِيلِ",
+       "t": "as-sabīli",
+       "g": "of the road"
+      },
+      {
+       "a": "كَىْ",
+       "t": "kay",
+       "g": "so that"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَكُونَ",
+       "t": "yakūna",
+       "g": "it be"
+      },
+      {
+       "a": "دُولَةً",
+       "t": "dūlatan",
+       "g": "circulating wealth"
+      },
+      {
+       "a": "بَيْنَ",
+       "t": "bayna",
+       "g": "among"
+      },
+      {
+       "a": "ٱلْأَغْنِيَآءِ",
+       "t": "al-aghniyāʾi",
+       "g": "the rich"
+      },
+      {
+       "a": "مِنكُمْ",
+       "t": "minkum",
+       "g": "of you"
+      },
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and whatever"
+      },
+      {
+       "a": "ءَاتَىٰكُمُ",
+       "t": "ātākumu",
+       "g": "gives you"
+      },
+      {
+       "a": "ٱلرَّسُولُ",
+       "t": "ar-rasūlu",
+       "g": "the Messenger"
+      },
+      {
+       "a": "فَخُذُوهُ",
+       "t": "fa-khudhūhu",
+       "g": "then take it"
+      },
+      {
+       "a": "وَمَا",
+       "t": "wa-mā",
+       "g": "and whatever"
+      },
+      {
+       "a": "نَهَىٰكُمْ",
+       "t": "nahākum",
+       "g": "he forbids you"
+      },
+      {
+       "a": "عَنْهُ",
+       "t": "ʿanhu",
+       "g": "from it"
+      },
+      {
+       "a": "فَٱنتَهُوا۟",
+       "t": "fa-ntahū",
+       "g": "then refrain"
+      },
+      {
+       "a": "وَٱتَّقُوا۟",
+       "t": "wa-taqū",
+       "g": "and fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "شَدِيدُ",
+       "t": "shadīdu",
+       "g": "is severe"
+      },
+      {
+       "a": "ٱلْعِقَابِ",
+       "t": "al-ʿiqāb",
+       "g": "in punishment"
+      }
+     ],
+     "sense": "The rule widens from one tribe's abandoned land to fayʾ in general, taken from any town without a fight, and the distribution is fixed by name, Allah and the Messenger, relatives, orphans, the needy, the traveler, rather than left to the strongest claim. The stated purpose is that wealth not become dūla, a thing that only turns over among people already rich. The verse then generalizes further, past property, into a rule about obeying whatever the Messenger commands or forbids.",
+     "notes": [
+      {
+       "t": "Dūla shares its root with the modern word for a state, dawla; both come from a verb for turning something over from one hand to another.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The list of recipients here, Allah, the Messenger, near relatives, orphans, the needy, the traveler, matches word for word the list the Qur'an gives for the one-fifth share of battle spoils.",
+       "lvl": "quran",
+       "src": "8:41"
+      },
+      {
+       "t": "This is one of the few places the Qur'an states an economic purpose directly, that wealth not become something that only circulates among those already rich.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "8:41",
+       "why": "the identical recipient list, Allah, the Messenger, kin, orphans, the needy, the traveler, given there for a fifth of battle spoils"
+      },
+      {
+       "ref": "4:59",
+       "why": "the parallel command to obey, paired there with obeying Allah and those in authority"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "لِلْفُقَرَآءِ",
+       "t": "lilfuqarāʾi",
+       "g": "for the poor"
+      },
+      {
+       "a": "ٱلْمُهَٰجِرِينَ",
+       "t": "al-muhājirīna",
+       "g": "emigrants"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "أُخْرِجُوا۟",
+       "t": "ukhrijū",
+       "g": "were driven out"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "دِيَٰرِهِمْ",
+       "t": "diyārihim",
+       "g": "their homes"
+      },
+      {
+       "a": "وَأَمْوَٰلِهِمْ",
+       "t": "wa-amwālihim",
+       "g": "and their properties"
+      },
+      {
+       "a": "يَبْتَغُونَ",
+       "t": "yabtaghūna",
+       "g": "seeking"
+      },
+      {
+       "a": "فَضْلًا",
+       "t": "faḍlan",
+       "g": "bounty"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "from"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرِضْوَٰنًا",
+       "t": "wa-riḍwānan",
+       "g": "and approval"
+      },
+      {
+       "a": "وَيَنصُرُونَ",
+       "t": "wa-yanṣurūna",
+       "g": "and supporting"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَرَسُولَهُۥٓ",
+       "t": "wa-rasūlahu",
+       "g": "and His Messenger"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "are"
+      },
+      {
+       "a": "ٱلصَّٰدِقُونَ",
+       "t": "aṣ-ṣādiqūn",
+       "g": "the truthful"
+      }
+     ],
+     "sense": "The share for Allah, the Messenger, and the needy named in the previous verse is now identified with a named group: the poor emigrants who left both home and property behind in Mecca. Their motive is given as bounty from Allah and His approval, alongside actively supporting Allah and His Messenger, and the verse closes by calling them, not just believers, but the truthful, people whose claim matches their conduct.",
+     "notes": [
+      {
+       "t": "Aṣ-ṣādiqūn, the truthful, is used here as a settled title rather than a description of one act, distinguishing a sincere claim to faith from the false one the surah goes on to describe in the hypocrites.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same combination of emigration and active support for the cause with wealth and person is set out at length earlier, in the surah about the spoils of Badr.",
+       "lvl": "quran",
+       "src": "8:72"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:9",
+       "why": "the Medinan believers who housed them, described in the next verse with the same closing pattern, those, they, are"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "وَٱلَّذِينَ",
+       "t": "walladhīna",
+       "g": "and those who"
+      },
+      {
+       "a": "تَبَوَّءُو",
+       "t": "tabawwaʾū",
+       "g": "settled"
+      },
+      {
+       "a": "ٱلدَّارَ",
+       "t": "ad-dāra",
+       "g": "the home"
+      },
+      {
+       "a": "وَٱلْإِيمَٰنَ",
+       "t": "wal-īmāna",
+       "g": "and the faith"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "before"
+      },
+      {
+       "a": "قَبْلِهِمْ",
+       "t": "qablihim",
+       "g": "them"
+      },
+      {
+       "a": "يُحِبُّونَ",
+       "t": "yuḥibbūna",
+       "g": "they love"
+      },
+      {
+       "a": "مَنْ",
+       "t": "man",
+       "g": "whoever"
+      },
+      {
+       "a": "هَاجَرَ",
+       "t": "hājara",
+       "g": "emigrated"
+      },
+      {
+       "a": "إِلَيْهِمْ",
+       "t": "ilayhim",
+       "g": "to them"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَجِدُونَ",
+       "t": "yajidūna",
+       "g": "they find"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "صُدُورِهِمْ",
+       "t": "ṣudūrihim",
+       "g": "their breasts"
+      },
+      {
+       "a": "حَاجَةً",
+       "t": "ḥājatan",
+       "g": "any need"
+      },
+      {
+       "a": "مِّمَّآ",
+       "t": "mimmā",
+       "g": "for what"
+      },
+      {
+       "a": "أُوتُوا۟",
+       "t": "ūtū",
+       "g": "they were given"
+      },
+      {
+       "a": "وَيُؤْثِرُونَ",
+       "t": "wa-yuʾthirūna",
+       "g": "and they prefer"
+      },
+      {
+       "a": "عَلَىٰٓ",
+       "t": "ʿalā",
+       "g": "over"
+      },
+      {
+       "a": "أَنفُسِهِمْ",
+       "t": "anfusihim",
+       "g": "themselves"
+      },
+      {
+       "a": "وَلَوْ",
+       "t": "wa-law",
+       "g": "even if"
+      },
+      {
+       "a": "كَانَ",
+       "t": "kāna",
+       "g": "there was"
+      },
+      {
+       "a": "بِهِمْ",
+       "t": "bihim",
+       "g": "with them"
+      },
+      {
+       "a": "خَصَاصَةٌ",
+       "t": "khaṣāṣatun",
+       "g": "need"
+      },
+      {
+       "a": "وَمَن",
+       "t": "wa-man",
+       "g": "and whoever"
+      },
+      {
+       "a": "يُوقَ",
+       "t": "yūqa",
+       "g": "is guarded"
+      },
+      {
+       "a": "شُحَّ",
+       "t": "shuḥḥa",
+       "g": "from the stinginess"
+      },
+      {
+       "a": "نَفْسِهِۦ",
+       "t": "nafsihi",
+       "g": "of his own soul"
+      },
+      {
+       "a": "فَأُو۟لَٰٓئِكَ",
+       "t": "fa-ulāʾika",
+       "g": "then those"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "are"
+      },
+      {
+       "a": "ٱلْمُفْلِحُونَ",
+       "t": "al-mufliḥūn",
+       "g": "the successful"
+      }
+     ],
+     "sense": "This is the Ansar, the Medinans who had already made the city their home and held faith before the emigrants arrived. Their description moves through love of the newcomers, no resentment at what the newcomers were given, and preference for them over themselves even while in need. The verse ends on a general principle detached from the historical scene: whoever is spared his own soul's stinginess is among those who succeed.",
+     "notes": [
+      {
+       "t": "Bukhari and Muslim record that an Ansari host gave a hungry guest the only food in the house, feeding him in the dark so he would not see there was nothing left for the family, and that this verse was revealed about what he and his wife did.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, from Abū Hurayrah"
+      },
+      {
+       "t": "Tabawwaʾū is the verb for pitching a tent or claiming a dwelling place, used here for the Ansar's faith as much as their city, as though belief itself had become a home they had already moved into.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:8",
+       "why": "the emigrants this verse's love and preference are directed toward, named just before"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "وَٱلَّذِينَ",
+       "t": "walladhīna",
+       "g": "and those who"
+      },
+      {
+       "a": "جَآءُو",
+       "t": "jāʾū",
+       "g": "came"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "after"
+      },
+      {
+       "a": "بَعْدِهِمْ",
+       "t": "baʿdihim",
+       "g": "them"
+      },
+      {
+       "a": "يَقُولُونَ",
+       "t": "yaqūlūna",
+       "g": "saying"
+      },
+      {
+       "a": "رَبَّنَا",
+       "t": "rabbanā",
+       "g": "our Lord"
+      },
+      {
+       "a": "ٱغْفِرْ",
+       "t": "ighfir",
+       "g": "forgive"
+      },
+      {
+       "a": "لَنَا",
+       "t": "lanā",
+       "g": "us"
+      },
+      {
+       "a": "وَلِإِخْوَٰنِنَا",
+       "t": "wa-liʾikhwāninā",
+       "g": "and our brothers"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "سَبَقُونَا",
+       "t": "sabaqūnā",
+       "g": "preceded us"
+      },
+      {
+       "a": "بِٱلْإِيمَٰنِ",
+       "t": "bil-īmāni",
+       "g": "in faith"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "تَجْعَلْ",
+       "t": "tajʿal",
+       "g": "place"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "قُلُوبِنَا",
+       "t": "qulūbinā",
+       "g": "our hearts"
+      },
+      {
+       "a": "غِلًّا",
+       "t": "ghillan",
+       "g": "any resentment"
+      },
+      {
+       "a": "لِّلَّذِينَ",
+       "t": "lidh-dhīna",
+       "g": "toward those who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believed"
+      },
+      {
+       "a": "رَبَّنَآ",
+       "t": "rabbanā",
+       "g": "our Lord"
+      },
+      {
+       "a": "إِنَّكَ",
+       "t": "innaka",
+       "g": "indeed You"
+      },
+      {
+       "a": "رَءُوفٌ",
+       "t": "raʾūfun",
+       "g": "are Kind"
+      },
+      {
+       "a": "رَّحِيمٌ",
+       "t": "raḥīm",
+       "g": "and Merciful"
+      }
+     ],
+     "sense": "A third group is added to the emigrants and the Ansar: everyone who comes after them, defined only by a prayer rather than a deed. The prayer asks forgiveness for themselves and for those who believed earlier, and asks that no resentment settle in the heart toward believers generally. The verse gives later generations a place in the same list by words alone.",
+     "notes": [
+      {
+       "t": "Ghill is resentment that stays hidden below the surface rather than open hostility; asking that none of it be placed in the heart addresses a feeling rather than an action.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same opening, rabbanā ighfir lanā, our Lord forgive us, is one of the Qur'an's most repeated prayers, said elsewhere by believers asking forgiveness for themselves together with those before them.",
+       "lvl": "quran",
+       "src": "3:193"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:9",
+       "why": "the brothers who preceded them in faith, described in the verse just before"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "أَلَمْ",
+       "t": "alam",
+       "g": "have you not"
+      },
+      {
+       "a": "تَرَ",
+       "t": "tara",
+       "g": "seen"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "at"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "نَافَقُوا۟",
+       "t": "nāfaqū",
+       "g": "were hypocrites"
+      },
+      {
+       "a": "يَقُولُونَ",
+       "t": "yaqūlūna",
+       "g": "saying"
+      },
+      {
+       "a": "لِإِخْوَٰنِهِمُ",
+       "t": "li-ikhwānihimu",
+       "g": "to their brothers"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "كَفَرُوا۟",
+       "t": "kafarū",
+       "g": "disbelieved"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "among"
+      },
+      {
+       "a": "أَهْلِ",
+       "t": "ahli",
+       "g": "the people"
+      },
+      {
+       "a": "ٱلْكِتَٰبِ",
+       "t": "al-kitābi",
+       "g": "of the Book"
+      },
+      {
+       "a": "لَئِنْ",
+       "t": "laʾin",
+       "g": "if"
+      },
+      {
+       "a": "أُخْرِجْتُمْ",
+       "t": "ukhrijtum",
+       "g": "you are expelled"
+      },
+      {
+       "a": "لَنَخْرُجَنَّ",
+       "t": "lanakhrujanna",
+       "g": "we will surely leave"
+      },
+      {
+       "a": "مَعَكُمْ",
+       "t": "maʿakum",
+       "g": "with you"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "نُطِيعُ",
+       "t": "nuṭīʿu",
+       "g": "will we obey"
+      },
+      {
+       "a": "فِيكُمْ",
+       "t": "fīkum",
+       "g": "concerning you"
+      },
+      {
+       "a": "أَحَدًا",
+       "t": "aḥadan",
+       "g": "anyone"
+      },
+      {
+       "a": "أَبَدًا",
+       "t": "abadan",
+       "g": "ever"
+      },
+      {
+       "a": "وَإِن",
+       "t": "wa-in",
+       "g": "and if"
+      },
+      {
+       "a": "قُوتِلْتُمْ",
+       "t": "qūtiltum",
+       "g": "you are fought"
+      },
+      {
+       "a": "لَنَنصُرَنَّكُمْ",
+       "t": "lananṣurannakum",
+       "g": "we will surely aid you"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "but Allah"
+      },
+      {
+       "a": "يَشْهَدُ",
+       "t": "yash-hadu",
+       "g": "testifies"
+      },
+      {
+       "a": "إِنَّهُمْ",
+       "t": "innahum",
+       "g": "that they"
+      },
+      {
+       "a": "لَكَٰذِبُونَ",
+       "t": "lakādhibūn",
+       "g": "are liars"
+      }
+     ],
+     "sense": "The scene shifts from Banu an-Nadir to the hypocrites in Medina who had promised them support in private. Their promise runs through three clauses, leaving together, obeying no outside authority, fighting alongside them, each stacked with an oath for emphasis. Allah's own testimony closes the verse and names the promise for what it is before events even test it.",
+     "notes": [
+      {
+       "t": "Each clause of the promise is built on a laʾin oath construction, the strongest form of conditional emphasis in Arabic, which the next verse takes apart clause by clause.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Swearing what is not meant is described elsewhere as the hypocrites' habitual behavior rather than a one-time lapse.",
+       "lvl": "quran",
+       "src": "9:56"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:12",
+       "why": "the promise made here is answered clause by clause in the next verse"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "لَئِنْ",
+       "t": "laʾin",
+       "g": "if"
+      },
+      {
+       "a": "أُخْرِجُوا۟",
+       "t": "ukhrijū",
+       "g": "they are expelled"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَخْرُجُونَ",
+       "t": "yakhrujūna",
+       "g": "will they leave"
+      },
+      {
+       "a": "مَعَهُمْ",
+       "t": "maʿahum",
+       "g": "with them"
+      },
+      {
+       "a": "وَلَئِن",
+       "t": "wa-laʾin",
+       "g": "and if"
+      },
+      {
+       "a": "قُوتِلُوا۟",
+       "t": "qūtilū",
+       "g": "they are fought"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَنصُرُونَهُمْ",
+       "t": "yanṣurūnahum",
+       "g": "will they aid them"
+      },
+      {
+       "a": "وَلَئِن",
+       "t": "wa-laʾin",
+       "g": "and if"
+      },
+      {
+       "a": "نَّصَرُوهُمْ",
+       "t": "naṣarūhum",
+       "g": "they did aid them"
+      },
+      {
+       "a": "لَيُوَلُّنَّ",
+       "t": "layuwallunna",
+       "g": "they would surely turn"
+      },
+      {
+       "a": "ٱلْأَدْبَٰرَ",
+       "t": "al-adbāra",
+       "g": "their backs"
+      },
+      {
+       "a": "ثُمَّ",
+       "t": "thumma",
+       "g": "then"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يُنصَرُونَ",
+       "t": "yunṣarūn",
+       "g": "would they be helped"
+      }
+     ],
+     "sense": "Each promise from the previous verse is answered in the same order and denied. They will not leave with them, will not aid them if attacked, and even the hypothetical case where they did aid them ends the same way: retreat, and no help left standing after that. The verse forecasts the outcome before Banu an-Nadir's exile plays it out.",
+     "notes": [
+      {
+       "t": "The three clauses mirror the three oaths of the previous verse in order and in grammar, so the denial reads as a direct answer rather than a separate statement.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:11",
+       "why": "the three promises this verse answers clause by clause"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "لَأَنتُمْ",
+       "t": "la-antum",
+       "g": "you are indeed"
+      },
+      {
+       "a": "أَشَدُّ",
+       "t": "ashaddu",
+       "g": "more intense"
+      },
+      {
+       "a": "رَهْبَةً",
+       "t": "rahbatan",
+       "g": "in fear"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "صُدُورِهِم",
+       "t": "ṣudūrihim",
+       "g": "their breasts"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "than"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "بِأَنَّهُمْ",
+       "t": "bi-annahum",
+       "g": "is because they"
+      },
+      {
+       "a": "قَوْمٌ",
+       "t": "qawmun",
+       "g": "are a people"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "who do not"
+      },
+      {
+       "a": "يَفْقَهُونَ",
+       "t": "yafqahūn",
+       "g": "understand"
+      }
+     ],
+     "sense": "The verse gives the reason behind the hypocrites' and the tribe's failure to back each other: the believers are feared more than Allah is. That fear, misplaced onto people rather than onto Allah, is traced to a failure of fiqh, of grasping how things actually stand.",
+     "notes": [
+      {
+       "t": "Yafqahūn comes from the same root as fiqh, understanding, later narrowed to the technical sense of jurisprudence; here it names the plain failure to grasp where real power lies.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:14",
+       "why": "the same closing formula, that is because they are a people who, repeats one verse later with a different failing named"
+      }
+     ]
+    },
+    "14": {
+     "words": [
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يُقَٰتِلُونَكُمْ",
+       "t": "yuqātilūnakum",
+       "g": "will they fight you"
+      },
+      {
+       "a": "جَمِيعًا",
+       "t": "jamīʿan",
+       "g": "together"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "قُرًى",
+       "t": "quranā",
+       "g": "towns"
+      },
+      {
+       "a": "مُّحَصَّنَةٍ",
+       "t": "muḥaṣṣanatin",
+       "g": "fortified"
+      },
+      {
+       "a": "أَوْ",
+       "t": "aw",
+       "g": "or"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "وَرَآءِ",
+       "t": "wa-rāʾi",
+       "g": "behind"
+      },
+      {
+       "a": "جُدُرٍ",
+       "t": "judurin",
+       "g": "walls"
+      },
+      {
+       "a": "بَأْسُهُم",
+       "t": "baʾsuhum",
+       "g": "their violence"
+      },
+      {
+       "a": "بَيْنَهُمْ",
+       "t": "baynahum",
+       "g": "among themselves"
+      },
+      {
+       "a": "شَدِيدٌ",
+       "t": "shadīdun",
+       "g": "is severe"
+      },
+      {
+       "a": "تَحْسَبُهُمْ",
+       "t": "taḥsabuhum",
+       "g": "you think them"
+      },
+      {
+       "a": "جَمِيعًا",
+       "t": "jamīʿan",
+       "g": "united"
+      },
+      {
+       "a": "وَقُلُوبُهُمْ",
+       "t": "wa-qulūbuhum",
+       "g": "but their hearts"
+      },
+      {
+       "a": "شَتَّىٰ",
+       "t": "shattā",
+       "g": "are divided"
+      },
+      {
+       "a": "ذَٰلِكَ",
+       "t": "dhālika",
+       "g": "that"
+      },
+      {
+       "a": "بِأَنَّهُمْ",
+       "t": "bi-annahum",
+       "g": "is because they"
+      },
+      {
+       "a": "قَوْمٌ",
+       "t": "qawmun",
+       "g": "are a people"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "who do not"
+      },
+      {
+       "a": "يَعْقِلُونَ",
+       "t": "yaʿqilūn",
+       "g": "reason"
+      }
+     ],
+     "sense": "The picture continues past the failed alliance to the enemy's actual military posture: they will not meet the believers in open combat except behind walls, and their fierceness is reserved for fighting each other. Apparent unity hides real division, a gap the verse locates in the heart rather than on the surface. The closing formula changes the failing named from not understanding to not reasoning.",
+     "notes": [
+      {
+       "t": "Yafqahūn in the previous verse and yaʿqilūn here, understanding and reasoning, are near-synonyms in the Qur'an's vocabulary, so setting them side by side across two verses reads as one failure described twice rather than two different faults.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Hidden hostility greater than what shows on the surface is a warning given earlier about outsiders taken as close allies.",
+       "lvl": "quran",
+       "src": "3:118"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:13",
+       "why": "the same closing formula, with the failing changed from not understanding to not reasoning"
+      }
+     ]
+    },
+    "15": {
+     "words": [
+      {
+       "a": "كَمَثَلِ",
+       "t": "kamathali",
+       "g": "like the example"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "of those"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "before"
+      },
+      {
+       "a": "قَبْلِهِمْ",
+       "t": "qablihim",
+       "g": "them"
+      },
+      {
+       "a": "قَرِيبًا",
+       "t": "qarīban",
+       "g": "recently"
+      },
+      {
+       "a": "ذَاقُوا۟",
+       "t": "dhāqū",
+       "g": "they tasted"
+      },
+      {
+       "a": "وَبَالَ",
+       "t": "wa-bāla",
+       "g": "the ill consequence"
+      },
+      {
+       "a": "أَمْرِهِمْ",
+       "t": "amrihim",
+       "g": "of their affair"
+      },
+      {
+       "a": "وَلَهُمْ",
+       "t": "walahum",
+       "g": "and for them"
+      },
+      {
+       "a": "عَذَابٌ",
+       "t": "ʿadhābun",
+       "g": "is punishment"
+      },
+      {
+       "a": "أَلِيمٌ",
+       "t": "alīm",
+       "g": "painful"
+      }
+     ],
+     "sense": "The comparison points to a recent precedent rather than an ancient one. Most commentators read this as Banu Qaynuqaʿ, another Jewish tribe of Medina expelled shortly before Banu an-Nadir under similar terms, so the tribe now facing exile had already watched the consequence play out once nearby. The painful punishment named at the end is still to come, separate from what they already tasted.",
+     "notes": [
+      {
+       "t": "Commentators differ on which recent precedent is meant: most read it as Banu Qaynuqaʿ, expelled from Medina not long before this surah's events, though some read it as the defeat of the Meccan disbelievers at Badr.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir record both readings"
+      },
+      {
+       "t": "Wabāl is the bad outcome that a choice brings back on the one who made it, used elsewhere in the Qur'an for the consequence of a people's own conduct rather than an outside punishment.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:2",
+       "why": "the exile this verse's precedent is compared against"
+      }
+     ]
+    },
+    "16": {
+     "words": [
+      {
+       "a": "كَمَثَلِ",
+       "t": "kamathali",
+       "g": "like the example"
+      },
+      {
+       "a": "ٱلشَّيْطَٰنِ",
+       "t": "ash-shayṭāni",
+       "g": "of Satan"
+      },
+      {
+       "a": "إِذْ",
+       "t": "idh",
+       "g": "when"
+      },
+      {
+       "a": "قَالَ",
+       "t": "qāla",
+       "g": "he says"
+      },
+      {
+       "a": "لِلْإِنسَٰنِ",
+       "t": "lilʾinsāni",
+       "g": "to man"
+      },
+      {
+       "a": "ٱكْفُرْ",
+       "t": "ikfur",
+       "g": "disbelieve"
+      },
+      {
+       "a": "فَلَمَّا",
+       "t": "fa-lammā",
+       "g": "but when"
+      },
+      {
+       "a": "كَفَرَ",
+       "t": "kafara",
+       "g": "he disbelieves"
+      },
+      {
+       "a": "قَالَ",
+       "t": "qāla",
+       "g": "he says"
+      },
+      {
+       "a": "إِنِّى",
+       "t": "innī",
+       "g": "indeed I"
+      },
+      {
+       "a": "بَرِىٓءٌ",
+       "t": "barīʾun",
+       "g": "am free"
+      },
+      {
+       "a": "مِّنكَ",
+       "t": "minka",
+       "g": "of you"
+      },
+      {
+       "a": "إِنِّىٓ",
+       "t": "innī",
+       "g": "indeed I"
+      },
+      {
+       "a": "أَخَافُ",
+       "t": "akhāfu",
+       "g": "fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "رَبَّ",
+       "t": "rabba",
+       "g": "Lord"
+      },
+      {
+       "a": "ٱلْعَٰلَمِينَ",
+       "t": "al-ʿālamīn",
+       "g": "of the worlds"
+      }
+     ],
+     "sense": "A second comparison follows the first, this one about betrayal rather than precedent. Satan urges disbelief and then disowns the very person who took his word, citing fear of Allah as his excuse. The image fits the hypocrites' promise in verse 11 exactly: encouragement given freely, support withdrawn the moment it would cost something.",
+     "notes": [
+      {
+       "t": "The scene has no named setting or time; the exegetes take it as an image of how temptation generally works rather than one historical incident.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Satan disowning those who followed him is described again, at greater length, as a speech he gives on the Day of Judgment.",
+       "lvl": "quran",
+       "src": "14:22"
+      }
+     ],
+     "links": [
+      {
+       "ref": "14:22",
+       "why": "the fuller version of the same disowning, given as a speech on the Day of Judgment"
+      },
+      {
+       "ref": "59:11",
+       "why": "the hypocrites' promise this comparison mirrors, encouragement offered and then withdrawn"
+      }
+     ]
+    },
+    "17": {
+     "words": [
+      {
+       "a": "فَكَانَ",
+       "t": "fa-kāna",
+       "g": "so was"
+      },
+      {
+       "a": "عَٰقِبَتَهُمَآ",
+       "t": "ʿāqibatahumā",
+       "g": "the end of the two of them"
+      },
+      {
+       "a": "أَنَّهُمَا",
+       "t": "annahumā",
+       "g": "that they"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "[will be] in"
+      },
+      {
+       "a": "ٱلنَّارِ",
+       "t": "an-nāri",
+       "g": "the Fire"
+      },
+      {
+       "a": "خَٰلِدَيْنِ",
+       "t": "khālidayni",
+       "g": "abiding"
+      },
+      {
+       "a": "فِيهَا",
+       "t": "fīhā",
+       "g": "in it"
+      },
+      {
+       "a": "وَذَٰلِكَ",
+       "t": "wa-dhālika",
+       "g": "and that"
+      },
+      {
+       "a": "جَزَٰٓؤُا۟",
+       "t": "jazāʾu",
+       "g": "is the reward"
+      },
+      {
+       "a": "ٱلظَّٰلِمِينَ",
+       "t": "aẓ-ẓālimīn",
+       "g": "of the wrongdoers"
+      }
+     ],
+     "sense": "The two comparisons close together: Satan and the one he misled share one outcome, the Fire, permanently. The verse steps back from the image to name what it stands for, this is the standard reward for wrongdoing, not a fate specific to Satan and his one victim.",
+     "notes": [
+      {
+       "t": "ʿĀqibatahumā, the outcome of the two of them, uses the dual form, tying Satan and the misled person to one shared ending rather than two separate ones.",
+       "lvl": "editorial"
+      }
+     ]
+    },
+    "18": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "you who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "ٱتَّقُوا۟",
+       "t": "ittaqū",
+       "g": "fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَلْتَنظُرْ",
+       "t": "waltanẓur",
+       "g": "and let look"
+      },
+      {
+       "a": "نَفْسٌ",
+       "t": "nafsun",
+       "g": "every soul"
+      },
+      {
+       "a": "مَّا",
+       "t": "mā",
+       "g": "at what"
+      },
+      {
+       "a": "قَدَّمَتْ",
+       "t": "qaddamat",
+       "g": "it has sent ahead"
+      },
+      {
+       "a": "لِغَدٍ",
+       "t": "lighadin",
+       "g": "for tomorrow"
+      },
+      {
+       "a": "وَٱتَّقُوا۟",
+       "t": "wa-taqū",
+       "g": "and fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "خَبِيرٌ",
+       "t": "khabīrun",
+       "g": "is aware"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "تَعْمَلُونَ",
+       "t": "taʿmalūn",
+       "g": "you do"
+      }
+     ],
+     "sense": "The verse turns from the account of Banu an-Nadir to a direct address, the first in the surah aimed at the believers themselves. Fear of Allah frames both ends of the sentence, and between the two commands sits a single instruction: look at what has already been sent ahead for tomorrow, as though the record were something a person could go back and check now.",
+     "notes": [
+      {
+       "t": "Ghad, tomorrow, is used here for the Day of Judgment, the near word standing in for the far event to make the looking feel immediate rather than distant.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same image, a soul confronted with what it sent ahead, appears again describing the moment the sky splits.",
+       "lvl": "quran",
+       "src": "82:5"
+      }
+     ],
+     "links": [
+      {
+       "ref": "82:5",
+       "why": "the same reckoning image, a soul facing what it sent ahead, set at the moment the sky splits"
+      }
+     ]
+    },
+    "19": {
+     "words": [
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "تَكُونُوا۟",
+       "t": "takūnū",
+       "g": "be"
+      },
+      {
+       "a": "كَٱلَّذِينَ",
+       "t": "kal-ladhīna",
+       "g": "like those who"
+      },
+      {
+       "a": "نَسُوا۟",
+       "t": "nasū",
+       "g": "forgot"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "فَأَنسَىٰهُمْ",
+       "t": "fa-ansāhum",
+       "g": "so He made them forget"
+      },
+      {
+       "a": "أَنفُسَهُمْ",
+       "t": "anfusahum",
+       "g": "themselves"
+      },
+      {
+       "a": "أُو۟لَٰٓئِكَ",
+       "t": "ulāʾika",
+       "g": "those"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "are"
+      },
+      {
+       "a": "ٱلْفَٰسِقُونَ",
+       "t": "al-fāsiqūn",
+       "g": "the defiantly disobedient"
+      }
+     ],
+     "sense": "The warning turns the same verb back on itself: forgetting Allah is answered with Allah making the forgetter forget his own self. The consequence is not punishment added from outside but a natural result of the original neglect, and it lands on the same title used for Banu an-Nadir earlier in the surah, the defiantly disobedient.",
+     "notes": [
+      {
+       "t": "The wordplay, nasū ... fa-ansāhum, forgot ... so He made them forget, makes the punishment mirror the offense in the sentence's own grammar.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:5",
+       "why": "the same closing title, al-fāsiqūn, used earlier of Banu an-Nadir"
+      }
+     ]
+    },
+    "20": {
+     "words": [
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَسْتَوِىٓ",
+       "t": "yastawī",
+       "g": "are equal"
+      },
+      {
+       "a": "أَصْحَٰبُ",
+       "t": "aṣḥābu",
+       "g": "the companions"
+      },
+      {
+       "a": "ٱلنَّارِ",
+       "t": "an-nāri",
+       "g": "of the Fire"
+      },
+      {
+       "a": "وَأَصْحَٰبُ",
+       "t": "wa-aṣḥābu",
+       "g": "and the companions"
+      },
+      {
+       "a": "ٱلْجَنَّةِ",
+       "t": "al-jannati",
+       "g": "of Paradise"
+      },
+      {
+       "a": "أَصْحَٰبُ",
+       "t": "aṣḥābu",
+       "g": "the companions"
+      },
+      {
+       "a": "ٱلْجَنَّةِ",
+       "t": "al-jannati",
+       "g": "of Paradise"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "are"
+      },
+      {
+       "a": "ٱلْفَآئِزُونَ",
+       "t": "al-fāʾizūn",
+       "g": "the successful"
+      }
+     ],
+     "sense": "The verse states a plain inequality between the two outcomes and then repeats the name of the winning side rather than simply naming both. Only the companions of Paradise get the second clause, called the successful, so the sentence ends weighted entirely toward one side.",
+     "notes": [
+      {
+       "t": "The repetition of aṣḥāb al-jannati rather than a pronoun keeps both the phrase and the outcome in view twice in one short verse.",
+       "lvl": "editorial"
+      }
+     ]
+    },
+    "21": {
+     "words": [
+      {
+       "a": "لَوْ",
+       "t": "law",
+       "g": "if"
+      },
+      {
+       "a": "أَنزَلْنَا",
+       "t": "anzalnā",
+       "g": "We had sent down"
+      },
+      {
+       "a": "هَٰذَا",
+       "t": "hādhā",
+       "g": "this"
+      },
+      {
+       "a": "ٱلْقُرْءَانَ",
+       "t": "al-qurʾāna",
+       "g": "Qur'an"
+      },
+      {
+       "a": "عَلَىٰ",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "جَبَلٍ",
+       "t": "jabalin",
+       "g": "a mountain"
+      },
+      {
+       "a": "لَّرَأَيْتَهُۥ",
+       "t": "laraʾaytahu",
+       "g": "you would have seen it"
+      },
+      {
+       "a": "خَٰشِعًا",
+       "t": "khāshiʿan",
+       "g": "humbled"
+      },
+      {
+       "a": "مُّتَصَدِّعًا",
+       "t": "mutaṣaddiʿan",
+       "g": "breaking apart"
+      },
+      {
+       "a": "مِّنْ",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "خَشْيَةِ",
+       "t": "khashyati",
+       "g": "fear"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "وَتِلْكَ",
+       "t": "wa-tilka",
+       "g": "and these"
+      },
+      {
+       "a": "ٱلْأَمْثَٰلُ",
+       "t": "al-amthālu",
+       "g": "examples"
+      },
+      {
+       "a": "نَضْرِبُهَا",
+       "t": "naḍribuhā",
+       "g": "We give"
+      },
+      {
+       "a": "لِلنَّاسِ",
+       "t": "lilnnāsi",
+       "g": "to people"
+      },
+      {
+       "a": "لَعَلَّهُمْ",
+       "t": "laʿallahum",
+       "g": "so that they"
+      },
+      {
+       "a": "يَتَفَكَّرُونَ",
+       "t": "yatafakkarūn",
+       "g": "may reflect"
+      }
+     ],
+     "sense": "A hypothetical measures what the Qur'an is against something solid: a mountain receiving it would not stand unmoved but would crack apart in awe. The comparison points at the human audience that does receive the Qur'an without that visible reaction, and the verse names its own method in passing, these are amthāl, examples, given so that people will think them through.",
+     "notes": [
+      {
+       "t": "Khāshiʿan and mutaṣaddiʿan describe a living posture and a physical break together, giving the mountain both an emotional state and a fracture in the same two words.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Mountains are described elsewhere declining a trust the heavens and earth also refused, out of the same apprehension pictured here.",
+       "lvl": "quran",
+       "src": "33:72"
+      }
+     ],
+     "links": [
+      {
+       "ref": "33:72",
+       "why": "mountains again measured against something they cannot bear, there the Trust rather than the Qur'an"
+      }
+     ]
+    },
+    "22": {
+     "words": [
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "is Allah"
+      },
+      {
+       "a": "ٱلَّذِى",
+       "t": "alladhī",
+       "g": "the one"
+      },
+      {
+       "a": "لَآ",
+       "t": "lā",
+       "g": "no"
+      },
+      {
+       "a": "إِلَٰهَ",
+       "t": "ilāha",
+       "g": "god"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "Him"
+      },
+      {
+       "a": "عَٰلِمُ",
+       "t": "ʿālimu",
+       "g": "Knower"
+      },
+      {
+       "a": "ٱلْغَيْبِ",
+       "t": "al-ghaybi",
+       "g": "of the unseen"
+      },
+      {
+       "a": "وَٱلشَّهَٰدَةِ",
+       "t": "wash-shahādati",
+       "g": "and the witnessed"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱلرَّحْمَٰنُ",
+       "t": "ar-raḥmānu",
+       "g": "is the Compassionate"
+      },
+      {
+       "a": "ٱلرَّحِيمُ",
+       "t": "ar-raḥīm",
+       "g": "the Merciful"
+      }
+     ],
+     "sense": "The surah shifts into its closing sequence of divine names, opening each of its last three verses with huwa Allāh. This one moves from the single claim of exclusive godhood into knowledge that covers what is hidden and what is present without distinction, then to the pair of names built on mercy.",
+     "notes": [
+      {
+       "t": "Al-ghayb and ash-shahāda, the unseen and the witnessed, is a standing pair in the Qur'an's vocabulary for the whole of reality, not two separate categories of things known.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The same pairing, Knower of the unseen and the witnessed, names Allah again earlier in the Qur'an.",
+       "lvl": "quran",
+       "src": "6:73"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:23",
+       "why": "the same opening formula, He is Allah, continues into the next verse's longer list of names"
+      }
+     ]
+    },
+    "23": {
+     "words": [
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "is Allah"
+      },
+      {
+       "a": "ٱلَّذِى",
+       "t": "alladhī",
+       "g": "the one"
+      },
+      {
+       "a": "لَآ",
+       "t": "lā",
+       "g": "no"
+      },
+      {
+       "a": "إِلَٰهَ",
+       "t": "ilāha",
+       "g": "god"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "Him"
+      },
+      {
+       "a": "ٱلْمَلِكُ",
+       "t": "al-maliku",
+       "g": "the Sovereign"
+      },
+      {
+       "a": "ٱلْقُدُّوسُ",
+       "t": "al-quddūsu",
+       "g": "the Holy"
+      },
+      {
+       "a": "ٱلسَّلَٰمُ",
+       "t": "as-salāmu",
+       "g": "the Source of Peace"
+      },
+      {
+       "a": "ٱلْمُؤْمِنُ",
+       "t": "al-muʾminu",
+       "g": "the Giver of Security"
+      },
+      {
+       "a": "ٱلْمُهَيْمِنُ",
+       "t": "al-muhayminu",
+       "g": "the Guardian"
+      },
+      {
+       "a": "ٱلْعَزِيزُ",
+       "t": "al-ʿazīzu",
+       "g": "the Mighty"
+      },
+      {
+       "a": "ٱلْجَبَّارُ",
+       "t": "al-jabbāru",
+       "g": "the Compeller"
+      },
+      {
+       "a": "ٱلْمُتَكَبِّرُ",
+       "t": "al-mutakabbiru",
+       "g": "the Supreme in Greatness"
+      },
+      {
+       "a": "سُبْحَٰنَ",
+       "t": "subḥāna",
+       "g": "glory be to"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "عَمَّا",
+       "t": "ʿammā",
+       "g": "above what"
+      },
+      {
+       "a": "يُشْرِكُونَ",
+       "t": "yushrikūn",
+       "g": "they associate"
+      }
+     ],
+     "sense": "Nine names run in sequence with no conjunction between them, an unbroken list rather than the paired names used elsewhere in the surah. The verse then turns from naming to a direct declaration, exalting Allah above whatever is set beside Him, which reads as the point the whole list has been building toward.",
+     "notes": [
+      {
+       "t": "The nine names run without any wa, and, joining them, a construction the Qur'an uses to give a listed description one continuous weight rather than a set of separate items.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The closing formula, exalted is He above what they associate with Him, recurs across the Qur'an as a fixed response to claims of partners with Allah.",
+       "lvl": "quran",
+       "src": "16:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:24",
+       "why": "the list of names continues, unbroken, into the surah's final verse"
+      }
+     ]
+    },
+    "24": {
+     "words": [
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "is Allah"
+      },
+      {
+       "a": "ٱلْخَٰلِقُ",
+       "t": "al-khāliqu",
+       "g": "the Creator"
+      },
+      {
+       "a": "ٱلْبَارِئُ",
+       "t": "al-bāriʾu",
+       "g": "the Maker"
+      },
+      {
+       "a": "ٱلْمُصَوِّرُ",
+       "t": "al-muṣawwiru",
+       "g": "the Shaper"
+      },
+      {
+       "a": "لَهُ",
+       "t": "lahu",
+       "g": "His are"
+      },
+      {
+       "a": "ٱلْأَسْمَآءُ",
+       "t": "al-asmāʾu",
+       "g": "the names"
+      },
+      {
+       "a": "ٱلْحُسْنَىٰ",
+       "t": "al-ḥusnā",
+       "g": "most beautiful"
+      },
+      {
+       "a": "يُسَبِّحُ",
+       "t": "yusabbiḥu",
+       "g": "glorifies"
+      },
+      {
+       "a": "لَهُۥ",
+       "t": "lahu",
+       "g": "Him"
+      },
+      {
+       "a": "مَا",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "is in"
+      },
+      {
+       "a": "ٱلسَّمَٰوَٰتِ",
+       "t": "as-samāwāti",
+       "g": "the heavens"
+      },
+      {
+       "a": "وَٱلْأَرْضِ",
+       "t": "wal-arḍi",
+       "g": "and the earth"
+      },
+      {
+       "a": "وَهُوَ",
+       "t": "wa-huwa",
+       "g": "and He"
+      },
+      {
+       "a": "ٱلْعَزِيزُ",
+       "t": "al-ʿazīzu",
+       "g": "is the Mighty"
+      },
+      {
+       "a": "ٱلْحَكِيمُ",
+       "t": "al-ḥakīm",
+       "g": "the Wise"
+      }
+     ],
+     "sense": "Three names of making run together, bringing into being, shaping matter without a prior model, giving form, before the verse states outright that the best names all belong to Allah. The closing line returns to the opening sentence of the surah nearly word for word, so the whole chapter ends where it began, everything in the heavens and the earth glorifying Him.",
+     "notes": [
+      {
+       "t": "Khāliq, bāriʾ and muṣawwir move from the general act of creating, to shaping something out of matter, to giving it its particular form, three stages of the same act named separately.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The best names are named as a set again, with the instruction to call on Allah by them.",
+       "lvl": "quran",
+       "src": "7:180"
+      }
+     ],
+     "links": [
+      {
+       "ref": "59:1",
+       "why": "the closing sentence returns almost word for word to the surah's opening line"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 60,
+   "verses": {
+    "1": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O you"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "do not"
+      },
+      {
+       "a": "تَتَّخِذُوا۟",
+       "t": "tattakhidhū",
+       "g": "take"
+      },
+      {
+       "a": "عَدُوِّى",
+       "t": "ʿaduwwī",
+       "g": "My enemy"
+      },
+      {
+       "a": "وَعَدُوَّكُمْ",
+       "t": "wa-ʿaduwwakum",
+       "g": "and your enemy"
+      },
+      {
+       "a": "أَوْلِيَآءَ",
+       "t": "awliyāʾa",
+       "g": "as allies"
+      },
+      {
+       "a": "تُلْقُونَ",
+       "t": "tulqūna",
+       "g": "offering"
+      },
+      {
+       "a": "إِلَيْهِم",
+       "t": "ilayhim",
+       "g": "to them"
+      },
+      {
+       "a": "بِٱلْمَوَدَّةِ",
+       "t": "bil-mawaddati",
+       "g": "affection"
+      },
+      {
+       "a": "وَقَدْ",
+       "t": "wa-qad",
+       "g": "when"
+      },
+      {
+       "a": "كَفَرُوا۟",
+       "t": "kafarū",
+       "g": "they have rejected"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "what"
+      },
+      {
+       "a": "جَآءَكُم",
+       "t": "jāʾakum",
+       "g": "came to you"
+      },
+      {
+       "a": "مِّنَ",
+       "t": "mina",
+       "g": "of"
+      },
+      {
+       "a": "ٱلْحَقِّ",
+       "t": "al-ḥaqqi",
+       "g": "the truth"
+      },
+      {
+       "a": "يُخْرِجُونَ",
+       "t": "yukhrijūna",
+       "g": "driving out"
+      },
+      {
+       "a": "ٱلرَّسُولَ",
+       "t": "ar-rasūla",
+       "g": "the Messenger"
+      },
+      {
+       "a": "وَإِيَّاكُمْ",
+       "t": "wa-iyyākum",
+       "g": "and you"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "because"
+      },
+      {
+       "a": "تُؤْمِنُوا۟",
+       "t": "tuʾminū",
+       "g": "you believe"
+      },
+      {
+       "a": "بِٱللَّهِ",
+       "t": "billāhi",
+       "g": "in Allah"
+      },
+      {
+       "a": "رَبِّكُمْ",
+       "t": "rabbikum",
+       "g": "your Lord"
+      },
+      {
+       "a": "إِن",
+       "t": "in",
+       "g": "if"
+      },
+      {
+       "a": "كُنتُمْ",
+       "t": "kuntum",
+       "g": "you have"
+      },
+      {
+       "a": "خَرَجْتُمْ",
+       "t": "kharajtum",
+       "g": "gone out"
+      },
+      {
+       "a": "جِهَٰدًا",
+       "t": "jihādan",
+       "g": "striving"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "سَبِيلِى",
+       "t": "sabīlī",
+       "g": "My cause"
+      },
+      {
+       "a": "وَٱبْتِغَآءَ",
+       "t": "wa-btighāʾa",
+       "g": "and seeking"
+      },
+      {
+       "a": "مَرْضَاتِى",
+       "t": "marḍātī",
+       "g": "My pleasure"
+      },
+      {
+       "a": "تُسِرُّونَ",
+       "t": "tusirrūna",
+       "g": "you secretly send"
+      },
+      {
+       "a": "إِلَيْهِم",
+       "t": "ilayhim",
+       "g": "to them"
+      },
+      {
+       "a": "بِٱلْمَوَدَّةِ",
+       "t": "bil-mawaddati",
+       "g": "affection"
+      },
+      {
+       "a": "وَأَنَا۠",
+       "t": "wa-anā",
+       "g": "while I"
+      },
+      {
+       "a": "أَعْلَمُ",
+       "t": "aʿlamu",
+       "g": "know best"
+      },
+      {
+       "a": "بِمَآ",
+       "t": "bimā",
+       "g": "what"
+      },
+      {
+       "a": "أَخْفَيْتُمْ",
+       "t": "akhfaytum",
+       "g": "you conceal"
+      },
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "and what"
+      },
+      {
+       "a": "أَعْلَنتُمْ",
+       "t": "aʿlantum",
+       "g": "you disclose"
+      },
+      {
+       "a": "وَمَن",
+       "t": "wa-man",
+       "g": "and whoever"
+      },
+      {
+       "a": "يَفْعَلْهُ",
+       "t": "yafʿalhu",
+       "g": "does that"
+      },
+      {
+       "a": "مِنكُمْ",
+       "t": "minkum",
+       "g": "among you"
+      },
+      {
+       "a": "فَقَدْ",
+       "t": "fa-qad",
+       "g": "has certainly"
+      },
+      {
+       "a": "ضَلَّ",
+       "t": "ḍalla",
+       "g": "strayed"
+      },
+      {
+       "a": "سَوَآءَ",
+       "t": "sawāʾa",
+       "g": "the right"
+      },
+      {
+       "a": "ٱلسَّبِيلِ",
+       "t": "as-sabīl",
+       "g": "way"
+      }
+     ],
+     "sense": "The address opens on a direct command: do not take My enemy, and yours, as allies, extending affection to people who have rejected the truth that reached you and driven out the Messenger for the crime of believing in Allah. The verse names the specific danger, secretly sending word of loyalty to men openly at war with the faith, and states that Allah already knows what is hidden and what is said aloud. Whoever does this has left the right path entirely, not stumbled on a side issue.",
+     "notes": [
+      {
+       "t": "The occasion named by the commentators is Hatib ibn Abi Balta'a, who sent a secret letter warning Quraysh of the Prophet's ﷺ planned march on Mecca; the Prophet ﷺ was told of it and sent riders to intercept it before it arrived.",
+       "lvl": "sunnah",
+       "src": "Bukhari and Muslim, from Ali ibn Abi Talib"
+      },
+      {
+       "t": "The same warning against taking disbelievers as allies instead of believers is given in general terms elsewhere, with the same word for ally, wali.",
+       "lvl": "quran",
+       "src": "3:28"
+      },
+      {
+       "t": "The enemy is named twice, Allah's before the believers' own, so the hostility being warned against is located first in what these people are against Allah, not only in what they are against the believers.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "58:22",
+       "why": "extends the same prohibition from alliance to love itself, toward anyone who opposes Allah and His Messenger"
+      },
+      {
+       "ref": "60:4",
+       "why": "gives the positive model, Abraham's open declaration of enmity, that this verse's warning against secret loyalty sets up against"
+      }
+     ]
+    },
+    "2": {
+     "words": [
+      {
+       "a": "إِن",
+       "t": "in",
+       "g": "if"
+      },
+      {
+       "a": "يَثْقَفُوكُمْ",
+       "t": "yathqafūkum",
+       "g": "they overpower you"
+      },
+      {
+       "a": "يَكُونُوا۟",
+       "t": "yakūnū",
+       "g": "they would be"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "to you"
+      },
+      {
+       "a": "أَعْدَآءً",
+       "t": "aʿdāʾan",
+       "g": "enemies"
+      },
+      {
+       "a": "وَيَبْسُطُوٓا۟",
+       "t": "wa-yabsuṭū",
+       "g": "and stretch out"
+      },
+      {
+       "a": "إِلَيْكُمْ",
+       "t": "ilaykum",
+       "g": "against you"
+      },
+      {
+       "a": "أَيْدِيَهُمْ",
+       "t": "aydiyahum",
+       "g": "their hands"
+      },
+      {
+       "a": "وَأَلْسِنَتَهُم",
+       "t": "wa-alsinatahum",
+       "g": "and their tongues"
+      },
+      {
+       "a": "بِٱلسُّوٓءِ",
+       "t": "bis-sūʾi",
+       "g": "with harm"
+      },
+      {
+       "a": "وَوَدُّوا۟",
+       "t": "wa-waddū",
+       "g": "and they wish"
+      },
+      {
+       "a": "لَوْ",
+       "t": "law",
+       "g": "that"
+      },
+      {
+       "a": "تَكْفُرُونَ",
+       "t": "takfurūn",
+       "g": "you would disbelieve"
+      }
+     ],
+     "sense": "The reasoning behind the command follows: given the advantage, these people would show unmistakable hostility, hand and tongue turned against the believers, and they want nothing less than for the believers to abandon their faith. The image corrects any hope that private affection shown to them would be returned in kind. Their wish, plainly stated, is the believers' fall.",
+     "notes": [
+      {
+       "t": "Yathqafukum is to catch someone off guard or gain the upper hand over them, not simply to be stronger; the danger described is opportunity meeting hostility, not a standing military threat.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Hostile tongues turned against the believers are described in similar terms elsewhere, of people who speak sharply once they feel safe to.",
+       "lvl": "quran",
+       "src": "33:19"
+      }
+     ]
+    },
+    "3": {
+     "words": [
+      {
+       "a": "لَن",
+       "t": "lan",
+       "g": "never"
+      },
+      {
+       "a": "تَنفَعَكُمْ",
+       "t": "tanfaʿakum",
+       "g": "will benefit you"
+      },
+      {
+       "a": "أَرْحَامُكُمْ",
+       "t": "arḥāmukum",
+       "g": "your relatives"
+      },
+      {
+       "a": "وَلَآ",
+       "t": "wa-lā",
+       "g": "nor"
+      },
+      {
+       "a": "أَوْلَٰدُكُمْ",
+       "t": "awlādukum",
+       "g": "your children"
+      },
+      {
+       "a": "يَوْمَ",
+       "t": "yawma",
+       "g": "on the Day"
+      },
+      {
+       "a": "ٱلْقِيَٰمَةِ",
+       "t": "al-qiyāmati",
+       "g": "of Resurrection"
+      },
+      {
+       "a": "يَفْصِلُ",
+       "t": "yafṣilu",
+       "g": "He will separate"
+      },
+      {
+       "a": "بَيْنَكُمْ",
+       "t": "baynakum",
+       "g": "between you"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "بِمَا",
+       "t": "bimā",
+       "g": "of what"
+      },
+      {
+       "a": "تَعْمَلُونَ",
+       "t": "taʿmalūna",
+       "g": "you do"
+      },
+      {
+       "a": "بَصِيرٌ",
+       "t": "baṣīr",
+       "g": "is Seeing"
+      }
+     ],
+     "sense": "Kinship and children, the ties that might tempt someone to protect or excuse a relative among the enemy, are ruled out as currency on the Day of Resurrection. Allah will judge between people that day on grounds those ties cannot reach. He already sees everything anyone does now, which is what makes the later separation exact rather than arbitrary.",
+     "notes": [
+      {
+       "t": "The same claim, that neither wealth nor children are of use on that day, appears with an exception attached, for whoever comes to Allah with a sound heart.",
+       "lvl": "quran",
+       "src": "26:88-89"
+      },
+      {
+       "t": "Yafsilu is to cut apart or sort into separate piles, the same root behind yawm al-fasl, the Day of Sorting, one of the Qur'an's names for the Day of Resurrection.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "26:89",
+       "why": "names the one thing that does help that day, a heart free of divided loyalty, which this verse states only in the negative"
+      }
+     ]
+    },
+    "4": {
+     "words": [
+      {
+       "a": "قَدْ",
+       "t": "qad",
+       "g": "already"
+      },
+      {
+       "a": "كَانَتْ",
+       "t": "kānat",
+       "g": "there was"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "for you"
+      },
+      {
+       "a": "أُسْوَةٌ",
+       "t": "uswatun",
+       "g": "an example"
+      },
+      {
+       "a": "حَسَنَةٌ",
+       "t": "ḥasanatun",
+       "g": "good"
+      },
+      {
+       "a": "فِىٓ",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "إِبْرَٰهِيمَ",
+       "t": "ibrāhīma",
+       "g": "Abraham"
+      },
+      {
+       "a": "وَٱلَّذِينَ",
+       "t": "walladhīna",
+       "g": "and those who"
+      },
+      {
+       "a": "مَعَهُۥٓ",
+       "t": "maʿahu",
+       "g": "were with him"
+      },
+      {
+       "a": "إِذْ",
+       "t": "idh",
+       "g": "when"
+      },
+      {
+       "a": "قَالُوا۟",
+       "t": "qālū",
+       "g": "they said"
+      },
+      {
+       "a": "لِقَوْمِهِمْ",
+       "t": "liqawmihim",
+       "g": "to their people"
+      },
+      {
+       "a": "إِنَّا",
+       "t": "innā",
+       "g": "indeed we"
+      },
+      {
+       "a": "بُرَءَٰٓؤُا۟",
+       "t": "buraʾāʾu",
+       "g": "are disassociated"
+      },
+      {
+       "a": "مِنكُمْ",
+       "t": "minkum",
+       "g": "from you"
+      },
+      {
+       "a": "وَمِمَّا",
+       "t": "wa-mimmā",
+       "g": "and from what"
+      },
+      {
+       "a": "تَعْبُدُونَ",
+       "t": "taʿbudūna",
+       "g": "you worship"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "other than"
+      },
+      {
+       "a": "دُونِ",
+       "t": "dūni",
+       "g": "besides"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "كَفَرْنَا",
+       "t": "kafarnā",
+       "g": "we reject"
+      },
+      {
+       "a": "بِكُمْ",
+       "t": "bikum",
+       "g": "you"
+      },
+      {
+       "a": "وَبَدَا",
+       "t": "wa-badā",
+       "g": "and has appeared"
+      },
+      {
+       "a": "بَيْنَنَا",
+       "t": "baynanā",
+       "g": "between us"
+      },
+      {
+       "a": "وَبَيْنَكُمُ",
+       "t": "wa-baynakumu",
+       "g": "and you"
+      },
+      {
+       "a": "ٱلْعَدَٰوَةُ",
+       "t": "al-ʿadāwatu",
+       "g": "enmity"
+      },
+      {
+       "a": "وَٱلْبَغْضَآءُ",
+       "t": "wal-baghḍāʾu",
+       "g": "and hatred"
+      },
+      {
+       "a": "أَبَدًا",
+       "t": "abadan",
+       "g": "forever"
+      },
+      {
+       "a": "حَتَّىٰ",
+       "t": "ḥattā",
+       "g": "until"
+      },
+      {
+       "a": "تُؤْمِنُوا۟",
+       "t": "tuʾminū",
+       "g": "you believe"
+      },
+      {
+       "a": "بِٱللَّهِ",
+       "t": "billāhi",
+       "g": "in Allah"
+      },
+      {
+       "a": "وَحْدَهُۥٓ",
+       "t": "waḥdahu",
+       "g": "alone"
+      },
+      {
+       "a": "إِلَّا",
+       "t": "illā",
+       "g": "except"
+      },
+      {
+       "a": "قَوْلَ",
+       "t": "qawla",
+       "g": "the saying"
+      },
+      {
+       "a": "إِبْرَٰهِيمَ",
+       "t": "ibrāhīma",
+       "g": "of Abraham"
+      },
+      {
+       "a": "لِأَبِيهِ",
+       "t": "li-abīhi",
+       "g": "to his father"
+      },
+      {
+       "a": "لَأَسْتَغْفِرَنَّ",
+       "t": "la-astaghfiranna",
+       "g": "I will surely ask forgiveness"
+      },
+      {
+       "a": "لَكَ",
+       "t": "laka",
+       "g": "for you"
+      },
+      {
+       "a": "وَمَآ",
+       "t": "wa-mā",
+       "g": "but not"
+      },
+      {
+       "a": "أَمْلِكُ",
+       "t": "amliku",
+       "g": "I have power"
+      },
+      {
+       "a": "لَكَ",
+       "t": "laka",
+       "g": "for you"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "against"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "Allah"
+      },
+      {
+       "a": "مِن",
+       "t": "min",
+       "g": "of"
+      },
+      {
+       "a": "شَىْءٍ",
+       "t": "shayʾin",
+       "g": "anything"
+      },
+      {
+       "a": "رَّبَّنَا",
+       "t": "rabbanā",
+       "g": "our Lord"
+      },
+      {
+       "a": "عَلَيْكَ",
+       "t": "ʿalayka",
+       "g": "upon You"
+      },
+      {
+       "a": "تَوَكَّلْنَا",
+       "t": "tawakkalnā",
+       "g": "we rely"
+      },
+      {
+       "a": "وَإِلَيْكَ",
+       "t": "wa-ilayka",
+       "g": "and to You"
+      },
+      {
+       "a": "أَنَبْنَا",
+       "t": "anabnā",
+       "g": "we return"
+      },
+      {
+       "a": "وَإِلَيْكَ",
+       "t": "wa-ilayka",
+       "g": "and to You"
+      },
+      {
+       "a": "ٱلْمَصِيرُ",
+       "t": "al-maṣīr",
+       "g": "is the journey's end"
+      }
+     ],
+     "sense": "Abraham and those with him are set up as the pattern to follow: they told their own people plainly that they were finished with them and with what they worshipped, and that enmity between them would stand until the people believed in Allah alone. The one thing set apart from the model is Abraham's promise to ask forgiveness for his father, a private commitment made before it was clear his father stood against Allah, not a rule for how to treat an enemy. The prayer that follows, reliance on Allah and return to Him, belongs to Abraham and his companions as much as the declaration does.",
+     "notes": [
+      {
+       "t": "Abraham's promise to his father and his later withdrawal from it, once it was clear his father was an enemy of Allah, are told directly, which is why this verse marks that one line out as an exception rather than folding it into the example.",
+       "lvl": "quran",
+       "src": "9:113-114"
+      },
+      {
+       "t": "Abraham's actual words to his father, that he would ask his Lord to forgive him, are recorded, almost the same wording used here.",
+       "lvl": "quran",
+       "src": "19:47"
+      },
+      {
+       "t": "Bura'au minkum, we are quit of you, is the language of a formal legal dissociation, the same root that opens Surah At-Tawbah's declaration of bara'ah from treaty-breakers.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "21:67",
+       "why": "the same declaration against his people, made earlier, when he broke their idols and named what he thought of what they worshipped"
+      },
+      {
+       "ref": "60:1",
+       "why": "the enmity Abraham declares is exactly what the surah's opening forbids the believers from concealing toward"
+      }
+     ]
+    },
+    "5": {
+     "words": [
+      {
+       "a": "رَبَّنَا",
+       "t": "rabbanā",
+       "g": "our Lord"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "do not"
+      },
+      {
+       "a": "تَجْعَلْنَا",
+       "t": "tajʿalnā",
+       "g": "make us"
+      },
+      {
+       "a": "فِتْنَةً",
+       "t": "fitnatan",
+       "g": "a trial"
+      },
+      {
+       "a": "لِّلَّذِينَ",
+       "t": "lidh-dhīna",
+       "g": "for those who"
+      },
+      {
+       "a": "كَفَرُوا۟",
+       "t": "kafarū",
+       "g": "disbelieve"
+      },
+      {
+       "a": "وَٱغْفِرْ",
+       "t": "wa-ghfir",
+       "g": "and forgive"
+      },
+      {
+       "a": "لَنَا",
+       "t": "lanā",
+       "g": "us"
+      },
+      {
+       "a": "رَبَّنَآ",
+       "t": "rabbanā",
+       "g": "our Lord"
+      },
+      {
+       "a": "إِنَّكَ",
+       "t": "innaka",
+       "g": "indeed You"
+      },
+      {
+       "a": "أَنتَ",
+       "t": "anta",
+       "g": "You"
+      },
+      {
+       "a": "ٱلْعَزِيزُ",
+       "t": "al-ʿazīzu",
+       "g": "the Almighty"
+      },
+      {
+       "a": "ٱلْحَكِيمُ",
+       "t": "al-ḥakīm",
+       "g": "the Wise"
+      }
+     ],
+     "sense": "The prayer continues in Abraham's voice: a request not to be made a trial for the disbelievers, and a request for forgiveness. Being made a fitnah for them could mean being handed over to their power, or it could mean an outcome that lets them read their own disbelief as vindicated; the prayer asks Allah to prevent either. It closes on two names, the Almighty and the Wise, matched to a plea that needs both strength and judgment behind it.",
+     "notes": [
+      {
+       "t": "The same request, in nearly the same words, is prayed by Moses' people, asking not to be made a trial for a wrongdoing nation.",
+       "lvl": "quran",
+       "src": "10:85"
+      },
+      {
+       "t": "Commentators read fitnah here two ways, a trial in the sense of the disbelievers being given power over the believers, or a trial in the sense of an outcome that would let the disbelievers feel their disbelief had been proven right.",
+       "lvl": "debated",
+       "src": "at-Tabari and Ibn Kathir record both readings"
+      }
+     ],
+     "links": [
+      {
+       "ref": "2:128",
+       "why": "the same address, our Lord, opening another of Abraham's recorded prayers"
+      }
+     ]
+    },
+    "6": {
+     "words": [
+      {
+       "a": "لَقَدْ",
+       "t": "laqad",
+       "g": "certainly"
+      },
+      {
+       "a": "كَانَ",
+       "t": "kāna",
+       "g": "there was"
+      },
+      {
+       "a": "لَكُمْ",
+       "t": "lakum",
+       "g": "for you"
+      },
+      {
+       "a": "فِيهِمْ",
+       "t": "fīhim",
+       "g": "in them"
+      },
+      {
+       "a": "أُسْوَةٌ",
+       "t": "uswatun",
+       "g": "an example"
+      },
+      {
+       "a": "حَسَنَةٌ",
+       "t": "ḥasanatun",
+       "g": "good"
+      },
+      {
+       "a": "لِّمَن",
+       "t": "li-man",
+       "g": "for whoever"
+      },
+      {
+       "a": "كَانَ",
+       "t": "kāna",
+       "g": "is"
+      },
+      {
+       "a": "يَرْجُوا۟",
+       "t": "yarjū",
+       "g": "hoping"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "وَٱلْيَوْمَ",
+       "t": "wal-yawma",
+       "g": "and the Day"
+      },
+      {
+       "a": "ٱلْءَاخِرَ",
+       "t": "al-ākhira",
+       "g": "the Last"
+      },
+      {
+       "a": "وَمَن",
+       "t": "wa-man",
+       "g": "and whoever"
+      },
+      {
+       "a": "يَتَوَلَّ",
+       "t": "yatawalla",
+       "g": "turns away"
+      },
+      {
+       "a": "فَإِنَّ",
+       "t": "fa-inna",
+       "g": "then indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "هُوَ",
+       "t": "huwa",
+       "g": "He"
+      },
+      {
+       "a": "ٱلْغَنِىُّ",
+       "t": "al-ghaniyyu",
+       "g": "the Self-Sufficient"
+      },
+      {
+       "a": "ٱلْحَمِيدُ",
+       "t": "al-ḥamīd",
+       "g": "the Praiseworthy"
+      }
+     ],
+     "sense": "The line about a good example returns, now aimed specifically at whoever hopes for Allah and the Last Day, since that hope is what makes Abraham's stand worth following rather than merely admirable. Whoever turns away instead changes nothing about Allah, who has no need of anyone's loyalty and is praiseworthy whether or not it is given.",
+     "notes": [
+      {
+       "t": "The identical phrase, a good example for whoever hopes for Allah and the Last Day, is used elsewhere of the Prophet ﷺ himself, so the same standard is applied to Abraham's community and to his.",
+       "lvl": "quran",
+       "src": "33:21"
+      },
+      {
+       "t": "A similar warning follows a similar turning away elsewhere: if people turn away, Allah simply replaces them with others, since He does not depend on anyone's loyalty.",
+       "lvl": "quran",
+       "src": "47:38"
+      }
+     ]
+    },
+    "7": {
+     "words": [
+      {
+       "a": "عَسَى",
+       "t": "ʿasā",
+       "g": "perhaps"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "يَجْعَلَ",
+       "t": "yajʿala",
+       "g": "will put"
+      },
+      {
+       "a": "بَيْنَكُمْ",
+       "t": "baynakum",
+       "g": "between you"
+      },
+      {
+       "a": "وَبَيْنَ",
+       "t": "wa-bayna",
+       "g": "and between"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those whom"
+      },
+      {
+       "a": "عَادَيْتُم",
+       "t": "ʿādaytum",
+       "g": "you have taken as enemies"
+      },
+      {
+       "a": "مِّنْهُم",
+       "t": "minhum",
+       "g": "among them"
+      },
+      {
+       "a": "مَّوَدَّةً",
+       "t": "mawaddatan",
+       "g": "affection"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "قَدِيرٌ",
+       "t": "qadīrun",
+       "g": "is Able"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "غَفُورٌ",
+       "t": "ghafūrun",
+       "g": "is Forgiving"
+      },
+      {
+       "a": "رَّحِيمٌ",
+       "t": "raḥīm",
+       "g": "Merciful"
+      }
+     ],
+     "sense": "After the command to break with hostile enemies, the surah leaves room for the relationship to change: Allah may yet put affection between believers and people they currently count as enemies. The possibility is anchored in two of Allah's names, powerful enough to bring it about and forgiving enough to let past hostility be set aside.",
+     "notes": [
+      {
+       "t": "A perhaps from Allah is read by the grammarians as carrying the weight of near-certainty rather than open possibility, since what Allah undertakes does not fail.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A door is left open for reconciliation with a hostile idolater elsewhere too: if one of them asks for protection, it is to be given so he can hear the Qur'an, before he is returned to safety.",
+       "lvl": "quran",
+       "src": "9:6"
+      }
+     ],
+     "links": [
+      {
+       "ref": "9:6",
+       "why": "shows the same principle in practice, protection extended to an individual enemy even while the general state of hostility continues"
+      }
+     ]
+    },
+    "8": {
+     "words": [
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يَنْهَىٰكُمُ",
+       "t": "yanhākumu",
+       "g": "does forbid you"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَنِ",
+       "t": "ʿani",
+       "g": "from"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "لَمْ",
+       "t": "lam",
+       "g": "have not"
+      },
+      {
+       "a": "يُقَٰتِلُوكُمْ",
+       "t": "yuqātilūkum",
+       "g": "fought you"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلدِّينِ",
+       "t": "ad-dīni",
+       "g": "the religion"
+      },
+      {
+       "a": "وَلَمْ",
+       "t": "wa-lam",
+       "g": "and have not"
+      },
+      {
+       "a": "يُخْرِجُوكُم",
+       "t": "yukhrijūkum",
+       "g": "driven you out"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "دِيَٰرِكُمْ",
+       "t": "diyārikum",
+       "g": "your homes"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "تَبَرُّوهُمْ",
+       "t": "tabarrūhum",
+       "g": "you deal kindly with them"
+      },
+      {
+       "a": "وَتُقْسِطُوٓا۟",
+       "t": "wa-tuqsiṭū",
+       "g": "and act justly"
+      },
+      {
+       "a": "إِلَيْهِمْ",
+       "t": "ilayhim",
+       "g": "toward them"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "يُحِبُّ",
+       "t": "yuḥibbu",
+       "g": "loves"
+      },
+      {
+       "a": "ٱلْمُقْسِطِينَ",
+       "t": "al-muqsiṭīn",
+       "g": "those who act justly"
+      }
+     ],
+     "sense": "The prohibition on allying with Allah's enemies is not a prohibition on kindness toward everyone outside the faith. Allah does not forbid dealing well and justly with people who have not fought the believers over religion or driven them from their homes; He loves those who act justly, without narrowing that love to believers alone.",
+     "notes": [
+      {
+       "t": "Asma bint Abi Bakr asked the Prophet ﷺ whether she could receive and be kind to her mother, who had come to Medina not yet a believer; he told her to keep the tie, and commentators connect this verse to that ruling.",
+       "lvl": "sunnah",
+       "src": "Bukhari, Book of Gifts, from Asma bint Abi Bakr"
+      },
+      {
+       "t": "The call to justice even toward people who are not allies is made directly elsewhere: hatred for a people must not turn someone away from acting justly.",
+       "lvl": "quran",
+       "src": "5:8"
+      },
+      {
+       "t": "The root for justice, q-s-t, used here for those who act justly, is set against the root for wrongdoing, z-l-m, that closes the next verse, a deliberate contrast between the two groups.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:9",
+       "why": "the paired verse, naming exactly who this permission for kindness does not cover"
+      }
+     ]
+    },
+    "9": {
+     "words": [
+      {
+       "a": "إِنَّمَا",
+       "t": "innamā",
+       "g": "only"
+      },
+      {
+       "a": "يَنْهَىٰكُمُ",
+       "t": "yanhākumu",
+       "g": "does forbid you"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَنِ",
+       "t": "ʿani",
+       "g": "from"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those who"
+      },
+      {
+       "a": "قَٰتَلُوكُمْ",
+       "t": "qātalūkum",
+       "g": "fought you"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "ٱلدِّينِ",
+       "t": "ad-dīni",
+       "g": "the religion"
+      },
+      {
+       "a": "وَأَخْرَجُوكُم",
+       "t": "wa-akhrajūkum",
+       "g": "and drove you out"
+      },
+      {
+       "a": "مِّن",
+       "t": "min",
+       "g": "from"
+      },
+      {
+       "a": "دِيَٰرِكُمْ",
+       "t": "diyārikum",
+       "g": "your homes"
+      },
+      {
+       "a": "وَظَٰهَرُوا۟",
+       "t": "wa-ẓāharū",
+       "g": "and supported"
+      },
+      {
+       "a": "عَلَىٰٓ",
+       "t": "ʿalā",
+       "g": "in"
+      },
+      {
+       "a": "إِخْرَاجِكُمْ",
+       "t": "ikhrājikum",
+       "g": "your expulsion"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "تَوَلَّوْهُمْ",
+       "t": "tawallawhum",
+       "g": "you ally with them"
+      },
+      {
+       "a": "وَمَن",
+       "t": "wa-man",
+       "g": "and whoever"
+      },
+      {
+       "a": "يَتَوَلَّهُمْ",
+       "t": "yatawallahum",
+       "g": "allies with them"
+      },
+      {
+       "a": "فَأُو۟لَٰٓئِكَ",
+       "t": "fa-ulāʾika",
+       "g": "then those"
+      },
+      {
+       "a": "هُمُ",
+       "t": "humu",
+       "g": "they"
+      },
+      {
+       "a": "ٱلظَّٰلِمُونَ",
+       "t": "aẓ-ẓālimūn",
+       "g": "are the wrongdoers"
+      }
+     ],
+     "sense": "The line is drawn precisely here: the ban is on people who fought the believers over religion, drove them from their homes, or backed others in doing so. Allying with that group, and only that group, is what the earlier verses were warning against, and whoever allies with them is named among the wrongdoers.",
+     "notes": [
+      {
+       "t": "Innama, only, restricts the ban that follows to a named group, in contrast with the wider set of people the previous verse permits kindness toward.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "A similar restriction on taking allies is made regarding people who turn back to open hostility, naming the point at which the tie must be cut.",
+       "lvl": "quran",
+       "src": "4:89"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:1",
+       "why": "returns to the surah's opening verb for forbidden alliance, now defined by exactly who counts as the enemy meant there"
+      }
+     ]
+    },
+    "10": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O you"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "ءَامَنُوٓا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "جَآءَكُمُ",
+       "t": "jāʾakumu",
+       "g": "come to you"
+      },
+      {
+       "a": "ٱلْمُؤْمِنَٰتُ",
+       "t": "al-muʾminātu",
+       "g": "believing women"
+      },
+      {
+       "a": "مُهَٰجِرَٰتٍ",
+       "t": "muhājirātin",
+       "g": "as emigrants"
+      },
+      {
+       "a": "فَٱمْتَحِنُوهُنَّ",
+       "t": "fa-mtaḥinūhunna",
+       "g": "then test them"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "أَعْلَمُ",
+       "t": "aʿlamu",
+       "g": "knows best"
+      },
+      {
+       "a": "بِإِيمَٰنِهِنَّ",
+       "t": "bi-īmānihinna",
+       "g": "their faith"
+      },
+      {
+       "a": "فَإِنْ",
+       "t": "fa-in",
+       "g": "then if"
+      },
+      {
+       "a": "عَلِمْتُمُوهُنَّ",
+       "t": "ʿalimtumūhunna",
+       "g": "you know them"
+      },
+      {
+       "a": "مُؤْمِنَٰتٍ",
+       "t": "muʾminātin",
+       "g": "to be believers"
+      },
+      {
+       "a": "فَلَا",
+       "t": "fa-lā",
+       "g": "then do not"
+      },
+      {
+       "a": "تَرْجِعُوهُنَّ",
+       "t": "tarjiʿūhunna",
+       "g": "return them"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "ٱلْكُفَّارِ",
+       "t": "al-kuffār",
+       "g": "the disbelievers"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "هُنَّ",
+       "t": "hunna",
+       "g": "they"
+      },
+      {
+       "a": "حِلٌّ",
+       "t": "ḥillun",
+       "g": "lawful"
+      },
+      {
+       "a": "لَّهُمْ",
+       "t": "lahum",
+       "g": "for them"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "nor"
+      },
+      {
+       "a": "هُمْ",
+       "t": "hum",
+       "g": "they"
+      },
+      {
+       "a": "يَحِلُّونَ",
+       "t": "yaḥillūna",
+       "g": "are lawful"
+      },
+      {
+       "a": "لَهُنَّ",
+       "t": "lahunna",
+       "g": "for them"
+      },
+      {
+       "a": "وَءَاتُوهُم",
+       "t": "wa-ātūhum",
+       "g": "and give them"
+      },
+      {
+       "a": "مَّآ",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "أَنفَقُوا۟",
+       "t": "anfaqū",
+       "g": "they spent"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and no"
+      },
+      {
+       "a": "جُنَاحَ",
+       "t": "junāḥa",
+       "g": "blame"
+      },
+      {
+       "a": "عَلَيْكُمْ",
+       "t": "ʿalaykum",
+       "g": "upon you"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "تَنكِحُوهُنَّ",
+       "t": "tankiḥūhunna",
+       "g": "you marry them"
+      },
+      {
+       "a": "إِذَآ",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "ءَاتَيْتُمُوهُنَّ",
+       "t": "ātaytumūhunna",
+       "g": "you give them"
+      },
+      {
+       "a": "أُجُورَهُنَّ",
+       "t": "ujūrahunna",
+       "g": "their dowries"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and do not"
+      },
+      {
+       "a": "تُمْسِكُوا۟",
+       "t": "tumsikū",
+       "g": "hold"
+      },
+      {
+       "a": "بِعِصَمِ",
+       "t": "biʿiṣami",
+       "g": "to the marriage ties"
+      },
+      {
+       "a": "ٱلْكَوَافِرِ",
+       "t": "al-kawāfiri",
+       "g": "of disbelieving women"
+      },
+      {
+       "a": "وَسْـَٔلُوا۟",
+       "t": "wasʾalū",
+       "g": "and ask"
+      },
+      {
+       "a": "مَآ",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "أَنفَقْتُمْ",
+       "t": "anfaqtum",
+       "g": "you have spent"
+      },
+      {
+       "a": "وَلْيَسْـَٔلُوا۟",
+       "t": "walyasʾalū",
+       "g": "and let them ask"
+      },
+      {
+       "a": "مَآ",
+       "t": "mā",
+       "g": "what"
+      },
+      {
+       "a": "أَنفَقُوا۟",
+       "t": "anfaqū",
+       "g": "they have spent"
+      },
+      {
+       "a": "ذَٰلِكُمْ",
+       "t": "dhālikum",
+       "g": "that"
+      },
+      {
+       "a": "حُكْمُ",
+       "t": "ḥukmu",
+       "g": "is the judgment"
+      },
+      {
+       "a": "ٱللَّهِ",
+       "t": "llāhi",
+       "g": "of Allah"
+      },
+      {
+       "a": "يَحْكُمُ",
+       "t": "yaḥkumu",
+       "g": "He judges"
+      },
+      {
+       "a": "بَيْنَكُمْ",
+       "t": "baynakum",
+       "g": "between you"
+      },
+      {
+       "a": "وَٱللَّهُ",
+       "t": "wallāhu",
+       "g": "and Allah"
+      },
+      {
+       "a": "عَلِيمٌ",
+       "t": "ʿalīmun",
+       "g": "is Knowing"
+      },
+      {
+       "a": "حَكِيمٌ",
+       "t": "ḥakīm",
+       "g": "Wise"
+      }
+     ],
+     "sense": "The verse sets a procedure for women who arrive in Medina as believers after Hudaybiyyah: they are to be tested, since only Allah knows their faith with certainty, and once satisfied of it the believers must not send them back to disbelieving husbands, because a marriage bond no longer holds between a believer and a disbeliever. Their former husbands are to be repaid what they spent on the marriage, and a believer may marry such a woman once her dowry is paid. Believers are told not to keep hold of marriages to women who remain disbelievers, with each side to reclaim what it spent, a rule the verse calls Allah's own judgment between people.",
+     "notes": [
+      {
+       "t": "The treaty of Hudaybiyyah required returning migrants who arrived without a guardian's permission; the early Muslims held that clause did not extend to women, and this verse settled the question by setting a different rule for them.",
+       "lvl": "sunnah",
+       "src": "recorded in the seerah accounts of Hudaybiyyah, including the report of al-Miswar ibn Makhramah in Bukhari"
+      },
+      {
+       "t": "The general rule this verse specifies for a newly arrived believing woman, that marriage to an idolater does not stand once she believes, is stated on its own elsewhere.",
+       "lvl": "quran",
+       "src": "2:221"
+      },
+      {
+       "t": "Imtahinu, test them, comes from the same root as the surah's name, al-Mumtahanah, the tested woman, the only surah named for a procedure set out in one of its own verses.",
+       "lvl": "editorial"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:11",
+       "why": "the mirroring rule for the reverse case, when a believer's wife leaves to the disbelievers instead"
+      }
+     ]
+    },
+    "11": {
+     "words": [
+      {
+       "a": "وَإِن",
+       "t": "wa-in",
+       "g": "and if"
+      },
+      {
+       "a": "فَاتَكُمْ",
+       "t": "fātakum",
+       "g": "escapes you"
+      },
+      {
+       "a": "شَىْءٌ",
+       "t": "shayʾun",
+       "g": "anything"
+      },
+      {
+       "a": "مِّنْ",
+       "t": "min",
+       "g": "of"
+      },
+      {
+       "a": "أَزْوَٰجِكُمْ",
+       "t": "azwājikum",
+       "g": "your wives"
+      },
+      {
+       "a": "إِلَى",
+       "t": "ilā",
+       "g": "to"
+      },
+      {
+       "a": "ٱلْكُفَّارِ",
+       "t": "al-kuffār",
+       "g": "the disbelievers"
+      },
+      {
+       "a": "فَعَاقَبْتُمْ",
+       "t": "fa-ʿāqabtum",
+       "g": "and you retaliate"
+      },
+      {
+       "a": "فَـَٔاتُوا۟",
+       "t": "fa-ātū",
+       "g": "then give"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "those whose"
+      },
+      {
+       "a": "ذَهَبَتْ",
+       "t": "dhahabat",
+       "g": "have gone"
+      },
+      {
+       "a": "أَزْوَٰجُهُم",
+       "t": "azwājuhum",
+       "g": "their wives"
+      },
+      {
+       "a": "مِّثْلَ",
+       "t": "mithla",
+       "g": "the equivalent"
+      },
+      {
+       "a": "مَآ",
+       "t": "mā",
+       "g": "of what"
+      },
+      {
+       "a": "أَنفَقُوا۟",
+       "t": "anfaqū",
+       "g": "they spent"
+      },
+      {
+       "a": "وَٱتَّقُوا۟",
+       "t": "wa-taqū",
+       "g": "and fear"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "ٱلَّذِىٓ",
+       "t": "alladhī",
+       "g": "in whom"
+      },
+      {
+       "a": "أَنتُم",
+       "t": "antum",
+       "g": "you"
+      },
+      {
+       "a": "بِهِۦ",
+       "t": "bihi",
+       "g": "-"
+      },
+      {
+       "a": "مُؤْمِنُونَ",
+       "t": "muʾminūn",
+       "g": "believe"
+      }
+     ],
+     "sense": "The reverse case is covered next: if a believer's wife leaves to the disbelievers' side and a subsequent gain comes to the believers, the husband whose wife left is to be given the equivalent of what he had spent on her. The rule runs the same principle in both directions, so that no one's dowry is simply absorbed by whichever side a marriage happens to end up on.",
+     "notes": [
+      {
+       "t": "Faaqabtum ordinarily means to punish or take a turn at something, but here it names a later gain coming to the believers, such as a share of spoils, out of which the compensation described is drawn.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "The distribution of gains of this kind among the believers is the subject of its own ruling elsewhere, the same wartime property this verse assumes a share of.",
+       "lvl": "quran",
+       "src": "8:1"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:10",
+       "why": "the mirror case, believing women whose former disbelieving husbands must be repaid the dowries they had spent"
+      }
+     ]
+    },
+    "12": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O"
+      },
+      {
+       "a": "ٱلنَّبِىُّ",
+       "t": "an-nabiyyu",
+       "g": "Prophet"
+      },
+      {
+       "a": "إِذَا",
+       "t": "idhā",
+       "g": "when"
+      },
+      {
+       "a": "جَآءَكَ",
+       "t": "jāʾaka",
+       "g": "come to you"
+      },
+      {
+       "a": "ٱلْمُؤْمِنَٰتُ",
+       "t": "al-muʾminātu",
+       "g": "believing women"
+      },
+      {
+       "a": "يُبَايِعْنَكَ",
+       "t": "yubāyiʿnaka",
+       "g": "pledging to you"
+      },
+      {
+       "a": "عَلَىٰٓ",
+       "t": "ʿalā",
+       "g": "upon"
+      },
+      {
+       "a": "أَن",
+       "t": "an",
+       "g": "that"
+      },
+      {
+       "a": "لَّا",
+       "t": "lā",
+       "g": "not"
+      },
+      {
+       "a": "يُشْرِكْنَ",
+       "t": "yushrikna",
+       "g": "they associate partners"
+      },
+      {
+       "a": "بِٱللَّهِ",
+       "t": "billāhi",
+       "g": "with Allah"
+      },
+      {
+       "a": "شَيْـًٔا",
+       "t": "shayʾan",
+       "g": "anything"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَسْرِقْنَ",
+       "t": "yasriqna",
+       "g": "they steal"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَزْنِينَ",
+       "t": "yaznīna",
+       "g": "they commit adultery"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَقْتُلْنَ",
+       "t": "yaqtulna",
+       "g": "they kill"
+      },
+      {
+       "a": "أَوْلَٰدَهُنَّ",
+       "t": "awlādahunna",
+       "g": "their children"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَأْتِينَ",
+       "t": "yaʾtīna",
+       "g": "they bring"
+      },
+      {
+       "a": "بِبُهْتَٰنٍ",
+       "t": "bibuhtānin",
+       "g": "a slander"
+      },
+      {
+       "a": "يَفْتَرِينَهُۥ",
+       "t": "yaftarīnahu",
+       "g": "they invent it"
+      },
+      {
+       "a": "بَيْنَ",
+       "t": "bayna",
+       "g": "between"
+      },
+      {
+       "a": "أَيْدِيهِنَّ",
+       "t": "aydīhinna",
+       "g": "their hands"
+      },
+      {
+       "a": "وَأَرْجُلِهِنَّ",
+       "t": "wa-arjulihinna",
+       "g": "and their feet"
+      },
+      {
+       "a": "وَلَا",
+       "t": "wa-lā",
+       "g": "and not"
+      },
+      {
+       "a": "يَعْصِينَكَ",
+       "t": "yaʿṣīnaka",
+       "g": "they disobey you"
+      },
+      {
+       "a": "فِى",
+       "t": "fī",
+       "g": "in"
+      },
+      {
+       "a": "مَعْرُوفٍ",
+       "t": "maʿrūfin",
+       "g": "what is right"
+      },
+      {
+       "a": "فَبَايِعْهُنَّ",
+       "t": "fa-bāyiʿhunna",
+       "g": "then accept their pledge"
+      },
+      {
+       "a": "وَٱسْتَغْفِرْ",
+       "t": "wa-staghfir",
+       "g": "and ask forgiveness"
+      },
+      {
+       "a": "لَهُنَّ",
+       "t": "lahunna",
+       "g": "for them"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "إِنَّ",
+       "t": "inna",
+       "g": "indeed"
+      },
+      {
+       "a": "ٱللَّهَ",
+       "t": "allāha",
+       "g": "Allah"
+      },
+      {
+       "a": "غَفُورٌ",
+       "t": "ghafūrun",
+       "g": "is Forgiving"
+      },
+      {
+       "a": "رَّحِيمٌ",
+       "t": "raḥīm",
+       "g": "Merciful"
+      }
+     ],
+     "sense": "The Prophet ﷺ is given the terms on which believing women pledge allegiance to him: no associating partners with Allah, no theft, no adultery, no killing their children, no fabricated slander, and obedience to him in what is right. He is told to accept the pledge on those terms and to ask forgiveness for the women who make it.",
+     "notes": [
+      {
+       "t": "The terms listed here match the reports of the pledge women made to the Prophet ﷺ, including after the conquest of Mecca, describing the same conditions in the same order.",
+       "lvl": "sunnah",
+       "src": "Bukhari, Book of Tafsir, from Aisha"
+      },
+      {
+       "t": "A slander invented between their hands and feet is read by the exegetes as a woman falsely attributing to her husband a child that is not his, the phrase locating the fabrication in a pregnancy carried and a child held.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Not killing their children renounces, in the women's own words, the pre-Islamic practice of burying infant daughters alive, condemned on its own elsewhere.",
+       "lvl": "quran",
+       "src": "16:58-59"
+      }
+     ],
+     "links": [
+      {
+       "ref": "81:8-9",
+       "why": "gives the buried girl's own side, asked what crime she was killed for, the practice this pledge renounces from the mother's side"
+      },
+      {
+       "ref": "49:12",
+       "why": "the same root for fabrication used here for slander against a husband is extended there to backbiting among believers generally"
+      }
+     ]
+    },
+    "13": {
+     "words": [
+      {
+       "a": "يَٰٓأَيُّهَا",
+       "t": "yā-ayyuhā",
+       "g": "O you"
+      },
+      {
+       "a": "ٱلَّذِينَ",
+       "t": "alladhīna",
+       "g": "who"
+      },
+      {
+       "a": "ءَامَنُوا۟",
+       "t": "āmanū",
+       "g": "believe"
+      },
+      {
+       "a": "لَا",
+       "t": "lā",
+       "g": "do not"
+      },
+      {
+       "a": "تَتَوَلَّوْا۟",
+       "t": "tatawallaw",
+       "g": "take as allies"
+      },
+      {
+       "a": "قَوْمًا",
+       "t": "qawman",
+       "g": "a people"
+      },
+      {
+       "a": "غَضِبَ",
+       "t": "ghaḍiba",
+       "g": "has become angry"
+      },
+      {
+       "a": "ٱللَّهُ",
+       "t": "allāhu",
+       "g": "Allah"
+      },
+      {
+       "a": "عَلَيْهِمْ",
+       "t": "ʿalayhim",
+       "g": "with them"
+      },
+      {
+       "a": "قَدْ",
+       "t": "qad",
+       "g": "certainly"
+      },
+      {
+       "a": "يَئِسُوا۟",
+       "t": "yaʾisū",
+       "g": "they have despaired"
+      },
+      {
+       "a": "مِنَ",
+       "t": "mina",
+       "g": "of"
+      },
+      {
+       "a": "ٱلْءَاخِرَةِ",
+       "t": "al-ākhirati",
+       "g": "the Hereafter"
+      },
+      {
+       "a": "كَمَا",
+       "t": "kamā",
+       "g": "just as"
+      },
+      {
+       "a": "يَئِسَ",
+       "t": "yaʾisa",
+       "g": "has despaired"
+      },
+      {
+       "a": "ٱلْكُفَّارُ",
+       "t": "al-kuffāru",
+       "g": "the disbelievers"
+      },
+      {
+       "a": "مِنْ",
+       "t": "min",
+       "g": "of"
+      },
+      {
+       "a": "أَصْحَٰبِ",
+       "t": "aṣḥābi",
+       "g": "the companions"
+      },
+      {
+       "a": "ٱلْقُبُورِ",
+       "t": "al-qubūr",
+       "g": "of the graves"
+      }
+     ],
+     "sense": "The closing verse returns to the surah's opening line, forbidding alliance with a people Allah is angry with. They have despaired of the Hereafter, the comparison says, the way the dead disbelievers in their graves have despaired, having by then seen what they denied and lost any chance to act on it.",
+     "notes": [
+      {
+       "t": "The same warning, almost word for word, is given elsewhere about people who ally themselves with a group Allah is angry with, there aimed at those who kept ties with men expelled for hostility to the Prophet ﷺ.",
+       "lvl": "quran",
+       "src": "58:14"
+      },
+      {
+       "t": "The verse returns to the address and the verb the surah opened with, closing it on the same line it began.",
+       "lvl": "editorial"
+      },
+      {
+       "t": "Commentators differ on what the comparison to the companions of the graves adds: some read it as the dead disbelievers themselves, now certain of the truth and despairing of any further chance to act on it, others take the comparison to rest on the despair alone, without pressing the image of the grave.",
+       "lvl": "debated",
+       "src": "discussed among the exegetes, including at-Tabari and Ibn Kathir"
+      }
+     ],
+     "links": [
+      {
+       "ref": "60:1",
+       "why": "the surah's own opening line, now closing it with the same address and the same forbidden verb"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
