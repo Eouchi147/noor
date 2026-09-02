@@ -18,7 +18,7 @@ translated in the kid's codex").
 ## 1. How the system works
 
 * Corpus: `i18n/text/en.json` = `{"_meta":…, "s": {key: englishString}}`.
-  13,538 strings, 224,694 words. Keys are stable content hashes, so a pack
+  14,182 strings, 228,721 words. Keys are stable content hashes, so a pack
   entry survives page edits only while the English text is byte-identical.
 * Key = FNV-1a 32-bit twice, seeds `0x811C9DC5` and `0x7B5C1A9F`, over the
   UTF-16 code units of the whitespace-normalised string
@@ -29,13 +29,13 @@ translated in the kid's codex").
 * Packs: `i18n/text/<code>.json` = `{"_meta":{"language","base","coverage"},
   "s":{key: translation}}`, minified, `ensure_ascii=False`. Languages:
   ar ur fr es de ru tr id hi bn fa prs pa ps ha so ku sw zh ja ko.
-* Runtime: `assets/noor-text.js` fetches `/i18n/text/<code>.json?v=84` with
+* Runtime: `assets/noor-text.js` fetches `/i18n/text/<code>.json?v=85` with
   `cache: "force-cache"` and swaps every matching text node (MutationObserver,
   so JS-rendered text too). Untranslated strings simply stay English.
   **Every time packs change, bump `PACK_V` (the `?v=` number) in
   `assets/noor-text.js` and `V` in `sw.js`, and ship both files with the packs;
-  otherwise returning readers keep the old packs forever.** Current: v=84 and
-  noor-v113.
+  otherwise returning readers keep the old packs forever.** Current: v=85 and
+  noor-v114.
 * `i18n/text/priority.json` (4,050 keys) is the old "first strings" list; the
   packs at ~4,016 entries (tr id hi bn fa pa) hold exactly that set. `qa.json`
   is a pseudo-locale for tests. `ui-en.json`/`ui-delta.json` are older UI
@@ -45,10 +45,16 @@ translated in the kid's codex").
   `python3 /tmp/vercelish.py <repo> 8433`, see tests/anime.mjs header for the
   same server), `scripts/extract-text.py` (re-harvests the corpus, see §4).
 
-## 2. Coverage on 2 Sep 2026 (after the repair below)
+## 2. Coverage at the end of 2 Sep 2026
 
-    ar 100%  fr 100%  prs 100%  es 72%  de 71%  ru 71%  ur 7%
+    corpus 14,182 strings, 228,721 words
+    ar 100%  fr 100%  prs 100%  es 72%  de 72%  ru 71%  ur 7%
     tr id hi bn fa pa 5%  ps ha so ku sw zh ja ko ~0% (only pass-through strings)
+
+The daily light library is separate from the corpus and lives in
+`lights/i18n/<lang>.json`: 350 cards each, done for ar de es fr prs ru.
+Every other language gets the Lantern's translation of the day at request time
+(see api/illuminations.js, function `speak`), cached once per language per day.
 
 ## 3. The batch procedure that worked (de, ru, prs, and the kids strings)
 
@@ -79,14 +85,15 @@ Allah/Allahs, ru Аллах declined, prs الله). No em or en dashes anywhere
 
 ## 4. What is waiting, in order
 
-### 4a. The kids wing in every language (re-prioritised by Sam on 2 Sep 2026)
-`kids.html` and `kids/*.html` (15 rooms plus the hub). The six complete
-languages already carry them. For the other 15 languages: harvest the kids
-strings (they are in the corpus; filter `scripts/extract-text.py` to the kids
-pages or take every key whose string appears in those files), batch, translate,
-merge. Watch the runtime strings the hub renders from JS (Noor's lines, the
-Little Mushaf interface, surah titles and kid meanings): they are in the corpus
-under the same keys.
+### 4a. DONE on 2 Sep 2026: the kids wing is in the corpus
+`scripts/harvest-kids.mjs` opens the hub and all fifteen rooms in a browser,
+plays them, folds in the per-room sidecar lists, and adds what it finds to
+`i18n/text/en.json` without ever removing a key. It found 644 new strings
+(4,027 words), now translated into ar de es fr prs ru. Two things to know if
+you run it again: it must never click a language button (it is guarded, and the
+guard is why the first run had to be thrown away), and the sidecars live in
+`/root/mushaf/kids/strings/` in the session that built the rooms, so pass
+`NOOR_KIDS_STRINGS` if they are somewhere else.
 
 ### 4b. Re-translate what was stripped from es, de, ru
 `i18n/retranslate.json` lists the keys (es 3,632 keys / 63,869 words; de 4,111
@@ -100,15 +107,13 @@ the batch procedure on exactly these keys (build the job file from the list,
 not from `todo`, if you want them first). Positions 6634 to 12995 of the old
 packs were verified right and kept.
 
-### 4c. The corpus is stale
-A fresh harvest (`scripts/extract-text.py`, which OVERWRITES
-`i18n/text/en.json`; run it on a copy or diff first) finds 14,677 unique
-strings against the 13,538 in the corpus: about 1,647 real sentences on
-non-landing pages (44,780 words) that currently show in English in every
-language, and about 2,342 templated strings from the dictionary landing pages
-(`words/*.html` style pages). When re-harvesting, keep every existing key
-(the translations hang off them) and add the new ones; then translate the
-delta for the complete languages first (ar fr prs, then es de ru).
+### 4c. The corpus is still short of the site
+Most of the 44,780 words that were missing turned out to be the daily light
+library, now handled separately (§2). What remains is roughly a thousand
+sentences on the deeper pages plus about 2,300 templated strings from the
+dictionary landing pages. `scripts/harvest-kids.mjs` is the pattern to copy:
+open the pages in a browser, add, never remove. `scripts/extract-text.py`
+OVERWRITES `i18n/text/en.json`, so diff it rather than running it in place.
 
 ### 4d. The remaining languages to 100%
 Sam's tiers: after the kids wing, whichever languages matter most to his
@@ -122,6 +127,16 @@ packs, nothing loads it), `locales/en.json`, `i18n/text/_esparts`,
 `i18n/text/_frparts`, `i18n/text/trparts` (legacy line-format parts, already
 folded in), and the stray directory `study 2/` (a duplicate of `study/`).
 Old GSAP files in `assets/` are unreferenced since the anime.js layer.
+
+### 4f. Light packs for the remaining fifteen languages
+`/root/mushaf/lights/` holds the job files (`job-00.json` .. `job-11.json`,
+30 cards each) and `BRIEF.md`, the contract. One agent per three job files
+worked well. Assemble with the audit in this file's history: same ids, same
+keys, no em or en dashes, every number in the English present in the
+translation, the honorific count per field unchanged, and the four character
+limits (c 26, t 96, s 1200, d 64). Write the result as
+`{"n":350,"lang":"<code>","lights":{...}}` to `lights/i18n/<code>.json`, then
+`node tests/lightlang.mjs`.
 
 ## 5. Where the tooling from the 2 Sep session lived
 The one-off scripts (`god_allah.py`, `rekey.py`, `strip_bad_packs.py`) were in
