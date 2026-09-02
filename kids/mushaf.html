@@ -27,94 +27,187 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/assets/kids-engine.css?v=1">
+<script src="/assets/kids-engine.js?v=1"></script>
 <script src="/noor-fx.js" defer></script>
 <script src="/assets/noor-text.js?v=83" defer></script>
 <script src="/assets/noor-anime.js?v=1" defer></script>
 <style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
 <style>
-:root{--night:#0d1633;--night2:#1e3a8a;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416;--kf:"Fredoka","Inter",system-ui,sans-serif}
-body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:10px}
+:root{--gold:#E9C86A;--goldd:#C9A227;--goldk:#8a6a1c;--parchment:#FFFEF7;--ink:#2C2416;--kf:"Fredoka","Inter",system-ui,sans-serif}
+body{margin:0;position:relative;background:#0a1128;color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh;line-height:1.5}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:12px}
 .font-amiri{font-family:Amiri,serif}
-header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
-.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
-.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
-.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
-.backlink:hover{color:var(--gold)}
-main{max-width:640px;margin:0 auto;padding:1.2rem 1rem 3rem}
+/* ---------- the night sky: three layers that move at different speeds ---------- */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(120% 60% at 50% -12%,rgba(233,200,106,.17),transparent 60%),radial-gradient(70% 45% at 8% 100%,rgba(30,58,138,.75),transparent 62%),radial-gradient(60% 40% at 92% 96%,rgba(56,189,248,.14),transparent 60%),linear-gradient(178deg,#070e24 0%,#0d1633 46%,#16244d 100%)}
+.sky .far,.sky .near{position:absolute;inset:-6% 0 0 0}
+.sky .far{animation:drift 120s ease-in-out infinite alternate}
+.sky .near{animation:drift 70s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateY(3%)}}
+.st{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw var(--td,4s) ease-in-out var(--tl,0s) infinite}
+.near .st{width:3px;height:3px;box-shadow:0 0 6px 1px rgba(255,255,255,.5)}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.95}}
+.moon{position:absolute;top:84px;right:6%;z-index:0;width:54px;height:54px;pointer-events:none;filter:drop-shadow(0 0 16px rgba(233,200,106,.55));animation:moon 9s ease-in-out infinite}
+@keyframes moon{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+.sky .haze{position:absolute;left:0;right:0;bottom:0;height:28vh;background:linear-gradient(rgba(10,17,40,0),rgba(7,12,32,.92))}
+/* ---------- header: a plain block ---------- */
+header{position:relative;z-index:2;background:rgba(10,17,40,.55);border-bottom:1px solid rgba(233,200,106,.15)}
+.hwrap{max-width:640px;margin:0 auto;padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.wordmark{display:inline-flex;align-items:center;min-height:44px;color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em;text-shadow:0 0 12px rgba(233,200,106,.35)}
+.backlink{display:inline-flex;align-items:center;gap:.35rem;min-height:44px;padding:.4rem 1rem;border-radius:999px;border:1px solid rgba(233,200,106,.38);background:rgba(255,254,247,.06);color:var(--parchment);font-family:var(--kf);font-weight:600;font-size:.86rem;text-decoration:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 3px 0 rgba(4,6,18,.4);transition:background .2s,color .2s,transform .15s,box-shadow .15s}
+.backlink:hover,.backlink:focus-visible{background:rgba(233,200,106,.18);color:var(--gold)}
+.backlink:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 0 rgba(4,6,18,.4)}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:1.1rem 1rem 3rem}
+/* ---------- hero ---------- */
 .hero{text-align:center}
-.hero .ic{width:64px;height:64px;margin:0 auto .4rem;filter:drop-shadow(0 0 16px rgba(233,200,106,.5))}
-.hero h1{font-family:var(--kf);font-weight:700;font-size:clamp(30px,8vw,44px);margin:.1em 0;color:var(--gold);letter-spacing:-.01em}
-.hero .lede{font-size:15.5px;line-height:1.55;color:rgba(255,254,247,.88);max-width:34rem;margin:0 auto}
-.prog{margin:1rem auto .6rem;max-width:26rem;text-align:center;font-family:var(--kf);font-weight:600;font-size:14.5px;color:var(--gold)}
-.bar{height:10px;border-radius:999px;background:rgba(255,254,247,.1);border:1px solid rgba(233,200,106,.25);overflow:hidden;margin:.4rem auto 0}
-.bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--goldd),var(--gold));transition:width .6s cubic-bezier(.22,1,.36,1)}
+.hero .ic{width:min(190px,54vw);height:auto;margin:0 auto .2rem;display:block;filter:drop-shadow(0 14px 22px rgba(3,5,16,.6))}
+.hero .ic .tw{animation:tw var(--td,3s) ease-in-out var(--tl,0s) infinite;transform-box:fill-box;transform-origin:center}
+.hero h1{font-family:var(--kf);font-weight:700;font-size:clamp(32px,8.5vw,46px);margin:.05em 0 .1em;color:var(--gold);letter-spacing:-.01em;line-height:1.1;text-shadow:0 2px 0 rgba(5,8,24,.35),0 0 26px rgba(233,200,106,.4)}
+.hero .lede{font-size:15.5px;line-height:1.6;color:rgba(255,254,247,.9);max-width:34rem;margin:0 auto}
+.prog{margin:1rem auto .5rem;max-width:26rem;padding:.7rem 1rem .85rem;border-radius:18px;background:rgba(8,14,44,.55);border:1px solid rgba(233,200,106,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 22px rgba(3,5,16,.35);text-align:center;font-family:var(--kf);font-weight:600;font-size:15px;color:var(--gold)}
+.prog b{color:#fff;font-size:1.15em}
+.bar{height:12px;border-radius:999px;background:rgba(255,254,247,.1);border:1px solid rgba(233,200,106,.3);overflow:hidden;margin:.45rem auto 0;box-shadow:inset 0 2px 4px rgba(0,0,0,.35)}
+.bar i{display:block;height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--goldd),var(--gold) 60%,#fff3c4);box-shadow:0 0 10px rgba(233,200,106,.6);transform:scaleX(0);transform-origin:0 50%}
+[dir="rtl"] .bar i{transform-origin:100% 50%}
 .screen{display:none}.screen.on{display:block;animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+/* ---------- the shelf of surahs ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
 @media(min-width:560px){.grid{grid-template-columns:1fr 1fr 1fr}}
-.sc{position:relative;display:flex;flex-direction:column;align-items:center;gap:.2rem;padding:.95rem .6rem .8rem;border-radius:20px;border:1.5px solid rgba(233,200,106,.28);background:linear-gradient(165deg,rgba(255,254,247,.08),rgba(255,254,247,.03));color:var(--parchment);text-align:center;transition:transform .25s cubic-bezier(.34,1.56,.64,1),border-color .25s,box-shadow .25s}
-.sc:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(233,200,106,.7);box-shadow:0 14px 30px rgba(4,6,18,.4)}
-.sc .sar{font-family:Amiri,serif;font-size:1.9rem;line-height:1.2;color:var(--gold)}
-.sc .snm{font-family:var(--kf);font-weight:700;font-size:1rem}
-.sc .sen{font-size:.72rem;color:rgba(255,254,247,.65)}
-.sc .scount{margin-top:.35rem;font-family:var(--kf);font-size:.72rem;font-weight:600;color:rgba(255,254,247,.75)}
-.sc .stars{display:flex;gap:2px;margin-top:.15rem;flex-wrap:wrap;justify-content:center}
-.sc .stars i{width:9px;height:9px;border-radius:50%;background:rgba(255,254,247,.14);border:1px solid rgba(233,200,106,.35)}
-.sc .stars i.on{background:var(--gold);box-shadow:0 0 6px rgba(233,200,106,.7)}
-.sc.full{border-color:var(--gold);box-shadow:0 0 22px rgba(233,200,106,.3)}
-.sc.full::after{content:"\2726";position:absolute;top:.45rem;inset-inline-end:.55rem;color:var(--gold);font-size:.9rem}
-.stop{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.2rem 0 .8rem;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;gap:.4rem;min-height:40px;padding:.4rem .95rem;border-radius:999px;border:1px solid rgba(233,200,106,.4);background:rgba(20,16,10,.35);color:var(--gold);font-family:var(--kf);font-weight:600;font-size:.9rem;text-decoration:none;transition:background .2s,transform .2s}
-.pill:hover{background:rgba(233,200,106,.16);transform:translateY(-1px)}
-.pill.solid{background:linear-gradient(135deg,var(--goldd),var(--gold));color:#1A160F;border-color:transparent}
-.pill.solid.busy{opacity:.75}
-.shead{text-align:center;margin:.2rem 0 1rem}
-.shead .sar{font-family:Amiri,serif;font-size:2.6rem;line-height:1.2;color:var(--gold);text-shadow:0 0 22px rgba(233,200,106,.35)}
-.shead h2{font-family:var(--kf);font-weight:700;font-size:1.6rem;margin:.05em 0 0}
-.shead .about{font-size:.92rem;line-height:1.55;color:rgba(255,254,247,.82);max-width:30rem;margin:.4rem auto 0}
-.basmala{text-align:center;font-family:Amiri,serif;font-size:1.7rem;color:rgba(255,254,247,.85);margin:.2rem 0 .6rem}
-.vlist{display:flex;flex-direction:column;gap:.7rem}
-.v{position:relative;background:var(--parchment);color:var(--ink);border-radius:20px;border:2px solid rgba(201,162,39,.55);padding:.9rem .95rem .85rem;box-shadow:0 12px 30px rgba(3,5,16,.35);transition:box-shadow .3s,border-color .3s}
-.v.playing{border-color:var(--gold);box-shadow:0 0 0 5px rgba(233,200,106,.22),0 12px 30px rgba(3,5,16,.35)}
-.v.known{border-color:var(--goldd);background:linear-gradient(165deg,#FFFEF7,#FFF6D6)}
-.v .num{position:absolute;top:-11px;inset-inline-start:14px;font-family:var(--kf);font-weight:700;font-size:.72rem;letter-spacing:.08em;color:#1A160F;background:linear-gradient(135deg,var(--goldd),var(--gold));border-radius:999px;padding:.15rem .6rem}
-.v .ar{font-family:Amiri,serif;font-size:clamp(26px,7vw,34px);line-height:1.9;text-align:center;margin:.35rem 0 .2rem;direction:rtl}
-.v .tr{font-size:.9rem;font-weight:600;color:#6b5a2e;text-align:center;letter-spacing:.01em}
-.v .mn{font-size:.95rem;line-height:1.5;color:#3d3320;text-align:center;margin:.35rem 0 .6rem}
-.v .row{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap}
-.v .play,.v .know{display:inline-flex;align-items:center;gap:.4rem;min-height:40px;padding:.4rem .9rem;border-radius:999px;font-family:var(--kf);font-weight:600;font-size:.88rem;border:1.5px solid rgba(201,162,39,.5);background:#fff;color:#1A160F;transition:transform .2s cubic-bezier(.34,1.56,.64,1),background .2s}
-.v .play:hover,.v .know:hover{transform:translateY(-1px)}
-.v .play svg,.v .know svg{width:16px;height:16px}
-.v .play.on{background:var(--gold);border-color:var(--gold)}
-.v .know[aria-pressed="true"]{background:linear-gradient(135deg,var(--goldd),var(--gold));border-color:transparent}
+.sc{position:relative;display:flex;flex-direction:column;align-items:center;gap:.12rem;padding:1rem .55rem .85rem;border-radius:22px;border:1.5px solid rgba(233,200,106,.3);background:linear-gradient(165deg,rgba(255,254,247,.13),rgba(255,254,247,.035));color:var(--parchment);text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 6px 0 rgba(4,6,18,.5),0 14px 28px rgba(3,5,16,.35);transition:transform .25s cubic-bezier(.34,1.56,.64,1),border-color .25s,box-shadow .2s}
+.sc:hover,.sc:focus-visible{transform:translateY(-4px);border-color:rgba(233,200,106,.75)}
+.sc:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 2px 0 rgba(4,6,18,.5),0 8px 16px rgba(3,5,16,.35)}
+.sc .sar{font-family:Amiri,serif;font-size:clamp(1.55rem,8.6vw,2rem);line-height:1.25;color:var(--gold);text-shadow:0 0 14px rgba(233,200,106,.35)}
+.sc .snm{font-family:var(--kf);font-weight:700;font-size:1.02rem}
+.sc .sen{font-size:.74rem;color:rgba(255,254,247,.7)}
+.sc .stars{display:flex;gap:3px;margin-top:.4rem;flex-wrap:wrap;justify-content:center}
+.sc .stars i{display:block;width:13px;height:13px;background:rgba(255,254,247,.16);clip-path:polygon(50% 0,63% 37%,100% 50%,63% 63%,50% 100%,37% 63%,0 50%,37% 37%);transition:background .3s}
+.sc .stars i.on{background:linear-gradient(135deg,#fff3c4,var(--gold) 55%,var(--goldd))}
+.sc .scount{margin-top:.3rem;font-family:var(--kf);font-size:.76rem;font-weight:600;color:rgba(255,254,247,.78)}
+.sc .scount b{color:#fff}
+.sc.full{border-color:var(--gold);background:linear-gradient(165deg,rgba(233,200,106,.3),rgba(233,200,106,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 0 rgba(4,6,18,.5),0 0 26px rgba(233,200,106,.3)}
+.sc.full .scount{color:var(--gold)}
+.sc.full::after{content:"\2726";position:absolute;top:.4rem;inset-inline-end:.55rem;color:var(--gold);font-size:1rem;text-shadow:0 0 8px rgba(233,200,106,.8)}
+.sc.next::before{content:"";position:absolute;inset:-4px;border-radius:26px;border:2px solid rgba(233,200,106,.8);pointer-events:none;animation:halo 2.2s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.025)}}
+.tip{margin:1.4rem auto 0;max-width:34rem;font-size:.86rem;line-height:1.6;color:rgba(255,254,247,.75);text-align:center}
+/* ---------- buttons: chunky, rounded, a darker bottom edge that flattens on press ---------- */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:.5rem 1.05rem;border-radius:18px;border:1.5px solid rgba(233,200,106,.45);background:linear-gradient(180deg,rgba(255,254,247,.14),rgba(255,254,247,.04));color:var(--gold);font-family:var(--kf);font-weight:600;font-size:.95rem;text-decoration:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 5px 0 rgba(4,6,18,.55);transition:transform .15s,box-shadow .15s,background .2s,border-color .2s}
+.pill svg{width:18px;height:18px;flex:none}
+.pill:hover,.pill:focus-visible{background:linear-gradient(180deg,rgba(233,200,106,.22),rgba(233,200,106,.08))}
+.pill:active{transform:translateY(4px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 0 rgba(4,6,18,.55)}
+.pill[aria-pressed="true"]{background:linear-gradient(180deg,rgba(233,200,106,.38),rgba(233,200,106,.16));border-color:var(--gold);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 5px 0 rgba(4,6,18,.55),0 0 18px rgba(233,200,106,.4)}
+.pill.solid{min-height:52px;font-size:1.05rem;background:linear-gradient(180deg,#FFF0B8,var(--gold) 55%,var(--goldd));color:#1A160F;border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 5px 0 var(--goldk),0 0 28px rgba(233,200,106,.45)}
+.pill.solid:hover,.pill.solid:focus-visible{background:linear-gradient(180deg,#FFF6D0,#F2D77E 55%,var(--goldd))}
+.pill.solid:active{transform:translateY(4px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 0 var(--goldk),0 0 28px rgba(233,200,106,.45)}
+.pill.solid.busy{background:linear-gradient(180deg,#fff7d6,#F2D77E)}
+.pill.solid.busy svg{animation:pulse 1s ease-in-out infinite}
+.pill .pa1,.pill.busy .pa0{display:none}.pill.busy .pa1{display:inline}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.25);opacity:.75}}
+.stop{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.1rem 0 .7rem;flex-wrap:wrap}
+.stop #playall{flex:1 1 100%}
+.spk{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(233,200,106,.55);background:linear-gradient(180deg,rgba(255,254,247,.16),rgba(255,254,247,.05));color:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 0 rgba(4,6,18,.55);transition:transform .15s,box-shadow .15s,background .2s;flex:none;vertical-align:middle}
+.spk svg{width:22px;height:22px}
+.spk:hover,.spk:focus-visible{background:rgba(233,200,106,.22)}
+.spk:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(4,6,18,.55)}
+.spk[aria-pressed="true"]{background:linear-gradient(180deg,var(--gold),var(--goldd));color:#1A160F;border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 0 var(--goldk),0 0 22px rgba(233,200,106,.65)}
+.spk[aria-pressed="true"] svg{animation:pulse 1s ease-in-out infinite}
+/* ---------- the surah page ---------- */
+.shead{text-align:center;margin:.3rem 0 .6rem}
+.shead .nrow{display:flex;align-items:center;justify-content:center;gap:.7rem}
+.shead .sar{font-family:Amiri,serif;font-size:2.7rem;line-height:1.25;color:var(--gold);text-shadow:0 0 24px rgba(233,200,106,.4);margin:0}
+.shead h2{font-family:var(--kf);font-weight:700;font-size:1.55rem;margin:.05em 0 0;line-height:1.2}
+.shead h2 .en{color:rgba(255,254,247,.75);font-weight:600;font-size:.8em}
+.shead .about{font-size:.93rem;line-height:1.6;color:rgba(255,254,247,.85);max-width:30rem;margin:.45rem auto 0}
+.hint{display:flex;align-items:flex-start;justify-content:center;gap:.45rem;margin:.6rem auto .5rem;max-width:28rem;font-family:var(--kf);font-weight:600;font-size:.88rem;line-height:1.45;color:var(--gold);text-align:center}
+.hint svg{width:18px;height:18px;flex:none;margin-top:.1em}
+.snest{position:relative;display:flex;justify-content:center;gap:6px;margin:.4rem auto .8rem;padding:.3rem 0}
+.snest::before{content:"";position:absolute;left:14%;right:14%;top:50%;height:2px;background:linear-gradient(90deg,transparent,rgba(233,200,106,.6),transparent)}
+.bead{position:relative;width:34px;height:34px;display:grid;place-items:center}
+.bead i{display:block;width:28px;height:28px;background:rgba(255,254,247,.16);clip-path:polygon(50% 0,63% 37%,100% 50%,63% 63%,50% 100%,37% 63%,0 50%,37% 37%);transition:background .3s,transform .3s}
+.bead.on i{background:linear-gradient(135deg,#fff3c4,var(--gold) 55%,var(--goldd));transform:scale(1.1)}
+.bead.on{filter:drop-shadow(0 0 8px rgba(233,200,106,.8))}
+.basrow{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.2rem 0 .8rem}
+.basmala{font-family:Amiri,serif;font-size:1.75rem;line-height:1.5;color:rgba(255,254,247,.9);margin:0;text-shadow:0 0 14px rgba(233,200,106,.25)}
+.vlist{display:flex;flex-direction:column;gap:1rem}
+.v{position:relative;background:linear-gradient(180deg,#FFFEF7,#FFF8E4);color:var(--ink);border-radius:22px;border:2px solid rgba(201,162,39,.5);padding:1.15rem .95rem .95rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 0 rgba(120,90,20,.3),0 14px 30px rgba(3,5,16,.4);transition:box-shadow .3s,border-color .3s,transform .3s}
+.v.next{transform:translateY(-3px);border-color:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 0 rgba(120,90,20,.3),0 0 0 4px rgba(233,200,106,.25),0 0 30px rgba(233,200,106,.35)}
+.v.playing{border-color:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 0 rgba(120,90,20,.3),0 0 0 5px rgba(233,200,106,.3),0 0 36px rgba(233,200,106,.5)}
+.v.known{border-color:var(--goldd);background:linear-gradient(165deg,#FFFEF7,#FFF0C4)}
+.v.known::after{content:"\2726";position:absolute;top:-13px;inset-inline-end:14px;color:#1A160F;background:linear-gradient(135deg,var(--goldd),var(--gold));border-radius:999px;width:26px;height:26px;display:grid;place-items:center;font-size:.9rem;box-shadow:0 2px 0 var(--goldk)}
+.v .num{position:absolute;top:-12px;inset-inline-start:14px;font-family:var(--kf);font-weight:700;font-size:.74rem;letter-spacing:.06em;color:#1A160F;background:linear-gradient(135deg,var(--goldd),var(--gold));border-radius:999px;padding:.18rem .65rem;box-shadow:0 2px 0 var(--goldk)}
+.v .ar{font-family:Amiri,serif;font-size:clamp(27px,7.2vw,36px);line-height:1.95;text-align:center;margin:.4rem 0 .2rem;direction:rtl}
+.v .tr{font-size:.92rem;font-weight:600;color:#6b5a2e;text-align:center;letter-spacing:.01em;margin:0}
+.v .mn{font-size:.98rem;line-height:1.55;color:#3d3320;text-align:center;margin:.4rem 0 .7rem}
+.v .turn{margin:.1rem auto .7rem;max-width:22rem;text-align:center}
+.v .turn .tt{display:block;font-family:var(--kf);font-weight:700;font-size:1.02rem;color:var(--goldk)}
+.v .turn .tbar{display:block;height:9px;margin:.4rem auto 0;border-radius:999px;background:rgba(201,162,39,.22);overflow:hidden}
+.v .turn .tbar b{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--goldd),var(--gold));transform-origin:0 50%;transform:scaleX(1)}
+[dir="rtl"] .v .turn .tbar b{transform-origin:100% 50%}
+.v .row{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;max-width:24rem;margin:0 auto}
+.v .play,.v .know{flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;min-width:44px;padding:.5rem .8rem;border-radius:18px;font-family:var(--kf);font-weight:600;font-size:.96rem;border:1.5px solid rgba(201,162,39,.55);background:linear-gradient(180deg,#fff,#fbf2d8);color:#1A160F;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 0 #d9c58a;transition:transform .15s,box-shadow .15s,background .2s}
+.v .play:hover,.v .know:hover,.v .play:focus-visible,.v .know:focus-visible{background:linear-gradient(180deg,#fff,#f6e7b8)}
+.v .play:active,.v .know:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 1px 0 #d9c58a}
+.v .play svg,.v .know svg{width:18px;height:18px;flex:none}
+.v .play[aria-pressed="true"]{background:linear-gradient(180deg,var(--gold),var(--goldd));border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 0 var(--goldk),0 0 22px rgba(233,200,106,.6)}
+.v .play[aria-pressed="true"] svg{animation:pulse 1s ease-in-out infinite}
+.v .play .l1,.v .play[aria-pressed="true"] .l0{display:none}.v .play[aria-pressed="true"] .l1{display:inline}
+.v .know[aria-pressed="true"]{background:linear-gradient(135deg,var(--goldd),var(--gold));border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 0 var(--goldk)}
 .v .know[aria-pressed="true"] .k0{display:none}.v .know[aria-pressed="false"] .k1{display:none}
-.done-line{text-align:center;font-family:var(--kf);font-weight:600;font-size:1rem;color:var(--gold);margin:1.1rem 0 0;min-height:1.4em}
-.tip{margin:1.4rem auto 0;max-width:34rem;font-size:.82rem;line-height:1.6;color:rgba(255,254,247,.7);text-align:center}
+.v .hint{color:var(--goldk);margin-bottom:0}
+#bhint{margin-bottom:1.1rem}
+.done-line{text-align:center;font-family:var(--kf);font-weight:600;font-size:1.05rem;color:var(--gold);margin:1.2rem 0 0;min-height:1.4em;line-height:1.5}
+.done-line b{color:#fff}
+.fin{margin:1.2rem auto 0;max-width:30rem;text-align:center;padding:1.3rem 1rem 1.4rem;border-radius:24px;background:linear-gradient(165deg,rgba(233,200,106,.24),rgba(233,200,106,.06));border:1.5px solid rgba(233,200,106,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 40px rgba(233,200,106,.25),0 16px 40px rgba(3,5,16,.4)}
+.fin .fstar{width:72px;height:72px;margin:0 auto .4rem;display:block;filter:drop-shadow(0 0 16px rgba(233,200,106,.8))}
+.fin h3{font-family:var(--kf);font-weight:700;font-size:1.5rem;margin:0 0 .3rem;color:var(--gold);line-height:1.2}
+.fin p{margin:.3rem auto 0;font-size:.98rem;line-height:1.6;color:rgba(255,254,247,.92);max-width:26rem}
+.fin .ref{font-family:var(--kf);font-weight:600;color:var(--gold);font-size:.86rem}
+.fin .pill{margin-top:.9rem}
 .foot{margin-top:2.2rem;text-align:center}
-.foot a{color:var(--gold);text-decoration:none;font-family:var(--kf);font-weight:600}
-.foot .reset{display:block;margin:.6rem auto 0;font-size:.72rem;color:rgba(255,254,247,.45);text-decoration:underline}
+.foot a{display:inline-flex;align-items:center;min-height:44px;padding:.4rem 1rem;color:var(--gold);text-decoration:none;font-family:var(--kf);font-weight:600}
+.foot .reset{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:.3rem auto 0;padding:.4rem 1rem;font-size:.78rem;font-family:var(--kf);color:rgba(255,254,247,.55);text-decoration:underline;border-radius:999px}
+.foot .reset.armed{color:var(--gold);text-decoration:none;border:1px solid rgba(233,200,106,.5);background:rgba(233,200,106,.12)}
+.reset .r1,.reset.armed .r0{display:none}.reset.armed .r1{display:inline}
 .burst{position:fixed;inset:0;pointer-events:none;z-index:50;contain:strict}
-.burst span{position:absolute;left:0;top:0;width:9px;height:9px;background:var(--c,#E9C86A);clip-path:polygon(50% 0,63% 37%,100% 50%,63% 63%,50% 100%,37% 63%,0 50%,37% 37%);animation:pop 1.1s cubic-bezier(.18,.6,.4,1) both}
-@keyframes pop{from{transform:translate(var(--x),var(--y)) scale(1);opacity:1}to{transform:translate(var(--X),var(--Y)) scale(.3) rotate(300deg);opacity:0}}
-@media(prefers-reduced-motion:reduce){.screen.on{animation:none}.burst span{animation:none;display:none}}
+@media(prefers-reduced-motion:reduce){.screen.on,.sky .far,.sky .near,.st,.moon,.hero .ic .tw,.sc.next::before,.pill.solid.busy svg,.v .play[aria-pressed="true"] svg,.spk[aria-pressed="true"] svg{animation:none}.v .turn .tbar{display:none}.sc,.v,.pill,.spk,.v .play,.v .know{transition:none}}
 </style>
 </head>
 <body>
+<div class="sky" aria-hidden="true"><div class="far" id="far"></div><div class="near" id="near"></div><div class="haze"></div></div>
+<svg class="moon" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset="1" stop-color="#C9A227"/></linearGradient></defs><path d="M44 8a26 26 0 1 0 12 44 22 22 0 1 1-12-44Z" fill="url(#mg)"/></svg>
 <header>
 <div class="hwrap">
 <a class="wordmark" href="/index">نُور · LITTLE CODEX</a>
 <a class="backlink" href="/kids">← All games</a>
 </div>
 </header>
-<main>
+<main data-no-anime>
 <section class="hero">
-<svg class="ic" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="#E9C86A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 16c-6-5-14-6-22-4v34c8-2 16-1 22 4 6-5 14-6 22-4V12c-8-2-16-1-22 4Z"/><path d="M32 16v34"/><path d="M15 22c5-1 10-1 14 1M15 30c5-1 10-1 14 1M15 38c5-1 10-1 14 1M35 23c4-2 9-2 14-1M35 31c4-2 9-2 14-1M35 39c4-2 9-2 14-1"/></svg>
+<svg class="ic" viewBox="0 0 160 112" aria-hidden="true">
+<defs>
+<radialGradient id="hg" cx="50%" cy="58%" r="50%"><stop offset="0" stop-color="#E9C86A" stop-opacity=".5"/><stop offset="1" stop-color="#E9C86A" stop-opacity="0"/></radialGradient>
+<linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFEF7"/><stop offset="1" stop-color="#F0E1B4"/></linearGradient>
+<linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a6a1c"/><stop offset=".5" stop-color="#C9A227"/><stop offset="1" stop-color="#6e5314"/></linearGradient>
+<linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5a2b"/><stop offset="1" stop-color="#3f2508"/></linearGradient>
+<linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset="1" stop-color="#E9C86A"/></linearGradient>
+</defs>
+<ellipse cx="80" cy="64" rx="78" ry="44" fill="url(#hg)"/>
+<path d="M10 104h140" stroke="#E9C86A" stroke-opacity=".35" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M44 102 82 64M116 102 78 64" stroke="url(#rg)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M80 40C62 30 42 30 22 37v48c20-6 40-6 58 5 18-11 38-11 58-5V37c-20-7-40-7-58 3Z" fill="url(#cg)"/>
+<path d="M80 45C64 37 47 37 30 42v39c17-4 33-4 50 6 17-10 33-10 50-6V42c-17-5-34-5-50 3Z" fill="url(#pg)" stroke="#C9A227" stroke-opacity=".5"/>
+<path d="M80 45v42" stroke="#8a6a1c" stroke-width="2" stroke-linecap="round"/>
+<g stroke="#C9A227" stroke-opacity=".55" stroke-width="2" stroke-linecap="round" fill="none"><path d="M38 52c10-3 20-3 34-1M38 61c10-3 20-3 34-1M38 70c10-3 20-3 34-1M88 51c14-2 24-2 34 1M88 60c14-2 24-2 34 1M88 69c14-2 24-2 34 1"/></g>
+<path d="M104 33v26l-4-4-4 4V33Z" fill="#2f855a"/>
+<g fill="url(#sg)"><path class="tw" style="--td:3.2s;--tl:-1s" d="M22 20l1.8 4.6 4.6 1.8-4.6 1.8L22 33l-1.8-4.6-4.6-1.8 4.6-1.8Z"/><path class="tw" style="--td:4s;--tl:-2.2s" d="M140 24l1.5 3.9 3.9 1.5-3.9 1.5-1.5 3.9-1.5-3.9-3.9-1.5 3.9-1.5Z"/><path class="tw" style="--td:3.6s;--tl:-.6s" d="M126 8l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z"/><path class="tw" style="--td:4.4s;--tl:-3s" d="M46 12l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z"/></g>
+</svg>
 <h1>The Little Mushaf</h1>
 <p class="lede">Eleven short surahs, one ayah at a time. Read the Arabic, say it after the reciter, learn what it means, and light a star when you can say it by yourself.</p>
 </section>
-<div class="prog"><span id="ptext">Surahs you can say: 0 of 11</span><div class="bar" aria-hidden="true"><i id="pbar"></i></div></div>
+<div class="prog"><span id="ptext"><span class="p0">Surahs you can say: <b id="pnum">0</b> of 11</span><span class="p1" hidden>You can say all eleven surahs. Allahu Akbar!</span></span><div class="bar" aria-hidden="true"><i id="pbar"></i></div></div>
 
 <section class="screen on" id="scr-pick" aria-label="Choose a surah">
 <div class="grid" id="grid"></div>
@@ -123,113 +216,332 @@ main{max-width:640px;margin:0 auto;padding:1.2rem 1rem 3rem}
 
 <section class="screen" id="scr-surah" aria-label="The surah">
 <div class="stop">
-<button class="pill" id="back" type="button">← All surahs</button>
-<button class="pill solid" id="playall" type="button"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Play the whole surah</span></button>
+<button class="pill" id="back" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>All surahs</span></button>
+<button class="pill" id="teacher" type="button" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-4 10 4-10 4Z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg><span>Teacher mode</span></button>
+<button class="pill solid" id="playall" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span class="pa0">Play the whole surah</span><span class="pa1">Stop</span></button>
 </div>
-<div class="shead"><p class="sar" dir="rtl" lang="ar" id="s-ar"></p><h2 id="s-name"></h2><p class="about" id="s-about"></p></div>
-<p class="basmala" dir="rtl" lang="ar" id="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+<p class="hint" id="thint" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-4 10 4-10 4Z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg><span>Teacher mode: Shaykh al-Husary says each ayah slowly, then it is your turn to say it. Then once more.</span></p>
+<p class="hint" id="mhint" role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M22 9l-6 6M16 9l6 6"/></svg><span>Turn the sound on to hear the recitation.</span></p>
+<div class="shead">
+<div class="nrow"><p class="sar" dir="rtl" lang="ar" id="s-ar"></p><button class="spk" id="sayname" type="button" aria-pressed="false" aria-label="Hear the name of the surah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<h2 id="s-name" tabindex="-1"><span class="nm"></span> <span class="en"></span></h2>
+<p class="about" id="s-about"></p>
+<p class="hint" id="vhint" role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10Z"/></svg><span>Ask a grown-up to read it with you.</span></p>
+</div>
+<div class="snest" id="snest" aria-hidden="true"></div>
+<div class="basrow" id="basrow"><p class="basmala" dir="rtl" lang="ar" id="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p><button class="spk" id="bplay" type="button" aria-pressed="false" aria-label="Listen to the basmala"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button></div>
+<p class="hint" id="bhint" role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>The recitation could not load, try again.</span></p>
 <div class="vlist" id="vlist"></div>
-<p class="done-line" id="dline"></p>
+<p class="done-line" id="dline"><span class="d1" hidden></span><span class="d2" hidden>You can say the whole surah! A star for your necklace of surahs.</span></p>
+<div class="fin" id="fin" hidden>
+<svg class="fstar" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".5" stop-color="#E9C86A"/><stop offset="1" stop-color="#C9A227"/></linearGradient></defs><path fill="url(#fg)" d="M32 4l7.6 17.6L58.8 23 44.3 35.6l4.5 18.8L32 44.4 15.2 54.4l4.5-18.8L5.2 23l19.2-1.4Z"/></svg>
+<h3>You can say all eleven surahs!</h3>
+<p>Allahu Akbar! Allah says He made the Qur'an easy to remember, and He asks: is there anyone who will remember it?</p>
+<p class="ref">Qur'an 54:17</p>
+<a class="pill solid" href="/kids">☾ Back to the Little Codex</a>
+</div>
 </section>
 
-<div class="foot"><a href="/kids">☾ Back to the Little Codex</a><button class="reset" id="reset" type="button">start over</button></div>
+<div class="foot"><a href="/kids">☾ Back to the Little Codex</a><br><button class="reset" id="reset" type="button"><span class="r0">start over</span><span class="r1">Tap again to start over</span></button></div>
 </main>
 <div class="burst" id="burst" aria-hidden="true"></div>
 <script>
 (function(){
 "use strict";
-var S=[{"n":1,"name":"Al-Fatiha","ar":"ٱلْفَاتِحَة","en":"The Opening","about":"The surah we say in every prayer, seventeen times a day. Every Muslim in the world knows it by heart.","v":[{"n":1,"g":1,"ar":"بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","tr":"bismi llāhi ar-raḥmāni ar-raḥīmi","m":"In the name of Allah, the Most Merciful, the Most Kind."},{"n":2,"g":2,"ar":"ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ","tr":"al-ḥamdu lillāhi rabbi al-ʿālamīn","m":"All praise belongs to Allah, Lord of all the worlds,"},{"n":3,"g":3,"ar":"ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","tr":"ar-raḥmāni ar-raḥīmi","m":"the Most Merciful, the Most Kind,"},{"n":4,"g":4,"ar":"مَٰلِكِ يَوْمِ ٱلدِّينِ","tr":"māliki yawmi ad-dīn","m":"the King of the Day of Judgement."},{"n":5,"g":5,"ar":"إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","tr":"iyyāka naʿbudu wa-iyyāka nastaʿīn","m":"You alone we worship, and You alone we ask for help."},{"n":6,"g":6,"ar":"ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ","tr":"ihdinā aṣ-ṣirāṭa al-mustaqīm","m":"Guide us on the straight path,"},{"n":7,"g":7,"ar":"صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ","tr":"ṣirāṭa alladhīna anʿamta ʿalayhim ghayri al-maghḍūbi ʿalayhim wa-lā aḍ-ḍāllīn","m":"the path of those You have blessed, not of those who earned anger, and not of those who went astray."}]},{"n":112,"name":"Al-Ikhlas","ar":"ٱلْإِخْلَاص","en":"Pure Faith","about":"Who is Allah? Four short lines say it all. The Prophet ﷺ said this surah is worth a third of the Qur'an.","v":[{"n":1,"g":6222,"ar":"قُلْ هُوَ ٱللَّهُ أَحَدٌ","tr":"qul huwa allāhu aḥad","m":"Say: He is Allah, the One."},{"n":2,"g":6223,"ar":"ٱللَّهُ ٱلصَّمَدُ","tr":"allāhu aṣ-ṣamad","m":"Allah, whom everyone needs, and who needs no one."},{"n":3,"g":6224,"ar":"لَمْ يَلِدْ وَلَمْ يُولَدْ","tr":"lam yalid wa-lam yūlad","m":"He has no children, and He was not born."},{"n":4,"g":6225,"ar":"وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ","tr":"wa-lam yakun lahu kufuwan aḥad","m":"And there is nothing like Him at all."}]},{"n":113,"name":"Al-Falaq","ar":"ٱلْفَلَق","en":"The Daybreak","about":"A morning shield. Say it to ask Allah to keep you safe from every harm.","v":[{"n":1,"g":6226,"ar":"قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ","tr":"qul aʿūdhu bi-rabbi al-falaq","m":"Say: I ask the Lord of the daybreak to keep me safe,"},{"n":2,"g":6227,"ar":"مِن شَرِّ مَا خَلَقَ","tr":"min sharri mā khalaq","m":"from the harm of what He created,"},{"n":3,"g":6228,"ar":"وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","tr":"wa-min sharri ghāsiqin idhā waqab","m":"and from the dark of night when it spreads,"},{"n":4,"g":6229,"ar":"وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ","tr":"wa-min sharri an-naffāthāti fī al-ʿuqad","m":"and from those who blow on knots to do harm,"},{"n":5,"g":6230,"ar":"وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ","tr":"wa-min sharri ḥāsidin idhā ḥasad","m":"and from an envier when he envies."}]},{"n":114,"name":"An-Nas","ar":"ٱلنَّاس","en":"People","about":"An evening shield, against the sneaky whisperer. The last surah in the whole Qur'an.","v":[{"n":1,"g":6231,"ar":"قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ","tr":"qul aʿūdhu bi-rabbi an-nās","m":"Say: I ask the Lord of people to keep me safe,"},{"n":2,"g":6232,"ar":"مَلِكِ ٱلنَّاسِ","tr":"maliki an-nās","m":"the King of people,"},{"n":3,"g":6233,"ar":"إِلَٰهِ ٱلنَّاسِ","tr":"ilāhi an-nās","m":"the One whom people worship,"},{"n":4,"g":6234,"ar":"مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ","tr":"min sharri al-waswās al-khannās","m":"from the harm of the sneaky whisperer,"},{"n":5,"g":6235,"ar":"ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ","tr":"alladhī yuwaswisu fī ṣudūri an-nās","m":"who whispers into the hearts of people,"},{"n":6,"g":6236,"ar":"مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ","tr":"mina al-jinnati wan-nās","m":"from the jinn and from people."}]},{"n":108,"name":"Al-Kawthar","ar":"ٱلْكَوْثَر","en":"The Abundance","about":"The shortest surah in the Qur'an, and a gift to the Prophet ﷺ: a river in Paradise, and more good than anyone can count.","v":[{"n":1,"g":6205,"ar":"إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ","tr":"innā aʿṭaynāka al-kawthar","m":"We have given you al-Kawthar, so much good."},{"n":2,"g":6206,"ar":"فَصَلِّ لِرَبِّكَ وَٱنْحَرْ","tr":"fa-ṣalli li-rabbika wanḥar","m":"So pray to your Lord, and give your sacrifice."},{"n":3,"g":6207,"ar":"إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ","tr":"inna shāniʾaka huwa al-abtar","m":"The one who hates you is the one who is cut off."}]},{"n":103,"name":"Al-Asr","ar":"ٱلْعَصْر","en":"Time","about":"Three lines about time, and the four things that save us from losing it.","v":[{"n":1,"g":6177,"ar":"وَٱلْعَصْرِ","tr":"wal-ʿaṣr","m":"By time,"},{"n":2,"g":6178,"ar":"إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ","tr":"inna al-insāna lafī khusr","m":"people are truly losing,"},{"n":3,"g":6179,"ar":"إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ","tr":"illā alladhīna āmanū wa-ʿamilū aṣ-ṣāliḥāt wa-tawāṣaw bil-ḥaqq wa-tawāṣaw biṣ-ṣabr","m":"except those who believe, do good deeds, tell each other the truth, and tell each other to be patient."}]},{"n":105,"name":"Al-Fil","ar":"ٱلْفِيل","en":"The Elephant","about":"The year an army came to Makkah with an elephant to knock down the Kaaba, and Allah sent birds.","v":[{"n":1,"g":6189,"ar":"أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَٰبِ ٱلْفِيلِ","tr":"alam tara kayfa faʿala rabbuka bi-aṣḥābi al-fīl","m":"Did you not see what your Lord did to the army of the elephant?"},{"n":2,"g":6190,"ar":"أَلَمْ يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍ","tr":"alam yajʿal kaydahum fī taḍlīl","m":"Did He not turn their plan into nothing?"},{"n":3,"g":6191,"ar":"وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ","tr":"wa-arsala ʿalayhim ṭayran abābīl","m":"He sent flocks of birds against them,"},{"n":4,"g":6192,"ar":"تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ","tr":"tarmīhim bi-ḥijāratin min sijjīl","m":"throwing at them stones of hard clay,"},{"n":5,"g":6193,"ar":"فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ","tr":"fa-jaʿalahum ka-ʿaṣfin maʾkūl","m":"and made them like chewed-up straw."}]},{"n":106,"name":"Quraysh","ar":"قُرَيْش","en":"Quraysh","about":"The tribe of Makkah, their winter and summer journeys, and the One who fed them and kept them safe.","v":[{"n":1,"g":6194,"ar":"لِإِيلَٰفِ قُرَيْشٍ","tr":"li-īlāfi quraysh","m":"For the safety of Quraysh,"},{"n":2,"g":6195,"ar":"إِۦلَٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ","tr":"īlāfihim riḥlata ash-shitāʾi waṣ-ṣayf","m":"their safe journeys in winter and summer,"},{"n":3,"g":6196,"ar":"فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْبَيْتِ","tr":"fal-yaʿbudū rabba hādhā al-bayt","m":"let them worship the Lord of this House,"},{"n":4,"g":6197,"ar":"ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍ وَءَامَنَهُم مِّنْ خَوْفٍ","tr":"alladhī aṭʿamahum min jūʿin wa-āmanahum min khawf","m":"who fed them when they were hungry, and kept them safe from fear."}]},{"n":107,"name":"Al-Ma'un","ar":"ٱلْمَاعُون","en":"Small Kindnesses","about":"Real prayer makes you kind. This surah is about the orphan, the poor, and sharing small things.","v":[{"n":1,"g":6198,"ar":"أَرَءَيْتَ ٱلَّذِى يُكَذِّبُ بِٱلدِّينِ","tr":"a-raʾayta alladhī yukadhdhibu bid-dīn","m":"Have you seen the one who denies the Day of Judgement?"},{"n":2,"g":6199,"ar":"فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ","tr":"fa-dhālika alladhī yaduʿʿu al-yatīm","m":"That is the one who pushes the orphan away,"},{"n":3,"g":6200,"ar":"وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلْمِسْكِينِ","tr":"wa-lā yaḥuḍḍu ʿalā ṭaʿāmi al-miskīn","m":"and does not urge feeding the poor."},{"n":4,"g":6201,"ar":"فَوَيْلٌ لِّلْمُصَلِّينَ","tr":"fa-waylun lil-muṣallīn","m":"So woe to those who pray,"},{"n":5,"g":6202,"ar":"ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ","tr":"alladhīna hum ʿan ṣalātihim sāhūn","m":"but are careless about their prayer,"},{"n":6,"g":6203,"ar":"ٱلَّذِينَ هُمْ يُرَآءُونَ","tr":"alladhīna hum yurāʾūn","m":"who only pray to be seen,"},{"n":7,"g":6204,"ar":"وَيَمْنَعُونَ ٱلْمَاعُونَ","tr":"wa-yamnaʿūna al-māʿūn","m":"and refuse to share even small things."}]},{"n":109,"name":"Al-Kafirun","ar":"ٱلْكَافِرُون","en":"Those Who Do Not Believe","about":"What we worship and what we do not. A calm, clear line: you have your religion, and I have mine.","v":[{"n":1,"g":6208,"ar":"قُلْ يَٰٓأَيُّهَا ٱلْكَٰفِرُونَ","tr":"qul yā-ayyuhā al-kāfirūn","m":"Say: O you who do not believe,"},{"n":2,"g":6209,"ar":"لَآ أَعْبُدُ مَا تَعْبُدُونَ","tr":"lā aʿbudu mā taʿbudūn","m":"I do not worship what you worship,"},{"n":3,"g":6210,"ar":"وَلَآ أَنتُمْ عَٰبِدُونَ مَآ أَعْبُدُ","tr":"wa-lā antum ʿābidūna mā aʿbud","m":"and you do not worship what I worship."},{"n":4,"g":6211,"ar":"وَلَآ أَنَا۠ عَابِدٌ مَّا عَبَدتُّمْ","tr":"wa-lā anā ʿābidun mā ʿabattum","m":"I will never worship what you worship,"},{"n":5,"g":6212,"ar":"وَلَآ أَنتُمْ عَٰبِدُونَ مَآ أَعْبُدُ","tr":"wa-lā antum ʿābidūna mā aʿbud","m":"and you will not worship what I worship."},{"n":6,"g":6213,"ar":"لَكُمْ دِينُكُمْ وَلِىَ دِينِ","tr":"lakum dīnukum wa-liya dīn","m":"You have your religion, and I have mine."}]},{"n":110,"name":"An-Nasr","ar":"ٱلنَّصْر","en":"The Help","about":"When the help of Allah came and Makkah opened its gates, and people came to Islam in crowds.","v":[{"n":1,"g":6214,"ar":"إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ","tr":"idhā jāʾa naṣru llāhi wal-fatḥ","m":"When the help of Allah comes, and the victory,"},{"n":2,"g":6215,"ar":"وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُونَ فِى دِينِ ٱللَّهِ أَفْوَاجًا","tr":"wa-raʾayta an-nāsa yadkhulūna fī dīni llāhi afwājā","m":"and you see people entering the religion of Allah in crowds,"},{"n":3,"g":6216,"ar":"فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ إِنَّهُۥ كَانَ تَوَّابًا","tr":"fa-sabbiḥ bi-ḥamdi rabbika wa-staghfirhu innahu kāna tawwābā","m":"then praise your Lord and ask His forgiveness. He always accepts those who return to Him."}]}];
-var KEY="nk-mushaf";
-var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
-var $=function(s){return document.querySelector(s)};
+/* eleven short surahs; n is the real surah number, v[].n the ayah index NK.recite needs, g the global ayah number */
+var S=[
+{"n":1,"name":"Al-Fatiha","ar":"ٱلْفَاتِحَة","en":"The Opening","about":"The surah we say in every prayer, seventeen times a day. Every Muslim in the world knows it by heart.","v":[
+ {"n":1,"g":1,"ar":"بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","tr":"bismi llāhi ar-raḥmāni ar-raḥīmi","m":"In the name of Allah, the Most Merciful, the Most Kind."},
+ {"n":2,"g":2,"ar":"ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ","tr":"al-ḥamdu lillāhi rabbi al-ʿālamīn","m":"All praise belongs to Allah, Lord of all the worlds,"},
+ {"n":3,"g":3,"ar":"ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","tr":"ar-raḥmāni ar-raḥīmi","m":"the Most Merciful, the Most Kind,"},
+ {"n":4,"g":4,"ar":"مَٰلِكِ يَوْمِ ٱلدِّينِ","tr":"māliki yawmi ad-dīn","m":"the King of the Day of Judgement."},
+ {"n":5,"g":5,"ar":"إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","tr":"iyyāka naʿbudu wa-iyyāka nastaʿīn","m":"You alone we worship, and You alone we ask for help."},
+ {"n":6,"g":6,"ar":"ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ","tr":"ihdinā aṣ-ṣirāṭa al-mustaqīm","m":"Guide us on the straight path,"},
+ {"n":7,"g":7,"ar":"صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ","tr":"ṣirāṭa alladhīna anʿamta ʿalayhim ghayri al-maghḍūbi ʿalayhim wa-lā aḍ-ḍāllīn","m":"the path of those You have blessed, not of those who earned anger, and not of those who went astray."}
+]},
+{"n":112,"name":"Al-Ikhlas","ar":"ٱلْإِخْلَاص","en":"Pure Faith","about":"Who is Allah? Four short lines say it all. The Prophet ﷺ said this surah is worth a third of the Qur'an (Bukhari 5013).","v":[
+ {"n":1,"g":6222,"ar":"قُلْ هُوَ ٱللَّهُ أَحَدٌ","tr":"qul huwa allāhu aḥad","m":"Say: He is Allah, the One."},
+ {"n":2,"g":6223,"ar":"ٱللَّهُ ٱلصَّمَدُ","tr":"allāhu aṣ-ṣamad","m":"Allah, whom everyone needs, and who needs no one."},
+ {"n":3,"g":6224,"ar":"لَمْ يَلِدْ وَلَمْ يُولَدْ","tr":"lam yalid wa-lam yūlad","m":"He has no children, and He was not born."},
+ {"n":4,"g":6225,"ar":"وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ","tr":"wa-lam yakun lahu kufuwan aḥad","m":"And there is nothing like Him at all."}
+]},
+{"n":113,"name":"Al-Falaq","ar":"ٱلْفَلَق","en":"The Daybreak","about":"A morning shield. Say it to ask Allah to keep you safe from every harm.","v":[
+ {"n":1,"g":6226,"ar":"قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ","tr":"qul aʿūdhu bi-rabbi al-falaq","m":"Say: I ask the Lord of the daybreak to keep me safe,"},
+ {"n":2,"g":6227,"ar":"مِن شَرِّ مَا خَلَقَ","tr":"min sharri mā khalaq","m":"from the harm of what He created,"},
+ {"n":3,"g":6228,"ar":"وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","tr":"wa-min sharri ghāsiqin idhā waqab","m":"and from the dark of night when it spreads,"},
+ {"n":4,"g":6229,"ar":"وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ","tr":"wa-min sharri an-naffāthāti fī al-ʿuqad","m":"and from those who blow on knots to do harm,"},
+ {"n":5,"g":6230,"ar":"وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ","tr":"wa-min sharri ḥāsidin idhā ḥasad","m":"and from an envier when he envies."}
+]},
+{"n":114,"name":"An-Nas","ar":"ٱلنَّاس","en":"People","about":"An evening shield, against the sneaky whisperer. The last surah in the whole Qur'an.","v":[
+ {"n":1,"g":6231,"ar":"قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ","tr":"qul aʿūdhu bi-rabbi an-nās","m":"Say: I ask the Lord of people to keep me safe,"},
+ {"n":2,"g":6232,"ar":"مَلِكِ ٱلنَّاسِ","tr":"maliki an-nās","m":"the King of people,"},
+ {"n":3,"g":6233,"ar":"إِلَٰهِ ٱلنَّاسِ","tr":"ilāhi an-nās","m":"the One whom people worship,"},
+ {"n":4,"g":6234,"ar":"مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ","tr":"min sharri al-waswās al-khannās","m":"from the harm of the sneaky whisperer,"},
+ {"n":5,"g":6235,"ar":"ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ","tr":"alladhī yuwaswisu fī ṣudūri an-nās","m":"who whispers into the hearts of people,"},
+ {"n":6,"g":6236,"ar":"مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ","tr":"mina al-jinnati wan-nās","m":"from the jinn and from people."}
+]},
+{"n":108,"name":"Al-Kawthar","ar":"ٱلْكَوْثَر","en":"The Abundance","about":"The shortest surah in the Qur'an, and a gift to the Prophet ﷺ: a river in Paradise, and more good than anyone can count.","v":[
+ {"n":1,"g":6205,"ar":"إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ","tr":"innā aʿṭaynāka al-kawthar","m":"We have given you al-Kawthar, so much good."},
+ {"n":2,"g":6206,"ar":"فَصَلِّ لِرَبِّكَ وَٱنْحَرْ","tr":"fa-ṣalli li-rabbika wanḥar","m":"So pray to your Lord, and give your sacrifice."},
+ {"n":3,"g":6207,"ar":"إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ","tr":"inna shāniʾaka huwa al-abtar","m":"The one who hates you is the one who is cut off."}
+]},
+{"n":103,"name":"Al-Asr","ar":"ٱلْعَصْر","en":"Time","about":"Three lines about time, and the four things that save us from losing it.","v":[
+ {"n":1,"g":6177,"ar":"وَٱلْعَصْرِ","tr":"wal-ʿaṣr","m":"By time,"},
+ {"n":2,"g":6178,"ar":"إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ","tr":"inna al-insāna lafī khusr","m":"people are truly losing,"},
+ {"n":3,"g":6179,"ar":"إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ","tr":"illā alladhīna āmanū wa-ʿamilū aṣ-ṣāliḥāt wa-tawāṣaw bil-ḥaqq wa-tawāṣaw biṣ-ṣabr","m":"except those who believe, do good deeds, tell each other the truth, and tell each other to be patient."}
+]},
+{"n":105,"name":"Al-Fil","ar":"ٱلْفِيل","en":"The Elephant","about":"The year an army came to Makkah with an elephant to knock down the Kaaba, and Allah sent birds.","v":[
+ {"n":1,"g":6189,"ar":"أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَٰبِ ٱلْفِيلِ","tr":"alam tara kayfa faʿala rabbuka bi-aṣḥābi al-fīl","m":"Did you not see what your Lord did to the army of the elephant?"},
+ {"n":2,"g":6190,"ar":"أَلَمْ يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍ","tr":"alam yajʿal kaydahum fī taḍlīl","m":"Did He not turn their plan into nothing?"},
+ {"n":3,"g":6191,"ar":"وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ","tr":"wa-arsala ʿalayhim ṭayran abābīl","m":"He sent flocks of birds against them,"},
+ {"n":4,"g":6192,"ar":"تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ","tr":"tarmīhim bi-ḥijāratin min sijjīl","m":"throwing at them stones of hard clay,"},
+ {"n":5,"g":6193,"ar":"فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ","tr":"fa-jaʿalahum ka-ʿaṣfin maʾkūl","m":"and made them like chewed-up straw."}
+]},
+{"n":106,"name":"Quraysh","ar":"قُرَيْش","en":"Quraysh","about":"The tribe of Makkah, their winter and summer journeys, and the One who fed them and kept them safe.","v":[
+ {"n":1,"g":6194,"ar":"لِإِيلَٰفِ قُرَيْشٍ","tr":"li-īlāfi quraysh","m":"For the safety of Quraysh,"},
+ {"n":2,"g":6195,"ar":"إِۦلَٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ","tr":"īlāfihim riḥlata ash-shitāʾi waṣ-ṣayf","m":"their safe journeys in winter and summer,"},
+ {"n":3,"g":6196,"ar":"فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْبَيْتِ","tr":"fal-yaʿbudū rabba hādhā al-bayt","m":"let them worship the Lord of this House,"},
+ {"n":4,"g":6197,"ar":"ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍ وَءَامَنَهُم مِّنْ خَوْفٍ","tr":"alladhī aṭʿamahum min jūʿin wa-āmanahum min khawf","m":"who fed them when they were hungry, and kept them safe from fear."}
+]},
+{"n":107,"name":"Al-Ma'un","ar":"ٱلْمَاعُون","en":"Small Kindnesses","about":"Real prayer makes you kind. This surah is about the orphan, the poor, and sharing small things.","v":[
+ {"n":1,"g":6198,"ar":"أَرَءَيْتَ ٱلَّذِى يُكَذِّبُ بِٱلدِّينِ","tr":"a-raʾayta alladhī yukadhdhibu bid-dīn","m":"Have you seen the one who denies the Day of Judgement?"},
+ {"n":2,"g":6199,"ar":"فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ","tr":"fa-dhālika alladhī yaduʿʿu al-yatīm","m":"That is the one who pushes the orphan away,"},
+ {"n":3,"g":6200,"ar":"وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلْمِسْكِينِ","tr":"wa-lā yaḥuḍḍu ʿalā ṭaʿāmi al-miskīn","m":"and does not urge feeding the poor."},
+ {"n":4,"g":6201,"ar":"فَوَيْلٌ لِّلْمُصَلِّينَ","tr":"fa-waylun lil-muṣallīn","m":"So woe to those who pray,"},
+ {"n":5,"g":6202,"ar":"ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ","tr":"alladhīna hum ʿan ṣalātihim sāhūn","m":"but are careless about their prayer,"},
+ {"n":6,"g":6203,"ar":"ٱلَّذِينَ هُمْ يُرَآءُونَ","tr":"alladhīna hum yurāʾūn","m":"who only pray to be seen,"},
+ {"n":7,"g":6204,"ar":"وَيَمْنَعُونَ ٱلْمَاعُونَ","tr":"wa-yamnaʿūna al-māʿūn","m":"and refuse to share even small things."}
+]},
+{"n":109,"name":"Al-Kafirun","ar":"ٱلْكَافِرُون","en":"Those Who Do Not Believe","about":"What we worship and what we do not. A calm, clear line: you have your religion, and I have mine.","v":[
+ {"n":1,"g":6208,"ar":"قُلْ يَٰٓأَيُّهَا ٱلْكَٰفِرُونَ","tr":"qul yā-ayyuhā al-kāfirūn","m":"Say: O you who do not believe,"},
+ {"n":2,"g":6209,"ar":"لَآ أَعْبُدُ مَا تَعْبُدُونَ","tr":"lā aʿbudu mā taʿbudūn","m":"I do not worship what you worship,"},
+ {"n":3,"g":6210,"ar":"وَلَآ أَنتُمْ عَٰبِدُونَ مَآ أَعْبُدُ","tr":"wa-lā antum ʿābidūna mā aʿbud","m":"and you do not worship what I worship."},
+ {"n":4,"g":6211,"ar":"وَلَآ أَنَا۠ عَابِدٌ مَّا عَبَدتُّمْ","tr":"wa-lā anā ʿābidun mā ʿabattum","m":"I will never worship what you worship,"},
+ {"n":5,"g":6212,"ar":"وَلَآ أَنتُمْ عَٰبِدُونَ مَآ أَعْبُدُ","tr":"wa-lā antum ʿābidūna mā aʿbud","m":"and you will not worship what I worship."},
+ {"n":6,"g":6213,"ar":"لَكُمْ دِينُكُمْ وَلِىَ دِينِ","tr":"lakum dīnukum wa-liya dīn","m":"You have your religion, and I have mine."}
+]},
+{"n":110,"name":"An-Nasr","ar":"ٱلنَّصْر","en":"The Help","about":"When the help of Allah came and Makkah opened its gates, and people came to Islam in crowds.","v":[
+ {"n":1,"g":6214,"ar":"إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ","tr":"idhā jāʾa naṣru llāhi wal-fatḥ","m":"When the help of Allah comes, and the victory,"},
+ {"n":2,"g":6215,"ar":"وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُونَ فِى دِينِ ٱللَّهِ أَفْوَاجًا","tr":"wa-raʾayta an-nāsa yadkhulūna fī dīni llāhi afwājā","m":"and you see people entering the religion of Allah in crowds,"},
+ {"n":3,"g":6216,"ar":"فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ إِنَّهُۥ كَانَ تَوَّابًا","tr":"fa-sabbiḥ bi-ḥamdi rabbika wa-staghfirhu innahu kāna tawwābā","m":"then praise your Lord and ask His forgiveness. He always accepts those who return to Him."}
+]}
+];
+var KEY="nk-mushaf",TKEY="nk-mushaf-teacher";
+var RM=!!(window.NK&&NK.reduced);
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var ICO={
+ play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+ star:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.6 6.2 6.7.5-5.1 4.4 1.6 6.6L12 16.7l-5.8 3.5 1.6-6.6L2.7 9.2l6.7-.5z"/></svg>',
+ warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>',
+ mute:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>'
+};
+var FLYSTAR='<svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="nkfs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".5" stop-color="#E9C86A"/><stop offset="1" stop-color="#C9A227"/></linearGradient></defs><path fill="url(#nkfs)" d="M12 1.8l2.9 6.6 7.2.6-5.5 4.7 1.7 7.1L12 17.1l-6.3 3.7 1.7-7.1L1.9 9l7.2-.6z"/></svg>';
+
+/* ---------- progress: nk-mushaf keeps its {stars:{}, done} shape ---------- */
 var state={stars:{},done:false};
-try{var raw=JSON.parse(localStorage.getItem(KEY)||"null");if(raw&&raw.stars)state=raw}catch(e){}
+try{var raw=JSON.parse(localStorage.getItem(KEY)||"null");
+ if(raw&&typeof raw==="object"&&raw.stars&&typeof raw.stars==="object"&&!Array.isArray(raw.stars))state=Object.assign({stars:{},done:false},raw)}catch(e){}
+(function clean(){var st={};S.forEach(function(s){var l=state.stars[s.n];if(!Array.isArray(l))return;
+ l=l.map(Number).filter(function(x,i,a){return x>=1&&x<=s.v.length&&a.indexOf(x)===i}).sort(function(a,b){return a-b});if(l.length)st[s.n]=l});state.stars=st;state.done=!!state.done})();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 function starsOf(n){return state.stars[n]||[]}
 function fullSurah(s){return starsOf(s.n).length>=s.v.length}
 function completed(){return S.filter(fullSurah).length}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;")}
 
-/* recitation: Mishary Alafasy, the same voice as the big Mushaf, with the
-   same fallbacks, one ayah at a time so a child can repeat each line */
-var audio=null,queue=[],playingBtn=null;
-function srcs(g,s,a){var s3=String(s).padStart(3,"0"),a3=String(a).padStart(3,"0");
- return["https://cdn.islamic.network/quran/audio/128/ar.alafasy/"+g+".mp3","https://everyayah.com/data/Alafasy_128kbps/"+s3+a3+".mp3","https://cdn.islamic.network/quran/audio/64/ar.alafasy/"+g+".mp3"]}
-function stop(){if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio=null}
- queue=[];document.querySelectorAll(".v.playing").forEach(function(v){v.classList.remove("playing")});
- document.querySelectorAll(".play.on").forEach(function(b){b.classList.remove("on")});
- $("#playall").classList.remove("busy");playingBtn=null}
-function playAyah(s,v,then){var list=srcs(v.g,s.n,v.n),i=0;
- var card=document.getElementById("v-"+v.n);
- document.querySelectorAll(".v.playing").forEach(function(x){x.classList.remove("playing")});
- if(card){card.classList.add("playing");var b=card.querySelector(".play");if(b)b.classList.add("on")}
- function tryNext(){if(i>=list.length){finish();return}
-  var a=new Audio();a.preload="auto";a.src=list[i++];audio=a;
-  a.onended=finish;a.onerror=tryNext;
-  a.play().catch(tryNext)}
- function finish(){if(card){card.classList.remove("playing");var b=card.querySelector(".play");if(b)b.classList.remove("on")}
-  audio=null;if(then)then()}
- tryNext()}
-function playAll(s){stop();$("#playall").classList.add("busy");var k=0;
- (function next(){if(k>=s.v.length){$("#playall").classList.remove("busy");return}
-  var v=s.v[k++];var card=document.getElementById("v-"+v.n);
-  if(card&&!RM)card.scrollIntoView({behavior:"smooth",block:"center"});
-  playAyah(s,v,next)})()}
+/* ---------- the sky: far stars drift slower than near ones ---------- */
+(function(){var far=$("#far"),near=$("#near");if(!far||!near)return;
+ function fill(host,n){var f=document.createDocumentFragment();
+  for(var i=0;i<n;i++){var s=document.createElement("i");s.className="st";
+   s.style.cssText="left:"+(Math.random()*100).toFixed(1)+"%;top:"+(Math.random()*100).toFixed(1)+"%;--td:"+(2.8+Math.random()*4.5).toFixed(1)+"s;--tl:"+(-Math.random()*7).toFixed(1)+"s";f.appendChild(s)}
+  host.appendChild(f)}
+ fill(far,RM?26:64);fill(near,RM?8:22)})();
 
-function burst(x,y,cols,n){if(RM)return;var host=$("#burst"),f=document.createDocumentFragment();
- for(var i=0;i<n;i++){var p=document.createElement("span");var a=Math.random()*Math.PI*2,d=50+Math.random()*120;
-  p.style.cssText="--c:"+cols[i%cols.length]+";--x:"+x+"px;--y:"+y+"px;--X:"+(x+Math.cos(a)*d)+"px;--Y:"+(y+Math.sin(a)*d-40)+"px";
-  f.appendChild(p)}
- host.appendChild(f);setTimeout(function(){host.innerHTML=""},1200)}
+/* ---------- the progress bar fills with a spring, the number counts up ---------- */
+var pbar=$("#pbar"),pnum=$("#pnum"),pspring=null;
+function setBar(frac,kick){if(RM){pbar.style.transform="scaleX("+frac.toFixed(3)+")";return}
+ if(!pspring)pspring=NK.spring({from:0,to:0,stiffness:110,damping:12,onUpdate:function(x){pbar.style.transform="scaleX("+Math.max(0,Math.min(1,x)).toFixed(3)+")"}});
+ pspring.set(frac,kick||0)}
+function renderProgress(){var c=completed(),all=c>=S.length,prev=+pnum.textContent||0;
+ $("#ptext .p0").hidden=all;$("#ptext .p1").hidden=!all;
+ if(prev!==c){if(RM||c<prev)pnum.textContent=c;else NK.countTo(pnum,c,{from:prev,dur:600})}
+ setBar(c/S.length,c>prev?.6:0)}
 
-function renderProgress(){var c=completed();
- $("#ptext").textContent=c>=S.length?"You can say all eleven surahs. Allahu Akbar":"Surahs you can say: "+c+" of "+S.length;
- $("#pbar").style.width=Math.round(100*c/S.length)+"%"}
-
-function renderPick(){var g=$("#grid");
- g.innerHTML=S.map(function(s){var k=starsOf(s.n).length,full=k>=s.v.length;
-  return '<button type="button" class="sc'+(full?" full":"")+'" data-n="'+s.n+'" aria-label="'+s.name+', '+k+' of '+s.v.length+' ayahs lit">'+
-   '<span class="sar" lang="ar" dir="rtl">'+s.ar+'</span><span class="snm">'+s.name+'</span><span class="sen">'+s.en+'</span>'+
-   '<span class="scount">'+(full?"you can say it":s.v.length+" ayahs · "+k+" lit")+'</span>'+
-   '<span class="stars" aria-hidden="true">'+s.v.map(function(v,i){return '<i class="'+(i<k?"on":"")+'"></i>'}).join("")+'</span></button>'}).join("");
+/* ---------- the shelf ---------- */
+function tileHTML(s){var known=starsOf(s.n),k=known.length,n=s.v.length,full=k>=n;
+ return '<span class="sar" lang="ar" dir="rtl">'+s.ar+'</span><span class="snm">'+esc(s.name)+'</span><span class="sen">'+esc(s.en)+'</span>'+
+  '<span class="stars" aria-hidden="true">'+s.v.map(function(v){return '<i class="'+(known.indexOf(v.n)>=0?"on":"")+'"></i>'}).join("")+'</span>'+
+  '<span class="scount">'+(full?'You can say it!':'<b>'+k+'</b> of '+n+' stars')+'</span>'}
+function renderPick(){var nx=null;S.forEach(function(s){if(nx===null&&!fullSurah(s))nx=s.n});
+ $("#grid").innerHTML=S.map(function(s){return '<button type="button" class="sc'+(fullSurah(s)?" full":"")+(s.n===nx?" next":"")+'" data-n="'+s.n+'">'+tileHTML(s)+'</button>'}).join("");
  renderProgress()}
 
+/* ---------- the surah page ---------- */
 var cur=null;
-function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
-function openSurah(n){stop();cur=S.filter(function(s){return s.n===n})[0];if(!cur)return;
- $("#s-ar").textContent=cur.ar;$("#s-name").textContent=cur.name+" · "+cur.en;$("#s-about").textContent=cur.about;
+function cardHTML(v,known){var k=known.indexOf(v.n)>=0;
+ return '<article class="v'+(k?" known":"")+'" id="v-'+v.n+'" data-v="'+v.n+'"><span class="num" id="vn-'+v.n+'">Ayah <b>'+v.n+'</b></span>'+
+  '<p class="ar" lang="ar" dir="rtl">'+v.ar+'</p><p class="tr translit">'+esc(v.tr)+'</p><p class="mn">'+esc(v.m)+'</p>'+
+  '<div class="turn" hidden><span class="tt">Your turn, say it!</span><i class="tbar"><b></b></i></div>'+
+  '<div class="row"><button type="button" class="play" data-v="'+v.n+'" aria-pressed="false" aria-describedby="vn-'+v.n+'">'+ICO.play+'<span class="l0">Listen</span><span class="l1">Stop</span></button>'+
+  '<button type="button" class="know" data-v="'+v.n+'" aria-pressed="'+(k?"true":"false")+'" aria-describedby="vn-'+v.n+'" data-nk-quiet>'+ICO.star+'<span class="k0">I can say it</span><span class="k1">I know this one</span></button></div>'+
+  '<p class="hint rh" role="status" hidden>'+ICO.warn+'<span>The recitation could not load, try again.</span></p>'+
+  '<p class="hint mh" role="status" hidden>'+ICO.mute+'<span>Turn the sound on to hear the recitation.</span></p></article>'}
+function cardOf(vn){return document.getElementById("v-"+vn)}
+function beadOf(vn){return $('#snest .bead[data-v="'+vn+'"]')}
+function renderNest(){var known=starsOf(cur.n);
+ $("#snest").innerHTML=cur.v.map(function(v){return '<span class="bead'+(known.indexOf(v.n)>=0?" on":"")+'" data-v="'+v.n+'"><i></i></span>'}).join("")}
+function markNext(){var known=starsOf(cur.n),first=null;
+ cur.v.forEach(function(v){if(first===null&&known.indexOf(v.n)<0)first=v.n});
+ $$("#vlist .v").forEach(function(c){c.classList.toggle("next",+c.dataset.v===first)})}
+function doneLine(){var d=$("#dline"),k=starsOf(cur.n).length,n=cur.v.length,d1=$(".d1",d),d2=$(".d2",d);
+ d1.hidden=!(k&&k<n);d2.hidden=k<n;
+ if(!d1.hidden)d1.innerHTML='<b>'+k+'</b> of '+n+' ayahs lit. Keep going!'}
+function showScreen(which){$$(".screen").forEach(function(x){x.classList.remove("on")});
+ var sc=$(which==="pick"?"#scr-pick":"#scr-surah");void sc.offsetWidth;sc.classList.add("on");
+ var p=$(".prog"),y=p?p.getBoundingClientRect().top+window.scrollY-10:0;window.scrollTo(0,Math.max(0,y))}
+function openSurah(n){var s=S.filter(function(x){return x.n===n})[0];if(!s)return;
+ stopAll();cur=s;
+ $("#s-ar").textContent=cur.ar;$("#s-name .nm").textContent=cur.name;$("#s-name .en").textContent=cur.en;$("#s-about").textContent=cur.about;
  /* Al-Fatiha opens with its own first ayah, so the basmala line is not printed twice */
- $("#basmala").style.display=cur.n===1?"none":"";
- var known=starsOf(cur.n);
- $("#vlist").innerHTML=cur.v.map(function(v){var k=known.indexOf(v.n)>=0;
-  return '<article class="v'+(k?" known":"")+'" id="v-'+v.n+'"><span class="num">Ayah '+v.n+'</span>'+
-   '<p class="ar" lang="ar">'+v.ar+'</p><p class="tr">'+esc(v.tr)+'</p><p class="mn">'+esc(v.m)+'</p>'+
-   '<div class="row"><button type="button" class="play" data-v="'+v.n+'"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Listen</span></button>'+
-   '<button type="button" class="know" data-v="'+v.n+'" aria-pressed="'+(k?"true":"false")+'"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.6 6.2 6.7.5-5.1 4.4 1.6 6.6L12 16.7l-5.8 3.5 1.6-6.6L2.7 9.2l6.7-.5z"/></svg><span class="k0">I can say it</span><span class="k1">I know this one</span></button></div></article>'}).join("");
- doneLine();
- document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
- var sc=$("#scr-surah");void sc.offsetWidth;sc.classList.add("on");window.scrollTo(0,0)}
-function doneLine(){var d=$("#dline");if(!cur)return;var k=starsOf(cur.n).length;
- d.textContent=k>=cur.v.length?"You can say the whole of "+cur.name+". A star for your necklace of surahs":k?k+" of "+cur.v.length+" ayahs lit. Keep going":""}
-function toggleKnow(vn,btn){var list=starsOf(cur.n).slice(),i=list.indexOf(vn);
- if(i>=0)list.splice(i,1);else list.push(vn);
- state.stars[cur.n]=list;
- var wasFull=fullSurah(cur);
- if(completed()>=S.length)state.done=true;
- save();
- btn.setAttribute("aria-pressed",i>=0?"false":"true");
- var card=document.getElementById("v-"+vn);if(card)card.classList.toggle("known",i<0);
- if(i<0){var r=btn.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,["#C9A227","#E9C86A","#FFFEF7"],14)}
- if(wasFull&&i<0){setTimeout(function(){burst(innerWidth/2,180,["#C9A227","#E9C86A","#FFFEF7","#38bdf8"],30)},250)}
- doneLine();renderProgress()}
+ $("#basrow").hidden=cur.n===1;
+ $("#vhint").hidden=true;$("#bhint").hidden=true;$("#mhint").hidden=true;$("#fin").hidden=true;
+ $("#sayname").setAttribute("aria-pressed","false");
+ renderNest();
+ $("#vlist").innerHTML=cur.v.map(function(v){return cardHTML(v,starsOf(cur.n))}).join("");
+ doneLine();markNext();
+ showScreen("surah");NK.sfx("whoosh");setTimeout(function(){NK.sfx("page")},150);
+ NK.pop($(".shead"),{from:.85});
+ try{$("#s-name").focus({preventScroll:true})}catch(e){}}
+function goPick(focusN){stopAll();cur=null;renderPick();showScreen("pick");NK.sfx("whoosh");
+ if(focusN){var t=$('#grid .sc[data-n="'+focusN+'"]');if(t){try{t.focus({preventScroll:true})}catch(e){}}}}
 
+/* ---------- recitation: NK.recite, one ayah at a time, with a teacher mode ---------- */
+var teacher=false;try{teacher=localStorage.getItem(TKEY)==="1"}catch(e){}
+var run=0,expectStop=false,turnTimer=0;
+function recite(s,a){expectStop=true;var p;
+ try{p=NK.recite(s,a,{teacher:teacher})}catch(e){p=Promise.resolve(false)}
+ expectStop=false;
+ return p.catch(function(){return false})}
+function busy(on){$("#playall").classList.toggle("busy",!!on)}
+function clearTurn(){if(turnTimer){clearTimeout(turnTimer);turnTimer=0}$$("#vlist .turn").forEach(function(t){t.hidden=true})}
+function clearPlaying(){$$("#vlist .v.playing").forEach(function(c){c.classList.remove("playing")});
+ $$('#vlist .play[aria-pressed="true"]').forEach(function(b){b.setAttribute("aria-pressed","false")});
+ $("#bplay").setAttribute("aria-pressed","false")}
+function halt(){run++;clearTurn();clearPlaying();busy(false)}
+function stopAll(){halt();expectStop=true;try{NK.stopAudio()}catch(e){}expectStop=false}
+function markPlaying(vn){var c=cardOf(vn);if(!c)return;c.classList.add("playing");
+ $(".play",c).setAttribute("aria-pressed","true");$$(".hint",c).forEach(function(h){h.hidden=true})}
+function unmarkPlaying(vn){var c=cardOf(vn);if(!c)return;c.classList.remove("playing");$(".play",c).setAttribute("aria-pressed","false")}
+function showHint(el){if(!el)return;el.hidden=false;NK.pop(el,{from:.7})}
+function hideHints(sel){$$(sel||"#scr-surah .hint:not(#thint)").forEach(function(h){h.hidden=true})}
+document.addEventListener("kids:volume",function(e){if(e.detail&&!e.detail.muted)hideHints("#mhint, #vlist .mh")});
+function muted(){return !!(NK.volume&&NK.volume.muted)}
+function mutedHint(el){showHint(el);var pill=$(".nk-sound-btn");if(pill)NK.wobble(pill)}
+function failHint(el){showHint(el);NK.sfx("wrong");NK.haptic("error")}
+document.addEventListener("kids:recite",function(e){var st=e.detail&&e.detail.state;
+ if(st==="stop"&&!expectStop)halt()});
+function one(v,my){if(muted())return Promise.resolve("muted");
+ return recite(cur.n,v.n).then(function(ok){if(my!==run)return "stopped";return ok?"ok":"failed"})}
+function turn(v,my){return new Promise(function(res){if(my!==run){res("stopped");return}
+ var card=cardOf(v.n),t=card&&$(".turn",card),dur=Math.min(9000,1600+v.ar.length*75);
+ if(t){t.hidden=false;NK.pop(t,{from:.8});var b=$("b",t);
+  if(b){b.style.transition="none";b.style.transform="scaleX(1)";void b.offsetWidth;
+   if(!RM){b.style.transition="transform "+dur+"ms linear";b.style.transform="scaleX(0)"}}}
+ NK.sfx("bubble");
+ turnTimer=setTimeout(function(){turnTimer=0;if(t)t.hidden=true;res(my!==run?"stopped":"ok")},dur)})}
+/* teacher mode: listen, say it, listen once more, say it again */
+function teach(v,my){return one(v,my).then(function(r){return r!=="ok"?r:turn(v,my)}).then(function(r){return r!=="ok"?r:one(v,my)}).then(function(r){return r!=="ok"?r:turn(v,my)})}
+function playSeq(list,all){stopAll();hideHints();var my=++run,i=0,fails=0;if(all)busy(true);
+ function finish(){if(my!==run)return;run++;busy(false);clearPlaying()}
+ function step(){if(my!==run)return;
+  if(i>=list.length){finish();return}
+  var v=list[i++],card=cardOf(v.n);
+  if(all&&card){try{card.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})}catch(e){}}
+  markPlaying(v.n);
+  (teacher?teach(v,my):one(v,my)).then(function(r){if(my!==run)return;
+   unmarkPlaying(v.n);
+   if(r==="muted"){mutedHint(card&&$(".mh",card));finish();return}
+   if(r==="failed"){fails++;failHint(card&&$(".rh",card));
+    /* one dead ayah is skipped; two in a row means the network is gone, so stop and say so */
+    if(!all||fails>=2){finish();return}
+    setTimeout(step,700);return}
+   fails=0;
+   if(all)setTimeout(step,teacher?350:250);else finish()})}
+ step()}
+function playCard(vn){var v=cur.v[vn-1];if(!v)return;
+ if(muted()){mutedHint($(".mh",cardOf(vn)));return}
+ playSeq([v],false)}
+$("#playall").addEventListener("click",function(){if(!cur)return;
+ if(this.classList.contains("busy")){stopAll();return}
+ if(muted()){mutedHint($("#mhint"));return}
+ playSeq(cur.v,true)});
+$("#bplay").addEventListener("click",function(){var b=this;
+ if(b.getAttribute("aria-pressed")==="true"){stopAll();return}
+ if(muted()){mutedHint($("#mhint"));return}
+ stopAll();hideHints();var my=++run;b.setAttribute("aria-pressed","true");
+ recite(1,1).then(function(ok){if(my!==run)return;run++;b.setAttribute("aria-pressed","false");if(!ok)failHint($("#bhint"))})});
+$("#sayname").addEventListener("click",function(){var b=this;if(!cur)return;
+ if(b.getAttribute("aria-pressed")==="true"){stopAll();b.setAttribute("aria-pressed","false");return}
+ if(muted()){mutedHint($("#mhint"));return}
+ stopAll();hideHints();var my=++run;b.setAttribute("aria-pressed","true");
+ NK.say(cur.ar).then(function(ok){b.setAttribute("aria-pressed","false");if(my!==run)return;run++;if(!ok&&!muted())showHint($("#vhint"))})});
+var tBtn=$("#teacher");
+function setTeacher(on,silent){teacher=!!on;tBtn.setAttribute("aria-pressed",teacher?"true":"false");$("#thint").hidden=!teacher;
+ try{localStorage.setItem(TKEY,teacher?"1":"0")}catch(e){}
+ if(silent)return;stopAll();NK.sfx(teacher?"ding":"pop");if(teacher)NK.pop($("#thint"),{from:.8})}
+tBtn.addEventListener("click",function(){setTeacher(!teacher)});
+setTeacher(teacher,true);
+
+/* ---------- "I can say it": the star flies into the necklace ---------- */
+function landing(bead){var r=bead.getBoundingClientRect();
+ if(r.bottom>0&&r.top<innerHeight)return {el:bead,rect:r};
+ var w=36,top=r.bottom<=0?12:innerHeight-60;
+ return {el:null,rect:{left:innerWidth/2-w/2,top:top,width:w,height:w}}}
+function surahDone(finalToo){NK.haptic("success");var nest=$("#snest");
+ if(!finalToo)NK.sfx("level");
+ NK.fx.burstAt(nest,{n:34,kind:"star",power:1.2});NK.bounce(nest);
+ $$("#snest .bead").forEach(function(b,i){setTimeout(function(){NK.bounce(b)},i*70)});
+ NK.pop($("#dline .d2"),{from:.7});
+ if(finalToo)setTimeout(finale,700)}
+function finale(){state.done=true;save();
+ try{var next=NK.done("mushaf");if(next&&next.stars)state=next}catch(e){}
+ NK.sfx("cheer");NK.haptic("success");NK.fx.confetti();setTimeout(function(){NK.fx.shower()},500);
+ var fin=$("#fin");fin.hidden=false;NK.pop(fin,{from:.6});
+ setTimeout(function(){try{fin.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})}catch(e){}},250);
+ renderProgress()}
+function toggleKnow(vn,btn){if(!cur)return;var list=starsOf(cur.n).slice(),i=list.indexOf(vn),card=cardOf(vn);
+ var wasFull=fullSurah(cur),wasAll=completed()>=S.length;
+ if(i>=0)list.splice(i,1);else list.push(vn);
+ list.sort(function(a,b){return a-b});
+ if(list.length)state.stars[cur.n]=list;else delete state.stars[cur.n];
+ var full=fullSurah(cur),all=completed()>=S.length,on=i<0;
+ if(all)state.done=true;
+ save();
+ btn.setAttribute("aria-pressed",on?"true":"false");
+ if(card)card.classList.toggle("known",on);
+ var bead=beadOf(vn);
+ if(on){NK.sfx("gem");NK.haptic("success");NK.fx.burstAt(btn,{n:16,kind:"star"});
+  var to=bead?landing(bead):null,br=btn.getBoundingClientRect(),from={left:br.left+br.width/2-20,top:br.top+br.height/2-20,width:40,height:40};
+  var flight=to?NK.flyTo(from,to.el||to.rect,{html:FLYSTAR,duration:820,spin:360,size:44,scaleTo:.75}):Promise.resolve(false);
+  flight.then(function(){if(bead){bead.classList.add("on");NK.bounce(bead)}
+   NK.sfx("pop");
+   if(to){var r=to.rect;NK.fx.burst(r.left+r.width/2,r.top+r.height/2,{n:12,kind:"spark"})}
+   if(full&&!wasFull)setTimeout(function(){surahDone(all&&!wasAll)},220)})}
+ else{NK.sfx("pop");if(bead)bead.classList.remove("on")}
+ doneLine();renderProgress();markNext()}
+
+/* ---------- wiring ---------- */
 $("#grid").addEventListener("click",function(e){var b=e.target.closest(".sc");if(b)openSurah(+b.dataset.n)});
-$("#vlist").addEventListener("click",function(e){var p=e.target.closest(".play"),k=e.target.closest(".know");
- if(p){var v=cur.v[+p.dataset.v-1];if(p.classList.contains("on")){stop();return}stop();playAyah(cur,v);return}
+$("#vlist").addEventListener("click",function(e){if(!cur)return;var p=e.target.closest(".play"),k=e.target.closest(".know");
+ if(p){if(p.getAttribute("aria-pressed")==="true"){stopAll();return}playCard(+p.dataset.v);return}
  if(k)toggleKnow(+k.dataset.v,k)});
-$("#playall").addEventListener("click",function(){if(!cur)return;if($("#playall").classList.contains("busy")){stop();return}playAll(cur)});
-$("#back").addEventListener("click",function(){stop();renderPick();document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});$("#scr-pick").classList.add("on");window.scrollTo(0,0)});
-$("#reset").addEventListener("click",function(){state={stars:{},done:false};save();stop();renderPick();document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});$("#scr-pick").classList.add("on")});
-addEventListener("pagehide",stop);
+$("#back").addEventListener("click",function(){goPick(cur&&cur.n)});
+var resetBtn=$("#reset"),armed=0;
+resetBtn.addEventListener("click",function(){
+ if(!armed){armed=setTimeout(function(){armed=0;resetBtn.classList.remove("armed")},4000);resetBtn.classList.add("armed");NK.wobble(resetBtn);return}
+ clearTimeout(armed);armed=0;resetBtn.classList.remove("armed");
+ state={stars:{},done:false};save();stopAll();cur=null;$("#fin").hidden=true;renderPick();showScreen("pick");NK.sfx("whoosh")});
 renderPick();
 })();
 </script>

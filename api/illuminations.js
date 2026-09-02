@@ -353,16 +353,89 @@ const BASE_RULES = "Accuracy is sacred: well-established facts and mainstream Su
 
    The old behaviour, an AI writing a historical claim fresh every morning with
    nobody checking it, is exactly the thing this site is not allowed to do. */
+/* ---------- the light, in the reader's language ----------
+   The library is written in English and validated in English. A reader who
+   switched the whole Codex to German was still handed an English paragraph,
+   because the picker returned the card exactly as written. Two doors are open
+   to it now, in this order:
+
+     1. lights/i18n/<lang>.json, an audited translation of the library keyed by
+        light id. Free, instant, identical for every reader, and the only door
+        a finished language should ever need.
+     2. the Lantern, translating that one card and nothing else, under rules
+        that forbid it to add, remove or reinterpret. Its answer is written to
+        the day's store, so a language costs one translation per day at most.
+
+   If both doors are shut the English card is returned rather than a blank
+   tile, carrying tr:"en" so the page can say the translation is still coming. */
+const I18N = {};       /* lang -> { at, by: {id: {c,t,s,d}} } */
+async function lightPack(host, lang) {
+  if (!lang || lang === "en") return null;
+  const now = Date.now();
+  const hit = I18N[lang];
+  if (hit && now - hit.at < 6 * 3600 * 1000) return hit.by;
+  const base = "https://" + String(host || "noorcodex.com").replace(/^https?:\/\//, "");
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 5000);
+    const r = await fetch(base + "/lights/i18n/" + lang + ".json", { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) throw 0;
+    const j = await r.json();
+    const by = j && (j.lights || j.by || j);
+    if (by && typeof by === "object") { I18N[lang] = { at: now, by: by }; return by; }
+  } catch { I18N[lang] = { at: now, by: (hit && hit.by) || null }; }
+  return (I18N[lang] && I18N[lang].by) || null;
+}
+const TR_RULES = "You are translating one card of a validated Islamic history library. "
+  + "Translate only: never add a fact, never drop a clause, never soften or explain. "
+  + "Keep every number, year, century and name exactly as given; proper names take their "
+  + "standard form in the target language. Say Allah, never God or a local word for a deity. "
+  + "Never use the em dash or the en dash; use commas or the middot. Reply with JSON only, "
+  + "as {\"category\":\"\",\"title\":\"\",\"story\":\"\",\"detail\":\"\"}.";
+async function lanternTranslate(card, lang) {
+  const p = await lantern(
+    TR_RULES + "\nTranslate into " + LANGS[lang] + ".",
+    JSON.stringify({ category: card.category, title: card.title, story: card.story, detail: card.detail }),
+    900);
+  if (!p || !p.title || !p.story) throw 0;
+  return p;
+}
+/* one card, moved into a language, by whichever door is open */
+async function speak(card, lang, host) {
+  if (!card || !lang || lang === "en") return card;
+  const out = Object.assign({}, card, { lang: lang, tr: card.tr || "en" });
+  const pack = await lightPack(host, lang);
+  const t = pack && card.id && pack[card.id];
+  if (t && (t.t || t.title)) {
+    out.category = clean(t.c || t.category || out.category).slice(0, 26);
+    out.title = clean(t.t || t.title).slice(0, 96);
+    out.story = clean(t.s || t.story || out.story).slice(0, 1200);
+    out.detail = clean(t.d || t.detail || out.detail).slice(0, 64);
+    out.tr = "file";
+    return out;
+  }
+  try {
+    const p = await lanternTranslate(out, lang);
+    out.category = clean(p.category || out.category).slice(0, 26);
+    out.title = clean(p.title).slice(0, 96);
+    out.story = clean(p.story).slice(0, 1200);
+    out.detail = clean(p.detail || out.detail).slice(0, 64);
+    out.tr = "lantern";
+  } catch { /* the English card is still true; only its language is wrong */ }
+  return out;
+}
 async function kindLight(today, want, lang, host) {
   const picked = await chooseLight(host, want, { useLantern: true });
   if (picked) {
-    return { date: want, lang: lang || "en", source: picked.source,
+    const card = { date: want, lang: "en", source: picked.source, tr: "en",
              category: clean(picked.category).slice(0, 26),
              title: clean(picked.title).slice(0, 96),
              story: clean(picked.story).slice(0, 1200),
              detail: clean(picked.detail).slice(0, 64),
              id: picked.id, why: picked.why, lvl: picked.lvl, src: picked.src,
              hijri: picked.hijri };
+    return await speak(card, lang, host);
   }
   return lightFallback(want, lang);
 }
@@ -454,10 +527,21 @@ export default async function handler(req, res) {
     /* past days never wake the AI: they come from the store's memory of
        what actually shone that day, or from the treasury, instantly. */
     if (want !== today) {
+      const host0 = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
       if (kvReady()) {
         try {
           const hit = (await kv([["GET", kk]]))[0];
           if (hit) return res.status(200).json(remember(ck, JSON.parse(hit)));
+          /* the day was stored in English before this reader's language existed:
+             move that card rather than dropping to the small treasury */
+          if (lang !== "en") {
+            const en = (await kv([["GET", "nl:" + want]]))[0];
+            if (en) {
+              const said = await speak(JSON.parse(en), lang, host0);
+              if (said && said.tr !== "en") kv([["SET", kk, JSON.stringify(said)], ["EXPIRE", kk, "2764800"]]).catch(() => {});
+              return res.status(200).json(remember(ck, said));
+            }
+          }
         } catch {}
       }
       return res.status(200).json(remember(ck, lightFallback(want, lang)));

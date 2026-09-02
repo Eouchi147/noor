@@ -10,51 +10,127 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="manifest" href="/manifest.webmanifest"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/assets/kids-engine.css?v=1">
+<script src="/assets/kids-engine.js?v=1"></script>
 <style>
+:root{--gold:#C9A227;--gold-hi:#E9C86A;--gold-lt:#F4D46A;--gold-pale:#FFF7DF;--gold-dk:#8a6a14;--ink:#1A160F;--parchment:#FFFEF7;--fredoka:"Fredoka","Inter",system-ui,sans-serif}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:linear-gradient(180deg,#04060F 0%,#0a1128 40%,#141b3a 100%);color:#FFFEF7;font-family:Inter,system-ui,sans-serif;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;max-width:660px;margin:0 auto}
-.wm{color:#F4D46A;font-weight:800;font-size:.95rem;text-decoration:none}
-.wm span{display:block;font-size:.56rem;letter-spacing:.22em;color:rgba(255,254,247,.5);font-weight:700;text-transform:uppercase}
-.back{font-size:.72rem;font-weight:700;color:rgba(255,254,247,.7);border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.4rem .9rem;text-decoration:none}
-.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
-.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#FFF7DF;opacity:.5;animation:tw 3s ease-in-out infinite}
-@keyframes tw{0%,100%{opacity:.2}50%{opacity:.8}}
-main{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:0 16px 5rem;text-align:center}
-h1{font-size:1.5rem;font-weight:800;margin-top:.6rem}
-.ar{font-family:Amiri,serif;color:#F4D46A;font-size:1.7rem;filter:drop-shadow(0 0 14px rgba(244,212,106,.5))}
-.sub{font-size:.8rem;color:rgba(255,254,247,.65);line-height:1.7;max-width:26rem;margin:.6rem auto 0}
-.sky{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.5rem,1fr));gap:.8rem;margin-top:1.6rem}
-.lan{position:relative;background:none;border:0;cursor:pointer;font-family:inherit;color:inherit;padding:.4rem .2rem .7rem;border-radius:16px;transition:transform .25s}
-.lan:hover{transform:translateY(-3px)}
-.lan:focus-visible{outline:2px solid #F4D46A;outline-offset:3px}
-.lan svg{width:56px;height:74px;display:block;margin:0 auto;filter:drop-shadow(0 0 12px rgba(244,212,106,.35))}
-.lan .glow{animation:breathe 3.4s ease-in-out infinite}
-@keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
-.lan .snip{display:block;margin-top:.45rem;font-family:Amiri,serif;font-size:.78rem;line-height:1.5;color:rgba(255,254,247,.78);max-height:2.4em;overflow:hidden}
-.lan.new::after{content:"new";position:absolute;top:0;inset-inline-end:12%;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#1A160F;background:linear-gradient(135deg,#C9A227,#F4D46A);border-radius:999px;padding:.14rem .45rem}
-.lan.dim svg{opacity:.7;filter:drop-shadow(0 0 6px rgba(244,212,106,.2))}
-/* the bloom */
-#veil{position:fixed;inset:0;background:rgba(4,6,15,.86);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:50;padding:1.2rem}
-#veil[hidden]{display:none}
-#bloom{max-width:22rem;text-align:center;transform:scale(.6);opacity:0;transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .7s}
+html{-webkit-text-size-adjust:100%}
+body{background:#04060F;color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+[hidden]{display:none!important}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+/* ---------- the night: a gradient sky, a moon glow, far stars, near stars, a horizon ---------- */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#03050d 0%,#0a1128 46%,#141b3a 100%)}
+.stars::before{content:"";position:absolute;inset:-10% -10% auto;height:70%;background:radial-gradient(ellipse at 80% 14%,rgba(244,212,106,.17),transparent 52%)}
+.stars::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:radial-gradient(ellipse at 50% 100%,rgba(201,162,39,.16),transparent 66%)}
+.layer{position:absolute;inset:-4%}
+.layer i{position:absolute;width:2px;height:2px;border-radius:50%;background:#FFF7DF;opacity:.5;animation:tw var(--tw,3s) ease-in-out infinite}
+.layer i.n{width:3px;height:3px;box-shadow:0 0 7px rgba(255,247,223,.85)}
+#far{animation:parallax 150s linear infinite alternate}
+#near{animation:parallax 75s linear infinite alternate}
+@keyframes parallax{from{transform:translate3d(0,0,0)}to{transform:translate3d(-26px,12px,0)}}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+.moon{position:absolute;top:54px;right:6%;width:78px;height:78px;animation:moonf 12s ease-in-out infinite alternate}
+@keyframes moonf{from{transform:translateY(0)}to{transform:translateY(7px)}}
+.shoot{position:absolute;left:40%;top:12%;width:130px;height:2px;border-radius:2px;opacity:0;background:linear-gradient(90deg,#FFFEF7,rgba(255,247,223,.6) 30%,rgba(255,247,223,0));box-shadow:0 0 8px rgba(255,247,223,.6);transform-origin:0 50%}
+.horizon{position:absolute;left:0;right:0;bottom:0;line-height:0}
+.horizon svg{width:100%;height:auto;max-height:170px;display:block}
+/* ---------- header and title ---------- */
+header{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;max-width:660px;margin:0 auto}
+.wm{display:flex;flex-direction:column;justify-content:center;min-height:44px;color:var(--gold-lt);font-family:var(--fredoka);font-weight:700;font-size:1.02rem;text-decoration:none;letter-spacing:.005em}
+.wm span{display:block;font-family:Inter,system-ui,sans-serif;font-size:.56rem;letter-spacing:.22em;color:rgba(255,254,247,.5);font-weight:700;text-transform:uppercase}
+.back{display:inline-flex;align-items:center;min-height:44px;font-family:var(--fredoka);font-size:.86rem;font-weight:600;color:var(--gold-pale);border:1.5px solid rgba(244,212,106,.45);border-radius:999px;padding:.4rem 1rem;text-decoration:none;background:rgba(244,212,106,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);transition:background .2s,transform .2s}
+.back:hover,.back:focus-visible{background:rgba(244,212,106,.16);transform:translateY(-1px)}
+main{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:0 16px 6rem;text-align:center}
+h1{font-size:1.7rem;font-weight:700;margin-top:.5rem;line-height:1.2}
+.ar{font-family:Amiri,serif;color:var(--gold-lt);font-size:1.8rem;line-height:1.5;text-shadow:0 0 18px rgba(244,212,106,.55),0 0 2px rgba(244,212,106,.8)}
+.sub{font-size:.86rem;color:rgba(255,254,247,.72);line-height:1.75;max-width:27rem;margin:.6rem auto 0}
+/* ---------- the sky of lanterns ---------- */
+.sky{display:grid;grid-template-columns:repeat(auto-fit,minmax(6.4rem,8.5rem));justify-content:center;gap:.5rem .4rem;margin-top:1.4rem}
+.lan{position:relative;background:none;border:0;cursor:pointer;padding:.55rem .15rem .6rem;border-radius:18px;min-height:44px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s}
+.lan:hover,.lan:focus-visible{transform:translateY(-4px);background:rgba(244,212,106,.07)}
+.lan .body{display:block;width:60px;margin:0 auto;transform-origin:50% 8%;animation:drift var(--dd,6s) ease-in-out var(--dl,0s) infinite alternate;will-change:transform}
+@keyframes drift{from{transform:translateY(0) rotate(var(--sw,2deg))}to{transform:translateY(var(--ry,-5px)) rotate(calc(var(--sw,2deg) * -1))}}
+.lan svg{width:60px;height:78px;display:block;overflow:visible}
+.lan .halo{opacity:.55;transition:opacity .4s}
+.lan:hover .halo,.lan:focus-visible .halo{opacity:.95}
+.glow{animation:breathe 3.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
+.lan .snip{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin-top:.4rem;font-family:Amiri,serif;font-size:.84rem;line-height:1.5;color:rgba(255,254,247,.8);overflow-wrap:anywhere;unicode-bidi:plaintext;text-align:center;padding:0 .15rem}
+.lan .tag{display:none;position:absolute;top:2px;inset-inline-end:8%;font-family:var(--fredoka);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink);background:linear-gradient(135deg,#C9A227,#F4D46A);border-radius:999px;padding:.18rem .5rem;box-shadow:0 2px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.45)}
+.lan.new .tag{display:inline-block}
+.lan.dim svg{opacity:.78}
+.lan.dim .halo{opacity:.3}
+.lan.lit svg,.lan.lit .halo{opacity:1}
+.lan.lit .snip{color:var(--gold-pale)}
+.lan.lit .body{animation-duration:4.5s}
+.lan.lit::after{content:"";position:absolute;left:50%;top:44px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--gold-pale);box-shadow:0 0 10px 4px rgba(244,212,106,.75);animation:breathe 2.2s ease-in-out infinite}
+body.veiled .lan .body,body.veiled .layer i,body.veiled #far,body.veiled #near,body.veiled .moon{animation-play-state:paused}
+/* ---------- states: lighting, empty, could not reach ---------- */
+.state{margin-top:1.5rem}
+.msg{font-size:.88rem;color:rgba(255,254,247,.72);line-height:1.75;max-width:26rem;margin:0 auto}
+.loading{display:flex;flex-direction:column;align-items:center;gap:.7rem;padding:1.4rem 0 .4rem}
+.ghosts{display:flex;gap:1.1rem}
+.ghosts i{display:block;width:34px;height:52px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,rgba(244,212,106,.3),rgba(244,212,106,.08));box-shadow:0 0 18px rgba(244,212,106,.15);animation:pulse 1.3s ease-in-out infinite}
+.ghosts i:nth-child(2){animation-delay:.2s}.ghosts i:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.empty{padding:1.2rem 1rem;border:1.5px dashed rgba(244,212,106,.35);border-radius:20px;background:rgba(244,212,106,.04)}
+.failed{padding:1.2rem 1rem 1.1rem;border:1.5px solid rgba(244,212,106,.35);border-radius:20px;background:linear-gradient(180deg,rgba(255,254,247,.06),rgba(255,254,247,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.failed .msg{margin-bottom:.9rem}
+.blessing{margin-top:1.2rem;color:var(--gold-pale);font-family:var(--fredoka);font-weight:600;font-size:1rem}
+.ayah{margin-top:1.9rem;font-size:.86rem;line-height:1.75;color:rgba(255,254,247,.74)}
+.ayah i{font-style:italic;color:var(--gold-pale)}
+.ayah .ref{display:block;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,212,106,.72);font-weight:700;margin-top:.3rem}
+/* ---------- chunky buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;font-family:var(--fredoka);font-weight:700;border:0;border-radius:18px;cursor:pointer;min-height:48px;padding:.6rem 1.4rem;font-size:1rem;line-height:1.2;text-decoration:none;position:relative;transition:transform .12s ease,box-shadow .12s ease,background .2s,filter .2s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-gold{background:linear-gradient(180deg,#FFE9A3 0%,#EFCF6C 55%,#D9AC3C 100%);color:var(--ink);box-shadow:0 5px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.55),0 12px 26px rgba(244,212,106,.22)}
+.btn-gold:hover,.btn-gold:focus-visible{filter:brightness(1.06)}
+.btn-gold:active{transform:translateY(4px);box-shadow:0 1px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-ghost{background:linear-gradient(180deg,rgba(244,212,106,.17),rgba(244,212,106,.06));color:var(--gold-lt);border:1.5px solid rgba(244,212,106,.5);box-shadow:0 4px 0 rgba(138,106,20,.6),inset 0 1px 0 rgba(255,255,255,.16)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:linear-gradient(180deg,rgba(244,212,106,.26),rgba(244,212,106,.1))}
+.btn-ghost:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(138,106,20,.6),inset 0 1px 0 rgba(255,255,255,.16)}
+.more{margin-top:1.3rem}
+.give-inv{margin-top:2.2rem;background:rgba(244,212,106,.07);border:1.5px solid rgba(244,212,106,.38);border-radius:20px;padding:1.1rem 1.1rem 1.15rem;font-size:.82rem;line-height:1.7;color:rgba(255,254,247,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.give-inv .cta{margin-top:.7rem;min-height:44px;font-size:.95rem}
+/* ---------- the bloom ---------- */
+#veil{position:fixed;inset:0;z-index:50;background:rgba(4,6,15,.9);display:flex;flex-direction:column;overflow:auto;overscroll-behavior:contain;padding:1.2rem;opacity:0;transition:opacity .25s}
+#veil.on{opacity:1}
+#bloom{position:relative;margin:auto;width:100%;max-width:22rem;text-align:center;padding:1.3rem 1.1rem 1.1rem;border-radius:28px;background:linear-gradient(180deg,rgba(28,37,86,.94),rgba(10,17,40,.97));border:1px solid rgba(244,212,106,.36);box-shadow:0 30px 80px rgba(2,3,12,.75),inset 0 1px 0 rgba(255,255,255,.2),0 0 60px rgba(244,212,106,.08);transform:scale(.6);opacity:0;transition:transform .7s cubic-bezier(.34,1.56,.64,1),opacity .45s;outline:none}
+#bloom:focus-visible{outline:3px solid var(--gold-lt);outline-offset:4px}
 #veil.go #bloom{transform:scale(1);opacity:1}
-#bloom svg{width:110px;height:146px;margin:0 auto;filter:drop-shadow(0 0 30px rgba(244,212,106,.6))}
-#bloom .dua{font-family:Amiri,serif;font-size:1.25rem;line-height:1.9;color:#FFF7DF;margin-top:1rem;opacity:0;transition:opacity .8s .5s}
+#bloom svg{width:110px;height:146px;margin:0 auto;display:block;overflow:visible}
+#bloom .glow{transform-box:fill-box;transform-origin:center;animation:breathe2 2.6s ease-in-out infinite}
+@keyframes breathe2{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.3);opacity:1}}
+#bloom .sp{animation:tw 2.8s ease-in-out infinite}
+#bloom .sp2{animation-delay:1.3s}
+#bloom .dua{font-family:Amiri,serif;font-size:1.3rem;line-height:1.9;color:var(--gold-pale);margin-top:.8rem;opacity:0;transition:opacity .6s .35s;overflow-wrap:anywhere;unicode-bidi:plaintext}
+#bloom .dua::before{content:"\201C"}#bloom .dua::after{content:"\201D"}
 #veil.go #bloom .dua{opacity:1}
-#bloom .inv{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,212,106,.8);font-weight:800;margin-top:1.1rem;opacity:0;transition:opacity .6s 1s}
+.hear{margin-top:.7rem;min-height:44px;font-size:.9rem;padding:.45rem 1.1rem;opacity:0;transition:opacity .5s .5s,transform .12s ease,box-shadow .2s ease,background .2s}
+#veil.go .hear{opacity:1}
+.hear[aria-pressed="true"]{background:linear-gradient(180deg,rgba(244,212,106,.4),rgba(244,212,106,.18));box-shadow:0 0 0 3px rgba(244,212,106,.3),0 0 24px rgba(244,212,106,.55),0 4px 0 rgba(138,106,20,.6)}
+.hint{font-size:.8rem;color:rgba(255,254,247,.72);margin-top:.55rem;line-height:1.6}
+#bloom .inv{font-family:var(--fredoka);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,212,106,.85);font-weight:700;margin-top:1rem;opacity:0;transition:opacity .5s .6s}
 #veil.go #bloom .inv{opacity:1}
-.ameen{margin-top:.7rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border:0;border-radius:999px;padding:.65rem 1.6rem;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit;opacity:0;transition:opacity .6s 1.2s}
+.ameen{margin-top:.6rem;font-size:1.22rem;min-height:56px;padding:.7rem 2rem;border-radius:22px;opacity:0;transition:opacity .5s .75s,transform .12s ease,box-shadow .12s ease,background .3s,color .3s}
 #veil.go .ameen{opacity:1}
-.ameen.said{background:rgba(255,254,247,.15);color:#F4D46A}
-#spark{position:absolute;pointer-events:none;inset:0}
-.close{margin-top:1rem;background:none;border:0;color:rgba(255,254,247,.55);font-size:.72rem;cursor:pointer;font-family:inherit}
-.give-inv{margin-top:2.2rem;background:rgba(244,212,106,.08);border:1.5px solid rgba(244,212,106,.4);border-radius:18px;padding:1rem 1.1rem;font-size:.78rem;line-height:1.65;color:rgba(255,254,247,.8)}
-.give-inv a{color:#F4D46A;font-weight:800;text-decoration:none}
-.empty{margin-top:2rem;font-size:.8rem;color:rgba(255,254,247,.6);line-height:1.7}
-.more{margin-top:1.2rem;background:none;border:1px solid rgba(244,212,106,.45);color:#F4D46A;border-radius:999px;padding:.55rem 1.3rem;font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit}
-@media (prefers-reduced-motion: reduce){.lan .glow,.stars i{animation:none}#bloom,.ameen,#bloom .dua,#bloom .inv{transition:none;opacity:1;transform:none}}
+.ameen.said{background:linear-gradient(180deg,rgba(255,254,247,.2),rgba(255,254,247,.08));color:var(--gold-lt);box-shadow:0 4px 0 rgba(138,106,20,.55),inset 0 1px 0 rgba(255,255,255,.22)}
+.ameen.said:active{box-shadow:0 1px 0 rgba(138,106,20,.55),inset 0 1px 0 rgba(255,255,255,.22)}
+#spark{position:absolute;inset:0;pointer-events:none;overflow:visible}
+#spark .ring{position:absolute;left:50%;top:22%;width:80px;height:80px;border-radius:50%;border:3px solid rgba(244,212,106,.95);box-shadow:0 0 22px rgba(244,212,106,.55)}
+.close{margin-top:.85rem;min-height:44px;font-size:.9rem;padding:.45rem 1.1rem;background:none;border-color:rgba(244,212,106,.3);box-shadow:none;color:rgba(255,254,247,.75)}
+.close:active{transform:translateY(2px);box-shadow:none}
+@media (max-width:359px){.sky{gap:.4rem .2rem}.lan .snip{font-size:.78rem}}
+@media (prefers-reduced-motion: reduce){
+.layer i,#far,#near,.moon,.lan .body,.glow,#bloom .glow,#bloom .sp,.ghosts i,.lan.lit::after{animation:none}
+.lan,.back,.btn,#veil,#bloom,#bloom .dua,#bloom .inv,.ameen,.hear{transition:none}
+#veil{opacity:1}#bloom{opacity:1;transform:none}#bloom .dua,#bloom .inv,.ameen,.hear{opacity:1}
+}
 </style>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
@@ -70,19 +146,55 @@ h1{font-size:1.5rem;font-weight:800;margin-top:.6rem}
 <style id="kids-skin">h1,.title{font-family:"Fredoka","Inter",system-ui,sans-serif;letter-spacing:-.005em}h1 .ar,h1 .font-amiri,h1 [lang="ar"]{font-family:Amiri,serif}</style>
 </head>
 <body>
+<svg class="defs" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="lg-body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D99E33"/><stop offset=".42" stop-color="#FFE79A"/><stop offset=".58" stop-color="#FFF3C4"/><stop offset="1" stop-color="#CE8F2A"/></linearGradient>
+<linearGradient id="lg-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9AC3C"/><stop offset="1" stop-color="#6E5010"/></linearGradient>
+<linearGradient id="lg-flame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB347"/><stop offset=".6" stop-color="#FFE38A"/><stop offset="1" stop-color="#FFFEF7"/></linearGradient>
+<radialGradient id="rg-halo"><stop offset="0" stop-color="#F4D46A" stop-opacity=".55"/><stop offset=".45" stop-color="#F4D46A" stop-opacity=".18"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient>
+<radialGradient id="rg-inner"><stop offset="0" stop-color="#FFFEF7" stop-opacity=".95"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient>
+<radialGradient id="rg-moon"><stop offset="0" stop-color="#F4D46A" stop-opacity=".42"/><stop offset=".5" stop-color="#F4D46A" stop-opacity=".1"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient>
+<linearGradient id="lg-moon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFEF7"/><stop offset="1" stop-color="#E9C86A"/></linearGradient>
+<linearGradient id="lg-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D46A" stop-opacity="0"/><stop offset="1" stop-color="#F4D46A" stop-opacity=".14"/></linearGradient>
+</defs></svg>
+<div class="stars" id="stars" aria-hidden="true">
+<div class="layer" id="far"></div>
+<div class="layer" id="near"></div>
+<svg class="moon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" fill="url(#rg-moon)"/><path d="M50 20 A30 30 0 1 0 50 80 A34 34 0 0 1 50 20 Z" fill="url(#lg-moon)"/></svg>
+<i class="shoot" id="shoot"></i>
+<div class="horizon"><svg viewBox="0 0 720 100" preserveAspectRatio="xMidYMax slice">
+<rect width="720" height="100" fill="url(#lg-hz)"/>
+<path d="M0 84 H720" stroke="#F4D46A" stroke-opacity=".3" stroke-width="1"/>
+<g fill="#070b1f">
+<path d="M0 100 V80 H48 V70 H100 V84 H150 V100 Z"/>
+<path d="M150 100 V64 Q190 20 230 64 V100 Z"/>
+<path d="M190 44 V33" stroke="#070b1f" stroke-width="2.5" stroke-linecap="round"/><circle cx="190" cy="30" r="2.6"/>
+<path d="M248 100 V38 L255 28 L262 38 V100 Z"/>
+<path d="M276 100 V78 H330 V72 H360 V100 Z"/>
+<path d="M360 100 Q430 70 500 100 Z"/>
+<path d="M508 100 V70 Q536 44 564 70 V100 Z"/>
+<path d="M592 100 V44 L598 34 L604 44 V100 Z"/>
+<path d="M616 100 V76 H670 V70 H720 V100 Z"/>
+</g>
+</svg></div>
+</div>
 <header>
 <a class="wm" href="/kids">☾ The Lantern Sky<span>NOOR · Little Codex</span></a>
 <a class="back" href="/kids">All games →</a>
 </header>
-<div class="stars" id="stars" aria-hidden="true"></div>
 <main>
 <div class="ar notranslate" translate="no">سَمَاءُ الْفَوَانِيس</div>
 <h1>The Lantern Sky</h1>
 <p class="sub">Every gift to the Codex becomes a lantern here, carrying the giver's du'a with no name attached. Tap a lantern to watch it bloom, read the du'a inside, and answer it with one beautiful word: Ameen.</p>
-<div class="sky" id="sky" aria-live="polite"></div>
-<p class="empty" id="empty" hidden>The sky is waiting for its first lanterns. When gifts arrive with du'as, they will float here.</p>
-<button class="more" id="more" hidden>More lanterns</button>
-<div class="give-inv">Grown-ups: your own lantern rises here the day you give one. <a href="/donate">Light yours →</a></div>
+<div class="sky" id="sky"></div>
+<div class="state" role="status">
+<div class="loading" id="loading"><span class="ghosts" aria-hidden="true"><i></i><i></i><i></i></span><span class="msg">Lighting the lanterns...</span></div>
+<p class="empty msg" id="empty" hidden>The sky is waiting for its first lanterns. When gifts arrive with du'as, they will float here.</p>
+<div class="failed" id="failed" hidden><p class="msg">The lanterns could not be reached just now. Check the connection and try again.</p><button class="btn btn-gold retry" id="retry" type="button">Try again</button></div>
+</div>
+<p class="msg blessing" id="blessing" hidden>Ameen. May Allah answer every du'a in this sky.</p>
+<button class="btn btn-ghost more" id="more" type="button" hidden>More lanterns</button>
+<p class="ayah">Allah says: <i>“Call on Me, and I will answer you.”</i><span class="ref">Qur'an 40:60</span></p>
+<div class="give-inv">Grown-ups: your own lantern rises here the day you give one.<br/><a class="btn btn-gold cta" href="/donate">Light yours →</a></div>
 <!--WGO-->
 <style>.wgo{max-width:46rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(244,212,106,.2)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#FFFEF7;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(255,254,247,.62);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem;text-align:start}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:linear-gradient(165deg,rgba(255,254,247,.08),rgba(255,254,247,.03));border:1px solid rgba(244,212,106,.26);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(244,212,106,.65);transform:translateY(-1px);box-shadow:0 6px 20px rgba(4,6,15,.45)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#F4D46A;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#F4D46A}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(255,254,247,.72);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
 <section class="wgo" aria-labelledby="wgo-h">
@@ -96,79 +208,209 @@ h1{font-size:1.5rem;font-weight:800;margin-top:.6rem}
 <!--/WGO-->
 </main>
 
+<template id="lan-tpl">
+<button class="lan" type="button">
+<span class="sr">A lantern carrying a du'a. Open it and say Ameen.</span>
+<span class="body"><svg viewBox="0 0 92 120" aria-hidden="true">
+<circle class="halo" cx="46" cy="60" r="46" fill="url(#rg-halo)"/>
+<circle cx="46" cy="7.5" r="4" fill="none" stroke="url(#lg-metal)" stroke-width="2.4"/>
+<path d="M34 17 Q46 6 58 17 Z" fill="url(#lg-metal)"/>
+<ellipse cx="46" cy="17.5" rx="14.5" ry="4.5" fill="url(#lg-metal)"/>
+<path d="M33 19 C27 44 27 74 33 96 L59 96 C65 74 65 44 59 19 Z" fill="url(#lg-body)" stroke="#8a6a14" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M40 20 C37 44 37 72 40 95 M46 19 V96 M52 20 C55 44 55 72 52 95" stroke="#8a6a14" stroke-opacity=".3" stroke-width="1" fill="none"/>
+<ellipse cx="46" cy="57" rx="13" ry="20" fill="url(#rg-inner)"/>
+<path d="M46 42 C39.5 51 38.5 60 46 67 C53.5 60 52.5 51 46 42 Z" fill="url(#lg-flame)"/>
+<circle class="glow" cx="46" cy="60" r="4" fill="#FFFEF7"/>
+<path d="M36.5 24 C34 42 34 60 36 80" stroke="#fff" stroke-opacity=".4" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path d="M33 96 L59 96 L55 106 L37 106 Z" fill="url(#lg-metal)"/>
+<path d="M46 106 V112" stroke="#8a6a14" stroke-width="2" stroke-linecap="round"/>
+<circle cx="46" cy="114.5" r="2.6" fill="#B8892A"/>
+</svg></span>
+<span class="tag">new</span>
+<span class="snip" dir="auto"></span>
+<span class="sr lit-mark" hidden>Answered with Ameen.</span>
+</button>
+</template>
+
 <div id="veil" hidden>
-<div id="bloom" role="dialog" aria-modal="true" aria-label="A lantern's du'a">
-<svg viewBox="0 0 92 120" aria-hidden="true">
-<ellipse cx="46" cy="16" rx="13" ry="5" fill="#8a6a14"/>
-<path d="M33 16 C28 44 28 74 33 96 L59 96 C64 74 64 44 59 16 Z" fill="rgba(244,212,106,.95)" stroke="#8a6a14" stroke-width="1.6"/>
-<path d="M33 96 L59 96 L54 106 L38 106 Z" fill="#8a6a14"/>
-<circle class="glow" cx="46" cy="56" r="13" fill="#FFF7DF"><animate attributeName="r" values="12;15;12" dur="2.6s" repeatCount="indefinite"/></circle>
+<div id="bloom" role="dialog" aria-modal="true" aria-label="A lantern's du'a" tabindex="-1">
+<svg id="bloom-svg" viewBox="0 0 92 120" aria-hidden="true">
+<circle class="halo" cx="46" cy="60" r="46" fill="url(#rg-halo)"/>
+<circle cx="46" cy="7.5" r="4" fill="none" stroke="url(#lg-metal)" stroke-width="2.4"/>
+<path d="M34 17 Q46 6 58 17 Z" fill="url(#lg-metal)"/>
+<ellipse cx="46" cy="17.5" rx="14.5" ry="4.5" fill="url(#lg-metal)"/>
+<path d="M33 19 C27 44 27 74 33 96 L59 96 C65 74 65 44 59 19 Z" fill="url(#lg-body)" stroke="#8a6a14" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M40 20 C37 44 37 72 40 95 M46 19 V96 M52 20 C55 44 55 72 52 95" stroke="#8a6a14" stroke-opacity=".3" stroke-width="1" fill="none"/>
+<ellipse cx="46" cy="57" rx="13" ry="20" fill="url(#rg-inner)"/>
+<path d="M46 42 C39.5 51 38.5 60 46 67 C53.5 60 52.5 51 46 42 Z" fill="url(#lg-flame)"/>
+<circle class="glow" cx="46" cy="60" r="4" fill="#FFFEF7"/>
+<path d="M36.5 24 C34 42 34 60 36 80" stroke="#fff" stroke-opacity=".4" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path d="M33 96 L59 96 L55 106 L37 106 Z" fill="url(#lg-metal)"/>
+<path d="M46 106 V112" stroke="#8a6a14" stroke-width="2" stroke-linecap="round"/>
+<circle cx="46" cy="114.5" r="2.6" fill="#B8892A"/>
+<path class="sp" d="M80 30l1.6 4.4L86 36l-4.4 1.6L80 42l-1.6-4.4L74 36l4.4-1.6Z" fill="#FFF7DF"/>
+<path class="sp sp2" d="M12 82l1.3 3.6L17 87l-3.7 1.4L12 92l-1.3-3.6L7 87l3.7-1.4Z" fill="#FFF7DF"/>
 </svg>
-<p class="dua" id="bloom-dua"></p>
+<p class="dua" id="bloom-dua" dir="auto"></p>
+<button class="btn btn-ghost hear" id="hear" type="button" aria-pressed="false" aria-label="Hear the du'a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Hear it</span></button>
+<p class="hint" id="hint" hidden>Ask a grown-up to read it with you.</p>
+<p class="hint" id="hint-mute" hidden>Sound is off. Tap the speaker in the corner to turn it on.</p>
 <p class="inv">Say Ameen</p>
-<button class="ameen" id="ameen">Ameen · آمين</button>
+<button class="btn btn-gold ameen" id="ameen" type="button"><span id="ameen-say">Ameen · آمين</span><span id="ameen-said" hidden>Ameen, and may it be answered ✦</span></button>
 <div id="spark"></div>
-<br/><button class="close" id="close">close the lantern</button>
+<br/><button class="btn btn-ghost close" id="close" type="button">close the lantern</button>
 </div>
 </div>
 
 <script>
 (function(){
 "use strict";
-var reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-/* a quiet field of stars */
-var st=document.getElementById("stars");
-for(var i=0;i<70;i++){var s=document.createElement("i");s.style.left=(Math.random()*100)+"%";s.style.top=(Math.random()*100)+"%";s.style.animationDelay=(Math.random()*3)+"s";st.appendChild(s);}
-var LANTERN='<svg viewBox="0 0 92 120" aria-hidden="true"><ellipse cx="46" cy="16" rx="13" ry="5" fill="#8a6a14"/><path d="M33 16 C28 44 28 74 33 96 L59 96 C64 74 64 44 59 16 Z" fill="rgba(244,212,106,.9)" stroke="#8a6a14" stroke-width="1.6"/><path d="M33 96 L59 96 L54 106 L38 106 Z" fill="#8a6a14"/><circle class="glow" cx="46" cy="56" r="12" fill="#FFF7DF"/></svg>';
-var sky=document.getElementById("sky"), all=[], shown=0, PAGE=24;
-function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
+var NK=window.NK; if(!NK)return;
+var RM=!!NK.reduced;
+function $(id){return document.getElementById(id)}
+var sky=$("sky"),more=$("more"),empty=$("empty"),failed=$("failed"),loading=$("loading"),retry=$("retry"),blessing=$("blessing");
+var veil=$("veil"),bloom=$("bloom"),duaEl=$("bloom-dua"),am=$("ameen"),a1=$("ameen-say"),a2=$("ameen-said"),closeBtn=$("close"),hear=$("hear"),hint=$("hint"),hintMute=$("hint-mute"),spark=$("spark"),bloomSvg=$("bloom-svg");
+var tpl=$("lan-tpl"),mainEl=document.querySelector("main"),headEl=document.querySelector("header");
+var all=[],shown=0,PAGE=24,opener=null,current="",openToken=0,veilTimer=0,bless=false;
+
+/* ---- the sky: far stars, near stars, a shooting star now and then ---- */
+function seed(layer,n,near){
+  var f=document.createDocumentFragment();
+  for(var i=0;i<n;i++){
+    var s=document.createElement("i"); if(near)s.className="n";
+    s.style.left=(Math.random()*100).toFixed(1)+"%"; s.style.top=(Math.random()*100).toFixed(1)+"%";
+    s.style.setProperty("--tw",(2.4+Math.random()*3.4).toFixed(2)+"s"); s.style.animationDelay=(-Math.random()*6).toFixed(2)+"s";
+    f.appendChild(s);
+  }
+  layer.appendChild(f);
+}
+seed($("far"),RM?28:64,false); seed($("near"),RM?6:18,true);
+var shoot=$("shoot"),shootT=0;
+function planShoot(){clearTimeout(shootT); if(RM||!shoot.animate)return; shootT=setTimeout(fireShoot,7000+Math.random()*9000);}
+function fireShoot(){
+  if(document.hidden||!veil.hidden){planShoot();return;}
+  shoot.style.left=(15+Math.random()*60).toFixed(1)+"%"; shoot.style.top=(5+Math.random()*22).toFixed(1)+"%";
+  var a=shoot.animate([{transform:"rotate(-30deg) translateX(0) scaleX(.2)",opacity:0},{opacity:1,offset:.2},{transform:"rotate(-30deg) translateX(-240px) scaleX(1)",opacity:0}],{duration:1150,easing:"cubic-bezier(.25,.6,.35,1)"});
+  a.onfinish=planShoot; a.oncancel=planShoot;
+}
+planShoot();
+document.addEventListener("visibilitychange",function(){if(!document.hidden)planShoot();});
+
+/* ---- the lanterns ---- */
+function tidy(s){return String(s).replace(/[\u2013\u2014]/g,"\u00B7").replace(/\s+/g," ").trim()}
+function makeLantern(d,i){
+  var b=tpl.content.firstElementChild.cloneNode(true), body=b.querySelector(".body");
+  if(i<3)b.classList.add("new"); if(i>=12)b.classList.add("dim");
+  body.style.setProperty("--dd",(5+Math.random()*3.5).toFixed(2)+"s");
+  body.style.setProperty("--dl",(-Math.random()*8).toFixed(2)+"s");
+  body.style.setProperty("--sw",(1.5+Math.random()*2.5).toFixed(2)+"deg");
+  body.style.setProperty("--ry",(-(3+Math.random()*5)).toFixed(1)+"px");
+  b.querySelector(".snip").textContent=d;
+  b.addEventListener("click",function(){openLantern(d,b)});
+  return b;
+}
 function renderMore(){
-  var slice=all.slice(shown, shown+PAGE);
-  slice.forEach(function(d,k){
-    var i=shown+k;
-    var b=document.createElement("button");
-    b.className="lan"+(i<3?" new":"")+(i>=12?" dim":"");
-    b.setAttribute("aria-label","A lantern carrying a du'a. Open it and say Ameen.");
-    b.innerHTML=LANTERN+'<span class="snip">'+esc(d.length>34?d.slice(0,34)+"…":d)+"</span>";
-    b.addEventListener("click",function(){open(d)});
-    sky.appendChild(b);
+  var slice=all.slice(shown,shown+PAGE),frag=document.createDocumentFragment(),made=[];
+  slice.forEach(function(d,k){var b=makeLantern(d,shown+k);if(!RM)b.style.opacity="0";frag.appendChild(b);made.push(b);});
+  sky.appendChild(frag);
+  made.forEach(function(b,k){setTimeout(function(){b.style.opacity="";NK.pop(b,{from:.35,duration:560});},RM?0:55*k);});
+  shown+=slice.length; more.hidden=shown>=all.length;
+}
+function state(which){loading.hidden=which!=="loading";empty.hidden=which!=="empty";failed.hidden=which!=="failed";}
+function load(isRetry){
+  state("loading"); more.hidden=true;
+  return fetch("/api/dedications",{cache:isRetry?"reload":"default"}).then(function(r){if(!r.ok)throw new Error("http "+r.status);return r.json()}).then(function(j){
+    var items=(j&&Array.isArray(j.items)?j.items:[]).filter(function(x){return typeof x==="string"}).map(tidy).filter(function(x){return x.length>0});
+    all=items; shown=0; sky.textContent="";
+    if(!all.length){state("empty");NK.pop(empty);return;}
+    state("");
+    renderMore();
+    if(isRetry){NK.sfx("sparkle");NK.haptic("success");}
+  }).catch(function(){
+    state("failed");
+    if(isRetry){NK.sfx("wrong");NK.haptic("error");NK.shake(failed);}else NK.pop(failed);
   });
-  shown+=slice.length;
-  document.getElementById("more").hidden = shown>=all.length;
 }
-var veil=document.getElementById("veil"), am=document.getElementById("ameen");
-function open(d){
-  document.getElementById("bloom-dua").textContent="“"+d+"”";
-  am.classList.remove("said"); am.textContent="Ameen · آمين";
-  veil.hidden=false;
-  requestAnimationFrame(function(){requestAnimationFrame(function(){veil.classList.add("go")})});
+retry.addEventListener("click",function(){load(true)});
+more.addEventListener("click",function(){renderMore();NK.sfx("sparkle");});
+load(false);
+
+/* ---- the bloom: a lantern flies up, opens, and waits for its Ameen ---- */
+function focusables(){return [].slice.call(bloom.querySelectorAll("button:not([disabled]),a[href]")).filter(function(el){return !el.hidden&&el.offsetParent!==null})}
+function openLantern(d,btn){
+  if(!veil.hidden&&veil.classList.contains("on"))return;
+  clearTimeout(veilTimer);
+  var token=++openToken;
+  opener=btn; current=d;
+  duaEl.textContent=d;
+  am.classList.remove("said"); a1.hidden=false; a2.hidden=true;
+  hear.setAttribute("aria-pressed","false"); hint.hidden=true; hintMute.hidden=true;
+  veil.classList.remove("go"); veil.hidden=false;
+  document.body.classList.add("veiled");
+  mainEl.setAttribute("inert",""); headEl.setAttribute("inert","");
+  requestAnimationFrame(function(){if(token===openToken)veil.classList.add("on")});
+  NK.sfx("whoosh");
+  var from=btn.querySelector("svg");
+  var flight=RM?Promise.resolve(true):NK.flyTo(from,bloomSvg,{html:from.outerHTML,duration:480,arc:48});
+  flight.then(function(){
+    if(token!==openToken)return;
+    veil.classList.add("go");
+    NK.sfx("pop"); NK.fx.burstAt(bloomSvg,{n:12,kind:"spark"});
+    try{bloom.focus({preventScroll:true})}catch(e){bloom.focus()}
+    setTimeout(function(){if(token===openToken&&!veil.hidden)NK.sfx("sparkle");},RM?0:400);
+  });
 }
-function close(){veil.classList.remove("go");setTimeout(function(){veil.hidden=true},reduced?0:250)}
-document.getElementById("close").addEventListener("click",close);
-veil.addEventListener("click",function(e){if(e.target===veil)close()});
-addEventListener("keydown",function(e){if(e.key==="Escape"&&!veil.hidden)close()});
+function closeLantern(){
+  if(veil.hidden)return;
+  openToken++;
+  NK.stopAudio();
+  NK.sfx("whoosh");
+  veil.classList.remove("go"); veil.classList.remove("on");
+  document.body.classList.remove("veiled");
+  mainEl.removeAttribute("inert"); headEl.removeAttribute("inert");
+  var op=opener; opener=null;
+  if(bless){bless=false;blessing.hidden=false;NK.pop(blessing);}
+  veilTimer=setTimeout(function(){veil.hidden=true; if(op&&op.isConnected){try{op.focus({preventScroll:true})}catch(e){}}},RM?0:260);
+}
+function rings(){
+  if(RM||!spark.animate)return;
+  var y=bloomSvg.offsetTop+bloomSvg.offsetHeight*.5;
+  [0,140].forEach(function(delay){
+    var r=document.createElement("i"); r.className="ring"; r.style.top=y+"px"; spark.appendChild(r);
+    var a=r.animate([{transform:"translate(-50%,-50%) scale(.25)",opacity:.95},{transform:"translate(-50%,-50%) scale(2.8)",opacity:0}],{duration:950,delay:delay,easing:"cubic-bezier(.2,.7,.3,1)",fill:"both"});
+    a.onfinish=function(){r.remove()}; a.oncancel=function(){r.remove()};
+  });
+}
 am.addEventListener("click",function(){
   if(am.classList.contains("said"))return;
-  am.classList.add("said"); am.textContent="Ameen, and may it be answered ✦";
-  if(!reduced){
-    var sp=document.getElementById("spark");
-    for(var i=0;i<12;i++){
-      var p=document.createElement("i");
-      p.style.cssText="position:absolute;left:50%;top:40%;width:4px;height:4px;border-radius:50%;background:#F4D46A;opacity:1;transition:all 1s ease-out;";
-      sp.appendChild(p);
-      (function(p){requestAnimationFrame(function(){
-        p.style.transform="translate("+(Math.random()*160-80)+"px,"+(Math.random()*-120-10)+"px)";
-        p.style.opacity="0";
-      });setTimeout(function(){p.remove()},1100);})(p);
-    }
-  }
+  am.classList.add("said"); a1.hidden=true; a2.hidden=false;
+  NK.sfx("chime"); NK.haptic("success");
+  NK.fx.burstAt(bloomSvg,{n:RM?6:28,kind:"bubble",colors:["#F4D46A","#FFE9A3","#FFF7DF","#E9C86A"],power:.9});
+  NK.bounce(bloomSvg); rings();
+  if(opener&&!opener.classList.contains("lit")){opener.classList.add("lit");var m=opener.querySelector(".lit-mark");if(m)m.hidden=false;}
+  if(blessing.hidden)bless=true;
 });
-fetch("../api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
-  all=(j&&j.items)||[];
-  if(!all.length){document.getElementById("empty").hidden=false;return;}
-  renderMore();
-  document.getElementById("more").addEventListener("click",renderMore);
-}).catch(function(){document.getElementById("empty").hidden=false;});
+hear.addEventListener("click",function(){
+  if(!current)return;
+  hint.hidden=true; hintMute.hidden=true;
+  if(NK.volume.muted){hintMute.hidden=false;NK.wobble(hear);return;}
+  hear.setAttribute("aria-pressed","true");
+  var t=openToken;
+  NK.say(current).then(function(ok){
+    hear.setAttribute("aria-pressed","false");
+    if(!ok&&t===openToken&&!veil.hidden){hint.hidden=false;NK.pop(hint);}
+  });
+});
+closeBtn.addEventListener("click",closeLantern);
+veil.addEventListener("click",function(e){if(e.target===veil)closeLantern()});
+veil.addEventListener("keydown",function(e){
+  if(e.key!=="Tab")return;
+  var f=focusables(); if(!f.length){e.preventDefault();return;}
+  var first=f[0],last=f[f.length-1],cur=document.activeElement;
+  if(e.shiftKey){if(cur===first||cur===bloom||!bloom.contains(cur)){e.preventDefault();last.focus();}}
+  else if(cur===last||!bloom.contains(cur)){e.preventDefault();first.focus();}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!veil.hidden){e.preventDefault();closeLantern();}});
 })();
 </script>
 </body>

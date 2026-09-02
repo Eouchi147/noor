@@ -26,58 +26,246 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
+<link rel="stylesheet" href="/assets/kids-engine.css?v=1">
+<script src="/assets/kids-engine.js?v=1"></script>
 <style>
-:root{--night:#0d1633;--night2:#1e3a8a;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416}
-body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
-.font-amiri{font-family:Amiri,serif}
-header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
-.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
-.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
-.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
-.backlink:hover{color:var(--gold)}
-main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
-.hero{text-align:center;padding:1.6rem 0 1.2rem}
-.hero .moon{font-size:2.6rem;display:block;margin-bottom:.4rem;filter:drop-shadow(0 0 14px rgba(233,200,106,.6))}
-.hero h1{margin:.2rem 0;font-size:1.7rem;font-weight:800;color:var(--gold)}
-.hero p{color:rgba(255,254,247,.75);font-size:.9rem;line-height:1.6;max-width:26rem;margin:.5rem auto 0}
-.progress-row{display:flex;justify-content:center;gap:.35rem;margin-top:1rem;flex-wrap:wrap}
-.pstar{font-size:1.3rem;opacity:.25;transition:opacity .3s,transform .3s}
-.pstar.lit{opacity:1;transform:scale(1.15);filter:drop-shadow(0 0 8px rgba(233,200,106,.8))}
-section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,106,.22);border-radius:20px;padding:1.2rem 1.15rem;margin:1.1rem 0}
-.lesson h2{margin:0 0 .25rem;font-size:1.15rem;color:var(--gold);display:flex;align-items:center;gap:.55rem}
-.lesson h2 .big{font-size:1.5rem}
-.lesson .sub{font-size:.78rem;color:rgba(255,254,247,.55);margin:0 0 .8rem}
-.lesson p{font-size:.86rem;line-height:1.65;color:rgba(255,254,247,.82)}
-.card{background:var(--parchment);color:var(--ink);border-radius:16px;border:2px solid var(--goldd);padding:1rem 1.1rem;margin:.8rem 0}
-.card .ar{font-family:Amiri,serif;font-size:1.5rem;text-align:center;color:#241D12;line-height:1.9;direction:rtl}
-.card .say{text-align:center;font-size:.8rem;color:rgba(44,36,22,.65);font-style:italic;margin-top:.3rem}
-.card .mean{text-align:center;font-size:.84rem;color:rgba(44,36,22,.85);font-weight:600;margin-top:.4rem}
-.wsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:.8rem}
-.wstep{background:rgba(255,254,247,.06);border:1.5px dashed rgba(233,200,106,.35);border-radius:14px;padding:.7rem .4rem;text-align:center}
-.wstep .ic{font-size:1.5rem;display:block}
-.wstep .t{font-size:.68rem;font-weight:700;color:var(--gold);display:block;margin-top:.3rem}
-.wstep .d{font-size:.62rem;color:rgba(255,254,247,.6);display:block;margin-top:.15rem;line-height:1.4}
-.wstep .x{font-size:.6rem;color:rgba(255,254,247,.45)}
-.prayers{display:grid;gap:.5rem;margin-top:.8rem}
-.prayer{display:flex;align-items:center;gap:.75rem;background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.25);border-radius:14px;padding:.6rem .8rem}
-.sky{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:999px;border:2px solid rgba(233,200,106,.5)}
+:root{--night:#0d1633;--night2:#1e3a8a;--gold:#E9C86A;--goldd:#C9A227;--gold-dk:#8a6a1c;--parchment:#FFFEF7;--ink:#2C2416;--sea:#38bdf8;--fredoka:"Fredoka","Inter",system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{margin:0;background:#0a1128;color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh;line-height:1.5}
+[hidden]{display:none!important}
+button{font-family:inherit}
+a,button{touch-action:manipulation}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.font-amiri,.ar{font-family:Amiri,serif}
+/* ---------- the night sky behind everything: far stars drift slower than near ones ---------- */
+.skybg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;background:radial-gradient(120% 55% at 50% -12%,rgba(233,200,106,.16),transparent 62%),radial-gradient(70% 45% at 85% 105%,rgba(56,189,248,.18),transparent 60%),linear-gradient(175deg,#08122f 0%,#0d1633 48%,#1b2f6e 100%)}
+.skybg .far,.skybg .near{position:absolute;inset:-8% 0 0 0}
+.skybg .far{animation:drift 110s ease-in-out infinite alternate}
+.skybg .near{animation:drift 60s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateY(3.5%)}}
+.st{position:absolute;border-radius:50%;background:#fff;animation:tw var(--td,4s) ease-in-out var(--tl,0s) infinite}
+.near .st{box-shadow:0 0 7px 1px rgba(255,255,255,.55)}
+@keyframes tw{0%,100%{opacity:.14}50%{opacity:.9}}
+.skybg .haze{position:absolute;left:0;right:0;bottom:0;height:26vh;background:linear-gradient(rgba(10,22,64,0),rgba(8,18,52,.85))}
+/* ---------- header: a plain block at the top ---------- */
+header.top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;max-width:640px;margin:0 auto}
+.wordmark,.backlink{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-family:var(--fredoka);font-weight:600;white-space:nowrap}
+.wordmark{color:var(--gold);font-size:15px;letter-spacing:.03em;text-shadow:0 0 12px rgba(233,200,106,.45);padding:6px 2px}
+.backlink{gap:6px;padding:8px 15px;border-radius:999px;background:rgba(255,254,247,.08);border:1px solid rgba(233,200,106,.38);color:var(--parchment);font-size:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 3px 0 rgba(5,8,24,.35);transition:background .2s,color .2s}
+.backlink:hover,.backlink:focus-visible{background:rgba(233,200,106,.2);color:var(--gold)}
+main{position:relative;z-index:1;width:min(100%,600px);margin:0 auto;padding:0 12px 20px}
+/* ---------- hero ---------- */
+.hero{text-align:center;padding:6px 0 4px}
+.hero .lamp{width:58px;height:76px;filter:drop-shadow(0 0 16px rgba(233,200,106,.6));animation:sway 5s ease-in-out infinite;transform-origin:50% 0}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.hero h1{margin:.05em 0 .15em;font-size:clamp(34px,9vw,46px);line-height:1.05;color:#fff;text-shadow:0 2px 0 rgba(5,8,24,.25),0 4px 24px rgba(233,200,106,.45)}
+.hero .sub{margin:0 auto;max-width:30rem;font-size:15.5px;line-height:1.55;color:rgba(255,254,247,.9)}
+.progress-row{display:flex;justify-content:center;gap:4px;margin-top:10px}
+.pstar{width:44px;height:44px;display:inline-grid;place-items:center;opacity:.3;filter:grayscale(1);transition:opacity .4s,filter .4s}
+.pstar svg{width:36px;height:36px}
+.pstar.lit{opacity:1;filter:drop-shadow(0 0 10px rgba(233,200,106,.9))}
+.dn{display:inline-flex;gap:6px;align-items:center;margin:10px auto 0;padding:7px 14px;border:1px solid rgba(201,162,39,.7);border-radius:999px;background:rgba(201,162,39,.16);color:var(--gold);font-family:var(--fredoka);font-size:13.5px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+/* ---------- a lesson ---------- */
+section.lesson{position:relative;margin:14px 0 0;padding:16px 14px;border-radius:22px;background:linear-gradient(rgba(19,29,70,.84),rgba(11,18,46,.92));border:2px solid rgba(233,200,106,.3);box-shadow:0 18px 40px rgba(3,5,16,.45),inset 0 1px 0 rgba(255,255,255,.08);transition:border-color .5s,box-shadow .5s}
+section.lesson.earned{border-color:rgba(233,200,106,.75);box-shadow:0 18px 40px rgba(3,5,16,.45),0 0 28px rgba(233,200,106,.22),inset 0 1px 0 rgba(255,255,255,.1)}
+.lhead{display:flex;align-items:center;gap:10px;margin:0 0 2px}
+.lnum{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:Amiri,serif;font-size:22px;font-weight:700;line-height:1;color:var(--ink);background:linear-gradient(#f5dc8a,#E9C86A 45%,#C9A227);box-shadow:0 3px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.5)}
+.lesson h2{margin:0;font-family:var(--fredoka);font-size:clamp(21px,5.6vw,26px);font-weight:600;color:var(--gold);line-height:1.15}
+.lesson .sub{margin:4px 0 10px;font-size:14px;color:rgba(255,254,247,.68);line-height:1.5}
+.prose{margin:10px 0 0;font-size:15px;line-height:1.65;color:rgba(255,254,247,.88)}
+.prose b{color:#fff3c4}
+.acard{display:flex;align-items:center;gap:10px;margin:12px 0 0;padding:12px 12px 12px 10px;border-radius:18px;background:linear-gradient(#fffdf4,#f8f0d8);border:2px solid var(--goldd);color:var(--ink);box-shadow:0 8px 20px rgba(5,8,24,.35),inset 0 1px 0 #fff}
+.acard .txt{flex:1;min-width:0}
+.acard .ar{font-size:clamp(24px,7vw,32px);line-height:1.7;text-align:center;margin:0;color:#241D12}
+.acard .trl{display:block;text-align:center;font-size:13.5px;color:#7c5c14;font-style:italic;margin:0}
+.acard .mean{text-align:center;font-size:14.5px;font-weight:600;color:#3d2f15;margin:6px 0 0;line-height:1.45}
+.spk{flex:none;width:46px;height:46px;border-radius:50%;border:0;padding:0;background:linear-gradient(#f5dc8a,#E9C86A 45%,#C9A227);color:#2C2416;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.5);transition:box-shadow .2s,transform .12s}
+.spk svg{width:22px;height:22px}
+.spk:active{transform:translateY(3px);box-shadow:0 1px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.5)}
+.spk[aria-pressed="true"]{box-shadow:0 4px 0 var(--gold-dk),0 0 0 4px rgba(233,200,106,.5),0 0 20px rgba(233,200,106,.85);animation:spkA 1s ease-in-out infinite}
+@keyframes spkA{50%{transform:scale(1.07)}}
+.game{margin:12px 0 0;padding:12px 10px;border-radius:18px;background:rgba(8,14,44,.55);border:1px solid rgba(233,200,106,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.task{margin:0 0 10px;font-family:var(--fredoka);font-size:16px;font-weight:600;color:#fff3c4;text-align:center;line-height:1.35}
+.msg{min-height:1.4em;margin:10px 0 0;text-align:center;font-family:var(--fredoka);font-size:15px;font-weight:600;color:var(--gold)}
+.msg span{display:none}
+.msg[data-m="start"] .m-start,.msg[data-m="next"] .m-next,.msg[data-m="wrong"] .m-wrong,.msg[data-m="done"] .m-done{display:inline}
+.donep{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:10px;padding:16px 12px;border-radius:18px;background:linear-gradient(rgba(233,200,106,.2),rgba(233,200,106,.08));border:2px solid rgba(233,200,106,.6);text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.donep .big{font-family:var(--fredoka);font-size:22px;font-weight:600;color:#fff3c4;text-shadow:0 0 14px rgba(233,200,106,.6);line-height:1.2}
+.donep .small{margin:0;font-size:14.5px;color:rgba(255,254,247,.85);line-height:1.5}
+.replay{min-height:44px;padding:8px 18px;border-radius:999px;border:1px solid rgba(255,254,247,.3);background:rgba(255,254,247,.08);color:#fff;font-family:var(--fredoka);font-weight:600;font-size:14px;cursor:pointer;margin-top:4px;transition:background .2s}
+.replay:hover,.replay:focus-visible{background:rgba(255,254,247,.16)}
+.next{transform:translateY(-4px)}
+.next::after{content:"";position:absolute;inset:-4px;border-radius:inherit;box-shadow:0 0 0 3px rgba(233,200,106,.95),0 0 22px rgba(233,200,106,.85);animation:glow 1s ease-in-out infinite;pointer-events:none}
+@keyframes glow{0%,100%{opacity:.45}50%{opacity:1}}
+.lockhint{margin:10px 0 0;text-align:center;font-family:var(--fredoka);font-size:14.5px;font-weight:600;color:#f9a8d4}
+.vhint,.rhint{margin:8px 0 0;text-align:center;font-size:13.5px;font-weight:600;color:#8ecdf5}
+/* ---------- 1. the sentence ---------- */
+.line{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:10px 8px;border-radius:14px;background:linear-gradient(#fffdf4,#f8f0d8);border:2px solid var(--goldd);box-shadow:inset 0 1px 0 #fff,0 6px 16px rgba(5,8,24,.3);transition:box-shadow .5s}
+.line.glow{box-shadow:0 0 0 3px rgba(233,200,106,.6),0 0 26px rgba(233,200,106,.75),inset 0 1px 0 #fff}
+.slot{min-width:38px;min-height:44px;padding:2px 8px;border-radius:10px;border:2px dashed rgba(201,162,39,.55);display:grid;place-items:center;font-family:Amiri,serif;font-size:24px;line-height:1.2;color:var(--ink);transition:background .3s,border-color .3s}
+.slot .w{visibility:hidden}
+.slot.filled{border-style:solid;border-color:var(--goldd);background:#fff}
+.slot.filled .w{visibility:visible}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px}
+.wtile{position:relative;min-width:88px;min-height:64px;padding:6px 10px;border-radius:14px;border:2px solid #e3cf8e;background:linear-gradient(#fffef9,#fdf2d2);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 0 #c9b070,inset 0 1px 0 #fff;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,opacity .3s}
+.wtile .ar{font-size:24px;line-height:1.15}
+.wtile .trl{font-family:var(--fredoka);font-size:12px;font-weight:600;color:#8a6a1c}
+.wtile:active{transform:translateY(3px);box-shadow:0 1px 0 #c9b070,inset 0 1px 0 #fff}
+.wtile.used{opacity:.35;box-shadow:none;transform:scale(.94);pointer-events:none}
+.flyw{display:grid;place-items:center;width:100%;height:100%;font-family:Amiri,serif;font-size:26px;line-height:1;color:#fff;text-shadow:0 0 12px rgba(233,200,106,.95),0 2px 4px rgba(0,0,0,.5);white-space:nowrap}
+/* ---------- 2. wudu ---------- */
+.bismline{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 10px;padding:5px 6px 5px 14px;border-radius:999px;background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.35)}
+.bismline .ar{font-size:24px;color:#fff3c4;line-height:1.2}
+.bismline .trl{font-size:13px;color:rgba(255,254,247,.72);font-style:italic}
+.wtrail{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.wstep{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,254,247,.08);border:1.5px dashed rgba(233,200,106,.4);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s,box-shadow .3s}
+.wstep svg{width:26px;height:26px;opacity:.55;transition:opacity .3s}
+.wstep.cur{border-style:solid;border-color:var(--gold);background:rgba(233,200,106,.22);transform:scale(1.15);box-shadow:0 0 16px rgba(233,200,106,.6)}
+.wstep.done{border-style:solid;border-color:var(--sea);background:rgba(56,189,248,.22)}
+.wstep.cur svg,.wstep.done svg{opacity:1}
+.wstep.done::after{content:"\2713";position:absolute;right:-4px;top:-4px;width:15px;height:15px;border-radius:50%;background:#38bdf8;color:#06213a;font:700 10px/15px var(--fredoka);text-align:center;box-shadow:0 0 0 2px #0b1236}
+.wstage{position:relative}
+.wstart{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;min-height:120px;padding:16px 14px;border-radius:18px;border:0;cursor:pointer;background:linear-gradient(#f5dc8a,#E9C86A 45%,#C9A227);color:#2C2416;font-family:var(--fredoka);font-size:20px;font-weight:600;box-shadow:0 6px 0 var(--gold-dk),0 14px 26px rgba(201,162,39,.35),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .12s,box-shadow .2s;animation:glowp 2.2s ease-in-out infinite}
+.wstart:active{transform:translateY(4px);box-shadow:0 2px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.55);animation:none}
+.wstart small{font-family:Inter,system-ui,sans-serif;font-size:13.5px;font-weight:600;color:#5b4a23}
+.wstart svg{width:40px;height:40px}
+.wcard{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;min-height:200px;padding:14px 12px 14px;border-radius:18px;border:2px solid #e3cf8e;background:linear-gradient(#fffef9,#fdf2d2);color:var(--ink);cursor:pointer;box-shadow:0 6px 0 #c9b070,0 14px 24px rgba(5,8,24,.35),inset 0 1px 0 #fff;transition:box-shadow .2s,transform .15s}
+.wcard:active{transform:translateY(4px);box-shadow:0 2px 0 #c9b070,inset 0 1px 0 #fff}
+.wcard .ico{width:90px;height:90px;filter:drop-shadow(0 4px 4px rgba(60,40,10,.2))}
+.wcard .t{font-family:var(--fredoka);font-size:22px;font-weight:600;color:#3d2f15;line-height:1.1}
+.wcard .d{font-size:14px;color:#7c5c14;line-height:1.4;text-align:center}
+.wcard .tapme{font-family:var(--fredoka);font-size:12.5px;font-weight:600;color:#8a6a1c;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.dots{display:flex;gap:9px;margin-top:6px}
+.dots i{width:16px;height:16px;border-radius:50%;background:#ecdfb8;border:2px solid #d8c48a;transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .25s,border-color .25s}
+.dots i.on{background:linear-gradient(#7cc9f2,#38bdf8);border-color:#2a9fd6;transform:scale(1.25);box-shadow:0 0 8px rgba(56,189,248,.8)}
+/* ---------- 3. the five skies ---------- */
+.pwin{position:relative;border-radius:16px;overflow:hidden;border:2px solid var(--goldd);box-shadow:0 10px 24px rgba(5,8,24,.45),inset 0 1px 0 rgba(255,255,255,.2);background:#0b1236}
+.pwin svg{display:block;width:100%;height:auto}
+.skyg{opacity:0;transition:opacity .9s ease}
+.skyg.on{opacity:1}
+.pw .tw{animation:tw 3.2s ease-in-out var(--tl,0s) infinite}
+.lg{--fl:0;transition:opacity .5s}
+.lg.on{--fl:1}
+.pq{margin:10px 0 0;text-align:center;font-family:var(--fredoka);font-size:16.5px;font-weight:600;color:#fff3c4;line-height:1.35}
+.pname{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0 0}
+.pname .txt{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.pname .ar{font-size:30px;color:#fff3c4;line-height:1.25}
+.pname .trl{font-size:13px;color:rgba(255,254,247,.72);font-style:italic}
+.prayers{display:grid;gap:8px;margin-top:12px}
+.prayer{position:relative;display:flex;align-items:center;gap:10px;min-height:58px;padding:6px 10px;border-radius:16px;border:2px solid rgba(233,200,106,.3);background:linear-gradient(rgba(255,254,247,.09),rgba(255,254,247,.04));color:var(--parchment);cursor:pointer;text-align:start;box-shadow:0 4px 0 rgba(5,8,24,.5),inset 0 1px 0 rgba(255,255,255,.1);transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,border-color .3s,background .3s}
+.prayer:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(5,8,24,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+.prayer .sky{flex:none;width:40px;height:40px;border-radius:50%;border:2px solid rgba(233,200,106,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 6px rgba(0,0,0,.35)}
 .sky.fajr{background:linear-gradient(180deg,#1e3a8a 40%,#f9a8d4)}
 .sky.dhuhr{background:radial-gradient(circle at 50% 40%,#fde68a,#60a5fa)}
 .sky.asr{background:linear-gradient(180deg,#93c5fd,#fbbf24)}
 .sky.maghrib{background:linear-gradient(180deg,#f97316,#7c2d12)}
 .sky.isha{background:radial-gradient(circle at 65% 30%,#e9c86a 6%,transparent 7%),linear-gradient(180deg,#0d1633,#1e1b4b)}
-.prayer .nm{font-weight:800;font-size:.9rem;color:var(--parchment)}
-.prayer .tm{font-size:.66rem;color:rgba(255,254,247,.55)}
-.prayer .rk{margin-left:auto;font-size:.8rem;color:var(--gold);letter-spacing:.12em;white-space:nowrap}
-.donebtn{display:block;width:100%;margin-top:1rem;background:linear-gradient(160deg,#E9C86A,#C9A227);color:#241D12;border:0;border-radius:999px;padding:.7rem;font-weight:800;font-size:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:inherit}
-.donebtn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(233,200,106,.3)}
-.donebtn.done{background:rgba(233,200,106,.15);color:var(--gold);border:1.5px solid rgba(233,200,106,.5)}
-.parents{border:1.5px solid rgba(139,168,136,.4);background:rgba(139,168,136,.08);border-radius:20px;padding:1.1rem 1.15rem;margin:1.6rem 0 0}
-.parents h3{margin:0 0 .4rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#8BA888}
-.parents p{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.75);margin:.4rem 0}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
-@media (prefers-reduced-motion:reduce){.pstar{transition:none}}
+.prayer .pt{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.prayer .nm{font-family:var(--fredoka);font-weight:600;font-size:18px}
+.prayer .tm{font-size:12.5px;color:rgba(255,254,247,.68)}
+.prayer .rk{margin-inline-start:auto;font-size:13px;color:var(--gold);letter-spacing:.08em;white-space:nowrap}
+.prayer .lamp{flex:none;width:24px;height:32px;--fl:0;opacity:.55;transition:opacity .4s,filter .4s}
+.prayer.lit{border-color:var(--gold);background:linear-gradient(rgba(233,200,106,.3),rgba(233,200,106,.12));box-shadow:0 4px 0 rgba(5,8,24,.5),0 0 18px rgba(233,200,106,.35),inset 0 1px 0 rgba(255,255,255,.15)}
+.prayer.lit .lamp{--fl:1;opacity:1;filter:drop-shadow(0 0 8px rgba(233,200,106,.9))}
+.ayah{margin:8px 0 0;font-family:Amiri,serif;font-size:22px;line-height:1.7;color:#fff3c4}
+.rec{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:8px 0 2px}
+.rbtn{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:6px 16px;border-radius:999px;border:2px solid var(--goldd);background:linear-gradient(#fff,#fff3d3);color:#5b4a23;font-family:var(--fredoka);font-weight:600;font-size:14.5px;cursor:pointer;box-shadow:0 4px 0 #c9b070,inset 0 1px 0 #fff;transition:box-shadow .2s,transform .12s,background .2s}
+.rbtn svg{width:18px;height:18px;flex:none}
+.rbtn:active{transform:translateY(3px);box-shadow:0 1px 0 #c9b070,inset 0 1px 0 #fff}
+.rbtn[aria-pressed="true"]{background:linear-gradient(#f5dc8a,#E9C86A);box-shadow:0 4px 0 var(--gold-dk),0 0 0 4px rgba(233,200,106,.45),0 0 22px rgba(233,200,106,.8)}
+.cite{margin:4px 0 0;font-size:13px;font-weight:700;color:var(--gold)}
+/* ---------- 4. golden words ---------- */
+.moment{display:flex;align-items:center;justify-content:center;gap:12px;min-height:78px;padding:10px 14px;border-radius:16px;background:linear-gradient(#fffdf4,#f8f0d8);border:2px solid var(--goldd);color:var(--ink);box-shadow:0 8px 20px rgba(5,8,24,.35),inset 0 1px 0 #fff}
+.moment .mic{font-size:38px;line-height:1;flex:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.moment .mt{font-family:var(--fredoka);font-size:19px;font-weight:600;color:#3d2f15;line-height:1.25}
+.mdots{display:flex;justify-content:center;gap:8px;margin:10px 0 0}
+.mdot{width:12px;height:12px;border-radius:50%;background:rgba(255,254,247,.15);border:1.5px solid rgba(233,200,106,.4);transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .25s,box-shadow .25s}
+.mdot.on{background:var(--gold);box-shadow:0 0 8px rgba(233,200,106,.8);transform:scale(1.25)}
+.gwords{display:grid;gap:8px;margin-top:12px}
+.gw{display:flex;align-items:center;gap:8px}
+.pick{position:relative;flex:1;min-width:0;min-height:64px;display:flex;flex-direction:column;align-items:center;padding:8px 10px;border-radius:16px;border:2px solid #e3cf8e;background:linear-gradient(#fffef9,#fdf2d2);color:var(--ink);cursor:pointer;box-shadow:0 4px 0 #c9b070,inset 0 1px 0 #fff;text-align:center;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
+.pick:active{transform:translateY(3px);box-shadow:0 1px 0 #c9b070,inset 0 1px 0 #fff}
+.pick .ar{font-size:26px;line-height:1.35}
+.pick .trl{font-family:var(--fredoka);font-size:13px;font-weight:600;color:#8a6a1c}
+.pick .mean{font-size:12.5px;color:#5b4a23;line-height:1.35;margin-top:2px}
+.pick.hit{box-shadow:0 4px 0 #c9b070,0 0 0 3px rgba(233,200,106,.8),0 0 22px rgba(233,200,106,.8)}
+/* ---------- 5. the scale ---------- */
+.scalebox{border-radius:16px;overflow:hidden;background:linear-gradient(#141f4f,#0b1236);border:2px solid rgba(233,200,106,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);transition:border-color .5s,box-shadow .5s}
+.scalebox svg{display:block;width:100%;height:auto}
+.scalebox.full{border-color:var(--gold);box-shadow:0 0 24px rgba(233,200,106,.4)}
+.deed{display:flex;align-items:center;gap:12px;min-height:82px;margin-top:10px;padding:10px 14px;border-radius:16px;background:linear-gradient(#fffdf4,#f8f0d8);border:2px solid var(--goldd);color:var(--ink);box-shadow:0 8px 20px rgba(5,8,24,.35),inset 0 1px 0 #fff}
+.deed .dic{font-size:36px;line-height:1;flex:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.deed .dt{font-family:var(--fredoka);font-size:18px;font-weight:600;color:#3d2f15;line-height:1.3}
+.deed.toss{animation:toss .6s ease-in forwards}
+@keyframes toss{to{transform:translateX(110%) rotate(16deg);opacity:0}}
+.kbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kb{position:relative;min-height:58px;border-radius:18px;border:0;font-family:var(--fredoka);font-size:18px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+.kb svg{width:22px;height:22px;flex:none}
+.kb.yes{background:linear-gradient(#a7ecbe,#34d399 45%,#15a06f);color:#04301f;box-shadow:0 5px 0 #0b5c40,inset 0 1px 0 rgba(255,255,255,.5)}
+.kb.no{background:linear-gradient(#cfd8ea,#8fa0c2 45%,#5f7196);color:#111a33;box-shadow:0 5px 0 #3b4763,inset 0 1px 0 rgba(255,255,255,.5)}
+.kb.yes:active{transform:translateY(4px);box-shadow:0 1px 0 #0b5c40,inset 0 1px 0 rgba(255,255,255,.5)}
+.kb.no:active{transform:translateY(4px);box-shadow:0 1px 0 #3b4763,inset 0 1px 0 rgba(255,255,255,.5)}
+/* ---------- the star row under each lesson ---------- */
+.starrow{display:flex;align-items:center;gap:10px;margin-top:14px}
+.donebtn{flex:1;min-height:58px;padding:10px 16px;border-radius:18px;border:0;font-family:var(--fredoka);font-size:18px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(#f5dc8a,#E9C86A 45%,#C9A227);color:#2C2416;box-shadow:0 5px 0 var(--gold-dk),0 12px 24px rgba(201,162,39,.35),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .12s,box-shadow .2s,opacity .3s,filter .3s;line-height:1.2;text-align:center}
+.donebtn svg{width:24px;height:24px;flex:none}
+.donebtn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--gold-dk),0 4px 10px rgba(201,162,39,.25),inset 0 1px 0 rgba(255,255,255,.55)}
+.donebtn.lk{filter:saturate(.3);opacity:.72;box-shadow:0 5px 0 #6b5a2a,inset 0 1px 0 rgba(255,255,255,.35)}
+.donebtn.go{animation:glowp 2.2s ease-in-out infinite}
+@keyframes glowp{0%,100%{box-shadow:0 5px 0 var(--gold-dk),0 12px 24px rgba(201,162,39,.3),inset 0 1px 0 rgba(255,255,255,.55)}50%{box-shadow:0 5px 0 var(--gold-dk),0 12px 30px rgba(233,200,106,.65),inset 0 1px 0 rgba(255,255,255,.55)}}
+.donebtn.done{background:linear-gradient(rgba(233,200,106,.22),rgba(233,200,106,.12));color:var(--gold);border:2px solid rgba(233,200,106,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);animation:none}
+.donebtn span{display:none;align-items:center;gap:8px}
+.donebtn.lk .lk,.donebtn.go .go,.donebtn.done .dd{display:inline-flex}
+.lstar{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:rgba(255,254,247,.06);border:2px dashed rgba(233,200,106,.4);transition:border-color .4s,background .4s,box-shadow .4s}
+.lstar svg{width:36px;height:36px;opacity:.25;filter:grayscale(1);transition:opacity .4s,filter .4s}
+.lstar.lit{border-style:solid;border-color:var(--gold);background:rgba(233,200,106,.18);box-shadow:0 0 18px rgba(233,200,106,.6)}
+.lstar.lit svg{opacity:1;filter:none}
+/* ---------- for parents ---------- */
+.parents{border:1.5px solid rgba(139,168,136,.45);background:rgba(139,168,136,.1);border-radius:20px;padding:14px 15px;margin:16px 0 0;position:relative;z-index:1}
+.parents h3{margin:0 0 .4rem;font-family:var(--fredoka);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#a8c9a4}
+.parents p{font-size:14px;line-height:1.65;color:rgba(255,254,247,.8);margin:.4rem 0}
+.parents a{color:var(--gold)}
+/* ---------- the finish ---------- */
+.win{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;padding:18px 18px 84px;background:radial-gradient(130% 130% at 50% 24%,rgba(23,32,78,.96),rgba(7,9,26,.985));opacity:0;transition:opacity .6s;overflow:auto}
+.win.on{opacity:1}
+.winfx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.rays{position:absolute;left:50%;top:44%;width:165vmax;height:165vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(233,200,106,.15) 0deg 8deg,rgba(233,200,106,0) 8deg 20deg);border-radius:50%;animation:spin 32s linear infinite;-webkit-mask-image:radial-gradient(circle,#000 0 34%,transparent 66%);mask-image:radial-gradient(circle,#000 0 34%,transparent 66%)}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.wcardw{position:relative;z-index:2;margin:auto;background:linear-gradient(#fffdf4,#f8f0d8);border:3px solid var(--goldd);border-radius:22px;max-width:440px;width:100%;padding:22px 18px 18px;text-align:center;color:var(--ink);box-shadow:0 24px 60px rgba(2,3,12,.6),0 0 40px rgba(233,200,106,.25),inset 0 1px 0 #fff}
+.wcardw::before{content:"";position:absolute;inset:4px;border:1px solid rgba(201,162,39,.55);border-radius:16px;pointer-events:none}
+.win.on .wcardw{animation:wpop .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes wpop{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
+.wstars{display:flex;justify-content:center;gap:4px;margin-bottom:6px}
+.wstars svg{width:40px;height:40px;filter:drop-shadow(0 2px 4px rgba(60,40,10,.3))}
+.wtag{margin:4px 0 0;font-family:var(--fredoka);font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dk)}
+.wbig{margin:8px 0 0;font-family:var(--fredoka);font-size:19px;font-weight:600;color:#3d2f15;line-height:1.3}
+.wsent{display:flex;align-items:center;gap:10px;margin:12px 0 0;padding:10px 12px;border-radius:16px;background:#fff;border:1.5px solid #e3cf8e}
+.wsent .txt{flex:1;min-width:0}
+.wsent .ar{font-size:24px;line-height:1.6;margin:0;color:#241D12}
+.wsent .trl{display:block;font-size:12.5px;color:#7c5c14;font-style:italic}
+.wsafe{margin:12px 0 0;font-size:15px;font-weight:600;color:var(--night2)}
+.wbtns{display:grid;gap:12px;margin-top:16px}
+.btn{min-height:56px;padding:0 20px;border-radius:18px;font-family:var(--fredoka);font-weight:600;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:0;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.bp{background:linear-gradient(#f5dc8a,#E9C86A 45%,#C9A227);color:#2C2416;box-shadow:0 5px 0 var(--gold-dk),0 12px 24px rgba(201,162,39,.35),inset 0 1px 0 rgba(255,255,255,.55);animation:glowp 2.4s ease-in-out infinite}
+.bp:active{transform:translateY(4px);box-shadow:0 1px 0 var(--gold-dk),0 4px 10px rgba(201,162,39,.25),inset 0 1px 0 rgba(255,255,255,.55);animation:none}
+.bs{background:linear-gradient(#fff,#f5ecd2);border:2px solid var(--goldd);color:#2C2416;box-shadow:0 5px 0 #c9b070,inset 0 1px 0 #fff}
+.bs:active{transform:translateY(4px);box-shadow:0 1px 0 #c9b070,inset 0 1px 0 #fff}
+footer{position:relative;z-index:1;text-align:center;padding:8px 10px 96px;font-size:14px}
+footer .backlink{margin-bottom:12px}
+.rlink{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 20px;border-radius:999px;border:1px solid rgba(255,254,247,.28);background:rgba(255,254,247,.06);color:rgba(255,254,247,.82);font-family:var(--fredoka);font-size:15px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.rlink:hover,.rlink:focus-visible{background:rgba(255,254,247,.14);color:#fff}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+@media (max-width:340px){main{padding:0 8px 20px}section.lesson{padding:14px 10px}.game{padding:10px 8px}.wtile{min-width:84px}.prayer .tm{display:none}.wordmark{font-size:13.5px}}
+@media (prefers-reduced-motion:reduce){
+.st,.skybg .far,.skybg .near,.hero .lamp,.pw .tw{animation:none}
+.rays,.wstart,.donebtn.go,.bp,.spk[aria-pressed="true"],.next::after{animation:none}
+.win.on .wcardw{animation:none}
+.skyg{transition:none}
+.deed.toss{animation:none;opacity:0}
+.wtile,.prayer,.pick,.kb,.wstep,.dots i,.mdot{transition:none}
+}
 </style>
 <link rel="canonical" href="https://noorcodex.com/kids/practice"/>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
@@ -92,141 +280,558 @@ section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,
 <style id="kids-skin">h1,.title{font-family:"Fredoka","Inter",system-ui,sans-serif;letter-spacing:-.005em}h1 .ar,h1 .font-amiri,h1 [lang="ar"]{font-family:Amiri,serif}</style>
 </head>
 <body>
-<header>
-<div class="hwrap">
-<a class="wordmark" href="/kids">☾ NOOR · Little Codex</a>
-<a class="backlink" href="/kids">← All wonders</a>
+<div class="skybg" aria-hidden="true">
+<div class="far" id="skyFar"></div>
+<div class="near" id="skyNear"></div>
+<div class="haze"></div>
 </div>
+<header class="top">
+<a class="wordmark" href="/kids">☾ NOOR · Little Codex</a>
+<a class="backlink" href="/kids" data-nk-press>← All wonders</a>
 </header>
 
 <main>
 <div class="hero">
-<span class="moon">🌙</span>
+<svg class="lamp" viewBox="0 0 24 32" style="--fl:1" aria-hidden="true"><use href="#lantern"/></svg>
 <h1>My First Steps</h1>
-<p>Being Muslim is made of little steps that anyone can learn, even grown-ups. Finish a lesson, tap the button, and light your star.</p>
-<div class="progress-row" id="stars">
-<span class="pstar" data-s="0">⭐</span><span class="pstar" data-s="1">⭐</span><span class="pstar" data-s="2">⭐</span><span class="pstar" data-s="3">⭐</span><span class="pstar" data-s="4">⭐</span>
+<p class="sub">Being Muslim is made of little steps that anyone can learn, even grown-ups. Play each lesson to the end, then light your star.</p>
+<div class="progress-row" id="stars" aria-label="Your five stars">
+<span class="pstar" data-s="0"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg></span><span class="pstar" data-s="1"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg></span><span class="pstar" data-s="2"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg></span><span class="pstar" data-s="3"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg></span><span class="pstar" data-s="4"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg></span>
 </div>
+<p class="dn" id="doneNote" hidden>&#10003; All five stars are lit</p>
 </div>
 
 <!-- 1 SHAHADA -->
 <section class="lesson" id="l0">
-<h2><span class="big">١</span> The Big Sentence</h2>
+<div class="lhead"><span class="lnum">١</span><h2>The Big Sentence</h2></div>
 <p class="sub">The whole religion fits in one breath</p>
-<p>Every Muslim in the world, every grandmother in Makkah, every kid in Canada, agrees on one sentence. It's the first thing whispered to babies and the password of the whole ummah:</p>
-<div class="card">
-<p class="ar">لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ</p>
-<p class="say">La ilaha illa Allah, Muhammadun rasul Allah</p>
+<p class="prose">Every Muslim in the world, every grandmother in Makkah, every kid in Canada, agrees on one sentence. It is the first thing whispered to babies and the password of the whole ummah:</p>
+<div class="acard">
+<button type="button" class="spk" data-say="لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ" aria-label="Hear the Big Sentence" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+<div class="txt">
+<p class="ar" lang="ar" dir="rtl">لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ</p>
+<span class="trl">La ilaha illa Allah, Muhammadun rasul Allah</span>
 <p class="mean">There is no god but Allah, and Muhammad ﷺ is His Messenger.</p>
 </div>
-<p>That's it. That's the key to the whole house. If you can say it and mean it, you're in the family.</p>
-<button class="donebtn" data-l="0">I learned the Big Sentence ⭐</button>
+</div>
+<p class="vhint" hidden>Ask a grown-up to read it with you.</p>
+<p class="prose">That's it. That's the key to the whole house. If you can say it and mean it, you're in the family.</p>
+<div class="game" id="g0">
+<p class="task">Build the Big Sentence: tap the words in the right order.</p>
+<div class="line" id="line0" dir="rtl" lang="ar" aria-hidden="true">
+<span class="slot"><span class="w">لَا</span></span><span class="slot"><span class="w">إِلَٰهَ</span></span><span class="slot"><span class="w">إِلَّا</span></span><span class="slot"><span class="w">اللَّهُ</span></span><span class="slot"><span class="w">مُحَمَّدٌ</span></span><span class="slot"><span class="w">رَسُولُ</span></span><span class="slot"><span class="w">اللَّهِ</span></span>
+</div>
+<div class="tiles" id="tiles0">
+<button type="button" class="wtile" data-k="la" data-nk-quiet><span class="ar" lang="ar" dir="rtl">لَا</span><span class="trl">La</span></button>
+<button type="button" class="wtile" data-k="ilaha" data-nk-quiet><span class="ar" lang="ar" dir="rtl">إِلَٰهَ</span><span class="trl">ilaha</span></button>
+<button type="button" class="wtile" data-k="illa" data-nk-quiet><span class="ar" lang="ar" dir="rtl">إِلَّا</span><span class="trl">illa</span></button>
+<button type="button" class="wtile" data-k="allah" data-nk-quiet><span class="ar" lang="ar" dir="rtl">اللَّهُ</span><span class="trl">Allah</span></button>
+<button type="button" class="wtile" data-k="muhammad" data-nk-quiet><span class="ar" lang="ar" dir="rtl">مُحَمَّدٌ</span><span class="trl">Muhammadun</span></button>
+<button type="button" class="wtile" data-k="rasul" data-nk-quiet><span class="ar" lang="ar" dir="rtl">رَسُولُ</span><span class="trl">rasul</span></button>
+<button type="button" class="wtile" data-k="allah" data-nk-quiet><span class="ar" lang="ar" dir="rtl">اللَّهِ</span><span class="trl">Allah</span></button>
+</div>
+<p class="msg" id="msg0" data-m="start" aria-live="polite"><span class="m-start">Tap the first word!</span><span class="m-next">Yes! Now the next word.</span><span class="m-wrong">Not that one. Listen, then try again!</span><span class="m-done">You built the Big Sentence!</span></p>
+<div class="donep" id="done0" hidden><span class="big">The key to the whole house!</span><p class="small">Say it slowly, and mean it, and you are in the family.</p><button type="button" class="replay" data-g="0">Build it again</button></div>
+</div>
+<p class="lockhint" id="lock0" hidden>Build the sentence first, then your star is ready!</p>
+<div class="starrow">
+<button type="button" class="donebtn lk" data-l="0"><span class="lk">Finish the steps first</span><span class="go"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>Light my star</span><span class="dd">Star earned!</span></button>
+<span class="lstar" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg></span>
+</div>
 </section>
 
 <!-- 2 WUDU -->
 <section class="lesson" id="l1">
-<h2><span class="big">٢</span> Wudu, Getting Sparkly</h2>
+<div class="lhead"><span class="lnum">٢</span><h2>Wudu, Getting Sparkly</h2></div>
 <p class="sub">Before we pray, we wash, like getting ready to meet Someone important. Because we are.</p>
-<div class="wsteps">
-<div class="wstep"><span class="ic">🤲</span><span class="t">Hands</span><span class="d">wash them</span><span class="x">×3</span></div>
-<div class="wstep"><span class="ic">👄</span><span class="t">Mouth</span><span class="d">swish water</span><span class="x">×3</span></div>
-<div class="wstep"><span class="ic">👃</span><span class="t">Nose</span><span class="d">sniff & blow</span><span class="x">×3</span></div>
-<div class="wstep"><span class="ic">😊</span><span class="t">Face</span><span class="d">forehead to chin</span><span class="x">×3</span></div>
-<div class="wstep"><span class="ic">💪</span><span class="t">Arms</span><span class="d">to the elbows</span><span class="x">×3</span></div>
-<div class="wstep"><span class="ic">💆</span><span class="t">Head & ears</span><span class="d">wipe once</span><span class="x">×1</span></div>
+<div class="game" id="g1">
+<div class="bismline">
+<span class="ar" lang="ar" dir="rtl">بِسْمِ اللَّهِ</span>
+<span class="trl">Bismillah</span>
+<button type="button" class="spk" data-say="بِسْمِ اللَّهِ" aria-label="Hear Bismillah" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
 </div>
-<div class="wsteps" style="grid-template-columns:1fr">
-<div class="wstep"><span class="ic">🦶</span><span class="t">Feet</span><span class="d">up to the ankles, and you're sparkly clean</span><span class="x">×3</span></div>
+<p class="vhint" hidden>Ask a grown-up to read it with you.</p>
+<div class="wtrail" aria-hidden="true">
+<span class="wstep" data-i="0"><svg viewBox="0 0 64 64"><use href="#w-hands"/></svg></span>
+<span class="wstep" data-i="1"><svg viewBox="0 0 64 64"><use href="#w-mouth"/></svg></span>
+<span class="wstep" data-i="2"><svg viewBox="0 0 64 64"><use href="#w-nose"/></svg></span>
+<span class="wstep" data-i="3"><svg viewBox="0 0 64 64"><use href="#w-face"/></svg></span>
+<span class="wstep" data-i="4"><svg viewBox="0 0 64 64"><use href="#w-arm"/></svg></span>
+<span class="wstep" data-i="5"><svg viewBox="0 0 64 64"><use href="#w-head"/></svg></span>
+<span class="wstep" data-i="6"><svg viewBox="0 0 64 64"><use href="#w-feet"/></svg></span>
 </div>
-<p style="margin-top:.7rem">Start with <b>Bismillah</b>, and remember: wudu isn't a race. Water is precious, the Prophet ﷺ used only a little, even beside a river.</p>
-<button class="donebtn" data-l="1">I can do wudu ⭐</button>
+<div class="wstage" id="wstage">
+<button type="button" class="wstart" id="wStart" data-nk-quiet><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#w-hands"/></svg><span>Bismillah, let's start!</span><small>Seven steps, and you will be sparkly clean.</small></button>
+<button type="button" class="wcard" data-i="0" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-hands"/></svg><span class="t">Hands</span><span class="d">Wash them up to the wrists, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<button type="button" class="wcard" data-i="1" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-mouth"/></svg><span class="t">Mouth</span><span class="d">Swish water around and spit it out, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<button type="button" class="wcard" data-i="2" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-nose"/></svg><span class="t">Nose</span><span class="d">Sniff a little water and blow it out, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<button type="button" class="wcard" data-i="3" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-face"/></svg><span class="t">Face</span><span class="d">From the forehead to the chin, ear to ear, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<button type="button" class="wcard" data-i="4" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-arm"/></svg><span class="t">Arms</span><span class="d">Right arm, then left arm, up to the elbows, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<button type="button" class="wcard" data-i="5" data-n="1" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-head"/></svg><span class="t">Head and ears</span><span class="d">Wipe your wet hands over your head and ears, just once</span><span class="dots"><i></i></span><span class="tapme">Tap to wipe</span></button>
+<button type="button" class="wcard" data-i="6" data-n="3" hidden data-nk-quiet><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#w-feet"/></svg><span class="t">Feet</span><span class="d">Right foot, then left foot, up to the ankles, three times</span><span class="dots"><i></i><i></i><i></i></span><span class="tapme">Tap to wash</span></button>
+<div class="donep" id="done1" hidden><span class="big">Sparkly clean!</span><p class="small">Seven steps, and now you are ready to stand in front of Allah.</p><button type="button" class="replay" data-g="1">Wash again</button></div>
+</div>
+</div>
+<p class="prose">Wudu is not a race. Water is precious: the Prophet ﷺ used only a little, even beside a river.</p>
+<p class="lockhint" id="lock1" hidden>Finish all seven steps first, then your star is ready!</p>
+<div class="starrow">
+<button type="button" class="donebtn lk" data-l="1"><span class="lk">Finish the steps first</span><span class="go"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>Light my star</span><span class="dd">Star earned!</span></button>
+<span class="lstar" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg></span>
+</div>
 </section>
 
 <!-- 3 PRAYERS -->
 <section class="lesson" id="l2">
-<h2><span class="big">٣</span> The Five Prayers & Their Skies</h2>
-<p class="sub">Each prayer has its own sky. Watch the window and you'll always know which one it is.</p>
-<div class="prayers">
-<div class="prayer"><span class="sky fajr"></span><span><span class="nm">Fajr</span><br/><span class="tm">before the sun wakes up</span></span><span class="rk">★★</span></div>
-<div class="prayer"><span class="sky dhuhr"></span><span><span class="nm">Dhuhr</span><br/><span class="tm">when the sun is highest</span></span><span class="rk">★★★★</span></div>
-<div class="prayer"><span class="sky asr"></span><span><span class="nm">Asr</span><br/><span class="tm">golden afternoon</span></span><span class="rk">★★★★</span></div>
-<div class="prayer"><span class="sky maghrib"></span><span><span class="nm">Maghrib</span><br/><span class="tm">just after sunset</span></span><span class="rk">★★★</span></div>
-<div class="prayer"><span class="sky isha"></span><span><span class="nm">Isha</span><br/><span class="tm">when the stars come out</span></span><span class="rk">★★★★</span></div>
+<div class="lhead"><span class="lnum">٣</span><h2>The Five Prayers and Their Skies</h2></div>
+<p class="sub">Each prayer has its own sky. Look at the window and you will always know which one it is.</p>
+<div class="game" id="g2">
+<div class="pwin">
+<svg class="pw" viewBox="0 0 360 160" aria-hidden="true">
+<defs>
+<linearGradient id="g-fajr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f1a4d"/><stop offset=".55" stop-color="#4c3d8f"/><stop offset="1" stop-color="#f9a8d4"/></linearGradient>
+<linearGradient id="g-dhuhr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f7de1"/><stop offset="1" stop-color="#bfe3ff"/></linearGradient>
+<linearGradient id="g-asr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b8fe0"/><stop offset=".6" stop-color="#9cc4f0"/><stop offset="1" stop-color="#fbbf24"/></linearGradient>
+<linearGradient id="g-maghrib" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1650"/><stop offset=".5" stop-color="#c2410c"/><stop offset="1" stop-color="#fdba74"/></linearGradient>
+<linearGradient id="g-isha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05081f"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<radialGradient id="g-sun"><stop offset="0" stop-color="#fff7cc"/><stop offset=".5" stop-color="#fde68a" stop-opacity=".7"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
+<radialGradient id="g-sunset"><stop offset="0" stop-color="#fff1c2"/><stop offset=".45" stop-color="#fb923c" stop-opacity=".8"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></radialGradient>
+<radialGradient id="g-moonglow"><stop offset="0" stop-color="#E9C86A" stop-opacity=".45"/><stop offset="1" stop-color="#E9C86A" stop-opacity="0"/></radialGradient>
+<mask id="m-moon"><circle cx="290" cy="40" r="16" fill="#fff"/><circle cx="298" cy="34" r="14" fill="#000"/></mask>
+<clipPath id="c-win"><rect x="0" y="0" width="360" height="160"/></clipPath>
+<g id="cloud"><ellipse cx="0" cy="0" rx="22" ry="8"/><ellipse cx="-14" cy="-5" rx="11" ry="7"/><ellipse cx="12" cy="-6" rx="10" ry="6"/></g>
+</defs>
+<g clip-path="url(#c-win)">
+<g class="skyg" data-p="fajr"><rect width="360" height="160" fill="url(#g-fajr)"/><circle cx="60" cy="30" r="1.4" fill="#fff" opacity=".6"/><circle cx="120" cy="18" r="1.1" fill="#fff" opacity=".5"/><circle cx="300" cy="26" r="1.3" fill="#fff" opacity=".55"/><circle cx="220" cy="40" r="1" fill="#fff" opacity=".4"/><ellipse cx="180" cy="126" rx="130" ry="26" fill="#fde68a" opacity=".35"/><ellipse cx="180" cy="128" rx="60" ry="10" fill="#fff7cc" opacity=".5"/></g>
+<g class="skyg" data-p="dhuhr"><rect width="360" height="160" fill="url(#g-dhuhr)"/><circle cx="180" cy="36" r="52" fill="url(#g-sun)"/><circle cx="180" cy="36" r="17" fill="#fff4b8"/><use href="#cloud" x="74" y="64" fill="#fff" opacity=".92"/><use href="#cloud" x="292" y="46" fill="#fff" opacity=".85"/></g>
+<g class="skyg" data-p="asr"><rect width="360" height="160" fill="url(#g-asr)"/><circle cx="272" cy="80" r="48" fill="url(#g-sun)"/><circle cx="272" cy="80" r="15" fill="#fde68a"/><use href="#cloud" x="92" y="52" fill="#fff" opacity=".75"/><use href="#cloud" x="200" y="34" fill="#fff" opacity=".55"/></g>
+<g class="skyg" data-p="maghrib"><rect width="360" height="160" fill="url(#g-maghrib)"/><circle cx="180" cy="122" r="64" fill="url(#g-sunset)"/><circle cx="180" cy="122" r="20" fill="#ffedd5"/><use href="#cloud" x="80" y="58" fill="#7c2d12" opacity=".55"/><use href="#cloud" x="280" y="70" fill="#7c2d12" opacity=".45"/></g>
+<g class="skyg" data-p="isha"><rect width="360" height="160" fill="url(#g-isha)"/><circle cx="290" cy="40" r="60" fill="url(#g-moonglow)"/><circle cx="290" cy="40" r="16" fill="#F4DC8E" mask="url(#m-moon)"/><g fill="#fff"><circle class="tw" cx="40" cy="30" r="1.6" style="--tl:-1s"/><circle class="tw" cx="90" cy="60" r="1.2" style="--tl:-2s"/><circle class="tw" cx="140" cy="22" r="1.5" style="--tl:-.5s"/><circle class="tw" cx="200" cy="48" r="1.1" style="--tl:-1.6s"/><circle class="tw" cx="240" cy="20" r="1.4" style="--tl:-2.4s"/><circle class="tw" cx="330" cy="70" r="1.2" style="--tl:-.9s"/><circle cx="70" cy="90" r="1" opacity=".6"/><circle cx="170" cy="80" r=".9" opacity=".5"/><circle cx="320" cy="20" r="1" opacity=".6"/></g><path d="M118 62l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#fff" opacity=".8"/></g>
+<path d="M0 124q60-16 120 0t120 0t120 0V160H0z" fill="#0d1440"/>
+<g fill="#080c2c"><rect x="148" y="104" width="64" height="28" rx="3"/><path d="M152 106q28-36 56 0z"/><rect x="218" y="80" width="7" height="52" rx="2"/><circle cx="221.5" cy="78" r="4"/><path d="M176 84v8" stroke="#080c2c" stroke-width="2"/></g>
+<path d="M180 72a5 5 0 1 0 2 9.6 4 4 0 1 1 -2-9.6z" fill="#E9C86A"/>
+<path d="M172 118h16v14h-16z" fill="#E9C86A" opacity=".55"/>
+<rect y="132" width="360" height="28" fill="#05081f"/>
+<g class="lg" data-p="fajr" transform="translate(30 130)"><use href="#lantern" width="16" height="22" x="-8" y="-22"/></g>
+<g class="lg" data-p="dhuhr" transform="translate(92 130)"><use href="#lantern" width="16" height="22" x="-8" y="-22"/></g>
+<g class="lg" data-p="asr" transform="translate(268 130)"><use href="#lantern" width="16" height="22" x="-8" y="-22"/></g>
+<g class="lg" data-p="maghrib" transform="translate(330 130)"><use href="#lantern" width="16" height="22" x="-8" y="-22"/></g>
+<g class="lg" data-p="isha" transform="translate(120 148)"><use href="#lantern" width="16" height="22" x="-8" y="-22"/></g>
+</g>
+</svg>
 </div>
-<p style="margin-top:.7rem">Each ★ is one <b>rak'ah</b>, a round of standing, bowing, and touching your forehead to the floor (the closest place to Allah you can be!). Learn them slowly, one prayer at a time. Try <a href="/kids/lanterns" style="color:var(--gold)">Five Lanterns</a> to practice!</p>
-<button class="donebtn" data-l="2">I know the five prayers ⭐</button>
+<p class="pq" id="pq">Which prayer is it? Look at the sky, then tap the prayer.</p>
+<div class="pname" data-p="fajr" hidden><span class="txt"><span class="ar" lang="ar" dir="rtl">الفَجْر</span><span class="trl">al-Fajr</span></span><button type="button" class="spk" data-say="الفَجْر" aria-label="Hear the name of the prayer" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<div class="pname" data-p="dhuhr" hidden><span class="txt"><span class="ar" lang="ar" dir="rtl">الظُّهْر</span><span class="trl">adh-Dhuhr</span></span><button type="button" class="spk" data-say="الظُّهْر" aria-label="Hear the name of the prayer" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<div class="pname" data-p="asr" hidden><span class="txt"><span class="ar" lang="ar" dir="rtl">العَصْر</span><span class="trl">al-'Asr</span></span><button type="button" class="spk" data-say="العَصْر" aria-label="Hear the name of the prayer" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<div class="pname" data-p="maghrib" hidden><span class="txt"><span class="ar" lang="ar" dir="rtl">المَغْرِب</span><span class="trl">al-Maghrib</span></span><button type="button" class="spk" data-say="المَغْرِب" aria-label="Hear the name of the prayer" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<div class="pname" data-p="isha" hidden><span class="txt"><span class="ar" lang="ar" dir="rtl">العِشَاء</span><span class="trl">al-'Isha</span></span><button type="button" class="spk" data-say="العِشَاء" aria-label="Hear the name of the prayer" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div>
+<p class="vhint" hidden>Ask a grown-up to read it with you.</p>
+<div class="prayers" id="prayers">
+<button type="button" class="prayer" data-p="fajr" data-nk-quiet><span class="sky fajr"></span><span class="pt"><span class="nm">Fajr</span><span class="tm">before the sun wakes up</span></span><span class="rk">★★</span><svg class="lamp" viewBox="0 0 24 32" aria-hidden="true"><use href="#lantern"/></svg></button>
+<button type="button" class="prayer" data-p="dhuhr" data-nk-quiet><span class="sky dhuhr"></span><span class="pt"><span class="nm">Dhuhr</span><span class="tm">when the sun is highest</span></span><span class="rk">★★★★</span><svg class="lamp" viewBox="0 0 24 32" aria-hidden="true"><use href="#lantern"/></svg></button>
+<button type="button" class="prayer" data-p="asr" data-nk-quiet><span class="sky asr"></span><span class="pt"><span class="nm">Asr</span><span class="tm">golden afternoon</span></span><span class="rk">★★★★</span><svg class="lamp" viewBox="0 0 24 32" aria-hidden="true"><use href="#lantern"/></svg></button>
+<button type="button" class="prayer" data-p="maghrib" data-nk-quiet><span class="sky maghrib"></span><span class="pt"><span class="nm">Maghrib</span><span class="tm">just after sunset</span></span><span class="rk">★★★</span><svg class="lamp" viewBox="0 0 24 32" aria-hidden="true"><use href="#lantern"/></svg></button>
+<button type="button" class="prayer" data-p="isha" data-nk-quiet><span class="sky isha"></span><span class="pt"><span class="nm">Isha</span><span class="tm">when the stars come out</span></span><span class="rk">★★★★</span><svg class="lamp" viewBox="0 0 24 32" aria-hidden="true"><use href="#lantern"/></svg></button>
+</div>
+<div class="donep" id="done2" hidden>
+<span class="big">Five prayers, five skies, every day!</span>
+<p class="ayah" lang="ar" dir="rtl">إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي وَأَقِمِ الصَّلَاةَ لِذِكْرِي</p>
+<p class="small">"I am Allah: there is no god but Me, so worship Me, and keep up the prayer to remember Me."</p>
+<p class="cite">Qur'an 20:14</p>
+<div class="rec">
+<button type="button" class="rbtn" id="recite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Hear the ayah</span></button>
+<button type="button" class="rbtn" id="reciteT" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 21v-5h5"/></svg><span>Repeat after the Shaykh</span></button>
+</div>
+<p class="rhint" id="recHint" hidden>The recitation needs the internet. Ask a grown-up to read it with you.</p>
+<button type="button" class="replay" data-g="2">Watch the skies again</button>
+</div>
+</div>
+<p class="prose">Each ★ is one <b>rak'ah</b>: a round of standing, bowing, and touching your forehead to the floor, the closest place to Allah you can be! Learn them slowly, one prayer at a time.</p>
+<p class="lockhint" id="lock2" hidden>Find all five prayers first, then your star is ready!</p>
+<div class="starrow">
+<button type="button" class="donebtn lk" data-l="2"><span class="lk">Finish the steps first</span><span class="go"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>Light my star</span><span class="dd">Star earned!</span></button>
+<span class="lstar" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg></span>
+</div>
 </section>
 
 <!-- 4 LITTLE WORDS -->
 <section class="lesson" id="l3">
-<h2><span class="big">٤</span> Little Golden Words</h2>
+<div class="lhead"><span class="lnum">٤</span><h2>Little Golden Words</h2></div>
 <p class="sub">Tiny sentences that turn ordinary moments into treasure</p>
-<div class="card">
-<p class="ar">بِسْمِ اللَّهِ</p>
-<p class="say">Bismillah</p>
-<p class="mean">"In Allah's name", before eating, drinking, or starting anything</p>
+<div class="game" id="g3">
+<p class="task">When do we say it? Look at the moment, then tap the golden words.</p>
+<div id="moments">
+<div class="moment" data-k="bism"><span class="mic" aria-hidden="true">🍽️</span><span class="mt">Before you eat</span></div>
+<div class="moment" data-k="hamd" hidden><span class="mic" aria-hidden="true">🤧</span><span class="mt">After a sneeze</span></div>
+<div class="moment" data-k="sleep" hidden><span class="mic" aria-hidden="true">🛏️</span><span class="mt">Going to sleep</span></div>
+<div class="moment" data-k="bism" hidden><span class="mic" aria-hidden="true">✏️</span><span class="mt">Before you start your homework</span></div>
+<div class="moment" data-k="hamd" hidden><span class="mic" aria-hidden="true">🍪</span><span class="mt">After a yummy snack</span></div>
 </div>
-<div class="card">
-<p class="ar">الْحَمْدُ لِلَّهِ</p>
-<p class="say">Alhamdulillah</p>
-<p class="mean">"All thanks belong to Allah", after eating, after sneezing, after anything good</p>
+<div class="mdots" aria-hidden="true"><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i></div>
+<div class="gwords">
+<div class="gw">
+<button type="button" class="spk" data-say="بِسْمِ اللَّهِ" aria-label="Hear Bismillah" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+<button type="button" class="pick" data-k="bism" data-nk-quiet><span class="ar" lang="ar" dir="rtl">بِسْمِ اللَّهِ</span><span class="trl">Bismillah</span><span class="mean">"In Allah's name": before eating, drinking, or starting anything</span></button>
 </div>
-<div class="card">
-<p class="ar">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</p>
-<p class="say">Bismika Allahumma amutu wa ahya</p>
-<p class="mean">"In Your name, O Allah, I sleep and I wake", the goodnight du'a (Bukhari 6324)</p>
+<div class="gw">
+<button type="button" class="spk" data-say="الْحَمْدُ لِلَّهِ" aria-label="Hear Alhamdulillah" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+<button type="button" class="pick" data-k="hamd" data-nk-quiet><span class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</span><span class="trl">Alhamdulillah</span><span class="mean">"All thanks belong to Allah": after eating, after sneezing, after anything good</span></button>
 </div>
-<button class="donebtn" data-l="3">I know my golden words ⭐</button>
+<div class="gw">
+<button type="button" class="spk" data-say="بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا" aria-label="Hear the goodnight du'a" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+<button type="button" class="pick" data-k="sleep" data-nk-quiet><span class="ar" lang="ar" dir="rtl">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</span><span class="trl">Bismika Allahumma amutu wa ahya</span><span class="mean">"In Your name, O Allah, I sleep and I wake": the goodnight du'a (Bukhari 6324)</span></button>
+</div>
+</div>
+<p class="vhint" hidden>Ask a grown-up to read it with you.</p>
+<div class="donep" id="done3" hidden><span class="big">You know your golden words!</span><p class="small">Say them every day, and every day becomes treasure.</p><button type="button" class="replay" data-g="3">Play again</button></div>
+</div>
+<p class="lockhint" id="lock3" hidden>Match all five moments first, then your star is ready!</p>
+<div class="starrow">
+<button type="button" class="donebtn lk" data-l="3"><span class="lk">Finish the steps first</span><span class="go"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>Light my star</span><span class="dd">Star earned!</span></button>
+<span class="lstar" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg></span>
+</div>
 </section>
 
 <!-- 5 KINDNESS -->
 <section class="lesson" id="l4">
-<h2><span class="big">٥</span> The Secret Level: Kindness</h2>
-<p class="sub">Worship isn't only on the prayer mat</p>
-<p>The Prophet ﷺ taught that <b>smiling at someone is charity</b> (Tirmidhi 1956), that Allah loves gentle hands, and that the best Muslims are the best to their families. So:</p>
-<p>🌟 Say salam when you come home · 🌟 Help without being asked twice · 🌟 Don't waste water or food · 🌟 Be soft with animals · 🌟 Tell the truth even when it's squeaky-hard</p>
-<p>Every one of these counts on your scale. That's the secret level most grown-ups forget.</p>
-<button class="donebtn" data-l="4">I'm playing the secret level ⭐</button>
+<div class="lhead"><span class="lnum">٥</span><h2>The Secret Level: Kindness</h2></div>
+<p class="sub">Worship is not only on the prayer mat</p>
+<p class="prose">The Prophet ﷺ taught that <b>smiling at someone is charity</b> (Tirmidhi 1956), that Allah loves gentle hands, and that the best Muslims are the best to their families. Every kind thing you do is weighed on your scale.</p>
+<div class="game" id="g4">
+<p class="task">Kind or not kind? Tap the right answer and fill your scale.</p>
+<div class="scalebox" id="scalebox">
+<svg class="sc" viewBox="0 0 360 150" aria-hidden="true">
+<defs>
+<linearGradient id="g-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3c4"/><stop offset=".5" stop-color="#E9C86A"/><stop offset="1" stop-color="#C9A227"/></linearGradient>
+<linearGradient id="g-post" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a6a1c"/><stop offset=".5" stop-color="#E9C86A"/><stop offset="1" stop-color="#8a6a1c"/></linearGradient>
+<radialGradient id="g-dish" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="#fff3c4"/><stop offset="1" stop-color="#C9A227"/></radialGradient>
+</defs>
+<ellipse cx="180" cy="143" rx="70" ry="5" fill="#000" opacity=".35"/>
+<rect x="140" y="130" width="80" height="12" rx="6" fill="url(#g-post)"/>
+<rect x="175" y="40" width="10" height="94" rx="5" fill="url(#g-post)"/>
+<g id="panL" transform="translate(70 40)"><path d="M0 0L-22 44M0 0L22 44" stroke="#C9A227" stroke-width="1.6"/><path d="M-30 44q30 18 60 0z" fill="url(#g-dish)"/><ellipse cx="0" cy="44" rx="30" ry="4" fill="#f5dc8a"/></g>
+<g id="panR" transform="translate(290 40)"><path d="M0 0L-22 44M0 0L22 44" stroke="#C9A227" stroke-width="1.6"/><path d="M-30 44q30 18 60 0z" fill="url(#g-dish)"/><ellipse cx="0" cy="44" rx="30" ry="4" fill="#f5dc8a"/><g id="hearts"></g></g>
+<g id="beam" transform="rotate(0 180 40)"><rect x="66" y="35" width="228" height="10" rx="5" fill="url(#g-beam)" stroke="#8a6a1c" stroke-width="1"/><circle cx="70" cy="40" r="4" fill="#8a6a1c"/><circle cx="290" cy="40" r="4" fill="#8a6a1c"/></g>
+<circle cx="180" cy="40" r="8" fill="#E9C86A" stroke="#8a6a1c" stroke-width="2"/>
+</svg>
+</div>
+<div id="deeds">
+<div class="deed" data-kind="1" hidden><span class="dic" aria-hidden="true">🏠</span><span class="dt">Say salam when you come home</span></div>
+<div class="deed" data-kind="0" hidden><span class="dic" aria-hidden="true">🐈</span><span class="dt">Pull the cat's tail</span></div>
+<div class="deed" data-kind="1" hidden><span class="dic" aria-hidden="true">🧹</span><span class="dt">Help before being asked twice</span></div>
+<div class="deed" data-kind="0" hidden><span class="dic" aria-hidden="true">🚰</span><span class="dt">Leave the tap running while you play</span></div>
+<div class="deed" data-kind="1" hidden><span class="dic" aria-hidden="true">😊</span><span class="dt">Smile at someone</span></div>
+<div class="deed" data-kind="0" hidden><span class="dic" aria-hidden="true">🧸</span><span class="dt">Say the toy broke by itself when you broke it</span></div>
+<div class="deed" data-kind="1" hidden><span class="dic" aria-hidden="true">🍞</span><span class="dt">Finish your food instead of throwing it away</span></div>
+<div class="deed" data-kind="1" hidden><span class="dic" aria-hidden="true">🗣️</span><span class="dt">Tell the truth even when it's squeaky-hard</span></div>
+</div>
+<div class="kbtns" id="kbtns">
+<button type="button" class="kb yes" id="kYes" data-nk-quiet><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#heart"/></svg>Kind</button>
+<button type="button" class="kb no" id="kNo" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Not kind</button>
+</div>
+<div class="mdots" id="kdots" aria-hidden="true"><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i><i class="mdot"></i></div>
+<div class="donep" id="done4" hidden><span class="big">Your scale is heavy with good!</span><p class="small">Every one of these counts. That is the secret level most grown-ups forget.</p><button type="button" class="replay" data-g="4">Weigh again</button></div>
+</div>
+<p class="lockhint" id="lock4" hidden>Sort all the cards first, then your star is ready!</p>
+<div class="starrow">
+<button type="button" class="donebtn lk" data-l="4"><span class="lk">Finish the steps first</span><span class="go"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>Light my star</span><span class="dd">Star earned!</span></button>
+<span class="lstar" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg></span>
+</div>
 </section>
 
 <!-- PARENTS -->
 <section class="parents">
-<h3>For parents · the minimum & the reasonable maximum</h3>
+<h3>For parents · the minimum &amp; the reasonable maximum</h3>
 <p><b>The floor:</b> children are invited to pray from around seven and expected to keep the habit from around ten (Abu Dawud 495 · hasan), but accountability before Allah begins only at maturity. Before then, everything is practice, and practice is meant to be praised, not policed.</p>
-<p><b>The reasonable ceiling:</b> a child who loves five short prayers will outgrow a child who was forced through fifty. Add Qur'an in verses, fasting in half-days, and let them see <em>you</em> loving it, the sunnah of teaching is patience: "Allah is gentle and loves gentleness in all things" (Bukhari 6927).</p>
-<p>The Big Codex has the whole story when they're ready: <a href="/" style="color:var(--gold)">the Path</a> · <a href="/quran" style="color:var(--gold)">the Mushaf</a> · <a href="/prophets" style="color:var(--gold)">the 25 Prophets</a>.</p>
+<p><b>The reasonable ceiling:</b> a child who loves five short prayers will outgrow a child who was forced through fifty. Add Qur'an in verses, fasting in half-days, and let them see <em>you</em> loving it. The sunnah of teaching is patience: "Allah is gentle and loves gentleness in all things" (Bukhari 6927).</p>
+<p>The Big Codex has the whole story when they're ready: <a href="/">the Path</a> · <a href="/quran">the Mushaf</a> · <a href="/prophets">the 25 Prophets</a>.</p>
 </section>
 </main>
 
+<div class="win" id="win" hidden>
+<div class="winfx" aria-hidden="true"><div class="rays"></div></div>
+<div class="wcardw" id="wcard" role="dialog" aria-modal="true" aria-label="All five stars are lit!">
+<div class="wstars" id="wstars" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#star"/></svg><svg viewBox="0 0 64 64"><use href="#star"/></svg><svg viewBox="0 0 64 64"><use href="#star"/></svg><svg viewBox="0 0 64 64"><use href="#star"/></svg><svg viewBox="0 0 64 64"><use href="#star"/></svg></div>
+<p class="wtag">Five first steps!</p>
+<p class="wbig">Being Muslim is made of little steps. You took five today, masha Allah!</p>
+<div class="wsent">
+<button type="button" class="spk" data-say="لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ" aria-label="Hear the Big Sentence" aria-pressed="false" data-nk-quiet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+<div class="txt"><p class="ar" lang="ar" dir="rtl">لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ</p><span class="trl">La ilaha illa Allah, Muhammadun rasul Allah</span></div>
+</div>
+<p class="vhint" hidden>Ask a grown-up to read it with you.</p>
+<p class="wsafe">Keep walking: one small step, every day.</p>
+<div class="wbtns">
+<a class="btn bp" href="/kids" id="winGo" data-nk-press>☾ More wonders</a>
+<button type="button" class="btn bs" id="again">Play again</button>
+</div>
+</div>
+</div>
+
+<footer>
+<a class="backlink" href="/kids" data-nk-press>☾ Back to the Little Codex</a>
+<div><button type="button" class="rlink" id="reset">Start over</button></div>
+</footer>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="g-star" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3c4"/><stop offset=".5" stop-color="#E9C86A"/><stop offset="1" stop-color="#C9A227"/></linearGradient>
+<linearGradient id="g-heart" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9db0"/><stop offset="1" stop-color="#e0355c"/></linearGradient>
+<linearGradient id="g-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6ff"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+<symbol id="star" viewBox="0 0 64 64"><path d="M32 4l8.2 17.6 19.3 2.3-14.3 13.2 3.8 19.1L32 46.6l-17 9.6 3.8-19.1L4.5 23.9l19.3-2.3z" fill="url(#g-star)" stroke="#8a6a1c" stroke-width="2" stroke-linejoin="round"/><path d="M24 22l6-12" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".7"/></symbol>
+<symbol id="heart" viewBox="0 0 64 64"><path d="M32 56C18 44 6 34 6 22a13 13 0 0 1 26-3 13 13 0 0 1 26 3c0 12-12 22-26 34z" fill="url(#g-heart)" stroke="#a12a45" stroke-width="2" stroke-linejoin="round"/><ellipse cx="21" cy="21" rx="5" ry="3" fill="#fff" opacity=".6" transform="rotate(-30 21 21)"/></symbol>
+<symbol id="lantern" viewBox="0 0 24 32">
+<ellipse cx="12" cy="17" rx="11.5" ry="13" fill="#E9C86A" style="opacity:calc(var(--fl,0)*.35)"/>
+<path d="M12 1v3" stroke="#C9A227" stroke-width="2" stroke-linecap="round"/>
+<path d="M7 5h10l1 3H6z" fill="#C9A227"/>
+<path d="M6 8h12l1.5 14a7.5 7.5 0 0 1-15 0z" fill="#7c5c14" stroke="#C9A227" stroke-width="1.2"/>
+<path d="M8.5 10h7l1 11a4.5 4.5 0 0 1-9 0z" fill="#fff3c4" style="opacity:calc(.25 + var(--fl,0)*.75)"/>
+<path d="M12 12c2.5 3 3.5 5 3.5 7a3.5 3.5 0 0 1-7 0c0-2 1-4 3.5-7z" fill="#f97316" style="opacity:var(--fl,0)"/>
+<path d="M12 15c1.2 1.6 1.8 2.8 1.8 3.8a1.8 1.8 0 0 1-3.6 0c0-1 .6-2.2 1.8-3.8z" fill="#fff3c4" style="opacity:var(--fl,0)"/>
+<path d="M8 25h8" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round"/>
+</symbol>
+<g id="drop"><path d="M0-8c2.6 3.6 4 6 4 8a4 4 0 0 1-8 0c0-2 1.4-4.4 4-8z" fill="url(#g-water)" stroke="#2a9fd6" stroke-width=".8"/></g>
+<g id="fb"><circle cx="10" cy="34" r="5.5" fill="#F3D3B8"/><circle cx="54" cy="34" r="5.5" fill="#F3D3B8"/><circle cx="32" cy="34" r="23" fill="#F6DCC2"/><path d="M9.5 32C11 16 20 9 32 9s21 7 22.5 23c-3-8-11-11-22.5-11S12.5 24 9.5 32z" fill="#8a6a45"/><circle cx="24" cy="34" r="2.4" fill="#5b4a3a"/><circle cx="40" cy="34" r="2.4" fill="#5b4a3a"/><path d="M25 45q7 5 14 0" stroke="#c98a5e" stroke-width="2.2" fill="none" stroke-linecap="round"/></g>
+<g id="palm"><rect x="7" y="30" width="21" height="26" rx="9" fill="#EDBE96"/><rect x="8" y="17" width="4.8" height="19" rx="2.4" fill="#EDBE96"/><rect x="13.6" y="12" width="4.8" height="24" rx="2.4" fill="#EDBE96"/><rect x="19.2" y="13" width="4.8" height="23" rx="2.4" fill="#EDBE96"/><rect x="24.6" y="18" width="4.4" height="18" rx="2.2" fill="#EDBE96"/><rect x="25" y="30" width="6" height="15" rx="3" fill="#EDBE96" transform="rotate(-35 28 37)"/></g>
+<g id="foot"><ellipse cx="17" cy="42" rx="10" ry="16" fill="#EDBE96"/><circle cx="8" cy="22" r="3.6" fill="#EDBE96"/><circle cx="14" cy="19" r="3.3" fill="#EDBE96"/><circle cx="20" cy="18.5" r="3" fill="#EDBE96"/><circle cx="25.5" cy="20" r="2.8" fill="#EDBE96"/><circle cx="30" cy="23" r="2.5" fill="#EDBE96"/></g>
+<symbol id="w-hands" viewBox="0 0 64 64"><use href="#palm"/><use href="#palm" transform="translate(64 0) scale(-1 1)"/><use href="#drop" transform="translate(32 12)"/><use href="#drop" transform="translate(20 4) scale(.65)"/><use href="#drop" transform="translate(44 4) scale(.65)"/></symbol>
+<symbol id="w-mouth" viewBox="0 0 64 64"><use href="#fb" opacity=".45"/><path d="M18 43q7-7 14-4q7-3 14 4q-7 8-14 8t-14-8z" fill="#e0707a" stroke="#a12a45" stroke-width="1.2" stroke-linejoin="round"/><path d="M23 45.5q9 4.5 18 0v1.2q-9 3.6-18 0z" fill="#fff" opacity=".9"/><path d="M20 43.5q12 4 24 0" stroke="#a12a45" stroke-width="1.4" fill="none" stroke-linecap="round"/><use href="#drop" transform="translate(48 30) scale(.8)"/><use href="#drop" transform="translate(15 28) scale(.6)"/></symbol>
+<symbol id="w-nose" viewBox="0 0 64 64"><use href="#fb" opacity=".45"/><path d="M32 24L25.5 40q6.5 5 13 0z" fill="#F0C8A6" stroke="#c98a5e" stroke-width="2.2" stroke-linejoin="round"/><circle cx="28.8" cy="40.5" r="1.4" fill="#a86f4b"/><circle cx="35.2" cy="40.5" r="1.4" fill="#a86f4b"/><use href="#drop" transform="translate(45 26) scale(.75)"/><use href="#drop" transform="translate(19 24) scale(.55)"/></symbol>
+<symbol id="w-face" viewBox="0 0 64 64"><use href="#fb"/><circle cx="18" cy="41" r="3.5" fill="#f2a6a0" opacity=".6"/><circle cx="46" cy="41" r="3.5" fill="#f2a6a0" opacity=".6"/><use href="#drop" transform="translate(52 16) scale(.7)"/><use href="#drop" transform="translate(12 16) scale(.6)"/><path d="M56 46l1.3 3.2 3.2 1.3-3.2 1.3-1.3 3.2-1.3-3.2-3.2-1.3 3.2-1.3z" fill="#fff"/></symbol>
+<symbol id="w-arm" viewBox="0 0 64 64"><rect x="6" y="6" width="20" height="16" rx="5" fill="#5b8def"/><path d="M16 20v22q0 6 6 6h20" stroke="#EDBE96" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="44" cy="48" r="8.5" fill="#EDBE96"/><path d="M40 45q4-2 8 0" stroke="#c98a5e" stroke-width="1.4" fill="none" stroke-linecap="round"/><use href="#drop" transform="translate(31 34) scale(.8)"/><use href="#drop" transform="translate(52 30) scale(.65)"/></symbol>
+<symbol id="w-head" viewBox="0 0 64 64"><use href="#fb" opacity=".45"/><circle cx="10" cy="34" r="5.5" fill="#EDBE96" stroke="#c98a5e" stroke-width="1.2"/><circle cx="54" cy="34" r="5.5" fill="#EDBE96" stroke="#c98a5e" stroke-width="1.2"/><path d="M9.5 32C11 16 20 9 32 9s21 7 22.5 23c-3-8-11-11-22.5-11S12.5 24 9.5 32z" fill="#6b4a2b"/><path d="M14 6q18-8 36 0" stroke="#38bdf8" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/><use href="#drop" transform="translate(32 6) scale(.7)"/></symbol>
+<symbol id="w-feet" viewBox="0 0 64 64"><use href="#foot"/><use href="#foot" transform="translate(64 0) scale(-1 1)"/><use href="#drop" transform="translate(32 30) scale(.8)"/><use href="#drop" transform="translate(32 50) scale(.6)"/></symbol>
+</defs>
+</svg>
+
 <script>
+'use strict';
 (function(){
-var done=[false,false,false,false,false];
-function paint(){
-  document.querySelectorAll(".pstar").forEach(function(s,i){s.classList.toggle("lit",done[i]);});
-  document.querySelectorAll(".donebtn").forEach(function(b){
-    var i=+b.dataset.l;
-    if(done[i]){b.classList.add("done");b.textContent="⭐ Star earned!";}
-  });
-}
-document.querySelectorAll(".donebtn").forEach(function(b){
-  b.addEventListener("click",function(){
-    var i=+b.dataset.l;
-    done[i]=!done[i];
-    if(!done[i]){b.classList.remove("done");b.textContent=b.getAttribute("data-orig")||b.textContent;paint();return;}
-    b.setAttribute("data-orig",b.textContent);
-    paint();
-    if(done.every(Boolean)){
-      var c=document.createElement("div");c.className="confetti";
-      for(var k=0;k<26;k++){var s=document.createElement("span");s.textContent=["⭐","🌙","✨"][k%3];
-        s.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-5%;font-size:"+(14+Math.random()*18)+"px;transition:transform 2.6s ease-in,opacity 2.6s;";
-        c.appendChild(s);}
-      document.body.appendChild(c);
-      requestAnimationFrame(function(){[].forEach.call(c.children,function(s){s.style.transform="translateY("+(110+Math.random()*30)+"vh) rotate("+(Math.random()*360)+"deg)";s.style.opacity="0";});});
-      setTimeout(function(){c.remove();},3000);
-    }
-  });
-});
-paint();
+/* the engine is loaded in <head>; this shim only exists so the room never throws if it ever failed to load */
+var NK=window.NK||(function(){var n=function(){};var p=function(){return Promise.resolve(false)};function get(k){try{return JSON.parse(localStorage.getItem('nk-'+k)||'null')}catch(e){return null}}
+function save(k,d){var v=Object.assign({},get(k)||{},d||{});try{localStorage.setItem('nk-'+k,JSON.stringify(v))}catch(e){}return v}
+return{reduced:false,sfx:n,say:p,recite:p,stopAudio:n,haptic:n,pop:n,shake:n,wobble:n,bounce:n,tilt:n,canSay:function(){return false},volume:{muted:false},
+fx:{burst:n,burstAt:n,confetti:n,shower:n},flyTo:function(){return Promise.resolve(false)},spring:function(o){var x=o.from||0;return{set:function(t){x=t;if(o.onUpdate)o.onUpdate(t,0)},get:function(){return x},stop:n}},
+progress:get,save:save,done:function(k,ex){return save(k,Object.assign({},ex||{},{done:true,at:Date.now()}))},clear:function(k){try{localStorage.removeItem('nk-'+k)}catch(e){}}}})();
+var KEY='practice',N=5,RM=!!NK.reduced,F=RM?0.15:1;
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+/* timers that a replay can cancel: each game owns one */
+function Clock(){var g=0;return{later:function(fn,ms){var my=g;return setTimeout(function(){if(my===g)fn()},ms)},cancel:function(){g++}}}
+function unnext(root){$$('.next',root).forEach(function(e){e.classList.remove('next')})}
+function centerRect(el,s){var r=el.getBoundingClientRect();return{left:r.left+r.width/2-s/2,top:r.top+r.height/2-s/2,width:s,height:s}}
+var STAR='<svg viewBox="0 0 64 64" aria-hidden="true"><use href="#star"/></svg>',HEART='<svg viewBox="0 0 64 64" aria-hidden="true"><use href="#heart"/></svg>';
+var WATER=['#bfe6ff','#7cc9f2','#38bdf8','#ffffff'],ROSE=['#ff9db0','#e0355c','#fff3c4','#f9a8d4'];
+/* ---------- the sky: far stars drift slower than near ones ---------- */
+function seedStars(box,n,lo,hi){for(var i=0;i<n;i++){var st=document.createElement('span');st.className='st';var sz=(lo+Math.random()*(hi-lo)).toFixed(1);
+st.style.cssText='left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*92).toFixed(1)+'%;width:'+sz+'px;height:'+sz+'px;--td:'+(2.8+Math.random()*3.6).toFixed(1)+'s;--tl:'+(-Math.random()*6).toFixed(1)+'s';box.appendChild(st)}}
+seedStars($('#skyFar'),24,1.2,2.2);seedStars($('#skyNear'),11,2.4,3.6);
+/* ---------- the teacher's voice ---------- */
+var voiceHintShown=false;
+function speak(text,btn){if(btn)btn.setAttribute('aria-pressed','true');
+return NK.say(text).then(function(ok){if(btn)btn.setAttribute('aria-pressed','false');
+if(!ok&&NK.volume.muted){var pill=$('.nk-sound-btn');if(pill)NK.wobble(pill)}
+if(!ok&&!voiceHintShown&&!NK.volume.muted&&!(NK.canSay&&NK.canSay('ar-SA'))){voiceHintShown=true;$$('.vhint').forEach(function(h){h.hidden=false;NK.pop(h,{from:.9,duration:300})})}
+return ok})}
+$$('.spk').forEach(function(b){b.addEventListener('click',function(){
+if(b.getAttribute('aria-pressed')==='true'){NK.stopAudio();b.setAttribute('aria-pressed','false');return}
+var t=b.getAttribute('data-say');if(!t)return;
+var box=b.parentNode,ar=box?box.querySelector('.ar'):null;if(ar)NK.bounce(ar);
+speak(t,b)})});
+/* ---------- progress: five stars, one key ---------- */
+var stars=[false,false,false,false,false],ready=[false,false,false,false,false];
+(function(){var p=NK.progress(KEY);if(p&&Array.isArray(p.stars))for(var i=0;i<N;i++)stars[i]=p.stars[i]===true})();
+var SEC=[0,1,2,3,4].map(function(i){return $('#l'+i)}),BTN=SEC.map(function(s){return $('.donebtn',s)});
+var win=$('#win'),doneNote=$('#doneNote');
+function setBtn(i){var b=BTN[i];b.classList.toggle('done',stars[i]);b.classList.toggle('go',!stars[i]&&ready[i]);b.classList.toggle('lk',!stars[i]&&!ready[i])}
+function updateHero(){$$('.pstar').forEach(function(s,i){s.classList.toggle('lit',stars[i])});doneNote.hidden=!stars.every(Boolean)}
+function unlock(i){if(ready[i])return;ready[i]=true;SEC[i].classList.add('ready');$('#lock'+i).hidden=true;setBtn(i);
+if(!stars[i]){var b=BTN[i];NK.bounce(b);setTimeout(function(){try{b.scrollIntoView({behavior:RM?'auto':'smooth',block:'nearest'})}catch(e){}},350)}}
+function earnStar(i){if(stars[i])return;stars[i]=true;NK.save(KEY,{stars:stars.slice()});
+var b=BTN[i],slot=$('.lstar',SEC[i]),ps=$('.pstar[data-s="'+i+'"]');
+NK.sfx('whoosh');
+NK.flyTo(centerRect(b,56),slot,{html:STAR,size:56,scaleTo:.75,duration:780,spin:360,arc:90}).then(function(){
+slot.classList.add('lit');SEC[i].classList.add('earned');setBtn(i);
+NK.sfx('gem');NK.haptic('success');NK.fx.burstAt(slot,{n:18,kind:'star'});NK.bounce(slot);
+updateHero();if(ps){NK.bounce(ps);NK.fx.burstAt(ps,{n:8,kind:'spark',power:.6})}
+if(stars.every(Boolean))setTimeout(finishAll,900)})}
+function finishAll(){NK.done(KEY,{stars:stars.slice()});
+win.hidden=false;requestAnimationFrame(function(){win.classList.add('on')});
+NK.sfx('whoosh');
+setTimeout(function(){NK.sfx('cheer');NK.fx.confetti();NK.fx.shower()},380);
+$$('#wstars svg').forEach(function(s,i){setTimeout(function(){NK.bounce(s)},500+i*110)});
+setTimeout(function(){try{$('#winGo').focus()}catch(e){}},800);
+updateHero()}
+function closeWin(){win.classList.remove('on');setTimeout(function(){win.hidden=true},600)}
+BTN.forEach(function(b,i){b.addEventListener('click',function(){
+var slot=$('.lstar',SEC[i]);
+if(stars[i]){NK.sfx('sparkle');NK.bounce(slot);NK.fx.burstAt(slot,{n:8,kind:'star',power:.6});return}
+if(!ready[i]){NK.sfx('bubble');NK.wobble(b);var h=$('#lock'+i);if(h.hidden){h.hidden=false;NK.pop(h,{from:.9,duration:300})}
+var g=$('.game',SEC[i]);try{g.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'})}catch(e){}return}
+earnStar(i)})});
+$('#again').addEventListener('click',function(){NK.clear(KEY);location.reload()});
+$('#reset').addEventListener('click',function(){NK.clear(KEY);location.reload()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!win.hidden)closeWin()});
+NK.tilt($('#wcard'));
+$$('.replay').forEach(function(b){b.addEventListener('click',function(){var g=GAMES[+b.getAttribute('data-g')];if(g){g.reset();NK.sfx('whoosh')}})});
+var GAMES=[];
+/* ---------- 1. build the Big Sentence ---------- */
+GAMES[0]=(function(){
+var game=$('#g0'),tiles=$('#tiles0'),line=$('#line0'),msg=$('#msg0'),donep=$('#done0'),slots=$$('.slot',line),C=Clock(),pos=0,hintT=null;
+var SEQ=['la','ilaha','illa','allah','muhammad','rasul','allah'];
+var FULL=$('.acard .ar',SEC[0]).textContent;
+function tileEls(){return $$('.wtile',tiles)}
+function setMsg(m){msg.setAttribute('data-m',m);NK.pop(msg,{from:.9,duration:300})}
+function correctTile(){var k=SEQ[pos];return tileEls().filter(function(t){return !t.classList.contains('used')&&t.getAttribute('data-k')===k})[0]}
+function showHint(){var c=correctTile();unnext(tiles);if(c)c.classList.add('next')}
+function armHint(){clearHint();hintT=C.later(showHint,5000)}
+function clearHint(){if(hintT){clearTimeout(hintT);hintT=null}}
+function onTile(e){var t=e.currentTarget;if(pos>=SEQ.length||t.classList.contains('used'))return;
+clearHint();
+if(t.getAttribute('data-k')!==SEQ[pos]){NK.sfx('wrong');NK.haptic('error');NK.shake(t);setMsg('wrong');showHint();return}
+unnext(tiles);var slot=slots[pos];pos++;
+t.classList.add('used');t.setAttribute('aria-disabled','true');
+NK.sfx('ding');NK.haptic('success');
+var ar=$('.ar',t),word=ar.textContent;speak(word);
+var w=Math.max(44,Math.round(ar.getBoundingClientRect().width));
+var last=pos>=SEQ.length;
+if(!last){setMsg('next');armHint()}
+NK.flyTo(ar,slot,{html:'<span class="flyw">'+word+'</span>',size:w,scaleTo:1,duration:620,arc:60}).then(function(){
+slot.classList.add('filled');NK.pop(slot,{from:.6,duration:360});NK.sfx('pop');NK.fx.burstAt(slot,{n:10,kind:'spark',power:.6});
+if(last)complete()})}
+function complete(){clearHint();NK.sfx('level');NK.haptic('success');line.classList.add('glow');setMsg('done');
+NK.fx.burstAt(line,{n:22,kind:'star'});donep.hidden=false;NK.pop(donep);
+C.later(function(){speak(FULL)},600);unlock(0)}
+function showDone(){slots.forEach(function(s){s.classList.add('filled')});tileEls().forEach(function(t){t.classList.add('used');t.setAttribute('aria-disabled','true')});
+line.classList.add('glow');msg.setAttribute('data-m','done');donep.hidden=false;pos=SEQ.length}
+function reset(){C.cancel();clearHint();pos=0;slots.forEach(function(s){s.classList.remove('filled')});
+tileEls().forEach(function(t){t.classList.remove('used','next');t.removeAttribute('aria-disabled')});
+shuffle(tileEls()).forEach(function(t){tiles.appendChild(t)});
+line.classList.remove('glow');msg.setAttribute('data-m','start');donep.hidden=true;armHint()}
+tileEls().forEach(function(t){t.addEventListener('click',onTile)});
+shuffle(tileEls()).forEach(function(t){tiles.appendChild(t)});
+return{reset:reset,showDone:showDone,start:armHint}})();
+/* ---------- 2. wudu, one step at a time ---------- */
+GAMES[1]=(function(){
+var game=$('#g1'),start=$('#wStart'),cards=$$('.wcard',game),trail=$$('.wstep',game),donep=$('#done1'),C=Clock(),cur=-1,count=0,busy=false;
+var BISM=$('.bismline .ar',game).textContent;
+function show(i){cards.forEach(function(c,k){c.hidden=k!==i});trail.forEach(function(t,k){t.classList.toggle('cur',k===i)});
+if(i>=0&&cards[i]){NK.pop(cards[i],{from:.7});$$('.dots i',cards[i]).forEach(function(d){d.classList.remove('on')})}}
+start.addEventListener('click',function(){if(cur>=0)return;speak(BISM);NK.sfx('whoosh');
+start.hidden=true;cur=0;count=0;show(0)});
+cards.forEach(function(card,i){card.addEventListener('click',function(){if(i!==cur||busy)return;
+var n=+card.getAttribute('data-n');count++;
+var dots=$$('.dots i',card);if(dots[count-1])dots[count-1].classList.add('on');
+NK.fx.burstAt($('.ico',card),{n:12,kind:'bubble',colors:WATER,power:.8});NK.haptic('light');
+if(count<n){NK.sfx('bubble');return}
+NK.sfx('splash');card.classList.add('clean');trail[cur].classList.add('done');NK.bounce(trail[cur]);NK.fx.burstAt(trail[cur],{n:8,kind:'spark',power:.5,colors:WATER});
+busy=true;
+C.later(function(){busy=false;if(cur<cards.length-1){cur++;count=0;show(cur);NK.sfx('whoosh')}else complete()},520*F)})});
+function complete(){cards.forEach(function(c){c.hidden=true});trail.forEach(function(t){t.classList.remove('cur')});
+donep.hidden=false;NK.pop(donep);NK.sfx('level');NK.haptic('success');NK.fx.burstAt(donep,{n:26,kind:'star'});cur=cards.length;unlock(1)}
+function showDone(){start.hidden=true;cards.forEach(function(c){c.hidden=true});trail.forEach(function(t){t.classList.add('done');t.classList.remove('cur')});donep.hidden=false;cur=cards.length}
+function reset(){C.cancel();busy=false;cur=-1;count=0;cards.forEach(function(c){c.hidden=true;c.classList.remove('clean');$$('.dots i',c).forEach(function(d){d.classList.remove('on')})});
+trail.forEach(function(t){t.classList.remove('done','cur')});donep.hidden=true;start.hidden=false;NK.pop(start,{from:.8})}
+return{reset:reset,showDone:showDone,start:function(){}}})();
+/* ---------- 3. which prayer is it? ---------- */
+GAMES[2]=(function(){
+var game=$('#g2'),rows=$$('.prayer',game),skyg=$$('.skyg',game),lamps=$$('.lg',game),names=$$('.pname',game),q=$('#pq'),donep=$('#done2'),C=Clock();
+var PR=['fajr','dhuhr','asr','maghrib','isha'],order=shuffle(PR.slice()),round=0,busy=false,hintT=null;
+function arOf(p){var n=names.filter(function(x){return x.getAttribute('data-p')===p})[0];return n?$('.ar',n).textContent:''}
+function setSky(p){skyg.forEach(function(g){g.classList.toggle('on',g.getAttribute('data-p')===p)})}
+function showName(p){names.forEach(function(n){var on=n.getAttribute('data-p')===p;if(on&&n.hidden){n.hidden=false;NK.pop(n,{from:.8})}else if(!on)n.hidden=true});q.hidden=!!p}
+function rowOf(p){return rows.filter(function(r){return r.getAttribute('data-p')===p})[0]}
+function showHint(){unnext(game);var r=rowOf(order[round]);if(r)r.classList.add('next')}
+function armHint(){clearHint();hintT=C.later(showHint,5000)}
+function clearHint(){if(hintT){clearTimeout(hintT);hintT=null}}
+function ask(){setSky(order[round]);showName(null);unnext(game);armHint()}
+rows.forEach(function(row){row.addEventListener('click',function(){if(busy||round>=order.length)return;
+var p=row.getAttribute('data-p');
+if(row.classList.contains('lit')){NK.sfx('pop');NK.bounce(row);speak(arOf(p));return}
+clearHint();
+if(p!==order[round]){NK.sfx('wrong');NK.haptic('error');NK.shake(row);showHint();return}
+unnext(game);row.classList.add('lit');
+lamps.forEach(function(l){if(l.getAttribute('data-p')===p)l.classList.add('on')});
+NK.sfx('chime');NK.haptic('success');NK.fx.burstAt($('.lamp',row),{n:14,kind:'star'});
+showName(p);speak(arOf(p));busy=true;
+C.later(function(){busy=false;round++;if(round<order.length){ask();NK.sfx('whoosh')}else complete()},1600*F)})});
+function complete(){clearHint();q.hidden=true;donep.hidden=false;NK.pop(donep);NK.sfx('level');NK.haptic('success');NK.fx.burstAt($('.pwin',game),{n:24,kind:'star'});unlock(2)}
+function showDone(){rows.forEach(function(r){r.classList.add('lit')});lamps.forEach(function(l){l.classList.add('on')});setSky('isha');showName('isha');q.hidden=true;donep.hidden=false;round=order.length}
+function reset(){C.cancel();clearHint();NK.stopAudio();busy=false;round=0;order=shuffle(PR.slice());
+rows.forEach(function(r){r.classList.remove('lit','next')});lamps.forEach(function(l){l.classList.remove('on')});
+donep.hidden=true;$('#recHint').hidden=true;ask()}
+/* the ayah on the finished panel: Alafasy, or the Shaykh's teaching recitation */
+var recBtn=$('#recite'),recTBtn=$('#reciteT'),recHint=$('#recHint'),recWanted=null;
+function recite(teacher){var b=teacher?recTBtn:recBtn;
+if(b.getAttribute('aria-pressed')==='true'){NK.stopAudio();return}
+recHint.hidden=true;recWanted=b;
+NK.recite(20,14,{teacher:teacher}).then(function(ok){if(!ok&&NK.volume.muted){var pill=$('.nk-sound-btn');if(pill)NK.wobble(pill)}})}
+recBtn.addEventListener('click',function(){recite(false)});
+recTBtn.addEventListener('click',function(){recite(true)});
+document.addEventListener('kids:recite',function(e){var st=e.detail&&e.detail.state;
+if(st==='play'){recBtn.setAttribute('aria-pressed',recWanted===recBtn?'true':'false');recTBtn.setAttribute('aria-pressed',recWanted===recTBtn?'true':'false');return}
+recBtn.setAttribute('aria-pressed','false');recTBtn.setAttribute('aria-pressed','false');
+if(st==='failed'&&!donep.hidden){recHint.hidden=false;NK.pop(recHint,{from:.9,duration:300})}});
+setSky(order[0]);
+return{reset:reset,showDone:showDone,start:armHint}})();
+/* ---------- 4. when do we say it? ---------- */
+GAMES[3]=(function(){
+var game=$('#g3'),moments=$$('.moment',game),picks=$$('.pick',game),dots=$$('.mdot',game),donep=$('#done3'),C=Clock(),idx=0,busy=false,hintT=null;
+function show(i){moments.forEach(function(m,k){m.hidden=k!==i});if(moments[i])NK.pop(moments[i],{from:.8});unnext(game);armHint()}
+function pickOf(k){return picks.filter(function(p){return p.getAttribute('data-k')===k})[0]}
+function showHint(){unnext(game);if(idx<moments.length){var p=pickOf(moments[idx].getAttribute('data-k'));if(p)p.classList.add('next')}}
+function armHint(){clearHint();hintT=C.later(showHint,5000)}
+function clearHint(){if(hintT){clearTimeout(hintT);hintT=null}}
+picks.forEach(function(pick){pick.addEventListener('click',function(){if(busy||idx>=moments.length)return;
+var k=pick.getAttribute('data-k'),want=moments[idx].getAttribute('data-k');clearHint();
+if(k!==want){NK.sfx('wrong');NK.haptic('error');NK.shake(pick);showHint();return}
+unnext(game);NK.sfx('ding');NK.haptic('success');
+if(dots[idx])dots[idx].classList.add('on');
+NK.fx.burstAt(moments[idx],{n:16,kind:'star'});pick.classList.add('hit');NK.bounce($('.ar',pick));
+speak($('.ar',pick).textContent);busy=true;
+C.later(function(){busy=false;pick.classList.remove('hit');idx++;if(idx<moments.length){show(idx);NK.sfx('whoosh')}else complete()},1300*F)})});
+function complete(){clearHint();moments.forEach(function(m){m.hidden=true});donep.hidden=false;NK.pop(donep);NK.sfx('level');NK.haptic('success');NK.fx.burstAt(donep,{n:22,kind:'star'});unlock(3)}
+function showDone(){moments.forEach(function(m){m.hidden=true});dots.forEach(function(d){d.classList.add('on')});donep.hidden=false;idx=moments.length}
+function reset(){C.cancel();clearHint();busy=false;idx=0;dots.forEach(function(d){d.classList.remove('on')});picks.forEach(function(p){p.classList.remove('hit','next')});donep.hidden=true;show(0)}
+return{reset:reset,showDone:showDone,start:armHint}})();
+/* ---------- 5. kind or not kind: the scale ---------- */
+GAMES[4]=(function(){
+var game=$('#g4'),deeds=$$('.deed',game),dots=$$('#kdots .mdot'),yes=$('#kYes'),no=$('#kNo'),beam=$('#beam'),panL=$('#panL'),panR=$('#panR'),heartsG=$('#hearts'),box=$('#scalebox'),donep=$('#done4'),C=Clock();
+var order=shuffle(deeds.slice()),idx=0,hearts=0,busy=false,hintT=null,NS='http://www.w3.org/2000/svg';
+var SPOTS=[[-18,40],[0,40],[18,40],[-9,30],[9,30]],MAX=SPOTS.length,STEP=2.4;
+function setAngle(a){beam.setAttribute('transform','rotate('+a.toFixed(2)+' 180 40)');var r=a*Math.PI/180;
+panL.setAttribute('transform','translate('+(180-110*Math.cos(r)).toFixed(1)+' '+(40-110*Math.sin(r)).toFixed(1)+')');
+panR.setAttribute('transform','translate('+(180+110*Math.cos(r)).toFixed(1)+' '+(40+110*Math.sin(r)).toFixed(1)+')')}
+var spring=NK.spring({from:0,to:0,stiffness:110,damping:9,onUpdate:setAngle});
+function tilt(n){var a=Math.min(MAX,n)*STEP;if(RM)setAngle(a);else spring.set(a,22)}
+function addHeart(n){var s=SPOTS[Math.min(MAX,n)-1];var u=document.createElementNS(NS,'use');u.setAttribute('href','#heart');u.setAttribute('x',s[0]-8);u.setAttribute('y',s[1]-8);u.setAttribute('width','16');u.setAttribute('height','16');heartsG.appendChild(u)}
+function show(i){deeds.forEach(function(d){d.hidden=true});var d=order[i];d.classList.remove('toss');d.hidden=false;NK.pop(d,{from:.8});unnext(game);armHint()}
+function showHint(){unnext(game);if(idx<order.length)(order[idx].getAttribute('data-kind')==='1'?yes:no).classList.add('next')}
+function armHint(){clearHint();hintT=C.later(showHint,6000)}
+function clearHint(){if(hintT){clearTimeout(hintT);hintT=null}}
+function answer(kind){if(busy||idx>=order.length)return;var d=order[idx],want=d.getAttribute('data-kind')==='1';clearHint();
+if(kind!==want){NK.sfx('wrong');NK.haptic('error');NK.shake(d);NK.wobble(kind?yes:no);showHint();return}
+unnext(game);NK.sfx('ding');NK.haptic('success');if(dots[idx])dots[idx].classList.add('on');busy=true;
+if(want){hearts++;
+NK.flyTo(centerRect($('.dic',d),44),panR,{html:HEART,size:44,scaleTo:.5,duration:700,spin:-30}).then(function(){
+addHeart(hearts);NK.sfx('pop');NK.fx.burstAt(panR,{n:12,kind:'heart',colors:ROSE,power:.7});tilt(hearts);C.later(next,300*F)})}
+else{d.classList.add('toss');C.later(function(){NK.sfx('whoosh')},120);C.later(next,700*F)}}
+function next(){busy=false;idx++;if(idx<order.length)show(idx);else complete()}
+function complete(){clearHint();deeds.forEach(function(d){d.hidden=true});box.classList.add('full');donep.hidden=false;NK.pop(donep);
+NK.sfx('level');NK.haptic('success');NK.fx.burstAt(box,{n:24,kind:'heart',colors:ROSE});unlock(4)}
+function showDone(){deeds.forEach(function(d){d.hidden=true});dots.forEach(function(d){d.classList.add('on')});
+heartsG.textContent='';for(var i=1;i<=MAX;i++)addHeart(i);setAngle(MAX*STEP);box.classList.add('full');donep.hidden=false;idx=order.length}
+function reset(){C.cancel();clearHint();busy=false;idx=0;hearts=0;order=shuffle(deeds.slice());heartsG.textContent='';tilt(0);
+dots.forEach(function(d){d.classList.remove('on')});box.classList.remove('full');donep.hidden=true;unnext(game);show(0)}
+yes.addEventListener('click',function(){answer(true)});
+no.addEventListener('click',function(){answer(false)});
+return{reset:reset,showDone:showDone,start:function(){show(0)}}})();
+/* ---------- restore what was earned before, then open the games ---------- */
+for(var i=0;i<N;i++){
+if(stars[i]){ready[i]=true;SEC[i].classList.add('earned','ready');$('.lstar',SEC[i]).classList.add('lit');GAMES[i].showDone()}
+else GAMES[i].start();
+setBtn(i)}
+updateHero();
 })();
 </script>
 </body>
