@@ -82,22 +82,28 @@ console.log('\n=== 1. the caption is built from the card ===');
 
 console.log('\n=== 2. the Lantern may tighten, not invent ===');
 {
+  /* The Lantern answers in the shape the composer now asks for: a JSON object
+     with a hook and tags. It may only use words the card already uses, so
+     each stub hook is built from the card's own opening. */
   STORE.clear();
   const plain = await S.compose('h', '2026-05-06', { polish: false });
-  lantern = 'A tighter opening line. ' + plain.caption.slice(0, 200);
+  const words = plain.caption.replace(/[#\d]/g, ' ').split(/\s+/).filter(w => /^[A-Za-z]{3,}$/.test(w));
+  const own = words.slice(0, 7).join(' ');
+  const answer = (hook, tags) => JSON.stringify({ hook, tags: tags || [] });
+  lantern = answer('One question about ' + own.toLowerCase());
   const good = await S.compose('h', '2026-05-06', {});
   ok(good.polished === true, 'a clean rewrite is accepted');
 
-  lantern = 'In 1492 exactly 40000 scholars gathered. ' + plain.caption.slice(0, 100);
+  lantern = answer('In 1492 exactly 40000 scholars gathered about ' + own.toLowerCase());
   const bad = await S.compose('h', '2026-05-06', {});
   ok(bad.polished === false, 'a rewrite that introduces a number is REFUSED');
-  ok(/number/.test(bad.refused), 'and the reason is recorded (' + bad.refused + ')');
+  ok(/not supported|number/.test(bad.refused), 'and the reason is recorded (' + bad.refused + ')');
 
-  lantern = 'Amazing story! ' + plain.caption.slice(0, 100);
+  lantern = answer('Amazing story about ' + own.toLowerCase() + '!');
   const bang = await S.compose('h', '2026-05-06', {});
   ok(bang.polished === false, 'an exclamation mark is refused');
 
-  lantern = 'A line — with a long dash. ' + plain.caption.slice(0, 100);
+  lantern = answer('A line \u2014 with a long dash about ' + own.toLowerCase());
   const dash = await S.compose('h', '2026-05-06', {});
   ok(dash.polished === false, 'a long dash is refused');
   lantern = null;
@@ -264,7 +270,9 @@ console.log('\n=== 14. the Lantern is not asked about cited material ===');
   ok(S.polishAllowed(null) === true, 'and a card with no level is treated as editorial, not as an error');
 
   /* and end to end: walk real mornings until a cited card comes up */
-  lantern = 'A much tighter opening line for this card.';
+  /* a hook the guard will accept on any card: three ordinary words it cannot
+     mistake for an invented name, and the card's own tags */
+  lantern = JSON.stringify({ hook: 'one morning worth stopping for', tags: ['#Islam'] });
   let cited = null, free = null;
   for (let t = 0; t < 60 && !(cited && free); t++) {
     STORE.clear();

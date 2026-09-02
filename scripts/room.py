@@ -86,8 +86,8 @@ HEAD = """<!DOCTYPE html>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
-<script src="/assets/noor-text.js?v=82" defer></script>
-<script src="/assets/noor-search.js?v=77" defer></script>
+<script src="/assets/noor-text.js?v=83" defer></script>
+<script src="/assets/noor-search.js?v=78" defer></script>
 <script src="/sponsor.js" defer></script>
 {jsonld}
 <style>html{{-webkit-text-size-adjust:100%}}html,body{{overflow-x:clip}}*{{-webkit-tap-highlight-color:transparent}}a,button{{touch-action:manipulation}}</style>

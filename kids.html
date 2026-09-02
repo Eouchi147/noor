@@ -229,7 +229,7 @@ main{max-width:660px}
 <header class="khead" id="khead">
 <a class="wordmark" href="/kids" aria-label="Little Codex, home">
 <svg class="wm-mark" viewBox="0 0 80 80" aria-hidden="true"><path d="M58 6A36 36 0 1 0 58 74A44 44 0 0 1 58 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
-<span class="wm-txt"><span class="wm-top">Little <span class="moon">Codex</span></span><span class="wm-sub">by Noor</span></span>
+<span class="wm-txt notranslate" translate="no"><span class="wm-top">Little <span class="moon">Codex</span></span><span class="wm-sub">by Noor</span></span>
 </a>
 <nav class="kn" aria-label="Little Codex">
 <a class="kpill solid" href="#wonders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9Z"/></svg><span class="long">Games and rooms</span><span class="short">Games</span></a>
@@ -451,7 +451,7 @@ function render(){
   return '<a class="w-hero" href="/'+x.f.replace(/\.html$/,'')+'"><span class="rb">'+(isDone(x.k)?'✓ finished':'Hero story')+'</span><span class="fig">'+x.fig+'</span><span><span class="nm">'+x.n+'</span><span class="ln" style="display:block">'+x.l+'</span></span></a>'}).join("");
  g.innerHTML=G.map(function(x){
   return '<a class="w-card" href="/'+x.f.replace(/\.html$/,'')+'" style="--wa:'+x.a+'">'+(isDone(x.k)?'<span class="w-done">✓ done</span>':'')+
-   '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span></a>';
+   '<span class="w-ic">'+I[x.i]+'</span><span class="w-nm">'+x.n+'</span><span class="w-ln">'+x.l+'</span><span class="w-go">Play \u2726</span></a>';
  }).join("");
  /* the twelve was written by hand and the list grew to fourteen, so a child
     who finished everything was told they had done 14 of 12. The total counts
@@ -1190,9 +1190,9 @@ html[dir="rtl"] .bubble::before,html[dir="rtl"] .bubble::after{transform:scaleX(
 .w-grid{grid-template-columns:repeat(auto-fill,minmax(156px,1fr));gap:12px}
 .w-card{gap:.5rem;padding:1rem .95rem 3rem;border-radius:22px;min-height:150px;border:1.5px solid color-mix(in srgb,var(--wa) 45%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--wa) 14%,rgba(255,254,247,.06)),rgba(255,254,247,.03));box-shadow:0 10px 26px rgba(4,6,18,.35);overflow:hidden}
 .w-card::before{content:"";position:absolute;inset:auto -30% -55% auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--wa) 30%,transparent),transparent 70%);pointer-events:none}
-.w-card::after{content:"Play \2726";position:absolute;inset-inline-start:.95rem;bottom:.85rem;font-family:var(--kf);font-weight:700;font-size:13px;color:#1A160F;background:linear-gradient(135deg,color-mix(in srgb,var(--wa) 80%,#fff),var(--wa));border-radius:999px;padding:.28rem .75rem;box-shadow:0 4px 12px color-mix(in srgb,var(--wa) 40%,transparent);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.w-card .w-go{position:absolute;inset-inline-start:.95rem;bottom:.85rem;font-family:var(--kf);font-weight:700;font-size:13px;color:#1A160F;background:linear-gradient(135deg,color-mix(in srgb,var(--wa) 80%,#fff),var(--wa));border-radius:999px;padding:.28rem .75rem;box-shadow:0 4px 12px color-mix(in srgb,var(--wa) 40%,transparent);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .w-card:hover{transform:translateY(-5px) rotate(-1deg) scale(1.02);border-color:color-mix(in srgb,var(--wa) 85%,#fff);box-shadow:0 18px 36px rgba(4,6,18,.45),0 0 26px color-mix(in srgb,var(--wa) 28%,transparent)}
-.w-card:hover::after{transform:translateX(4px)}
+.w-card:hover .w-go{transform:translateX(4px)}
 .w-ic{width:54px;height:54px;border-width:2px;box-shadow:0 0 18px color-mix(in srgb,var(--wa) 45%,transparent)}
 .w-ic svg{width:28px;height:28px;stroke-width:1.9}
 .w-nm{font-family:var(--kf);font-weight:700;font-size:1.05rem;line-height:1.15}
