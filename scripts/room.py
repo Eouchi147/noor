@@ -77,10 +77,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="stylesheet" href="{p}assets/tw.css?v=49"/>
 <script src="{p}noor-fx.js" defer></script>
 <script src="{p}noor-ink.js" defer></script>
-<script src="{p}assets/gsap.min.js" defer></script>
-<script src="{p}assets/ScrollTrigger.min.js" defer></script>
-<script src="{p}assets/DrawSVGPlugin.min.js" defer></script>
-<script src="{p}assets/noor-motion.js?v=76" defer></script>
+<script src="/assets/noor-anime.js?v=1" defer></script>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <link rel="stylesheet" href="/assets/figfit.css?v=106"/>
 <script src="/assets/figfit.js?v=106" defer></script>
