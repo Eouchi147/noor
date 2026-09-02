@@ -273,7 +273,7 @@ console.log('\n[8] kids.html');
 console.log('\n[8b] nine little games');
 {
   const { ctx, page, errors } = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
-  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo','strong','island']) {
+  for (const g of ['story-steps','ark-pairs','star-catcher','kaaba-builder','zamzam','yunus','orchard','lanterns','echo','strong','island','mushaf','letters','practice','cradle']) {
     errors.length = 0;
     await page.goto(BASE + '/kids/' + g + '.html', { waitUntil: 'networkidle' });
     await page.waitForTimeout(900);

@@ -25,7 +25,7 @@
 <title>The Greatest Game · NOOR Little Codex</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 /* NOOR Little Codex : base tokens shared with the mother site */
 :root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--lapis:#1E3A8A;--deep:#14100A;--acc:#38bdf8}
@@ -220,348 +220,51 @@ main{max-width:660px}
 <script src="/assets/noor-anime.js?v=1" defer></script>
 </head>
 <body>
-<div class="sky" id="sky" aria-hidden="true"></div>
+<div class="sky" id="sky" aria-hidden="true"><span class="lantern" style="left:8%;--lw:26px;--ld:26s;--ll:-4s;--ls:3.4s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:26%;--lw:20px;--ld:32s;--ll:-18s;--ls:4.1s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:68%;--lw:30px;--ld:24s;--ll:-10s;--ls:3.1s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:88%;--lw:22px;--ld:30s;--ll:-25s;--ls:3.8s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="shoot" style="--st:14%;--sl:72%;--sd:13s;--sdl:4s"></span><span class="shoot" style="--st:30%;--sl:38%;--sd:17s;--sdl:11s"></span></div>
 <div class="veil" aria-hidden="true"></div>
 <div class="side l" aria-hidden="true"></div>
 <div class="side r" aria-hidden="true"></div>
-<svg class="crescent" viewBox="0 0 80 80" aria-hidden="true"><path d="M56 6A34 34 0 1 0 56 74 28 28 0 1 1 56 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
+<svg class="crescent" viewBox="0 0 80 80" aria-hidden="true"><path d="M58 6A36 36 0 1 0 58 74A44 44 0 0 1 58 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
 
-<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
-<style id="nav49">
-/* --- self-contained header layout (works with or without the shared sheet) --- */
-/* While the sheet is open the body carries overflow:hidden, and on iOS that
-   quietly breaks position:sticky: the header stops sticking and scrolls away,
-   leaving page content in the strip above the menu and no way to close it
-   without scrolling back to the top. Pinning it for the duration fixes that.
-   The swap is invisible because at any scroll position a sticky header and a
-   fixed one both render at the top of the viewport, and everything behind is
-   covered by the sheet. */
-body.sheet-open #site-header{position:fixed;left:0;right:0;top:0;z-index:70}
-#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
-#site-header a{text-decoration:none;color:inherit}
-#site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
-#site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
-#site-header>div>a:first-child>div:last-child>div:first-child{font-family:Amiri,serif;font-size:1.125rem;line-height:1;color:#2C2416}
-#site-header>div>a:first-child>div:last-child>div:last-child{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
-#site-header nav[aria-label="Primary"]{display:none;align-items:center;gap:1rem;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65)}
-@media (min-width:1024px){#site-header nav[aria-label="Primary"]{display:flex}}
-#site-header nav[aria-label="Primary"] a{color:inherit;transition:color .15s}
-#site-header nav[aria-label="Primary"] a:hover{color:#2C2416}
-#site-header nav[aria-label="Primary"] a.text-ink{color:#2C2416;font-weight:700}
-#site-header>div>div:last-child{display:flex;align-items:center;gap:.5rem}
-#site-header .give-pill{display:none}
-@media (min-width:640px){#site-header .give-pill{display:inline-block}}
-.dd{position:relative}
-.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
-.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
-.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
-.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
-.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
-@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
-.dd-mega .mg{min-width:0}
-.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
-.dd-mega .dd-h + .dd-h{margin-top:.8rem}
-.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
-.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
-.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
-.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
-.give-pill:hover{transform:translateY(-1px)}
-.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
-.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
-.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
-.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
-.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
-.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
-.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
-.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
-.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
-.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
-.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
-.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
-#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
-@media (max-width:1023.5px){#nav-burger{display:block}}
-body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-body.sheet-open #nav-burger span:nth-child(2){opacity:0}
-body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-#nav-sheet{position:fixed;left:0;right:0;top:calc(3.5rem + var(--safetop,0px));bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
-body.sheet-open #nav-sheet{display:block}
-body.sheet-open{overflow:hidden}
-/* Installed to a home screen there is no browser chrome above the page, so the
-   header sits under the clock and the signal bars. Scoped to standalone on
-   purpose: in an ordinary mobile browser the chrome already holds this space
-   and adding the inset there would push the header down for no reason. */
-:root{--safetop:0px}
-@media (display-mode:standalone),(display-mode:fullscreen){
-  :root{--safetop:env(safe-area-inset-top,0px)}
-  #site-header{padding-top:env(safe-area-inset-top,0px)}
-}
-html.standalone{--safetop:env(safe-area-inset-top,0px)}
-html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
-/* ---- the pinned strip -------------------------------------------------
-   Five rooms, two across, sitting above everything else. This is the whole
-   point of the redesign: the common case is answered before the reader has
-   to choose anything. */
-#nav-sheet .pins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.35rem 0 .4rem}
-#nav-sheet .pin{display:flex;align-items:center;justify-content:center;text-align:center;
-  min-height:3.4rem;padding:.6rem .7rem;border:1px solid rgba(201,162,39,.4);
-  background:linear-gradient(160deg,#FFFDF4,#FFF6E2);border-radius:14px;
-  font-size:.8rem;font-weight:800;color:#2C2416;text-decoration:none;line-height:1.35}
-#nav-sheet .pin:active{background:#FFF1CE}
-#nav-sheet .pin:first-child{grid-column:1 / -1}
-
-/* ---- the doors ---------------------------------------------------------
-   <details> rather than a script: they open with JavaScript unavailable, and
-   a screen reader already knows what a disclosure is. */
-#nav-sheet .door{border-bottom:1px solid rgba(201,162,39,.18)}
-#nav-sheet .door summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;
-  padding:.85rem .1rem;font-size:.95rem;font-weight:800;color:#2C2416;
-  font-family:Inter,system-ui,sans-serif}
-#nav-sheet .door summary::-webkit-details-marker{display:none}
-#nav-sheet .door summary::after{content:"";margin-inline-start:auto;width:.5rem;height:.5rem;flex:none;
-  border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;
-  transform:rotate(45deg);transition:transform .2s ease}
-#nav-sheet .door[open] summary::after{transform:rotate(-135deg)}
-#nav-sheet .door .cnt{font-size:.62rem;font-weight:700;color:rgba(44,36,22,.38);
-  border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.05rem .4rem;line-height:1.6}
-#nav-sheet .door-in{padding:0 0 .6rem}
-/* Said explicitly rather than left to the browser: the sheet's own
-   a.shl{display:block} was out-specifying the built-in hiding, so every
-   door stood open and the redesign achieved nothing. */
-#nav-sheet .door:not([open]) .door-in{display:none}
-@media (prefers-reduced-motion:reduce){#nav-sheet .door summary::after{transition:none}}
-
-#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
-#nav-sheet .sh-g:first-child{margin-top:.2rem}
-#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
-#nav-sheet a.shl:active{background:#FFF7DF}
-#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
-@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
-#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
-
-/* --- the search drawer -------------------------------------------------
-   The magnifier at top right is the only search chrome the house shows.
-   The panel is hard-hidden until it is opened, and it is a floating drawer,
-   never a band across the page. These rules live in the generator so a nav
-   rebuild can never strip them again. */
-#search-bar{display:none}
-#search-bar.open{display:block;position:fixed;top:3.5rem;right:1rem;z-index:72;width:min(26rem,calc(100vw - 2rem))}
-@media (min-width:640px){#search-bar.open{right:1.5rem}}
-body.sheet-open #search-bar{display:none}
-#search-bar .sb-in{background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:16px;box-shadow:0 20px 48px rgba(26,22,15,.18);padding:.5rem}
-#search-bar input#search-input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:.9rem;line-height:1.4;color:#2C2416;background:#fff;border:1px solid rgba(44,36,22,.15);border-radius:11px;padding:.62rem .8rem;outline:0;-webkit-appearance:none;appearance:none}
-#search-bar input#search-input::placeholder{color:rgba(44,36,22,.4)}
-#search-bar input#search-input:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
-#search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
-#search-bar #search-results.hidden{display:none}
-
-/* --- the three new doors: let each system supply the face it renders best --- */
-html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
-html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
-html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
-html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
-
-/* --- paper ---------------------------------------------------------------
-   Choreography must never cost a reader the words. Anything the motion
-   layer is holding back is forced visible before it reaches a printer. */
-@media print{
-  #site-header,#nav-sheet,#search-bar{display:none!important}
-  .mo,.mo-pop,.mo-draw,[data-mo-stagger] .mo,[data-mo-stagger] .mo-pop{
-    opacity:1!important;visibility:visible!important;transform:none!important}
-  .mo-draw path,.mo-draw line,.mo-draw circle,.mo-draw rect,.mo-draw polyline,.mo-draw ellipse{
-    stroke-dasharray:none!important;stroke-dashoffset:0!important;opacity:1!important}
-}
-</style>
-<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
-<a href="/" class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
-<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
+<header class="khead" id="khead">
+<a class="wordmark" href="/kids" aria-label="Little Codex, home">
+<svg class="wm-mark" viewBox="0 0 80 80" aria-hidden="true"><path d="M58 6A36 36 0 1 0 58 74A44 44 0 0 1 58 6Z" fill="#E9C86A"/><path d="M22 14l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2z" fill="#FFF9E3"/></svg>
+<span class="wm-txt"><span class="wm-top">Little <span class="moon">Codex</span></span><span class="wm-sub">by Noor</span></span>
 </a>
-<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
-<a href="/quran" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
-<a href="/prophets" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
-<a href="/hajj" class="hover:text-ink transition-colors" data-i18n="nav.hajj">Hajj</a>
-<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
-<a href="/kids" class="text-ink font-bold" data-i18n="nav.kids">Kids</a>
-<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
-<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
-<div class="mg">
-<p class="dd-h" data-i18n="g.read">Read</p>
-<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
-<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
-<p class="dd-h" data-i18n="g.learn">Learn</p>
-<a role="menuitem" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
-<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a role="menuitem" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
-<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
-<a role="menuitem" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
+<nav class="kn" aria-label="Little Codex">
+<a class="kpill solid" href="#wonders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9Z"/></svg><span class="long">Games and rooms</span><span class="short">Games</span></a>
+<details class="klang" id="klang">
+<summary class="kpill" aria-label="Choose your language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg><span id="lang-cur">EN</span></summary>
+<div class="klang-pop" role="menu">
+<p class="kl-t">Choose your language</p>
+<button type="button" data-setlang="en" lang="en">English</button>
+<button type="button" data-setlang="ar" lang="ar">العربية</button>
+<button type="button" data-setlang="fr" lang="fr">Français</button>
+<button type="button" data-setlang="es" lang="es">Español</button>
+<button type="button" data-setlang="de" lang="de">Deutsch</button>
+<button type="button" data-setlang="ru" lang="ru">Русский</button>
+<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
+<button type="button" data-setlang="ur" lang="ur">اردو</button>
+<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
+<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
+<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
+<button type="button" data-setlang="fa" lang="fa">فارسی</button>
+<button type="button" data-setlang="prs" lang="prs">دری</button>
+<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
+<button type="button" data-setlang="ha" lang="ha">Hausa</button>
+<button type="button" data-setlang="ps" lang="ps">پښتو</button>
+<button type="button" data-setlang="so" lang="so">Soomaali</button>
+<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
+<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
+<button type="button" data-setlang="zh" lang="zh">中文</button>
+<button type="button" data-setlang="ja" lang="ja">日本語</button>
+<button type="button" data-setlang="ko" lang="ko">한국어</button>
 </div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.live">Live</p>
-<a role="menuitem" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
-<a role="menuitem" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
-<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
-<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a role="menuitem" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
-<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
-<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.story">The Story</p>
-<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
-<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
-<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
-<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<a role="menuitem" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.little">Little Ones</p>
-<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="dd-h" data-i18n="g.house">The House</p>
-<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a role="menuitem" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
-<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-</div>
-</div></div></div>
+</details>
+<a class="kpill" href="/" aria-label="For grown-ups: the big Codex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5"/><path d="M6.5 10.5V20h11v-9.5"/><path d="M10.5 20v-5h3v5"/></svg><span class="long">For grown-ups</span></a>
 </nav>
-<div class="flex items-center gap-2">
-<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
-<div class="dd-menu49"><div class="lang-pane">
-<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid" id="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-<button type="button" data-setlang="zh" lang="zh">中文</button>
-<button type="button" data-setlang="ja" lang="ja">日本語</button>
-<button type="button" data-setlang="ko" lang="ko">한국어</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-</div></div></div>
-<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
-<a id="search-toggle" href="/#search" aria-label="Search the Path" title="Search the Path" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
-<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
-</div>
-</div>
 </header>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.pinned">Most opened</p><div class="pins"><a class="pin" href="/quran" data-i18n="p.quran">The Mushaf</a><a class="pin" href="/good-life" data-i18n="p.goodlife">How to Live Well</a><a class="pin" href="/prophets" data-i18n="p.prophets">The 25 Prophets</a><a class="pin" href="/pillars" data-i18n="p.pillars">The Five Pillars</a><a class="pin" href="/stories" data-i18n="p.stories">The Hall of Stories</a></div>
-<details class="door"><summary><span data-i18n="g.read">Read</span><span class="cnt">4</span></summary><div class="door-in">
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.learn">Learn</span><span class="cnt">5</span></summary><div class="door-in">
-<a class="shl" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
-<a class="shl" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.live">Live</span><span class="cnt">11</span></summary><div class="door-in">
-<a class="shl" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
-<a class="shl" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a class="shl" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.story">The Story</span><span class="cnt">11</span></summary><div class="door-in">
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<a class="shl" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.little">Little Ones</span><span class="cnt">3</span></summary><div class="door-in">
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.house">The House</span><span class="cnt">6</span></summary><div class="door-in">
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-</div></details>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-<button type="button" data-setlang="zh" lang="zh">中文</button>
-<button type="button" data-setlang="ja" lang="ja">日本語</button>
-<button type="button" data-setlang="ko" lang="ko">한국어</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
+
 
 
 
@@ -573,10 +276,32 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="kicker">✦ Seven questions ✦</p>
 <h1 class="title">The Greatest Game</h1>
 <p class="subtitle">Who is the greatest of all? Tap a star, meet the champions, and find the seven treasure Names!</p>
+<div class="noor" id="noor" aria-live="polite">
+<svg class="noor-fig" viewBox="0 0 74 86" role="img" aria-label="Noor, the little lantern">
+<defs>
+<radialGradient id="nglow" cx="50%" cy="55%" r="50%"><stop offset="0" stop-color="#FFE9A6" stop-opacity=".95"/><stop offset="1" stop-color="#F59E0B" stop-opacity="0"/></radialGradient>
+<linearGradient id="nglass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset="1" stop-color="#F4D46A"/></linearGradient>
+</defs>
+<circle cx="37" cy="46" r="34" fill="url(#nglow)" opacity=".7"/>
+<path d="M37 3c-4 0-7 3-7 7v3h14v-3c0-4-3-7-7-7Zm-3 7a3 3 0 0 1 6 0v2h-6Z" fill="#C9A227"/>
+<rect x="21" y="12" width="32" height="7" rx="3.5" fill="#C9A227"/>
+<path d="M24 19h26l3 40H21Z" fill="url(#nglass)" stroke="#C9A227" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M28 22v34M46 22v34" stroke="#C9A227" stroke-width="1.6" opacity=".55"/>
+<g class="flame"><path d="M37 33c4 5 6 8 6 12a6 6 0 0 1-12 0c0-4 2-7 6-12Z" fill="#F59E0B"/><path d="M37 39c2 3 3 4.5 3 6.5a3 3 0 0 1-6 0c0-2 1-3.5 3-6.5Z" fill="#FFF3C4"/></g>
+<g class="eye"><circle cx="31" cy="30" r="2.4" fill="#2C2416"/><circle cx="43" cy="30" r="2.4" fill="#2C2416"/><circle cx="31.9" cy="29.1" r=".8" fill="#fff"/><circle cx="43.9" cy="29.1" r=".8" fill="#fff"/></g>
+<path d="M32 54q5 4 10 0" stroke="#2C2416" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<circle cx="27.5" cy="51" r="2" fill="#F9A8D4" opacity=".7"/><circle cx="46.5" cy="51" r="2" fill="#F9A8D4" opacity=".7"/>
+<rect x="19" y="59" width="36" height="8" rx="4" fill="#C9A227"/>
+<rect x="25" y="67" width="24" height="5" rx="2.5" fill="#A8841D"/>
+<path d="M12 44l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2Z" fill="#FFF9E3" opacity=".9"/>
+<path d="M63 20l1.6 3.6 3.6 1.6-3.6 1.6-1.6 3.6-1.6-3.6-3.6-1.6 3.6-1.6Z" fill="#FFF9E3" opacity=".8"/>
+</svg>
+<p class="bubble" id="noor-say">Assalamu alaikum! Tap a star and meet a champion.</p>
+</div>
 </div>
 <div class="arc" id="arc"></div>
 <p class="found" id="found"></p>
-<div class="wonders">
+<div class="wonders" id="wonders">
 <p class="w-kick">✦ Hero stories ✦</p>
 <a class="w-sky" href="/kids/lanterns">
 <span class="sky-art" aria-hidden="true">
@@ -599,6 +324,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="w-feat" id="wfeat"></div>
 <p class="w-kick" style="margin-top:26px">✦ More wonders ✦</p>
 <h2 class="w-title">Little Games and Rooms</h2>
+<p class="w-next" id="wnext"></p>
 <div class="w-grid" id="wgrid"></div>
 <style>
 .w-sky{display:flex;align-items:center;gap:1rem;text-decoration:none;background:linear-gradient(150deg,#0d1430,#1b2450 60%,#2a2340);border:1px solid rgba(244,212,106,.4);border-radius:22px;padding:1rem 1.1rem;margin:0 0 1rem;box-shadow:0 14px 38px rgba(6,10,26,.35);position:relative;overflow:hidden}
@@ -652,7 +378,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 </section>
 </main>
 
-<footer>☾ A little garden of wonder from the Codex of Light · <button class="reset" id="reset" aria-label="Clear your gems and start over">start over</button></footer>
+<footer>☾ A little garden of wonder from the Codex of Light, made with love for every child · <button class="reset" id="reset" aria-label="Clear your gems and start over">start over</button></footer>
 
 <style>
 .wonders{max-width:720px;margin:38px auto 0;padding:0 4px;text-align:center}
@@ -693,10 +419,12 @@ var I={
  whale:'<svg viewBox="0 0 24 24"><path d="M3 13c2-4.5 6.5-6.5 10.5-5.5S20 12 20.5 9.5c1 4-1 8-6.5 8.5S5 16 3 13Z"/><path d="M18.5 6.5c.4-1.4 1.6-2.2 2.9-2.2-.3 1.4-1.4 2.4-2.9 2.2Z"/></svg>',
  sprout:'<svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12c0-3.5-2.4-5.5-6-5.5C6 10 8.4 12 12 12Z"/><path d="M12 10c0-3 2-4.8 5.5-4.8C17.5 8.2 15.5 10 12 10Z"/><path d="M8 20h8"/></svg>',
  lantern:'<svg viewBox="0 0 24 24"><path d="M9 7h6l1 9a4 4 0 0 1-8 0Z"/><path d="M10.5 7V5.2A1.2 1.2 0 0 1 11.7 4h.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M12 20v1.5"/></svg>',
+ book:'<svg viewBox="0 0 24 24"><path d="M12 6.5c-2.2-1.8-5.2-2.2-8-1.5v13c2.8-.7 5.8-.3 8 1.5 2.2-1.8 5.2-2.2 8-1.5V5c-2.8-.7-5.8-.3-8 1.5Z"/><path d="M12 6.5v13"/></svg>',
  med:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/></svg>'
 };
 var G=[
  {f:"kids/cradle.html",k:"nk-cradle",a:"#f9a8d4",i:"lantern",n:"The Cradle · 0 to 3",l:"First sounds & words for the littlest"},
+ {f:"kids/mushaf.html",k:"nk-mushaf",a:"#FFE9A6",i:"book",n:"The Little Mushaf",l:"Learn eleven short surahs, ayah by ayah"},
  {f:"kids/letters.html",k:"nk-letters",a:"#F4D46A",i:"abjad",n:"The Letter Garden",l:"Meet all 28 Arabic letters & win stars"},
  {f:"kids/story-steps.html",k:"nk-story-steps",a:"#34d399",i:"steps",n:"Story Steps",l:"Put six great stories in order"},
  {f:"kids/ark-pairs.html",k:"nk-ark",a:"#38bdf8",i:"ark",n:"Two by Two",l:"Match the pairs, load the ark"},
@@ -728,6 +456,9 @@ function render(){
  /* the twelve was written by hand and the list grew to fourteen, so a child
     who finished everything was told they had done 14 of 12. The total counts
     itself now, and the congratulation waits for the real last one. */
+ var nx=document.getElementById("wnext");
+ if(nx){var first=null;for(var q=0;q<G.length;q++){if(!isDone(G[q].k)){first=G[q];break}}
+  nx.innerHTML=first?'Try this next: <a href="/'+first.f.replace(/\.html$/,'')+'">'+first.n+'</a> \u2726':'You have played every room \u2726'}
  var WONDERS=G.length+1+HEROES.length;
  var total=G.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0)+(gemsDone()?1:0)+HEROES.reduce(function(s,x){return s+(isDone(x.k)?1:0)},0);
  c.textContent=total===0?("All "+WONDERS+" wonders are waiting for you ✦"):total>=WONDERS?"Every wonder is yours ✦":("You have finished "+total+" of "+WONDERS+" wonders ✦");
@@ -1167,7 +898,7 @@ function renderNecklace(){chain.innerHTML=R.map((r,i)=>{const d=done.has(r.id);
 return '<span class="socket'+(d?" on":"")+'" role="img" aria-label="Gem '+(i+1)+' of 7: '+(d?r.fin.gEn:"still empty")+'">'+(d?gemSvg(r.acc):"")+"</span>"}).join("")}
 
 function renderMap(){arc.innerHTML=R.map((r,i)=>{const d=done.has(r.id);
-return '<button class="rbtn'+(d?" done":"")+'" data-r="'+i+'" aria-label="Round '+(i+1)+": "+r.ti+". "+(d?"Gem found! Tap to play again.":"Not played yet.")+'">'+
+return '<button class="rbtn'+(d?" done":"")+'" data-r="'+i+'" style="--acc:'+r.acc+'" aria-label="Round '+(i+1)+": "+r.ti+". "+(d?"Gem found! Tap to play again.":"Not played yet.")+'">'+
 '<span class="orb">'+(d?gemSvg(r.acc):'<span class="st" aria-hidden="true">✩</span>')+'</span><span class="lb">'+r.ti+"</span></button>"}).join("");
 const n=done.size;
 found.textContent=n===0?"Seven gems are waiting for you ✦":n===7?"All seven gems are yours! ✦":"You found "+n+" of 7 gems ✦"}
@@ -1259,7 +990,7 @@ let landed=false;const end=()=>{if(landed)return;landed=true;fl.remove();landGem
 fl.addEventListener("transitionend",end,{once:true});
 setTimeout(end,1050)}
 
-function landGem(r,socket){done.add(r.id);save();
+function landGem(r,socket){done.add(r.id);save();try{document.dispatchEvent(new CustomEvent("kids:gem",{detail:{n:done.size}}))}catch(e){}
 socket.innerHTML=gemSvg(r.acc);
 socket.setAttribute("aria-label","Gem "+(cur+1)+" of 7: "+r.fin.gEn);
 socket.classList.add("on","pop");
@@ -1284,7 +1015,7 @@ function goMap(){phase="map";busy=false;document.body.classList.remove("final");
 renderMap();showScreen("scr-map")}
 
 /* finale: the seven gems become a constellation */
-function showFinale(){phase="finale";busy=false;
+function showFinale(){phase="finale";busy=false;try{document.dispatchEvent(new CustomEvent("kids:finale"))}catch(e){}
 document.body.classList.add("final");renderNecklace();
 const P=[[48,164],[92,96],[150,58],[218,46],[284,70],[334,124],[296,206]];
 let sv='<svg viewBox="0 0 380 250" role="img" aria-label="Seven Name gems joined as a constellation of stars">';
@@ -1303,7 +1034,7 @@ f.appendChild(s)}
 fx.appendChild(f);
 setTimeout(()=>{fx.querySelectorAll(".fall").forEach(e=>e.remove())},6500)}
 
-function resetAll(){done.clear();save();goMap();renderNecklace()}
+function resetAll(){done.clear();save();goMap();renderNecklace();try{document.dispatchEvent(new CustomEvent("kids:reset"))}catch(e){}}
 
 arc.addEventListener("click",e=>{const b=e.target.closest(".rbtn");if(b)startRound(+b.dataset.r)});
 cta.addEventListener("click",onCta);
@@ -1315,6 +1046,189 @@ renderNecklace();renderMap();showScreen("scr-map");
 })();
 </script>
 <p style="text-align:center;font-size:.68rem;color:rgba(255,254,247,.45);padding:0 1rem 2rem;line-height:1.7">Schools &amp; madrasas: put the whole Little Codex in your own website · <a href="/license" style="color:#E9C86A;font-weight:700;text-decoration:none">licensing →</a></p>
+<script>
+(function(){
+"use strict";
+/* Noor, the lantern friend: what she says depends on how far the child has come */
+var say=document.getElementById("noor-say"),noor=document.getElementById("noor");
+if(!say||!noor)return;
+function gems(){try{var v=JSON.parse(localStorage.getItem("noor-kids-gems")||"[]");return Array.isArray(v)?v.length:0}catch(e){return 0}}
+function line(n){
+ if(n<=0)return "Assalamu alaikum! I am Noor. Shall we find the seven treasure Names together?";
+ if(n>=7)return "Allahu Akbar! You found all seven Names. You know Who is the greatest of all.";
+ if(n===1)return "One gem! Six more stars are waiting for you.";
+ return "You have "+n+" gems. "+(7-n)+" more to go, little explorer.";
+}
+function speak(n,jump){say.textContent=line(n);
+ if(jump&&!matchMedia("(prefers-reduced-motion: reduce)").matches){noor.classList.remove("jump");void noor.offsetWidth;noor.classList.add("jump")}}
+speak(gems(),false);
+document.addEventListener("kids:gem",function(e){speak(e.detail&&e.detail.n||gems(),true)});
+document.addEventListener("kids:finale",function(){speak(7,true)});
+document.addEventListener("kids:reset",function(){speak(0,false)});
+addEventListener("pageshow",function(){speak(gems(),false)});
+/* a mouse moves the sky a little, a finger never does */
+try{
+ if(matchMedia("(hover:hover) and (pointer:fine)").matches&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  var sky=document.getElementById("sky");sky.style.transform="scale(1.06)";sky.style.transition="transform .9s ease-out";
+  addEventListener("pointermove",function(e){var x=(e.clientX/innerWidth-.5)*-10,y=(e.clientY/innerHeight-.5)*-8;
+   sky.style.transform="scale(1.06) translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px)"},{passive:true});
+ }
+}catch(e){}
+/* the language popover closes when a language is chosen or the child taps elsewhere */
+var kl=document.getElementById("klang");
+if(kl){kl.addEventListener("click",function(e){if(e.target.closest("[data-setlang]"))setTimeout(function(){kl.removeAttribute("open")},60)});
+ document.addEventListener("click",function(e){if(kl.open&&!kl.contains(e.target))kl.removeAttribute("open")});
+ document.addEventListener("keydown",function(e){if(e.key==="Escape")kl.removeAttribute("open")})}
+})();
+</script>
+<style id="kids-2">
+/* ============================================================
+   NOOR Little Codex · the second skin
+   ------------------------------------------------------------
+   Everything the game already knew how to do is left alone. This
+   sheet sits on top of it and changes what a child SEES: a header
+   that belongs to children, a sky with lanterns in it, seven stars
+   that breathe and carry their own colour, a lantern friend who
+   talks, and doors into the rooms that look like doors.
+   ============================================================ */
+:root{--kf:"Fredoka","Inter",system-ui,sans-serif;--sky-1:#0a0e28;--sky-2:#152052;--sky-3:#1b2e6b;--rose:#f9a8d4;--mint:#5eead4;--violet:#a78bfa}
+body{font-family:Inter,system-ui,sans-serif}
+
+/* ---- the sky, with weather in it ---- */
+.sky{overflow:hidden;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 34%,var(--sky-3) 60%,#2d4fb3 128%)}
+.sky::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 40% at 18% 22%,rgba(94,234,212,.13),transparent 70%),
+  radial-gradient(50% 36% at 84% 30%,rgba(167,139,250,.16),transparent 70%),
+  radial-gradient(70% 30% at 50% 78%,rgba(249,168,212,.08),transparent 70%)}
+.lantern{position:absolute;bottom:-12vh;width:var(--lw,30px);opacity:0;filter:drop-shadow(0 0 10px rgba(233,200,106,.55));animation:drift var(--ld,20s) linear var(--ll,0s) infinite;will-change:transform,opacity}
+.lantern svg{width:100%;height:auto;display:block;animation:sway var(--ls,3.6s) ease-in-out infinite alternate;transform-origin:50% 0}
+@keyframes drift{0%{transform:translateY(0);opacity:0}6%{opacity:.85}90%{opacity:.7}100%{transform:translateY(-125vh);opacity:0}}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.shoot{position:absolute;top:var(--st,18%);left:var(--sl,70%);width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,249,227,0),#FFF9E3 60%,rgba(255,249,227,0));transform:rotate(-24deg);opacity:0;animation:shoot var(--sd,11s) ease-in var(--sdl,3s) infinite;box-shadow:0 0 8px rgba(255,249,227,.8)}
+@keyframes shoot{0%{opacity:0;transform:rotate(-24deg) translateX(0)}2%{opacity:1}9%{opacity:0;transform:rotate(-24deg) translateX(-360px)}100%{opacity:0;transform:rotate(-24deg) translateX(-360px)}}
+.crescent{top:calc(64px + var(--safetop,0px));width:54px}
+@media(max-width:600px){.crescent{display:none}}
+
+/* ---- the children's header ---- */
+header.khead{position:sticky;top:0;z-index:7;display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:none;margin:0;padding:calc(8px + var(--safetop,0px)) 12px 8px;background:linear-gradient(180deg,rgba(8,11,32,.92),rgba(8,11,32,.78));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.18)}
+.wordmark{display:flex;flex-direction:row;align-items:center;gap:9px;text-decoration:none;min-height:40px}
+.wm-mark{width:34px;height:34px;flex:none;filter:drop-shadow(0 0 10px rgba(233,200,106,.5))}
+.wm-txt{display:flex;flex-direction:column;line-height:1.05}
+.wordmark .wm-top{font-family:var(--kf);font-weight:700;font-size:18px;letter-spacing:.01em;color:var(--parchment)}
+.wordmark .wm-top .moon{color:var(--gold-hi)}
+.wordmark .wm-sub{font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(233,200,106,.85)}
+.kn{display:flex;align-items:center;gap:6px}
+.kpill{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 13px;border-radius:999px;border:1px solid rgba(233,200,106,.4);background:rgba(20,16,10,.4);color:var(--gold-hi);font-family:var(--kf);font-weight:600;font-size:14px;letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:background .25s,transform .25s cubic-bezier(.34,1.56,.64,1);list-style:none;white-space:nowrap}
+.kpill::-webkit-details-marker{display:none}
+.kpill:hover,.kpill:focus-visible{background:rgba(233,200,106,.16);transform:translateY(-1px)}
+.kpill.solid{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#1A160F;border-color:transparent;box-shadow:0 6px 18px rgba(201,162,39,.35)}
+.kpill.solid:hover{background:linear-gradient(135deg,var(--gold-hi),var(--gold))}
+.kpill svg{width:15px;height:15px;flex:none}
+.kpill .short{display:inline}.kpill .long{display:none}
+@media(max-width:519px){.kpill{padding:6px 10px;gap:5px;font-size:13px}.wordmark .wm-sub{display:none}.wordmark .wm-top{font-size:16px}.wm-mark{width:30px;height:30px}header.khead{padding-inline:8px}}
+@media(min-width:520px){.kpill .short{display:none}.kpill .long{display:inline}}
+.klang{position:relative}
+.klang[open] > .kpill{background:rgba(233,200,106,.2)}
+.klang-pop{position:absolute;inset-inline-end:0;top:calc(100% + 8px);z-index:20;width:min(88vw,340px);max-height:min(70vh,420px);overflow:auto;padding:10px;border-radius:18px;background:#0f1633;border:1px solid rgba(233,200,106,.4);box-shadow:0 18px 50px rgba(2,3,12,.6);display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.klang-pop button{min-height:42px;padding:6px 10px;border-radius:12px;border:1px solid rgba(255,254,247,.1);background:rgba(255,254,247,.05);color:var(--parchment);font-family:Inter,system-ui,sans-serif;font-weight:600;font-size:13.5px;text-align:center}
+.klang-pop button:hover{background:rgba(233,200,106,.14)}
+.klang-pop button.on{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#1A160F;border-color:transparent}
+.klang-pop .kl-t{grid-column:1/-1;font-family:var(--kf);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);margin:2px 4px 4px}
+
+/* the necklace sits under the header now */
+.necklace{top:calc(56px + var(--safetop,0px));z-index:6}
+
+/* ---- Noor, the lantern friend ---- */
+.noor{display:flex;align-items:center;justify-content:center;gap:12px;max-width:420px;margin:6px auto 0;text-align:start}
+.noor-fig{flex:none;width:74px;height:86px;filter:drop-shadow(0 0 18px rgba(233,200,106,.5));animation:noorBob 3.4s ease-in-out infinite;transform-origin:50% 100%}
+.noor.jump .noor-fig{animation:noorJump .9s cubic-bezier(.34,1.56,.64,1) 1}
+@keyframes noorBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+@keyframes noorJump{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-26px) scale(1.06) rotate(-6deg)}60%{transform:translateY(0) scale(.96)}80%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.noor-fig .flame{animation:flame 1.1s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes flame{from{transform:scaleY(.92) scaleX(1.04);opacity:.85}to{transform:scaleY(1.08) scaleX(.96);opacity:1}}
+.noor-fig .eye{animation:blink 5s steps(1) infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.bubble{position:relative;background:var(--parchment);color:var(--ink);border-radius:18px;padding:10px 14px;font-family:var(--kf);font-weight:600;font-size:15px;line-height:1.35;box-shadow:0 10px 26px rgba(3,5,16,.4);border:2px solid var(--gold)}
+.bubble::before{content:"";position:absolute;inset-inline-start:-11px;top:34px;width:0;height:0;border:8px solid transparent;border-inline-end:10px solid var(--gold)}
+.bubble::after{content:"";position:absolute;inset-inline-start:-6px;top:36px;width:0;height:0;border:6px solid transparent;border-inline-end:8px solid var(--parchment)}
+html[dir="rtl"] .bubble::before,html[dir="rtl"] .bubble::after{transform:scaleX(-1)}
+
+/* ---- the star map ---- */
+.map-head{margin:8px 0 2px}
+.kicker{font-family:var(--kf);font-weight:600;font-size:12px;letter-spacing:.28em}
+.title{font-family:var(--kf);font-weight:700;font-size:clamp(36px,10vw,54px);letter-spacing:-.01em;margin:.05em 0 .05em;background:linear-gradient(180deg,#FFF3C4,var(--gold-hi) 60%,#D4AD3B);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 22px rgba(233,200,106,.35))}
+.subtitle{font-size:16px;font-weight:500;max-width:360px}
+.arc{row-gap:20px;padding-top:10px}
+.rbtn{gap:8px}
+.orb{width:clamp(70px,21vw,96px);height:clamp(70px,21vw,96px);border:3px solid color-mix(in srgb,var(--acc,#E9C86A) 70%,transparent);background:radial-gradient(circle at 32% 26%,color-mix(in srgb,var(--acc,#E9C86A) 38%,transparent),transparent 58%),rgba(30,58,138,.55);box-shadow:0 8px 22px rgba(4,6,18,.5),0 0 22px color-mix(in srgb,var(--acc,#E9C86A) 30%,transparent),inset 0 0 18px rgba(13,22,58,.55);animation:orbFloat 4.2s ease-in-out infinite alternate}
+.arc .rbtn:nth-child(2n) .orb{animation-delay:-1.3s}
+.arc .rbtn:nth-child(3n) .orb{animation-delay:-2.6s}
+@keyframes orbFloat{from{translate:0 0}to{translate:0 -5px}}
+.orb .st{font-size:34px;color:color-mix(in srgb,var(--acc,#E9C86A) 85%,#fff);text-shadow:0 0 14px color-mix(in srgb,var(--acc,#E9C86A) 70%,transparent)}
+.rbtn:hover .orb,.rbtn:focus-visible .orb{transform:scale(1.12) rotate(-4deg);border-color:#fff}
+.rbtn.done .orb{border-color:var(--gold-hi);background:radial-gradient(circle at 34% 28%,rgba(233,200,106,.35),transparent 60%),rgba(16,13,8,.65);box-shadow:0 8px 22px rgba(4,6,18,.5),0 0 22px rgba(233,200,106,.55)}
+.rbtn .lb{font-family:var(--kf);font-weight:600;font-size:14px;letter-spacing:.01em}
+.found{font-family:var(--kf);font-weight:600;font-size:15px;letter-spacing:.02em;margin-top:22px}
+
+/* ---- the round ---- */
+.tomap{font-family:var(--kf);font-weight:600;font-size:14px}
+.q-en{font-family:var(--kf);font-weight:700;font-size:clamp(26px,7vw,36px)}
+.c-name{font-family:var(--kf);font-weight:700;font-size:26px}
+.c-fact{font-size:17px}
+.cta{font-family:var(--kf);font-weight:700;font-size:19px;border-radius:22px;min-height:60px}
+.f-line{font-family:var(--kf);font-weight:700;font-size:20px}
+.g-en{font-family:var(--kf);font-weight:600;font-size:15px}
+.takbir-en{font-family:var(--kf);letter-spacing:.2em}
+.finale-line{font-size:17px}
+
+/* ---- the rooms of wonder ---- */
+.wonders{margin-top:42px}
+.w-kick{font-family:var(--kf);font-weight:600;font-size:12px;letter-spacing:.26em}
+.w-title{font-family:var(--kf);font-weight:700;font-size:clamp(26px,6vw,38px);letter-spacing:-.01em;text-shadow:0 0 28px rgba(233,200,106,.3)}
+.w-next{margin:-4px 0 14px;font-family:var(--kf);font-weight:600;font-size:14px;color:rgba(255,254,247,.85)}
+.w-next a{color:var(--gold-hi);text-decoration:none;border-bottom:2px dotted rgba(233,200,106,.6)}
+.w-grid{grid-template-columns:repeat(auto-fill,minmax(156px,1fr));gap:12px}
+.w-card{gap:.5rem;padding:1rem .95rem 3rem;border-radius:22px;min-height:150px;border:1.5px solid color-mix(in srgb,var(--wa) 45%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--wa) 14%,rgba(255,254,247,.06)),rgba(255,254,247,.03));box-shadow:0 10px 26px rgba(4,6,18,.35);overflow:hidden}
+.w-card::before{content:"";position:absolute;inset:auto -30% -55% auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--wa) 30%,transparent),transparent 70%);pointer-events:none}
+.w-card::after{content:"Play \2726";position:absolute;inset-inline-start:.95rem;bottom:.85rem;font-family:var(--kf);font-weight:700;font-size:13px;color:#1A160F;background:linear-gradient(135deg,color-mix(in srgb,var(--wa) 80%,#fff),var(--wa));border-radius:999px;padding:.28rem .75rem;box-shadow:0 4px 12px color-mix(in srgb,var(--wa) 40%,transparent);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.w-card:hover{transform:translateY(-5px) rotate(-1deg) scale(1.02);border-color:color-mix(in srgb,var(--wa) 85%,#fff);box-shadow:0 18px 36px rgba(4,6,18,.45),0 0 26px color-mix(in srgb,var(--wa) 28%,transparent)}
+.w-card:hover::after{transform:translateX(4px)}
+.w-ic{width:54px;height:54px;border-width:2px;box-shadow:0 0 18px color-mix(in srgb,var(--wa) 45%,transparent)}
+.w-ic svg{width:28px;height:28px;stroke-width:1.9}
+.w-nm{font-family:var(--kf);font-weight:700;font-size:1.05rem;line-height:1.15}
+.w-ln{font-size:.78rem;color:rgba(255,254,247,.7);line-height:1.4}
+.w-done{font-family:var(--kf);font-size:.72rem}
+.w-hero{border-radius:24px;padding:1.05rem}
+.w-hero .nm{font-family:var(--kf);font-weight:700;font-size:1.25rem}
+.w-hero .ln{font-size:.8rem}
+.w-hero .fig{width:72px;height:92px}
+.w-hero .rb{font-family:var(--kf)}
+.w-sky{border-radius:24px}
+.w-sky .sky-n{font-family:var(--kf);font-weight:700;font-size:1.3rem}
+.w-sky .sky-go{font-family:var(--kf)}
+.w-count{font-family:var(--kf);font-weight:600;font-size:.95rem;margin-top:1.1rem}
+.wgo>h2{font-family:var(--kf)}
+.wgo-c b{font-family:var(--kf)}
+
+/* ---- footer ---- */
+footer{font-family:var(--kf);font-weight:500;font-size:14px}
+
+/* ---- desktop ---- */
+@media(min-width:900px){
+.noor{max-width:480px}
+.noor-fig{width:86px;height:100px}
+.bubble{font-size:16px}
+.arc{padding-top:30px}
+.w-grid{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:14px}
+}
+
+/* ---- calm mode ---- */
+@media(prefers-reduced-motion:reduce){
+.lantern,.shoot{display:none}
+.orb,.noor-fig,.noor-fig .flame,.noor-fig .eye{animation:none}
+.w-card,.w-card::after{transition:none}
+}
+</style>
 </body>
 </html>
 
