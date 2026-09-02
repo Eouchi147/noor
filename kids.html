@@ -60,16 +60,11 @@ html.standalone{--safetop:env(safe-area-inset-top,0px)}
 .bl-full{display:none}
 @media(min-width:600px){.bl-full{display:inline}.bl-min{display:none}}
 
-/* the necklace : seven gem sockets, always visible */
-.necklace{position:sticky;top:0;z-index:6;display:flex;justify-content:center;padding:8px 8px 10px;background:linear-gradient(180deg,rgba(8,11,32,.9),rgba(8,11,32,0));backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-.chain{position:relative;display:flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;background:rgba(20,16,10,.45);border:1px solid rgba(233,200,106,.28)}
-.chain::before{content:"";position:absolute;inset-inline-start:14px;inset-inline-end:14px;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(233,200,106,.55),transparent)}
-.socket{position:relative;width:30px;height:30px;border-radius:50%;border:2px dashed rgba(233,200,106,.42);background:rgba(30,58,138,.3);display:grid;place-items:center;transition:border-color .4s,box-shadow .4s}
-.socket svg{width:22px;height:22px;display:block}
-.socket.on{border-style:solid;border-color:var(--gold);background:rgba(20,16,10,.55);box-shadow:0 0 12px rgba(233,200,106,.5)}
-.socket.pop svg{animation:gemPop .65s cubic-bezier(.34,1.56,.64,1) both}
+/* The seven gems used to sit in a bar that followed the child down the page.
+   The star map already shows all seven, so the bar was two rows of screen
+   spent saying what the map says better. The gem now travels to the button
+   that carries the child back to the map, and the star lights when they land. */
 @keyframes gemPop{from{transform:scale(.15) rotate(-25deg);opacity:0}to{transform:scale(1) rotate(0deg);opacity:1}}
-@media(max-width:359px){.socket{width:26px;height:26px}.chain{gap:7px;padding:8px 12px}}
 
 /* screens */
 main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:6px 16px 34px}
@@ -173,7 +168,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:6px 16px 
 
 /* footer */
 footer{position:relative;z-index:1;text-align:center;padding:14px 16px 30px;font-size:12.5px;color:rgba(255,254,247,.6)}
-footer .reset{color:rgba(233,200,106,.8);text-decoration:underline;font-size:12px;padding:6px}
+footer .reset{display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;margin-top:4px;border-radius:999px;border:1px solid rgba(233,200,106,.4);background:rgba(20,16,10,.35);color:rgba(233,200,106,.9);font-size:13px;font-weight:600;text-decoration:none}
 footer .reset:hover{color:var(--gold-hi)}
 
 /* desktop */
@@ -218,6 +213,8 @@ main{max-width:660px}
   <script src="/assets/figfit.js?v=106" defer></script>
   <script src="/assets/noor-dials.js?v=109" defer></script>
 <script src="/assets/noor-anime.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/kids-engine.css?v=1"/>
+<script src="/assets/kids-engine.js?v=1"></script>
 </head>
 <body>
 <div class="sky" id="sky" aria-hidden="true"><span class="lantern" style="left:8%;--lw:26px;--ld:26s;--ll:-4s;--ls:3.4s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:26%;--lw:20px;--ld:32s;--ll:-18s;--ls:4.1s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:68%;--lw:30px;--ld:24s;--ll:-10s;--ls:3.1s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="lantern" style="left:88%;--lw:22px;--ld:30s;--ll:-25s;--ls:3.8s"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3c-3 0-5 2-5 5v2h10V8c0-3-2-5-5-5Z" fill="#C9A227"/><rect x="11" y="10" width="18" height="5" rx="2.5" fill="#C9A227"/><path d="M13 15h14l2 26H11Z" fill="#FFE9A6" stroke="#C9A227" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 22c3 4 4 6 4 9a4 4 0 0 1-8 0c0-3 1-5 4-9Z" fill="#F59E0B"/><rect x="9" y="41" width="22" height="6" rx="3" fill="#C9A227"/><rect x="14" y="47" width="12" height="4" rx="2" fill="#A8841D"/></svg></span><span class="shoot" style="--st:14%;--sl:72%;--sd:13s;--sdl:4s"></span><span class="shoot" style="--st:30%;--sl:38%;--sd:17s;--sdl:11s"></span></div>
@@ -268,7 +265,6 @@ main{max-width:660px}
 
 
 
-<div class="necklace" aria-label="Your necklace of seven Name gems"><div class="chain" id="chain"></div></div>
 
 <main>
 <section class="screen" id="scr-map" aria-label="Star map of the seven rounds">
@@ -882,8 +878,8 @@ let done=new Set();
 try{const raw=JSON.parse(localStorage.getItem(KEY)||"[]");if(Array.isArray(raw))done=new Set(raw.filter(x=>R.some(r=>r.id===x)))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}};
 
-const chain=$("#chain"),arc=$("#arc"),stage=$("#stage"),pile=$("#pile"),cta=$("#cta"),qline=$("#qline"),found=$("#found"),fx=$("#fx"),scrRound=$("#scr-round");
-let cur=0,step=-1,phase="map",busy=false;
+const arc=$("#arc"),stage=$("#stage"),pile=$("#pile"),cta=$("#cta"),qline=$("#qline"),found=$("#found"),fx=$("#fx"),scrRound=$("#scr-round");
+let cur=0,step=-1,phase="map",busy=false,newGem=-1;
 
 /* forty gentle sky stars */
 (()=>{const sky=$("#sky"),f=document.createDocumentFragment();
@@ -894,8 +890,6 @@ f.appendChild(s)}sky.appendChild(f)})();
 
 const gemSvg=col=>'<svg viewBox="0 0 64 64" style="color:'+col+'" aria-hidden="true"><use href="#g-gem"/></svg>';
 
-function renderNecklace(){chain.innerHTML=R.map((r,i)=>{const d=done.has(r.id);
-return '<span class="socket'+(d?" on":"")+'" role="img" aria-label="Gem '+(i+1)+' of 7: '+(d?r.fin.gEn:"still empty")+'">'+(d?gemSvg(r.acc):"")+"</span>"}).join("")}
 
 function renderMap(){arc.innerHTML=R.map((r,i)=>{const d=done.has(r.id);
 return '<button class="rbtn'+(d?" done":"")+'" data-r="'+i+'" style="--acc:'+r.acc+'" aria-label="Round '+(i+1)+": "+r.ti+". "+(d?"Gem found! Tap to play again.":"Not played yet.")+'">'+
@@ -940,15 +934,19 @@ pile.innerHTML="";
 stage.innerHTML='<div class="champ-card mystery in"><span class="ctag">Round '+(i+1)+" · "+r.ti+'</span>'+
 '<div class="art"><div class="mq" aria-hidden="true">?</div></div>'+
 '<h3 class="c-name">Somebody amazing...</h3><p class="c-fact">Tap the big button and meet the first champion!</p></div>';
-cta.className="cta";cta.textContent=r.first;
-showScreen("scr-round")}
+cta.className="cta";cta.textContent=r.first;cta.style.removeProperty("--acc");
+showScreen("scr-round");
+if(window.NK){NK.sfx("page");const c=stage.firstElementChild;if(c)NK.pop(c,{from:.72,duration:520})}}
 
 function showChamp(k){const r=R[cur],c=r.c[k];
 stage.innerHTML='<div class="champ-card in"><span class="ctag">Champion '+(k+1)+'</span>'+
 '<div class="art" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#a-'+c.a+'"/></svg></div>'+
 '<h3 class="c-name">'+c.n+'</h3><p class="c-fact">'+c.f[0]+(c.f[1]?'<span class="n">0</span>':"")+c.f[2]+"</p></div>";
 if(c.f[1]){const el=stage.querySelector(".n");setTimeout(()=>rollNum(el,c.f[1]),RM?0:280)}
-stageBurst([r.acc,"#E9C86A","#FFFEF7"],14)}
+stageBurst([r.acc,"#E9C86A","#FFFEF7"],14);
+if(window.NK){NK.sfx(k===0?"pop":"chime");NK.haptic("light");
+ const card=stage.firstElementChild;if(card){NK.tilt(card,5);
+  NK.fx.burstAt(card,{n:14,colors:[r.acc,"#E9C86A","#FFFEF7"],kind:"spark",power:.8})}}}
 
 function addMini(k){const c=R[cur].c[k],s=document.createElement("span");
 s.className="mini";s.setAttribute("role","img");s.setAttribute("aria-label",c.n+", beaten");
@@ -961,6 +959,7 @@ const cr=card.getBoundingClientRect(),pr=pile.getBoundingClientRect();
 card.style.setProperty("--tx",(pr.left+pr.width/2-cr.left-cr.width/2)+"px");
 card.style.setProperty("--ty",(pr.top+pr.height/2-cr.top-cr.height/2)+"px");
 card.classList.remove("in");card.classList.add("out");
+if(window.NK){NK.sfx("whoosh")}
 setTimeout(()=>{if(step>=0)addMini(step);cb()},470)}
 
 function renderFinal(r){
@@ -972,30 +971,27 @@ stage.innerHTML='<div class="finalwrap"><div class="rays" aria-hidden="true"></d
 '<p class="g-en">'+r.fin.gEn+" · "+r.fin.gM+'</p>'+
 '<div class="gemwrap"><svg class="gem" id="thegem" viewBox="0 0 64 64" role="img" aria-label="The gem of '+r.fin.gEn+'"><use href="#g-gem"/></svg></div></div></div>';
 stageBurst(["#C9A227","#E9C86A","#FFFEF7",r.acc],30);
+if(window.NK){NK.sfx("level");NK.haptic("success");
+ const fc=stage.querySelector(".final-card");if(fc)NK.tilt(fc,4)}
 const gem=$("#thegem");
 setTimeout(()=>gem.classList.add("pop"),RM?10:420);
 setTimeout(()=>flyGem(r,gem),RM?60:1500)}
 
-function flyGem(r,gem){const socket=chain.children[cur];
-if(RM){landGem(r,socket);return}
-const g=gem.getBoundingClientRect(),s=socket.getBoundingClientRect();
-const fl=document.createElement("div");fl.className="flyer";
-fl.innerHTML='<svg viewBox="0 0 64 64" style="color:'+r.acc+'"><use href="#g-gem"/></svg>';
-fl.style.transform="translate("+g.left+"px,"+g.top+"px) scale("+(g.width/90)+")";
-document.body.appendChild(fl);
+/* The gem is carried, not filed away. It rises off the final card and lands
+   in the button that takes the child back to the map, which then wears its
+   colour; the star itself lights when the map comes back. */
+function flyGem(r,gem){
+if(RM||!window.NK||!NK.flyTo){landGem(r);return}
 gem.classList.remove("pop");gem.classList.add("gone");
-requestAnimationFrame(()=>requestAnimationFrame(()=>{
-fl.style.transform="translate("+(s.left+s.width/2-45)+"px,"+(s.top+s.height/2-45)+"px) scale("+((s.width-6)/90)+")"}));
-let landed=false;const end=()=>{if(landed)return;landed=true;fl.remove();landGem(r,socket)};
-fl.addEventListener("transitionend",end,{once:true});
-setTimeout(end,1050)}
+NK.sfx("whoosh");
+NK.flyTo(gem,cta,{html:'<svg viewBox="0 0 64 64" style="color:'+r.acc+'"><use href="#g-gem"/></svg>',
+  size:90,scaleTo:.34,spin:340,duration:900,arc:90}).then(()=>landGem(r));}
 
-function landGem(r,socket){done.add(r.id);save();try{document.dispatchEvent(new CustomEvent("kids:gem",{detail:{n:done.size}}))}catch(e){}
-socket.innerHTML=gemSvg(r.acc);
-socket.setAttribute("aria-label","Gem "+(cur+1)+" of 7: "+r.fin.gEn);
-socket.classList.add("on","pop");
-const s=socket.getBoundingClientRect();
-confetti(s.left+s.width/2,s.top+s.height/2,["#C9A227","#E9C86A",r.acc],20);
+function landGem(r){done.add(r.id);save();try{document.dispatchEvent(new CustomEvent("kids:gem",{detail:{n:done.size}}))}catch(e){}
+newGem=cur;
+if(window.NK){NK.sfx("gem");NK.haptic("success");NK.fx.burstAt(cta,{n:22,colors:["#C9A227","#E9C86A","#FFFEF7",r.acc],kind:"star"});NK.pop(cta)}
+else{const c=cta.getBoundingClientRect();confetti(c.left+c.width/2,c.top+c.height/2,["#C9A227","#E9C86A",r.acc],20)}
+cta.style.setProperty("--acc",r.acc);
 phase="fdone";busy=false;
 cta.textContent=done.size===7?"See the seven stars ✦":"Back to the star map ✦";
 cta.classList.remove("hide")}
@@ -1012,11 +1008,18 @@ else{cta.classList.remove("gold");cta.textContent=r.more}
 busy=false})}
 
 function goMap(){phase="map";busy=false;document.body.classList.remove("final");
-renderMap();showScreen("scr-map")}
+renderMap();showScreen("scr-map");
+if(window.NK)NK.sfx("whoosh");
+/* the index is read now, not in 260ms: newGem is cleared before the star lights */
+if(newGem>=0){const i=newGem,b=arc.children[i],orb=b&&b.querySelector(".orb");
+ if(orb&&window.NK){setTimeout(()=>{NK.pop(orb,{from:.3,duration:620});NK.sfx("sparkle");
+  NK.fx.burstAt(orb,{n:16,colors:["#E9C86A","#FFFEF7",R[i].acc],kind:"spark",power:.7});
+  b.scrollIntoView({block:"center",behavior:RM?"auto":"smooth"})},260)}
+ newGem=-1}}
 
 /* finale: the seven gems become a constellation */
 function showFinale(){phase="finale";busy=false;try{document.dispatchEvent(new CustomEvent("kids:finale"))}catch(e){}
-document.body.classList.add("final");renderNecklace();
+document.body.classList.add("final");renderMap();
 const P=[[48,164],[92,96],[150,58],[218,46],[284,70],[334,124],[296,206]];
 let sv='<svg viewBox="0 0 380 250" role="img" aria-label="Seven Name gems joined as a constellation of stars">';
 sv+='<polyline class="cline" points="'+P.map(p=>p.join(",")).join(" ")+'"/>';
@@ -1024,6 +1027,8 @@ P.forEach((p,i)=>{sv+='<g transform="translate('+p[0]+","+p[1]+')"><g class="cg"
 sv+='<g fill="#FFF9E3" opacity=".8"><circle cx="30" cy="40" r="2"/><circle cx="352" cy="36" r="2"/><circle cx="196" cy="120" r="1.6"/><circle cx="120" cy="200" r="2"/><circle cx="360" cy="190" r="1.6"/></g></svg>';
 $("#constwrap").innerHTML=sv;
 showScreen("scr-finale");
+if(window.NK){NK.sfx("cheer");NK.haptic("success");
+ setTimeout(()=>{NK.fx.confetti({n:110,duration:1700});NK.fx.shower({n:40,duration:2600})},260)}
 setTimeout(()=>confetti(innerWidth/2,230,["#C9A227","#E9C86A","#FFFEF7"],34),350);
 starShower()}
 
@@ -1034,7 +1039,7 @@ f.appendChild(s)}
 fx.appendChild(f);
 setTimeout(()=>{fx.querySelectorAll(".fall").forEach(e=>e.remove())},6500)}
 
-function resetAll(){done.clear();save();goMap();renderNecklace();try{document.dispatchEvent(new CustomEvent("kids:reset"))}catch(e){}}
+function resetAll(){done.clear();newGem=-1;save();goMap();try{document.dispatchEvent(new CustomEvent("kids:reset"))}catch(e){}}
 
 arc.addEventListener("click",e=>{const b=e.target.closest(".rbtn");if(b)startRound(+b.dataset.r)});
 cta.addEventListener("click",onCta);
@@ -1042,7 +1047,17 @@ $("#tomap").addEventListener("click",goMap);
 $("#again").addEventListener("click",resetAll);
 $("#reset").addEventListener("click",resetAll);
 
-renderNecklace();renderMap();showScreen("scr-map");
+renderMap();showScreen("scr-map");
+
+/* the last two things the page owes a child: a header that gets out of the way
+   when they are reading, and stars that answer a finger. */
+if(window.NK){
+ NK.autoHideHeader(document.querySelector("header.khead"));
+ document.querySelectorAll(".w-card,.w-hero,.w-sky").forEach(el=>NK.tilt(el,6));
+ arc.addEventListener("pointerdown",e=>{const b=e.target.closest(".rbtn");
+  if(b)NK.fx.burstAt(b.querySelector(".orb"),{n:7,kind:"spark",power:.45,
+   colors:[R[+b.dataset.r].acc,"#FFF3C4"]})},{passive:true});
+}
 })();
 </script>
 <p style="text-align:center;font-size:.68rem;color:rgba(255,254,247,.45);padding:0 1rem 2rem;line-height:1.7">Schools &amp; madrasas: put the whole Little Codex in your own website · <a href="/license" style="color:#E9C86A;font-weight:700;text-decoration:none">licensing →</a></p>
@@ -1110,7 +1125,7 @@ body{font-family:Inter,system-ui,sans-serif}
 @media(max-width:600px){.crescent{display:none}}
 
 /* ---- the children's header ---- */
-header.khead{position:sticky;top:0;z-index:7;display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:none;margin:0;padding:calc(8px + var(--safetop,0px)) 12px 8px;background:linear-gradient(180deg,rgba(8,11,32,.92),rgba(8,11,32,.78));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.18)}
+header.khead{position:sticky;top:0;z-index:7;transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:none;margin:0;padding:calc(8px + var(--safetop,0px)) 12px 8px;background:linear-gradient(180deg,rgba(8,11,32,.92),rgba(8,11,32,.78));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.18)}
 .wordmark{display:flex;flex-direction:row;align-items:center;gap:9px;text-decoration:none;min-height:40px}
 .wm-mark{width:34px;height:34px;flex:none;filter:drop-shadow(0 0 10px rgba(233,200,106,.5))}
 .wm-txt{display:flex;flex-direction:column;line-height:1.05}
@@ -1135,8 +1150,6 @@ header.khead{position:sticky;top:0;z-index:7;display:flex;align-items:center;jus
 .klang-pop button.on{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#1A160F;border-color:transparent}
 .klang-pop .kl-t{grid-column:1/-1;font-family:var(--kf);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);margin:2px 4px 4px}
 
-/* the necklace sits under the header now */
-.necklace{top:calc(56px + var(--safetop,0px));z-index:6}
 
 /* ---- Noor, the lantern friend ---- */
 .noor{display:flex;align-items:center;justify-content:center;gap:12px;max-width:420px;margin:6px auto 0;text-align:start}

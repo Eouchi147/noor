@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="The Cradle · NOOR for babies and toddlers, 0 to 3: first sounds of the Qur'an with real recitation, first Arabic words, a peek-a-boo sky game, the daily rhythm of adhkar around a baby, and honest Montessori guidance for parents."/>
+<meta name="description" content="The Cradle · NOOR for babies and toddlers, 0 to 3: first sounds of the Qur'an with real recitation, first Arabic words you can hear, a peek-a-boo sky game, the daily rhythm of adhkar around a baby, and honest Montessori guidance for parents."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
 <meta property="og:title" content="The Cradle · 0 to 3 · NOOR Little Codex"/>
@@ -27,79 +27,165 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="/noor-fx.js" defer></script>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}a,button{touch-action:manipulation}</style>
+<link rel="stylesheet" href="/assets/kids-engine.css?v=1">
+<script src="/assets/kids-engine.js?v=1"></script>
 <style>
-:root{--night:#0d1633;--gold:#E9C86A;--goldd:#C9A227;--parchment:#FFFEF7;--ink:#2C2416;--rose:#f9a8d4}
-body{margin:0;background:linear-gradient(178deg,#0a1128,#0d1633 45%,#16244d 100%);color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh}
-.font-amiri{font-family:Amiri,serif}
-header{position:sticky;top:0;z-index:30;background:rgba(10,17,40,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(233,200,106,.15)}
-.hwrap{max-width:640px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
-.wordmark{color:var(--gold);text-decoration:none;font-weight:800;font-size:.9rem;letter-spacing:.04em}
-.backlink{color:rgba(255,254,247,.7);text-decoration:none;font-size:.75rem;font-weight:700;border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.35rem .8rem}
-.backlink:hover{color:var(--gold)}
-main{max-width:640px;margin:0 auto;padding:1.4rem 1rem 4rem}
-.hero{text-align:center;padding:1.5rem 0 1rem}
-.hero .moon{font-size:2.8rem;display:block;margin-bottom:.4rem;filter:drop-shadow(0 0 16px rgba(233,200,106,.6));animation:rock 5s ease-in-out infinite}
-@keyframes rock{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-@media (prefers-reduced-motion:reduce){.hero .moon{animation:none}}
-.hero h1{margin:.2rem 0;font-size:1.7rem;font-weight:800;color:var(--gold)}
-.hero .ar{font-family:Amiri,serif;font-size:1.3rem;color:rgba(244,212,106,.8)}
-.hero p{color:rgba(255,254,247,.75);font-size:.88rem;line-height:1.65;max-width:28rem;margin:.6rem auto 0}
-section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,106,.22);border-radius:22px;padding:1.25rem 1.15rem;margin:1.15rem 0}
-.lesson h2{margin:0 0 .2rem;font-size:1.12rem;color:var(--gold);display:flex;align-items:center;gap:.55rem}
-.lesson .sub{font-size:.76rem;color:rgba(255,254,247,.55);margin:0 0 .9rem;line-height:1.6}
-/* honest note */
-.honest{background:linear-gradient(90deg,rgba(249,168,212,.12),rgba(249,168,212,.04));border:1.5px dashed rgba(249,168,212,.45);border-radius:18px;padding:.95rem 1.05rem;font-size:.78rem;line-height:1.7;color:rgba(255,254,247,.85);margin:1.1rem 0}
-.honest b{color:var(--rose)}
-/* first sounds */
-.sounds{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-@media(max-width:480px){.sounds{grid-template-columns:1fr}}
-.snd{background:linear-gradient(165deg,rgba(233,200,106,.14),rgba(233,200,106,.05));border:2px solid rgba(233,200,106,.4);border-radius:20px;padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s;font-family:inherit;color:var(--parchment);text-align:start;width:100%}
-.snd:hover{transform:scale(1.02);border-color:var(--gold)}
-.snd .pb{width:3rem;height:3rem;border-radius:999px;background:linear-gradient(135deg,#C9A227,#E9C86A);display:grid;place-items:center;font-size:1.1rem;color:#1A160F;flex:none;box-shadow:0 0 18px rgba(233,200,106,.4)}
-.snd.playing .pb{background:#1A160F;color:#F4D46A;outline:2px solid rgba(244,212,106,.6)}
-.snd b{display:block;font-size:.88rem}
-.snd span{display:block;font-size:.68rem;color:rgba(255,254,247,.6);margin-top:.1rem;line-height:1.5}
-/* first words */
-#words{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.2rem,1fr));gap:.6rem}
-.word{background:rgba(255,254,247,.06);border:2px solid rgba(233,200,106,.3);border-radius:20px;text-align:center;padding:1rem .5rem .85rem;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .25s,border-color .25s}
-.word:hover{transform:translateY(-4px)}
-.word.glow{background:rgba(233,200,106,.18);border-color:var(--gold);transform:scale(1.05)}
-.word .we{font-size:2rem;display:block}
-.word .wa{font-family:Amiri,serif;font-size:1.7rem;color:#FFF7DF;display:block;margin-top:.2rem}
-.word .wt{font-size:.7rem;font-weight:800;color:var(--gold);display:block;margin-top:.15rem}
-.word .wm{font-size:.62rem;color:rgba(255,254,247,.55);display:block}
-/* peek game */
-#sky{position:relative;background:linear-gradient(180deg,#0a1128,#1e3a8a);border-radius:20px;border:2px solid rgba(233,200,106,.3);min-height:15rem;overflow:hidden;padding:1rem}
-.cloud{position:absolute;font-size:3.6rem;cursor:pointer;transition:transform .3s,opacity .5s;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));user-select:none}
-.cloud:hover{transform:scale(1.08)}
-.behind{position:absolute;font-size:2.6rem;opacity:0;transition:opacity .5s,transform .5s;transform:scale(.4);pointer-events:none;filter:drop-shadow(0 0 18px rgba(244,212,106,.8))}
+:root{--night:#0a1128;--gold:#C9A227;--gold-hi:#E9C86A;--gold-lt:#F4D46A;--gold-dk:#8a6a14;--parchment:#FFFEF7;--ink:#2C2416;--rose:#f9a8d4;--rose-dk:#a8557f;--fredoka:"Fredoka","Inter",system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{margin:0;background:#0a1128;color:var(--parchment);font-family:Inter,system-ui,sans-serif;min-height:100vh;line-height:1.6}
+[hidden]{display:none!important}
+button{font-family:inherit;color:inherit}
+a,button{touch-action:manipulation}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:3px;border-radius:14px}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.li{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* ---------- the night behind everything: two star layers at different speeds ---------- */
+.night{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(120% 58% at 80% -10%,rgba(244,212,106,.15),transparent 60%),radial-gradient(90% 46% at 10% 106%,rgba(249,168,212,.14),transparent 62%),linear-gradient(178deg,#070c20 0%,#0d1633 46%,#16244d 100%)}
+.night .lyr{position:absolute;inset:-6% 0 0 0}
+.night .far{animation:drift 120s ease-in-out infinite alternate}
+.night .near{animation:drift 62s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateY(3.2%)}}
+.night i{position:absolute;border-radius:50%;background:#FFF7DF;animation:tw var(--td,4s) ease-in-out var(--tl,0s) infinite}
+.night .near i{box-shadow:0 0 7px 1px rgba(255,247,223,.5)}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+.night .haze{position:absolute;left:0;right:0;bottom:0;height:30vh;background:linear-gradient(rgba(10,17,40,0),rgba(8,13,34,.8))}
+/* ---------- header: a plain block ---------- */
+.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:660px;margin:0 auto;padding:8px 14px}
+.wordmark{display:inline-flex;align-items:center;min-height:44px;color:var(--gold-hi);text-decoration:none;font-family:var(--fredoka);font-weight:600;font-size:13.5px;letter-spacing:.05em;text-shadow:0 0 14px rgba(233,200,106,.4)}
+.backlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 15px;border-radius:999px;background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.36);color:var(--parchment);text-decoration:none;font-family:var(--fredoka);font-weight:600;font-size:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 3px 0 rgba(5,8,24,.35);transition:background .2s,color .2s}
+.backlink:hover,.backlink:focus-visible{background:rgba(233,200,106,.18);color:var(--gold-lt)}
+main{position:relative;z-index:1;width:min(100%,660px);margin:0 auto;padding:0 12px 30px}
+/* ---------- hero ---------- */
+.hero{text-align:center}
+.hscene{position:relative;border-radius:20px;overflow:hidden;border:1.5px solid rgba(233,200,106,.32);box-shadow:0 18px 44px rgba(3,6,20,.55),inset 0 1px 0 rgba(255,255,255,.16)}
+.hscene svg{display:block;width:100%;height:auto}
+#cradle{transform-box:view-box;transform-origin:180px 18px;animation:rock 5.6s ease-in-out infinite}
+@keyframes rock{0%,100%{transform:rotate(-3.2deg)}50%{transform:rotate(3.2deg)}}
+#hlamp{transform-box:view-box;transform-origin:108px 22px;animation:swing 7.4s ease-in-out infinite}
+@keyframes swing{0%,100%{transform:rotate(-4.5deg)}50%{transform:rotate(4.5deg)}}
+.lamp{animation:pulse 4.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.spk1,.spk2,.spk3{animation:rise 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.spk2{animation-delay:2s}.spk3{animation-delay:4s}
+@keyframes rise{0%{opacity:0;transform:translateY(6px) scale(.6)}30%{opacity:1}60%{opacity:.8;transform:translateY(-10px) scale(1)}100%{opacity:0;transform:translateY(-20px) scale(.5)}}
+h1{font-family:var(--fredoka);font-weight:700;font-size:clamp(30px,8.6vw,42px);line-height:1.08;margin:.34em 0 .04em;color:#fff;text-shadow:0 2px 0 rgba(5,8,24,.3),0 4px 22px rgba(233,200,106,.42)}
+.hero .ar{font-family:Amiri,serif;font-size:1.2rem;line-height:1.9;color:var(--gold-lt);margin:0}
+.hero .sub{color:rgba(255,254,247,.82);font-size:14.5px;line-height:1.7;max-width:30rem;margin:.5rem auto 0}
+.dn{display:none;align-items:center;gap:7px;margin:.7rem auto 0;padding:7px 15px;border:1px solid rgba(249,168,212,.6);border-radius:999px;background:rgba(249,168,212,.16);color:#ffd9ec;font-family:var(--fredoka);font-size:13.5px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.dn.on{display:inline-flex}
+.dn svg{width:16px;height:16px}
+/* ---------- the little rhythm meter ---------- */
+.prog{margin:14px 0 0;background:linear-gradient(165deg,rgba(255,254,247,.09),rgba(255,254,247,.03));border:1.5px solid rgba(233,200,106,.28);border-radius:18px;padding:12px 14px 13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 22px rgba(3,6,20,.3)}
+.pbar{height:10px;border-radius:99px;background:rgba(5,9,26,.65);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+.pbar i{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:left;border-radius:99px;background:linear-gradient(90deg,#f9a8d4,#F4DC8E 55%,#C9A227);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.pcap{margin:.5rem 0 0;font-size:12.8px;line-height:1.65;color:rgba(255,254,247,.68)}
+.pcap b{color:var(--gold-lt);font-size:15px;font-family:var(--fredoka)}
+.pmsg{margin:.5rem 0 0;font-family:var(--fredoka);font-size:14px;font-weight:600;color:#ffd9ec}
+.say{margin:.55rem 0 0;min-height:1.4em;font-family:var(--fredoka);font-size:14px;font-weight:500;line-height:1.5;color:var(--gold-lt)}
+/* ---------- sections ---------- */
+section.lesson{position:relative;background:linear-gradient(168deg,rgba(255,254,247,.07),rgba(255,254,247,.025));border:1.5px solid rgba(233,200,106,.24);border-radius:22px;padding:1.1rem 1rem 1.15rem;margin:1.1rem 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 26px rgba(3,6,20,.28)}
+.lesson h2{margin:0 0 .2rem;font-family:var(--fredoka);font-size:1.1rem;font-weight:600;color:var(--gold-lt);display:flex;align-items:center;gap:.55rem;line-height:1.35}
+.lesson h2 svg{width:22px;height:22px;flex:none;color:var(--gold-hi)}
+.lesson .sub{font-size:12.8px;color:rgba(255,254,247,.62);margin:0 0 .85rem;line-height:1.7}
+.hint{margin:.6rem 0 0;font-size:13px;font-weight:600;color:var(--gold-lt)}
+.honest{background:linear-gradient(100deg,rgba(249,168,212,.14),rgba(249,168,212,.04));border:1.5px dashed rgba(249,168,212,.5);border-radius:18px;padding:.95rem 1.05rem;font-size:13px;line-height:1.8;color:rgba(255,254,247,.88);margin:1.1rem 0}
+.honest b{color:#ffc8e2}
+/* ---------- first sounds ---------- */
+.sounds{display:grid;grid-template-columns:1fr;gap:.6rem}
+@media(min-width:560px){.sounds{grid-template-columns:1fr 1fr}}
+.snd{display:flex;align-items:center;gap:.75rem;width:100%;text-align:start;padding:.8rem .85rem;border-radius:20px;border:2px solid rgba(233,200,106,.4);background:linear-gradient(165deg,rgba(233,200,106,.16),rgba(233,200,106,.05));color:var(--parchment);cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 0 rgba(90,68,14,.45);transition:border-color .2s,background .2s,box-shadow .2s}
+.snd:hover{border-color:var(--gold-hi);background:linear-gradient(165deg,rgba(233,200,106,.24),rgba(233,200,106,.08))}
+.snd:active{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 1px 0 rgba(90,68,14,.45)}
+.snd .pb{position:relative;width:52px;height:52px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(150deg,#F4DC8E,#E9C86A 45%,#C9A227);color:#1A160F;box-shadow:0 4px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.6),0 0 18px rgba(233,200,106,.35)}
+.snd .pb svg{width:24px;height:24px}
+.snd .pb .stop{display:none}
+.snd[aria-pressed="true"] .pb{background:linear-gradient(150deg,#1a2246,#0d1633);color:var(--gold-lt);box-shadow:0 4px 0 #05091c,0 0 0 3px rgba(244,212,106,.55),0 0 22px rgba(233,200,106,.75)}
+.snd[aria-pressed="true"] .pb .play{display:none}
+.snd[aria-pressed="true"] .pb .stop{display:block}
+.sbody{min-width:0;flex:1}
+.snd b{display:block;font-family:var(--fredoka);font-size:15px;font-weight:600;color:#FFF7DF}
+.snd .ref{font-family:Inter,system-ui,sans-serif;font-size:11.5px;font-weight:600;color:rgba(244,212,106,.85)}
+.snd .sar{display:block;font-family:Amiri,serif;font-size:19px;line-height:1.8;color:var(--gold-lt)}
+.snd .sd{display:block;font-size:11.8px;line-height:1.6;color:rgba(255,254,247,.62)}
+.dots{display:flex;gap:5px;margin-top:.4rem}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,254,247,.22);transition:background .25s,box-shadow .25s,transform .25s}
+.dots i.on{background:var(--gold-lt);box-shadow:0 0 10px rgba(244,212,106,.9);transform:scale(1.25)}
+/* ---------- first words ---------- */
+#words{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.4rem,1fr));gap:.6rem}
+.word{position:relative;display:block;width:100%;padding:.85rem .5rem .8rem;text-align:center;cursor:pointer;border-radius:20px;border:2px solid rgba(233,200,106,.3);background:linear-gradient(168deg,rgba(255,254,247,.09),rgba(255,254,247,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 5px 0 rgba(6,10,28,.5);transition:border-color .25s,background .25s,box-shadow .25s}
+.word:hover{border-color:rgba(233,200,106,.65)}
+.word:active{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 0 rgba(6,10,28,.5)}
+.word .we{display:block}
+.word .we svg{width:42px;height:42px;filter:drop-shadow(0 3px 5px rgba(3,6,20,.5))}
+.word .wa{display:block;font-family:Amiri,serif;font-size:1.6rem;line-height:1.7;color:#FFF7DF}
+.word .wt{display:block;font-family:var(--fredoka);font-size:12.5px;font-weight:600;color:var(--gold-lt)}
+.word .wm{display:block;font-size:11px;color:rgba(255,254,247,.58);line-height:1.5}
+.word .wsp{position:absolute;top:7px;inset-inline-end:7px;width:22px;height:22px;color:rgba(244,212,106,.7)}
+.word .wsp svg{width:22px;height:22px}
+.word.glow{border-color:var(--gold-lt);background:linear-gradient(168deg,rgba(233,200,106,.28),rgba(249,168,212,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 5px 0 rgba(6,10,28,.5),0 0 22px rgba(233,200,106,.55)}
+.word[aria-pressed="true"] .wsp{color:var(--gold-lt)}
+/* ---------- peek game ---------- */
+#sky{position:relative;height:18rem;border-radius:20px;overflow:hidden;border:2px solid rgba(233,200,106,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 10px 24px rgba(3,6,20,.35)}
+#sky .bg{position:absolute;inset:0;width:100%;height:100%}
+.peekspot{position:absolute;width:96px;height:86px}
+.behind{position:absolute;left:0;right:0;top:2px;text-align:center;opacity:0;transform:scale(.45);transition:opacity .45s ease,transform .45s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+.behind svg{width:52px;height:52px;filter:drop-shadow(0 0 16px rgba(244,212,106,.7))}
+.behind .bn{display:block;font-family:var(--fredoka);font-size:12.5px;font-weight:600;color:#FFF7DF;text-shadow:0 1px 6px rgba(3,6,20,.9)}
+.behind .bar{display:block;font-family:Amiri,serif;font-size:15px;line-height:1.5;color:var(--gold-lt)}
 .behind.shown{opacity:1;transform:scale(1)}
-#sky .cap{position:absolute;left:0;right:0;bottom:.6rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.6)}
-/* rhythm */
+.cloud{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer}
+.cloud .puff{display:block;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s}
+.cloud .puff svg{width:96px;height:64px;filter:drop-shadow(0 6px 12px rgba(3,6,20,.45))}
+.peekspot.open .cloud .puff{transform:translate(-34%,26%) scale(.72) rotate(-9deg);opacity:.3}
+#sky .cap{position:absolute;left:0;right:0;bottom:.5rem;text-align:center;font-size:12px;color:rgba(255,254,247,.6)}
+/* ---------- daily rhythm ---------- */
 .rhy{display:grid;gap:.55rem}
-.rmoment{display:flex;gap:.75rem;align-items:flex-start;background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.25);border-radius:16px;padding:.75rem .85rem}
-.rmoment .re{font-size:1.5rem;flex:none;margin-top:.1rem}
-.rmoment b{font-size:.82rem;color:var(--gold);display:block}
-.rmoment .ar{font-family:Amiri,serif;font-size:1.25rem;color:#FFF7DF;direction:rtl;text-align:end;display:block;margin:.25rem 0;line-height:1.9}
-.rmoment p{font-size:.7rem;color:rgba(255,254,247,.65);margin:.15rem 0 0;line-height:1.6}
-.rmoment .src{font-size:.6rem;color:rgba(233,200,106,.7);font-weight:700}
-/* milestones */
+.rmoment{display:flex;gap:.7rem;align-items:flex-start;background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.24);border-radius:16px;padding:.75rem .8rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.rmoment>.re{flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(233,200,106,.14);color:var(--gold-lt)}
+.rmoment>.re svg{width:19px;height:19px}
+.rbody{min-width:0;flex:1}
+.rmoment b{display:block;font-family:var(--fredoka);font-size:13.6px;font-weight:600;color:var(--gold-lt)}
+.rline{display:flex;align-items:center;gap:.5rem;margin:.25rem 0}
+.rmoment .ar{flex:1;min-width:0;font-family:Amiri,serif;font-size:1.15rem;color:#FFF7DF;direction:rtl;text-align:end;line-height:2}
+.rmoment p{font-size:11.8px;color:rgba(255,254,247,.68);margin:.15rem 0 0;line-height:1.7}
+.rmoment .src{font-size:10.5px;color:rgba(233,200,106,.75);font-weight:700;letter-spacing:.02em}
+.spk{flex:none;width:44px;height:44px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:linear-gradient(150deg,#F4DC8E,#E9C86A 45%,#C9A227);color:#1A160F;box-shadow:0 4px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.55);transition:box-shadow .2s}
+.spk svg{width:21px;height:21px}
+.spk:active{box-shadow:0 1px 0 var(--gold-dk),inset 0 1px 0 rgba(255,255,255,.55)}
+.spk[aria-pressed="true"]{box-shadow:0 4px 0 var(--gold-dk),0 0 0 4px rgba(233,200,106,.45),0 0 20px rgba(233,200,106,.8)}
+/* ---------- milestones ---------- */
 .mtable{display:grid;gap:.5rem}
-.mrow{background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.22);border-radius:16px;padding:.75rem .9rem}
-.mrow b{font-size:.78rem;color:var(--gold)}
-.mrow p{font-size:.7rem;color:rgba(255,254,247,.7);margin:.25rem 0 0;line-height:1.65}
-/* offline ideas */
-.ideas{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
-@media(max-width:520px){.ideas{grid-template-columns:1fr}}
-.idea{background:rgba(255,254,247,.05);border:1.5px dashed rgba(233,200,106,.35);border-radius:16px;padding:.7rem .8rem}
-.idea b{font-size:.74rem;color:#FFF7DF;display:flex;gap:.4rem}
-.idea p{font-size:.66rem;color:rgba(255,254,247,.6);margin:.25rem 0 0;line-height:1.6}
-.grownup{margin-top:2rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.45);line-height:1.7}
-.grownup a{color:var(--gold);text-decoration:none;font-weight:700}
-.rain{position:fixed;top:-2rem;z-index:70;font-size:1.4rem;animation:fall 2.4s linear forwards;pointer-events:none}
-@keyframes fall{to{transform:translateY(110vh) rotate(200deg)}}
+.mrow{background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.22);border-radius:16px;padding:.75rem .85rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.mrow b{font-family:var(--fredoka);font-size:13.4px;font-weight:600;color:var(--gold-lt)}
+.mrow p{font-size:11.8px;color:rgba(255,254,247,.72);margin:.2rem 0 0;line-height:1.75}
+/* ---------- off-screen shelf ---------- */
+.ideas{display:grid;grid-template-columns:1fr;gap:.55rem}
+@media(min-width:520px){.ideas{grid-template-columns:1fr 1fr}}
+.idea{display:block;width:100%;text-align:start;padding:.75rem .8rem;cursor:pointer;border-radius:16px;border:1.5px dashed rgba(233,200,106,.4);background:rgba(255,254,247,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);transition:border-color .22s,background .22s}
+.idea:hover{border-color:rgba(233,200,106,.75)}
+.ihead{display:flex;align-items:center;gap:.45rem}
+.ihead svg.ii{width:19px;height:19px;flex:none;color:var(--gold-lt)}
+.idea b{flex:1;font-family:var(--fredoka);font-size:13.2px;font-weight:600;color:#FFF7DF}
+.tick{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(233,200,106,.5);display:grid;place-items:center;color:transparent;transition:background .22s,color .22s,border-color .22s}
+.tick svg{width:14px;height:14px}
+.idea .ip{display:block;font-size:11.4px;color:rgba(255,254,247,.62);margin:.28rem 0 0;line-height:1.7}
+.idea[aria-pressed="true"]{border-style:solid;border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.1)}
+.idea[aria-pressed="true"] .tick{background:#34d399;border-color:#34d399;color:#06281c}
+/* ---------- foot ---------- */
+.grownup{margin:1.6rem 0 0;text-align:center;font-size:12.5px;color:rgba(255,254,247,.5);line-height:1.8}
+.grownup a{color:var(--gold-lt);text-decoration:none;font-weight:700}
+footer{position:relative;z-index:1;text-align:center;padding:.6rem 12px 100px}
+footer .backlink{margin-bottom:12px}
+.rlink{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 20px;border-radius:999px;border:1px solid rgba(255,254,247,.24);background:rgba(255,254,247,.05);color:rgba(255,254,247,.75);font-family:var(--fredoka);font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.rlink:hover,.rlink:focus-visible{background:rgba(255,254,247,.13);color:#fff}
+@media(max-width:340px){main{padding:0 8px 24px}section.lesson{padding:.9rem .75rem}.word .wa{font-size:1.4rem}}
+@media(prefers-reduced-motion:reduce){
+.night .far,.night .near,.night i,#cradle,#hlamp,.lamp,.spk1,.spk2,.spk3{animation:none}
+.behind,.cloud .puff{transition-duration:.12s}
+.snd,.word,.idea,.dots i{transition-duration:.12s}
+}
 </style>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
@@ -113,92 +199,227 @@ section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,
 <style id="kids-skin">h1,.title{font-family:"Fredoka","Inter",system-ui,sans-serif;letter-spacing:-.005em}h1 .ar,h1 .font-amiri,h1 [lang="ar"]{font-family:Amiri,serif}</style>
 </head>
 <body>
-<header>
-<div class="hwrap">
-<a class="wordmark" href="/index">نُور · LITTLE CODEX</a>
-<a class="backlink" href="/kids">← All games</a>
+<div class="night" id="night" aria-hidden="true">
+<div class="lyr far" id="starFar"></div>
+<div class="lyr near" id="starNear"></div>
+<div class="haze"></div>
 </div>
+<header class="top">
+<a class="wordmark" href="/index">نُور · LITTLE CODEX</a>
+<a class="backlink" href="/kids">All games</a>
 </header>
 <main>
 <div class="hero">
-<span class="moon" aria-hidden="true"><span data-ic=moon></span></span>
+<div class="hscene" id="hscene">
+<svg viewBox="0 0 360 180" aria-hidden="true">
+<defs>
+<linearGradient id="g-hsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070c20"/><stop offset=".6" stop-color="#152252"/><stop offset="1" stop-color="#22346f"/></linearGradient>
+<radialGradient id="rg-moon"><stop offset="0" stop-color="#F4D46A" stop-opacity=".45"/><stop offset=".45" stop-color="#F4D46A" stop-opacity=".12"/><stop offset="1" stop-color="#F4D46A" stop-opacity="0"/></radialGradient>
+<linearGradient id="g-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9C86A"/><stop offset="1" stop-color="#8a6a14"/></linearGradient>
+<linearGradient id="g-bowl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4DC8E"/><stop offset=".55" stop-color="#E9C86A"/><stop offset="1" stop-color="#B78F1E"/></linearGradient>
+<linearGradient id="g-blank" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd0e6"/><stop offset="1" stop-color="#d97fae"/></linearGradient>
+<linearGradient id="g-glow2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D46A" stop-opacity="0"/><stop offset="1" stop-color="#F4D46A" stop-opacity=".16"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="360" height="180" fill="url(#g-hsky)"/>
+<rect x="0" y="120" width="360" height="60" fill="url(#g-glow2)"/>
+<g fill="#FFF7DF"><circle cx="42" cy="26" r="1.5" opacity=".8"/><circle cx="88" cy="52" r="1.1" opacity=".55"/><circle cx="26" cy="74" r="1.2" opacity=".5"/><circle cx="140" cy="20" r="1" opacity=".6"/><circle cx="238" cy="30" r="1.2" opacity=".55"/><circle cx="332" cy="96" r="1.1" opacity=".5"/><circle cx="66" cy="108" r="1" opacity=".45"/><circle cx="296" cy="120" r="1.3" opacity=".5"/><circle cx="196" cy="14" r=".9" opacity=".5"/></g>
+<path d="M104 34l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#FFF7DF" opacity=".7"/>
+<path d="M268 96l1.3 3.5 3.5 1.3-3.5 1.3-1.3 3.5-1.3-3.5-3.5-1.3 3.5-1.3z" fill="#FFF7DF" opacity=".55"/>
+<circle cx="300" cy="44" r="52" fill="url(#rg-moon)"/>
+<path d="M300 26a18 18 0 1 0 0 36 22 22 0 0 1 0-36z" fill="#F4DC8E"/>
+<path d="M0 180 V152 Q54 136 110 152 Q166 168 222 150 Q286 130 360 150 V180 Z" fill="#060a1c"/>
+<path d="M0 152 Q54 136 110 152" stroke="#F4D46A" stroke-opacity=".2" stroke-width="1.4" fill="none"/>
+<rect x="92" y="13" width="176" height="9" rx="4.5" fill="url(#g-wood)"/>
+<circle cx="92" cy="17.5" r="5" fill="#C9A227"/><circle cx="268" cy="17.5" r="5" fill="#C9A227"/>
+<g id="hlamp">
+<path d="M108 22v22" stroke="#E9C86A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+<circle class="lamp" cx="108" cy="55" r="15" fill="#F4D46A" opacity=".35"/>
+<rect x="102" y="43" width="12" height="3.4" rx="1.7" fill="#C9A227"/>
+<path d="M103 47h10l1.2 9.6a6.2 6.2 0 0 1-12.4 0z" fill="url(#g-wood)"/>
+<path d="M105 50h6l.7 6a3.7 3.7 0 0 1-7.4 0z" fill="#FFF3C4"/>
+</g>
+<g id="cradle">
+<path d="M132 22 L142 70 M228 22 L218 70" stroke="#E9C86A" stroke-width="2.2" stroke-linecap="round" opacity=".65"/>
+<path d="M132 78 Q180 134 228 78 Z" fill="url(#g-bowl)"/>
+<path d="M136 82 Q180 130 224 82" stroke="#B78F1E" stroke-width="1.6" fill="none" opacity=".5"/>
+<path d="M141 89 Q180 125 219 89" stroke="#B78F1E" stroke-width="1.4" fill="none" opacity=".42"/>
+<path d="M146 84 Q180 120 214 84 Z" fill="url(#g-blank)"/>
+<path d="M151 90 Q180 114 209 90" stroke="#fff" stroke-width="1.6" fill="none" opacity=".35"/>
+<rect x="126" y="66" width="108" height="12" rx="6" fill="url(#g-wood)"/>
+<rect x="129" y="68" width="102" height="2.6" rx="1.3" fill="#FFF7DF" opacity=".55"/>
+<ellipse cx="180" cy="83" rx="15" ry="5.4" fill="#FFFEF7" opacity=".8"/>
+<path class="spk1" d="M170 52l1.4 3.8 3.8 1.4-3.8 1.4-1.4 3.8-1.4-3.8-3.8-1.4 3.8-1.4z" fill="#FFF7DF"/>
+<path class="spk2" d="M196 46l1.2 3.2 3.2 1.2-3.2 1.2-1.2 3.2-1.2-3.2-3.2-1.2 3.2-1.2z" fill="#F4D46A"/>
+<path class="spk3" d="M158 42l1 2.8 2.8 1-2.8 1-1 2.8-1-2.8-2.8-1 2.8-1z" fill="#ffd0e6"/>
+</g>
+</svg>
+</div>
 <h1>The Cradle</h1>
-<p class="ar" translate="no">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
-<p>For the newest Muslims of all: babies and toddlers, 0 to 3, and the tired, wonderful parents holding them. First sounds, first words, one sky game, and the gentle rhythm of a home that remembers Allah.</p>
+<p class="ar notranslate" lang="ar" dir="rtl" translate="no">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
+<p class="sub">For the newest Muslims of all: babies and toddlers, 0 to 3, and the tired, wonderful parents holding them. First sounds, first words, one sky game, and the gentle rhythm of a home that remembers Allah.</p>
+<p class="dn" id="doneNote"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg><span>This room is yours</span></p>
+</div>
+
+<div class="prog">
+<div class="pbar" aria-hidden="true"><i id="pfill"></i></div>
+<p class="pcap" id="pcap">Tonight's little rhythm: play one surah together, then tap three words. <b id="pstep">0</b> of 4 done.</p>
+<p class="pmsg" id="pmsg" hidden>Baraka Allahu fikum. Come back at bedtime.</p>
+<p class="say" id="say" aria-live="polite">Hold them close. Tap anything, together.</p>
 </div>
 
 <div class="honest">
-<b>An honest word before anything else.</b> Babies learn from faces, arms, and voices, not from screens; every child-health body says so and we agree. This room is a companion for <b>you</b>: play the recitations while you hold them, learn the words to say around them, steal the game for giggles on your lap. The screen is the songbook. You are the singer.
+<b>An honest word before anything else.</b> Babies learn from faces, arms and voices, not from screens; every child-health body says so and we agree. This room is a companion for <b>you</b>: play the recitations while you hold them, learn the words to say around them, steal the game for giggles on your lap. The screen is the songbook. You are the singer.
 </div>
 
 <!-- FIRST SOUNDS -->
 <section class="lesson">
-<h2><span data-ic=note></span> First sounds · the surahs of the cradle</h2>
-<p class="sub">Real recitation (Mishary Alafasy), one ayah at a time. Play them at waking, feeding, and the drift into sleep. These four are short enough to become the furniture of a baby's world.</p>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-note"/></svg>First sounds · the surahs of the cradle</h2>
+<p class="sub">Real recitation, Mishary Alafasy, ayah by ayah, whole surahs from first word to last. Play them at waking, at feeding, at the drift into sleep. These four are short enough to become the furniture of a baby's world.</p>
 <div class="sounds">
-<button class="snd" data-ref="1:1"><span class="pb">▶</span><span><b>Bismillah · Al-Fatiha 1:1</b><span>The opening of everything. Play it before feeds: it becomes their signal of good things coming.</span></span></button>
-<button class="snd" data-ref="112:1"><span class="pb">▶</span><span><b>Al-Ikhlas 112</b><span>“Say: He is Allah, One.” A third of the Qur'an in four short ayat; a favorite first memorization years later.</span></span></button>
-<button class="snd" data-ref="113:1"><span class="pb">▶</span><span><b>Al-Falaq 113</b><span>The dawn refuge. Part of the sleep ritual the Prophet ﷺ kept every night.</span></span></button>
-<button class="snd" data-ref="114:1"><span class="pb">▶</span><span><b>An-Nas 114</b><span>The refuge of mankind. The last words of the Book, and many families' last words of the day.</span></span></button>
+<button type="button" class="snd" data-ref="1:1" data-surah="1" data-from="1" data-to="1" aria-pressed="false">
+<span class="pb"><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg><svg class="stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-stop"/></svg></span>
+<span class="sbody"><b>Bismillah <span class="ref">Al-Fatiha 1:1</span></b><span class="sar notranslate" lang="ar" dir="rtl" translate="no">بِسْمِ اللَّه</span><span class="sd">The opening of everything. Play it before feeds: it becomes their signal that good things are coming.</span><span class="dots" aria-hidden="true"><i></i></span></span>
+</button>
+<button type="button" class="snd" data-ref="112:1" data-surah="112" data-from="1" data-to="4" aria-pressed="false">
+<span class="pb"><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg><svg class="stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-stop"/></svg></span>
+<span class="sbody"><b>Al-Ikhlas <span class="ref">112 · 4 ayat</span></b><span class="sar notranslate" lang="ar" dir="rtl" translate="no">الْإِخْلَاص</span><span class="sd">"Say: He is Allah, One." A third of the Qur'an in four short ayat, and a favourite first memorisation years later.</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+</button>
+<button type="button" class="snd" data-ref="113:1" data-surah="113" data-from="1" data-to="5" aria-pressed="false">
+<span class="pb"><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg><svg class="stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-stop"/></svg></span>
+<span class="sbody"><b>Al-Falaq <span class="ref">113 · 5 ayat</span></b><span class="sar notranslate" lang="ar" dir="rtl" translate="no">الْفَلَق</span><span class="sd">The dawn refuge. Part of the sleep ritual the Prophet ﷺ kept every night.</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+</button>
+<button type="button" class="snd" data-ref="114:1" data-surah="114" data-from="1" data-to="6" aria-pressed="false">
+<span class="pb"><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg><svg class="stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-stop"/></svg></span>
+<span class="sbody"><b>An-Nas <span class="ref">114 · 6 ayat</span></b><span class="sar notranslate" lang="ar" dir="rtl" translate="no">النَّاس</span><span class="sd">The refuge of mankind. The last words of the Book, and many families' last words of the day.</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
+</button>
 </div>
-<p class="sub" style="margin-top:.8rem;margin-bottom:0">✦ A beloved tradition welcomes a newborn with the adhan whispered in the right ear; families have carried it for centuries. The sunnah of tahnik and du'a for the newborn is in Bukhari 5467.</p>
+<p class="hint" id="recHint" hidden>The recitation needs the internet. Ask a grown-up to read it with you.</p>
+<p class="sub" style="margin:.8rem 0 0">A beloved tradition welcomes a newborn with the adhan whispered in the right ear; families have carried it for centuries. The sunnah of tahnik and du'a for the newborn is in Bukhari 5467.</p>
 </section>
 
 <!-- FIRST WORDS -->
 <section class="lesson">
-<h2><span data-ic=note></span> First words · the golden eight</h2>
-<p class="sub">Tap a card together: it glows, you say the word, baby watches your mouth. Repeat forever. These eight are the vocabulary of a Muslim home; children absorb them before any lesson.</p>
-<div id="words"></div>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>First words · the golden eight</h2>
+<p class="sub">Tap a card together: it lights up and says the word aloud, and baby watches your mouth say it after. Repeat forever. These eight are the vocabulary of a Muslim home; children absorb them long before any lesson.</p>
+<div id="words">
+<button type="button" class="word" data-w="allah" data-ar="اللَّه" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-allah"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">اللَّه</span><span class="wt">Allah</span><span class="wm">our Lord</span>
+</button>
+<button type="button" class="word" data-w="bism" data-ar="بِسْمِ اللَّه" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-bism"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">بِسْمِ اللَّه</span><span class="wt">Bismillah</span><span class="wm">we begin with Allah</span>
+</button>
+<button type="button" class="word" data-w="hamd" data-ar="الْحَمْدُ لِلَّه" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-hamd"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">الْحَمْدُ لِلَّه</span><span class="wt">Alhamdulillah</span><span class="wm">thank You, Allah</span>
+</button>
+<button type="button" class="word" data-w="salam" data-ar="سَلَام" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-salam"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">سَلَام</span><span class="wt">Salam</span><span class="wm">peace · hello</span>
+</button>
+<button type="button" class="word" data-w="qamar" data-ar="قَمَر" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-qamar"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">قَمَر</span><span class="wt">Qamar</span><span class="wm">moon</span>
+</button>
+<button type="button" class="word" data-w="najm" data-ar="نَجْم" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-najm"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">نَجْم</span><span class="wt">Najm</span><span class="wm">star</span>
+</button>
+<button type="button" class="word" data-w="maa" data-ar="مَاء" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-maa"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">مَاء</span><span class="wt">Ma'</span><span class="wm">water</span>
+</button>
+<button type="button" class="word" data-w="nur" data-ar="نُور" data-nk-quiet aria-pressed="false">
+<span class="wsp" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-spk"/></svg></span>
+<span class="we" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#w-nur"/></svg></span>
+<span class="wa notranslate" lang="ar" dir="rtl" translate="no">نُور</span><span class="wt">Nur</span><span class="wm">light</span>
+</button>
+</div>
+<p class="hint" id="voiceHint" hidden>This phone has no Arabic voice. Ask a grown-up to read it with you.</p>
 </section>
 
 <!-- PEEK GAME -->
 <section class="lesson">
-<h2><span data-ic=moon></span> Peek! What is behind the cloud?</h2>
-<p class="sub">A lap game for chubby fingers: tap a cloud, something of the sky peeks out, you name it in Arabic, together. That is the whole game. It is enough.</p>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cloud"/></svg>Peek! What is behind the cloud?</h2>
+<p class="sub">A lap game for chubby fingers: tap a cloud, something of the sky peeks out, you name it in Arabic together. Peek-a-boo is how a baby learns that what goes away comes back. That is the whole game, and it is enough.</p>
 <div id="sky">
-<span class="cap">tap the clouds ✦ they always come back</span>
+<svg class="bg" viewBox="0 0 300 288" preserveAspectRatio="none" aria-hidden="true">
+<defs>
+<linearGradient id="g-sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070c20"/><stop offset=".55" stop-color="#17265c"/><stop offset="1" stop-color="#2b4189"/></linearGradient>
+<linearGradient id="g-hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1132"/><stop offset="1" stop-color="#060a20"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="300" height="288" fill="url(#g-sky2)"/>
+<g fill="#FFF7DF"><circle cx="34" cy="40" r="1.6" opacity=".7"/><circle cx="120" cy="24" r="1.2" opacity=".55"/><circle cx="212" cy="52" r="1.4" opacity=".6"/><circle cx="272" cy="26" r="1.1" opacity=".5"/><circle cx="60" cy="130" r="1.2" opacity=".5"/><circle cx="248" cy="140" r="1.3" opacity=".55"/><circle cx="150" cy="96" r="1" opacity=".45"/><circle cx="26" cy="214" r="1.2" opacity=".5"/><circle cx="284" cy="204" r="1.1" opacity=".45"/></g>
+<path d="M0 288 V246 Q40 222 82 244 Q120 262 158 240 Q198 216 240 242 Q272 260 300 246 V288 Z" fill="url(#g-hill)"/>
+<path d="M0 246 Q40 222 82 244" stroke="#F4D46A" stroke-opacity=".22" stroke-width="1.4" fill="none"/>
+</svg>
+<div class="peekspot" style="left:3%;top:5%">
+<span class="behind"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#p-moon"/></svg><span class="bar notranslate" lang="ar" dir="rtl" translate="no">قَمَر</span><span class="bn">Qamar</span></span>
+<button type="button" class="cloud" data-ar="قَمَر" data-nk-quiet aria-label="Peek behind the cloud"><span class="puff" aria-hidden="true"><svg viewBox="0 0 96 64"><use href="#c-puff"/></svg></span></button>
+</div>
+<div class="peekspot" style="left:52%;top:11%">
+<span class="behind"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#p-star"/></svg><span class="bar notranslate" lang="ar" dir="rtl" translate="no">نَجْم</span><span class="bn">Najm</span></span>
+<button type="button" class="cloud" data-ar="نَجْم" data-nk-quiet aria-label="Peek behind the cloud"><span class="puff" aria-hidden="true"><svg viewBox="0 0 96 64"><use href="#c-puff"/></svg></span></button>
+</div>
+<div class="peekspot" style="left:11%;top:44%">
+<span class="behind"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#p-sun"/></svg><span class="bar notranslate" lang="ar" dir="rtl" translate="no">شَمْس</span><span class="bn">Shams</span></span>
+<button type="button" class="cloud" data-ar="شَمْس" data-nk-quiet aria-label="Peek behind the cloud"><span class="puff" aria-hidden="true"><svg viewBox="0 0 96 64"><use href="#c-puff"/></svg></span></button>
+</div>
+<div class="peekspot" style="left:55%;top:53%">
+<span class="behind"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#p-bird"/></svg><span class="bar notranslate" lang="ar" dir="rtl" translate="no">طَيْر</span><span class="bn">Tayr</span></span>
+<button type="button" class="cloud" data-ar="طَيْر" data-nk-quiet aria-label="Peek behind the cloud"><span class="puff" aria-hidden="true"><svg viewBox="0 0 96 64"><use href="#c-puff"/></svg></span></button>
+</div>
+<span class="cap">Tap the clouds. They always come back.</span>
 </div>
 </section>
 
 <!-- DAILY RHYTHM -->
 <section class="lesson">
-<h2><span data-ic=clock></span> The rhythm of the day · said around the baby</h2>
-<p class="sub">Not lessons: atmosphere. Say these aloud at their moments and the child will one day say them with you, no flashcards required. Every line is sourced.</p>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>The rhythm of the day · said around the baby</h2>
+<p class="sub">Not lessons: atmosphere. Say these aloud at their moments and the child will one day say them with you, no flashcards required. Tap the speaker to hear each one. Every line is sourced.</p>
 <div class="rhy">
-<div class="rmoment"><span class="re"><span data-ic=sun></span></span><div><b>On waking</b><span class="ar" translate="no">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ</span><p>Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur · “Praise to Allah who gave us life after taking it, and to Him is the return.”</p><span class="src">· Bukhari 6312</span></div></div>
-<div class="rmoment"><span class="re"><span data-ic=hand></span></span><div><b>Before food (and before nursing, quietly)</b><span class="ar" translate="no">بِسْمِ اللَّهِ</span><p>Bismillah · and if forgotten mid-meal: Bismillahi fi awwalihi wa akhirihi.</p><span class="src">· Abu Dawud 3767</span></div></div>
-<div class="rmoment"><span class="re"><span data-ic=drop></span></span><div><b>When baby sneezes (yes, really: start now)</b><span class="ar" translate="no">يَرْحَمُكَ اللَّهُ</span><p>Yarhamuk Allah · “Allah have mercy on you.” Said to them a thousand times, it becomes theirs.</p><span class="src">· Bukhari 6224</span></div></div>
-<div class="rmoment"><span class="re"><span data-ic=shield></span></span><div><b>Morning & evening shield</b><span class="ar" translate="no">أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</span><p>The Prophet's ﷺ own protection for his grandsons Hasan and Husayn: “I seek refuge for you both in Allah's perfect words, from every devil and creature, and from every envious eye.”</p><span class="src">· Bukhari 3371</span></div></div>
-<div class="rmoment"><span class="re"><span data-ic=moon></span></span><div><b>The sleep ritual</b><span class="ar" translate="no">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ قُلْ أَعُوذُ بِرَبِّ النَّاسِ</span><p>The three Quls, blown gently over cupped hands and wiped over the little body, as the Prophet ﷺ did nightly; Ayat al-Kursi for the older ones who can hear it through.</p><span class="src">· Bukhari 5017 · 2311</span></div></div>
+<div class="rmoment"><span class="re"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"/></svg></span><div class="rbody"><b>On waking</b><span class="rline"><span class="ar notranslate" lang="ar" dir="rtl" translate="no">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ</span><button type="button" class="spk" data-ar="الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ" aria-pressed="false" aria-label="Hear the du'a for waking"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spk"/></svg></button></span><p>Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur · "Praise to Allah who gave us life after taking it, and to Him is the return."</p><span class="src">Bukhari 6312</span></div></div>
+<div class="rmoment"><span class="re"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bowl"/></svg></span><div class="rbody"><b>Before food, and before nursing, quietly</b><span class="rline"><span class="ar notranslate" lang="ar" dir="rtl" translate="no">بِسْمِ اللَّهِ</span><button type="button" class="spk" data-ar="بِسْمِ اللَّهِ" aria-pressed="false" aria-label="Hear the du'a before food"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spk"/></svg></button></span><p>Bismillah · and if it is forgotten mid-meal: Bismillahi fi awwalihi wa akhirihi.</p><span class="src">Abu Dawud 3767</span></div></div>
+<div class="rmoment"><span class="re"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-puff"/></svg></span><div class="rbody"><b>When baby sneezes, yes, really, start now</b><span class="rline"><span class="ar notranslate" lang="ar" dir="rtl" translate="no">يَرْحَمُكَ اللَّهُ</span><button type="button" class="spk" data-ar="يَرْحَمُكَ اللَّهُ" aria-pressed="false" aria-label="Hear the reply to a sneeze"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spk"/></svg></button></span><p>Yarhamuk Allah · "Allah have mercy on you." Said to them a thousand times, it becomes theirs.</p><span class="src">Bukhari 6224</span></div></div>
+<div class="rmoment"><span class="re"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></span><div class="rbody"><b>Morning and evening shield</b><span class="rline"><span class="ar notranslate" lang="ar" dir="rtl" translate="no">أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</span><button type="button" class="spk" data-ar="أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ" aria-pressed="false" aria-label="Hear the protection du'a"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spk"/></svg></button></span><p>The Prophet's ﷺ own protection for his grandsons Hasan and Husayn: "I seek refuge for you both in Allah's perfect words, from every devil and creature, and from every envious eye."</p><span class="src">Bukhari 3371</span></div></div>
+<div class="rmoment"><span class="re"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon"/></svg></span><div class="rbody"><b>The sleep ritual</b><span class="rline"><span class="ar notranslate" lang="ar" dir="rtl" translate="no">قُلْ هُوَ اللَّهُ أَحَدٌ · قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ · قُلْ أَعُوذُ بِرَبِّ النَّاسِ</span><button type="button" class="spk" data-ar="قُلْ هُوَ اللَّهُ أَحَدٌ" aria-pressed="false" aria-label="Hear the three Quls opening"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spk"/></svg></button></span><p>The three Quls, blown gently over cupped hands and wiped over the little body, as the Prophet ﷺ did nightly; Ayat al-Kursi for the older ones who can hear it through.</p><span class="src">Bukhari 5017 · 2311</span></div></div>
 </div>
 </section>
 
 <!-- MILESTONES -->
 <section class="lesson">
-<h2><span data-ic=seed></span> What is growing in there · 0 to 3, honestly</h2>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seed"/></svg>What is growing in there · 0 to 3, honestly</h2>
 <p class="sub">Montessori called this the absorbent mind: the child does not study the world, they become it. Here is what that means for a Muslim home, without pressure and without myths.</p>
 <div class="mtable">
-<div class="mrow"><b>0-12 months · the listening year</b><p>Everything is soundscape. A home where the Qur'an is recited calmly, where salam is exchanged and Bismillah is said, is already teaching. There is nothing to test. There is only atmosphere to keep beautiful.</p></div>
-<div class="mrow"><b>12-24 months · the naming year</b><p>First words arrive; order matters intensely (same mat, same corner, same routine calms them). Point and name: qamar, najm, ma'. Let them watch wudu from your hip and slap the water once, it is theirs too.</p></div>
-<div class="mrow"><b>24-36 months · the “I do it!” year</b><p>Practical life begins: carrying their own little mat, pouring water at wudu with a tiny cup, putting a coin in the sadaqa jar every Friday. Movements first, meanings later; that is the fitrah's own order.</p></div>
+<div class="mrow"><b>0 to 12 months · the listening year</b><p>Everything is soundscape. A home where the Qur'an is recited calmly, where salam is exchanged and Bismillah is said, is already teaching. There is nothing to test. There is only atmosphere to keep beautiful.</p></div>
+<div class="mrow"><b>12 to 24 months · the naming year</b><p>First words arrive; order matters intensely, the same mat, the same corner, the same routine calms them. Point and name: qamar, najm, ma'. Let them watch wudu from your hip and slap the water once, it is theirs too.</p></div>
+<div class="mrow"><b>24 to 36 months · the "I do it!" year</b><p>Practical life begins: carrying their own little mat, pouring water at wudu with a tiny cup, putting a coin in the sadaqa jar every Friday. Movements first, meanings later; that is the fitrah's own order.</p></div>
 </div>
 </section>
 
 <!-- OFFLINE IDEAS -->
 <section class="lesson">
-<h2><span data-ic=home></span> Off-screen shelf · six things to do this week</h2>
-<p class="sub">Montessori trays, Muslim soul, zero preparation beyond your kitchen.</p>
+<h2><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg>Off-screen shelf · six things to do this week</h2>
+<p class="sub">Montessori trays, Muslim soul, zero preparation beyond your kitchen. Tap one when you have done it: this phone will remember for you.</p>
 <div class="ideas">
-<div class="idea"><b><span data-ic=home></span> The treasure basket</b><p>A basket of safe real things to mouth and grip (wooden spoon, fabric square, big misbaha beads knotted tight, always supervised). Swap one thing weekly.</p></div>
-<div class="idea"><b><span data-ic=moon></span> The Maghrib walk</b><p>Step outside after sunset, find the moon or first star, say “Allahu Akbar” softly together. First astronomy, first awe.</p></div>
-<div class="idea"><b><span data-ic=drop></span> Wudu splash</b><p>At your wudu, give them a cup of water and one hand to wash. Soaked sleeves are the tuition fee.</p></div>
-<div class="idea"><b><span data-ic=calc></span> The Friday coin</b><p>Every Jumu'ah, their fingers drop the coin in the sadaqa jar. By three, giving feels like something Fridays are for.</p></div>
-<div class="idea"><b><span data-ic=star></span> Sound jars</b><p>Rice, beans, and one bell in sealed jars: shake to the rhythm of “Sub-han-Allah.” Loudest worship in the house.</p></div>
-<div class="idea"><b><span data-ic=minaret></span> The tiny mat</b><p>A small mat beside yours, never forced. They will sit, roll, wander, return. The returning is the lesson.</p></div>
+<button type="button" class="idea" data-k="basket" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-basket"/></svg><b>The treasure basket</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">A basket of safe real things to mouth and grip: a wooden spoon, a fabric square, big misbaha beads knotted tight, always supervised. Swap one thing weekly.</span></button>
+<button type="button" class="idea" data-k="maghrib" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon"/></svg><b>The Maghrib walk</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">Step outside after sunset, find the moon or the first star, say "Allahu Akbar" softly together. First astronomy, first awe.</span></button>
+<button type="button" class="idea" data-k="wudu" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-drop"/></svg><b>Wudu splash</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">At your wudu, give them a cup of water and one hand to wash. Soaked sleeves are the tuition fee.</span></button>
+<button type="button" class="idea" data-k="coin" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coin"/></svg><b>The Friday coin</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">Every Jumu'ah, their fingers drop the coin in the sadaqa jar. By three, giving feels like something Fridays are for.</span></button>
+<button type="button" class="idea" data-k="jars" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-jar"/></svg><b>Sound jars</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">Rice, beans, and one bell in sealed jars: shake to the rhythm of "Sub-han-Allah." The loudest worship in the house.</span></button>
+<button type="button" class="idea" data-k="mat" data-nk-quiet aria-pressed="false"><span class="ihead"><svg class="li ii" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mat"/></svg><b>The tiny mat</b><span class="tick" aria-hidden="true"><svg class="li" viewBox="0 0 24 24"><use href="#i-check"/></svg></span></span><span class="ip">A small mat beside yours, never forced. They will sit, roll, wander, return. The returning is the lesson.</span></button>
 </div>
 </section>
 
-<p class="grownup">Next room when they're ready: the <a href="/kids/letters">Letter Garden</a> (3+) · the whole path is drawn in <a href="/school">the Madrasa of Light</a> <span data-ic=lamp></span></p>
+<p class="grownup">Next room when they are ready: the <a href="/kids/letters">Letter Garden</a> for ages 3 and up · the whole path is drawn in <a href="/school">the Madrasa of Light</a></p>
 <!--WGO-->
 <style>.wgo{max-width:46rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(244,212,106,.2)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#FFFEF7;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(255,254,247,.62);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem;text-align:start}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:linear-gradient(165deg,rgba(255,254,247,.08),rgba(255,254,247,.03));border:1px solid rgba(244,212,106,.26);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(244,212,106,.65);transform:translateY(-1px);box-shadow:0 6px 20px rgba(4,6,15,.45)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#F4D46A;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#F4D46A}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(255,254,247,.72);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
 <section class="wgo" aria-labelledby="wgo-h">
@@ -211,77 +432,271 @@ section.lesson{background:rgba(255,254,247,.04);border:1.5px solid rgba(233,200,
 </section>
 <!--/WGO-->
 </main>
-
+<footer>
+<a class="backlink" href="/kids">Back to the Little Codex</a>
+<div><button type="button" class="rlink" id="reset">Start over</button></div>
+</footer>
+<svg class="defs" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="g-gold1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".5" stop-color="#F4DC8E"/><stop offset="1" stop-color="#C9A227"/></linearGradient>
+<linearGradient id="g-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd6f7"/><stop offset="1" stop-color="#2f8fd0"/></linearGradient>
+<linearGradient id="g-cloudy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFEF7"/><stop offset=".55" stop-color="#dce9fb"/><stop offset="1" stop-color="#a9c3e8"/></linearGradient>
+<linearGradient id="g-lant" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4DC8E"/><stop offset="1" stop-color="#C08C1C"/></linearGradient>
+<radialGradient id="rg-sun"><stop offset="0" stop-color="#FFF3C4"/><stop offset="1" stop-color="#F0A13A"/></radialGradient>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2.6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.6l4.6 4.6L19 7.4"/></symbol>
+<symbol id="i-spk" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2.2v11.4"/><circle cx="6.4" cy="17.6" r="2.6"/><circle cx="16.4" cy="15.4" r="2.6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.6S4.6 15 4.6 10.1A3.7 3.7 0 0 1 12 8.6a3.7 3.7 0 0 1 7.4 1.5c0 4.9-7.4 9.5-7.4 9.5Z"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h9.6a3.6 3.6 0 0 0 .6-7.1 5.6 5.6 0 0 0-10.2-2A4.05 4.05 0 0 0 7 18.5Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3.2 2"/></symbol>
+<symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 20.4v-8.2"/><path d="M12 12.2c0-3.6-2.4-5.6-6.1-5.6 0 3.6 2.4 5.6 6.1 5.6Z"/><path d="M12 10.2c0-3.1 2-5 5.6-5 0 3.1-2 5-5.6 5Z"/><path d="M8 20.4h8"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3.8 11.2 12 4l8.2 7.2"/><path d="M6 10.2v9.4h12v-9.4"/><path d="M10 19.6v-5h4v5"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 3.2v2.3M12 18.5v2.3M3.2 12h2.3M18.5 12h2.3M5.7 5.7l1.6 1.6M16.7 16.7l1.6 1.6M18.3 5.7l-1.6 1.6M7.3 16.7l-1.6 1.6"/></symbol>
+<symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3.8 11.6h16.4a8.2 8.2 0 0 1-16.4 0Z"/><path d="M9.6 8.6c0-1.5 1.3-1.7 1.3-3.2M14.4 8.6c0-1.5-1.3-1.7-1.3-3.2"/></symbol>
+<symbol id="i-puff" viewBox="0 0 24 24"><path d="M4 8.4h6.4a3 3 0 1 0-3-3"/><path d="M4 12.4h9.6a3.4 3.4 0 1 1-3.4 3.4"/><path d="M4 16.4h3.4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.4 19 6v6.1c0 4-3 7-7 8.5-4-1.5-7-4.5-7-8.5V6Z"/><path d="M9.4 12.2l1.9 1.9 3.5-3.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.3 14.7A8.2 8.2 0 0 1 9.3 4.7a8.4 8.4 0 1 0 10 10Z"/></symbol>
+<symbol id="i-basket" viewBox="0 0 24 24"><path d="M3.6 10h16.8l-1.6 8.6a2 2 0 0 1-2 1.6H7.2a2 2 0 0 1-2-1.6Z"/><path d="M8.4 10 11 3.8M15.6 10 13 3.8"/><path d="M7.6 13.4h8.8"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.8c3.1 4.6 6.1 7.4 6.1 10.6a6.1 6.1 0 0 1-12.2 0c0-3.2 3-6 6.1-10.6Z"/><path d="M9.4 14.6a2.7 2.7 0 0 0 2 2.5"/></symbol>
+<symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.8"/><circle cx="12" cy="12" r="3.4"/></symbol>
+<symbol id="i-jar" viewBox="0 0 24 24"><path d="M7.6 8h8.8l.9 9.9a2.4 2.4 0 0 1-2.4 2.6H9.1a2.4 2.4 0 0 1-2.4-2.6Z"/><rect x="7.4" y="4.2" width="9.2" height="3.6" rx="1.7"/><path d="M10 13.4h4"/></symbol>
+<symbol id="i-mat" viewBox="0 0 24 24"><rect x="4.2" y="8.2" width="15.6" height="11.4" rx="2.2"/><path d="M12 8.2V5.4"/><path d="M9.4 13.4a2.6 2.6 0 0 1 5.2 0v3.2H9.4Z"/></symbol>
+<symbol id="w-allah" viewBox="0 0 48 48">
+<rect x="11" y="11" width="26" height="26" rx="2.5" fill="#C9A227" transform="rotate(45 24 24)"/>
+<rect x="11" y="11" width="26" height="26" rx="2.5" fill="url(#g-gold1)"/>
+<rect x="15" y="15" width="18" height="18" rx="2" fill="none" stroke="#C9A227" stroke-width="1.1" opacity=".8"/>
+<circle cx="24" cy="24" r="6.4" fill="#0d1633"/><circle cx="24" cy="24" r="2.6" fill="#F4D46A"/>
+</symbol>
+<symbol id="w-bism" viewBox="0 0 48 48">
+<path d="M11 41V24a13 13 0 0 1 26 0v17z" fill="url(#g-gold1)"/>
+<path d="M16.5 41V25a7.5 7.5 0 0 1 15 0v16z" fill="#1b2a5e"/>
+<path d="M20 41V26a4 4 0 0 1 8 0v15z" fill="#FFF3C4" opacity=".95"/>
+<path d="M24 12l1.5 4 4 1.5-4 1.5L24 23l-1.5-4-4-1.5 4-1.5z" fill="#F4D46A"/>
+</symbol>
+<symbol id="w-hamd" viewBox="0 0 48 48">
+<path d="M24 40S7.5 30.5 7.5 20.2A8.2 8.2 0 0 1 24 16.6a8.2 8.2 0 0 1 16.5 3.6C40.5 30.5 24 40 24 40Z" fill="#f9a8d4"/>
+<path d="M15 20a5.5 5.5 0 0 1 4.5-4.4" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7"/>
+</symbol>
+<symbol id="w-salam" viewBox="0 0 48 48">
+<path d="M7 31q-5 1.2-6 5.6 5.4.7 9.6-2.6z" fill="#cfc7b2"/>
+<ellipse cx="22" cy="28" rx="15" ry="10" fill="#FFFEF7"/>
+<path d="M11 26q10-13 22-5-7 9.4-22 5z" fill="#b9cee9"/>
+<path d="M13 25q9-8.6 18-3.4" stroke="#93b0d6" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<circle cx="35" cy="21" r="6.4" fill="#FFFEF7"/>
+<path d="M40.6 21.4l6.4 2.4-6.4 2.4z" fill="#F0A13A"/>
+<circle cx="36.4" cy="19.6" r="1.8" fill="#332614"/>
+<circle cx="31" cy="26" r="2.4" fill="#f2a6a0" opacity=".5"/>
+</symbol>
+<symbol id="w-qamar" viewBox="0 0 48 48">
+<path d="M26 9a15 15 0 1 0 0 30 18.4 18.4 0 0 1 0-30z" fill="url(#g-gold1)"/>
+<path d="M37 14l1.3 3.6 3.6 1.3-3.6 1.3L37 23.8l-1.3-3.6-3.6-1.3 3.6-1.3z" fill="#FFF7DF"/>
+</symbol>
+<symbol id="w-najm" viewBox="0 0 48 48">
+<path d="M24 6l4.8 12.6L41 23.4l-12.2 4.8L24 41l-4.8-12.8L7 23.4l12.2-4.8z" fill="url(#g-gold1)"/>
+<circle cx="24" cy="23.4" r="3.2" fill="#FFF7DF" opacity=".85"/>
+</symbol>
+<symbol id="w-maa" viewBox="0 0 48 48">
+<path d="M24 6c7.4 9.6 12.6 15.2 12.6 21A12.6 12.6 0 0 1 11.4 27C11.4 21.2 16.6 15.6 24 6z" fill="url(#g-water)"/>
+<path d="M18 28.5a6 6 0 0 0 4.6 5.8" stroke="#FFFEF7" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".75"/>
+</symbol>
+<symbol id="w-nur" viewBox="0 0 48 48">
+<path d="M24 40.5v3" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M16 16h16l1.6 17.4a9.6 9.6 0 0 1-19.2 0z" fill="url(#g-lant)"/>
+<path d="M19 21h10l1 12.4a6 6 0 0 1-12 0z" fill="#3a2c08" opacity=".55"/>
+<path d="M24 22.5c3.2 3.4 4.4 5.4 4.4 7.4a4.4 4.4 0 0 1-8.8 0c0-2 1.2-4 4.4-7.4z" fill="#FFF3C4"/>
+<rect x="14" y="12" width="20" height="5" rx="2.5" fill="#C9A227"/>
+<path d="M24 12V7.5" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+</symbol>
+<symbol id="p-moon" viewBox="0 0 64 64">
+<circle cx="32" cy="32" r="30" fill="#F4D46A" opacity=".12"/>
+<path d="M35 10a22 22 0 1 0 0 44 27 27 0 0 1 0-44z" fill="url(#g-gold1)"/>
+</symbol>
+<symbol id="p-star" viewBox="0 0 64 64">
+<circle cx="32" cy="32" r="28" fill="#F4D46A" opacity=".12"/>
+<path d="M32 6l6.4 17.6L56 30l-17.6 6.4L32 54l-6.4-17.6L8 30l17.6-6.4z" fill="url(#g-gold1)"/>
+<circle cx="32" cy="30" r="4" fill="#FFF7DF" opacity=".85"/>
+</symbol>
+<symbol id="p-sun" viewBox="0 0 64 64">
+<circle cx="32" cy="32" r="28" fill="#F0A13A" opacity=".14"/>
+<g stroke="#F4D46A" stroke-width="3.6" stroke-linecap="round"><path d="M32 5v7M32 52v7M5 32h7M52 32h7M12.8 12.8l5 5M46.2 46.2l5 5M51.2 12.8l-5 5M17.8 46.2l-5 5"/></g>
+<circle cx="32" cy="32" r="14" fill="url(#rg-sun)"/>
+</symbol>
+<symbol id="p-bird" viewBox="0 0 64 64">
+<ellipse cx="28" cy="36" rx="18" ry="11" fill="#dce9fb"/>
+<path d="M12 33q11-19 26-6-9 9-26 6z" fill="#a9c3e8"/>
+<circle cx="44" cy="29" r="7.5" fill="#FFFEF7"/>
+<path d="M51 29l7.5 3-7.5 3z" fill="#F0A13A"/>
+<circle cx="45.6" cy="27.4" r="1.8" fill="#332614"/>
+<path d="M10 44q10 4 21 1.6" stroke="#a9c3e8" stroke-width="3" fill="none" stroke-linecap="round"/>
+</symbol>
+<symbol id="c-puff" viewBox="0 0 96 64">
+<g fill="url(#g-cloudy)">
+<ellipse cx="32" cy="38" rx="19" ry="15"/><ellipse cx="62" cy="36" rx="21" ry="17"/><ellipse cx="47" cy="26" rx="19" ry="16"/>
+<rect x="13" y="33" width="70" height="18" rx="9"/>
+</g>
+<ellipse cx="42" cy="22" rx="13" ry="7" fill="#FFFEF7" opacity=".55"/>
+<path d="M20 48h56" stroke="#8fa9cf" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+</symbol>
+</defs>
+</svg>
 <script>
+'use strict';
 (function(){
-"use strict";
-var $=function(id){return document.getElementById(id)};
+/* the engine is loaded in <head>; this shim only exists so the room never throws if it ever failed to load */
+var NK=window.NK||(function(){var n=function(){};var p=function(){return Promise.resolve(false)};function get(k){try{return JSON.parse(localStorage.getItem('nk-'+k)||'null')}catch(e){return null}}
+return{reduced:false,sfx:n,say:p,recite:p,stopAudio:n,haptic:n,pop:n,shake:n,wobble:n,bounce:n,tilt:n,canSay:function(){return false},volume:{muted:false},
+fx:{burst:n,burstAt:n,confetti:n,shower:n},flyTo:function(){return Promise.resolve(false)},
+spring:function(o){var x=o.from||0;return{set:function(t){x=t;if(o.onUpdate)o.onUpdate(t,0)},get:function(){return x},stop:n}},
+countTo:function(el,to){el.textContent=String(Math.round(to))},progress:get,
+save:function(k,d){var v=Object.assign({},get(k)||{},d||{});try{localStorage.setItem('nk-'+k,JSON.stringify(v))}catch(e){}return v},
+done:function(k,ex){var v=Object.assign({},get(k)||{},ex||{},{done:true,at:Date.now()});try{localStorage.setItem('nk-'+k,JSON.stringify(v))}catch(e){}return v},
+clear:function(k){try{localStorage.removeItem('nk-'+k)}catch(e){}}}})();
 
-/* first sounds: shared house recitation, one playing at a time */
-document.querySelectorAll(".snd").forEach(function(b){
-  b.addEventListener("click",function(){
-    if(window.playAyah){
-      document.querySelectorAll(".snd.playing").forEach(function(x){if(x!==b)x.classList.remove("playing")});
-      window.playAyah(b.getAttribute("data-ref"),b);
-    }
-  });
-});
+var KEY='cradle',RM=!!NK.reduced;
+var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var sayEl=$('#say'),pfill=$('#pfill'),pstep=$('#pstep'),pcap=$('#pcap'),pmsg=$('#pmsg'),doneNote=$('#doneNote'),
+    voiceHint=$('#voiceHint'),recHint=$('#recHint');
 
-/* first words */
-var W=[
-["اللَّه","Allah","our Lord","<span data-ic=heart></span>"],
-["بِسْمِ اللَّه","Bismillah","we begin with Allah","<span data-ic=star></span>"],
-["الْحَمْدُ لِلَّه","Alhamdulillah","thank You, Allah","<span data-ic=star></span>"],
-["سَلَام","Salam","peace · hello","<span data-ic=dove></span>"],
-["قَمَر","Qamar","moon","<span data-ic=moon></span>"],
-["نَجْم","Najm","star","<span data-ic=star></span>"],
-["مَاء","Ma'","water","<span data-ic=drop></span>"],
-["نُور","Nur","light","<span data-ic=bulb></span>"]
-];
-var wbox=$("words");
-W.forEach(function(w){
-  var d=document.createElement("div");
-  d.className="word";d.setAttribute("role","button");d.setAttribute("tabindex","0");
-  d.innerHTML='<span class="we">'+w[3]+'</span><span class="wa notranslate" translate="no">'+w[0]+'</span><span class="wt">'+w[1]+'</span><span class="wm">'+w[2]+"</span>";
-  function glow(){
-    d.classList.add("glow");
-    setTimeout(function(){d.classList.remove("glow")},900);
-  }
-  d.addEventListener("click",glow);
-  d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();glow()}});
-  wbox.appendChild(d);
-});
+/* every string this script writes into the page is a whole, stable sentence, so the site can translate it */
+var S={
+ start:'Hold them close. Tap anything, together.',
+ playing:'Let it play while you rock them.',
+ ended:'Beautiful. Play it again whenever they fuss.',
+ word:'Say it slowly. Let them watch your mouth.',
+ peek:'Name it in Arabic, then again in your own words.',
+ shelf:'Ticked. The shelf remembers on this phone.',
+ doneLine:'Baraka Allahu fikum. That is enough for today.'
+};
+function talk(t){if(sayEl.textContent===t)return;sayEl.textContent=t;NK.pop(sayEl,{from:.94,duration:300})}
 
-/* peek sky */
-var sky=$("sky");
-var SPOTS=[[8,12],[52,8],[26,48],[66,52]];
-var PEEK=[["<span data-ic=moon></span>","Qamar"],["<span data-ic=star></span>","Najm"],["<span data-ic=sun></span>","Shams"],["<span data-ic=star></span>","after the rain"]];
-SPOTS.forEach(function(pos,i){
-  var behind=document.createElement("span");
-  behind.className="behind";behind.textContent=PEEK[i][0];
-  behind.style.left=(pos[0]+3)+"%";behind.style.top=(pos[1]+6)+"%";
-  var cloud=document.createElement("span");
-  cloud.className="cloud";cloud.innerHTML="<span data-ic=moon></span>";if(window.NOOR_IC_RENDER)NOOR_IC_RENDER(cloud);
-  cloud.style.left=pos[0]+"%";cloud.style.top=pos[1]+"%";
-  cloud.setAttribute("role","button");
-  cloud.addEventListener("click",function(){
-    cloud.style.opacity="0";cloud.style.pointerEvents="none";
-    behind.classList.add("shown");
-    for(var k=0;k<4;k++){
-      var s=document.createElement("span");
-      s.className="rain";s.innerHTML=["✦","<span data-ic=star></span>"][k%2];if(window.NOOR_IC_RENDER)NOOR_IC_RENDER(s);
-      s.style.left=(Math.random()*90+2)+"vw";
-      s.style.animationDelay=(Math.random()*.5)+"s";
-      document.body.appendChild(s);
-      setTimeout(function(x){return function(){x.remove()}}(s),3000);
-    }
-    setTimeout(function(){
-      behind.classList.remove("shown");
-      setTimeout(function(){cloud.style.opacity="1";cloud.style.pointerEvents="auto"},600);
-    },2600);
-  });
-  sky.appendChild(behind);sky.appendChild(cloud);
-});
+/* ---------- the night sky: far stars drift slower than near ones ---------- */
+function stars(box,n,lo,hi){var f=document.createDocumentFragment();
+ for(var i=0;i<n;i++){var st=document.createElement('i');var sz=(lo+Math.random()*(hi-lo)).toFixed(1);
+  st.style.cssText='left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*94).toFixed(1)+'%;width:'+sz+'px;height:'+sz+'px;--td:'+(3+Math.random()*3.6).toFixed(1)+'s;--tl:'+(-Math.random()*6).toFixed(1)+'s';
+  f.appendChild(st)}
+ box.appendChild(f)}
+stars($('#starFar'),24,1.2,2.2);stars($('#starNear'),11,2.4,3.4);
+NK.tilt($('#hscene'),5);
+
+/* ---------- progress: one surah played, three words tapped ---------- */
+var saved=NK.progress(KEY)||{};
+var recited=false,tapped={},taps=0,finished=!!saved.done;
+var bar=NK.spring({from:0,to:0,stiffness:120,damping:15,onUpdate:function(x){
+ pfill.style.transform='scaleX('+Math.max(0,Math.min(1,x)).toFixed(3)+')'}});
+function steps(){return (recited?1:0)+Math.min(3,taps)}
+function paint(){
+ var n=finished?4:steps(),f=n/4;
+ if(RM)pfill.style.transform='scaleX('+f.toFixed(3)+')';else bar.set(f,.5);
+ NK.countTo(pstep,n,{from:Math.max(0,n-1),dur:420});
+}
+function finish(){
+ if(finished)return;finished=true;
+ NK.done(KEY,{words:taps});
+ pcap.hidden=true;pmsg.hidden=false;NK.pop(pmsg);
+ doneNote.classList.add('on');NK.pop(doneNote);
+ talk(S.doneLine);
+ NK.sfx('cheer');NK.haptic('success');
+ NK.fx.confetti({n:RM?12:46,duration:2200,colors:['#f9a8d4','#F4DC8E','#E9C86A','#FFF7DF','#a9c3e8']});
+ if(!RM)NK.fx.burstAt(doneNote,{n:12,kind:'heart',colors:['#f9a8d4','#ffd0e6'],power:.6});
+}
+function bump(){paint();if(recited&&taps>=3)finish()}
+if(finished){pcap.hidden=true;pmsg.hidden=false;doneNote.classList.add('on')}
+paint();
+
+/* ---------- the teacher's voice ---------- */
+var voiceShown=false;
+function speak(text,btn){
+ if(btn)btn.setAttribute('aria-pressed','true');
+ return NK.say(text).then(function(ok){
+  if(btn)btn.setAttribute('aria-pressed','false');
+  if(!ok&&!voiceShown&&!NK.volume.muted&&!(NK.canSay&&NK.canSay('ar-SA'))){voiceShown=true;voiceHint.hidden=false;NK.pop(voiceHint)}
+  return ok})}
+
+/* ---------- first sounds: a whole surah, one ayah at a time ---------- */
+var token=0,live=null,selfStop=false;
+function dots(btn,n){var ds=btn.querySelectorAll('.dots i');
+ for(var i=0;i<ds.length;i++)ds[i].classList.toggle('on',i<n)}
+function stopSurah(){
+ token++;var b=live;live=null;
+ selfStop=true;NK.stopAudio();selfStop=false;
+ if(b){b.setAttribute('aria-pressed','false');dots(b,0)}}
+/* if anything else stops the audio (a du'a button, a hidden tab), the card lets go too */
+document.addEventListener('kids:recite',function(e){
+ var st=e.detail&&e.detail.state;
+ if(live&&!selfStop&&st==='stop')stopSurah()});
+function playSurah(btn){
+ if(live===btn){stopSurah();NK.sfx('whoosh');return}
+ stopSurah();
+ var t=++token,su=+btn.dataset.surah,from=+btn.dataset.from,to=+btn.dataset.to,i=from;
+ live=btn;btn.setAttribute('aria-pressed','true');recHint.hidden=true;
+ talk(S.playing);
+ if(!recited){recited=true;bump()}
+ (function step(){
+  if(t!==token)return;
+  dots(btn,i-from+1);
+  selfStop=true;var pr=NK.recite(su,i);selfStop=false;
+  pr.then(function(ok){
+   if(t!==token)return;
+   if(!ok){
+    stopSurah();
+    if(NK.volume.muted){var pill=document.querySelector('.nk-sound-btn');if(pill)NK.wobble(pill)}
+    else{recHint.hidden=false;NK.pop(recHint)}
+    return}
+   i++;
+   if(i>to){stopSurah();NK.sfx('level');NK.haptic('success');talk(S.ended);return}
+   setTimeout(step,RM?120:300)})})()}
+$$('.snd').forEach(function(b){b.addEventListener('click',function(){playSurah(b)})});
+
+/* ---------- first words ---------- */
+$$('#words .word').forEach(function(b){
+ var t=0;
+ b.addEventListener('click',function(){
+  NK.sfx('pop');NK.haptic('light');
+  b.classList.add('glow');clearTimeout(t);t=setTimeout(function(){b.classList.remove('glow')},900);
+  NK.pop(b.querySelector('.we'),{from:.7,duration:420});
+  if(!RM)NK.fx.burstAt(b,{n:10,kind:'heart',colors:['#f9a8d4','#F4DC8E','#FFF7DF'],power:.55});
+  speak(b.dataset.ar,b);
+  talk(S.word);
+  if(!tapped[b.dataset.w]){tapped[b.dataset.w]=1;taps++;bump()}
+ })});
+
+/* ---------- peek: the cloud slides aside, the sky peeks out, the cloud comes back ---------- */
+$$('#sky .peekspot').forEach(function(spot){
+ var cloud=spot.querySelector('.cloud'),behind=spot.querySelector('.behind'),t=0;
+ function shut(){clearTimeout(t);spot.classList.remove('open');behind.classList.remove('shown')}
+ cloud.addEventListener('click',function(){
+  if(spot.classList.contains('open')){NK.sfx('pop');shut();return}
+  spot.classList.add('open');behind.classList.add('shown');
+  NK.sfx('sparkle');NK.haptic('light');
+  if(!RM)NK.fx.burstAt(behind,{n:10,kind:'star',power:.55});
+  speak(cloud.dataset.ar);
+  talk(S.peek);
+  clearTimeout(t);t=setTimeout(shut,RM?1400:2600)})});
+
+/* ---------- the du'as of the day ---------- */
+$$('.spk').forEach(function(b){
+ b.addEventListener('click',function(){
+  if(b.getAttribute('aria-pressed')==='true'){NK.stopAudio();b.setAttribute('aria-pressed','false');return}
+  speak(b.dataset.ar,b)})});
+
+/* ---------- the off-screen shelf remembers what you have done ---------- */
+var shelf=(saved&&saved.shelf&&typeof saved.shelf==='object')?saved.shelf:{};
+$$('.idea').forEach(function(b){
+ var k=b.dataset.k;
+ if(shelf[k])b.setAttribute('aria-pressed','true');
+ b.addEventListener('click',function(){
+  var on=b.getAttribute('aria-pressed')!=='true';
+  b.setAttribute('aria-pressed',on?'true':'false');
+  shelf[k]=on?1:0;NK.save(KEY,{shelf:shelf});
+  if(on){NK.sfx('ding');NK.haptic('success');if(!RM)NK.fx.burstAt(b.querySelector('.tick'),{n:9,kind:'spark',colors:['#34d399','#FFF7DF'],power:.5});talk(S.shelf)}
+  else NK.sfx('pop')})});
+
+$('#reset').addEventListener('click',function(){NK.clear(KEY);location.reload()});
+document.addEventListener('visibilitychange',function(){if(document.hidden)stopSurah()});
+talk(S.start);
 })();
 </script>
 </body>
