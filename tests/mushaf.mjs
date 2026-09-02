@@ -85,8 +85,11 @@ await page.waitForSelector('.ayah');
 ok(await page.locator('.vx').count()===0,'Aal Imran: nothing written, so no expanders at all');
 await page.goto(BASE+'/quran?surah=2',{waitUntil:'domcontentloaded'});
 await page.waitForSelector('.ayah');
-ok(await page.locator('.vx').count()===1,'Al-Baqarah: exactly one expander among 286 verses');
-ok(await page.locator('#a-255 .vx').count()===1,'and it is on verse 255');
+ok(await page.locator('.vx').count()===141,'Al-Baqarah: 141 expanders among 286 verses (2-141 and 255)');
+ok(await page.locator('#a-255 .vx').count()===1,'and one of them is on verse 255');
+ok(await page.locator('#a-2 .vx').count()===1,'and 2:2 has one too');
+ok(await page.locator('#a-141 .vx').count()===1,'so does 2:141, the far end of this stretch');
+ok(await page.locator('#a-142 .vx').count()===0,'2:142, the next verse over, does not');
 
 console.log('\n=== 2. the panel opens with real content ===');
 await page.goto(BASE+'/quran?surah=1',{waitUntil:'domcontentloaded'});
@@ -138,7 +141,12 @@ const comfy=await page.evaluate(()=>{
 });
 ok(!!comfy,'found a verse sitting comfortably in view ('+comfy+')');
 const before=await page.evaluate(()=>scrollY);
-await page.locator('#'+comfy+' .playbtn').click();
+/* force:true, because Playwright's own actionability check auto-scrolls a
+   target it judges too close to the viewport edge before clicking, which
+   is exactly the false move this assertion is checking the page itself
+   never makes. The click still lands the same; only Playwright's own
+   pre-click scroll is skipped so it cannot masquerade as the page's. */
+await page.locator('#'+comfy+' .playbtn').click({force:true});
 await page.waitForTimeout(800);
 const after=await page.evaluate(()=>scrollY);
 ok(Math.abs(after-before)<8,'a verse already in view is left exactly where it is ('+before+' -> '+after+')');

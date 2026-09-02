@@ -211,9 +211,12 @@ console.log('\n[7] reduced motion · search');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   ok(errors.length === 0 && await page.locator('.tile').count() === 71, 'reduced motion healthy');
-  /* Search became a full overlay built by /assets/noor-search.js: the field is
-     #ns-q and the results live in #ns-out. */
-  await page.click('#search-toggle');
+  /* Search is a full overlay built by /assets/noor-search.js: the field is
+     #ns-q and the results live in #ns-out. The header magnifier itself now
+     opens the nav dial instead (see tests/menu.mjs), so this overlay is
+     reached the same way a keyboard-first reader reaches it: the "/" or
+     Cmd/Ctrl+K shortcut that noor-search.js listens for globally. */
+  await page.keyboard.press('/');
   await page.waitForSelector('#ns-q', { timeout: 8000 });
   await page.fill('#ns-q', 'kawthar');
   await page.waitForTimeout(400);
