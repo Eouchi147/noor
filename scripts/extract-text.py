@@ -39,8 +39,11 @@ def _fnv(s, seed):
     """FNV-1a, 32 bit. Chosen because the browser has to compute the same key on
     every text node at language change, and it must be synchronous and cheap."""
     h = seed
-    for ch in s:
-        h ^= ord(ch) & 0xFFFF
+    # walk UTF-16 code units, not code points: the browser hashes charCodeAt(),
+    # so an emoji (two surrogates) must hash the same way here or its key never matches
+    b = s.encode("utf-16-le")
+    for i in range(0, len(b), 2):
+        h ^= (b[i] | (b[i + 1] << 8)) & 0xFFFF
         h = (h * 0x01000193) & 0xFFFFFFFF
     return h
 

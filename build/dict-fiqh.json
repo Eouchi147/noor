@@ -171,7 +171,7 @@
     "also": ["Rukhsa", "Rukhsat", "Rukhas", "Ruhsat", "Rukhsah shar'iyyah", "concession", "dispensation", "exemption", "relief", "allowance", "easing"],
     "cat": "fiqh",
     "short": "A concession: permission to do the easier thing when a recognised excuse applies.",
-    "long": "Shortening prayer while travelling, breaking the fast when ill, and wiping over socks are all rukhsah. The Qur'an states plainly that God intends ease for you and does not intend hardship, and the Prophet is reported to have said God loves His concessions to be taken as He loves His commands to be obeyed. Taking a concession you genuinely qualify for is not weakness, and refusing one out of scruple is not extra piety.",
+    "long": "Shortening prayer while travelling, breaking the fast when ill, and wiping over socks are all rukhsah. The Qur'an states plainly that Allah intends ease for you and does not intend hardship, and the Prophet is reported to have said Allah loves His concessions to be taken as He loves His commands to be obeyed. Taking a concession you genuinely qualify for is not weakness, and refusing one out of scruple is not extra piety.",
     "see": ["azimah", "darurah", "qasr", "fidyah"],
     "k": "quran"
   },
@@ -512,7 +512,7 @@
     "also": ["Hadd", "Hudood", "Hadd punishment", "Huduud", "Hodud", "Had", "hudud punishments", "fixed penalties", "prescribed punishments", "Islamic criminal law", "limits of God"],
     "cat": "fiqh",
     "short": "The small set of fixed penalties named in revelation, hedged about with very strict proof.",
-    "long": "The singular is hadd, a limit; the name comes from the Qur'an's phrase the limits of God, which it uses more widely. Jurists usually count between four and seven: theft, zina, false accusation of zina, highway robbery, and for most, drinking wine and apostasy. The evidence required is deliberately near impossible, four upright eyewitnesses to the act itself in zina, and a settled maxim holds that hudud are averted by any doubt. Confessions may be withdrawn, and the classical record shows these penalties were rarely carried out.",
+    "long": "The singular is hadd, a limit; the name comes from the Qur'an's phrase the limits of Allah, which it uses more widely. Jurists usually count between four and seven: theft, zina, false accusation of zina, highway robbery, and for most, drinking wine and apostasy. The evidence required is deliberately near impossible, four upright eyewitnesses to the act itself in zina, and a settled maxim holds that hudud are averted by any doubt. Confessions may be withdrawn, and the classical record shows these penalties were rarely carried out.",
     "see": ["tazir", "qisas", "zina", "qadi"],
     "k": "quran"
   },
@@ -644,7 +644,7 @@
     "also": ["Sadd al dharai", "Sadd adh-dharai", "Sad al-zarai", "Sadd ul dharai", "Dharia", "Dhariah", "Zarai", "blocking the means", "preventing pretexts", "closing the doors", "fath al-dharai"],
     "cat": "fiqh",
     "short": "Blocking the means: forbidding something lawful because it reliably leads to something forbidden.",
-    "long": "The classic proof is the Qur'anic instruction not to insult what others call upon besides God, lest they insult God in return out of ignorance. Malikis and Hanbalis use the principle heavily, while Shafi'is and Hanafis apply it more sparingly, since without limits it can be stretched to forbid nearly anything. Its mirror image, opening the means, is used to encourage whatever leads to a required good.",
+    "long": "The classic proof is the Qur'anic instruction not to insult what others call upon besides Allah, lest they insult Allah in return out of ignorance. Malikis and Hanbalis use the principle heavily, while Shafi'is and Hanafis apply it more sparingly, since without limits it can be stretched to forbid nearly anything. Its mirror image, opening the means, is used to encourage whatever leads to a required good.",
     "see": ["maslahah", "maliki", "hanbali", "haram"],
     "k": "debated"
   },
@@ -688,7 +688,7 @@
     "also": ["Nafaqa", "Nafqah", "Nafakah", "Nafaqat", "Nafaka", "Infaq", "maintenance", "spousal maintenance", "financial support", "child support", "upkeep", "provision"],
     "cat": "fiqh",
     "short": "Maintenance: the husband's duty to provide housing, food and clothing for wife and children.",
-    "long": "The Qur'an sets the measure by means, telling a man of wealth to spend from his wealth and one whose provision is straitened to spend from what God has given him. It is owed regardless of the wife's own income, since whatever she owns or earns remains hers alone. It continues through the waiting period after a revocable divorce, and a father's duty to maintain his children does not end when the marriage does.",
+    "long": "The Qur'an sets the measure by means, telling a man of wealth to spend from his wealth and one whose provision is straitened to spend from what Allah has given him. It is owed regardless of the wife's own income, since whatever she owns or earns remains hers alone. It continues through the waiting period after a revocable divorce, and a father's duty to maintain his children does not end when the marriage does.",
     "see": ["nikah", "iddah", "talaq", "mahr"],
     "k": "quran"
   },
@@ -754,7 +754,7 @@
     "also": ["Bay", "Bai", "Baye", "Bai'", "Buyu", "Buyoo", "Bay salam", "Bay al-inah", "sale", "trade", "buying and selling", "commerce", "transaction"],
     "cat": "fiqh",
     "short": "Sale: the exchange of property for property by mutual consent.",
-    "long": "The Qur'an states that God has permitted trade and forbidden riba, and the Prophet himself worked as a merchant before prophethood. A valid sale needs a known price, a known item the seller can actually deliver, ownership or authority to sell it, and consent untouched by deception. Fiqh names many specific forms, among them salam, paid now and delivered later, and murabahah, sold at a disclosed markup.",
+    "long": "The Qur'an states that Allah has permitted trade and forbidden riba, and the Prophet himself worked as a merchant before prophethood. A valid sale needs a known price, a known item the seller can actually deliver, ownership or authority to sell it, and consent untouched by deception. Fiqh names many specific forms, among them salam, paid now and delivered later, and murabahah, sold at a disclosed markup.",
     "see": ["aqd", "riba", "gharar", "murabahah"],
     "k": "quran"
   },
@@ -808,8 +808,8 @@
     "ar": "ذَبيحة",
     "also": ["Zabiha", "Zabihah", "Dhabiha", "Zabeeha", "Dhabh", "Zabh", "Tasmiyah", "Nahr", "halal slaughter", "halal meat", "ritual slaughter", "Islamic slaughter", "halal butchery"],
     "cat": "fiqh",
-    "short": "Meat from an animal slaughtered in the Islamic way, with the name of God pronounced over it.",
-    "long": "The throat is cut swiftly with a sharp blade, severing the windpipe and the blood vessels, and the animal must be alive and treated gently beforehand; the Prophet ordered the blade to be sharpened, the animal spared distress, and the knife kept out of its sight. The Qur'an also permits the food of the People of the Book, and scholars differ over whether ordinary commercial meat in Jewish and Christian countries falls under that permission. Pork, blood, carrion and anything dedicated to other than God remain forbidden either way.",
+    "short": "Meat from an animal slaughtered in the Islamic way, with the name of Allah pronounced over it.",
+    "long": "The throat is cut swiftly with a sharp blade, severing the windpipe and the blood vessels, and the animal must be alive and treated gently beforehand; the Prophet ordered the blade to be sharpened, the animal spared distress, and the knife kept out of its sight. The Qur'an also permits the food of the People of the Book, and scholars differ over whether ordinary commercial meat in Jewish and Christian countries falls under that permission. Pork, blood, carrion and anything dedicated to other than Allah remain forbidden either way.",
     "see": ["halal", "haram", "khamr", "hady"],
     "k": "quran"
   },
