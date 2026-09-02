@@ -23,8 +23,9 @@
    523 words it is well over a year before anything repeats.
 --------------------------------------------------------------------------- */
 
-import { readDay, leadsFor, FIXED } from "./_calendar.js";
+import { readDay, leadsFor, FIXED, MONTHS } from "./_calendar.js";
 import { verifiedHijri, verifiedRange, addDays, METHOD_NOTE } from "./_hijri.js";
+import { trimToSentences } from "./_prose.js";
 
 export const SLOTS = [
   { id: "dawn",  at: 5,  needsDate: true  },
@@ -75,6 +76,46 @@ const root = l => String(l || "").replace(/^(https?:\/\/[^/]+).*$/, "$1");
 const tags = (...extra) => [...new Set([...extra, ...BASE_TAGS])];
 
 /* ---------------------------------------------------------------------------
+   the expansion
+
+   The first month of slots went out thin: a chapter post whose whole caption
+   was its title plus one boilerplate line, a word post that stopped at the
+   dictionary's one-line gloss. Accurate, and empty, and the owner said so.
+
+   The library already holds the full material: every chapter of the Path has
+   its own /node/<id>.json with a summary, a details narrative, its verse, its
+   hadith with a named source and its lessons; every word of the Encyclopedia
+   has a long teaching text in assets/dict-index.json. The fix is not to write
+   anything new at post time, it is to CARRY what was already written and
+   audited. The caller fetches the chosen chapter and the chosen entry and
+   hands them in as ctx.node and ctx.entry; with neither present these slots
+   still compose, the way the norepeat test builds them, just thinner.
+--------------------------------------------------------------------------- */
+/* {{c:id|label}} and {{n:ID|label}} are the site's own cross links; a caption
+   keeps the label and drops the plumbing */
+const unmark = s => String(s || "").replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1");
+
+/* the invitation, one honest sentence per kind of post, claims checked against
+   the live rooms rather than remembered: the Mushaf is recited, the
+   Encyclopedia holds 523 entries, the Path holds 71 chapters */
+const INVITE = {
+  dawn: "Noor Codex of Light is a free Islamic library: the whole Qur'an recited, the calendar explained with its evidence named, the story of Islam told in order. No ads, no trackers, no account.\n\nnoorcodex.com",
+  lead: "Noor Codex of Light is a free Islamic library: the whole Qur'an recited, the calendar explained with its evidence named, the story of Islam told in order. No ads, no trackers, no account.\n\nnoorcodex.com",
+  word: "One word a day, from the Encyclopedia of the Path: 523 words of the deen, each with its Arabic, its evidence and its meaning in plain English, free at noorcodex.com. No ads, no trackers, no account.",
+  dusk: "One chapter a day, from the Path of Creation: the whole story in order, Kun Fayakun to the Hour, in 71 illuminated chapters, free at noorcodex.com. No ads, no trackers, no account."
+};
+
+/* the pickers, exported so the caller can know WHICH chapter and word today
+   is, fetch their full material, and hand it back in */
+export const pickWord = (words, dateStr) => pick(words, dateStr, "word");
+export const pickChapter = (path, dateStr) => pick(path, dateStr, "path");
+
+const dayName = g => {
+  try { return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    [new Date(String(g) + "T12:00:00Z").getUTCDay()] || ""; } catch { return ""; }
+};
+
+/* ---------------------------------------------------------------------------
    which slots belong to this day
 --------------------------------------------------------------------------- */
 export async function planDay(dateStr, opts = {}) {
@@ -98,7 +139,7 @@ export async function planDay(dateStr, opts = {}) {
    what each slot actually says
 --------------------------------------------------------------------------- */
 export function buildSlot(slot, ctx) {
-  const { date, hijri: h, day, leads, words, path, link, image } = ctx;
+  const { date, hijri: h, day, leads, words, path, link, image, node, entry } = ctx;
 
   if (slot === "dawn") {
     if (!h || !day) return null;
@@ -110,12 +151,13 @@ export function buildSlot(slot, ctx) {
         title: f.name,
         /* the names already carry their article -- "The Day of Arafah" -- so
            "Today is The Day of Arafah" reads like a machine wrote it */
-        oneLine: `${f.name} — ${hd}.`,
+        oneLine: `${f.name}: ${hd}.`,
         body: `${hd}.\n\n${f.what}`,
         todo: f.todo || [],
         basis: f.basis ? (f.url ? `${f.basis} · ${f.url}` : f.basis) : "",
         note: [f.note, METHOD_NOTE].filter(Boolean).join(" · "),
         tags: tags(f.tag || "#Islam", "#Muslim"),
+        invite: INVITE.dawn,
         link, image
       };
     }
@@ -123,12 +165,40 @@ export function buildSlot(slot, ctx) {
       const r = rec[0];
       return {
         lvl: r.lvl, key: r.key, title: r.name,
-        oneLine: `${r.name} — ${r.what}`,
+        oneLine: `${r.name}: ${r.what}`,
         body: `${hd}.\n\n${r.what}`,
         todo: r.todo || [],
         basis: r.url ? `${r.basis} · ${r.url}` : r.basis,
         note: [r.note, METHOD_NOTE].filter(Boolean).join(" · "),
-        tags: tags(r.tag || "#Islam", "#Muslim"), link, image
+        tags: tags(r.tag || "#Islam", "#Muslim"),
+        invite: INVITE.dawn,
+        link, image
+      };
+    }
+    /* an ordinary morning. The date alone teaches nothing; the month it sits
+       in always does, and the month piece was written and audited the way the
+       observances were. On top of it, one true dated line about the rhythm:
+       what stands near enough today to act on. */
+    const m = MONTHS[h.m];
+    const rhythm = [];
+    if (h.d >= 9 && h.d <= 12 && h.m !== 12)
+      rhythm.push(`The white days of this month, the 13th to the 15th, begin in ${13 - h.d === 1 ? "one day" : (13 - h.d) + " days"}: three fasts the Prophet ﷺ named to Abu Dharr.`);
+    const wd = dayName(h.g);
+    if (wd === "Sunday" || wd === "Wednesday")
+      rhythm.push(`Tomorrow is ${wd === "Sunday" ? "Monday" : "Thursday"}, one of the two days deeds are presented, which the Prophet ﷺ liked to meet fasting.`);
+    if (wd === "Thursday")
+      rhythm.push("Tonight is the night of Jumu'ah, and tomorrow its day: many bring forward Surah al-Kahf to the night.");
+    if (m) {
+      return {
+        lvl: m.lvl, key: "month-" + h.m + "-" + h.d, title: hd,
+        oneLine: `${hd}, in ${m.name}.`,
+        /* the title already prints the date, so the body opens on the month */
+        body: m.what + (rhythm.length ? `\n\n${rhythm.join(" ")}` : ""),
+        todo: [], basis: m.url ? `${m.basis} · ${m.url}` : (m.basis || ""),
+        note: [m.note, METHOD_NOTE].filter(Boolean).join(" · "),
+        tags: tags("#HijriCalendar", "#" + m.name.replace(/[^A-Za-z]/g, "")),
+        invite: INVITE.dawn,
+        link, image
       };
     }
     return {
@@ -136,7 +206,9 @@ export function buildSlot(slot, ctx) {
       oneLine: `Today is ${hd}.`,
       body: `${hd}.\n\nAn ordinary day in the Muslim year, which is most of them, and the ones the rest are built out of.`,
       todo: [], basis: "", note: METHOD_NOTE,
-      tags: tags("#HijriCalendar"), link, image
+      tags: tags("#HijriCalendar"),
+      invite: INVITE.dawn,
+      link, image
     };
   }
 
@@ -151,37 +223,103 @@ export function buildSlot(slot, ctx) {
       todo: o.todo || [],
       basis: o.basis ? (o.url ? `${o.basis} · ${o.url}` : o.basis) : "",
       note: [o.note, METHOD_NOTE].filter(Boolean).join(" · "),
-      tags: tags(o.tag || "#Islam", "#Muslim"), link, image
+      tags: tags(o.tag || "#Islam", "#Muslim"),
+      invite: INVITE.lead,
+      link, image
     };
   }
 
   if (slot === "word") {
     const w = pick(words, date, "word");
     if (!w) return null;
+    /* entry is the word's FULL record out of assets/dict-index.json, fetched
+       by the caller; w is the menu index's one-line version of the same word */
+    const e = entry && (entry.t || entry.l || entry.s) ? entry : null;
+    const long = e && e.l ? trimToSentences(unmark(e.l), 1050) : "";
+    const shortLine = (e && e.s) || w.s || "";
+    /* the term itself is the title, and every channel prints the title first,
+       so the body opens on the Arabic rather than saying the word twice */
+    const bodyParts = [w.a, shortLine];
+    if (long && long !== shortLine) bodyParts.push(long);
+    const catLine = e && e.cat ? `${e.cat} · one entry of 523 in the Encyclopedia of the Path.` : "";
     return {
-      lvl: "editorial", key: "word-" + w.i, title: w.t,
-      oneLine: `${w.t} (${w.a}) — ${w.s}`,
-      body: `${w.t}\n${w.a}\n\n${w.s}`,
-      todo: [], basis: "", note: "",
-      tags: tags("#Arabic", "#Quran"),
-      link: root(link) + "/dictionary#" + w.i, image
+      lvl: (e && e.k) || "editorial", key: "word-" + w.i, title: w.t,
+      oneLine: `${w.t} (${w.a}): ${shortLine}`,
+      body: bodyParts.filter(Boolean).join("\n\n"),
+      todo: [], basis: "",
+      note: catLine,
+      tags: tags("#Arabic", "#Quran", "#IslamicTerms"),
+      invite: INVITE.word,
+      /* a fragment in a caption is mangled into a hashtag by the networks, so
+         the deep link travels as a query and the room reads both spellings */
+      link: root(link) + "/dictionary?w=" + w.i, image
     };
   }
 
   if (slot === "dusk") {
     const c = pick(path, date, "path");
     if (!c) return null;
+    /* node is the chapter's own /node/<id>.json, fetched by the caller: the
+       same file the reader's modal opens, so the post and the room agree */
+    const n = node && (node.summary || node.details) ? node : null;
+    const summary = n ? unmark(n.summary || "") : "";
+    const details = n ? trimToSentences(unmark(n.details || ""), 950) : "";
+    const lessons = n && Array.isArray(n.lessons) ? n.lessons.slice(0, 3).map(unmark) : [];
+    /* the verse the chapter itself carries, translation first; a chapter with
+       no verse offers its hadith instead, source and all */
+    let basis = "";
+    const v = n && Array.isArray(n.quran) && n.quran[0];
+    const hh = n && Array.isArray(n.hadith) && n.hadith[0];
+    const bits = [summary, details].filter(Boolean).join("\n\n");
+    /* a chapter that already quotes its verse in the narrative does not quote
+       it again underneath; the hadith, with its named source, stands instead */
+    const verseShown = v && v.en && bits.includes(String(v.en).slice(0, 48));
+    if (v && v.en && !verseShown) basis = `Qur'an ${v.ref}: "${trimToSentences(v.en, 200) || v.en}"`;
+    else if (hh && hh.text) basis = `${trimToSentences(unmark(hh.text), 220) || hh.text}` + (hh.source ? ` · ${hh.source}` : "");
     return {
-      lvl: "editorial", key: "path-" + c.i, title: c.t,
-      oneLine: `${c.t} — chapter ${c.i} of the Path.`,
-      body: `${c.t}\n${c.a || ""}\n\nChapter ${c.i} of the Path of Creation: the story from Kun Fayakun to the Hour, in seventy-one chapters.`,
-      todo: [], basis: "", note: "",
-      tags: tags("#IslamicHistory"),
-      link: root(link) + "/#node-" + c.i, image
+      lvl: "editorial", key: "path-" + c.i, title: n && n.titleEn ? n.titleEn : c.t,
+      oneLine: `${(n && n.titleEn) || c.t}. Chapter ${c.i} of 71 on the Path.`,
+      body: bits || `${c.t}\n${c.a || ""}\n\nChapter ${c.i} of the Path of Creation: the story from Kun Fayakun to the Hour, in seventy-one chapters.`,
+      todo: lessons,
+      basis,
+      note: [n && n.metric ? n.metric : "", `Chapter ${c.i} of 71 on the Path of Creation.`].filter(Boolean).join(" · "),
+      tags: tags("#IslamicHistory", "#Muslim"),
+      invite: INVITE.dusk,
+      /* ?node= rather than #node-: the fragment form is eaten as a hashtag in
+         a caption, and the query form is the one the room's own tests open */
+      link: root(link) + "/?node=" + c.i, image
     };
   }
 
   return null;   /* "light" is built by compose() in social.js, not here */
+}
+
+/* ---------------------------------------------------------------------------
+   fetching what the day's word and chapter actually say
+
+   One helper, used by the poster and by the card route, so the caption and
+   the picture are always built from the same material. Every fetch here is
+   allowed to fail: a slot composed without its enrichment is the thin post
+   the machine used to send, which is worse than the full one and better than
+   none.
+--------------------------------------------------------------------------- */
+export async function slotExtras(base, date, index, slot) {
+  const out = { node: null, entry: null };
+  const grab = async u => {
+    try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
+  };
+  if (!slot || slot === "dusk") {
+    const c = index && pickChapter(index.path, date);
+    if (c && c.i != null) out.node = await grab(base + "/node/" + c.i + ".json");
+  }
+  if (!slot || slot === "word") {
+    const w = index && pickWord(index.words, date);
+    if (w && w.i != null) {
+      const d = await grab(base + "/assets/dict-index.json");
+      if (d && d.words && d.words[w.i]) out.entry = d.words[w.i];
+    }
+  }
+  return out;
 }
 
 /* ---------------------------------------------------------------------------

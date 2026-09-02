@@ -41,7 +41,7 @@
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
-import { planDay, buildSlot, dueNow, SLOT_IDS, SLOTS } from "./_schedule.js";
+import { planDay, buildSlot, dueNow, slotExtras, SLOT_IDS, SLOTS } from "./_schedule.js";
 import * as CH from "./_channels.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
@@ -865,9 +865,13 @@ export async function composeSlot(host, date, slotId, opts = {}) {
   let index = opts.index || null;
   if (!index) { try { const r = await fetch(base + "/assets/menu-index.json");
     if (r.ok) index = await r.json(); } catch { } }
+  /* the day's chapter and word, in full, so the caption carries the material
+     the library actually wrote rather than the index's one line */
+  const extras = opts.extras || await slotExtras(base, date, index, slotId);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
+    node: extras.node, entry: extras.entry,
     link: base + "/?light=" + date,
     /* its OWN card, not the day's light. Handing one url to every slot is what
        made four different posts a day look like one post four times. */
@@ -947,9 +951,11 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image };
     } else {
+      const extras = await slotExtras(base, date, idx, slot.id);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
+        node: extras.node, entry: extras.entry,
         link: base + "/?light=" + date,
         image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slot.id) + "&fmt=png"
       });

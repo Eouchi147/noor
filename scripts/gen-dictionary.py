@@ -396,9 +396,13 @@ JS = """<script>
   }
   window.NOOR_DICT = { open: open, size: D.length };
 
-  /* arriving from a link, or from the search on any other page */
+  /* arriving from a link, or from the search on any other page.
+     ?w=id is read as a fallback spelling of #id: a social caption mangles a
+     fragment into a hashtag, so the daily word post links with a query
+     instead, and both spellings land on the same entry. */
   function fromHash(){
     var h = (location.hash || "").replace(/^#/, "");
+    if (!h) { try { h = new URLSearchParams(location.search).get("w") || ""; } catch (e) {} }
     if (!h) return;
     if (ents[h]) { setTimeout(function(){ open(h); }, 120); return; }
     var pre = h.match(/^q=(.*)$/);           /* /dictionary#q=qadr */

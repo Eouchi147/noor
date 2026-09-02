@@ -672,6 +672,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
   /* arriving from a link, or from the search on any other page */
   function fromHash(){
     var h = (location.hash || "").replace(/^#/, "");
+    if (!h) { try { h = new URLSearchParams(location.search).get("w") || ""; } catch (e) {} }
     if (!h) return;
     if (ents[h]) { setTimeout(function(){ open(h); }, 120); return; }
     var pre = h.match(/^q=(.*)$/);           /* /dictionary#q=qadr */

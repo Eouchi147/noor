@@ -28,6 +28,18 @@ globalThis.fetch = async url => {
   if (u.includes('aladhan')) return stubFetch()(u);
   if (u.includes('menu-index.json')) return { ok: true, status: 200, json: async () => idx };
   if (u.includes('/lights/all.json')) return { ok: true, status: 200, json: async () => lights };
+  /* the enrichment the slots now carry: the chapter's own node file and the
+     Encyclopedia's full entries, served from disk the way production serves
+     them from the site */
+  const nm = u.match(/\/node\/(\d+)\.json/);
+  if (nm) {
+    const j = JSON.parse(fs.readFileSync(new URL('node/' + nm[1] + '.json', root), 'utf8'));
+    return { ok: true, status: 200, json: async () => j };
+  }
+  if (u.includes('dict-index.json')) {
+    const j = JSON.parse(fs.readFileSync(new URL('assets/dict-index.json', root), 'utf8'));
+    return { ok: true, status: 200, json: async () => j };
+  }
   throw new Error('unexpected fetch ' + u);
 };
 

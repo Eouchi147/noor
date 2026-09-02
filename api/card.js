@@ -40,7 +40,7 @@
 //    the honorific. Only the drawing spells it out.
 
 import { chooseLight } from "./_lights.js";
-import { planDay, buildSlot, SLOT_IDS } from "./_schedule.js";
+import { planDay, buildSlot, slotExtras, SLOT_IDS } from "./_schedule.js";
 import { ornament, motifFor } from "./_art.js";
 import { REGULAR, BOLD, FAMILY, COVERAGE } from "./_cardfont.js";
 import { fitSentences } from "./_prose.js";
@@ -314,14 +314,19 @@ async function slotCard(host, date, slot) {
   if (!SLOT_IDS.includes(slot) || slot === "light") return null;
   let plan; try { plan = await planDay(date); } catch { return null; }
   if (!plan) return null;
+  const base = "https://" + String(host).replace(/^https?:\/\//, "");
   let index = null;
   try {
-    const r = await fetch("https://" + String(host).replace(/^https?:\/\//, "") + "/assets/menu-index.json");
+    const r = await fetch(base + "/assets/menu-index.json");
     if (r.ok) index = await r.json();
   } catch { }
+  /* the same enrichment the caption gets, so the picture can never say less
+     than the words underneath it were built from */
+  const extras = await slotExtras(base, date, index, slot);
   const post = buildSlot(slot, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
-    words: index && index.words, path: index && index.path, link: "", image: ""
+    words: index && index.words, path: index && index.path,
+    node: extras.node, entry: extras.entry, link: "", image: ""
   });
   if (!post || !post.title) return null;
   /* The body of a slot is built for a caption, where it opens by restating the

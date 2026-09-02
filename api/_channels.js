@@ -102,6 +102,7 @@ export function shape(p, ch) {
     const parts = [p.title, "", p.body];
     if (p.todo && p.todo.length) parts.push("", p.todo.map(t => "• " + t).join("\n"));
     if (p.basis) parts.push("", p.basis);
+    if (p.invite) parts.push("", p.invite);
     parts.push("", link);
     if (tags) parts.push("", tags);
     return { text: cut(parts.join("\n"), s.chars), image: p.image || null };
@@ -118,11 +119,16 @@ export function shape(p, ch) {
     return { title: cut(p.title, 300), text: cut(parts.join("\n"), s.chars), image: p.image || null };
   }
 
-  /* facebook and instagram: the house caption */
+  /* facebook and instagram: the house caption. The invitation sits between
+     the material and the link: first the teaching, whole; then, for whoever
+     the picture stopped, what the library is and that it is free; the link
+     and the tags close. Reddit deliberately never carries it -- a promotion
+     there costs the account -- and X has no room for it. */
   const parts = [p.title, "", p.body];
   if (p.todo && p.todo.length) parts.push("", p.todo.map(t => "• " + t).join("\n"));
   if (p.basis) parts.push("", p.basis);
   if (p.note) parts.push("", p.note);
+  if (p.invite) parts.push("", p.invite);
   parts.push("", link);
   if (tags) parts.push("", tags);
   return { text: cut(parts.join("\n"), s.chars), image: p.image || null };
