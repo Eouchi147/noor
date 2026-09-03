@@ -12,12 +12,13 @@ browser's, the picture is numpy's, and the two agree on the clock.
     python3 webreel.py sufi shatir      render some of them
     python3 webreel.py --audit          only check the safe area
 """
-import io, json, os, subprocess, sys, time
+import io, json, os, subprocess, sys, tempfile, time
 import numpy as np
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
 import cine
+import sound
 from spec import W, H, FPS, SAFE_TOP, SAFE_BOTTOM, SAFE_L, SAFE_R, ease
 
 PAGE = "file://" + os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "type.html")
@@ -92,8 +93,12 @@ def look(name):
     return lk, card
 
 
-def frames(stage, name, secs=None):
-    """yields (t, finished frame) for the whole reel"""
+def prepare(stage, name, secs=None):
+    """build the type layer once, and hand back everything the render needs.
+
+    Split out of frames() because the sound has to be written before ffmpeg
+    starts, and the sound is placed from the timeline this build reports.
+    """
     cfg, card = look(name)
     secs = secs or cfg["secs"]
     info = stage.build(card, secs)
@@ -103,6 +108,14 @@ def frames(stage, name, secs=None):
     cin = cine.Cine(cfg["pal"], cfg["seed"], cfg["n"], cfg["k"], secs,
                     cine.Scene(cfg["scene"], n=cfg["n"], k=cfg["k"]),
                     cue_at=cue_at, recede=info["tBody"] - 0.5)
+    return {"cfg": cfg, "card": card, "secs": secs, "info": info, "cin": cin,
+            "slot": plan()[name].get("slot", "morning")}
+
+
+def frames(stage, name, secs=None, prep=None):
+    """yields (t, finished frame) for the whole reel"""
+    p = prep or prepare(stage, name, secs)
+    secs, info, cin = p["secs"], p["info"], p["cin"]
     for i in range(int(FPS * secs)):
         t = i / float(FPS)
         fg = stage.at(t)
@@ -111,13 +124,20 @@ def frames(stage, name, secs=None):
 
 
 def render(stage, name, out_dir="out"):
-    cfg, card = look(name)
-    secs = cfg["secs"]
+    prep = prepare(stage, name)
+    secs = prep["secs"]
     out = f"{out_dir}/{name}.mp4"
+    # The bed, written first because it is placed from this card's own timeline.
+    # It goes to a temp directory rather than out_dir on purpose: the workflow
+    # commits everything in reels/, so a run that died between writing the bed
+    # and encoding would otherwise leave a four megabyte wav in the repository.
+    wav = sound.bed(os.path.join(tempfile.gettempdir(), f"noor-bed-{os.getpid()}-{name}.wav"),
+                    prep["info"], secs, prep["cfg"]["seed"], prep["slot"],
+                    len(prep["card"]["lines"]))
     p = subprocess.Popen(
         ["ffmpeg", "-y", "-loglevel", "error",
          "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-         "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+         "-i", wav,
          "-map", "0:v", "-map", "1:a", "-t", str(secs),
          # slow and crf 25: these frames are dark and barely move, so the
          # slower search finds far more to throw away. Four megabytes became
@@ -127,12 +147,14 @@ def render(stage, name, out_dir="out"):
          "-c:a", "aac", "-b:a", "96k", "-shortest",
          "-movflags", "+faststart", out], stdin=subprocess.PIPE)
     cover_at, cover = None, None
-    for t, img, info in frames(stage, name):
+    for t, img, info in frames(stage, name, prep=prep):
         p.stdin.write(img.tobytes())
         if cover_at is None: cover_at = info["tDate"] + 1.1
         if cover is None and t >= cover_at:
             cover = img; img.save(f"{out_dir}/{name}-cover.jpg", quality=92)
     p.stdin.close(); p.wait()
+    try: os.remove(wav)
+    except OSError: pass
     return out
 
 

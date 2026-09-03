@@ -3,14 +3,18 @@
 
 Called by the workflow with no arguments, so a card added to plan.json is
 rendered on the next run and nothing already rendered is rendered again. Given
-ids, it renders exactly those and overwrites them.
+ids, it renders exactly those and overwrites them. Given "all", it renders the
+whole library again, which is what a change to the picture or the sound needs:
+those change every reel, and a reel is only as current as the day it was made.
 
     python3 render_missing.py                  the ones with no video
     python3 render_missing.py <id> [<id> ...]  exactly these, again
+    python3 render_missing.py all              every card, again
 """
 import json, os, sys, time
 from playwright.sync_api import sync_playwright
 
+import sound
 import webreel
 
 OUT = os.environ.get("REELS_OUT", "../../reels")
@@ -19,6 +23,9 @@ OUT = os.environ.get("REELS_OUT", "../../reels")
 def main():
     want = [a for a in sys.argv[1:] if not a.startswith("-")]
     cards = webreel.plan()
+    every = "--all" in sys.argv or [w.lower() for w in want] == ["all"]
+    if every:
+        want = list(cards)
     unknown = [w for w in want if w not in cards]
     if unknown: raise SystemExit("not in plan.json: " + ", ".join(unknown))
     if not want:
@@ -43,12 +50,22 @@ def main():
             for nm, why in bad: print("  OUT", nm, why)
             raise SystemExit("the safe area audit failed; nothing was rendered")
 
+        faults = []
         for nm in want:
             t0 = time.time()
             webreel._SCRIM.clear()
             path = webreel.render(st, nm, out_dir=OUT)
-            print("%s  %.0fs" % (path, time.time() - t0), flush=True)
+            # the sound is checked on the finished file, not on the bed that
+            # went in, because what ships is what came out of the encoder
+            bad = sound.check(path)
+            if bad: faults.append((nm, bad))
+            print("%s  %.0fs  %s" % (path, time.time() - t0,
+                                     "sound ok" if not bad else "SOUND " + "; ".join(bad)),
+                  flush=True)
         st.close()
+        if faults:
+            for nm, bad in faults: print("  SOUND", nm, "; ".join(bad))
+            raise SystemExit("the sound audit failed on %d reel(s)" % len(faults))
 
     manifest()
     return 0

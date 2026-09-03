@@ -6,10 +6,11 @@ surface either platform shows to people who do not already follow the account,
 so this is the growth path; everything here exists to make a stranger stop, and
 then to teach them one true thing well enough that they look the account up.
 
-Every frame is generated. There is no photograph, no stock footage, no music
-and no voice: the picture is Islamic star polygon geometry drawn from a seed,
-and the words are the card's own. So there is no licence to honour, no
-attribution to print, no dead link in two years, and no way for a figurative
+Every frame and every second of sound is generated. There is no photograph, no
+stock footage, no sample and no voice: the picture is Islamic star polygon
+geometry drawn from a seed, the sound is synthesised from the card's own
+timeline, and the words are the card's own. So there is no licence to honour,
+no attribution to print, no dead link in two years, and no way for a figurative
 image or a depiction of a prophet to reach the frame through a stock search.
 
     plan.json          the 30 cards: the script and the look for each
@@ -18,9 +19,11 @@ image or a depiction of a prophet to reach the frame through a stock search.
     spec.py            the frame, and the part of it the platforms leave alone
     geom.py            star polygon fields
     cine.py            the moving picture
+    sound.py           the bed under it
     web/               the type layer: anime.js, the page, the fonts
     webreel.py         renders one card, and audits the safe area
-    render_missing.py  renders whatever plan.json has that reels/ does not
+    render_missing.py  renders whatever plan.json has that reels/ does not,
+                       or `all` to render the whole library again
 
 ## How a reel is made
 
@@ -52,6 +55,38 @@ about fifty milliseconds apart; and the phrase carrying the surprise turns gold
 and underlines itself as it lands. The whole claim is readable by about 1.2
 seconds. Each card names that phrase in its `key` field, so which words carry
 the reel is an editorial decision, not a guess.
+
+## The sound
+
+Music is contested in Islamic law and this is a library, not a personal
+account, so the bed carries no melody, no pulse and no instrument sample.
+`sound.py` builds two things in numpy: shaped noise -- air, wind, the presence
+of a large stone room -- and a drone of root, fifth, octave and twelfth. There
+is no third anywhere in the stack, so it never resolves major or minor and
+there is nothing in it that behaves like a tune. One partial is split 4.5 Hz
+between the ears: on headphones that is a theta binaural beat, and on a phone
+speaker the two sum into a slow breathing instead, so neither listener is
+short-changed.
+
+The stack is weighted up on purpose. A phone speaker rolls off hard below about
+400 Hz, so a drone written where a drone should sit is a drone nobody hears;
+the body stays for headphones and the twelfth and above carry it on a handset.
+
+It is cut to the picture, not laid under it. Every swell is placed from the
+same timeline the type layer reports, so the air lifts on the opening bloom,
+brightens as the surprise turns gold, settles when the date rules in, opens as
+each block of substance arrives, and thins on the way home. It fades from and
+to silence, so the seam is clean when the reel loops -- and a reel loops a lot.
+
+Every reel is written to -18 LUFS integrated, measured with `ebur128` on the
+bed and then checked again on the finished mp4, because what ships is what came
+out of the encoder. An account whose posts jump in volume is an account people
+mute. `sound.check()` fails a render that has no audio stream, is not stereo
+AAC at 48 kHz, misses the loudness by more than 1.5 LU, or peaks within a
+decibel of clipping.
+
+Most reels are watched muted, and these are text-driven, so they still work in
+silence. The sound is upside, never load-bearing.
 
 ## The safe area, and why it is measured in pixels
 
@@ -124,7 +159,8 @@ as a photo.
 ## What the files are
 
 Each card renders `reels/<id>.mp4` and `reels/<id>-cover.jpg`. 1080x1920, 30fps,
-H.264 high, yuv420p, about a megabyte, with the silent AAC track Instagram
-requires: without an audio stream Instagram treats the file as malformed. The
-cover exists because the profile grid otherwise takes frame zero, which is the
+H.264 high, yuv420p, and an AAC stereo track at 48 kHz and 96 kbit: about
+1.8 MB in all. The audio track is not optional even when it is quiet, because
+without an audio stream Instagram treats the file as malformed. The cover
+exists because the profile grid otherwise takes frame zero, which is the
 picture before a single word has arrived.
