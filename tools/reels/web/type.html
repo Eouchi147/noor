@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>NOOR reel type layer</title>
+<style>
+@font-face{font-family:NoorB;src:url(noor-card-bold.ttf) format("truetype");font-weight:700;font-display:block}
+@font-face{font-family:NoorR;src:url(noor-card-regular.ttf) format("truetype");font-weight:400;font-display:block}
+:root{
+  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6;
+  --safeT:270px; --safeB:1500px; --safeL:87px; --safeR:950px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+
+#stage{position:absolute;inset:0}
+
+/* the one thing that is not type: a bloom that opens the reel */
+#flare{position:absolute;left:-210px;top:-330px;width:1500px;height:1500px;
+  transform:scale(.2);opacity:0;pointer-events:none;
+  background:radial-gradient(circle,rgba(233,200,106,.42) 0%,rgba(233,200,106,.13) 34%,rgba(233,200,106,0) 66%)}
+#streak{position:absolute;left:0;top:0;width:1080px;height:2px;opacity:0;
+  background:linear-gradient(90deg,rgba(233,200,106,0),rgba(255,249,227,.95),rgba(233,200,106,0));
+  filter:blur(1px)}
+
+/* the column is inset from the safe rectangle by the distance a word's blur
+   and scale can travel while it is arriving, so even mid animation no ink
+   leaves the area the platforms keep clear */
+/* flow-root so the children's margins are measured inside the column
+   rather than collapsing through it: the fitter believes what it measures */
+#col{position:absolute;left:96px;top:var(--safeT);width:830px;display:flow-root}
+
+.markrow{display:flex;align-items:center;gap:0;height:118px;flex-direction:column;
+  align-items:flex-start;justify-content:flex-start}
+.mrule{width:46px;height:3px;background:var(--gold);transform-origin:left center;
+  transform:scaleX(0);margin-top:6px}
+.mline{display:flex;align-items:center;gap:18px;margin-top:17px}
+.brand{font:700 34px NoorB,sans-serif;color:var(--gold);letter-spacing:.21em;display:flex}
+.brand span{opacity:0;display:inline-block}
+.mdiv{width:2px;height:32px;background:var(--gold);opacity:0}
+.cat{font:700 26px NoorB,sans-serif;color:var(--muted);letter-spacing:.16em;opacity:0}
+
+h1#hook{font-family:NoorB,sans-serif;font-weight:700;color:var(--cream);
+  line-height:1.17;letter-spacing:-.005em;position:relative}
+h1#hook .w{display:inline-block;opacity:0;--b:0px;filter:blur(var(--b));
+  transform-origin:0 50%;
+  will-change:transform,filter,opacity}
+h1#hook .w.key{color:var(--gold)}
+#uline{position:absolute;height:4px;background:var(--gold);opacity:.85;
+  transform-origin:left center;transform:scaleX(0);border-radius:2px}
+
+.dl{margin-top:26px;height:92px}
+.drule{width:150px;height:3px;background:var(--gold);transform-origin:left center;transform:scaleX(0)}
+.date{display:block;margin-top:18px;font:400 30px NoorR,sans-serif;color:var(--muted);
+  letter-spacing:.10em}
+.date span{opacity:0;display:inline-block;white-space:pre}
+
+#body{margin-top:92px}
+.blk{opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
+.blk + .blk{margin-top:26px}
+.blk div{font-family:NoorR,sans-serif;color:var(--cream)}
+
+#close{margin-top:46px;opacity:0}
+#close .crule{width:46px;height:3px;background:var(--gold);margin-bottom:18px}
+#close .site{font:400 30px NoorR,sans-serif;color:var(--gold);letter-spacing:.10em}
+#close .sub{margin-top:12px;font:400 26px NoorR,sans-serif;color:var(--muted)}
+</style></head>
+<body>
+<div id="stage">
+  <div id="flare"></div>
+  <div id="streak"></div>
+  <div id="col">
+    <div class="markrow">
+      <i class="mrule"></i>
+      <div class="mline">
+        <span class="brand" id="brand"></span>
+        <i class="mdiv"></i>
+        <span class="cat" id="cat"></span>
+      </div>
+    </div>
+    <h1 id="hook"></h1><i id="uline"></i>
+    <div class="dl"><i class="drule"></i><span class="date" id="date"></span></div>
+    <div id="body"></div>
+    <div id="close">
+      <div class="crule"></div>
+      <div class="site">NOORCODEX.COM</div>
+      <div class="sub">the whole story, free</div>
+    </div>
+  </div>
+</div>
+<script src="anime.min.js"></script>
+<script src="type.js"></script>
+</body></html>

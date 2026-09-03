@@ -1,0 +1,670 @@
+{
+ "_meta": {
+  "written": "2026-09-03",
+  "n": 30,
+  "source": "lights/all.json",
+  "brief": "BRIEF.md"
+ },
+ "cards": {
+  "al-sufi-andromeda-964": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A little cloud in his star book was another galaxy",
+   "key": "another galaxy",
+   "date": "Abd al-Rahman al-Sufi · Isfahan, 964",
+   "lines": [
+    "In 964 the Persian astronomer Abd al-Rahman al-Sufi finished his Book of Fixed Stars in Isfahan.",
+    "He checked every star in Ptolemy's catalogue with his own eyes, and in Andromeda he described a small cloud.",
+    "It is the earliest known record of the Andromeda galaxy, which no one understood as separate until the 1920s."
+   ],
+   "caption": "Al-Sufi went through Ptolemy's catalogue constellation by constellation and drew each one twice, as seen on a globe and as seen in the sky. He also wrote down the Arabic names Bedouin observers were already using. His book was copied and translated for six hundred years, and many star names in use today come through it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Isfahan #Andromeda #StarNames #Stargazing",
+   "look": {
+    "scene": "andromeda",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 352,
+    "secs": 21
+   }
+  },
+  "ibn-al-shatir-copernicus": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A mosque timekeeper's lunar model matches Copernicus exactly",
+   "key": "matches Copernicus exactly",
+   "date": "Ibn al-Shatir · Damascus",
+   "lines": [
+    "Ibn al-Shatir kept the prayer times at the Umayyad Mosque in Damascus and built the sundial for its minaret.",
+    "In 1957 Victor Roberts showed his model of the moon is identical to the one Copernicus published in 1543.",
+    "No Latin translation of Ibn al-Shatir is known, Copernicus never names him, and no route between them has been found."
+   ],
+   "caption": "Ibn al-Shatir rebuilt planetary astronomy out of uniform circular motions alone, discarding Ptolemy's equant and off centre circles. Victor Roberts worked with E. S. Kennedy in Beirut, and found that several parameters match as well. Some scholars argue for transmission through Byzantine Greek manuscripts, others for two men solving the same problem the same way. One difference is plain: Ibn al-Shatir kept the earth at the centre, and Copernicus moved it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Damascus #Mathematics #MedievalHistory",
+   "look": {
+    "scene": "epicycles",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 136,
+    "secs": 21
+   }
+  },
+  "qalawun-hospital-1284": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "A Cairo hospital was endowed to turn nobody away",
+   "key": "turn nobody away",
+   "date": "Qalawun · Cairo, 1284",
+   "lines": [
+    "The Mamluk sultan Qalawun founded a hospital in Cairo in 1284, on the site of a former Fatimid palace.",
+    "Its endowment deed survives, setting out separate wards, a pharmacy, a library and a salaried staff of physicians.",
+    "Payment was never required of the patient, and the site has served the sick almost continuously since."
+   ],
+   "caption": "The deed also provided for oculists and surgeons, and for an allowance paid on discharge to sick people who could not work. Qalawun's complex held a school and his tomb as well as the hospital. Endowed hospitals of this kind, called bimaristans, existed across the Muslim world from the ninth century, and an eye hospital still operates on the Cairo site.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Cairo #Egypt #Bimaristan #Charity",
+   "look": {
+    "scene": "arcade",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 678,
+    "secs": 21
+   }
+  },
+  "ibn-al-nafis-circulation-1242": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "He corrected Galen on the heart and was lost for centuries",
+   "key": "lost for centuries",
+   "date": "Ibn al-Nafis · Cairo, around 1242",
+   "lines": [
+    "Around 1242 in Cairo, the Syrian physician Ibn al-Nafis wrote on the anatomy in Ibn Sina's Canon.",
+    "He held that the wall of the heart is solid, and that blood must go from the right chamber to the lungs and back.",
+    "That is the pulmonary circulation, described three centuries before European anatomists."
+   ],
+   "caption": "The accepted view, from Galen and from Ibn Sina alike, was that blood crossed from the right side of the heart to the left through invisible pores. Ibn al-Nafis wrote that there are no pores, and that the blood mixes with air in the lungs. His text then sat unread until a physician, Muhyi al-Din al-Tatawi, found it in a Berlin manuscript and published on it in 1924.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #Anatomy #History #Cairo #HistoryOfScience",
+   "look": {
+    "scene": "ripples",
+    "pal": "green",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 890,
+    "secs": 21
+   }
+  },
+  "al-jazari-machines-1206": {
+   "slot": "morning",
+   "eyebrow": "Engineering",
+   "hook": "An engineer drew about fifty machines and how to build them",
+   "key": "how to build them",
+   "date": "Al-Jazari · Diyarbakir, 1206",
+   "lines": [
+    "In 1206, at the Artuqid court in Diyarbakir, al-Jazari finished his Book of Knowledge of Ingenious Mechanical Devices.",
+    "It sets out about fifty machines with exploded diagrams and step by step instructions, from water clocks to pumps.",
+    "He wrote that he would describe nothing he had not built and tested himself. He died the year the book was completed."
+   ],
+   "caption": "Among the machines are an elephant clock combining Indian, Greek, Chinese and Arab parts, hand washing basins that pour and refill, and musical automata. Historians of technology point to his use of the crankshaft joined to a connecting rod, and of segmental gears and a camshaft, in machines that actually worked.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #History #HistoryOfScience #Automata #Inventions #Mechanics",
+   "look": {
+    "scene": "epicycles",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 0,
+    "seed": 934,
+    "secs": 21
+   }
+  },
+  "tusi-couple": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "Two rolling circles turn a circle into a straight line",
+   "key": "a straight line",
+   "date": "Nasir al-Din al-Tusi · 1247",
+   "lines": [
+    "Ptolemy's models needed the equant, a point about which a planet swept equal angles though it was not the centre.",
+    "In 1247 Nasir al-Din al-Tusi rolled a small circle inside a circle of twice its diameter, tracing a straight line.",
+    "Circular motions alone can therefore produce oscillation, and the construction is called the Tusi couple."
+   ],
+   "caption": "The equant predicted well and it broke the rule that motion in the heavens is uniform and circular, so astronomers had complained about it for centuries. Al-Tusi's answer removed the need for it. The same construction appears, drawn the same way and with no attribution, in Copernicus's book of 1543, and how it got there is a standing question.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #Mathematics #Geometry #History #HistoryOfScience #MedievalHistory",
+   "look": {
+    "scene": "epicycles",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 576,
+    "secs": 21
+   }
+  },
+  "al-battani-solar-year": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "He measured the year and was off by two minutes",
+   "key": "off by two minutes",
+   "date": "Al-Battani · Raqqa, 877 to 918",
+   "lines": [
+    "Al-Battani observed from Raqqa, on the Euphrates, from about 877 until 918, with instruments he had built himself.",
+    "He put the solar year at 365 days, 5 hours, 46 minutes and 24 seconds, about two minutes and twenty seconds short.",
+    "His tables were translated into Latin in the twelfth century, and Copernicus cites him repeatedly in the book of 1543."
+   ],
+   "caption": "Al-Battani also found that the point at which the sun is furthest from the earth had shifted since Ptolemy recorded its position, which meant the Greek tables were not simply to be copied forward. In Europe he was known as Albategnius. There is a crater on the moon carrying his Latin name.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Calendar #Stargazing #MedievalHistory",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 562,
+    "secs": 21
+   }
+  },
+  "fatima-al-fihri-qarawiyyin": {
+   "slot": "morning",
+   "eyebrow": "Learning",
+   "hook": "She spent her inheritance on a mosque that has never closed",
+   "key": "has never closed",
+   "date": "Fatima al-Fihri · Fez, 859",
+   "lines": [
+    "Fatima al-Fihri's family migrated from Kairouan to Fez in the early ninth century.",
+    "When her father died she spent her share of his estate on a mosque, built in 859, in the migrants' quarter.",
+    "That mosque, al-Qarawiyyin, gathered teaching circles, then a library, then salaried professors, and never closed."
+   ],
+   "caption": "Al-Qarawiyyin issued certificates to those who studied there, and UNESCO and Guinness both list it as the oldest existing degree granting institution. Tradition holds that Fatima fasted while the building work went on. Almost everything told about her comes from Ibn Abi Zar's chronicle, written some five centuries later, and historians say plainly that earlier evidence for her life is thin.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Education #History #Morocco #Fez #Universities #Libraries #WomenInHistory",
+   "look": {
+    "scene": "arcade",
+    "pal": "sand",
+    "n": 12,
+    "k": 5,
+    "cue": 0,
+    "seed": 172,
+    "secs": 21
+   }
+  },
+  "al-razi-case-records": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "Al-Razi wrote down the cases where he was wrong",
+   "key": "where he was wrong",
+   "date": "Al-Razi · Rayy and Baghdad",
+   "lines": [
+    "Abu Bakr al-Razi was born in Rayy, near modern Tehran, and ran hospitals there and in Baghdad.",
+    "His case notes record particular patients, the treatment given and whether it worked, including the times it did not.",
+    "He argued that medicine advances only when a physician trusts a careful observation over a great name."
+   ],
+   "caption": "The Hawi, the book al-Razi is best known for, was not written by him for readers. His students assembled it after his death from his working notebooks, which is why it reads as it does: an authority quoted, then Greek and Indian opinion, then a mark meaning mine, followed by what he had seen at the bedside. His book of doubts about Galen held that Galen's own method demanded exactly that.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Baghdad #HistoryOfScience #Books",
+   "look": {
+    "scene": "pages",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 958,
+    "secs": 21
+   }
+  },
+  "ulugh-beg-catalogue-1437": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A governor remeasured the sky and catalogued 1,018 stars",
+   "key": "1,018 stars",
+   "date": "Ulugh Beg · Samarkand, 1437",
+   "lines": [
+    "In the 1420s Ulugh Beg, governor of Samarkand, built an observatory around a sextant arc about forty metres in radius.",
+    "In 1437 his team completed the Zij-i Sultani, a catalogue of 1,018 stars measured fresh, not copied from Ptolemy.",
+    "Their value for the length of the year is within about a minute of the modern figure."
+   ],
+   "caption": "The great arc was sunk into a trench cut in the rock so that it could not shift. Ulugh Beg was a grandson of Timur, and by all accounts more interested in the sky than in ruling. He was killed in 1449, and the buried arc of his instrument was rediscovered by excavation in 1908 and can be visited today.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Samarkand #Observatory #Stargazing",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 834,
+    "secs": 21
+   }
+  },
+  "zubayda-pilgrim-road-831": {
+   "slot": "morning",
+   "eyebrow": "Water",
+   "hook": "A caliph's wife paid for the water on the Makkah road",
+   "key": "paid for the water",
+   "date": "Zubayda bint Ja'far · died 831 CE",
+   "lines": [
+    "Zubayda bint Ja'far, wife of Harun al-Rashid, made the hajj and saw pilgrims dying of thirst on the way.",
+    "She spent her own fortune on wells, cisterns, paved stretches and waystations along some 1,500 kilometres of desert.",
+    "The route has been called Darb Zubayda, Zubayda's Road, ever since."
+   ],
+   "caption": "Her wells were not the end of it. Zubayda also paid for a spring channel at Makkah that carried water into the city itself, and the remains of her pools and milestones are still mapped across Iraq and Saudi Arabia. She died in 831, and her name survived not through a battle or a dynasty but through drinking water.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #History #Hajj #Makkah #Abbasid #Archaeology #Water",
+   "look": {
+    "scene": "ripples",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 898,
+    "secs": 21
+   }
+  },
+  "timbuktu-manuscripts-rescue-2013": {
+   "slot": "morning",
+   "eyebrow": "Libraries",
+   "hook": "Timbuktu's manuscripts were smuggled out in footlockers",
+   "key": "smuggled out in footlockers",
+   "date": "Timbuktu to Bamako · 2012 to 2013",
+   "lines": [
+    "Armed groups took Timbuktu in 2012, and its libraries held centuries of work on law, astronomy and medicine.",
+    "The librarian Abdel Kader Haidara organised an evacuation by car, donkey and boat down the Niger, past checkpoints.",
+    "By early 2013 an estimated 350,000 manuscripts had reached houses in Bamako."
+   ],
+   "caption": "Many of these manuscripts had never left the families who copied them, and they cover law, astronomy, medicine, poetry and mathematics. Volunteers packed them into metal footlockers and rice sacks and moved them a few at a time. Some were burned in Timbuktu, but far fewer than first reported, and the collections are now being conserved and digitised in the south of the country.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Timbuktu #Mali #Manuscripts #Libraries #BookHistory #History",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 677,
+    "secs": 21
+   }
+  },
+  "astrolabe-model-of-the-sky": {
+   "slot": "morning",
+   "eyebrow": "Instruments",
+   "hook": "An astrolabe is a model of the sky, held in the hand",
+   "key": "model of the sky",
+   "date": "Oldest dated example by Nastulus · 927 CE",
+   "lines": [
+    "A star or the sun is sighted through the bar on the back, and its height above the horizon is read off the rim.",
+    "Turning the openwork grid on the front until it matches gives the time of day or night, with no arithmetic needed.",
+    "Muslim makers turned it into a standard object, engraved with prayer times and the direction of Makkah."
+   ],
+   "caption": "The geometry behind it is Greek: flattening the sphere of the sky onto a disc goes back to Hipparchus. The same instrument gives the direction being faced, where any other star has got to, and the height of the tower across the street. Chaucer wrote a manual for one in English, for his ten year old son.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Astronomy #IslamicHistory #Astrolabe #HistoryOfScience #Navigation #MedievalHistory",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 0,
+    "seed": 314,
+    "secs": 21
+   }
+  },
+  "banu-musa-ingenious-devices": {
+   "slot": "morning",
+   "eyebrow": "Engineering",
+   "hook": "Three brothers designed machines that regulated themselves",
+   "key": "regulated themselves",
+   "date": "Banu Musa · Baghdad, c. 850 CE",
+   "lines": [
+    "Muhammad, Ahmad and al-Hasan, the sons of Musa ibn Shakir, were astronomers in ninth century Baghdad.",
+    "Around 850 they produced the Book of Ingenious Devices, about a hundred machines that mostly look like toys.",
+    "The surprise is a hidden control: a float rises with the liquid and closes a valve, holding a condition steady."
+   ],
+   "caption": "That is feedback, a machine keeping a condition steady with no hand on it: a siphon that empties a chamber at a set level, a lamp that trims its own wick and draws up its own oil. The brothers were patrons as well as builders, paying translators out of their own pockets. Their book also describes a grab for lifting objects off a riverbed, and Donald Hill translated it into English in 1979.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #HistoryOfScience #Baghdad #Automation #Inventions",
+   "look": {
+    "scene": "epicycles",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 734,
+    "secs": 21
+   }
+  },
+  "block-printed-amulets-fustat": {
+   "slot": "morning",
+   "eyebrow": "Printing",
+   "hook": "Arabic was printed on paper before printing existed in Europe",
+   "key": "before printing existed",
+   "date": "Fustat, Egypt · c. 10th to 14th centuries",
+   "lines": [
+    "They are narrow strips of paper carrying Qur'anic verses and prayers, rolled into metal amulet cases.",
+    "About sixty survive, printed from carved blocks, most of them dug up at Fustat, the old settlement under Cairo.",
+    "The trade stayed with street sellers and never moved to books, and historians still disagree about why."
+   ],
+   "caption": "The strips come from medieval Egypt and Syria and date from roughly the tenth to the fourteenth centuries. Printing on paper was practised in Arabic long before it existed in Europe, yet it stayed confined to amulets sold in the street, a trade of low standing. Historians give various reasons, from the prestige of the copyist's hand to the economics of a strong manuscript trade, and none of them is settled.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Printing #BookHistory #Egypt #Cairo #Archaeology #MedievalHistory",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 153,
+    "secs": 21
+   }
+  },
+  "hijri-calendar-epoch-622": {
+   "slot": "evening",
+   "eyebrow": "Calendar",
+   "hook": "The Muslim year counts from a departure, not a birth",
+   "key": "departure, not a birth",
+   "date": "Set under Umar ibn al-Khattab · c. 638 CE",
+   "lines": [
+    "Around 638 CE the caliph Umar ibn al-Khattab and his advisers had to decide where the Muslim calendar should begin.",
+    "They chose the Hijra, the migration from Makkah to Yathrib, and the first day of year 1 falls on 16 July 622.",
+    "Every Islamic date since is counted from a group of refugees arriving in a town that agreed to take them in."
+   ],
+   "caption": "The choice was deliberate. Umar and his advisers passed over the birth of the Prophet ﷺ, the first revelation and every victory, and took the migration instead, because that was when a scattered community became a society with obligations to one another. By the standard reckoning that day, the first of Muharram in year 1, falls in the Julian calendar.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijri #Calendar #Makkah #Madinah #History",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 2,
+    "seed": 249,
+    "secs": 21
+   }
+  },
+  "constitution-of-medina-622": {
+   "slot": "evening",
+   "eyebrow": "Governance",
+   "hook": "Medina's founding document named Jews as part of one community",
+   "key": "part of one community",
+   "date": "Yathrib, later Madinah · 622 CE",
+   "lines": [
+    "Soon after arriving in Yathrib in 622, the Prophet ﷺ set out the terms on which a mixed town would live.",
+    "The early biographer Ibn Ishaq preserved it: it names the tribes and puts the Jewish clans in one community.",
+    "Historians treat it as one of the earliest written constitutional documents anywhere."
+   ],
+   "caption": "The document is usually called the Sahifa, or Constitution of Medina. It states that the listed clans form one community alongside the believers, guarantees them their religion, fixes who pays blood money for whom, requires joint defence of the town, and sends disputes to arbitration rather than feud. It was written for a place with more than one faith in it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #History #Governance #Constitution #Interfaith",
+   "look": {
+    "scene": "pages",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 555,
+    "secs": 21
+   }
+  },
+  "zakat-is-growth": {
+   "slot": "evening",
+   "eyebrow": "Charity",
+   "hook": "The word for alms means growth, not deduction",
+   "key": "growth, not deduction",
+   "date": "Root z k w, growth and purity",
+   "lines": [
+    "Zakat is the obligatory portion of accumulated wealth handed over each year.",
+    "Its root z k w means to grow and to increase, and also to be pure, and the noun is used of a plant that thrives.",
+    "So the term for taking a fortieth out of savings is a word about the pile getting larger."
+   ],
+   "caption": "Arabic takes purity and increase from the same three letters because a thing cleaned of what spoils it grows better. The Qur'an uses the same verb of the self in the chapter of the sun: he has succeeded who causes it to grow, and he has failed who buries it. One verb covers a bank balance and a person.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Zakat #Charity #Arabic #Language #Quran #IslamicHistory",
+   "look": {
+    "scene": "ripples",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 478,
+    "secs": 21
+   }
+  },
+  "longest-verse-is-a-contract": {
+   "slot": "evening",
+   "eyebrow": "Structure",
+   "hook": "The longest verse in the Qur'an is about debt",
+   "key": "is about debt",
+   "date": "Surah al-Baqarah, verse 282",
+   "lines": [
+    "Verse 282 of Surah al-Baqarah is the longest single verse in the Qur'an, longer than most of the short chapters.",
+    "It is a commercial instruction: when a debt is contracted for a fixed term, write it down and bring witnesses.",
+    "The most space given to any one subject goes to keeping an accurate record of what one person owes another."
+   ],
+   "caption": "The verse is not about prayer or paradise. It asks for a scribe to write justly, tells the one who owes to dictate, allows for a debtor who cannot dictate, and permits a pledge instead of a written record when travelling. It also says the writing down should not be thought beneath anyone, whether the sum is small or large.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Finance #Contracts #Ethics #Arabic",
+   "look": {
+    "scene": "pages",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 105,
+    "secs": 21
+   }
+  },
+  "fasting-is-not-about-hunger": {
+   "slot": "evening",
+   "eyebrow": "Ramadan",
+   "hook": "Leaving food is not wanted if false speech stays",
+   "key": "if false speech stays",
+   "date": "Abu Hurayra · Ramadan",
+   "lines": [
+    "Going without water in a hot country is hard enough to feel like an achievement in itself.",
+    "The Prophet ﷺ said that whoever does not give up false speech, Allah has no need of his leaving food and drink.",
+    "Ramadan is a month of restraint in speech and temper, with the hunger as its least important part."
+   ],
+   "caption": "The report is blunt about what the fast is for, and it refuses to accept thirst as an achievement on its own. In another narration the Prophet ﷺ told a fasting person who is insulted or dragged into an argument to say, twice, that he is fasting, and to leave it there. The hunger is the most visible part of the month and the least important.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #Fasting #Hadith #Faith #IslamicHistory #Spirituality",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 556,
+    "secs": 21
+   }
+  },
+  "smile-counts-as-charity": {
+   "slot": "evening",
+   "eyebrow": "Charity",
+   "hook": "Smiling in the face of a brother counts as charity",
+   "key": "counts as charity",
+   "date": "Abu Dharr al-Ghifari",
+   "lines": [
+    "Abu Dharr al-Ghifari came from a poor tribe and had almost nothing he could give away.",
+    "The Prophet ﷺ told him that smiling in the face of his brother was an act of charity.",
+    "What is asked for is attention rather than money, and the poorest man in the mosque had as much of that as anyone."
+   ],
+   "caption": "Abu Dharr worried openly that the rich were buying rewards he could not afford. The answer changed the currency. He was also told not to think little of any good deed, even meeting another person with a cheerful face. The point was practical rather than sentimental.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hadith #Charity #Kindness #Companions #Faith",
+   "look": {
+    "scene": "rosette",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 153,
+    "secs": 21
+   }
+  },
+  "hafs-and-warsh-today": {
+   "slot": "evening",
+   "eyebrow": "Readings",
+   "hook": "The Qur'an in Morocco is recited differently from Cairo",
+   "key": "recited differently",
+   "date": "Hafs, Warsh, Qalun and al-Duri",
+   "lines": [
+    "Each canonical reading comes through named students, usually two, so ten readings arrive as twenty transmissions.",
+    "Most of the world reads Hafs from Asim of Kufa; Morocco and much of West Africa read Warsh from Nafi of Madinah.",
+    "The same text, in more than one transmitted form, on shelves a few hours' flight apart."
+   ],
+   "caption": "The Cairo edition of 1924 printed Hafs from Asim, and that reading spread with it. A printed Warsh Qur'an looks noticeably different on the page, with different vowel signs and spellings. Parts of Libya read Qalun from the same Nafi, and Sudan and the Horn read al-Duri from Abu Amr. Algeria and Mauritania read Warsh alongside Morocco.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Morocco #Cairo #WestAfrica #Qiraat #Recitation",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 340,
+    "secs": 21
+   }
+  },
+  "safa-marwa-inside-the-mosque": {
+   "slot": "evening",
+   "eyebrow": "Hajj",
+   "hook": "Two hills of a woman's search now stand inside a mosque",
+   "key": "inside a mosque",
+   "date": "Safa and Marwa · Hajj and Umrah",
+   "lines": [
+    "Safa and Marwa are two rock outcrops a little under four hundred metres apart.",
+    "Pilgrims walk between them seven times, roughly three kilometres, in memory of Hagar looking for water for Ismail.",
+    "The expansions enclosed the whole route inside the mosque, and the bare rock of Safa is still exposed behind glass."
+   ],
+   "caption": "The Qur'an names both hills and calls them among the symbols of Allah. For most of history the walk ran along an open street with shops on it, until the Saudi expansions enclosed it, air conditioned it and later stacked it on several levels to move larger crowds. The rock is fenced at one end so that what people are walking between can still be seen.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Hajj #Umrah #Pilgrimage #IslamicHistory #Quran #Heritage",
+   "look": {
+    "scene": "arcade",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 529,
+    "secs": 21
+   }
+  },
+  "quba-first-mosque-622": {
+   "slot": "evening",
+   "eyebrow": "Madinah",
+   "hook": "The first mosque was built by hand at Quba",
+   "key": "built by hand",
+   "date": "Quba, outside Yathrib · 622",
+   "lines": [
+    "In 622 the Prophet ﷺ reached the outskirts of Yathrib and stopped for several days at Quba, among palm groves.",
+    "A mosque went up there before he travelled on, palm trunks and mud brick, with reports of him carrying stones himself.",
+    "The building on the site now is modern. The foundation date is not."
+   ],
+   "caption": "The commentators generally identify Quba with the mosque the Qur'an calls founded on God consciousness from the first day. He kept visiting it after moving into the town, and the practice of going out to Quba on a Saturday is recorded from him.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quba #Mosque #Architecture #Heritage #Seerah",
+   "look": {
+    "scene": "arcade",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 135,
+    "secs": 21
+   }
+  },
+  "makkah-taken-630": {
+   "slot": "evening",
+   "eyebrow": "Makkah",
+   "hook": "The city that drove him out was told: go, you are free",
+   "key": "go, you are free",
+   "date": "Makkah · Ramadan, 630 CE",
+   "lines": [
+    "In Ramadan, 630 CE, the Prophet ﷺ entered Makkah with a large force and the city fell with very little fighting.",
+    "He had been driven out eight years earlier. Asked what they expected, the people said good, from a generous brother.",
+    "Bilal, who had been tortured in that city as a slave, climbed onto the roof of the Ka'ba and called the prayer."
+   ],
+   "caption": "Members of his family had been killed by people now standing in front of him. A general amnesty followed, with a short list of exceptions, and most of those were pardoned as well. The accounts date the entry to Ramadan of the eighth year after the migration.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Seerah #History #Mercy #Ramadan",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 216,
+    "secs": 21
+   }
+  },
+  "farewell-sermon-632": {
+   "slot": "evening",
+   "eyebrow": "Hajj",
+   "hook": "The farewell sermon was given from the back of a camel",
+   "key": "back of a camel",
+   "date": "Plain of Arafah · Dhul Hijjah, 632",
+   "lines": [
+    "On the plain of Arafah in Dhul Hijjah, 632, the Prophet ﷺ addressed the largest gathering he ever spoke to.",
+    "He spoke from the back of his camel, with a man repeating his words to the crowd standing behind.",
+    "The sermon cancelled blood feuds and interest, and the first claim it cancelled was one owed to his own family."
+   ],
+   "caption": "The interest cancelled first of all was owed to his own uncle, and the men were told that their wives have rights over them. Jabir ibn Abdullah, then a young man, gave an account of the whole pilgrimage that runs to several pages in Muslim's collection. In the version preserved in other collections the sermon states that no Arab has any superiority over a non Arab except in God consciousness. He died within three months.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hajj #Arafah #Seerah #Hadith #History",
+   "look": {
+    "scene": "rosette",
+    "pal": "sand",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 934,
+    "secs": 21
+   }
+  },
+  "four-sacred-months": {
+   "slot": "evening",
+   "eyebrow": "Calendar",
+   "hook": "Four months of the twelve were closed to war",
+   "key": "closed to war",
+   "date": "Dhul Qa'dah, Dhul Hijjah, Muharram, Rajab",
+   "lines": [
+    "The Qur'an states that the number of months with Allah is twelve, and that four of them are sacred.",
+    "The four are Dhul Qa'dah, Dhul Hijjah, Muharram and Rajab, three consecutive and one standing alone.",
+    "It is a calendar doing the work of a peace treaty, in a place where no authority was strong enough to enforce one."
+   ],
+   "caption": "The truce those months carried was older than Islam and was kept by tribes who agreed on very little else. Caravans moved, pilgrims travelled, and blood feuds paused for a quarter of every year. The verse confirms the arrangement rather than creating it, and dates the twelve months to the day the heavens and the earth were created.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Calendar #Muharram #Rajab #History",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 960,
+    "secs": 21
+   }
+  },
+  "ring-composition": {
+   "slot": "evening",
+   "eyebrow": "Structure",
+   "hook": "Some chapters are built as a ring around a centre",
+   "key": "ring around a centre",
+   "date": "Farahi, Islahi, Cuypers, Farrin",
+   "lines": [
+    "Hamiduddin Farahi, an Indian scholar who died in 1930, argued that each chapter has a single organising theme.",
+    "Michel Cuypers and Raymond Farrin describe the pattern as ring composition, sections mirroring outward from a middle.",
+    "It treats the jumps between subjects as a shape to be found rather than a defect to be explained."
+   ],
+   "caption": "Farahi's student Amin Ahsan Islahi worked the idea through the whole book in an Urdu commentary. Cuypers read Surah al-Ma'ida this way and Farrin al-Baqarah, so that the first section answers the last and the pivot sits at the centre. The approach is one reading among several, and it is contested.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Tafsir #IslamicHistory #Scholarship #Literature #Structure",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 324,
+    "secs": 21
+   }
+  },
+  "laylat-al-qadr-pardon-dua": {
+   "slot": "evening",
+   "eyebrow": "Ramadan",
+   "hook": "Aisha asked what to say if she found the night",
+   "key": "found the night",
+   "date": "Aisha · Laylat al-Qadr",
+   "lines": [
+    "Aisha asked the Prophet ﷺ what she should say if she knew which night was Laylat al-Qadr.",
+    "The words he gave her ask for pardon: O Allah, You are the one who pardons and You love to pardon, so pardon me.",
+    "On the night the Qur'an calls better than a thousand months, what she was told to ask was that a record be wiped."
+   ],
+   "caption": "She was not told to ask for anything material. The Arabic verb is afw, which carries the sense of erasing a thing rather than overlooking it while still remembering it. The report is in the collections of Tirmidhi and Ibn Majah, and Tirmidhi himself graded it hasan sahih.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #LaylatAlQadr #Quran #Hadith #Dua #IslamicHistory",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 2,
+    "seed": 560,
+    "secs": 21
+   }
+  },
+  "salah-prayer-and-blessing": {
+   "slot": "evening",
+   "eyebrow": "Prayer",
+   "hook": "The word for prayer also means blessing the Prophet ﷺ",
+   "key": "also means blessing",
+   "date": "Surah Ta-Ha",
+   "lines": [
+    "Salah is the ritual prayer performed five times a day, and the same word is used for blessing the Prophet ﷺ.",
+    "The Qur'an gives its purpose in three words in Surah Ta-Ha: establish the prayer for My remembrance.",
+    "The verse makes the standing and bowing an instrument of memory, putting salah and dhikr into one sentence."
+   ],
+   "caption": "The same word, from the same root, is what God and the angels are said to do for the Prophet ﷺ, and what believers do when they say the formula asking for peace upon him. The lexicographers connect the root with supplication and with turning towards. The purpose the verse gives is not reward, not protection, not good order.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Salah #Prayer #Arabic #Language #Dhikr",
+   "look": {
+    "scene": "rosette",
+    "pal": "green",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 231,
+    "secs": 21
+   }
+  }
+ }
+}

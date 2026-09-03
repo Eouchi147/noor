@@ -3,9 +3,11 @@
    One post a day became four, and five when something is coming.
 
        05:00 UTC  dawn    what today is, and what to do about it
+       08:00 UTC  reelA   a reel: the astonishing half of the library
        09:00 UTC  lead    only when an observance is a known number of days out
        12:00 UTC  light   the day's card, the engine that already existed
        16:00 UTC  word    one word of the Path, in Arabic and plain English
+       17:00 UTC  reelB   a reel: the rooted half
        20:00 UTC  dusk    one chapter of the Path
 
    Two design decisions worth stating, because both were tempting to get wrong.
@@ -27,13 +29,25 @@ import { readDay, leadsFor, FIXED, MONTHS } from "./_calendar.js";
 import { verifiedHijri, verifiedRange, addDays, METHOD_NOTE } from "./_hijri.js";
 import { trimToSentences } from "./_prose.js";
 
+/* THIRD: the two reel slots are the only ones that post something rendered
+   somewhere else. Reels are the one surface either platform shows to people
+   who do not already follow the account, so they are the growth path, and the
+   videos are built by a workflow and committed to /reels rather than made at
+   post time. A reel slot whose video is not there yet composes to nothing and
+   says so, exactly like a word slot with no dictionary: the day loses one post
+   and the machine keeps its promise about the rest. The list stays in clock
+   order, because dueNow takes the LAST due slot when it is catching up. */
 export const SLOTS = [
   { id: "dawn",  at: 5,  needsDate: true  },
+  { id: "reelA", at: 8,  needsDate: false, reel: "morning" },
   { id: "lead",  at: 9,  needsDate: true, conditional: true },
   { id: "light", at: 12, needsDate: false },
   { id: "word",  at: 16, needsDate: false },
+  { id: "reelB", at: 17, needsDate: false, reel: "evening" },
   { id: "dusk",  at: 20, needsDate: false }
 ];
+export const REEL_SLOTS = SLOTS.filter(s => s.reel).map(s => s.id);
+export const reelHalf = id => (SLOTS.find(s => s.id === id) || {}).reel || "";
 export const SLOT_IDS = SLOTS.map(s => s.id);
 
 /* a small stable hash, so a given date always picks the same item */
@@ -140,6 +154,29 @@ export async function planDay(dateStr, opts = {}) {
 --------------------------------------------------------------------------- */
 export function buildSlot(slot, ctx) {
   const { date, hijri: h, day, leads, words, path, link, image, node, entry } = ctx;
+
+  /* -------------------------------------------------------------------------
+     a reel
+
+     The caption was written and audited alongside the video and is carried
+     whole: `caption` tells the channel shaper not to assemble one, because
+     anything assembled here would be a second, worse caption sitting under a
+     video that already said it. `only` keeps a reel off the channels that
+     cannot show one; the cover is what they would fall back to, and a still of
+     a video is a poor post.
+  ------------------------------------------------------------------------- */
+  if (reelHalf(slot)) {
+    const r = ctx.reel;
+    if (!r || !r.id || !r.video) return null;
+    return {
+      lvl: "editorial", key: r.id,
+      title: r.hook || "", oneLine: r.hook || "",
+      body: r.caption || "", caption: r.caption || "",
+      todo: [], basis: "", note: "", tags: [], invite: "",
+      link, image: r.cover || null, video: r.video, reel: true,
+      only: ["facebook", "instagram"]
+    };
+  }
 
   if (slot === "dawn") {
     if (!h || !day) return null;
@@ -304,10 +341,24 @@ export function buildSlot(slot, ctx) {
    none.
 --------------------------------------------------------------------------- */
 export async function slotExtras(base, date, index, slot) {
-  const out = { node: null, entry: null };
+  const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
   };
+  /* The manifest lists only the cards that HAVE a rendered video, so a card
+     added to the plan but not yet rendered can never be chosen and no slot can
+     ever point at a file that is not there. */
+  const half = reelHalf(slot);
+  if (half) {
+    const man = await grab(base + "/reels/index.json");
+    const list = (man && Array.isArray(man.cards) ? man.cards : [])
+      .filter(c => c && c.id && c.slot === half);
+    const c = pick(list, date, "reel:" + half);
+    if (c) out.reel = { ...c,
+      video: base + "/reels/" + c.id + ".mp4",
+      cover: base + "/reels/" + c.id + "-cover.jpg" };
+    return out;
+  }
   if (!slot || slot === "dusk") {
     const c = index && pickChapter(index.path, date);
     if (c && c.i != null) out.node = await grab(base + "/node/" + c.i + ".json");

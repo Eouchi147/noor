@@ -119,6 +119,11 @@ export function shape(p, ch) {
     return { title: cut(p.title, 300), text: cut(parts.join("\n"), s.chars), image: p.image || null };
   }
 
+  /* A reel arrives with its caption already written and audited beside the
+     video it belongs to, so the house builder is not asked to assemble a
+     second, worse one under a video that has already said it. */
+  if (p.caption) return { text: cut(p.caption, s.chars), image: p.image || null };
+
   /* facebook and instagram: the house caption. The invitation sits between
      the material and the link: first the teaching, whole; then, for whoever
      the picture stopped, what the library is and that it is free; the link

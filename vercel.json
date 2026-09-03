@@ -3,6 +3,9 @@
   "functions": {
     "api/card.js": {
       "includeFiles": "node_modules/@resvg/resvg-wasm/**"
+    },
+    "api/social.js": {
+      "maxDuration": 60
     }
   },
   "cleanUrls": true,

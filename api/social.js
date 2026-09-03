@@ -41,7 +41,7 @@
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
-import { planDay, buildSlot, dueNow, slotExtras, SLOT_IDS, SLOTS } from "./_schedule.js";
+import { planDay, buildSlot, dueNow, slotExtras, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
 import * as CH from "./_channels.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
@@ -57,6 +57,8 @@ import { trimToSentences } from "./_prose.js";
 const GRAPH_FB = "https://graph.facebook.com/v21.0";
 const GRAPH_IG = "https://graph.instagram.com/v21.0";
 const graphBase = tok => (/^IG/.test(String(tok || "")) ? GRAPH_IG : GRAPH_FB);
+const prevDate = d => new Date(Date.parse(d + "T00:00:00Z") - 86400000)
+  .toISOString().slice(0, 10);
 
 const K_LOG = "nsoc:log";
 const K_Q = "nsoc:q";
@@ -593,17 +595,139 @@ async function postInstagram(post) {
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
 }
 
+/* ---------------------------------------------------------------------------
+   reels
+
+   A reel is not a photo with a longer file. Both platforms take it in stages,
+   and both take it BY URL: the video is committed to /reels by the render
+   workflow and served from the site, which is why this reuses the same token
+   plumbing that already works for images rather than inventing an upload.
+
+   Instagram is the awkward one. Creating the container returns immediately,
+   but the video is then transcoded, and publishing before that finishes is
+   refused. So this waits, and if the wait runs past what a serverless function
+   may spend, it does NOT fail: it hands back the container id as `pending`,
+   the slot is recorded as pending, and the next hourly cron publishes it. A
+   post that arrives an hour late is a post; a function that dies at the
+   timeout is a lost one, and the record would say "failed" about a video
+   Instagram had accepted.
+--------------------------------------------------------------------------- */
+const IG_POLL_EVERY = Number(process.env.IG_POLL_EVERY_MS || 3000);
+/* Vercel gives a function sixty seconds; this leaves room for the create call,
+   the publish call and the rest of the run. */
+const IG_POLL_BUDGET = Number(process.env.IG_POLL_BUDGET_MS || 32000);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function igPublish(creationId, id, tok, G) {
+  const p = await fetch(`${G}/${id}/media_publish`, {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ creation_id: creationId, access_token: tok })
+  });
+  const pj = await p.json().catch(() => ({}));
+  if (!p.ok) return { ok: false, error: metaErr(pj, "publish http " + p.status) };
+  return { ok: true, id: pj.id || creationId };
+}
+
+/* Publish a container that was still transcoding when its run ran out of
+   time. Called at the top of the next run, for the slots that recorded one. */
+export async function finishInstagramReel(creationId) {
+  if (!igConfigured()) return { ok: false, skipped: "IG_USER_ID or a token is not set" };
+  const id = process.env.IG_USER_ID, tok = igToken(), G = graphBase(tok);
+  try {
+    const s = await fetch(`${G}/${creationId}?fields=status_code`, {
+      headers: { authorization: "Bearer " + tok }
+    });
+    const sj = await s.json().catch(() => ({}));
+    const code = sj && sj.status_code;
+    if (code === "ERROR" || code === "EXPIRED")
+      return { ok: false, error: metaErr(sj, "Instagram could not process the video: " + code) };
+    if (code !== "FINISHED") return { ok: false, pending: creationId };
+    return await igPublish(creationId, id, tok, G);
+  } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+async function postInstagramReel(post) {
+  if (!igConfigured()) return { ok: false, skipped: "IG_USER_ID or a token is not set" };
+  if (!post.video) return { ok: false, error: "no video for the reel" };
+  const id = process.env.IG_USER_ID, tok = igToken(), G = graphBase(tok);
+  try {
+    const body = {
+      media_type: "REELS", video_url: post.video, caption: post.caption,
+      share_to_feed: true, access_token: tok
+    };
+    /* the cover is what the profile grid shows; without one Instagram takes
+       the first frame, which is the picture before a single word has arrived */
+    if (post.image) body.cover_url = post.image;
+    const c = await fetch(`${G}/${id}/media`, {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const cj = await c.json().catch(() => ({}));
+    if (!c.ok || !cj.id) return { ok: false, error: metaErr(cj, "container http " + c.status) };
+
+    const started = Date.now();
+    while (Date.now() - started < IG_POLL_BUDGET) {
+      await sleep(IG_POLL_EVERY);
+      const s = await fetch(`${G}/${cj.id}?fields=status_code`, {
+        headers: { authorization: "Bearer " + tok }
+      });
+      const sj = await s.json().catch(() => ({}));
+      const code = sj && sj.status_code;
+      if (code === "FINISHED") return await igPublish(cj.id, id, tok, G);
+      if (code === "ERROR" || code === "EXPIRED")
+        return { ok: false, error: metaErr(sj, "Instagram could not process the video: " + code) };
+    }
+    return { ok: false, pending: cj.id,
+      error: "Instagram is still processing the video; it will be published on the next run" };
+  } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+/* Facebook takes a reel in three phases and fetches the file itself, so none
+   of the bytes pass through here. */
+async function postFacebookReel(post) {
+  if (!fbConfigured()) return { ok: false, skipped: "FB_PAGE_ID or FB_PAGE_TOKEN is not set" };
+  if (!post.video) return { ok: false, error: "no video for the reel" };
+  const id = process.env.FB_PAGE_ID, tok = await pageToken();
+  try {
+    const st = await fetch(`${GRAPH_FB}/${id}/video_reels`, {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ upload_phase: "start", access_token: tok })
+    });
+    const sj = await st.json().catch(() => ({}));
+    if (!st.ok || !sj.video_id || !sj.upload_url)
+      return { ok: false, error: metaErr(sj, "start http " + st.status) };
+
+    const up = await fetch(sj.upload_url, {
+      method: "POST",
+      headers: { authorization: "OAuth " + tok, file_url: post.video }
+    });
+    const uj = await up.json().catch(() => ({}));
+    if (!up.ok) return { ok: false, error: metaErr(uj, "upload http " + up.status) };
+
+    const fin = await fetch(`${GRAPH_FB}/${id}/video_reels`, {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ video_id: sj.video_id, upload_phase: "finish",
+        video_state: "PUBLISHED", description: post.caption, access_token: tok })
+    });
+    const fj = await fin.json().catch(() => ({}));
+    if (!fin.ok) return { ok: false, error: metaErr(fj, "finish http " + fin.status) };
+    return { ok: true, id: sj.video_id };
+  } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
 /* Never throws. A network wobble must not take the cron down with it. */
 export async function publishAll(rec, post, D) {
   const ran = [];
+  const isReel = !!post.video;
   if (D.fb && !rec.fbId) {
-    const r = await postFacebook(post);
+    const r = isReel ? await postFacebookReel(post) : await postFacebook(post);
     if (r.ok) rec.fbId = r.id || "posted";
     ran.push({ where: "facebook", ...r });
   } else if (D.fb) ran.push({ where: "facebook", ok: true, id: rec.fbId, already: true });
   if (D.ig && !rec.igId) {
-    const r = await postInstagram(post);
+    const r = isReel ? await postInstagramReel(post) : await postInstagram(post);
     if (r.ok) rec.igId = r.id || "posted";
+    else if (r.pending) rec.igPending = r.pending;
     ran.push({ where: "instagram", ...r });
   } else if (D.ig) ran.push({ where: "instagram", ok: true, id: rec.igId, already: true });
   return ran;
@@ -837,8 +961,9 @@ export function liveChannels() {
 }
 
 async function sendOne(ch, shaped, post) {
-  if (ch === "facebook")  return await postFacebook({ ...post, caption: shaped.text });
-  if (ch === "instagram") return await postInstagram({ ...post, caption: shaped.text });
+  const p = { ...post, caption: shaped.text };
+  if (ch === "facebook")  return await (p.video ? postFacebookReel(p) : postFacebook(p));
+  if (ch === "instagram") return await (p.video ? postInstagramReel(p) : postInstagram(p));
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
   return await fn(shaped);
@@ -930,6 +1055,33 @@ export async function runDue(host, date, now, opts = {}) {
     if (!D.storeOk) { out.skipped = "the settings could not be read, so nothing was sent"; return out; }
   }
 
+  /* Instagram keeps a container for a day, so yesterday is as far back as it
+     is worth looking, and looking further would risk republishing something a
+     human has since posted by hand. */
+  if (!opts.dry) {
+    for (const d of [prevDate(date), date]) {
+      for (const id of REEL_SLOTS) {
+        const rec = await readSlot(d, id);
+        if (!rec || rec.state !== "pending" || !rec.pending) continue;
+        for (const p of rec.pending) {
+          if (p.where !== "instagram") continue;
+          const r = await finishInstagramReel(p.creation);
+          if (r.ok) {
+            rec.state = "sent"; delete rec.pending;
+            rec.results = { ...(rec.results || {}), instagram: r };
+            await writeSlot(d, id, rec);
+            out.ran.push({ slot: id, date: d, state: "sent", finished: true });
+          } else if (!r.pending) {
+            rec.state = "failed"; delete rec.pending;
+            rec.results = { ...(rec.results || {}), instagram: r };
+            await writeSlot(d, id, rec);
+            out.ran.push({ slot: id, date: d, state: "failed", error: r.error || "" });
+          }
+        }
+      }
+    }
+  }
+
   const plan = await planDay(date, opts);
   out.verified = plan.verified;
   if (!plan.verified) out.note = "the calendar could not be verified, so nothing dated was planned";
@@ -972,7 +1124,11 @@ export async function runDue(host, date, now, opts = {}) {
     }
 
     const results = {};
-    for (const ch of liveChannels()) {
+    /* A reel names the channels that can show one. The others would fall back
+       to its cover, and a still frame of a video is a poor post. */
+    const chans = post.only ? liveChannels().filter(c => post.only.includes(c))
+                            : liveChannels();
+    for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
       try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
@@ -982,17 +1138,24 @@ export async function runDue(host, date, now, opts = {}) {
        a draft is OFFERED -- there is no way to know when he actually posts one,
        and guessing would be worse than pacing the offer. If he skips one, the
        next comes round on the same rhythm and nothing is lost. */
-    const rd = CH.shape(post, "reddit");
+    const rd = post.only ? null : CH.shape(post, "reddit");
     let lastRedditAt = null;
-    if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
-    results.reddit = await CH.sendReddit(rd, { lastRedditAt });
-    if (results.reddit.links && results.reddit.links.length && kvReady()) {
-      try { await kv([["SET", K_RED, out.at]]); } catch { }
+    if (rd) {
+      if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
+      results.reddit = await CH.sendReddit(rd, { lastRedditAt });
+      if (results.reddit.links && results.reddit.links.length && kvReady()) {
+        try { await kv([["SET", K_RED, out.at]]); } catch { }
+      }
     }
 
     const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
-    const rec = { at: out.at, slot: slot.id, state: anySent ? "sent" : "failed",
+    const pending = Object.entries(results)
+      .filter(([, r]) => r && r.pending)
+      .map(([c, r]) => ({ where: c, creation: r.pending }));
+    const rec = { at: out.at, slot: slot.id,
+      state: anySent && !pending.length ? "sent" : (pending.length ? "pending" : "failed"),
       title: post.title, lvl: post.lvl, results };
+    if (pending.length) rec.pending = pending;
     await writeSlot(date, slot.id, rec);
     out.ran.push({ slot: slot.id, state: rec.state, results });
   }
