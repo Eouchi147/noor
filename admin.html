@@ -1185,10 +1185,20 @@ The rung applies to every slot in the day, not just the card.</p>
 <div class="panel" id="so-ladder"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">Today, hour by hour</h2>
-<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Four every day, five when something is
-coming. Times are UTC. A slot that has gone shows what it said and where it landed; the rest wait
-their hour. If a run is missed the machine sends the most recent one owed, never the whole backlog.</p>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Six every day, seven when something is
+coming: the card, the word, the chapter, the dawn announcement, and the two reels at 08:00 and 17:00.
+Times are UTC. A slot that has gone shows what it said and where it landed; the rest wait their hour.
+Press Preview on any of them to read exactly what would go out, and on a reel to watch it. If a run is
+missed the machine sends the most recent one owed, never the whole backlog.</p>
 <div class="panel" id="so-sched"><p class="muted">&hellip;</p></div>
+
+<h2 class="sec">The reels</h2>
+<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Every video that has been rendered and
+merged, with the caption that goes under it. These are the exact files Instagram and Facebook are handed:
+nothing is re-encoded on the way out. The morning slot draws from one half of the library and the evening
+from the other, and each card is used once before any is used twice, so what you see here is roughly the
+next fortnight. Adding to it is a render, not a post.</p>
+<div class="panel" id="so-reels"><p class="muted">&hellip;</p></div>
 
 <h2 class="sec">The day's post</h2>
 <div class="panel" style="display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)">
@@ -3263,7 +3273,13 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
         box.innerHTML =
           '<div style="border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.9rem 1rem;'
           + 'background:rgba(255,254,247,.03)">'
-          + (j.post.imageSvg ? '<img src="' + esc(j.post.imageSvg) + '" alt="" style="width:150px;float:inline-end;'
+          /* a reel slot carries a video, and reading its caption without
+             watching the thing the caption sits under is no preview at all */
+          + (j.post.video ? '<video src="' + esc(j.post.video) + '" poster="' + esc(j.post.image || "")
+              + '" controls playsinline preload="metadata" style="width:190px;float:inline-end;'
+              + 'margin:0 0 .6rem .9rem;border-radius:12px;border:1px solid rgba(255,254,247,.14);'
+              + 'background:#05060f"></video>'
+            : j.post.imageSvg ? '<img src="' + esc(j.post.imageSvg) + '" alt="" style="width:150px;float:inline-end;'
               + 'margin:0 0 .6rem .9rem;border-radius:10px;border:1px solid rgba(255,254,247,.14)"/>' : '')
           + '<p style="margin:0 0 .5rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;'
           + 'color:var(--gold)">' + esc(j.post.title || id) + '</p>'
@@ -3375,8 +3391,56 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       'does not expire at all and is the better answer if your account can create one.</p>';
   }
 
+  /* The reels are static files beside the site, not something the posting
+     desk holds, so this reads the manifest the render workflow writes rather
+     than asking /api/social. A manifest that is not there yet is the normal
+     state before the first render has been merged, and says so. */
+  function drawReels(j) {
+    var el = $("so-reels");
+    var cards = (j && j.cards) || [];
+    if (!cards.length) {
+      el.innerHTML = '<p class="muted">No reels have been merged yet. The <code>reels</code> workflow '
+        + 'renders whatever <code>tools/reels/plan.json</code> has that <code>/reels</code> does not, and '
+        + 'opens a pull request with the videos. Until one is merged the two reel slots compose to nothing '
+        + 'and the rest of the day goes out as usual.</p>';
+      return;
+    }
+    var half = function (s) {
+      return s === "morning"
+        ? '<span class="pill-mute">08:00 &middot; morning</span>'
+        : '<span class="pill-mute">17:00 &middot; evening</span>';
+    };
+    el.innerHTML = '<p class="muted" style="margin:0 0 .9rem">' + cards.length + ' rendered &middot; '
+      + cards.filter(function (c) { return c.slot === "morning"; }).length + ' morning, '
+      + cards.filter(function (c) { return c.slot === "evening"; }).length + ' evening</p>'
+      + '<div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))">'
+      + cards.map(function (c) {
+          var id = esc(c.id);
+          return '<div style="border:1px solid rgba(255,254,247,.12);border-radius:12px;overflow:hidden;'
+            + 'background:rgba(255,254,247,.03)">'
+            + '<video src="/reels/' + id + '.mp4" poster="/reels/' + id + '-cover.jpg" controls playsinline '
+            + 'preload="none" style="width:100%;display:block;aspect-ratio:9/16;background:#05060f"></video>'
+            + '<div style="padding:.7rem .8rem">'
+            + '<div style="display:flex;gap:.5rem;align-items:baseline;justify-content:space-between">'
+            + '<b style="font-size:.82rem;line-height:1.35">' + esc(c.hook || id) + '</b>' + half(c.slot)
+            + '</div>'
+            + '<details style="margin:.5rem 0 0"><summary class="muted" style="cursor:pointer;'
+            + 'font-size:.72rem">The caption</summary>'
+            + '<pre style="white-space:pre-wrap;font-family:inherit;font-size:.74rem;line-height:1.5;'
+            + 'margin:.4rem 0 0;color:rgba(243,241,232,.85)">' + esc(c.caption || "") + '</pre></details>'
+            + '<p class="muted" style="margin:.5rem 0 0;font-size:.68rem"><code>' + id + '</code></p>'
+            + '</div></div>';
+        }).join("")
+      + '</div>';
+  }
+
   function loadSocial() {
     $("so-preview").innerHTML = '<p class="muted">Building the preview&hellip;</p>';
+
+    fetch("/reels/index.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(drawReels)
+      .catch(function () { drawReels(null); });
 
     /* the schedule first: it decides whether the preview below is an offer or a receipt */
     fetch("/api/social?action=today", { credentials: "same-origin" })
