@@ -59,6 +59,10 @@
     {
       "source": "/journal/:slug",
       "destination": "/api/journal-page?slug=:slug"
+    },
+    {
+      "source": "/pinterest/callback",
+      "destination": "/api/social?action=pin-callback"
     }
   ]
 }

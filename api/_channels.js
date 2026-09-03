@@ -141,7 +141,11 @@ export const configured = {
   facebook:  () => !!(env("FB_PAGE_ID") && env("FB_PAGE_TOKEN")),
   instagram: () => !!(env("IG_USER_ID") && (env("IG_TOKEN") || env("IG_ACCESS_TOKEN") || env("FB_PAGE_TOKEN"))),
   linkedin:  () => !!(env("LI_ORG_URN") && env("LI_TOKEN")),
-  pinterest: () => !!(env("PIN_BOARD_ID") && env("PIN_TOKEN")),
+  /* A board (by id or by name) and some way to hold a token: either one
+     pasted in, or the app credentials that can mint one. */
+  pinterest: () => !!((env("PIN_BOARD_ID") || env("PIN_BOARD_NAME")) &&
+                      (env("PIN_TOKEN") ||
+                       (env("PIN_APP_ID") && env("PIN_APP_SECRET") && env("PIN_REFRESH_TOKEN")))),
   /* X is double-gated on purpose. Every post there is billed, and a post
      carrying a link is billed at thirteen times the base rate, so a token
      sitting in the environment must not be enough to start spending. It takes
@@ -189,11 +193,19 @@ export async function sendLinkedIn(shaped, opts = {}) {
    rotating refresh token is reported back so the console can show that it
    changed and needs storing. */
 let PIN_MEM = { tok: "", at: 0 };
+
+/* Pinterest has two worlds: api.pinterest.com, and api-sandbox.pinterest.com
+   where writes are free and nothing reaches a real profile. An app waiting on
+   Pinterest's review cannot post to the first one, so without this the whole
+   path stays untested until the day it goes live, which is the worst possible
+   day to find out. PIN_API_BASE moves every call at once. */
+export const pinBase = () => (env("PIN_API_BASE") || "https://api.pinterest.com").replace(/\/+$/, "");
+
 async function pinRefresh(fetcher) {
   const id = env("PIN_APP_ID"), sec = env("PIN_APP_SECRET"), rt = env("PIN_REFRESH_TOKEN");
   if (!id || !sec || !rt) return null;
   try {
-    const r = await (fetcher || fetch)("https://api.pinterest.com/v5/oauth/token", {
+    const r = await (fetcher || fetch)(pinBase() + "/v5/oauth/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded",
                  Authorization: "Basic " + Buffer.from(id + ":" + sec).toString("base64") },
@@ -206,19 +218,49 @@ async function pinRefresh(fetcher) {
   return null;
 }
 
+/* A board id is a nineteen digit number that appears nowhere in the Pinterest
+   interface: you can only get it from the API. Asking the owner to find one is
+   asking him to do by hand the one thing the API is for, so the board may be
+   named instead and looked up once. The answer is held for the life of the
+   lambda; boards do not get renamed mid-afternoon. */
+let PIN_BOARD_MEM = { id: "", name: "", at: 0 };
+export async function pinBoardId(tok, opts = {}) {
+  const fixed = env("PIN_BOARD_ID");
+  if (fixed) return fixed;
+  const want = (env("PIN_BOARD_NAME") || "").trim();
+  if (!want || !tok) return "";
+  if (PIN_BOARD_MEM.id && PIN_BOARD_MEM.name === want && Date.now() - PIN_BOARD_MEM.at < 6 * 3600000)
+    return PIN_BOARD_MEM.id;
+  try {
+    const r = await (opts.fetch || fetch)(pinBase() + "/v5/boards?page_size=100",
+      { headers: { Authorization: "Bearer " + tok } });
+    if (!r.ok) return "";
+    const j = await r.json();
+    const list = (j && j.items) || [];
+    const hit = list.find(b => String(b.name || "").trim().toLowerCase() === want.toLowerCase());
+    if (hit && hit.id) { PIN_BOARD_MEM = { id: String(hit.id), name: want, at: Date.now() }; return String(hit.id); }
+  } catch { }
+  return "";
+}
+
 export async function sendPinterest(shaped, opts = {}) {
-  const board = env("PIN_BOARD_ID");
   let tok = (PIN_MEM.tok && Date.now() - PIN_MEM.at < 20 * 86400000) ? PIN_MEM.tok : env("PIN_TOKEN");
-  if (!board || !tok) return { ok: false, err: "pinterest is not configured" };
+  /* No access token in the environment is the normal state once the app is
+     live: only the rotating refresh token is stored, and the access token is
+     minted from it. Refresh first rather than failing on an absence. */
+  if (!tok) tok = await pinRefresh(opts.fetch);
+  if (!tok) return { ok: false, err: "pinterest is not configured: no PIN_TOKEN and no working PIN_REFRESH_TOKEN" };
+  const board = await pinBoardId(tok, opts);
+  if (!board) return { ok: false, err: "pinterest has no board: set PIN_BOARD_ID or PIN_BOARD_NAME" };
   if (!shaped.image) return { ok: false, err: "pinterest needs an image and none was built" };
   const body = {
     board_id: board, title: shaped.title, description: shaped.text, link: shaped.link,
     media_source: { source_type: "image_url", url: shaped.image }
   };
-  let r = await jsonPost("https://api.pinterest.com/v5/pins", body, { Authorization: "Bearer " + tok }, opts.fetch);
+  let r = await jsonPost(pinBase() + "/v5/pins", body, { Authorization: "Bearer " + tok }, opts.fetch);
   if (!r.ok && /401|expired|unauthor/i.test(String(r.err))) {
     const fresh = await pinRefresh(opts.fetch);
-    if (fresh) r = await jsonPost("https://api.pinterest.com/v5/pins", body, { Authorization: "Bearer " + fresh }, opts.fetch);
+    if (fresh) r = await jsonPost(pinBase() + "/v5/pins", body, { Authorization: "Bearer " + fresh }, opts.fetch);
   }
   return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned" } : r;
 }

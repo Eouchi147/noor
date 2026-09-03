@@ -999,6 +999,68 @@ export async function runDue(host, date, now, opts = {}) {
   return out;
 }
 
+/* ===========================================================================
+   PINTEREST · TURNING AN APPROVAL INTO A TOKEN
+   ---------------------------------------------------------------------------
+   Everything else about Pinterest was written months ago and has never posted,
+   because the one step between "Pinterest approved the app" and "the house can
+   post" was missing: the OAuth round trip. There was no redirect target, so
+   there was no way to obtain the refresh token the sender needs, and the code
+   sat waiting for an environment variable nobody could produce.
+
+   Two actions close that gap, and they are deliberately in this route rather
+   than a new file: the deployment is already near its function limit, and this
+   route is the one that owns posting.
+
+     /api/social?action=pin-auth       sends the owner to Pinterest to approve
+     /pinterest/callback               Pinterest sends him back here with a code
+
+   The callback cannot rely on the admin cookie, because Pinterest may return
+   the owner in a different browser context than the one that unlocked the
+   console. So the `state` carries its own proof: it is signed with
+   ADMIN_SECRET and expires in fifteen minutes. That is what authorises the
+   callback, and it is also what makes the round trip CSRF safe.
+
+   The tokens are shown once, in the browser, and never written to the store.
+   A refresh token is a password; the house does not keep a copy it was not
+   asked to keep. The owner copies it into Vercel, which is the only place it
+   belongs. */
+const PIN_SCOPES = "boards:read,boards:write,pins:read,pins:write,user_accounts:read";
+function pinRedirect(host) {
+  return "https://" + String(host).replace(/^https?:\/\//, "") + "/pinterest/callback";
+}
+function pinState(secret) {
+  const exp = Date.now() + 15 * 60 * 1000;
+  return exp + "." + crypto.createHmac("sha256", secret).update("pin" + exp).digest("hex");
+}
+function pinStateOk(state, secret) {
+  if (!secret) return false;
+  const [expStr, sig] = String(state || "").split(".");
+  const exp = parseInt(expStr, 10);
+  if (!exp || Date.now() > exp) return false;
+  const want = crypto.createHmac("sha256", secret).update("pin" + exp).digest("hex");
+  const A = Buffer.from(sig || ""), B = Buffer.from(want);
+  return A.length === B.length && crypto.timingSafeEqual(A, B);
+}
+const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function pinPage(res, title, bodyHtml, code = 200) {
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  return res.status(code).send('<!doctype html><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">' +
+    "<title>" + esc(title) + " \u00b7 NOOR</title><style>" +
+    "body{margin:0;background:#0F1630;color:#EEF1FA;font:16px/1.6 system-ui,sans-serif;padding:28px 18px}" +
+    ".w{max-width:640px;margin:0 auto}h1{font-size:26px;margin:0 0 14px;color:#E9C86A}" +
+    "p{color:#A9B3D6;max-width:60ch}code,.v{font-family:ui-monospace,Menlo,monospace;font-size:13px}" +
+    ".v{display:block;background:#0B1129;border:1px solid #2B3766;border-radius:10px;padding:12px 14px;" +
+    "margin:6px 0 16px;word-break:break-all;color:#EEF1FA}" +
+    ".k{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E9C86A;margin-top:14px}" +
+    "a{color:#E9C86A}.ok{color:#7FD1AE}.no{color:#F0876A}" +
+    "</style><div class=w>" + bodyHtml + "</div>");
+}
+
 export default async function handler(req, res) {
   const host = req.headers["x-forwarded-host"] || req.headers.host || process.env.VERCEL_URL || "noorcodex.com";
   const q = req.query || {};
@@ -1035,12 +1097,70 @@ export default async function handler(req, res) {
   const bearerOk = !!cronSecret && bearer.length === cronSecret.length
     && crypto.timingSafeEqual(Buffer.from(bearer), Buffer.from(cronSecret));
   const cronMayRun = String(q0.action || "") === "due" && (fromVercelCron || bearerOk);
+  /* Pinterest returns the owner to the callback in whatever browser he
+     approved in, which may not be the one holding the console cookie. The
+     signed, fifteen minute `state` this route issued is the proof instead. */
+  const pinCallback = String(q0.action || "") === "pin-callback"
+    && pinStateOk(q0.state, process.env.ADMIN_SECRET || "");
 
   const gate = ownerGate(req);
-  if (!gate.ok && !cronMayRun) return json(res, gate.code, { ok: false, reason: gate.reason });
+  if (!gate.ok && !cronMayRun && !pinCallback) return json(res, gate.code, { ok: false, reason: gate.reason });
 
   if (req.method === "GET") {
     const action = String(q.action || "preview");
+    /* Step one: send the owner to Pinterest. */
+    if (action === "pin-auth") {
+      const id = process.env.PIN_APP_ID, secret = process.env.ADMIN_SECRET || "";
+      if (!id) return pinPage(res, "Pinterest", "<h1>Pinterest is not ready</h1><p>Set <code>PIN_APP_ID</code> in Vercel first. It is the app id on the Pinterest developer page, and it is not a secret.</p>", 400);
+      const u = "https://www.pinterest.com/oauth/?" + new URLSearchParams({
+        client_id: id, redirect_uri: pinRedirect(host), response_type: "code",
+        scope: PIN_SCOPES, state: pinState(secret)
+      }).toString();
+      res.setHeader("Cache-Control", "no-store");
+      res.writeHead(302, { Location: u });
+      return res.end();
+    }
+
+    /* Step two: Pinterest hands back a code. Trade it for the tokens, show
+       them once, and keep no copy. */
+    if (action === "pin-callback") {
+      const id = process.env.PIN_APP_ID, sec = process.env.PIN_APP_SECRET;
+      if (String(q.error || "")) return pinPage(res, "Pinterest", "<h1>Pinterest said no</h1><p>It returned <code>" + esc(q.error) + "</code>" + (q.error_description ? ": " + esc(q.error_description) : "") + ".</p><p><a href=\"/api/social?action=pin-auth\">Try again</a></p>", 400);
+      const code = String(q.code || "");
+      if (!code) return pinPage(res, "Pinterest", "<h1>No code came back</h1><p>Start again from <a href=\"/api/social?action=pin-auth\">the beginning</a>.</p>", 400);
+      if (!id || !sec) return pinPage(res, "Pinterest", "<h1>Half configured</h1><p>Both <code>PIN_APP_ID</code> and <code>PIN_APP_SECRET</code> must be set in Vercel before the code can be exchanged.</p>", 400);
+      let j = null, err = "";
+      try {
+        const r = await fetch(CH.pinBase() + "/v5/oauth/token", {
+          method: "POST",
+          headers: { "content-type": "application/x-www-form-urlencoded",
+                     Authorization: "Basic " + Buffer.from(id + ":" + sec).toString("base64") },
+          body: new URLSearchParams({ grant_type: "authorization_code", code,
+                                      redirect_uri: pinRedirect(host) }).toString()
+        });
+        j = await r.json().catch(() => null);
+        if (!r.ok) err = "Pinterest answered " + r.status + (j && j.message ? ": " + j.message : "");
+      } catch (e) { err = String(e && e.message || e); }
+      if (err || !j || !j.refresh_token) {
+        return pinPage(res, "Pinterest", "<h1>The exchange failed</h1><p class=no>" + esc(err || "no refresh token came back") + "</p><p>The usual cause is a redirect URI on the Pinterest app that does not match this one exactly:</p><span class=v>" + esc(pinRedirect(host)) + "</span><p><a href=\"/api/social?action=pin-auth\">Try again</a></p>", 502);
+      }
+      /* the board, named rather than numbered, resolved while a token is in hand */
+      let board = process.env.PIN_BOARD_ID || "", boardNote = "";
+      if (!board) {
+        board = await CH.pinBoardId(j.access_token).catch(() => "");
+        if (!board) boardNote = "<p class=no>No board matched <code>PIN_BOARD_NAME</code>" + (process.env.PIN_BOARD_NAME ? " (" + esc(process.env.PIN_BOARD_NAME) + ")" : ", which is not set") + ". Create the board on Pinterest, then set the name, or paste a <code>PIN_BOARD_ID</code>.</p>";
+      }
+      const rows = [["PIN_REFRESH_TOKEN", j.refresh_token]];
+      if (board) rows.push(["PIN_BOARD_ID", board]);
+      return pinPage(res, "Pinterest connected",
+        "<h1 class=ok>Pinterest said yes</h1>" +
+        "<p>Copy these into Vercel now, under Settings, Environment Variables. This page is the only time they are shown, and the house keeps no copy of them.</p>" +
+        rows.map(([k, v]) => "<div class=k>" + esc(k) + "</div><span class=v>" + esc(v) + "</span>").join("") +
+        boardNote +
+        "<p>The access token lives thirty days and the house mints a new one from the refresh token whenever it needs to, so this is the last time you have to do this by hand.</p>" +
+        "<p>Redeploy after saving them, then open the console's Social room: Pinterest should read as live.</p>");
+    }
+
     if (action === "log") return json(res, 200, { ok: true, log: await socialLog(), queue: await queue() });
     if (action === "tokens") return json(res, 200, { ok: true, tokens: await tokenClock() });
     /* The console re-renders the ladder after every change. Composing a whole
