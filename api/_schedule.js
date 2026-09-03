@@ -36,7 +36,7 @@ import { trimToSentences } from "./_prose.js";
    post time. A reel slot whose video is not there yet composes to nothing and
    says so, exactly like a word slot with no dictionary: the day loses one post
    and the machine keeps its promise about the rest. The list stays in clock
-   order, because dueNow takes the LAST due slot when it is catching up. */
+   order, because a catch-up run works through the owed slots newest first. */
 export const SLOTS = [
   { id: "dawn",  at: 5,  needsDate: true  },
   { id: "reelA", at: 8,  needsDate: false, reel: "morning" },
@@ -387,6 +387,14 @@ export function dueNow(planSlots, nowUTC, sent, opts = {}) {
     .filter(s => planSlots.includes(s.id))
     .filter(s => hour >= s.at)
     .filter(s => !sent.includes(s.id));
+  /* `all` hands back every owed slot, most recent first, and leaves the capping
+     to the caller. This exists because capping HERE counts attempts, and an
+     attempt that finds nothing to say is not a post: with the old slice the
+     day's card sat owed from noon while the machine spent every run on a
+     later slot that had nothing to say, and only got out near midnight, on the
+     days it got out at all. runDue now walks this list and stops after it has
+     actually SENT its cap, which is the thing the cap was ever about. */
+  if (opts.all) return due.slice().reverse();
   const cap = opts.cap == null ? 1 : opts.cap;
   return due.slice(-cap);          /* the most recent unsent, not the whole backlog */
 }

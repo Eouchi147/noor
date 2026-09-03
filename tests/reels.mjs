@@ -199,6 +199,35 @@ console.log('\nFacebook');
   ok(r.every(x => !x.ok), 'a reel post with no video is refused rather than sent as a photo');
 }
 
+/* --------------------------------------------------- the order of the day */
+console.log('\nwhich slot a run picks');
+{
+  const plan = ['dawn', 'reelA', 'light', 'word', 'reelB', 'dusk'];
+  const at = h => new Date('2026-09-03T' + String(h).padStart(2, '0') + ':01:00Z');
+
+  const capped = S.dueNow(plan, at(17), ['dawn', 'word']);
+  ok(capped.length === 1 && capped[0].id === 'reelB',
+     'capped, it is still the most recent owed slot');
+
+  const all = S.dueNow(plan, at(17), ['dawn', 'word'], { all: true });
+  ok(all.map(s => s.id).join() === 'reelB,light,reelA',
+     'all, it is every owed slot, most recent first');
+  ok(all[all.length - 1].id === 'reelA', 'the stalest is last, never first');
+
+  const settled = S.dueNow(plan, at(17), ['dawn', 'word', 'reelA', 'reelB'], { all: true });
+  ok(settled.map(s => s.id).join() === 'light',
+     'a slot recorded as settled drops out and stops blocking the one behind it');
+
+  ok(S.dueNow(plan, at(3), [], { all: true }).length === 0,
+     'before the first slot nothing is owed, however you ask');
+
+  /* the shape of the bug this replaced: the day's card sat owed from noon
+     because every later hour put a fresher slot in front of it */
+  const noon = S.dueNow(plan, at(12), ['dawn'], { all: true });
+  ok(noon.map(s => s.id).join() === 'light,reelA',
+     'at noon the card is reachable, with the empty reel slot behind it');
+}
+
 globalThis.fetch = realFetch;
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

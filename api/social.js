@@ -1086,15 +1086,31 @@ export async function runDue(host, date, now, opts = {}) {
   out.verified = plan.verified;
   if (!plan.verified) out.note = "the calendar could not be verified, so nothing dated was planned";
 
+  /* Settled means dealt with, not necessarily posted. "skipped" is a slot that
+     had nothing to say today; "queued" is one already waiting for the owner on
+     the middle rung. Leaving either owed had them picked again every hour for
+     the rest of the day, ahead of slots that did have something to say, and on
+     the middle rung it pushed a fresh copy into the queue each time. */
   const sent = [];
-  for (const id of plan.slots) { const r = await readSlot(date, id); if (r && r.state === "sent") sent.push(id); }
+  for (const id of plan.slots) {
+    const r = await readSlot(date, id);
+    if (r && (r.state === "sent" || r.state === "skipped" || r.state === "queued"))
+      sent.push(id);
+  }
 
-  const due = dueNow(plan.slots, now || new Date(), sent, { cap: opts.cap == null ? 1 : opts.cap });
+  const due = dueNow(plan.slots, now || new Date(), sent, { all: true });
   if (!due.length) { out.skipped = "nothing is due"; return out; }
+  /* the cap counts POSTS, not attempts. Walking newest first keeps the old
+     promise -- a cron that was down sends the most recent thing owed, never the
+     backlog -- while letting the run fall through a slot that turns out to have
+     nothing to say and reach the one behind it in the same minute. */
+  const cap = opts.cap == null ? 1 : opts.cap;
+  let posted = 0;
 
   const base = "https://" + publicHost(host);
   const idx = opts.index || null;
   for (const slot of due) {
+    if (posted >= cap) break;
     let post;
     if (slot.id === "light") {
       const c = await compose(host, date, { polish: D.polish });
@@ -1112,7 +1128,14 @@ export async function runDue(host, date, now, opts = {}) {
         image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slot.id) + "&fmt=png"
       });
     }
-    if (!post) { out.ran.push({ slot: slot.id, skipped: "nothing to say" }); continue; }
+    if (!post) {
+      /* written down, so the console stops calling it owed and the next run
+         does not spend itself on it again */
+      await writeSlot(date, slot.id, { at: out.at, slot: slot.id, state: "skipped",
+        title: "", why: "nothing to say for this slot today" });
+      out.ran.push({ slot: slot.id, state: "skipped" });
+      continue;
+    }
 
     if (opts.dry) { out.ran.push({ slot: slot.id, dry: true, post }); continue; }
 
@@ -1120,6 +1143,7 @@ export async function runDue(host, date, now, opts = {}) {
       await writeSlot(date, slot.id, { at: out.at, state: "queued", slot: slot.id, post });
       if (kvReady()) { try { await kv([["LPUSH", K_Q, date + "#" + slot.id], ["LTRIM", K_Q, "0", "60"]]); } catch { } }
       out.ran.push({ slot: slot.id, state: "queued" });
+      posted++;                       /* the rung says one a run, queued or sent */
       continue;
     }
 
@@ -1158,6 +1182,7 @@ export async function runDue(host, date, now, opts = {}) {
     if (pending.length) rec.pending = pending;
     await writeSlot(date, slot.id, rec);
     out.ran.push({ slot: slot.id, state: rec.state, results });
+    posted++;
   }
   return out;
 }

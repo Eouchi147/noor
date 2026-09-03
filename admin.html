@@ -3205,6 +3205,8 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     lead:  "A countdown, only when something is coming",
     light: "The day's card",
     word:  "One of 523 words, Arabic and plain English",
+    reelA: "A reel: the astonishing half of the library",
+    reelB: "A reel: the rooted half",
     dusk:  "One of 71 chapters of the Path"
   };
   function drawSchedule(j) {
@@ -3222,10 +3224,14 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     }
     el.innerHTML = head + j.slots.map(function (s) {
       var past = j.nowHour >= s.at;
-      var chip = s.state === "sent"   ? '<span class="pill-ok">sent</span>'
-               : s.state === "failed" ? '<span class="pill-bad">failed</span>'
-               : s.state === "queued" ? '<span class="pill-mute">waiting for you</span>'
-               : s.state === "due"    ? '<span class="pill-bad">owed</span>'
+      var chip = s.state === "sent"    ? '<span class="pill-ok">sent</span>'
+               : s.state === "failed"  ? '<span class="pill-bad">failed</span>'
+               : s.state === "queued"  ? '<span class="pill-mute">waiting for you</span>'
+               /* settled, not owed: the hour came and there was nothing to say,
+                  which is the ordinary state of a reel slot before its video
+                  has been merged */
+               : s.state === "skipped" ? '<span class="pill-mute">nothing to say</span>'
+               : s.state === "due"     ? '<span class="pill-bad">owed</span>'
                : '<span class="pill-mute">' + String(s.at).padStart(2, "0") + ':00</span>';
       var where = "";
       if (s.results) {
@@ -3237,7 +3243,9 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       /* A row you cannot act on is a dead end. An owed slot is one whose hour
          has passed and whose run never happened — the honest thing is to let it
          be read and sent from here, not to leave it sitting as a complaint. */
-      var owed = s.state === "due" || s.state === "failed";
+      /* a skipped slot is offered too: it is rebuilt on demand, and if there is
+         still nothing to say it says so rather than posting anything */
+      var owed = s.state === "due" || s.state === "failed" || s.state === "skipped";
       var acts = '<button class="ghost" data-slotprev="' + esc(s.id) + '" '
         + 'style="padding:.3rem .7rem;font-size:.74rem">Preview</button>'
         + (owed ? ' <button class="btn" data-slotsend="' + esc(s.id) + '" '
