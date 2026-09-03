@@ -199,6 +199,38 @@ console.log('\nFacebook');
   ok(r.every(x => !x.ok), 'a reel post with no video is refused rather than sent as a photo');
 }
 
+/* ------------------------------------------------------------- the seam
+   composeSlot is what the console's Preview and Post now both call. It fetches
+   the manifest through slotExtras and then hands a context to buildSlot, and
+   for a while it built that context without the reel in it -- so both halves
+   passed their own tests and every reel slot still came out empty. This tests
+   the join, end to end, with only the network stubbed. */
+console.log('\nfrom the manifest to a finished post');
+{
+  const man = { n: 2, cards: [
+    { id: 'al-sufi-andromeda-964', slot: 'morning', hook: 'A little cloud in his star book was another galaxy', caption: 'CAPTION A', cover: true },
+    { id: 'smile-counts-as-charity', slot: 'evening', hook: 'Smiling in the face of a brother counts as charity', caption: 'CAPTION B', cover: true }
+  ] };
+  const real2 = globalThis.fetch;
+  globalThis.fetch = async u => String(u).endsWith('/reels/index.json')
+    ? { ok: true, json: async () => man } : { ok: false, json: async () => ({}) };
+
+  const p = await SOC.composeSlot('noorcodex.com', '2026-09-04', 'reelA', { plan: { hijri: null, day: null, leads: [] } });
+  ok(!!p, 'a reel slot composes once the manifest is on the site');
+  ok(p && /^https:\/\/noorcodex\.com\/reels\/.+\.mp4$/.test(p.video || ''), 'it carries a video url');
+  ok(p && /-cover\.jpg$/.test(p.image || ''), 'and its cover, not the day card');
+  ok(p && /^CAPTION [AB]$/.test(p.caption || ''), 'and the caption written beside the video');
+  ok(p && p.only.join() === 'facebook,instagram', 'and it is aimed only where a reel can be shown');
+
+  const ev = await SOC.composeSlot('noorcodex.com', '2026-09-04', 'reelB', { plan: { hijri: null, day: null, leads: [] } });
+  ok(ev && ev.key === 'smile-counts-as-charity', 'the evening slot draws from the evening half');
+
+  globalThis.fetch = async () => ({ ok: false, json: async () => ({}) });
+  const none = await SOC.composeSlot('noorcodex.com', '2026-09-04', 'reelA', { plan: { hijri: null, day: null, leads: [] } });
+  ok(none === null, 'and with no manifest it composes to nothing rather than a broken post');
+  globalThis.fetch = real2;
+}
+
 /* --------------------------------------------------- the order of the day */
 console.log('\nwhich slot a run picks');
 {

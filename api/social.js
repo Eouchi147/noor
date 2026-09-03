@@ -996,7 +996,7 @@ export async function composeSlot(host, date, slotId, opts = {}) {
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
-    node: extras.node, entry: extras.entry,
+    node: extras.node, entry: extras.entry, reel: extras.reel,
     link: base + "/?light=" + date,
     /* its OWN card, not the day's light. Handing one url to every slot is what
        made four different posts a day look like one post four times. */
@@ -1123,7 +1123,7 @@ export async function runDue(host, date, now, opts = {}) {
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
-        node: extras.node, entry: extras.entry,
+        node: extras.node, entry: extras.entry, reel: extras.reel,
         link: base + "/?light=" + date,
         image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slot.id) + "&fmt=png"
       });
