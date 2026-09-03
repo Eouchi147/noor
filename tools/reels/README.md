@@ -8,8 +8,8 @@ then to teach them one true thing well enough that they look the account up.
 
 Every frame and every second of sound is generated. There is no photograph, no
 stock footage, no sample and no voice: the picture is Islamic star polygon
-geometry drawn from a seed, the sound is synthesised from the card's own
-timeline, and the words are the card's own. So there is no licence to honour,
+geometry drawn from a seed, the sound is notes placed on the card's own
+timeline and played into a synthesised hall, and the words are the card's own. So there is no licence to honour,
 no attribution to print, no dead link in two years, and no way for a figurative
 image or a depiction of a prophet to reach the frame through a stock search.
 
@@ -59,24 +59,49 @@ the reel is an editorial decision, not a guess.
 ## The sound
 
 Music is contested in Islamic law and this is a library, not a personal
-account, so the bed carries no melody, no pulse and no instrument sample.
-`sound.py` builds two things in numpy: shaped noise -- air, wind, the presence
-of a large stone room -- and a drone of root, fifth, octave and twelfth. There
-is no third anywhere in the stack, so it never resolves major or minor and
-there is nothing in it that behaves like a tune. One partial is split 4.5 Hz
-between the ears: on headphones that is a theta binaural beat, and on a phone
-speaker the two sum into a slow breathing instead, so neither listener is
-short-changed.
+account, so the bed has no percussion, no pulse, no instrument sample and
+nothing licensed. It is notes, and every note is something the picture does.
 
-The stack is weighted up on purpose. A phone speaker rolls off hard below about
-400 Hz, so a drone written where a drone should sit is a drone nobody hears;
-the body stays for headphones and the twelfth and above carry it on a handset.
+The pitch set is **suspended**: root, fourth, fifth, octave, ninth, eleventh,
+twelfth. There is no third anywhere in it, so it never resolves major or minor
+and never arrives -- which is both why it stays clear of what is argued about
+and why it sounds the way it does. Floating is what an unresolved fourth
+sounds like; the constraint and the effect turned out to be the same thing.
 
-It is cut to the picture, not laid under it. Every swell is placed from the
-same timeline the type layer reports, so the air lifts on the opening bloom,
-brightens as the surprise turns gold, settles when the date rules in, opens as
-each block of substance arrives, and thins on the way home. It fades from and
-to silence, so the seam is clean when the reel loops -- and a reel loops a lot.
+Two layers, both built in `sound.py`:
+
+**The pad** is three long tones that swell in over a second or two and hold, so
+there is always something sounding and the reel never thins out between events.
+The third of them opens as the substance arrives.
+
+**The struck notes** sit on top, one for each thing that happens on screen. The
+bloom opens on the fifth; the root arrives under it; the phrase that turns gold
+gets the highest note in the set and then settles an octave below it; the date
+rules in on the fourth; each block of substance takes the next step of a
+wandering figure with a quiet root beneath it; and the way home is the root
+again. Nothing is on a grid and nothing repeats. The rhythm of the sound is the
+rhythm of the animation, because they are placed from the same timeline.
+
+The voice is a glass pad: partials slightly sharp and dying sooner the higher
+they are, which is what a struck thing does. Each partial is doubled and
+detuned so it shimmers -- but a long note is detuned four times less than a
+short one, and each partial by a different amount. A beat that is shimmer on a
+bell becomes a tremolo on a tone held for twenty seconds, and a tremolo that
+never stops is a pulse, which is the one thing this bed must not have.
+
+They are played into a synthesised hall: a real convolution, not a delay
+pretending. The impulse is noise decaying band by band, the highs absorbed
+first as they are by everything a room is made of, about three seconds to
+-60 dB. A tail whose bands all die together sounds like a machine; this one
+does not.
+
+Under all of it, quietly, a drone at the root four octaves down with its octave
+split 4.5 Hz between the ears -- theta binaural on headphones, a slow breathing
+when a phone speaker sums the two -- and a little air.
+
+The notes are pitched four octaves above the drone on purpose. A phone speaker
+rolls off hard below about 400 Hz; the body is there for headphones, but what
+carries the reel on a handset is the notes.
 
 Every reel is written to -18 LUFS integrated, measured with `ebur128` on the
 bed and then checked again on the finished mp4, because what ships is what came
@@ -86,7 +111,7 @@ AAC at 48 kHz, misses the loudness by more than 1.5 LU, or peaks within a
 decibel of clipping.
 
 Most reels are watched muted, and these are text-driven, so they still work in
-silence. The sound is upside, never load-bearing.
+silence. The sound embellishes; it is never what the reel depends on.
 
 ## The safe area, and why it is measured in pixels
 
