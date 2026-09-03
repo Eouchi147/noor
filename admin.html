@@ -3246,10 +3246,15 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       /* a skipped slot is offered too: it is rebuilt on demand, and if there is
          still nothing to say it says so rather than posting anything */
       var owed = s.state === "due" || s.state === "failed" || s.state === "skipped";
+      /* a reel Instagram is still transcoding: the one useful thing to offer is
+         to ask again, not to send the whole slot a second time */
+      var finishing = s.state === "pending";
       var acts = '<button class="ghost" data-slotprev="' + esc(s.id) + '" '
         + 'style="padding:.3rem .7rem;font-size:.74rem">Preview</button>'
         + (owed ? ' <button class="btn" data-slotsend="' + esc(s.id) + '" '
-            + 'style="padding:.3rem .8rem;font-size:.74rem">Post now</button>' : '');
+            + 'style="padding:.3rem .8rem;font-size:.74rem">Post now</button>' : '')
+        + (finishing ? ' <button class="btn" data-slotfinish="1" '
+            + 'style="padding:.3rem .8rem;font-size:.74rem">Finish it</button>' : '');
       return '<div style="padding:.7rem 0;border-bottom:1px solid rgba(255,254,247,.07)">'
         + '<div style="display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap">'
         + '<code style="flex:0 0 3.4rem;color:' + (past ? "var(--gold-hi)" : "rgba(255,254,247,.4)") + '">'
@@ -3305,6 +3310,28 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
           + '</p></div>';
       })
       .catch(function () { box.innerHTML = '<p class="muted">Could not reach /api/social.</p>'; });
+  }
+
+  /* Instagram takes a reel, then transcodes it, and refuses to publish until it
+     has finished. This asks whether it has. */
+  function finishReels(btn) {
+    if (btn) { btn.disabled = true; btn.textContent = "Asking\u2026"; }
+    fetch("/api/social", { method: "POST", credentials: "same-origin",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "finish-reels" }) })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || !j.ok) { toast((j && j.error) || "It refused.", "bad");
+          if (btn) { btn.disabled = false; btn.textContent = "Finish it"; } return; }
+        var done = (j.ran || []).filter(function (x) { return x.ok; });
+        var still = (j.ran || []).filter(function (x) { return x.state === "pending"; });
+        toast(done.length ? "Published on Instagram"
+              : still.length ? "Instagram is still processing it. Try again in a minute."
+              : (j.note || "Nothing was waiting."), done.length ? "ok" : "mute");
+        loadSocial();
+      })
+      .catch(function () { toast("Could not reach /api/social", "bad");
+        if (btn) { btn.disabled = false; btn.textContent = "Finish it"; } });
   }
 
   function sendSlotNow(id, btn) {
@@ -3596,6 +3623,8 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     if (sp) { previewSlot(sp.getAttribute("data-slotprev")); return; }
     var ss = t.closest ? t.closest("[data-slotsend]") : null;
     if (ss) { sendSlotNow(ss.getAttribute("data-slotsend"), ss); return; }
+    var sf = t.closest ? t.closest("[data-slotfinish]") : null;
+    if (sf) { finishReels(sf); return; }
     if (t.id === "so-send") send();
     if (t.id === "so-skip") socPost({ action: "skip" }, "Marked as skipped; nothing will be sent for today.");
     var rung = t.closest && t.closest("[data-rung]");

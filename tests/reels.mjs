@@ -260,6 +260,74 @@ console.log('\nwhich slot a run picks');
      'at noon the card is reachable, with the empty reel slot behind it');
 }
 
+/* -------------------------------------------------- taken but not finished
+   Instagram accepts a reel and then transcodes it, and refuses to publish
+   until it has finished. That state is neither a success nor a failure, and
+   the two send paths used to describe it differently: the cron called it
+   pending, the Post button called it sent. A slot marked sent is never looked
+   at again, so a container that needed one more minute was stranded and the
+   reel never appeared, although Instagram had it the whole time. */
+console.log('\ntaken, not yet finished');
+{
+  const SLOTS_KV = new Map();
+  const kvStub = () => {
+    globalThis.fetch = async (url, opt) => {
+      url = String(url);
+      if (url.startsWith('https://kv.test')) {
+        const cmds = JSON.parse(opt.body);
+        return { ok: true, json: async () => cmds.map(c => {
+          const [v, k, val] = c;
+          if (v === 'GET') return { result: SLOTS_KV.has(k) ? SLOTS_KV.get(k) : null };
+          if (v === 'SET') { SLOTS_KV.set(k, val); return { result: 'OK' }; }
+          return { result: null };
+        }) };
+      }
+      return { ok: false, status: 404, json: async () => ({}), text: async () => '' };
+    };
+  };
+
+  ok(SOC.slotState({ facebook: { ok: true }, instagram: { ok: true } }) === 'sent',
+     'both landed: sent');
+  ok(SOC.slotState({ facebook: { ok: true }, instagram: { ok: false, pending: 'C' } }) === 'pending',
+     'one landed and one is still processing: pending, not sent');
+  ok(SOC.slotState({ facebook: { ok: false }, instagram: { ok: false } }) === 'failed',
+     'neither landed: failed');
+  ok(SOC.slotState({ facebook: { ok: true }, reddit: { ok: false } }) === 'sent',
+     'a Reddit draft never decides the state');
+
+  /* the record that was actually stranded on 3 September: state sent, with a
+     container sitting unpublished inside the results */
+  process.env.KV_REST_API_URL = 'https://kv.test';
+  process.env.KV_REST_API_TOKEN = 't';
+  const key = 'nsoc:slot:2026-09-03#reelA';
+  SLOTS_KV.set(key, JSON.stringify({ at: 'x', slot: 'reelA', state: 'sent',
+    results: { facebook: { ok: true, id: 'F' }, instagram: { ok: false, pending: 'CONT' } } }));
+
+  let phase = 'ready';
+  kvStub();
+  const kvOnly = globalThis.fetch;
+  globalThis.fetch = async (url, opt) => {
+    const u = String(url);
+    if (u.startsWith('https://kv.test')) return kvOnly(url, opt);
+    if (u.includes('media_publish')) return { ok: true, json: async () => ({ id: 'IGPOST' }), text: async () => '' };
+    if (u.includes('CONT')) return { ok: true, json: async () => ({ status_code: phase === 'ready' ? 'FINISHED' : 'IN_PROGRESS' }), text: async () => '' };
+    return { ok: true, json: async () => ({}), text: async () => '' };
+  };
+
+  const ran = await SOC.finishPendingReels('2026-09-03', { ran: [] });
+  const done = ran.find(x => x.slot === 'reelA' && x.finished);
+  ok(!!done && done.ok, 'the finisher publishes a container stranded inside a sent record');
+  const after = JSON.parse(SLOTS_KV.get(key));
+  ok(after.results.instagram.ok === true && after.results.instagram.id === 'IGPOST',
+     'and writes Instagram\'s id back into the record');
+  ok(after.state === 'sent', 'and the slot settles as sent, with both networks in');
+
+  const again = await SOC.finishPendingReels('2026-09-03', { ran: [] });
+  ok(again.length === 0, 'running it twice publishes nothing twice');
+
+  globalThis.fetch = realFetch;
+}
+
 globalThis.fetch = realFetch;
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

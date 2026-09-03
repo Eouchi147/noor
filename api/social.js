@@ -612,10 +612,12 @@ async function postInstagram(post) {
    timeout is a lost one, and the record would say "failed" about a video
    Instagram had accepted.
 --------------------------------------------------------------------------- */
-const IG_POLL_EVERY = Number(process.env.IG_POLL_EVERY_MS || 3000);
+const IG_POLL_EVERY = Number(process.env.IG_POLL_EVERY_MS || 2500);
 /* Vercel gives a function sixty seconds; this leaves room for the create call,
-   the publish call and the rest of the run. */
-const IG_POLL_BUDGET = Number(process.env.IG_POLL_BUDGET_MS || 32000);
+   the publish call and the rest of the run. Thirty two seconds was not enough
+   for a twenty second 1080x1920 reel even once, so waiting was the exception
+   and being handed back a container was the rule. */
+const IG_POLL_BUDGET = Number(process.env.IG_POLL_BUDGET_MS || 40000);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function igPublish(creationId, id, tok, G) {
@@ -713,6 +715,54 @@ async function postFacebookReel(post) {
     if (!fin.ok) return { ok: false, error: metaErr(fj, "finish http " + fin.status) };
     return { ok: true, id: sj.video_id };
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+/* ---------------------------------------------------------------------------
+   what a slot's state IS, in one place
+
+   This existed twice, written slightly differently, and the two disagreed about
+   a reel whose video Instagram had accepted but not yet finished processing:
+   the cron path called it pending and the Post button called it sent. A slot
+   marked sent is never looked at again, so a container that only needed another
+   minute was stranded, and the reel never appeared on Instagram although
+   Instagram had it the whole time.
+
+   pending is not a failure and it is not a success. It means a network took the
+   thing and has not finished with it, so it must be left alone by the sender
+   and picked up by the finisher.
+--------------------------------------------------------------------------- */
+export function slotState(results) {
+  const live = Object.entries(results || {}).filter(([c]) => !CH.draftOnly.has(c));
+  const anySent = live.some(([, r]) => r && r.ok);
+  const anyPending = live.some(([, r]) => r && r.pending && !r.ok);
+  if (anyPending) return "pending";
+  return anySent ? "sent" : "failed";
+}
+
+/* Publish any reel container a run had to leave transcoding.
+
+   Keyed on the RESULT rather than on the slot's state, so it heals a record
+   written by either path, including one an older version of this file wrote
+   before the two agreed. Instagram keeps a container for about a day, so
+   yesterday is as far back as it is worth looking. */
+export async function finishPendingReels(date, out) {
+  const ran = (out && out.ran) || [];
+  for (const d of [prevDate(date), date]) {
+    for (const id of REEL_SLOTS) {
+      const rec = await readSlot(d, id);
+      const ig = rec && rec.results && rec.results.instagram;
+      if (!ig || ig.ok || !ig.pending) continue;
+      const r = await finishInstagramReel(ig.pending);
+      if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: "instagram" }); continue; }
+      rec.results = { ...rec.results, instagram: r };
+      rec.state = slotState(rec.results);
+      if (r.ok) rec.igId = r.id || "posted";
+      await writeSlot(d, id, rec);
+      ran.push({ slot: id, date: d, state: rec.state, finished: true,
+                 where: "instagram", ok: !!r.ok, error: r.error || "" });
+    }
+  }
+  return ran;
 }
 
 /* Never throws. A network wobble must not take the cron down with it. */
@@ -1012,6 +1062,13 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   const prev = await readSlot(date, slotId);
   if (prev && prev.state === "sent" && !opts.force)
     return { ...out, ok: false, error: "that slot has already gone today" };
+  /* pressing Post on a slot a network is still processing would send it twice
+     everywhere else; finishing it is what the owner actually wants */
+  if (prev && prev.state === "pending" && !opts.force) {
+    const ran = await finishPendingReels(date, { ran: [] });
+    return { ...out, ok: true, state: (await readSlot(date, slotId) || {}).state || "pending",
+      finished: ran, note: "that slot was already sent; Instagram was still processing it" };
+  }
 
   const post = await composeSlot(host, date, slotId, opts);
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
@@ -1025,25 +1082,29 @@ export async function sendSlot(host, date, slotId, opts = {}) {
              error: "this has already been published recently, so it was not sent again" };
 
   const results = {};
-  for (const ch of liveChannels()) {
+  /* the same narrowing the cron does: a reel names the only channels that can
+     show one, and there is no Reddit draft to write from a video */
+  const chans = post.only ? liveChannels().filter(c => post.only.includes(c)) : liveChannels();
+  for (const ch of chans) {
     const shaped = CH.shape(post, ch);
     if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
     try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
     catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
   }
-  let lastRedditAt = null;
-  if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
-  results.reddit = await CH.sendReddit(CH.shape(post, "reddit"), { lastRedditAt });
-  if (results.reddit.links && results.reddit.links.length && kvReady()) {
-    try { await kv([["SET", K_RED, out.at]]); } catch { }
+  if (!post.only) {
+    let lastRedditAt = null;
+    if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
+    results.reddit = await CH.sendReddit(CH.shape(post, "reddit"), { lastRedditAt });
+    if (results.reddit.links && results.reddit.links.length && kvReady()) {
+      try { await kv([["SET", K_RED, out.at]]); } catch { }
+    }
   }
 
-  const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
-  const rec = { at: out.at, slot: slotId, state: anySent ? "sent" : "failed",
+  const rec = { at: out.at, slot: slotId, state: slotState(results),
     title: post.title, lvl: post.lvl, results };
   await writeSlot(date, slotId, rec);
-  if (anySent) await noteSaid(key);
-  return { ...out, ok: anySent, state: rec.state, title: post.title, results };
+  if (rec.state !== "failed") await noteSaid(key);
+  return { ...out, ok: rec.state !== "failed", state: rec.state, title: post.title, results };
 }
 
 export async function runDue(host, date, now, opts = {}) {
@@ -1055,32 +1116,7 @@ export async function runDue(host, date, now, opts = {}) {
     if (!D.storeOk) { out.skipped = "the settings could not be read, so nothing was sent"; return out; }
   }
 
-  /* Instagram keeps a container for a day, so yesterday is as far back as it
-     is worth looking, and looking further would risk republishing something a
-     human has since posted by hand. */
-  if (!opts.dry) {
-    for (const d of [prevDate(date), date]) {
-      for (const id of REEL_SLOTS) {
-        const rec = await readSlot(d, id);
-        if (!rec || rec.state !== "pending" || !rec.pending) continue;
-        for (const p of rec.pending) {
-          if (p.where !== "instagram") continue;
-          const r = await finishInstagramReel(p.creation);
-          if (r.ok) {
-            rec.state = "sent"; delete rec.pending;
-            rec.results = { ...(rec.results || {}), instagram: r };
-            await writeSlot(d, id, rec);
-            out.ran.push({ slot: id, date: d, state: "sent", finished: true });
-          } else if (!r.pending) {
-            rec.state = "failed"; delete rec.pending;
-            rec.results = { ...(rec.results || {}), instagram: r };
-            await writeSlot(d, id, rec);
-            out.ran.push({ slot: id, date: d, state: "failed", error: r.error || "" });
-          }
-        }
-      }
-    }
-  }
+  if (!opts.dry) await finishPendingReels(date, out);
 
   const plan = await planDay(date, opts);
   out.verified = plan.verified;
@@ -1088,13 +1124,15 @@ export async function runDue(host, date, now, opts = {}) {
 
   /* Settled means dealt with, not necessarily posted. "skipped" is a slot that
      had nothing to say today; "queued" is one already waiting for the owner on
-     the middle rung. Leaving either owed had them picked again every hour for
+     the middle rung; "pending" is one a network has taken and not finished with,
+     which must not be sent twice. Leaving any of them owed had them picked again every hour for
      the rest of the day, ahead of slots that did have something to say, and on
      the middle rung it pushed a fresh copy into the queue each time. */
   const sent = [];
   for (const id of plan.slots) {
     const r = await readSlot(date, id);
-    if (r && (r.state === "sent" || r.state === "skipped" || r.state === "queued"))
+    if (r && (r.state === "sent" || r.state === "skipped" ||
+              r.state === "queued" || r.state === "pending"))
       sent.push(id);
   }
 
@@ -1172,14 +1210,8 @@ export async function runDue(host, date, now, opts = {}) {
       }
     }
 
-    const anySent = Object.entries(results).some(([c, r]) => r.ok && !CH.draftOnly.has(c));
-    const pending = Object.entries(results)
-      .filter(([, r]) => r && r.pending)
-      .map(([c, r]) => ({ where: c, creation: r.pending }));
-    const rec = { at: out.at, slot: slot.id,
-      state: anySent && !pending.length ? "sent" : (pending.length ? "pending" : "failed"),
+    const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
-    if (pending.length) rec.pending = pending;
     await writeSlot(date, slot.id, rec);
     out.ran.push({ slot: slot.id, state: rec.state, results });
     posted++;
@@ -1443,6 +1475,13 @@ export default async function handler(req, res) {
     if (body.action === "renewed")
       return json(res, 200, await markTokenRenewed(String(body.which || "both"), body.at));
     /* send one named slot now, regardless of its hour */
+    /* publish anything a network took and had not finished with, now, rather
+       than at the top of the next hour */
+    if (body.action === "finish-reels") {
+      const ran = await finishPendingReels(date, { ran: [] });
+      return json(res, 200, { ok: true, date, ran,
+        note: ran.length ? "" : "nothing was waiting to be finished" });
+    }
     if (body.action === "send-slot") {
       const r = await sendSlot(host, date, String(body.slot || ""), { force: !!body.force });
       return json(res, r.ok ? 200 : 409, r);
