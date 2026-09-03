@@ -1,0 +1,85 @@
+# NOOR - render the reels
+#
+# The videos are built here rather than on Vercel because they need ffmpeg and
+# a browser, and because rendering is minutes of CPU that has nothing to do
+# with serving a page. Nothing is pushed to main: the run opens a pull request
+# with the finished files, which is reviewed and merged the same way every
+# other change to this repository is.
+#
+# It renders only the cards in tools/reels/plan.json that have no video yet, so
+# adding a card to that file is the whole act of scheduling one. Run it by hand
+# from the Actions tab, or let the Monday run pick up whatever was added.
+
+name: reels
+
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "card ids to re-render, space separated. Leave empty to render only what is missing."
+        required: false
+        default: ""
+  schedule:
+    - cron: "0 4 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: reels
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/reels/requirements.txt
+
+      - name: install
+        run: |
+          pip install -r tools/reels/requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: the copy is what the cards say
+        run: python tools/reels/copy_audit.py tools/reels/plan.json
+
+      - name: render
+        working-directory: tools/reels
+        run: python render_missing.py ${{ github.event.inputs.ids }}
+
+      - name: what came out
+        run: |
+          echo '### Reels' >> "$GITHUB_STEP_SUMMARY"
+          ls -la reels >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'nothing new' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: open a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: reels
+          branch: reels/rendered
+          delete-branch: true
+          commit-message: |
+            reels: render the cards that had no video
+
+            Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+          title: "Reels: newly rendered videos"
+          body: |
+            Rendered from tools/reels/plan.json by the reels workflow.
+
+            Every video was checked against the Instagram and Facebook safe
+            area before it was encoded: the type layer is measured as pixels,
+            every fifth frame, and a run that finds a word outside the
+            rectangle renders nothing at all.
+
+            1080x1920, 30fps, H.264 high, yuv420p, with the silent AAC track
+            Instagram requires. Each video has a cover beside it, because the
+            profile grid otherwise takes frame zero, which is the picture
+            before a single word has arrived.
