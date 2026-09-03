@@ -43,8 +43,14 @@ jobs:
           cache: pip
           cache-dependency-path: tools/reels/requirements.txt
 
+      # ffmpeg is NOT on the ubuntu-24.04 runner image. It was on 22.04, it is
+      # not on 24.04, and ubuntu-latest is now 24.04, which is how a run that
+      # had already audited all thirty cards died on the first encode.
       - name: install
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
           pip install -r tools/reels/requirements.txt
           python -m playwright install --with-deps chromium
 
@@ -60,7 +66,11 @@ jobs:
           echo '### Reels' >> "$GITHUB_STEP_SUMMARY"
           ls -la reels >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'nothing new' >> "$GITHUB_STEP_SUMMARY"
 
+      # even after a failure: a run that rendered twenty five and then ran out
+      # of time still has twenty five finished reels, and each one is complete
+      # on its own. With nothing to commit this step simply does nothing.
       - name: open a pull request
+        if: always()
         uses: peter-evans/create-pull-request@v7
         with:
           add-paths: reels
