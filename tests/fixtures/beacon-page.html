@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>beacon fixture</title>
+<body><p>a page</p><script>
+  window.__sent = [];
+  navigator.sendBeacon = function (u, b) { window.__sent.push(String(u)); return true; };
+  window.fetch = function (u, o) { if (String(u).indexOf("/api/beacon") === 0) window.__sent.push(String(u)); return Promise.resolve({ ok: true }); };
+</script><script src="/noor-fx.js"></script></body>

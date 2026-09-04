@@ -143,13 +143,17 @@ export default async function handler(req, res) {
 
     const viewKeys = days.map(d => "nv:" + d + ":views");
     const peopleKeys = days.map(d => "nv:" + d + ":people");
+    /* what the gate turned away, so the filter can be seen working */
+    const filtKeys = days.map(d => "nv:" + d + ":filtered");
     const keyLists = await kv(months.map(m => ["KEYS", "nm:" + m + ":*"]));
     const dimKeys = [].concat(...keyLists.map(x => x || []));
 
     const values = await kv([
       ["MGET", ...viewKeys],
       ["MGET", ...peopleKeys],
-      ...(dimKeys.length ? [["MGET", ...dimKeys]] : [])
+      ...(dimKeys.length ? [["MGET", ...dimKeys]] : []),
+      ["MGET", ...filtKeys],
+      ["GET", "nv:cleanfrom"]
     ]);
     /* the finer grain: hour-of-day, visit length, per-day rooms, and how
        long each room holds a reader. All hashes, all aggregate. */
@@ -157,7 +161,8 @@ export default async function handler(req, res) {
       ...days.map(d => ["HGETALL", "nvh:" + d + ":hh"]),
       ...days.map(d => ["HGETALL", "nvh:" + d + ":dur"]),
       ...days.map(d => ["HGETALL", "nvh:" + d + ":rr"]),
-      ...months.map(m => ["HGETALL", "nmh:" + m + ":rt"])
+      ...months.map(m => ["HGETALL", "nmh:" + m + ":rt"]),
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":filt"])
     ]).catch(() => []);
     function toObj(x) {
       if (!x) return {};
@@ -168,12 +173,22 @@ export default async function handler(req, res) {
     const hh = (hashes.slice(0, N) || []).map(toObj);
     const du = (hashes.slice(N, 2 * N) || []).map(toObj);
     const rr = (hashes.slice(2 * N, 3 * N) || []).map(toObj);
-    const rt = (hashes.slice(3 * N) || []).map(toObj);
+    const M = months.length;
+    const rt = (hashes.slice(3 * N, 3 * N + M) || []).map(toObj);
+    const fl = (hashes.slice(3 * N + M) || []).map(toObj);
     const views = (values[0] || []).map(x => parseInt(x, 10) || 0);
     const people = (values[1] || []).map(x => parseInt(x, 10) || 0);
     const dims = dimKeys.length ? (values[2] || []).map(x => parseInt(x, 10) || 0) : [];
+    const fBase = dimKeys.length ? 3 : 2;
+    const filtered = (values[fBase] || []).map(x => parseInt(x, 10) || 0);
+    out.cleanFrom = String(values[fBase + 1] || "");
 
-    out.days = days.map((d, i) => ({ date: d, views: views[i], people: people[i] }));
+    out.days = days.map((d, i) => ({ date: d, views: views[i], people: people[i],
+                                     filtered: filtered[i] || 0 }));
+    /* the reasons, summed over the window: what the gate is actually catching */
+    const fBy = {};
+    fl.forEach(h => { for (const k of Object.keys(h)) fBy[k] = (fBy[k] || 0) + h[k]; });
+    out.filtered = { total: filtered.reduce((a, b) => a + b, 0), by: fBy };
     out.totals.views30 = views.reduce((a, b) => a + b, 0);
     out.totals.people30 = people.reduce((a, b) => a + b, 0);
 

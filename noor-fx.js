@@ -591,6 +591,31 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (function () {
   "use strict";
   if (/(^|\/)admin(\.html)?$/.test(location.pathname)) return;
+
+  /* ---- who does not get counted ---------------------------------------
+     The owner is on this site more than anyone alive, and every one of his
+     visits used to land in the same number a stranger's did. A browser marks
+     itself once, here, and is never counted again: open
+     noorcodex.com/?nocount=1 on a device, or simply open the console, which
+     sets the same flag. ?nocount=0 undoes it. It is per browser, because
+     that is all a site can honestly know without an identifier -- and an
+     identifier is the one thing this counter has never had.
+
+     navigator.webdriver is true in any browser being driven by software,
+     which is how a page opened by automation stops looking like a reader. */
+  try {
+    var q = location.search;
+    if (/[?&]nocount=0/.test(q)) localStorage.removeItem("noor_nocount");
+    else if (/[?&]nocount=1/.test(q)) localStorage.setItem("noor_nocount", "1");
+    if (localStorage.getItem("noor_nocount") === "1") return;
+  } catch (e) {}
+  if (navigator.webdriver) return;
+
+  /* Which host counts is decided by the beacon, not here. A page can be served
+     from a preview build, a laptop or the live domain, and only the server can
+     be trusted to know which -- so it is checked there, once, rather than
+     asserted in two places that can drift apart. */
+
   try {
     var today = new Date().toISOString().slice(0, 10);
     var first = 0;
@@ -607,8 +632,28 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       } else src = "direct";
     } catch (e) {}
     var payload = JSON.stringify({ p: location.pathname, n: first, s: src, h: new Date().getHours() });
-    if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([payload], { type: "application/json" }));
-    else fetch("/api/beacon", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
+
+    /* ---- and only a page somebody actually looked at -------------------
+       Firing on load counted three things that are not a reading: a page the
+       browser prefetched in the background against a link never clicked, a
+       prerender nobody ever saw, and a headless crawler that loads and leaves
+       within the same instant.
+
+       So it waits, and then asks whether the page is in front of a person. A
+       little over a second is long enough that none of the three survive it,
+       and short enough that a real reader deciding to leave has usually not
+       gone yet. It does cost the genuine one-second bounce -- which, in a
+       number labelled "readers", is arguably the right thing to lose. */
+    function count() {
+      if (document.visibilityState !== "visible") return;
+      if (navigator.sendBeacon) navigator.sendBeacon("/api/beacon", new Blob([payload], { type: "application/json" }));
+      else fetch("/api/beacon", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
+    }
+    if (document.prerendering) document.addEventListener("prerenderingchange", function () { setTimeout(count, 1200); }, { once: true });
+    else if (document.visibilityState === "visible") setTimeout(count, 1200);
+    else document.addEventListener("visibilitychange", function h2() {
+      if (document.visibilityState === "visible") { document.removeEventListener("visibilitychange", h2); setTimeout(count, 1200); }
+    });
 
     /* how long the visit lasted, in whole seconds, sent once when the reader
        leaves or first hides the tab. Aggregate only: no ID travels with it. */

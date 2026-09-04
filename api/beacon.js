@@ -162,16 +162,110 @@ function sourceOf(raw) {
   return "other";
 }
 
+/* ---------------------------------------------------------------------------
+   WHAT IS NOT A READER
+
+   Until now the count was every POST that arrived, and three kinds of thing
+   were arriving that are not people:
+
+     the owner, who is on this site more than anyone else alive;
+     crawlers that execute JavaScript -- Google and Bing render pages, so do
+       the SEO suites, and so does a growing number of AI collectors;
+     link previewers, uptime monitors, and anything driving a real browser.
+
+   A first-party beacon written in JavaScript already turns away the crawlers
+   that only read HTML, which is most of them, and that is why this list is
+   shorter than a server log's would be. What is left is named here.
+
+   Two rules kept this list honest. Match the crawler, never the app: Pinterest
+   the previewer is "Pinterestbot" while Pinterest the phone app is a real
+   reader holding a real phone, so only the first is named. And when in doubt,
+   count it -- an over-eager filter that quietly eats real readers is a worse
+   lie than the one being fixed.
+
+   What is turned away is counted in its own key, so the filter can be seen
+   working rather than believed in.
+--------------------------------------------------------------------------- */
+const NOT_A_READER = new RegExp([
+  /* the plain words, which catch most of the long tail on their own.
+     "bot" is deliberately NOT matched loosely: Cubot is a phone brand, and a
+     bare /bot\\b/ would have thrown away every reader holding one. A crawler
+     names itself "SomethingBot/1.0" or "compatible; SomethingBot;", so the
+     punctuation after the word is what makes it safe to match. */
+  "bot/", "\\bbot\\b", "bot;", "bot\\)", "spider", "crawler", "slurp",
+  "scraper", "archiver", "indexer",
+  /* the AI collectors */
+  "gptbot", "chatgpt-user", "oai-searchbot", "claudebot", "claude-web",
+  "anthropic-ai", "perplexitybot", "perplexity-user", "google-extended",
+  "ccbot", "bytespider", "amazonbot", "applebot", "meta-externalagent",
+  "meta-externalfetcher", "cohere-ai", "diffbot", "imagesift", "omgili",
+  "timpibot", "youbot", "petalbot", "webzio", "awario", "peer39", "brightbot",
+  /* search and the SEO suites */
+  "googlebot", "bingbot", "yandex", "baiduspider", "duckduckbot", "sogou",
+  "ahrefs", "semrush", "mj12", "dotbot", "dataforseo", "screaming frog",
+  "seokicks", "serpstat", "sitebulb", "blexbot", "megaindex", "barkrowler",
+  /* link previewers: a card being unfurled is not a visit */
+  "facebookexternalhit", "twitterbot", "linkedinbot", "whatsapp", "telegrambot",
+  "discordbot", "slackbot", "skypeuripreview", "redditbot", "pinterestbot",
+  "embedly", "quora link", "vkshare", "flipboard", "nuzzel", "iframely",
+  /* monitors, and the machinery that measures a page */
+  "uptimerobot", "pingdom", "statuscake", "betteruptime", "site24x7",
+  "newrelic", "datadog", "vercel-screenshot", "vercel-favicon",
+  "lighthouse", "pagespeed", "gtmetrix", "webpagetest", "headlesschrome",
+  /* and anything that is not a browser at all */
+  "puppeteer", "playwright", "selenium", "phantomjs", "cypress",
+  "curl/", "wget", "python-requests", "python-urllib", "aiohttp", "httpx",
+  "node-fetch", "axios/", "go-http-client", "java/", "okhttp", "libwww",
+  "guzzle", "postman", "insomnia", "apache-httpclient", "restsharp", "scrapy"
+].join("|"), "i");
+
+/* Only the live site counts. A preview deployment is the owner looking at his
+   own work in a different coat, and localhost is a laptop. */
+const PROD_HOST = String(process.env.PUBLIC_HOST || "noorcodex.com").toLowerCase();
+function isLiveSite(h) {
+  h = String(h || "").toLowerCase().split(":")[0];
+  return h === PROD_HOST || h === "www." + PROD_HOST;
+}
+
+/* Why a ping was not counted, for the one counter that makes this visible.
+   Returns "" when it IS a reader. */
+function notAReader(req) {
+  const ua = String(req.headers["user-agent"] || "");
+  if (!ua.trim()) return "noua";        /* every real browser sends one */
+  if (NOT_A_READER.test(ua)) return "bot";
+  if (!isLiveSite(req.headers.host)) return "preview";
+  return "";
+}
+
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") return res.status(405).end();
   if (!kvReady()) return res.status(204).end();   /* counting not set up yet */
 
+  const day = new Date().toISOString().slice(0, 10);
+
+  /* the gate. Counted in its own key so the tab can show what it turned away:
+     a filter nobody can see the effect of is a filter nobody should trust. */
+  const why = notAReader(req);
+  if (why) {
+    try {
+      await kv([
+        ["INCR", "nv:" + day + ":filtered"],
+        ["EXPIRE", "nv:" + day + ":filtered", "8000000"],
+        ["HINCRBY", "nvh:" + day + ":filt", why, "1"],
+        ["EXPIRE", "nvh:" + day + ":filt", "8000000"]
+      ]);
+    } catch {}
+    return res.status(204).end();
+  }
+  /* the first day the gate was in place, so the tab can mark the line between
+     numbers that were inflated and numbers that were not. Set once, ever. */
+  try { await kv([["SETNX", "nv:cleanfrom", day]]); } catch {}
+
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
   body = body || {};
 
-  const day = new Date().toISOString().slice(0, 10);
   const month = day.slice(0, 7);
   const cc = String(req.headers["x-vercel-ip-country"] || "??").slice(0, 2).toUpperCase();
   let room = String(body.p || "").replace(/^\/+|\.html$/g, "").split("/")[0].toLowerCase();
