@@ -519,6 +519,20 @@ const metaErr = (j, fallback) =>
   (j && j.error && (j.error.error_user_msg || j.error.message)) ||
   (j && j.error_message) || fallback;
 
+/* Meta's numeric code and subcode, carried beside the message.
+
+   The message is prose, and prose is Meta's to reword whenever it likes; the
+   code is the only stable handle anything downstream can hold. The first cut
+   of this kept the sentence and threw the number away, which left a diagnosis
+   with nothing to match on but English. */
+const metaCode = j => {
+  const e = (j && j.error) || {};
+  const out = {};
+  if (e.code != null) out.code = Number(e.code);
+  if (e.error_subcode != null) out.sub = Number(e.error_subcode);
+  return out;
+};
+
 /* ---------------------------------------------------------------------------
    the Page token, fetched rather than asked for
 
@@ -569,7 +583,7 @@ async function postFacebook(post) {
       body: JSON.stringify({ url: post.image, caption: post.caption, access_token: tok })
     });
     const j = await r.json().catch(() => ({}));
-    if (!r.ok) return { ok: false, error: metaErr(j, "http " + r.status) };
+    if (!r.ok) return { ok: false, error: metaErr(j, "http " + r.status), ...metaCode(j) };
     return { ok: true, id: j.post_id || j.id || "" };
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
 }
@@ -584,13 +598,15 @@ async function postInstagram(post) {
       body: JSON.stringify({ image_url: post.image, caption: post.caption, access_token: tok })
     });
     const cj = await c.json().catch(() => ({}));
-    if (!c.ok || !cj.id) return { ok: false, error: metaErr(cj, "container http " + c.status) };
+    if (!c.ok || !cj.id)
+      return { ok: false, error: metaErr(cj, "container http " + c.status), step: "container", ...metaCode(cj) };
     const p = await fetch(`${G}/${id}/media_publish`, {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ creation_id: cj.id, access_token: tok })
     });
     const pj = await p.json().catch(() => ({}));
-    if (!p.ok) return { ok: false, error: metaErr(pj, "publish http " + p.status) };
+    if (!p.ok)
+      return { ok: false, error: metaErr(pj, "publish http " + p.status), step: "publish", ...metaCode(pj) };
     return { ok: true, id: pj.id || cj.id };
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
 }
@@ -626,7 +642,7 @@ async function igPublish(creationId, id, tok, G) {
     body: JSON.stringify({ creation_id: creationId, access_token: tok })
   });
   const pj = await p.json().catch(() => ({}));
-  if (!p.ok) return { ok: false, error: metaErr(pj, "publish http " + p.status) };
+  if (!p.ok) return { ok: false, error: metaErr(pj, "publish http " + p.status), step: "publish", ...metaCode(pj) };
   return { ok: true, id: pj.id || creationId };
 }
 
@@ -665,7 +681,8 @@ async function postInstagramReel(post) {
       body: JSON.stringify(body)
     });
     const cj = await c.json().catch(() => ({}));
-    if (!c.ok || !cj.id) return { ok: false, error: metaErr(cj, "container http " + c.status) };
+    if (!c.ok || !cj.id)
+      return { ok: false, error: metaErr(cj, "container http " + c.status), step: "container", ...metaCode(cj) };
 
     const started = Date.now();
     while (Date.now() - started < IG_POLL_BUDGET) {
@@ -1085,11 +1102,41 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   /* the same narrowing the cron does: a reel names the only channels that can
      show one, and there is no Reddit draft to write from a video */
   const chans = post.only ? liveChannels().filter(c => post.only.includes(c)) : liveChannels();
+
+  /* THE PRE-FLIGHT, ON THE PATH THAT ACTUALLY POSTS.
+
+     imageReachable() was written for exactly one failure and then wired only
+     into the old whole-day publish, which is not what sends a slot. So on the
+     day it happened the check existed and was not running.
+
+     It matters more than it looks, because the two networks are not symmetric:
+     Instagram REQUIRES an image and Facebook does not. A card Meta cannot
+     fetch therefore takes out Instagram alone and leaves Facebook looking
+     perfectly healthy -- which is precisely the shape of "it posted on
+     Facebook but not Instagram", and reads like an Instagram fault when it is
+     nothing of the kind.
+
+     Fetching it here is also the cheapest possible warm-up. The card is
+     rendered on demand by a function that may be cold; Meta comes for the URL
+     seconds later and does not wait long. Asking for it first means the render
+     has already happened by the time it does. */
+  let imgWhy = "";
+  if (post.image && chans.some(c => CH.SPEC[c] && CH.SPEC[c].image === "required")) {
+    const img = await imageReachable(post.image);
+    if (!img.ok) imgWhy = img.why;
+  }
+
   for (const ch of chans) {
     const shaped = CH.shape(post, ch);
-    if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
+    if (CH.SPEC[ch].image === "required" && !shaped.image) {
+      results[ch] = { ok: false, error: "needs an image", err: "needs an image" }; continue; }
+    if (CH.SPEC[ch].image === "required" && imgWhy) {
+      results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
     try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
-    catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
+    catch (e) {
+      const m = String(e && e.message || e).slice(0, 120);
+      results[ch] = { ok: false, error: m, err: m };
+    }
   }
   if (!post.only) {
     let lastRedditAt = null;
@@ -1105,6 +1152,190 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   await writeSlot(date, slotId, rec);
   if (rec.state !== "failed") await noteSaid(key);
   return { ...out, ok: rec.state !== "failed", state: rec.state, title: post.title, results };
+}
+
+/* ---------------------------------------------------------------------------
+   ONE CHANNEL, AGAIN
+
+   Post now is the wrong tool when one network took the post and another
+   refused it. The slot is already recorded "sent" -- slotState says sent if
+   ANY live channel got it -- so sending again needs force, and force would
+   publish it a second time everywhere it already worked.
+
+   So a retry names its channel. It touches that channel's result and nothing
+   else, and it refuses outright to re-send a channel that already succeeded.
+   That refusal is the whole safety of the button: it can be pressed twice, or
+   by two people, and the second press cannot double-post.
+--------------------------------------------------------------------------- */
+export async function retryChannel(host, date, slotId, ch, opts = {}) {
+  const out = { date, slot: slotId, where: ch, at: new Date().toISOString() };
+  if (!SLOT_IDS.includes(slotId)) return { ...out, ok: false, error: "no such slot" };
+  if (!CH.ALL.includes(ch)) return { ...out, ok: false, error: "no such channel" };
+  if (CH.draftOnly.has(ch))
+    return { ...out, ok: false, error: ch + " is written as a draft for you, never sent by the machine" };
+  if (!(CH.configured[ch] && CH.configured[ch]()))
+    return { ...out, ok: false, error: ch + " is not configured, so there is nothing to retry with" };
+
+  const rec = await readSlot(date, slotId);
+  const had = rec && rec.results && rec.results[ch];
+  if (had && had.ok && !opts.force)
+    return { ...out, ok: false, already: true, state: rec.state,
+             error: "that already went to " + ch + ", so it was not sent again" };
+  /* a container Instagram is still transcoding is finished, never re-sent */
+  if (had && had.pending && !opts.force) {
+    const ran = await finishPendingReels(date, { ran: [] });
+    const now = await readSlot(date, slotId);
+    return { ...out, ok: true, finished: ran, state: (now && now.state) || "pending",
+             results: (now && now.results) || {},
+             note: "Instagram already had this one; it was asked again rather than sent again" };
+  }
+
+  const post = await composeSlot(host, date, slotId, opts);
+  if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
+  if (post.only && !post.only.includes(ch))
+    return { ...out, ok: false, error: "this post is not offered to " + ch };
+
+  const shaped = CH.shape(post, ch);
+  if (CH.SPEC[ch].image === "required" && !shaped.image)
+    return { ...out, ok: false, error: "needs an image and has none" };
+  if (CH.SPEC[ch].image === "required") {
+    const img = await imageReachable(shaped.image);
+    if (!img.ok) return { ...out, ok: false, pre: true, error: img.why };
+  }
+
+  let r;
+  try { r = await sendOne(ch, shaped, { ...post, date }); }
+  catch (e) { const m = String(e && e.message || e).slice(0, 160); r = { ok: false, error: m, err: m }; }
+
+  const results = { ...((rec && rec.results) || {}), [ch]: r };
+  const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
+                 title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
+  await writeSlot(date, slotId, next);
+  return { ...out, ok: !!r.ok, state: next.state, result: r, results };
+}
+
+/* ---------------------------------------------------------------------------
+   WHAT IS ACTUALLY WRONG
+
+   Two kinds of evidence, and they are not worth the same. The first is what
+   can be checked right now: is the card there, is it a PNG, is the caption
+   inside the limit, how many days are left on the token. Those are facts.
+   The second is what Meta said, which is a sentence plus a number -- the
+   number is worth matching on, the sentence is worth quoting and not parsing,
+   because it is Meta's to change.
+
+   So this runs the checks, quotes Meta verbatim, and names a cause only where
+   one of the two establishes it. Where nothing does, it says so and offers the
+   retry, which is the honest answer for a network that simply had a bad
+   minute. It never guesses at a cause to look confident.
+--------------------------------------------------------------------------- */
+const FAULTS = [
+  { when: c => c === 190,
+    cause: "the access token is expired or has been revoked",
+    fix: "token",
+    steps: ["Open Meta Business Suite and generate a fresh token.",
+            "Put it into the Vercel project settings as IG_TOKEN (or FB_PAGE_TOKEN).",
+            "Redeploy, then press Renewed on the token card here so the clock resets.",
+            "Come back and press Retry on this row."] },
+  { when: c => c === 10 || c === 200 || c === 803,
+    cause: "the token is valid but is not permitted to publish for this account",
+    fix: "manual",
+    steps: ["Check the Instagram account is a Business or Creator account, not personal.",
+            "Check it is still linked to the Facebook Page in Business Suite.",
+            "Confirm the app has instagram_content_publish and pages_manage_posts.",
+            "Then press Retry on this row."] },
+  { when: c => c === 4 || c === 17 || c === 32 || c === 613,
+    cause: "Meta is rate limiting the account for now",
+    fix: "wait",
+    steps: ["Nothing is broken; the account has hit a posting or API limit.",
+            "Instagram allows 50 published posts in a rolling 24 hours.",
+            "Wait an hour, then press Retry on this row."] },
+  { when: (c, sub) => c === 9004 || (sub >= 2207000 && sub <= 2207099) || c === 2207003 || c === 2207020,
+    cause: "Instagram could not fetch or process the card image",
+    fix: "retry",
+    steps: ["The card is rendered on demand, so a cold start can outrun Meta's patience.",
+            "The check below says whether it is reachable now.",
+            "If it is, press Retry -- asking for it once has already warmed it."] },
+  { when: c => c === 36003 || c === 36001,
+    cause: "Instagram rejected the image itself, for its shape or its format",
+    fix: "manual",
+    steps: ["Instagram takes aspect ratios between 4:5 and 1.91:1, PNG or JPEG.",
+            "Open the card in Preview and check what it is rendering.",
+            "This one needs the card template changed, not a retry."] }
+];
+
+export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
+  const out = { date, slot: slotId, where: ch, checks: [], steps: [], cause: "", fix: "retry" };
+  if (!SLOT_IDS.includes(slotId)) return { ...out, ok: false, error: "no such slot" };
+  if (!CH.ALL.includes(ch)) return { ...out, ok: false, error: "no such channel" };
+
+  const rec = await readSlot(date, slotId);
+  const r = (rec && rec.results && rec.results[ch]) || null;
+  out.state = rec ? rec.state : null;
+  out.said = r ? String(r.error || r.err || "") : "";
+  if (r && r.code != null) out.code = r.code;
+  if (r && r.sub != null) out.sub = r.sub;
+  if (r && r.step) out.step = r.step;
+
+  if (r && r.ok) return { ...out, ok: true, cause: "nothing: this one went out", fix: "none", canRetry: false };
+  if (r && r.pending)
+    return { ...out, ok: true, fix: "finish", canRetry: true,
+      cause: "Instagram has the video and is still processing it",
+      steps: ["Nothing failed. The container was accepted and is transcoding.",
+              "Press Finish it, or leave it: the next hourly run publishes it by itself."] };
+
+  /* the facts, gathered now rather than inferred from a sentence */
+  const post = await composeSlot(host, date, slotId, opts).catch(() => null);
+  if (!post) {
+    out.checks.push({ name: "the post", ok: false, detail: "this slot builds to nothing today" });
+    return { ...out, ok: true, canRetry: false, cause: "there is nothing for this slot to say",
+             fix: "manual", steps: ["Nothing is broken. This slot has no card for today."] };
+  }
+  const shaped = CH.shape(post, ch);
+  const spec = CH.SPEC[ch] || { chars: 2200, tags: 30, image: "optional" };
+
+  if (spec.image === "required" || post.image) {
+    const img = await imageReachable(shaped.image || post.image);
+    out.checks.push({ name: "the card image", ok: !!img.ok,
+      detail: img.ok ? ((img.type || "image") + (img.bytes ? ", " + Math.round(img.bytes / 1024) + " KB" : "") + ", reachable now")
+                     : img.why });
+  }
+  const text = String(shaped.text || "");
+  out.checks.push({ name: "the caption", ok: text.length <= spec.chars,
+    detail: text.length + " of " + spec.chars + " characters" });
+  /* the same shape the shaper counts with, so the two never disagree */
+  const tags = (text.match(/#[\p{L}\p{N}_]+/gu) || []).length;
+  out.checks.push({ name: "the hashtags", ok: tags <= spec.tags,
+    detail: tags + " of " + spec.tags + " allowed" });
+  try {
+    const tk = await tokenClock();
+    const t = ch === "facebook" ? tk.fb : ch === "instagram" ? tk.ig : null;
+    if (t) out.checks.push({ name: "the token", ok: t.daysLeft == null || t.daysLeft > 3,
+      detail: t.daysLeft == null ? "never marked renewed, so its age is unknown"
+                                 : t.daysLeft + " days left of " + tk.lifeDays });
+  } catch { }
+
+  /* Meta's own code first, because it is the only thing here Meta stands behind */
+  const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));
+  if (hit) { out.cause = hit.cause; out.fix = hit.fix; out.steps = hit.steps.slice(); }
+  else {
+    const broke = out.checks.filter(c => !c.ok);
+    if (broke.length) {
+      out.cause = broke.map(c => c.name + " is wrong: " + c.detail).join("; ");
+      out.fix = broke.some(c => c.name === "the card image") ? "retry" : "manual";
+      out.steps = broke.map(c => "Fix " + c.name + " -- " + c.detail);
+      if (out.fix === "retry") out.steps.push("Then press Retry on this row.");
+    } else {
+      out.cause = out.said
+        ? "no cause we can establish. Every check above passes now, so this reads as a bad minute at Meta rather than something wrong with the post"
+        : "nothing was recorded against this channel";
+      out.fix = "retry";
+      out.steps = ["Everything checks out on our side right now.",
+                   "Press Retry. If it fails again with the same words, the message above is Meta's, verbatim, and worth searching."];
+    }
+  }
+  out.canRetry = out.fix !== "none";
+  return { ...out, ok: true };
 }
 
 export async function runDue(host, date, now, opts = {}) {
@@ -1432,6 +1663,11 @@ export default async function handler(req, res) {
       return json(res, 200, { ok: true, slot: id, post, shaped,
         state: rec ? rec.state : null, sentAt: rec ? rec.at : null });
     }
+    /* why one channel of one slot did not go, in facts rather than guesses */
+    if (action === "diagnose") {
+      const r = await diagnoseSlot(host, String(q.date || date), String(q.slot || ""), String(q.where || ""));
+      return json(res, r.ok === false ? 400 : 200, r);
+    }
     if (action === "reddit") {
       let last = null;
       if (kvReady()) { try { last = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
@@ -1484,6 +1720,14 @@ export default async function handler(req, res) {
     }
     if (body.action === "send-slot") {
       const r = await sendSlot(host, date, String(body.slot || ""), { force: !!body.force });
+      return json(res, r.ok ? 200 : 409, r);
+    }
+    /* send one slot to ONE network, leaving the ones that already took it
+       alone. This is what a half-failed slot needs; send-slot with force is
+       what would post it twice. */
+    if (body.action === "retry-channel") {
+      const r = await retryChannel(host, String(body.date || date), String(body.slot || ""),
+                                   String(body.where || ""), { force: !!body.force });
       return json(res, r.ok ? 200 : 409, r);
     }
     if (body.action === "skip") {

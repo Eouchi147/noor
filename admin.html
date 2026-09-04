@@ -632,6 +632,25 @@ button.sm{padding:.28rem .6rem;font-size:.7rem;border-radius:8px}
 .logrow time{font-family:var(--mono);font-size:.68rem;color:var(--txt-3)}
 .pill-ok{color:var(--good);font-size:.68rem;font-weight:800}
 .pill-bad{color:var(--bad);font-size:.68rem;font-weight:800}
+/* a network that refused, offered as the button that sends it again. It has to
+   read as the failure it is first and a control second, so it keeps the red it
+   already had and only shows its edge when you go near it. */
+.chan-retry{background:none;border:1px solid rgba(240,138,138,.35);color:#F08A8A;
+  border-radius:999px;padding:.05rem .5rem;font:inherit;font-size:.68rem;cursor:pointer;
+  line-height:1.5;transition:background .15s ease,border-color .15s ease}
+.chan-retry:hover{background:rgba(240,138,138,.14);border-color:rgba(240,138,138,.7)}
+.chan-retry:focus-visible{outline:2px solid #F08A8A;outline-offset:2px}
+.chan-retry[disabled]{opacity:.5;cursor:default}
+.diag{border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.9rem 1rem;
+  background:rgba(255,254,247,.03);font-size:.82rem}
+.diag h4{margin:0 0 .5rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold-hi);font-weight:700}
+.diag .said{margin:.2rem 0 .8rem;padding:.5rem .7rem;border-left:2px solid rgba(240,138,138,.5);
+  background:rgba(240,138,138,.07);color:rgba(255,254,247,.82);font-style:italic}
+.diag ul{margin:.3rem 0 .8rem;padding-left:1.1rem}
+.diag li{margin:.18rem 0}
+.diag .chk-ok{color:#8ED49B}
+.diag .chk-no{color:#F08A8A}
 
 @media (max-width:900px){
   .wrap{padding:.8rem .8rem 5rem}
@@ -3233,12 +3252,21 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
                : s.state === "skipped" ? '<span class="pill-mute">nothing to say</span>'
                : s.state === "due"     ? '<span class="pill-bad">owed</span>'
                : '<span class="pill-mute">' + String(s.at).padStart(2, "0") + ':00</span>';
-      var where = "";
+      /* The network names were the only place a half-failed slot showed
+         itself, and they were dead text. A red one is now the button that
+         sends that one network again -- which is what you want when the other
+         one already has the post and must not get it twice. */
+      var where = "", broke = [];
       if (s.results) {
         where = Object.keys(s.results).filter(function (k) { return k !== "reddit"; })
           .map(function (k) {
-            return '<span style="color:' + (s.results[k] && s.results[k].ok ? "#8ED49B" : "#F08A8A")
-                 + '">' + esc(k) + '</span>'; }).join(" ");
+            var r = s.results[k] || {};
+            if (r.ok) return '<span style="color:#8ED49B" title="went out">' + esc(k) + '</span>';
+            if (r.pending) return '<span style="color:#E9C86A" title="still processing">' + esc(k) + '</span>';
+            broke.push(k);
+            return '<button class="chan-retry" data-retry="' + esc(s.id) + '|' + esc(k) + '" '
+                 + 'title="send this one again, and only this one">' + esc(k) + ' &#8635;</button>';
+          }).join(" ");
       }
       /* A row you cannot act on is a dead end. An owed slot is one whose hour
          has passed and whose run never happened — the honest thing is to let it
@@ -3254,7 +3282,14 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
         + (owed ? ' <button class="btn" data-slotsend="' + esc(s.id) + '" '
             + 'style="padding:.3rem .8rem;font-size:.74rem">Post now</button>' : '')
         + (finishing ? ' <button class="btn" data-slotfinish="1" '
-            + 'style="padding:.3rem .8rem;font-size:.74rem">Finish it</button>' : '');
+            + 'style="padding:.3rem .8rem;font-size:.74rem">Finish it</button>' : '')
+        /* one network refused and another did not: the two things worth
+           offering are "put it right" and "tell me what is wrong", and
+           neither of them is Post now, which would post it twice */
+        + (broke.length ? ' <button class="btn" data-fixch="' + esc(s.id) + '|' + esc(broke[0]) + '" '
+            + 'style="padding:.3rem .8rem;font-size:.74rem">Fix it</button>'
+          + ' <button class="ghost" data-whych="' + esc(s.id) + '|' + esc(broke[0]) + '" '
+            + 'style="padding:.3rem .7rem;font-size:.74rem">What\'s wrong?</button>' : '');
       return '<div style="padding:.7rem 0;border-bottom:1px solid rgba(255,254,247,.07)">'
         + '<div style="display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap">'
         + '<code style="flex:0 0 3.4rem;color:' + (past ? "var(--gold-hi)" : "rgba(255,254,247,.4)") + '">'
@@ -3350,6 +3385,123 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
       })
       .catch(function () { toast("Could not reach /api/social", "bad");
         if (btn) { btn.disabled = false; btn.textContent = "Post now"; } });
+  }
+
+  /* ONE NETWORK, AGAIN.
+
+     Post now sends the slot to everything owed it, which is exactly wrong when
+     Facebook already has the post and Instagram refused it. This sends one,
+     and the server refuses outright to re-send a network that already
+     succeeded, so pressing it twice cannot double-post. */
+  function retryChan(id, where, btn, quiet) {
+    var was = btn ? btn.innerHTML : "";
+    if (btn) { btn.disabled = true; btn.innerHTML = esc(where) + " \u2026"; }
+    return fetch("/api/social", { method: "POST", credentials: "same-origin",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "retry-channel", slot: id, where: where }) })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || !j.ok) {
+          if (!quiet) toast((j && j.error) || ("It refused to send to " + where + "."), "bad");
+          if (btn) { btn.disabled = false; btn.innerHTML = was; }
+          return j;
+        }
+        toast(j.note ? j.note : ("Sent to " + where + "."), "ok");
+        loadSocial();
+        return j;
+      })
+      .catch(function () {
+        if (!quiet) toast("Could not reach /api/social", "bad");
+        if (btn) { btn.disabled = false; btn.innerHTML = was; }
+        return null;
+      });
+  }
+
+  /* WHY IT DID NOT GO.
+
+     The server checks what it can check now -- the card, the caption, the
+     hashtags, the token -- and quotes Meta verbatim rather than paraphrasing
+     it. Anything it cannot establish it says it cannot establish, because a
+     confident wrong diagnosis costs more than an honest shrug. */
+  function diagBox(id, j) {
+    var chk = (j.checks || []).map(function (c) {
+      return '<li><span class="' + (c.ok ? "chk-ok" : "chk-no") + '">'
+           + (c.ok ? "\u2713" : "\u2717") + '</span> ' + esc(c.name) + ' &mdash; ' + esc(c.detail) + '</li>';
+    }).join("");
+    var steps = (j.steps || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("");
+    return '<div class="diag">'
+      + '<h4>' + esc(j.where) + ' &middot; what went wrong</h4>'
+      + (j.said ? '<p class="said">' + esc(j.said)
+          + (j.code != null ? ' <span class="muted">(Meta code ' + esc(String(j.code))
+              + (j.sub != null ? ", subcode " + esc(String(j.sub)) : "") + ')</span>' : '')
+          + '</p>' : '')
+      + '<p style="margin:.2rem 0 .7rem"><b>' + esc(j.cause || "no cause established") + '</b></p>'
+      + (chk ? '<h4>what we checked just now</h4><ul>' + chk + '</ul>' : '')
+      + (steps ? '<h4>what to do</h4><ol>' + steps + '</ol>' : '')
+      + (j.canRetry ? '<button class="btn" data-retry="' + esc(id) + '|' + esc(j.where) + '" '
+          + 'style="padding:.3rem .8rem;font-size:.74rem">Retry ' + esc(j.where) + '</button>' : '')
+      + '</div>';
+  }
+
+  function whyChan(id, where, btn) {
+    var box = $("slotbox-" + id);
+    if (!box) return;
+    box.hidden = false;
+    box.innerHTML = '<p class="muted" style="margin:0">Checking&hellip;</p>';
+    if (btn) btn.disabled = true;
+    fetch("/api/social?action=diagnose&slot=" + encodeURIComponent(id)
+          + "&where=" + encodeURIComponent(where), { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (btn) btn.disabled = false;
+        if (!j || j.ok === false) { box.innerHTML = '<p class="muted">Could not work out what is wrong.</p>'; return; }
+        box.innerHTML = diagBox(id, j);
+      })
+      .catch(function () { if (btn) btn.disabled = false;
+        box.innerHTML = '<p class="muted">Could not reach /api/social.</p>'; });
+  }
+
+  /* FIX IT.
+
+     Diagnose first, then act on the answer. Where the fault is one the machine
+     can clear by itself -- a network that had a bad minute, a card that was
+     cold, a container still transcoding -- it clears it and says so. Where it
+     needs a person, it does NOT pretend: it opens the same panel What's wrong
+     would have opened, with the steps. A button that claims to have fixed
+     something it has not is worse than no button. */
+  function fixChan(id, where, btn) {
+    var was = btn ? btn.textContent : "Fix it";
+    if (btn) { btn.disabled = true; btn.textContent = "Looking\u2026"; }
+    var box = $("slotbox-" + id);
+    fetch("/api/social?action=diagnose&slot=" + encodeURIComponent(id)
+          + "&where=" + encodeURIComponent(where), { credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (!j || j.ok === false) {
+          toast("Could not work out what is wrong.", "bad");
+          if (btn) { btn.disabled = false; btn.textContent = was; } return;
+        }
+        if (j.fix === "finish") {
+          if (btn) btn.textContent = "Finishing\u2026";
+          return finishReels(btn);
+        }
+        if (j.fix === "retry") {
+          if (btn) btn.textContent = "Sending\u2026";
+          return retryChan(id, where, null, true).then(function (r) {
+            if (btn) { btn.disabled = false; btn.textContent = was; }
+            if (r && r.ok) return;
+            /* it tried, and it did not work: show the reading rather than a shrug */
+            if (box) { box.hidden = false; box.innerHTML = diagBox(id, j); }
+            toast("That did not clear it. The reading is below.", "bad");
+          });
+        }
+        /* needs a person */
+        if (btn) { btn.disabled = false; btn.textContent = was; }
+        if (box) { box.hidden = false; box.innerHTML = diagBox(id, j); }
+        toast("This one needs you. The steps are below.", "bad");
+      })
+      .catch(function () { toast("Could not reach /api/social", "bad");
+        if (btn) { btn.disabled = false; btn.textContent = was; } });
   }
 
   function drawReddit(j) {
@@ -3625,6 +3777,12 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     if (ss) { sendSlotNow(ss.getAttribute("data-slotsend"), ss); return; }
     var sf = t.closest ? t.closest("[data-slotfinish]") : null;
     if (sf) { finishReels(sf); return; }
+    var rc = t.closest ? t.closest("[data-retry]") : null;
+    if (rc) { var a = rc.getAttribute("data-retry").split("|"); retryChan(a[0], a[1], rc); return; }
+    var fc = t.closest ? t.closest("[data-fixch]") : null;
+    if (fc) { var b = fc.getAttribute("data-fixch").split("|"); fixChan(b[0], b[1], fc); return; }
+    var wc = t.closest ? t.closest("[data-whych]") : null;
+    if (wc) { var c2 = wc.getAttribute("data-whych").split("|"); whyChan(c2[0], c2[1], wc); return; }
     if (t.id === "so-send") send();
     if (t.id === "so-skip") socPost({ action: "skip" }, "Marked as skipped; nothing will be sent for today.");
     var rung = t.closest && t.closest("[data-rung]");
