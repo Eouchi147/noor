@@ -42,7 +42,7 @@
                    w: (groups[order[g]] || {}).w || 0 };
         }
         var all = [];
-        (j.w || []).forEach(function (e) { all.push(prep(e, "words", "/dictionary#" + e.i)); });
+        (j.w || []).forEach(function (e) { all.push(prep(e, "words", "/dictionary/" + e.i)); });
         (j.e || []).forEach(function (e) { all.push(prep(e, e.g, e.u)); });
         /* a room is worth finding by name, but it should never crowd out the
            thing inside it that the reader actually asked for */

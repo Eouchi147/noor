@@ -42,11 +42,13 @@ import { kv, kvReady } from "./_kv.js";
    unreachable at the same moment. If you are reading these in a log, the two
    layers in front of them have both failed. */
 export const FREE_CHAIN = [
-  "meta-llama/llama-3.3-70b-instruct:free",
-  "google/gemma-3-27b-it:free",
-  "deepseek/deepseek-chat-v3-0324:free",
-  "qwen/qwen-2.5-72b-instruct:free",
-  "mistralai/mistral-small-3.2-24b-instruct:free"
+  /* as of 7 September 2026. The families that were free in August -- Llama,
+     DeepSeek, Qwen, Mistral -- have all left the free tier since. */
+  "thinkingmachines/inkling:free",
+  "google/gemma-4-31b-it:free",
+  "minimax/minimax-m3:free",
+  "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "nvidia/nemotron-3-super-120b-a12b:free"
 ];
 
 const K_FREE = "nlm:free";      /* the live free list, as last seen */
@@ -64,15 +66,47 @@ let GOOD = "";
    can hold, and whether it can accept text at all. Nothing here is a promise
    of quality, only an ordering that is better than alphabetical.
 --------------------------------------------------------------------------- */
+/* Ordered by what writes the best prose in the house voice, which is what the
+   Lantern is for. Re-read against the live free list on 7 September 2026:
+   the 975B Inkling and the 31B Gemma 4 write cleanly; the Nemotron Ultra is
+   a reasoning model and answers well but slowly; the small Nemotrons and
+   MiniMax follow. Families no longer on the free tier are kept at the bottom
+   in case they return, and are harmless there. */
 const TIERS = [
-  /deepseek/i, /llama-3\.[13]|llama-4/i, /qwen.*(72b|max|235b|plus)/i,
-  /gemma-3/i, /mistral-(small|medium|large)/i, /gpt-oss/i, /nemotron/i,
-  /glm-4/i, /kimi/i, /qwen/i, /llama/i, /gemma/i, /phi-4/i
+  /thinkingmachines\/inkling(?!-small)/i,
+  /gemma-4-31b/i,
+  /minimax-m3/i,
+  /nemotron-3-ultra/i,
+  /nemotron-3-super/i,
+  /gemma-4/i,
+  /inkling-small/i,
+  /minimax-m2/i,
+  /nemotron-3\.5-lightning/i,
+  /deepseek/i, /llama-4|llama-3\.[13]/i, /qwen.*(72b|max|235b|plus)/i,
+  /gemma-3/i, /mistral-(small|medium|large)/i, /gpt-oss/i, /glm-4/i, /kimi/i,
+  /nemotron/i, /qwen/i, /llama/i, /gemma/i, /phi-4/i
+];
+
+/* Free, text-in text-out, and still the wrong tool: a safety classifier does
+   not write captions, a code model writes them badly, a 2.6B model writes them
+   worse, and a model tuned for finance or clinical notes is not a general one.
+   These are dropped before ranking rather than ranked last, because "last"
+   still means "asked, eventually, when everything above has failed". */
+const NOT_A_WRITER = [
+  /content-safety/i, /guard/i, /moderation/i,
+  /laguna/i, /north-mini-code/i, /-code(r)?[:\-]/i, /codestral/i,
+  /lfm-2\.5-2\.6b/i, /\b[12](\.\d)?b\b/i,
+  /ling-3\.0-flash-(fin|sante)/i,
+  /embed/i, /rerank/i
 ];
 
 function tier(id) {
   for (let i = 0; i < TIERS.length; i++) if (TIERS[i].test(id)) return i;
   return TIERS.length;
+}
+
+export function isWriter(id) {
+  return !NOT_A_WRITER.some(rx => rx.test(String(id || "")));
 }
 
 function usable(m) {
@@ -149,7 +183,8 @@ export async function refreshFreeModels(force) {
     clearTimeout(t);
     if (!r.ok) throw new Error("http " + r.status);
     const j = await r.json();
-    const list = (j.data || []).filter(m => m && m.id && usable(m) && (/:free$/i.test(m.id) || priceZero(m)));
+    const list = (j.data || []).filter(m => m && m.id && usable(m) && isWriter(m.id)
+                                             && (/:free$/i.test(m.id) || priceZero(m)));
     list.sort((a, b) => {
       const d = tier(a.id) - tier(b.id);
       return d || (Number(b.context_length || 0) - Number(a.context_length || 0));

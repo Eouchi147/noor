@@ -1215,13 +1215,18 @@ Press Preview on any of them to read exactly what would go out, and on a reel to
 missed the machine sends the most recent one owed, never the whole backlog.</p>
 <div class="panel" id="so-sched"><p class="muted">&hellip;</p></div>
 
-<h2 class="sec">The reels</h2>
-<p class="muted" style="margin:.1rem 0 .7rem;max-width:52rem">Every video that has been rendered and
+<!-- Thirty vertical videos is a long way to scroll past to reach the day's
+     post, so this folds, stays folded once folded, and does not build its
+     thirty players until it is opened. -->
+<details class="tsec" id="so-reels-fold" style="margin-top:1.4rem">
+<summary>The reels <span class="ts-s" id="so-reels-n"></span></summary>
+<p class="muted" style="margin:.1rem 1rem .7rem;max-width:52rem">Every video that has been rendered and
 merged, with the caption that goes under it. These are the exact files Instagram and Facebook are handed:
 nothing is re-encoded on the way out. The morning slot draws from one half of the library and the evening
 from the other, and each card is used once before any is used twice, so what you see here is roughly the
 next fortnight. Adding to it is a render, not a post.</p>
-<div class="panel" id="so-reels"><p class="muted">&hellip;</p></div>
+<div class="panel" id="so-reels" style="margin:0 .6rem .6rem"><p class="muted">&hellip;</p></div>
+</details>
 
 <h2 class="sec">The day's post</h2>
 <div class="panel" style="display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)">
@@ -3697,7 +3702,25 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
 
     fetch("/reels/index.json", { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(drawReels)
+      .then(function (j) {
+        var fold = $("so-reels-fold"), n = $("so-reels-n");
+        var cards = (j && j.cards) || [];
+        if (n) n.textContent = cards.length
+          ? cards.length + " rendered · " + cards.filter(function (c) { return c.slot === "morning"; }).length
+            + " morning, " + cards.filter(function (c) { return c.slot === "evening"; }).length + " evening"
+          : "none yet";
+        /* the fold remembers itself; open it and it stays open, close it and
+           it stays closed, on this browser */
+        var want = "0"; try { want = localStorage.getItem("noor_reels_open") || "0"; } catch (e) {}
+        if (fold) {
+          fold.open = want === "1";
+          fold.ontoggle = function () {
+            try { localStorage.setItem("noor_reels_open", fold.open ? "1" : "0"); } catch (e) {}
+            if (fold.open && !fold.dataset.built) { fold.dataset.built = "1"; drawReels(j); }
+          };
+          if (fold.open && !fold.dataset.built) { fold.dataset.built = "1"; drawReels(j); }
+        } else drawReels(j);
+      })
       .catch(function () { drawReels(null); });
 
     /* the schedule first: it decides whether the preview below is an offer or a receipt */

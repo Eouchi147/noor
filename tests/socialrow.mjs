@@ -51,6 +51,8 @@ async function open_() {
         return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(DIAG) });
       return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(TODAY) });
     }
+    if (u.includes('/reels/index.json')) return r.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ n: 2, cards: [{ id: 'a', slot: 'morning', hook: 'A', caption: 'x' }, { id: 'b', slot: 'evening', hook: 'B', caption: 'y' }] }) });
     if (u.includes('/api/')) return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
     if (u.startsWith(BASE)) return r.continue();
     return r.abort();
@@ -153,6 +155,24 @@ console.log('\nit reads on a phone');
   ok(g && g.doc <= g.vw + 1, 'the page still does not scroll sideways');
   ok(g && g.right <= g.vw + 1, 'and the button is inside the screen');
   ok(g && g.h >= 16, 'it is big enough to hit');
+}
+
+console.log('\nthe reels fold out of the way');
+{
+  const f = await pg.evaluate(() => {
+    const d = document.getElementById('so-reels-fold');
+    return { exists: !!d, open: d && d.open, videos: document.querySelectorAll('#so-reels video').length,
+             summary: d && d.querySelector('summary').textContent.trim() };
+  });
+  ok(f.exists && f.open === false, 'the reels start folded, so the day\'s post is one scroll away');
+  ok(f.videos === 0, 'and no video player is built while they are folded');
+  await pg.click('#so-reels-fold summary');
+  await pg.waitForTimeout(500);
+  const g = await pg.evaluate(() => ({ open: document.getElementById('so-reels-fold').open,
+    videos: document.querySelectorAll('#so-reels video').length,
+    remembered: localStorage.getItem('noor_reels_open') }));
+  ok(g.open && g.videos > 0, 'opening it builds the players');
+  ok(g.remembered === '1', 'and the browser remembers it was opened');
 }
 
 await br.close();

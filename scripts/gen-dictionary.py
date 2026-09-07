@@ -108,7 +108,11 @@ def build():
             main.append('<h2 class="dletter" id="L-%s">%s</h2>' % (L, L))
         lvl = LEVELS[e["k"]]
         also = " · ".join(e["also"][:6])
-        see = "".join('<button type="button" class="seelink" data-go="%s">%s</button>' % (esc(s), esc(s.replace("-", " ")))
+        # A real <a>, not a button. The buttons were fine for a reader and
+        # invisible to a crawler, which is how 523 pages came to hang off a hub
+        # that never linked to them. The href is the page; data-go keeps the
+        # in-page jump for anyone who has the whole book open.
+        see = "".join('<a class="seelink" href="/dictionary/%s" data-go="%s">%s</a>' % (esc(s), esc(s), esc(s.replace("-", " ")))
                       for s in e["see"])
         main.append(
             '<article class="dent" id="%s" data-cat="%s" data-term="%s" data-also="%s">'
@@ -119,13 +123,15 @@ def build():
             '<span class="evb %s" title="%s">%s</span>'
             '<span class="dchev" aria-hidden="true"></span></button>'
             '<p class="dshort">%s</p>'
-            '<div class="dbody"><div class="dbi"><p class="dlong">%s</p>%s%s</div></div>'
+            '<div class="dbody"><div class="dbi"><p class="dlong">%s</p>%s%s'
+            '<p class="dpage"><a href="/dictionary/%s">Open %s on its own page &rarr;</a></p></div></div>'
             '</article>'
             % (esc(e["id"]), esc(e["cat"]), esc(e["term"].lower()), esc(" ".join(e["also"]).lower()),
                esc(e["term"]), e.get("ar", ""), esc(CATNAME[e["cat"]]), esc(e["k"]), esc(lvl[1]), esc(lvl[0]),
                esc(e["short"]), esc(e.get("long", "")),
                ('<p class="dalso"><b>also written</b> %s</p>' % esc(also)) if also else "",
-               ('<div class="dsee"><b>see also</b>%s</div>' % see) if see else ""))
+               ('<div class="dsee"><b>see also</b>%s</div>' % see) if see else "",
+               esc(e["id"]), esc(e["term"])))
     main.append('</div>')
     main.append('<p class="dnone" id="dnone" hidden>Nothing under that spelling yet. Try fewer letters, or the '
                 'plain English word: this dictionary indexes every transliteration it knows, and it is still growing. '
@@ -173,6 +179,10 @@ def build():
                  footline="Free forever, and it will never sell you a definition.")
     open(OUT, "w", encoding="utf-8").write(html)
     print("dictionary.html written · %d KB · %d entries · 4 plates" % (len(html) / 1024, len(D)))
+    n = build_pages(D)
+    print("dictionary/ written · %d word pages" % n)
+    r = retire_root_pages(D)
+    if r: print("root · %d old word page%s removed" % (r, "" if r == 1 else "s"))
     return D
 
 
@@ -255,6 +265,8 @@ CSS = """
 .evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.1)}
 .evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.24);background:rgba(44,36,22,.04)}
 .dent[hidden]{display:none}
+.dpage{margin:.7rem 0 0;font-size:.78rem}.dpage a{font-weight:800;color:#8a6d13;text-decoration:none}.dpage a:hover{text-decoration:underline}
+a.seelink{display:inline-block;text-decoration:none}
 .dletter[hidden]{display:none}
 .dnone{font-size:.88rem;line-height:1.85;color:rgba(44,36,22,.6);background:#fff;border:1px dashed rgba(201,162,39,.45);border-radius:16px;padding:1.1rem 1.15rem;margin-top:1.2rem}
 .dnone a{color:#8a6d13;font-weight:700}
@@ -380,7 +392,9 @@ JS = """<script>
   }
   list.addEventListener("click", function(e){
     var go = e.target.closest(".seelink");
-    if (go) { open(go.dataset.go); return; }
+    /* a see-also is a real link now, for the crawler; for a reader with the
+       whole book open, the in-page jump is still the better thing */
+    if (go) { e.preventDefault(); open(go.dataset.go); return; }
     var head = e.target.closest(".dhead");
     if (head) toggle(head.parentNode);
   });
@@ -424,6 +438,161 @@ JS = """<script>
 })();
 </script>"""
 
+
+
+
+# ---------------------------------------------------------------------------
+# ONE PAGE PER WORD, UNDER /dictionary/
+#
+# These used to sit at the root -- /iman, /fiqh, /mudal -- each carrying a
+# canonical that pointed at /dictionary/<word>, an address that did not exist.
+# The sitemap listed the same 523 non-existent addresses. Two of the words,
+# hajj and quran, had the same name as a room, and the room won: those two
+# had no page at all. And nothing linked to any of them except each other.
+#
+# So: they live here now, where their canonical always said they did; they are
+# richer than the hub's entry for the same word, so a crawler has a reason to
+# keep both; the hub links to every one; and each links to its neighbours and
+# to the rest of its domain, so the encyclopedia is a web and not a well.
+# ---------------------------------------------------------------------------
+PAGE_DIR = os.path.join(ROOT, "dictionary")
+
+PAGE_CSS = """
+:root{--ink:#2C2416;--gold:#C9A227;--hi:#F4D46A}
+*{box-sizing:border-box}
+body{margin:0;background:#FFFEF7;color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.85}
+a{color:#8a6d13}
+.top{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid rgba(44,36,22,.08);font-size:.8rem}
+.top .mark{width:1.9rem;height:1.9rem;border-radius:999px;background:#14100A;color:var(--hi);display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;text-decoration:none;font-size:1rem}
+.top .home{font-weight:800;color:var(--ink);text-decoration:none}
+.top .enc{margin-inline-start:auto;text-decoration:none;font-weight:700}
+main{max-width:42rem;margin:0 auto;padding:2.2rem 1.1rem 3rem}
+.crumb{font-size:.72rem;color:rgba(44,36,22,.55);margin:0 0 .9rem}.crumb a{text-decoration:none;font-weight:700}
+.kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin:0}
+h1{font-size:2rem;font-weight:800;letter-spacing:-.01em;margin:.3rem 0 0;display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+h1 .ar{font-family:Amiri,serif;font-weight:400;font-size:1.9rem;color:var(--gold)}
+.badge{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid #6b6257;color:#6b6257;border-radius:999px;padding:.24rem .6rem;margin-top:.8rem}
+.lede{font-size:1.02rem;font-weight:600;margin:1rem 0 0}
+h2{font-size:.95rem;font-weight:800;margin:1.8rem 0 .4rem}
+p{font-size:.9rem;margin:.4rem 0;color:rgba(44,36,22,.85)}
+.alt{font-size:.78rem;color:rgba(44,36,22,.55);line-height:2}
+.see{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+.see a{font-size:.76rem;font-weight:700;text-decoration:none;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.34rem .75rem;color:var(--ink);background:#fff}
+.see a:hover{border-color:var(--gold)}
+.see a .a{font-family:Amiri,serif;color:var(--gold);margin-inline-start:.35rem;font-weight:400}
+.deep{margin-top:2rem;background:linear-gradient(170deg,#14100A,#1b2440);border-radius:16px;padding:1.1rem 1.2rem;color:#FFFEF7}
+.deep p{color:rgba(255,254,247,.75);font-size:.82rem;margin:0 0 .7rem}
+.deep a{color:var(--hi);font-weight:800;text-decoration:none}
+footer{max-width:42rem;margin:0 auto;padding:0 1.1rem 2.4rem;font-size:.7rem;color:rgba(44,36,22,.45)}
+"""
+
+
+def build_pages(D):
+    os.makedirs(PAGE_DIR, exist_ok=True)
+    by_id = {e["id"]: e for e in D}
+    by_cat = {}
+    for e in D:
+        by_cat.setdefault(e["cat"], []).append(e)
+    n = 0
+    for e in D:
+        term, ar = e["term"], e.get("ar", "")
+        short, long_ = e["short"], e.get("long", "")
+        lvl = LEVELS[e["k"]]
+        url = "https://noorcodex.com/dictionary/" + e["id"]
+        # the neighbours the editors named, then six more from the same domain
+        see = [by_id[s] for s in e["see"] if s in by_id]
+        seen = {e["id"]} | {x["id"] for x in see}
+        sib = [x for x in by_cat[e["cat"]] if x["id"] not in seen]
+        # deterministic, spread across the domain rather than alphabetical neighbours
+        step = max(1, len(sib) // 6) if sib else 1
+        sib = [sib[(i * step) % len(sib)] for i in range(min(6, len(sib)))] if sib else []
+        chip = lambda x: '<a href="/dictionary/%s">%s%s</a>' % (esc(x["id"]), esc(x["term"]),
+               ('<span class="a" translate="no">%s</span>' % x["ar"]) if x.get("ar") else "")
+        ld = {"@context": "https://schema.org", "@graph": [
+            {"@type": "DefinedTerm", "@id": url + "#term", "name": term,
+             "alternateName": e["also"][:8], "description": short, "url": url,
+             "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "NOOR Codex · The Words of the Path",
+                                  "url": "https://noorcodex.com/dictionary"}},
+            {"@type": "WebPage", "@id": url, "url": url, "name": "%s · meaning in Islam" % term,
+             "description": short, "inLanguage": "en", "isPartOf": {"@id": "https://noorcodex.com/#site"},
+             "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [
+                 {"@type": "ListItem", "position": 1, "name": "NOOR", "item": "https://noorcodex.com/"},
+                 {"@type": "ListItem", "position": 2, "name": "The Encyclopedia of the Path", "item": "https://noorcodex.com/dictionary"},
+                 {"@type": "ListItem", "position": 3, "name": term, "item": url}]}}]}
+        html = (
+            '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8"/>\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>\n'
+            '<title>%s · meaning in Islam · NOOR Codex of Light</title>\n'
+            '<meta name="description" content="%s"/>\n'
+            '<link rel="canonical" href="%s"/>\n'
+            '<meta property="og:title" content="%s · meaning in Islam"/>\n'
+            '<meta property="og:description" content="%s"/>\n'
+            '<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>\n'
+            '<meta property="og:url" content="%s"/>\n'
+            '<meta name="theme-color" content="#14100A"/>\n'
+            '<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>\n'
+            '<link rel="preconnect" href="https://fonts.googleapis.com"/>\n'
+            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>\n'
+            '<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>\n'
+            '<script type="application/ld+json">%s</script>\n'
+            '<style>%s</style>\n'
+            '<script src="/noor-fx.js" defer></script>\n'
+            '</head>\n<body>\n'
+            '<nav class="top">\n<a class="mark" href="/" aria-label="NOOR Codex of Light">ن</a>\n'
+            '<a class="home" href="/">NOOR Codex of Light</a>\n'
+            '<a class="enc" href="/dictionary">The Encyclopedia &rarr;</a>\n</nav>\n'
+            '<main>\n'
+            '<p class="crumb"><a href="/">NOOR</a> &rsaquo; <a href="/dictionary">The Encyclopedia of the Path</a> &rsaquo; <a href="/dictionary#cat-%s">%s</a></p>\n'
+            '<p class="kick">A word of the Path</p>\n'
+            '<h1>%s <span class="ar" translate="no">%s</span></h1>\n'
+            '<span class="badge" title="%s">%s</span>\n'
+            '<p class="lede">%s</p>\n'
+            '<h2>What does %s mean in Islam?</h2>\n<p>%s</p>\n'
+            '%s'
+            '%s'
+            '%s'
+            '<div class="deep">\n<p>This entry lives inside a free encyclopedia of %d words of the Path, each with its meaning, its Arabic, its evidence, and its neighbours. No ads, no account, no tracking.</p>\n'
+            '<a href="/dictionary#%s">Open %s in the full encyclopedia &rarr;</a>\n</div>\n'
+            '</main>\n'
+            '<footer>NOOR Codex of Light · free forever, no ads, no trackers · <a href="/">noorcodex.com</a></footer>\n'
+            '</body>\n</html>\n'
+        ) % (
+            esc(term), esc(short), url, esc(term), esc(short), url,
+            json.dumps(ld, ensure_ascii=False), PAGE_CSS,
+            esc(e["cat"]), esc(CATNAME[e["cat"]]),
+            esc(term), ar, esc(lvl[1]), esc(lvl[0]), esc(short),
+            esc(term), esc(long_) if long_ else esc(short),
+            ('<h2>Also written</h2><p class="alt">%s</p>\n' % esc(" · ".join(e["also"]))) if e["also"] else "",
+            ('<h2>Words that sit beside it</h2><div class="see">%s</div>\n' % "".join(chip(x) for x in see)) if see else "",
+            ('<h2>More from %s</h2><div class="see">%s</div>\n' % (esc(CATNAME[e["cat"]]), "".join(chip(x) for x in sib))) if sib else "",
+            len(D), esc(e["id"]), esc(term))
+        open(os.path.join(PAGE_DIR, e["id"] + ".html"), "w", encoding="utf-8").write(html)
+        n += 1
+    return n
+
+
+def retire_root_pages(D):
+    """Remove the word pages that used to sit at the site root.
+
+    Guarded twice. A file is removed only if it is named for a dictionary id
+    AND its own canonical says it belongs under /dictionary/ -- so hajj.html
+    and quran.html, which are rooms that happen to share a word's name, are
+    never touched, and neither is anything else that merely shares a slug.
+    """
+    n = 0
+    for e in D:
+        f = os.path.join(ROOT, e["id"] + ".html")
+        if not os.path.exists(f):
+            continue
+        try:
+            head = open(f, encoding="utf-8", errors="ignore").read(4000)
+        except Exception:
+            continue
+        if 'rel="canonical" href="https://noorcodex.com/dictionary/%s"' % e["id"] not in head:
+            continue
+        os.remove(f)
+        n += 1
+    return n
 
 
 def build_search_index(D):

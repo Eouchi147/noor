@@ -223,7 +223,13 @@ html[dir="rtl"] .vx.on .vxc{transform:rotate(-90deg)}
 #player .pbar{position:relative;height:3px;background:rgba(244,212,106,.16);cursor:pointer}
 #player .pbar i{display:block;height:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#C9A227,#F4D46A);transition:transform .18s linear}
 html[dir="rtl"] #player .pbar i{transform-origin:right center}
-#player .pbar::after{content:"";position:absolute;inset:-2px 0 -9px}
+/* the line is three pixels; the thumb that seeks on it is not. The hit area
+   reaches well above the line, into the dead space at the top of the bar,
+   without moving anything the eye sees. */
+#player .pbar::after{content:"";position:absolute;inset:-18px 0 -9px}
+@media (pointer:coarse){#player .pbar{height:4px}#player .pbar::after{inset:-22px 0 -12px}}
+/* and touch does not mean the seek jumps on a scroll that merely brushed it */
+#player .pbar{touch-action:pan-y}
 #player .pbar:hover{background:rgba(244,212,106,.3)}
 /* following is a mode, and the button says which mode you are in */
 #p-follow.off{opacity:.45;border-style:dashed}
@@ -1189,60 +1195,166 @@ function setPlaying(i,loading){playingIdx=i;
  playerLabel(loading?"loading recitation…":null);}
 function markSounding(i){if(prevBtn&&playingIdx===i)paintBtn(prevBtn,2);playerLabel();}
 
-/* ---------- the next verse, fetched while this one is still sounding ----------
-   The gap between verses was never the recitation. It was a network round trip
-   that began only once the previous verse had ended. */
+/* ---------- the engine ----------
+   Two players, blessed once, traded every verse.
+
+   WHAT WAS WRONG, IN ORDER OF HOW MUCH IT MATTERED
+
+   A verse was skipped. Not lost to the network -- skipped, by this code, on
+   purpose. A five-second timer decided a verse that had not STARTED in five
+   seconds had failed, walked the mirrors, and then "continued" to the next
+   verse. On a phone, on a cold connection, five seconds is nothing: the
+   recitation moved on with a verse missing and a message that vanished
+   before it was read. A Qur'an player must not skip an ayah. Not quietly,
+   not at all. Now a verse that will not load is retried, and if it still
+   will not load the recitation STOPS on that verse and says so, and play
+   resumes from it.
+
+   The timer measured the wrong thing. "Has it started" is not "is it
+   coming". A verse whose bytes are arriving is fine however long it takes;
+   one whose bytes have stopped is not, however soon it is. So the watch now
+   looks at what has buffered, and gives up only when nothing has arrived for
+   a long while.
+
+   Every verse was a fresh Audio object. On iPhone that is the difference
+   between a recitation that carries on with the screen locked and one that
+   goes silent: an element created after the screen locks has no gesture
+   behind it and is refused. Two elements are made once, played silently
+   inside the reader's first tap, and reused for every verse after -- both
+   of them carry that tap for the rest of the visit. One sounds while the
+   other holds the next verse, already fetched, and they trade at the end.
+
+   And the phone's own controls now know what is playing: the lock screen
+   shows the surah and verse, and its play, pause, next and previous work. */
+const SILENT="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
+const DECK=[];
+function mkEl(){const a=new Audio();a.preload="auto";a.setAttribute("playsinline","");a.crossOrigin=null;return a;}
+function ensureDeck(){if(!DECK.length)DECK.push(mkEl(),mkEl());}
+let blessed=false;
+function bless(){
+ /* inside a gesture: give both elements the tap, so neither ever needs one again.
+    The silent play resolves a moment later, by which time one of these may
+    already be sounding the first verse -- so the clean-up only touches an
+    element that is still holding the silence. */
+ ensureDeck();if(blessed)return;blessed=true;
+ DECK.forEach(a=>{try{a.muted=true;a.src=SILENT;
+  const p=a.play();
+  const done=()=>{if(a.src===SILENT){try{a.pause();}catch(e){}}a.muted=false;};
+  if(p&&p.then)p.then(done).catch(done);else done();}catch(e){a.muted=false;}});
+}
+function idle(){ensureDeck();return DECK[0]===audio?DECK[1]:DECK[0];}
+function quiet(a){if(!a)return;a.onended=a.onerror=a.onplaying=a.ontimeupdate=a.onprogress=a.onwaiting=null;
+ try{a.pause();}catch(e){}}
+
 let pre=null;
-function dropPre(){if(pre&&pre.el){try{pre.el.pause();pre.el.removeAttribute("src");pre.el.load();}catch(e){}}pre=null;}
+function dropPre(){if(pre&&pre.el){quiet(pre.el);try{pre.el.removeAttribute("src");pre.el.load();}catch(e){}}pre=null;}
 function preloadNext(i){
  if(!continuous){dropPre();return;}
  const j=i+1;
  if(!ayahs[j]){dropPre();return;}
  if(pre&&pre.i===j)return;
  dropPre();
- try{const a=new Audio();a.preload="auto";a.src=srcsFor(j)[0];a.load();pre={i:j,el:a};}catch(e){pre=null;}
+ try{const a=idle();quiet(a);a.src=srcsFor(j)[0];a.load();pre={i:j,el:a};}catch(e){pre=null;}
 }
-let watchdog=null,failStreak=0;
+
+let watchdog=null,failStreak=0,retryRound=0,retryFor=-1,stuckAt=-1;
 function clearWatch(){if(watchdog){clearTimeout(watchdog);watchdog=null;}}
 function killAudio(){clearWatch();
- if(audio){audio.onended=null;audio.onerror=null;audio.onplaying=null;audio.ontimeupdate=null;audio.pause();
-  try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
+ if(audio){quiet(audio);try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
 function stopAudio(){killAudio();dropPre();
- setPlaying(-1);continuous=false;paused=false;playerShow(false);progress(0);
+ setPlaying(-1);continuous=false;paused=false;stuckAt=-1;retryRound=0;playerShow(false);progress(0);
  setFollow(true);            /* the next listen starts following again */
- listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);}
+ listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);
+ mediaSession(false);}
+
+function say(msg,ms){$("t-status").textContent=msg;
+ if(ms)setTimeout(()=>{if($("t-status").textContent===msg)$("t-status").textContent="";},ms);}
+
+/* A verse that would not load. Tried again, twice, from the first mirror; then
+   the recitation stops ON that verse, says so, and play resumes from it. */
 function ayahFailed(i){
- if(continuous&&failStreak<2&&i+1<ayahs.length){failStreak++;
-  $("t-status").textContent="A verse could not load, continuing…";setTimeout(()=>$("t-status").textContent="",2500);
-  playAyah(i+1);return;}
- $("t-status").textContent="Recitation servers are unreachable right now. Try again in a minute.";
- setTimeout(()=>$("t-status").textContent="",4500);stopAudio();}
+ const n=ayahs[i]?ayahs[i].numberInSurah:i+1;
+ if(retryFor!==i){retryFor=i;retryRound=0;}
+ if(retryRound<2){retryRound++;
+  say("Verse "+n+" is slow to load, trying again…");
+  watchdog=setTimeout(()=>{if(playingIdx===i)playAyah(i,0);},1200*retryRound);return;}
+ retryRound=0;stuckAt=i;
+ killAudio();
+ paused=true;setToggle(false);playerLabel("could not load · tap play to try again");
+ say("Verse "+n+" could not be loaded. Tap play to try again.",9000);
+}
+
+/* the watch: gives up only when nothing has ARRIVED for a long while, never
+   because something has not yet started */
+function armWatch(me,i,srcIdx){
+ clearWatch();
+ let seen=-1,still=0;
+ const limit=srcIdx===0?9:5;                         /* 22s on the first mirror, 12s after */
+ const tick=()=>{if(audio!==me)return;
+  if(me.readyState>=3||(!me.paused&&me.currentTime>0))return;   /* it is sounding, or ready to */
+  let have=0;try{have=me.buffered.length?me.buffered.end(me.buffered.length-1):0;}catch(e){}
+  if(have>seen){seen=have;still=0;}else still++;
+  if(still>=limit){next(me,i,srcIdx);return;}
+  watchdog=setTimeout(tick,2500);};
+ watchdog=setTimeout(tick,2500);
+}
+function next(me,i,srcIdx){if(audio!==me)return;clearWatch();playAyah(i,srcIdx+1);}
+
 function playAyah(i,srcIdx){srcIdx=srcIdx||0;
  if(!ayahs[i]){stopAudio();return;}
  const srcs=srcsFor(i);
  if(srcIdx>=srcs.length){ayahFailed(i);return;}
- killAudio();
- let me;
- if(srcIdx===0&&pre&&pre.i===i&&pre.el){me=pre.el;pre=null;}   /* already on its way down */
- else{me=new Audio();me.preload="auto";me.src=srcs[srcIdx];}
+ /* the count of retries belongs to ONE verse; a different verse starts fresh */
+ if(i!==retryFor){retryFor=i;retryRound=0;}
+ stuckAt=-1;
+ ensureDeck();
+ const useSrc=!(srcIdx===0&&pre&&pre.i===i&&pre.el);
+ const me=useSrc?idle():pre.el;
+ if(!useSrc)pre=null;                                 /* already on its way down */
+ if(audio&&audio!==me)killAudio();else clearWatch();
+ quiet(me);
+ if(useSrc){me.src=srcs[srcIdx];me.load();}
  audio=me;
  paused=false;setToggle(true);playerShow(true);progress(0);setPlaying(i,true);
- let moved=false;
- const next=()=>{if(moved||audio!==me)return;moved=true;clearWatch();playAyah(i,srcIdx+1);};
- watchdog=setTimeout(next,srcIdx===srcs.length-1?8000:5000);   /* hang rescue */
- me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;markSounding(i);preloadNext(i);};
+ mediaSession(true);
+ me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;retryRound=0;retryFor=-1;markSounding(i);preloadNext(i);};
  me.ontimeupdate=()=>{if(audio!==me)return;if(me.duration)progress(me.currentTime/me.duration);};
  me.onended=()=>{if(audio!==me)return;clearWatch();progress(1);
   if(!continuous){stopAudio();return;}
   if(i+1<ayahs.length){playAyah(i+1);return;}
   surahEnded();};
- me.onerror=()=>next();
- if(me.error){next();return;}   /* a preloaded source that failed before we adopted it */
- me.play().catch(err=>{if(audio!==me)return;
-  if(err&&err.name==="NotAllowedError"){clearWatch();
-   $("t-status").textContent="Your browser blocked sound. Tap the <span data-ic=play></span> beside a verse once.";
-   setTimeout(()=>$("t-status").textContent="",4500);stopAudio();return;}
-  next();});
+ me.onerror=()=>next(me,i,srcIdx);
+ if(me.error){next(me,i,srcIdx);return;}
+ armWatch(me,i,srcIdx);
+ const p=me.play();
+ if(p&&p.catch)p.catch(err=>{if(audio!==me)return;
+  if(err&&err.name==="NotAllowedError"){
+   /* the phone wants a tap. Do not stop: hold the verse, show play, and the
+      tap that follows resumes exactly here. */
+   clearWatch();paused=true;setToggle(false);playerLabel("tap play to continue");
+   say("Tap play to continue the recitation.",5000);return;}
+  next(me,i,srcIdx);});
+}
+
+/* ---------- the lock screen ----------
+   The phone's own controls, so a reader who locked the screen can pause,
+   resume and move between verses without unlocking it. */
+function mediaSession(on){
+ if(!("mediaSession" in navigator))return;
+ try{
+  if(!on){navigator.mediaSession.metadata=null;navigator.mediaSession.playbackState="none";return;}
+  const a=ayahs[playingIdx];
+  navigator.mediaSession.metadata=new MediaMetadata({
+   title:SURAHS[cur-1][1]+" · verse "+(a?a.numberInSurah:"")+" / "+SURAHS[cur-1][4],
+   artist:"Alafasy",album:"NOOR · Codex of Light",
+   artwork:[{src:"/assets/brand/mark-180.png",sizes:"180x180",type:"image/png"}]});
+  navigator.mediaSession.playbackState=paused?"paused":"playing";
+  navigator.mediaSession.setActionHandler("play",()=>$("p-toggle").click());
+  navigator.mediaSession.setActionHandler("pause",()=>$("p-toggle").click());
+  navigator.mediaSession.setActionHandler("nexttrack",()=>$("p-next").click());
+  navigator.mediaSession.setActionHandler("previoustrack",()=>$("p-prev").click());
+  navigator.mediaSession.setActionHandler("stop",stopAudio);
+ }catch(e){}
 }
 
 /* ---------- the end of a surah is not the end of the recitation ----------
@@ -1267,6 +1379,7 @@ function surahEnded(){
  }).catch(()=>{chaining=false;stopAudio();});
 }
 roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
+ bless();
  const i=+b.dataset.play;
  if(playingIdx===i&&audio){$("p-toggle").click();return;}
  continuous=false;dropPre();listenLabel(false);$("t-listen").classList.remove("on");
@@ -1275,6 +1388,7 @@ roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if
 $("t-listen").addEventListener("click",()=>{
  if(continuous){stopAudio();return;}
  if(!ayahs.length)return;
+ bless();
  continuous=true;listenLabel(true);$("t-listen").classList.add("on");
  follow=true;followBtn(true);
  playAyah(playingIdx>=0?playingIdx:0);});
@@ -1286,9 +1400,16 @@ $("p-bar").addEventListener("click",e=>{
  if(document.documentElement.dir==="rtl")f=1-f;
  f=Math.max(0,Math.min(1,f));
  try{audio.currentTime=f*audio.duration;progress(f);}catch(err){}});
-$("p-toggle").addEventListener("click",()=>{if(!audio)return;
- if(paused){audio.play().catch(()=>{});paused=false;setToggle(true);}
- else{clearWatch();audio.pause();paused=true;setToggle(false);}});
+$("p-toggle").addEventListener("click",()=>{
+ bless();
+ /* a verse that would not load is retried from here, from its first mirror */
+ if(stuckAt>=0){const i=stuckAt;stuckAt=-1;retryFor=-1;retryRound=0;playAyah(i,0);return;}
+ if(!audio){if(playingIdx>=0)playAyah(playingIdx,0);return;}
+ if(paused){
+  const p=audio.play();
+  if(p&&p.catch)p.catch(()=>{});
+  paused=false;setToggle(true);playerLabel();mediaSession(true);}
+ else{clearWatch();audio.pause();paused=true;setToggle(false);playerLabel("paused");mediaSession(true);}});
 $("p-next").addEventListener("click",()=>{if(playingIdx>=0&&playingIdx+1<ayahs.length)playAyah(playingIdx+1);});
 $("p-prev").addEventListener("click",()=>{if(playingIdx>0)playAyah(playingIdx-1);});
 $("p-stop").addEventListener("click",stopAudio);
@@ -1320,6 +1441,7 @@ window.NOOR_MUSHAF={
  get cur(){return cur}, get playingIdx(){return playingIdx},
  get follow(){return follow}, get continuous(){return continuous},
  get paused(){return paused}, get preloaded(){return pre?pre.i:-1},
+ get stuckAt(){return stuckAt}, get blessed(){return blessed},
  get verseNotes(){return VSET?Object.keys(VSET).length:-1}};
 })();
 </script>
