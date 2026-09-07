@@ -211,6 +211,12 @@ export function chooseReel(cards, dateStr, half, hijri) {
     const list = all.filter(c => kindOf(c) === kind && (!c.slot || c.slot === half || kind !== "light"));
     if (list.length) return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
   }
+  /* the shelf holds only the old day's cards, filed as morning and evening,
+     and a new half (noon, afternoon, night) asked: rather than post nothing,
+     the half takes any day's card, on its own walk, until the other kinds
+     are rendered */
+  const any = all.filter(c => kindOf(c) === "light");
+  if (any.length) return pick(any, dateStr, "reel:" + half);
   return null;
 }
 

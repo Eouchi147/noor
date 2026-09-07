@@ -111,5 +111,16 @@ console.log('\nyesterday\'s manifest');
   ok(ids.size === 6, 'and six days still walk all six morning cards');
 }
 
+console.log('\nthe old shelf and the new halves');
+{
+  /* the shelf as it stood before the six kinds rendered: day's cards only,
+     filed morning and evening, and no kind field at all */
+  const OLD = [{ id: 'l1', slot: 'morning', hook: 'a' }, { id: 'l2', slot: 'evening', hook: 'b' }, { id: 'l3', slot: 'morning', hook: 'c' }, { id: 'l4', slot: 'evening', hook: 'd' }];
+  const got = ['morning', 'noon', 'afternoon', 'evening', 'night'].map(h => S.chooseReel(OLD, '2026-09-07', h, null));
+  ok(got.every(Boolean), 'every one of the five halves gets a reel from the old shelf rather than nothing');
+  ok(got[0].slot === 'morning' && got[3].slot === 'evening', 'morning and evening keep to their own cards');
+  ok(new Set(got.map(c => c.id)).size >= 3, 'the new halves walk the shelf on their own, so a day does not show one card five times');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
