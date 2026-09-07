@@ -371,12 +371,15 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
 
     root = ROOTS[int(seed) % len(ROOTS)] * (0.9439 if evening else 1.0)
 
-    # while the voice sounds, everything but the sub and the air steps down
+    # while the Qur'an is recited nothing else sounds: the whole bed, notes,
+    # drone, sub and air, is taken to silence over the half second before the
+    # voice begins and comes back over the half second after it ends. The
+    # recitation stands alone, as it should.
     duck = np.ones(n, dtype=np.float32)
     if voice is not None:
         vx, v0 = voice
         v1 = v0 + len(vx) / float(SR)
-        duck = 1.0 - 0.82 * (_ramp(t, v0 - 0.6, v0 + 0.3) * (1.0 - _ramp(t, v1 - 0.1, v1 + 0.7)))
+        duck = 1.0 - (_ramp(t, v0 - 0.55, v0 - 0.05) * (1.0 - _ramp(t, v1 + 0.05, v1 + 0.55)))
 
     # ---- the notes ------------------------------------------------------
     # played four octaves up from the drone root, where a phone can hear them
@@ -439,8 +442,8 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
         # a breath drawn before the way home, on every kind that has one
         rise = rise + _riser(t, tClose, 1.4, rng) * 0.045
 
-    left = notes_l + (dl + sub) * (0.55 + 0.45 * duck) + air_l + rise
-    right = notes_r + (dr + sub) * (0.55 + 0.45 * duck) + air_r + rise
+    left = (notes_l + dl + sub + air_l + rise) * duck
+    right = (notes_r + dr + sub + air_r + rise) * duck
 
     # ---- the voice ------------------------------------------------------
     if voice is not None:
@@ -450,8 +453,8 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
         # a little of the same hall, so the voice is in the room the notes are in
         vw = _conv(v, hall) * 0.55
         vl = v * 0.80 + vw * 0.28; vr = v * 0.80 + _conv(v, _ir(seed=ROOM_SEED + 1)) * 0.55 * 0.28
-        left = left * 0.62 + vl
-        right = right * 0.62 + vr
+        left = left + vl
+        right = right + vr
     return left * master, right * master
 
 

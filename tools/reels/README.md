@@ -105,8 +105,9 @@ on the moments the picture blooms, and a breath of filtered noise is drawn in
 before the word lands and before the way home. Each kind has its own score
 (`_score_for` in `sound.py`): The word's one big chord as the Arabic lands,
 This day's root under the numeral and a bright fifth under what to do. In One
-verse the bed steps down to the sub and the air while the recitation sounds
-and the notes speak only before and after it; the voice is high passed at
+verse nothing else sounds while the Qur'an is recited: the whole bed goes to
+silence in the half second before the voice and returns in the half second
+after it, and the notes speak only before and after; the voice is high passed at
 80 Hz, trimmed of its silence, and given a little of the same hall, so it
 stands in the room the notes are in. A verse reel is levelled to -16 LUFS,
 speech's level; the rest stay at -18.
