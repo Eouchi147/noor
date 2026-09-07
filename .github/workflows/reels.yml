@@ -6,9 +6,19 @@
 # with the finished files, which is reviewed and merged the same way every
 # other change to this repository is.
 #
-# It renders only the cards in tools/reels/plan.json that have no video yet, so
-# adding a card to that file is the whole act of scheduling one. Run it by hand
-# from the Actions tab, or let the Monday run pick up whatever was added.
+# Six kinds of reel come out of one plan (tools/reels/plan.json): the day's
+# card, Did you know?, This day, The word, One verse and The Codex. The plan is
+# rebuilt from the library at the start of every run, so a word added to the
+# dictionary or a card added to know.json is scheduled by being there. Only
+# cards with no video yet are rendered.
+#
+# Three jobs. "plan" builds and audits the plan once, fetches the translations
+# once, and counts what is missing. "render" is a matrix: as many machines as
+# the count needs (up to the "machines" input), each taking every n-th card of
+# the same list, so a shelf of three hundred is filled in the time one machine
+# would take for eighty. "assemble" gathers what every machine made, writes the
+# manifest and opens one pull request. A machine that dies takes only its own
+# share with it; the others' reels still ship.
 
 name: reels
 
@@ -16,9 +26,13 @@ on:
   workflow_dispatch:
     inputs:
       ids:
-        description: "card ids to re-render, space separated. Leave empty to render only what is missing."
+        description: "card ids to re-render, space separated. Leave empty to render only what is missing. 'all' renders everything again."
         required: false
         default: ""
+      machines:
+        description: "how many machines may render at once (each takes up to 80 reels)"
+        required: false
+        default: "4"
   schedule:
     - cron: "0 4 * * 1"
 
@@ -30,10 +44,17 @@ concurrency:
   group: reels
   cancel-in-progress: false
 
+env:
+  PER_MACHINE: "80"
+
 jobs:
-  render:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 30
+    outputs:
+      shards: ${{ steps.count.outputs.shards }}
+      n: ${{ steps.count.outputs.n }}
+      todo: ${{ steps.count.outputs.todo }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,6 +63,83 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: tools/reels/requirements.txt
+
+      - name: install
+        run: pip install -r tools/reels/requirements.txt
+
+      - name: the plan, from the library
+        working-directory: tools/reels
+        run: python plan_build.py
+
+      - name: the translations, once
+        working-directory: tools/reels
+        run: python verses.py fetch
+
+      - name: the copy is what the sources say
+        run: python tools/reels/copy_audit.py tools/reels/plan.json
+
+      - name: how many machines the shelf needs
+        id: count
+        working-directory: tools/reels
+        env:
+          NOOR_NO_PEDALBOARD: "1"
+        run: |
+          todo=$(python render_missing.py --count ${{ github.event.inputs.ids }} | tail -1)
+          max=${{ github.event.inputs.machines || 4 }}
+          n=$(( (todo + PER_MACHINE - 1) / PER_MACHINE ))
+          [ "$n" -gt "$max" ] && n=$max
+          [ "$n" -lt 1 ] && n=1
+          shards=$(python -c "import json; print(json.dumps(list(range($n))))")
+          echo "todo=$todo"   >> "$GITHUB_OUTPUT"
+          echo "n=$n"         >> "$GITHUB_OUTPUT"
+          echo "shards=$shards" >> "$GITHUB_OUTPUT"
+          echo "$todo to render on $n machine(s)"
+
+      # the plan and the translations travel to every machine as they are, so
+      # each renders from the same words and nobody fetches twice
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reels-plan
+          path: |
+            tools/reels/plan.json
+            tools/reels/verses.json
+          retention-days: 3
+
+  render:
+    needs: plan
+    if: needs.plan.outputs.todo != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.shards) }}
+    env:
+      REELS_JOBS: "3"
+      REELS_MAX: "80"
+      REELS_SHARD: ${{ matrix.shard }}
+      REELS_SHARDS: ${{ needs.plan.outputs.n }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: reels-plan
+          path: tools/reels
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/reels/requirements.txt
+
+      # the recitations, once fetched, stay between runs
+      - uses: actions/cache@v4
+        with:
+          path: tools/reels/cache
+          key: reels-voice-${{ github.run_id }}-${{ matrix.shard }}
+          restore-keys: |
+            reels-voice-
 
       # ffmpeg is NOT on the ubuntu-24.04 runner image. It was on 22.04, it is
       # not on 24.04, and ubuntu-latest is now 24.04, which is how a run that
@@ -54,42 +152,119 @@ jobs:
           pip install -r tools/reels/requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: the copy is what the cards say
-        run: python tools/reels/copy_audit.py tools/reels/plan.json
-
       - name: render
         working-directory: tools/reels
-        run: python render_missing.py ${{ github.event.inputs.ids }}
+        run: |
+          touch /tmp/before
+          python render_missing.py ${{ github.event.inputs.ids }}
+
+      # only what this machine made goes on: a reel, its cover, its sidecar,
+      # or the note that a card was set aside
+      - name: what this machine made
+        if: always()
+        run: |
+          mkdir -p /tmp/made
+          find reels -type f -newer /tmp/before ! -name '*.part.mp4' ! -name 'index.json' -exec cp -v {} /tmp/made/ \; | wc -l
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reels-made-${{ matrix.shard }}
+          path: /tmp/made
+          if-no-files-found: ignore
+          retention-days: 3
+
+  assemble:
+    needs: [plan, render]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: reels-plan
+          path: tools/reels
+
+      - uses: actions/download-artifact@v4
+        if: needs.plan.outputs.todo != '0'
+        with:
+          pattern: reels-made-*
+          path: reels
+          merge-multiple: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/reels/requirements.txt
+
+      - name: install
+        run: pip install -r tools/reels/requirements.txt
+
+      - name: the manifest, from what has a video
+        working-directory: tools/reels
+        env:
+          NOOR_NO_PEDALBOARD: "1"
+        run: python render_missing.py --manifest
 
       - name: what came out
         run: |
           echo '### Reels' >> "$GITHUB_STEP_SUMMARY"
-          ls -la reels >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'nothing new' >> "$GITHUB_STEP_SUMMARY"
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os, glob
+          try:
+              m = json.load(open("reels/index.json"))
+          except Exception:
+              print("no manifest"); raise SystemExit
+          by = {}
+          for c in m["cards"]: by[c.get("kind", "light")] = by.get(c.get("kind", "light"), 0) + 1
+          print("rendered: %d  " % m["n"] + "  ".join("%s %d" % kv for kv in sorted(by.items())))
+          unfit = sorted(glob.glob("reels/*.unfit.json"))
+          if unfit:
+              print("\nset aside as unfit: " + ", ".join(os.path.basename(u)[:-11] for u in unfit))
+          PY
 
-      # even after a failure: a run that rendered twenty five and then ran out
-      # of time still has twenty five finished reels, and each one is complete
-      # on its own. With nothing to commit this step simply does nothing.
+      # even after a failed machine: what the others finished is complete on
+      # its own. With nothing to commit this step simply does nothing.
       - name: open a pull request
-        if: always()
         uses: peter-evans/create-pull-request@v7
         with:
-          add-paths: reels
+          add-paths: |
+            reels
+            tools/reels/plan.json
+            tools/reels/verses.json
           branch: reels/rendered
           delete-branch: true
           commit-message: |
             reels: render the cards that had no video
 
-            Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+            Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+            Claude-Session: https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
           title: "Reels: newly rendered videos"
           body: |
-            Rendered from tools/reels/plan.json by the reels workflow.
+            Rendered from `tools/reels/plan.json` by the `reels` workflow, on
+            as many machines as the shelf needed, gathered here into one change.
+
+            Six kinds share the shelf: the day's card, Did you know?, This day,
+            The word, One verse and The Codex. The words on screen are the
+            library's own (the dictionary, the calendar, the Uthmani text with
+            Saheeh International, the Light cards, the menu), and
+            `copy_audit.py` proved every number and name against its source
+            before anything was rendered.
 
             Every video was checked against the Instagram and Facebook safe
             area before it was encoded: the type layer is measured as pixels,
-            every fifth frame, and a run that finds a word outside the
-            rectangle renders nothing at all.
+            every fifth frame, and a card that does not fit is set aside and
+            named in `reels/<id>.unfit.json` rather than shipped.
 
-            1080x1920, 30fps, H.264 high, yuv420p, with the silent AAC track
-            Instagram requires. Each video has a cover beside it, because the
-            profile grid otherwise takes frame zero, which is the picture
-            before a single word has arrived.
+            1080x1920, 30fps, H.264 high, yuv420p, AAC stereo at 48 kHz: the
+            bed built in numpy and finished in Pedalboard for every reel, and
+            for One verse the recitation itself, credited on screen and in the
+            caption, with nothing at all sounding under the voice. Each video
+            has a cover beside it, and a small JSON with what was made.
+
+            🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+            https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
