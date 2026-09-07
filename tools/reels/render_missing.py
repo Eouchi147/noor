@@ -63,8 +63,12 @@ def main():
         for nm in want:
             try:
                 info, worst, out = webreel.audit(st, nm)
-            except (SystemExit, Exception) as e:
-                bad.append((nm, str(e) or type(e).__name__)); continue
+            except SystemExit as e:
+                bad.append((nm, str(e) or "unfit")); continue
+            except Exception as e:
+                # a browser or picture failure is the machine's, not the card's:
+                # the run stops here rather than marking every card unfit
+                raise SystemExit("the renderer failed on %s: %s" % (nm, str(e)[:200]))
             if out or not info["fits"]:
                 bad.append((nm, str(out[:2] or "does not fit")))
             else:
@@ -109,7 +113,7 @@ def unfit_path(cid):
 def copy_hash(card):
     """the words of a card, hashed: when they change the card is tried again"""
     import hashlib
-    keep = {k: v for k, v in card.items() if k not in ("look", "caption", "slot")}
+    keep = {k: v for k, v in card.items() if k not in ("look", "caption", "slot", "build")}
     return hashlib.md5(json.dumps(keep, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
 
 
@@ -207,7 +211,8 @@ def manifest():
                               .replace("{meaning}", meta.get("meaning", ""))
                               .replace("{reciter}", meta.get("reciter", "a reciter")))
         hook = {"light": c.get("hook"), "know": c.get("hook"), "day": c.get("hook"),
-                "word": c.get("term"), "verse": meta.get("ref") or c.get("verse")}[kind]
+                "word": c.get("term"), "verse": meta.get("ref") or c.get("verse"),
+                "codex": ((c.get("room") or {}).get("t") or "The Codex")}.get(kind, c.get("hook"))
         row = {"id": cid, "kind": kind, "slot": c["slot"], "hook": hook or "",
                "caption": caption, "secs": meta.get("secs"),
                "cover": os.path.exists(os.path.join(OUT, cid + "-cover.jpg"))}

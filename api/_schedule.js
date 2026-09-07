@@ -166,8 +166,10 @@ export async function planDay(dateStr, opts = {}) {
 const ROTA = {
   /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week */
   morning: ["verse", "verse", "know", "verse", "word", "verse", "know"],
-  evening: ["word", "word", "light", "know", "light", "word", "light"]
+  evening: ["word", "word", "light", "know", "light", "codex", "light"]
 };
+/* The Codex, the brand's own reel, has Friday evening and no other turn; if
+   none is rendered yet the word takes the evening as before */
 const FALLBACK = ["verse", "word", "know", "light"];
 
 export function chooseReel(cards, dateStr, half, hijri) {
@@ -181,7 +183,7 @@ export function chooseReel(cards, dateStr, half, hijri) {
     if (today.length) return today[0];
   }
   const want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
-  const order = [want, ...FALLBACK.filter(k => k !== want)];
+  const order = [want, ...(want === "codex" ? ["word"] : []), ...FALLBACK.filter(k => k !== want)];
   for (const kind of order) {
     /* the old manifests carried no kind and no other kind than light; a card
        without a slot is fine anywhere, one with a slot keeps to its half.

@@ -34,6 +34,52 @@
   var T = null, INFO = null, FIT = null, SECS = 0, KIND = "light";
   var ms = function (s) { return Math.round(s * 1000); };
 
+  /* THE GRID. Every kind has a tempo, and every moment in its timeline is
+     quantised to an eighth of that tempo, so the words, the swells and the
+     notes all land together. No beat is ever sounded: the grid is felt.
+     One verse has no grid, because the recitation sets the time. */
+  var BPM = { light: 96, know: 108, day: 84, word: 92, verse: 0, codex: 120 };
+  var GRID = { bpm: 0, eighth: 0, beat: 0, bar: 0 };
+  function grid(kind) {
+    var b = BPM[kind] || 0;
+    GRID = b ? { bpm: b, beat: 60 / b, eighth: 30 / b, bar: 240 / b } : { bpm: 0, beat: 0, eighth: 0, bar: 0 };
+    return GRID;
+  }
+  /* to the nearest eighth, never earlier than `min` */
+  function q(t, min) {
+    if (!GRID.eighth) return t;
+    var v = Math.round(t / GRID.eighth) * GRID.eighth;
+    if (min != null && v < min) v += GRID.eighth;
+    return v;
+  }
+  /* to the next beat at or after t */
+  function qb(t) { if (!GRID.beat) return t; return Math.ceil(t / GRID.beat - 1e-6) * GRID.beat; }
+
+  /* what the picture is told each frame, from what the type is doing */
+  var SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.42, secs: 0, pulse: null, pulseStart: 0, fps: 30 };
+  function bloomAt(t, list, rise, fall) {
+    var a = 0;
+    for (var i = 0; i < list.length; i++) { var u = t - list[i]; if (u < 0) continue; a += Math.min(1, u / rise) * Math.exp(-Math.max(0, u - rise) / fall); }
+    return Math.min(1, a);
+  }
+  function scenePush(t) {
+    var pulse = 0;
+    if (SCENE.pulse) { var i = Math.floor((t - SCENE.pulseStart) * SCENE.fps); if (i >= 0 && i < SCENE.pulse.length) pulse = SCENE.pulse[i]; }
+    var lift = Math.max(0, Math.min(1, (t - 0.2) / 2.2));
+    window.NOORSCENE.frame({
+      t: t,
+      cue: Math.max(0, Math.min(1, (t - SCENE.cue) / 1.6)),
+      bloom: bloomAt(t, SCENE.blooms, 0.22, 0.9),
+      hit: bloomAt(t, SCENE.hits, 0.06, 0.35),
+      pulse: pulse,
+      recede: SCENE.recede ? Math.max(0, Math.min(1, (t - SCENE.recede) / 1.4)) : 0,
+      focus: SCENE.focus,
+      scrim: 0.25 + 0.45 * lift,
+      progress: SCENE.secs ? t / SCENE.secs : 0,
+      beat: GRID.beat ? (t / GRID.beat) % 1 : 0
+    });
+  }
+
   function letters(node, text, cls) {
     node.textContent = "";
     for (var i = 0; i < text.length; i++) {
@@ -113,7 +159,7 @@
      against the rendered pixels rather than trusted. */
   function rest() {
     T.seek(SECS * 1000);
-    var b = el(KIND === "word" || KIND === "verse" ? "close2" : "close")
+    var b = el(KIND === "codex" ? "hud-ask" : (KIND === "word" || KIND === "verse") ? "close2" : "close")
               .getBoundingClientRect().bottom;
     T.seek(0);
     return b;
@@ -121,6 +167,7 @@
 
   function shrink() {
     var f = FIT;
+    if (KIND === "codex") { f.fits = false; INFO.fits = false; return false; }
     if (KIND === "word") {
       if (f.short > 36) { f.short -= 2; el("short").style.fontSize = f.short + "px"; }
       else if (f.ar > 110) { f.ar -= 20; el("ar").style.fontSize = f.ar + "px"; }
@@ -172,14 +219,17 @@
   /* which of the two stages a kind uses, and a clean slate on it */
   function stage(kind) {
     var mid = kind === "word" || kind === "verse";
+    var hud = kind === "codex";
     /* a previous card's timeline leaves its last values as inline styles:
        an opacity 1 on the close, a transform on a word. Every one of them
        goes, so each card starts from the stylesheet and nothing else. */
     if (T) { try { T.revert(); } catch (e) { } T = null; }
     document.querySelectorAll("#stage [style]").forEach(function (e) { e.removeAttribute("style"); });
     el("mid").style.top = "";
-    el("col").style.display = mid ? "none" : "flow-root";
+    el("col").style.display = (mid || hud) ? "none" : "flow-root";
     el("mid").style.display = mid ? "flex" : "none";
+    el("hud").style.display = hud ? "flex" : "none";
+    SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.42, secs: 0, pulse: null, pulseStart: 0, fps: 30 };
     el("daynum").style.display = "none";
     el("todo").style.display = "none";
     el("body").style.marginTop = "";
@@ -224,14 +274,14 @@
     var blocks = body.querySelectorAll(".blk");
     var f = fitColumn();
 
-    /* --- when everything happens, in seconds --- */
+    /* --- when everything happens, in seconds, on the grid --- */
     var n = words.length;
-    var HK_START = 0.18, HK_STEP = Math.min(0.062, Math.max(0.030, 0.62 / n));
-    var hookEnd = HK_START + (n - 1) * HK_STEP + 0.52;
-    var tDate = Math.max(hookEnd + 0.18, 1.25);
-    var tBody = tDate + 1.15;
-    var tClose = secs - 3.2;
-    var step = Math.max(2.1, (tClose - tBody - 0.6) / Math.max(1, blocks.length));
+    var HK_START = q(0.18), HK_STEP = GRID.eighth ? Math.max(GRID.eighth / 2, Math.min(GRID.eighth, 0.62 / n)) : Math.min(0.062, Math.max(0.030, 0.62 / n));
+    var hookEnd = q(HK_START + (n - 1) * HK_STEP + 0.52);
+    var tDate = qb(Math.max(hookEnd + 0.18, 1.25));
+    var tBody = qb(tDate + 1.15);
+    var tClose = q(secs - 3.2);
+    var step = q(Math.max(2.1, (tClose - tBody - 0.6) / Math.max(1, blocks.length)));
 
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
     opening(tl, "#brand", "#cat", "#col .mrule", "#col .mdiv");
@@ -276,7 +326,9 @@
     INFO = { fits: f.fits, tight: !!f.tight, hookPx: f.hook, bodyPx: f.body, lines: f.lines,
              tDate: tDate, tBody: tBody, tClose: tClose, step: step,
              hookEnd: hookEnd, height: el("col").getBoundingClientRect().height,
-             cover: tDate + 1.1 };
+             cover: tDate + 1.1, grid: GRID };
+    SCENE.cue = tBody + step * 0.5; SCENE.blooms = [0, hookEnd - 0.3, tClose]; SCENE.hits = [0, hookEnd - 0.3, tBody, tClose];
+    SCENE.recede = tBody - 0.5; SCENE.focus = 0.30;
     tl.seek(0);
     return INFO;
   }
@@ -307,12 +359,12 @@
     var f = fitColumn();
 
     var n = words.length;
-    var tNum = 0.42, tHook = 1.10, HK_STEP = Math.min(0.062, Math.max(0.030, 0.62 / n));
-    var hookEnd = tHook + (n - 1) * HK_STEP + 0.52;
-    var tBody = hookEnd + 0.55;
-    var tClose = secs - 3.0;
-    var step = Math.max(1.9, (tClose - tBody - (card.todo ? 1.6 : 0.4)) / Math.max(1, blocks.length));
-    var tTodo = tBody + blocks.length * step - 0.2;
+    var tNum = q(0.42), tHook = qb(1.10), HK_STEP = GRID.eighth ? GRID.eighth / 2 : Math.min(0.062, Math.max(0.030, 0.62 / n));
+    var hookEnd = q(tHook + (n - 1) * HK_STEP + 0.52);
+    var tBody = qb(hookEnd + 0.55);
+    var tClose = q(secs - 3.0);
+    var step = q(Math.max(1.9, (tClose - tBody - (card.todo ? 1.6 : 0.4)) / Math.max(1, blocks.length)));
+    var tTodo = q(tBody + blocks.length * step - 0.2);
 
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
     opening(tl, "#brand", "#cat", "#col .mrule", "#col .mdiv");
@@ -342,7 +394,10 @@
     INFO = { fits: f.fits, tight: !!f.tight, hookPx: f.hook, bodyPx: f.body, lines: blocks.length,
              tDate: tNum, tBody: tBody, tClose: tClose, step: step, hookEnd: hookEnd,
              tTodo: card.todo ? tTodo : null,
-             height: el("col").getBoundingClientRect().height, cover: hookEnd + 0.9 };
+             height: el("col").getBoundingClientRect().height, cover: hookEnd + 0.9, grid: GRID };
+    SCENE.cue = tNum; SCENE.blooms = [0, tNum, hookEnd - 0.3, tClose]; SCENE.hits = [0, tNum, hookEnd - 0.3, tBody, tClose];
+    if (card.todo) { SCENE.blooms.push(tTodo); SCENE.hits.push(tTodo); }
+    SCENE.recede = tBody - 0.5; SCENE.focus = 0.30;
     tl.seek(0);
     return INFO;
   }
@@ -398,9 +453,9 @@
       f.tight = f.short < 40;
     });
 
-    var tAr = 0.55, tTerm = 1.25, tRule = 1.85, tShort = 2.25;
-    var tLong = Math.min(tShort + 3.6, secs - 6.4);
-    var tClose = secs - 3.0;
+    var tAr = qb(0.55), tTerm = q(tAr + 0.7), tRule = q(tTerm + 0.6), tShort = qb(tRule + 0.4);
+    var tLong = qb(Math.min(tShort + 3.6, secs - 6.4));
+    var tClose = q(secs - 3.0);
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
     opening(tl, "#brand2", "#cat2", "#mid .mrule", "#mid .mdiv");
     /* the word itself, out of light */
@@ -418,7 +473,10 @@
     tl.pause();
     T = tl; FIT = f;
     var ab = el("ar").getBoundingClientRect();
-    INFO = { fits: f.fits, tight: !!f.tight, arPx: f.ar, shortPx: f.short,
+    SCENE.cue = tAr; SCENE.blooms = [0, tAr, tShort, tClose]; SCENE.hits = [0, tAr, tRule, tShort, tClose];
+    if (card.long) SCENE.hits.push(tLong);
+    SCENE.recede = tShort - 0.5; SCENE.focus = (ab.top + ab.height * 0.5) / 1920;
+    INFO = { fits: f.fits, tight: !!f.tight, arPx: f.ar, shortPx: f.short, grid: GRID,
              focus: (ab.top + ab.height * 0.5) / 1920,
              tAr: tAr, tTerm: tTerm, tRule: tRule, tShort: tShort, tLong: card.long ? tLong : null,
              tClose: tClose, tDate: tTerm, tBody: tShort, step: 3.6, hookEnd: tAr + 0.9,
@@ -473,7 +531,7 @@
     var rec = card.rec || { start: 2.6, dur: Math.max(4, secs - 8) };
     var tAyah = 0.70, tRef = 1.45;
     var tEnd = rec.start + rec.dur;              // the recitation ends here
-    var tRec = tEnd + 0.5, tClose = tEnd + 1.35;
+    var tRec = tEnd + 1.1, tClose = tEnd + 1.9;   // the bed is back by tEnd + 0.55
     /* each sentence arrives where its share of the words falls in the
        recitation, so the meaning keeps pace with the voice */
     var lens = [], total = 0;
@@ -503,7 +561,9 @@
     tl.pause();
     T = tl; FIT = f;
     var yb = el("ayah").getBoundingClientRect();
-    INFO = { fits: f.fits, tight: !!f.tight, ayahPx: f.ayah, transPx: f.trans,
+    SCENE.cue = tAyah; SCENE.blooms = [0, tAyah, tEnd + 0.9, tClose]; SCENE.hits = [0, tAyah, tEnd + 0.9];
+    SCENE.recede = rec.start - 0.5; SCENE.focus = (yb.top + yb.height * 0.5) / 1920;
+    INFO = { fits: f.fits, tight: !!f.tight, ayahPx: f.ayah, transPx: f.trans, grid: GRID,
              focus: (yb.top + yb.height * 0.5) / 1920,
              tAyah: tAyah, tRef: tRef, recStart: rec.start, recEnd: tEnd, sentAt: at,
              tReciter: tRec, tClose: tClose,
@@ -513,17 +573,98 @@
     return INFO;
   }
 
+  /* ------------------------------------------------------------------ codex */
+  function buildCodex(card, secs) {
+    /* card: build "1448.03", counts [[523,"words"],[114,"surahs"],...] (six),
+       zeros [[0,"ads"],[0,"accounts"],[0,"tracking"]], room {k,t,d},
+       ask {l1,l2,l3} */
+    el("hud-build").textContent = card.build || "";
+    var g = el("hud-grid"); g.textContent = "";
+    var counts = (card.counts || []).concat(card.zeros || []);
+    counts.forEach(function (c) {
+      var d = document.createElement("div"); d.className = "cnt" + (Number(c[0]) === 0 ? " zero" : "");
+      var b = document.createElement("b"); b.textContent = "0"; b.dataset.to = String(c[0]);
+      var sp = document.createElement("span"); sp.textContent = c[1];
+      d.appendChild(b); d.appendChild(sp); g.appendChild(d);
+    });
+    var room = card.room || {};
+    el("hud-room-k").textContent = room.k || "today's room";
+    el("hud-room-t").textContent = room.t || "";
+    el("hud-room-d").textContent = room.d || "";
+    var ask = card.ask || {};
+    el("hud-l1").textContent = ask.l1 || "One light a day.";
+    el("hud-l2").textContent = ask.l2 || "Follow. Save this. Send it to one person.";
+    el("hud-l3").textContent = ask.l3 || "NOORCODEX.COM";
+
+    var cells = g.querySelectorAll(".cnt");
+    var f = { fits: true, tight: false };
+    var avail = SAFE_B - SAFE_T - 46;
+    for (var pass = 0; pass < 6; pass++) {
+      if (el("hud").getBoundingClientRect().height <= avail) break;
+      var b = cells[0] ? parseInt(getComputedStyle(cells[0].querySelector("b")).fontSize) : 60;
+      cells.forEach(function (c) { c.querySelector("b").style.fontSize = (b - 10) + "px"; });
+      el("hud-room-t").style.fontSize = (parseInt(getComputedStyle(el("hud-room-t")).fontSize) - 4) + "px";
+      f.tight = true;
+    }
+    f.fits = el("hud").getBoundingClientRect().height <= avail;
+
+    /* hard cadence: everything on the beat at 120 */
+    var B = GRID.beat, E = GRID.eighth;
+    var tHead = q(0.25), tRule = tHead + E, tCount = qb(tHead + B), tRoom = qb(tCount + B * cells.length * 0.5 + B);
+    var tAsk = qb(tRoom + 2 * B), tClose = tAsk;
+    if (tAsk > secs - 3.0) { tAsk = q(secs - 3.0); tClose = tAsk; }
+    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
+    tl.add("#flare", { opacity: [0, .5, 0], scale: [.25, 1.2], duration: 500, ease: "outQuad" }, 0);
+    tl.add("#hud .h", { opacity: [0, 1], translateY: [10, 0], duration: 260 }, ms(tHead));
+    tl.add("#hud .rule", { scaleX: [0, 1], duration: 380 }, ms(tRule));
+    cells.forEach(function (c, i) {
+      var at = tCount + i * B * 0.5;
+      tl.add(c, { opacity: [0, 1], translateY: [14, 0], "--b": ["4px", "0px"], duration: 240 }, ms(at));
+      /* the number counts up over one beat, in steps that land on eighths */
+      var b = c.querySelector("b"), to = Number(b.dataset.to);
+      tl.add({ v: 0 }, { v: to, duration: ms(B * 1.5), ease: "outCubic", modifier: A.utils.round(0),
+        onUpdate: function (self) { b.textContent = String(Math.round(self.targets[0].v)); } }, ms(at));
+    });
+    tl.add("#hud-room", { opacity: [0, 1], translateY: [16, 0], "--b": ["6px", "0px"], duration: 320 }, ms(tRoom));
+    tl.add("#hud-ask", { opacity: [0, 1], translateY: [18, 0], duration: 320 }, ms(tAsk));
+    tl.add("#hud-l1", { scale: [1.06, 1], duration: 380 }, ms(tAsk));
+    tl.pause();
+    T = tl; FIT = f;
+    var hits = [0, tHead, tRule];
+    cells.forEach(function (c, i) { hits.push(tCount + i * B * 0.5); });
+    hits.push(tRoom, tAsk);
+    SCENE.cue = tRoom; SCENE.blooms = [0, tCount, tRoom, tAsk]; SCENE.hits = hits;
+    SCENE.recede = 0; SCENE.focus = 0.66;
+    INFO = { fits: f.fits, tight: f.tight, tHead: tHead, tCount: tCount, tRoom: tRoom, tAsk: tAsk, tClose: tClose,
+             cells: cells.length, tDate: tHead, tBody: tCount, step: B * 0.5, hookEnd: tRule, grid: GRID,
+             cover: tRoom + 0.6, height: el("hud").getBoundingClientRect().height };
+    tl.seek(0);
+    return INFO;
+  }
+
   window.NOORREEL = {
     build: function (card, secs) {
       KIND = card.kind || "light";
       SECS = secs;
+      grid(KIND);
       stage(KIND);
-      if (KIND === "day") return buildDay(card, secs);
-      if (KIND === "word") return buildWord(card, secs);
-      if (KIND === "verse") return buildVerse(card, secs);
-      return buildLight(card, secs);
+      SCENE.secs = secs;
+      if (!window.NOORSCENE) throw new Error("scene.js did not load: no picture");
+      var lk = card.look || {};
+      window.NOORSCENE.card({ kind: KIND, seed: lk.seed, n: lk.n, k: lk.k, pal: lk.pal, month: card.hm || 1 });
+      var info;
+      if (KIND === "day") info = buildDay(card, secs);
+      else if (KIND === "word") info = buildWord(card, secs);
+      else if (KIND === "verse") info = buildVerse(card, secs);
+      else if (KIND === "codex") info = buildCodex(card, secs);
+      else info = buildLight(card, secs);
+      info.scene = { cue: SCENE.cue, blooms: SCENE.blooms, hits: SCENE.hits, focus: SCENE.focus };
+      scenePush(0);
+      return info;
     },
-    seek: function (t) { T.seek(Math.max(0, t * 1000)); },
+    /* the recitation's loudness per frame, so the picture can breathe with it */
+    pulse: function (arr, start, fps) { SCENE.pulse = arr; SCENE.pulseStart = start; SCENE.fps = fps || 30; },
+    seek: function (t) { T.seek(Math.max(0, t * 1000)); scenePush(Math.max(0, t)); },
     rest: rest,
     shrink: shrink,
     /* the opening bloom and streak are light, not information: the safe area
@@ -531,6 +672,7 @@
     decor: function (on) {
       var v = on ? "" : "none";
       el("flare").style.display = v; el("streak").style.display = v;
+      document.body.classList.toggle("type-only", !on);
     },
     info: function () { return INFO; }
   };

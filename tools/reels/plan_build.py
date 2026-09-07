@@ -19,7 +19,7 @@ from the card id, so a card keeps its picture and its seed for good.
 
     python3 plan_build.py            rebuild plan.json in place
 """
-import glob, hashlib, json, os, re, sys
+import glob, hashlib, json, os, re, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.environ.get("NOOR_ROOT") or os.path.join(HERE, "..", "..")
@@ -160,6 +160,44 @@ def verse_cards():
     return cards
 
 
+# the rooms The Codex tours: the ones a stranger walks into, not the desk drawers
+CODEX_SKIP = ("/donate", "/license", "/journal", "/feedback", "/legal", "/masjid", "/school", "/hajj-plan", "/#mizan", "/kids/lanterns")
+
+
+def codex_counts():
+    """the library's true numbers, from the library itself"""
+    idx = json.load(open(os.path.join(ROOT, "assets", "menu-index.json"), encoding="utf-8"))
+    lights = json.load(open(os.path.join(ROOT, "lights", "all.json"), encoding="utf-8"))
+    words = sum(len(json.load(open(f, encoding="utf-8"))) for f in glob.glob(os.path.join(ROOT, "build", "dict-*.json")))
+    return idx, {"words": words, "surahs": 114, "lights": int(lights.get("n") or len(lights.get("lights", []))),
+                 "chapters": len(idx.get("path", [])), "names": 99, "prophets": 25}
+
+
+def codex_cards():
+    idx, N = codex_counts()
+    counts = [[N["words"], "words"], [N["surahs"], "surahs"], [N["lights"], "lights"], [N["chapters"], "chapters"]]
+    zeros = [[0, "ads"], [0, "accounts"], [0, "tracking"]]
+    cards = {}
+    rooms = [it for sec in idx["sections"] for it in sec["items"] if it["u"] not in CODEX_SKIP]
+    for i, it in enumerate(rooms):
+        slug = re.sub(r"[^a-z0-9]+", "-", it["u"].lower()).strip("-") or "home"
+        cid = "codex-" + slug
+        if cid in cards: raise SystemExit("two rooms make the same card id: " + cid)
+        url = "noorcodex.com" + ("" if it["u"].startswith("/#") else it["u"])
+        cards[cid] = {
+            "kind": "codex", "src": it["u"], "slot": "evening",
+            "build": "build %s" % time.strftime("%Y.%m"),
+            "counts": counts, "zeros": zeros,
+            "room": {"k": "today's room", "t": it["t"], "d": it["d"]},
+            "ask": {"l1": "One light a day.", "l2": "Follow. Save this. Send it to one person.", "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"},
+            "caption": "NOOR is a free Islamic library: %d words defined, all %d surahs with recitation, %d lights of history and science, the Path in %d chapters. No ads, no account, no tracking, ever.\n\nToday's room: %s. %s\n%s\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight"
+                       % (N["words"], N["surahs"], N["lights"], N["chapters"], it["t"], it["d"], url),
+            "look": {"pal": "codex", "seed": h32(cid) % 1000, "n": STARS[h32(cid) % len(STARS)][0], "k": STARS[h32(cid) % len(STARS)][1],
+                     "scene": "codex", "secs": 10}
+        }
+    return cards
+
+
 def main():
     doc = json.load(open(PLAN, encoding="utf-8")) if os.path.exists(PLAN) else {"_meta": {}, "cards": {}}
     old = doc.get("cards", {})
@@ -175,7 +213,7 @@ def main():
                          "secs": 13, "cue": 0}
         kept[k] = v
     cards = dict(kept)
-    for build in (word_cards, day_cards, verse_cards):
+    for build in (word_cards, day_cards, verse_cards, codex_cards):
         new = build()
         cards.update(new)
         print("  %-12s %d" % (build.__name__.replace("_cards", ""), len(new)))

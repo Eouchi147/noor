@@ -150,7 +150,28 @@ first. The measurement that decides is taken with the timeline in place and
 everything at rest: measuring the column mid build reported it eighty pixels
 shorter than the one that actually renders, and cost a card that overran.
 
-## The five kinds
+## The second cut: the picture is light, the timing is a grid
+
+The picture is no longer drawn in numpy. `web/scene.js` is one fragment
+shader, run in the same headless Chromium that animates the words (with
+SwiftShader on a machine that has no GPU, which is every runner): sky, haze,
+the house geometry, the subject of each kind, rays, bloom, grain and the
+grade, at 405x720 under a full-resolution DOM. One JPEG screenshot per frame
+is the finished picture and goes straight to ffmpeg. The type layer tells
+the shader what each instant is: the cue, the blooms and hits it placed, the
+reciter's loudness, where the subject stands. `cine.py` and `geom.py` are
+no longer used.
+
+Every kind but One verse has a tempo (`BPM` in `type.js`: the day's card 96,
+Did you know 108, This day 84, The word 92, The Codex 120), and every moment
+of its timeline is quantised to an eighth of it, so the words, the swells,
+the risers and the notes land together. No beat is ever sounded. The sound
+is finished in Pedalboard (`_master`, `_voice_chain`, `_saturate_sub` in
+`sound.py`): a shelf for weight, a slow glue compressor, tape-like harmonics
+on the sub so a phone hears it, a levelled and de-essed voice, and a
+hand-made soft ceiling after the loudness is set.
+
+## The six kinds
 
 One plan, five kinds of card, one opening they all share: the bloom, the
 streak of light, the mark drawing itself. Then each goes its own way.
@@ -162,6 +183,7 @@ streak of light, the mark drawing itself. Then each goes its own way.
 | `day`   | This day: the numeral of the Hijri date, the day's name | 13 s     | `calendar.json` from `api/_calendar.js` |
 | `word`  | The word: the Arabic itself, centred, then its meaning  | 14 s     | `build/dict-*.json`, verbatim       |
 | `verse` | One verse: the Arabic in the Quran cut, the meaning by sentence under the recitation | the voice decides | `quran-uthmani.json` (Tanzil), `verses.json` (Saheeh International), everyayah.com |
+| `codex` | The Codex: the library's own blueprint, counters ticking up on the beat, one room, the ask | 10 s | `assets/menu-index.json`, the dictionary, the lights |
 
 `plan_build.py` writes `plan.json` from those sources and keeps the hand
 written cards exactly as they are, so running it again changes nothing that
@@ -187,7 +209,7 @@ then three seconds of the way home.
 
 The rota in `api/_schedule.js` gives the two daily slots to the kinds by
 weekday, mornings `verse verse know verse word verse know` from Sunday and
-evenings `word word light know light word light`, and a This day reel takes
+evenings `word word light know light codex light`, and a This day reel takes
 the morning of its own Hijri date. `node tests/reels-kinds.mjs` holds it.
 
 ## How one gets posted

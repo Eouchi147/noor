@@ -12,7 +12,7 @@ ROOT = os.environ.get("NOOR_ROOT") or os.path.join(HERE, "..", "..")
 LIB = os.environ.get("NOOR_LIGHTS") or os.path.join(ROOT, "lights", "all.json")
 SRC = {c["id"]: c for c in json.load(open(LIB))["lights"]}
 
-TAG_FLOOR = {"light": 6, "know": 5, "word": 4, "day": 4, "verse": 3}
+TAG_FLOOR = {"light": 6, "know": 5, "word": 4, "day": 4, "verse": 3, "codex": 4}
 
 
 def _dict():
@@ -55,6 +55,8 @@ def haystack(cid, v, D, CAL, VER):
                          f.get("basis", ""), f.get("note", ""), str(v.get("hd", "")), str(v.get("num", "")),
                          "Muharram Safar Rabi al-Awwal Rabi al-Akhir "
                          "Jumada al-Ula Jumada al-Akhirah Rajab Sha'ban Ramadan Shawwal Dhul Qa'dah Dhul Hijjah"])
+    if kind == "codex":
+        return "codex"
     if kind == "verse":
         import re as _re
         m = _re.fullmatch(r"(\d+):(\d+)(?:-(\d+))?", str(v.get("verse", "")))
@@ -139,6 +141,23 @@ def audit(path):
             if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
             lines = []
             screen = ""
+        elif kind == "codex":
+            need = {"counts", "zeros", "room", "ask", "caption"}
+            if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
+            import glob as _g
+            words = sum(len(json.load(open(f, encoding="utf-8"))) for f in _g.glob(os.path.join(ROOT, "build", "dict-*.json")))
+            lights = json.load(open(LIB, encoding="utf-8")); nl = int(lights.get("n") or len(lights.get("lights", [])))
+            idx = json.load(open(os.path.join(ROOT, "assets", "menu-index.json"), encoding="utf-8"))
+            truth = {"words": words, "surahs": 114, "lights": nl, "chapters": len(idx.get("path", []))}
+            for num, label in v["counts"]:
+                if truth.get(label) != int(num): bad.append((cid, "%s says %s, the library says %s" % (label, num, truth.get(label))))
+            for num, label in v["zeros"]:
+                if int(num) != 0: bad.append((cid, "a zero that is not zero: " + label))
+            rooms = {it["u"]: it for sec in idx["sections"] for it in sec["items"]}
+            r = rooms.get(v.get("src"))
+            if not r or r["t"] != v["room"]["t"] or r["d"] != v["room"]["d"]: bad.append((cid, "the room is not the menu's own"))
+            lines = []
+            screen = ""
         else:
             bad.append((cid, "unknown kind " + kind)); continue
         for i, l in enumerate(lines):
@@ -168,7 +187,7 @@ def audit(path):
         if len(body) > 520: bad.append((cid, f"caption body {len(body)} > 520"))
         if kind != "day" and v.get("hook") and v["hook"].lower() in norm(body): bad.append((cid, "caption repeats the hook"))
         # the caption is copy too: its numbers and names come from the same source
-        if kind != "verse":
+        if kind not in ("verse", "codex"):
             for n in nums(cap) - hay_num:
                 if n.replace(",", "") not in {x.replace(",", "") for x in hay_num}:
                     bad.append((cid, "caption number not in the source: " + n))

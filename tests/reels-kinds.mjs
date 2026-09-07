@@ -17,6 +17,7 @@ for (let i = 0; i < 8; i++) MAN.push({ id: 'verse-' + i, kind: 'verse', slot: i 
 for (let i = 0; i < 8; i++) MAN.push({ id: 'word-' + i, kind: 'word', slot: i % 2 ? 'evening' : 'morning', hook: 'w', caption: 'c' });
 for (let i = 0; i < 5; i++) MAN.push({ id: 'know-' + i, kind: 'know', slot: 'morning', hook: 'k', caption: 'c' });
 for (let i = 0; i < 4; i++) MAN.push({ id: 'light-' + i, kind: 'light', slot: i % 2 ? 'evening' : 'morning', hook: 'l', caption: 'c' });
+for (let i = 0; i < 3; i++) MAN.push({ id: 'codex-' + i, kind: 'codex', slot: 'evening', hook: 'c', caption: 'c' });
 MAN.push({ id: 'day-ashura', kind: 'day', slot: 'morning', hm: 1, hd: 10, hook: 'Ashura', caption: 'c' });
 MAN.push({ id: 'month-09', kind: 'day', slot: 'morning', hm: 9, hd: 1, hook: 'Ramadan begins', caption: 'c' });
 MAN.push({ id: 'day-ramadan', kind: 'day', slot: 'morning', hm: 9, hd: 1, hook: 'Ramadan begins', caption: 'c' });
@@ -32,7 +33,7 @@ console.log('\nthe rota');
   const morn = week.map(d => kind(S.chooseReel(MAN, d, 'morning', null)));
   const eve = week.map(d => kind(S.chooseReel(MAN, d, 'evening', null)));
   ok(morn.join() === 'verse,verse,know,verse,word,verse,know', 'mornings Sun..Sat: ' + morn.join(' '));
-  ok(eve.join() === 'word,word,light,know,light,word,light', 'evenings Sun..Sat: ' + eve.join(' '));
+  ok(eve.join() === 'word,word,light,know,light,codex,light', 'evenings Sun..Sat: ' + eve.join(' '));
   ok(morn.filter(k => k === 'verse').length === 4, 'four verses a week in the morning');
   const a = S.chooseReel(MAN, '2026-09-07', 'morning', null), b = S.chooseReel(MAN, '2026-09-07', 'morning', null);
   ok(a.id === b.id, 'the same date always chooses the same card');
@@ -86,6 +87,8 @@ console.log('\nan empty shelf');
   const noVerse = MAN.filter(c => c.kind !== 'verse');
   const m = S.chooseReel(noVerse, '2026-09-07', 'morning', null);
   ok(m && kind(m) === 'word', 'a verse morning with no verses rendered yet becomes a word, not silence');
+  const noCodex = S.chooseReel(MAN.filter(c => c.kind !== 'codex'), '2026-09-11', 'evening', null);
+  ok(noCodex && kind(noCodex) === 'word', 'a Friday evening with no Codex rendered yet is a word');
   const nothing = S.chooseReel(MAN.filter(c => c.kind === 'day'), '2026-09-07', 'morning', null);
   ok(nothing === null, 'only day reels on the shelf, and not their day: nothing, honestly');
 }

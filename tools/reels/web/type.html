@@ -9,11 +9,14 @@
 @font-face{font-family:Amiri;src:url(amiri-bold.ttf) format("truetype");font-weight:700;font-display:block}
 @font-face{font-family:AmiriQuran;src:url(amiri-quran.ttf) format("truetype");font-weight:400;font-display:block}
 :root{
-  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6; --parch:#F3E7BE;
+  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6; --parch:#F3E7BE; --text:#DCE3F2;
   --safeT:270px; --safeB:1500px; --safeL:87px; --safeR:950px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{background:#070912}
+#gl{position:absolute;left:0;top:0;width:1080px;height:1920px;display:block}
+body.type-only{background:transparent} body.type-only #gl{display:none}
 body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
 
 #stage{position:absolute;inset:0}
@@ -76,6 +79,30 @@ h1#hook .w.key{color:var(--gold)}
 #todo{display:none;margin-top:30px;font:700 36px NoorB,sans-serif;color:var(--gold);line-height:1.3;opacity:0;--b:0px;filter:blur(var(--b))}
 
 /* ---------------------------------------------------------------------
+   The Codex: a blueprint of the library, in the house mono
+   --------------------------------------------------------------------- */
+@font-face{font-family:NoorM;src:url(noor-mono.ttf) format("truetype");font-weight:400;font-display:block}
+@font-face{font-family:NoorM;src:url(noor-mono-bold.ttf) format("truetype");font-weight:700;font-display:block}
+#hud{position:absolute;left:96px;top:var(--safeT);width:830px;display:none;flex-direction:column;gap:0;font-family:NoorM,ui-monospace,monospace;color:var(--muted)}
+#hud .h{display:flex;justify-content:space-between;align-items:baseline;font-size:24px;letter-spacing:.14em;color:var(--gold);opacity:0}
+#hud .h i{font-style:normal;color:var(--muted);font-size:22px;letter-spacing:.08em}
+#hud .rule{height:2px;background:var(--gold);transform-origin:left center;transform:scaleX(0);margin:18px 0 34px}
+#hud .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+#hud .cnt{opacity:0;--b:0px;filter:blur(var(--b));border:1px solid rgba(126,155,209,.35);border-radius:6px;padding:16px 18px;position:relative;background:rgba(5,8,20,.35)}
+#hud .cnt:before{content:"";position:absolute;left:-1px;top:-1px;width:14px;height:14px;border-left:2px solid var(--gold);border-top:2px solid var(--gold)}
+#hud .cnt b{display:block;font-size:92px;line-height:.95;color:var(--cream);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#hud .cnt span{display:block;margin-top:10px;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#hud .cnt.zero b{color:var(--gold)}
+#hud .room{margin-top:34px;opacity:0;--b:0px;filter:blur(var(--b))}
+#hud .room .k{font-size:22px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+#hud .room .t{font:700 60px NoorB,sans-serif;color:var(--cream);line-height:1.1;margin-top:8px;letter-spacing:-.01em}
+#hud .room .d{font:400 34px NoorR,sans-serif;color:var(--text);margin-top:10px;line-height:1.35}
+#hud .ask{margin-top:36px;opacity:0}
+#hud .ask .l1{font:700 64px NoorB,sans-serif;color:var(--gold);line-height:1.05;letter-spacing:-.01em}
+#hud .ask .l2{margin-top:14px;font-size:30px;letter-spacing:.06em;color:var(--cream)}
+#hud .ask .l3{margin-top:18px;font-size:30px;letter-spacing:.12em;color:var(--gold)}
+
+/* ---------------------------------------------------------------------
    the centred stage: The word and One verse
    --------------------------------------------------------------------- */
 #mid{position:absolute;left:96px;top:var(--safeT);width:830px;display:none;flex-direction:column;
@@ -107,6 +134,7 @@ h1#hook .w.key{color:var(--gold)}
 #mid .close .crule{margin:0 auto 18px}
 </style></head>
 <body>
+<canvas id="gl"></canvas>
 <div id="stage">
   <div id="flare"></div>
   <div id="streak"></div>
@@ -129,6 +157,13 @@ h1#hook .w.key{color:var(--gold)}
       <div class="site">NOORCODEX.COM</div>
       <div class="sub">the whole story, free</div>
     </div>
+  </div>
+  <div id="hud">
+    <div class="h"><span id="hud-brand">NOOR · CODEX OF LIGHT</span><i id="hud-build"></i></div>
+    <div class="rule"></div>
+    <div class="grid" id="hud-grid"></div>
+    <div class="room" id="hud-room"><div class="k" id="hud-room-k"></div><div class="t" id="hud-room-t"></div><div class="d" id="hud-room-d"></div></div>
+    <div class="ask" id="hud-ask"><div class="l1" id="hud-l1"></div><div class="l2" id="hud-l2"></div><div class="l3" id="hud-l3"></div></div>
   </div>
   <div id="mid">
     <div class="markrow">
@@ -156,5 +191,6 @@ h1#hook .w.key{color:var(--gold)}
   </div>
 </div>
 <script src="anime.min.js"></script>
+<script src="scene.js"></script>
 <script src="type.js"></script>
 </body></html>

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""NOOR reel · render the anime.js type layer over the generated picture.
+"""NOOR reel · render the browser's frame: the shader picture and the type.
 
-The words are animated in a headless browser by the same anime.js build the
-site ships (`web/anime.min.js`, copied from assets/). The timeline never plays:
-it is built paused and seeked to an exact millisecond for each frame, the frame
-is screenshotted with a transparent background, and that layer is composited
-over the picture `cine.py` draws for the same instant. So the motion is the
-browser's, the picture is numpy's, and the two agree on the clock.
+The picture is a fragment shader (web/scene.js) and the words are anime.js
+(web/type.js), both in one headless page. The timeline never plays: it is
+built paused and seeked to an exact millisecond for each frame, the shader is
+told what that instant is (the cue, the blooms, the reciter's loudness), and
+one screenshot is the finished frame. It goes to ffmpeg as JPEG; the encoder
+decodes it itself, so nothing passes through numpy on the way.
 
-    python3 webreel.py                  render every card in make.LOOKS
+    python3 webreel.py                  render every card in plan.json
     python3 webreel.py sufi shatir      render some of them
     python3 webreel.py --audit          only check the safe area
 """
@@ -17,54 +17,40 @@ import numpy as np
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
-import cine
 import sound
 import verses
 from spec import W, H, FPS, SAFE_TOP, SAFE_BOTTOM, SAFE_L, SAFE_R, ease
 
 MAX_SECS = 58.0          # Instagram takes up to 90; nobody watches 90
 CENTRED = ("word", "verse")
+JPEG_Q = 94              # the frames go to ffmpeg as JPEG: the encoder decodes them itself
 
 PAGE = "file://" + os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "type.html")
 
-_SCRIM = {}
-
-
-def scrim(img, t, centre=False):
-    """the ground the type stands on, deepening as the words arrive.
-
-    The column formats read top to bottom, so the ground deepens toward the
-    bottom. The centred formats stand on the middle of the frame, with the
-    picture meant to be seen around them, so their ground is a band."""
-    lift = ease((t - 0.2) / 2.2)
-    key = (round(lift, 3), centre)
-    col = _SCRIM.get(key)
-    if col is None:
-        v = np.linspace(0.0, 1.0, H, dtype=np.float32)
-        if centre:
-            band = np.exp(-((v - float(centre)) / 0.30) ** 2)
-            a = (34 + 72 * lift) * (0.30 + 0.70 * band)
-        else:
-            a = (118 + 74 * lift) * (0.36 + 0.64 * (v ** 1.35))
-            a = np.maximum(a, 96 * lift)
-        col = (np.clip(a, 0, 236).reshape(H, 1, 1) / 255.0).astype(np.float32)
-        _SCRIM[key] = col
-    base = np.asarray(img, dtype=np.float32)
-    ink = np.array([5.0, 7.0, 20.0], dtype=np.float32)
-    return Image.fromarray(np.uint8(base * (1.0 - col) + ink * col))
+_SCRIM = {}   # kept for callers that clear it; the ground is drawn by the shader now
 
 
 class Stage:
     """one page, held open for the length of a render"""
     def __init__(self, pw):
+        # the picture is a WebGL shader; on a machine with no GPU, which is
+        # every runner, Chromium draws it with SwiftShader on the CPU
         self.b = pw.chromium.launch(args=["--force-color-profile=srgb",
-                                          "--font-render-hinting=none"])
+                                          "--font-render-hinting=none",
+                                          "--use-gl=angle", "--use-angle=swiftshader",
+                                          "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
         self.p = self.b.new_page(viewport={"width": W, "height": H},
                                  device_scale_factor=1)
         self.errs = []
         self.p.on("pageerror", lambda e: self.errs.append(str(e)))
         self.p.goto(PAGE)
         self.p.wait_for_function("() => document.fonts.status === 'loaded'")
+        if self.errs: raise RuntimeError("the page did not load cleanly: " + self.errs[0])
+        # the picture must exist before a single card is built; a browser
+        # without WebGL fails here, loudly, not as 300 unfit cards
+        info = self.p.evaluate("() => { NOORSCENE.init(); return NOORSCENE.info(); }")
+        if not info or not info.get("ok"): raise RuntimeError("no picture: " + str(info))
+        self.gl = info
 
     def build(self, card, secs):
         """build, then step the type down until the resting column clears"""
@@ -80,9 +66,18 @@ class Stage:
         return info
 
     def at(self, t):
+        """the type alone, with alpha: for the safe-area audit"""
         self.p.evaluate("t=>NOORREEL.seek(t)", t)
         return Image.open(io.BytesIO(
             self.p.screenshot(omit_background=True, type="png"))).convert("RGBA")
+
+    def frame(self, t):
+        """the finished frame, picture and words, as JPEG bytes"""
+        self.p.evaluate("t=>NOORREEL.seek(t)", t)
+        return self.p.screenshot(type="jpeg", quality=JPEG_Q)
+
+    def pulse(self, env, start, fps=FPS):
+        self.p.evaluate("([a,s,f])=>NOORREEL.pulse(a,s,f)", [[float(x) for x in env], start, fps])
 
     def close(self):
         self.b.close()
@@ -104,6 +99,7 @@ KIND_FIELDS = {
     "day":   ("eyebrow", "num", "month", "ar", "hook", "key", "lines", "todo"),
     "word":  ("eyebrow", "ar", "term", "short", "long"),
     "verse": ("eyebrow", "ar", "ref", "sents", "reciter", "verse"),
+    "codex": ("build", "counts", "zeros", "room", "ask"),
 }
 
 
@@ -120,6 +116,8 @@ def look(name):
         card.update(verses.card_text(c))
     card["kind"] = kind
     lk = dict(c["look"])
+    card["look"] = lk
+    if kind == "day": card["hm"] = c.get("hm", 1)
     return lk, card
 
 
@@ -143,47 +141,28 @@ def prepare(stage, name, secs=None):
         start = 2.6
         card["rec"] = {"start": start, "dur": vdur}
         card["reciter"] = "Recited by " + who
-        secs = min(MAX_SECS, round(start + vdur + 1.35 + 3.0, 2))
-        if start + vdur + 2.6 > MAX_SECS:
+        secs = min(MAX_SECS, round(start + vdur + 1.9 + 3.0, 2))
+        if start + vdur + 3.2 > MAX_SECS:
             raise SystemExit(f"{name}: the recitation is {vdur:.0f}s, too long for a reel")
         voice = (vx, start)
         env = sound.envelope(vx, FPS)
-        def pulse(t, env=env, start=start):
-            i = int((t - start) * FPS)
-            return float(env[i]) if 0 <= i < len(env) else 0.0
+        pulse = True
     secs = secs or cfg["secs"]
     info = stage.build(card, secs)
-    scene_kw = {"n": cfg["n"], "k": cfg["k"]}
-    if kind == "day": scene_kw["month"] = plan()[name].get("hm", 1)
-    if kind == "word":
-        cue_at, blooms = info["tAr"] - 0.2, [info["tAr"], info["tShort"]]
-    elif kind == "verse":
-        cue_at, blooms = info["tAyah"] - 0.2, [info["tAyah"], info["recEnd"] + 0.45]
-    elif kind == "day":
-        cue_at, blooms = info["tDate"], [info["tDate"], info["hookEnd"] - 0.3]
-    else:
-        cue_at = info["tBody"] + min(cfg.get("cue", 0), len(card["lines"]) - 1) * info["step"] - 0.3
-        blooms = [info["hookEnd"] - 0.3]
-    centred = kind in CENTRED
-    cin = cine.Cine(cfg["pal"], cfg["seed"], cfg["n"], cfg["k"], secs,
-                    cine.Scene(cfg["scene"], **scene_kw),
-                    cue_at=cue_at, recede=info["tBody"] - 0.5,
-                    rays=kind in ("word", "verse", "day"), blooms=blooms,
-                    pulse=pulse, centre=(float(info.get("focus", 0.42)) if centred else False))
-    return {"cfg": cfg, "card": card, "secs": secs, "info": info, "cin": cin,
-            "kind": kind, "voice": voice, "centre": centred,
+    if pulse is not None:
+        stage.pulse(list(env), start)
+    return {"cfg": cfg, "card": card, "secs": secs, "info": info,
+            "kind": kind, "voice": voice, "centre": kind in CENTRED,
             "slot": plan()[name].get("slot", "morning")}
 
 
 def frames(stage, name, secs=None, prep=None):
-    """yields (t, finished frame) for the whole reel"""
+    """yields (t, finished frame as JPEG bytes, info) for the whole reel"""
     p = prep or prepare(stage, name, secs)
-    secs, info, cin = p["secs"], p["info"], p["cin"]
+    secs, info = p["secs"], p["info"]
     for i in range(int(FPS * secs)):
         t = i / float(FPS)
-        fg = stage.at(t)
-        bg = scrim(cin.frame(t), t, cin.centre).convert("RGBA")
-        yield t, Image.alpha_composite(bg, fg).convert("RGB"), info
+        yield t, stage.frame(t), info
 
 
 def render(stage, name, out_dir="out"):
@@ -203,7 +182,7 @@ def render(stage, name, out_dir="out"):
                     voice=prep["voice"])
     p = subprocess.Popen(
         ["ffmpeg", "-y", "-loglevel", "error",
-         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
+         "-f", "image2pipe", "-c:v", "mjpeg", "-r", str(FPS), "-i", "-",
          "-i", wav,
          "-map", "0:v", "-map", "1:a", "-t", str(secs),
          # slow and crf 25: these frames are dark and barely move, so the
@@ -214,11 +193,12 @@ def render(stage, name, out_dir="out"):
          "-c:a", "aac", "-b:a", "96k", "-shortest",
          "-movflags", "+faststart", part], stdin=subprocess.PIPE)
     cover_at, cover = None, None
-    for t, img, info in frames(stage, name, prep=prep):
-        p.stdin.write(img.tobytes())
+    for t, jpg, info in frames(stage, name, prep=prep):
+        p.stdin.write(jpg)
         if cover_at is None: cover_at = info.get("cover", info["tDate"] + 1.1)
         if cover is None and t >= cover_at:
-            cover = img; img.save(f"{out_dir}/{name}-cover.jpg", quality=92)
+            cover = jpg
+            with open(f"{out_dir}/{name}-cover.jpg", "wb") as f: f.write(jpg)
     p.stdin.close(); rc = p.wait()
     try: os.remove(wav)
     except OSError: pass

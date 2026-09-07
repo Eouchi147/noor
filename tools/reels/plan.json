@@ -1,7 +1,7 @@
 {
  "_meta": {
   "written": "2026-09-03",
-  "n": 255,
+  "n": 287,
   "source": "lights/all.json",
   "brief": "BRIEF.md",
   "kinds": {
@@ -9,7 +9,8 @@
    "know": 34,
    "word": 106,
    "day": 21,
-   "verse": 64
+   "verse": 64,
+   "codex": 32
   },
   "built": "plan_build.py from the library; light and know cards are written by hand"
  },
@@ -4950,6 +4951,1830 @@
     "n": 12,
     "k": 5,
     "scene": "halo"
+   }
+  },
+  "codex-quran": {
+   "kind": "codex",
+   "src": "/quran",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Mushaf",
+    "d": "All 114 surahs, with recitation for every ayah"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Mushaf. All 114 surahs, with recitation for every ayah\nnoorcodex.com/quran\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 339,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-arabic": {
+   "kind": "codex",
+   "src": "/arabic",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Letters",
+    "d": "Learn to read the Arabic script, letter by letter"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Letters. Learn to read the Arabic script, letter by letter\nnoorcodex.com/arabic\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 299,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-words": {
+   "kind": "codex",
+   "src": "/words",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Words of the Path",
+    "d": "The du'as worth carrying, in Arabic and English"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Words of the Path. The du'as worth carrying, in Arabic and English\nnoorcodex.com/words\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 122,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-allah": {
+   "kind": "codex",
+   "src": "/allah",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Ninety-Nine Names",
+    "d": "His names, what He is not, and the three doors of tawhid"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Ninety-Nine Names. His names, what He is not, and the three doors of tawhid\nnoorcodex.com/allah\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 571,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-prophets": {
+   "kind": "codex",
+   "src": "/prophets",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The 25 Prophets",
+    "d": "Every prophet named in the Qur'an"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The 25 Prophets. Every prophet named in the Qur'an\nnoorcodex.com/prophets\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 358,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-muhammad": {
+   "kind": "codex",
+   "src": "/muhammad",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Seerah",
+    "d": "Twenty-three years, his character and his habits"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Seerah. Twenty-three years, his character and his habits\nnoorcodex.com/muhammad\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 649,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-theology": {
+   "kind": "codex",
+   "src": "/theology",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Theology",
+    "d": "The branches, and where they parted"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Theology. The branches, and where they parted\nnoorcodex.com/theology\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 512,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-unseen": {
+   "kind": "codex",
+   "src": "/unseen",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Unseen",
+    "d": "Angels, jinn, the barzakh, the signs of the Hour"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Unseen. Angels, jinn, the barzakh, the signs of the Hour\nnoorcodex.com/unseen\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 375,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-soul": {
+   "kind": "codex",
+   "src": "/soul",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Journey of the Soul",
+    "d": "What happens after the last breath"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Journey of the Soul. What happens after the last breath\nnoorcodex.com/soul\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 107,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-pillars": {
+   "kind": "codex",
+   "src": "/pillars",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Five Pillars",
+    "d": "Shahadah, salah, zakat, sawm, hajj"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Five Pillars. Shahadah, salah, zakat, sawm, hajj\nnoorcodex.com/pillars\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 970,
+    "n": 10,
+    "k": 4,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-begin": {
+   "kind": "codex",
+   "src": "/begin",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Begin",
+    "d": "For anyone new to Islam, from the first day"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Begin. For anyone new to Islam, from the first day\nnoorcodex.com/begin\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 547,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-ramadan": {
+   "kind": "codex",
+   "src": "/ramadan",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Ramadan",
+    "d": "The month, and the tools for it"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Ramadan. The month, and the tools for it\nnoorcodex.com/ramadan\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 377,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-hajj": {
+   "kind": "codex",
+   "src": "/hajj",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Hajj & Umrah",
+    "d": "The rites, step by step, with their evidence"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Hajj & Umrah. The rites, step by step, with their evidence\nnoorcodex.com/hajj\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 765,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-eid": {
+   "kind": "codex",
+   "src": "/eid",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Two Eids",
+    "d": "Fitr and Adha"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Two Eids. Fitr and Adha\nnoorcodex.com/eid\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 421,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-timeline": {
+   "kind": "codex",
+   "src": "/#timeline",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Path of Creation",
+    "d": "71 chapters, from Kun Fayakun to the Hour"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Path of Creation. 71 chapters, from Kun Fayakun to the Hour\nnoorcodex.com\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 525,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-companions": {
+   "kind": "codex",
+   "src": "/companions",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Companions",
+    "d": "The men and women who saw him ﷺ"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Companions. The men and women who saw him ﷺ\nnoorcodex.com/companions\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 541,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-heroes": {
+   "kind": "codex",
+   "src": "/heroes",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Heroes of Islam",
+    "d": "The people who carried it after them"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Heroes of Islam. The people who carried it after them\nnoorcodex.com/heroes\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 466,
+    "n": 10,
+    "k": 4,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-characters": {
+   "kind": "codex",
+   "src": "/characters",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Characters",
+    "d": "Everyone the Codex names"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Characters. Everyone the Codex names\nnoorcodex.com/characters\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 160,
+    "n": 10,
+    "k": 4,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-places": {
+   "kind": "codex",
+   "src": "/places",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Places",
+    "d": "The ground it happened on"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Places. The ground it happened on\nnoorcodex.com/places\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 408,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-sermon": {
+   "kind": "codex",
+   "src": "/sermon",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Last Sermon",
+    "d": "The final khutbah, line by line"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Last Sermon. The final khutbah, line by line\nnoorcodex.com/sermon\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 50,
+    "n": 10,
+    "k": 4,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-good-life": {
+   "kind": "codex",
+   "src": "/good-life",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "How to Live a Good Life",
+    "d": "Tayyiba: a good life, not an easy one"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: How to Live a Good Life. Tayyiba: a good life, not an easy one\nnoorcodex.com/good-life\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 741,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-three-lives": {
+   "kind": "codex",
+   "src": "/three-lives",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Three Lives",
+    "d": "Weigh your own against them"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Three Lives. Weigh your own against them\nnoorcodex.com/three-lives\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 661,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-family": {
+   "kind": "codex",
+   "src": "/family",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Family Room",
+    "d": "Children, parents, neighbours"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Family Room. Children, parents, neighbours\nnoorcodex.com/family\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 557,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-marriage": {
+   "kind": "codex",
+   "src": "/marriage",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Marriage & the Home",
+    "d": "From the proposal to the household"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Marriage & the Home. From the proposal to the household\nnoorcodex.com/marriage\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 502,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-health": {
+   "kind": "codex",
+   "src": "/health",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Prophetic Health",
+    "d": "The body, the plate, the fast, hijama"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Prophetic Health. The body, the plate, the fast, hijama\nnoorcodex.com/health\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 852,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-teens": {
+   "kind": "codex",
+   "src": "/teens",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "For Teenagers",
+    "d": "Written for them, not about them"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: For Teenagers. Written for them, not about them\nnoorcodex.com/teens\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 469,
+    "n": 16,
+    "k": 7,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-protection": {
+   "kind": "codex",
+   "src": "/protection",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Protection & the Light",
+    "d": "Sihr, ruqya, the evil eye, and the myths"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Protection & the Light. Sihr, ruqya, the evil eye, and the myths\nnoorcodex.com/protection\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 770,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-simulation": {
+   "kind": "codex",
+   "src": "/simulation",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "Are We in a Simulation?",
+    "d": "The modern question, answered from the text"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Are We in a Simulation?. The modern question, answered from the text\nnoorcodex.com/simulation\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 412,
+    "n": 10,
+    "k": 4,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-dictionary": {
+   "kind": "codex",
+   "src": "/dictionary",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Encyclopedia of the Path",
+    "d": "523 words this library uses, defined"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Encyclopedia of the Path. 523 words this library uses, defined\nnoorcodex.com/dictionary\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 973,
+    "n": 12,
+    "k": 5,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-madrasa": {
+   "kind": "codex",
+   "src": "/madrasa",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Classroom",
+    "d": "The whole curriculum, in order"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Classroom. The whole curriculum, in order\nnoorcodex.com/madrasa\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 476,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-kids": {
+   "kind": "codex",
+   "src": "/kids",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Kids' Codex",
+    "d": "The Greatest Game"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Kids' Codex. The Greatest Game\nnoorcodex.com/kids\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 344,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
+   }
+  },
+  "codex-stories": {
+   "kind": "codex",
+   "src": "/stories",
+   "slot": "evening",
+   "build": "build 2026.09",
+   "counts": [
+    [
+     523,
+     "words"
+    ],
+    [
+     114,
+     "surahs"
+    ],
+    [
+     350,
+     "lights"
+    ],
+    [
+     71,
+     "chapters"
+    ]
+   ],
+   "zeros": [
+    [
+     0,
+     "ads"
+    ],
+    [
+     0,
+     "accounts"
+    ],
+    [
+     0,
+     "tracking"
+    ]
+   ],
+   "room": {
+    "k": "today's room",
+    "t": "The Hall of Stories",
+    "d": "His names, told as stories"
+   },
+   "ask": {
+    "l1": "One light a day.",
+    "l2": "Follow. Save this. Send it to one person.",
+    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
+   },
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Hall of Stories. His names, told as stories\nnoorcodex.com/stories\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "look": {
+    "pal": "codex",
+    "seed": 954,
+    "n": 8,
+    "k": 3,
+    "scene": "codex",
+    "secs": 10
    }
   }
  }

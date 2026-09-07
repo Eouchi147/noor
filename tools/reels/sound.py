@@ -32,6 +32,13 @@ Nothing is sampled and nothing is licensed: it is all built here in numpy.
 """
 import os, re, subprocess, wave
 import numpy as np
+try:
+    import pedalboard as PB           # Spotify's audio engine: the mix's quality lives here
+except Exception:                     # pragma: no cover
+    PB = None
+    if os.environ.get("NOOR_NO_PEDALBOARD") != "1":
+        raise SystemExit("pedalboard is not installed: pip install -r requirements.txt "
+                         "(or set NOOR_NO_PEDALBOARD=1 to render the bare mix on purpose)")
 
 SR = 48000
 TARGET_LUFS = -18.0      # ambient sits below a music mix; Meta lifts the rest
@@ -145,8 +152,11 @@ def _sub(t, root, swells, floor=0.55):
     env = np.full_like(t, floor)
     for at, amt in swells:
         u = t - at
-        rise = _smooth(u / 0.32)
-        fall = np.exp(-np.maximum(0.0, u - 0.32) / 2.6)
+        # a big swell breathes in over a third of a second; a small one is an
+        # accent, in by 90 ms and gone in a second and a half
+        ra = 0.32 if amt >= 0.8 else 0.09
+        rise = _smooth(u / ra)
+        fall = np.exp(-np.maximum(0.0, u - ra) / (2.6 if amt >= 0.8 else 1.4))
         env += amt * rise * fall * (u >= 0)
     env = np.minimum(env, 1.6)
     f0 = root / 2.0
@@ -320,13 +330,32 @@ def _score_verse(info, secs):
         (tAyah + 0.10, SUS[0], 0.50, 9.0, 0.06), (tAyah + 0.16, SUS[3], 0.36, 9.0, 0.06),
         (tRef, SUS[4], 0.22, 6.0, 0.05),
         # after the voice: home, on the root, then the fifth above it
-        (r1 + 0.25, SUS[0], 0.56, 9.0, 0.06), (r1 + 0.30, SUS[3], 0.36, 8.0, 0.06),
+        (r1 + 0.90, SUS[0], 0.56, 9.0, 0.06), (r1 + 0.95, SUS[3], 0.36, 8.0, 0.06),
         (tClose + 0.2, SUS[2], 0.34, 8.0, 0.05), (tClose + 0.5, SUS[4], 0.18, 7.0, 0.05),
     ]
     return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
 
 
+def _score_codex(info, secs):
+    """a HUD in the key of the house: a low root on the head, a fifth on the
+    rule, a rising walk up the suspended set as the counters tick, the root
+    and the octave under the ask"""
+    tHead, tCount, tRoom, tAsk = (float(info["tHead"]), float(info["tCount"]),
+                                  float(info["tRoom"]), float(info["tAsk"]))
+    step = float(info.get("step") or 0.25); cells = int(info.get("cells") or 6)
+    plan = [(0.10, SUS[0], 0.22, 90.0, 1.2), (0.10, SUS[2], 0.16, 90.0, 1.8),
+            (0.02, SUS[0], 0.50, 6.0, 0.03), (tHead, SUS[2], 0.30, 5.0, 0.03),
+            (float(info["hookEnd"]), SUS[3], 0.26, 5.0, 0.03)]
+    walk = [SUS[0], SUS[2], SUS[3], SUS[4], SUS[5], SUS[6], SUS[3], SUS[2]]
+    for i in range(cells):
+        plan.append((tCount + i * step, walk[i % len(walk)], 0.30, 4.0, 0.02))
+    plan += [(tRoom, SUS[0], 0.46, 7.0, 0.04), (tRoom + 0.16, SUS[3], 0.30, 6.0, 0.05),
+             (tAsk, SUS[0], 0.52, 8.0, 0.04), (tAsk + 0.08, SUS[3], 0.40, 8.0, 0.04), (tAsk + 0.4, SUS[2], 0.24, 7.0, 0.05)]
+    return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
+
+
 def _score_for(kind, info, secs, lines):
+    if kind == "codex": return _score_codex(info, secs)
     if kind == "day": return _score_day(info, secs)
     if kind == "word": return _score_word(info, secs)
     if kind == "verse": return _score_verse(info, secs)
@@ -334,12 +363,18 @@ def _score_for(kind, info, secs, lines):
 
 
 def _swells_for(kind, info):
-    """where the sub swells: the moments the picture blooms"""
+    """where the sub swells: the moments the picture blooms. When the type
+    layer reports its scene (the hits it placed on the grid) those are the
+    swells, exactly; the lists below are the fallback for an older build."""
+    sc = info.get("scene") or {}
+    if sc.get("hits"):
+        big = set(round(float(x), 3) for x in (sc.get("blooms") or []))
+        return [(float(h), 1.0 if round(float(h), 3) in big else 0.45) for h in sc["hits"]]
     hookEnd, tClose = float(info["hookEnd"]), float(info["tClose"])
     if kind == "word":
         return [(0.0, 0.8), (float(info["tAr"]), 1.1), (float(info["tShort"]), 0.5), (tClose, 0.9)]
     if kind == "verse":
-        return [(0.0, 0.9), (float(info["tAyah"]), 0.8), (float(info["recEnd"]) + 0.25, 1.0), (tClose, 0.6)]
+        return [(0.0, 0.9), (float(info["tAyah"]), 0.8), (float(info["recEnd"]) + 0.9, 1.0), (tClose, 0.6)]
     if kind == "day":
         out = [(0.0, 0.8), (float(info["tDate"]), 1.0), (hookEnd - 0.3, 0.7), (tClose, 0.9)]
         if info.get("tTodo"): out.append((float(info["tTodo"]), 0.6))
@@ -387,7 +422,7 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
     dry = np.zeros(n, dtype=np.float32)
     for at, deg, amp, hold, atk in _score_for(kind, info, secs, lines):
         dry += _note(t, at, base * (2.0 ** (deg / 12.0)), amp, hold, atk)
-    dry *= 0.16 * duck
+    dry *= 0.19 * duck
 
     hall = _ir()
     wet_l = _conv(dry, hall)
@@ -431,17 +466,21 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
     air_r = low * g_low + mid * g_mid + hir * g_hi
 
     # ---- the weight: the sub, and the breath before the bloom -----------
-    sub = _sub(t, root, _swells_for(kind, info), floor=0.62) * 0.14 * (0.75 + 0.25 * lift)
+    sub = _sub(t, root, _swells_for(kind, info), floor=0.42) * 0.11 * (0.75 + 0.25 * lift)
     rise = np.zeros(n, dtype=np.float32)      # the first bloom has no run-up: it is t=0
-    if kind in ("word", "verse"):
-        at = float(info["tAr"]) if kind == "word" else float(info["tAyah"])
-        rise = _riser(t, at, 1.1, rng) * 0.055
-    if kind == "verse":
-        rise = rise + _riser(t, float(info["recEnd"]) + 0.25, 1.2, rng) * 0.04
-    else:
-        # a breath drawn before the way home, on every kind that has one
-        rise = rise + _riser(t, tClose, 1.4, rng) * 0.045
+    sc = info.get("scene") or {}
+    gridd = info.get("grid") or {}
+    bar = float(gridd.get("bar") or 0) or 1.3
+    blooms = [float(b) for b in (sc.get("blooms") or []) if float(b) > 0.9]
+    if not blooms:
+        blooms = [float(info["tAr"])] if kind == "word" else [float(info["tAyah"]), float(info["recEnd"]) + 0.9] if kind == "verse" else [tClose]
+    for i, at in enumerate(blooms):
+        # the breath is a bar long where a bar fits, and the last one, before
+        # the way home, is the longest
+        dur = min(bar, max(0.7, at - (blooms[i - 1] if i else 0.0) - 0.2))
+        rise += _riser(t, at, dur, rng) * (0.05 if i < len(blooms) - 1 else 0.06)
 
+    sub = _saturate_sub(sub)
     left = (notes_l + dl + sub + air_l + rise) * duck
     right = (notes_r + dr + sub + air_r + rise) * duck
 
@@ -450,12 +489,75 @@ def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
         vx, v0 = voice
         i0 = int(round(v0 * SR)); i1 = min(n, i0 + len(vx))
         v = np.zeros(n, dtype=np.float32); v[i0:i1] = vx[:i1 - i0]
+        v = _voice_chain(v)
         # a little of the same hall, so the voice is in the room the notes are in
         vw = _conv(v, hall) * 0.55
-        vl = v * 0.80 + vw * 0.28; vr = v * 0.80 + _conv(v, _ir(seed=ROOM_SEED + 1)) * 0.55 * 0.28
+        vl = v * 0.80 + vw * 0.22; vr = v * 0.80 + _conv(v, _ir(seed=ROOM_SEED + 1)) * 0.55 * 0.22
         left = left + vl
         right = right + vr
     return left * master, right * master
+
+
+# ---------------------------------------------------------------- the chains
+
+def _pb(chain, x, sr=SR):
+    """run a mono or stereo float32 array through a Pedalboard chain"""
+    if PB is None or not chain:
+        return x
+    board = PB.Pedalboard(chain)
+    if x.ndim == 1:
+        return board(x[None, :].astype(np.float32), sr)[0]
+    return board(x.astype(np.float32), sr)
+
+
+def _saturate_sub(sub):
+    """the weight, given harmonics: a phone speaker cannot play 31 Hz, but it
+    can play the second and third harmonic of a gently driven sine, and the
+    ear puts the fundamental back. Tape does this; so does this."""
+    if PB is None: return sub
+    peak = max(1e-9, float(np.abs(sub).max()))
+    # scaled so the resting level sits low on the curve and a swell climbs it:
+    # the drive adds harmonics without flattening the eleven decibels between
+    y = _pb([PB.Distortion(drive_db=7.0), PB.LowpassFilter(cutoff_frequency_hz=180.0)], sub / peak * 0.5)
+    return (y / max(1e-9, float(np.abs(y).max())) * peak).astype(np.float32)
+
+
+def _voice_chain(v):
+    """what a recitation gets and nothing more: the room taken out below
+    80 Hz, a gentle levelling so the quiet phrases carry on a phone, the
+    sibilance eased, and no colour of any kind"""
+    if PB is None: return v
+    return _pb([PB.HighpassFilter(cutoff_frequency_hz=80.0),
+                PB.Compressor(threshold_db=-20.0, ratio=2.4, attack_ms=8.0, release_ms=140.0),
+                PB.PeakFilter(cutoff_frequency_hz=6800.0, gain_db=-3.0, q=1.1),
+                PB.Gain(gain_db=3.0)], v).astype(np.float32)
+
+
+def _master(left, right):
+    """the whole mix, glued: a shelf for weight, a slow compressor that holds
+    the swells together, a little presence. The limiter comes last, after the
+    loudness is set, so it only ever catches peaks."""
+    if PB is None: return left, right
+    st = np.stack([left, right])
+    y = _pb([PB.LowShelfFilter(cutoff_frequency_hz=95.0, gain_db=1.5),
+             PB.Compressor(threshold_db=-12.0, ratio=1.5, attack_ms=25.0, release_ms=260.0),
+             PB.HighShelfFilter(cutoff_frequency_hz=6500.0, gain_db=1.0)], st)
+    return y[0].astype(np.float32), y[1].astype(np.float32)
+
+
+def _limit(left, right, ceiling_db=TRUE_PEAK_DB):
+    """a soft ceiling: below -6 dB of it nothing is touched, above it the
+    curve bends so no sample crosses the ceiling. Written by hand because a
+    library limiter adds make-up gain, and the loudness was set already."""
+    c = 10.0 ** (ceiling_db / 20.0)
+    knee = c * 0.5
+    def bend(x):
+        a = np.abs(x)
+        over = a > knee
+        y = a.copy()
+        y[over] = knee + (c - knee) * np.tanh((a[over] - knee) / (c - knee))
+        return (np.sign(x) * y).astype(np.float32)
+    return bend(left), bend(right)
 
 
 # ---------------------------------------------------------------- output
@@ -490,6 +592,7 @@ def bed(path, info, secs, seed, slot="morning", lines=3, target=None, kind="ligh
     """write one card's bed, trimmed to an exact loudness, and return its path"""
     if target is None: target = target_for(kind)
     left, right = build(info, secs, seed, slot, lines, kind=kind, voice=voice)
+    left, right = _master(left, right)
     peak = max(1e-9, float(max(np.abs(left).max(), np.abs(right).max())))
     head = 10.0 ** (-6.0 / 20.0) / peak
     _write(path, left, right, head)
@@ -497,8 +600,12 @@ def bed(path, info, secs, seed, slot="morning", lines=3, target=None, kind="ligh
     if got is None:
         got = NOMINAL_LUFS
     gain = head * 10.0 ** ((target - got) / 20.0)
-    gain = min(gain, 10.0 ** (TRUE_PEAK_DB / 20.0) / peak)
-    _write(path, left, right, gain)
+    # the limiter takes what the loudness asks for and keeps it under the ceiling
+    # up to 5 dB of peak may lean on the ceiling; more than that is a mix
+    # problem, and the gain is held rather than crushed
+    gain = min(gain, 10.0 ** ((TRUE_PEAK_DB + 5.0) / 20.0) / peak)
+    l2, r2 = _limit(left * gain, right * gain)
+    _write(path, l2, r2, 1.0)
     return path
 
 
