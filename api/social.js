@@ -593,11 +593,26 @@ async function postInstagram(post) {
   const id = process.env.IG_USER_ID, tok = igToken(), G = graphBase(tok);
   try {
     /* two steps: create a container from the public image URL, then publish it */
-    const c = await fetch(`${G}/${id}/media`, {
+    const makeContainer = () => fetch(`${G}/${id}/media`, {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ image_url: post.image, caption: post.caption, access_token: tok })
     });
-    const cj = await c.json().catch(() => ({}));
+    let c = await makeContainer();
+    let cj = await c.json().catch(() => ({}));
+    /* ONE MORE GO, IMMEDIATELY.
+
+       Instagram fetches the card itself, and the card is rendered on demand by
+       a function that may be cold. When that fetch is the thing that failed,
+       the second attempt three seconds later is nearly always the one that
+       works -- and the difference matters: the healer below would land this
+       post an hour late, and a post an hour late is not the same post. Only
+       the CREATE is retried. Publishing twice is not a thing to be casual
+       about; creating a container that was never made is harmless. */
+    if ((!c.ok || !cj.id) && healable({ ok: false, ...metaCode(cj) })) {
+      await sleep(3000);
+      c = await makeContainer();
+      cj = await c.json().catch(() => ({}));
+    }
     if (!c.ok || !cj.id)
       return { ok: false, error: metaErr(cj, "container http " + c.status), step: "container", ...metaCode(cj) };
     const p = await fetch(`${G}/${id}/media_publish`, {
@@ -752,7 +767,13 @@ export function slotState(results) {
   const live = Object.entries(results || {}).filter(([c]) => !CH.draftOnly.has(c));
   const anySent = live.some(([, r]) => r && r.ok);
   const anyPending = live.some(([, r]) => r && r.pending && !r.ok);
+  /* a channel that is not configured did not fail; it was never asked */
+  const anyFailed = live.some(([, r]) => r && !r.ok && !r.pending && !r.skipped);
   if (anyPending) return "pending";
+  /* One landed and one did not. This used to read "sent", which is how a post
+     that never reached Instagram sat in the console under a green word for a
+     week. It is not sent. It is half sent, and something has to come back. */
+  if (anySent && anyFailed) return "partial";
   return anySent ? "sent" : "failed";
 }
 
@@ -1129,7 +1150,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   for (const ch of chans) {
     const shaped = CH.shape(post, ch);
     if (CH.SPEC[ch].image === "required" && !shaped.image) {
-      results[ch] = { ok: false, error: "needs an image", err: "needs an image" }; continue; }
+      results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
     if (CH.SPEC[ch].image === "required" && imgWhy) {
       results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
     try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
@@ -1197,7 +1218,7 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
 
   const shaped = CH.shape(post, ch);
   if (CH.SPEC[ch].image === "required" && !shaped.image)
-    return { ...out, ok: false, error: "needs an image and has none" };
+    return { ...out, ok: false, fatal: true, error: "needs an image and has none" };
   if (CH.SPEC[ch].image === "required") {
     const img = await imageReachable(shaped.image);
     if (!img.ok) return { ...out, ok: false, pre: true, error: img.why };
@@ -1207,6 +1228,9 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   try { r = await sendOne(ch, shaped, { ...post, date }); }
   catch (e) { const m = String(e && e.message || e).slice(0, 160); r = { ok: false, error: m, err: m }; }
 
+  /* every attempt is stamped on the result, so the healer can be bounded and
+     can wait between tries instead of hammering a network that is down */
+  r = { ...r, tries: Number((had && had.tries) || 0) + 1, lastTry: out.at };
   const results = { ...((rec && rec.results) || {}), [ch]: r };
   const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
                  title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
@@ -1338,6 +1362,76 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
   return { ...out, ok: true };
 }
 
+/* ---------------------------------------------------------------------------
+   THE SAFETY NET
+
+   Reels got healed and nothing else did. finishPendingReels walks REEL_SLOTS
+   only, and the one thing that could retry an ordinary failed channel was a
+   button a human had to notice and press. So a card that Instagram refused at
+   noon stayed refused: the slot read "sent" because Facebook had taken it, a
+   slot that reads sent is never revisited, and the post simply never existed
+   on Instagram. That is the whole of "some posts don't fire on Instagram".
+
+   This closes it. Every hourly run walks yesterday and today, finds live
+   channels that failed, and sends that one channel again -- through the same
+   path the button uses, which refuses outright to touch a channel that already
+   succeeded, so a heal can never double-post.
+
+   Three rules keep it from becoming a nuisance:
+
+     it stops after four attempts, because a fifth is not going to work;
+     it waits longer between each, because a network having a bad minute needs
+       a minute, not four requests inside one;
+     it does not retry what a retry cannot fix. An expired token is not a bad
+       minute -- retrying it four times a day for a week writes noise into the
+       log and still does not post. Those are left alone and shown to a human,
+       which is what the diagnosis is for.
+--------------------------------------------------------------------------- */
+const HEAL_MAX_TRIES = Number(process.env.HEAL_MAX_TRIES || 4);
+/* minutes to wait before attempt 2, 3, 4. The cron is hourly, so the first of
+   these is really "the very next run" and the rest space out from there. */
+const HEAL_BACKOFF = [0, 15, 60, 180];
+
+export function healable(r) {
+  if (!r || r.ok || r.pending) return false;
+  if (r.skipped) return false;          /* never asked: not configured */
+  if (r.fatal) return false;            /* nothing to send, or nothing to send it with */
+  const hit = FAULTS.find(f => f.when(Number(r.code), Number(r.sub || 0)));
+  /* a token or a permission is a person's job, not a retry's */
+  if (hit && (hit.fix === "token" || hit.fix === "manual")) return false;
+  return true;
+}
+
+export function healDue(r, nowMs) {
+  const tries = Number(r.tries || 1);
+  if (tries >= HEAL_MAX_TRIES) return false;
+  const wait = (HEAL_BACKOFF[Math.min(tries, HEAL_BACKOFF.length - 1)] || 0) * 60000;
+  const last = Date.parse(r.lastTry || "") || 0;
+  if (!last) return true;
+  return (nowMs - last) >= wait;
+}
+
+export async function healFailures(host, date, out, now) {
+  const ran = (out && out.ran) || [];
+  const nowMs = now ? +new Date(now) : Date.now();
+  for (const d of [prevDate(date), date]) {
+    for (const id of SLOT_IDS) {
+      const rec = await readSlot(d, id);
+      if (!rec || !rec.results) continue;
+      if (rec.state === "queued") continue;     /* still waiting for a human */
+      for (const ch of liveChannels()) {
+        const r = rec.results[ch];
+        if (!healable(r) || !healDue(r, nowMs)) continue;
+        const res = await retryChannel(host, d, id, ch, {});
+        ran.push({ slot: id, date: d, where: ch, healed: true, ok: !!res.ok,
+                   state: res.state || "", tries: Number(r.tries || 1) + 1,
+                   error: res.ok ? "" : String(res.error || (res.result && res.result.error) || "") });
+      }
+    }
+  }
+  return ran;
+}
+
 export async function runDue(host, date, now, opts = {}) {
   const D = await dials();
   const out = { date, mode: D.mode, at: (now || new Date()).toISOString(), ran: [], skipped: "" };
@@ -1347,7 +1441,11 @@ export async function runDue(host, date, now, opts = {}) {
     if (!D.storeOk) { out.skipped = "the settings could not be read, so nothing was sent"; return out; }
   }
 
-  if (!opts.dry) await finishPendingReels(date, out);
+  if (!opts.dry) {
+    await finishPendingReels(date, out);
+    /* and then everything else that did not land, one channel at a time */
+    await healFailures(host, date, out, now);
+  }
 
   const plan = await planDay(date, opts);
   out.verified = plan.verified;
@@ -1362,8 +1460,11 @@ export async function runDue(host, date, now, opts = {}) {
   const sent = [];
   for (const id of plan.slots) {
     const r = await readSlot(date, id);
+    /* "partial" is settled as far as COMPOSING goes: the slot has been said,
+       and running it again would post a second time everywhere it landed. The
+       channel that refused is healed one channel at a time, by healFailures. */
     if (r && (r.state === "sent" || r.state === "skipped" ||
-              r.state === "queued" || r.state === "pending"))
+              r.state === "queued" || r.state === "pending" || r.state === "partial"))
       sent.push(id);
   }
 
