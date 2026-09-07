@@ -66,6 +66,10 @@
     {
       "source": "/pinterest/callback",
       "destination": "/api/social?action=pin-callback"
+    },
+    {
+      "source": "/youtube/callback",
+      "destination": "/api/youtube?action=callback"
     }
   ]
 }

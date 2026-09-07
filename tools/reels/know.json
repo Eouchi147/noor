@@ -1,0 +1,416 @@
+{
+ "_meta": {
+  "note": "Did you know? cards, written by hand from lights/all.json under BRIEF.md: one claim, one sentence of evidence, a dateline. Every fact is in the source card; copy_audit.py proves it.",
+  "kind": "know"
+ },
+ "cards": {
+  "know-camera-obscura": {
+   "src": "camera-obscura-dark-room",
+   "eyebrow": "Did you know?",
+   "hook": "The camera is named after an Arabic dark room",
+   "key": "Arabic dark room",
+   "date": "Ibn al-Haytham · Cairo, early eleventh century",
+   "lines": [
+    "He set several lamps outside a small hole and showed their images stayed separate on the wall: light travels in straight lines."
+   ],
+   "caption": "His term was the dark room. Kepler put that into Latin in 1604 as camera obscura, and the word stayed on every camera since. The experiment, several lamps outside one aperture, is what turned a curiosity noticed since antiquity into a proof about how light travels.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Science #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-sine": {
+   "src": "sine-mistranslation",
+   "eyebrow": "Did you know?",
+   "hook": "The word sine is a translation mistake",
+   "key": "translation mistake",
+   "date": "India to Baghdad to Toledo · one word's route",
+   "lines": [
+    "The Indian jya became jiba in Arabic, was misread as jayb, a fold, and a Latin translator in twelfth century Spain wrote sinus."
+   ],
+   "caption": "Indian astronomers called the half chord jya. Carried into Arabic by sound as jiba, which means nothing, it was written without vowels and read as jayb, a real word for a fold. The Latin translator rendered the meaning he found, sinus, and English shortened it to sine. The function is Indian; the name is an accident.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #Arabic #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-ghubar": {
+   "src": "ghubar-numerals-route",
+   "eyebrow": "Did you know?",
+   "hook": "Your digits came to Europe through the Maghrib and Spain",
+   "key": "the Maghrib and Spain",
+   "date": "Maghrib to Europe · tenth to thirteenth c.",
+   "lines": [
+    "Fibonacci learned them as a boy at Bugia on the coast of what is now Algeria, where his father was a customs official."
+   ],
+   "caption": "The numerals reached the Arabic speaking world from India, and split into two families of shapes. The western set, called ghubar or dust figures after the boards they were written on, is the one Europe learned: Gerbert of Aurillac met them in Catalonia in the tenth century, and Fibonacci learned them properly in Bugia.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-cipher": {
+   "src": "sifr-zero-cipher",
+   "eyebrow": "Did you know?",
+   "hook": "Zero and cipher are one Arabic word borrowed twice",
+   "key": "one Arabic word",
+   "date": "Sanskrit to Arabic to Latin · one word's route",
+   "lines": [
+    "Arabic sifr, meaning empty, was written into Latin two ways: zephirum became zero, and cifra became cipher."
+   ],
+   "caption": "The Indian mathematicians called the empty column shunya, the void. Arabic translators rendered it sifr, empty. Latin wrote that down twice, as zephirum and cifra: the first became zero, the second became cipher, which meant zero, then any digit, then a secret code. A cipher is a zero, and a zero is an emptiness, carried west in Arabic.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Mathematics #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-star-names": {
+   "src": "arabic-star-names",
+   "eyebrow": "Did you know?",
+   "hook": "Look up on a clear night and you are mostly reading Arabic",
+   "key": "reading Arabic",
+   "date": "Star names in English · from Arabic star lists",
+   "lines": [
+    "Altair is the flying eagle, Vega the swooping one, Aldebaran the follower, Deneb a tail, Rigel a foot, Algol the ghoul."
+   ],
+   "caption": "Altair and Vega are two birds on opposite banks of the Milky Way. Aldebaran follows the Pleiades. Betelgeuse is usually explained as a copyist's misreading of the Arabic for the hand of the Jawza. When the International Astronomical Union began fixing official spellings in 2016, a large share of the list was Arabic.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Astronomy #Arabic #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-damascus-steel": {
+   "src": "damascus-steel-wootz-analysis",
+   "eyebrow": "Did you know?",
+   "hook": "A Damascus sabre was dissolved in acid and held nanotubes",
+   "key": "held nanotubes",
+   "date": "Wootz steel · India to Damascus, analysed 2006",
+   "lines": [
+    "In 2006 a group at Dresden dissolved a fragment of a seventeenth century sabre and reported carbon nanotubes, published in Nature."
+   ],
+   "caption": "The watered blades were forged at Damascus and Isfahan, but the steel arrived as cakes of crucible metal from southern India and Sri Lanka, the material English writers called wootz. The pattern comes from bands of carbide. The technique lapsed in the eighteenth century, most likely when a particular ore stopped coming through the trade. The smiths knew which ore, which heat, and how slowly to let it cool.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Science #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-catgut": {
+   "src": "al-zahrawi-catgut-and-clips",
+   "eyebrow": "Did you know?",
+   "hook": "A surgeon in Cordoba closed wounds with the jaws of ants",
+   "key": "the jaws of ants",
+   "date": "Al-Zahrawi · Kitab al-Tasrif, c. 1000 CE",
+   "lines": [
+    "He used the mandibles of large ants as clips to hold the edges of a torn intestine, and thread the body absorbs inside it."
+   ],
+   "caption": "Animal gut had been used as thread before him. What al-Zahrawi set down was its use inside the body, where the thread is absorbed and nothing has to be taken out again. He also described a family whose boys bled to death from small cuts, often read as the earliest clinical account of an inherited bleeding disorder. His warning was blunt: anyone who cuts without knowing anatomy will kill the patient.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-canon": {
+   "src": "ibn-sina-canon-textbook",
+   "eyebrow": "Did you know?",
+   "hook": "One medical textbook was taught in Europe for six centuries",
+   "key": "six centuries",
+   "date": "Ibn Sina · Canon of Medicine, c. 1025",
+   "lines": [
+    "Translated at Toledo in the twelfth century, printed in Latin in the 1470s, and still set reading in medical faculties in the sixteenth."
+   ],
+   "caption": "The Canon is five books: principles, some eight hundred simple drugs, diseases organ by organ, diseases of the whole body, and a formulary. Its success was organisation: a physician could find the passage he needed, which made it teachable. That was also the trouble with it. A book good enough to be the syllabus is a book people stop testing, and physicians from Ibn al-Nafis onward had to argue against it.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-licence": {
+   "src": "physician-examination-baghdad-931",
+   "eyebrow": "Did you know?",
+   "hook": "Baghdad examined its doctors after one patient died",
+   "key": "one patient died",
+   "date": "Baghdad · 931 CE, reported by Ibn abi Usaybi'a",
+   "lines": [
+    "The caliph ordered that nobody practise until examined; Sinan ibn Thabit tested the city and passed more than eight hundred and sixty."
+   ],
+   "caption": "In 931 a man in Baghdad died through a practitioner's mistake, and al-Muqtadir ordered the examinations. Those who failed were barred, with exemptions for physicians of established reputation. Sinan also arranged for doctors to visit prisons and sent staffed dispensaries out to the villages. The account is a later one and the round number is a round number, but the principle is clear: a licence to practise, granted by examination.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-free-hospital": {
+   "src": "bimaristan-endowment-funding",
+   "eyebrow": "Did you know?",
+   "hook": "Treatment in a medieval Muslim hospital was free",
+   "key": "was free",
+   "date": "Bimaristans · Baghdad c. 981, Damascus 1154",
+   "lines": [
+    "A donor signed over shops, farms or a bathhouse, and the rent paid the staff and the drugs from then on: the endowment said so."
+   ],
+   "caption": "The bimaristan, from a Persian word meaning place of the sick, was funded by waqf, a permanent endowment. The Adudi hospital in Baghdad opened around 981 and Nur al-Din's in Damascus in 1154, with wards divided by complaint, including for mental illness, salaried physicians, surgeons, pharmacists, a kitchen and a library. The system depended on wealthy people wanting a charity that outlived them.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-quarantine": {
+   "src": "plague-of-amwas-quarantine",
+   "eyebrow": "Did you know?",
+   "hook": "Umar turned an army around at the edge of a plague",
+   "key": "edge of a plague",
+   "date": "Plague of Amwas · Syria, 638 CE",
+   "lines": [
+    "The Prophet ﷺ had said not to enter a land where plague has broken out, and not to leave it if you are already there."
+   ],
+   "caption": "In 638 plague broke out at Amwas in Syria. Umar ibn al-Khattab, travelling towards Syria, halted at Sargh on the border and ordered the return. Asked whether he was fleeing the decree of Allah, he answered that he was fleeing from the decree of Allah to the decree of Allah. The rule cuts both ways, and Muslim authorities cited it again in 2020.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Umar #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-earth-radius": {
+   "src": "al-biruni-earth-radius",
+   "eyebrow": "Did you know?",
+   "hook": "One hill in the Punjab was enough to measure the earth",
+   "key": "measure the earth",
+   "date": "Al-Biruni · Nandana fort, c. 1018 CE",
+   "lines": [
+    "He measured the hill's height from the plain, climbed it, measured how far the horizon dropped, and got a radius of about 6,340 kilometres."
+   ],
+   "caption": "His answer is within a fraction of a per cent of the modern figure. He liked the method because it needed one person and one instrument, where the caliph al-Ma'mun's astronomers had needed survey parties pacing across a plain. Historians note that his instrument could not really support that much accuracy, so part of the agreement is luck.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-rainbow": {
+   "src": "al-farisi-glass-raindrop",
+   "eyebrow": "Did you know?",
+   "hook": "He built a glass raindrop to explain the rainbow",
+   "key": "glass raindrop",
+   "date": "Kamal al-Din al-Farisi · Tabriz, c. 1309",
+   "lines": [
+    "A glass sphere filled with water, in a darkened room, showed the main bow comes from two refractions and one reflection in each drop."
+   ],
+   "caption": "He was working through Ibn al-Haytham's Optics and reached the rainbow. Rather than argue about it he built a model. The fainter outer bow, he found, comes from an extra reflection, which is also why its colours run the other way. At almost the same time Theodoric of Freiberg in Germany reached the same conclusion by the same kind of experiment; there is no sign either knew of the other.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #Optics #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-columbus": {
+   "src": "al-farghani-mile-columbus",
+   "eyebrow": "Did you know?",
+   "hook": "Columbus sailed on a number he had converted wrongly",
+   "key": "converted wrongly",
+   "date": "Al-Farghani · Baghdad, c. 833 CE",
+   "lines": [
+    "The textbook gave fifty six and two thirds miles to a degree in Arabic miles; Columbus used the shorter mile and shrank the earth."
+   ],
+   "caption": "Al-Farghani's introduction to astronomy, thirty short chapters with almost no mathematics, was the standard textbook for seven hundred years and where Dante took his figures for the size of the heavens. It carried al-Ma'mun's measurement of the earth. Read with the wrong mile, it put Asia correspondingly nearer. How much was error and how much was wishful thinking is still argued.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Astronomy #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-paper-arithmetic": {
+   "src": "al-uqlidisi-paper-arithmetic",
+   "eyebrow": "Did you know?",
+   "hook": "The decimal point first appears in Damascus in 952",
+   "key": "Damascus in 952",
+   "date": "Al-Uqlidisi · Damascus, 952 CE",
+   "lines": [
+    "He used a mark to separate a whole number from the fraction following it, the earliest known use of a decimal fraction."
+   ],
+   "caption": "Reckoning was then done on a board spread with fine dust, where each step was wiped out as the next was written. Al-Uqlidisi argued for ink and paper instead, partly because on paper the working stays where you can check it. Al-Kashi set decimal fractions out systematically in 1427, and Simon Stevin made them ordinary in Europe in 1585.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-nineteen": {
+   "src": "al-samawal-nineteen",
+   "eyebrow": "Did you know?",
+   "hook": "He wrote his algebra book at nineteen",
+   "key": "at nineteen",
+   "date": "Al-Samawal al-Maghribi · Baghdad, c. 1130-1180",
+   "lines": [
+    "In al-Bahir he divided one polynomial by another in a table, and recorded that any quantity raised to the power zero is one."
+   ],
+   "caption": "Born in Baghdad to a Jewish family from Morocco, he worked through the mathematics available in the city and found by his late teens that he had exhausted it. He used repeated division to carry a quotient to as many places as he wanted, coming close to the idea of an unending decimal. He became a Muslim in 1163 and wrote his own account of why.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #IslamicHistory #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-sanaa": {
+   "src": "sanaa-attic-1972",
+   "eyebrow": "Did you know?",
+   "hook": "A mosque roof in Yemen hid the Qur'an's earliest pages",
+   "key": "earliest pages",
+   "date": "Great Mosque of Sana'a, Yemen · 1972",
+   "lines": [
+    "Workers repairing the roof in 1972 found the space above the ceiling packed with old parchment: some of the earliest manuscripts known."
+   ],
+   "caption": "The material was swept into sacks and left on a staircase. A conservation project ran from 1980 to 1989, with the conservator Ursula Dreibholz sorting and flattening fragments, and recovered tens of thousands of pieces from what had served as the mosque's store for worn out copies of scripture, which are set aside rather than destroyed. Kept safe by being walled up and forgotten.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-birmingham": {
+   "src": "birmingham-leaves-paris-codex",
+   "eyebrow": "Did you know?",
+   "hook": "Two leaves in Birmingham belong to a book kept in Paris",
+   "key": "a book kept in Paris",
+   "date": "Mingana 1572a and BnF Arabe 328(c)",
+   "lines": [
+    "Radiocarbon dated in 2015 to between 568 and 645 CE, they were bound by mistake into another manuscript; sixteen more leaves are in Paris."
+   ],
+   "caption": "Alba Fedeli identified the two leaves during doctoral work, and François Déroche of the Collège de France confirmed that they belong with the sixteen in the Bibliothèque nationale de France, catalogued as Arabe 328(c). One codex, eighteen surviving leaves, split between two European cities and reunited on paper. The Birmingham pages carry part of Surah al-Kahf, the closing verses of Surah Maryam, and the opening forty verses of Surah Ta-Ha.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-cairo-1924": {
+   "src": "cairo-1924-edition",
+   "eyebrow": "Did you know?",
+   "hook": "The Qur'an most people read was typeset over seventeen years",
+   "key": "seventeen years",
+   "date": "Cairo · begun 1907, published July 1924",
+   "lines": [
+    "A committee of al-Azhar scholars began in 1907; the edition appeared in July 1924, and almost every Qur'an published since follows it."
+   ],
+   "caption": "The Egyptian government wanted a reliable printed Qur'an for state schools, where the copies in use were full of errors. The edition follows the reading of Hafs from Asim, uses the Kufan way of dividing and numbering the verses, and fixes the pause marks and the spelling. It was not a new text. It was a decision about which inherited conventions to print, and Sunni and Shia publishers alike follow it.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-maryam": {
+   "src": "surah-maryam-only-woman",
+   "eyebrow": "Did you know?",
+   "hook": "Only one woman is named in the Qur'an",
+   "key": "one woman",
+   "date": "Surah Maryam, chapter 19",
+   "lines": [
+    "Every other woman appears by relation: the wife of Imran, the wife of Fir'awn, the queen who came to Sulayman. Maryam is named directly."
+   ],
+   "caption": "Chapter 19 carries her name, and gives her the longest continuous account of any woman in the book: her withdrawal to a distant place, the palm tree, and her return to her people carrying the child. She is also the one person told she has been chosen above the women of the worlds.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #Maryam #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-basmala-114": {
+   "src": "basmala-appears-114-times",
+   "eyebrow": "Did you know?",
+   "hook": "The opening formula appears exactly 114 times",
+   "key": "exactly 114 times",
+   "date": "Surah al-Naml, verse 30",
+   "lines": [
+    "It heads 113 chapters, and occurs once more inside the text, quoted from a letter: the total is 114, the number of chapters."
+   ],
+   "caption": "Every chapter opens with the basmala except chapter 9, Surah al-Tawba. The one occurrence that is not a heading is in Surah al-Naml, where the queen of Saba reads out the letter that has reached her from Sulayman and quotes its opening. A quotation from a letter between two heads of state brings the count to the number of chapters.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #Basmala #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-kursi": {
+   "src": "ayat-al-kursi-greatest-verse",
+   "eyebrow": "Did you know?",
+   "hook": "The greatest verse is one sentence made of negations",
+   "key": "made of negations",
+   "date": "Ubayy ibn Ka'b · al-Baqarah, verse 255",
+   "lines": [
+    "No god but Him, no drowsiness takes Him and no sleep, no intercession without His permission, no fatigue in holding the heavens."
+   ],
+   "caption": "The Prophet ﷺ asked Ubayy ibn Ka'b which verse of the book of Allah was the greatest, and Ubayy answered with the verse of the Throne. The Prophet ﷺ struck him on the chest and told him that knowledge should be pleasant for him. The verse sits in the middle of the longest chapter, surrounded by rules about debt, warfare, marriage and charity.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #AyatAlKursi #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-rahma": {
+   "src": "rahma-and-the-womb",
+   "eyebrow": "Did you know?",
+   "hook": "Mercy and the womb come from the same three letters",
+   "key": "same three letters",
+   "date": "Root r h m, mercy and the womb",
+   "lines": [
+    "The root r h m gives rahma, mercy, and rahim, the womb, and the two names of God that open every chapter of the Qur'an."
+   ],
+   "caption": "It also gives the ordinary Arabic word for kinship, since relatives are the people connected through a womb. The Prophet ﷺ reported Allah saying that He is al-Rahman, that He created the rahim and derived its name from His own name, and that whoever keeps it joined He will keep joined. The formula recited before every reading rests on the same three letters as the organ that carried the reader.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Mercy #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-salam": {
+   "src": "islam-and-salam",
+   "eyebrow": "Did you know?",
+   "hook": "The greeting is the religion's own name, conjugated",
+   "key": "religion's own name",
+   "date": "Root s l m, wholeness and peace",
+   "lines": [
+    "From one root come salam, peace, the greeting between Muslims, salim, sound and unbroken, and islam itself, handing something over whole."
+   ],
+   "caption": "The root s l m carries wholeness, soundness, being intact. Al-Salam is one of the names of God listed at the end of Surah al-Hashr. A Muslim is one who gives himself over, and the word for what he gives and the word for the state he is meant to reach are built from one skeleton.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Peace #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-sabr": {
+   "src": "sabr-is-restraint",
+   "eyebrow": "Did you know?",
+   "hook": "Patience in Arabic is a word about restraint",
+   "key": "about restraint",
+   "date": "Root s b r, to bind and restrain",
+   "lines": [
+    "The root means to bind, to hold something in place: the tongue off complaint, the body at its task, the hand from retaliation."
+   ],
+   "caption": "Sabr is usually translated as patience, which suggests sitting still and letting time pass. The same root names a bitter plant and supplies the verb for holding a person to a commitment. The Qur'an says the patient will be given their reward without reckoning. The word describes somebody doing something difficult, not somebody waiting for it to be over.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Sabr #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-windmills": {
+   "src": "sistan-windmills",
+   "eyebrow": "Did you know?",
+   "hook": "The oldest windmills stood on a plain of constant wind",
+   "key": "constant wind",
+   "date": "Sistan and Nashtifan · from the 9th century",
+   "lines": [
+    "In Sistan a wind blows from the north for about a hundred and twenty days each summer, and the mills there turn on a vertical shaft."
+   ],
+   "caption": "Arabic geographers of the ninth and tenth centuries describe the windmills of the region as a known feature. Mills of the same design at Nashtifan in eastern Iran are still standing and were still grinding within living memory. European windmills, which appear in the records of the 1180s, turn on a horizontal shaft and are a different machine, so most historians treat them as a separate development.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Engineering #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-qanat": {
+   "src": "qanat-underground-water",
+   "eyebrow": "Did you know?",
+   "hook": "Madrid drank from Persian water tunnels for centuries",
+   "key": "Persian water tunnels",
+   "date": "Qanats · Iran and westward, from c. 500 BCE",
+   "lines": [
+    "A qanat is driven gently downhill from groundwater out to the fields, so water arrives by gravity and does not evaporate."
+   ],
+   "caption": "The technique is Iranian and pre-Islamic, at least two and a half thousand years old, and the one at Gonabad is still delivering water. Under Muslim rule it spread east and west and took local names: falaj in Oman, foggara in Algeria, khettara in Morocco, karez further east. Madrid drank from galleries of this kind into the nineteenth century. Around the year 1000 the mathematician al-Karaji wrote a book on finding hidden water and building these tunnels.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Engineering #Water #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-book-flap": {
+   "src": "islamic-bookbinding-flap",
+   "eyebrow": "Did you know?",
+   "hook": "The flap on an old book cover is structural, not decoration",
+   "key": "structural, not decoration",
+   "date": "Islamic bookbinding · from the 9th century",
+   "lines": [
+    "It crosses the fore edge and tucks under the front, closing the book against dust and holding the text block square."
+   ],
+   "caption": "The Islamic book got a binding of its own: pasteboard boards, so the book is light, and sewing without cords, which leaves the back flat. Books were shelved flat, so titles were written on the fore edge rather than the spine. Historians of binding trace European gold tooling back to these workshops, reaching Italy by way of Venice and Naples.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Books #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-textiles": {
+   "src": "textile-words-and-dyes",
+   "eyebrow": "Did you know?",
+   "hook": "Muslin, damask and mohair are place names or Arabic words",
+   "key": "place names or Arabic words",
+   "date": "Tiraz workshops and the cloth trade",
+   "lines": [
+    "Muslin is named for Mosul, damask for Damascus; mohair is mukhayyar, meaning choice; cotton is qutn; crimson comes through qirmiz."
+   ],
+   "caption": "Textiles were the largest manufacturing industry of the medieval Muslim world, and the trade left its vocabulary in European languages. Some favourites are guesswork: gauze from Gaza and satin from the Arabic name for the Chinese port of Quanzhou are marked uncertain in the dictionaries. State workshops wove bands of inscription, tiraz, into robes, naming the ruler and the year.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-perfume": {
+   "src": "al-kindi-perfume-recipes",
+   "eyebrow": "Did you know?",
+   "hook": "A philosopher wrote a hundred recipes for perfume",
+   "key": "recipes for perfume",
+   "date": "Al-Kindi · Baghdad, 9th century",
+   "lines": [
+    "The Book of the Chemistry of Perfume and Distillations holds more than a hundred recipes, with cheaper substitutes for the poor."
+   ],
+   "caption": "Al-Kindi, the first of the major philosophers to write in Arabic, treated smell as a manufacturing problem with quantities in it. The book survives in a single manuscript in Istanbul, edited and translated into German by Karl Garbers in 1948. In another work on compound drugs he tried to put numbers to how the strengths of ingredients add up, one of the first attempts to make pharmacy arithmetic rather than judgement.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-frequency": {
+   "src": "frequency-analysis-from-dictionaries",
+   "eyebrow": "Did you know?",
+   "hook": "Code breaking came out of Arabic dictionary work",
+   "key": "Arabic dictionary work",
+   "date": "Al-Khalil to Ibn al-Durayhim · 8th to 14th c.",
+   "lines": [
+    "Al-Kindi's ninth century method: take a long ordinary text, count each letter, count the cipher's symbols, and match them in order."
+   ],
+   "caption": "Counting letters was a habit of Arabic linguistics before it was a weapon. Al-Khalil ibn Ahmad, who died around 786, built the first Arabic dictionary by working through the permutations of the roots. The tradition ran on for centuries into the Ottoman chancery manuals. Al-Kindi's own treatise was thought lost until a copy turned up in an Istanbul archive in 1987.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-ibn-battuta": {
+   "src": "ibn-battuta-dictated-book",
+   "eyebrow": "Did you know?",
+   "hook": "Ibn Battuta did not write the book that carries his name",
+   "key": "did not write",
+   "date": "Dictated to Ibn Juzayy · Fez, 1355",
+   "lines": [
+    "In 1355 at Fez he dictated three decades of travel to a young scholar, Ibn Juzayy, who said openly he had polished the language."
+   ],
+   "caption": "Ibn Juzayy also lifted long passages describing Damascus and Makkah straight out of Ibn Jubayr, writing a century and a half earlier, which was ordinary practice then. Nothing in Ibn Battuta's own hand survives. It remains the fullest description of the fourteenth century Muslim world anybody left, and it has to be read knowing how it was made.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Travel #History #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-muqaddimah": {
+   "src": "muqaddimah-new-science",
+   "eyebrow": "Did you know?",
+   "hook": "A tax idea from 1377 shaped American argument in the 1980s",
+   "key": "shaped American argument",
+   "date": "Ibn Khaldun · Muqaddimah, 1377",
+   "lines": [
+    "He argued that a state's revenue is largest when its tax rates are low and shrinks as they rise; Arthur Laffer credited him for it."
+   ],
+   "caption": "The Muqaddimah is only the introduction to Ibn Khaldun's history, and it is the part still read. In it he announces a subject nobody had named, the science of human social organisation. He explains prices by supply and by the labour inside a good, and tests old chronicles against what an economy could actually feed. The book was translated into English by Franz Rosenthal in 1958.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #History #Economics #NoorCodexOfLight",
+   "kind": "know"
+  },
+  "know-ibn-muqla": {
+   "src": "ibn-muqla-proportioned-hand",
+   "eyebrow": "Did you know?",
+   "hook": "He measured letters in dots and lost his writing hand",
+   "key": "lost his writing hand",
+   "date": "Ibn Muqla · Baghdad, c. 885 to 940 CE",
+   "lines": [
+    "The dot of the reed pen became the unit: the alif a set number of dots tall, a circle of that alif governing every other letter."
+   ],
+   "caption": "Ibn Muqla served three times as vizier to the Abbasid caliphs and is credited with putting Arabic calligraphy on a geometric footing, the proportioned hand. Politics ended badly for him: he was imprisoned, his right hand was cut off, and he died in prison in July 940. His system was still being taught five hundred years later.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Calligraphy #History #NoorCodexOfLight",
+   "kind": "know"
+  }
+ }
+}

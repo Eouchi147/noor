@@ -99,6 +99,18 @@ Under all of it, quietly, a drone at the root four octaves down with its octave
 split 4.5 Hz between the ears -- theta binaural on headphones, a slow breathing
 when a phone speaker sums the two -- and a little air.
 
+Under those, the sub: the root two octaves down with its second harmonic
+beside it, so a phone that cannot play 31 Hz still hears the weight. It swells
+on the moments the picture blooms, and a breath of filtered noise is drawn in
+before the word lands and before the way home. Each kind has its own score
+(`_score_for` in `sound.py`): The word's one big chord as the Arabic lands,
+This day's root under the numeral and a bright fifth under what to do. In One
+verse the bed steps down to the sub and the air while the recitation sounds
+and the notes speak only before and after it; the voice is high passed at
+80 Hz, trimmed of its silence, and given a little of the same hall, so it
+stands in the room the notes are in. A verse reel is levelled to -16 LUFS,
+speech's level; the rest stay at -18.
+
 The notes are pitched four octaves above the drone on purpose. A phone speaker
 rolls off hard below about 400 Hz; the body is there for headphones, but what
 carries the reel on a handset is the notes.
@@ -136,6 +148,46 @@ read on a phone. If no hook size can house a 36px body, the hook gives way
 first. The measurement that decides is taken with the timeline in place and
 everything at rest: measuring the column mid build reported it eighty pixels
 shorter than the one that actually renders, and cost a card that overran.
+
+## The five kinds
+
+One plan, five kinds of card, one opening they all share: the bloom, the
+streak of light, the mark drawing itself. Then each goes its own way.
+
+| kind    | what it is                                              | length   | the words come from                 |
+|---------|---------------------------------------------------------|----------|-------------------------------------|
+| `light` | the day's card: a claim, a dateline, three sentences    | 20 s     | `plan.json`, written by hand        |
+| `know`  | Did you know?: the claim, one sentence of evidence      | 13 s     | `know.json`, written by hand        |
+| `day`   | This day: the numeral of the Hijri date, the day's name | 13 s     | `calendar.json` from `api/_calendar.js` |
+| `word`  | The word: the Arabic itself, centred, then its meaning  | 14 s     | `build/dict-*.json`, verbatim       |
+| `verse` | One verse: the Arabic in the Quran cut, the meaning by sentence under the recitation | the voice decides | `quran-uthmani.json` (Tanzil), `verses.json` (Saheeh International), everyayah.com |
+
+`plan_build.py` writes `plan.json` from those sources and keeps the hand
+written cards exactly as they are, so running it again changes nothing that
+was reviewed. `copy_audit.py` knows every kind: a word's `short` must be the
+dictionary's own, a day's lines must be in the calendar's text, a Did you
+know's numbers and names must be in its Light card.
+
+The two centred kinds get their own picture: The word stands on a mandala
+that draws itself and turns, with a disc of light behind the word that
+brightens as it lands; One verse stands in a halo of rings that breathe
+with the reciter's voice, because the renderer measures the recording's
+envelope and hands it to the picture, so the two can never drift apart.
+This day carries a ring of twelve marks with this month's lit and a
+crescent inside it. All three have light rays turning slowly behind them.
+
+One verse is built around its recording. `verses.py` holds a roster of
+twenty reciters from everyayah.com, each named on screen and in the caption.
+A different one is chosen for each verse in turn; the slow mujawwad readings
+are offered only to short verses, the murattal readings to anything longer,
+and a reading that still runs past forty six seconds gives way to the next.
+The reel's length follows from the voice: 2.6 s in, the recitation, 1.35 s,
+then three seconds of the way home.
+
+The rota in `api/_schedule.js` gives the two daily slots to the kinds by
+weekday, mornings `verse verse know verse word verse know` from Sunday and
+evenings `word word light know light word light`, and a This day reel takes
+the morning of its own Hijri date. `node tests/reels-kinds.mjs` holds it.
 
 ## How one gets posted
 
@@ -176,7 +228,10 @@ as a photo.
 2. Write its script against `BRIEF.md`. Nothing may be invented: every number
    and every capitalised name has to be findable in that card's own text,
    because a reel is screenshotted and argued with far more often than a page.
-3. Add it to `plan.json` with a `look`.
+3. Add it to `plan.json` with a `look` (a Did you know? goes in `know.json`
+   with one line; a word, a day or a verse is not written at all: put the word
+   in `plan_build.py`'s list, the verse in `verses.txt`, and the day is
+   already in the calendar).
 4. `python3 copy_audit.py plan.json` and `python3 webreel.py --audit <id>`.
 5. Push. The `reels` workflow renders what is missing and opens a pull request
    with the videos.

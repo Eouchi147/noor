@@ -3,8 +3,13 @@
 <style>
 @font-face{font-family:NoorB;src:url(noor-card-bold.ttf) format("truetype");font-weight:700;font-display:block}
 @font-face{font-family:NoorR;src:url(noor-card-regular.ttf) format("truetype");font-weight:400;font-display:block}
+/* Amiri, by Khaled Hosny, SIL Open Font License (amiri-OFL.txt): the Arabic
+   the site sets its dictionary in, and the Quran cut it sets the Mushaf in */
+@font-face{font-family:Amiri;src:url(amiri-regular.ttf) format("truetype");font-weight:400;font-display:block}
+@font-face{font-family:Amiri;src:url(amiri-bold.ttf) format("truetype");font-weight:700;font-display:block}
+@font-face{font-family:AmiriQuran;src:url(amiri-quran.ttf) format("truetype");font-weight:400;font-display:block}
 :root{
-  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6;
+  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6; --parch:#F3E7BE;
   --safeT:270px; --safeB:1500px; --safeL:87px; --safeR:950px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -21,11 +26,9 @@ body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
   background:linear-gradient(90deg,rgba(233,200,106,0),rgba(255,249,227,.95),rgba(233,200,106,0));
   filter:blur(1px)}
 
-/* the column is inset from the safe rectangle by the distance a word's blur
-   and scale can travel while it is arriving, so even mid animation no ink
-   leaves the area the platforms keep clear */
-/* flow-root so the children's margins are measured inside the column
-   rather than collapsing through it: the fitter believes what it measures */
+/* ---------------------------------------------------------------------
+   the column: the light card, Did you know? and This day, top left
+   --------------------------------------------------------------------- */
 #col{position:absolute;left:96px;top:var(--safeT);width:830px;display:flow-root}
 
 .markrow{display:flex;align-items:center;gap:0;height:118px;flex-direction:column;
@@ -58,10 +61,50 @@ h1#hook .w.key{color:var(--gold)}
 .blk + .blk{margin-top:26px}
 .blk div{font-family:NoorR,sans-serif;color:var(--cream)}
 
-#close{margin-top:46px;opacity:0}
-#close .crule{width:46px;height:3px;background:var(--gold);margin-bottom:18px}
-#close .site{font:400 30px NoorR,sans-serif;color:var(--gold);letter-spacing:.10em}
-#close .sub{margin-top:12px;font:400 26px NoorR,sans-serif;color:var(--muted)}
+.close{margin-top:46px;opacity:0}
+.close .crule{width:46px;height:3px;background:var(--gold);margin-bottom:18px}
+.close .site{font:400 30px NoorR,sans-serif;color:var(--gold);letter-spacing:.10em}
+.close .sub{margin-top:12px;font:400 26px NoorR,sans-serif;color:var(--muted)}
+
+/* This day: the numeral of the date, above the name of the day */
+#daynum{display:none;align-items:flex-end;gap:26px;margin:4px 0 22px}
+#daynum .n{font:700 200px NoorB,sans-serif;color:var(--gold);line-height:.86;letter-spacing:-.03em;
+  opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
+#daynum .m{display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
+#daynum .m b{font:700 40px NoorB,sans-serif;color:var(--cream);letter-spacing:.10em;opacity:0}
+#daynum .m i{font:400 46px Amiri,serif;color:var(--muted);font-style:normal;opacity:0;direction:rtl;text-align:left;line-height:1.1}
+#todo{display:none;margin-top:30px;font:700 36px NoorB,sans-serif;color:var(--gold);line-height:1.3;opacity:0;--b:0px;filter:blur(var(--b))}
+
+/* ---------------------------------------------------------------------
+   the centred stage: The word and One verse
+   --------------------------------------------------------------------- */
+#mid{position:absolute;left:96px;top:var(--safeT);width:830px;display:none;flex-direction:column;
+  align-items:center;text-align:center}
+#mid .markrow{align-items:center;height:auto;margin-bottom:0}
+#mid .mrule{margin:6px auto 0}
+#mid .mline{margin-top:14px}
+#ar{font:700 170px Amiri,serif;color:var(--gold);direction:rtl;line-height:1.30;margin-top:48px;
+  opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity;max-width:830px}
+#term{margin-top:10px;font:700 40px NoorB,sans-serif;color:var(--cream);letter-spacing:.20em;text-transform:uppercase;
+  display:flex;justify-content:center;flex-wrap:wrap}
+#term span{opacity:0;display:inline-block;white-space:pre}
+.crule2{width:150px;height:3px;background:var(--gold);transform-origin:center;transform:scaleX(0);margin-top:40px}
+#short{margin-top:38px;font:400 44px NoorR,sans-serif;color:var(--cream);line-height:1.36;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
+#long{margin-top:28px;font:400 32px NoorR,sans-serif;color:var(--muted);line-height:1.42;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
+
+/* One verse: the Arabic in the Quran cut, then the meaning sentence by sentence */
+#ayah{font:400 76px AmiriQuran,Amiri,serif;color:var(--parch);direction:rtl;line-height:1.9;margin-top:40px;
+  max-width:830px;text-align:center;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
+#ref{margin-top:18px;font:400 28px NoorR,sans-serif;color:var(--muted);letter-spacing:.16em;opacity:0}
+#trans{margin-top:40px;width:800px;text-align:center}
+#trans .s{font:400 40px NoorR,sans-serif;color:var(--cream);line-height:1.40;opacity:0;--b:0px;filter:blur(var(--b));
+  display:block;will-change:transform,filter,opacity}
+#trans .s + .s{margin-top:12px}
+#trans.replace{position:relative}
+#trans.replace .s{position:absolute;left:0;right:0;top:0;margin:0}
+#reciter{margin-top:34px;font:400 28px NoorR,sans-serif;color:var(--muted);letter-spacing:.06em;opacity:0}
+#mid .close{text-align:center;margin-top:34px}
+#mid .close .crule{margin:0 auto 18px}
 </style></head>
 <body>
 <div id="stage">
@@ -76,13 +119,39 @@ h1#hook .w.key{color:var(--gold)}
         <span class="cat" id="cat"></span>
       </div>
     </div>
+    <div id="daynum"><span class="n" id="dayn"></span><span class="m"><b id="daym"></b><i id="dayar"></i></span></div>
     <h1 id="hook"></h1><i id="uline"></i>
     <div class="dl"><i class="drule"></i><span class="date" id="date"></span></div>
     <div id="body"></div>
-    <div id="close">
+    <div id="todo"></div>
+    <div id="close" class="close">
       <div class="crule"></div>
       <div class="site">NOORCODEX.COM</div>
       <div class="sub">the whole story, free</div>
+    </div>
+  </div>
+  <div id="mid">
+    <div class="markrow">
+      <i class="mrule"></i>
+      <div class="mline">
+        <span class="brand" id="brand2"></span>
+        <i class="mdiv"></i>
+        <span class="cat" id="cat2"></span>
+      </div>
+    </div>
+    <div id="ar"></div>
+    <div id="term"></div>
+    <div id="ayah"></div>
+    <div id="ref"></div>
+    <i class="crule2" id="crule2"></i>
+    <div id="short"></div>
+    <div id="long"></div>
+    <div id="trans"></div>
+    <div id="reciter"></div>
+    <div id="close2" class="close">
+      <div class="crule"></div>
+      <div class="site" id="site2">NOORCODEX.COM</div>
+      <div class="sub" id="sub2">the whole story, free</div>
     </div>
   </div>
 </div>

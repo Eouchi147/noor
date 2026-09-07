@@ -1047,8 +1047,10 @@ async function writeSlot(date, slot, rec) {
 }
 
 /* which channels are live right now, minus the ones that must never auto-send */
-export function liveChannels() {
-  return CH.ALL.filter(c => !CH.draftOnly.has(c) && CH.configured[c] && CH.configured[c]());
+export function liveChannels(post) {
+  return CH.ALL.filter(c => !CH.draftOnly.has(c) && CH.configured[c] && CH.configured[c]())
+    /* a channel that takes only video is not a channel for a card */
+    .filter(c => !(CH.SPEC[c] && CH.SPEC[c].video === "required") || (post && post.video));
 }
 
 async function sendOne(ch, shaped, post) {
@@ -1057,6 +1059,7 @@ async function sendOne(ch, shaped, post) {
   if (ch === "instagram") return await (p.video ? postInstagramReel(p) : postInstagram(p));
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
+  if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
   return await fn(shaped);
 }
 
@@ -1083,7 +1086,7 @@ export async function composeSlot(host, date, slotId, opts = {}) {
     if (r.ok) index = await r.json(); } catch { } }
   /* the day's chapter and word, in full, so the caption carries the material
      the library actually wrote rather than the index's one line */
-  const extras = opts.extras || await slotExtras(base, date, index, slotId);
+  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
@@ -1103,6 +1106,13 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   const prev = await readSlot(date, slotId);
   if (prev && prev.state === "sent" && !opts.force)
     return { ...out, ok: false, error: "that slot has already gone today" };
+  /* Half sent is still sent, as far as sending the whole slot goes: one
+     network has it, and Post now would give it to that network again. The
+     missing half is a job for retryChannel, which touches only the network
+     that refused. The console hides the button; this is for anyone who calls
+     the API without it. */
+  if (prev && prev.state === "partial" && !opts.force)
+    return { ...out, ok: false, error: "that slot is half sent; retry the network that refused, not the whole slot" };
   /* pressing Post on a slot a network is still processing would send it twice
      everywhere else; finishing it is what the owner actually wants */
   if (prev && prev.state === "pending" && !opts.force) {
@@ -1125,7 +1135,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   const results = {};
   /* the same narrowing the cron does: a reel names the only channels that can
      show one, and there is no Reddit draft to write from a video */
-  const chans = post.only ? liveChannels().filter(c => post.only.includes(c)) : liveChannels();
+  const chans = post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post);
 
   /* THE PRE-FLIGHT, ON THE PATH THAT ACTUALLY POSTS.
 
@@ -1218,6 +1228,23 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
   if (post.only && !post.only.includes(ch))
     return { ...out, ok: false, error: "this post is not offered to " + ch };
+  /* The post is composed again, and composing is not always a pure function
+     of the date: the day's light consults a memory of what has been shown
+     lately, so a card rebuilt the morning after can come out as a DIFFERENT
+     card. Sending that would put one thing on Facebook and another on
+     Instagram under the same slot. So the rebuilt post has to be the post the
+     record says went out, or it does not go. */
+  if (rec && rec.title && post.title && rec.title !== post.title) {
+    const why = "the slot rebuilt as a different card (\"" + String(post.title).slice(0, 60)
+              + "\") from the one that went out (\"" + String(rec.title).slice(0, 60)
+              + "\"), so it was not sent";
+    /* written down, so the healer stops asking and the console can say why.
+       A person pressing the button still gets a fresh comparison, so once
+       the day is pinned to the right card the retry works again. */
+    const stamped = { ...(had || {}), ok: false, fatal: true, drift: true, error: why, lastTry: out.at };
+    await writeSlot(date, slotId, { ...rec, results: { ...(rec.results || {}), [ch]: stamped } });
+    return { ...out, ok: false, fatal: true, drift: true, error: why };
+  }
 
   const shaped = CH.shape(post, ch);
   if (CH.SPEC[ch].image === "required" && !shaped.image)
@@ -1233,7 +1260,9 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
 
   /* every attempt is stamped on the result, so the healer can be bounded and
      can wait between tries instead of hammering a network that is down */
-  r = { ...r, tries: Number((had && had.tries) || 0) + 1, lastTry: out.at };
+  /* the send that failed in the first place was attempt one, whether or not
+     it was stamped -- records written before this existed carry no count */
+  r = { ...r, tries: Number((had && had.tries) || 1) + 1, lastTry: out.at };
   const results = { ...((rec && rec.results) || {}), [ch]: r };
   const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
                  title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
@@ -1342,6 +1371,29 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
                                  : t.daysLeft + " days left of " + tk.lifeDays });
   } catch { }
 
+  /* YouTube speaks in words, not codes: the three that need a person */
+  if (ch === "youtube") {
+    const said = String(out.said || "") + " " + String(out.code || "");
+    if (r && r.quota || /quota/i.test(said)) {
+      out.cause = "YouTube's daily quota for uploads is spent"; out.fix = "wait";
+      out.steps = ["Nothing is broken: the API allows about six uploads a day and the day's are used.",
+                   "It resets at midnight Pacific time; the hourly run will retry after that."];
+    } else if (/invalid_grant|token/i.test(said)) {
+      out.cause = "the YouTube consent has expired or been revoked"; out.fix = "token";
+      out.steps = ["Open /api/youtube?action=auth and give consent again.",
+                   "Paste the new YT_REFRESH_TOKEN into Vercel and redeploy.",
+                   "If this keeps happening every week, the OAuth app is still in Testing: publish it in the Google Cloud console."];
+    } else if (/not connected/i.test(said)) {
+      out.cause = "YouTube is not connected yet"; out.fix = "manual";
+      out.steps = ["Follow the YouTube steps page once: a Google Cloud project, the consent, three variables in Vercel."];
+    } else if (r && r.private) {
+      out.cause = "uploaded, but YouTube kept it private: the project has not passed the API audit"; out.fix = "manual";
+      out.steps = ["Fill in the YouTube API Services audit form once; a non-commercial library is normally approved.",
+                   "Until then every upload lands private; set each one public by hand in YouTube Studio if you wish."];
+    }
+    if (out.cause) { out.canRetry = out.fix === "retry" || out.fix === "wait"; return { ...out, ok: true }; }
+  }
+
   /* Meta's own code first, because it is the only thing here Meta stands behind */
   const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));
   if (hit) { out.cause = hit.cause; out.fix = hit.fix; out.steps = hit.steps.slice(); }
@@ -1419,6 +1471,11 @@ export function healDue(r, nowMs) {
    everything on the first pass, and trying to is what cost a post. */
 const HEAL_PER_RUN = Number(process.env.HEAL_PER_RUN || 2);
 
+/* A reel is not a card. Instagram takes it in stages and the sender may poll
+   for forty seconds before handing back a container, so a reel repair needs
+   nearly the whole function to itself. It is only attempted when it has it. */
+const HEAL_REEL_RESERVE_MS = Number(process.env.HEAL_REEL_RESERVE_MS || 48000);
+
 export async function healFailures(host, date, out, now, hasTime) {
   const ran = (out && out.ran) || [];
   const nowMs = now ? +new Date(now) : Date.now();
@@ -1427,18 +1484,27 @@ export async function healFailures(host, date, out, now, hasTime) {
   for (const d of [prevDate(date), date]) {
     for (const id of SLOT_IDS) {
       if (done >= HEAL_PER_RUN || !room()) return ran;
-      const rec = await readSlot(d, id);
+      let rec = null;
+      try { rec = await readSlot(d, id); } catch { continue; }
       if (!rec || !rec.results) continue;
       if (rec.state === "queued") continue;     /* still waiting for a human */
+      const isReel = REEL_SLOTS.includes(id);
       for (const ch of liveChannels()) {
         if (done >= HEAL_PER_RUN || !room()) return ran;
         const r = rec.results[ch];
         if (!healable(r) || !healDue(r, nowMs)) continue;
+        if (isReel && ch === "instagram" && !room(HEAL_REEL_RESERVE_MS)) continue;
         done++;
-        const res = await retryChannel(host, d, id, ch, { preflightMs: 5000 });
-        ran.push({ slot: id, date: d, where: ch, healed: true, ok: !!res.ok,
-                   state: res.state || "", tries: Number(r.tries || 1) + 1,
-                   error: res.ok ? "" : String(res.error || (res.result && res.result.error) || "") });
+        /* one repair that throws must not take the others with it */
+        try {
+          const res = await retryChannel(host, d, id, ch, { preflightMs: 5000 });
+          ran.push({ slot: id, date: d, where: ch, healed: true, ok: !!res.ok,
+                     state: res.state || "", tries: Number(r.tries || 1) + 1,
+                     error: res.ok ? "" : String(res.error || (res.result && res.result.error) || "") });
+        } catch (e) {
+          ran.push({ slot: id, date: d, where: ch, healed: true, ok: false,
+                     error: String(e && e.message || e).slice(0, 120) });
+        }
       }
     }
   }
@@ -1510,7 +1576,7 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image };
     } else {
-      const extras = await slotExtras(base, date, idx, slot.id);
+      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
@@ -1541,8 +1607,8 @@ export async function runDue(host, date, now, opts = {}) {
     const results = {};
     /* A reel names the channels that can show one. The others would fall back
        to its cover, and a still frame of a video is a poor post. */
-    const chans = post.only ? liveChannels().filter(c => post.only.includes(c))
-                            : liveChannels();
+    const chans = post.only ? liveChannels(post).filter(c => post.only.includes(c))
+                            : liveChannels(post);
     for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
@@ -1597,7 +1663,7 @@ async function tidyUp(host, date, out, now, began, opts = {}) {
     out.tidyError = "finishing reels: " + String(e && e.message || e).slice(0, 120);
   }
   try {
-    await healFailures(host, date, out, now, () => left() > HEAL_RESERVE_MS);
+    await healFailures(host, date, out, now, need => left() > (need || HEAL_RESERVE_MS));
   } catch (e) {
     out.tidyError = (out.tidyError ? out.tidyError + " · " : "")
       + "healing: " + String(e && e.message || e).slice(0, 120);

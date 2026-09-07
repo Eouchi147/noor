@@ -8,6 +8,9 @@
 
      facebook    2,200 chars, hashtags fine, image optional.   LIVE
      instagram   2,200 chars, up to 30 tags, image REQUIRED.   LIVE
+     youtube     Shorts: the reel file, a title, the caption
+                 as description. Video REQUIRED, so only the
+                 reel slots ever reach it.                     needs consent
      linkedin    ~3,000 chars, 3-5 tags at most, no emoji
                  confetti. Reads as a trade journal.           needs token
      pinterest   image first. Title <=100, description <=500,
@@ -36,6 +39,8 @@
    having.
 --------------------------------------------------------------------------- */
 
+import * as YT from "./_youtube.js";
+
 const env = k => (process.env[k] || "").trim();
 /* LinkedIn versions live about twelve months and the header is mandatory on
    every call -- there is no default. 202508 sunsets in August 2026, so the
@@ -59,6 +64,8 @@ const cut = (s, n) => {
 export const SPEC = {
   facebook:  { chars: 2200, tags: 8,  image: "optional", live: true  },
   instagram: { chars: 2200, tags: 30, image: "required", live: true  },
+  /* video only: a reel's third home. Nothing without a video goes here. */
+  youtube:   { chars: 4900, tags: 15, image: "optional", video: "required", live: true },
   linkedin:  { chars: 3000, tags: 4,  image: "optional", live: false },
   pinterest: { chars: 500,  tags: 3,  image: "required", live: false },
   x:         { chars: 280,  tags: 2,  image: "optional", live: false },
@@ -86,6 +93,12 @@ export function shape(p, ch) {
     const lead = p.oneLine || p.title;
     return { text: cut(lead, room) + (withLink ? "\n" + link : "") + (tags ? " " + tags : ""),
              image: p.image || null };
+  }
+
+  if (ch === "youtube") {
+    /* the reel's caption is its description; the title is its hook with
+       #Shorts on it, the way YouTube files a vertical minute. See _youtube.js. */
+    return YT.shape(p);
   }
 
   if (ch === "pinterest") {
@@ -144,6 +157,7 @@ export function shape(p, ch) {
 --------------------------------------------------------------------------- */
 export const configured = {
   facebook:  () => !!(env("FB_PAGE_ID") && env("FB_PAGE_TOKEN")),
+  youtube:   () => YT.configured(),
   instagram: () => !!(env("IG_USER_ID") && (env("IG_TOKEN") || env("IG_ACCESS_TOKEN") || env("FB_PAGE_TOKEN"))),
   linkedin:  () => !!(env("LI_ORG_URN") && env("LI_TOKEN")),
   /* A board (by id or by name) and some way to hold a token: either one
@@ -335,4 +349,8 @@ export async function sendReddit(shaped, opts = {}) {
   };
 }
 
-export const SENDERS = { linkedin: sendLinkedIn, pinterest: sendPinterest, x: sendX, reddit: sendReddit };
+export async function sendYouTube(shaped, opts = {}) {
+  return YT.upload(shaped, opts);
+}
+
+export const SENDERS = { linkedin: sendLinkedIn, pinterest: sendPinterest, x: sendX, reddit: sendReddit, youtube: sendYouTube };

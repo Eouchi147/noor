@@ -248,11 +248,130 @@ class Scene:
                fill=GOLD + (self.A(140 + 70 * cue),), width=3)
 
 
+    # ------------------------------------------------------------------
+    # the centred scenes of the new formats. They live behind Arabic type,
+    # so they are built around the middle of the frame and they move: a
+    # mandala that draws itself and turns, a halo that breathes with the
+    # reciter's voice, a ring of months with this one lit.
+    # ------------------------------------------------------------------
+
+    def _mandala(self, d, t, secs, cue):
+        """two star polygons drawing themselves in opposite turns, a ring of
+        petals outside them, all of it waking as the word lands (cue)"""
+        cx, cy = BW * 0.50, BH * float(self.kw.get("cy", 0.44))
+        n, k = self.kw.get("n", 12), self.kw.get("k", 5)
+        pulse = self.kw.get("pulse", lambda t: 0.0)(t)
+        wake = 0.35 + 0.65 * cue
+        # a disc of light behind the word, breathing, brightest as it lands
+        glow = Image.new("L", (BW, BH), 0)
+        gr = 150 + 40 * wake + 14 * math.sin(t * 0.9)
+        ImageDraw.Draw(glow).ellipse([cx - gr, cy - gr, cx + gr, cy + gr], fill=int(self.A(58 + 70 * wake)))
+        glow = glow.filter(ImageFilter.GaussianBlur(46))
+        d._image.paste(Image.new("RGB", (BW, BH), (190, 150, 70)), (0, 0), glow)
+        # the drawing progresses over the first four seconds, then holds
+        p = min(1.0, 0.04 + t / 3.8)
+        R1 = 240 + 6 * math.sin(t * 0.7) + 10 * pulse
+        R2 = 148
+        base_a = self.A((120 + 110 * wake) * (0.8 + 0.2 * pulse))
+        for R, kk, rot, w, aa in ((R1, k, t * 0.030, 3, base_a),
+                                  (R2, max(2, k - 2), -t * 0.048 + math.pi / n, 2, int(base_a * 0.85))):
+            pts, _ = geom.star_points(cx, cy, R, n, kk, -math.pi / 2 + rot)
+            seg = len(pts)
+            for i in range(seg):
+                f = max(0.0, min(1.0, p * seg - i))
+                if f <= 0: break
+                x0, y0 = pts[i]; x1, y1 = pts[(i + 1) % seg]
+                d.line([x0, y0, x0 + (x1 - x0) * f, y0 + (y1 - y0) * f],
+                       fill=GOLD + (aa,), width=w)
+        # the petals: short arcs on a ring outside the star, appearing with the cue
+        m = 2 * n
+        ring = R1 + 34
+        for i in range(m):
+            f = max(0.0, min(1.0, cue * m * 1.15 - i))
+            if f <= 0: break
+            a0 = (360.0 / m) * i + math.degrees(t * 0.030) - 90 + 4
+            d.arc([cx - ring, cy - ring, cx + ring, cy + ring], a0, a0 + (360.0 / m - 8) * f,
+                  fill=GOLD + (self.A(170 * wake),), width=3)
+        # the outer circle, faint, always
+        R3 = ring + 18
+        d.ellipse([cx - R3, cy - R3, cx + R3, cy + R3],
+                  outline=(150, 168, 220, self.A(40 + 20 * wake)), width=1)
+        # a heart of light
+        r0 = 5 + 3 * cue
+        d.ellipse([cx - r0, cy - r0, cx + r0, cy + r0], fill=GOLD + (self.A(120 + 100 * cue),))
+
+    def _halo(self, d, t, secs, cue):
+        """concentric rings that breathe with the recitation: the picture
+        listens to the voice, so the two never drift apart"""
+        cx, cy = BW * 0.50, BH * float(self.kw.get("cy", 0.40))
+        pulse = self.kw.get("pulse", lambda t: 0.0)(t)
+        n = self.kw.get("n", 8); k = self.kw.get("k", 3)
+        open_ = min(1.0, t / 2.2)
+        base = 150 + 90 * open_
+        # the light behind the verse swells with the voice
+        glow = Image.new("L", (BW, BH), 0)
+        gr = base * (0.9 + 0.12 * pulse)
+        ImageDraw.Draw(glow).ellipse([cx - gr, cy - gr, cx + gr, cy + gr], fill=int(self.A(40 + 90 * pulse + 30 * open_)))
+        glow = glow.filter(ImageFilter.GaussianBlur(52))
+        d._image.paste(Image.new("RGB", (BW, BH), (200, 165, 90)), (0, 0), glow)
+        for i in range(5):
+            R = (base + i * 46) * (1.0 + 0.030 * pulse * (1 + i * 0.4)) + 3 * math.sin(t * 0.5 + i)
+            a = self.A((96 - i * 14) * (0.55 + 0.45 * open_) * (0.7 + 0.6 * pulse))
+            d.ellipse([cx - R, cy - R, cx + R, cy + R],
+                      outline=(233, 214, 150, max(0, min(255, int(a)))), width=2 if i else 3)
+        # a faint star polygon behind the rings, turning with the breath
+        R = base * 0.78
+        pts, _ = geom.star_points(cx, cy, R, n, k, -math.pi / 2 + t * 0.02)
+        d.line(pts + [pts[0]], fill=GOLD + (self.A(50 + 40 * open_ + 70 * pulse),), width=2)
+        # sparks that lift from the halo while the voice is sounding
+        rr = random.Random(int(t * 30))
+        for i in range(int(12 * pulse)):
+            ang = rr.random() * 6.283
+            dist = base + rr.random() * 60
+            sx = cx + dist * math.cos(ang); sy = cy + dist * math.sin(ang) - rr.random() * 18
+            d.ellipse([sx - 1.2, sy - 1.2, sx + 1.2, sy + 1.2], fill=(255, 240, 200, self.A(120 * pulse)))
+
+    def _months(self, d, t, secs, cue):
+        """a ring of twelve marks, this month's lit, and a crescent inside"""
+        cx, cy = BW * 0.64, BH * 0.66
+        R = 138
+        month = int(self.kw.get("month", 1))
+        p = min(1.0, t / 1.6)
+        d.ellipse([cx - R, cy - R, cx + R, cy + R], outline=(150, 168, 220, self.A(58 * p)), width=1)
+        for i in range(12):
+            f = max(0.0, min(1.0, p * 12 * 1.05 - i))
+            if f <= 0: break
+            ang = -math.pi / 2 + 2 * math.pi * i / 12
+            lit = (i + 1) == month
+            r0, r1 = R - (14 if lit else 8), R + (14 if lit else 6)
+            a = self.A((210 if lit else 80) * f * (0.7 + 0.3 * cue if lit else 1))
+            d.line([cx + r0 * math.cos(ang), cy + r0 * math.sin(ang),
+                    cx + r1 * math.cos(ang), cy + r1 * math.sin(ang)],
+                   fill=GOLD + (a,), width=3 if lit else 2)
+            if lit:
+                g = 7 + 3 * math.sin(t * 2.0)
+                gx, gy = cx + (R + 24) * math.cos(ang), cy + (R + 24) * math.sin(ang)
+                d.ellipse([gx - g, gy - g, gx + g, gy + g], fill=GOLD + (self.A(70 + 60 * cue),))
+        # the crescent, thin, waxing a little across the reel
+        rc = 54
+        cxm, cym = cx, cy
+        ph = 0.08 + 0.10 * (t / secs)
+        kx = math.cos(ph * 2 * math.pi)
+        lit = Image.new("L", (rc * 4, rc * 4), 0)
+        ld = ImageDraw.Draw(lit)
+        c = rc * 2
+        ld.pieslice([c - rc, c - rc, c + rc, c + rc], -90, 90, fill=255)
+        ld.ellipse([c - abs(kx) * rc, c - rc, c + abs(kx) * rc, c + rc], fill=0 if kx > 0 else 255)
+        lit = lit.filter(ImageFilter.GaussianBlur(0.8)).point(lambda v: int(v * 0.86 * getattr(self, "a", 1.0) * p))
+        d._image.paste(Image.new("RGB", (rc * 4, rc * 4), (247, 242, 226)), (int(cxm - c), int(cym - c)), lit)
+
+
 class Cine:
     """the background, ready to be asked for any second of the run"""
 
     def __init__(self, palette="night", seed=7, n=8, k=3, secs=20,
-                 scene=None, cue_at=None, recede=None, push=0.09):
+                 scene=None, cue_at=None, recede=None, push=0.09,
+                 rays=False, blooms=(), pulse=None, centre=False):
         self.P = geom.PALETTES[palette]
         P = self.P
         self.secs = secs
@@ -260,6 +379,21 @@ class Cine:
         self.cue_at = cue_at if cue_at is not None else secs * 0.45
         self.recede = recede
         self.push = push
+        # the new formats: light rays turning behind the centre, gold blooms at
+        # the moments the type lands, and a pulse (the recitation's envelope)
+        # that the rays, the lamp and the scene all breathe with
+        self.rays = rays
+        self.blooms = list(blooms)
+        self.pulse = pulse or (lambda t: 0.0)
+        self.centre = centre
+        fy = float(centre) if centre else 0.26
+        if scene is not None:
+            scene.kw.setdefault("pulse", self.pulse)
+            if centre: scene.kw.setdefault("cy", fy)
+        if rays:
+            yy, xx = np.mgrid[0:BH, 0:BW].astype(np.float32)
+            self.ray_ang = np.arctan2(yy - BH * fy, xx - BW * 0.5)
+            self.ray_dist = np.hypot((xx - BW * 0.5) / BW, (yy - BH * fy) / BH)
 
         # the night itself, deliberately dark: white type has to sit on it
         self.sky = _sky(P["sky"], OW, OH) * 0.72
@@ -303,14 +437,37 @@ class Cine:
         """the picture owns the frame until the words need it"""
         if self.recede is None: return 1.0
         p = max(0.0, min(1.0, (t - self.recede) / 1.4))
-        return 1.0 - 0.45 * (1 - pow(1 - p, 3))
+        # the centred scenes sit behind the words by design, so they keep more
+        return 1.0 - (0.40 if self.centre else 0.45) * (1 - pow(1 - p, 3))
+
+    def bloom_a(self, t):
+        """how much gold is in the air right now: each bloom rises in a fifth
+        of a second and takes two to fade"""
+        a = 0.0
+        for at in self.blooms:
+            u = t - at
+            if u < 0: continue
+            a += (min(1.0, u / 0.22)) * math.exp(-max(0.0, u - 0.22) / 0.9)
+        return min(1.0, a)
+
+    def _rays_layer(self, t):
+        """soft spokes of light turning very slowly; brighter with the pulse"""
+        ang = self.ray_ang + t * 0.045
+        spokes = 0.5 + 0.5 * np.cos(ang * 9.0)
+        spokes = spokes ** 6.0
+        fall = np.clip(1.0 - self.ray_dist * 1.25, 0, 1) ** 1.6
+        g = (0.11 + 0.14 * self.pulse(t) + 0.10 * self.bloom_a(t))
+        return (spokes * fall * g)[..., None] * np.array(self.P["lamp"], dtype=np.float32) * 1.7
 
     def frame(self, t):
         breathe = 0.88 + 0.12 * math.sin(t * 0.55)
 
         base = self._plane(self.sky, t, 0.35, 0.10).copy()
-        base += self._plane(self.lamp, t, 0.35, 0.10) * breathe
-        base += self._plane(self.far, t, 0.6, 0.16)
+        glow = breathe * (1.0 + 0.55 * self.pulse(t) + 0.9 * self.bloom_a(t))
+        base += self._plane(self.lamp, t, 0.35, 0.10) * glow
+        base += self._plane(self.far, t, 0.6, 0.16) * (1.0 + 0.5 * self.bloom_a(t))
+        if self.rays:
+            base += self._rays_layer(t)
 
         # the star field, its own plane, twinkling
         x, y, b, ph, sp = self.stars
@@ -340,11 +497,15 @@ class Cine:
 
         d = ImageDraw.Draw(img, "RGBA")
         # dust, slow, barely there
+        ba = self.bloom_a(t) if self.centre else 0.0
         for fx, fy, s, phi, rate in self.motes:
             mx = (fx * BW + 26 * math.sin(t * 0.21 * rate + phi)) % BW
             my = (fy * BH - t * 5.5 * rate) % BH
-            a = int(46 * s * (0.5 + 0.5 * math.sin(t * 0.8 + phi)))
-            d.ellipse([mx - s, my - s, mx + s, my + s], fill=(226, 232, 250, a))
+            if ba:   # drawn a little toward the heart of the frame while it glows
+                mx += (BW * 0.5 - mx) * 0.22 * ba
+                my += (BH * float(self.centre) - my) * 0.22 * ba
+            a = int((46 + 70 * ba) * s * (0.5 + 0.5 * math.sin(t * 0.8 + phi)))
+            d.ellipse([mx - s, my - s, mx + s, my + s], fill=(226, 232, 250, min(255, a)))
 
         if self.scene:
             cue = max(0.0, min(1.0, (t - self.cue_at) / 1.6))

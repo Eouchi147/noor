@@ -8,8 +8,62 @@ card's own text, because a reel is screenshotted and argued with.
 import json, os, re, sys, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LIB = os.environ.get("NOOR_LIGHTS") or os.path.join(HERE, "..", "..", "lights", "all.json")
+ROOT = os.environ.get("NOOR_ROOT") or os.path.join(HERE, "..", "..")
+LIB = os.environ.get("NOOR_LIGHTS") or os.path.join(ROOT, "lights", "all.json")
 SRC = {c["id"]: c for c in json.load(open(LIB))["lights"]}
+
+TAG_FLOOR = {"light": 6, "know": 5, "word": 4, "day": 4, "verse": 3}
+
+
+def _dict():
+    """the dictionary, id -> entry, from the build JSON the site is built from"""
+    import glob
+    out = {}
+    for f in glob.glob(os.path.join(ROOT, "build", "dict-*.json")):
+        for e in json.load(open(f, encoding="utf-8")):
+            out[e["id"]] = e
+    return out
+
+
+def _calendar():
+    try: return json.load(open(os.path.join(HERE, "calendar.json"), encoding="utf-8"))
+    except FileNotFoundError: return {"FIXED": {}, "MONTHS": {}}
+
+
+def _verses():
+    try: return json.load(open(os.path.join(HERE, "verses.json"), encoding="utf-8")).get("verses", {})
+    except FileNotFoundError: return {}
+
+
+def haystack(cid, v, D, CAL, VER):
+    """the text a card of this kind may draw from, or None if there is none"""
+    kind = v.get("kind", "light")
+    if kind in ("light", "know"):
+        src = SRC.get(v.get("src") or cid)
+        if not src: return None
+        return " ".join([src.get("s", ""), src.get("t", ""), src.get("d", ""), src.get("c", "")])
+    if kind == "word":
+        e = D.get(v.get("src") or "")
+        if not e: return None
+        return " ".join([e.get("term", ""), e.get("ar", ""), e.get("short", ""), e.get("long", ""),
+                         " ".join(e.get("also", []))])
+    if kind == "day":
+        key = v.get("src") or ""
+        f = CAL["FIXED"].get(key) or CAL["MONTHS"].get(key.replace("month-", ""))
+        if not f: return None
+        return " ".join([f.get("name", ""), f.get("what", ""), " ".join(f.get("todo", []) or []),
+                         f.get("basis", ""), f.get("note", ""), str(v.get("hd", "")), str(v.get("num", "")),
+                         "Muharram Safar Rabi al-Awwal Rabi al-Akhir "
+                         "Jumada al-Ula Jumada al-Akhirah Rajab Sha'ban Ramadan Shawwal Dhul Qa'dah Dhul Hijjah"])
+    if kind == "verse":
+        import re as _re
+        m = _re.fullmatch(r"(\d+):(\d+)(?:-(\d+))?", str(v.get("verse", "")))
+        if not m: return None
+        s, a, b = int(m.group(1)), int(m.group(2)), int(m.group(3) or m.group(2))
+        parts = [VER.get("%d:%d" % (s, n), {}).get("text", "") for n in range(a, b + 1)]
+        if not all(parts): return ""     # the translation is fetched by the workflow before the audit
+        return " ".join(parts + [VER["%d:%d" % (s, a)].get("surah", "")])
+    return None
 
 OK_WORDS = set("""A An The In On At By For And But Not Now It Its He She They We You His Her Their
 Every Each One Two Three Four Five Six Seven Eight Nine Ten Muslim Muslims Islam Islamic Allah
@@ -42,26 +96,58 @@ def audit(path):
     out = doc.get("cards", doc)
     out = {k: v for k, v in out.items() if not k.startswith("_")}
     bad = []
+    D, CAL, VER = _dict(), _calendar(), _verses()
     for cid, v in out.items():
-        src = SRC.get(cid)
-        if not src: bad.append((cid, "unknown card")); continue
-        hay = " ".join([src.get("s", ""), src.get("t", ""),
-                        src.get("d", ""), src.get("c", "")])
+        kind = v.get("kind", "light")
+        hay = haystack(cid, v, D, CAL, VER)
+        if hay is None: bad.append((cid, "unknown source for a %s card" % kind)); continue
+        if hay == "": continue          # a verse whose translation is not fetched yet
         hay_n, hay_num, hay_name = norm(hay), nums(hay), names(hay)
 
-        need = {"eyebrow", "hook", "key", "date", "lines", "caption"}
-        if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
-        if v["key"] not in v["hook"]: bad.append((cid, "key not in hook"))
-        if len(v["lines"]) != 3: bad.append((cid, "not three lines"))
-        for f, lim in (("eyebrow", 22), ("hook", 62), ("date", 46)):
-            if len(v[f]) > lim: bad.append((cid, f"{f} {len(v[f])} > {lim}"))
-        for i, l in enumerate(v["lines"]):
-            if len(l) > 118: bad.append((cid, f"line {i} {len(l)} > 118"))
-            if re.match(r"^(And|But)\b", l): bad.append((cid, f"line {i} opens with And/But"))
-            if "..." in l or "…" in l: bad.append((cid, f"line {i} trails off"))
-
-        screen = " ".join([v["eyebrow"], v["hook"], v["date"], *v["lines"]])
-        for f in (screen, v["caption"]):
+        if kind in ("light", "know"):
+            need = {"eyebrow", "hook", "key", "date", "lines", "caption"}
+            if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
+            if v["key"] not in v["hook"]: bad.append((cid, "key not in hook"))
+            want = 3 if kind == "light" else 1
+            if len(v["lines"]) != want: bad.append((cid, "not %s line%s" % (want, "s" if want > 1 else "")))
+            for f, lim in (("eyebrow", 22), ("hook", 62), ("date", 46)):
+                if len(v[f]) > lim: bad.append((cid, f"{f} {len(v[f])} > {lim}"))
+            lines = v["lines"]
+            screen = " ".join([v["eyebrow"], v["hook"], v["date"], *lines])
+        elif kind == "day":
+            need = {"num", "month", "hook", "key", "lines", "caption", "hm", "hd"}
+            if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
+            if v["key"] not in v["hook"]: bad.append((cid, "key not in hook"))
+            if not (1 <= len(v["lines"]) <= 2): bad.append((cid, "a day card carries one or two lines"))
+            if len(v["hook"]) > 62: bad.append((cid, f"hook {len(v['hook'])} > 62"))
+            if v.get("todo") and len(v["todo"]) > 96: bad.append((cid, "todo too long"))
+            lines = v["lines"]
+            screen = " ".join([v["hook"], *lines, v.get("todo", "")])
+        elif kind == "word":
+            need = {"ar", "term", "short", "caption", "src"}
+            if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
+            e = D[v["src"]]
+            if v["short"] != e["short"]: bad.append((cid, "short is not the dictionary's own"))
+            if v.get("long") and v["long"] not in e.get("long", ""): bad.append((cid, "long is not from the dictionary"))
+            if v["ar"] != e["ar"] or v["term"] != e["term"]: bad.append((cid, "ar/term differ from the dictionary"))
+            if len(v["short"]) > 150: bad.append((cid, f"short {len(v['short'])} > 150"))
+            if len(v.get("long", "")) > 150: bad.append((cid, f"long {len(v['long'])} > 150"))
+            lines = [v["short"], v.get("long", "")]
+            screen = " ".join([v["term"], *lines])
+        elif kind == "verse":
+            need = {"verse", "caption"}
+            if not need <= set(v): bad.append((cid, "missing " + str(need - set(v)))); continue
+            lines = []
+            screen = ""
+        else:
+            bad.append((cid, "unknown kind " + kind)); continue
+        for i, l in enumerate(lines):
+            lim = {"know": 140, "day": 150}.get(kind, 118)
+            if len(l) > lim and kind in ("light", "know", "day"): bad.append((cid, f"line {i} {len(l)} > {lim}"))
+            if kind in ("light", "know"):      # house style is asked of what the house wrote
+                if re.match(r"^(And|But)\b", l): bad.append((cid, f"line {i} opens with And/But"))
+                if "..." in l or "…" in l: bad.append((cid, f"line {i} trails off"))
+        for f in ((screen, v["caption"]) if kind in ("light", "know") else ()):
             if "—" in f or "–" in f: bad.append((cid, "em or en dash"))
         if re.search(r"[\U0001F300-\U0001FAFF☀-➿]", screen):
             bad.append((cid, "emoji on screen"))
@@ -77,10 +163,15 @@ def audit(path):
         tg = re.findall(r"#\w+", cap)
         if "#NoorCodexOfLight" not in tg or "#Islam" not in tg:
             bad.append((cid, "caption is missing a house tag"))
-        if not (6 <= len(tg) <= 12): bad.append((cid, f"{len(tg)} tags"))
-        body = cap.split("Read the whole")[0].strip()
-        if len(body) > 480: bad.append((cid, f"caption body {len(body)} > 480"))
-        if v["hook"].lower() in norm(body): bad.append((cid, "caption repeats the hook"))
+        if not (TAG_FLOOR.get(kind, 6) <= len(tg) <= 12): bad.append((cid, f"{len(tg)} tags"))
+        body = re.split(r"Read the whole|The whole story|Every word|Read the whole surah|Every day of", cap)[0].strip()
+        if len(body) > 520: bad.append((cid, f"caption body {len(body)} > 520"))
+        if kind != "day" and v.get("hook") and v["hook"].lower() in norm(body): bad.append((cid, "caption repeats the hook"))
+        # the caption is copy too: its numbers and names come from the same source
+        if kind != "verse":
+            for n in nums(cap) - hay_num:
+                if n.replace(",", "") not in {x.replace(",", "") for x in hay_num}:
+                    bad.append((cid, "caption number not in the source: " + n))
     return out, bad
 
 if __name__ == "__main__":

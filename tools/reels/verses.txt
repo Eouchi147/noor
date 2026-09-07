@@ -1,0 +1,67 @@
+# One verse · the references, one per line. Text from quran-uthmani.json,
+# meaning from verses.json (Saheeh International), voice from everyayah.
+# A range is at most a few verses: a reel carries one thought, not a page.
+94:5-6      # with hardship, ease
+2:152       # remember Me and I will remember you
+2:153       # seek help through patience and prayer
+2:186       # I am near
+13:28       # hearts find rest in the remembrance of Allah
+39:53       # do not despair of the mercy of Allah
+3:139       # do not weaken and do not grieve
+65:3        # whoever relies upon Allah
+65:2-3      # a way out
+14:7        # if you are grateful I will surely increase you
+2:286       # Allah does not burden a soul beyond what it can bear
+49:13       # peoples and tribes that you may know one another
+16:97       # whoever does righteousness, male or female
+21:87       # Yunus in the darkness
+20:114      # my Lord, increase me in knowledge
+17:23-24    # to parents, good treatment
+31:17       # the counsel of Luqman
+25:63       # the servants of the Most Merciful walk gently
+41:34       # repel with what is better
+42:30       # what strikes you of disaster
+57:4        # He is with you wherever you are
+67:2        # to test you as to which of you is best in deed
+29:69       # those who strive for Us
+9:51        # nothing will befall us except what Allah has decreed
+33:21       # in the Messenger of Allah an excellent pattern
+6:162       # my prayer, my rites of sacrifice, my living and my dying
+10:57       # a healing for what is in the breasts
+17:80       # an entrance of truth and an exit of truth
+18:10       # the youths of the cave
+28:56       # you do not guide whom you like
+30:21       # He created for you mates
+35:15       # you are those in need of Allah
+40:60       # call upon Me, I will respond
+11:114      # good deeds do away with misdeeds
+2:45-46     # patience and prayer, and it is difficult
+3:159       # by mercy from Allah you were lenient
+3:173       # sufficient for us is Allah
+3:185       # every soul will taste death
+7:156       # My mercy encompasses all things
+16:127      # be patient, and your patience is only through Allah
+22:46       # it is not eyes that are blinded but hearts
+26:80       # when I am ill, it is He who cures me
+29:2-3      # do people think they will be left to say we believe
+51:56       # I did not create jinn and mankind except to worship Me
+53:39-42    # a man has nothing except what he strives for
+55:13       # which of the favours of your Lord would you deny
+64:16       # fear Allah as much as you are able
+73:8        # devote yourself to Him with complete devotion
+87:14-15    # he has succeeded who purifies himself
+93:1-5      # by the morning brightness
+94:1-4      # did We not expand for you your breast
+96:1-5      # read, in the name of your Lord
+97:1-5      # the night of decree
+103:1-3     # by time
+107:1-7     # have you seen the one who denies
+108:1-3     # We have granted you al-Kawthar
+110:1-3     # when the victory of Allah has come
+112:1-4     # say, He is Allah, One
+113:1-5     # the daybreak
+114:1-6     # mankind
+1:1-7       # the opening
+2:255       # the verse of the Throne
+24:35       # the verse of light
+59:22-24    # the names at the end of al-Hashr

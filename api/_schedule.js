@@ -150,6 +150,52 @@ export async function planDay(dateStr, opts = {}) {
 }
 
 /* ---------------------------------------------------------------------------
+   which reel today
+
+   Five kinds of reel share two slots a day. The kinds take turns by weekday,
+   so a follower sees a verse, a word, a Did you know and the day's card in a
+   rhythm rather than a run of one thing; within a kind the stride walk above
+   keeps any one card from coming back before the rest have had their turn.
+
+   A This day reel belongs to one Hijri date and to no other: on its date it
+   takes the morning slot from whatever the rota had there, and on every other
+   date it is never chosen at all. A kind with nothing rendered yet simply
+   yields its turn to the next, so the account is never silent because a
+   shelf is still being filled.
+--------------------------------------------------------------------------- */
+const ROTA = {
+  /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week */
+  morning: ["verse", "verse", "know", "verse", "word", "verse", "know"],
+  evening: ["word", "word", "light", "know", "light", "word", "light"]
+};
+const FALLBACK = ["verse", "word", "know", "light"];
+
+export function chooseReel(cards, dateStr, half, hijri) {
+  const all = (cards || []).filter(c => c && c.id);
+  const kindOf = c => c.kind || "light";
+  const dow = new Date(String(dateStr) + "T12:00:00Z").getUTCDay();
+  if (half === "morning" && hijri && hijri.m && hijri.d) {
+    const today = all.filter(c => kindOf(c) === "day" && Number(c.hm) === Number(hijri.m) && Number(c.hd) === Number(hijri.d));
+    /* a named day outranks the month it opens: Ashura's month is not the news */
+    today.sort((a, b) => (String(a.id).startsWith("month-") ? 1 : 0) - (String(b.id).startsWith("month-") ? 1 : 0));
+    if (today.length) return today[0];
+  }
+  const want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
+  const order = [want, ...FALLBACK.filter(k => k !== want)];
+  for (const kind of order) {
+    /* the old manifests carried no kind and no other kind than light; a card
+       without a slot is fine anywhere, one with a slot keeps to its half.
+       The salt is the kind alone, whichever slot asks: the walk is indexed by
+       the date, so a word chosen on Thursday morning and one chosen on
+       Sunday evening are different steps of one walk, not two walks that
+       can land on the same card in the same week. */
+    const list = all.filter(c => kindOf(c) === kind && (!c.slot || c.slot === half || kind !== "light"));
+    if (list.length) return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
+  }
+  return null;
+}
+
+/* ---------------------------------------------------------------------------
    what each slot actually says
 --------------------------------------------------------------------------- */
 export function buildSlot(slot, ctx) {
@@ -174,7 +220,7 @@ export function buildSlot(slot, ctx) {
       body: r.caption || "", caption: r.caption || "",
       todo: [], basis: "", note: "", tags: [], invite: "",
       link, image: r.cover || null, video: r.video, reel: true,
-      only: ["facebook", "instagram"]
+      only: ["facebook", "instagram", "youtube"]
     };
   }
 
@@ -340,7 +386,7 @@ export function buildSlot(slot, ctx) {
    the machine used to send, which is worse than the full one and better than
    none.
 --------------------------------------------------------------------------- */
-export async function slotExtras(base, date, index, slot) {
+export async function slotExtras(base, date, index, slot, hijri) {
   const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
@@ -351,9 +397,7 @@ export async function slotExtras(base, date, index, slot) {
   const half = reelHalf(slot);
   if (half) {
     const man = await grab(base + "/reels/index.json");
-    const list = (man && Array.isArray(man.cards) ? man.cards : [])
-      .filter(c => c && c.id && c.slot === half);
-    const c = pick(list, date, "reel:" + half);
+    const c = chooseReel(man && Array.isArray(man.cards) ? man.cards : [], date, half, hijri || null);
     if (c) out.reel = { ...c,
       video: base + "/reels/" + c.id + ".mp4",
       cover: base + "/reels/" + c.id + "-cover.jpg" };

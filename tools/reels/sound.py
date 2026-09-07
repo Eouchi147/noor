@@ -19,7 +19,14 @@ sharp and dying sooner, which is what a struck bell does. It is played into a
 synthesised hall -- a real convolution, not a delay pretending -- with the
 highs decaying first, as they do in a room made of stone.
 
-Under all of it, quietly, the drone and the air from before.
+Under all of it, quietly, the drone and the air from before -- and now, under
+those, a sub: the root two octaves down with its second harmonic beside it, so
+a phone that cannot play 31 Hz still hears the weight of it. It swells on the
+moments the picture blooms and settles between them.
+
+The formats each have their own score (see _score_for). One verse is different
+in kind: the recitation is the subject, so while it sounds the bed steps down
+to the sub and the air, and the notes only speak before and after it.
 
 Nothing is sampled and nothing is licensed: it is all built here in numpy.
 """
@@ -132,6 +139,91 @@ def _note(t, at, hz, amp=1.0, hold=6.0, attack=0.05):
     return out * env_a * live * amp
 
 
+def _sub(t, root, swells, floor=0.55):
+    """the weight under everything: root/2 and root, with a touch of the
+    second harmonic so small speakers hear it. `swells` are (time, amount)."""
+    env = np.full_like(t, floor)
+    for at, amt in swells:
+        u = t - at
+        rise = _smooth(u / 0.32)
+        fall = np.exp(-np.maximum(0.0, u - 0.32) / 2.6)
+        env += amt * rise * fall * (u >= 0)
+    env = np.minimum(env, 1.6)
+    f0 = root / 2.0
+    w = (np.sin(2 * np.pi * f0 * t) * 1.00
+         + np.sin(2 * np.pi * f0 * 2.0 * t + 0.3) * 0.42
+         + np.sin(2 * np.pi * f0 * 3.0 * t + 0.9) * 0.10)
+    return (w * env).astype(np.float32)
+
+
+def _riser(t, at, dur, rng):
+    """a breath drawn in before the bloom: filtered noise rising in pitch and
+    level through `dur` seconds, cut at `at`. Cinema's oldest trick, kept
+    small."""
+    n = len(t)
+    u = (t - (at - dur)) / max(1e-6, dur)
+    live = (u >= 0) & (u < 1.0)
+    if not live.any():
+        return np.zeros_like(t)
+    noise = rng.standard_normal(n).astype(np.float32)
+    lo = _band(noise, 120.0, 900.0)
+    hi = _band(noise, 900.0, 5200.0)
+    for a in (lo, hi):
+        a /= max(1e-9, float(np.abs(a).max()))
+    uu = np.clip(u, 0, 1)
+    env = (uu ** 2.2) * live
+    out = lo * (1.0 - uu) * env + hi * uu * env
+    tail = np.exp(-np.maximum(0.0, t - at) / 0.12) * (t >= at)   # dies at once
+    return (out * (1.0 - (t >= at)) + out * tail).astype(np.float32)
+
+
+def load_voice(path, sr=SR):
+    """a recitation file -> mono float32 at the bed's rate, trimmed of the
+    silence at both ends, and the seconds it lasts. ffmpeg decodes it, so
+    whatever everyayah serves is fine."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-f", "f32le",
+                          "-ac", "1", "-ar", str(sr), "-"],
+                         capture_output=True).stdout
+    x = np.frombuffer(raw, dtype=np.float32).copy()
+    if not len(x):
+        raise SystemExit("could not decode " + path)
+    x /= max(1e-9, float(np.abs(x).max()))
+    # trim: where the voice actually begins and ends, at -42 dBFS over 20 ms
+    win = int(sr * 0.02)
+    e = np.sqrt(np.convolve(x * x, np.ones(win) / win, mode="same"))
+    loud = np.where(e > 10.0 ** (-42.0 / 20.0))[0]
+    if len(loud):
+        a = max(0, loud[0] - int(sr * 0.08)); b = min(len(x), loud[-1] + int(sr * 0.35))
+        x = x[a:b]
+    # a high pass at 80 Hz keeps the recording's room out of the sub's way
+    f = np.fft.rfftfreq(len(x), 1.0 / sr)
+    g = 1.0 / (1.0 + np.exp(-(np.log2(np.maximum(f, 1e-6)) - np.log2(80.0)) * 6.0))
+    x = np.fft.irfft(np.fft.rfft(x) * g, len(x)).astype(np.float32)
+    fade = int(sr * 0.03)
+    x[:fade] *= np.linspace(0, 1, fade, dtype=np.float32)
+    x[-fade:] *= np.linspace(1, 0, fade, dtype=np.float32)
+    x /= max(1e-9, float(np.abs(x).max()))
+    return x, len(x) / float(sr)
+
+
+def envelope(x, fps=30, sr=SR):
+    """the voice's loudness at each frame, 0..1, smoothed the way an ear is:
+    what the picture breathes with"""
+    hop = sr // fps
+    n = int(np.ceil(len(x) / hop))
+    env = np.zeros(n, dtype=np.float32)
+    for i in range(n):
+        seg = x[i * hop:(i + 1) * hop]
+        env[i] = float(np.sqrt(np.mean(seg * seg))) if len(seg) else 0.0
+    env = env / max(1e-9, float(env.max()))
+    # attack fast, release slow
+    out = np.zeros_like(env); v = 0.0
+    for i, e in enumerate(env):
+        v = e if e > v else v + (e - v) * 0.18
+        out[i] = v
+    return out
+
+
 def _score(info, secs, lines):
     """what gets played, and exactly when.
 
@@ -172,10 +264,96 @@ def _score(info, secs, lines):
     return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
 
 
+def _score_day(info, secs):
+    tNum, hookEnd, tBody, step = (float(info["tDate"]), float(info["hookEnd"]),
+                                  float(info["tBody"]), float(info["step"]))
+    tClose = float(info["tClose"]); tTodo = info.get("tTodo")
+    plan = [
+        (0.10, SUS[0], 0.26, 90.0, 1.5), (0.10, SUS[2], 0.19, 90.0, 2.2),
+        (tBody - 0.4, SUS[3], 0.15, 90.0, 2.4),
+        (0.02, SUS[2], 0.46, 7.0, 0.04), (0.30, SUS[0], 0.34, 8.0, 0.05),
+        (tNum, SUS[0], 0.52, 9.0, 0.04),                # the date lands, on the root
+        (tNum + 0.18, SUS[3], 0.30, 8.0, 0.05),
+        (hookEnd - 0.30, SUS[5], 0.56, 6.5, 0.03),      # the name of the day
+        (hookEnd + 0.10, SUS[3], 0.24, 6.0, 0.05),
+    ]
+    walk = [SUS[4], SUS[2], SUS[6]]
+    for i in range(max(1, int(info.get("lines") or 1))):
+        at = tBody + i * step
+        if at > secs - 1.2: break
+        plan.append((at, walk[i % len(walk)], 0.36, 7.5, 0.05))
+    if tTodo:
+        plan.append((float(tTodo), SUS[2], 0.44, 7.5, 0.04))   # what to do: the fifth, bright
+        plan.append((float(tTodo) + 0.22, SUS[4], 0.22, 6.0, 0.05))
+    plan.append((tClose, SUS[0], 0.40, 8.0, 0.05)); plan.append((tClose + 0.30, SUS[2], 0.26, 7.5, 0.05))
+    return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
+
+
+def _score_word(info, secs):
+    tAr, tTerm, tRule, tShort = (float(info["tAr"]), float(info["tTerm"]),
+                                 float(info["tRule"]), float(info["tShort"]))
+    tLong = info.get("tLong"); tClose = float(info["tClose"])
+    plan = [
+        (0.10, SUS[0], 0.24, 90.0, 1.5), (0.10, SUS[2], 0.18, 90.0, 2.2),
+        (tShort - 0.3, SUS[3], 0.16, 90.0, 2.4),
+        (0.02, SUS[2], 0.40, 7.0, 0.04), (0.30, SUS[0], 0.30, 8.0, 0.05),
+        # the word itself: a chord, root fifth octave, the reel's one big note
+        (tAr + 0.12, SUS[0], 0.58, 10.0, 0.06), (tAr + 0.16, SUS[2], 0.44, 9.0, 0.06),
+        (tAr + 0.20, SUS[3], 0.40, 9.0, 0.06), (tAr + 0.50, SUS[5], 0.22, 7.0, 0.05),
+        (tTerm, SUS[4], 0.26, 6.5, 0.04),                # its name, small
+        (tRule, SUS[1], 0.30, 7.0, 0.05),                # the rule draws
+        (tShort, SUS[6], 0.40, 8.0, 0.05), (tShort + 0.26, SUS[3], 0.20, 7.0, 0.05),
+    ]
+    if tLong:
+        plan.append((float(tLong), SUS[4], 0.34, 7.5, 0.05)); plan.append((float(tLong) + 0.24, SUS[0], 0.16, 6.5, 0.06))
+    plan.append((tClose, SUS[0], 0.40, 8.0, 0.05)); plan.append((tClose + 0.30, SUS[2], 0.26, 7.5, 0.05))
+    return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
+
+
+def _score_verse(info, secs):
+    """before the voice and after it; nothing struck while it sounds"""
+    tAyah, tRef = float(info["tAyah"]), float(info["tRef"])
+    r0, r1, tClose = float(info["recStart"]), float(info["recEnd"]), float(info["tClose"])
+    plan = [
+        (0.10, SUS[0], 0.24, 90.0, 1.5), (0.10, SUS[2], 0.18, 90.0, 2.2),
+        (0.02, SUS[2], 0.40, 7.0, 0.04), (0.30, SUS[0], 0.30, 8.0, 0.05),
+        (tAyah + 0.10, SUS[0], 0.50, 9.0, 0.06), (tAyah + 0.16, SUS[3], 0.36, 9.0, 0.06),
+        (tRef, SUS[4], 0.22, 6.0, 0.05),
+        # after the voice: home, on the root, then the fifth above it
+        (r1 + 0.25, SUS[0], 0.56, 9.0, 0.06), (r1 + 0.30, SUS[3], 0.36, 8.0, 0.06),
+        (tClose + 0.2, SUS[2], 0.34, 8.0, 0.05), (tClose + 0.5, SUS[4], 0.18, 7.0, 0.05),
+    ]
+    return [p for p in plan if 0.0 <= p[0] < secs - 0.35]
+
+
+def _score_for(kind, info, secs, lines):
+    if kind == "day": return _score_day(info, secs)
+    if kind == "word": return _score_word(info, secs)
+    if kind == "verse": return _score_verse(info, secs)
+    return _score(info, secs, lines)
+
+
+def _swells_for(kind, info):
+    """where the sub swells: the moments the picture blooms"""
+    hookEnd, tClose = float(info["hookEnd"]), float(info["tClose"])
+    if kind == "word":
+        return [(0.0, 0.8), (float(info["tAr"]), 1.1), (float(info["tShort"]), 0.5), (tClose, 0.9)]
+    if kind == "verse":
+        return [(0.0, 0.9), (float(info["tAyah"]), 0.8), (float(info["recEnd"]) + 0.25, 1.0), (tClose, 0.6)]
+    if kind == "day":
+        out = [(0.0, 0.8), (float(info["tDate"]), 1.0), (hookEnd - 0.3, 0.7), (tClose, 0.9)]
+        if info.get("tTodo"): out.append((float(info["tTodo"]), 0.6))
+        return out
+    return [(0.0, 0.8), (hookEnd - 0.3, 0.9), (float(info["tBody"]), 0.5), (tClose, 0.9)]
+
+
 # ---------------------------------------------------------------- the bed
 
-def build(info, secs, seed, slot="morning", lines=3):
-    """(left, right) float32 for one card, cut to that card's own timeline"""
+def build(info, secs, seed, slot="morning", lines=3, kind="light", voice=None):
+    """(left, right) float32 for one card, cut to that card's own timeline.
+
+    `voice` is (samples, start) for One verse: the recitation, already trimmed,
+    to be placed at `start` seconds. While it sounds the bed steps aside."""
     n = int(round(SR * secs))
     t = np.arange(n, dtype=np.float32) / SR
     rng = np.random.default_rng(int(seed) * 7919 + 13)
@@ -193,13 +371,20 @@ def build(info, secs, seed, slot="morning", lines=3):
 
     root = ROOTS[int(seed) % len(ROOTS)] * (0.9439 if evening else 1.0)
 
+    # while the voice sounds, everything but the sub and the air steps down
+    duck = np.ones(n, dtype=np.float32)
+    if voice is not None:
+        vx, v0 = voice
+        v1 = v0 + len(vx) / float(SR)
+        duck = 1.0 - 0.82 * (_ramp(t, v0 - 0.6, v0 + 0.3) * (1.0 - _ramp(t, v1 - 0.1, v1 + 0.7)))
+
     # ---- the notes ------------------------------------------------------
     # played four octaves up from the drone root, where a phone can hear them
     base = root * 8.0
     dry = np.zeros(n, dtype=np.float32)
-    for at, deg, amp, hold, atk in _score(info, secs, lines):
+    for at, deg, amp, hold, atk in _score_for(kind, info, secs, lines):
         dry += _note(t, at, base * (2.0 ** (deg / 12.0)), amp, hold, atk)
-    dry *= 0.16
+    dry *= 0.16 * duck
 
     hall = _ir()
     wet_l = _conv(dry, hall)
@@ -242,8 +427,31 @@ def build(info, secs, seed, slot="morning", lines=3):
     air_l = low * g_low + mid * g_mid + hil * g_hi
     air_r = low * g_low + mid * g_mid + hir * g_hi
 
-    left = notes_l + dl + air_l
-    right = notes_r + dr + air_r
+    # ---- the weight: the sub, and the breath before the bloom -----------
+    sub = _sub(t, root, _swells_for(kind, info), floor=0.62) * 0.14 * (0.75 + 0.25 * lift)
+    rise = np.zeros(n, dtype=np.float32)      # the first bloom has no run-up: it is t=0
+    if kind in ("word", "verse"):
+        at = float(info["tAr"]) if kind == "word" else float(info["tAyah"])
+        rise = _riser(t, at, 1.1, rng) * 0.055
+    if kind == "verse":
+        rise = rise + _riser(t, float(info["recEnd"]) + 0.25, 1.2, rng) * 0.04
+    else:
+        # a breath drawn before the way home, on every kind that has one
+        rise = rise + _riser(t, tClose, 1.4, rng) * 0.045
+
+    left = notes_l + (dl + sub) * (0.55 + 0.45 * duck) + air_l + rise
+    right = notes_r + (dr + sub) * (0.55 + 0.45 * duck) + air_r + rise
+
+    # ---- the voice ------------------------------------------------------
+    if voice is not None:
+        vx, v0 = voice
+        i0 = int(round(v0 * SR)); i1 = min(n, i0 + len(vx))
+        v = np.zeros(n, dtype=np.float32); v[i0:i1] = vx[:i1 - i0]
+        # a little of the same hall, so the voice is in the room the notes are in
+        vw = _conv(v, hall) * 0.55
+        vl = v * 0.80 + vw * 0.28; vr = v * 0.80 + _conv(v, _ir(seed=ROOM_SEED + 1)) * 0.55 * 0.28
+        left = left * 0.62 + vl
+        right = right * 0.62 + vr
     return left * master, right * master
 
 
@@ -268,9 +476,17 @@ def _lufs(path):
     return float(m[-1]) if m else None
 
 
-def bed(path, info, secs, seed, slot="morning", lines=3, target=TARGET_LUFS):
+VOICE_LUFS = -16.0       # One verse is speech-led, and speech sits where speech sits
+
+
+def target_for(kind):
+    return VOICE_LUFS if kind == "verse" else TARGET_LUFS
+
+
+def bed(path, info, secs, seed, slot="morning", lines=3, target=None, kind="light", voice=None):
     """write one card's bed, trimmed to an exact loudness, and return its path"""
-    left, right = build(info, secs, seed, slot, lines)
+    if target is None: target = target_for(kind)
+    left, right = build(info, secs, seed, slot, lines, kind=kind, voice=voice)
     peak = max(1e-9, float(max(np.abs(left).max(), np.abs(right).max())))
     head = 10.0 ** (-6.0 / 20.0) / peak
     _write(path, left, right, head)
