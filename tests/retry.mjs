@@ -180,5 +180,30 @@ console.log('\nwhat it says is wrong');
 }
 
 globalThis.fetch = realFetch;
+/* ------------------------------------- a network that joined afterwards */
+console.log('\na network that was not live when the post went out');
+{
+  net(); sent = [];
+  process.env.PIN_TOKEN = 'at-pasted'; process.env.PIN_BOARD_NAME = 'NOOR Codex of Light';
+  const inner = globalThis.fetch;
+  const pins = [];
+  globalThis.fetch = async (url, opt) => {
+    const u = String(url);
+    if (u.includes('/v5/boards')) return { ok: true, status: 200, json: async () => ({ items: [{ id: '1', name: 'NOOR Codex of Light' }, { id: '2', name: 'Islamic words, explained' }] }), text: async () => '' };
+    if (u.includes('/v5/pins')) { pins.push(JSON.parse(opt.body)); return { ok: true, status: 201, json: async () => ({ id: 'pin-1' }), text: async () => JSON.stringify({ id: 'pin-1' }) }; }
+    return inner(url, opt);
+  };
+  put({ at: 'x', slot: 'word', state: 'sent', title: 'Qalqalah', results: { facebook: { ok: true, id: 'FBPOST' }, instagram: { ok: true, id: 'IGPOST' } } });
+  const r = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'pinterest', CTX);
+  ok(r.ok === true && r.result && r.result.id === 'pin-1', 'the sent slot goes to the network that joined later');
+  ok(sent.length === 0, 'Facebook and Instagram are not touched');
+  ok(pins.length === 1 && pins[0].board_id === '2' && pins[0].link.includes('/dictionary?w=1'), 'the pin lands on the words board with a link to the entry');
+  const rec = got();
+  ok(rec.results.pinterest && rec.results.pinterest.ok && rec.results.facebook.id === 'FBPOST' && rec.state === 'sent', 'the record gains the third network and keeps the other two');
+  const again = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'pinterest', CTX);
+  ok(again.ok === false && again.already === true && pins.length === 1, 'pressing it twice does not pin twice');
+  globalThis.fetch = inner; delete process.env.PIN_TOKEN; delete process.env.PIN_BOARD_NAME;
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

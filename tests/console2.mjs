@@ -33,7 +33,10 @@ const DIAG = { ok: true, where: 'instagram', slot: 'light', said: 'Meta could no
   cause: 'Instagram could not fetch or process the card image', fix: 'retry', canRetry: true,
   checks: [{ name: 'the card image', ok: true, detail: 'image/png, 41 KB, reachable now' }],
   steps: ['Press Retry.'] };
-const DIALS = { ok: true, dials: { mode: 'auto' }, configured: { fb: true, ig: true } };
+const DIALS = { ok: true, dials: { mode: 'auto' }, configured: { fb: true, ig: true },
+  channels: [{ id: 'facebook', live: true, draftOnly: false, spec: {} }, { id: 'instagram', live: true, draftOnly: false, spec: {} },
+             { id: 'youtube', live: true, draftOnly: false, spec: { video: 'required' } }, { id: 'pinterest', live: true, draftOnly: false, spec: {} },
+             { id: 'x', live: false, draftOnly: false, spec: {} }, { id: 'reddit', live: false, draftOnly: true, spec: {} }] };
 const TOKENS = { tokens: { fb: { daysLeft: 41, renewedAt: '2026-08-19' }, ig: { daysLeft: 41 }, lifeDays: 60 } };
 const REDDIT = { held: [{ slot: 'light', title: 'A draft for r/islam', text: 'Body of the draft', links: [] }] };
 const LOG = { log: [{ at: '2026-09-07T12:00:00Z', slot: 'light', state: 'partial' }], queue: [] };
@@ -128,7 +131,7 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   }));
   ok(p.retry.includes('light|instagram'), 'the network that refused is a Retry button');
   ok(!p.retry.includes('light|facebook'), 'the one that worked is not');
-  ok(!p.retry.some(x => x.startsWith('word|')), 'a row where both worked offers no retry');
+  ok(!p.retry.some(x => x === 'word|facebook' || x === 'word|instagram'), 'a row where both worked offers no retry of either');
   ok(!p.retry.includes('reelB|instagram'), 'a container still transcoding is not offered a retry');
   ok(p.fix.includes('light|instagram') && p.why.includes('light|instagram'), "Fix it and What's wrong? sit on the half-failed row");
   ok(!p.send.includes('light'), 'Post now is NOT on the half-failed row (it would post twice)');
@@ -139,6 +142,18 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(p.gridEmpty, 'the reels grid is not built until the fold opens');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   await pg.screenshot({ path: 'tests/shots/console2-' + w + '-posts.png', fullPage: true });
+
+  /* a network that joined after the post went out is offered on the sent rows */
+  ok(await pg.$('#slot-word [data-retry="word|pinterest"]') !== null, 'a sent card offers + pinterest, which was not live when it went out');
+  ok(await pg.$('#slot-word [data-retry="word|youtube"]') === null, 'but not YouTube, which takes only video');
+  ok(await pg.$('#slot-word [data-retry="word|x"]') === null && await pg.$('#slot-word [data-retry="word|reddit"]') === null, 'and nothing that is off or draft-only');
+  ok(await pg.$('#slot-dawn [data-retry="dawn|facebook"]') === null, 'a network that already took the post is not offered again');
+  ok(await pg.$('#slot-reelA [data-retry="reelA|pinterest"]') === null, 'an owed slot offers nothing extra: Post now covers it');
+  posted.length = 0;
+  await pg.click('#slot-word [data-retry="word|pinterest"]');
+  await pg.waitForTimeout(500);
+  ok(posted.length === 1 && posted[0].body.action === 'retry-channel' && posted[0].body.slot === 'word' && posted[0].body.where === 'pinterest' && !posted[0].body.force,
+     '+ pinterest asks for retry-channel on that network alone, without force');
 
   posted.length = 0;
   await pg.click('[data-retry="light|instagram"]');

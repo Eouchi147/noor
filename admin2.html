@@ -143,6 +143,8 @@ nav.bar button .dot{position:absolute;top:10px;right:calc(50% - 18px);width:7px;
 .chan.ok{color:var(--good)}.chan.pending{color:var(--wait)}
 .chan.bad{color:var(--bad);border-color:rgba(240,138,138,.35);cursor:pointer}
 .chan.bad:active{background:rgba(240,138,138,.12)}
+.chan.more{color:var(--blue);border-color:rgba(126,155,209,.35);cursor:pointer;background:none}
+.chan.more:active{background:rgba(126,155,209,.12)}
 .slot{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 8px}
 .slot .h{display:flex;align-items:baseline;gap:10px}
 .slot .h code{font-size:11px;background:none;border:0;color:var(--gold);padding:0}
@@ -382,13 +384,18 @@ function drawPosts(force){
     var slots=t.slots||[];
     var old=t.legacy;if(old&&old.state==="sent")slots.forEach(function(s){if(s.id==="light"&&(!s.state||s.state==="due"||s.state==="waiting")){s.state="sent";s.legacy=true}});
     var hijri=t.plan&&t.plan.hijri?t.plan.hijri.d+" "+t.plan.hijri.name+" "+t.plan.hijri.y:"";
+    /* a network that joined after a post went out (Pinterest, YouTube) is
+       offered on the sent rows, so the day need not wait for tomorrow */
+    var LIVE=((d.channels)||[]).filter(function(c){return c.live&&!c.draftOnly});
     var rows=slots.map(function(s){
       var r=s.results||{};var broke=[];
+      var isReel=/^reel/.test(s.id);
+      var more=(s.state==="sent"||s.state==="partial")?LIVE.filter(function(c){return !r[c.id]&&(isReel||!(c.spec&&c.spec.video==="required"))&&!INFLIGHT[s.id+"|"+c.id]}).map(function(c){return '<button class="chan more" data-retry="'+esc(s.id)+'|'+esc(c.id)+'" title="'+esc(c.id)+' was not live when this went out; send it there too">+ '+esc(c.id)+'</button>'}).join(""):"";
       var where=Object.keys(r).filter(function(k){return k!=="reddit"}).map(function(k){var x=r[k]||{};
         if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>';
         if(x.pending)return '<span class="chan pending">'+esc(k)+' …</span>';
         if(INFLIGHT[s.id+"|"+k])return '<button class="chan bad" disabled>'+esc(k)+' …</button>';
-        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="send this one again">'+esc(k)+' ↻</button>'}).join("");
+        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="send this one again">'+esc(k)+' ↻</button>'}).join("")+more;
       var owed=(s.state==="due"||s.state==="failed")&&!INFLIGHT[s.id];
       var acts='<button class="btn ghost sm" data-prev="'+esc(s.id)+'">Preview</button>'
         +(INFLIGHT[s.id]?'<button class="btn sm" disabled>Sending…</button>':'')
