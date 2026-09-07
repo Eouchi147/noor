@@ -968,10 +968,6 @@ file or dismiss the finding.</p>
 <!-- ===================== TRAFFIC ===================== -->
 <div class="pane" id="pane-traffic">
 
-<div class="panel" id="t-honest" style="margin-bottom:.7rem">
-  <p class="muted" style="margin:0">Checking what is counted&hellip;</p>
-</div>
-
 <div class="tstat">
 <div class="tc"><div class="v" data-t="p30">·</div><div class="l">Readers · 30 days</div><div class="d" data-d="p30"></div></div>
 <div class="tc"><div class="v" data-t="v30">·</div><div class="l">Page views · 30 days</div><div class="d" data-d="v30"></div></div>
@@ -1338,12 +1334,7 @@ document.querySelectorAll(".tab").forEach(function(t){
 });
 function openTabFromHash(){var h=(location.hash||"").replace("#","");var t=document.querySelector('.tab[data-pane="'+h+'"]');if(t)t.click()}
 
-/* Whoever is standing here is the owner, and the owner is not a reader. The
-   console shares an origin with the site, so marking the browser from here
-   takes his laptop and his phone out of the count the moment he opens it on
-   each -- without him having to know that a flag exists. */
-function showDash(){try{localStorage.setItem("noor_nocount","1")}catch(e){}
-  $("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();loadBrief();(window.__noorRooms||[]).forEach(function(f){try{f()}catch(e){}});openTabFromHash()}
+function showDash(){$("gate").hidden=true;$("dash").hidden=false;load();loadVisitors();loadWall();loadBrief();(window.__noorRooms||[]).forEach(function(f){try{f()}catch(e){}});openTabFromHash()}
 
 /* ---------------------------------------------------------------------------
    the briefing
@@ -1639,65 +1630,10 @@ $("v-go").addEventListener("click",function(){
     $("t-a").textContent=days[0].date;
     $("t-b").textContent=days[days.length-1].date;
     $("t-peak").textContent="peak "+max+" on "+days[peakI].date;
-    /* the line between numbers that counted the owner and the machines, and
-       numbers that did not. Everything left of it reads high. */
-    var cf=(DATA&&DATA.cleanFrom)||"";
-    var ci=cf?days.findIndex(function(d){return d.date>=cf}):-1;
-    if(ci>0){
-      var x=(pad+ci*((W-pad*2)/Math.max(1,vals.length-1))).toFixed(1);
-      svg.insertAdjacentHTML("beforeend",
-        '<line x1="'+x+'" y1="'+pad+'" x2="'+x+'" y2="'+(H-pad)+'" stroke="#7E9BD1" '
-        + 'stroke-width="1" stroke-dasharray="3 3" opacity=".75"><title>Filtering began '
-        + esc(cf)+'. Everything to the left counted the owner and the machines too.</title></line>');
-    }
   }
-
-  /* WHAT IS COUNTED, said plainly.
-
-     A filter nobody can see the effect of is a filter nobody should trust, so
-     this reports the gate's own tally rather than asserting that it works, and
-     says outright which of these numbers were gathered before it existed. */
-  var FWHY={bot:"crawlers, AI collectors and link previewers",
-            noua:"requests with no browser name at all",
-            preview:"preview builds and localhost"};
-  function honest(v){
-    var box=$("t-honest"); if(!box) return;
-    var me=false; try{me=localStorage.getItem("noor_nocount")==="1"}catch(e){}
-    var f=(v&&v.filtered)||{total:0,by:{}};
-    var by=Object.keys(f.by||{}).map(function(k){
-      return (f.by[k]||0).toLocaleString()+" "+(FWHY[k]||k)}).join(" &middot; ");
-    var cf=(v&&v.cleanFrom)||"";
-    box.innerHTML=
-      '<div style="display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap">'
-      + '<b style="font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi)">What is counted</b>'
-      + '<span style="flex:1"></span>'
-      + '<span style="font-size:.72rem;color:'+(me?"#8ED49B":"#F08A8A")+'">'
-      + (me?"&#10003; this browser is not counted":"&#10007; this browser IS being counted")+'</span>'
-      + '<button class="ghost" id="t-mytoggle" style="padding:.25rem .7rem;font-size:.7rem">'
-      + (me?"Count this browser":"Stop counting this browser")+'</button></div>'
-      + '<p class="muted" style="margin:.5rem 0 0;font-size:.8rem">'
-      + 'Turned away in the last 30 days: <b>'+(f.total||0).toLocaleString()+'</b>'
-      + (by?' &mdash; '+by:'')+'.</p>'
-      + '<p class="muted" style="margin:.35rem 0 0;font-size:.8rem">'
-      + (cf ? 'Filtering began <b>'+esc(cf)+'</b>. Anything before that date counted the owner '
-            + 'and the machines too, so read it as a shape rather than a number.'
-           : 'Filtering starts with the next visit to the live site.')
-      + '</p>'
-      + '<p class="muted" style="margin:.35rem 0 0;font-size:.75rem">'
-      + 'Marking is per browser, because that is all this counter can honestly know '
-      + 'without an identifier, and it has never had one. Do it once on each device you '
-      + 'read the site with &mdash; or just open this console there.</p>';
-  }
-  document.addEventListener("click",function(e){
-    var t=e.target; if(!t||t.id!=="t-mytoggle") return;
-    var on=false; try{on=localStorage.getItem("noor_nocount")==="1"}catch(e2){}
-    try{ on?localStorage.removeItem("noor_nocount"):localStorage.setItem("noor_nocount","1"); }catch(e3){}
-    honest(DATA);
-  });
 
   function render(v){
     DATA=v;
-    honest(v);
     var days=v.days||[], people=days.reduce(function(a,d){return a+(d.people||0)},0);
     var views=v.totals?v.totals.views30:0;
     var today=days.length?days[days.length-1].people:0;
@@ -1782,9 +1718,6 @@ $("v-go").addEventListener("click",function(){
     fetch("/api/visitors",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(v){
       if(!v){return}
       if(!v.enabled){
-        /* the counter is off, but which browsers are excluded is still a real
-           setting, and a panel left saying "Checking..." for ever is a bug */
-        honest(v);
         $("t-src").innerHTML='<p class="muted">The lamp counter is not on yet. Either add REDIS_URL in Vercel with the connection URL of a Redis you already have, or make one from the Storage tab (Create Database, Upstash). Then Redeploy. The Pulse tab has both roads written out.</p>';
         return;
       }
