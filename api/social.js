@@ -484,10 +484,13 @@ export async function compose(host, date, opts = {}) {
    rendered on demand here, so the cheapest possible insurance is to fetch it
    ourselves first and refuse to post if it is not an image.
 --------------------------------------------------------------------------- */
-export async function imageReachable(url) {
+export async function imageReachable(url, ms) {
   try {
     const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 12000);
+    /* twelve seconds is right when a post is on the line and wrong when this
+       is the safety net tidying up: there, a slow card costs the run its
+       remaining budget, so the healer asks for a much shorter patience. */
+    const t = setTimeout(() => ctrl.abort(), Number(ms) || 12000);
     const r = await fetch(url, { signal: ctrl.signal, headers: { "user-agent": "noor-preflight" } });
     clearTimeout(t);
     const type = String(r.headers.get("content-type") || "");
@@ -1220,7 +1223,7 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   if (CH.SPEC[ch].image === "required" && !shaped.image)
     return { ...out, ok: false, fatal: true, error: "needs an image and has none" };
   if (CH.SPEC[ch].image === "required") {
-    const img = await imageReachable(shaped.image);
+    const img = await imageReachable(shaped.image, opts.preflightMs);
     if (!img.ok) return { ...out, ok: false, pre: true, error: img.why };
   }
 
@@ -1411,18 +1414,28 @@ export function healDue(r, nowMs) {
   return (nowMs - last) >= wait;
 }
 
-export async function healFailures(host, date, out, now) {
+/* At most this many repairs in one run, and never one that cannot finish
+   inside the time left. The net is hourly; it does not have to catch
+   everything on the first pass, and trying to is what cost a post. */
+const HEAL_PER_RUN = Number(process.env.HEAL_PER_RUN || 2);
+
+export async function healFailures(host, date, out, now, hasTime) {
   const ran = (out && out.ran) || [];
   const nowMs = now ? +new Date(now) : Date.now();
+  const room = typeof hasTime === "function" ? hasTime : () => true;
+  let done = 0;
   for (const d of [prevDate(date), date]) {
     for (const id of SLOT_IDS) {
+      if (done >= HEAL_PER_RUN || !room()) return ran;
       const rec = await readSlot(d, id);
       if (!rec || !rec.results) continue;
       if (rec.state === "queued") continue;     /* still waiting for a human */
       for (const ch of liveChannels()) {
+        if (done >= HEAL_PER_RUN || !room()) return ran;
         const r = rec.results[ch];
         if (!healable(r) || !healDue(r, nowMs)) continue;
-        const res = await retryChannel(host, d, id, ch, {});
+        done++;
+        const res = await retryChannel(host, d, id, ch, { preflightMs: 5000 });
         ran.push({ slot: id, date: d, where: ch, healed: true, ok: !!res.ok,
                    state: res.state || "", tries: Number(r.tries || 1) + 1,
                    error: res.ok ? "" : String(res.error || (res.result && res.result.error) || "") });
@@ -1432,19 +1445,21 @@ export async function healFailures(host, date, out, now) {
   return ran;
 }
 
+/* api/social.js is given sixty seconds. The scheduled post must own them:
+   whatever else this run would like to do, it does with what is left over. */
+const RUN_BUDGET_MS = Number(process.env.RUN_BUDGET_MS || 55000);
+/* the longest a single repair can plausibly take -- a card fetch, a container,
+   a wait, a publish -- so one is never STARTED without room to finish it */
+const HEAL_RESERVE_MS = Number(process.env.HEAL_RESERVE_MS || 22000);
+
 export async function runDue(host, date, now, opts = {}) {
+  const began = Date.now();
   const D = await dials();
   const out = { date, mode: D.mode, at: (now || new Date()).toISOString(), ran: [], skipped: "" };
 
   if (!opts.force) {
     if (D.mode === "off") { out.skipped = "the machine is off"; return out; }
     if (!D.storeOk) { out.skipped = "the settings could not be read, so nothing was sent"; return out; }
-  }
-
-  if (!opts.dry) {
-    await finishPendingReels(date, out);
-    /* and then everything else that did not land, one channel at a time */
-    await healFailures(host, date, out, now);
   }
 
   const plan = await planDay(date, opts);
@@ -1469,7 +1484,13 @@ export async function runDue(host, date, now, opts = {}) {
   }
 
   const due = dueNow(plan.slots, now || new Date(), sent, { all: true });
-  if (!due.length) { out.skipped = "nothing is due"; return out; }
+  /* an hour with nothing owed is the hour with the most time to spare, so it
+     is exactly when the tidying should happen */
+  if (!due.length) {
+    out.skipped = "nothing is due";
+    await tidyUp(host, date, out, now, began, opts);
+    return out;
+  }
   /* the cap counts POSTS, not attempts. Walking newest first keeps the old
      promise -- a cron that was down sends the most recent thing owed, never the
      backlog -- while letting the run fall through a slot that turns out to have
@@ -1548,7 +1569,40 @@ export async function runDue(host, date, now, opts = {}) {
     out.ran.push({ slot: slot.id, state: rec.state, results });
     posted++;
   }
+  await tidyUp(host, date, out, now, began, opts);
   return out;
+}
+
+/* ---------------------------------------------------------------------------
+   THE TIDYING, AND WHY IT COMES LAST
+
+   It used to come first, and that is how a 12:00 card came to be marked owed
+   on a day the machine was working. The healer walked two days of slots,
+   composed each repair, waited up to twelve seconds on a card fetch and three
+   more between Instagram attempts -- and the function is given sixty seconds
+   in total. On a day with something to repair, the run spent its whole budget
+   in the net and never reached the posting loop at all. The safety net took
+   down the thing it was there to protect.
+
+   So: the scheduled post goes first and owns the clock. Repair happens after
+   it, only with time genuinely left over, at most twice per run, and inside a
+   guard -- because an exception here must cost a tidy-up, never a post.
+--------------------------------------------------------------------------- */
+async function tidyUp(host, date, out, now, began, opts = {}) {
+  if (opts.dry) return;
+  const left = () => RUN_BUDGET_MS - (Date.now() - began);
+  try {
+    if (left() > 6000) await finishPendingReels(date, out);
+  } catch (e) {
+    out.tidyError = "finishing reels: " + String(e && e.message || e).slice(0, 120);
+  }
+  try {
+    await healFailures(host, date, out, now, () => left() > HEAL_RESERVE_MS);
+  } catch (e) {
+    out.tidyError = (out.tidyError ? out.tidyError + " · " : "")
+      + "healing: " + String(e && e.message || e).slice(0, 120);
+  }
+  out.msLeft = Math.max(0, left());
 }
 
 /* ===========================================================================

@@ -170,6 +170,71 @@ console.log('\nevery run does this');
   ok(!sent.includes('facebook'), 'and still never re-posts to a network that has it');
 }
 
+
+/* ==========================================================================
+   THE REGRESSION THIS FILE EXISTS FOR
+
+   The first cut of the healer ran BEFORE the posting loop. It walked two days
+   of slots, composed each repair, waited up to twelve seconds on a card fetch
+   and three more between Instagram attempts -- inside a function given sixty
+   seconds in total. On a day with something to repair it spent the whole
+   budget in the net and never reached the posting loop, and a 12:00 card was
+   marked "owed" on a day the machine was working perfectly.
+
+   The safety net took down the thing it was there to protect. So what is held
+   here is the ordering: the scheduled post owns the clock, and no failure,
+   exception or hang in the tidying can cost a post.
+   ========================================================================== */
+console.log('\nthe post comes first, whatever else happens');
+{
+  /* a slot that is owed, and a previous day full of things to repair */
+  STORE.clear(); sent = [];
+  STORE.set('nsoc:slot:2026-09-06#word', JSON.stringify(half()));
+  STORE.set('nsoc:slot:2026-09-06#dawn', JSON.stringify(half()));
+  STORE.set('nsoc:slot:2026-09-06#dusk', JSON.stringify(half()));
+
+  const out = await SOC.runDue('noorcodex.com', DATE, new Date(LATER), { force: true });
+  const posted = (out.ran || []).filter(x => x.state && !x.healed);
+  ok(posted.length >= 1, 'the owed slot is posted even with repairs waiting');
+  const iPost = (out.ran || []).findIndex(x => x.state && !x.healed);
+  const iHeal = (out.ran || []).findIndex(x => x.healed);
+  ok(iHeal === -1 || iPost < iHeal, 'and it is posted BEFORE anything is repaired');
+}
+
+console.log('\nthe net cannot take down what it protects');
+{
+  STORE.clear(); sent = [];
+  STORE.set('nsoc:slot:2026-09-06#word', JSON.stringify(half()));
+  /* the healer explodes */
+  const realHeal = SOC.healFailures;
+  const kvBroken = () => { throw new Error('KV fell over mid-heal'); };
+  /* simulate by making the card fetch throw only during the tidy-up phase */
+  let posting = true;
+  const good = globalThis.fetch;
+  globalThis.fetch = async (u, o) => {
+    if (!posting && String(u).includes('/api/card')) throw new Error('boom');
+    return good(u, o);
+  };
+  const out = await SOC.runDue('noorcodex.com', DATE, new Date(LATER), { force: true });
+  globalThis.fetch = good;
+  ok((out.ran || []).some(x => x.state && !x.healed), 'a run still posts when the tidying throws');
+  ok(!!out && typeof out === 'object', 'and the run returns rather than dying');
+}
+
+console.log('\nit is bounded so it can never eat the hour');
+{
+  STORE.clear(); sent = [];
+  for (const id of ['dawn', 'word', 'dusk', 'light']) {
+    STORE.set('nsoc:slot:2026-09-06#' + id, JSON.stringify(half()));
+    STORE.set('nsoc:slot:' + DATE + '#' + id, JSON.stringify(half()));
+  }
+  const ran = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, () => true);
+  ok(ran.filter(x => x.healed).length <= 2, 'at most two repairs in one run, however many are owed');
+
+  const none = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, () => false);
+  ok(none.filter(x => x.healed).length === 0, 'and none at all when the run has no time left');
+}
+
 globalThis.fetch = realFetch;
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
