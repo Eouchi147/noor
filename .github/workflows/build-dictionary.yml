@@ -1,0 +1,80 @@
+# NOOR - build the Encyclopedia of the Path
+#
+# The hub (/dictionary) and the 523 word pages (/dictionary/<word>) are both
+# generated from build/dict-*.json by scripts/gen-dictionary.py. Nothing is
+# pushed to main: the run opens a pull request with the result, reviewed and
+# merged like any other change.
+#
+# It runs by hand from the Actions tab, and by itself whenever the source
+# JSON or the generator changes on main -- so adding a word is editing one
+# JSON file and merging the pull request that appears.
+
+name: dictionary
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "build/dict-*.json"
+      - "scripts/gen-dictionary.py"
+      - "scripts/_dict_figs.py"
+      - "scripts/room.py"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dictionary
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: build the hub and every word page
+        run: python3 scripts/gen-dictionary.py
+
+      - name: what changed
+        run: |
+          echo '### Encyclopedia' >> "$GITHUB_STEP_SUMMARY"
+          echo "word pages: $(ls dictionary/*.html | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          git add -A
+          echo "files added: $(git diff --cached --diff-filter=A --name-only | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          echo "files removed: $(git diff --cached --diff-filter=D --name-only | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          echo "files changed: $(git diff --cached --diff-filter=M --name-only | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          git reset -q
+
+      - name: open a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: dictionary/built
+          delete-branch: true
+          commit-message: |
+            dictionary: build the hub and the word pages
+
+            Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+            Claude-Session: https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
+          title: "Encyclopedia: rebuilt hub and word pages"
+          body: |
+            Built from `build/dict-*.json` by `scripts/gen-dictionary.py`.
+
+            The word pages live under `/dictionary/`, where their canonical and the
+            sitemap have always said they do. The hub links to every one of them
+            with a real anchor, each page links to its neighbours and to six more
+            from its domain, and the old copies at the site root are removed --
+            except `hajj.html` and `quran.html`, which are rooms, not words, and
+            are never touched.
+
+            🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+            https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
+
