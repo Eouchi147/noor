@@ -35,8 +35,11 @@ function pinterest(opts = {}) {
       }
       if (u.includes("/v5/boards")) {
         if (opts.boardsFail) return reply(403, {});
+        if ((init.method || "GET") === "POST") { const b = JSON.parse(body); boards.push({ id: "made-" + boards.length, name: b.name }); return reply(201, { id: "made-" + (boards.length - 1), name: b.name }); }
         return reply(200, { items: boards });
       }
+      if (u.includes("/v5/pins") && opts.trial)
+        return reply(403, { code: 3, message: "Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead." });
       if (u.includes("/v5/pins")) {
         const tok = (init.headers || {}).Authorization || "";
         if (opts.expireFirstPin && !tok.includes("refreshed"))
@@ -90,14 +93,17 @@ section("2. a board may be named instead of numbered");
   ok(P.calls.filter(c => c.url.includes("/v5/boards")).length === before, "and the lookup is not repeated for the next Pin");
 }
 
-section("3. a name that matches nothing fails honestly");
+section("3. a name that matches nothing is made, once, in public");
 {
   clearEnv();
   process.env.PIN_BOARD_NAME = "A board that was never made";
   process.env.PIN_TOKEN = "at-pasted";
   const CH = await load();
-  const r = await CH.sendPinterest(SHAPED, { fetch: pinterest().fetch });
-  ok(!r.ok && /no board/.test(r.err), "it names the real problem: " + r.err);
+  const P = pinterest();
+  const r = await CH.sendPinterest(SHAPED, { fetch: P.fetch });
+  const made = P.calls.filter(c => c.url.endsWith("/v5/boards") && c.method === "POST");
+  ok(r.ok && made.length === 1 && JSON.parse(made[0].body).privacy === "PUBLIC" && JSON.parse(made[0].body).name === "A board that was never made",
+     "the board is created, public, under exactly that name, and the pin lands on it");
 }
 
 section("4. the refresh token alone is enough to post");
@@ -233,6 +239,40 @@ section("10. a reel is a video pin");
   const Pf = pinterest({ mediaFails: true });
   const rf = await CH.sendPinterest(sh, { fetch: Pf.fetch });
   ok(!rf.ok && /process/.test(rf.err) && !Pf.calls.some(c => c.url.endsWith("/v5/pins")), "a video Pinterest cannot process makes no pin and says why");
+}
+
+section("11. Trial access, and the sandbox it points to");
+{
+  clearEnv();
+  process.env.PIN_TOKEN = "at-pasted"; process.env.PIN_BOARD_NAME = "NOOR Codex of Light";
+  const CH = await load();
+  const P = pinterest({ trial: true });
+  const r = await CH.sendPinterest(SHAPED, { fetch: P.fetch });
+  ok(r.ok === false && r.fatal === true && r.trial === true && /sandbox/.test(r.err), "the Trial refusal is a state, not a fault: fatal, named, and it says what to set");
+  ok(P.calls.filter(c => c.url.includes("/v5/pins")).length === 1, "and it is not tried twice in one go");
+
+  clearEnv();
+  process.env.PIN_API_BASE = "https://api-sandbox.pinterest.com";
+  process.env.PIN_APP_ID = "1606775"; process.env.PIN_APP_SECRET = "s3cret";
+  process.env.PIN_REFRESH_TOKEN = "rt-production"; process.env.PIN_SANDBOX_REFRESH_TOKEN = "rt-sandbox";
+  process.env.PIN_BOARD_NAME = "NOOR Codex of Light";
+  const CH2 = await load();
+  ok(CH2.pinSandbox() === true && CH2.configured.pinterest(), "with PIN_API_BASE on the sandbox the channel is configured from the sandbox token");
+  const boards = [];
+  const P2 = pinterest({ boards });
+  const reelShaped = CH2.shape({ title: "With hardship, ease", caption: "the caption", link: "https://noorcodex.com/verse/94",
+    image: "https://noorcodex.com/reels/verse-94-5-cover.jpg", video: "https://noorcodex.com/reels/verse-94-5.mp4", reel: true, kind: "verse" }, "pinterest");
+  const r2 = await CH2.sendPinterest(reelShaped, { fetch: P2.fetch });
+  const tokCall = P2.calls.find(c => c.url.includes("/v5/oauth/token"));
+  ok(tokCall && tokCall.url.startsWith("https://api-sandbox.pinterest.com") && tokCall.body.includes("rt-sandbox"), "the token is minted on the sandbox host from the sandbox refresh token, not the production one");
+  ok(r2.ok && r2.sandbox === true, "the pin is made, and the result says it was the sandbox");
+  const made = P2.calls.filter(c => c.url.endsWith("/v5/boards") && c.method === "POST").map(c => JSON.parse(c.body).name);
+  ok(made.length === 1 && made[0] === "One verse of the Qur'an", "the sandbox had no boards, so the verse board was created there, once");
+  const pin = JSON.parse(P2.calls.find(c => c.url.includes("/v5/pins")).body);
+  ok(pin.media_source.source_type === "image_url" && pin.media_source.url === reelShaped.image && !P2.calls.some(c => c.url.endsWith("/v5/media")), "the sandbox takes no video, so the reel's cover is pinned as an image and no upload is attempted");
+  ok(pin.board_id === "made-0" && P2.calls.every(c => !c.url.startsWith("https://api.pinterest.com")), "every call went to the sandbox host");
+  const r3 = await CH2.sendPinterest(reelShaped, { fetch: P2.fetch });
+  ok(r3.ok && P2.calls.filter(c => c.url.endsWith("/v5/boards") && c.method === "POST").length === 1, "the second pin reuses the board it made");
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");

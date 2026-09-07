@@ -167,7 +167,7 @@ export const configured = {
      pasted in, or the app credentials that can mint one. */
   pinterest: () => !!((env("PIN_BOARD_ID") || env("PIN_BOARD_NAME")) &&
                       (env("PIN_TOKEN") ||
-                       (env("PIN_APP_ID") && env("PIN_APP_SECRET") && env("PIN_REFRESH_TOKEN")))),
+                       (env("PIN_APP_ID") && env("PIN_APP_SECRET") && (env("PIN_REFRESH_TOKEN") || env("PIN_SANDBOX_REFRESH_TOKEN"))))),
   /* X is double-gated on purpose. Every post there is billed, and a post
      carrying a link is billed at thirteen times the base rate, so a token
      sitting in the environment must not be enough to start spending. It takes
@@ -222,9 +222,16 @@ let PIN_MEM = { tok: "", at: 0 };
    path stays untested until the day it goes live, which is the worst possible
    day to find out. PIN_API_BASE moves every call at once. */
 export const pinBase = () => (env("PIN_API_BASE") || "https://api.pinterest.com").replace(/\/+$/, "");
+/* Trial access is the sandbox: Pinterest refuses every pin against the real
+   API until Standard access is granted, and the sandbox has tokens of its
+   own. So a sandbox refresh token may sit beside the production one
+   (PIN_SANDBOX_REFRESH_TOKEN), and moving between the two worlds is one
+   variable, PIN_API_BASE, with nothing pasted twice. */
+export const pinSandbox = () => /api-sandbox\./.test(pinBase());
+const pinRefreshToken = () => (pinSandbox() && env("PIN_SANDBOX_REFRESH_TOKEN")) || env("PIN_REFRESH_TOKEN");
 
 async function pinRefresh(fetcher) {
-  const id = env("PIN_APP_ID"), sec = env("PIN_APP_SECRET"), rt = env("PIN_REFRESH_TOKEN");
+  const id = env("PIN_APP_ID"), sec = env("PIN_APP_SECRET"), rt = pinRefreshToken();
   if (!id || !sec || !rt) return null;
   try {
     const r = await (fetcher || fetch)(pinBase() + "/v5/oauth/token", {
@@ -287,6 +294,14 @@ export async function pinBoardId(tok, opts = {}, name = "") {
     let hit = find(want);
     /* the kind's board is not on the profile yet: the general one takes it */
     if (!hit && name) hit = fixed ? { id: fixed } : (general ? find(general) : null);
+    /* nothing at all by that name -- the sandbox starts empty, and a profile
+       may lose a board -- so the board is made, public, and used from then on */
+    if (!hit) {
+      const made = await jsonPost(pinBase() + "/v5/boards",
+        { name: name || general, privacy: "PUBLIC", description: "From NOOR Codex of Light, a free library of Islam: noorcodex.com" },
+        { Authorization: "Bearer " + tok }, opts.fetch);
+      if (made.ok && made.j && made.j.id) hit = { id: made.j.id };
+    }
     if (hit && hit.id) { PIN_BOARD_MEM.set(want.toLowerCase(), { id: String(hit.id), at: Date.now() }); return String(hit.id); }
   } catch { }
   /* the lookup itself failed: a pasted board id still stands */
@@ -335,7 +350,9 @@ export async function sendPinterest(shaped, opts = {}) {
   if (!board) return { ok: false, err: "pinterest has no board: set PIN_BOARD_ID or PIN_BOARD_NAME" };
   if (!shaped.image) return { ok: false, err: "pinterest needs an image and none was built" };
   let media = null;
-  if (shaped.video) {
+  /* the sandbox takes no video: the reel's cover stands in as an image pin,
+     so the path is exercised end to end before Standard access arrives */
+  if (shaped.video && !pinSandbox()) {
     const v = await pinUploadVideo(shaped.video, tok, opts.fetch);
     if (!v.ok) return v;
     media = v.id;
@@ -350,7 +367,12 @@ export async function sendPinterest(shaped, opts = {}) {
     const fresh = await pinRefresh(opts.fetch);
     if (fresh) r = await jsonPost(pinBase() + "/v5/pins", body, { Authorization: "Bearer " + fresh }, opts.fetch);
   }
-  return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned", board: shaped.board || "" } : r;
+  if (!r.ok && /trial access/i.test(String(r.err))) {
+    /* not a fault, a stage: nothing to retry until Pinterest grants Standard */
+    return { ok: false, fatal: true, trial: true,
+             err: "Pinterest keeps the app on Trial access, so pins are refused on the real API until Standard access is granted. For the recording set PIN_API_BASE to https://api-sandbox.pinterest.com and open the door again; when Standard lands, remove it." };
+  }
+  return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned", board: shaped.board || "", sandbox: pinSandbox() || undefined } : r;
 }
 
 export async function sendX(shaped, opts = {}) {

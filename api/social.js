@@ -1508,7 +1508,25 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
     if (out.cause) { out.canRetry = out.fix === "retry" || out.fix === "wait"; return { ...out, ok: true }; }
   }
 
-  /* Meta's own code first, because it is the only thing here Meta stands behind */
+  /* Pinterest speaks in words too */
+  if (ch === "pinterest") {
+    const said = String(out.said || "");
+    if (r && r.trial || /trial access/i.test(said)) {
+      out.cause = "Pinterest keeps the app on Trial access: pins are refused on the real API until Standard access is granted"; out.fix = "manual";
+      out.steps = ["Nothing is broken and nothing is retried.",
+                   "For the recording Pinterest asks for, set PIN_API_BASE to https://api-sandbox.pinterest.com in Vercel, redeploy, open /api/social?action=pin-auth again and paste the PIN_SANDBOX_REFRESH_TOKEN it shows.",
+                   "When Standard access is granted, remove PIN_API_BASE: the house then pins for real with the token it already has."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+    if (/refresh|401|unauthor|expired/i.test(said)) {
+      out.cause = "the Pinterest token no longer works"; out.fix = "token";
+      out.steps = ["Open /api/social?action=pin-auth and give access again.", "Paste the refresh token it shows into Vercel and redeploy."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+  }
+  const NET = ch === "pinterest" ? "Pinterest" : ch === "youtube" ? "YouTube" : "Meta";
+
+  /* the network's own code first, because it is the only thing here it stands behind */
   const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));
   if (hit) { out.cause = hit.cause; out.fix = hit.fix; out.steps = hit.steps.slice(); }
   else {
@@ -1520,11 +1538,11 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
       if (out.fix === "retry") out.steps.push("Then press Retry on this row.");
     } else {
       out.cause = out.said
-        ? "no cause we can establish. Every check above passes now, so this reads as a bad minute at Meta rather than something wrong with the post"
+        ? "no cause we can establish. Every check above passes now, so this reads as a bad minute at " + NET + " rather than something wrong with the post"
         : "nothing was recorded against this channel";
       out.fix = "retry";
       out.steps = ["Everything checks out on our side right now.",
-                   "Press Retry. If it fails again with the same words, the message above is Meta's, verbatim, and worth searching."];
+                   "Press Retry. If it fails again with the same words, the message above is " + NET + "'s, verbatim, and worth searching."];
     }
   }
   out.canRetry = out.fix !== "none";
@@ -1939,13 +1957,14 @@ export default async function handler(req, res) {
         board = await CH.pinBoardId(j.access_token).catch(() => "");
         if (!board) boardNote = "<p class=no>No board matched <code>PIN_BOARD_NAME</code>" + (process.env.PIN_BOARD_NAME ? " (" + esc(process.env.PIN_BOARD_NAME) + ")" : ", which is not set") + ". Create the board on Pinterest, then set the name, or paste a <code>PIN_BOARD_ID</code>.</p>";
       }
-      const rows = [["PIN_REFRESH_TOKEN", j.refresh_token]];
-      if (board) rows.push(["PIN_BOARD_ID", board]);
+      const sandbox = CH.pinSandbox();
+      const rows = [[sandbox ? "PIN_SANDBOX_REFRESH_TOKEN" : "PIN_REFRESH_TOKEN", j.refresh_token]];
+      if (board && !sandbox) rows.push(["PIN_BOARD_ID", board]);
       return pinPage(res, "Pinterest connected",
         "<h1 class=ok>Pinterest said yes</h1>" +
         "<p>Copy these into Vercel now, under Settings, Environment Variables. This page is the only time they are shown, and the house keeps no copy of them.</p>" +
         rows.map(([k, v]) => "<div class=k>" + esc(k) + "</div><span class=v>" + esc(v) + "</span>").join("") +
-        boardNote +
+        (sandbox ? "<p class=no>This token is for Pinterest's <b>sandbox</b> (PIN_API_BASE is set to it): pins made with it appear on your own profile and nowhere else, which is what Trial access allows. Keep PIN_REFRESH_TOKEN as it is; when Standard access lands, remove PIN_API_BASE and the house pins for real.</p>" : boardNote) +
         "<p>The access token lives thirty days and the house mints a new one from the refresh token whenever it needs to, so this is the last time you have to do this by hand.</p>" +
         "<p>Redeploy after saving them, then open the console's Social room: Pinterest should read as live.</p>");
     }
