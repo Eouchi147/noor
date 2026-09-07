@@ -1,7 +1,7 @@
 {
  "_meta": {
   "written": "2026-09-03",
-  "n": 287,
+  "n": 373,
   "source": "lights/all.json",
   "brief": "BRIEF.md",
   "kinds": {
@@ -9,7 +9,7 @@
    "know": 34,
    "word": 106,
    "day": 21,
-   "verse": 64,
+   "verse": 150,
    "codex": 32
   },
   "built": "plan_build.py from the library; light and know cards are written by hand"
@@ -4950,6 +4950,1296 @@
     "seed": 189,
     "n": 12,
     "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-2-2": {
+   "kind": "verse",
+   "verse": "2:2",
+   "ordinal": 64,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 343,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-2-115": {
+   "kind": "verse",
+   "verse": "2:115",
+   "ordinal": 65,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 265,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-2-165": {
+   "kind": "verse",
+   "verse": "2:165",
+   "ordinal": 66,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 598,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-2-183": {
+   "kind": "verse",
+   "verse": "2:183",
+   "ordinal": 67,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 660,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-2-201": {
+   "kind": "verse",
+   "verse": "2:201",
+   "ordinal": 68,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 627,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-2-216": {
+   "kind": "verse",
+   "verse": "2:216",
+   "ordinal": 69,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 427,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-2-222": {
+   "kind": "verse",
+   "verse": "2:222",
+   "ordinal": 70,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 313,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-2-257": {
+   "kind": "verse",
+   "verse": "2:257",
+   "ordinal": 71,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 847,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-2-261": {
+   "kind": "verse",
+   "verse": "2:261",
+   "ordinal": 72,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 228,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-2-155-156": {
+   "kind": "verse",
+   "verse": "2:155-156",
+   "ordinal": 73,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 421,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-3-8": {
+   "kind": "verse",
+   "verse": "3:8",
+   "ordinal": 74,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 462,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-3-26": {
+   "kind": "verse",
+   "verse": "3:26",
+   "ordinal": 75,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 679,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-3-31": {
+   "kind": "verse",
+   "verse": "3:31",
+   "ordinal": 76,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 452,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-3-103": {
+   "kind": "verse",
+   "verse": "3:103",
+   "ordinal": 77,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 901,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-3-104": {
+   "kind": "verse",
+   "verse": "3:104",
+   "ordinal": 78,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 287,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-3-190-191": {
+   "kind": "verse",
+   "verse": "3:190-191",
+   "ordinal": 79,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 840,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-3-200": {
+   "kind": "verse",
+   "verse": "3:200",
+   "ordinal": 80,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 771,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-4-1": {
+   "kind": "verse",
+   "verse": "4:1",
+   "ordinal": 81,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 260,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-4-58": {
+   "kind": "verse",
+   "verse": "4:58",
+   "ordinal": 82,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 800,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-4-135": {
+   "kind": "verse",
+   "verse": "4:135",
+   "ordinal": 83,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 391,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-5-8": {
+   "kind": "verse",
+   "verse": "5:8",
+   "ordinal": 84,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 272,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-6-59": {
+   "kind": "verse",
+   "verse": "6:59",
+   "ordinal": 85,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 428,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-6-103": {
+   "kind": "verse",
+   "verse": "6:103",
+   "ordinal": 86,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 853,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-7-23": {
+   "kind": "verse",
+   "verse": "7:23",
+   "ordinal": 87,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 728,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-7-31": {
+   "kind": "verse",
+   "verse": "7:31",
+   "ordinal": 88,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 201,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-7-180": {
+   "kind": "verse",
+   "verse": "7:180",
+   "ordinal": 89,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 87,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-7-199": {
+   "kind": "verse",
+   "verse": "7:199",
+   "ordinal": 90,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 903,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-8-2": {
+   "kind": "verse",
+   "verse": "8:2",
+   "ordinal": 91,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 608,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-8-46": {
+   "kind": "verse",
+   "verse": "8:46",
+   "ordinal": 92,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 40,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-9-129": {
+   "kind": "verse",
+   "verse": "9:129",
+   "ordinal": 93,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 496,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-10-62": {
+   "kind": "verse",
+   "verse": "10:62",
+   "ordinal": 94,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 866,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-12-86": {
+   "kind": "verse",
+   "verse": "12:86",
+   "ordinal": 95,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 228,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-12-87": {
+   "kind": "verse",
+   "verse": "12:87",
+   "ordinal": 96,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 551,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-14-34": {
+   "kind": "verse",
+   "verse": "14:34",
+   "ordinal": 97,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 737,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-15-9": {
+   "kind": "verse",
+   "verse": "15:9",
+   "ordinal": 98,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 169,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-16-18": {
+   "kind": "verse",
+   "verse": "16:18",
+   "ordinal": 99,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 301,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-16-90": {
+   "kind": "verse",
+   "verse": "16:90",
+   "ordinal": 100,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 116,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-16-128": {
+   "kind": "verse",
+   "verse": "16:128",
+   "ordinal": 101,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 138,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-17-36": {
+   "kind": "verse",
+   "verse": "17:36",
+   "ordinal": 102,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 6,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-17-37": {
+   "kind": "verse",
+   "verse": "17:37",
+   "ordinal": 103,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 772,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-17-70": {
+   "kind": "verse",
+   "verse": "17:70",
+   "ordinal": 104,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 806,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-17-82": {
+   "kind": "verse",
+   "verse": "17:82",
+   "ordinal": 105,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 380,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-18-46": {
+   "kind": "verse",
+   "verse": "18:46",
+   "ordinal": 106,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 373,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-18-109": {
+   "kind": "verse",
+   "verse": "18:109",
+   "ordinal": 107,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 795,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-19-96": {
+   "kind": "verse",
+   "verse": "19:96",
+   "ordinal": 108,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 106,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-20-25-28": {
+   "kind": "verse",
+   "verse": "20:25-28",
+   "ordinal": 109,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 398,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-20-46": {
+   "kind": "verse",
+   "verse": "20:46",
+   "ordinal": 110,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 10,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-21-107": {
+   "kind": "verse",
+   "verse": "21:107",
+   "ordinal": 111,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 427,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-23-1-4": {
+   "kind": "verse",
+   "verse": "23:1-4",
+   "ordinal": 112,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 318,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-23-115": {
+   "kind": "verse",
+   "verse": "23:115",
+   "ordinal": 113,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 868,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-25-70": {
+   "kind": "verse",
+   "verse": "25:70",
+   "ordinal": 114,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 108,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-27-62": {
+   "kind": "verse",
+   "verse": "27:62",
+   "ordinal": 115,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 981,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-28-77": {
+   "kind": "verse",
+   "verse": "28:77",
+   "ordinal": 116,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 952,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-29-45": {
+   "kind": "verse",
+   "verse": "29:45",
+   "ordinal": 117,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 995,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-30-22": {
+   "kind": "verse",
+   "verse": "30:22",
+   "ordinal": 118,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 506,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-31-18-19": {
+   "kind": "verse",
+   "verse": "31:18-19",
+   "ordinal": 119,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 548,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-33-41-42": {
+   "kind": "verse",
+   "verse": "33:41-42",
+   "ordinal": 120,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 342,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-33-56": {
+   "kind": "verse",
+   "verse": "33:56",
+   "ordinal": 121,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 217,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-33-70-71": {
+   "kind": "verse",
+   "verse": "33:70-71",
+   "ordinal": 122,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 968,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-35-28": {
+   "kind": "verse",
+   "verse": "35:28",
+   "ordinal": 123,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 328,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-36-82": {
+   "kind": "verse",
+   "verse": "36:82",
+   "ordinal": 124,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 36,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-39-9": {
+   "kind": "verse",
+   "verse": "39:9",
+   "ordinal": 125,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 736,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-39-10": {
+   "kind": "verse",
+   "verse": "39:10",
+   "ordinal": 126,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 178,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-41-30": {
+   "kind": "verse",
+   "verse": "41:30",
+   "ordinal": 127,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 960,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-41-33": {
+   "kind": "verse",
+   "verse": "41:33",
+   "ordinal": 128,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 814,
+    "n": 10,
+    "k": 4,
+    "scene": "halo"
+   }
+  },
+  "verse-42-19": {
+   "kind": "verse",
+   "verse": "42:19",
+   "ordinal": 129,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 729,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-47-7": {
+   "kind": "verse",
+   "verse": "47:7",
+   "ordinal": 130,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 645,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-48-4": {
+   "kind": "verse",
+   "verse": "48:4",
+   "ordinal": 131,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 52,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-49-10": {
+   "kind": "verse",
+   "verse": "49:10",
+   "ordinal": 132,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 545,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-50-16": {
+   "kind": "verse",
+   "verse": "50:16",
+   "ordinal": 133,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 207,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-54-17": {
+   "kind": "verse",
+   "verse": "54:17",
+   "ordinal": 134,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 195,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-55-1-4": {
+   "kind": "verse",
+   "verse": "55:1-4",
+   "ordinal": 135,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 601,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-55-26-27": {
+   "kind": "verse",
+   "verse": "55:26-27",
+   "ordinal": 136,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 725,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-55-60": {
+   "kind": "verse",
+   "verse": "55:60",
+   "ordinal": 137,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 663,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-64-11": {
+   "kind": "verse",
+   "verse": "64:11",
+   "ordinal": 138,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 609,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-65-7": {
+   "kind": "verse",
+   "verse": "65:7",
+   "ordinal": 139,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 587,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-67-1": {
+   "kind": "verse",
+   "verse": "67:1",
+   "ordinal": 140,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 894,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-76-9": {
+   "kind": "verse",
+   "verse": "76:9",
+   "ordinal": 141,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 34,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-79-40-41": {
+   "kind": "verse",
+   "verse": "79:40-41",
+   "ordinal": 142,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 0,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-84-6": {
+   "kind": "verse",
+   "verse": "84:6",
+   "ordinal": 143,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 647,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-89-27-30": {
+   "kind": "verse",
+   "verse": "89:27-30",
+   "ordinal": 144,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 96,
+    "n": 8,
+    "k": 3,
+    "scene": "halo"
+   }
+  },
+  "verse-91-7-10": {
+   "kind": "verse",
+   "verse": "91:7-10",
+   "ordinal": 145,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 521,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-95-1-4": {
+   "kind": "verse",
+   "verse": "95:1-4",
+   "ordinal": 146,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 633,
+    "n": 16,
+    "k": 7,
+    "scene": "halo"
+   }
+  },
+  "verse-99-7-8": {
+   "kind": "verse",
+   "verse": "99:7-8",
+   "ordinal": 147,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 67,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-102-1-2": {
+   "kind": "verse",
+   "verse": "102:1-2",
+   "ordinal": 148,
+   "slot": "morning",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 313,
+    "n": 12,
+    "k": 5,
+    "scene": "halo"
+   }
+  },
+  "verse-109-1-6": {
+   "kind": "verse",
+   "verse": "109:1-6",
+   "ordinal": 149,
+   "slot": "evening",
+   "eyebrow": "One verse",
+   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 379,
+    "n": 16,
+    "k": 7,
     "scene": "halo"
    }
   },

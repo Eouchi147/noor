@@ -104,8 +104,11 @@ export function shape(p, ch) {
   if (ch === "pinterest") {
     return {
       title: cut(p.title, 100),
-      text: cut([p.body, p.basis].filter(Boolean).join(" "), 500),
-      image: p.image, link
+      text: cut([p.caption || p.body, p.caption ? "" : p.basis].filter(Boolean).join(" "), 500),
+      image: p.image, link,
+      /* a reel is a video pin: the file, and the cover as its still */
+      video: p.video || null,
+      board: pinBoardFor(p)
     };
   }
 
@@ -242,24 +245,83 @@ async function pinRefresh(fetcher) {
    asking him to do by hand the one thing the API is for, so the board may be
    named instead and looked up once. The answer is held for the life of the
    lambda; boards do not get renamed mid-afternoon. */
-let PIN_BOARD_MEM = { id: "", name: "", at: 0 };
-export async function pinBoardId(tok, opts = {}) {
+const PIN_BOARD_MEM = new Map();   /* name -> { id, at }, for the life of the lambda */
+
+/* Pinterest reaches strangers through boards, not profiles: a board is what
+   its search indexes and what a stranger follows. So each kind of thing the
+   house makes has a board of its own, named here exactly as it is named on
+   the profile, and anything without one goes to the general board
+   (PIN_BOARD_NAME). A board that does not exist on the profile is not an
+   error: the pin falls back to the general board and the record says which. */
+export const PIN_BOARDS = {
+  verse: "One verse of the Qur'an",
+  word:  "Islamic words, explained",
+  light: "Lights of Islamic history and science",
+  know:  "Lights of Islamic history and science",
+  day:   "The Islamic year, day by day",
+  dawn:  "The Islamic year, day by day",
+  lead:  "The Islamic year, day by day",
+  dusk:  "The Path of Creation"
+};
+export function pinBoardFor(p) {
+  if (!p) return "";
+  if (p.reel || p.kind) return PIN_BOARDS[p.kind] || "";
+  return PIN_BOARDS[p.slot] || "";
+}
+
+export async function pinBoardId(tok, opts = {}, name = "") {
   const fixed = env("PIN_BOARD_ID");
-  if (fixed) return fixed;
-  const want = (env("PIN_BOARD_NAME") || "").trim();
-  if (!want || !tok) return "";
-  if (PIN_BOARD_MEM.id && PIN_BOARD_MEM.name === want && Date.now() - PIN_BOARD_MEM.at < 6 * 3600000)
-    return PIN_BOARD_MEM.id;
+  if (!name && fixed) return fixed;
+  const general = (env("PIN_BOARD_NAME") || "").trim();
+  const want = (name || general).trim();
+  if (!want || !tok) return fixed || "";
+  const had = PIN_BOARD_MEM.get(want.toLowerCase());
+  if (had && Date.now() - had.at < 6 * 3600000) return had.id;
   try {
     const r = await (opts.fetch || fetch)(pinBase() + "/v5/boards?page_size=100",
       { headers: { Authorization: "Bearer " + tok } });
-    if (!r.ok) return "";
+    if (!r.ok) return name ? (fixed || "") : "";
     const j = await r.json();
     const list = (j && j.items) || [];
-    const hit = list.find(b => String(b.name || "").trim().toLowerCase() === want.toLowerCase());
-    if (hit && hit.id) { PIN_BOARD_MEM = { id: String(hit.id), name: want, at: Date.now() }; return String(hit.id); }
+    const find = n => list.find(b => String(b.name || "").trim().toLowerCase() === n.toLowerCase());
+    let hit = find(want);
+    /* the kind's board is not on the profile yet: the general one takes it */
+    if (!hit && name) hit = fixed ? { id: fixed } : (general ? find(general) : null);
+    if (hit && hit.id) { PIN_BOARD_MEM.set(want.toLowerCase(), { id: String(hit.id), at: Date.now() }); return String(hit.id); }
   } catch { }
-  return "";
+  /* the lookup itself failed: a pasted board id still stands */
+  return name ? (fixed || "") : "";
+}
+
+/* A video pin is three calls where an image pin is one: Pinterest hands out
+   an upload slot, the file goes to it, and the pin is made from the media id
+   once Pinterest has finished with it. The file never leaves the site by
+   hand: the lambda fetches it from /reels and forwards it. */
+const PIN_MEDIA_WAIT = Number(process.env.PIN_MEDIA_WAIT_MS || 28000);
+const PIN_MEDIA_EVERY = Number(process.env.PIN_MEDIA_EVERY_MS || 2500);
+async function pinUploadVideo(url, tok, fetcher) {
+  const f = fetcher || fetch;
+  const reg = await jsonPost(pinBase() + "/v5/media", { media_type: "video" }, { Authorization: "Bearer " + tok }, f);
+  if (!reg.ok) return { ok: false, err: "pinterest media: " + reg.err };
+  const m = reg.j || {};
+  if (!m.media_id || !m.upload_url) return { ok: false, err: "pinterest media: no upload slot came back" };
+  const src = await f(url);
+  if (!src.ok) return { ok: false, err: "the reel could not be fetched for pinterest: http " + src.status };
+  const bytes = await src.arrayBuffer();
+  const form = new FormData();
+  for (const [k, v] of Object.entries(m.upload_parameters || {})) form.append(k, String(v));
+  form.append("file", new Blob([bytes], { type: "video/mp4" }), "reel.mp4");
+  const up = await f(m.upload_url, { method: "POST", body: form });
+  if (!up.ok && up.status !== 204) return { ok: false, err: "pinterest upload: http " + up.status };
+  const started = Date.now();
+  while (Date.now() - started < PIN_MEDIA_WAIT) {
+    await new Promise(r => setTimeout(r, PIN_MEDIA_EVERY));
+    const st = await f(pinBase() + "/v5/media/" + m.media_id, { headers: { Authorization: "Bearer " + tok } });
+    const sj = await st.json().catch(() => ({}));
+    if (sj.status === "succeeded") return { ok: true, id: String(m.media_id) };
+    if (sj.status === "failed") return { ok: false, err: "pinterest could not process the video" };
+  }
+  return { ok: false, err: "pinterest is still processing the video; retried next hour" };
 }
 
 export async function sendPinterest(shaped, opts = {}) {
@@ -269,19 +331,26 @@ export async function sendPinterest(shaped, opts = {}) {
      minted from it. Refresh first rather than failing on an absence. */
   if (!tok) tok = await pinRefresh(opts.fetch);
   if (!tok) return { ok: false, err: "pinterest is not configured: no PIN_TOKEN and no working PIN_REFRESH_TOKEN" };
-  const board = await pinBoardId(tok, opts);
+  const board = await pinBoardId(tok, opts, shaped.board || "");
   if (!board) return { ok: false, err: "pinterest has no board: set PIN_BOARD_ID or PIN_BOARD_NAME" };
   if (!shaped.image) return { ok: false, err: "pinterest needs an image and none was built" };
+  let media = null;
+  if (shaped.video) {
+    const v = await pinUploadVideo(shaped.video, tok, opts.fetch);
+    if (!v.ok) return v;
+    media = v.id;
+  }
   const body = {
     board_id: board, title: shaped.title, description: shaped.text, link: shaped.link,
-    media_source: { source_type: "image_url", url: shaped.image }
+    media_source: media ? { source_type: "video_id", cover_image_url: shaped.image, media_id: media }
+                        : { source_type: "image_url", url: shaped.image }
   };
   let r = await jsonPost(pinBase() + "/v5/pins", body, { Authorization: "Bearer " + tok }, opts.fetch);
   if (!r.ok && /401|expired|unauthor/i.test(String(r.err))) {
     const fresh = await pinRefresh(opts.fetch);
     if (fresh) r = await jsonPost(pinBase() + "/v5/pins", body, { Authorization: "Bearer " + fresh }, opts.fetch);
   }
-  return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned" } : r;
+  return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned", board: shaped.board || "" } : r;
 }
 
 export async function sendX(shaped, opts = {}) {

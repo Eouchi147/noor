@@ -31,7 +31,7 @@ console.log('\nthe slots');
   const hours = S.SLOTS.map(s => s.at);
   ok(hours.every((h, i) => i === 0 || h >= hours[i - 1]), 'the list stays in clock order');
   ok(new Set(hours).size === hours.length, 'no two slots share an hour');
-  ok(S.REEL_SLOTS.join() === 'reelA,reelB', 'REEL_SLOTS names them');
+  ok(S.REEL_SLOTS.join() === 'reelA,reelC,reelD,reelB,reelE', 'REEL_SLOTS names the five');
   ok(S.reelHalf('reelA') === 'morning' && S.reelHalf('reelB') === 'evening',
      'each reel slot knows its half of the library');
   ok(S.reelHalf('dusk') === '', 'a slot that is not a reel says so');
@@ -52,7 +52,7 @@ const REEL = { id: 'al-sufi-andromeda-964', slot: 'morning',
   ok(p.caption === REEL.caption, 'and the written caption, whole');
   ok(p.title === REEL.hook, 'the hook is the title');
   ok(p.reel === true, 'it is marked as a reel');
-  ok(Array.isArray(p.only) && p.only.join() === 'facebook,instagram,youtube',
+  ok(Array.isArray(p.only) && p.only.join() === 'facebook,instagram,youtube,pinterest',
      'it names the only channels that can show it');
   ok(S.buildSlot('reelA', { date: '2026-09-04', link: 'l' }) === null,
      'no reel for the day composes to nothing rather than a broken post');
@@ -220,7 +220,7 @@ console.log('\nfrom the manifest to a finished post');
   ok(p && /^https:\/\/noorcodex\.com\/reels\/.+\.mp4$/.test(p.video || ''), 'it carries a video url');
   ok(p && /-cover\.jpg$/.test(p.image || ''), 'and its cover, not the day card');
   ok(p && /^CAPTION [AB]$/.test(p.caption || ''), 'and the caption written beside the video');
-  ok(p && p.only.join() === 'facebook,instagram,youtube', 'and it is aimed only where a reel can be shown');
+  ok(p && p.only.join() === 'facebook,instagram,youtube,pinterest', 'and it is aimed only where a reel can be shown');
 
   const ev = await SOC.composeSlot('noorcodex.com', '2026-09-04', 'reelB', { plan: { hijri: null, day: null, leads: [] } });
   ok(ev && ev.key === 'smile-counts-as-charity', 'the evening slot draws from the evening half');

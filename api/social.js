@@ -137,7 +137,7 @@ export function normMode(v) {
 
 export async function dials() {
   /* the shipped state, and the state a store that will not answer gets */
-  const v = { mode: "off", fb: true, ig: true, polish: true, storeOk: false };
+  const v = { mode: "off", fb: true, ig: true, polish: true, stories: true, storeOk: false };
   if (!kvReady()) return v;
   try {
     const raw = (await kv([["GET", K_SET]]))[0];
@@ -152,7 +152,8 @@ export async function dials() {
     if (o["social.fb"] === false) v.fb = false;
     if (o["social.ig"] === false) v.ig = false;
     if (o["social.polish"] === false) v.polish = false;
-  } catch { return { mode: "off", fb: true, ig: true, polish: true, storeOk: false }; }
+    if (o["social.stories"] === false) v.stories = false;
+  } catch { return { mode: "off", fb: true, ig: true, polish: true, stories: true, storeOk: false }; }
   return v;
 }
 
@@ -719,6 +720,94 @@ async function postInstagramReel(post) {
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
 }
 
+/* STORIES: THE SAME THING, ON THE SURFACE THAT DOES NOT COST THE FEED.
+
+   Every reel and every card can also be a story on both networks, for the
+   followers who open stories and never scroll a feed. A story is a second
+   surface, not a second post: it does not sit in the grid, it does not
+   compete with the feed post for reach, and it is gone in a day. So each
+   thing the house publishes goes there too, after the feed post has landed,
+   and a story that fails is noted on the record and never retried: the feed
+   post is the promise, the story is the bonus. */
+async function postInstagramStory(post) {
+  if (!igConfigured()) return { ok: false, skipped: "not configured" };
+  const id = process.env.IG_USER_ID, tok = igToken(), G = graphBase(tok);
+  const body = post.video ? { media_type: "STORIES", video_url: post.video, access_token: tok }
+                          : { media_type: "STORIES", image_url: post.image, access_token: tok };
+  if (!body.video_url && !body.image_url) return { ok: false, error: "nothing to show" };
+  try {
+    const c = await fetch(`${G}/${id}/media`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    const cj = await c.json().catch(() => ({}));
+    if (!c.ok || !cj.id) return { ok: false, error: metaErr(cj, "story container http " + c.status), ...metaCode(cj) };
+    if (post.video) {
+      /* a video story transcodes like a reel, which takes longer than a
+         function has left by the time the feed post is up. One look, and if
+         it is not ready the container is handed back: finishPendingReels
+         publishes it on the next hourly run, well inside a story's day. */
+      await sleep(Math.min(IG_POLL_EVERY, 3000));
+      const sj = await (await fetch(`${G}/${cj.id}?fields=status_code`, { headers: { authorization: "Bearer " + tok } })).json().catch(() => ({}));
+      if (sj.status_code === "ERROR" || sj.status_code === "EXPIRED") return { ok: false, error: "the story could not be processed: " + sj.status_code };
+      if (sj.status_code !== "FINISHED") return { ok: false, pending: cj.id, note: "the story is still processing; it is published on the next run" };
+    }
+    return await igPublish(cj.id, id, tok, G);
+  } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+async function postFacebookStory(post) {
+  if (!fbConfigured()) return { ok: false, skipped: "not configured" };
+  const id = process.env.FB_PAGE_ID, tok = await pageToken();
+  try {
+    if (post.video) {
+      const st = await fetch(`${GRAPH_FB}/${id}/video_stories`, { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ upload_phase: "start", access_token: tok }) });
+      const sj = await st.json().catch(() => ({}));
+      if (!st.ok || !sj.video_id || !sj.upload_url) return { ok: false, error: metaErr(sj, "story start http " + st.status) };
+      const up = await fetch(sj.upload_url, { method: "POST", headers: { authorization: "OAuth " + tok, file_url: post.video } });
+      const uj = await up.json().catch(() => ({}));
+      if (!up.ok) return { ok: false, error: metaErr(uj, "story upload http " + up.status) };
+      const fin = await fetch(`${GRAPH_FB}/${id}/video_stories`, { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ video_id: sj.video_id, upload_phase: "finish", access_token: tok }) });
+      const fj = await fin.json().catch(() => ({}));
+      if (!fin.ok) return { ok: false, error: metaErr(fj, "story finish http " + fin.status) };
+      return { ok: true, id: fj.post_id || sj.video_id };
+    }
+    if (!post.image) return { ok: false, error: "nothing to show" };
+    /* a photo story: the photo first, unpublished, then the story from it */
+    const ph = await fetch(`${GRAPH_FB}/${id}/photos`, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ url: post.image, published: false, access_token: tok }) });
+    const pj = await ph.json().catch(() => ({}));
+    if (!ph.ok || !pj.id) return { ok: false, error: metaErr(pj, "story photo http " + ph.status) };
+    const stv = await fetch(`${GRAPH_FB}/${id}/photo_stories`, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ photo_id: pj.id, access_token: tok }) });
+    const sj2 = await stv.json().catch(() => ({}));
+    if (!stv.ok) return { ok: false, error: metaErr(sj2, "photo story http " + stv.status) };
+    return { ok: true, id: sj2.post_id || pj.id };
+  } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+const STORY = { instagram: postInstagramStory, facebook: postFacebookStory };
+
+/* after a feed post landed on a network: the same thing as a story there.
+   Bolted onto the channel's own result, so the slot's state (sent, partial,
+   pending) is never decided by a story. */
+const STORY_RESERVE_MS = Number(process.env.STORY_RESERVE_MS || 12000);
+export async function addStories(results, post, D, left) {
+  if (!D || D.stories === false) return false;
+  let any = false;
+  for (const ch of Object.keys(STORY)) {
+    const r = results[ch];
+    if (!r || !r.ok || r.story) continue;
+    /* a story is the bonus: with no time left in the run it is simply not
+       tried, and the record says so rather than the function being killed */
+    if (typeof left === "function" && left() < STORY_RESERVE_MS) {
+      r.story = { ok: false, skipped: "no time left in this run" }; any = true; continue; }
+    try { r.story = await STORY[ch](post); }
+    catch (e) { r.story = { ok: false, error: String(e && e.message || e).slice(0, 120) }; }
+    any = true;
+  }
+  return any;
+}
+
 /* Facebook takes a reel in three phases and fetches the file itself, so none
    of the bytes pass through here. */
 async function postFacebookReel(post) {
@@ -792,6 +881,17 @@ export async function finishPendingReels(date, out) {
     for (const id of REEL_SLOTS) {
       const rec = await readSlot(d, id);
       const ig = rec && rec.results && rec.results.instagram;
+      /* a video story handed back as a container is finished the same way;
+         it never touches the slot's state */
+      if (ig && ig.ok && ig.story && ig.story.pending) {
+        const st = await finishInstagramReel(ig.story.pending);
+        if (!st.pending) {
+          rec.results = { ...rec.results, instagram: { ...ig, story: st } };
+          await writeSlot(d, id, rec);
+          ran.push({ slot: id, date: d, state: rec.state, finished: true, where: "instagram story", ok: !!st.ok, error: st.error || "" });
+        }
+        continue;
+      }
       if (!ig || ig.ok || !ig.pending) continue;
       const r = await finishInstagramReel(ig.pending);
       if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: "instagram" }); continue; }
@@ -1053,8 +1153,13 @@ export function liveChannels(post) {
     .filter(c => !(CH.SPEC[c] && CH.SPEC[c].video === "required") || (post && post.video));
 }
 
-async function sendOne(ch, shaped, post) {
+/* a video pin is a fetch, an upload and a wait: not started without the room
+   to finish, and handed to the hourly heal instead */
+const PIN_VIDEO_RESERVE_MS = Number(process.env.PIN_VIDEO_RESERVE_MS || 36000);
+async function sendOne(ch, shaped, post, left) {
   const p = { ...post, caption: shaped.text };
+  if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
+    return { ok: false, err: "no time left in this run for the video pin; retried next hour", error: "no time left in this run for the video pin; retried next hour" };
   if (ch === "facebook")  return await (p.video ? postFacebookReel(p) : postFacebook(p));
   if (ch === "instagram") return await (p.video ? postInstagramReel(p) : postInstagram(p));
   const fn = CH.SENDERS[ch];
@@ -1079,7 +1184,7 @@ export async function composeSlot(host, date, slotId, opts = {}) {
     if (!c) return null;
     return { lvl: (c.light && c.light.lvl) || "editorial", title: c.light.title,
       oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
-      tags: [], link: c.link, image: c.image, imageSvg: c.imageSvg, card: c.light };
+      tags: [], link: c.link, image: c.image, imageSvg: c.imageSvg, card: c.light, slot: "light" };
   }
   let index = opts.index || null;
   if (!index) { try { const r = await fetch(base + "/assets/menu-index.json");
@@ -1121,6 +1226,8 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       finished: ran, note: "that slot was already sent; Instagram was still processing it" };
   }
 
+  const began = Date.now();
+  const left = () => RUN_BUDGET_MS - (Date.now() - began);
   const post = await composeSlot(host, date, slotId, opts);
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
 
@@ -1166,12 +1273,13 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
     if (CH.SPEC[ch].image === "required" && imgWhy) {
       results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
-    try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
+    try { results[ch] = await sendOne(ch, shaped, { ...post, date }, left); }
     catch (e) {
       const m = String(e && e.message || e).slice(0, 120);
       results[ch] = { ok: false, error: m, err: m };
     }
   }
+
   if (!post.only) {
     let lastRedditAt = null;
     if (kvReady()) { try { lastRedditAt = (await kv([["GET", K_RED]]))[0] || null; } catch { } }
@@ -1183,8 +1291,14 @@ export async function sendSlot(host, date, slotId, opts = {}) {
 
   const rec = { at: out.at, slot: slotId, state: slotState(results),
     title: post.title, lvl: post.lvl, results };
+  /* the record is written BEFORE the stories: if the function is cut off
+     while a story is being made, the feed post is already on the record and
+     cannot be sent a second time next hour */
   await writeSlot(date, slotId, rec);
   if (rec.state !== "failed") await noteSaid(key);
+  /* the same thing, as a story, wherever the feed post landed */
+  if (await addStories(results, { ...post, date }, opts.dials || await dials(), left))
+    await writeSlot(date, slotId, rec);
   return { ...out, ok: rec.state !== "failed", state: rec.state, title: post.title, results };
 }
 
@@ -1493,7 +1607,7 @@ export async function healFailures(host, date, out, now, hasTime) {
         if (done >= HEAL_PER_RUN || !room()) return ran;
         const r = rec.results[ch];
         if (!healable(r) || !healDue(r, nowMs)) continue;
-        if (isReel && ch === "instagram" && !room(HEAL_REEL_RESERVE_MS)) continue;
+        if (isReel && (ch === "instagram" || ch === "pinterest") && !room(HEAL_REEL_RESERVE_MS)) continue;
         done++;
         /* one repair that throws must not take the others with it */
         try {
@@ -1520,6 +1634,7 @@ const HEAL_RESERVE_MS = Number(process.env.HEAL_RESERVE_MS || 22000);
 
 export async function runDue(host, date, now, opts = {}) {
   const began = Date.now();
+  const left = () => RUN_BUDGET_MS - (Date.now() - began);
   const D = await dials();
   const out = { date, mode: D.mode, at: (now || new Date()).toISOString(), ran: [], skipped: "" };
 
@@ -1574,7 +1689,7 @@ export async function runDue(host, date, now, opts = {}) {
       if (!c) { out.ran.push({ slot: "light", skipped: "the library is not reachable" }); continue; }
       post = { lvl: (c.light && c.light.lvl) || "editorial", title: c.light.title,
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
-        tags: [], link: c.link, image: c.image };
+        tags: [], link: c.link, image: c.image, slot: "light" };
     } else {
       const extras = await slotExtras(base, date, idx, slot.id, plan.hijri);
       post = buildSlot(slot.id, {
@@ -1612,7 +1727,7 @@ export async function runDue(host, date, now, opts = {}) {
     for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
-      try { results[ch] = await sendOne(ch, shaped, { ...post, date }); }
+      try { results[ch] = await sendOne(ch, shaped, { ...post, date }, left); }
       catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
     }
     /* Reddit is composed and kept, never sent. What is paced here is how often
@@ -1631,7 +1746,9 @@ export async function runDue(host, date, now, opts = {}) {
 
     const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
+    /* on the record first, then the stories: see sendSlot */
     await writeSlot(date, slot.id, rec);
+    if (await addStories(results, { ...post, date }, D, left)) await writeSlot(date, slot.id, rec);
     out.ran.push({ slot: slot.id, state: rec.state, results });
     posted++;
   }

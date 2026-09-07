@@ -207,15 +207,19 @@ and a reading that still runs past forty six seconds gives way to the next.
 The reel's length follows from the voice: 2.6 s in, the recitation, 1.35 s,
 then three seconds of the way home.
 
-The rota in `api/_schedule.js` gives the two daily slots to the kinds by
-weekday, mornings `verse verse know verse word verse know` from Sunday and
-evenings `word word light know light codex light`, and a This day reel takes
-the morning of its own Hijri date. `node tests/reels-kinds.mjs` holds it.
+The rota in `api/_schedule.js` gives five reel slots a day to the kinds by
+weekday (morning 08:00, noon 11:00, afternoon 14:00, evening 17:00, night
+21:00 UTC). Across a week that is 12 verses, 11 words, 8 Did you knows, 3
+day's cards and The Codex on Friday evening; a This day reel takes the
+morning of its own Hijri date. With 150 verses and 106 words on the shelf the
+walk runs about three months before a verse comes round again.
+`node tests/reels-kinds.mjs` holds it.
 
 ## How one gets posted
 
-`api/_schedule.js` has two reel slots, `reelA` at 08:00 UTC and `reelB` at
-17:00 UTC, beside the five that already existed. Each hour the `due` cron asks
+`api/_schedule.js` has five reel slots, `reelA` 08:00, `reelC` 11:00, `reelD`
+14:00, `reelB` 17:00 and `reelE` 21:00 UTC, between the five card slots that
+already existed. Each hour the `due` cron asks
 what is owed; a reel slot fetches `/reels/index.json`, the manifest the render
 workflow writes, and picks the day's card from the half of the library that
 belongs to it. The pick walks the whole list before it repeats and depends only
@@ -228,9 +232,13 @@ a file that is not there. A slot with nothing to post composes to nothing and
 says so: the day loses one post and the rest go out as usual.
 
 The caption is carried whole from `plan.json` rather than assembled, because it
-was written and audited beside the video. A reel is offered only to Facebook and
-Instagram; the others would fall back to the cover, and a still of a video is a
-poor post.
+was written and audited beside the video. A reel is offered to Facebook,
+Instagram, YouTube (as a Short) and Pinterest (as a video pin on the board of
+its kind); the other channels would fall back to the cover, and a still of a
+video is a poor post. On Facebook and Instagram every reel and every card is
+also put up as a story once the feed post has landed (`addStories` in
+`api/social.js`, the `social.stories` dial); a story that fails is noted and
+never decides the slot's state.
 
 Instagram is the awkward half. Creating the container returns at once, but the
 video is then transcoded and publishing before that finishes is refused. So the
@@ -258,6 +266,19 @@ as a photo.
 4. `python3 copy_audit.py plan.json` and `python3 webreel.py --audit <id>`.
 5. Push. The `reels` workflow renders what is missing and opens a pull request
    with the videos.
+
+## How the workflow renders
+
+`.github/workflows/reels.yml` is three jobs. `plan` builds and audits the plan
+once, fetches the translations once, and counts what is missing
+(`render_missing.py --count`). `render` is a matrix of up to four machines
+(the `machines` input), each taking every n-th card of the same interleaved
+list (`REELS_SHARD` of `REELS_SHARDS`) and at most 80 (`REELS_MAX`); each
+hands what it made on as an artifact. `assemble` gathers them, writes the
+manifest (`render_missing.py --manifest`) and opens one pull request. A
+machine that dies takes only its own share with it. On a private repository
+the four machines together spend about 400 of the 2,000 free minutes a month
+to fill the shelf once; the weekly run after that renders only what is new.
 
 ## What the files are
 

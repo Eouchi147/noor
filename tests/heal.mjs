@@ -33,7 +33,7 @@ const CTX = {
   plan: { hijri: { text: '' }, day: {}, leads: [] },
   index: { words: [{ i: 1, t: 'Qalqalah', a: 'قلقلة', s: 'a bounce in the sound' }], path: [] },
   extras: { entry: { s: 'a bounce in the sound', l: '', cat: 'Tajwid', k: 'editorial' } },
-  dials: { polish: false, mode: 'auto', storeOk: true }
+  dials: { polish: false, mode: 'auto', storeOk: true, stories: false }
 };
 
 globalThis.fetch = async (url, opt) => {
@@ -233,6 +233,67 @@ console.log('\nit is bounded so it can never eat the hour');
 
   const none = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, () => false);
   ok(none.filter(x => x.healed).length === 0, 'and none at all when the run has no time left');
+}
+
+/* ==========================================================================
+   FOUND ON REVIEW, BEFORE SHIPPING
+   ========================================================================== */
+console.log('\nPost now cannot be used to double-post a half-sent slot');
+{
+  put(half());
+  const r = await SOC.sendSlot('noorcodex.com', DATE, 'word', CTX);
+  ok(r.ok === false && /half sent/.test(r.error), 'send-slot on a partial slot is refused, with the reason');
+  ok(sent.length === 0 || !sent.includes('facebook'), 'and nothing reaches the network that has it');
+}
+
+console.log('\na retry sends the SAME card the other network has');
+{
+  /* the record says one title went out; the slot rebuilds as another */
+  put({ ...half(), title: 'A different card entirely' }); sent = [];
+  const r = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', CTX);
+  ok(r.ok === false && r.drift === true, 'a slot that rebuilds as a different card is refused');
+  ok(/different card/.test(r.error) && /Qalqalah/.test(r.error), 'and the reason names both cards');
+  ok(!sent.includes('ig-publish'), 'so nothing mismatched is ever published');
+  ok(r.fatal === true, 'and it is marked fatal, so the healer does not try it four times');
+  ok(got().results.instagram.drift === true && got().results.instagram.fatal === true,
+     'and it is written down, so the healer stops asking');
+  ok(got().results.facebook.ok === true, 'without touching the half that went out');
+  ok(!SOC.healable(got().results.instagram), 'the healer now leaves it alone');
+}
+
+console.log('\nattempts are counted from the first send');
+{
+  put(half({ tries: undefined, lastTry: undefined })); sent = [];
+  /* a record from before counting existed: no tries stamped at all */
+  const rec0 = got(); delete rec0.results.instagram.tries; delete rec0.results.instagram.lastTry; put(rec0);
+  igFails = () => ({ ok: false, status: 400, headers: { get: () => '' },
+    json: async () => ({ error: { message: 'still no', code: 9004 } }), text: async () => '' });
+  await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', CTX);
+  igFails = null;
+  ok(got().results.instagram.tries === 2, 'the failed original send counts as the first attempt');
+}
+
+console.log('\na reel repair waits for room a card repair does not need');
+{
+  STORE.clear(); sent = [];
+  STORE.set('nsoc:slot:' + DATE + '#reelA', JSON.stringify({ at: 'x', slot: 'reelA', state: 'partial', title: 'A reel',
+    results: { facebook: { ok: true }, instagram: { ok: false, code: 9004, tries: 1, lastTry: '2026-09-07T01:00:00.000Z' } } }));
+  /* room for a card (22s) but not for a reel (48s) */
+  const tight = need => (need || 0) < 30000;
+  const ran = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, tight);
+  ok(!ran.some(x => x.slot === 'reelA'), 'a reel is not started when the run cannot finish it');
+  const roomy = () => true;
+  const ran2 = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, roomy);
+  ok(ran2.some(x => x.slot === 'reelA'), 'but it is when there is time');
+}
+
+console.log('\none broken slot does not stop the others being healed');
+{
+  STORE.clear(); sent = [];
+  STORE.set('nsoc:slot:' + DATE + '#dawn', 'this is not json {{{');
+  STORE.set('nsoc:slot:' + DATE + '#word', JSON.stringify(half()));
+  const ran = await SOC.healFailures('noorcodex.com', DATE, { ran: [] }, LATER, () => true);
+  ok(ran.some(x => x.slot === 'word' && x.ok), 'a corrupt record is stepped over and the next slot still heals');
 }
 
 globalThis.fetch = realFetch;

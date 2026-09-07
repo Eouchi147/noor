@@ -1,14 +1,22 @@
 /* NOOR · the day, in slots
    ===========================================================================
-   One post a day became four, and five when something is coming.
+   One post a day became four, then seven, then nine, and ten when something
+   is coming.
 
        05:00 UTC  dawn    what today is, and what to do about it
-       08:00 UTC  reelA   a reel: the astonishing half of the library
+       08:00 UTC  reelA   a reel (morning)
        09:00 UTC  lead    only when an observance is a known number of days out
+       11:00 UTC  reelC   a reel (noon)
        12:00 UTC  light   the day's card, the engine that already existed
+       14:00 UTC  reelD   a reel (afternoon)
        16:00 UTC  word    one word of the Path, in Arabic and plain English
-       17:00 UTC  reelB   a reel: the rooted half
+       17:00 UTC  reelB   a reel (evening)
        20:00 UTC  dusk    one chapter of the Path
+       21:00 UTC  reelE   a reel (night)
+
+   Every card also goes out a second time as a story on Facebook and
+   Instagram (api/social.js, addStories), so nine posts a day become eighteen
+   surfaces, well inside Instagram's hundred a day.
 
    Two design decisions worth stating, because both were tempting to get wrong.
 
@@ -41,10 +49,13 @@ export const SLOTS = [
   { id: "dawn",  at: 5,  needsDate: true  },
   { id: "reelA", at: 8,  needsDate: false, reel: "morning" },
   { id: "lead",  at: 9,  needsDate: true, conditional: true },
+  { id: "reelC", at: 11, needsDate: false, reel: "noon" },
   { id: "light", at: 12, needsDate: false },
+  { id: "reelD", at: 14, needsDate: false, reel: "afternoon" },
   { id: "word",  at: 16, needsDate: false },
   { id: "reelB", at: 17, needsDate: false, reel: "evening" },
-  { id: "dusk",  at: 20, needsDate: false }
+  { id: "dusk",  at: 20, needsDate: false },
+  { id: "reelE", at: 21, needsDate: false, reel: "night" }
 ];
 export const REEL_SLOTS = SLOTS.filter(s => s.reel).map(s => s.id);
 export const reelHalf = id => (SLOTS.find(s => s.id === id) || {}).reel || "";
@@ -164,9 +175,15 @@ export async function planDay(dateStr, opts = {}) {
    shelf is still being filled.
 --------------------------------------------------------------------------- */
 const ROTA = {
-  /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week */
-  morning: ["verse", "verse", "know", "verse", "word", "verse", "know"],
-  evening: ["word", "word", "light", "know", "light", "codex", "light"]
+  /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week. Five reels a
+     day; the day's card (light) keeps its two halves, morning and evening,
+     the other kinds go anywhere. Across a week: 12 verses, 11 words, 8 Did
+     you knows, 3 day's cards, 1 Codex, and This day on its own date. */
+  morning:   ["verse", "verse", "know", "verse", "word", "verse", "know"],
+  noon:      ["word", "know", "verse", "word", "know", "word", "verse"],
+  afternoon: ["verse", "word", "word", "know", "verse", "know", "word"],
+  evening:   ["word", "word", "light", "know", "light", "codex", "light"],
+  night:     ["know", "verse", "verse", "word", "word", "verse", "verse"]
 };
 /* The Codex, the brand's own reel, has Friday evening and no other turn; if
    none is rendered yet the word takes the evening as before */
@@ -201,6 +218,14 @@ export function chooseReel(cards, dateStr, half, hijri) {
    what each slot actually says
 --------------------------------------------------------------------------- */
 export function buildSlot(slot, ctx) {
+  const p = buildSlotInner(slot, ctx);
+  /* the slot rides along, so a channel that files things by kind (Pinterest's
+     boards) knows what it was handed without asking the schedule again */
+  if (p && !p.slot) p.slot = slot;
+  return p;
+}
+
+function buildSlotInner(slot, ctx) {
   const { date, hijri: h, day, leads, words, path, link, image, node, entry } = ctx;
 
   /* -------------------------------------------------------------------------
@@ -222,7 +247,8 @@ export function buildSlot(slot, ctx) {
       body: r.caption || "", caption: r.caption || "",
       todo: [], basis: "", note: "", tags: [], invite: "",
       link, image: r.cover || null, video: r.video, reel: true,
-      only: ["facebook", "instagram", "youtube"]
+      kind: r.kind || "light",
+      only: ["facebook", "instagram", "youtube", "pinterest"]
     };
   }
 

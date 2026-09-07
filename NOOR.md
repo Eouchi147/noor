@@ -61,18 +61,24 @@ These are not preferences. They are refused, not negotiated.
 
 ## What is decided
 
-- **The reels** (`tools/reels/README.md`): six kinds share two slots a day at
-  08:00 and 17:00 UTC: the day's card, Did you know?, This day, The word, One
-  verse, and The Codex (the brand's own reel, Friday evenings). A rota by
-  weekday, one no-repeat walk per kind, a This day reel on its own Hijri date.
+- **The reels** (`tools/reels/README.md`): six kinds share five slots a day
+  (08, 11, 14, 17, 21 UTC): the day's card, Did you know?, This day, The
+  word, One verse, and The Codex (the brand's own reel, Friday evenings). A
+  rota by weekday, one no-repeat walk per kind, a This day reel on its own
+  Hijri date; 150 verses and 106 words on the shelf. The render workflow
+  spreads a shelf over up to four machines and opens one pull request.
   The picture is a shader in the browser; the words are anime.js on a tempo
   grid per kind; the sound is built in numpy and finished in Pedalboard;
   every reel is levelled (-18 LUFS; -16 for a verse). A different reciter
   each time from the roster in `verses.py`, named on screen.
-- **Channels** (`api/_channels.js`): Facebook and Instagram live; YouTube
-  Shorts for reels once the consent is given; Pinterest waiting on Pinterest;
-  X built and switched off (paid); Reddit drafts only, never automatic;
-  Telegram recommended, not built yet; TikTok and Threads after YouTube.
+- **Channels** (`api/_channels.js`): Facebook and Instagram live, and every
+  post there goes up a second time as a story (`social.stories` dial);
+  YouTube Shorts for reels once the consent is given; Pinterest approved
+  (Trial), each kind on its own board, reels as video pins, Standard access
+  asked for with a screen recording; X built and switched off (paid); Reddit
+  drafts only, never automatic; Telegram recommended, not built yet; TikTok
+  and Threads after YouTube. The day is ten posts (nine without a countdown),
+  eighteen surfaces on Meta, well inside Instagram's hundred a day.
 - **Reliability** (`api/social.js`): the poster posts first, then heals what
   failed with backoff, and never double-posts: a half-sent slot is retried
   one network at a time, a legacy-sent card is honoured, a slot in flight

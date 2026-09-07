@@ -43,6 +43,13 @@ function pinterest(opts = {}) {
           return reply(401, { message: "token expired" });
         return reply(201, { id: "pin-8812" });
       }
+      /* a video pin: the upload slot, the file, the processing, in that order */
+      if (u.endsWith("/v5/media")) return reply(201, { media_id: "m-77", media_type: "video",
+        upload_url: "https://pinterest-media-upload.s3.test/", upload_parameters: { key: "k1", policy: "p1" } });
+      if (u.startsWith("https://pinterest-media-upload.s3.test/")) { calls[calls.length - 1].form = init.body; return reply(204, {}); }
+      if (u.includes("/v5/media/m-77")) { opts.polls = (opts.polls || 0) + 1;
+        return reply(200, { status: opts.mediaFails ? "failed" : (opts.polls >= 2 ? "succeeded" : "processing") }); }
+      if (u.startsWith("https://noorcodex.com/reels/")) return { ok: true, status: 200, arrayBuffer: async () => new Uint8Array([0, 0, 0, 24]).buffer };
       return reply(404, {});
     }
   };
@@ -174,6 +181,58 @@ section("9. the round trip's signed state");
   ok(!check(past + crypto.createHmac("sha256", SECRET).update("pin" + (Date.now() - 1000)).digest("hex"), SECRET),
      "and an expired one is not, so a stale link cannot be replayed");
   ok(!check("", SECRET), "an empty state is refused");
+}
+
+section("9. a board for every kind, and the general one for the rest");
+{
+  clearEnv();
+  process.env.PIN_TOKEN = "at-pasted"; process.env.PIN_BOARD_NAME = "NOOR Codex of Light";
+  const CH = await load();
+  ok(CH.pinBoardFor({ slot: "word" }) === "Islamic words, explained", "the word card goes to the words board");
+  ok(CH.pinBoardFor({ reel: true, kind: "verse" }) === "One verse of the Qur'an", "a verse reel goes to the verse board");
+  ok(CH.pinBoardFor({ reel: true, kind: "know" }) === "Lights of Islamic history and science", "Did you know goes with the Lights");
+  ok(CH.pinBoardFor({ slot: "dawn" }) === "The Islamic year, day by day" && CH.pinBoardFor({ reel: true, kind: "day" }) === "The Islamic year, day by day", "dawn and This day share the calendar board");
+  ok(CH.pinBoardFor({ slot: "dusk" }) === "The Path of Creation", "the chapter goes to the Path");
+  ok(CH.pinBoardFor({ slot: "light" }) === "Lights of Islamic history and science", "the day's card is a Light and goes with the Lights");
+  ok(CH.pinBoardFor({ reel: true, kind: "codex" }) === "" && CH.pinBoardFor({ slot: "lead" }) === "The Islamic year, day by day", "The Codex takes the general board; the countdown the calendar");
+  const sh = CH.shape({ title: "Taqwa", body: "b", link: "https://noorcodex.com/dictionary?w=1", image: "https://noorcodex.com/api/card", slot: "word" }, "pinterest");
+  ok(sh.board === "Islamic words, explained" && !sh.video, "shape names the board and carries no video for a card");
+  const boards = [{ id: "1", name: "NOOR Codex of Light" }, { id: "2", name: "Islamic words, explained" }];
+  const P = pinterest({ boards });
+  const r = await CH.sendPinterest(sh, { fetch: P.fetch });
+  const pin = JSON.parse(P.calls.find(c => c.url.includes("/v5/pins")).body);
+  ok(r.ok && pin.board_id === "2", "the pin lands on the words board");
+  const P2 = pinterest({ boards: [{ id: "1", name: "NOOR Codex of Light" }] });
+  const CH2 = await load();
+  const r2 = await CH2.sendPinterest(sh, { fetch: P2.fetch });
+  const pin2 = JSON.parse(P2.calls.find(c => c.url.includes("/v5/pins")).body);
+  ok(r2.ok && pin2.board_id === "1", "a board not on the profile yet falls back to the general one rather than failing");
+}
+
+section("10. a reel is a video pin");
+{
+  clearEnv();
+  process.env.PIN_TOKEN = "at-pasted"; process.env.PIN_BOARD_NAME = "NOOR Codex of Light";
+  process.env.PIN_MEDIA_EVERY_MS = "5";
+  const CH = await load();
+  const post = { title: "With hardship, ease", caption: "the audited caption", body: "x", link: "https://noorcodex.com/verse/94",
+    image: "https://noorcodex.com/reels/verse-94-5-cover.jpg", video: "https://noorcodex.com/reels/verse-94-5.mp4", reel: true, kind: "verse" };
+  const sh = CH.shape(post, "pinterest");
+  ok(sh.video === post.video && sh.text === "the audited caption" && sh.board === "One verse of the Qur'an", "shape carries the video, the audited caption and the verse board");
+  const P = pinterest({ boards: [{ id: "1", name: "NOOR Codex of Light" }, { id: "9", name: "One verse of the Qur'an" }] });
+  const r = await CH.sendPinterest(sh, { fetch: P.fetch });
+  const seq = P.calls.map(c => c.url.replace("https://api.pinterest.com", ""));
+  ok(r.ok && r.id === "pin-8812", "the pin is made");
+  const iReg = seq.indexOf("/v5/media"), iUp = seq.findIndex(u => u.startsWith("https://pinterest-media-upload")), iPin = seq.findIndex(u => u === "/v5/pins");
+  ok(iReg > -1 && iUp > iReg && iPin > iUp, "register, upload, then the pin, in that order");
+  ok(seq.filter(u => u.includes("/v5/media/m-77")).length === 2, "processing is polled until it succeeds");
+  const up = P.calls[iUp];
+  ok(up.form && typeof up.form.get === "function" && up.form.get("key") === "k1" && up.form.get("file") && up.form.get("file").size === 4, "the upload carries Pinterest's fields and the file's bytes");
+  const pin = JSON.parse(P.calls[iPin].body);
+  ok(pin.media_source.source_type === "video_id" && pin.media_source.media_id === "m-77" && pin.media_source.cover_image_url === post.image && pin.board_id === "9", "the pin is a video pin with the cover, on the verse board");
+  const Pf = pinterest({ mediaFails: true });
+  const rf = await CH.sendPinterest(sh, { fetch: Pf.fetch });
+  ok(!rf.ok && /process/.test(rf.err) && !Pf.calls.some(c => c.url.endsWith("/v5/pins")), "a video Pinterest cannot process makes no pin and says why");
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");

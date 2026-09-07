@@ -14,7 +14,7 @@ const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fai
 
 const MAN = [];
 for (let i = 0; i < 8; i++) MAN.push({ id: 'verse-' + i, kind: 'verse', slot: i % 2 ? 'evening' : 'morning', hook: 'v', caption: 'c' });
-for (let i = 0; i < 8; i++) MAN.push({ id: 'word-' + i, kind: 'word', slot: i % 2 ? 'evening' : 'morning', hook: 'w', caption: 'c' });
+for (let i = 0; i < 40; i++) MAN.push({ id: 'word-' + i, kind: 'word', slot: i % 2 ? 'evening' : 'morning', hook: 'w', caption: 'c' });
 for (let i = 0; i < 5; i++) MAN.push({ id: 'know-' + i, kind: 'know', slot: 'morning', hook: 'k', caption: 'c' });
 for (let i = 0; i < 4; i++) MAN.push({ id: 'light-' + i, kind: 'light', slot: i % 2 ? 'evening' : 'morning', hook: 'l', caption: 'c' });
 for (let i = 0; i < 3; i++) MAN.push({ id: 'codex-' + i, kind: 'codex', slot: 'evening', hook: 'c', caption: 'c' });
@@ -35,6 +35,12 @@ console.log('\nthe rota');
   ok(morn.join() === 'verse,verse,know,verse,word,verse,know', 'mornings Sun..Sat: ' + morn.join(' '));
   ok(eve.join() === 'word,word,light,know,light,codex,light', 'evenings Sun..Sat: ' + eve.join(' '));
   ok(morn.filter(k => k === 'verse').length === 4, 'four verses a week in the morning');
+  const halves = ['morning', 'noon', 'afternoon', 'evening', 'night'];
+  const week5 = week.map(d => halves.map(h => kind(S.chooseReel(MAN, d, h, null))));
+  ok(week5.every(r => r.length === 5 && r.every(Boolean)), 'five reels a day, every half of every day has a kind');
+  const tally = {}; week5.flat().forEach(k => tally[k] = (tally[k] || 0) + 1);
+  ok(tally.verse === 12 && tally.word === 11 && tally.know === 8 && tally.light === 3 && tally.codex === 1, 'a week is 12 verses, 11 words, 8 Did you knows, 3 day\'s cards, 1 Codex: ' + JSON.stringify(tally));
+  ok(week5.every(r => !(r[1] === 'light' || r[2] === 'light' || r[4] === 'light')), 'the day\'s card keeps to its two halves');
   const a = S.chooseReel(MAN, '2026-09-07', 'morning', null), b = S.chooseReel(MAN, '2026-09-07', 'morning', null);
   ok(a.id === b.id, 'the same date always chooses the same card');
 }
@@ -55,13 +61,13 @@ console.log('\nno repeats within a kind');
   let d2 = new Date('2026-09-06T12:00:00Z');
   for (let i = 0; i < 21; i++) {
     const iso = d2.toISOString().slice(0, 10);
-    for (const h of ['morning', 'evening']) { const c = S.chooseReel(MAN, iso, h, null); if (c && c.kind === 'word') { words.push(c.id); when.push(iso + ' ' + h); } }
+    for (const h of ['morning', 'noon', 'afternoon', 'evening', 'night']) { const c = S.chooseReel(MAN, iso, h, null); if (c && c.kind === 'word') { words.push(c.id); when.push(iso + ' ' + h); } }
     d2 = new Date(d2.getTime() + 86400000);
   }
   let close = null;
   for (let i = 0; i < words.length; i++) for (let j = i + 1; j < words.length; j++)
     if (words[i] === words[j] && (Date.parse(when[j]) - Date.parse(when[i])) < 7 * 86400000) close = words[i] + ' ' + when[i] + ' / ' + when[j];
-  ok(!close, 'a word never comes back within a week across the two slots' + (close ? ': ' + close : ''));
+  ok(!close, 'a word never comes back within a week across the five slots' + (close ? ': ' + close : ''));
 }
 
 console.log('\nThis day');

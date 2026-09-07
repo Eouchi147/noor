@@ -10,6 +10,14 @@ those change every reel, and a reel is only as current as the day it was made.
     python3 render_missing.py                  the ones with no video
     python3 render_missing.py <id> [<id> ...]  exactly these, again
     python3 render_missing.py all              every card, again
+    python3 render_missing.py --count          how many a run would render, no browser
+    python3 render_missing.py --manifest       list what has a video, nothing else
+
+Several machines can share one run: with REELS_SHARDS=4 and REELS_SHARD=0..3
+each takes every fourth card of the same interleaved list, so four runners
+finish a shelf in the time one would take a quarter of it. Each then hands
+its files to the one that writes the manifest (--manifest) and opens the
+pull request; the workflow in .github/workflows/reels.yml is that dance.
 """
 import json, os, sys, time
 from playwright.sync_api import sync_playwright
@@ -21,31 +29,51 @@ import webreel
 OUT = os.environ.get("REELS_OUT", "../../reels")
 
 
-def main():
-    want = [a for a in sys.argv[1:] if not a.startswith("-")]
+def todo(args):
+    """the cards this process should render, in the order it should take them"""
+    want = [a for a in args if not a.startswith("-")]
     cards = webreel.plan()
-    every = "--all" in sys.argv or [w.lower() for w in want] == ["all"]
+    every = "--all" in args or [w.lower() for w in want] == ["all"]
     if every:
         want = list(cards)
     unknown = [w for w in want if w not in cards]
     if unknown: raise SystemExit("not in plan.json: " + ", ".join(unknown))
-    named = bool(want)
     if not want:
         # a card with a video is done; a card marked unfit is known and is
         # not tried again unless it is named or the plan changes its copy
         want = [c for c in cards
                 if not os.path.exists(os.path.join(OUT, c + ".mp4"))
                 and not unfit_still(c, cards[c])]
-    if not want:
-        print("nothing to render: every card in plan.json already has a video")
-        return 0
     # the kinds take turns, so a run that stops early still leaves a balanced
     # shelf: a verse, a word, a Did you know, a day, then round again
     want = interleave(want, cards)
+    total = len(want)
+    shards = max(1, int(os.environ.get("REELS_SHARDS", "1") or 1))
+    shard = int(os.environ.get("REELS_SHARD", "0") or 0)
+    if shards > 1:
+        if not 0 <= shard < shards:
+            raise SystemExit("REELS_SHARD must be between 0 and %d" % (shards - 1))
+        want = want[shard::shards]
     cap = int(os.environ.get("REELS_MAX", "0") or 0)
     if cap and len(want) > cap:
-        print(f"{len(want)} missing; this run takes the first {cap}")
         want = want[:cap]
+    return want, cards, total
+
+
+def main():
+    if "--manifest" in sys.argv:
+        sweep(); manifest(); return 0
+    if "--count" in sys.argv:
+        # what one run would take on, before any machine is spent on it
+        os.environ.pop("REELS_SHARDS", None); os.environ.pop("REELS_SHARD", None)
+        want, _, total = todo(sys.argv[1:])
+        print(len(want)); return 0
+    want, cards, total = todo(sys.argv[1:])
+    if not want:
+        print("nothing to render: every card in plan.json already has a video")
+        return 0
+    if len(want) < total:
+        print(f"{total} to do in all; this machine takes {len(want)}")
     os.makedirs(OUT, exist_ok=True)
     print(f"{len(want)} to render into {OUT}")
 
@@ -178,7 +206,7 @@ def interleave(names, cards):
     by = {}
     for nm in names:
         by.setdefault(cards[nm].get("kind", "light"), []).append(nm)
-    order = ["verse", "word", "know", "day", "light"]
+    order = ["verse", "word", "know", "day", "codex", "light"]
     queues = [by[k] for k in order if by.get(k)] + [v for k, v in by.items() if k not in order]
     out = []
     while any(queues):
