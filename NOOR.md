@@ -76,8 +76,10 @@ These are not preferences. They are refused, not negotiated.
   YouTube Shorts for reels once the consent is given; Pinterest approved
   (Trial), each kind on its own board, reels as video pins, Standard access
   asked for with a screen recording; X built and switched off (paid); Reddit
-  drafts only, never automatic; Telegram recommended, not built yet; TikTok
-  and Threads after YouTube. The day is ten posts (nine without a countdown),
+  drafts only, never automatic; Telegram built (`api/_telegram.js`: a bot
+  from BotFather made administrator of a public channel, TG_BOT_TOKEN and
+  TG_CHAT_ID), cards as photos and reels as videos; TikTok and Threads after
+  YouTube. The day is ten posts (nine without a countdown),
   eighteen surfaces on Meta, well inside Instagram's hundred a day.
 - **Reliability** (`api/social.js`): the poster posts first, then heals what
   failed with backoff, and never double-posts: a half-sent slot is retried
@@ -108,7 +110,7 @@ tells him what to drag and what to press. Not before.
 ## What is next
 
 The Codex and the second cut of the reels (shader picture, grid, sound
-chain) are shipping now. Then: Telegram; the YouTube consent in Sam's
-browser; more day's cards and Did you knows; the achievements room by field
+chain) are shipping now. Then: the Telegram bot and channel made in Sam's
+Telegram, and the two variables; the YouTube consent in Sam's browser; more day's cards and Did you knows; the achievements room by field
 and era; the internal linking audit once the dictionary pull request is
 live; Instagram insights so the rota can lean on what strangers watch.

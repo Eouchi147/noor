@@ -1165,6 +1165,8 @@ async function sendOne(ch, shaped, post, left) {
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
   if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
+  /* a reel goes to the channel as a video, by url: Telegram fetches it */
+  if (ch === "telegram") return await fn({ ...shaped, video: p.video || null });
   return await fn(shaped);
 }
 
@@ -1524,7 +1526,38 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
       out.canRetry = false; return { ...out, ok: true };
     }
   }
-  const NET = ch === "pinterest" ? "Pinterest" : ch === "youtube" ? "YouTube" : "Meta";
+
+  /* Telegram: a pause it names in seconds, or a bot that is not yet an
+     administrator of the channel. Both are said in words, not Meta codes. */
+  if (ch === "telegram") {
+    const said = String(out.said || "");
+    if ((r && r.wait) || /too many requests|retry after|asked for a pause/i.test(said)) {
+      out.cause = "Telegram is rate limiting the bot for now"; out.fix = "wait";
+      out.steps = ["Nothing is broken; Telegram asked for a pause" + (r && r.wait ? " of " + r.wait + " seconds" : "") + ".",
+                   "The hourly run retries by itself; or wait a minute and press Retry on this row."];
+      out.canRetry = true; return { ...out, ok: true };
+    }
+    if ((r && r.admin) || /chat not found|not a member|administrator|not enough rights|kicked|write forbidden/i.test(said)) {
+      out.cause = "the bot cannot post to the channel: it is not an administrator of it, or TG_CHAT_ID names the wrong channel"; out.fix = "manual";
+      out.steps = ["In Telegram, open the channel, then Administrators, then Add administrator, and pick the bot by its username.",
+                   "Switch on Post messages for it; the other rights are not needed.",
+                   "Check TG_CHAT_ID in Vercel is the channel's public username with its @ (a private channel takes its -100... id instead).",
+                   "Then press Retry on this row."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+    if (/does not recognise the bot token|unauthorized/i.test(said)) {
+      out.cause = "the bot token is not one Telegram knows"; out.fix = "token";
+      out.steps = ["Open @BotFather in Telegram, send /token, pick the bot, and copy the token it shows.",
+                   "Paste it into Vercel as TG_BOT_TOKEN and redeploy, then press Retry on this row."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+    if (/not configured|not connected/i.test(said)) {
+      out.cause = "Telegram is not connected yet"; out.fix = "manual";
+      out.steps = ["Follow the Telegram steps page once: a bot from @BotFather, a public channel, the bot as its administrator, two variables in Vercel."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+  }
+  const NET = ch === "pinterest" ? "Pinterest" : ch === "youtube" ? "YouTube" : ch === "telegram" ? "Telegram" : "Meta";
 
   /* the network's own code first, because it is the only thing here it stands behind */
   const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));

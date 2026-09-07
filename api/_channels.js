@@ -1,6 +1,6 @@
-/* NOOR · the six places a post can go
+/* NOOR · the seven places a post can go
    ===========================================================================
-   One post, six shapes. Sending the same 2,200-character block everywhere is
+   One post, seven shapes. Sending the same 2,200-character block everywhere is
    how an account reads as a bot, and on two of these networks it is also how
    an account dies.
 
@@ -11,6 +11,9 @@
      youtube     Shorts: the reel file, a title, the caption
                  as description. Video REQUIRED, so only the
                  reel slots ever reach it.                     needs consent
+     telegram    a channel: a bold title, the body, the link;
+                 1,024 chars under a picture or a reel, which
+                 Telegram fetches from the url itself.        needs a bot token
      linkedin    ~3,000 chars, 3-5 tags at most, no emoji
                  confetti. Reads as a trade journal.           needs token
      pinterest   image first. Title <=100, description <=500,
@@ -40,6 +43,7 @@
 --------------------------------------------------------------------------- */
 
 import * as YT from "./_youtube.js";
+import * as TG from "./_telegram.js";
 
 const env = k => (process.env[k] || "").trim();
 /* LinkedIn versions live about twelve months and the header is mandatory on
@@ -66,6 +70,11 @@ export const SPEC = {
   instagram: { chars: 2200, tags: 30, image: "required", live: true  },
   /* video only: a reel's third home. Nothing without a video goes here. */
   youtube:   { chars: 4900, tags: 15, image: "optional", video: "required", live: true },
+  /* a card goes as a photo, a reel as a video, either with a 1,024-character
+     caption; a post with neither would be a 4,096-character message, which
+     the module allows and the day never produces. Telegram puts no limit on
+     hashtags; the house adds none, and a reel's own ride along. */
+  telegram:  { chars: 1024, tags: 10, image: "optional", video: "optional", live: true },
   linkedin:  { chars: 3000, tags: 4,  image: "optional", live: false },
   pinterest: { chars: 500,  tags: 3,  image: "required", live: false },
   x:         { chars: 280,  tags: 2,  image: "optional", live: false },
@@ -99,6 +108,12 @@ export function shape(p, ch) {
     /* the reel's caption is its description; the title is its hook with
        #Shorts on it, the way YouTube files a vertical minute. See _youtube.js. */
     return YT.shape(p);
+  }
+
+  if (ch === "telegram") {
+    /* HTML parse mode, so the title can be bold and the three markup
+       characters have to be escaped; the limit is counted after. See _telegram.js. */
+    return TG.shape(p);
   }
 
   if (ch === "pinterest") {
@@ -161,6 +176,7 @@ export function shape(p, ch) {
 export const configured = {
   facebook:  () => !!(env("FB_PAGE_ID") && env("FB_PAGE_TOKEN")),
   youtube:   () => YT.configured(),
+  telegram:  () => TG.configured(),
   instagram: () => !!(env("IG_USER_ID") && (env("IG_TOKEN") || env("IG_ACCESS_TOKEN") || env("FB_PAGE_TOKEN"))),
   linkedin:  () => !!(env("LI_ORG_URN") && env("LI_TOKEN")),
   /* A board (by id or by name) and some way to hold a token: either one
@@ -444,4 +460,8 @@ export async function sendYouTube(shaped, opts = {}) {
   return YT.upload(shaped, opts);
 }
 
-export const SENDERS = { linkedin: sendLinkedIn, pinterest: sendPinterest, x: sendX, reddit: sendReddit, youtube: sendYouTube };
+export async function sendTelegram(shaped, opts = {}) {
+  return TG.send(shaped, opts);
+}
+
+export const SENDERS = { linkedin: sendLinkedIn, pinterest: sendPinterest, x: sendX, reddit: sendReddit, youtube: sendYouTube, telegram: sendTelegram };
