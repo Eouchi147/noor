@@ -54,7 +54,12 @@ globalThis.fetch = async (url, opt) => {
   const m = u.match(/\/v21\.0\/([^/]+)\/insights\?metric=(.+)$/);
   if (m) {
     const id = m[1], metrics = m[2];
-    if (id.startsWith('fb')) return J({ data: metrics.split(',').map(name => ({ name, values: [{ value: name === 'post_total_media_view_unique' ? 55 : 80 }] })) });
+    if (id.startsWith('fb')) {
+      /* Meta today: the names the changelog promised are refused, four others are taken */
+      const names = metrics.split(',');
+      if (names.some(n => !FB_OK.has(n))) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
+      return J({ data: names.map(name => ({ name, values: [{ value: name === 'post_media_view_unique' ? 55 : 80 }] })) });
+    }
     if (igMode === 'noperm') return J({ error: { message: '(#10) Application does not have permission for this action', code: 10 } }, 400);
     if (igMode === 'refuse:' + id) return J({ error: { message: 'Unsupported get request. Object with ID does not exist', code: 100, error_subcode: 33 } }, 400);
     if (igMode === 'oldnames' && /views/.test(metrics)) return J({ error: { message: '(#100) metric[0] must be one of the following values: reach, likes...', code: 100 } }, 400);
@@ -63,6 +68,7 @@ globalThis.fetch = async (url, opt) => {
   return J({ error: { message: 'unexpected ' + u } }, 400);
 };
 
+const FB_OK = new Set(['post_media_view_unique', 'post_media_view', 'post_clicks', 'post_reactions_like_total']);
 const INS = await import('../api/_insights.js');
 
 /* ---------- fixed records: fourteen days, a kind per slot, an id per network ---------- */
@@ -239,8 +245,20 @@ console.log('\nwhen Meta no longer knows a metric name');
 
 console.log('\nFacebook and YouTube');
 {
+  store.delete(INS.K_FBSET); calls = [];
   const f = await INS.fetchFacebook('fb1', { now: NOW });
-  ok(f.reach === 55 && f.views === 80 && f.likes === 80 && /post_total_media_view_unique/.test(f.metrics), 'a Facebook post: unique media views as reach, impressions as views');
+  const probes = calls.filter(u => /\/fb1\/insights\?metric=[a-z_]+$/.test(u)).length;
+  ok(probes === INS.FB_CANDIDATES.length, 'the first Facebook read asks Meta about every candidate metric, one at a time: ' + probes);
+  ok(f.reach === 55 && f.views === 80 && f.likes === 80 && f.clicks === 80 && f.metrics === 'post_media_view_unique,post_media_view,post_clicks,post_reactions_like_total',
+     'and reads with exactly the names Meta accepted, unique media views as reach, media views as views: ' + f.metrics);
+  const learned = JSON.parse(store.get(INS.K_FBSET));
+  ok(learned && learned.set.length === 4, 'the accepted set is remembered');
+  calls = [];
+  const f2 = await INS.fetchFacebook('fb2', { now: NOW });
+  ok(f2.reach === 55 && calls.length === 1, 'the next post asks once, with the remembered set, and probes nothing');
+  store.set(INS.K_FBSET, JSON.stringify({ at: NOW, set: ['post_impressions'] }));
+  const f3 = await INS.fetchFacebook('fb3', { now: NOW });
+  ok(f3.error && f3.code === 100 && JSON.parse(store.get(INS.K_FBSET)).set.length === 0, 'a remembered name Meta stops taking is refused once and forgotten, so the next read learns again');
   const y = await INS.fetchYouTube(['yt1', 'yt2'], { now: NOW });
   ok(y.yt1 && y.yt1.views === 900 && y.yt1.likes === 12 && y.yt1.reach === null, 'a Short: views and likes, no reach');
   const none = await INS.fetchYouTube(['zz'], { now: NOW, fetch: async u => /youtube\/v3/.test(String(u)) ? ({ ok: true, status: 200, json: async () => ({ items: [] }) }) : ({ ok: true, status: 200, json: async () => ({ access_token: 'a' }) }) });

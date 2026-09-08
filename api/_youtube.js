@@ -30,7 +30,11 @@ const env = k => (process.env[k] || "").trim();
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=multipart&part=snippet,status";
-export const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+/* upload, to put a Short up; readonly, to read what it did afterwards. The
+   first consent carried upload alone, and the Readers room was answered
+   "insufficient authentication scopes" for every Short: a token that can
+   publish a video cannot count its views. One consent grants both. */
+export const SCOPE = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly";
 const K_ACCESS = "nsoc:yt:access";
 const K_DAY = d => "nsoc:yt:day:" + d;
 export const DAILY_CAP = 5;          /* 5 x 1,600 = 8,000 of the 10,000 units, with room for the rest */

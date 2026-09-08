@@ -99,7 +99,7 @@ console.log('\nthe consent');
   const u = new URL(YT.authUrl('noorcodex.com', 'st.ate'));
   ok(u.searchParams.get('redirect_uri') === 'https://noorcodex.com/youtube/callback', 'the redirect is /youtube/callback on the site');
   ok(u.searchParams.get('access_type') === 'offline' && u.searchParams.get('prompt') === 'consent', 'offline access with a forced consent, so a refresh token comes back');
-  ok(u.searchParams.get('scope') === 'https://www.googleapis.com/auth/youtube.upload', 'the one scope: upload, nothing else');
+  ok(u.searchParams.get('scope') === 'https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly', 'two scopes: upload to put a Short up, readonly to read what it did; nothing else');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

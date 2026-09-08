@@ -67,6 +67,41 @@ export const FB_METRICS = {
   full: ["post_total_media_view_unique", "post_impressions", "post_clicks", "post_reactions_like_total"],
   bare: ["post_impressions", "post_clicks", "post_reactions_like_total"]
 };
+/* Meta answered "(#100) The value must be a valid insights metric" to BOTH
+   sets above, 44 posts running, on the first live read: the names a changelog
+   promised are not the names the API takes today, and the API does not say
+   which it takes. So the house asks it, once: each candidate below is tried
+   alone on a real post, the ones Meta accepts are kept under nsoc:ins:fbset
+   for a week, and every read after that asks for exactly those. A new name
+   Meta introduces is added here; nothing else needs to change. */
+export const FB_CANDIDATES = [
+  "post_total_media_view_unique", "post_media_view_unique", "post_impressions_unique",
+  "post_media_view", "post_impressions", "post_video_views",
+  "post_clicks", "post_reactions_like_total", "post_engaged_users"
+];
+export const K_FBSET = "nsoc:ins:fbset";
+const FBSET_MS = 7 * 86400 * 1000;
+/* which candidate stands for which column, first found first served */
+const FB_REACH = ["post_total_media_view_unique", "post_media_view_unique", "post_impressions_unique"];
+const FB_VIEWS = ["post_media_view", "post_impressions", "post_video_views"];
+const firstOf = (m, names) => { for (const n of names) if (m[n] != null) return m[n]; return null; };
+
+/* the set Meta accepts, learned once on a real post and remembered */
+export async function fbMetricSet(id, tok, opts = {}) {
+  const nowMs = nowMsOf(opts.now);
+  const [c] = await cacheRead([K_FBSET], opts);
+  if (c && c.at && nowMs - Date.parse(c.at) < FBSET_MS && Array.isArray(c.set)) return c.set;
+  const set = [];
+  for (const name of FB_CANDIDATES) {
+    let r;
+    try { r = await graphGet(`${GRAPH_FB}/${id}/insights?metric=${name}`, tok, opts.fetch); } catch { continue; }
+    if (r.ok && rows(r.j)[name] != null) set.push(name);
+    else if (r.ok) set.push(name);              /* accepted, empty today: still a name Meta takes */
+    else if (permissionMissing(metaCode(r.j), metaErr(r.j))) return { needs: metaErr(r.j) || "permission" };
+  }
+  await cacheWrite(K_FBSET, { at: new Date(nowMs).toISOString(), set }, opts);
+  return set;
+}
 
 /* ---------------------------------------------------------------------------
    the kinds
@@ -230,22 +265,24 @@ export async function fetchFacebook(id, opts = {}) {
   const now = opts.now ? new Date(opts.now).toISOString() : new Date().toISOString();
   const tok = opts.fbToken || await pageToken();
   if (!tok) return { at: now, error: "no Facebook token" };
-  let last = null;
-  for (const set of [FB_METRICS.full, FB_METRICS.bare]) {
-    let r;
-    try { r = await graphGet(`${GRAPH_FB}/${id}/insights?metric=${set.join(",")}`, tok, opts.fetch); }
-    catch (e) { return { at: now, error: String(e && e.message || e).slice(0, 160) }; }
-    if (r.ok) {
-      const m = rows(r.j);
-      return { at: now, reach: m.post_total_media_view_unique != null ? m.post_total_media_view_unique : null,
-               views: m.post_impressions != null ? m.post_impressions : null,
-               clicks: m.post_clicks, likes: m.post_reactions_like_total, metrics: set.join(",") };
-    }
-    const code = metaCode(r.j), msg = metaErr(r.j) || ("http " + r.status);
-    last = { at: now, error: msg, code };
-    if (!unknownMetric(code, msg)) break;
+  const learned = await fbMetricSet(id, tok, opts);
+  if (learned && learned.needs) return { at: now, error: "Facebook refused the insights: " + learned.needs, code: 10 };
+  const set = Array.isArray(learned) ? learned : [];
+  if (!set.length) return { at: now, error: "Meta accepts none of the post metrics the house knows; the names need a look", code: 100 };
+  let r;
+  try { r = await graphGet(`${GRAPH_FB}/${id}/insights?metric=${set.join(",")}`, tok, opts.fetch); }
+  catch (e) { return { at: now, error: String(e && e.message || e).slice(0, 160) }; }
+  if (r.ok) {
+    const m = rows(r.j);
+    return { at: now, reach: firstOf(m, FB_REACH), views: firstOf(m, FB_VIEWS),
+             clicks: m.post_clicks != null ? m.post_clicks : null,
+             likes: m.post_reactions_like_total != null ? m.post_reactions_like_total : null, metrics: set.join(",") };
   }
-  return last;
+  const code = metaCode(r.j), msg = metaErr(r.j) || ("http " + r.status);
+  /* a set that was accepted last week and is refused today is forgotten, so
+     the next read learns again rather than failing for six more days */
+  if (unknownMetric(code, msg)) { try { await cacheWrite(K_FBSET, { at: new Date(0).toISOString(), set: [] }, opts); } catch { } }
+  return { at: now, error: msg, code };
 }
 
 /* YouTube answers for up to fifty ids in one call */
