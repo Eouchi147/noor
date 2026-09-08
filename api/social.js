@@ -654,6 +654,13 @@ const IG_POLL_EVERY = Number(process.env.IG_POLL_EVERY_MS || 2500);
    for a twenty second 1080x1920 reel even once, so waiting was the exception
    and being handed back a container was the rule. */
 const IG_POLL_BUDGET = Number(process.env.IG_POLL_BUDGET_MS || 40000);
+/* ...and, since the clock per network (sendWithin), the poll also stops when
+   the RUN has this much left, whatever its own budget says: a long recitation
+   spent thirty eight seconds here after Facebook's eleven and was cut by the
+   clock with its container lost. Handed back as pending instead, the same
+   container is published next hour, and the networks behind it in the loop
+   get their turn in this one. */
+const IG_POLL_FLOOR = Number(process.env.IG_POLL_FLOOR_MS || 20000);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function igPublish(creationId, id, tok, G) {
@@ -684,8 +691,9 @@ export async function finishInstagramReel(creationId) {
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
 }
 
-async function postInstagramReel(post) {
+async function postInstagramReel(post, left) {
   if (!igConfigured()) return { ok: false, skipped: "IG_USER_ID or a token is not set" };
+  const room = () => typeof left === "function" ? left() - IG_POLL_FLOOR : Infinity;
   if (!post.video) return { ok: false, error: "no video for the reel" };
   const id = process.env.IG_USER_ID, tok = igToken(), G = graphBase(tok);
   try {
@@ -705,7 +713,7 @@ async function postInstagramReel(post) {
       return { ok: false, error: metaErr(cj, "container http " + c.status), step: "container", ...metaCode(cj) };
 
     const started = Date.now();
-    while (Date.now() - started < IG_POLL_BUDGET) {
+    while (Date.now() - started < IG_POLL_BUDGET && room() > 0) {
       await sleep(IG_POLL_EVERY);
       const s = await fetch(`${G}/${cj.id}?fields=status_code`, {
         headers: { authorization: "Bearer " + tok }
@@ -1212,7 +1220,7 @@ async function sendOne(ch, shaped, post, left) {
   if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
     return { ok: false, err: "no time left in this run for the video pin; retried next hour", error: "no time left in this run for the video pin; retried next hour" };
   if (ch === "facebook")  return await (p.video ? postFacebookReel(p) : postFacebook(p));
-  if (ch === "instagram") return await (p.video ? postInstagramReel(p) : postInstagram(p));
+  if (ch === "instagram") return await (p.video ? postInstagramReel(p, left) : postInstagram(p));
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
   if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
