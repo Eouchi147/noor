@@ -20,6 +20,7 @@ process.env.TH_TOKEN = "THAAQZAlongLivedTokenThatIsQuiteLongIndeedAndSecret01234
 process.env.TH_USER_ID = "17841400000000001";
 process.env.ADMIN_SECRET = "admin-secret";
 process.env.TH_POLL_WAIT_MS = "5";
+process.env.TH_IMAGE_WAIT_MS = "5";
 delete process.env.KV_REST_API_URL; delete process.env.REDIS_URL; delete process.env.KV_URL;
 
 import * as TH from "../api/_threads.js";
@@ -129,7 +130,7 @@ console.log('\nthe send: text, image, video');
   const r2 = await TH.send(sh, { fetch: T2.fetch });
   ok(r2.ok && r2.media === "IMAGE" && T2.calls[0].body.media_type === "IMAGE" && T2.calls[0].body.image_url === CARD.image && T2.calls[0].body.text === sh.text, 'a card is an IMAGE container with the picture by url and the shaped text');
   ok(!("link_attachment" in T2.calls[0].body), 'a picture post carries its link in the text only: Threads allows no attachment beside a picture');
-  ok(kinds(T2).slice(0, 2).join(' > ') === 'threads > threads_publish', 'container then publish, no status look for a picture');
+  ok(kinds(T2).slice(0, 3).join(' > ') === 'threads > C?fields=status,error_message > threads_publish', 'container, one look at its status (Meta wants every container looked at before it is published), then publish: ' + kinds(T2).join(' > '));
 
   const T3 = threads();
   const r3 = await TH.send({ text: "caption", image: "https://h/c.jpg", video: "https://h/r.mp4" }, { fetch: T3.fetch });
@@ -263,6 +264,25 @@ console.log('\nwhat Meta can say back');
   ok(!failed.ok && !failed.pending && /could not process the video: ERROR/.test(failed.err), 'a video Meta could not process is a failure that says so, not a pending');
   const pubFail = await TH.send({ text: "c" }, { fetch: threads({ answer: u => /threads_publish$/.test(u) ? reply(400, { error: { message: "Media ID is not available", code: 9007 } }) : null }).fetch });
   ok(!pubFail.ok && pubFail.step === "publish" && /not available/.test(pubFail.err), 'a publish that fails names its step');
+
+  /* the first real card: created, then "does not exist" a second later,
+     because Meta had not finished fetching the picture */
+  {
+    let n = 0;
+    const late = threads({ answer: u => /threads_publish$/.test(u) && ++n < 3 ? reply(400, { error: { message: "The requested resource does not exist", code: 24, error_subcode: 4279009 } }) : null });
+    const r = await TH.send(sh, { fetch: late.fetch });
+    ok(r.ok && r.media === "IMAGE" && n === 3, 'a publish answered "does not exist" (24 / 4279009) is asked again after a moment, and the third answer is the post: ' + JSON.stringify({ ok: r.ok, n }));
+    const pubs = late.calls.filter(x => /threads_publish$/.test(x.url));
+    ok(pubs.length === 3 && pubs.every(x => x.body.creation_id === "C1"), 'the same container every time, never a new one');
+    let m = 0;
+    const never = threads({ answer: u => /threads_publish$/.test(u) && ++m ? reply(400, { error: { message: "The requested resource does not exist", code: 24, error_subcode: 4279009 } }) : null });
+    const r2 = await TH.send(sh, { fetch: never.fetch });
+    ok(!r2.ok && r2.code === 24 && m === 3 && /had not finished preparing/.test(r2.err), 'three answers of "does not exist" and it fails in words, with the hour to retry: ' + r2.err);
+    const slow = threads({ videoStatus: "IN_PROGRESS" });
+    const r3 = await TH.send(sh, { fetch: slow.fetch });
+    const looks = slow.calls.filter(x => /fields=status/.test(x.url)).length;
+    ok(r3.ok && looks === 3, 'a picture still IN_PROGRESS is looked at three times and then published anyway, never handed back as pending: ' + looks + ' looks, ' + JSON.stringify(r3.ok));
+  }
 
   const down = await TH.send(sh, { fetch: async () => { throw new Error("fetch failed access_token=" + TOKEN + " " + TOKEN); } });
   ok(!down.ok && /did not answer/.test(down.err), 'a network fault is reported, not thrown');

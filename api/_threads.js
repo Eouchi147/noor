@@ -56,7 +56,14 @@ const K_SEEN = "nsoc:th:seen";        /* { fp, since } : the day this token was 
 
 /* the short poll a video gets before it is handed back */
 const POLL_WAIT_MS = Number(process.env.TH_POLL_WAIT_MS || 3000);
+/* a picture's looks: a few, short, before it is published; and how many times
+   a publish answered "does not exist yet" is asked again */
+const IMAGE_WAIT_MS = Number(process.env.TH_IMAGE_WAIT_MS || 1500);
+const IMAGE_LOOKS = 3;
+const PUBLISH_RETRIES = 2;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+/* code 24 / 4279009: the container exists but is not ready to be published */
+const notReadyYet = out => Number(out.code) === 24 || Number(out.sub) === 4279009 || /does not exist/i.test(String(out.err || ""));
 
 export const configured = () => !!env("TH_TOKEN");
 export const doorReady = () => !!(env("TH_APP_ID") && env("TH_APP_SECRET"));
@@ -260,6 +267,11 @@ function explain(status, j) {
        not on the site yet. The next hour usually finds it. */
     return { ok: false, code: code || status, sub, err: "Threads could not fetch the file from its url (" + said + "); retried next hour" };
   }
+  if (code === 24 || sub === 4279009) {
+    /* the container was made and Meta was still preparing it when asked to
+       publish; send() asks again after a moment, and the hour after that */
+    return { ok: false, code: 24, sub, err: "Threads had not finished preparing the post when asked to publish it (" + said + "); asked again" };
+  }
   return { ok: false, code: code || status, sub, err: said };
 }
 
@@ -337,8 +349,32 @@ export async function send(shaped, opts = {}) {
     if (!st.ok || (st.status !== "FINISHED" && st.status !== "PUBLISHED"))
       return { ok: false, pending: cid, err: "Threads is still processing the video; it is published on the next run",
                note: "Threads is still processing the video; it is published on the next run" };
+  } else if (shaped.image) {
+    /* The first card the house ever sent to Threads was refused at the
+       publish with "the requested resource does not exist" (code 24,
+       4279009): the container had been created a second earlier and Meta had
+       not finished fetching the picture. Meta's own advice is to wait before
+       publishing ANY container, not only a video. A picture takes seconds,
+       not the half minute a video does, so it is looked at here, a few short
+       times, and only then published. A card slot has no next-run finisher
+       (finishPendingReels walks the reel slots), so a picture is never handed
+       back as pending: it is published here or it fails here, in words. */
+    for (let i = 0; i < IMAGE_LOOKS; i++) {
+      let st;
+      try { st = await status(cid, tok, f); } catch (e) { st = { ok: false, err: mask(String(e && e.message || e)) }; }
+      if (st.ok && (st.status === "ERROR" || st.status === "EXPIRED"))
+        return { ok: false, err: "Threads could not take the picture: " + st.status + (st.error ? " (" + st.error + ")" : ""), code: st.status };
+      if (st.ok && (st.status === "FINISHED" || st.status === "PUBLISHED")) break;
+      await sleep(IMAGE_WAIT_MS);
+    }
   }
-  const out = await publish(cid, uid, tok, f);
+  /* and the publish itself is given a second chance on exactly that answer,
+     because a look that said FINISHED has still been followed by it */
+  let out = await publish(cid, uid, tok, f);
+  for (let i = 0; i < PUBLISH_RETRIES && !out.ok && notReadyYet(out); i++) {
+    await sleep(IMAGE_WAIT_MS);
+    out = await publish(cid, uid, tok, f);
+  }
   if (out.ok) out.media = body.media_type;
   return out;
 }

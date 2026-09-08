@@ -1175,6 +1175,38 @@ export function liveChannels(post) {
 /* a video pin is a fetch, an upload and a wait: not started without the room
    to finish, and handed to the hourly heal instead */
 const PIN_VIDEO_RESERVE_MS = Number(process.env.PIN_VIDEO_RESERVE_MS || 36000);
+/* THE CLOCK, PER CHANNEL.
+
+   Three hourly runs in a row died at Vercel's sixty seconds with nothing on
+   the record: the 11:00 reel, then the noon card twice. The loop below asked
+   every live network in turn and consulted the clock only for a video pin;
+   a slow Instagram fetch or a long YouTube upload spent the whole minute,
+   the function was cut before writeSlot ran, and the slot stayed owed -- so
+   whatever HAD landed was sent again the next hour. The opposite of the
+   promise never to double-post.
+
+   So each network is given what is left of the run, less a reserve for
+   writing the record, and no more. A network that does not answer in its
+   room is recorded as late, the record is written with the others' answers
+   intact, and healFailures asks that one network again next hour, alone.
+   The clock does not cancel the request underneath (fetch has no such
+   handle here); it makes sure the record is written first, which is the
+   thing that keeps a slot from going out twice. */
+const WRITE_RESERVE_MS = Number(process.env.WRITE_RESERVE_MS || 6000);
+const CHANNEL_MIN_MS = Number(process.env.CHANNEL_MIN_MS || 8000);
+const OUT_OF_TIME = "no time left in this run for this network; retried next hour";
+async function sendWithin(ch, shaped, post, left) {
+  const began = Date.now();
+  const stamp = r => { if (r && typeof r === "object") r.ms = Date.now() - began; return r; };
+  if (typeof left !== "function") return stamp(await sendOne(ch, shaped, post, left));
+  const room = left() - WRITE_RESERVE_MS;
+  if (room < CHANNEL_MIN_MS) return stamp({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true });
+  let timer;
+  const clock = new Promise(r => { timer = setTimeout(() => r({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true }), room); });
+  try { return stamp(await Promise.race([sendOne(ch, shaped, post, left), clock])); }
+  finally { clearTimeout(timer); }
+}
+
 async function sendOne(ch, shaped, post, left) {
   const p = { ...post, caption: shaped.text };
   if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
@@ -1250,7 +1282,9 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   }
 
   const began = Date.now();
-  const left = () => RUN_BUDGET_MS - (Date.now() - began);
+  /* a caller already on a clock (the healer, inside the hourly run) hands
+     its own down, so a slot sent late in a run cannot start a fresh minute */
+  const left = typeof opts.left === "function" ? opts.left : () => RUN_BUDGET_MS - (Date.now() - began);
   const post = await composeSlot(host, date, slotId, opts);
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
 
@@ -1296,7 +1330,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
     if (CH.SPEC[ch].image === "required" && imgWhy) {
       results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
-    try { results[ch] = await sendOne(ch, shaped, { ...post, date }, left); }
+    try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left); }
     catch (e) {
       const m = String(e && e.message || e).slice(0, 120);
       results[ch] = { ok: false, error: m, err: m };
@@ -1842,7 +1876,7 @@ export async function runDue(host, date, now, opts = {}) {
     for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
-      try { results[ch] = await sendOne(ch, shaped, { ...post, date }, left); }
+      try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left); }
       catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
     }
     /* Reddit is composed and kept, never sent. What is paced here is how often
@@ -1866,9 +1900,23 @@ export async function runDue(host, date, now, opts = {}) {
     if (await addStories(results, { ...post, date }, D, left)) await writeSlot(date, slot.id, rec);
     out.ran.push({ slot: slot.id, state: rec.state, results });
     posted++;
+    /* one line in the function log, so a slow hour can be read afterwards:
+       which network took the time. Never a token, never a caption. */
+    logRun("sent", { slot: slot.id, state: rec.state, msLeft: left(), took: tookBy(results) });
   }
   await tidyUp(host, date, out, now, began, opts);
+  logRun("run", { ran: out.ran.map(r => r.slot + ":" + (r.state || (r.skipped ? "skipped" : "?"))), msLeft: out.msLeft, tidy: out.tidyError || "" });
   return out;
+}
+
+/* the per-network milliseconds of one slot's results, for the log */
+function tookBy(results) {
+  const t = {};
+  for (const [ch, r] of Object.entries(results || {})) if (r && typeof r.ms === "number") t[ch] = r.ms + (r.late ? " late" : "");
+  return t;
+}
+function logRun(what, fields) {
+  try { console.log(JSON.stringify({ noor: what, ...fields })); } catch { }
 }
 
 /* ---------------------------------------------------------------------------
