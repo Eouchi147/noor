@@ -362,6 +362,38 @@ console.log("\nthe Lantern writes the paragraph, and may not invent one number")
   ok(/One thing needs you today/.test(ST.template(found)), "the template counts the acts: " + ST.template(found));
   ok(ST.template(ST.rules(mkHouse())).length > 0 && ST_sentences(ST.template(ST.rules(mkHouse()))) <= 3, "and it is never more than three sentences");
   ok(ST.guardParagraph("Nothing at all today.", []).ok, "a paragraph with no number in it needs no permission");
+  /* the first live paragraph was the model's thinking, verbatim */
+  const aloud = ST.guardParagraph("We need to produce one paragraph, max three sentences, plain English, for the one person who runs the house. Must use only numbers that appear in the findings.", []);
+  ok(!aloud.ok && /thought aloud/.test(aloud.why), "a model that hands back its thinking about the task is refused, and the template speaks: " + aloud.why);
+  const thought = ST.guardParagraph("<think>let me count the findings</think> Three posts are half sent and one is still transcoding.", [{ say: "3 of today's posts are half sent", title: "", level: "act" }, { say: "1 post is still transcoding", title: "", level: "watch" }]);
+  ok(thought.ok && thought.text === "Three posts are half sent and one is still transcoding.", "a think block is cut away and the sentence after it stands: " + JSON.stringify(thought.text));
+  ok(!ST.guardParagraph("<think>still thinking", []).ok, "a think block that never closes is nothing");
+  ok(!ST.guardParagraph("I should say that readers are down on yesterday.", []).ok, "first-person notes about what to say are refused");
+}
+
+console.log("\na network seen waiting is waiting in every voice");
+{
+  /* the first live morning: Pinterest on Trial answered one slot in words, and
+     was cut by the clock on another and set aside for drift on a third. All
+     three are the same wait. */
+  const records = {
+    [TODAY + "#light"]: { at: TODAY + "T12:00:00Z", slot: "light", state: "sent", title: "The day's card",
+      results: { instagram: { ok: true, id: "ig-1" }, pinterest: { ok: false, fatal: true, trial: true, waiting: true, err: "Pinterest is waiting on its Standard-access review" } } },
+    [TODAY + "#reelA"]: { at: TODAY + "T08:00:00Z", slot: "reelA", state: "partial", title: "A reel",
+      results: { instagram: { ok: true, id: "ig-2" }, pinterest: { ok: false, fatal: true, drift: true, err: "no time left in this run for the video pin; retried next hour" } } },
+    [TODAY + "#reelC"]: { at: TODAY + "T11:00:00Z", slot: "reelC", state: "partial", title: "A reel",
+      results: { instagram: { ok: true, id: "ig-3" }, pinterest: { ok: false, late: true, err: "no time left in this run for this network; retried next hour" } } }
+  };
+  const h = await ST.gather({ now: NOW, date: TODAY, kv: fakeKv, kvReady: fakeReady,
+    readSlot: async (d, s) => records[d + "#" + s] || null,
+    dials: async () => ({ mode: "auto", storeOk: true }), tokenClock: async () => ({ fb: {}, ig: {}, lifeDays: 60 }),
+    threadsAge: async () => ({ days: null }), night: async () => ({ findings: 0 }) });
+  const states = Object.fromEntries(h.today.filter(t => t.results).map(t => [t.id, t.state]));
+  ok(states.reelA === "sent" && states.reelC === "sent" && states.light === "sent", "the three slots read sent, not half sent: " + JSON.stringify(states));
+  const f = ST.rules(h);
+  ok(!byId(f, "slots-partial"), "so nothing proposes sending it to Pinterest again");
+  const w = byId(f, "slots-waiting");
+  ok(w && w.evidence.refused === 3, "and the one waiting line counts all three: " + (w && w.evidence.refused));
 }
 
 console.log("\nthe steward, end to end, with the store and the Lantern stubbed");

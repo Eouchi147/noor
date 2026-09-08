@@ -123,6 +123,24 @@ export async function gather(opts = {}) {
     got.forEach((rec, i) => { if (rec) window.push({ date: d, slot: planned[i], rec }); });
   }
 
+  /* A network that is waiting on its review refuses in more than one voice:
+     the Trial answer carries `waiting`, but a pin cut by the clock or set aside
+     for drift on the same network does not, and the first live morning read
+     "3 of today's posts are half sent" with "Send it to Pinterest again" under
+     it, an action that could only meet the same review. So once a network is
+     seen waiting anywhere in the window, every failure on that network is read
+     as waiting too, before the slot's state is judged. */
+  const waitingNets = new Set();
+  for (const w of window) for (const [c, r] of Object.entries((w.rec && w.rec.results) || {})) if (r && (r.waiting || r.trial)) waitingNets.add(c);
+  for (const w of window) {
+    const rs = w.rec && w.rec.results;
+    if (!rs) continue;
+    for (const c of waitingNets) {
+      const r = rs[c];
+      if (r && !r.ok && !r.pending && !r.skipped && !r.waiting && !r.trial) w.rec = { ...w.rec, results: { ...rs, [c]: { ...r, waiting: true, settled: true } } };
+    }
+  }
+
   /* today, slot by slot: what has a record, what has none and whose hour has
      gone. The state is read back through slotState so this file and the poster
      can never disagree about what half sent means. */
@@ -523,9 +541,19 @@ const numbersIn = v => {
   return out;
 };
 
+/* A reasoning model sometimes hands back its thinking instead of its answer:
+   the first live paragraph began "We need to produce one paragraph, max three
+   sentences". Thinking has a shape: it talks about the task (the paragraph,
+   the sentences, the findings, the JSON, the person), it says "we need" and
+   "I should", it quotes the instructions back. None of that is a sentence
+   about the house, so it is refused and the template speaks instead. */
+const THINKING = /\b(we need|we must|we should|i should|i need|i will|let me|let's|must use|the user|the findings|the json|paragraph|sentences?\b|chief of staff|instruction|the task|as an ai|plain english)\b/i;
 export function guardParagraph(text, findings) {
-  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  let raw = String(text || "");
+  raw = raw.replace(/<think>[^]*?<\/think>/gi, " ").replace(/^\s*<think>[^]*$/i, " ");
+  raw = raw.replace(/\s+/g, " ").trim();
   if (!raw) return { ok: false, why: "the editor did not answer" };
+  if (THINKING.test(raw)) return { ok: false, why: "it thought aloud about the task instead of answering" };
   if (/[—–]/.test(raw)) return { ok: false, why: "it used a dash the house does not write" };
   const kept = sentences(raw).slice(0, 3).join(" ");
   if (!kept) return { ok: false, why: "it wrote nothing that ends" };

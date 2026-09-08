@@ -418,9 +418,16 @@ function cached(key,fn,force){var c=C[key];if(!force&&c&&Date.now()-c.at<TTL)ret
    reads as sent, with the network marked waiting, so the day is not covered
    in "half sent" for something nobody can act on. */
 var WAITING={};
-function settle(t){WAITING={};(t&&t.slots||[]).forEach(function(s){var r=s.results||{};var bad=Object.keys(r).filter(function(k){return k!=="reddit"&&r[k]&&!r[k].ok&&!r[k].pending&&!r[k].skipped});
-  var waiting=bad.filter(function(k){return r[k].trial||r[k].waiting});waiting.forEach(function(k){WAITING[k]=1});
-  if(s.state==="partial"&&bad.length&&waiting.length===bad.length){s.state="sent";s.waiting=waiting}});return t}
+function settle(t){WAITING={};var slots=(t&&t.slots)||[];
+  /* first pass: which networks are waiting anywhere today */
+  slots.forEach(function(s){var r=s.results||{};Object.keys(r).forEach(function(k){if(r[k]&&(r[k].trial||r[k].waiting))WAITING[k]=1})});
+  /* second pass: a failure on a waiting network is the same wait in another
+     voice (a pin cut by the clock, a card set aside for drift), so it reads as
+     waiting too, and a slot whose only unanswered networks are waiting is sent */
+  slots.forEach(function(s){var r=s.results||{};var bad=Object.keys(r).filter(function(k){return k!=="reddit"&&r[k]&&!r[k].ok&&!r[k].pending&&!r[k].skipped});
+    bad.forEach(function(k){if(WAITING[k]&&!(r[k].trial||r[k].waiting))r[k].waiting=true});
+    var waiting=bad.filter(function(k){return r[k].trial||r[k].waiting});
+    if(s.state==="partial"&&bad.length&&waiting.length===bad.length){s.state="sent";s.waiting=waiting}});return t}
 var today=function(f){return cached("today",function(){return get("/api/social?action=today").then(function(r){return settle(r.j)})},f)};
 var visitors=function(f){return cached("visitors",function(){return get("/api/visitors").then(function(r){return r.j})},f)};
 var dialsQ=function(f){return cached("dials",function(){return get("/api/social?action=dials").then(function(r){return r.j})},f)};
