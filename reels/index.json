@@ -1,5 +1,5 @@
 {
- "n": 207,
+ "n": 372,
  "written": "2026-09-08",
  "cards": [
   {
@@ -1080,6 +1080,16 @@
    "cover": true
   },
   {
+   "id": "verse-1-1-7",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Fatiha · 1:1-7",
+   "caption": "Al-Fatiha · 1:1-7\n\nIn the name of Allah, the Entirely Merciful, the Especially Merciful. [All] praise is [due] to Allah, Lord of the worlds - The Entirely Merciful, the Especially Merciful, Sovereign of the Day of Recompense. It is You we worship and You we ask for help. Guide us to the straight path - The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 36.19,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
    "id": "verse-10-57",
    "kind": "verse",
    "slot": "morning",
@@ -1088,6 +1098,66 @@
    "secs": 21.21,
    "cover": true,
    "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-10-62",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Yunus · 10:62",
+   "caption": "Yunus · 10:62\n\nUnquestionably, [for] the allies of Allah there will be no fear concerning them, nor will they grieve\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 17.95,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-102-1-2",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "At-Takathur · 102:1-2",
+   "caption": "At-Takathur · 102:1-2\n\nCompetition in [worldly] increase diverts you Until you visit the graveyards.\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.0,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-103-1-3",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-'Asr · 103:1-3",
+   "caption": "Al-'Asr · 103:1-3\n\nBy time, Indeed, mankind is in loss, Except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience.\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.03,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-107-1-7",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Ma'un · 107:1-7",
+   "caption": "Al-Ma'un · 107:1-7\n\nHave you seen the one who denies the Recompense? For that is the one who drives away the orphan And does not encourage the feeding of the poor. So woe to those who pray [But] who are heedless of their prayer - Those who make show [of their deeds] And withhold [simple] assistance.\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 36.81,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-108-1-3",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Kawthar · 108:1-3",
+   "caption": "Al-Kawthar · 108:1-3\n\nIndeed, We have granted you, [O Muhammad], al-Kawthar. So pray to your Lord and sacrifice [to Him alone]. Indeed, your enemy is the one cut off.\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.1,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-109-1-6",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Kafirun · 109:1-6",
+   "caption": "Al-Kafirun · 109:1-6\n\nSay, \"O disbelievers, I do not worship what you worship. Nor are you worshippers of what I worship. Nor will I be a worshipper of what you worship. Nor will you be worshippers of what I worship. For you is your religion, and for me is my religion.\"\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 52.85,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
   },
   {
    "id": "verse-11-114",
@@ -1100,6 +1170,66 @@
    "reciter": "Nasser al-Qatami"
   },
   {
+   "id": "verse-110-1-3",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Nasr · 110:1-3",
+   "caption": "An-Nasr · 110:1-3\n\nWhen the victory of Allah has come and the conquest, And you see the people entering into the religion of Allah in multitudes, Then exalt [Him] with praise of your Lord and ask forgiveness of Him. Indeed, He is ever Accepting of repentance.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 23.8,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-112-1-4",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Ikhlas · 112:1-4",
+   "caption": "Al-Ikhlas · 112:1-4\n\nSay, \"He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, Nor is there to Him any equivalent.\"\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.88,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
+   "id": "verse-113-1-5",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Falaq · 113:1-5",
+   "caption": "Al-Falaq · 113:1-5\n\nSay, \"I seek refuge in the Lord of daybreak From the evil of that which He created And from the evil of darkness when it settles And from the evil of the blowers in knots And from the evil of an envier when he envies.\"\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.94,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-114-1-6",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nas · 114:1-6",
+   "caption": "An-Nas · 114:1-6\n\nSay, \"I seek refuge in the Lord of mankind, The Sovereign of mankind. The God of mankind, From the evil of the retreating whisperer - Who whispers [evil] into the breasts of mankind - From among the jinn and mankind.\"\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.23,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-12-86",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Yusuf · 12:86",
+   "caption": "Yusuf · 12:86\n\nHe said, \"I only complain of my suffering and my grief to Allah, and I know from Allah that which you do not know.\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.33,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-12-87",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Yusuf · 12:87",
+   "caption": "Yusuf · 12:87\n\nO my sons, go and find out about Joseph and his brother and despair not of relief from Allah. Indeed, no one despairs of relief from Allah except the disbelieving people.\"\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 27.56,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
    "id": "verse-13-28",
    "kind": "verse",
    "slot": "morning",
@@ -1110,6 +1240,16 @@
    "reciter": "Abdur-Rahman as-Sudais"
   },
   {
+   "id": "verse-14-34",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ibrahim · 14:34",
+   "caption": "Ibrahim · 14:34\n\nAnd He gave you from all you asked of Him. And if you should count the favor of Allah, you could not enumerate them. Indeed, mankind is [generally] most unjust and ungrateful.\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 28.42,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
    "id": "verse-14-7",
    "kind": "verse",
    "slot": "evening",
@@ -1118,6 +1258,56 @@
    "secs": 31.92,
    "cover": true,
    "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-15-9",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Hijr · 15:9",
+   "caption": "Al-Hijr · 15:9\n\nIndeed, it is We who sent down the Qur'an and indeed, We will be its guardian.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 15.81,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-16-127",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nahl · 16:127",
+   "caption": "An-Nahl · 16:127\n\nAnd be patient, [O Muhammad], and your patience is not but through Allah. And do not grieve over them and do not be in distress over what they conspire.\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 23.14,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-16-128",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nahl · 16:128",
+   "caption": "An-Nahl · 16:128\n\nIndeed, Allah is with those who fear Him and those who are doers of good.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.73,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-16-18",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nahl · 16:18",
+   "caption": "An-Nahl · 16:18\n\nAnd if you should count the favors of Allah, you could not enumerate them. Indeed, Allah is Forgiving and Merciful.\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 18.76,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-16-90",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Nahl · 16:90",
+   "caption": "An-Nahl · 16:90\n\nIndeed, Allah orders justice and good conduct and giving to relatives and forbids immorality and bad conduct and oppression. He admonishes you that perhaps you will be reminded.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 49.16,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
   },
   {
    "id": "verse-16-97",
@@ -1140,6 +1330,36 @@
    "reciter": "Abdur-Rahman as-Sudais"
   },
   {
+   "id": "verse-17-36",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Isra · 17:36",
+   "caption": "Al-Isra · 17:36\n\nAnd do not pursue that of which you have no knowledge. Indeed, the hearing, the sight and the heart - about all those [one] will be questioned.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.8,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-17-37",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Isra · 17:37",
+   "caption": "Al-Isra · 17:37\n\nAnd do not walk upon the earth exultantly. Indeed, you will never tear the earth [apart], and you will never reach the mountains in height.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.16,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-17-70",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Isra · 17:70",
+   "caption": "Al-Isra · 17:70\n\nAnd We have certainly honored the children of Adam and carried them on the land and sea and provided for them of the good things and preferred them over much of what We have created, with [definite] preference.\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 24.71,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
    "id": "verse-17-80",
    "kind": "verse",
    "slot": "evening",
@@ -1148,6 +1368,66 @@
    "secs": 24.88,
    "cover": true,
    "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-17-82",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Isra · 17:82",
+   "caption": "Al-Isra · 17:82\n\nAnd We send down of the Qur'an that which is healing and mercy for the believers, but it does not increase the wrongdoers except in loss.\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 23.72,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-18-10",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Kahf · 18:10",
+   "caption": "Al-Kahf · 18:10\n\n[Mention] when the youths retreated to the cave and said, \"Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance.\"\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.55,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-18-109",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Kahf · 18:109",
+   "caption": "Al-Kahf · 18:109\n\nSay, \"If the sea were ink for [writing] the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted, even if We brought the like of it as a supplement.\"\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 27.82,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-18-46",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Kahf · 18:46",
+   "caption": "Al-Kahf · 18:46\n\nWealth and children are [but] adornment of the worldly life. But the enduring good deeds are better to your Lord for reward and better for [one's] hope.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.1,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-19-96",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Maryam · 19:96",
+   "caption": "Maryam · 19:96\n\nIndeed, those who have believed and done righteous deeds - the Most Merciful will appoint for them affection.\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 16.85,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-2-115",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:115",
+   "caption": "Al-Baqarah · 2:115\n\nAnd to Allah belongs the east and the west. So wherever you [might] turn, there is the Face of Allah. Indeed, Allah is all-Encompassing and Knowing.\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.74,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
   },
   {
    "id": "verse-2-152",
@@ -1170,6 +1450,36 @@
    "reciter": "Mohamed Siddiq al-Minshawi"
   },
   {
+   "id": "verse-2-155-156",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:155-156",
+   "caption": "Al-Baqarah · 2:155-156\n\nAnd We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient, Who, when disaster strikes them, say, \"Indeed we belong to Allah, and indeed to Him we will return.\"\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 48.54,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-2-165",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:165",
+   "caption": "Al-Baqarah · 2:165\n\nAnd [yet], among the people are those who take other than Allah as equals [to Him]. They love them as they [should] love Allah. But those who believe are stronger in love for Allah. And if only they who have wronged would consider [that] when they see the punishment, [they will be certain] that all power belongs to Allah and that Allah is severe in punishment.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.97,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-2-183",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:183",
+   "caption": "Al-Baqarah · 2:183\n\nO you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous -\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.19,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
    "id": "verse-2-186",
    "kind": "verse",
    "slot": "evening",
@@ -1178,6 +1488,76 @@
    "secs": 39.88,
    "cover": true,
    "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-2-2",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:2",
+   "caption": "Al-Baqarah · 2:2\n\nThis is the Book about which there is no doubt, a guidance for those conscious of Allah -\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.34,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-2-201",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:201",
+   "caption": "Al-Baqarah · 2:201\n\nBut among them is he who says, \"Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire.\"\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 32.55,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-2-216",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:216",
+   "caption": "Al-Baqarah · 2:216\n\nFighting has been enjoined upon you while it is hateful to you. But perhaps you hate a thing and it is good for you; and perhaps you love a thing and it is bad for you. And Allah Knows, while you know not.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 34.79,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-2-222",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:222",
+   "caption": "Al-Baqarah · 2:222\n\nAnd they ask you about menstruation. Say, \"It is harm, so keep away from wives during menstruation. And do not approach them until they are pure. And when they have purified themselves, then come to them from where Allah has ordained for you. Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.\"\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 46.81,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-2-255",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:255",
+   "caption": "Al-Baqarah · 2:255\n\nAllah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is [presently] before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 51.67,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-2-257",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:257",
+   "caption": "Al-Baqarah · 2:257\n\nAllah is the ally of those who believe. He brings them out from darknesses into the light. And those who disbelieve - their allies are Taghut. They take them out of the light into darknesses. Those are the companions of the Fire; they will abide eternally therein.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 35.19,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-2-261",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:261",
+   "caption": "Al-Baqarah · 2:261\n\nThe example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.18,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
   },
   {
    "id": "verse-2-286",
@@ -1210,12 +1590,72 @@
    "reciter": "Hani ar-Rifai"
   },
   {
+   "id": "verse-20-25-28",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Taha · 20:25-28",
+   "caption": "Taha · 20:25-28\n\n[Moses] said, \"My Lord, expand for me my breast [with assurance] And ease for me my task And untie the knot from my tongue That they may understand my speech.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 40.77,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-20-46",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Taha · 20:46",
+   "caption": "Taha · 20:46\n\n[Allah] said, \"Fear not. Indeed, I am with you both; I hear and I see.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 18.35,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-21-107",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Anbya · 21:107",
+   "caption": "Al-Anbya · 21:107\n\nAnd We have not sent you, [O Muhammad], except as a mercy to the worlds.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 16.15,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
    "id": "verse-21-87",
    "kind": "verse",
    "slot": "evening",
    "hook": "Al-Anbya · 21:87",
    "caption": "Al-Anbya · 21:87\n\nAnd [mention] the man of the fish, when he went off in anger and thought that We would not decree [anything] upon him. And he called out within the darknesses, \"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.\"\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
    "secs": 49.5,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-22-46",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Hajj · 22:46",
+   "caption": "Al-Hajj · 22:46\n\nSo have they not traveled through the earth and have hearts by which to reason and ears by which to hear? For indeed, it is not eyes that are blinded, but blinded are the hearts which are within the breasts.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 34.47,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-23-1-4",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Mu'minun · 23:1-4",
+   "caption": "Al-Mu'minun · 23:1-4\n\nCertainly will the believers have succeeded: They who are during their prayer humbly submissive And they who turn away from ill speech And they who are observant of zakah\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 27.54,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-23-115",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Mu'minun · 23:115",
+   "caption": "Al-Mu'minun · 23:115\n\nThen did you think that We created you uselessly and that to Us you would not be returned?\"\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 27.56,
    "cover": true,
    "reciter": "Nasser al-Qatami"
   },
@@ -1230,6 +1670,76 @@
    "reciter": "Ahmad al-Ajmi"
   },
   {
+   "id": "verse-25-70",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Furqan · 25:70",
+   "caption": "Al-Furqan · 25:70\n\nExcept for those who repent, believe and do righteous work. For them Allah will replace their evil deeds with good. And ever is Allah Forgiving and Merciful.\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 28.58,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-26-80",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ash-Shu'ara · 26:80",
+   "caption": "Ash-Shu'ara · 26:80\n\nAnd when I am ill, it is He who cures me\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 12.46,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-27-62",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Naml · 27:62",
+   "caption": "An-Naml · 27:62\n\nIs He [not best] who responds to the desperate one when he calls upon Him and removes evil and makes you inheritors of the earth? Is there a deity with Allah? Little do you remember.\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.7,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-28-56",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Qasas · 28:56",
+   "caption": "Al-Qasas · 28:56\n\nIndeed, [O Muhammad], you do not guide whom you like, but Allah guides whom He wills. And He is most knowing of the [rightly] guided.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 34.63,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-28-77",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Qasas · 28:77",
+   "caption": "Al-Qasas · 28:77\n\nBut seek, through that which Allah has given you, the home of the Hereafter; and [yet], do not forget your share of the world. And do good as Allah has done good to you. And desire not corruption in the land. Indeed, Allah does not like corrupters.\"\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.81,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-29-2-3",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-'Ankabut · 29:2-3",
+   "caption": "Al-'Ankabut · 29:2-3\n\nDo the people think that they will be left to say, \"We believe\" and they will not be tried? But We have certainly tried those before them, and Allah will surely make evident those who are truthful, and He will surely make evident the liars.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 50.89,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-29-45",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-'Ankabut · 29:45",
+   "caption": "Al-'Ankabut · 29:45\n\nRecite, [O Muhammad], what has been revealed to you of the Book and establish prayer. Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater. And Allah knows that which you do.\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 32.2,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
    "id": "verse-29-69",
    "kind": "verse",
    "slot": "morning",
@@ -1238,6 +1748,26 @@
    "secs": 25.6,
    "cover": true,
    "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-3-103",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ali 'Imran · 3:103",
+   "caption": "Ali 'Imran · 3:103\n\nAnd hold firmly to the rope of Allah all together and do not become divided. And remember the favor of Allah upon you - when you were enemies and He brought your hearts together and you became, by His favor, brothers. And you were on the edge of a pit of the Fire, and He saved you from it. Thus does Allah make clear to you His verses that you may be guided.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 51.44,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-3-104",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:104",
+   "caption": "Ali 'Imran · 3:104\n\nAnd let there be [arising] from you a nation inviting to [all that is] good, enjoining what is right and forbidding what is wrong, and those will be the successful.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.41,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
   },
   {
    "id": "verse-3-139",
@@ -1250,6 +1780,106 @@
    "reciter": "Saud ash-Shuraym"
   },
   {
+   "id": "verse-3-159",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ali 'Imran · 3:159",
+   "caption": "Ali 'Imran · 3:159\n\nSo by mercy from Allah, [O Muhammad], you were lenient with them. And if you had been rude [in speech] and harsh in heart, they would have disbanded from about you. So pardon them and ask forgiveness for them and consult them in the matter. And when you have decided, then rely upon Allah. Indeed, Allah loves those who rely [upon Him].\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 35.95,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-3-173",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:173",
+   "caption": "Ali 'Imran · 3:173\n\nThose to whom hypocrites said, \"Indeed, the people have gathered against you, so fear them.\" But it [merely] increased them in faith, and they said, \"Sufficient for us is Allah, and [He is] the best Disposer of affairs.\"\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 20.35,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-3-185",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ali 'Imran · 3:185",
+   "caption": "Ali 'Imran · 3:185\n\nEvery soul will taste death, and you will only be given your [full] compensation on the Day of Resurrection. So he who is drawn away from the Fire and admitted to Paradise has attained [his desire]. And what is the life of this world except the enjoyment of delusion.\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 37.98,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
+   "id": "verse-3-190-191",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ali 'Imran · 3:190-191",
+   "caption": "Ali 'Imran · 3:190-191\n\nIndeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding. Who remember Allah while standing or sitting or [lying] on their sides and give thought to the creation of the heavens and the earth, [saying], \"Our Lord, You did not create this aimlessly; exalted are You [above such a thing]; then protect us from the punishment of the Fire.\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 46.86,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-3-200",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:200",
+   "caption": "Ali 'Imran · 3:200\n\nO you who have believed, persevere and endure and remain stationed and fear Allah that you may be successful.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 32.09,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-3-26",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ali 'Imran · 3:26",
+   "caption": "Ali 'Imran · 3:26\n\nSay, \"O Allah, Owner of Sovereignty, You give sovereignty to whom You will and You take sovereignty away from whom You will. You honor whom You will and You humble whom You will. In Your hand is [all] good. Indeed, You are over all things competent.\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.66,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-3-31",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:31",
+   "caption": "Ali 'Imran · 3:31\n\nSay, [O Muhammad], \"If you should love Allah, then follow me, [so] Allah will love you and forgive you your sins. And Allah is Forgiving and Merciful.\"\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.83,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-3-8",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:8",
+   "caption": "Ali 'Imran · 3:8\n\n[Who say], \"Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.86,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-30-21",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ar-Rum · 30:21",
+   "caption": "Ar-Rum · 30:21\n\nAnd of His signs is that He created for you from yourselves mates that you may find tranquillity in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 37.17,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-30-22",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ar-Rum · 30:22",
+   "caption": "Ar-Rum · 30:22\n\nAnd of His signs is the creation of the heavens and the earth and the diversity of your languages and your colors. Indeed in that are signs for those of knowledge.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.47,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
    "id": "verse-31-17",
    "kind": "verse",
    "slot": "morning",
@@ -1258,6 +1888,16 @@
    "secs": 19.83,
    "cover": true,
    "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-31-18-19",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Luqman · 31:18-19",
+   "caption": "Luqman · 31:18-19\n\nAnd do not turn your cheek [in contempt] toward people and do not walk through the earth exultantly. Indeed, Allah does not like everyone self-deluded and boastful. And be moderate in your pace and lower your voice; indeed, the most disagreeable of sounds is the voice of donkeys.\"\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 37.1,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
   },
   {
    "id": "verse-33-21",
@@ -1270,6 +1910,76 @@
    "reciter": "Abdur-Rahman as-Sudais"
   },
   {
+   "id": "verse-33-41-42",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Ahzab · 33:41-42",
+   "caption": "Al-Ahzab · 33:41-42\n\nO you who have believed, remember Allah with much remembrance And exalt Him morning and afternoon.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 37.16,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-33-56",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Ahzab · 33:56",
+   "caption": "Al-Ahzab · 33:56\n\nIndeed, Allah confers blessing upon the Prophet, and His angels [ask Him to do so]. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.9,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-33-70-71",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Ahzab · 33:70-71",
+   "caption": "Al-Ahzab · 33:70-71\n\nO you who have believed, fear Allah and speak words of appropriate justice. He will [then] amend for you your deeds and forgive you your sins. And whoever obeys Allah and His Messenger has certainly attained a great attainment.\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.68,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-35-15",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Fatir · 35:15",
+   "caption": "Fatir · 35:15\n\nO mankind, you are those in need of Allah, while Allah is the Free of need, the Praiseworthy.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.7,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-35-28",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Fatir · 35:28",
+   "caption": "Fatir · 35:28\n\nAnd among people and moving creatures and grazing livestock are various colors similarly. Only those fear Allah, from among His servants, who have knowledge. Indeed, Allah is Exalted in Might and Forgiving.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 47.43,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-36-82",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ya-Sin · 36:82",
+   "caption": "Ya-Sin · 36:82\n\nHis command is only when He intends a thing that He says to it, \"Be,\" and it is.\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 16.38,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-39-10",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Az-Zumar · 39:10",
+   "caption": "Az-Zumar · 39:10\n\nSay, \"O My servants who have believed, fear your Lord. For those who do good in this world is good, and the earth of Allah is spacious. Indeed, the patient will be given their reward without account.\"\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.18,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
    "id": "verse-39-53",
    "kind": "verse",
    "slot": "evening",
@@ -1278,6 +1988,76 @@
    "secs": 31.46,
    "cover": true,
    "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-39-9",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Az-Zumar · 39:9",
+   "caption": "Az-Zumar · 39:9\n\nIs one who is devoutly obedient during periods of the night, prostrating and standing [in prayer], fearing the Hereafter and hoping for the mercy of his Lord, [like one who does not]? Say, \"Are those who know equal to those who do not know?\" Only they will remember [who are] people of understanding.\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.9,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-4-1",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nisa · 4:1",
+   "caption": "An-Nisa · 4:1\n\nO mankind, fear your Lord, who created you from one soul and created from it its mate and dispersed from both of them many men and women. And fear Allah, through whom you ask one another, and the wombs. Indeed Allah is ever, over you, an Observer.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 48.56,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-4-135",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "An-Nisa · 4:135",
+   "caption": "An-Nisa · 4:135\n\nO you who have believed, be persistently standing firm in justice, witnesses for Allah, even if it be against yourselves or parents and relatives. Whether one is rich or poor, Allah is more worthy of both. So follow not [personal] inclination, lest you not be just. And if you distort [your testimony] or refuse [to give it], then indeed Allah is ever, with what you do, Acquainted.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 36.39,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-4-58",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Nisa · 4:58",
+   "caption": "An-Nisa · 4:58\n\nIndeed, Allah commands you to render trusts to whom they are due and when you judge between people to judge with justice. Excellent is that which Allah instructs you. Indeed, Allah is ever Hearing and Seeing.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 45.89,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-40-60",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ghafir · 40:60",
+   "caption": "Ghafir · 40:60\n\nAnd your Lord says, \"Call upon Me; I will respond to you.\" Indeed, those who disdain My worship will enter Hell [rendered] contemptible.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 23.72,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-41-30",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Fussilat · 41:30",
+   "caption": "Fussilat · 41:30\n\nIndeed, those who have said, \"Our Lord is Allah \" and then remained on a right course - the angels will descend upon them, [saying], \"Do not fear and do not grieve but receive good tidings of Paradise, which you were promised.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 41.8,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-41-33",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Fussilat · 41:33",
+   "caption": "Fussilat · 41:33\n\nAnd who is better in speech than one who invites to Allah and does righteousness and says, \"Indeed, I am of the Muslims.\"\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.79,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
   },
   {
    "id": "verse-41-34",
@@ -1290,6 +2070,16 @@
    "reciter": "Khalid al-Qahtani"
   },
   {
+   "id": "verse-42-19",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ash-Shuraa · 42:19",
+   "caption": "Ash-Shuraa · 42:19\n\nAllah is Subtle with His servants; He gives provisions to whom He wills. And He is the Powerful, the Exalted in Might.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 28.74,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
    "id": "verse-42-30",
    "kind": "verse",
    "slot": "evening",
@@ -1298,6 +2088,36 @@
    "secs": 22.41,
    "cover": true,
    "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-47-7",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Muhammad · 47:7",
+   "caption": "Muhammad · 47:7\n\nO you who have believed, if you support Allah, He will support you and plant firmly your feet.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.96,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-48-4",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Fath · 48:4",
+   "caption": "Al-Fath · 48:4\n\nIt is He who sent down tranquillity into the hearts of the believers that they would increase in faith along with their [present] faith. And to Allah belong the soldiers of the heavens and the earth, and ever is Allah Knowing and Wise.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.78,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-49-10",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Hujurat · 49:10",
+   "caption": "Al-Hujurat · 49:10\n\nThe believers are but brothers, so make settlement between your brothers. And fear Allah that you may receive mercy.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.22,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
   },
   {
    "id": "verse-49-13",
@@ -1310,6 +2130,96 @@
    "reciter": "Abu Bakr ash-Shatri"
   },
   {
+   "id": "verse-5-8",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Ma'idah · 5:8",
+   "caption": "Al-Ma'idah · 5:8\n\nO you who have believed, be persistently standing firm for Allah, witnesses in justice, and do not let the hatred of a people prevent you from being just. Be just; that is nearer to righteousness. And fear Allah; indeed, Allah is Acquainted with what you do.\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.72,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-50-16",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Qaf · 50:16",
+   "caption": "Qaf · 50:16\n\nAnd We have already created man and know what his soul whispers to him, and We are closer to him than [his] jugular vein\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.4,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-51-56",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Adh-Dhariyat · 51:56",
+   "caption": "Adh-Dhariyat · 51:56\n\nAnd I did not create the jinn and mankind except to worship Me.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 17.12,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-53-39-42",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Najm · 53:39-42",
+   "caption": "An-Najm · 53:39-42\n\nAnd that there is not for man except that [good] for which he strives And that his effort is going to be seen - Then he will be recompensed for it with the fullest recompense And that to your Lord is the finality\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 27.77,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-54-17",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Qamar · 54:17",
+   "caption": "Al-Qamar · 54:17\n\nAnd We have certainly made the Qur'an easy for remembrance, so is there any who will remember?\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.42,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-55-1-4",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ar-Rahman · 55:1-4",
+   "caption": "Ar-Rahman · 55:1-4\n\nThe Most Merciful Taught the Qur'an, Created man, [And] taught him eloquence.\n\nRecited by Muhammad Jibril. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 17.66,
+   "cover": true,
+   "reciter": "Muhammad Jibril"
+  },
+  {
+   "id": "verse-55-13",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ar-Rahman · 55:13",
+   "caption": "Ar-Rahman · 55:13\n\nSo which of the favors of your Lord would you deny?\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 16.15,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-55-26-27",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ar-Rahman · 55:26-27",
+   "caption": "Ar-Rahman · 55:26-27\n\nEveryone upon the earth will perish, And there will remain the Face of your Lord, Owner of Majesty and Honor.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 15.52,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-55-60",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ar-Rahman · 55:60",
+   "caption": "Ar-Rahman · 55:60\n\nIs the reward for good [anything] but good?\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 13.82,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
    "id": "verse-57-4",
    "kind": "verse",
    "slot": "morning",
@@ -1320,6 +2230,26 @@
    "reciter": "Abdul Basit Abd us-Samad"
   },
   {
+   "id": "verse-59-22-24",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Hashr · 59:22-24",
+   "caption": "Al-Hashr · 59:22-24\n\nHe is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Entirely Merciful, the Especially Merciful. He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him. He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names. Whatever is in the heavens and earth is exalting Him. And He is the Exalted in Might, the Wise.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 42.64,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-6-103",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-An'am · 6:103",
+   "caption": "Al-An'am · 6:103\n\nVision perceives Him not, but He perceives [all] vision; and He is the Subtle, the Acquainted.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.89,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
    "id": "verse-6-162",
    "kind": "verse",
    "slot": "evening",
@@ -1328,6 +2258,36 @@
    "secs": 20.01,
    "cover": true,
    "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-6-59",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-An'am · 6:59",
+   "caption": "Al-An'am · 6:59\n\nAnd with Him are the keys of the unseen; none knows them except Him. And He knows what is on the land and in the sea. Not a leaf falls but that He knows it. And no grain is there within the darknesses of the earth and no moist or dry [thing] but that it is [written] in a clear record.\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 45.12,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-64-11",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "At-Taghabun · 64:11",
+   "caption": "At-Taghabun · 64:11\n\nNo disaster strikes except by permission of Allah. And whoever believes in Allah - He will guide his heart. And Allah is Knowing of all things.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.48,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-64-16",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "At-Taghabun · 64:16",
+   "caption": "At-Taghabun · 64:16\n\nSo fear Allah as much as you are able and listen and obey and spend [in the way of Allah]; it is better for your selves. And whoever is protected from the stinginess of his soul - it is those who will be the successful.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.66,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
   },
   {
    "id": "verse-65-2-3",
@@ -1350,6 +2310,26 @@
    "reciter": "Abdul Basit Abd us-Samad"
   },
   {
+   "id": "verse-65-7",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "At-Talaq · 65:7",
+   "caption": "At-Talaq · 65:7\n\nLet a man of wealth spend from his wealth, and he whose provision is restricted - let him spend from what Allah has given him. Allah does not charge a soul except [according to] what He has given it. Allah will bring about, after hardship, ease.\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 43.91,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-67-1",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Mulk · 67:1",
+   "caption": "Al-Mulk · 67:1\n\nBlessed is He in whose hand is dominion, and He is over all things competent -\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.24,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
    "id": "verse-67-2",
    "kind": "verse",
    "slot": "evening",
@@ -1358,6 +2338,146 @@
    "secs": 21.18,
    "cover": true,
    "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-7-156",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-A'raf · 7:156",
+   "caption": "Al-A'raf · 7:156\n\nAnd decree for us in this world [that which is] good and [also] in the Hereafter; indeed, we have turned back to You.\" [Allah] said, \"My punishment - I afflict with it whom I will, but My mercy encompasses all things.\" So I will decree it [especially] for those who fear Me and give zakah and those who believe in Our verses -\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 50.71,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-7-180",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-A'raf · 7:180",
+   "caption": "Al-A'raf · 7:180\n\nAnd to Allah belong the best names, so invoke Him by them. And leave [the company of] those who practice deviation concerning His names. They will be recompensed for what they have been doing.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 45.97,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-7-199",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-A'raf · 7:199",
+   "caption": "Al-A'raf · 7:199\n\nTake what is given freely, enjoin what is good, and turn away from the ignorant.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 16.93,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-7-23",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-A'raf · 7:23",
+   "caption": "Al-A'raf · 7:23\n\nThey said, \"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\"\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.47,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-7-31",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-A'raf · 7:31",
+   "caption": "Al-A'raf · 7:31\n\nO children of Adam, take your adornment at every masjid, and eat and drink, but be not excessive. Indeed, He likes not those who commit excess.\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 24.35,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-73-8",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Muzzammil · 73:8",
+   "caption": "Al-Muzzammil · 73:8\n\nAnd remember the name of your Lord and devote yourself to Him with [complete] devotion.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.81,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-76-9",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Insan · 76:9",
+   "caption": "Al-Insan · 76:9\n\n[Saying], \"We feed you only for the countenance of Allah. We wish not from you reward or gratitude.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.41,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-79-40-41",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Nazi'at · 79:40-41",
+   "caption": "An-Nazi'at · 79:40-41\n\nBut as for he who feared the position of his Lord and prevented the soul from [unlawful] inclination, Then indeed, Paradise will be [his] refuge.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.65,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-8-2",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Anfal · 8:2",
+   "caption": "Al-Anfal · 8:2\n\nThe believers are only those who, when Allah is mentioned, their hearts become fearful, and when His verses are recited to them, it increases them in faith; and upon their Lord they rely -\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.05,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-8-46",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Anfal · 8:46",
+   "caption": "Al-Anfal · 8:46\n\nAnd obey Allah and His Messenger, and do not dispute and [thus] lose courage and [then] your strength would depart; and be patient. Indeed, Allah is with the patient.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.14,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-84-6",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Inshiqaq · 84:6",
+   "caption": "Al-Inshiqaq · 84:6\n\nO mankind, indeed you are laboring toward your Lord with [great] exertion and will meet it.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.09,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-87-14-15",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-A'la · 87:14-15",
+   "caption": "Al-A'la · 87:14-15\n\nHe has certainly succeeded who purifies himself And mentions the name of his Lord and prays.\n\nRecited by Yasser ad-Dossari. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.47,
+   "cover": true,
+   "reciter": "Yasser ad-Dossari"
+  },
+  {
+   "id": "verse-89-27-30",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Fajr · 89:27-30",
+   "caption": "Al-Fajr · 89:27-30\n\n[To the righteous it will be said], \"O reassured soul, Return to your Lord, well-pleased and pleasing [to Him], And enter among My [righteous] servants And enter My Paradise.\"\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 24.43,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-9-129",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "At-Tawbah · 9:129",
+   "caption": "At-Tawbah · 9:129\n\nBut if they turn away, [O Muhammad], say, \"Sufficient for me is Allah; there is no deity except Him. On Him I have relied, and He is the Lord of the Great Throne.\"\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 30.83,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
   },
   {
    "id": "verse-9-51",
@@ -1370,12 +2490,82 @@
    "reciter": "Mahmoud Khalil al-Husary"
   },
   {
+   "id": "verse-91-7-10",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ash-Shams · 91:7-10",
+   "caption": "Ash-Shams · 91:7-10\n\nAnd [by] the soul and He who proportioned it And inspired it [with discernment of] its wickedness and its righteousness, He has succeeded who purifies it, And he has failed who instills it [with corruption].\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 35.27,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-93-1-5",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ad-Duhaa · 93:1-5",
+   "caption": "Ad-Duhaa · 93:1-5\n\nBy the morning brightness And [by] the night when it covers with darkness, Your Lord has not taken leave of you, [O Muhammad], nor has He detested [you]. And the Hereafter is better for you than the first [life]. And your Lord is going to give you, and you will be satisfied.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 28.7,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
+   "id": "verse-94-1-4",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ash-Sharh · 94:1-4",
+   "caption": "Ash-Sharh · 94:1-4\n\nDid We not expand for you, [O Muhammad], your breast? And We removed from you your burden Which had weighed upon your back And raised high for you your repute.\n\nRecited by Muhammad Ayyub. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 26.77,
+   "cover": true,
+   "reciter": "Muhammad Ayyub"
+  },
+  {
    "id": "verse-94-5-6",
    "kind": "verse",
    "slot": "morning",
    "hook": "Ash-Sharh · 94:5-6",
    "caption": "Ash-Sharh · 94:5-6\n\nFor indeed, with hardship [will be] ease. Indeed, with hardship [will be] ease.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
    "secs": 25.15,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-95-1-4",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "At-Tin · 95:1-4",
+   "caption": "At-Tin · 95:1-4\n\nBy the fig and the olive And [by] Mount Sinai And [by] this secure city [Makkah], We have certainly created man in the best of stature;\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 18.05,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-96-1-5",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-'Alaq · 96:1-5",
+   "caption": "Al-'Alaq · 96:1-5\n\nRecite in the name of your Lord who created - Created man from a clinging substance. Recite, and your Lord is the most Generous - Who taught by the pen - Taught man that which he knew not.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 24.6,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-97-1-5",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Qadr · 97:1-5",
+   "caption": "Al-Qadr · 97:1-5\n\nIndeed, We sent the Qur'an down during the Night of Decree. And what can make you know what is the Night of Decree? The Night of Decree is better than a thousand months. The angels and the Spirit descend therein by permission of their Lord for every matter. Peace it is until the emergence of dawn.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 50.39,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-99-7-8",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Az-Zalzalah · 99:7-8",
+   "caption": "Az-Zalzalah · 99:7-8\n\nSo whoever does an atom's weight of good will see it, And whoever does an atom's weight of evil will see it.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.53,
    "cover": true,
    "reciter": "Abdul Basit Abd us-Samad"
   },
@@ -1394,6 +2584,24 @@
    "slot": "evening",
    "hook": "Adhan",
    "caption": "Adhan (أَذان). The call announcing that a prayer time has entered, given aloud before each obligatory prayer. It was taught to the companions in Madinah after they discussed how to gather people, and Bilal was its first caller.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/adhan\n\n#TheWord #Islam #Arabic #Adhan #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ajal",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ajal",
+   "caption": "Ajal (الأَجَل). The appointed term of a life or a nation, which does not arrive early or run late. The Qur'an says that when their term comes they cannot delay it by an hour, nor bring it forward (Qur'an 7:34).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ajal\n\n#TheWord #Islam #Arabic #Ajal #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-akhirah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Akhirah",
+   "caption": "Akhirah (الآخِرَة). The hereafter: everything after death, from the grave to the final settling in Paradise or the Fire. The Qur'an pairs it constantly with the dunya, the near life, and says the hereafter is better and more lasting (Qur'an 87:17).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/akhirah\n\n#TheWord #Islam #Arabic #Akhirah #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1434,6 +2642,24 @@
    "cover": true
   },
   {
+   "id": "word-barzakh",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Barzakh",
+   "caption": "Barzakh (البَرْزَخ). The state between death and the resurrection, where the soul waits after the body is buried. The word means a barrier or partition.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/barzakh\n\n#TheWord #Islam #Arabic #Barzakh #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-basmalah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Basmalah",
+   "caption": "Basmalah (بِسْمِ اللهِ الرَّحْمٰنِ الرَّحيم). The opening line In the name of Allah, the Most Gracious, the Most Merciful, found before nearly every surah. It stands at the head of 113 surahs; at-Tawbah alone has none.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/basmalah\n\n#TheWord #Islam #Arabic #Basmalah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-dhikr",
    "kind": "word",
    "slot": "evening",
@@ -1448,6 +2674,42 @@
    "slot": "morning",
    "hook": "Du'a",
    "caption": "Du'a (الدُّعَاء). Asking Allah directly, in any language, at any time, for anything permitted.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/dua\n\n#TheWord #Islam #Arabic #Dua #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-dunya",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Dunya",
+   "caption": "Dunya (الدُّنْيَا). The nearer life: this world, which is not condemned in itself, only when it becomes the whole aim. The word means the nearer or the lower, and names this life set against the one that comes after.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/dunya\n\n#TheWord #Islam #Arabic #Dunya #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-fatihah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Al-Fatihah",
+   "caption": "Al-Fatihah (الفاتِحَة). The seven verse opening surah, recited in the prayer; most schools require it in every unit. Its names include the Opening, the Mother of the Book, and the seven oft repeated verses.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/fatihah\n\n#TheWord #Islam #Arabic #AlFatihah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-fatwa",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Fatwa",
+   "caption": "Fatwa (فَتْوى). A scholar's answer to a specific question: advice, not a court judgement. The one who gives it is a mufti and the one who asks is a mustafti.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/fatwa\n\n#TheWord #Islam #Arabic #Fatwa #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-fiqh",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Fiqh",
+   "caption": "Fiqh (الفِقْه). The human effort to work out Islamic law from its sources, and the rulings that result. The word means understanding.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/fiqh\n\n#TheWord #Islam #Arabic #Fiqh #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1479,6 +2741,24 @@
    "cover": true
   },
   {
+   "id": "word-halal",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Halal",
+   "caption": "Halal (حَلال). Permitted. Anything revelation has not forbidden, which is the great majority of things. The word means loosed or untied.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/halal\n\n#TheWord #Islam #Arabic #Halal #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-haram",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Haram",
+   "caption": "Haram (حَرام). Forbidden. Leaving it is rewarded, and doing it deliberately is a sin. The list is far shorter than people assume: shirk, killing, theft, interest, intoxicants, pork, gambling, zina, and injustice to others.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/haram\n\n#TheWord #Islam #Arabic #Haram #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-haya",
    "kind": "word",
    "slot": "evening",
@@ -1488,11 +2768,29 @@
    "cover": true
   },
   {
+   "id": "word-hijrah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Hijrah",
+   "caption": "Hijrah (الهِجْرَة). The Prophet's migration from Makkah to Madinah in 622, the start of the Muslim calendar. The word means to leave something behind and cut ties with it.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hijrah\n\n#TheWord #Islam #Arabic #Hijrah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-hilm",
    "kind": "word",
    "slot": "evening",
    "hook": "Hilm",
    "caption": "Hilm (الحِلْم). Forbearance: the strength to stay calm and unhurried when you have every right to react. The Prophet peace be upon him told al-Ashajj of Abd al-Qays that he had two qualities Allah loves, hilm and unhurriedness, in Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hilm\n\n#TheWord #Islam #Arabic #Hilm #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-hisab",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Hisab",
+   "caption": "Hisab (الحِسَاب). The reckoning: each person shown their record and questioned about the life they were given. The Qur'an describes books handed to the right hand and to the left, and an easy reckoning for some (Qur'an 84:7-9).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hisab\n\n#TheWord #Islam #Arabic #Hisab #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1533,6 +2831,24 @@
    "cover": true
   },
   {
+   "id": "word-ijma",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ijma'",
+   "caption": "Ijma' (إِجْماع). The agreement of the qualified scholars of one generation on a single ruling. It is the third of the four agreed sources, after the Qur'an and the Sunnah.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ijma\n\n#TheWord #Islam #Arabic #Ijma #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ijtihad",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ijtihad",
+   "caption": "Ijtihad (اِجْتِهاد). The disciplined effort of a qualified scholar to derive a ruling from the sources. The root means to exert oneself to the limit.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ijtihad\n\n#TheWord #Islam #Arabic #Ijtihad #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-ikhlas",
    "kind": "word",
    "slot": "evening",
@@ -1547,6 +2863,24 @@
    "slot": "morning",
    "hook": "Iman",
    "caption": "Iman (الإِيمَان). Faith: belief in Allah, His angels, His books, His messengers, the Last Day, and the decree.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/iman\n\n#TheWord #Islam #Arabic #Iman #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-islam",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Islam",
+   "caption": "Islam (الإِسْلَام). Submission to Allah: outwardly the five pillars, inwardly the handing over of the whole self. The word comes from a root carrying both surrender and peace, and the Qur'an calls it the religion with Allah (Qur'an 3:19).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/islam\n\n#TheWord #Islam #Arabic #Islam #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-isnad",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Isnad",
+   "caption": "Isnad (الإِسْنَاد). The chain of narrators who carried a hadith, listed name by name back to its source. A hadith is quoted like this: so and so told me, from so and so, from so and so, that the Prophet said.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/isnad\n\n#TheWord #Islam #Arabic #Isnad #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1569,6 +2903,24 @@
    "cover": true
   },
   {
+   "id": "word-jannah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Jannah",
+   "caption": "Jannah (الجَنَّة). Paradise: the garden of lasting delight prepared for the believers, where nothing is lost or spoiled.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/jannah\n\n#TheWord #Islam #Arabic #Jannah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-jinn",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Jinn",
+   "caption": "Jinn (الجِنّ). A created race made from fire, unseen to us, who like people believe or disbelieve and are accountable.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/jinn\n\n#TheWord #Islam #Arabic #Jinn #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-jumuah",
    "kind": "word",
    "slot": "morning",
@@ -1578,11 +2930,101 @@
    "cover": true
   },
   {
+   "id": "word-juz",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Juz",
+   "caption": "Juz (جُزْء). One of the thirty roughly equal parts the Qur'an is divided into, for reading it over a month. The division is a reading aid rather than part of the revelation, and it usually cuts across a surah rather than falling neatly between two.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/juz\n\n#TheWord #Islam #Arabic #Juz #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-kabah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Ka'bah",
+   "caption": "Ka'bah (الكَعْبَة). The stone cube at the centre of Makkah that Muslims face in every prayer. The name comes from a word for a cube.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/kabah\n\n#TheWord #Islam #Arabic #Kabah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-khawf",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Khawf",
+   "caption": "Khawf (الخَوْف). Fear of Allah: the awareness of His justice that keeps a person from walking off the edge.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/khawf\n\n#TheWord #Islam #Arabic #Khawf #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-khutbah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Khutbah",
+   "caption": "Khutbah (خُطْبَة). The sermon given before the Friday prayer and after the two Eid prayers. The Friday khutbah comes in two parts with a brief sitting between them, and it is delivered before the prayer, not after.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/khutbah\n\n#TheWord #Islam #Arabic #Khutbah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-laylat-al-qadr",
    "kind": "word",
    "slot": "morning",
    "hook": "Laylat al-Qadr",
    "caption": "Laylat al-Qadr (لَيْلَةُ القَدْر). The night in Ramadan that the Qur'an calls better than a thousand months. A whole surah is named for it, and it says worship in that one night is better than a thousand months, which is more than eighty years.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/laylat-al-qadr\n\n#TheWord #Islam #Arabic #LaylatalQadr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-madhhab",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Madhhab",
+   "caption": "Madhhab (مَذْهَب). A school of law: a settled method of deriving rulings, carried by generations of scholars. The plural is madhahib, and the word means a way gone along.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/madhhab\n\n#TheWord #Islam #Arabic #Madhhab #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-mahabbah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Mahabbah",
+   "caption": "Mahabbah (المَحَبَّة). Love of Allah, measured less by what it feels like and more by what it follows.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/mahabbah\n\n#TheWord #Islam #Arabic #Mahabbah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-makruh",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Makruh",
+   "caption": "Makruh (مَكْروه). Disliked but not forbidden: leaving it is rewarded, doing it brings no sin. Wasting water in wudu, and eating raw garlic before going to the mosque, are standard examples.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/makruh\n\n#TheWord #Islam #Arabic #Makruh #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-malaikah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Malaikah",
+   "caption": "Malaikah (المَلَائِكَة). Angels: beings created from light who never disobey Allah and carry out exactly what they are commanded. Belief in them is one of the six articles of faith.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/malaikah\n\n#TheWord #Islam #Arabic #Malaikah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-maqasid-al-shariah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Maqasid al-Shari'ah",
+   "caption": "Maqasid al-Shari'ah (مَقاصِدُ الشَّريعة). The higher aims of Islamic law: what its rulings exist in order to protect.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/maqasid-al-shariah\n\n#TheWord #Islam #Arabic #MaqasidalShariah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-mizan",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Mizan",
+   "caption": "Mizan (المِيزَان). The scale on which deeds are weighed on the Day of Judgement, with exact justice.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/mizan\n\n#TheWord #Islam #Arabic #Mizan #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1605,6 +3047,24 @@
    "cover": true
   },
   {
+   "id": "word-mustahabb",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Mustahabb",
+   "caption": "Mustahabb (مُسْتَحَبّ). Recommended: rewarded if done, with no blame for leaving it. It covers the great mass of good practice, from the voluntary prayers around the obligatory ones to greeting people first and using the siwak.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/mustahabb\n\n#TheWord #Islam #Arabic #Mustahabb #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-nafs",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Nafs",
+   "caption": "Nafs (النَّفْس). The self: the inner person that can command wrong, blame itself, or come to rest.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/nafs\n\n#TheWord #Islam #Arabic #Nafs #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-nasihah",
    "kind": "word",
    "slot": "evening",
@@ -1619,6 +3079,33 @@
    "slot": "morning",
    "hook": "Niyyah",
    "caption": "Niyyah (نِيَّة). The intention in the heart that turns an ordinary act into an act of worship. Every act of worship needs a niyyah, and the Prophet said actions are only by intentions.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/niyyah\n\n#TheWord #Islam #Arabic #Niyyah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-nubuwwah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Nubuwwah",
+   "caption": "Nubuwwah (النُّبُوَّة). Prophethood: Allah choosing certain men to receive revelation and deliver it, ending with Muhammad, peace be upon him. The Qur'an names many prophets and says every nation was sent a warner.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/nubuwwah\n\n#TheWord #Islam #Arabic #Nubuwwah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-qadr",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Qadr",
+   "caption": "Qadr (القَدَر). Allah's decree: that He knows, wrote, willed and created all that happens, without forcing anyone to sin. Scholars describe four levels to it: Allah's knowledge of everything, its writing in the Preserved Tablet, His will, and His creating it.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qadr\n\n#TheWord #Islam #Arabic #Qadr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-qalb",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Qalb",
+   "caption": "Qalb (القَلْب). The heart: in the Qur'an the seat of understanding and intention, not the organ alone.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qalb\n\n#TheWord #Islam #Arabic #Qalb #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1641,11 +3128,56 @@
    "cover": true
   },
   {
+   "id": "word-qiyas",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Qiyas",
+   "caption": "Qiyas (قِياس). Analogy: extending a known ruling to a new case that shares the same underlying reason. The classic example is extending the prohibition of wine to every intoxicant, because the reason behind the ruling is intoxication rather than grapes.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qiyas\n\n#TheWord #Islam #Arabic #Qiyas #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-rahmah",
    "kind": "word",
    "slot": "morning",
    "hook": "Rahmah",
    "caption": "Rahmah (الرَّحْمَة). Mercy: the disposition to spare, relieve and be gentle, in Allah first and in people after.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/rahmah\n\n#TheWord #Islam #Arabic #Rahmah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-raja",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Raja'",
+   "caption": "Raja' (الرَّجَاء). Hope in Allah's mercy, held by someone who is still working, not by someone who has stopped. The Qur'an forbids despair of Allah's mercy and says He forgives all sins (Qur'an 39:53).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/raja\n\n#TheWord #Islam #Arabic #Raja #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-rida",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Rida",
+   "caption": "Rida (الرِّضَا). Contentment with what Allah decrees, so the heart stops arguing with what already happened. The word means to be pleased, and it runs both ways: Allah pleased with the believer and the believer pleased with Him (Qur'an 98:8).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/rida\n\n#TheWord #Islam #Arabic #Rida #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ruh",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Ruh",
+   "caption": "Ruh (الرُّوح). The spirit that gives a body life, whose reality Allah kept to Himself.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ruh\n\n#TheWord #Islam #Arabic #Ruh #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-rukhsah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Rukhsah",
+   "caption": "Rukhsah (رُخْصة). A concession: permission to do the easier thing when a recognised excuse applies. Shortening prayer while travelling, breaking the fast when ill, and wiping over socks are all rukhsah.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/rukhsah\n\n#TheWord #Islam #Arabic #Rukhsah #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1713,6 +3245,24 @@
    "cover": true
   },
   {
+   "id": "word-shafaah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Shafa'ah",
+   "caption": "Shafa'ah (الشَّفَاعَة). Intercession: one person asking Allah on behalf of another, and only by Allah's permission.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/shafaah\n\n#TheWord #Islam #Arabic #Shafaah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-shahadah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Shahadah",
+   "caption": "Shahadah (الشَّهَادَة). The testimony that there is no god but Allah and that Muhammad is His Messenger. It is the first of the five pillars and the door into Islam: whoever says it, understanding and meaning it, is a Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/shahadah\n\n#TheWord #Islam #Arabic #Shahadah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-shukr",
    "kind": "word",
    "slot": "morning",
@@ -1727,6 +3277,24 @@
    "slot": "evening",
    "hook": "Sidq",
    "caption": "Sidq (الصِّدْق). Truthfulness: that your words, your intentions and your actions all report the same thing.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sidq\n\n#TheWord #Islam #Arabic #Sidq #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sirah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sirah",
+   "caption": "Sirah (السِّيرَة). The life story of the Prophet Muhammad, told in order, from birth to death. The root means to travel, so a sirah is the road a person walked.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sirah\n\n#TheWord #Islam #Arabic #Sirah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sirat",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sirat",
+   "caption": "Sirat (الصِّرَاط). The bridge laid over Hell that everyone must cross, at speeds matching their deeds.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sirat\n\n#TheWord #Islam #Arabic #Sirat #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1776,6 +3344,15 @@
    "cover": true
   },
   {
+   "id": "word-tafsir",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Tafsir",
+   "caption": "Tafsir (التَّفْسير). Explanation of the Qur'an: what a verse means, why it came, and what it asks of you. The word means to uncover, the way you pull a cover off a thing.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tafsir\n\n#TheWord #Islam #Arabic #Tafsir #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-tahajjud",
    "kind": "word",
    "slot": "evening",
@@ -1808,6 +3385,15 @@
    "slot": "morning",
    "hook": "Taqwa",
    "caption": "Taqwa (التَّقْوَى). An alert, careful awareness of Allah that keeps a person away from what harms them. The root means to guard or to shield, and carries the sense of putting something between yourself and danger.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/taqwa\n\n#TheWord #Islam #Arabic #Taqwa #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tartil",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Tartil",
+   "caption": "Tartil (التَّرْتيل). Reciting slowly and distinctly, giving every letter its right, as the Qur'an itself instructs. The command is direct: and recite the Qur'an with tartil.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tartil\n\n#TheWord #Islam #Arabic #Tartil #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
@@ -1875,11 +3461,29 @@
    "cover": true
   },
   {
+   "id": "word-wahy",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Wahy",
+   "caption": "Wahy (الوَحْي). Revelation: Allah's speech conveyed to a prophet, directly, from behind a veil, or through an angel.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/wahy\n\n#TheWord #Islam #Arabic #Wahy #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
    "id": "word-witr",
    "kind": "word",
    "slot": "morning",
    "hook": "Witr",
    "caption": "Witr (وِتْر). An odd-numbered night prayer, usually one or three rak'ahs, that closes the night. Witr means odd, as opposed to even.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/witr\n\n#TheWord #Islam #Arabic #Witr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-wudu",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Wudu",
+   "caption": "Wudu (وُضوء). The washing done before prayer: face, arms to the elbows, wiping the head, and feet to the ankles.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/wudu\n\n#TheWord #Islam #Arabic #Wudu #NoorCodexOfLight",
    "secs": 14,
    "cover": true
   },
