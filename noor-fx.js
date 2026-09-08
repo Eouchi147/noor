@@ -5,6 +5,23 @@
    All animation is transform/opacity only (GPU-composited).
    Honors prefers-reduced-motion. ~9 KB gzipped.
    ============================================================ */
+
+/* ------------------------------------------------------------
+   THE SOCIAL ROW · the one list of doors the whole house shares.
+   Edit here and every footer on the site changes; nothing is
+   pasted into a page. The order below is the order drawn.
+   An entry whose href is empty is not drawn at all.
+   ------------------------------------------------------------ */
+var NOOR_SOCIAL = [
+  { id: "instagram", name: "Instagram", href: "https://www.instagram.com/noorcodex" },
+  /* Sam fills this one in: the Page's own URL is not known here. */
+  { id: "facebook",  name: "Facebook",  href: "" },
+  { id: "youtube",   name: "YouTube",   href: "https://www.youtube.com/@noorcodex" },
+  { id: "pinterest", name: "Pinterest", href: "https://www.pinterest.com/noorcodex" },
+  { id: "telegram",  name: "Telegram",  href: "https://t.me/noorcodex" },
+  { id: "threads",   name: "Threads",   href: "https://www.threads.com/@noorcodexoflight" }
+];
+
 (function () {
 "use strict";
 
@@ -61,7 +78,7 @@ const UI_EN = {
   "modal.connected":"Connected in the Path","modal.close":"Close","modal.tilawah":"Tilawah","modal.node":"Node",
   "modal.meaning":"Meaning","modal.whennow":"When the Ummah Says It",
   "about.text":"NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.",
-  "footer.back":"← Back to the Path","footer.note":"Qur'an · authentic Hadith · classical sirah",
+  "footer.back":"← Back to the Path","footer.note":"Qur'an · authentic Hadith · classical sirah","footer.follow":"Follow the light",
   "chars.title":"Characters","chars.sub":"Named beings across the Codex: companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
   "chars.companions":"Companions","chars.angels":"Angels","chars.jinn":"Jinn","chars.animals":"Animals of the Signs","chars.endtime":"End of Time",
   "chars.companions.desc":"Those who saw the Prophet ﷺ, believed, and died upon Islam.","chars.angels.desc":"Created from light. They do not disobey.","chars.jinn.desc":"Created from smokeless fire: believers and rebels.","chars.animals.desc":"Creatures tied to a prophetic story or a clear ayah. Nothing invented.","chars.endtime.desc":"Named figures and forces of the final trials.",
@@ -76,8 +93,14 @@ const UI_EN = {
   "m.allah":"The Ninety-Nine Names",
   "m.seerah":"The Seerah · Twenty-Three Years"
 };
+/* A browser with site data refused -- a locked-down phone, private browsing on
+   some builds, a reader who turned storage off -- throws on this read rather
+   than answering null. Unguarded it threw here, before the object existed, so
+   NOOR_I18N was never defined at all and every page leaning on it went down
+   with it. A remembered language is a convenience; English is the floor. */
+const NOOR_LANG_0 = (function(){ try { return localStorage.getItem("noor_lang") || "en"; } catch (e) { return "en"; } })();
 const NOOR_I18N = {
-  lang: localStorage.getItem("noor_lang") || "en",
+  lang: NOOR_LANG_0,
   packs: { en: UI_EN },
   rtl: ["ar","ur","fa","he","ps","sd","prs","pa"],
   /* `fb` is what to show when no pack has the key. It used to be the key
@@ -852,6 +875,128 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     if (ql) { if (window.NOOR_I18N) NOOR_I18N.setLang(ql); }
     else if (window.NOOR_I18N && NOOR_I18N.lang !== "en") NOOR_I18N.setLang(NOOR_I18N.lang);
     else if (window.NOOR_I18N) NOOR_I18N.apply();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+/* ================= v83 · the row of doors under the footer =================
+   The house has doors on other people's platforms, and until now a reader
+   who wanted them had to already know they existed. This draws them once,
+   in one place, into the footer of every page that has one.
+
+   The list is NOOR_SOCIAL at the top of this file; that is the only thing
+   anyone should have to edit. The marks are drawn here in the same 24x24
+   stroke style as the rest of the iconography: no brand colours, no
+   wordmarks, no fetched images, nothing a network could change under us.
+   Where it lands, in order: after the line carrying footer.note, else
+   before the languages nav, else at the end of the footer. Once, ever. */
+(function () {
+  "use strict";
+  var GOLD = "#C9A227", DIM = "rgba(201,162,39,.55)";
+
+  /* the marks · fill:none, stroke:currentColor, the house's 1.6 weight */
+  var MARK = {
+    instagram: "<rect x='3.4' y='3.4' width='17.2' height='17.2' rx='5'/>" +
+               "<circle cx='12' cy='12' r='4.1'/><circle cx='16.8' cy='7.2' r='.95'/>",
+    facebook:  "<path d='M14.6 4.4h-1.7a3.4 3.4 0 0 0-3.4 3.4V20'/><path d='M7.4 11.1h5.7'/>",
+    youtube:   "<rect x='2.9' y='5.6' width='18.2' height='12.8' rx='4'/>" +
+               "<path d='M10.4 9.5 15.8 12l-5.4 2.5Z'/>",
+    pinterest: "<path d='M8.6 20.9V4.5h4.2a4.15 4.15 0 0 1 0 8.3H8.6'/>",
+    telegram:  "<path d='M21 3.8 2.9 11.4a.6.6 0 0 0 0 1.1l5.3 1.9 2 5.4a.6.6 0 0 0 1.1.1l2.5-3.6 4.3 3.1a.6.6 0 0 0 .9-.3Z'/>" +
+               "<path d='M21 3.8 8.2 14.4'/>",
+    threads:   "<circle cx='12' cy='12' r='3.4'/>" +
+               "<path d='M15.4 12v1.9a2.4 2.4 0 0 0 4.8 0V12a8.2 8.2 0 1 0-4.6 7.4'/>"
+  };
+
+  var CSS =
+    ".noor-social{margin:1.5rem auto 0;padding:0 1rem;text-align:center;max-width:100%}" +
+    ".noor-social p.noor-social-label{margin:0 0 .1rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;" +
+      "font-size:10px;font-weight:600;line-height:1.6;letter-spacing:.2em;text-transform:uppercase;color:" + DIM + "}" +
+    ".noor-social ul.noor-social-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.1rem;margin:0;padding:0;list-style:none}" +
+    ".noor-social ul.noor-social-row>li{margin:0;padding:0;list-style:none;line-height:0}" +
+    ".noor-social a.noor-social-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;" +
+      "border-radius:999px;color:" + DIM + ";text-decoration:none;border:0;background:none;" +
+      "-webkit-tap-highlight-color:transparent;transition:color .25s ease}" +
+    ".noor-social a.noor-social-link:hover,.noor-social a.noor-social-link:focus-visible{color:" + GOLD + ";text-decoration:none}" +
+    ".noor-social a.noor-social-link:focus-visible{outline:2px solid " + GOLD + ";outline-offset:-6px}" +
+    ".noor-social a.noor-social-link svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;" +
+      "stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}" +
+    "@media (prefers-reduced-motion:reduce){.noor-social a.noor-social-link{transition:none}}";
+
+  /* Where the footer of this page actually is. Three shapes exist in the
+     house: a <footer>, the About band that carries footer.note, and the bare
+     languages line at the foot of a translated index. */
+  function place(row) {
+    var feet = document.querySelectorAll("footer");
+    var foot = feet.length ? feet[feet.length - 1] : null;
+    var note = document.querySelector("[data-i18n='footer.note']");
+    if (note && (!foot || foot.contains(note))) {
+      note.insertAdjacentElement("afterend", row);
+      return "note";
+    }
+    var langs = document.querySelector("nav[aria-label='Languages'],.langs");
+    if (langs && (!foot || foot.contains(langs))) {
+      langs.parentNode.insertBefore(row, langs);
+      return "langs";
+    }
+    if (foot) { foot.appendChild(row); return "footer"; }
+    return null;
+  }
+
+  function init() {
+    /* an embedded room is someone else's page: it carries no footer and no
+       doors out of it */
+    if (document.documentElement.getAttribute("data-noor-embed") === "1") return;
+    if (document.querySelector("[data-noor-social]")) return;
+    var open = NOOR_SOCIAL.filter(function (s) { return s.href; });
+    if (!open.length) return;
+
+    var row = document.createElement("div");
+    row.className = "noor-social";
+    row.setAttribute("data-noor-social", "");
+
+    var label = document.createElement("p");
+    label.className = "noor-social-label";
+    label.setAttribute("data-i18n", "footer.follow");
+    label.textContent = (window.NOOR_I18N && NOOR_I18N.t("footer.follow", "Follow the light")) || "Follow the light";
+    row.appendChild(label);
+
+    var ul = document.createElement("ul");
+    ul.className = "noor-social-row";
+    open.forEach(function (s) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.className = "noor-social-link";
+      a.href = s.href;
+      a.target = "_blank";
+      a.rel = "me noopener";
+      a.setAttribute("aria-label", s.name);
+      a.setAttribute("data-social", s.id);
+      a.innerHTML = "<svg viewBox='0 0 24 24' aria-hidden='true' focusable='false'>" + (MARK[s.id] || "") + "</svg>";
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    row.appendChild(ul);
+
+    if (!place(row)) return;                 /* no footer on this page */
+    /* The row is built after NOOR_I18N has already walked the page, so on a
+       page in another language its label would sit in English until something
+       else caused an apply. The pack may also have arrived only after the line
+       above wrote the label. The one node is translated here, exactly the way
+       apply() does it -- the baked English remembered first, so it survives a
+       round trip through another language -- and nothing else is touched. */
+    try {
+      if (window.NOOR_I18N) {
+        var fb = NOOR_I18N.en(label, "data-i18n-en");
+        var v = NOOR_I18N.t("footer.follow", fb);
+        if (label.textContent !== v) label.textContent = v;
+      }
+    } catch (e) { /* the English already in the label stands */ }
+    var css = document.createElement("style");
+    css.id = "noor-social-css";
+    css.textContent = CSS;
+    document.head.appendChild(css);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

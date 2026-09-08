@@ -9,6 +9,9 @@
     },
     "api/insights.js": {
       "maxDuration": 60
+    },
+    "api/house.js": {
+      "maxDuration": 60
     }
   },
   "cleanUrls": true,

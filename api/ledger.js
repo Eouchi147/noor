@@ -197,12 +197,25 @@ const json = (res, code, obj) => {
   return res.status(code).json(obj);
 };
 
-/* ---------- Stripe, properly paginated ---------- */
-export async function fetchCharges(key, from, to, fetchImpl) {
+/* ---------- Stripe, properly paginated ----------
+   Twenty-five sequential pages is the ledger's own ceiling and it is right for
+   the ledger, which is opened by a person who can wait. It is wrong for a
+   caller that has a deadline of its own -- the steward and the flow both sit
+   inside the Lantern's sixteen seconds -- so `opts.maxPages` and
+   `opts.deadline` let such a caller stop the walk early. A walk that stopped
+   early has read a part of the charges and not all of them, and it says so:
+   `rows.partial` is true, and every caller that can be short must read the
+   count it makes as a floor rather than as the total. */
+export async function fetchCharges(key, from, to, fetchImpl, opts) {
+  const o = opts || {};
+  const cap = Number.isFinite(o.maxPages) && o.maxPages > 0 ? Math.min(25, Math.floor(o.maxPages)) : 25;
   const F = fetchImpl || fetch;
   const rows = [];
-  let starting = "";
-  for (let page = 0; page < 25; page++) {
+  let starting = "", partial = false;
+  for (let page = 0; page < cap; page++) {
+    /* the clock is read before a page is asked for and never in the middle of
+       one: a request already in flight is always finished and always counted */
+    if (o.deadline && page > 0 && Date.now() >= o.deadline) { partial = true; break; }
     const q = new URLSearchParams({ limit: "100" });
     q.append("expand[]", "data.balance_transaction");
     if (from) q.set("created[gte]", String(from));
@@ -216,8 +229,10 @@ export async function fetchCharges(key, from, to, fetchImpl) {
     const data = j.data || [];
     rows.push(...data);
     if (!j.has_more || !data.length) break;
+    if (page === cap - 1) partial = true;      /* Stripe has more and the cap stopped us */
     starting = data[data.length - 1].id;
   }
+  rows.partial = partial;
   return rows;
 }
 
@@ -379,7 +394,8 @@ export async function computeLedger(opts) {
 
   let charges = [];
   try {
-    charges = await fetchCharges(key, o.from, o.to, o.fetchImpl);
+    charges = await fetchCharges(key, o.from, o.to, o.fetchImpl,
+      { maxPages: o.maxPages, deadline: o.deadline });
   } catch {
     return { ok: false, reason: "stripe", configured: true, store, ...tally([], given) };
   }
@@ -402,7 +418,11 @@ export async function computeLedger(opts) {
     }
   } catch { /* the default stands */ }
 
-  return { ok: true, configured: true, store, range: { from: o.from || null, to: o.to || null },
+  /* `partial` travels with the answer because a total made out of some of the
+     charges is not the total, and a caller that hands it to a reader as one
+     would be saying a number the record does not have. */
+  return { ok: true, configured: true, store, partial: !!charges.partial,
+           range: { from: o.from || null, to: o.to || null },
            ...tally(charges, given, floorMinor, new Date().toISOString().slice(0, 7)) };
 }
 

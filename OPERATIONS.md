@@ -15,7 +15,7 @@ is right and this file is a bug: fix it in the same commit.
 | **What it is** | A free Islamic library and school. No ads, no trackers, no account. |
 | **Where it lives** | `noorcodex.com` and `noorcodex.ca` |
 | **Repo** | `github.com/Eouchi147/noor`, branch `noor-v2-illuminated` |
-| **Host** | Vercel. Static files plus 27 serverless routes under `/api`. |
+| **Host** | Vercel. Static files plus 30 serverless routes under `/api`. |
 | **Database** | Redis, via `REDIS_URL` or Upstash/Vercel KV REST. Everything dynamic. |
 | **AI** | OpenRouter, free models only, never billed unless deliberately allowed. |
 | **Money** | Stripe. Gifts only. No subscriptions sold, no paywall, ever. |
@@ -39,7 +39,7 @@ exists.
               ├── /study/<n>.json   the Qur'an study companion, one file per surah
               ├── /verse/<n>.json   the verse-by-verse layer, one file per surah
               ├── /node/<id>.json   one file per node of the Path
-              └── /api/*            27 serverless functions (Node, ESM)
+              └── /api/*            30 serverless functions (Node, ESM)
                                       ├── Redis  (journal, counters, settings, cache)
                                       ├── OpenRouter  (the Lantern)
                                       └── Stripe  (gifts, the ledger)
@@ -303,6 +303,9 @@ result.
 | `nl:auditcur` | How far through the corpus the auditor has walked | `_nightshift.js` |
 | `nl:brief` | The day in three sentences | `_nightshift.js` |
 | `nl:shift` | What the last night shift actually did, and what it cost | `_nightshift.js` |
+| `nsoc:ins:<net>:<id>` | What one post did, as the network last answered it | `_insights.js` |
+| `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
+| `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -334,6 +337,8 @@ stripped from everything public.
 | `/api/admin-guardians` | admin | The Legacy pane |
 | `/api/assistant` | admin | The console's own assistant |
 | `/api/marketing` | admin | The writing room |
+| `/api/house` | admin | The whole house in one call: `?action=steward` reads every record and answers with findings, each with the one call that would fix it; `?action=flow` draws the funnel from posts to gifts. Reads only. |
+| `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate |
 | `/api/beacon`, `/api/visitors` | yes (write) | Anonymous counters |
 | `/api/warm` | cron | The nightly breath |
 | `/api/license`, `/api/guardians`, `/api/sponsor-checkout` | none | **Retired sponsor program.** Referenced nowhere. Safe to delete when you are sure. |
@@ -419,7 +424,9 @@ node tests/social.mjs                 # 60 · the ladder, the guards, the half-f
 node tests/card.mjs                   # 15 · the card really rasterises, and is looked at
 node tests/nightshift.mjs             # 31 · every background job, and that it cannot write
 node tests/i18n.mjs                   # 7  · no reader ever sees a translation key  (server :8433)
-node tests/api-audit.mjs              # 97 · every route: auth, caching, secrets, cold start
+node tests/house.mjs                  # 129 · the steward's rules and the flow, everything stubbed
+node tests/insights.mjs               # 58 · what strangers watched, Meta and Google stubbed
+node tests/api-audit.mjs              # 129 · every route: auth, caching, secrets, cold start
 node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
 node tests/dials.mjs                  # the console's switches actually switch    (server :8433)
 node tests/figures.mjs                # every drawing on every page, 3 widths     (server :8433)
@@ -449,6 +456,9 @@ python3 /tmp/vercelish.py    # :8433, mimics Vercel's clean URLs
   rendered as an empty gap that nothing anywhere reported.
 - `nightshift.mjs` , three background jobs were written against a field that does
   not exist and did nothing at all while reporting success.
+- `house.mjs` , the steward may not invent: a paragraph carrying a number the
+  findings do not have is thrown away, a network waiting on a review is one line
+  and not one per slot, and no token, secret or household figure reaches an answer.
 - `i18n.mjs` , the live menu showed `m.threelives` because a missing string fell
   back to printing its own key over English that was already correct.
 
@@ -558,6 +568,38 @@ Order of checks, cheapest first:
    nothing went out.
 6. `Post this now` runs the whole path by hand, including the network calls, and
    prints exactly what came back. Use it before trusting a schedule.
+
+### The steward says something needs you
+
+`/api/house?action=steward` reads the whole house in one call and answers with
+findings, each carrying a level, a sentence, its evidence, and at most one
+action.
+
+- **act** is a fault a person can fix today: a slot no network took, a half sent
+  slot, a Meta token inside a week of dying, an Instagram token that can post
+  and cannot read, a network that is connected and has posted nothing.
+- **watch** is true and not urgent: the ladder sitting on `off`, a video still
+  transcoding, a network waiting on a review, the night shift's findings,
+  Reddit drafts, readers down on yesterday late in the day.
+- **good** is the house saying so out loud, which is worth as much as the rest.
+
+Two rules hold it up and neither is a preference. **Every finding is
+deterministic**: it comes from a slot record, the token clock, the insights
+cache, the beacon's counters, Stripe's charges or the night shift's list, and
+the Lantern is handed the findings only after they are made. Its one job is the
+paragraph at the top, and a paragraph carrying a number the findings do not
+have is thrown away and replaced by one built from the findings, with
+`lantern: false` in the answer so the console can tell the two apart. **Every
+action is a call that already exists** on `/api/social`, `/api/insights`,
+`/api/threads` or `/api/admin-data`, with the body its handler actually reads.
+
+The answer is kept for ten minutes under `nsoc:steward`; `?fresh=1` goes round
+it, which is what to press after fixing something. `?action=flow` is the second
+read: the funnel from posts made to gifts, over up to thirty days, cached
+fifteen minutes. Two things in that funnel are honestly missing rather than
+estimated, and it says so in `notes`: **clicks are attributed by month**, not by
+day, because that is the grain `api/beacon.js` keeps, and **a returning reader
+is not counted at all**, because the beacon is cookieless by design.
 
 ### The night shift flagged something
 

@@ -35,6 +35,8 @@
   "m.path": "The Path of Creation",
   "m.prophets": "The 25 Prophets",
   "m.companions": "The Companions",
+  "m.allah": "The Ninety-Nine Names",
+  "m.seerah": "The Seerah \u00b7 Twenty-Three Years",
   "m.characters": "Characters",
   "m.places": "Places",
   "m.heroes": "Heroes of Islam",
@@ -184,6 +186,7 @@
   "about.text": "NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.",
   "footer.back": "← Back to the Path",
   "footer.note": "Qur'an · authentic Hadith · classical sirah",
+  "footer.follow": "Follow the light",
   "chars.title": "Characters",
   "chars.sub": "Named beings across the Codex: companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
   "chars.companions": "Companions",
@@ -222,9 +225,7 @@
   "m.hajjplan": "Your Pilgrim Plan",
   "m.protection": "Protection & the Light",
   "m.ramadan": "Ramadan",
-  "m.eid": "The Two Eids",
-  "m.allah": "The Ninety-Nine Names",
-  "m.seerah": "The Seerah · Twenty-Three Years"
+  "m.eid": "The Two Eids"
  },
  "nodes": {
   "1": {

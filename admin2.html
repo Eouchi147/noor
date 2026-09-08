@@ -77,9 +77,11 @@ main{padding:16px 16px calc(var(--bar) + var(--sab) + 24px);max-width:760px;marg
 @media(prefers-reduced-motion:reduce){.surf.on{animation:none}}
 
 /* the bar, and the rail it becomes on a desk */
+/* the columns are counted from the buttons that are there, so a fifth
+   surface can join the four without a rule being edited */
 nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;height:calc(var(--bar) + var(--sab));padding-bottom:var(--sab);
   background:rgba(17,19,31,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
-  display:grid;grid-template-columns:repeat(4,1fr)}
+  display:grid;grid-auto-flow:column;grid-auto-columns:1fr}
 nav.bar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--faint);
   font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;position:relative;min-height:44px}
 nav.bar button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -191,6 +193,47 @@ svg.chart{width:100%;height:150px;display:block}
 @media(prefers-reduced-motion:reduce){.sk{animation:none}}
 .empty{color:var(--faint);font-size:13.5px;padding:8px 2px}
 
+/* ---- the rooms: House is the hub, each room is a surface of its own ---- */
+.back{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px 0 10px;border-radius:100px;
+  border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:600}
+.back:active{border-color:var(--line2);color:var(--text)}
+.back svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rooms{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:560px){.rooms{grid-template-columns:repeat(3,1fr)}}
+.rooms .card{margin:0;display:flex;flex-direction:column;gap:3px;min-height:112px;text-align:left;width:100%}
+.rooms .card b{color:var(--cream);font-weight:600;font-size:14px}
+.rooms .card .w{color:var(--faint);font-size:11.5px;line-height:1.35}
+.rooms .card .v{font-family:var(--f-disp);font-size:23px;font-weight:600;color:var(--cream);line-height:1.1;margin-top:auto;font-variant-numeric:tabular-nums}
+.ttl{font-family:var(--f-disp);font-weight:500;font-size:19px;color:var(--cream);letter-spacing:-.01em;margin:8px 0 0}
+.fi{width:100%;font:inherit;font-size:16px;background:var(--ink);color:var(--text);border:1px solid var(--line2);border-radius:10px;padding:10px 12px}
+.fi::placeholder{color:var(--faint)}
+textarea.fi{font-size:14px;line-height:1.65;resize:vertical}
+select.fi{-webkit-appearance:none;appearance:none}
+.frm{display:grid;gap:8px}
+@media(min-width:560px){.frm.two{grid-template-columns:1fr 1fr}.frm.two .full{grid-column:1/-1}}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.acts .btn{flex:1 1 auto}
+@media(min-width:560px){.acts .btn{flex:0 0 auto}}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px}
+.kv>b{color:var(--muted);font-weight:600;white-space:nowrap}
+.kv>span{color:var(--text);min-width:0;overflow-wrap:anywhere}
+.mon{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end;height:76px;margin:12px 0 0}
+.mon i{display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:4px}
+.mon i u{display:block;background:var(--line2);border-radius:2px 2px 0 0}
+.mon i.has u{background:var(--gold-dim)}
+.mon i.now u{background:var(--gold)}
+.mon i b{font-size:9px;font-weight:600;color:var(--faint);text-align:center}
+.tog{cursor:pointer;min-height:30px;display:inline-flex;align-items:center}
+.chat{display:flex;flex-direction:column;gap:8px;max-height:46svh;overflow:auto;margin-bottom:10px}
+.bub{border-radius:12px;padding:10px 12px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--line)}
+.bub.me{background:var(--panel2);align-self:flex-end;max-width:88%}
+.bub.it{background:var(--ink);color:var(--text)}
+.bub.warn{border-color:#4a2b2b;color:var(--bad)}
+.dif{display:grid;gap:6px;margin-top:10px;font-size:13.5px;overflow-wrap:anywhere}
+.dif .was{color:var(--bad);text-decoration:line-through}
+.dif .now{color:var(--good)}
+.seg.two{grid-template-columns:repeat(2,1fr)}
+
 /* ---- sheets: every action is one ---- */
 #veil{position:fixed;inset:0;background:rgba(5,6,15,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 #veil.on{opacity:1;pointer-events:auto}
@@ -213,6 +256,63 @@ svg.chart{width:100%;height:150px;display:block}
 .diag{font-size:13.5px}.diag .said{margin:0 0 10px;padding:8px 12px;border-left:2px solid rgba(240,138,138,.5);background:rgba(240,138,138,.07);font-style:italic;color:var(--text)}
 .diag ul{margin:4px 0 12px;padding-left:18px}.diag li{margin:3px 0}.diag .ok{color:var(--good)}.diag .no{color:var(--bad)}
 .diag h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim);margin:12px 0 4px}
+
+/* ---- the steward: what the house says before anything is asked of it ----
+   One card at the top of Today. The paragraph is the Lantern's when the
+   Lantern answered and the house's own template when it did not, and the
+   small mono label says which, because the two must never look the same. */
+.stw{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 12px}
+.stw .hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.stw .lab{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim)}
+.stw .rd{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--faint)}
+.stw .hd .btn{margin-left:auto}
+.stw p.say{margin:0;font-family:var(--f-disp);font-size:17px;line-height:1.55;color:var(--cream);font-weight:500}
+.fnd{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.fnd .f{display:flex;gap:11px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.fnd .f>i{width:9px;height:9px;border-radius:50%;flex:0 0 auto;margin-top:6px;background:var(--faint)}
+.fnd .f.act>i{background:var(--bad)}
+.fnd .f.watch>i{background:var(--wait)}
+.fnd .f.good>i{background:var(--good)}
+.fnd .f .x{flex:1;min-width:0}
+.fnd .f b{display:block;color:var(--cream);font-weight:600;font-size:14px;line-height:1.35}
+.fnd .f span.sy{display:block;color:var(--muted);font-size:12.5px;margin-top:3px;line-height:1.5}
+.fnd .f .go{margin-top:10px}
+.fnd details.q{border:1px solid var(--line);border-radius:12px;background:var(--panel2)}
+.fnd details.q>summary{list-style:none;cursor:pointer;padding:11px 13px;display:flex;align-items:center;gap:11px;color:var(--muted);font-size:13px;min-height:44px}
+.fnd details.q>summary::-webkit-details-marker{display:none}
+.fnd details.q>summary::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--good);flex:0 0 auto}
+.fnd details.q>summary::after{content:"▸";color:var(--gold-dim);font-size:11px;margin-left:auto;transition:transform .18s}
+.fnd details.q[open]>summary::after{transform:rotate(90deg)}
+.fnd details.q>.in{padding:0 13px 11px;display:flex;flex-direction:column;gap:8px}
+.fnd details.q .f{background:var(--panel)}
+
+/* ---- the flow: one map of where the energy goes ----
+   The drawing is magnitude and never status, so not one of the good, bad or
+   waiting tones is used in it: the widths carry the size, gold marks the
+   heaviest step and the travelling dots, and everything else is a line. */
+.map{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 10px;margin:0 0 12px}
+svg.flow{width:100%;height:auto;display:block}
+svg.flow .node{cursor:pointer}
+svg.flow .nb{fill:var(--panel2);stroke:var(--line2);stroke-width:1}
+svg.flow .node:hover .nb,svg.flow .node:focus-visible .nb{stroke:var(--gold-dim)}
+svg.flow .node:focus-visible{outline:none}
+/* an unread node is drawn hollow but is still a thing a thumb can hit, so its
+   ground is transparent rather than absent */
+svg.flow .node.unread .nb{fill:transparent;stroke:var(--line2);stroke-dasharray:4 4}
+svg.flow .nl{fill:var(--muted);font-family:var(--f-body);font-weight:600;font-size:11px;letter-spacing:.02em}
+svg.flow .nv{fill:var(--cream);font-family:var(--f-disp);font-weight:600;font-variant-numeric:tabular-nums}
+svg.flow .nu{fill:var(--faint);font-family:var(--f-mono);font-size:9px;letter-spacing:.04em}
+svg.flow .node.unread .nv{fill:var(--faint);font-family:var(--f-mono);font-size:12px;font-weight:400}
+svg.flow .ed{fill:none;stroke:var(--line2);stroke-linecap:round}
+svg.flow .ed.big{stroke:var(--gold);opacity:.72}
+svg.flow .ed.none{stroke:var(--line2);stroke-width:1.5;stroke-dasharray:3 5;opacity:.85}
+svg.flow .rt{fill:var(--muted);font-family:var(--f-mono);font-size:10px;letter-spacing:.01em}
+svg.flow .rtb{fill:var(--panel);stroke:var(--line);stroke-width:.6}
+svg.flow .pulse{fill:var(--gold)}
+.notes{margin:2px 0 0}
+.notes p{color:var(--faint);font-size:12.5px;line-height:1.55;margin:0 0 6px}
+.flowbar{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.flowbar .seg{flex:1;min-width:0}
 </style>
 </head>
 <body>
@@ -242,6 +342,16 @@ svg.chart{width:100%;height:150px;display:block}
     <section class="surf" id="s-posts"></section>
     <section class="surf" id="s-readers"></section>
     <section class="surf" id="s-house"></section>
+    <section class="surf" id="s-flow"></section>
+    <!-- The six rooms. They are surfaces exactly like the five above, but
+         they are reached from House rather than from the bar, so the bar
+         keeps its five buttons. -->
+    <section class="surf" id="s-lights"></section>
+    <section class="surf" id="s-legacy"></section>
+    <section class="surf" id="s-marketing"></section>
+    <section class="surf" id="s-journal"></section>
+    <section class="surf" id="s-night"></section>
+    <section class="surf" id="s-system"></section>
   </main>
 
   <nav class="bar" aria-label="Surfaces">
@@ -249,6 +359,7 @@ svg.chart{width:100%;height:150px;display:block}
     <button data-s="posts"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Posts<i class="dot" id="dot-posts" hidden></i></button>
     <button data-s="readers"><svg viewBox="0 0 24 24"><path d="M3 20l5-8 4 5 3-3 6 6"/><circle cx="17" cy="6" r="2"/></svg>Readers<i class="dot" id="dot-readers" hidden></i></button>
     <button data-s="house"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>House<i class="dot" id="dot-house" hidden></i></button>
+    <button data-s="flow"><svg viewBox="0 0 24 24"><circle cx="4.5" cy="6" r="2"/><circle cx="4.5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M6.6 7.1C10 9 12.6 10.5 16.9 11.7M6.6 16.9C10 15 12.6 13.5 16.9 12.3"/></svg>Flow<i class="dot" id="dot-flow" hidden></i></button>
   </nav>
 </div>
 
@@ -266,6 +377,9 @@ var relock=function(){$("app").classList.remove("on");$("gate").hidden=false;$("
 var answer=function(r){if(r.status===401){relock();return{ok:false,status:401,j:{},locked:true}}return r.json().catch(function(){return null}).then(function(j){return{ok:r.ok,status:r.status,j:j}})};
 var get=function(u){return fetch(u,{credentials:"same-origin",cache:"no-store"}).then(answer)};
 var post=function(u,b){return fetch(u,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};return r})};
+/* the corrections store is the one place the house is asked to forget
+   something, and it listens for DELETE, so the kit knows a third verb */
+var del=function(u,b){return fetch(u,{method:"DELETE",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};return r})};
 /* every action ends here when the network is gone: the button comes back and the owner is told */
 var unreachable=function(b,was){return function(){if(b){b.disabled=false;if(was!=null)b.textContent=was}closeSheet();toast("Could not reach the house.",true)}};
 var toastT=null;
@@ -285,6 +399,7 @@ var ICO={
   reddit:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16V8M8.5 11.5L12 8l3.5 3.5"/></svg>',
   warn:'<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5v.5"/></svg>',
   ok:'<svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 7"/></svg>',
+  ring:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>',
   lamp:'<svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 4 10.5c-.7.6-1 1.3-1 2.5H9c0-1.2-.3-1.9-1-2.5A6 6 0 0 1 12 3z"/></svg>',
   chev:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>'
 };
@@ -318,6 +433,28 @@ var held=function(f){return cached("held",function(){return post("/api/journal",
 var house=function(f){return cached("house",function(){return get("/api/admin-data").then(function(r){return r.j})},f)};
 var lantern=function(f){return cached("lantern",function(){return get("/api/admin-data?probe=lantern").then(function(r){return r.j})},f)};
 var insights=function(f){return cached("insights",function(){return get("/api/insights?days=14").then(function(r){return r.j})},f)};
+/* the six rooms read these, and House reads them too so each room's card on
+   the hub can carry one live number instead of a promise of one */
+var nightQ=function(f){return cached("night",function(){return get("/api/admin-data?probe=night").then(function(r){return r.j})},f)};
+var journalQ=function(f){return cached("journal",function(){return get("/api/journal").then(function(r){return r.j})},f)};
+var ovrQ=function(f){return cached("ovr",function(){return get("/api/overrides").then(function(r){return r.j})},f)};
+var LIGHT_DAY="";
+var lightsQ=function(f){var day=LIGHT_DAY;return cached("lights:"+day,function(){return get("/api/admin-data?probe=lights"+(day?"&date="+encodeURIComponent(day):"")).then(function(r){return r.j})},f)};
+/* the house in one call. The steward reads what matters today as findings;
+   the flow reads where the energy goes over a window of days. Both are
+   owner-gated GETs on the one route, and fresh=1 is how the console asks for
+   the answer again after it has changed something. */
+var stewardQ=function(f){return cached("steward",function(){return get("/api/house?action=steward").then(function(r){return r.j})},f)};
+function stewardAgain(){return get("/api/house?action=steward&fresh=1").then(function(r){C.steward={at:Date.now(),v:r.j};return r.j})}
+var FLOW_DAYS=14;
+var flowQ=function(f){var d=FLOW_DAYS;return cached("flow:"+d,function(){return get("/api/house?action=flow&days="+d).then(function(r){return r.j})},f)};
+/* a read whose failure must not take a whole surface down with it: the card
+   it feeds says so itself and the rest of the surface still draws */
+function soft(p){return p.then(function(v){return v},function(){return null})}
+function money(n){return "$"+(Math.round(Number(n||0)*100)/100).toLocaleString()}
+/* a stat tile. Everything that reaches it is escaped here rather than at each
+   call, because a number the house did not send is still a string. */
+function tile(v,l,d){return '<div class="c"><div class="v">'+esc(String(v))+'</div><div class="l">'+esc(l)+'</div>'+(d?'<div class="d">'+esc(d)+'</div>':'')+'</div>'}
 /* what the last Read again said that the read alone cannot know: the permission the token lacks */
 var INS_NEEDS="";
 var DRAWN={};
@@ -325,20 +462,32 @@ function bust(){C={};LOADED={}}
 
 /* ---------- surfaces ---------- */
 var CUR="today";
-var NAMES={today:"Today",posts:"Posts",readers:"Readers",house:"House"};
-var LOAD={today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse};
+/* Five surfaces sit in the bar. The six rooms are surfaces too, reached from
+   House and remembered in the hash, so a reload lands in the room the owner
+   was standing in. Nothing here counts the surfaces: the bar's columns are
+   counted from the buttons that are in it. */
+var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1};
+var NAMES={today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
+  lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System"};
+var LOAD={today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
+  lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem};
 var LOADED={};
 function show(s,force){
+  if(!NAMES[s]||!$("s-"+s))s="today";
   CUR=s;$("title").textContent=NAMES[s];
   document.querySelectorAll(".surf").forEach(function(e){e.classList.toggle("on",e.id==="s-"+s)});
-  document.querySelectorAll("nav.bar button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
+  /* standing in a room, the bar still lights House: that is the door it is behind */
+  document.querySelectorAll("nav.bar button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s||(!!ROOM[s]&&b.dataset.s==="house"))});
   try{history.replaceState(null,"","#"+s)}catch(e){}
   window.scrollTo(0,0);
-  if(!LOADED[s]||force){LOADED[s]=true;DRAWN[s]=Date.now();LOAD[s](force)}
+  if(LOAD[s]&&(!LOADED[s]||force)){LOADED[s]=true;DRAWN[s]=Date.now();LOAD[s](force)}
 }
+/* one back affordance, drawn at the top of every room */
+var BACK='<button class="back" data-back="1"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>House</button>';
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-back]");if(b)show("house")});
 document.querySelector("nav.bar").addEventListener("click",function(e){var b=e.target.closest("button");if(b)show(b.dataset.s)});
-$("refresh").addEventListener("click",function(){if(busy())return toast("A post is on its way; wait for it.");var b=$("refresh");b.classList.add("spin");bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();Promise.resolve(LOAD[CUR](true)).then(function(){setTimeout(function(){b.classList.remove("spin")},500)})});
-document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&!busy()&&Date.now()-(DRAWN[CUR]||0)>TTL){bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();LOAD[CUR](true)}});
+$("refresh").addEventListener("click",function(){if(busy())return toast("A post is on its way; wait for it.");var b=$("refresh");b.classList.add("spin");bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();Promise.resolve(LOAD[CUR]?LOAD[CUR](true):null).then(function(){setTimeout(function(){b.classList.remove("spin")},500)})});
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&!busy()&&Date.now()-(DRAWN[CUR]||0)>TTL&&LOAD[CUR]){bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();LOAD[CUR](true)}});
 
 function skel(n){var s="";for(var i=0;i<(n||3);i++)s+='<div class="row"><div class="sk" style="width:34px;height:34px;border-radius:9px"></div><div class="t"><div class="sk" style="width:60%"></div><div class="sk" style="width:40%;margin-top:6px"></div></div></div>';return '<div class="list">'+s+'</div>'}
 
@@ -346,8 +495,8 @@ function skel(n){var s="";for(var i=0;i<(n||3);i++)s+='<div class="row"><div cla
 function drawToday(force){
   var el=$("s-today");
   if(!el.dataset.built){el.innerHTML='<div class="card"><div class="hero"><div class="sk" style="width:110px;height:52px"></div></div><div class="strip">'+'<div class="sk" style="width:52px;height:54px"></div>'.repeat(7)+'</div></div><p class="sec">Waiting for you</p>'+skel(3)+'<p class="sec">The Lantern</p><div class="card"><div class="sk" style="width:80%"></div></div>';el.dataset.built="1"}
-  return Promise.all([today(force),visitors(force),inbox(force),held(force),reddit(force),house(force)]).then(function(a){
-    var t=a[0]||{},v=a[1]||{},ib=a[2]||{},hq=a[3]||{},rd=a[4]||{},h=a[5]||{};
+  return Promise.all([today(force),visitors(force),inbox(force),held(force),reddit(force),house(force),soft(stewardQ(force))]).then(function(a){
+    var t=a[0]||{},v=a[1]||{},ib=a[2]||{},hq=a[3]||{},rd=a[4]||{},h=a[5]||{},sw=a[6];
     /* a card sent through the old day path is still a sent card */
     var old=t.legacy;if(old&&old.state==="sent")(t.slots||[]).forEach(function(s){if(s.id==="light"&&(!s.state||s.state==="due"||s.state==="waiting")){s.state="sent";s.legacy=true}});
     var days=v.days||[],tod=days.length?days[days.length-1]:{people:0},yes=days.length>1?days[days.length-2]:{people:0};
@@ -365,23 +514,138 @@ function drawToday(force){
     var nNew=(ib.counts&&ib.counts["new"])||0;if(nNew)waits.push({ic:"mail",b:nNew+" new message"+(nNew>1?"s":""),s:"in the inbox",go:"readers",id:"inbox"});
     var nHeld=(hq.queue||[]).length;if(nHeld)waits.push({ic:"pen",b:nHeld+(nHeld>1?" replies":" reply")+" waiting to be read",s:"on the journal",go:"readers",id:"journal"});
     var nRed=(rd.held||[]).length;if(nRed)waits.push({ic:"reddit",b:nRed+" Reddit draft"+(nRed>1?"s":"")+" for your hand",s:"the machine never posts there itself",go:"posts",id:"reddit"});
+    /* THE DEDUPE. The steward names a slot in the evidence of every finding
+       that is about one, so a line the steward already carries is dropped from
+       Waiting for you rather than said twice in two voices. */
+    var covered=stewardCovers(sw);
+    waits=waits.filter(function(w){return !covered[w.id]});
     var okAll=slots.every(function(s){return s.state==="sent"||s.state==="skipped"||(!s.state||s.state==="waiting")});
     var line=!slots.length?"The day could not be read.":(okAll?"Everything that was due has gone out. "+(tod.people||0)+" readers so far today.":(waits.length+" thing"+(waits.length>1?"s":"")+" need"+(waits.length>1?"":"s")+" your hand."));
     var lit=!!h.lanternConfigured,lnModel=h.lanternModel||"";
     el.innerHTML=
-      '<div class="card"><div class="hero"><div class="n">'+(tod.people||0)+'</div><div class="l">readers<br>today</div>'
+      stewardCard(sw)
+      +'<div class="card"><div class="hero"><div class="n">'+(tod.people||0)+'</div><div class="l">readers<br>today</div>'
       +(days.length>1?'<div class="d '+(delta>=0?"up":"dn")+'">'+(delta>=0?"+":"")+delta+' on yesterday</div>':'')+'</div>'
       +(hijri?'<p class="muted small" style="margin:10px 0 0">'+esc(hijri)+' · Umm al-Qura</p>':'')
       +'<div class="strip">'+slots.map(function(s){return '<div class="s '+esc(s.state||"")+'" data-go="posts" data-id="'+esc(s.id)+'"><i></i><b>'+esc(s.id)+'</b><span>'+String(s.at).padStart(2,"0")+':00</span></div>'}).join("")+'</div></div>'
       +'<p class="sec">Waiting for you</p>'
       +(waits.length?'<div class="list">'+waits.map(function(w){return '<div class="row tap" data-go="'+w.go+'" data-id="'+esc(w.id)+'"><div class="ic">'+ICO[w.ic]+'</div><div class="t"><b>'+esc(w.b)+'</b><span>'+esc(w.s)+'</span></div><div class="chev">'+ICO.chev+'</div></div>'}).join("")+'</div>'
         :'<div class="row"><div class="ic" style="color:var(--good)">'+ICO.ok+'</div><div class="t"><b>Nothing</b><span>Every post went, every reply is answered for.</span></div></div>')
-      +'<p class="sec">The Lantern</p><div class="card"><div style="display:flex;gap:12px;align-items:flex-start"><div class="ic" style="width:34px;height:34px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:'+(lit?"var(--gold)":"var(--faint)")+';flex:0 0 auto"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'+ICO.lamp.replace(/<\/?svg[^>]*>/g,"")+'</svg></div>'
-      +'<div style="flex:1;min-width:0"><div style="color:var(--cream);font-weight:600">'+esc(line)+'</div><div class="muted small" style="margin-top:3px">'+(lit?"Lit · "+esc(String(lnModel).split("/").pop().replace(":free","")):"Not lit · no OpenRouter key on this deployment")+'</div></div></div></div>';
+      /* the steward's own header already says whether the Lantern spoke, so
+         this card is only drawn on a day the steward could not be read */
+      +((sw&&sw.ok)?'':'<p class="sec">The Lantern</p><div class="card"><div style="display:flex;gap:12px;align-items:flex-start"><div class="ic" style="width:34px;height:34px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:'+(lit?"var(--gold)":"var(--faint)")+';flex:0 0 auto"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'+ICO.lamp.replace(/<\/?svg[^>]*>/g,"")+'</svg></div>'
+      +'<div style="flex:1;min-width:0"><div style="color:var(--cream);font-weight:600">'+esc(line)+'</div><div class="muted small" style="margin-top:3px">'+(lit?"Lit · "+esc(String(lnModel).split("/").pop().replace(":free","")):"Not lit · no OpenRouter key on this deployment")+'</div></div></div></div>');
     $("dot-posts").hidden=!slots.some(function(s){return /partial|due|failed|queued/.test(s.state)});
     $("dot-readers").hidden=!(nNew||nHeld);
-    el.onclick=function(e){var g=e.target.closest("[data-go]");if(!g)return;show(g.dataset.go);setTimeout(function(){var t=document.getElementById("slot-"+g.dataset.id)||document.getElementById("anchor-"+g.dataset.id);if(t)t.scrollIntoView({behavior:"smooth",block:"center"})},220)};
+    wireSteward(el,sw);
+    el.onclick=function(e){
+      if(stewardClick(e,el,sw))return;
+      var g=e.target.closest("[data-go]");if(!g)return;show(g.dataset.go);setTimeout(function(){var t=document.getElementById("slot-"+g.dataset.id)||document.getElementById("anchor-"+g.dataset.id);if(t)t.scrollIntoView({behavior:"smooth",block:"center"})},220)};
   }).catch(function(){el.innerHTML='<div class="card"><b style="color:var(--bad)">The house could not be read.</b><p class="muted small" style="margin:6px 0 0">Pull to refresh, or open the full console.</p></div>'});
+}
+
+/* ---------------------------------------------------------------------------
+   THE STEWARD
+
+   One card, and it invents nothing. The paragraph is the server's; the
+   findings are the server's, act first, then watch, then good folded into one
+   quiet line; and an action exists only where the server sent one, performing
+   exactly what it says. A kind of "post" is posted to the route it names with
+   the body it carries; a kind of "open" is a link and nothing else.
+--------------------------------------------------------------------------- */
+var LEVEL_ORDER={act:0,watch:1,good:2};
+function stewardFindings(sw){
+  var f=(sw&&sw.findings)||[];
+  if(!Array.isArray(f))return[];
+  return f.slice().sort(function(a,b){return (LEVEL_ORDER[a.level]==null?3:LEVEL_ORDER[a.level])-(LEVEL_ORDER[b.level]==null?3:LEVEL_ORDER[b.level])});
+}
+/* every slot the steward already speaks for, so the old list says it once */
+function stewardCovers(sw){
+  var covered={};
+  if(!sw||!sw.ok)return covered;
+  stewardFindings(sw).forEach(function(f){
+    var ev=(f&&f.evidence)||{};
+    if(Array.isArray(ev.slots))ev.slots.forEach(function(s){if(s)covered[String(s)]=1});
+    if(f.id==="reddit-drafts")covered.reddit=1;
+  });
+  return covered;
+}
+/* THE SERVER SAYS WHAT AN ACTION IS, AND THE CONSOLE STILL CHECKS ITS SHAPE.
+   A finding is JSON arriving over a route, and this room was posting to
+   whatever route it named and rendering whatever href it carried. One wrong
+   answer -- a bug upstream, an answer from somewhere else, a store that had
+   been written into -- and that is a javascript: URL in a link the owner taps,
+   or a POST at a door in another house carrying whatever body came with it.
+   So the two are held to a shape before either is drawn: a route is /api/<name>
+   with an ordinary query on it and nothing else, and an href is a route of this
+   house, a room of this console, or an https address on this very origin.
+   Anything else draws no button and says so in the finding, because a button
+   quietly missing is a worse lie than a sentence explaining its absence. */
+var ROUTE_SHAPE=/^\/api\/[a-z-]+(\?[\w=&%.-]*)?$/;
+var HREF_SHAPE=/^\/(api\/|admin2#)[\w?=&#.-]*$/;
+function sameOrigin(h){try{var u=new URL(h,location.href);return u.protocol==="https:"&&u.host===location.host}catch(e){return false}}
+function actionOk(a){
+  if(!a||!a.label)return false;
+  if(a.kind==="open")return !!a.href&&(HREF_SHAPE.test(a.href)||(/^https:\/\//.test(a.href)&&sameOrigin(a.href)));
+  if(a.kind==="post")return !!a.route&&ROUTE_SHAPE.test(a.route);
+  return false;
+}
+function actionBtn(f,i){
+  var a=f&&f.action;if(!a||!a.label)return"";
+  if(!actionOk(a))return '<span class="sy">This finding carried an action the console did not recognise, so nothing is offered for it here.</span>';
+  if(a.kind==="open")
+    return '<a class="btn ghost sm go" href="'+esc(a.href)+'" target="_blank" rel="noopener" data-sopen="'+i+'">'+esc(a.label)+'</a>';
+  return '<button class="btn sm go" data-sact="'+i+'">'+esc(a.label)+'</button>';
+}
+function findingRow(f,i){
+  var lvl=LEVEL_ORDER[f.level]==null?"":f.level;
+  return '<div class="f '+esc(lvl)+'"><i></i><div class="x"><b>'+esc(f.title||"")+'</b><span class="sy">'+esc(f.say||"")+'</span>'+actionBtn(f,i)+'</div></div>';
+}
+function stewardCard(sw){
+  if(!sw)return"";
+  if(sw.ok===false||sw.enabled===false)
+    return '<div class="stw"><div class="hd"><span class="lab">The steward</span></div><p class="say" style="font-size:15px;font-family:var(--f-body);color:var(--muted)">'+esc(sw.error||"The house could not be read in one call just now.")+'</p></div>';
+  var all=stewardFindings(sw);
+  var loud=[],quiet=[];
+  all.forEach(function(f,i){(f.level==="good"?quiet:loud).push({f:f,i:i})});
+  var para=sw.paragraph||sw.say||"";
+  var read=ago(sw.at);
+  return '<div class="stw">'
+    +'<div class="hd"><span class="lab">'+(sw.lantern?"The Lantern":"From the record")+'</span>'
+    +(read?'<span class="rd">read '+esc(read)+'</span>':'')
+    +'<button class="btn ghost sm" id="stw-again">Read again</button></div>'
+    +(para?'<p class="say">'+esc(para)+'</p>':'<p class="say" style="font-size:15px;font-family:var(--f-body);color:var(--muted)">The house has nothing to say about today.</p>')
+    +'<div class="fnd">'
+    +loud.map(function(x){return findingRow(x.f,x.i)}).join("")
+    +(quiet.length?'<details class="q"><summary>'+quiet.length+' thing'+(quiet.length===1?" is":"s are")+' as they should be</summary><div class="in">'+quiet.map(function(x){return findingRow(x.f,x.i)}).join("")+'</div></details>':"")
+    +'</div></div>';
+}
+/* Read again asks the house for the answer once more, past its ten minutes */
+function wireSteward(el,sw){
+  var b=el.querySelector("#stw-again");if(!b)return;
+  b.onclick=function(){var was=b.textContent;b.disabled=true;b.textContent="Reading…";
+    stewardAgain().then(function(){b.disabled=false;b.textContent=was;LOADED.today=true;DRAWN.today=Date.now();drawToday(false)})
+      .catch(function(){b.disabled=false;b.textContent=was;toast("Could not reach the house.",true)})};
+}
+/* an action does exactly what the server said and nothing more */
+function stewardClick(e,el,sw){
+  var b=e.target.closest&&e.target.closest("[data-sact]");
+  if(!b)return !!(e.target.closest&&e.target.closest("[data-sopen],#stw-again"));
+  var f=stewardFindings(sw)[+b.dataset.sact];
+  /* the same shape check again on the way out, so that a redraw between the
+     drawing of a button and the tap on it cannot post to a route this room
+     would not have drawn a button for */
+  var a=f&&f.action;if(!a||a.kind!=="post"||!actionOk(a))return true;
+  var k="steward:"+(f.id||b.dataset.sact);
+  if(INFLIGHT[k])return true;
+  var was=b.textContent;b.disabled=true;b.textContent="Working…";INFLIGHT[k]=1;
+  post(a.route,a.body||{}).then(function(r){delete INFLIGHT[k];
+    var good=r.ok&&(!r.j||r.j.ok!==false);
+    if(!good){b.disabled=false;b.textContent=was;toast((r.j&&(r.j.error||r.j.why))||"It refused.",true);return}
+    toast((r.j&&r.j.note)||(a.label+" · done."));
+    bust();stewardAgain().catch(function(){}).then(function(){LOADED.today=true;DRAWN.today=Date.now();drawToday(false)});
+  }).catch(function(){delete INFLIGHT[k];unreachable(b,was)()});
+  return true;
 }
 
 /* ================= POSTS ================= */
@@ -417,7 +681,7 @@ function drawPosts(force){
         +(s.state==="queued"&&!INFLIGHT[s.id]?'<button class="btn sm" data-send="'+esc(s.id)+'">Post</button>':'');
       return '<div class="slot" id="slot-'+esc(s.id)+'"><div class="h"><code>'+String(s.at).padStart(2,"0")+':00</code><b>'+esc(s.id)+(s.title?' · <span style="font-weight:500;color:var(--text)">'+esc(s.title)+'</span>':'')+'</b>'+chip(s.state,s.at)+'</div>'
         +'<div class="muted small" style="margin-top:2px">'+esc(SLOT_WHAT[s.id]||"")+'</div>'
-        +'<div class="b">'+where+'<span class="spacer"></span>'+acts+'</div><div id="box-'+esc(s.id)+'" hidden style="margin-top:10px"></div></div>'});
+        +'<div class="b">'+where+'<span class="spacer"></span>'+acts+'</div></div>'});
     var cards=(re&&re.cards)||[];
     var fbL=tk.fb&&tk.fb.daysLeft!=null?tk.fb.daysLeft:null,igL=tk.ig&&tk.ig.daysLeft!=null?tk.ig.daysLeft:null,life=tk.lifeDays||60;
     var tokbar=function(lab,left){return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><b style="color:var(--cream)">'+lab+'</b><span class="muted">'+(left==null?"never marked renewed":left+" of "+life+" days left")+'</span></div><div class="bar2"><i class="'+(left!=null&&left<7?"low":"")+'" style="width:'+(left==null?0:Math.max(0,Math.min(100,left/life*100)))+'%"></i></div></div>'};
@@ -495,12 +759,12 @@ function preview(id){sheet('<h2>'+esc(id)+'</h2><p class="sub">'+esc(SLOT_WHAT[i
    is drawn from a bucket of fewer than five; the server says so itself. */
 var NET_NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube"};
 function insBars(rows,lab){if(!rows.length)return '<div class="empty">Nothing read yet.</div>';var mx=rows.reduce(function(m,r){return Math.max(m,(r.reach&&r.reach.median)||0)},0)||1;
-  return '<div class="bars">'+rows.map(function(r){var med=r.reach&&r.reach.median!=null?r.reach.median:null;return '<div class="b"><span class="n" title="'+esc(r.n)+' posts">'+esc(lab(r))+' <span class="faint">'+r.n+'</span></span><span class="t"><i data-w="'+(med==null?0:Math.round(med/mx*100))+'"></i></span><span class="v">'+(med==null?"·":Math.round(med).toLocaleString())+'</span></div>'}).join("")+'</div>'}
+  return '<div class="bars">'+rows.map(function(r){var med=r.reach&&r.reach.median!=null?r.reach.median:null;return '<div class="b"><span class="n" title="'+esc(r.n)+' posts">'+esc(lab(r))+' <span class="faint">'+esc(r.n)+'</span></span><span class="t"><i data-w="'+(med==null?0:Math.round(med/mx*100))+'"></i></span><span class="v">'+(med==null?"·":Math.round(med).toLocaleString())+'</span></div>'}).join("")+'</div>'}
 function insHtml(ins){
   if(!ins||ins.ok===false)return '<div class="card"><div class="empty">'+esc((ins&&ins.error)||"The posts could not be read back.")+'</div></div>';
   var need=INS_NEEDS?'<div class="card" style="border-color:#4a3f1f"><span class="pill wait">needs a permission</span><p class="small" style="margin:8px 0 0">'+esc(INS_NEEDS)+'</p></div>':'';
   var when=ins.readAt?"last read "+ago(ins.readAt):"never read";
-  var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><b style="color:var(--cream);font-size:13.5px">'+(ins.read||0)+' of '+(ins.media||0)+' read</b><span class="muted small"> · '+esc(ins.days||14)+' days · '+esc(when)+(ins.stale?' · '+ins.stale+' to read again':'')+(ins.refused?' · '+ins.refused+' refused':'')+'</span></div><button class="btn ghost sm" id="ins-read">Read again</button></div>'
+  var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><b style="color:var(--cream);font-size:13.5px">'+(ins.read||0)+' of '+(ins.media||0)+' read</b><span class="muted small"> · '+esc(ins.days||14)+' days · '+esc(when)+(ins.stale?' · '+esc(ins.stale)+' to read again':'')+(ins.refused?' · '+esc(ins.refused)+' refused':'')+'</span></div><button class="btn ghost sm" id="ins-read">Read again</button></div>'
     +(ins.note?'<p class="muted small" style="margin:8px 0 0">'+esc(ins.note)+'</p>':'')+'</div>';
   var says='<div class="card">'+(ins.sentences||[]).map(function(t){return '<p class="small" style="margin:0 0 6px;color:var(--text)">'+esc(t)+'</p>'}).join("")+'<p class="faint small" style="margin:6px 0 0">Median reach on Instagram, the network that shows a post to people who do not follow. A sentence needs five posts in a bucket.</p></div>';
   var top=(ins.top||[]);
@@ -537,12 +801,12 @@ function drawReaders(force){
     var area=pts.length?line+" L"+pts[pts.length-1][0].toFixed(1)+" "+(H-pad)+" L"+pts[0][0].toFixed(1)+" "+(H-pad)+" Z":"";
     var cf=v.cleanFrom||"",ci=cf?days.findIndex(function(d){return d.date>=cf}):-1,cx=ci>0?(pad+ci*((W-pad*2)/Math.max(1,vals.length-1))).toFixed(1):null;
     var chart=days.length?'<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9C86A" stop-opacity=".35"/><stop offset="1" stop-color="#E9C86A" stop-opacity="0"/></linearGradient></defs><path d="'+area+'" fill="url(#g)"/><path d="'+line+'" fill="none" stroke="#E9C86A" stroke-width="2" vector-effect="non-scaling-stroke"/>'+(cx?'<line x1="'+cx+'" y1="'+pad+'" x2="'+cx+'" y2="'+(H-pad)+'" stroke="#7E9BD1" stroke-dasharray="3 3" opacity=".8"/>':'')+'</svg><div style="display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10px;color:var(--faint);margin-top:4px"><span>'+esc(days[0].date)+'</span>'+(cf?'<span style="color:var(--blue)">filtered from '+esc(cf)+'</span>':'')+'<span>'+esc(days[days.length-1].date)+'</span></div>':'<div class="empty">No days counted yet.</div>';
-    var bars=function(rows,total,lab){var mx=rows.length?rows[0].n||1:1;return rows.length?'<div class="bars">'+rows.slice(0,8).map(function(r){return '<div class="b"><span class="n">'+esc(lab(r))+'</span><span class="t"><i data-w="'+Math.round(r.n/mx*100)+'"></i></span><span class="v">'+r.n+'</span></div>'}).join("")+'</div>':'<div class="empty">Nothing counted yet.</div>'};
+    var bars=function(rows,total,lab){var mx=rows.length?rows[0].n||1:1;return rows.length?'<div class="bars">'+rows.slice(0,8).map(function(r){return '<div class="b"><span class="n">'+esc(lab(r))+'</span><span class="t"><i data-w="'+Math.round(r.n/mx*100)+'"></i></span><span class="v">'+esc(r.n)+'</span></div>'}).join("")+'</div>':'<div class="empty">Nothing counted yet.</div>'};
     var items=(ib.items||[]);var q=(hq.queue||[]);
     el.innerHTML=
       '<div class="stat"><div class="c"><div class="v">'+tod+'</div><div class="l">readers today</div></div><div class="c"><div class="v">'+people.toLocaleString()+'</div><div class="l">readers · 30 d</div></div><div class="c"><div class="v">'+views.toLocaleString()+'</div><div class="l">page views · 30 d</div></div><div class="c"><div class="v">'+pp+'</div><div class="l">pages per reader</div></div></div>'
       +'<p class="sec">The last 30 days</p><div class="card">'+chart+'</div>'
-      +'<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">What is counted</b><span class="pill '+(me?"good":"bad")+'">'+(me?"this browser is not counted":"this browser IS counted")+'</span></div><p class="muted small" style="margin:8px 0 0">Turned away in 30 days: <b style="color:var(--text)">'+(f.total||0).toLocaleString()+'</b>'+(f.by&&Object.keys(f.by).length?' — '+Object.keys(f.by).map(function(k){return f.by[k]+" "+({bot:"crawlers & previewers",noua:"no browser name",preview:"preview builds"}[k]||k)}).join(" · "):'')+'.</p><button class="btn ghost sm" id="mytoggle" style="margin-top:10px">'+(me?"Count this browser":"Stop counting this browser")+'</button></div>'
+      +'<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">What is counted</b><span class="pill '+(me?"good":"bad")+'">'+(me?"this browser is not counted":"this browser IS counted")+'</span></div><p class="muted small" style="margin:8px 0 0">Turned away in 30 days: <b style="color:var(--text)">'+(f.total||0).toLocaleString()+'</b>'+(f.by&&Object.keys(f.by).length?' — '+Object.keys(f.by).map(function(k){return esc(f.by[k])+" "+esc({bot:"crawlers & previewers",noua:"no browser name",preview:"preview builds"}[k]||k)}).join(" · "):'')+'.</p><button class="btn ghost sm" id="mytoggle" style="margin-top:10px">'+(me?"Count this browser":"Stop counting this browser")+'</button></div>'
       +'<details class="fold"><summary>What brought them<span class="pill">'+((v.sources||[])[0]?esc(v.sources[0].s)+" leads":"")+'</span></summary><div class="in">'+bars(v.sources||[],people,function(r){return r.s})+'</div></details>'
       +'<details class="fold"><summary>From where<span class="pill">'+(v.countries||[]).length+' countries</span></summary><div class="in">'+bars(v.countries||[],people,function(r){return r.c})+'</div></details>'
       +'<details class="fold"><summary>Which rooms<span class="pill">'+((v.rooms||[])[0]?esc(v.rooms[0].r)+" leads":"")+'</span></summary><div class="in">'+bars(v.rooms||[],views,function(r){return r.r})+'</div></details>'
@@ -563,29 +827,1133 @@ function drawReaders(force){
 function drawHouse(force){
   var el=$("s-house");
   if(!el.dataset.built){el.innerHTML='<p class="sec">Health</p>'+skel(3);el.dataset.built="1"}
-  return Promise.all([house(force),dialsQ(force)]).then(function(a){
-    var h=a[0]||{},d=(a[1]&&a[1].dials)||{};
+  /* the hub carries one live number for every room, so the house reads at a
+     glance; a read that will not answer marks its own card and no other */
+  return Promise.all([house(force),dialsQ(force),soft(lightsQ(force)),soft(nightQ(force)),soft(journalQ(force)),soft(held(force))]).then(function(a){
+    var h=a[0]||{},d=(a[1]&&a[1].dials)||{},li=a[2],ni=a[3],jo=a[4],hq=a[5];
     var lit=!!h.lanternConfigured,lnModel=h.lanternModel||"";
     var g=h.gifts||{};var gu=h.guardians||[];
+    /* hrow escapes its own title and its own sentence, so a caller hands it
+       plain text. A caller that escapes first turns an ampersand in a store
+       name into &amp;amp; on the screen: escaping belongs in exactly one place
+       and this is it. */
     var hrow=function(ok,b,s){return '<div class="row"><div class="ic" style="color:'+(ok?"var(--good)":"var(--bad)")+'">'+(ok?ICO.ok:ICO.warn)+'</div><div class="t"><b>'+esc(b)+'</b><span>'+esc(s)+'</span></div></div>'};
-    var links=[["Lights","The library and the day's card","/admin#lights"],["Legacy","Guardians, vetting, the map","/admin#guardians"],["Marketing","The outreach studio and the pipeline","/admin#market"],["Journal desk","Write and publish an entry","/admin#journal"],["Night shift","What the Lantern found overnight","/admin#lantern"],["System","Keys, quick doors, the machinery","/admin#system"]];
+    var nHeld=hq&&hq.queue?hq.queue.length:0;
+    var nDoubt=li&&li.doubts?li.doubts.length:0;
+    var keysSet=(h.store?1:0)+(h.lanternConfigured?1:0)+(h.stripeConfigured?1:0);
+    var ten=mkGet().days[mkDay()]||0;
+    var stat={
+      lights:li?[String((li.index&&li.index.n)||0),"cards · "+(nDoubt?nDoubt+" questioned":"none questioned")]:["·","the library could not be read"],
+      legacy:[String(h.activeCount||0),"guardians · "+money(h.weekly||0)+" this week"],
+      marketing:[ten+" of 10","outreaches sent today"],
+      journal:jo?[String((jo.entries||[]).length),"entries"+(nHeld?" · "+nHeld+" waiting":" · nothing waiting")]:["·","the journal could not be read"],
+      night:ni?[String((ni.findings||[]).length),"flagged · "+(ni.brief?"the brief is written":"no brief yet")]:["·","the night could not be read"],
+      system:[keysSet+" of 3","keys set · the ladder is "+(d.mode||"off")]
+    };
+    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"]];
     el.innerHTML=
       '<p class="sec">Health</p><div class="list">'
-      +hrow(!!h.store,"The store",h.store?"On · "+esc(h.storeKind||""):"Off — nothing is remembered")
+      +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off — nothing is remembered")
       +'<div class="row" id="lantern-row"><div class="ic" style="color:'+(lit?"var(--good)":"var(--bad)")+'">'+(lit?ICO.ok:ICO.warn)+'</div><div class="t"><b>The Lantern</b><span id="lantern-sub">'+(lit?"Key set · first in line: "+esc(String(lnModel).split("/").pop().replace(":free","")):"No OpenRouter key on this deployment")+'</span></div>'+(lit?'<button class="btn ghost sm" id="lantern-test">Test it</button>':'')+'</div>'
-      +hrow(!!h.stripeConfigured,"Stripe",h.stripeConfigured?"Configured · "+esc(h.moneyMode||"")+" mode":"Not configured")
-      +hrow(true,"The ladder",esc(d.mode||"off"))+'</div>'
+      +hrow(!!h.stripeConfigured,"Stripe",h.stripeConfigured?"Configured · "+(h.moneyMode||"")+" mode":"Not configured")
+      +hrow(true,"The ladder",d.mode||"off")+'</div>'
       +'<p class="sec">Giving · 30 days</p><div class="stat"><div class="c"><div class="v">'+(g.total30d!=null?"$"+Number(g.total30d).toLocaleString():"·")+'</div><div class="l">received</div></div><div class="c"><div class="v">'+(g.count30d||0)+'</div><div class="l">gifts</div></div><div class="c"><div class="v">'+(g.monthly!=null?"$"+Number(g.monthly).toLocaleString():"·")+'</div><div class="l">monthly</div></div><div class="c"><div class="v">'+(h.activeCount||0)+'</div><div class="l">guardians</div></div></div>'
       +((g.recent||[]).length?'<div class="list" style="margin-top:8px">'+g.recent.slice(0,6).map(function(x){return '<div class="row"><div class="t"><b>'+esc(x.email||"A gift")+'</b><span>'+esc(x.when||"")+'</span></div><div class="r" style="color:var(--cream);font-weight:600">'+(x.amount!=null?esc(x.amount)+" "+esc(x.currency||""):"")+'</div></div>'}).join("")+'</div>':'')
       +(gu.length?'<p class="sec">Guardians</p><div class="list">'+gu.slice(0,8).map(function(x){return '<div class="row"><div class="t"><b>'+esc(x.gname||x.name||x.email||"a guardian")+'</b><span>'+esc(x.status||"")+(x.market&&x.market!=="?"?' · '+esc(x.market):'')+(x.renews?' · renews '+esc(x.renews):'')+(x.endsAfterWeek?' · ending':'')+(x.approved?' · lit on the wall':'')+'</span></div><div class="r" style="color:var(--cream);font-weight:600">'+(x.amount!=null?esc(x.amount)+' '+esc(x.currency||'')+'<span class="muted small" style="font-weight:400">/'+esc(x.cadence||'month')+'</span>':'')+'</div></div>'}).join("")+'</div>':'')
-      +'<p class="sec">The rest of the house</p>'+links.map(function(l){return '<a class="link" href="'+l[2]+'"><div><b>'+esc(l[0])+'</b><span>'+esc(l[1])+'</span></div><span class="chev">'+ICO.chev+'</span></a>'}).join("")
-      +'<p class="muted small" style="margin:18px 0 0">These open in the full console, which stays exactly as it was. <a href="#" id="logout">Sign out</a>.</p>';
+      +'<p class="sec">The rooms</p><div class="rooms">'+rooms.map(function(r){var s=stat[r[0]]||["·",""];
+        return '<button class="card tap" data-room="'+r[0]+'"><b>'+esc(r[1])+'</b><span class="w">'+esc(r[2])+'</span><div class="v">'+esc(s[0])+'</div><span class="w">'+esc(s[1])+'</span></button>'}).join("")+'</div>'
+      +'<p class="muted small" style="margin:18px 0 0">Every room of the house is here now. <a href="#" id="logout">Sign out</a>.</p>';
     $("logout").onclick=function(e){e.preventDefault();post("/api/admin-auth",{logout:true}).then(function(){location.reload()}).catch(unreachable())};
+    el.onclick=function(e){var c=e.target.closest("[data-room]");if(c)show(c.dataset.room)};
     var tb=$("lantern-test");if(tb)tb.onclick=function(){tb.disabled=true;tb.textContent="Asking…";$("lantern-sub").textContent="Asking OpenRouter for one word…";
       lantern(true).then(function(ln){ln=ln||{};tb.disabled=false;tb.textContent="Test it";
         var okd=ln.ok&&ln.answered;var ic=$("lantern-row").querySelector(".ic");ic.style.color=okd?"var(--good)":"var(--bad)";ic.innerHTML=okd?ICO.ok:ICO.warn;
         $("lantern-sub").textContent=okd?"Lit · "+String(ln.answered).split("/").pop().replace(":free","")+" answered in "+((ln.ms||0)/1000).toFixed(1)+" s":"Did not answer"+(ln.error?" · "+ln.error:"")}).catch(unreachable(tb,"Test it"))};
   }).catch(function(){el.innerHTML='<div class="card"><b style="color:var(--bad)">The house could not be read.</b></div>'});
+}
+
+/* ===========================================================================
+   THE FLOW
+
+   One picture of where the energy goes, drawn from GET /api/house?action=flow
+   and from nothing else. The networks are small source nodes on the left; they
+   converge into the posts made, and from there the map follows the server's own
+   edges: reach, then views and the arrivals the beacon could attribute, then
+   the readers on the site, and from them the pages read, the gifts and the
+   du'as. What arrived and the guardians standing sit at the end, because no
+   measured step leads to them and inventing one would be a lie.
+
+   THREE RULES.
+   1. A stage that could not be read is a hollow node saying "unread". It is
+      never a nought, because nought is a number and this is an absence.
+   2. An edge carries a rate only when the server sent one. The step from reach
+      to the arrivals crosses two grains of time and the server says so; the
+      map draws that step dotted and says nothing over it.
+   3. The picture is never the only encoding: every number under it is written
+      again as a plain list, and the server's notes are printed whole.
+
+   The motion is finite and reader-driven: a dot travels each edge once, on
+   load and on Trace, and under prefers-reduced-motion not one is made.
+   =========================================================================== */
+var F_ORDER=["posts","reach","views","clicks","readers","pages","gifts","duas","given","guardians"];
+var F_SHORT={posts:"posts",reach:"reached",views:"views",clicks:"arrivals",readers:"readers",pages:"pages",gifts:"gifts",duas:"du'as"};
+var F_DAYS=[7,14,30];
+function fnum(v){return Number(v).toLocaleString("en-US",{maximumFractionDigits:2})}
+function reduced(){try{return !!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)}catch(e){return false}}
+
+/* the columns, from the server's own edges: a stage sits one step further out
+   than the furthest stage that feeds it, and a stage nothing feeds sits at the
+   end rather than at the beginning */
+function flowDepths(stages,edges){
+  var d={},ids={};
+  stages.forEach(function(s){d[s.id]=null;ids[s.id]=1});
+  if(ids.posts)d.posts=1;
+  for(var pass=0;pass<stages.length+2;pass++)
+    edges.forEach(function(e){if(d[e.from]!=null&&ids[e.to]!=null){var v=d[e.from]+1;if(d[e.to]==null||v>d[e.to])d[e.to]=v}});
+  var max=1;for(var k in d)if(d[k]!=null&&d[k]>max)max=d[k];
+  stages.forEach(function(s){if(d[s.id]==null)d[s.id]=max+1});
+  return d;
+}
+/* the geometry. Left to right when there is room for it, top to bottom when
+   there is not, and the same numbers either way. */
+function flowLayout(stages,nets,edges,wide){
+  var depth=flowDepths(stages,edges);
+  var cols=[];
+  if(nets.length)cols.push(nets.map(function(n){return{net:n.net,label:n.net,value:n.value,unit:"posts",small:true}}));
+  var byDepth={};
+  stages.forEach(function(s){(byDepth[depth[s.id]]=byDepth[depth[s.id]]||[]).push(s)});
+  Object.keys(byDepth).map(Number).sort(function(a,b){return a-b}).forEach(function(k){
+    cols.push(byDepth[k].sort(function(a,b){return F_ORDER.indexOf(a.id)-F_ORDER.indexOf(b.id)})
+      .map(function(s){return{stage:s.id,label:s.label,value:s.value,unit:s.unit,unread:!!s.unread||s.value==null,small:false}}));
+  });
+  var at={},boxes=[],W,H;
+  if(wide){
+    /* the columns are drawn at a size that scales down to the card and stays
+       legible there; every stacked node keeps a band under it for the rate of
+       the step that fed it, which is why the rows are further apart than the
+       boxes are tall */
+    var PX=10,PY=20,GAP=26,NW=118,NH=58,SH=44,RG=28,CAP=15;
+    W=PX*2+cols.length*NW+(cols.length-1)*GAP;
+    var tallest=0;
+    cols.forEach(function(c){var h=c.length*(c[0].small?SH:NH)+(c.length-1)*RG;if(h>tallest)tallest=h});
+    H=PY*2+tallest+CAP;
+    cols.forEach(function(c,ci){
+      var nh=c[0].small?SH:NH,ch=c.length*nh+(c.length-1)*RG,y0=(H-CAP-ch)/2;
+      c.forEach(function(n,ri){n.x=PX+ci*(NW+GAP);n.y=y0+ri*(nh+RG);n.w=NW;n.h=nh;n.depth=ci;
+        boxes.push(n);at[n.stage||("net:"+n.net)]=n});
+    });
+  }else{
+    var px=6,py=14,cg=10,rg=42,nh2=56,sh2=42;
+    W=358;var y=py;
+    cols.forEach(function(c,ci){
+      var h=c[0].small?sh2:nh2,w=(W-px*2-(c.length-1)*cg)/c.length;
+      c.forEach(function(n,ri){n.x=px+ri*(w+cg);n.y=y;n.w=w;n.h=h;n.depth=ci;boxes.push(n);at[n.stage||("net:"+n.net)]=n});
+      y+=h+(ci<cols.length-1?rg:0);
+    });
+    H=y+py;
+  }
+  return{boxes:boxes,at:at,W:W,H:H,wide:wide};
+}
+function flowPath(a,b,wide){
+  if(wide){
+    var x1=a.x+a.w,y1=a.y+a.h/2,x2=b.x,y2=b.y+b.h/2,k=Math.max(16,(x2-x1)/2);
+    return{d:"M"+x1+","+y1+" C"+(x1+k)+","+y1+" "+(x2-k)+","+y2+" "+x2+","+y2,mx:(x1+x2)/2,my:(y1+y2)/2-7};
+  }
+  var X1=a.x+a.w/2,Y1=a.y+a.h,X2=b.x+b.w/2,Y2=b.y,K=Math.max(14,(Y2-Y1)/2);
+  return{d:"M"+X1+","+Y1+" C"+X1+","+(Y1+K)+" "+X2+","+(Y2-K)+" "+X2+","+Y2,mx:(X1+X2)/2,my:(Y1+Y2)/2+3};
+}
+/* the width of a step is its size on a log scale, never below a hairline and
+   never above eight, so a hundredfold difference is still one picture */
+function flowWidth(v,max){
+  if(typeof v!=="number"||!(v>0))return 1.5;
+  var t=Math.log(1+v)/Math.log(1+(max>0?max:1));
+  return Math.round((1.5+Math.max(0,Math.min(1,t))*6.5)*10)/10;
+}
+function rateLabel(e,from){
+  if(e.rate==null||typeof e.rate!=="number")return"";
+  var of=F_SHORT[from]||"";
+  if(e.rate<1)return (Math.round(e.rate*1000)/10)+" % of "+of;
+  return fnum(Math.round(e.rate*100)/100)+" × "+of;
+}
+function flowSvg(f,wide){
+  var stages=(f.stages||[]).filter(function(s){return s&&s.id});
+  var posts=stages.filter(function(s){return s.id==="posts"})[0];
+  var by=(posts&&posts.by)||{};
+  var nets=Object.keys(by).filter(function(k){return typeof by[k]==="number"}).sort(function(a,b){return by[b]-by[a]})
+    .map(function(k){return{net:k,value:by[k]}});
+  var edges=(f.edges||[]).filter(function(e){return e&&e.from&&e.to});
+  var L=flowLayout(stages,nets,edges,wide);
+  var maxv=1;edges.forEach(function(e){if(typeof e.value==="number"&&e.value>maxv)maxv=e.value});
+  var biggest=null;edges.forEach(function(e){if(typeof e.value==="number"&&(!biggest||e.value>biggest.value))biggest=e});
+  var out="",labs="",boxes="",tags=[];
+  /* the networks feed the posts they were made on; that connector is not one
+     of the server's steps, so it carries no rate and is marked apart */
+  if(L.at.posts)nets.forEach(function(n){
+    var a=L.at["net:"+n.net],b=L.at.posts;if(!a||!b)return;
+    var p=flowPath(a,b,wide);
+    out+='<path class="ed" data-src="'+esc(n.net)+'" data-depth="0" d="'+p.d+'" stroke-width="'+flowWidth(n.value,maxv)+'"/>';
+  });
+  edges.forEach(function(e){
+    var a=L.at[e.from],b=L.at[e.to];if(!a||!b)return;
+    var p=flowPath(a,b,wide);
+    var none=typeof e.value!=="number";
+    var big=biggest&&e===biggest;
+    out+='<path class="ed'+(none?" none":"")+(big?" big":"")+'" data-edge="'+esc(e.from+">"+e.to)+'" data-depth="'+(a.depth||0)+'" d="'+p.d+'"'+(none?"":' stroke-width="'+flowWidth(e.value,maxv)+'"')+'/>';
+    /* THE RATE GOES WHERE THERE IS ROOM FOR IT. Running left to right the
+       columns are close together and the space under a box is empty, so the
+       rate sits under the stage the step arrives at. Running top to bottom the
+       gap between two rows holds nothing but the wire, so it rides the wire on
+       a small ground of the card's own colour. */
+    var lab=rateLabel(e,e.from);
+    if(!lab)return;
+    if(wide){
+      labs+='<text class="rt" data-rate="'+esc(e.from+">"+e.to)+'" x="'+Math.round(b.x+b.w/2)+'" y="'+Math.round(b.y+b.h+11)+'" text-anchor="middle">'+esc(lab)+'</text>';
+      return;
+    }
+    tags.push({id:e.from+">"+e.to,lab:lab,x:p.mx,y:p.my,w:lab.length*5.9+10});
+  });
+  /* running top to bottom a stage can feed three at once, and three tags in
+     one gap would sit on top of one another. They are given two lanes and the
+     next tag takes whichever lane it does not collide in. */
+  var lanes=[[],[]];
+  tags.sort(function(a,b){return a.x-b.x}).forEach(function(t){
+    var li=0;
+    for(var i=0;i<2;i++){
+      var clear=lanes[i].every(function(o){return Math.abs(o.y-t.y)>18||o.x+o.w/2+3<t.x-t.w/2||t.x+t.w/2+3<o.x-o.w/2});
+      if(clear){li=i;break}
+      li=1;
+    }
+    lanes[li].push(t);
+    var y=t.y+(li?9:-8);
+    labs+='<g><rect class="rtb" x="'+(t.x-t.w/2).toFixed(1)+'" y="'+(y-10).toFixed(1)+'" width="'+t.w.toFixed(1)+'" height="14" rx="5"/>'
+      +'<text class="rt" data-rate="'+esc(t.id)+'" x="'+Math.round(t.x)+'" y="'+Math.round(y)+'" text-anchor="middle">'+esc(t.lab)+'</text></g>';
+  });
+  L.boxes.forEach(function(n){
+    var cx=Math.round(n.x+n.w/2),vs=n.small?15:23;
+    var lab=n.small?n.label:n.label;
+    var val=n.unread?"unread":fnum(n.value);
+    boxes+='<g class="node'+(n.unread?" unread":"")+'" '+(n.stage?'data-stage="'+esc(n.stage)+'"':'data-net="'+esc(n.net)+'"')+' tabindex="0" role="button" aria-label="'+esc(lab+": "+val+(n.unread?"":" "+(n.unit||"")))+'">'
+      +'<rect class="nb" x="'+n.x+'" y="'+n.y+'" width="'+n.w+'" height="'+n.h+'" rx="10"/>'
+      +'<text class="nl" x="'+cx+'" y="'+Math.round(n.y+(n.small?14:16))+'" text-anchor="middle">'+esc(lab)+'</text>'
+      +'<text class="nv" x="'+cx+'" y="'+Math.round(n.y+(n.small?33:41))+'" text-anchor="middle" font-size="'+vs+'">'+esc(val)+'</text>'
+      +(n.small||n.unread?"":'<text class="nu" x="'+cx+'" y="'+Math.round(n.y+53)+'" text-anchor="middle">'+esc(n.unit||"")+'</text>')
+      +'</g>';
+  });
+  return '<svg class="flow" viewBox="0 0 '+L.W+' '+L.H+'" role="img" aria-label="Where the energy goes, stage by stage">'
+    +out+boxes+labs+'<g id="flow-pulses"></g></svg>';
+}
+/* the pulse: one dot along each step, once, staggered by how far out the step
+   begins. Under prefers-reduced-motion not one element is made. */
+function flowTrace(){
+  var svg=document.querySelector("#s-flow svg.flow");if(!svg)return;
+  var g=svg.querySelector("#flow-pulses");if(!g)return;
+  g.innerHTML="";
+  if(reduced())return;
+  var NS="http://www.w3.org/2000/svg";
+  var paths=[].slice.call(svg.querySelectorAll("path[data-edge],path[data-src]"));
+  paths.forEach(function(p){
+    var delay=(parseInt(p.getAttribute("data-depth"),10)||0)*0.16;
+    var c=document.createElementNS(NS,"circle");
+    c.setAttribute("class","pulse");c.setAttribute("r","3.4");c.setAttribute("cx","0");c.setAttribute("cy","0");c.setAttribute("opacity","0");
+    var m=document.createElementNS(NS,"animateMotion");
+    m.setAttribute("dur","1.6s");m.setAttribute("begin","indefinite");m.setAttribute("repeatCount","1");m.setAttribute("fill","remove");m.setAttribute("path",p.getAttribute("d"));
+    var o=document.createElementNS(NS,"animate");
+    o.setAttribute("attributeName","opacity");o.setAttribute("values","0;1;1;0");o.setAttribute("dur","1.6s");o.setAttribute("begin","indefinite");o.setAttribute("repeatCount","1");o.setAttribute("fill","remove");
+    c.appendChild(m);c.appendChild(o);g.appendChild(c);
+    setTimeout(function(){try{m.beginElement();o.beginElement()}catch(e){}},Math.round(delay*1000));
+  });
+  clearTimeout(flowTrace.t);
+  flowTrace.t=setTimeout(function(){if(g&&g.parentNode)g.innerHTML=""},2800+paths.length*20);
+}
+function flowSheet(f,id){
+  var s=(f.stages||[]).filter(function(x){return x.id===id})[0];if(!s)return;
+  var by=s.by||{};
+  var known=Object.keys(by).filter(function(k){return typeof by[k]==="number"});
+  var blank=Object.keys(by).filter(function(k){return typeof by[k]!=="number"});
+  var max=1;known.forEach(function(k){if(by[k]>max)max=by[k]});
+  var head=(s.unread||s.value==null)?"Unread. Nothing has been read back for this yet, so it is not a nought."
+    :fnum(s.value)+" "+(s.unit||"");
+  sheet('<h2>'+esc(s.label||id)+'</h2><p class="sub">'+esc(head)+'</p>'
+    +'<p class="muted small" style="margin:0 0 14px">Read from '+esc(s.source||"a record the house keeps")+'.</p>'
+    +(known.length?'<div class="bars">'+known.sort(function(a,b){return by[b]-by[a]}).map(function(k){
+        var w=Math.round(by[k]/max*100);
+        return '<div class="b"><div class="n">'+esc(k)+'</div><div class="t"><i data-w="'+w+'" style="width:'+w+'%"></i></div><div class="v">'+esc(fnum(by[k]))+'</div></div>'}).join("")+'</div>':'')
+    +(blank.length?'<p class="muted small" style="margin:10px 0 0">Nothing has been read back for '+esc(blank.join(", "))+', so '+(blank.length===1?"that network is":"those networks are")+' unread rather than nought.</p>':'')
+    +(!known.length&&!blank.length?'<p class="muted small" style="margin:0">This stage is one number and is not broken down by network.</p>':'')
+    +'<div class="acts"><button class="btn ghost" id="cl">Close</button></div>');
+}
+function drawFlow(force){
+  var el=$("s-flow");
+  if(!el.dataset.built){el.innerHTML='<p class="sec">Where the energy goes</p><div class="map"><div class="sk" style="height:200px"></div></div>'+skel(4);el.dataset.built="1"}
+  return flowQ(force).then(function(f){
+    f=f||{};
+    var head='<p class="sec">Where the energy goes</p>'
+      +'<div class="flowbar"><div class="seg" id="flow-seg">'+F_DAYS.map(function(d){return '<button data-fd="'+d+'" class="'+(FLOW_DAYS===d?"on":"")+'">'+d+' days</button>'}).join("")+'</div>'
+      +'<button class="btn ghost sm" id="flow-trace">Trace</button></div>';
+    if(!f.ok||!(f.stages||[]).length){
+      el.innerHTML=head+'<div class="card"><b style="color:var(--bad)">The flow could not be read.</b><p class="muted small" style="margin:6px 0 0">'+esc(f.error||"The house answered with no stage in it, so there is nothing to draw.")+'</p></div>';
+      wireFlow(el,f);return;
+    }
+    var room=el.clientWidth||(document.querySelector("main")||{}).clientWidth||window.innerWidth;
+    var wide=room>=640;
+    var stages=(f.stages||[]).filter(function(s){return s&&s.id});
+    var when=(f.from&&f.to)?f.from+" to "+f.to:"";
+    el.innerHTML=head
+      +'<div class="map">'+flowSvg(f,wide)+'</div>'
+      +(when?'<p class="faint small" style="margin:-4px 0 14px;font-family:var(--f-mono)">'+esc(when)+' · tap a stage to see where its number comes from</p>':'')
+      +'<p class="sec">The same numbers, written out</p>'
+      +'<div class="list" id="flow-table">'+stages.map(function(s){
+        var un=s.unread||s.value==null;
+        return '<div class="row tap" data-trow="'+esc(s.id)+'"><div class="t" style="white-space:normal"><b style="white-space:normal">'+esc(s.label)+'</b><span style="white-space:normal">'+esc(s.source||"")+'</span></div>'
+          +'<div class="r">'+(un?'<span class="pill">unread</span>'
+            :'<div style="color:var(--cream);font-weight:600;font-variant-numeric:tabular-nums">'+esc(fnum(s.value))+'</div><div class="faint small">'+esc(s.unit||"")+'</div>')+'</div></div>'}).join("")+'</div>'
+      +((f.notes||[]).length?'<p class="sec">What these numbers are, and are not</p><div class="notes" id="flow-notes">'+f.notes.map(function(n){return '<p>'+esc(n)+'</p>'}).join("")+'</div>':'');
+    wireFlow(el,f);
+    flowTrace();
+  }).catch(function(){el.innerHTML='<p class="sec">Where the energy goes</p><div class="card"><b style="color:var(--bad)">The flow could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function wireFlow(el,f){
+  el.onclick=function(e){
+    var d=e.target.closest&&e.target.closest("[data-fd]");
+    if(d){var n=+d.dataset.fd;if(n===FLOW_DAYS)return;FLOW_DAYS=n;LOADED.flow=true;DRAWN.flow=Date.now();return void drawFlow(false)}
+    if(e.target.closest&&e.target.closest("#flow-trace"))return void flowTrace();
+    var g=e.target.closest&&e.target.closest("[data-stage],[data-trow]");
+    if(g&&f&&f.ok)return void flowSheet(f,g.getAttribute("data-stage")||g.getAttribute("data-trow"));
+  };
+  el.onkeydown=function(e){
+    if(e.key!=="Enter"&&e.key!==" ")return;
+    var g=e.target.closest&&e.target.closest("[data-stage]");
+    if(g&&f&&f.ok){e.preventDefault();flowSheet(f,g.getAttribute("data-stage"))}
+  };
+}
+
+/* ===========================================================================
+   THE SIX ROOMS
+
+   Everything that used to be a link into /admin lives here now, said in this
+   house's language: a surface each, reached from House, remembered in the
+   hash. Not one endpoint is new. Where the old console printed a table these
+   print a list of cards, where it printed a number these print a tile, and
+   nothing irreversible happens without a sheet or a second tap first.
+   =========================================================================== */
+
+/* ================= LIGHTS ================= */
+/* One read, /api/admin-data?probe=lights, answers all three questions of this
+   room: what the house would show this morning, what the library behind it
+   holds, and every card the editor held back. Looking never consumes a card:
+   the endpoint peeks. */
+var MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function drawLights(force){
+  var el=$("s-lights");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The day\'s card</p><div class="card"><div class="sk" style="height:90px"></div></div><p class="sec">The library</p><div class="stat">'+'<div class="c"><div class="sk" style="height:26px"></div></div>'.repeat(4)+'</div>';el.dataset.built="1"}
+  return lightsQ(force).then(function(d){
+    d=d||{};
+    var t=d.today,ix=d.index||{},months=ix.months||{},kinds=ix.kinds||{},db=d.doubts||[];
+    var nowM=+String(d.date||"").slice(5,7),peak=1,m,cal="";
+    for(m=1;m<=12;m++)peak=Math.max(peak,months[m]||0);
+    for(m=1;m<=12;m++){var c=months[m]||0;
+      /* a floor of six per cent so an empty month is still an honest gap */
+      var hgt=c?Math.max(14,Math.round(c/peak*100)):6;
+      cal+='<i class="'+(c?"has":"")+(m===nowM?" now":"")+'" title="'+esc(String(c))+' cards anchored to '+MONTHS[m]+'"><u style="height:'+hgt+'%"></u><b>'+MONTHS[m][0]+'</b></i>'}
+    var ks=Object.keys(kinds).sort(function(a,b){return kinds[b]-kinds[a]});
+    var hij=d.hijri?(d.hijri.d+" "+d.hijri.name+" "+d.hijri.y+" AH"):"";
+    el.innerHTML=BACK
+      +'<p class="sec">The day\'s card</p>'
+      +(t?'<div class="card"><span class="pill">'+esc(t.category)+'</span><div class="ttl">'+esc(t.title)+'</div>'
+        +'<p class="small" style="margin:8px 0 0">'+esc(t.story)+'</p>'
+        +(t.detail?'<p class="muted small" style="margin:8px 0 0">'+esc(t.detail)+'</p>':'')
+        +'<p class="faint small" style="margin:10px 0 0">Chosen because <b style="color:var(--gold)">'+esc(t.why)+'</b>'+(t.editor?' · editor: '+esc(t.editor):'')+' · <code>'+esc(t.id)+'</code>'+(t.lvl?' · '+esc(t.lvl):'')+'</p></div>'
+        :'<div class="card"><b style="color:var(--bad)">The library could not be read.</b><p class="muted small" style="margin:6px 0 0">Check that /lights/all.json is deployed.</p></div>')
+      +'<div class="card"><p class="muted small" style="margin:0 0 10px">The card is chosen from a written library, never written by the Lantern. Its work here is to choose between the day\'s best candidates and to check the one it chose.</p>'
+      +'<div class="frm two"><input class="fi" id="lt-date" type="text" placeholder="YYYY-MM-DD" aria-label="See another day" value="'+esc(LIGHT_DAY)+'"/>'
+      +'<div class="acts" style="margin:0"><button class="btn ghost" id="lt-go">See that day</button><button class="btn ghost" id="lt-again">Look again</button></div></div>'
+      +'<div class="acts"><a class="btn ghost" href="/api/card" target="_blank" rel="noopener">Open the card image</a></div></div>'
+      +'<p class="sec">The library</p>'
+      +'<div class="stat">'+tile(ix.n||0,"cards")+tile(ix.n||0,"days before a repeat")+tile(ix.exact||0,"dated · western")+tile(ix.hdays||0,"dated · islamic")+'</div>'
+      +'<div class="card" style="margin-top:8px">'
+      +(hij?'<p class="muted small" style="margin:0">Today is '+esc(hij)+'.</p>':'')
+      +(ks.length?'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">'+ks.map(function(k){return '<span class="pill">'+esc(k)+' '+esc(String(kinds[k]))+'</span>'}).join("")+'</div>':'')
+      +'<div class="mon">'+cal+'</div>'
+      +'<p class="faint small" style="margin:10px 0 0">Each bar is one western month and its height is how many cards are anchored to it; the gold bar is the month you are in. Most cards carry no date at all and rotate freely, which is honest: a card only claims a day when the day is known. Add more in <code>build/lights-*.json</code>, then run <code>scripts/gen-lights.py</code>.</p></div>'
+      +'<p class="sec">What the Lantern questioned</p>'
+      +(db.length?db.map(function(x){return '<div class="card"><div style="display:flex;gap:8px;align-items:baseline"><b style="color:var(--cream);flex:1;min-width:0">'+esc(x.title)+'</b><span class="pill">'+esc(String(x.at||"").slice(0,10))+'</span></div><p class="small" style="margin:8px 0 0">'+esc(x.doubt)+'</p><p class="faint small" style="margin:6px 0 0"><code>'+esc(x.id)+'</code></p></div>'}).join("")
+        :'<div class="empty">Nothing questioned. Either every card the editor has met held up, or it has not been asked yet.</div>')
+      +'<p class="faint small" style="margin:10px 0 0">Each of these is a card the editor declined to publish, with the doubt it raised. Nothing here has been changed on the site: check the claim yourself, then correct the card in the library and rebuild, or leave it.</p>';
+    el.onclick=function(e){var b=e.target.closest("button");if(!b)return;
+      if(b.id!=="lt-go"&&b.id!=="lt-again")return;
+      LIGHT_DAY=b.id==="lt-go"?String($("lt-date").value||"").trim().slice(0,10):"";
+      el.innerHTML=BACK+'<p class="sec">The day\'s card</p><div class="card"><div class="sk" style="height:90px"></div></div>';
+      drawLights(true)};
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The library could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+
+/* ================= LEGACY ================= */
+/* The Guardian era, kept as a record and still workable: the money it made,
+   the sponsors waiting for a lamp, the Lantern's reading of them against the
+   charter, and the map of regions. /api/admin-data holds the money and the
+   sponsors, /api/admin-guardians moves a lamp, /api/admin-vet judges. */
+var LEG=[],MKT_TRIED=false;
+function markets(){
+  /* The region list is a plain script the site already carries, and it is not
+     part of any endpoint, so the room fetches it once when it is first opened
+     and every later visit is served from the window it landed in. Without it
+     the room still draws; the count of open regions simply says nothing. */
+  return new Promise(function(res){
+    if(window.NOOR_MARKETS)return res(window.NOOR_MARKETS);
+    if(MKT_TRIED)return res(null);
+    MKT_TRIED=true;
+    var s=document.createElement("script");s.src="/markets.js";
+    s.onload=function(){res(window.NOOR_MARKETS||null)};
+    s.onerror=function(){res(null)};
+    document.head.appendChild(s)})}
+function vetBody(v){
+  var cls=v.verdict==="approve"?"good":(v.verdict==="decline"?"bad":"wait");
+  return '<div><span class="pill '+cls+'">'+esc(v.verdict||"review")+'</span> <span class="muted small">confidence '+esc(String(v.score||0))+' of 100</span></div>'
+    +((v.reasons||[]).length?'<ul class="small" style="margin:10px 0 0;padding-left:18px">'+v.reasons.map(function(r){return '<li>'+esc(r)+'</li>'}).join("")+'</ul>':'')
+    +((v.questions||[]).length?'<p class="sec" style="margin:12px 0 4px">Ask them</p><ul class="small" style="margin:0;padding-left:18px">'+v.questions.map(function(r){return '<li>'+esc(r)+'</li>'}).join("")+'</ul>':'');
+}
+function gCard(g,i){
+  var live=g.status==="active"||g.status==="trialing"||g.status==="past_due";
+  var lamp=live?(g.approved?'<span class="pill good">lit</span>':'<span class="pill wait">pending</span>'):'<span class="pill">out</span>';
+  var st=live?(g.status==="past_due"?"wait":"good"):"";
+  return '<div class="card"><div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--cream);font-size:15px">'+esc(g.market||"a region")+'</b>'
+    +'<span class="pill '+st+'">'+esc(g.status||"unknown")+(g.endsAfterWeek?" · ends":"")+'</span>'+lamp
+    +'<span style="margin-left:auto;color:var(--cream);font-weight:600">'+(g.amount!=null?esc(String(g.amount))+' '+esc(g.currency||'')+'<span class="muted small" style="font-weight:400">/'+esc(g.cadence||"week")+'</span>':'')+'</span></div>'
+    +'<p class="muted small" style="margin:6px 0 0">'+esc(g.gname||g.name||g.email||"someone")+(g.renews?' · renews '+esc(g.renews):'')+'</p>'
+    +(live?'<div class="acts"><button class="btn ghost sm" data-g="'+i+'" data-act="vet">Vet</button>'
+      +(g.approved?'<button class="btn ghost sm" data-g="'+i+'" data-act="unlight">Unlight</button>':'<button class="btn sm" data-g="'+i+'" data-act="approve">Approve</button>')
+      +(g.endsAfterWeek?'<button class="btn ghost sm" data-g="'+i+'" data-act="relight">Keep</button>':'<button class="btn ghost sm" data-g="'+i+'" data-act="release">Release</button>')
+      +'</div>':'')+'</div>';
+}
+function drawLegacy(force){
+  var el=$("s-legacy");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The money</p><div class="stat">'+'<div class="c"><div class="sk" style="height:26px"></div></div>'.repeat(4)+'</div><p class="sec">Guardians</p>'+skel(2);el.dataset.built="1"}
+  return Promise.all([house(force),markets()]).then(function(a){
+    var h=a[0]||{},M=a[1];
+    LEG=h.guardians||[];
+    var taken={};
+    LEG.forEach(function(g){if(g.status==="active"||g.status==="trialing"||g.status==="past_due")taken[g.market]=1});
+    var ML=(M&&M.list)||[],tp=(M&&M.tierPrices)||{};
+    var open=ML.length?ML.length-Object.keys(taken).length:null;
+    var guardianMode=h.moneyMode==="guardian";
+    el.innerHTML=BACK
+      +'<div class="card" style="margin-top:12px"><span class="pill '+(guardianMode?"good":"")+'">'+(guardianMode?"guardian mode is live":"retired")+'</span>'
+      +'<p class="small" style="margin:8px 0 0">'+(guardianMode
+        ?'Regional weekly sponsors run sitewide. To return to the gifts era, remove NOOR_MONEY_MODE in Vercel and redeploy.'
+        :'The house moved to two streams, gifts and licensing, and this program closed for good in August 2026. What follows is the record: the public endpoints answer 410 and nothing here can be woken.')+'</p></div>'
+      +'<p class="sec">The money</p><div class="stat">'
+      +tile(money(h.weekly),"this week")+tile(money(h.mrr),"monthly pace")+tile(h.activeCount||0,"active guardians")+tile(open==null?"·":open,"regions open")+'</div>'
+      +'<p class="sec">Guardians</p>'
+      +(LEG.length?LEG.map(gCard).join(""):'<div class="empty">No paid Guardians. When someone completes checkout they appear here, waiting for your approval.</div>')
+      +'<p class="faint small" style="margin:8px 0 0">A new payment arrives pending. Vet asks the Lantern to read them against the halal charter; Approve lights their lamp, live within about five minutes. Unlight hides it, Release ends the week gracefully, and refunds live in Stripe.</p>'
+      +'<p class="sec">Vet a sponsor by hand</p><div class="card"><p class="muted small" style="margin:0 0 10px">For someone who wrote to you before paying.</p>'
+      +'<div class="frm two"><input class="fi" id="v-name" placeholder="Business name"/><input class="fi" id="v-url" placeholder="Website"/>'
+      +'<input class="fi full" id="v-line" placeholder="Their tagline"/><input class="fi full" id="v-notes" placeholder="Notes, optional"/></div>'
+      +'<div class="acts"><button class="btn" id="v-go">Vet with the Lantern</button></div><div id="v-out"></div></div>'
+      +'<p class="sec">The map</p><details class="fold"><summary>All regions<span class="pill">'+(ML.length?ML.length+" lamps":"not read")+'</span></summary><div class="in">'
+      +(ML.length
+        ? '<div class="list">'+ML.map(function(m){return '<div class="row"><div class="t"><b>'+esc(m.label)+'</b><span>'+esc(m.id)+(taken[m.id]?" · lit":" · open")+'</span></div><div class="r"><span class="muted small">'+esc(tp[m.tier]!=null?"$"+tp[m.tier]+"/wk":"")+'</span> <a class="btn ghost sm" href="/index.html?noor-preview='+encodeURIComponent(m.id)+'" target="_blank" rel="noopener">View</a></div></div>'}).join("")+'</div>'
+          +'<p class="faint small" style="margin:10px 0 0">Each link previews the homepage exactly as that region sees it. Regions are edited in <code>markets.js</code>, one line each.</p>'
+        : '<div class="empty">The region list could not be read, so the count of open regions is left blank rather than guessed.</div>')
+      +'</div></details>';
+    el.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.id==="v-go")return vetByHand(b);
+      var act=b.dataset.act;if(!act)return;
+      var g=LEG[+b.dataset.g]||{};
+      if(act==="vet")return vetGuardian(g,b);
+      if(act==="approve")return approveSheet(g);
+      if(act==="unlight")return guardianAct(g,"extinguish",b,"The lamp is out.");
+      if(act==="relight")return guardianAct(g,"relight",b,"It keeps its lamp.");
+      if(act==="release")return releaseSheet(g);
+    };
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The record could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function guardianAct(g,action,b,said){
+  var was=b.textContent;b.disabled=true;b.textContent="…";
+  return post("/api/admin-guardians",{action:action,subscription:g.subscription}).then(function(r){
+    if(!r.ok||r.j.ok===false){b.disabled=false;b.textContent=was;return toast(r.j.error||"It refused.",true)}
+    closeSheet();toast(said);C.house=null;drawLegacy(true)}).catch(unreachable(b,was));
+}
+function vetGuardian(g,b){
+  var who=g.gname||g.name||g.market||"a sponsor";
+  sheet('<h2>The vetting</h2><p class="sub">'+esc(who)+' · the Lantern is reading them against the charter.</p><div class="sk" style="height:60px"></div>');
+  post("/api/admin-guardians",{action:"intake",subscription:g.subscription}).then(function(r){
+    var d=(r.ok&&r.j)||{};
+    return post("/api/admin-vet",{name:d.name||g.gname||g.name,url:d.url||g.gurl,line:d.line||g.gline,market:g.market,notes:""});
+  }).then(function(r){
+    if(r.locked)return;
+    $("sheet-in").innerHTML='<h2>The vetting</h2><p class="sub">'+esc(who)+'</p>'
+      +((r.ok&&r.j&&r.j.verdict)?vetBody(r.j):'<p class="small" style="color:var(--bad)">'+esc((r.j&&r.j.error)||"Vetting is unavailable.")+'</p>')
+      +'<div class="acts"><button class="btn ghost" id="cl">Close</button></div>';
+  }).catch(unreachable(b));
+}
+function vetByHand(b){
+  var was=b.textContent;b.disabled=true;b.textContent="Reading…";
+  var out=$("v-out");out.innerHTML='<div class="sk" style="height:40px;margin-top:12px"></div>';
+  post("/api/admin-vet",{name:$("v-name").value,url:$("v-url").value,line:$("v-line").value,notes:$("v-notes").value}).then(function(r){
+    b.disabled=false;b.textContent=was;
+    out.innerHTML='<div style="margin-top:12px">'+((r.ok&&r.j&&r.j.verdict)?vetBody(r.j):'<p class="small" style="color:var(--bad);margin:0">'+esc((r.j&&r.j.error)||"Vetting is unavailable.")+'</p>')+'</div>';
+  }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="color:var(--bad);margin-top:12px">Could not reach the house.</p>'});
+}
+function approveSheet(g){
+  sheet('<h2>Light this lamp</h2><p class="sub">'+esc(g.market||"")+'</p><div class="sk" style="height:60px"></div>');
+  post("/api/admin-guardians",{action:"intake",subscription:g.subscription}).then(function(r){
+    var d=(r.ok&&r.j)||{};
+    $("sheet-in").innerHTML='<h2>Light this lamp</h2><p class="sub">'+esc(g.market||"")+' · this is what every reader of the region will see</p>'
+      +'<div class="frm"><input class="fi" id="ap-name" placeholder="Name to show on the site" value="'+esc(d.name||g.gname||g.name||"")+'"/>'
+      +'<input class="fi" id="ap-url" placeholder="Their link, empty for none" value="'+esc(d.url||g.gurl||"")+'"/>'
+      +'<input class="fi" id="ap-line" placeholder="One line under the name, optional" value="'+esc(d.line||g.gline||"")+'"/></div>'
+      +'<div class="acts"><button class="btn" id="ap-go">Light it</button><button class="btn ghost" id="cl">Leave it</button></div>';
+    $("ap-go").onclick=function(){
+      var b=$("ap-go");b.disabled=true;b.textContent="…";
+      post("/api/admin-guardians",{action:"approve",subscription:g.subscription,name:$("ap-name").value,url:$("ap-url").value,line:$("ap-line").value}).then(function(res){
+        if(!res.ok||res.j.ok===false){b.disabled=false;b.textContent="Light it";return toast(res.j.error||"It refused.",true)}
+        closeSheet();toast("The lamp is lit.");C.house=null;drawLegacy(true)}).catch(unreachable(b,"Light it"))};
+  }).catch(unreachable());
+}
+function releaseSheet(g){
+  sheet('<h2>End this Guardianship</h2><p class="sub">'+esc(g.market||"")+' · it finishes at the end of the paid week and the region opens again after that.</p>'
+    +'<div class="acts"><button class="btn danger" id="rl-go">End it</button><button class="btn ghost" id="cl">Leave it</button></div>');
+  $("rl-go").onclick=function(){guardianAct(g,"release",$("rl-go"),"It ends when the week does.")};
+}
+
+/* ================= MARKETING ================= */
+/* The outreach studio. The Lantern writes here, bound to four laws it is
+   handed before a word; everything else is the owner's own count, kept on
+   this device under the same key the old console used, so nothing that was
+   ticked there is lost here. */
+var MK_KEY="noor_mk_v1";
+function mkGet(){var m;try{m=JSON.parse(localStorage.getItem(MK_KEY)||"{}")}catch(e){m=null}
+  m=m||{};if(!m.pipe)m.pipe=[];if(!m.armor)m.armor={};if(!m.days)m.days={};return m}
+function mkPut(m){try{localStorage.setItem(MK_KEY,JSON.stringify(m))}catch(e){}}
+function mkDay(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function mkStreak(m){var n=0,d=new Date();
+  for(var i=0;i<400;i++){var k=mkDay(d);if((m.days[k]||0)>=10)n++;else if(i>0)break;d.setDate(d.getDate()-1)}
+  return n}
+var LAWS=[
+  ["Unseen","No name, no face, no personal story. The project speaks: hello@noorcodex.com, signed The NOOR Codex team."],
+  ["Useful first","Every message hands over something real before it asks anything, and is worth reading by someone who never gives a penny."],
+  ["Never pushy","No urgency, no guilt, no hype. One light ask, placed late, with a graceful way to say no."],
+  ["Pure","Only what truly exists on the site today. No invented numbers, endorsements or claims."]
+];
+var ARMOR=[
+  ["gh","GitHub: repository set to private, and your real name and photo removed from the profile."],
+  ["stripe","Stripe: public business name NOOR Codex of Light, statement descriptor NOORCODEX, support email hello@noorcodex.com. This is what every giver sees on their bank statement."],
+  ["who","Domains: WHOIS privacy on for noorcodex.com, and the .ca names confirmed hidden."],
+  ["mail","Gmail: send-as hello@noorcodex.com set, display name NOOR Codex of Light, used for every reply."],
+  ["cross","Cross-links: no public page of the Codex names or links any other property of yours, and none of your other properties publicly claim the Codex."],
+  ["voices","The project's voices exist and are named NOOR: Reddit account, Facebook Page, Telegram channel with the phone number hidden, X or TikTok."],
+  ["never","Standing rule: nothing is ever sent from a personal account, and no message ever goes to a relative or a friend."]
+];
+var MK_KINDS=[["outreach","Email · school, masjid, organization, halal business"],["post","Post · Reddit, Facebook group, Telegram, X, forum"],["reply","Reply · a comment, a question, an objection"],["thanks","Thank a giver, or follow up on silence"],["angle","Campaign angles · what to lead with"]];
+var MK_FIELDS=[["channel","Channel or format (r/islam, Facebook group, cold email)"],["target","Who exactly (Al-Huda Islamic School, Toronto)"],["audience","Who is reading (a principal choosing curriculum)"],["room","Room to lead with (the Madrasa, the Cradle, Letters of Light)"],["lang","Language (English, Arabic, Urdu, Indonesian)"]];
+var STAGES=[["sent","sent"],["replied","replied"],["demo","tried the demo"],["follow","followed up"],["yes","yes"]];
+
+/* ---- the paste kit ----
+   A piece of outreach is two or three fields going into two or three boxes,
+   and it usually wants a small edit first, so what comes back is editable in
+   place, counts itself against the channel's limit, and copies field by
+   field rather than arriving as one block with "Subject:" glued to the top. */
+var KITN=0;
+function kitLimit(ch){var c=String(ch||"").toLowerCase();
+  if(/(^|\W)x(\W|$)|twitter/.test(c))return 280;
+  if(/threads|mastodon/.test(c))return 500;
+  if(/instagram/.test(c))return 2200;
+  return 0}
+function kitBlanks(t){var m=String(t||"").match(/\[[^\]\n]{2,40}\]/g);return m?m.slice(0,6):[]}
+function kit(o){
+  var lim=kitLimit(o.channel),gaps=kitBlanks((o.subject||"")+" "+(o.body||""));
+  var h='<div class="card" data-kit="k'+(++KITN)+'" data-lim="'+lim+'">'
+    +'<div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="color:var(--cream)">'+esc(o.label||"A draft")+'</b>'
+    +(o.channel?'<span class="pill">'+esc(o.channel)+'</span>':'')
+    +'<span class="faint small" data-count style="margin-left:auto"></span></div>'
+    +(o.note?'<p class="muted small" style="margin:6px 0 0">'+esc(o.note)+'</p>':'');
+  if(o.subject!=null)h+='<p class="sec" style="margin:12px 0 4px">'+esc(o.subjectLabel||"Subject")+'</p><input class="fi" data-sub value="'+esc(o.subject)+'"/>';
+  h+='<p class="sec" style="margin:12px 0 4px">'+esc(o.bodyLabel||"Message")+'</p>'
+    +'<textarea class="fi" data-body rows="'+Math.min(18,Math.max(4,Math.ceil(String(o.body||"").length/64)))+'">'+esc(o.body||"")+'</textarea>';
+  if(gaps.length)h+='<p class="small" style="margin:8px 0 0;color:var(--wait)">Fill in before sending: '+esc(gaps.join(" · "))+'</p>';
+  h+='<div class="acts">'
+    +(o.subject!=null?'<button class="btn ghost sm" data-cp="sub">Copy the '+esc(String(o.subjectLabel||"subject").toLowerCase())+'</button>':'')
+    +'<button class="btn ghost sm" data-cp="body">Copy the '+esc(String(o.bodyLabel||"message").toLowerCase())+'</button>'
+    +(o.subject!=null?'<button class="btn ghost sm" data-cp="both">Copy both</button>':'')
+    +(o.mail?'<button class="btn ghost sm" data-cp="mail">Open in mail</button>':'')
+    +'</div></div>';
+  return h}
+function kitCount(card){
+  var body=card.querySelector("[data-body]"),c=card.querySelector("[data-count]"),lim=+card.dataset.lim||0;
+  if(!body||!c)return;
+  var t=body.value||"",w=t.trim()?t.trim().split(/\s+/).length:0;
+  c.textContent=w+" words · "+t.length+" characters"+(lim?" · limit "+lim:"");
+  c.style.color=lim&&t.length>lim?"var(--bad)":"";
+}
+function kitBind(root){if(!root)return;
+  root.querySelectorAll("[data-kit]").forEach(function(c){kitCount(c);
+    var b=c.querySelector("[data-body]");if(b)b.addEventListener("input",function(){kitCount(c)})})}
+function fallbackCopy(text){
+  var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.select();var done=false;
+  try{done=document.execCommand("copy")}catch(e){}
+  document.body.removeChild(ta);return done}
+function copyText(text){
+  var yes=function(){toast("Copied.")},no=function(){toast("The browser refused the clipboard.",true)};
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    return navigator.clipboard.writeText(text).then(yes,function(){fallbackCopy(text)?yes():no()});
+  fallbackCopy(text)?yes():no()}
+function kitCopy(b){
+  var card=b.closest("[data-kit]");if(!card)return;
+  var sub=card.querySelector("[data-sub]"),body=card.querySelector("[data-body]");
+  var s=sub?sub.value:"",t=body?body.value:"",what=b.dataset.cp;
+  if(what==="mail")return void window.open("mailto:?subject="+encodeURIComponent(s)+"&body="+encodeURIComponent(t),"_blank");
+  copyText(what==="sub"?s:(what==="both"?(s?s+"\n\n":"")+t:t))}
+
+/* ---- the Learning Map · a one-page gift ----
+   Email-safe HTML, tables and inline styles at 600px, so it survives Gmail
+   and Outlook. It obeys the four laws: it gives before it asks. */
+function learningMap(){
+  var G="#F4D46A",GD="#C9A227",INK="#14100A",PAPER="#FFFEF7";
+  var mapCard=function(ar,en,sub,body){
+    return '<td width="33%" valign="top" style="padding:0 4px">'
+      +'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.25);border-radius:12px"><tr><td style="padding:14px 12px;text-align:center">'
+      +'<div style="font-size:26px;line-height:1.3;color:'+G+'">'+ar+'</div>'
+      +'<div style="font:800 15px Georgia,serif;color:'+PAPER+';margin-top:2px">'+en+'</div>'
+      +'<div style="font:700 9px Arial,sans-serif;letter-spacing:2px;color:'+GD+';margin-top:2px">'+sub+'</div>'
+      +'<div style="font:12px/1.6 Arial,sans-serif;color:rgba(255,254,247,.72);margin-top:8px">'+body+'</div>'
+      +'</td></tr></table></td>'};
+  var mapSec=function(n,kick,title){
+    return '<tr><td style="padding:26px 24px 4px">'
+      +'<div style="font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+GD+'">'+n+' — '+kick+'</div>'
+      +'<div style="font:800 20px Georgia,serif;color:'+PAPER+';margin-top:4px">'+title+'</div></td></tr>'};
+  var mapRow=function(n,ar,en,body,hi){
+    return '<tr><td style="padding:5px 24px">'
+      +'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:'+(hi?'rgba(244,212,106,.12)':'#1a2138')+';border:1px solid rgba(244,212,106,'+(hi?'.55':'.22')+');border-radius:10px"><tr>'
+      +'<td width="44" style="padding:12px 0 12px 14px;font:800 16px Georgia,serif;color:'+G+'" valign="top">'+n+'</td>'
+      +'<td style="padding:12px 14px 12px 0"><span style="font:800 14px Georgia,serif;color:'+PAPER+'">'+en+'</span>'
+      +' <span style="font-size:15px;color:'+G+'">&nbsp;'+ar+'</span>'
+      +'<div style="font:12px/1.6 Arial,sans-serif;color:rgba(255,254,247,.7);margin-top:3px">'+body+'</div></td>'
+      +'</tr></table></td></tr>'};
+  var mapArt=function(en,body){
+    return '<td width="50%" valign="top" style="padding:4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.22);border-radius:10px"><tr><td style="padding:11px 13px">'
+      +'<div style="font:800 13px Georgia,serif;color:'+PAPER+'">'+en+'</div>'
+      +'<div style="font:11px/1.55 Arial,sans-serif;color:rgba(255,254,247,.68);margin-top:3px">'+body+'</div>'
+      +'</td></tr></table></td>'};
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    +'<title>Islam: Light Upon Light · a free learning map</title></head>'
+    +'<body style="margin:0;padding:0;background:#0B1020">'
+    +'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0B1020"><tr><td align="center" style="padding:26px 10px">'
+    +'<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">'
+    +'<tr><td align="center" style="padding:0 24px"><div style="display:inline-block;border:1px solid rgba(244,212,106,.45);border-radius:999px;padding:6px 16px;font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+G+'">FREE LEARNING MAP · NOORCODEX.COM</div></td></tr>'
+    +'<tr><td align="center" style="padding:22px 24px 0"><div style="font-size:54px;line-height:1.2;color:'+G+'">&#1606;&#1615;&#1608;&#1585;</div>'
+    +'<div style="font:800 10px Arial,sans-serif;letter-spacing:4px;color:rgba(255,254,247,.55);margin-top:4px">LIGHT UPON LIGHT</div></td></tr>'
+    +'<tr><td align="center" style="padding:14px 24px 0"><div style="font:800 30px Georgia,serif;color:'+PAPER+'">Islam: <span style="color:'+G+'">Light Upon Light</span></div>'
+    +'<div style="font:13px Georgia,serif;color:rgba(255,254,247,.6);margin-top:6px">&#1606;&#1615;&#1608;&#1585;&#1612; &#1593;&#1614;&#1604;&#1614;&#1609;&#1648; &#1606;&#1615;&#1608;&#1585;&#1612; — Qur&rsquo;an 24:35</div>'
+    +'<div style="font:14px/1.7 Arial,sans-serif;color:rgba(255,254,247,.78);margin-top:12px;max-width:440px">Islam means peace through surrender to the One who is Light itself. Here is the whole map, on one page.</div></td></tr>'
+    +mapSec('01','THE CORE','What Islam actually is')
+    +'<tr><td style="padding:10px 20px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>'
+    +mapCard('&#1573;&#1587;&#1604;&#1575;&#1605;','Islam','SUBMISSION','What you do: the body in worship. From the root of salam, peace.')
+    +mapCard('&#1573;&#1610;&#1605;&#1575;&#1606;','Iman','FAITH','What you believe: the heart&rsquo;s conviction in the unseen.')
+    +mapCard('&#1573;&#1581;&#1587;&#1575;&#1606;','Ihsan','EXCELLENCE','To worship as if you see Him; for He surely sees you.')
+    +'</tr></table></td></tr>'
+    +mapSec('02','THE PRACTICE','The five pillars')
+    +mapRow('&#1633;','&#1588;&#1614;&#1607;&#1614;&#1575;&#1583;&#1614;&#1577;','Shahadah','The testimony: no god but Allah, and Muhammad &#65018; is His Messenger.',false)
+    +mapRow('&#1634;','&#1589;&#1614;&#1604;&#1614;&#1575;&#1577;','Salah','Five prayers that pin the day to its Maker.',true)
+    +mapRow('&#1635;','&#1586;&#1614;&#1603;&#1614;&#1575;&#1577;','Zakat','2.5% of held wealth, every year, owed to those in need.',false)
+    +mapRow('&#1636;','&#1589;&#1614;&#1608;&#1605;','Sawm','The fast of Ramadan: hunger that teaches mercy.',false)
+    +mapRow('&#1637;','&#1581;&#1614;&#1580;','Hajj','The pilgrimage, once in a life, for those who are able.',false)
+    +mapSec('03','THE BELIEF','The six articles of faith')
+    +'<tr><td style="padding:8px 20px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">'
+    +'<tr>'+mapArt('Allah','One God, no partner, no image, no equal.')+mapArt('The Angels','Made of light, never disobeying.')+'</tr>'
+    +'<tr>'+mapArt('The Books','Revelation across the ages, sealed by the Qur&rsquo;an.')+mapArt('The Messengers','From Adam to Muhammad &#65018;, one call.')+'</tr>'
+    +'<tr>'+mapArt('The Last Day','Every soul answers; nothing is lost.')+mapArt('The Decree','Nothing escapes His knowledge or His mercy.')+'</tr>'
+    +'</table></td></tr>'
+    +mapSec('04','THE SOURCE','Where it all comes from')
+    +'<tr><td align="center" style="padding:10px 24px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a2138;border:1px solid rgba(244,212,106,.3);border-radius:12px"><tr><td align="center" style="padding:16px 14px">'
+    +'<div style="font-size:24px;color:'+G+'">&#1602;&#1614;&#1604;&#1618;&#1576;</div>'
+    +'<div style="font:12px/1.65 Arial,sans-serif;color:rgba(255,254,247,.75);margin-top:6px;max-width:420px">The Qur&rsquo;an, the preserved speech of God, and the Sunnah, the lived example of His Messenger &#65018;. Everything else is commentary.</div>'
+    +'</td></tr></table></td></tr>'
+    +mapSec('05','THE DOOR','Why NOOR Codex')
+    +'<tr><td style="padding:8px 24px 0"><div style="font:13px/1.8 Arial,sans-serif;color:rgba(255,254,247,.75)">'
+    +'&#10022;&nbsp; A whole library: the story in order, the 25 prophets, an encyclopedia of 500+ words, tools for every masjid.<br>'
+    +'&#10022;&nbsp; Free forever. No ads, no trackers, no accounts.<br>'
+    +'&#10022;&nbsp; In your language: 21 doors and growing.</div></td></tr>'
+    +'<tr><td align="center" style="padding:24px"><a href="https://noorcodex.com" style="display:inline-block;background:'+G+';color:'+INK+';font:800 14px Arial,sans-serif;text-decoration:none;border-radius:999px;padding:13px 30px">Open the Codex &rarr;</a>'
+    +'<div style="font:10px Arial,sans-serif;letter-spacing:2px;color:rgba(255,254,247,.4);margin-top:12px">NOORCODEX.COM · FREE FOREVER · SHARE THIS PAGE</div></td></tr>'
+    +'</table></td></tr></table></body></html>';
+}
+function mapBlob(){return URL.createObjectURL(new Blob([learningMap()],{type:"text/html"}))}
+
+/* ---- the parts of the room that redraw on their own ----
+   The ten, the pipeline and the armor are counted on this device, so they
+   patch their own box rather than redrawing the surface and throwing away a
+   draft the Lantern has just written. */
+function mkTen(){
+  var m=mkGet(),n=m.days[mkDay()]||0,s=mkStreak(m);
+  var el=$("ten-n");if(!el)return;
+  el.textContent=n;
+  $("ten-bar").style.width=Math.min(100,n*10)+"%";
+  $("ten-note").textContent=n>=10
+    ?("Ten sent. The day is done, and the field is planted."+(s>1?" Days at ten in a row: "+s+".":""))
+    :((10-n)+" to go. Each one is a row in the pipeline below.");
+}
+function mkPipe(){
+  var m=mkGet(),box=$("pipe-list");if(!box)return;
+  if(!m.pipe.length){m.pipe.push({name:"",sent:0,replied:0,demo:0,follow:0,yes:0});mkPut(m)}
+  box.innerHTML=m.pipe.map(function(r,i){
+    return '<div class="card"><input class="fi" data-pn="'+i+'" placeholder="Masjid, school or business" value="'+esc(r.name||"")+'"/>'
+      +'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center">'
+      +STAGES.map(function(s){return '<button class="pill tog'+(r[s[0]]?" good":"")+'" data-pc="'+i+'|'+s[0]+'">'+esc(s[1])+'</button>'}).join("")
+      +'<button class="btn danger sm" data-px="'+i+'" style="margin-left:auto">Remove</button></div></div>'}).join("");
+}
+function mkArmor(){
+  var m=mkGet(),box=$("armor-list");if(!box)return;
+  var done=ARMOR.filter(function(a){return m.armor[a[0]]}).length;
+  box.innerHTML='<div class="list">'+ARMOR.map(function(a){
+    var on=!!m.armor[a[0]];
+    return '<button class="row tap" data-ar="'+esc(a[0])+'" style="width:100%;text-align:left"><div class="ic" style="color:'+(on?"var(--good)":"var(--faint)")+'">'+(on?ICO.ok:ICO.ring)+'</div>'
+      +'<div class="t" style="white-space:normal"><span style="white-space:normal;color:var(--text);font-size:13px;display:block">'+esc(a[1])+'</span></div>'
+      +'<div class="r"><span class="pill'+(on?" good":"")+'">'+(on?"closed":"open")+'</span></div></button>'}).join("")+'</div>'
+    +'<p class="muted small" style="margin:10px 0 0">'+(done===ARMOR.length?"Armor complete. Nothing on the money trail points at you.":(done+" of "+ARMOR.length+" closed. Every open one is a door with your name on it."))+'</p>';
+}
+function drawMarketing(force){
+  var el=$("s-marketing");
+  el.innerHTML=BACK
+    +'<p class="sec">The four laws every message obeys</p><div class="card">'
+    +LAWS.map(function(l,i){return '<div style="'+(i?"margin-top:12px":"")+'"><b style="color:var(--cream)">'+esc(l[0])+'</b><p class="muted small" style="margin:2px 0 0">'+esc(l[1])+'</p></div>'}).join("")
+    +'<p class="faint small" style="margin:12px 0 0">The Lantern is bound to these four before it writes a single word. It cannot sign your name, cannot invent a testimonial, and cannot manufacture a deadline.</p></div>'
+    +'<p class="sec">Today\'s ten</p><div class="card"><div class="hero"><div class="n" id="ten-n">0</div><div class="l">outreaches<br>sent today</div></div>'
+    +'<div class="bar2" style="margin-top:12px"><i id="ten-bar" style="width:0"></i></div>'
+    +'<p class="muted small" id="ten-note" style="margin:8px 0 0"></p>'
+    +'<p class="faint small" style="margin:8px 0 0">Ten a day, six days a week: the only number that decides revenue.</p>'
+    +'<div class="acts"><button class="btn ghost sm" id="ten-add">One more sent</button><button class="btn ghost sm" id="ten-reset">Start the day again</button></div></div>'
+    +'<p class="sec">Write something</p><div class="card"><div class="frm two">'
+    +'<select class="fi full" id="mk-kind" aria-label="What to write">'+MK_KINDS.map(function(k){return '<option value="'+esc(k[0])+'">'+esc(k[1])+'</option>'}).join("")+'</select>'
+    +MK_FIELDS.map(function(f){return '<input class="fi" id="mk-'+esc(f[0])+'" placeholder="'+esc(f[1])+'"/>'}).join("")
+    +'<textarea class="fi full" id="mk-message" rows="3" placeholder="Paste the message you are answering, or leave it empty"></textarea>'
+    +'<textarea class="fi full" id="mk-notes" rows="2" placeholder="Anything the Lantern must obey (mention the yearly invoice, keep it under 80 words)"></textarea>'
+    +'</div><div class="acts"><button class="btn" id="mk-go">Write it</button><span class="muted small" id="mk-state" style="align-self:center"></span></div></div>'
+    +'<div id="mk-out"></div>'
+    +'<p class="sec">The outreach studio</p>'
+    +'<div class="card"><b style="color:var(--cream)">The Learning Map · a one-page gift</b>'
+    +'<p class="muted small" style="margin:6px 0 0">A self-contained infographic: what Islam is, the five pillars, the six articles, the two sources, and one quiet door to the Codex. Email-safe HTML at 600px, so it survives Gmail and Outlook. Paste it into a newsletter, attach it, or open the preview and take a picture of it for image posts.</p>'
+    +'<div class="acts"><button class="btn" id="og-preview">Preview</button><button class="btn ghost" id="og-copy">Copy the HTML</button><button class="btn ghost" id="og-dl">Download it</button></div></div>'
+    +'<div class="card"><b style="color:var(--cream)">Write my week</b>'
+    +'<p class="muted small" style="margin:6px 0 0">One press, seven ready-to-paste pieces, Monday to Sunday, each on a different channel and a different room of the house. Ten minutes a day to paste them is the whole job.</p>'
+    +'<div class="acts"><button class="btn" id="wk-go">Write my week</button><span class="muted small" id="wk-state" style="align-self:center"></span></div>'
+    +'<div id="wk-out"></div></div>'
+    +'<p class="sec">The pipeline · ten rows a day</p><div id="pipe-list"></div>'
+    +'<div class="acts" style="margin-top:0"><button class="btn ghost sm" id="pipe-add">Add a row</button><span class="muted small" style="align-self:center">Saved on this device only. Tap a stage to mark it.</span></div>'
+    +'<p class="sec">Anonymity armor · do these once</p><div id="armor-list"></div>';
+  mkTen();mkPipe();mkArmor();
+  el.oninput=function(e){
+    var t=e.target;
+    if(t.dataset&&t.dataset.pn!=null){var m=mkGet();if(m.pipe[+t.dataset.pn]){m.pipe[+t.dataset.pn].name=t.value;mkPut(m)}}};
+  el.onclick=function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var m;
+    if(b.id==="ten-add"){m=mkGet();var k=mkDay();m.days[k]=(m.days[k]||0)+1;mkPut(m);return mkTen()}
+    if(b.id==="ten-reset"){m=mkGet();m.days[mkDay()]=0;mkPut(m);return mkTen()}
+    if(b.id==="pipe-add"){m=mkGet();m.pipe.push({name:"",sent:0,replied:0,demo:0,follow:0,yes:0});mkPut(m);return mkPipe()}
+    if(b.dataset.pc){var p=b.dataset.pc.split("|");m=mkGet();
+      if(m.pipe[+p[0]]){m.pipe[+p[0]][p[1]]=m.pipe[+p[0]][p[1]]?0:1;mkPut(m);mkPipe()}return}
+    /* a row removed is a row gone, so it asks twice */
+    if(b.dataset.px!=null){
+      if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Sure?";setTimeout(function(){b.dataset.sure="0";b.textContent="Remove"},4000);return}
+      m=mkGet();m.pipe.splice(+b.dataset.px,1);mkPut(m);return mkPipe()}
+    if(b.dataset.ar){m=mkGet();m.armor[b.dataset.ar]=m.armor[b.dataset.ar]?0:1;mkPut(m);return mkArmor()}
+    if(b.dataset.cp)return kitCopy(b);
+    if(b.id==="og-preview"){var u=mapBlob();window.open(u,"_blank");return void setTimeout(function(){URL.revokeObjectURL(u)},60000)}
+    if(b.id==="og-copy")return copyText(learningMap());
+    if(b.id==="og-dl"){var u2=mapBlob(),a=document.createElement("a");a.href=u2;a.download="noor-learning-map.html";
+      document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u2)},5000);return void toast("Saved as noor-learning-map.html.")}
+    if(b.id==="mk-go")return mkWrite(b);
+    if(b.id==="wk-go")return mkWeek(b);
+  };
+  return Promise.resolve();
+}
+function mkWrite(b){
+  var st=$("mk-state"),out=$("mk-out");
+  b.disabled=true;st.textContent="The Lantern is writing.";out.innerHTML='<div class="card"><div class="sk" style="height:60px"></div></div>';
+  var body={kind:$("mk-kind").value,message:$("mk-message").value,notes:$("mk-notes").value};
+  MK_FIELDS.forEach(function(f){body[f[0]]=$("mk-"+f[0]).value});
+  post("/api/marketing",body).then(function(r){
+    b.disabled=false;st.textContent="";
+    if(!r.ok){out.innerHTML='<div class="card"><b style="color:var(--bad)">Nothing came back.</b><p class="muted small" style="margin:6px 0 0">'+esc((r.j&&r.j.error)||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.")+'</p></div>';return}
+    var j=r.j||{};
+    if((j.angles||[]).length)out.innerHTML=j.angles.map(function(a){return kit({label:a.who,channel:a.where||"",subject:null,bodyLabel:"The line",body:a.line,note:a.angle?"Angle: "+a.angle:""})}).join("");
+    else if((j.variants||[]).length)out.innerHTML=j.variants.map(function(v){
+      var mail=/mail|email/i.test(v.label||"")||!!v.subject;
+      return kit({label:v.label,channel:body.channel||"",
+        subject:v.subject?v.subject:(v.title?v.title:null),
+        subjectLabel:v.subject?"Subject":"Title",body:v.body,mail:mail&&!!v.subject})}).join("");
+    else out.innerHTML='<div class="empty">Nothing came back. Ask it again.</div>';
+    kitBind(out);
+  }).catch(function(){b.disabled=false;st.textContent="";out.innerHTML='<div class="card"><b style="color:var(--bad)">Could not reach the house.</b></div>'});
+}
+function mkWeek(b){
+  var st=$("wk-state"),out=$("wk-out");
+  b.disabled=true;st.textContent="Writing. This is one large request and can take a minute.";
+  out.innerHTML='<div class="card" style="margin-top:12px"><div class="sk" style="height:60px"></div></div>';
+  post("/api/marketing",{kind:"week"}).then(function(r){
+    b.disabled=false;st.textContent="";
+    if(!r.ok){out.innerHTML='<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The week did not come back.</b><p class="muted small" style="margin:6px 0 0">'+esc((r.j&&r.j.error)||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.")+'</p></div>';return}
+    var wk=(r.j&&r.j.week)||[];
+    if(!wk.length){out.innerHTML='<div class="empty">The week came back empty. Ask again.</div>';return}
+    out.innerHTML='<div style="margin-top:12px">'+wk.map(function(p){
+      var mail=/mail|email/i.test(p.channel||"");
+      return kit({label:p.day,channel:p.channel||"",subject:p.title!=null?p.title:null,
+        subjectLabel:mail?"Subject":"Title",body:p.body,mail:mail,note:p.leads_with?"Leads with "+p.leads_with:""})}).join("")
+      +'<div class="acts"><button class="btn ghost sm" id="wk-all">Copy the whole week as one list</button></div></div>';
+    kitBind(out);
+    $("wk-all").onclick=function(){copyText(wk.map(function(p){
+      return (p.day||"")+" · "+(p.channel||"")+"\n"+(p.title?p.title+"\n":"")+(p.body||"")}).join("\n\n----------------------------------------\n\n"))};
+  }).catch(function(){b.disabled=false;st.textContent="";out.innerHTML='<div class="card" style="margin-top:12px"><b style="color:var(--bad)">Could not reach the house.</b></div>'});
+}
+
+/* ================= THE JOURNAL DESK ================= */
+/* Everything written here appears at /journal the moment it is saved as
+   published: no zip, no upload, no deploy. The desk carries no author field
+   and no signature, and nothing it sends out can name the writer -- the
+   journal is the house's opinion, not a person's, and that is kept absolute
+   exactly as the old desk kept it. */
+var JW={open:false,editing:null,prev:false,say:"",d:{title:"",dek:"",body:"",tags:"",slug:""}};
+function jwWords(){var w=String(JW.d.body||"").split(/\s+/).filter(Boolean).length;
+  return w?(w+" words · about "+Math.max(1,Math.round(w/220))+" min"):""}
+/* a faithful local echo of the small markup rules the site's own renderer
+   uses, so a preview costs nothing and saves no draft */
+function jwRender(md){
+  return String(md||"").replace(/\r\n?/g,"\n").split(/\n{2,}/).map(function(b){
+    b=b.trim();if(!b)return "";
+    var inl=function(t){return esc(t)
+      .replace(/\*\*([^*]{1,200})\*\*/g,"<strong>$1</strong>")
+      .replace(/\*([^*]{1,200})\*/g,"<em>$1</em>")
+      .replace(/\[([^\]]{1,120})\]\((https?:\/\/[^\s)]{1,300}|\/[^\s)]{0,200})\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/\n/g,"<br>")};
+    if(/^---+$/.test(b))return '<hr style="border:0;border-top:1px solid var(--line);margin:14px 0">';
+    if(/^###\s+/.test(b))return '<p class="ttl" style="font-size:15px">'+inl(b.replace(/^###\s+/,""))+'</p>';
+    if(/^##\s+/.test(b))return '<p class="ttl" style="font-size:17px">'+inl(b.replace(/^##\s+/,""))+'</p>';
+    if(/^>\s?/.test(b))return '<p class="small" style="border-left:2px solid var(--gold-dim);padding-left:12px;color:var(--muted);margin:10px 0">'+inl(b.split("\n").map(function(l){return l.replace(/^>\s?/,"")}).join("\n"))+'</p>';
+    if(/^[-*]\s+/.test(b))return '<ul class="small" style="margin:10px 0;padding-left:18px">'+b.split("\n").filter(function(l){return /^[-*]\s+/.test(l)}).map(function(l){return "<li>"+inl(l.replace(/^[-*]\s+/,""))+"</li>"}).join("")+'</ul>';
+    return '<p class="small" style="margin:10px 0;line-height:1.8">'+inl(b)+'</p>';
+  }).join("");
+}
+function drawJournal(force){
+  var el=$("s-journal");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The writing desk</p><div class="card"><div class="sk" style="height:44px"></div></div><p class="sec">Entries</p>'+skel(3);el.dataset.built="1"}
+  return Promise.all([journalQ(force),soft(held(force))]).then(function(a){
+    var j=a[0]||{},hq=a[1]||{};
+    var list=j.entries||[],q=hq.queue||[];
+    JW.list=list;JW.q=q;
+    var form=JW.open
+      ? '<div class="frm"><input class="fi" id="jw-title" placeholder="Title" maxlength="160" value="'+esc(JW.d.title)+'"/>'
+        +'<input class="fi" id="jw-dek" placeholder="One line underneath the title, optional" maxlength="300" value="'+esc(JW.d.dek)+'"/>'
+        +'<textarea class="fi" id="jw-body" rows="14" placeholder="Write. A blank line makes a new paragraph. ## makes a heading. &gt; makes a quotation. --- makes a divider. *word* is italic, **word** is bold, and [text](https://link) is a link.">'+esc(JW.d.body)+'</textarea>'
+        +'<input class="fi" id="jw-tags" placeholder="Tags, comma separated" maxlength="120" value="'+esc(JW.d.tags)+'"/>'
+        +'<input class="fi" id="jw-slug" placeholder="Address, left blank it is made from the title" maxlength="70" value="'+esc(JW.d.slug)+'"/></div>'
+        +'<div class="acts"><button class="btn" id="jw-publish">Publish</button><button class="btn ghost" id="jw-draft">Save as draft</button>'
+        +'<button class="btn ghost" id="jw-preview">'+(JW.prev?"Hide the preview":"Preview")+'</button><button class="btn ghost" id="jw-close">Close</button>'
+        +'<span class="muted small" id="jw-count" style="align-self:center">'+esc(jwWords())+'</span></div>'
+        +(JW.prev?'<div class="card" style="margin:12px 0 0;background:var(--ink)">'+jwRender(JW.d.body)+'</div>':'')
+      : '<div class="acts" style="margin:0"><button class="btn" id="jw-new">New entry</button><span class="muted small" style="align-self:center">'+esc(JW.say)+'</span></div>';
+    el.innerHTML=BACK
+      +'<p class="sec">The writing desk</p>'
+      +'<p class="muted small" style="margin:-6px 0 10px">Everything written here appears at <a href="/journal" target="_blank" rel="noopener">/journal</a> the moment it is saved as published. Saved as a draft, only you can see it. Nothing here asks for a name and nothing is signed: the journal is the house\'s opinion, and no entry can be traced back to a person.</p>'
+      +'<div class="card">'+form+'</div>'
+      +'<p class="sec">Entries</p>'
+      +(j.store===false?'<div class="empty">No store is connected, so the journal cannot save anything. Add REDIS_URL in Vercel.</div>'
+        :(list.length?list.map(function(e,i){
+          return '<div class="card"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="color:var(--cream);flex:1;min-width:0">'+esc(e.title)+'</b>'
+            +'<span class="pill '+(e.status==="published"?"good":"wait")+'">'+esc(e.status)+'</span></div>'
+            +'<p class="muted small" style="margin:6px 0 0">'+esc(String(e.at||"").slice(0,10))+' · /journal/'+esc(e.slug)+' · '+esc(String(e.comments||0))+' repl'+((e.comments||0)===1?"y":"ies")+'</p>'
+            +'<div class="acts"><button class="btn ghost sm" data-ed="'+i+'">Edit</button>'
+            +'<a class="btn ghost sm" href="/journal/'+encodeURIComponent(e.slug)+'" target="_blank" rel="noopener">View</a>'
+            +'<button class="btn danger sm" data-del="'+i+'">Delete</button></div></div>'}).join("")
+          :'<div class="empty">Nothing written yet. The first entry is one press away.</div>'))
+      +'<p class="sec">Replies waiting to be read</p>'
+      +'<p class="muted small" style="margin:-6px 0 10px">Nothing appears on the journal until you release it here. A flag is only what a machine noticed first. No reply is ever refused for disagreeing: refuse only spam, scams, coarse language a child should not meet, anything unlawful, anything that publishes a private person\'s details, and anything written to harass someone by name.</p>'
+      +(q.length?q.map(function(c,i){
+        return '<div class="card"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="color:var(--cream);flex:1;min-width:0">'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b>'
+          +(c.why?'<span class="pill wait">flagged: '+esc(c.why)+'</span>':'')+'</div>'
+          +'<p class="faint small" style="margin:6px 0 0">'+esc(String(c.at||"").slice(0,16).replace("T"," "))+(c.mail?' · <a href="mailto:'+esc(c.mail)+'">'+esc(c.mail)+'</a>':'')+'</p>'
+          +'<p class="msg" style="margin:10px 0 0">'+esc(c.body||"")+'</p>'
+          +'<div class="acts"><button class="btn sm" data-jrel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button>'
+          +'<button class="btn danger sm" data-jrm="'+esc(c.entry)+'|'+esc(c.cid)+'">Refuse</button>'
+          +(c.slug?'<a class="btn ghost sm" href="/journal/'+encodeURIComponent(c.slug)+'" target="_blank" rel="noopener">Open the entry</a>':'')+'</div></div>'}).join("")
+        :'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>')
+      +'<p class="sec">The Lantern\'s sorting</p><div class="card">'
+      +'<p class="muted small" style="margin:0">Once a month the Lantern scores released replies for how much they actually help you get closer to the truth: evidence, a real correction, a serious question. It never removes anything and it never sees an address. You can run it by hand here.</p>'
+      +'<div class="acts"><button class="btn ghost" id="jw-triage">Sort the replies now</button><span class="muted small" id="jw-tstate" style="align-self:center">'+esc(JW.tsay||"")+'</span></div></div>';
+    if(JW.open&&JW.focus){JW.focus=false;var ti=$("jw-title");if(ti)ti.focus()}
+    el.oninput=function(e){
+      var id=e.target.id||"";
+      if(id.indexOf("jw-")!==0)return;
+      var key=id.slice(3);
+      if(JW.d[key]===undefined)return;
+      JW.d[key]=e.target.value;
+      if(key==="body"&&$("jw-count"))$("jw-count").textContent=jwWords();
+    };
+    el.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.id==="jw-new"){JW.open=true;JW.editing=null;JW.prev=false;JW.say="";JW.focus=true;
+        JW.d={title:"",dek:"",body:"",tags:"",slug:""};return drawJournal(false)}
+      if(b.id==="jw-close"){JW.open=false;JW.editing=null;JW.say="";return drawJournal(false)}
+      if(b.id==="jw-preview"){JW.prev=!JW.prev;return drawJournal(false)}
+      if(b.id==="jw-publish")return jwSave("published",b);
+      if(b.id==="jw-draft")return jwSave("draft",b);
+      if(b.id==="jw-triage")return jwTriage(b);
+      if(b.dataset.ed!=null){
+        var e1=JW.list[+b.dataset.ed]||{};b.disabled=true;
+        return get("/api/journal?slug="+encodeURIComponent(e1.slug)).then(function(r){
+          b.disabled=false;
+          var en=(r.j&&r.j.entry)||null;
+          if(!en)return toast("That entry could not be opened.",true);
+          JW.open=true;JW.prev=false;JW.editing=en;JW.say="";JW.focus=true;
+          JW.d={title:en.title||"",dek:en.dek||"",body:en.body||"",tags:(en.tags||[]).join(", "),slug:en.slug||""};
+          drawJournal(false);window.scrollTo(0,0)}).catch(unreachable(b))}
+      /* an entry deleted is an entry gone, so it asks twice */
+      if(b.dataset.del!=null){
+        if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Sure?";setTimeout(function(){b.dataset.sure="0";b.textContent="Delete"},4000);return}
+        var e2=JW.list[+b.dataset.del]||{};b.disabled=true;
+        return post("/api/journal",{action:"delete",id:e2.id}).then(function(r){
+          if(!r.ok||!r.j.ok){b.disabled=false;b.textContent="Delete";return toast("It refused.",true)}
+          toast("Deleted.");C.journal=null;drawJournal(true)}).catch(unreachable(b,"Delete"))}
+      if(b.dataset.jrel)return jwComment(b.dataset.jrel,"approve",b,"Released.");
+      if(b.dataset.jrm){
+        if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Sure?";setTimeout(function(){b.dataset.sure="0";b.textContent="Refuse"},4000);return}
+        return jwComment(b.dataset.jrm,"reject",b,"Refused.")}
+    };
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The journal could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function jwSave(status,b){
+  var t=String(JW.d.title||"").trim();
+  if(!t){toast("It needs a title.",true);var ti=$("jw-title");if(ti)ti.focus();return}
+  var was=b.textContent;b.disabled=true;b.textContent="Saving…";
+  post("/api/journal",{action:"save",id:JW.editing?JW.editing.id:"",title:t,dek:JW.d.dek,body:JW.d.body,tags:JW.d.tags,slug:JW.d.slug,status:status}).then(function(r){
+    if(!r.ok||!r.j.ok){b.disabled=false;b.textContent=was;return toast((r.j&&r.j.reason)||"That did not save.",true)}
+    JW.open=false;JW.editing=null;JW.prev=false;
+    JW.say=status==="published"?"Published. It is live at /journal now.":"Saved as a draft, visible only to you.";
+    toast(JW.say);C.journal=null;drawJournal(true)}).catch(unreachable(b,was));
+}
+function jwComment(pair,state,b,said){
+  var p=String(pair).split("|"),was=b.textContent;b.disabled=true;b.textContent="…";
+  return post("/api/journal",{action:"comment-state",id:p[0],cid:p[1],state:state}).then(function(r){
+    if(!r.ok||!r.j.ok){b.disabled=false;b.textContent=was;return toast("It refused.",true)}
+    toast(said);C.held=null;drawJournal(true)}).catch(unreachable(b,was));
+}
+function jwTriage(b){
+  var was=b.textContent,st=$("jw-tstate");
+  b.disabled=true;b.textContent="Sorting…";st.textContent="The Lantern is reading the replies.";
+  /* the sentence is kept on the room, not on the node, so the redraw that
+     follows the sorting does not throw away what the sorting just said */
+  post("/api/journal",{action:"triage"}).then(function(r){
+    b.disabled=false;b.textContent=was;
+    if(!r.j||!r.j.ok){JW.tsay=(r.j&&r.j.reason==="off")?"Sorting is switched off in the dials.":"The Lantern could not be reached; the order is unchanged.";st.textContent=JW.tsay;return}
+    JW.tsay="Sorted "+(r.j.replies||0)+" replies across "+(r.j.entries||0)+" entries.";
+    st.textContent=JW.tsay;
+    C.held=null;drawJournal(true)}).catch(function(){b.disabled=false;b.textContent=was;JW.tsay="";st.textContent="Could not reach the house."});
+}
+
+/* ================= THE NIGHT SHIFT ================= */
+/* What the Lantern did while nobody was watching, and the one place it is
+   allowed to propose a change to the live site. None of the night's jobs can
+   edit, publish or delete anything: they file a finding and stop. A
+   correction reaches the site only when the owner presses Apply here. */
+var NS={mode:"assist",turns:[],chat:[],proposal:null,busy:false};
+function nsBubbles(){
+  var box=$("ns-chat");if(!box)return;
+  box.innerHTML=NS.chat.map(function(b){return '<div class="bub '+b.who+'">'+esc(b.text)+'</div>'}).join("");
+  box.scrollTop=box.scrollHeight;
+}
+function nsSay(who,text){NS.chat.push({who:who,text:text});nsBubbles()}
+function nsStrip(){
+  var box=$("ns-strip");if(!box)return;
+  var pr=NS.proposal;
+  if(!pr){box.innerHTML='<div class="empty">No change is proposed. Switch to Propose a correction above, describe the fix in plain words, and what comes back appears here as before and after.</div>';return}
+  box.innerHTML='<div class="card"><p class="sec" style="margin:0">Proposed correction · '+esc(pr.page)+'</p>'
+    +'<div class="dif"><div class="was">'+esc(pr.find)+'</div><div class="now">'+esc(pr.replace||"(removed)")+'</div></div>'
+    +(pr.why?'<p class="muted small" style="margin:10px 0 0">'+esc(pr.why)+'</p>':'')
+    +'<div class="acts"><button class="btn" id="ns-apply">Apply to the live site</button><button class="btn ghost" id="ns-discard">Discard</button>'
+    +'<span class="muted small" id="ns-applystate" style="align-self:center"></span></div></div>';
+}
+function nsOverrides(items){
+  var box=$("ovr-list");if(!box)return;
+  if(!items||!items.length){box.innerHTML='<div class="empty">None. The site is exactly as it was built, which is how it should usually be.</div>';return}
+  box.innerHTML=items.map(function(o){
+    return '<div class="card"><span class="pill">'+esc(o.page)+'</span>'
+      +'<div class="dif"><div class="was">'+esc(o.find)+'</div><div class="now">'+esc(o.replace||"(removed)")+'</div></div>'
+      +(o.why?'<p class="muted small" style="margin:10px 0 0">'+esc(o.why)+'</p>':'')
+      +'<div class="acts"><button class="btn danger sm" data-ovrm="'+esc(o.id)+'">Remove</button></div></div>'}).join("");
+}
+function drawNight(force){
+  var el=$("s-night");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">Last night</p><div class="card"><div class="sk" style="height:50px"></div></div><p class="sec">Passages to look at again</p>'+skel(2);el.dataset.built="1"}
+  return Promise.all([nightQ(force),soft(ovrQ(force))]).then(function(a){
+    var d=a[0]||{},ov=a[1]||{};
+    var b=d.brief,f=d.findings||[],L=d.last,jobs=(L&&L.jobs)||{},au=jobs.audit||{},tr=jobs.triage||{};
+    el.innerHTML=BACK
+      +'<p class="sec">Last night</p>'
+      +'<p class="muted small" style="margin:-6px 0 10px">The Lantern does not write facts for this site. It exercises judgment over what the house has already published: which passages an editor should look at again, how the inbox should be sorted, and the day in three sentences. None of these jobs can edit, publish or delete anything.</p>'
+      +'<div class="card">'+(b
+        ?'<p class="small" style="margin:0;line-height:1.8">'+esc(b.text)+'</p><p class="faint small" style="margin:10px 0 0">Written '+esc(String(b.at||"").slice(0,16).replace("T"," "))+' from the night\'s own numbers'+(b.model?' by '+esc(b.model):'')+'. It cannot use a number the numbers did not contain.</p>'
+        :'<div class="empty">No brief yet. It is written by the nightly run at 04:00 UTC.</div>')+'</div>'
+      +(L?'<div class="stat">'+tile((au.looked||0)+' of '+(au.of||0),"passages read",au.pace||"")
+        +tile(au.found||0,"flagged")+tile(tr.sorted||0,"inbox sorted",tr.urgent?tr.urgent+" want you first":"")
+        +tile((au.looked||0)+(tr.sorted||0)+1,"calls on the free chain")+'</div>'
+        +'<p class="faint small" style="margin:8px 0 0">Last night at '+esc(String(L.at||"").slice(0,16).replace("T"," "))+'. Change the pace in the dials of the old console; zero passages a night switches the audit off without switching off the brief.</p>'
+        :'<div class="empty">The night shift has not run yet.</div>')
+      +'<p class="sec">Passages it thinks you should look at</p>'
+      +'<p class="muted small" style="margin:-6px 0 10px">It is asked one question about each passage: is a hadith or a verse attributed without a reference, is a claim of fact surprising, does this read as a ruling rather than teaching, is a difference between scholars presented as settled, does a date look wrong. Nothing on the site has been changed. Check the claim yourself, then fix the source file or dismiss the finding.</p>'
+      +(f.length?f.map(function(x){
+        return '<div class="card"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="color:var(--cream);flex:1;min-width:0"><code>'+esc(x.id)+'</code></b>'
+          +(x.kind?'<span class="pill">'+esc(x.kind)+'</span>':'')+'<span class="pill">'+esc(String(x.at||"").slice(0,10))+'</span></div>'
+          +'<p class="small" style="margin:8px 0 0">'+esc(x.why)+'</p>'
+          +(x.where?'<p class="faint small" style="margin:6px 0 0">in <code>'+esc(x.where)+'</code></p>':'')
+          +'<div class="acts"><button class="btn ghost sm" data-clear="'+esc(x.id)+'">Dismiss</button></div></div>'}).join("")
+        :'<div class="empty">Nothing flagged. Most passages are fine, and clear is the correct answer for most of them.</div>')
+      +'<p class="sec">The Lantern, your right hand</p>'
+      +'<div class="card"><p class="muted small" style="margin:0 0 10px">It is handed the live numbers before it answers: the readers, the message desk and the giving ledger\'s own arithmetic. It obeys the same four laws as the Marketing room, it never learns who you are, and it will say plainly when the numbers are too small to mean anything.</p>'
+      +'<div class="seg two" id="ns-modes"><button data-nsmode="assist" class="'+(NS.mode==="assist"?"on":"")+'">Ask and triage</button><button data-nsmode="edit" class="'+(NS.mode==="edit"?"on":"")+'">Propose a correction</button></div>'
+      +'<p class="muted small" id="ns-modenote" style="margin:10px 0">'+esc(NS.mode==="edit"?"Describe the fix in plain words. What comes back is a proposal only: nothing changes until you press Apply.":"Ask it anything about the house. Good openers: what should I do today, what is in the inbox, what do I owe.")+'</p>'
+      +'<div class="chat" id="ns-chat"></div>'
+      +'<textarea class="fi" id="ns-in" rows="2" placeholder="'+(NS.mode==="edit"?"On which page, and what should it say instead?":"What should I do today?")+'"></textarea>'
+      +'<div class="acts"><button class="btn" id="ns-go">'+(NS.mode==="edit"?"Propose":"Ask")+'</button><span class="muted small" id="ns-state" style="align-self:center"></span></div></div>'
+      +'<p class="sec">Waiting for your word</p><div id="ns-strip"></div>'
+      +'<p class="sec">Live corrections now on the site</p><div id="ovr-list"></div>'
+      +'<div class="acts"><button class="btn ghost sm" id="ovr-refresh">Read them again</button><button class="btn danger sm" id="ovr-clear">Revert everything</button></div>'
+      +'<div class="card" style="margin-top:12px"><p class="small" style="margin:0"><b style="color:var(--gold)">Read this once.</b> An override is a live text patch, applied in the reader\'s browser for urgent corrections only. It never edits a file, it never touches Arabic, a reference number, markup or a link, and it disappears the moment you remove it. The permanent fix belongs in the next release of the page itself.</p></div>';
+    if(!NS.chat.length)NS.chat.push({who:"it",text:"Ask me what to do today and I will read the readers, the message desk and the ledger before I answer."});
+    nsBubbles();nsStrip();
+    if(ov&&ov.ok===false&&ov.reason==="store")$("ovr-list").innerHTML='<div class="empty">The store is not connected, so no correction can be held.</div>';
+    else nsOverrides((ov&&ov.items)||[]);
+    el.onclick=function(e){
+      var t=e.target.closest("button");if(!t)return;
+      if(t.dataset.nsmode){NS.mode=t.dataset.nsmode;NS.turns=[];NS.chat=[];return drawNight(false)}
+      if(t.id==="ns-go")return nsSend(t);
+      if(t.id==="ns-discard"){NS.proposal=null;return nsStrip()}
+      if(t.id==="ns-apply")return nsApply(t);
+      if(t.id==="ovr-refresh"){C.ovr=null;return ovrQ(true).then(function(o){nsOverrides((o&&o.items)||[]);toast("Read again.")}).catch(unreachable(t))}
+      if(t.id==="ovr-clear")return ovrClearSheet();
+      if(t.dataset.ovrm)return ovrRemove(t.dataset.ovrm,t);
+      /* a finding dismissed is a finding gone, so it asks twice */
+      if(t.dataset.clear){
+        if(t.dataset.sure!=="1"){t.dataset.sure="1";t.textContent="Sure?";setTimeout(function(){t.dataset.sure="0";t.textContent="Dismiss"},4000);return}
+        t.disabled=true;
+        return get("/api/admin-data?probe=night&clear="+encodeURIComponent(t.dataset.clear)).then(function(){
+          toast("Dismissed.");C.night=null;drawNight(true)}).catch(unreachable(t,"Dismiss"))}
+    };
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The night could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function nsSend(b){
+  if(NS.busy)return;
+  var box=$("ns-in"),text=String(box.value||"").trim();
+  if(!text)return;
+  NS.busy=true;b.disabled=true;box.value="";
+  nsSay("me",text);
+  NS.turns.push({role:"user",content:text});
+  $("ns-state").textContent=NS.mode==="edit"?"The Lantern is checking the wording.":"The Lantern is reading the house.";
+  post("/api/assistant",{messages:NS.turns.slice(-12),mode:NS.mode}).then(function(r){
+    NS.busy=false;b.disabled=false;$("ns-state").textContent="";
+    var j=r.j||{};
+    if(!r.ok||j.ok===false){nsSay("warn",j.reason||"The Lantern is dark. Check OPENROUTER_API_KEY in Vercel.");NS.turns.pop();return}
+    if(j.mode==="edit"){
+      if(j.valid&&j.proposal){nsSay("it","A correction is proposed. It is waiting for your word below.");NS.proposal=j.proposal;NS.turns=[];nsStrip()}
+      else{nsSay("warn",(j.reason||"It could not propose that safely.")+(j.proposal&&j.proposal.find?"\n\nIt wanted to change: "+j.proposal.find:""));NS.proposal=null;nsStrip()}
+      return}
+    var said=j.reply||"";
+    nsSay("it",said);
+    NS.turns.push({role:"assistant",content:said});
+  }).catch(function(){NS.busy=false;b.disabled=false;$("ns-state").textContent="";nsSay("warn","Cannot reach the Lantern.");NS.turns.pop()});
+}
+function nsApply(b){
+  var pr=NS.proposal;if(!pr)return;
+  b.disabled=true;$("ns-applystate").textContent="Applying.";
+  post("/api/overrides",{page:pr.page,find:pr.find,replace:pr.replace,why:pr.why}).then(function(r){
+    if(r.ok&&r.j&&r.j.ok){NS.proposal=null;nsStrip();nsOverrides(r.j.items||[]);C.ovr=null;
+      toast("Applied. It is live on "+pr.page+" from the next minute.");
+      nsSay("it","Applied. It is live on "+pr.page+" for every reader from the next minute. Remove it below once the real fix ships.");return}
+    b.disabled=false;$("ns-applystate").textContent=(r.j&&r.j.reason)||"It would not apply."}).catch(unreachable(b,"Apply to the live site"));
+}
+function ovrRemove(id,b){
+  var was=b.textContent;b.disabled=true;b.textContent="…";
+  del("/api/overrides",{id:id}).then(function(r){
+    if(r.ok&&r.j&&r.j.ok){C.ovr=null;nsOverrides(r.j.items||[]);toast("Removed.");return}
+    b.disabled=false;b.textContent=was;toast((r.j&&r.j.reason)||"It refused.",true)}).catch(unreachable(b,was));
+}
+function ovrClearSheet(){
+  sheet('<h2>Revert everything</h2><p class="sub">Every live correction is removed and the site returns to exactly what was built. Nothing is lost: the pages themselves were never changed.</p>'
+    +'<div class="acts"><button class="btn danger" id="ovr-go">Revert them all</button><button class="btn ghost" id="cl">Leave them</button></div>');
+  $("ovr-go").onclick=function(){
+    var b=$("ovr-go");b.disabled=true;b.textContent="…";
+    del("/api/overrides",{all:true}).then(function(r){
+      closeSheet();C.ovr=null;
+      if(r.ok&&r.j&&r.j.ok){nsOverrides(r.j.items||[]);toast("The site is as it was built.");return}
+      toast((r.j&&r.j.reason)||"It refused.",true)}).catch(unreachable(b,"Revert them all"))};
+}
+
+/* ================= SYSTEM ================= */
+/* The machinery. A key is shown as set or unset and never as a value, and the
+   one live question this room can answer -- is the lantern actually lit --
+   is asked only when the button is pressed. */
+var DOORS=[["Stripe","https://dashboard.stripe.com/payments"],["Vercel","https://vercel.com/dashboard"],["OpenRouter usage","https://openrouter.ai/activity"],["The site as the world sees it","/?noor-preview=GLOBAL"]];
+var LANTERN_LINK={policy:["openrouter.ai/settings/privacy","https://openrouter.ai/settings/privacy"],
+  limit:["openrouter.ai/credits","https://openrouter.ai/credits"],key:["openrouter.ai/keys","https://openrouter.ai/keys"]};
+function drawSystem(force){
+  var el=$("s-system");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">Health of the house</p>'+skel(4);el.dataset.built="1"}
+  return house(force).then(function(h){
+    h=h||{};
+    /* as with hrow above: the row escapes, the caller does not, so a value is
+       escaped exactly once and an ampersand in it stays an ampersand */
+    var row=function(ok,b,s){return '<div class="row"><div class="ic" style="color:'+(ok?"var(--good)":"var(--bad)")+'">'+(ok?ICO.ok:ICO.warn)+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">'+esc(b)+'</b><span style="white-space:normal">'+esc(s)+'</span></div></div>'};
+    var keys=[
+      ["ADMIN_PASSWORD and ADMIN_SECRET",true,"your lock; you are standing inside it"],
+      ["STRIPE_SECRET_KEY",!!h.stripeConfigured,"money flows"],
+      ["OPENROUTER_API_KEY",!!h.lanternConfigured,"the Lantern"],
+      ["REDIS_URL, or KV_REST_API_URL with KV_REST_API_TOKEN",!!h.store,"the lamp counter and everything the house remembers"]
+    ];
+    el.innerHTML=BACK
+      +'<p class="sec">Health of the house</p><div class="list">'
+      +row(!!h.stripeConfigured,"Stripe key · money can flow",h.stripeConfigured?"Configured · "+(h.moneyMode||"")+" mode":"Add STRIPE_SECRET_KEY in Vercel and redeploy")
+      +row(!!h.lanternConfigured,"The Lantern AI core","Daily Light, Verse Lamp, Thread, Seeker's Question, Friday Light, the du'a gate, vetting"+(h.lanternConfigured?" · first in line: "+String(h.lanternModel||"").split("/").pop().replace(":free",""):" · add OPENROUTER_API_KEY in Vercel and redeploy"))
+      +row(!!h.store,"The lamp counter · readers, sources and countries",h.store?"On · "+(h.storeKind||""):"Add REDIS_URL in Vercel, or create an Upstash store")
+      +row(true,"Money mode",h.moneyMode==="guardian"?"Guardian · sponsors live":"Gifts · the Guardian system is behind its switch")
+      +row(true,"Owner lock","You are inside it")+'</div>'
+      +(h.lanternWarning?'<p class="muted small" style="margin:10px 0 0">'+esc(h.lanternWarning)+'</p>':'')
+      +'<p class="sec">Is the lantern actually lit?</p><div class="card">'
+      +'<p class="muted small" style="margin:0">A key that is set is not the same as a key that works. This asks the lantern for one word, right now, and shows every model it tried, in order, with what each one said.</p>'
+      +'<div class="acts"><button class="btn ghost" id="sys-lantern">Test the lantern now</button></div><div id="sys-lantern-out"></div></div>'
+      +'<p class="sec">Quick doors</p><div class="list">'
+      +DOORS.map(function(d){return '<button class="row tap" data-door="'+esc(d[1])+'" style="width:100%;text-align:left"><div class="t"><b>'+esc(d[0])+'</b><span>'+esc(d[1])+'</span></div><div class="chev">'+ICO.chev+'</div></button>'}).join("")+'</div>'
+      +'<p class="sec">The keys this house runs on</p><div class="list">'
+      +keys.map(function(k){return '<div class="row"><div class="t" style="white-space:normal"><b style="white-space:normal"><code>'+esc(k[0])+'</code></b><span style="white-space:normal">'+esc(k[2])+'</span></div><div class="r"><span class="pill '+(k[1]?"good":"bad")+'">'+(k[1]?"set":"unset")+'</span></div></div>'}).join("")+'</div>'
+      +'<p class="faint small" style="margin:10px 0 0">No key is ever shown here, only whether the house has one. They are set in Vercel, under Settings and Environment Variables, and take effect on the next deploy.</p>'
+      +'<div class="acts" style="margin-top:20px"><button class="btn ghost" id="sys-logout">Sign out</button></div>';
+    el.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.dataset.door)return void window.open(b.dataset.door,"_blank","noopener");
+      if(b.id==="sys-logout")return void post("/api/admin-auth",{logout:true}).then(function(){location.reload()}).catch(unreachable(b));
+      if(b.id==="sys-lantern")return sysLantern(b);
+    };
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The machinery could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function sysLantern(b){
+  var was=b.textContent,out=$("sys-lantern-out");
+  b.disabled=true;b.textContent="Asking…";
+  out.innerHTML='<p class="muted small" style="margin:12px 0 0">Asking the lantern for one word. A free model can take a few seconds.</p>';
+  lantern(true).then(function(d){
+    d=d||{};b.disabled=false;b.textContent=was;
+    if(d.error&&!d.key){out.innerHTML='<div class="card" style="margin:12px 0 0"><b style="color:var(--bad)">The key is missing on this deployment.</b><p class="muted small" style="margin:6px 0 0">Add OPENROUTER_API_KEY in Vercel, under Settings and Environment Variables, then redeploy. Nothing else here can work until it is set.</p></div>';return}
+    var link=LANTERN_LINK[d.verdict];
+    out.innerHTML='<div style="margin-top:12px">'
+      +'<div class="row"><div class="ic" style="color:'+(d.ok?"var(--good)":"var(--bad)")+'">'+(d.ok?ICO.ok:ICO.warn)+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">'+(d.ok?"The lantern is lit.":"The lantern could not be lit.")+'</b><span style="white-space:normal">'+(d.ok
+        ?esc(String(d.answered||"").split("/").pop())+' answered "'+esc(d.reply||"")+'" in '+esc(String(d.ms||0))+' ms'
+        :'The Codex is still whole: every tile falls back to its written treasury.')+'</span></div></div>'
+      +(!d.ok&&d.advice?'<div class="card" style="margin-top:8px"><b style="color:var(--gold)">What to do</b><p class="small" style="margin:6px 0 0">'+esc(d.advice)+'</p>'+(link?'<p class="small" style="margin:8px 0 0"><a href="'+esc(link[1])+'" target="_blank" rel="noopener">'+esc(link[0])+'</a></p>':'')+'</div>':'')
+      +'<p class="muted small" style="margin:10px 0 0">OpenRouter lists '+esc(String(d.listed||0))+' free model'+(d.listed===1?"":"s")+' right now'+(d.listErr?' ('+esc(d.listErr)+')':'')+'. The house asks for that list itself every six hours, so a model that disappears is simply never asked for again.</p>'
+      +(d.warning?'<p class="small" style="margin:6px 0 0;color:var(--wait)">'+esc(d.warning)+'</p>':'')
+      +((d.tried||[]).length?'<div class="list" style="margin-top:10px">'+d.tried.map(function(t){
+        return '<div class="row"><div class="t" style="min-width:0"><b style="font-family:var(--f-mono);font-size:12px">'+esc(t.model)+'</b><span>'+esc(String(t.ms||0))+' ms</span></div><div class="r"><span class="pill '+(t.err?"bad":"good")+'">'+esc(t.err||"answered")+'</span></div></div>'}).join("")+'</div>':'')
+      +'</div>';
+  }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">Could not reach the house.</p>'});
 }
 
 /* ---------- the gate ---------- */

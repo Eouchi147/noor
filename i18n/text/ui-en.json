@@ -177,6 +177,7 @@
  "about.text": "NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.",
  "footer.back": "← Back to the Path",
  "footer.note": "Qur'an · authentic Hadith · classical sirah",
+ "footer.follow": "Follow the light",
  "chars.title": "Characters",
  "chars.sub": "Named beings across the Codex: companions of the Prophet ﷺ, angels who carry the command, jinn who believed or rebelled, animals made into signs, and the creatures of the end of time.",
  "chars.companions": "Companions",
@@ -236,5 +237,7 @@
  "p.prophets": "The 25 Prophets",
  "p.pillars": "The Five Pillars",
  "p.stories": "The Hall of Stories",
- "m.threelives": "Three Lives · Weigh Your Own"
+ "m.threelives": "Three Lives · Weigh Your Own",
+ "m.allah": "The Ninety-Nine Names",
+ "m.seerah": "The Seerah · Twenty-Three Years"
 }
