@@ -46,7 +46,7 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       if (body.action !== "refresh") return json(res, 400, { ok: false, error: "unknown action" });
-      const out = await refresh(days, { manifest: await manifest() });
+      const out = await refresh(days, { manifest: await manifest(), force: body.force === true });
       return json(res, 200, { ...out, enabled: true, store: kvKind() });
     }
     const out = await read(days, { manifest: await manifest() });

@@ -772,7 +772,8 @@ function insHtml(ins){
   var need=INS_NEEDS?'<div class="card" style="border-color:#4a3f1f"><span class="pill wait">needs a permission</span><p class="small" style="margin:8px 0 0">'+esc(INS_NEEDS)+'</p></div>':'';
   var when=ins.readAt?"last read "+ago(ins.readAt):"never read";
   var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><b style="color:var(--cream);font-size:13.5px">'+(ins.read||0)+' of '+(ins.media||0)+' read</b><span class="muted small"> · '+esc(ins.days||14)+' days · '+esc(when)+(ins.stale?' · '+esc(ins.stale)+' to read again':'')+(ins.refused?' · '+esc(ins.refused)+' refused':'')+'</span></div><button class="btn ghost sm" id="ins-read">Read again</button></div>'
-    +(ins.note?'<p class="muted small" style="margin:8px 0 0">'+esc(ins.note)+'</p>':'')+'</div>';
+    +(ins.note?'<p class="muted small" style="margin:8px 0 0">'+esc(ins.note)+'</p>':'')
+    +Object.keys(ins.refusedBy||{}).map(function(n){var r=ins.refusedBy[n]||{};return '<p class="muted small" style="margin:8px 0 0">'+esc(n)+' refused '+esc(r.n)+': '+esc(r.said||'no reason recorded')+'</p>'}).join("")+'</div>';
   var says='<div class="card">'+(ins.sentences||[]).map(function(t){return '<p class="small" style="margin:0 0 6px;color:var(--text)">'+esc(t)+'</p>'}).join("")+'<p class="faint small" style="margin:6px 0 0">Median reach on Instagram, the network that shows a post to people who do not follow. A sentence needs five posts in a bucket.</p></div>';
   var top=(ins.top||[]);
   return need+head
@@ -785,7 +786,7 @@ function insHtml(ins){
 /* Read again: a batch of forty, asked for until the house says it is done */
 function insRead(b){var was=b.textContent;b.disabled=true;var done=0;
   var step=function(){b.textContent="Reading…"+(done?" "+done:"");
-    return post("/api/insights",{action:"refresh",days:14}).then(function(r){if(r.locked)return;var j=r.j||{};
+    return post("/api/insights",{action:"refresh",days:14,force:true}).then(function(r){if(r.locked)return;var j=r.j||{};
       if(!r.ok||j.ok===false){toast(j.error||"It refused.",true);b.disabled=false;b.textContent=was;return}
       done+=j.fetched||0;
       if(j.needs){INS_NEEDS=j.say||("The token needs "+j.needs+".");C.insights=null;return drawReaders(true)}

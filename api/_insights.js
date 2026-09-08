@@ -159,10 +159,16 @@ async function cacheWrite(key, val, opts = {}) {
   if (!ready()) return;
   try { await store([["SET", key, JSON.stringify(val), "EX", String(30 * 86400)]]); } catch { }
 }
-export const fresh = (c, nowMs) => {
+/* `force` is the owner's hand on the button: a refusal is asked again at
+   once rather than after its hour, because the reason for pressing Read again
+   is usually that the reason for the refusal has just been fixed (a token
+   with the permission it lacked). An answer that was read is still kept for
+   its six hours; forcing never spends a call on a number already in hand. */
+const rank = (x, force) => (force && x.c && x.c.error) ? -1 : (x.c && x.c.at ? Date.parse(x.c.at) : 0);
+export const fresh = (c, nowMs, force) => {
   if (!c || !c.at) return false;
   const age = nowMs - Date.parse(c.at);
-  return c.error ? age < ERR_MS : age < CACHE_MS;
+  return c.error ? (!force && age < ERR_MS) : age < CACHE_MS;
 };
 
 /* ---------------------------------------------------------------------------
@@ -291,8 +297,10 @@ export async function refresh(days, opts = {}) {
   for (const p of posts) for (const net of Object.keys(p.media)) all.push({ net, id: p.media[net], key: K_INS(net, p.media[net]) });
   const cached = await cacheRead(all.map(x => x.key), opts);
   const due = all.map((x, i) => ({ ...x, c: cached[i] }))
-    .filter(x => !fresh(x.c, nowMs))
-    .sort((a, b) => (a.c && a.c.at ? Date.parse(a.c.at) : 0) - (b.c && b.c.at ? Date.parse(b.c.at) : 0));
+    .filter(x => !fresh(x.c, nowMs, !!opts.force))
+    /* oldest cache first; and when the owner forces, the refusals first of
+       all, because they are what the press is about */
+    .sort((a, b) => rank(a, !!opts.force) - rank(b, !!opts.force));
   const batch = due.slice(0, cap);
   const out = { ok: true, days, posts: posts.length, media: all.length, due: due.length, fetched: 0, errors: 0, partial: false };
   let needs = "";
@@ -373,12 +381,20 @@ export function aggregate(posts) {
   const perNet = { instagram: [], facebook: [], youtube: [] };
   const top = [];
   let read = 0, unread = 0, refused = 0;
+  /* what each network said when it refused, once per network and counted,
+     so "45 refused" is never all the console can say about it */
+  const refusedBy = {};
   for (const p of posts) {
     const ins = p.ins || {};
     for (const net of Object.keys(p.media)) {
       const v = ins[net];
       if (!v) { unread++; continue; }
-      if (v.error) { refused++; continue; }
+      if (v.error) {
+        refused++;
+        const r = refusedBy[net] || (refusedBy[net] = { n: 0, said: String(v.error).slice(0, 160), code: v.code || null });
+        r.n++;
+        continue;
+      }
       read++;
       const row = { date: p.date, slot: p.slot, hour: p.hour, kind: p.kind, title: p.title, net, id: p.media[net],
                     reach: v.reach != null ? v.reach : null, views: v.views != null ? v.views : null,
@@ -405,7 +421,7 @@ export function aggregate(posts) {
   });
   top.sort((a, b) => b.n - a.n);
   return {
-    posts: posts.length, read, unread, refused,
+    posts: posts.length, read, unread, refused, refusedBy,
     byKind, byHour, byNetwork, byFamily,
     top: top.slice(0, 10).map(t => ({ title: t.title, kind: t.kind, label: kindLabel(t.kind), hour: t.hour, at: HH(t.hour), net: t.net,
                                        id: t.id, url: t.url, measure: t.measure, n: t.n, reach: t.reach, views: t.views, date: t.date, slot: t.slot })),
