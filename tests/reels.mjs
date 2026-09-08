@@ -52,7 +52,7 @@ const REEL = { id: 'al-sufi-andromeda-964', slot: 'morning',
   ok(p.caption === REEL.caption, 'and the written caption, whole');
   ok(p.title === REEL.hook, 'the hook is the title');
   ok(p.reel === true, 'it is marked as a reel');
-  ok(Array.isArray(p.only) && p.only.join() === 'facebook,instagram,youtube,pinterest,telegram',
+  ok(Array.isArray(p.only) && p.only.join() === 'facebook,instagram,youtube,pinterest,telegram,threads',
      'it names the only channels that can show it');
   ok(S.buildSlot('reelA', { date: '2026-09-04', link: 'l' }) === null,
      'no reel for the day composes to nothing rather than a broken post');
@@ -220,7 +220,7 @@ console.log('\nfrom the manifest to a finished post');
   ok(p && /^https:\/\/noorcodex\.com\/reels\/.+\.mp4$/.test(p.video || ''), 'it carries a video url');
   ok(p && /-cover\.jpg$/.test(p.image || ''), 'and its cover, not the day card');
   ok(p && /^CAPTION [AB]$/.test(p.caption || ''), 'and the caption written beside the video');
-  ok(p && p.only.join() === 'facebook,instagram,youtube,pinterest,telegram', 'and it is aimed only where a reel can be shown');
+  ok(p && p.only.join() === 'facebook,instagram,youtube,pinterest,telegram,threads', 'and it is aimed only where a reel can be shown');
 
   const ev = await SOC.composeSlot('noorcodex.com', '2026-09-04', 'reelB', { plan: { hijri: null, day: null, leads: [] } });
   ok(ev && ev.key === 'smile-counts-as-charity', 'the evening slot draws from the evening half');

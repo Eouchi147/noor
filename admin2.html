@@ -309,6 +309,9 @@ var inbox=function(f){return cached("inbox",function(){return get("/api/inbox?li
 var held=function(f){return cached("held",function(){return post("/api/journal",{action:"queue"}).then(function(r){return r.j})},f)};
 var house=function(f){return cached("house",function(){return get("/api/admin-data").then(function(r){return r.j})},f)};
 var lantern=function(f){return cached("lantern",function(){return get("/api/admin-data?probe=lantern").then(function(r){return r.j})},f)};
+var insights=function(f){return cached("insights",function(){return get("/api/insights?days=14").then(function(r){return r.j})},f)};
+/* what the last Read again said that the read alone cannot know: the permission the token lacks */
+var INS_NEEDS="";
 var DRAWN={};
 function bust(){C={};LOADED={}}
 
@@ -476,11 +479,43 @@ function preview(id){sheet('<h2>'+esc(id)+'</h2><p class="sub">'+esc(SLOT_WHAT[i
       +'<div class="msg small" style="margin-top:12px">'+esc(ig.text||p.body||"")+'</div>'}).catch(unreachable())}
 
 /* ================= READERS ================= */
+/* What strangers watch: the last fortnight's posts read back from the
+   networks (api/insights). Bars are median reach by kind and by hour, the
+   top ten by reach, and only the sentences the numbers support. Nothing here
+   is drawn from a bucket of fewer than five; the server says so itself. */
+var NET_NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube"};
+function insBars(rows,lab){if(!rows.length)return '<div class="empty">Nothing read yet.</div>';var mx=rows.reduce(function(m,r){return Math.max(m,(r.reach&&r.reach.median)||0)},0)||1;
+  return '<div class="bars">'+rows.map(function(r){var med=r.reach&&r.reach.median!=null?r.reach.median:null;return '<div class="b"><span class="n" title="'+esc(r.n)+' posts">'+esc(lab(r))+' <span class="faint">'+r.n+'</span></span><span class="t"><i data-w="'+(med==null?0:Math.round(med/mx*100))+'"></i></span><span class="v">'+(med==null?"·":Math.round(med).toLocaleString())+'</span></div>'}).join("")+'</div>'}
+function insHtml(ins){
+  if(!ins||ins.ok===false)return '<div class="card"><div class="empty">'+esc((ins&&ins.error)||"The posts could not be read back.")+'</div></div>';
+  var need=INS_NEEDS?'<div class="card" style="border-color:#4a3f1f"><span class="pill wait">needs a permission</span><p class="small" style="margin:8px 0 0">'+esc(INS_NEEDS)+'</p></div>':'';
+  var when=ins.readAt?"last read "+ago(ins.readAt):"never read";
+  var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><b style="color:var(--cream);font-size:13.5px">'+(ins.read||0)+' of '+(ins.media||0)+' read</b><span class="muted small"> · '+esc(ins.days||14)+' days · '+esc(when)+(ins.stale?' · '+ins.stale+' to read again':'')+(ins.refused?' · '+ins.refused+' refused':'')+'</span></div><button class="btn ghost sm" id="ins-read">Read again</button></div>'
+    +(ins.note?'<p class="muted small" style="margin:8px 0 0">'+esc(ins.note)+'</p>':'')+'</div>';
+  var says='<div class="card">'+(ins.sentences||[]).map(function(t){return '<p class="small" style="margin:0 0 6px;color:var(--text)">'+esc(t)+'</p>'}).join("")+'<p class="faint small" style="margin:6px 0 0">Median reach on Instagram, the network that shows a post to people who do not follow. A sentence needs five posts in a bucket.</p></div>';
+  var top=(ins.top||[]);
+  return need+head
+    +'<details class="fold" open><summary>By kind<span class="pill">'+((ins.byKind||[])[0]?esc(ins.byKind[0].label)+" lead":"")+'</span></summary><div class="in">'+insBars(ins.byKind||[],function(r){return r.label})+'</div></details>'
+    +'<details class="fold"><summary>By hour<span class="pill">'+(ins.byHour||[]).length+' slots</span></summary><div class="in">'+insBars(ins.byHour||[],function(r){return r.label+" UTC"})+'</div></details>'
+    +'<details class="fold"><summary>By network<span class="pill">'+(ins.byNetwork||[]).map(function(n){return NET_NAME[n.net]||n.net}).join(" · ")+'</span></summary><div class="in">'+insBars(ins.byNetwork||[],function(r){return NET_NAME[r.net]||r.net})+'</div></details>'
+    +'<details class="fold"><summary>The top ten<span class="pill">by reach</span></summary><div class="in">'+(top.length?'<div class="list">'+top.map(function(t){return '<div class="row"><div class="t"><b>'+esc(t.title||t.slot)+'</b><span>'+esc(t.label)+' · '+esc(t.at)+' UTC · '+esc(NET_NAME[t.net]||t.net)+' · '+esc(t.date)+(t.url?' · <a href="'+esc(t.url)+'" target="_blank" rel="noopener">open</a>':'')+'</span></div><div class="r"><b style="color:var(--cream)">'+Number(t.n).toLocaleString()+'</b><div class="faint" style="font-family:var(--f-mono);font-size:10px">'+esc(t.measure)+'</div></div></div>'}).join("")+'</div>':'<div class="empty">Nothing read yet.</div>')+'</div></details>'
+    +says;
+}
+/* Read again: a batch of forty, asked for until the house says it is done */
+function insRead(b){var was=b.textContent;b.disabled=true;var done=0;
+  var step=function(){b.textContent="Reading…"+(done?" "+done:"");
+    return post("/api/insights",{action:"refresh",days:14}).then(function(r){if(r.locked)return;var j=r.j||{};
+      if(!r.ok||j.ok===false){toast(j.error||"It refused.",true);b.disabled=false;b.textContent=was;return}
+      done+=j.fetched||0;
+      if(j.needs){INS_NEEDS=j.say||("The token needs "+j.needs+".");C.insights=null;return drawReaders(true)}
+      if(j.partial)return step();
+      INS_NEEDS="";toast(done?"Read "+done+".":"Nothing new to read.");C.insights=null;return drawReaders(true)})};
+  step().catch(unreachable(b,was))}
 function drawReaders(force){
   var el=$("s-readers");
   if(!el.dataset.built){el.innerHTML='<div class="stat">'+'<div class="c"><div class="sk" style="height:26px"></div></div>'.repeat(4)+'</div><p class="sec">The last 30 days</p><div class="card"><div class="sk" style="height:150px"></div></div>';el.dataset.built="1"}
-  return Promise.all([visitors(force),inbox(force),held(force)]).then(function(a){
-    var v=a[0]||{},ib=a[1]||{},hq=a[2]||{};
+  return Promise.all([visitors(force),inbox(force),held(force),insights(force)]).then(function(a){
+    var v=a[0]||{},ib=a[1]||{},hq=a[2]||{},ins=a[3]||{};
     var days=v.days||[],people=(v.totals&&v.totals.people30)||days.reduce(function(s,d){return s+(d.people||0)},0),views=(v.totals&&v.totals.views30)||0;
     var tod=days.length?days[days.length-1].people||0:0,pp=people?(views/people).toFixed(1):"·";
     var me=false;try{me=localStorage.getItem("noor_nocount")==="1"}catch(e){}
@@ -501,11 +536,13 @@ function drawReaders(force){
       +'<details class="fold"><summary>What brought them<span class="pill">'+((v.sources||[])[0]?esc(v.sources[0].s)+" leads":"")+'</span></summary><div class="in">'+bars(v.sources||[],people,function(r){return r.s})+'</div></details>'
       +'<details class="fold"><summary>From where<span class="pill">'+(v.countries||[]).length+' countries</span></summary><div class="in">'+bars(v.countries||[],people,function(r){return r.c})+'</div></details>'
       +'<details class="fold"><summary>Which rooms<span class="pill">'+((v.rooms||[])[0]?esc(v.rooms[0].r)+" leads":"")+'</span></summary><div class="in">'+bars(v.rooms||[],views,function(r){return r.r})+'</div></details>'
+      +'<p class="sec" id="anchor-insights">What strangers watch</p>'+insHtml(ins)
       +'<p class="sec" id="anchor-inbox">The inbox</p>'+(ib.ok===false?'<div class="empty">The inbox is not set up.</div>':(items.length?'<div class="list">'+items.slice(0,20).map(function(m,i){return '<div class="row tap" data-msg="'+i+'"><div class="ic" style="color:'+(m.status==="new"?"var(--gold)":"var(--faint)")+'">'+ICO.mail+'</div><div class="t"><b>'+esc(m.from||m.kind||"someone")+(m.status==="new"?' <span class="pill good" style="margin-left:6px">new</span>':'')+'</b><span>'+esc(String(m.body||"").slice(0,90))+'</span></div><div class="r small muted">'+esc(ago(m.at))+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing has arrived.</div>'))
       +'<p class="sec" id="anchor-journal">Replies waiting to be read</p>'+(q.length?'<div class="list">'+q.map(function(c,i){return '<div class="row hold"><div class="ic">'+ICO.pen+'</div><div class="t tap" data-held="'+i+'"><b>'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b><span>'+esc(String(c.body||"").slice(0,90))+(c.why?' · <i style="color:var(--wait);font-style:normal">flagged: '+esc(c.why)+'</i>':'')+'</span></div><div class="acts2"><button class="btn sm" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger sm" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button></div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>');
     setTimeout(function(){el.querySelectorAll(".bars .t i").forEach(function(i){i.style.width=i.dataset.w+"%"})},50);
     el.onclick=function(e){var b=e.target.closest("button,[data-msg],[data-held]");if(!b)return;
       if(b.dataset.held!=null){var c=q[+b.dataset.held]||{};return sheet('<h2 style="font-size:18px">'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</h2><p class="sub">'+esc(ago(c.at))+(c.why?' · <span style="color:var(--wait)">flagged: '+esc(c.why)+'</span>':'')+' · read it whole before it goes on the wall</p><div class="msg">'+esc(c.body||"")+'</div><div class="acts"><button class="btn" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button><button class="btn ghost" id="cl">Close</button></div>')}
+      if(b.id==="ins-read")return insRead(b);
       if(b.id==="mytoggle"){var on=false;try{on=localStorage.getItem("noor_nocount")==="1"}catch(x){}try{on?localStorage.removeItem("noor_nocount"):localStorage.setItem("noor_nocount","1")}catch(x){}toast(on?"This browser is counted again.":"This browser is no longer counted.");drawReaders(false);return}
       if(b.dataset.msg!=null){var m=items[+b.dataset.msg]||{};return sheet('<h2 style="font-size:18px">'+esc(m.from||m.kind||"A message")+'</h2><p class="sub">'+esc(m.page||"")+(m.cc?' · '+esc(m.cc):'')+' · '+esc(ago(m.at))+'</p><div class="msg">'+esc(m.body||"")+'</div><div class="acts">'+(m.from&&/@/.test(m.from)?'<a class="btn" href="mailto:'+esc(m.from)+'">Reply by mail</a>':'')+'<a class="btn ghost" href="/admin#inbox">Open in the full console</a></div>')}
       var rel=b.dataset.rel||b.dataset.rm;if(rel){var p=rel.split("|");b.disabled=true;post("/api/journal",{action:"comment-state",id:p[0],cid:p[1],state:b.dataset.rel?"approve":"reject"}).then(function(r){toast(r.ok?(b.dataset.rel?"Released.":"Removed."):"It refused.",!r.ok);C.held=null;drawReaders(true)})}};

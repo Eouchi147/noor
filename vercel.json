@@ -6,6 +6,9 @@
     },
     "api/social.js": {
       "maxDuration": 60
+    },
+    "api/insights.js": {
+      "maxDuration": 60
     }
   },
   "cleanUrls": true,
@@ -70,6 +73,10 @@
     {
       "source": "/youtube/callback",
       "destination": "/api/youtube?action=callback"
+    },
+    {
+      "source": "/threads/callback",
+      "destination": "/api/threads?action=callback"
     }
   ]
 }

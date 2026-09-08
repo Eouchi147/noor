@@ -43,6 +43,7 @@ import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
 import { planDay, buildSlot, dueNow, slotExtras, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
 import * as CH from "./_channels.js";
+import * as TH from "./_threads.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
 import { ownerGate } from "./_owner.js";
@@ -56,7 +57,7 @@ import { trimToSentences } from "./_prose.js";
    human, and therefore cannot be set wrong. */
 const GRAPH_FB = "https://graph.facebook.com/v21.0";
 const GRAPH_IG = "https://graph.instagram.com/v21.0";
-const graphBase = tok => (/^IG/.test(String(tok || "")) ? GRAPH_IG : GRAPH_FB);
+export const graphBase = tok => (/^IG/.test(String(tok || "")) ? GRAPH_IG : GRAPH_FB);
 const prevDate = d => new Date(Date.parse(d + "T00:00:00Z") - 86400000)
   .toISOString().slice(0, 10);
 
@@ -517,7 +518,7 @@ export async function imageReachable(url, ms) {
 --------------------------------------------------------------------------- */
 export const fbConfigured = () => !!(process.env.FB_PAGE_ID && process.env.FB_PAGE_TOKEN);
 export const igConfigured = () => !!(process.env.IG_USER_ID && (process.env.IG_TOKEN || process.env.IG_ACCESS_TOKEN || process.env.FB_PAGE_TOKEN));
-const igToken = () => process.env.IG_TOKEN || process.env.IG_ACCESS_TOKEN || process.env.FB_PAGE_TOKEN;
+export const igToken = () => process.env.IG_TOKEN || process.env.IG_ACCESS_TOKEN || process.env.FB_PAGE_TOKEN;
 
 const metaErr = (j, fallback) =>
   (j && j.error && (j.error.error_user_msg || j.error.message)) ||
@@ -559,7 +560,7 @@ const metaCode = j => {
 let PAGE_TOK = { at: 0, tok: "" };
 const PAGE_TOK_TTL = 3600 * 1000;
 
-async function pageToken() {
+export async function pageToken() {
   const id = process.env.FB_PAGE_ID, tok = process.env.FB_PAGE_TOKEN;
   if (!id || !tok) return "";
   if (PAGE_TOK.tok && Date.now() - PAGE_TOK.at < PAGE_TOK_TTL) return PAGE_TOK.tok;
@@ -874,33 +875,51 @@ export function slotState(results) {
    Keyed on the RESULT rather than on the slot's state, so it heals a record
    written by either path, including one an older version of this file wrote
    before the two agreed. Instagram keeps a container for about a day, so
-   yesterday is as far back as it is worth looking. */
+   yesterday is as far back as it is worth looking.
+
+   Two networks hand containers back: Instagram (the reel, and the video
+   story beside it) and Threads (the reel). Each has a finisher here that
+   takes the container id and answers { ok, id } when it is published,
+   { pending } when it still is not, and { error } when the network gave up
+   on it; the walk below is the same for both. A channel is added by adding
+   its finisher. */
+const FINISHERS = {
+  instagram: finishInstagramReel,
+  threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; }
+};
+
 export async function finishPendingReels(date, out) {
   const ran = (out && out.ran) || [];
   for (const d of [prevDate(date), date]) {
     for (const id of REEL_SLOTS) {
       const rec = await readSlot(d, id);
-      const ig = rec && rec.results && rec.results.instagram;
-      /* a video story handed back as a container is finished the same way;
-         it never touches the slot's state */
-      if (ig && ig.ok && ig.story && ig.story.pending) {
-        const st = await finishInstagramReel(ig.story.pending);
-        if (!st.pending) {
-          rec.results = { ...rec.results, instagram: { ...ig, story: st } };
-          await writeSlot(d, id, rec);
-          ran.push({ slot: id, date: d, state: rec.state, finished: true, where: "instagram story", ok: !!st.ok, error: st.error || "" });
+      if (!rec || !rec.results) continue;
+      let changed = false;
+      for (const ch of Object.keys(FINISHERS)) {
+        const had = rec.results[ch];
+        if (!had) continue;
+        /* a video story handed back as a container is finished the same way;
+           it never touches the slot's state */
+        if (had.ok && had.story && had.story.pending) {
+          const st = await FINISHERS[ch](had.story.pending);
+          if (!st.pending) {
+            rec.results = { ...rec.results, [ch]: { ...had, story: st } };
+            changed = true;
+            ran.push({ slot: id, date: d, state: rec.state, finished: true, where: ch + " story", ok: !!st.ok, error: st.error || "" });
+          }
+          continue;
         }
-        continue;
+        if (had.ok || !had.pending) continue;
+        const r = await FINISHERS[ch](had.pending);
+        if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: ch }); continue; }
+        rec.results = { ...rec.results, [ch]: r };
+        rec.state = slotState(rec.results);
+        if (r.ok && ch === "instagram") rec.igId = r.id || "posted";
+        changed = true;
+        ran.push({ slot: id, date: d, state: rec.state, finished: true,
+                   where: ch, ok: !!r.ok, error: r.error || "" });
       }
-      if (!ig || ig.ok || !ig.pending) continue;
-      const r = await finishInstagramReel(ig.pending);
-      if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: "instagram" }); continue; }
-      rec.results = { ...rec.results, instagram: r };
-      rec.state = slotState(rec.results);
-      if (r.ok) rec.igId = r.id || "posted";
-      await writeSlot(d, id, rec);
-      ran.push({ slot: id, date: d, state: rec.state, finished: true,
-                 where: "instagram", ok: !!r.ok, error: r.error || "" });
+      if (changed) await writeSlot(d, id, rec);
     }
   }
   return ran;
@@ -1134,7 +1153,7 @@ async function noteSaid(key) {
                   ["EXPIRE", K_SAID, "7776000"]]); } catch { }
 }
 
-async function readSlot(date, slot) {
+export async function readSlot(date, slot) {
   if (!kvReady()) return null;
   try { const r = (await kv([["GET", K_SLOT(date, slot)]]))[0];
     return r ? (typeof r === "string" ? JSON.parse(r) : r) : null; } catch { return null; }
@@ -1167,6 +1186,8 @@ async function sendOne(ch, shaped, post, left) {
   if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
   /* a reel goes to the channel as a video, by url: Telegram fetches it */
   if (ch === "telegram") return await fn({ ...shaped, video: p.video || null });
+  /* and Threads takes it the same way, as a VIDEO container it processes */
+  if (ch === "threads") return await fn({ ...shaped, video: p.video || null });
   return await fn(shaped);
 }
 
@@ -1225,7 +1246,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   if (prev && prev.state === "pending" && !opts.force) {
     const ran = await finishPendingReels(date, { ran: [] });
     return { ...out, ok: true, state: (await readSlot(date, slotId) || {}).state || "pending",
-      finished: ran, note: "that slot was already sent; Instagram was still processing it" };
+      finished: ran, note: "that slot was already sent; a network was still processing the video" };
   }
 
   const began = Date.now();
@@ -1337,7 +1358,7 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
     const now = await readSlot(date, slotId);
     return { ...out, ok: true, finished: ran, state: (now && now.state) || "pending",
              results: (now && now.results) || {},
-             note: "Instagram already had this one; it was asked again rather than sent again" };
+             note: (ch === "threads" ? "Threads" : "Instagram") + " already had this one; it was asked again rather than sent again" };
   }
 
   const post = await composeSlot(host, date, slotId, opts);
@@ -1452,7 +1473,7 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
   if (r && r.ok) return { ...out, ok: true, cause: "nothing: this one went out", fix: "none", canRetry: false };
   if (r && r.pending)
     return { ...out, ok: true, fix: "finish", canRetry: true,
-      cause: "Instagram has the video and is still processing it",
+      cause: (ch === "threads" ? "Threads" : "Instagram") + " has the video and is still processing it",
       steps: ["Nothing failed. The container was accepted and is transcoding.",
               "Press Finish it, or leave it: the next hourly run publishes it by itself."] };
 
@@ -1557,7 +1578,50 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
       out.canRetry = false; return { ...out, ok: true };
     }
   }
-  const NET = ch === "pinterest" ? "Pinterest" : ch === "youtube" ? "YouTube" : ch === "telegram" ? "Telegram" : "Meta";
+  /* Threads: Meta's codes, but a token of its own and a door of its own, so
+     the token and permission faults point at /api/threads, not at Business
+     Suite. A rate limit there is the 250-a-day ceiling and clears by itself. */
+  if (ch === "threads") {
+    const said = String(out.said || "");
+    /* "expired" alone would also catch a container Meta let EXPIRE, which is
+       a retry, not a token; so the token is named, not the word */
+    if ((r && r.code === 190) || /does not accept the token|session has expired|invalid oauth/i.test(said)) {
+      out.cause = "the Threads token has expired or been revoked"; out.fix = "token";
+      out.steps = ["A Threads token lives sixty days. Open /api/threads?action=renew while it still works; once it has expired, open /api/threads?action=auth and give consent again.",
+                   "Paste the new TH_TOKEN into Vercel and redeploy, then press Retry on this row."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+    if ((r && r.wait) || /rate limit|limit reached|too many/i.test(said)) {
+      out.cause = "Threads is rate limiting the account for now"; out.fix = "wait";
+      out.steps = ["Nothing is broken; a profile may publish 250 posts in 24 hours and the API also limits calls per hour.",
+                   "The hourly run retries by itself; or wait an hour and press Retry on this row."];
+      out.canRetry = true; return { ...out, ok: true };
+    }
+    if (/threads_content_publish|tester|permission|not authorized/i.test(said)) {
+      out.cause = "the token is not permitted to publish for this account"; out.fix = "manual";
+      out.steps = ["While the Meta app is in development, the Threads account must accept the tester invitation: in the Threads app, Settings, Account, Website permissions, Invites.",
+                   "Then open /api/threads?action=auth again so the token carries threads_content_publish, paste TH_TOKEN and TH_USER_ID into Vercel, redeploy, and press Retry on this row."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+    if (/could not process the video|ERROR|EXPIRED/.test(said)) {
+      out.cause = "Threads could not process the video, or the container expired before it was published"; out.fix = "retry";
+      out.steps = ["The file is fetched from the site by url; check the reel plays at its address.",
+                   "Press Retry on this row: a new container is made and published."];
+      out.canRetry = true; return { ...out, ok: true };
+    }
+    if (/could not fetch the file/i.test(said)) {
+      out.cause = "Threads could not fetch the picture or the video from its url"; out.fix = "retry";
+      out.steps = ["The card is rendered on demand, so a cold start can outrun Meta's patience; the check above says whether it is reachable now.",
+                   "Press Retry on this row."];
+      out.canRetry = true; return { ...out, ok: true };
+    }
+    if (/not configured|not connected/i.test(said)) {
+      out.cause = "Threads is not connected yet"; out.fix = "manual";
+      out.steps = ["Follow the Threads steps page once: the Threads use case on the Meta app, the consent at /api/threads?action=auth, two variables in Vercel."];
+      out.canRetry = false; return { ...out, ok: true };
+    }
+  }
+  const NET = ch === "pinterest" ? "Pinterest" : ch === "youtube" ? "YouTube" : ch === "telegram" ? "Telegram" : ch === "threads" ? "Threads" : "Meta";
 
   /* the network's own code first, because it is the only thing here it stands behind */
   const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));

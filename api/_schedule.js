@@ -254,7 +254,7 @@ function buildSlotInner(slot, ctx) {
       todo: [], basis: "", note: "", tags: [], invite: "",
       link, image: r.cover || null, video: r.video, reel: true,
       kind: r.kind || "light",
-      only: ["facebook", "instagram", "youtube", "pinterest", "telegram"]
+      only: ["facebook", "instagram", "youtube", "pinterest", "telegram", "threads"]
     };
   }
 

@@ -50,9 +50,21 @@ const HOUSE = { store: true, storeKind: 'redis', lanternConfigured: true, lanter
   guardians: [{ market: 'FR', status: 'active', amount: 15, cadence: 'month', currency: 'EUR', email: 'g@x.y', name: 'A', started: '2026-05-01', renews: '2026-10-01', endsAfterWeek: false, approved: true, gname: 'Amina', gurl: '', gline: '' }],
   gifts: { total30d: 90, count30d: 3, monthly: 60, recent: [{ amount: 30, currency: 'USD', when: '2026-09-01', email: 'a@b.c' }] } };
 const LANTERN = { ok: true, answered: 'x/inkling:free', reply: 'lit', tried: [{ model: 'x/inkling:free', ms: 900, err: '' }], ms: 950 };
+const INS = { ok: true, enabled: true, days: 14, media: 70, read: 62, unread: 6, refused: 2, stale: 8, readAt: '2026-09-07T11:00:00Z',
+  byKind: [{ kind: 'reel:verse', label: 'verse reels', n: 12, reach: { median: 2400, mean: 2510 }, views: { median: 7100, mean: 7300 } },
+           { kind: 'card:word', label: 'word cards', n: 9, reach: { median: 1000, mean: 1040 }, views: { median: 1200, mean: 1250 } },
+           { kind: 'reel:word', label: 'word reels', n: 11, reach: { median: 300, mean: 320 }, views: { median: 900, mean: 950 } }],
+  byHour: [{ hour: 8, label: '08:00', n: 12, reach: { median: 2400 }, views: { median: 7100 } }, { hour: 21, label: '21:00', n: 11, reach: { median: 300 }, views: { median: 900 } }],
+  byNetwork: [{ net: 'instagram', n: 32, reach: { median: 1000 }, views: { median: 1900 } }, { net: 'facebook', n: 30, reach: { median: 500 }, views: { median: 800 } }],
+  top: [{ title: 'One verse about light', kind: 'reel:verse', label: 'verse reels', hour: 8, at: '08:00', net: 'instagram', id: 'ig1', url: '', measure: 'reach', n: 4100, date: '2026-09-02', slot: 'reelA' },
+        { title: 'A Short', kind: 'reel:verse', label: 'verse reels', hour: 8, at: '08:00', net: 'youtube', id: 'y1', url: 'https://youtube.com/shorts/y1', measure: 'views', n: 3900, date: '2026-09-03', slot: 'reelA' }],
+  sentences: ['Verse reels reach 8× the median of word reels (2,400 against 300, 12 and 11 posts).', 'The 21:00 slot reaches least (median 300 over 11 posts).'] };
 
+
+let insPosts = 0;
 async function open_(w, h, posted, errors, opts = {}) {
   const pg = await br.newPage({ viewport: { width: w, height: h } });
+  insPosts = 0;
   pg.on('pageerror', e => errors.push(String(e)));
   pg.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   pg.on('response', r => { if (r.status() >= 400) errors.push(r.status() + ' ' + r.url()); });
@@ -63,6 +75,8 @@ async function open_(w, h, posted, errors, opts = {}) {
       const b = JSON.parse(q.postData() || '{}'); posted.push({ url: u.replace(BASE, ''), body: b });
       if (u.includes('/api/journal') && b.action === 'queue') return r.fulfill(J(QUEUE));
       if (u.includes('/api/admin-auth')) return r.fulfill(J({ ok: true }));
+      /* Read again: the first batch says there is more, the second says done */
+      if (u.includes('/api/insights')) { insPosts++; return r.fulfill(J(insPosts === 1 ? { ok: true, fetched: 40, left: 30, partial: true } : { ok: true, fetched: 30, left: 0, partial: false })); }
       return r.fulfill(J({ ok: true, where: 'instagram', state: 'sent', results: {} }));
     }
     if (u.includes('/api/admin-data?probe=lantern')) return r.fulfill(J(LANTERN));
@@ -78,6 +92,7 @@ async function open_(w, h, posted, errors, opts = {}) {
       if (opts.legacy) { const t = JSON.parse(JSON.stringify(TODAY)); t.slots = t.slots.map(x => x.id === 'light' ? { id: 'light', at: 12, state: 'due', title: '' } : x); t.legacy = { state: 'sent', at: '2026-09-07T12:01:00Z', title: 'The card' }; return r.fulfill(J(t)); }
       return r.fulfill(J(TODAY));
     }
+    if (u.includes('/api/insights')) return r.fulfill(J(INS));
     if (u.includes('/api/visitors')) return r.fulfill(J(VIS));
     if (u.includes('/api/inbox')) return r.fulfill(J(INBOX));
     if (u.includes('/reels/index.json')) return r.fulfill(J({ n: 2, cards: [{ id: 'a', slot: 'morning', hook: 'A', caption: 'x' }, { id: 'b', slot: 'evening', hook: 'B', caption: 'y' }] }));
@@ -211,6 +226,24 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/88/.test(r) && /crawlers/.test(r), 'the turned-away total is explained');
   ok(/thank you for the library/.test(r), 'the inbox lists what arrived');
   ok(/A reply that waits/.test(r) && /flagged: link/.test(r), 'a held reply shows with why it was held');
+  /* what strangers watch */
+  const rAll = await pg.evaluate(() => document.getElementById('s-readers').textContent);   /* the folds too */
+  ok(/what strangers watch/i.test(r) && /62 of 70 read/.test(r) && /8 to read again/.test(r), 'the fortnight\'s read is summed up: read, of how many, how many are stale');
+  ok(/verse reels/.test(r) && /word cards/.test(r) && /word reels/.test(r), 'every kind is a bar');
+  const kb = await pg.evaluate(() => [...document.querySelectorAll('#s-readers details[open] .bars .b')].map(b => ({ n: b.querySelector('.n').textContent, w: b.querySelector('.t i').dataset.w, v: b.querySelector('.v').textContent })));
+  ok(kb.length === 3 && /verse reels/.test(kb[0].n) && kb[0].w === '100' && kb[0].v === '2,400' && kb[2].w === '13', 'the kind bars are median reach against the best, with the count: ' + JSON.stringify(kb));
+  ok(/08:00 UTC/.test(rAll) && /21:00 UTC/.test(rAll), 'the hours are rows, in a fold');
+  ok(/Verse reels reach 8× the median of word reels/.test(r) && /21:00 slot reaches least/.test(r), 'the sentences the numbers support are printed');
+  ok(/One verse about light/.test(rAll) && /A Short/.test(rAll) && /views/.test(rAll), 'the top ten lists the posts, a Short by its views');
+  ok(await pg.evaluate(() => !!document.querySelector('#s-readers a[href="https://youtube.com/shorts/y1"]')), 'with a link where the network gives one');
+  ok(!/needs a permission/.test(r), 'no permission is asked for when none is missing');
+  posted.length = 0;
+  await pg.click('#ins-read');
+  await pg.waitForTimeout(900);
+  const rf = posted.filter(x => x.url.startsWith('/api/insights'));
+  ok(rf.length === 2 && rf.every(x => x.body.action === 'refresh' && x.body.days === 14), 'Read again posts refresh, and again while the answer is partial, then stops: ' + rf.length);
+  ok(await pg.evaluate(() => /Read again/.test(document.getElementById('ins-read').textContent) && !document.getElementById('ins-read').disabled), 'and the button comes back');
+  ok(await pg.evaluate(() => /Read 70/.test(document.getElementById('toast').textContent)), 'the owner is told how many were read');
   await pg.click('[data-held="0"]');
   await pg.waitForTimeout(400);
   const held = await pg.evaluate(() => ({ open: document.getElementById('sheet').classList.contains('on'), text: document.getElementById('sheet-in').innerText }));
@@ -300,6 +333,24 @@ console.log('\nthe day after a card went through the old path');
   await pg.waitForSelector('#s-posts .slot', { timeout: 15000 });
   const send = await pg.evaluate(() => [...document.querySelectorAll('[data-send]')].map(b => b.getAttribute('data-send')));
   ok(!send.includes('light'), 'and Post now is not offered for it, so it cannot go out twice');
+  ok(errors.length === 0, 'no script threw');
+  await pg.close();
+}
+
+console.log('\nwhen the Instagram token cannot read insights');
+{
+  const posted = [], errors = [];
+  const pg = await open_(390, 844, posted, errors);
+  await pg.click('nav.bar [data-s="readers"]');
+  await pg.waitForSelector('#ins-read', { timeout: 15000 });
+  await pg.route('**/api/insights', r => r.request().method() === 'POST'
+    ? r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, fetched: 0, partial: false, needs: 'instagram_manage_insights', say: 'The Instagram token can post but cannot read what a post did: it was made without instagram_manage_insights. Generate a new token with that permission added and paste it into Vercel as IG_TOKEN, then redeploy and press Read again.' }) })
+    : r.continue());
+  await pg.click('#ins-read');
+  await pg.waitForTimeout(900);
+  const t = await pg.evaluate(() => document.getElementById('s-readers').innerText);
+  ok(/needs a permission/.test(t) && /instagram_manage_insights/.test(t) && /IG_TOKEN/.test(t), 'the missing permission is named where the numbers would be, with what to paste and where');
+  ok(await pg.evaluate(() => !document.getElementById('ins-read').disabled), 'and Read again is offered for after the token is replaced');
   ok(errors.length === 0, 'no script threw');
   await pg.close();
 }
