@@ -383,9 +383,16 @@ export async function computeLedger(opts) {
   } catch {
     return { ok: false, reason: "stripe", configured: true, store, ...tally([], given) };
   }
-  /* the household floor, set in Controls in whole units, held here in minor
-     units so it never meets a float on the way to the arithmetic */
-  let floorMinor = 2000000;
+  /* the household floor, set in Controls in whole units (or in the
+     LEDGER_FLOOR variable, whole units too), held here in minor units so it
+     never meets a float on the way to the arithmetic. The code itself knows
+     no figure: unset, the floor is zero and everything above upkeep is
+     onward, so the repository never says what the household lives on. */
+  let floorMinor = 0;
+  {
+    const e = parseFloat(String(process.env.LEDGER_FLOOR || "").replace(/[\s,]/g, ""));
+    if (Number.isFinite(e) && e >= 0) floorMinor = Math.round(e * 100);
+  }
   try {
     const raw = (await kv([["GET", "nb:settings"]]))[0];
     if (raw) {

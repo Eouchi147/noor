@@ -37,8 +37,9 @@ These are not preferences. They are refused, not negotiated.
   is recited the bed is silent. A tempo grid may shape the timing; it is
   never sounded.
 - **Money:** 2.5% zakat computed on gross first; the private ledger in the
-  console; the household floor of $20k USD a month. The public page names
-  only the zakat.
+  console; a household floor whose figure is set in Controls (The Ledger) or
+  the `LEDGER_FLOOR` variable and lives only there, never in this repository.
+  The public page names only the zakat.
 - **Nothing half finished goes live.** Every deliverable is audited for
   production before it is handed over, and shipped with a step-by-step page.
 
@@ -78,9 +79,15 @@ These are not preferences. They are refused, not negotiated.
   asked for with a screen recording; X built and switched off (paid); Reddit
   drafts only, never automatic; Telegram built (`api/_telegram.js`: a bot
   from BotFather made administrator of a public channel, TG_BOT_TOKEN and
-  TG_CHAT_ID), cards as photos and reels as videos; TikTok and Threads after
-  YouTube. The day is ten posts (nine without a countdown),
-  eighteen surfaces on Meta, well inside Instagram's hundred a day.
+  TG_CHAT_ID), cards as photos and reels as videos; Threads built
+  (`api/_threads.js`, its own door at `/api/threads?action=auth`: the Threads
+  use case on the Meta app, one consent, TH_TOKEN and TH_USER_ID shown once
+  and pasted into Vercel; a card as its picture with the title, one line and
+  the link, a reel as the video with its caption cut to 500; the token lives
+  sixty days and `?action=renew` shows a fresh one) and waiting on its
+  consent; TikTok after YouTube. The day is ten posts (nine without a
+  countdown), eighteen surfaces on Meta, well inside Instagram's hundred a
+  day and Threads' 250.
 - **Reliability** (`api/social.js`): the poster posts first, then heals what
   failed with backoff, and never double-posts: a half-sent slot is retried
   one network at a time, a legacy-sent card is honoured, a slot in flight

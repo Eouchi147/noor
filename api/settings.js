@@ -68,10 +68,13 @@ export const DIALS = {
   /* ---- the ledger ----------------------------------------------------
      A floor, not a share. Below this figure the work cannot become the
      keeper's occupation; above it, what is left is meant to leave. Zakat is
-     never affected by this number, because a due is not a remainder. */
-  "ledger.floor": { t: "num", def: 20000, min: 0, max: 1000000,
+     never affected by this number, because a due is not a remainder.
+     The figure itself is private: it is set here in the console or in the
+     LEDGER_FLOOR variable, and the code carries no default but zero, so the
+     repository never states what the household lives on. */
+  "ledger.floor": { t: "num", env: "LEDGER_FLOOR", def: 0, min: 0, max: 1000000,
                     g: "The Ledger", n: "Household floor each month",
-                    h: "In whole units of your currency. The private ledger counts this per month elapsed since the first gift arrived, and treats everything above it as onward giving. Never shown to a reader." },
+                    h: "In whole units of your currency. The private ledger counts this per month elapsed since the first gift arrived, and treats everything above it as onward giving. Never shown to a reader, never written in the repository: zero until you set it." },
 
   /* ---- the journal ---------------------------------------------------
      Three switches rather than one, because a section can go wrong in three
@@ -141,6 +144,10 @@ function envDefault(d) {
   if (raw === undefined || raw === "") return d.def;
   if (d.t === "bool") return d.envTrue ? raw === d.envTrue : raw === "1" || raw === "true";
   if (d.t === "int") { const n = parseInt(raw, 10); return Number.isFinite(n) ? n : d.def; }
+  if (d.t === "num") {
+    const n = parseFloat(String(raw).replace(/[\s,]/g, ""));
+    return Number.isFinite(n) && n >= (d.min ?? 0) ? Math.min(d.max ?? 1e9, n) : d.def;
+  }
   return raw;
 }
 
