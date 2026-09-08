@@ -1,215 +1,1940 @@
 {
- "n": 30,
- "written": "2026-09-04",
+ "n": 207,
+ "written": "2026-09-08",
  "cards": [
   {
    "id": "al-battani-solar-year",
+   "kind": "light",
    "slot": "morning",
    "hook": "He measured the year and was off by two minutes",
    "caption": "Al-Battani also found that the point at which the sun is furthest from the earth had shifted since Ptolemy recorded its position, which meant the Greek tables were not simply to be copied forward. In Europe he was known as Albategnius. There is a crater on the moon carrying his Latin name.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Calendar #Stargazing #MedievalHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "al-jazari-machines-1206",
+   "kind": "light",
    "slot": "morning",
    "hook": "An engineer drew about fifty machines and how to build them",
    "caption": "Among the machines are an elephant clock combining Indian, Greek, Chinese and Arab parts, hand washing basins that pour and refill, and musical automata. Historians of technology point to his use of the crankshaft joined to a connecting rod, and of segmental gears and a camshaft, in machines that actually worked.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #History #HistoryOfScience #Automata #Inventions #Mechanics",
+   "secs": null,
    "cover": true
   },
   {
    "id": "al-razi-case-records",
+   "kind": "light",
    "slot": "morning",
    "hook": "Al-Razi wrote down the cases where he was wrong",
    "caption": "The Hawi, the book al-Razi is best known for, was not written by him for readers. His students assembled it after his death from his working notebooks, which is why it reads as it does: an authority quoted, then Greek and Indian opinion, then a mark meaning mine, followed by what he had seen at the bedside. His book of doubts about Galen held that Galen's own method demanded exactly that.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Baghdad #HistoryOfScience #Books",
+   "secs": null,
    "cover": true
   },
   {
    "id": "al-sufi-andromeda-964",
+   "kind": "light",
    "slot": "morning",
    "hook": "A little cloud in his star book was another galaxy",
    "caption": "Al-Sufi went through Ptolemy's catalogue constellation by constellation and drew each one twice, as seen on a globe and as seen in the sky. He also wrote down the Arabic names Bedouin observers were already using. His book was copied and translated for six hundred years, and many star names in use today come through it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Isfahan #Andromeda #StarNames #Stargazing",
+   "secs": null,
    "cover": true
   },
   {
    "id": "astrolabe-model-of-the-sky",
+   "kind": "light",
    "slot": "morning",
    "hook": "An astrolabe is a model of the sky, held in the hand",
    "caption": "The geometry behind it is Greek: flattening the sphere of the sky onto a disc goes back to Hipparchus. The same instrument gives the direction being faced, where any other star has got to, and the height of the tower across the street. Chaucer wrote a manual for one in English, for his ten year old son.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Astronomy #IslamicHistory #Astrolabe #HistoryOfScience #Navigation #MedievalHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "banu-musa-ingenious-devices",
+   "kind": "light",
    "slot": "morning",
    "hook": "Three brothers designed machines that regulated themselves",
    "caption": "That is feedback, a machine keeping a condition steady with no hand on it: a siphon that empties a chamber at a set level, a lamp that trims its own wick and draws up its own oil. The brothers were patrons as well as builders, paying translators out of their own pockets. Their book also describes a grab for lifting objects off a riverbed, and Donald Hill translated it into English in 1979.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #HistoryOfScience #Baghdad #Automation #Inventions",
+   "secs": null,
    "cover": true
   },
   {
    "id": "block-printed-amulets-fustat",
+   "kind": "light",
    "slot": "morning",
    "hook": "Arabic was printed on paper before printing existed in Europe",
    "caption": "The strips come from medieval Egypt and Syria and date from roughly the tenth to the fourteenth centuries. Printing on paper was practised in Arabic long before it existed in Europe, yet it stayed confined to amulets sold in the street, a trade of low standing. Historians give various reasons, from the prestige of the copyist's hand to the economics of a strong manuscript trade, and none of them is settled.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Printing #BookHistory #Egypt #Cairo #Archaeology #MedievalHistory",
+   "secs": null,
+   "cover": true
+  },
+  {
+   "id": "codex-allah",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Ninety-Nine Names",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Ninety-Nine Names. His names, what He is not, and the three doors of tawhid\nnoorcodex.com/allah\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-arabic",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Letters",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Letters. Learn to read the Arabic script, letter by letter\nnoorcodex.com/arabic\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-begin",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Begin",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Begin. For anyone new to Islam, from the first day\nnoorcodex.com/begin\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-characters",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Characters",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Characters. Everyone the Codex names\nnoorcodex.com/characters\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-companions",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Companions",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Companions. The men and women who saw him ﷺ\nnoorcodex.com/companions\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-dictionary",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Encyclopedia of the Path",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Encyclopedia of the Path. 523 words this library uses, defined\nnoorcodex.com/dictionary\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-eid",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Two Eids",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Two Eids. Fitr and Adha\nnoorcodex.com/eid\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-family",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Family Room",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Family Room. Children, parents, neighbours\nnoorcodex.com/family\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-good-life",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "How to Live a Good Life",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: How to Live a Good Life. Tayyiba: a good life, not an easy one\nnoorcodex.com/good-life\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-hajj",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Hajj & Umrah",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Hajj & Umrah. The rites, step by step, with their evidence\nnoorcodex.com/hajj\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-health",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Prophetic Health",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Prophetic Health. The body, the plate, the fast, hijama\nnoorcodex.com/health\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-heroes",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Heroes of Islam",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Heroes of Islam. The people who carried it after them\nnoorcodex.com/heroes\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-kids",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Kids' Codex",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Kids' Codex. The Greatest Game\nnoorcodex.com/kids\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-madrasa",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Classroom",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Classroom. The whole curriculum, in order\nnoorcodex.com/madrasa\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-marriage",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Marriage & the Home",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Marriage & the Home. From the proposal to the household\nnoorcodex.com/marriage\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-muhammad",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Seerah",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Seerah. Twenty-three years, his character and his habits\nnoorcodex.com/muhammad\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-pillars",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Five Pillars",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Five Pillars. Shahadah, salah, zakat, sawm, hajj\nnoorcodex.com/pillars\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-places",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Places",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Places. The ground it happened on\nnoorcodex.com/places\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-prophets",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The 25 Prophets",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The 25 Prophets. Every prophet named in the Qur'an\nnoorcodex.com/prophets\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-protection",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Protection & the Light",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Protection & the Light. Sihr, ruqya, the evil eye, and the myths\nnoorcodex.com/protection\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-quran",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Mushaf",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Mushaf. All 114 surahs, with recitation for every ayah\nnoorcodex.com/quran\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-ramadan",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Ramadan",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Ramadan. The month, and the tools for it\nnoorcodex.com/ramadan\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-sermon",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Last Sermon",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Last Sermon. The final khutbah, line by line\nnoorcodex.com/sermon\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-simulation",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Are We in a Simulation?",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Are We in a Simulation?. The modern question, answered from the text\nnoorcodex.com/simulation\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-soul",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Journey of the Soul",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Journey of the Soul. What happens after the last breath\nnoorcodex.com/soul\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-stories",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Hall of Stories",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Hall of Stories. His names, told as stories\nnoorcodex.com/stories\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-teens",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "For Teenagers",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: For Teenagers. Written for them, not about them\nnoorcodex.com/teens\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-theology",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Theology",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Theology. The branches, and where they parted\nnoorcodex.com/theology\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-three-lives",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "Three Lives",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Three Lives. Weigh your own against them\nnoorcodex.com/three-lives\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-timeline",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Path of Creation",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Path of Creation. 71 chapters, from Kun Fayakun to the Hour\nnoorcodex.com\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-unseen",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Unseen",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Unseen. Angels, jinn, the barzakh, the signs of the Hour\nnoorcodex.com/unseen\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
+   "cover": true
+  },
+  {
+   "id": "codex-words",
+   "kind": "codex",
+   "slot": "evening",
+   "hook": "The Words of the Path",
+   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Words of the Path. The du'as worth carrying, in Arabic and English\nnoorcodex.com/words\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "secs": 10,
    "cover": true
   },
   {
    "id": "constitution-of-medina-622",
+   "kind": "light",
    "slot": "evening",
    "hook": "Medina's founding document named Jews as part of one community",
    "caption": "The document is usually called the Sahifa, or Constitution of Medina. It states that the listed clans form one community alongside the believers, guarantees them their religion, fixes who pays blood money for whom, requires joint defence of the town, and sends disputes to arbitration rather than feud. It was written for a place with more than one faith in it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #History #Governance #Constitution #Interfaith",
+   "secs": null,
    "cover": true
   },
   {
+   "id": "day-arafah",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The Day of Arafah",
+   "caption": "The Day of Arafah: 9 Dhul-Hijjah.\n\nThe pilgrims stand at Arafah. For everyone else, the Prophet ﷺ said he hoped its fast would expiate the year before it and the year after.\n\nFast, if you are not on Hajj.\n\nBasis: Sahih Muslim 1162a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Arafah #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 12,
+   "hd": 9
+  },
+  {
+   "id": "day-ashura",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Ashura",
+   "caption": "Ashura: 10 Muharram.\n\nThe tenth of Muharram. The Prophet ﷺ said he hoped its fast would expiate the year before it.\n\nFast, if you are able.\n\nBasis: Sahih Muslim 1162a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Ashura #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 1,
+   "hd": 10
+  },
+  {
+   "id": "day-dhulhijjah",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The first ten days of Dhul Hijjah",
+   "caption": "The first ten days of Dhul Hijjah: 1 Dhul-Hijjah.\n\nThe Prophet ﷺ said no days have deeds more beloved to Allah than these.\n\nIncrease whatever you already do: dhikr, charity, Qur'an, prayer.\n\nBasis: Sahih al-Bukhari 969\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#DhulHijjah #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 12,
+   "hd": 1
+  },
+  {
+   "id": "day-eid-adha",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Eid al-Adha",
+   "caption": "Eid al-Adha: 10 Dhul-Hijjah.\n\nThe day of sacrifice. Like Eid al-Fitr, it is a day of eating and fasting it is forbidden.\n\nDo not fast today.\n\nBasis: Sahih al-Bukhari 1991\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#EidAlAdha #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 12,
+   "hd": 10
+  },
+  {
+   "id": "day-eid-fitr",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Eid al-Fitr",
+   "caption": "Eid al-Fitr: 1 Shawwal.\n\nThe fast is complete. The first day of Shawwal is a day of eating, and fasting it is forbidden.\n\nDo not fast today.\n\nBasis: The prohibition on fasting the two Eids: Sahih al-Bukhari 1991\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#EidAlFitr #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 10,
+   "hd": 1
+  },
+  {
+   "id": "day-lastten",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The last ten nights",
+   "caption": "The last ten nights: 21 Ramadan.\n\nThe Prophet ﷺ said to search for Laylat al-Qadr in the odd nights of the last ten of Ramadan.\n\nPray at night through all ten, not one.\n\nBasis: Sahih al-Bukhari 2017\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#LaylatAlQadr #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 9,
+   "hd": 21
+  },
+  {
+   "id": "day-new-year",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The Hijri New Year",
+   "caption": "The Hijri New Year: 1 Muharram.\n\nA new Islamic year begins. The count starts from the Hijra, the migration to Madinah, not from a birth or a battle: the year a scattered community became a society with obligations to one another.\n\nThere is no prescribed act of worship for this day.\n\nBasis: The calendar's starting point is a decision of Umar ibn al-Khattab and his council, not a revealed date.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#HijriNewYear #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 1,
+   "hd": 1
+  },
+  {
+   "id": "day-rajab27",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The night journey",
+   "caption": "The night journey: 27 Rajab.\n\nThe Isra and Mi'raj are certain: the Qur'an opens Surah al-Isra with the night journey (17:1). The date is not. No authentic report places it on 27 Rajab or in Rajab at all.\n\nRead Surah al-Isra and the seerah of that night, on any night.\n\nBasis: The event: Qur'an 17:1. The date: not established in any authentic narration.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Rajab #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 7,
+   "hd": 27
+  },
+  {
+   "id": "day-ramadan",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Ramadan begins",
+   "caption": "Ramadan begins: 1 Ramadan.\n\nThe month of the Qur'an, and the fast that is one of the five pillars.\n\nFast from dawn to sunset.\n\nBasis: Qur'an 2:183-185\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Ramadan #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 9,
+   "hd": 1
+  },
+  {
+   "id": "day-sha3ban15",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The middle of Sha'ban",
+   "caption": "The middle of Sha'ban: 15 Sha'ban.\n\nA night some Muslims mark with prayer and seeking forgiveness, and others hold has no established basis.\n\nScholars genuinely differ. Ibn al-Jawzi, al-Tartushi and al-Iraqi held that no reliable report establishes merit for this night. Ibn al-Salah, Ibn Taymiyyah and Ibn Rajab held the supporting chains enough to justify praying alone that night.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Shaban #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 8,
+   "hd": 15
+  },
+  {
+   "id": "day-shawwal6",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The six of Shawwal",
+   "caption": "The six of Shawwal: 2 Shawwal.\n\nSix voluntary days fasted during Shawwal, which the Prophet ﷺ said is as though one had fasted the whole year.\n\nAny six days this month, together or spread out.\n\nBasis: Sahih Muslim 1164a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Shawwal #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 10,
+   "hd": 2
+  },
+  {
+   "id": "day-tashriq",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The days of Tashriq",
+   "caption": "The days of Tashriq: 11 Dhul-Hijjah.\n\nThe three days after Eid al-Adha. The Prophet ﷺ called them days of eating and drinking, and they are not fasted.\n\nDo not fast today.\n\nBasis: Sahih Muslim 1141a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#DhulHijjah #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 12,
+   "hd": 11
+  },
+  {
+   "id": "day-tasua",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "The ninth of Muharram",
+   "caption": "The ninth of Muharram: 9 Muharram.\n\nThe day before Ashura. The Prophet ﷺ said that if he lived to the next year he would fast the ninth as well, so that the fast would not look like anyone else's.\n\nFast today and tomorrow, if you are able.\n\nBasis: Sahih Muslim 1134a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Ashura #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 1,
+   "hd": 9
+  },
+  {
    "id": "farewell-sermon-632",
+   "kind": "light",
    "slot": "evening",
    "hook": "The farewell sermon was given from the back of a camel",
    "caption": "The interest cancelled first of all was owed to his own uncle, and the men were told that their wives have rights over them. Jabir ibn Abdullah, then a young man, gave an account of the whole pilgrimage that runs to several pages in Muslim's collection. In the version preserved in other collections the sermon states that no Arab has any superiority over a non Arab except in God consciousness. He died within three months.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hajj #Arafah #Seerah #Hadith #History",
+   "secs": null,
    "cover": true
   },
   {
    "id": "fasting-is-not-about-hunger",
+   "kind": "light",
    "slot": "evening",
    "hook": "Leaving food is not wanted if false speech stays",
    "caption": "The report is blunt about what the fast is for, and it refuses to accept thirst as an achievement on its own. In another narration the Prophet ﷺ told a fasting person who is insulted or dragged into an argument to say, twice, that he is fasting, and to leave it there. The hunger is the most visible part of the month and the least important.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #Fasting #Hadith #Faith #IslamicHistory #Spirituality",
+   "secs": null,
    "cover": true
   },
   {
    "id": "fatima-al-fihri-qarawiyyin",
+   "kind": "light",
    "slot": "morning",
    "hook": "She spent her inheritance on a mosque that has never closed",
    "caption": "Al-Qarawiyyin issued certificates to those who studied there, and UNESCO and Guinness both list it as the oldest existing degree granting institution. Tradition holds that Fatima fasted while the building work went on. Almost everything told about her comes from Ibn Abi Zar's chronicle, written some five centuries later, and historians say plainly that earlier evidence for her life is thin.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Education #History #Morocco #Fez #Universities #Libraries #WomenInHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "four-sacred-months",
+   "kind": "light",
    "slot": "evening",
    "hook": "Four months of the twelve were closed to war",
    "caption": "The truce those months carried was older than Islam and was kept by tribes who agreed on very little else. Caravans moved, pilgrims travelled, and blood feuds paused for a quarter of every year. The verse confirms the arrangement rather than creating it, and dates the twelve months to the day the heavens and the earth were created.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Calendar #Muharram #Rajab #History",
+   "secs": null,
    "cover": true
   },
   {
    "id": "hafs-and-warsh-today",
+   "kind": "light",
    "slot": "evening",
    "hook": "The Qur'an in Morocco is recited differently from Cairo",
    "caption": "The Cairo edition of 1924 printed Hafs from Asim, and that reading spread with it. A printed Warsh Qur'an looks noticeably different on the page, with different vowel signs and spellings. Parts of Libya read Qalun from the same Nafi, and Sudan and the Horn read al-Duri from Abu Amr. Algeria and Mauritania read Warsh alongside Morocco.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Morocco #Cairo #WestAfrica #Qiraat #Recitation",
+   "secs": null,
    "cover": true
   },
   {
    "id": "hijri-calendar-epoch-622",
+   "kind": "light",
    "slot": "evening",
    "hook": "The Muslim year counts from a departure, not a birth",
    "caption": "The choice was deliberate. Umar and his advisers passed over the birth of the Prophet ﷺ, the first revelation and every victory, and took the migration instead, because that was when a scattered community became a society with obligations to one another. By the standard reckoning that day, the first of Muharram in year 1, falls in the Julian calendar.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijri #Calendar #Makkah #Madinah #History",
+   "secs": null,
    "cover": true
   },
   {
    "id": "ibn-al-nafis-circulation-1242",
+   "kind": "light",
    "slot": "morning",
    "hook": "He corrected Galen on the heart and was lost for centuries",
    "caption": "The accepted view, from Galen and from Ibn Sina alike, was that blood crossed from the right side of the heart to the left through invisible pores. Ibn al-Nafis wrote that there are no pores, and that the blood mixes with air in the lungs. His text then sat unread until a physician, Muhyi al-Din al-Tatawi, found it in a Berlin manuscript and published on it in 1924.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #Anatomy #History #Cairo #HistoryOfScience",
+   "secs": null,
    "cover": true
   },
   {
    "id": "ibn-al-shatir-copernicus",
+   "kind": "light",
    "slot": "morning",
    "hook": "A mosque timekeeper's lunar model matches Copernicus exactly",
    "caption": "Ibn al-Shatir rebuilt planetary astronomy out of uniform circular motions alone, discarding Ptolemy's equant and off centre circles. Victor Roberts worked with E. S. Kennedy in Beirut, and found that several parameters match as well. Some scholars argue for transmission through Byzantine Greek manuscripts, others for two men solving the same problem the same way. One difference is plain: Ibn al-Shatir kept the earth at the centre, and Copernicus moved it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Damascus #Mathematics #MedievalHistory",
+   "secs": null,
+   "cover": true
+  },
+  {
+   "id": "know-basmala-114",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "The opening formula appears exactly 114 times",
+   "caption": "Every chapter opens with the basmala except chapter 9, Surah al-Tawba. The one occurrence that is not a heading is in Surah al-Naml, where the queen of Saba reads out the letter that has reached her from Sulayman and quotes its opening. A quotation from a letter between two heads of state brings the count to the number of chapters.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #Basmala #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-birmingham",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Two leaves in Birmingham belong to a book kept in Paris",
+   "caption": "Alba Fedeli identified the two leaves during doctoral work, and François Déroche of the Collège de France confirmed that they belong with the sixteen in the Bibliothèque nationale de France, catalogued as Arabe 328(c). One codex, eighteen surviving leaves, split between two European cities and reunited on paper. The Birmingham pages carry part of Surah al-Kahf, the closing verses of Surah Maryam, and the opening forty verses of Surah Ta-Ha.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-book-flap",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "The flap on an old book cover is structural, not decoration",
+   "caption": "The Islamic book got a binding of its own: pasteboard boards, so the book is light, and sewing without cords, which leaves the back flat. Books were shelved flat, so titles were written on the fore edge rather than the spine. Historians of binding trace European gold tooling back to these workshops, reaching Italy by way of Venice and Naples.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Books #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-cairo-1924",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "The Qur'an most people read was typeset over seventeen years",
+   "caption": "The Egyptian government wanted a reliable printed Qur'an for state schools, where the copies in use were full of errors. The edition follows the reading of Hafs from Asim, uses the Kufan way of dividing and numbering the verses, and fixes the pause marks and the spelling. It was not a new text. It was a decision about which inherited conventions to print, and Sunni and Shia publishers alike follow it.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-camera-obscura",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "The camera is named after an Arabic dark room",
+   "caption": "His term was the dark room. Kepler put that into Latin in 1604 as camera obscura, and the word stayed on every camera since. The experiment, several lamps outside one aperture, is what turned a curiosity noticed since antiquity into a proof about how light travels.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Science #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-canon",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "One medical textbook was taught in Europe for six centuries",
+   "caption": "The Canon is five books: principles, some eight hundred simple drugs, diseases organ by organ, diseases of the whole body, and a formulary. Its success was organisation: a physician could find the passage he needed, which made it teachable. That was also the trouble with it. A book good enough to be the syllabus is a book people stop testing, and physicians from Ibn al-Nafis onward had to argue against it.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-catgut",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "A surgeon in Cordoba closed wounds with the jaws of ants",
+   "caption": "Animal gut had been used as thread before him. What al-Zahrawi set down was its use inside the body, where the thread is absorbed and nothing has to be taken out again. He also described a family whose boys bled to death from small cuts, often read as the earliest clinical account of an inherited bleeding disorder. His warning was blunt: anyone who cuts without knowing anatomy will kill the patient.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-cipher",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Zero and cipher are one Arabic word borrowed twice",
+   "caption": "The Indian mathematicians called the empty column shunya, the void. Arabic translators rendered it sifr, empty. Latin wrote that down twice, as zephirum and cifra: the first became zero, the second became cipher, which meant zero, then any digit, then a secret code. A cipher is a zero, and a zero is an emptiness, carried west in Arabic.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Mathematics #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-columbus",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Columbus sailed on a number he had converted wrongly",
+   "caption": "Al-Farghani's introduction to astronomy, thirty short chapters with almost no mathematics, was the standard textbook for seven hundred years and where Dante took his figures for the size of the heavens. It carried al-Ma'mun's measurement of the earth. Read with the wrong mile, it put Asia correspondingly nearer. How much was error and how much was wishful thinking is still argued.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Astronomy #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-damascus-steel",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "A Damascus sabre was dissolved in acid and held nanotubes",
+   "caption": "The watered blades were forged at Damascus and Isfahan, but the steel arrived as cakes of crucible metal from southern India and Sri Lanka, the material English writers called wootz. The pattern comes from bands of carbide. The technique lapsed in the eighteenth century, most likely when a particular ore stopped coming through the trade. The smiths knew which ore, which heat, and how slowly to let it cool.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Science #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-earth-radius",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "One hill in the Punjab was enough to measure the earth",
+   "caption": "His answer is within a fraction of a per cent of the modern figure. He liked the method because it needed one person and one instrument, where the caliph al-Ma'mun's astronomers had needed survey parties pacing across a plain. Historians note that his instrument could not really support that much accuracy, so part of the agreement is luck.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-free-hospital",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Treatment in a medieval Muslim hospital was free",
+   "caption": "The bimaristan, from a Persian word meaning place of the sick, was funded by waqf, a permanent endowment. The Adudi hospital in Baghdad opened around 981 and Nur al-Din's in Damascus in 1154, with wards divided by complaint, including for mental illness, salaried physicians, surgeons, pharmacists, a kitchen and a library. The system depended on wealthy people wanting a charity that outlived them.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-frequency",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Code breaking came out of Arabic dictionary work",
+   "caption": "Counting letters was a habit of Arabic linguistics before it was a weapon. Al-Khalil ibn Ahmad, who died around 786, built the first Arabic dictionary by working through the permutations of the roots. The tradition ran on for centuries into the Ottoman chancery manuals. Al-Kindi's own treatise was thought lost until a copy turned up in an Istanbul archive in 1987.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-ghubar",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Your digits came to Europe through the Maghrib and Spain",
+   "caption": "The numerals reached the Arabic speaking world from India, and split into two families of shapes. The western set, called ghubar or dust figures after the boards they were written on, is the one Europe learned: Gerbert of Aurillac met them in Catalonia in the tenth century, and Fibonacci learned them properly in Bugia.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-ibn-battuta",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Ibn Battuta did not write the book that carries his name",
+   "caption": "Ibn Juzayy also lifted long passages describing Damascus and Makkah straight out of Ibn Jubayr, writing a century and a half earlier, which was ordinary practice then. Nothing in Ibn Battuta's own hand survives. It remains the fullest description of the fourteenth century Muslim world anybody left, and it has to be read knowing how it was made.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Travel #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-ibn-muqla",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "He measured letters in dots and lost his writing hand",
+   "caption": "Ibn Muqla served three times as vizier to the Abbasid caliphs and is credited with putting Arabic calligraphy on a geometric footing, the proportioned hand. Politics ended badly for him: he was imprisoned, his right hand was cut off, and he died in prison in July 940. His system was still being taught five hundred years later.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Calligraphy #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-kursi",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "The greatest verse is one sentence made of negations",
+   "caption": "The Prophet ﷺ asked Ubayy ibn Ka'b which verse of the book of Allah was the greatest, and Ubayy answered with the verse of the Throne. The Prophet ﷺ struck him on the chest and told him that knowledge should be pleasant for him. The verse sits in the middle of the longest chapter, surrounded by rules about debt, warfare, marriage and charity.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #AyatAlKursi #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-licence",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Baghdad examined its doctors after one patient died",
+   "caption": "In 931 a man in Baghdad died through a practitioner's mistake, and al-Muqtadir ordered the examinations. Those who failed were barred, with exemptions for physicians of established reputation. Sinan also arranged for doctors to visit prisons and sent staffed dispensaries out to the villages. The account is a later one and the round number is a round number, but the principle is clear: a licence to practise, granted by examination.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Medicine #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-maryam",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Only one woman is named in the Qur'an",
+   "caption": "Chapter 19 carries her name, and gives her the longest continuous account of any woman in the book: her withdrawal to a distant place, the palm tree, and her return to her people carrying the child. She is also the one person told she has been chosen above the women of the worlds.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #Maryam #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-muqaddimah",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "A tax idea from 1377 shaped American argument in the 1980s",
+   "caption": "The Muqaddimah is only the introduction to Ibn Khaldun's history, and it is the part still read. In it he announces a subject nobody had named, the science of human social organisation. He explains prices by supply and by the labour inside a good, and tests old chronicles against what an economy could actually feed. The book was translated into English by Franz Rosenthal in 1958.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #History #Economics #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-nineteen",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "He wrote his algebra book at nineteen",
+   "caption": "Born in Baghdad to a Jewish family from Morocco, he worked through the mathematics available in the city and found by his late teens that he had exhausted it. He used repeated division to carry a quotient to as many places as he wanted, coming close to the idea of an unending decimal. He became a Muslim in 1163 and wrote his own account of why.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-paper-arithmetic",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "The decimal point first appears in Damascus in 952",
+   "caption": "Reckoning was then done on a board spread with fine dust, where each step was wiped out as the next was written. Al-Uqlidisi argued for ink and paper instead, partly because on paper the working stays where you can check it. Al-Kashi set decimal fractions out systematically in 1427, and Simon Stevin made them ordinary in Europe in 1585.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #IslamicHistory #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-perfume",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "A philosopher wrote a hundred recipes for perfume",
+   "caption": "Al-Kindi, the first of the major philosophers to write in Arabic, treated smell as a manufacturing problem with quantities in it. The book survives in a single manuscript in Istanbul, edited and translated into German by Karl Garbers in 1948. In another work on compound drugs he tried to put numbers to how the strengths of ingredients add up, one of the first attempts to make pharmacy arithmetic rather than judgement.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-qanat",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Madrid drank from Persian water tunnels for centuries",
+   "caption": "The technique is Iranian and pre-Islamic, at least two and a half thousand years old, and the one at Gonabad is still delivering water. Under Muslim rule it spread east and west and took local names: falaj in Oman, foggara in Algeria, khettara in Morocco, karez further east. Madrid drank from galleries of this kind into the nineteenth century. Around the year 1000 the mathematician al-Karaji wrote a book on finding hidden water and building these tunnels.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Engineering #Water #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-quarantine",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Umar turned an army around at the edge of a plague",
+   "caption": "In 638 plague broke out at Amwas in Syria. Umar ibn al-Khattab, travelling towards Syria, halted at Sargh on the border and ordered the return. Asked whether he was fleeing the decree of Allah, he answered that he was fleeing from the decree of Allah to the decree of Allah. The rule cuts both ways, and Muslim authorities cited it again in 2020.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #IslamicHistory #Umar #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-rahma",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Mercy and the womb come from the same three letters",
+   "caption": "It also gives the ordinary Arabic word for kinship, since relatives are the people connected through a womb. The Prophet ﷺ reported Allah saying that He is al-Rahman, that He created the rahim and derived its name from His own name, and that whoever keeps it joined He will keep joined. The formula recited before every reading rests on the same three letters as the organ that carried the reader.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Mercy #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-rainbow",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "He built a glass raindrop to explain the rainbow",
+   "caption": "He was working through Ibn al-Haytham's Optics and reached the rainbow. Rather than argue about it he built a model. The fainter outer bow, he found, comes from an extra reflection, which is also why its colours run the other way. At almost the same time Theodoric of Freiberg in Germany reached the same conclusion by the same kind of experiment; there is no sign either knew of the other.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Science #Optics #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-sabr",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Patience in Arabic is a word about restraint",
+   "caption": "Sabr is usually translated as patience, which suggests sitting still and letting time pass. The same root names a bitter plant and supplies the verb for holding a person to a commitment. The Qur'an says the patient will be given their reward without reckoning. The word describes somebody doing something difficult, not somebody waiting for it to be over.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Sabr #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-salam",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "The greeting is the religion's own name, conjugated",
+   "caption": "The root s l m carries wholeness, soundness, being intact. Al-Salam is one of the names of God listed at the end of Surah al-Hashr. A Muslim is one who gives himself over, and the word for what he gives and the word for the state he is meant to reach are built from one skeleton.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #Peace #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-sanaa",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "A mosque roof in Yemen hid the Qur'an's earliest pages",
+   "caption": "The material was swept into sacks and left on a staircase. A conservation project ran from 1980 to 1989, with the conservator Ursula Dreibholz sorting and flattening fragments, and recovered tens of thousands of pieces from what had served as the mosque's store for worn out copies of scripture, which are set aside rather than destroyed. Kept safe by being walled up and forgotten.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-sine",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "The word sine is a translation mistake",
+   "caption": "Indian astronomers called the half chord jya. Carried into Arabic by sound as jiba, which means nothing, it was written without vowels and read as jayb, a real word for a fold. The Latin translator rendered the meaning he found, sinus, and English shortened it to sine. The function is Indian; the name is an accident.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Mathematics #Arabic #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-star-names",
+   "kind": "know",
+   "slot": "morning",
+   "hook": "Look up on a clear night and you are mostly reading Arabic",
+   "caption": "Altair and Vega are two birds on opposite banks of the Milky Way. Aldebaran follows the Pleiades. Betelgeuse is usually explained as a copyist's misreading of the Arabic for the hand of the Jawza. When the International Astronomical Union began fixing official spellings in 2016, a large share of the list was Arabic.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Astronomy #Arabic #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-textiles",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "Muslin, damask and mohair are place names or Arabic words",
+   "caption": "Textiles were the largest manufacturing industry of the medieval Muslim world, and the trade left its vocabulary in European languages. Some favourites are guesswork: gauze from Gaza and satin from the Arabic name for the Chinese port of Quanzhou are marked uncertain in the dictionaries. State workshops wove bands of inscription, tiraz, into robes, naming the ruler and the year.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Arabic #History #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true
+  },
+  {
+   "id": "know-windmills",
+   "kind": "know",
+   "slot": "evening",
+   "hook": "The oldest windmills stood on a plain of constant wind",
+   "caption": "Arabic geographers of the ninth and tenth centuries describe the windmills of the region as a known feature. Mills of the same design at Nashtifan in eastern Iran are still standing and were still grinding within living memory. European windmills, which appear in the records of the 1180s, turn on a horizontal shaft and are a different machine, so most historians treat them as a separate development.\n\nThe whole story, free, at noorcodex.com\n\n#DidYouKnow #Islam #Engineering #History #NoorCodexOfLight",
+   "secs": 13,
    "cover": true
   },
   {
    "id": "laylat-al-qadr-pardon-dua",
+   "kind": "light",
    "slot": "evening",
    "hook": "Aisha asked what to say if she found the night",
    "caption": "She was not told to ask for anything material. The Arabic verb is afw, which carries the sense of erasing a thing rather than overlooking it while still remembering it. The report is in the collections of Tirmidhi and Ibn Majah, and Tirmidhi himself graded it hasan sahih.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #LaylatAlQadr #Quran #Hadith #Dua #IslamicHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "longest-verse-is-a-contract",
+   "kind": "light",
    "slot": "evening",
    "hook": "The longest verse in the Qur'an is about debt",
    "caption": "The verse is not about prayer or paradise. It asks for a scribe to write justly, tells the one who owes to dictate, allows for a debtor who cannot dictate, and permits a pledge instead of a written record when travelling. It also says the writing down should not be thought beneath anyone, whether the sum is small or large.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Finance #Contracts #Ethics #Arabic",
+   "secs": null,
    "cover": true
   },
   {
    "id": "makkah-taken-630",
+   "kind": "light",
    "slot": "evening",
    "hook": "The city that drove him out was told: go, you are free",
    "caption": "Members of his family had been killed by people now standing in front of him. A general amnesty followed, with a short list of exceptions, and most of those were pardoned as well. The accounts date the entry to Ramadan of the eighth year after the migration.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Seerah #History #Mercy #Ramadan",
+   "secs": null,
    "cover": true
   },
   {
+   "id": "month-02",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Safar begins",
+   "caption": "Safar begins: 1 Safar.\n\nSafar carries no rulings of its own, and that absence is its lesson. Arabia held the month to be unlucky; the Prophet ﷺ swept the superstition away in one line: no omen-borne contagion, no Safar. A month cannot harm you, and nothing in the calendar is against you.\n\nBasis: Sahih Muslim 2220a\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Safar #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 2,
+   "hd": 1
+  },
+  {
+   "id": "month-03",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Rabi al-Awwal begins",
+   "caption": "Rabi al-Awwal begins: 1 Rabi al-Awwal.\n\nThe month in which, by the weight of the sources, the Prophet ﷺ was born, and in which he certainly died. His birth is the quietest fact in his biography and his death the most precisely recorded, and both fall here.\n\nBasis: The death in Rabi al-Awwal, 11 AH, is established in the earliest biographies; the birth date is reported variously, with the twelfth most often cited.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#RabialAwwal #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 3,
+   "hd": 1
+  },
+  {
+   "id": "month-04",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Rabi al-Akhir begins",
+   "caption": "Rabi al-Akhir begins: 1 Rabi al-Akhir.\n\nNo fast, no feast, no night of vigil is prescribed in Rabi al-Akhir. Months like this one are what most of a Muslim life is made of, and the deen was built to be lived in them: the five prayers, the Friday gathering, the two fasting days a week for those who keep them.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#RabialAkhir #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 4,
+   "hd": 1
+  },
+  {
+   "id": "month-05",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Jumada al-Ula begins",
+   "caption": "Jumada al-Ula begins: 1 Jumada al-Ula.\n\nAn unmarked month. The Prophet's ﷺ own practice filled ordinary months with small constant things, and he said the most beloved deeds to Allah are the most constant, even if small. A month with no occasion is the month that shows what is actually habit.\n\nBasis: The constancy hadith is in both Sahih collections, from Aisha.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#JumadaalUla #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 5,
+   "hd": 1
+  },
+  {
+   "id": "month-06",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Jumada al-Akhirah begins",
+   "caption": "Jumada al-Akhirah begins: 1 Jumada al-Akhirah.\n\nThe last unmarked month before the sacred season begins. From next month the year climbs: Rajab is sacred, Sha'ban carried the Prophet's ﷺ longest voluntary fasting, and then Ramadan. This month is the quiet before that ascent, and the right place to settle debts of prayer and fasting.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#JumadaalAkhirah #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 6,
+   "hd": 1
+  },
+  {
+   "id": "month-07",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Rajab begins",
+   "caption": "Rajab begins: 1 Rajab.\n\nRajab is one of the four sacred months (Qur'an 9:36), held sacred even before Islam, and the Qur'an confirmed it. Nothing further is soundly established for it: most reports naming special Rajab prayers or fasts are weak or fabricated, and the scholars of hadith say so plainly.\n\nBasis: Qur'an 9:36\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Rajab #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 7,
+   "hd": 1
+  },
+  {
+   "id": "month-08",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Sha'ban begins",
+   "caption": "Sha'ban begins: 1 Sha'ban.\n\nAisha said she never saw the Prophet ﷺ fast more in any month, after Ramadan, than in Sha'ban. It is the month deeds of the year are raised, and he wished his to be raised while he was fasting; the ummah has read it as Ramadan's training ground ever since.\n\nBasis: Aisha's report is in both Sahih collections; the raising of deeds is in the Sunan, graded hasan by some.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#Shaban #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 8,
+   "hd": 1
+  },
+  {
+   "id": "month-11",
+   "kind": "day",
+   "slot": "morning",
+   "hook": "Dhul-Qa'dah begins",
+   "caption": "Dhul-Qa'dah begins: 1 Dhul-Qa'dah.\n\nThe first of the two pilgrimage months, and one of the four sacred months (Qur'an 9:36). In Arabia it was the truce month in which the roads opened for the journey to Makkah, and Anas reports that the Prophet's ﷺ umrahs all fell in it, apart from the one joined to his Hajj.\n\nBasis: Qur'an 9:36. Anas's report on the umrahs is in the Sahih collections.\n\nEvery day of the Islamic year, explained free at noorcodex.com\n\n#DhulQadah #Islam #IslamicCalendar #Hijri #NoorCodexOfLight",
+   "secs": 13,
+   "cover": true,
+   "hm": 11,
+   "hd": 1
+  },
+  {
    "id": "qalawun-hospital-1284",
+   "kind": "light",
    "slot": "morning",
    "hook": "A Cairo hospital was endowed to turn nobody away",
    "caption": "The deed also provided for oculists and surgeons, and for an allowance paid on discharge to sick people who could not work. Qalawun's complex held a school and his tomb as well as the hospital. Endowed hospitals of this kind, called bimaristans, existed across the Muslim world from the ninth century, and an eye hospital still operates on the Cairo site.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Cairo #Egypt #Bimaristan #Charity",
+   "secs": null,
    "cover": true
   },
   {
    "id": "quba-first-mosque-622",
+   "kind": "light",
    "slot": "evening",
    "hook": "The first mosque was built by hand at Quba",
    "caption": "The commentators generally identify Quba with the mosque the Qur'an calls founded on God consciousness from the first day. He kept visiting it after moving into the town, and the practice of going out to Quba on a Saturday is recorded from him.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quba #Mosque #Architecture #Heritage #Seerah",
+   "secs": null,
    "cover": true
   },
   {
    "id": "ring-composition",
+   "kind": "light",
    "slot": "evening",
    "hook": "Some chapters are built as a ring around a centre",
    "caption": "Farahi's student Amin Ahsan Islahi worked the idea through the whole book in an Urdu commentary. Cuypers read Surah al-Ma'ida this way and Farrin al-Baqarah, so that the first section answers the last and the pivot sits at the centre. The approach is one reading among several, and it is contested.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Tafsir #IslamicHistory #Scholarship #Literature #Structure",
+   "secs": null,
    "cover": true
   },
   {
    "id": "safa-marwa-inside-the-mosque",
+   "kind": "light",
    "slot": "evening",
    "hook": "Two hills of a woman's search now stand inside a mosque",
    "caption": "The Qur'an names both hills and calls them among the symbols of Allah. For most of history the walk ran along an open street with shops on it, until the Saudi expansions enclosed it, air conditioned it and later stacked it on several levels to move larger crowds. The rock is fenced at one end so that what people are walking between can still be seen.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Hajj #Umrah #Pilgrimage #IslamicHistory #Quran #Heritage",
+   "secs": null,
    "cover": true
   },
   {
    "id": "salah-prayer-and-blessing",
+   "kind": "light",
    "slot": "evening",
    "hook": "The word for prayer also means blessing the Prophet ﷺ",
    "caption": "The same word, from the same root, is what God and the angels are said to do for the Prophet ﷺ, and what believers do when they say the formula asking for peace upon him. The lexicographers connect the root with supplication and with turning towards. The purpose the verse gives is not reward, not protection, not good order.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Salah #Prayer #Arabic #Language #Dhikr",
+   "secs": null,
    "cover": true
   },
   {
    "id": "smile-counts-as-charity",
+   "kind": "light",
    "slot": "evening",
    "hook": "Smiling in the face of a brother counts as charity",
    "caption": "Abu Dharr worried openly that the rich were buying rewards he could not afford. The answer changed the currency. He was also told not to think little of any good deed, even meeting another person with a cheerful face. The point was practical rather than sentimental.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hadith #Charity #Kindness #Companions #Faith",
+   "secs": null,
    "cover": true
   },
   {
    "id": "timbuktu-manuscripts-rescue-2013",
+   "kind": "light",
    "slot": "morning",
    "hook": "Timbuktu's manuscripts were smuggled out in footlockers",
    "caption": "Many of these manuscripts had never left the families who copied them, and they cover law, astronomy, medicine, poetry and mathematics. Volunteers packed them into metal footlockers and rice sacks and moved them a few at a time. Some were burned in Timbuktu, but far fewer than first reported, and the collections are now being conserved and digitised in the south of the country.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Timbuktu #Mali #Manuscripts #Libraries #BookHistory #History",
+   "secs": null,
    "cover": true
   },
   {
    "id": "tusi-couple",
+   "kind": "light",
    "slot": "morning",
    "hook": "Two rolling circles turn a circle into a straight line",
    "caption": "The equant predicted well and it broke the rule that motion in the heavens is uniform and circular, so astronomers had complained about it for centuries. Al-Tusi's answer removed the need for it. The same construction appears, drawn the same way and with no attribution, in Copernicus's book of 1543, and how it got there is a standing question.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #Mathematics #Geometry #History #HistoryOfScience #MedievalHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "ulugh-beg-catalogue-1437",
+   "kind": "light",
    "slot": "morning",
    "hook": "A governor remeasured the sky and catalogued 1,018 stars",
    "caption": "The great arc was sunk into a trench cut in the rock so that it could not shift. Ulugh Beg was a grandson of Timur, and by all accounts more interested in the sky than in ruling. He was killed in 1449, and the buried arc of his instrument was rediscovered by excavation in 1908 and can be visited today.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Samarkand #Observatory #Stargazing",
+   "secs": null,
+   "cover": true
+  },
+  {
+   "id": "verse-10-57",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Yunus · 10:57",
+   "caption": "Yunus · 10:57\n\nO mankind, there has to come to you instruction from your Lord and healing for what is in the breasts and guidance and mercy for the believers.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.21,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-11-114",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Hud · 11:114",
+   "caption": "Hud · 11:114\n\nAnd establish prayer at the two ends of the day and at the approach of the night. Indeed, good deeds do away with misdeeds. That is a reminder for those who remember.\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 50.99,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-13-28",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ar-Ra'd · 13:28",
+   "caption": "Ar-Ra'd · 13:28\n\nThose who have believed and whose hearts are assured by the remembrance of Allah. Unquestionably, by the remembrance of Allah hearts are assured.\"\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.34,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-14-7",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ibrahim · 14:7",
+   "caption": "Ibrahim · 14:7\n\nAnd [remember] when your Lord proclaimed, 'If you are grateful, I will surely increase you [in favor]; but if you deny, indeed, My punishment is severe.' \"\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.92,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-16-97",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "An-Nahl · 16:97",
+   "caption": "An-Nahl · 16:97\n\nWhoever does righteousness, whether male or female, while he is a believer - We will surely cause him to live a good life, and We will surely give them their reward [in the Hereafter] according to the best of what they used to do.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 30.83,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-17-23-24",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Isra · 17:23-24",
+   "caption": "Al-Isra · 17:23-24\n\nAnd your Lord has decreed that you not worship except Him, and to parents, good treatment. Whether one or both of them reach old age [while] with you, say not to them [so much as], \"uff,\" and do not repel them but speak to them a noble word. And lower to them the wing of humility out of mercy and say, \"My Lord, have mercy upon them as they brought me up [when I was] small.\"\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 47.0,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-17-80",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Isra · 17:80",
+   "caption": "Al-Isra · 17:80\n\nAnd say, \"My Lord, cause me to enter a sound entrance and to exit a sound exit and grant me from Yourself a supporting authority.\"\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 24.88,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-2-152",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:152",
+   "caption": "Al-Baqarah · 2:152\n\nSo remember Me; I will remember you. And be grateful to Me and do not deny Me.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 17.86,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-2-153",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:153",
+   "caption": "Al-Baqarah · 2:153\n\nO you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.78,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-2-186",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Baqarah · 2:186",
+   "caption": "Al-Baqarah · 2:186\n\nAnd when My servants ask you, [O Muhammad], concerning Me - indeed I am near. I respond to the invocation of the supplicant when he calls upon Me. So let them respond to Me [by obedience] and believe in Me that they may be [rightly] guided.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 39.88,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-2-286",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:286",
+   "caption": "Al-Baqarah · 2:286\n\nAllah does not charge a soul except [with that within] its capacity. It will have [the consequence of] what [good] it has gained, and it will bear [the consequence of] what [evil] it has earned. \"Our Lord, do not impose blame upon us if we have forgotten or erred. Our Lord, and lay not upon us a burden like that which You laid upon those before us. Our Lord, and burden us not with that which we have no ability to bear. And pardon us; and forgive us; and have mercy upon us. You are our protector, so give us victory over the disbelieving people.\"\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 51.36,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-2-45-46",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Baqarah · 2:45-46",
+   "caption": "Al-Baqarah · 2:45-46\n\nAnd seek help through patience and prayer, and indeed, it is difficult except for the humbly submissive [to Allah] Who are certain that they will meet their Lord and that they will return to Him.\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 32.29,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-20-114",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Taha · 20:114",
+   "caption": "Taha · 20:114\n\nSo high [above all] is Allah, the Sovereign, the Truth. And, [O Muhammad], do not hasten with [recitation of] the Qur'an before its revelation is completed to you, and say, \"My Lord, increase me in knowledge.\"\n\nRecited by Hani ar-Rifai. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.62,
+   "cover": true,
+   "reciter": "Hani ar-Rifai"
+  },
+  {
+   "id": "verse-21-87",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Anbya · 21:87",
+   "caption": "Al-Anbya · 21:87\n\nAnd [mention] the man of the fish, when he went off in anger and thought that We would not decree [anything] upon him. And he called out within the darknesses, \"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.\"\n\nRecited by Nasser al-Qatami. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 49.5,
+   "cover": true,
+   "reciter": "Nasser al-Qatami"
+  },
+  {
+   "id": "verse-25-63",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Furqan · 25:63",
+   "caption": "Al-Furqan · 25:63\n\nAnd the servants of the Most Merciful are those who walk upon the earth easily, and when the ignorant address them [harshly], they say [words of] peace,\n\nRecited by Ahmad al-Ajmi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 20.26,
+   "cover": true,
+   "reciter": "Ahmad al-Ajmi"
+  },
+  {
+   "id": "verse-29-69",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-'Ankabut · 29:69",
+   "caption": "Al-'Ankabut · 29:69\n\nAnd those who strive for Us - We will surely guide them to Our ways. And indeed, Allah is with the doers of good.\n\nRecited by Mohamed Siddiq al-Minshawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.6,
+   "cover": true,
+   "reciter": "Mohamed Siddiq al-Minshawi"
+  },
+  {
+   "id": "verse-3-139",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ali 'Imran · 3:139",
+   "caption": "Ali 'Imran · 3:139\n\nSo do not weaken and do not grieve, and you will be superior if you are [true] believers.\n\nRecited by Saud ash-Shuraym. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 14.0,
+   "cover": true,
+   "reciter": "Saud ash-Shuraym"
+  },
+  {
+   "id": "verse-31-17",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Luqman · 31:17",
+   "caption": "Luqman · 31:17\n\nO my son, establish prayer, enjoin what is right, forbid what is wrong, and be patient over what befalls you. Indeed, [all] that is of the matters [requiring] determination.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 19.83,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-33-21",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Ahzab · 33:21",
+   "caption": "Al-Ahzab · 33:21\n\nThere has certainly been for you in the Messenger of Allah an excellent pattern for anyone whose hope is in Allah and the Last Day and [who] remembers Allah often.\n\nRecited by Abdur-Rahman as-Sudais. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.29,
+   "cover": true,
+   "reciter": "Abdur-Rahman as-Sudais"
+  },
+  {
+   "id": "verse-39-53",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Az-Zumar · 39:53",
+   "caption": "Az-Zumar · 39:53\n\nSay, \"O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.\"\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.46,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-41-34",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Fussilat · 41:34",
+   "caption": "Fussilat · 41:34\n\nAnd not equal are the good deed and the bad. Repel [evil] by that [deed] which is better; and thereupon the one whom between you and him is enmity [will become] as though he was a devoted friend.\n\nRecited by Khalid al-Qahtani. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 29.83,
+   "cover": true,
+   "reciter": "Khalid al-Qahtani"
+  },
+  {
+   "id": "verse-42-30",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Ash-Shuraa · 42:30",
+   "caption": "Ash-Shuraa · 42:30\n\nAnd whatever strikes you of disaster - it is for what your hands have earned; but He pardons much.\n\nRecited by Ali al-Hudhaifi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.41,
+   "cover": true,
+   "reciter": "Ali al-Hudhaifi"
+  },
+  {
+   "id": "verse-49-13",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Hujurat · 49:13",
+   "caption": "Al-Hujurat · 49:13\n\nO mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another. Indeed, the most noble of you in the sight of Allah is the most righteous of you. Indeed, Allah is Knowing and Acquainted.\n\nRecited by Abu Bakr ash-Shatri. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 35.03,
+   "cover": true,
+   "reciter": "Abu Bakr ash-Shatri"
+  },
+  {
+   "id": "verse-57-4",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Al-Hadid · 57:4",
+   "caption": "Al-Hadid · 57:4\n\nIt is He who created the heavens and earth in six days and then established Himself above the Throne. He knows what penetrates into the earth and what emerges from it and what descends from the heaven and what ascends therein; and He is with you wherever you are. And Allah, of what you do, is Seeing.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 45.75,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-6-162",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-An'am · 6:162",
+   "caption": "Al-An'am · 6:162\n\nSay, \"Indeed, my prayer, my rites of sacrifice, my living and my dying are for Allah, Lord of the worlds.\n\nRecited by Mohammad al-Tablawi. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 20.01,
+   "cover": true,
+   "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-65-2-3",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "At-Talaq · 65:2-3",
+   "caption": "At-Talaq · 65:2-3\n\nAnd when they have [nearly] fulfilled their term, either retain them according to acceptable terms or part with them according to acceptable terms. And bring to witness two just men from among you and establish the testimony for [the acceptance of] Allah. That is instructed to whoever should believe in Allah and the Last day. And whoever fears Allah - He will make for him a way out And will provide for him from where he does not expect. And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has already set for everything a [decreed] extent.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 43.78,
+   "cover": true,
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
+   "id": "verse-65-3",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "At-Talaq · 65:3",
+   "caption": "At-Talaq · 65:3\n\nAnd will provide for him from where he does not expect. And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has already set for everything a [decreed] extent.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.19,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "verse-67-2",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "Al-Mulk · 67:2",
+   "caption": "Al-Mulk · 67:2\n\n[He] who created death and life to test you [as to] which of you is best in deed - and He is the Exalted in Might, the Forgiving -\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 21.18,
+   "cover": true,
+   "reciter": "Mishary Rashid Alafasy"
+  },
+  {
+   "id": "verse-9-51",
+   "kind": "verse",
+   "slot": "evening",
+   "hook": "At-Tawbah · 9:51",
+   "caption": "At-Tawbah · 9:51\n\nSay, \"Never will we be struck except by what Allah has decreed for us; He is our protector.\" And upon Allah let the believers rely.\n\nRecited by Mahmoud Khalil al-Husary. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 31.52,
+   "cover": true,
+   "reciter": "Mahmoud Khalil al-Husary"
+  },
+  {
+   "id": "verse-94-5-6",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Ash-Sharh · 94:5-6",
+   "caption": "Ash-Sharh · 94:5-6\n\nFor indeed, with hardship [will be] ease. Indeed, with hardship [will be] ease.\n\nRecited by Abdul Basit Abd us-Samad. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 25.15,
+   "cover": true,
+   "reciter": "Abdul Basit Abd us-Samad"
+  },
+  {
+   "id": "word-adab",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Adab",
+   "caption": "Adab (الأَدَب). Good manner in a specific situation: the right way to sit, speak, eat, enter, and ask. Where akhlaq names the character underneath, adab names the outward form it takes here and now, and most of it was taught by example.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/adab\n\n#TheWord #Islam #Arabic #Adab #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-adhan",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Adhan",
+   "caption": "Adhan (أَذان). The call announcing that a prayer time has entered, given aloud before each obligatory prayer. It was taught to the companions in Madinah after they discussed how to gather people, and Bilal was its first caller.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/adhan\n\n#TheWord #Islam #Arabic #Adhan #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-amanah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Amanah",
+   "caption": "Amanah (أَمانة). A trust: anything placed in your care that you must return, or use exactly as agreed. The Qur'an commands rendering trusts back to those they belong to.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/amanah\n\n#TheWord #Islam #Arabic #Amanah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-arafah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Arafah",
+   "caption": "Arafah (عَرَفَة). The open plain east of Makkah where pilgrims gather on the ninth of Dhul Hijjah. The small hill within it is called Jabal ar-Rahmah, the mount of mercy, and the farewell sermon was delivered nearby.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/arafah\n\n#TheWord #Islam #Arabic #Arafah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ayah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Ayah",
+   "caption": "Ayah (آيَة). A verse of the Qur'an, and in ordinary Arabic a sign. The same word is used for the signs of Allah in creation, which is why a verse is called a sign rather than a line.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ayah\n\n#TheWord #Islam #Arabic #Ayah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-barakah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Barakah",
+   "caption": "Barakah (البَرَكَة). Blessing: a quality Allah puts in a thing so that a small amount goes further than it should.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/barakah\n\n#TheWord #Islam #Arabic #Barakah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-dhikr",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Dhikr",
+   "caption": "Dhikr (الذِّكْر). Remembrance of Allah, in set phrases and in the wider habit of not forgetting Him.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/dhikr\n\n#TheWord #Islam #Arabic #Dhikr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-dua",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Du'a",
+   "caption": "Du'a (الدُّعَاء). Asking Allah directly, in any language, at any time, for anything permitted.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/dua\n\n#TheWord #Islam #Arabic #Dua #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-fitrah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Fitrah",
+   "caption": "Fitrah (الفِطْرَة). The natural disposition every person is born with, leaning toward recognising one Creator.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/fitrah\n\n#TheWord #Islam #Arabic #Fitrah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-hadith",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Hadith",
+   "caption": "Hadith (الحَدِيث). A report of what the Prophet Muhammad said, did, or quietly approved, passed down through named narrators. The word means speech, or something newly told.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hadith\n\n#TheWord #Islam #Arabic #Hadith #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-hajj",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Hajj",
+   "caption": "Hajj (حَجّ). The pilgrimage to Makkah in Dhul Hijjah, obligatory once in a lifetime on those who are able. It is the fifth pillar.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hajj\n\n#TheWord #Islam #Arabic #Hajj #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-haya",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Haya'",
+   "caption": "Haya' (الحَيَاء). A modesty that makes a person shrink from what is ugly, before Allah and before people. The Prophet peace be upon him said modesty is a branch of faith, in Bukhari and Muslim, and that modesty brings nothing but good, in Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/haya\n\n#TheWord #Islam #Arabic #Haya #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-hilm",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Hilm",
+   "caption": "Hilm (الحِلْم). Forbearance: the strength to stay calm and unhurried when you have every right to react. The Prophet peace be upon him told al-Ashajj of Abd al-Qays that he had two qualities Allah loves, hilm and unhurriedness, in Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/hilm\n\n#TheWord #Islam #Arabic #Hilm #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-husn-al-zann",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Husn al-Zann",
+   "caption": "Husn al-Zann (حُسْنُ الظَّنّ). Thinking well of people: reading an ambiguous act in the best way it can honestly be read. The Qur'an tells believers to avoid much suspicion, and forbids spying and backbiting in the same verse (Qur'an 49:12).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/husn-al-zann\n\n#TheWord #Islam #Arabic #HusnalZann #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-iftar",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Iftar",
+   "caption": "Iftar (إِفْطار). Breaking the fast at sunset, traditionally with dates and water before the Maghrib prayer. The Prophet hastened it rather than delaying it, and said people remain in good as long as they do so.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/iftar\n\n#TheWord #Islam #Arabic #Iftar #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ihram",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ihram",
+   "caption": "Ihram (إِحْرام). The sanctified state a pilgrim enters with intention and talbiyah, marked by simple unsewn dress. The root means to make something forbidden, because entering it makes ordinary permissible things off limits.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ihram\n\n#TheWord #Islam #Arabic #Ihram #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ihsan",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ihsan",
+   "caption": "Ihsan (الإِحْسَان). To worship Allah as though you see Him, and if you do not see Him, knowing that He sees you. The definition is the Prophet's own wording in the hadith of Jibril, collected in Bukhari and Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ihsan\n\n#TheWord #Islam #Arabic #Ihsan #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ikhlas",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ikhlas",
+   "caption": "Ikhlas (الإِخْلَاص). Doing an act for Allah alone, with no eye on who else is watching. The word means to make something pure, with nothing mixed into it.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ikhlas\n\n#TheWord #Islam #Arabic #Ikhlas #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-iman",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Iman",
+   "caption": "Iman (الإِيمَان). Faith: belief in Allah, His angels, His books, His messengers, the Last Day, and the decree.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/iman\n\n#TheWord #Islam #Arabic #Iman #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-istiqamah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Istiqamah",
+   "caption": "Istiqamah (الاسْتِقَامَة). Staying straight: keeping to the path steadily, over years, without dramatic swings.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/istiqamah\n\n#TheWord #Islam #Arabic #Istiqamah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-itikaf",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "I'tikaf",
+   "caption": "I'tikaf (اعْتِكاف). Staying in a mosque for a set period, devoted to worship and cut off from ordinary business. The word means to keep to something.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/itikaf\n\n#TheWord #Islam #Arabic #Itikaf #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-jumuah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Jumu'ah",
+   "caption": "Jumu'ah (صَلاةُ الجُمُعَة). The Friday congregational prayer: a sermon followed by two rak'ahs, replacing Dhuhr. The Qur'an commands believers to leave off trade and hurry to the remembrance of Allah when the Friday call is made.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/jumuah\n\n#TheWord #Islam #Arabic #Jumuah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-laylat-al-qadr",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Laylat al-Qadr",
+   "caption": "Laylat al-Qadr (لَيْلَةُ القَدْر). The night in Ramadan that the Qur'an calls better than a thousand months. A whole surah is named for it, and it says worship in that one night is better than a thousand months, which is more than eighty years.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/laylat-al-qadr\n\n#TheWord #Islam #Arabic #LaylatalQadr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-muhasabah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Muhasabah",
+   "caption": "Muhasabah (المُحَاسَبَة). Taking account of yourself: a regular, honest review of what you did and why.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/muhasabah\n\n#TheWord #Islam #Arabic #Muhasabah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-muraqabah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Muraqabah",
+   "caption": "Muraqabah (المُرَاقَبَة). Living with the awareness that Allah sees you, at the moment you are acting. The Qur'an says He is nearer to a person than his jugular vein (Qur'an 50:16), and that He is ever a watcher over you (Qur'an 4:1).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/muraqabah\n\n#TheWord #Islam #Arabic #Muraqabah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-nasihah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Nasihah",
+   "caption": "Nasihah (النَّصِيحَة). Sincere advice: wanting good for someone and telling them, privately and without an audience.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/nasihah\n\n#TheWord #Islam #Arabic #Nasihah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-niyyah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Niyyah",
+   "caption": "Niyyah (نِيَّة). The intention in the heart that turns an ordinary act into an act of worship. Every act of worship needs a niyyah, and the Prophet said actions are only by intentions.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/niyyah\n\n#TheWord #Islam #Arabic #Niyyah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-qanaah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Qana'ah",
+   "caption": "Qana'ah (القَنَاعَة). Being satisfied with enough, so that what you do not have stops taking up room.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qanaah\n\n#TheWord #Islam #Arabic #Qanaah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-qiblah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Qiblah",
+   "caption": "Qiblah (قِبْلَة). The direction of the Kaaba in Makkah, which Muslims face when they pray.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qiblah\n\n#TheWord #Islam #Arabic #Qiblah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-rahmah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Rahmah",
+   "caption": "Rahmah (الرَّحْمَة). Mercy: the disposition to spare, relieve and be gentle, in Allah first and in people after.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/rahmah\n\n#TheWord #Islam #Arabic #Rahmah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sabr",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Sabr",
+   "caption": "Sabr (الصَّبْر). Holding yourself steady under what is hard, without complaint to creation and without giving up. The root means to restrain or to confine.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sabr\n\n#TheWord #Islam #Arabic #Sabr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sadaqah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Sadaqah",
+   "caption": "Sadaqah (صَدَقَة). Voluntary giving, of any amount and at any time, to anyone in need. The root is sidq, truthfulness, because giving is treated as proof that a claim to faith is real.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sadaqah\n\n#TheWord #Islam #Arabic #Sadaqah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sadaqah-jariyah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sadaqah Jariyah",
+   "caption": "Sadaqah Jariyah (صَدَقَة جارِيَة). A charity that keeps benefiting people, so its reward continues after the giver dies. Jariyah means flowing.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sadaqah-jariyah\n\n#TheWord #Islam #Arabic #SadaqahJariyah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sahih",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sahih",
+   "caption": "Sahih (الصَّحِيح). A hadith that meets all five conditions of authenticity, with nothing missing and no hidden flaw.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sahih\n\n#TheWord #Islam #Arabic #Sahih #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sakinah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sakinah",
+   "caption": "Sakinah (السَّكِينَة). A stillness Allah sends down into the heart, usually at the moment it is least expected.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sakinah\n\n#TheWord #Islam #Arabic #Sakinah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-salah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Salah",
+   "caption": "Salah (الصَّلاة). The formal Muslim prayer, performed five times a day at set times, facing Makkah. The word means connection and supplication.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/salah\n\n#TheWord #Islam #Arabic #Salah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sawm",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Sawm",
+   "caption": "Sawm (صَوْم). Fasting: abstaining from food, drink and intimacy from true dawn until sunset, with intention. The word means to hold back.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sawm\n\n#TheWord #Islam #Arabic #Sawm #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-shukr",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Shukr",
+   "caption": "Shukr (الشُّكْر). Gratitude that shows: knowing the gift, saying so, and using it as its Giver would like. The Qur'an promises increase to those who are grateful (Qur'an 14:7).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/shukr\n\n#TheWord #Islam #Arabic #Shukr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sidq",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Sidq",
+   "caption": "Sidq (الصِّدْق). Truthfulness: that your words, your intentions and your actions all report the same thing.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sidq\n\n#TheWord #Islam #Arabic #Sidq #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-suhur",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Suhur",
+   "caption": "Suhur (سُحور). The meal eaten before dawn to begin a day of fasting. The name comes from sahar, the last darkness before dawn.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/suhur\n\n#TheWord #Islam #Arabic #Suhur #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sujud",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sujud",
+   "caption": "Sujud (سُجود). The prostration, forehead and nose on the ground, done twice in every rak'ah. Seven parts touch the ground: the forehead with the nose, the two palms, the two knees, and the toes of both feet.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sujud\n\n#TheWord #Islam #Arabic #Sujud #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-sunnah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Sunnah",
+   "caption": "Sunnah (السُّنَّة). The Prophet's way in belief, worship and conduct, and the measure against which innovation is judged. The word means a trodden path.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sunnah\n\n#TheWord #Islam #Arabic #Sunnah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-surah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Surah",
+   "caption": "Surah (سورَة). A chapter of the Qur'an; there are 114, arranged in the mushaf rather than by date of revelation. Each surah has a name, usually taken from a striking word inside it, and every surah except at-Tawbah opens with the basmalah.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/surah\n\n#TheWord #Islam #Arabic #Surah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tafakkur",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Tafakkur",
+   "caption": "Tafakkur (التَّفَكُّر). Deliberate reflection on creation and on your own life, treated as an act of worship.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tafakkur\n\n#TheWord #Islam #Arabic #Tafakkur #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tahajjud",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Tahajjud",
+   "caption": "Tahajjud (تَهَجُّد). Voluntary prayer in the night, traditionally after sleeping and before dawn. The root means to give up sleep.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tahajjud\n\n#TheWord #Islam #Arabic #Tahajjud #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tajwid",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Tajwid",
+   "caption": "Tajwid (التَّجْويد). The rules for pronouncing the Qur'an correctly: each letter from its place, with its proper qualities. The word means to do a thing well.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tajwid\n\n#TheWord #Islam #Arabic #Tajwid #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-talbiyah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Talbiyah",
+   "caption": "Talbiyah (تَلْبِيَة). The pilgrim's answering call, beginning labbayk Allahumma labbayk, here I am, my Lord, here I am. It continues: no partner have You, here I am, all praise and favour are Yours, and the dominion, You have no partner.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/talbiyah\n\n#TheWord #Islam #Arabic #Talbiyah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-taqwa",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Taqwa",
+   "caption": "Taqwa (التَّقْوَى). An alert, careful awareness of Allah that keeps a person away from what harms them. The root means to guard or to shield, and carries the sense of putting something between yourself and danger.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/taqwa\n\n#TheWord #Islam #Arabic #Taqwa #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tawadu",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Tawadu'",
+   "caption": "Tawadu' (التَّوَاضُع). Humility: knowing your size, without pretending to be smaller than you are.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tawadu\n\n#TheWord #Islam #Arabic #Tawadu #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tawaf",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Tawaf",
+   "caption": "Tawaf (طَواف). Circling the Kaaba seven times, keeping it on your left, starting and ending at the Black Stone. The Qur'an commands circling the Ancient House.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tawaf\n\n#TheWord #Islam #Arabic #Tawaf #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tawakkul",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Tawakkul",
+   "caption": "Tawakkul (التَّوَكُّل). Relying on Allah for the outcome while still doing the work that leads to it.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tawakkul\n\n#TheWord #Islam #Arabic #Tawakkul #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tawbah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Tawbah",
+   "caption": "Tawbah (التَّوْبَة). Turning back to Allah from a sin: stopping it, regretting it, and resolving not to return. The Qur'an calls for a sincere turning, tawbatan nasuha (Qur'an 66:8).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tawbah\n\n#TheWord #Islam #Arabic #Tawbah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-tawhid",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Tawhid",
+   "caption": "Tawhid (التَّوْحِيد). The belief that Allah is one, without partner, without equal, and alone deserving of worship. The word means to make one, or to declare one.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tawhid\n\n#TheWord #Islam #Arabic #Tawhid #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-ummah",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Ummah",
+   "caption": "Ummah (الأُمَّة). The whole body of Muslims, across every land and century, treated as one community. The root is umm, mother, so an ummah is a people gathered around one origin.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ummah\n\n#TheWord #Islam #Arabic #Ummah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-umrah",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Umrah",
+   "caption": "Umrah (عُمْرَة). The lesser pilgrimage: ihram, tawaf, sa'i and cutting the hair, and it may be done any time of year. It shares its rites with hajj but has no Arafah, no Mina and no fixed date.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/umrah\n\n#TheWord #Islam #Arabic #Umrah #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-witr",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Witr",
+   "caption": "Witr (وِتْر). An odd-numbered night prayer, usually one or three rak'ahs, that closes the night. Witr means odd, as opposed to even.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/witr\n\n#TheWord #Islam #Arabic #Witr #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-yaqin",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Yaqin",
+   "caption": "Yaqin (اليَقِين). Certainty: knowledge that has settled to the point where doubt no longer disturbs it.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/yaqin\n\n#TheWord #Islam #Arabic #Yaqin #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-zakat",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Zakat",
+   "caption": "Zakat (زَكاة). The yearly obligatory share of qualifying wealth, normally 2.5 percent, given to those entitled to it. The word carries both purification and growth.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/zakat\n\n#TheWord #Islam #Arabic #Zakat #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-zamzam",
+   "kind": "word",
+   "slot": "evening",
+   "hook": "Zamzam",
+   "caption": "Zamzam (زَمْزَم). The well beside the Ka'bah that opened for Hajar and her infant son Isma'il. Left in a dry valley with her baby, Hajar ran seven times between two hills looking for help, and water broke open at the child's feet.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/zamzam\n\n#TheWord #Islam #Arabic #Zamzam #NoorCodexOfLight",
+   "secs": 14,
+   "cover": true
+  },
+  {
+   "id": "word-zuhd",
+   "kind": "word",
+   "slot": "morning",
+   "hook": "Zuhd",
+   "caption": "Zuhd (الزُّهْد). Holding the world loosely: having a thing in your hand without letting it into your heart.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/zuhd\n\n#TheWord #Islam #Arabic #Zuhd #NoorCodexOfLight",
+   "secs": 14,
    "cover": true
   },
   {
    "id": "zakat-is-growth",
+   "kind": "light",
    "slot": "evening",
    "hook": "The word for alms means growth, not deduction",
    "caption": "Arabic takes purity and increase from the same three letters because a thing cleaned of what spoils it grows better. The Qur'an uses the same verb of the self in the chapter of the sun: he has succeeded who causes it to grow, and he has failed who buries it. One verb covers a bank balance and a person.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Zakat #Charity #Arabic #Language #Quran #IslamicHistory",
+   "secs": null,
    "cover": true
   },
   {
    "id": "zubayda-pilgrim-road-831",
+   "kind": "light",
    "slot": "morning",
    "hook": "A caliph's wife paid for the water on the Makkah road",
    "caption": "Her wells were not the end of it. Zubayda also paid for a spring channel at Makkah that carried water into the city itself, and the remains of her pools and milestones are still mapped across Iraq and Saudi Arabia. She died in 831, and her name survived not through a battle or a dynasty but through drinking water.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #History #Hajj #Makkah #Abbasid #Archaeology #Water",
+   "secs": null,
    "cover": true
   }
  ]
