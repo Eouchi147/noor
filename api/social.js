@@ -869,7 +869,10 @@ export function slotState(results) {
   const anySent = live.some(([, r]) => r && r.ok);
   const anyPending = live.some(([, r]) => r && r.pending && !r.ok);
   /* a channel that is not configured did not fail; it was never asked */
-  const anyFailed = live.some(([, r]) => r && !r.ok && !r.pending && !r.skipped);
+  /* and a network that is not open yet (Pinterest on Trial until its review)
+     did not fail either: it is a stage, not a fault, and nobody can act on
+     it. Counting it made every slot of the day read "half sent". */
+  const anyFailed = live.some(([, r]) => r && !r.ok && !r.pending && !r.skipped && !r.trial && !r.waiting);
   if (anyPending) return "pending";
   /* One landed and one did not. This used to read "sent", which is how a post
      that never reached Instagram sat in the console under a green word for a

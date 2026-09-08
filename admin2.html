@@ -140,7 +140,7 @@ nav.bar button .dot{position:absolute;top:10px;right:calc(50% - 18px);width:7px;
 .btn[disabled]{opacity:.5;cursor:default}
 .btn.sm{min-height:34px;padding:0 12px;font-size:12.5px;border-radius:8px}
 .chan{display:inline-flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:11px;min-height:30px;padding:0 11px;border-radius:100px;border:1px solid transparent}
-.chan.ok{color:var(--good)}.chan.pending{color:var(--wait)}
+.chan.ok{color:var(--good)}.chan.pending{color:var(--wait)}.chan.wait{color:var(--faint);border-color:var(--line)}
 .chan.bad{color:var(--bad);border-color:rgba(240,138,138,.35);cursor:pointer}
 .chan.bad:active{background:rgba(240,138,138,.12)}
 .chan.more{color:var(--blue);border-color:rgba(126,155,209,.35);cursor:pointer;background:none}
@@ -298,7 +298,15 @@ setInterval(clock,30000);
 /* ---------- the cache: a surface opened again within a minute is instant ---------- */
 var C={};var TTL=60000;
 function cached(key,fn,force){var c=C[key];if(!force&&c&&Date.now()-c.at<TTL)return Promise.resolve(c.v);return fn().then(function(v){C[key]={at:Date.now(),v:v};return v})}
-var today=function(f){return cached("today",function(){return get("/api/social?action=today").then(function(r){return r.j})},f)};
+/* A network that is not open yet (Pinterest on Trial until its review) is a
+   stage, not a fault. A slot whose only unanswered network is one of those
+   reads as sent, with the network marked waiting, so the day is not covered
+   in "half sent" for something nobody can act on. */
+var WAITING={};
+function settle(t){WAITING={};(t&&t.slots||[]).forEach(function(s){var r=s.results||{};var bad=Object.keys(r).filter(function(k){return k!=="reddit"&&r[k]&&!r[k].ok&&!r[k].pending&&!r[k].skipped});
+  var waiting=bad.filter(function(k){return r[k].trial||r[k].waiting});waiting.forEach(function(k){WAITING[k]=1});
+  if(s.state==="partial"&&bad.length&&waiting.length===bad.length){s.state="sent";s.waiting=waiting}});return t}
+var today=function(f){return cached("today",function(){return get("/api/social?action=today").then(function(r){return settle(r.j)})},f)};
 var visitors=function(f){return cached("visitors",function(){return get("/api/visitors").then(function(r){return r.j})},f)};
 var dialsQ=function(f){return cached("dials",function(){return get("/api/social?action=dials").then(function(r){return r.j})},f)};
 var tokens=function(f){return cached("tokens",function(){return get("/api/social?action=tokens").then(function(r){return r.j})},f)};
@@ -397,6 +405,7 @@ function drawPosts(force){
       var where=Object.keys(r).filter(function(k){return k!=="reddit"}).map(function(k){var x=r[k]||{};
         if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>';
         if(x.pending)return '<span class="chan pending">'+esc(k)+' …</span>';
+        if(x.trial||x.waiting)return '<span class="chan wait" title="'+esc(x.err||x.error||'not open yet')+'">'+esc(k)+' · waiting</span>';
         if(INFLIGHT[s.id+"|"+k])return '<button class="chan bad" disabled>'+esc(k)+' …</button>';
         broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="send this one again">'+esc(k)+' ↻</button>'}).join("")+more;
       var owed=(s.state==="due"||s.state==="failed")&&!INFLIGHT[s.id];
@@ -415,7 +424,8 @@ function drawPosts(force){
     var heldR=(rd.held||[]);
     el.innerHTML=
       '<p class="sec">The ladder</p><div class="card"><div class="seg" id="seg">'+RUNGS.map(function(r){return '<button data-mode="'+r[0]+'" class="'+(mode===r[0]?"on":"")+'">'+r[1]+'</button>'}).join("")+'</div><p class="muted small" style="margin:10px 0 0" id="rung-note">'+esc((RUNGS.filter(function(r){return r[0]===mode})[0]||RUNGS[0])[2])+'</p></div>'
-      +'<p class="sec">Today, hour by hour</p>'+(hijri?'<p class="muted small" style="margin:-4px 0 10px">'+esc(hijri)+' · Umm al-Qura</p>':'')+(rows.join("")||'<div class="empty">The day could not be read.</div>')
+      +'<p class="sec">Today, hour by hour</p>'+(hijri?'<p class="muted small" style="margin:-4px 0 10px">'+esc(hijri)+' · Umm al-Qura</p>':'')
+      +(Object.keys(WAITING).length?'<p class="muted small" style="margin:-4px 0 12px">'+esc(Object.keys(WAITING).join(", "))+' is waiting on its own review; nothing to do, it resumes by itself.</p>':'')+(rows.join("")||'<div class="empty">The day could not be read.</div>')
       +'<p class="sec">The reels</p><details class="fold" id="reels-fold"><summary>'+cards.length+' rendered<span class="pill">'+["verse","word","know","day","codex","light"].map(function(k){var n=cards.filter(function(c){return (c.kind||"light")===k}).length;return n?n+" "+k:""}).filter(Boolean).join(" · ")+'</span></summary><div class="in"><div class="grid" id="reel-grid"></div></div></details>'
       +'<p class="sec">The token clock</p><div class="card">'+tokbar("Facebook",fbL)+tokbar("Instagram",igL)+'<div style="display:flex;gap:8px;margin-top:12px"><button class="btn ghost sm" data-renew="fb">Facebook renewed</button><button class="btn ghost sm" data-renew="ig">Instagram renewed</button></div></div>'
       +'<p class="sec" id="anchor-reddit">Reddit · for your hand</p>'+(heldR.length?'<div class="list">'+heldR.map(function(h,i){return '<div class="row tap" data-red="'+i+'"><div class="ic">'+ICO.reddit+'</div><div class="t"><b>'+esc(h.title||h.slot)+'</b><span>'+esc(h.slot)+' · tap to copy the draft</span></div><div class="chev">'+ICO.chev+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting.</div>')

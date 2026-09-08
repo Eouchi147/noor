@@ -400,8 +400,9 @@ export async function sendPinterest(shaped, opts = {}) {
   }
   if (!r.ok && /trial access/i.test(String(r.err))) {
     /* not a fault, a stage: nothing to retry until Pinterest grants Standard */
-    return { ok: false, fatal: true, trial: true,
-             err: "Pinterest keeps the app on Trial access, so pins are refused on the real API until Standard access is granted. For the recording set PIN_API_BASE to https://api-sandbox.pinterest.com and open the door again; when Standard lands, remove it." };
+    return { ok: false, fatal: true, trial: true, waiting: true,
+             err: "Pinterest is waiting on its Standard-access review; pins resume by themselves when it is granted",
+             note: "Trial access refuses pins on the real API. For the recording set PIN_API_BASE to https://api-sandbox.pinterest.com and open the door again; when Standard lands, remove it." };
   }
   return r.ok ? { ok: true, id: (r.j && r.j.id) || "pinned", board: shaped.board || "", sandbox: pinSandbox() || undefined } : r;
 }

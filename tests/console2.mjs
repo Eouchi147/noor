@@ -24,7 +24,8 @@ const TODAY = {
     { id: 'lead', at: 9, state: 'skipped', title: '' },
     { id: 'light', at: 12, state: 'partial', title: 'The word for human nature also means breaking a fast',
       results: { facebook: { ok: true, id: 'F' }, instagram: { ok: false, error: 'Meta could not fetch the image', code: 9004 } } },
-    { id: 'word', at: 16, state: 'sent', title: 'Qalqalah', results: { facebook: { ok: true }, instagram: { ok: true } } },
+    { id: 'word', at: 16, state: 'partial', title: 'Qalqalah', results: { facebook: { ok: true }, instagram: { ok: true },
+      pinterest: { ok: false, fatal: true, trial: true, waiting: true, err: 'Pinterest is waiting on its Standard-access review; pins resume by themselves when it is granted' } } },
     { id: 'reelB', at: 17, state: 'pending', title: 'A reel', results: { facebook: { ok: true }, instagram: { ok: false, pending: 'CONT' } } },
     { id: 'dusk', at: 20, state: 'waiting', title: 'A chapter' }
   ]
@@ -125,6 +126,7 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/Rabi al-Awwal/.test(today), 'the Hijri date is named');
   ok(/dawn/.test(today) && /dusk/.test(today) && (today.match(/\d\d:00/g) || []).length >= 7, 'every slot of the day is on the strip');
   ok(/reelA is owed/.test(today) && /light is half sent/.test(today), 'what needs a hand is listed first');
+  ok(!/word is half sent/.test(today), 'a slot whose only unanswered network is waiting on its own review is not called half sent');
   ok(!/dusk is owed/.test(today), 'a slot whose hour has not come is not called owed');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(await pg.evaluate(() => getComputedStyle(document.getElementById('sheet')).visibility === 'hidden'), 'the closed sheet is out of the way of screen readers and the tab key');
@@ -159,15 +161,18 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   await pg.screenshot({ path: 'tests/shots/console2-' + w + '-posts.png', fullPage: true });
 
   /* a network that joined after the post went out is offered on the sent rows */
-  ok(await pg.$('#slot-word [data-retry="word|pinterest"]') !== null, 'a sent card offers + pinterest, which was not live when it went out');
-  ok(await pg.$('#slot-word [data-retry="word|youtube"]') === null, 'but not YouTube, which takes only video');
-  ok(await pg.$('#slot-word [data-retry="word|x"]') === null && await pg.$('#slot-word [data-retry="word|reddit"]') === null, 'and nothing that is off or draft-only');
+  ok(await pg.$('#slot-dawn [data-retry="dawn|pinterest"]') !== null, 'a sent card offers + pinterest, which was not live when it went out');
+  ok(await pg.$('#slot-word [data-retry="word|pinterest"]') === null && /pinterest · waiting/.test(p.text), 'a network waiting on its own review is a quiet grey chip, not a retry button');
+  ok(/pinterest is waiting on its own review/.test(p.text), 'said once at the top of the day: ' + (p.text.match(/.{0,40}waiting on its own.{0,40}/) || ['(missing)'])[0]);
+  ok(/Qalqalah[^]{0,300}?\bsent\b/.test(p.text) && !/Qalqalah[^]{0,300}?half sent/.test(p.text), 'and the slot reads sent: ' + JSON.stringify((p.text.match(/Qalqalah[^]{0,120}/) || [''])[0]));
+  ok(await pg.$('#slot-dawn [data-retry="dawn|youtube"]') === null, 'but not YouTube, which takes only video');
+  ok(await pg.$('#slot-dawn [data-retry="dawn|x"]') === null && await pg.$('#slot-dawn [data-retry="dawn|reddit"]') === null, 'and nothing that is off or draft-only');
   ok(await pg.$('#slot-dawn [data-retry="dawn|facebook"]') === null, 'a network that already took the post is not offered again');
   ok(await pg.$('#slot-reelA [data-retry="reelA|pinterest"]') === null, 'an owed slot offers nothing extra: Post now covers it');
   posted.length = 0;
-  await pg.click('#slot-word [data-retry="word|pinterest"]');
+  await pg.click('#slot-dawn [data-retry="dawn|pinterest"]');
   await pg.waitForTimeout(500);
-  ok(posted.length === 1 && posted[0].body.action === 'retry-channel' && posted[0].body.slot === 'word' && posted[0].body.where === 'pinterest' && !posted[0].body.force,
+  ok(posted.length === 1 && posted[0].body.action === 'retry-channel' && posted[0].body.slot === 'dawn' && posted[0].body.where === 'pinterest' && !posted[0].body.force,
      '+ pinterest asks for retry-channel on that network alone, without force');
 
   posted.length = 0;

@@ -241,6 +241,7 @@ section("10. a reel is a video pin");
   ok(!rf.ok && /process/.test(rf.err) && !Pf.calls.some(c => c.url.endsWith("/v5/pins")), "a video Pinterest cannot process makes no pin and says why");
 }
 
+const SOC = await import('../api/social.js');
 section("11. Trial access, and the sandbox it points to");
 {
   clearEnv();
@@ -248,7 +249,9 @@ section("11. Trial access, and the sandbox it points to");
   const CH = await load();
   const P = pinterest({ trial: true });
   const r = await CH.sendPinterest(SHAPED, { fetch: P.fetch });
-  ok(r.ok === false && r.fatal === true && r.trial === true && /sandbox/.test(r.err), "the Trial refusal is a state, not a fault: fatal, named, and it says what to set");
+  ok(r.ok === false && r.fatal === true && r.trial === true && r.waiting === true && /waiting on its Standard-access review/.test(r.err) && /sandbox/.test(r.note), "the Trial refusal is a state, not a fault: fatal, named as waiting, one quiet sentence, and the sandbox instruction kept as a note");
+  ok(SOC.slotState({ facebook: { ok: true }, pinterest: r }) === "sent", "a slot whose only unanswered network is waiting reads sent, not half sent");
+  ok(SOC.slotState({ facebook: { ok: true }, pinterest: r, instagram: { ok: false, error: "refused" } }) === "partial", "a real refusal beside it still reads half sent");
   ok(P.calls.filter(c => c.url.includes("/v5/pins")).length === 1, "and it is not tried twice in one go");
 
   clearEnv();
