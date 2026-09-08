@@ -234,6 +234,40 @@ select.fi{-webkit-appearance:none;appearance:none}
 .dif .now{color:var(--good)}
 .seg.two{grid-template-columns:repeat(2,1fr)}
 
+/* ---- the dials: one row a switch, and a bar that counts what is unsaved ----
+   The row is the whole sentence: what the dial is, what it does, where its
+   value comes from, and the control itself. On a phone the control drops
+   under the words rather than squeezing them, which is why the row wraps. */
+.dial{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;margin:0 0 8px}
+.dial.dirty{border-color:var(--gold-dim)}
+.dial .dt{flex:1 1 210px;min-width:0}
+.dial .dt>b{display:block;color:var(--cream);font-weight:600;font-size:14.5px}
+.dial .dh{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:3px}
+.dial .tags{margin-top:7px;display:flex;gap:10px;flex-wrap:wrap}
+.dial .src{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--faint)}
+.dial .src.chg{color:var(--gold)}
+.dial .why{color:var(--bad);font-size:12.5px;line-height:1.5;margin-top:7px}
+.dial .dc{flex:0 0 auto;margin-left:auto;display:flex;align-items:center;gap:8px;max-width:100%}
+.dial .dc .seg{min-width:180px;max-width:100%}
+/* the 16px stays: anything smaller and a phone zooms the page on focus */
+.dial input.fi{padding:8px 10px}
+.dial input.numi{width:110px;text-align:center;font-family:var(--f-mono)}
+.dial input.txti{width:min(260px,62vw)}
+/* a switch that is a button, so the tab key reaches it and a reader is told
+   what state it is in rather than what colour it is */
+.sw{width:50px;height:29px;border-radius:100px;border:1px solid var(--line2);background:var(--panel2);position:relative;flex:0 0 auto}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:var(--faint);
+  transition:transform .16s ease,background .16s ease}
+.sw[aria-checked="true"]{background:rgba(233,200,106,.2);border-color:var(--gold-dim)}
+.sw[aria-checked="true"]::after{transform:translateX(21px);background:var(--gold)}
+@media(prefers-reduced-motion:reduce){.sw::after{transition:none}}
+.savebar{position:sticky;bottom:calc(var(--bar) + var(--sab) + 10px);z-index:15;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  background:var(--panel2);border:1px solid var(--gold-dim);border-radius:12px;padding:10px 12px;margin:16px 0 0}
+.savebar .n{font-size:13.5px;font-weight:600;color:var(--cream)}
+.savebar .sp{color:var(--faint)}
+@media(min-width:900px){.savebar{bottom:16px}}
+
 /* ---- sheets: every action is one ---- */
 #veil{position:fixed;inset:0;background:rgba(5,6,15,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 #veil.on{opacity:1;pointer-events:auto}
@@ -343,7 +377,7 @@ svg.flow .pulse{fill:var(--gold)}
     <section class="surf" id="s-readers"></section>
     <section class="surf" id="s-house"></section>
     <section class="surf" id="s-flow"></section>
-    <!-- The six rooms. They are surfaces exactly like the five above, but
+    <!-- The seven rooms. They are surfaces exactly like the five above, but
          they are reached from House rather than from the bar, so the bar
          keeps its five buttons. -->
     <section class="surf" id="s-lights"></section>
@@ -352,6 +386,7 @@ svg.flow .pulse{fill:var(--gold)}
     <section class="surf" id="s-journal"></section>
     <section class="surf" id="s-night"></section>
     <section class="surf" id="s-system"></section>
+    <section class="surf" id="s-controls"></section>
   </main>
 
   <nav class="bar" aria-label="Surfaces">
@@ -445,6 +480,10 @@ var insights=function(f){return cached("insights",function(){return get("/api/in
 var nightQ=function(f){return cached("night",function(){return get("/api/admin-data?probe=night").then(function(r){return r.j})},f)};
 var journalQ=function(f){return cached("journal",function(){return get("/api/journal").then(function(r){return r.j})},f)};
 var ovrQ=function(f){return cached("ovr",function(){return get("/api/overrides").then(function(r){return r.j})},f)};
+/* every dial the house has, with its default and where its value comes from.
+   The public read of this route carries only what a reader may see; all=1 is
+   the owner's and is the one the Controls room draws from. */
+var settingsQ=function(f){return cached("settings",function(){return get("/api/settings?all=1").then(function(r){return r.j})},f)};
 var LIGHT_DAY="";
 var lightsQ=function(f){var day=LIGHT_DAY;return cached("lights:"+day,function(){return get("/api/admin-data?probe=lights"+(day?"&date="+encodeURIComponent(day):"")).then(function(r){return r.j})},f)};
 /* the house in one call. The steward reads what matters today as findings;
@@ -469,15 +508,16 @@ function bust(){C={};LOADED={}}
 
 /* ---------- surfaces ---------- */
 var CUR="today";
-/* Five surfaces sit in the bar. The six rooms are surfaces too, reached from
+/* Five surfaces sit in the bar. The seven rooms are surfaces too, reached from
    House and remembered in the hash, so a reload lands in the room the owner
    was standing in. Nothing here counts the surfaces: the bar's columns are
    counted from the buttons that are in it. */
-var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1};
+var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1};
 var NAMES={today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
-  lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System"};
+  lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",controls:"Controls"};
 var LOAD={today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
-  lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem};
+  lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
+  controls:drawControls};
 var LOADED={};
 function show(s,force){
   if(!NAMES[s]||!$("s-"+s))s="today";
@@ -649,7 +689,11 @@ function stewardClick(e,el,sw){
   post(a.route,a.body||{}).then(function(r){delete INFLIGHT[k];
     var good=r.ok&&(!r.j||r.j.ok!==false);
     if(!good){b.disabled=false;b.textContent=was;toast((r.j&&(r.j.error||r.j.why))||"It refused.",true);return}
-    toast((r.j&&r.j.note)||(a.label+" · done."));
+    /* the finisher answers with what it did, slot by slot; a container still
+       processing is not "done", and the toast must not say it is */
+    var ran=(r.j&&r.j.ran)||[];var still=ran.filter(function(x){return x.state==="pending"}).length;var fin=ran.filter(function(x){return x.finished}).length;
+    var said=(r.j&&r.j.note)||(ran.length?(fin?fin+" published":"")+(fin&&still?", ":"")+(still?still+" still processing at the network; the next hour looks again":""):"")||(a.label+" · done.");
+    toast(said,!!still&&!fin);
     bust();stewardAgain().catch(function(){}).then(function(){LOADED.today=true;DRAWN.today=Date.now();drawToday(false)});
   }).catch(function(){delete INFLIGHT[k];unreachable(b,was)()});
   return true;
@@ -837,8 +881,8 @@ function drawHouse(force){
   if(!el.dataset.built){el.innerHTML='<p class="sec">Health</p>'+skel(3);el.dataset.built="1"}
   /* the hub carries one live number for every room, so the house reads at a
      glance; a read that will not answer marks its own card and no other */
-  return Promise.all([house(force),dialsQ(force),soft(lightsQ(force)),soft(nightQ(force)),soft(journalQ(force)),soft(held(force))]).then(function(a){
-    var h=a[0]||{},d=(a[1]&&a[1].dials)||{},li=a[2],ni=a[3],jo=a[4],hq=a[5];
+  return Promise.all([house(force),dialsQ(force),soft(lightsQ(force)),soft(nightQ(force)),soft(journalQ(force)),soft(held(force)),soft(settingsQ(force))]).then(function(a){
+    var h=a[0]||{},d=(a[1]&&a[1].dials)||{},li=a[2],ni=a[3],jo=a[4],hq=a[5],st=a[6];
     var lit=!!h.lanternConfigured,lnModel=h.lanternModel||"";
     var g=h.gifts||{};var gu=h.guardians||[];
     /* hrow escapes its own title and its own sentence, so a caller hands it
@@ -849,6 +893,10 @@ function drawHouse(force){
     var nHeld=hq&&hq.queue?hq.queue.length:0;
     var nDoubt=li&&li.doubts?li.doubts.length:0;
     var keysSet=(h.store?1:0)+(h.lanternConfigured?1:0)+(h.stripeConfigured?1:0);
+    /* the Controls card carries the one number that matters about the dials:
+       how many the owner has turned by hand, against how many there are */
+    var sd=(st&&Array.isArray(st.dials))?st.dials:null;
+    var setHere=sd?sd.filter(function(x){return ctlHere(x)}).length:0;
     var ten=mkGet().days[mkDay()]||0;
     var stat={
       lights:li?[String((li.index&&li.index.n)||0),"cards · "+(nDoubt?nDoubt+" questioned":"none questioned")]:["·","the library could not be read"],
@@ -856,9 +904,10 @@ function drawHouse(force){
       marketing:[ten+" of 10","outreaches sent today"],
       journal:jo?[String((jo.entries||[]).length),"entries"+(nHeld?" · "+nHeld+" waiting":" · nothing waiting")]:["·","the journal could not be read"],
       night:ni?[String((ni.findings||[]).length),"flagged · "+(ni.brief?"the brief is written":"no brief yet")]:["·","the night could not be read"],
-      system:[keysSet+" of 3","keys set · the ladder is "+(d.mode||"off")]
+      system:[keysSet+" of 3","keys set · the ladder is "+(d.mode||"off")],
+      controls:sd?[setHere+" of "+sd.length,"dials set here · the rest are default"]:["·","the dials could not be read"]
     };
-    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"]];
+    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"]];
     el.innerHTML=
       '<p class="sec">Health</p><div class="list">'
       +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off — nothing is remembered")
@@ -1136,7 +1185,7 @@ function wireFlow(el,f){
 }
 
 /* ===========================================================================
-   THE SIX ROOMS
+   THE SEVEN ROOMS
 
    Everything that used to be a link into /admin lives here now, said in this
    house's language: a surface each, reached from House, remembered in the
@@ -1962,6 +2011,154 @@ function sysLantern(b){
         return '<div class="row"><div class="t" style="min-width:0"><b style="font-family:var(--f-mono);font-size:12px">'+esc(t.model)+'</b><span>'+esc(String(t.ms||0))+' ms</span></div><div class="r"><span class="pill '+(t.err?"bad":"good")+'">'+esc(t.err||"answered")+'</span></div></div>'}).join("")+'</div>':'')
       +'</div>';
   }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">Could not reach the house.</p>'});
+}
+
+/* ================= CONTROLS ================= */
+/* THE DIALS. The last thing that lived only on the old console: every switch
+   this house has, read from GET /api/settings?all=1 and written back with a
+   POST carrying nothing but the dials that were moved.
+
+   Four rules it keeps.
+   1. Nothing is live until Save. A row that has been touched is marked, the
+      bar at the foot counts the marks, and Discard puts every one of them
+      back without asking the house anything.
+   2. Only what was moved is sent. A dial typed back to the value it already
+      holds stops being a change, so a save is never a rewrite of the whole
+      table.
+   3. A dial the house refuses keeps its mark and says why, in the house's own
+      words. Snapping back to the old value as though nothing had happened is
+      how an owner comes to distrust a control panel.
+   4. Every value is shown as it is: a number is the number, never dressed as
+      money and never given a currency.  */
+var CTL={dirty:{},refused:{},list:null,by:{},store:true};
+function ctlHere(d){return /^set here/.test(String(d&&d.src||""))}
+/* where the value comes from, in three words at most: the house's own src,
+   with "built in" said as what an owner would call it */
+function ctlSrc(d){var s=String(d&&d.src||"");
+  if(ctlHere(d))return "set here";
+  if(/^env/.test(s))return s;
+  return "default"}
+function ctlVal(d){return (d.k in CTL.dirty)?CTL.dirty[d.k]:d.value}
+function ctlCtl(d){
+  var v=ctlVal(d),k=esc(d.k),n=esc(d.n);
+  if(d.t==="bool")
+    return '<button type="button" class="sw" role="switch" aria-checked="'+(v?"true":"false")+'" data-dial="'+k+'" aria-label="'+n+'"></button>';
+  if(d.t==="int"||d.t==="num")
+    return '<input class="fi numi" type="number" inputmode="numeric" step="1" min="'+esc(String(d.min==null?0:d.min))+'" max="'+esc(String(d.max==null?999999:d.max))+'" value="'+esc(v==null?"":String(v))+'" data-dial="'+k+'" aria-label="'+n+'"/>';
+  if(d.t==="enum"){var o=(d.opts||[]).slice(0,6);
+    return '<div class="seg" role="group" aria-label="'+n+'" style="grid-template-columns:repeat('+Math.max(1,o.length)+',1fr)">'
+      +o.map(function(x){var on=String(v)===String(x);
+        return '<button type="button" data-dial="'+k+'" data-opt="'+esc(x)+'" aria-pressed="'+(on?"true":"false")+'" class="'+(on?"on":"")+'">'+esc(x)+'</button>'}).join("")+'</div>'}
+  return '<input class="fi txti" type="text" maxlength="'+esc(String(d.max||200))+'" value="'+esc(v==null?"":String(v))+'" data-dial="'+k+'" aria-label="'+n+'" placeholder="empty means none"/>';
+}
+function ctlRow(d){
+  var chg=(d.k in CTL.dirty),why=CTL.refused[d.k]||"";
+  return '<div class="dial'+(chg?" dirty":"")+'" data-row="'+esc(d.k)+'">'
+    +'<div class="dt"><b>'+esc(d.n)+'</b><div class="dh">'+esc(d.h||"")+'</div>'
+    +'<div class="tags"><span class="src">'+esc(ctlSrc(d))+'</span><span class="src chg"'+(chg?"":" hidden")+'>changed</span></div>'
+    +'<div class="why"'+(why?"":" hidden")+'>'+esc(why)+'</div></div>'
+    +'<div class="dc">'+ctlCtl(d)+'</div></div>';
+}
+function ctlBar(){
+  var n=Object.keys(CTL.dirty).length;
+  return '<div class="savebar" id="ctl-bar"'+(n?"":" hidden")+'>'
+    +'<span class="n" id="ctl-n">'+n+' change'+(n===1?"":"s")+'</span> <span class="sp">·</span> '
+    +'<button class="btn sm" id="ctl-save">Save</button> <span class="sp">·</span> '
+    +'<button class="btn ghost sm" id="ctl-discard">Discard</button></div>';
+}
+/* the marks are painted rather than redrawn, so a number being typed keeps
+   the cursor it is being typed with */
+function ctlPaint(){
+  var el=$("s-controls");if(!el||!CTL.list)return;
+  CTL.list.forEach(function(d){
+    var row=el.querySelector('[data-row="'+d.k+'"]');if(!row)return;
+    var chg=(d.k in CTL.dirty),v=ctlVal(d),why=CTL.refused[d.k]||"";
+    row.classList.toggle("dirty",chg);
+    var tag=row.querySelector(".src.chg");if(tag)tag.hidden=!chg;
+    var w=row.querySelector(".why");if(w){w.textContent=why;w.hidden=!why}
+    if(d.t==="bool"){var sw=row.querySelector(".sw");if(sw)sw.setAttribute("aria-checked",v?"true":"false")}
+    if(d.t==="enum")row.querySelectorAll("[data-opt]").forEach(function(b){
+      var on=String(b.dataset.opt)===String(v);b.setAttribute("aria-pressed",on?"true":"false");b.classList.toggle("on",on)});
+  });
+  var n=Object.keys(CTL.dirty).length,bar=$("ctl-bar"),lab=$("ctl-n");
+  if(lab)lab.textContent=n+" change"+(n===1?"":"s");
+  if(bar)bar.hidden=!n;
+}
+function ctlSet(d,v){
+  /* a dial moved back to what it already holds is not a change */
+  if(String(v)===String(d.value))delete CTL.dirty[d.k];
+  else CTL.dirty[d.k]=v;
+  delete CTL.refused[d.k];
+  ctlPaint();
+}
+function drawControls(force){
+  var el=$("s-controls");
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The dials</p>'+skel(3);el.dataset.built="1"}
+  return settingsQ(force).then(function(j){
+    j=j||{};
+    var ds=(j.dials||[]).filter(function(d){return d&&d.k});
+    CTL.store=j.store!==false;CTL.list=ds;CTL.by={};
+    ds.forEach(function(d){CTL.by[d.k]=d});
+    /* a dial that has gone out of the house since it was touched cannot be
+       saved, so its mark goes with it rather than sitting there unsendable */
+    Object.keys(CTL.dirty).forEach(function(k){if(!CTL.by[k]){delete CTL.dirty[k];delete CTL.refused[k]}});
+    var groups=[],seen={};
+    ds.forEach(function(d){var g=d.g||"The house";if(!seen[g]){seen[g]=[];groups.push(g)}seen[g].push(d)});
+    var here=ds.filter(ctlHere).length;
+    el.innerHTML=BACK
+      +'<p class="sec">The dials</p>'
+      +'<p class="muted small" style="margin:-6px 0 10px">Every switch this house has, in one place. Nothing is live until you save, and a dial set here overrides what the environment says: put it back to its default and the environment answers for it again.</p>'
+      +(CTL.store?'':'<div class="card"><b style="color:var(--bad)">No store is connected, so nothing here can be saved.</b><p class="muted small" style="margin:6px 0 0">Every dial below is showing what the environment or the code says. Add REDIS_URL in Vercel and this room starts working.</p></div>')
+      +(ds.length
+        ?groups.map(function(g){return '<p class="sec">'+esc(g)+'</p>'+seen[g].map(ctlRow).join("")}).join("")
+        :'<div class="empty">No dial came back, so there is nothing to turn here.</div>')
+      +(ds.length?'<p class="faint small" style="margin:12px 0 0">'+esc(here+" of "+ds.length+" dials are set here; the rest are what the environment or the code says. A dial reads on the next request, not on the next deploy.")+'</p>':'')
+      +ctlBar();
+    el.onclick=function(e){
+      var b=e.target.closest&&e.target.closest("button");if(!b)return;
+      if(b.id==="ctl-save")return ctlSave(b);
+      if(b.id==="ctl-discard"){CTL.dirty={};CTL.refused={};return void drawControls(false)}
+      var d=CTL.by[b.dataset.dial||""];if(!d)return;
+      if(d.t==="bool")return ctlSet(d,b.getAttribute("aria-checked")!=="true");
+      if(d.t==="enum"&&b.dataset.opt!=null)return ctlSet(d,b.dataset.opt);
+    };
+    var typed=function(e){
+      var t=e.target,d=CTL.by[(t&&t.dataset&&t.dataset.dial)||""];if(!d)return;
+      if(d.t==="int"||d.t==="num"){
+        var n=parseFloat(String(t.value).replace(/[\s,]/g,""));
+        if(!isFinite(n))return;
+        if(d.min!=null&&n<d.min)n=d.min;
+        if(d.max!=null&&n>d.max)n=d.max;
+        return ctlSet(d,d.t==="int"?Math.round(n):n)}
+      if(d.t==="text")ctlSet(d,t.value);
+    };
+    el.oninput=typed;el.onchange=typed;
+  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The dials could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function ctlSave(b){
+  var keys=Object.keys(CTL.dirty);
+  if(!keys.length||INFLIGHT.dials)return;
+  var body={};keys.forEach(function(k){body[k]=CTL.dirty[k]});
+  var was=b.textContent;b.disabled=true;b.textContent="Saving…";INFLIGHT.dials=1;
+  post("/api/settings",body).then(function(r){
+    delete INFLIGHT.dials;
+    var j=r.j||{},refused=Array.isArray(j.refused)?j.refused:[];
+    if(r.locked)return;
+    if(!r.ok&&!refused.length){b.disabled=false;b.textContent=was;toast(j.error||"It refused.",true);return}
+    /* the house names the dial it would not take at the head of its sentence,
+       so the reason is filed on that row and the row keeps its mark */
+    var kept={};
+    refused.forEach(function(line){
+      var s=String(line);
+      var k=keys.filter(function(x){return s.indexOf(x)===0})[0];
+      if(!k)return;
+      kept[k]=1;CTL.refused[k]=s.slice(k.length).replace(/^[:\s]+/,"")||"the house would not take this value";
+    });
+    keys.forEach(function(k){if(!kept[k]){delete CTL.dirty[k];delete CTL.refused[k]}});
+    toast(refused.length?"The house refused "+refused.join("; ")+".":"Saved.",refused.length>0);
+    C.settings=null;C.house=null;LOADED.house=false;
+    drawControls(true);
+  }).catch(function(){delete INFLIGHT.dials;unreachable(b,was)()});
 }
 
 /* ---------- the gate ---------- */

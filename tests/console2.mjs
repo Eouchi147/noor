@@ -89,6 +89,39 @@ const WEEK = { kind: 'week', week: [
   { day: 'Tuesday', channel: 'masjid email', title: 'A free learning map', body: 'The Tuesday email.', leads_with: 'the Cradle' }] };
 const VET = { verdict: 'review', score: 62, reasons: ['The site sells clothing and says nothing about its finance.'], questions: ['Do you take interest bearing credit?'] };
 
+/* ---- the dials, in the shape GET /api/settings?all=1 really answers with ----
+   One dial of every type the table holds, and one of each source: a dial the
+   owner set here, a dial an environment variable is answering for, and dials
+   that are only what the code says. ledger.floor is in it with a figure on
+   it, because that one number must be shown as the number it is and never
+   dressed as money anywhere in the console. */
+const SETTINGS = () => ({ store: true, dials: [
+  { k: 'lantern.on', g: 'The Lantern', n: 'The Lantern answers readers', t: 'bool', value: true, def: false, src: 'set here',
+    h: 'Off means the lamp is not offered at all. Nothing is drawn and nothing is spent.' },
+  { k: 'lantern.free', g: 'The Lantern', n: 'Questions a day · a reader', t: 'int', min: 0, max: 100, value: 12, def: 6, src: 'env LANTERN_FREE_PER_DAY',
+    h: 'Counted per device and per address, whichever runs out first.' },
+  { k: 'jumuah.mode', g: 'The house', n: "The Jumu'ah banner", t: 'enum', opts: ['auto', 'on', 'off'], value: 'auto', def: 'auto', src: 'built in',
+    h: 'Auto shows it from Thursday evening to Friday evening. On and off are for testing.' },
+  { k: 'notice.text', g: 'The house', n: 'A notice across the top', t: 'text', max: 160, value: '', def: '', src: 'built in',
+    h: 'Plain text only, 160 characters. Empty means no notice. For an outage or a closure, not for marketing.' },
+  { k: 'ledger.floor', g: 'The Ledger', n: 'Household floor each month', t: 'num', min: 0, max: 1000000, value: 1800, def: 0, src: 'set here',
+    h: 'In whole units of your currency. The private ledger counts this per month elapsed since the first gift arrived. Never shown to a reader.' },
+  { k: 'social.mode', g: 'The social machine', n: "How the day's post goes out", t: 'enum', opts: ['off', 'approve', 'auto'], value: 'auto', def: 'off', src: 'set here',
+    h: 'off sends nothing on a schedule, approve leaves the post in the queue for you, auto posts with nobody in the loop.' },
+  { k: 'nightshift.audit', g: 'The night shift', n: 'Passages checked a night', t: 'int', min: 0, max: 60, value: 12, def: 12, src: 'built in',
+    h: 'It reads that many published passages, in order, and says which ones an editor should look at again.' },
+  { k: 'journal.on', g: 'The Journal', n: 'The journal is open', t: 'bool', value: true, def: true, src: 'built in',
+    h: 'Off hides /journal from readers entirely and stops serving every entry. The Codex is unaffected.' }
+] });
+/* the endpoint's own refusal: a notice may not smuggle a link into the site */
+const settingsSave = b => {
+  const refused = Object.keys(b).filter(k => k === 'notice.text' && /https?:/i.test(String(b[k])))
+    .map(k => k + ': ' + JSON.stringify(b[k]) + ' is not a value this dial takes');
+  const changed = Object.keys(b).filter(k => !refused.some(r => r.indexOf(k) === 0));
+  return { body: { ok: changed.length > 0, changed: changed.map(k => k + ' = ' + b[k]), refused, count: changed.length,
+    error: changed.length ? undefined : 'nothing was saved' }, status: changed.length ? 200 : 400 };
+};
+
 /* ---- the house, read in one call: GET /api/house?action=steward|flow ----
    The shapes are api/_steward.js's findings and api/_flow.js's stages and
    edges exactly as tests/house.mjs proves them: a level, a title, a sentence,
@@ -212,6 +245,7 @@ async function open_(w, h, posted, errors, opts = {}) {
       if (u.includes('/api/admin-vet')) return r.fulfill(J(VET));
       if (u.includes('/api/admin-guardians') && b.action === 'intake') return r.fulfill(J({ name: 'Amina Textiles', url: 'https://example.org', line: 'Modest cloth, honestly made' }));
       if (u.includes('/api/marketing')) return r.fulfill(J(b.kind === 'week' ? WEEK : MARKETING));
+      if (u.includes('/api/settings')) { const s = settingsSave(b); return r.fulfill(J(s.body, s.status)); }
       if (u.includes('/api/assistant')) return r.fulfill(J(b.mode === 'edit'
         ? { ok: true, mode: 'edit', valid: true, proposal: { page: 'pillars.html', find: 'seven ounces', replace: 'seven grams', why: 'the nisab was misread' } }
         : { ok: true, mode: 'assist', reply: 'Answer one message and the day is clear.' }));
@@ -233,6 +267,11 @@ async function open_(w, h, posted, errors, opts = {}) {
         return r.fulfill(J(opts.flow ? opts.flow(d) : FLOW(d)));
       }
       return r.fulfill(J(opts.steward ? opts.steward() : STEWARD()));
+    }
+    /* the dials the owner may see: every one of them, with its source */
+    if (u.includes('/api/settings')) {
+      posted.push({ url: u.replace(BASE, ''), method: 'GET', body: {} });
+      return r.fulfill(J(opts.settings ? opts.settings() : SETTINGS()));
     }
     if (u.includes('/api/admin-data?probe=lantern')) return r.fulfill(J(LANTERN));
     if (u.includes('/api/admin-data?probe=lights')) {
@@ -267,9 +306,10 @@ async function open_(w, h, posted, errors, opts = {}) {
     if (u.includes('fonts.g')) return r.fulfill({ status: 200, contentType: 'text/css', body: '' });
     return r.abort();
   });
-  await pg.goto(BASE + '/admin2.html', { waitUntil: 'domcontentloaded' });
+  await pg.goto(BASE + '/admin2.html' + (opts.hash || ''), { waitUntil: 'domcontentloaded' });
   await pg.waitForSelector('#app.on, #app:not([hidden])', { timeout: 15000 });
-  await pg.waitForSelector('#s-today .card, #s-today .row, #s-today .strip', { timeout: 15000 });
+  await pg.waitForSelector(opts.hash ? '.surf.on .card, .surf.on .row, .surf.on .dial'
+                                     : '#s-today .card, #s-today .row, #s-today .strip', { timeout: 15000 });
   await pg.waitForTimeout(400);
   return pg;
 }
@@ -497,14 +537,15 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/redis/i.test(hs) || /store/i.test(hs), 'the store is reported');
   ok(/\$90/.test(hs) && /30 USD/.test(hs), 'giving is shown');
   ok(/Amina/.test(hs) && /15 EUR/.test(hs) && /lit on the wall/.test(hs), 'a guardian is shown by the name they chose, with what they give');
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'lights,legacy,marketing,journal,night,system',
-     'the six rooms are cards on the hub, in order');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'lights,legacy,marketing,journal,night,system,controls',
+     'the seven rooms are cards on the hub, in order, with Controls right after System');
   ok(await pg.evaluate(() => !document.querySelector('#s-house a[href^="/admin#"]')) && !/rest of the house/i.test(hs),
      'and nothing on the hub points back into the old console');
   ok(/421/.test(hs) && /questioned/.test(hs), 'the Lights card carries a live number: the library is counted');
   ok(/2\s*entries/.test(hs) && /1 waiting/.test(hs), 'the Journal card counts the entries and what waits');
   ok(/1\s*\n?flagged/.test(hs.replace(/\s+/g, ' ')) || /flagged/.test(hs), 'the Night card counts what was flagged');
   ok(/2 of 3/.test(hs), 'the System card counts the keys that are set, and this house has no Stripe key');
+  ok(/3 of 8/.test(hs) && /dials set here/.test(hs), 'the Controls card counts the dials that are set here against every dial there is');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   await pg.screenshot({ path: 'tests/shots/console2-' + w + '-house.png', fullPage: true });
 
@@ -617,14 +658,15 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok((await surfaceOn(pg)) === 's-flow', 'a reload on #flow lands back on the map');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
 
-  console.log(label + ' · the six rooms open, route and draw');
+  console.log(label + ' · the seven rooms open, route and draw');
   const ROOMS = [['lights', 'Lights'], ['legacy', 'Legacy'], ['marketing', 'Marketing'],
-                 ['journal', 'Journal desk'], ['night', 'Night shift'], ['system', 'System']];
+                 ['journal', 'Journal desk'], ['night', 'Night shift'], ['system', 'System'],
+                 ['controls', 'Controls']];
   for (const [id, name] of ROOMS) {
     await pg.click('nav.bar [data-s="house"]');
     await pg.waitForSelector('#s-house [data-room="' + id + '"]', { timeout: 15000 });
     await pg.click('#s-house [data-room="' + id + '"]');
-    await pg.waitForSelector('#s-' + id + '.on .card, #s-' + id + '.on .row', { timeout: 15000 });
+    await pg.waitForSelector('#s-' + id + '.on .card, #s-' + id + '.on .row, #s-' + id + '.on .dial', { timeout: 15000 });
     await pg.waitForTimeout(250);
     ok((await surfaceOn(pg)) === 's-' + id, name + ' opens from House');
     ok(await pg.evaluate(() => location.hash) === '#' + id, 'the hash follows it to #' + id);
@@ -648,7 +690,7 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
     await pg.click('nav.bar [data-s="house"]');
     await pg.waitForSelector('#s-house [data-room="' + id + '"]', { timeout: 15000 });
     await pg.click('#s-house [data-room="' + id + '"]');
-    await pg.waitForSelector('#s-' + id + '.on .card', { timeout: 15000 });
+    await pg.waitForSelector('#s-' + id + '.on .card, #s-' + id + '.on .dial', { timeout: 15000 });
     await pg.waitForTimeout(250);
     return pg.evaluate(i => document.getElementById('s-' + i).innerText, id);
   };
@@ -838,6 +880,127 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   await pg.waitForTimeout(700);
   const sl = await pg.evaluate(() => document.getElementById('sys-lantern-out').innerText);
   ok(/lantern is lit/.test(sl) && /inkling/.test(sl) && /950 ms/.test(sl), 'and the lantern is asked for one word, model by model');
+  console.log(label + ' · Controls · the dials');
+  const cx = await roomText('controls');
+  ok(/The Lantern answers readers/.test(cx) && /Nothing is drawn and nothing is spent/.test(cx),
+     'Controls names each dial and prints its help underneath');
+  const secs = await pg.evaluate(() => [...document.querySelectorAll('#s-controls p.sec')].map(p => p.textContent).join(','));
+  ok(secs === 'The dials,The Lantern,The house,The Ledger,The social machine,The night shift,The Journal',
+     'the groups the house sent are the sections of the room, in its order: ' + secs);
+  const dials = await pg.evaluate(() => [...document.querySelectorAll('#s-controls .dial')].map(d => {
+    const sw = d.querySelector('.dc .sw'), seg = d.querySelector('.dc .seg'), inp = d.querySelector('.dc input');
+    return { k: d.getAttribute('data-row'),
+      name: (d.querySelector('.dt b') || {}).textContent || '',
+      help: (d.querySelector('.dh') || {}).textContent || '',
+      src: (d.querySelector('.src') || {}).textContent || '',
+      mono: sw ? '' : getComputedStyle(d.querySelector('.src')).fontFamily,
+      kind: sw ? 'switch' : seg ? 'seg' : inp ? inp.type : 'none',
+      role: sw ? sw.tagName + ':' + sw.getAttribute('role') + ':' + sw.getAttribute('aria-checked') : '',
+      opts: seg ? [...seg.querySelectorAll('button')].map(b => b.dataset.opt).join('/') : '',
+      min: inp ? inp.getAttribute('min') : null, max: inp ? inp.getAttribute('max') : null,
+      step: inp ? inp.getAttribute('step') : null, maxlen: inp ? inp.getAttribute('maxlength') : null,
+      value: inp ? inp.value : '' };
+  }));
+  const D = k => dials.find(x => x.k === k) || {};
+  ok(dials.length === 8 && dials.every(d => d.name && d.help && d.src),
+     'every dial the house sent is a row carrying its name, its help and where its value comes from');
+  ok(/Mono/i.test(D('lantern.free').mono || ''), 'the source is a small mono tag: ' + D('lantern.free').mono);
+  ok(D('lantern.on').src === 'set here' && D('lantern.free').src === 'env LANTERN_FREE_PER_DAY' && D('jumuah.mode').src === 'default',
+     'and it says set here, the environment variable by its name, or default: ' + dials.map(d => d.src).join(' | '));
+  ok(D('lantern.on').role === 'BUTTON:switch:true', 'a bool is a real button with role switch and aria-checked: ' + D('lantern.on').role);
+  ok(D('lantern.free').kind === 'number' && D('lantern.free').min === '0' && D('lantern.free').max === '100' && D('lantern.free').step === '1',
+     'an int is a number field with the min and the max the house gave, stepping by one');
+  ok(D('jumuah.mode').kind === 'seg' && D('jumuah.mode').opts === 'auto/on/off',
+     'an enum is a segmented control of exactly its options: ' + D('jumuah.mode').opts);
+  ok(D('notice.text').kind === 'text' && D('notice.text').maxlen === '160', 'text is a text field held to the length the house gave');
+  ok(D('ledger.floor').kind === 'number' && D('ledger.floor').value === '1800',
+     'the household floor is the number as it was typed: ' + JSON.stringify(D('ledger.floor').value));
+  ok(!/[$£€]/.test(cx) && !/1,800/.test(cx) && !/USD|EUR/.test(cx),
+     'never dressed as money and never given a currency: ' + JSON.stringify((cx.match(/.{0,30}[$£€].{0,10}/) || [''])[0]));
+  ok(await pg.evaluate(() => (document.getElementById('s-controls').innerHTML.match(/1800|1,800/g) || []).length) === 1,
+     'and the figure is written once, in its own field, and nowhere else in the room');
+
+  ok(await pg.evaluate(() => !!document.getElementById('ctl-bar').hidden), 'with nothing touched there is no save bar');
+  await pg.click('#s-controls [data-row="lantern.on"] .sw');
+  await pg.waitForTimeout(200);
+  const sw1 = await pg.evaluate(() => {
+    const row = document.querySelector('#s-controls [data-row="lantern.on"]');
+    return { checked: row.querySelector('.sw').getAttribute('aria-checked'), dirty: row.classList.contains('dirty'),
+      mark: !row.querySelector('.src.chg').hidden, bar: !document.getElementById('ctl-bar').hidden,
+      n: document.getElementById('ctl-n').textContent };
+  });
+  ok(sw1.checked === 'false', 'the switch turns');
+  ok(sw1.dirty && sw1.mark, 'and the row it sits on is marked as changed');
+  ok(sw1.bar && sw1.n === '1 change', 'one change brings the save bar up, counting one');
+  await pg.click('#s-controls [data-row="jumuah.mode"] [data-opt="off"]');
+  await pg.waitForTimeout(150);
+  await pg.fill('#s-controls [data-row="ledger.floor"] input', '2000');
+  await pg.waitForTimeout(250);
+  ok(await pg.evaluate(() => document.querySelector('#s-controls [data-row="jumuah.mode"] [data-opt="off"]').getAttribute('aria-pressed')) === 'true',
+     'a rung of a segmented control says it is the one chosen');
+  const barText = await pg.evaluate(() => document.getElementById('ctl-bar').innerText.replace(/\s+/g, ' ').trim());
+  ok(barText === '3 changes · Save · Discard', 'three changes read as one line at the foot: ' + JSON.stringify(barText));
+
+  posted.length = 0;
+  await pg.click('#ctl-save');
+  await pg.waitForTimeout(800);
+  const saves = posted.filter(x => !x.method && /^\/api\/settings/.test(x.url));
+  ok(saves.length === 1 && Object.keys(saves[0].body).sort().join(',') === 'jumuah.mode,lantern.on,ledger.floor',
+     'Save posts exactly the three dials that moved and nothing else: ' + JSON.stringify(saves.map(s => Object.keys(s.body))));
+  ok(saves.length === 1 && saves[0].body['lantern.on'] === false && saves[0].body['jumuah.mode'] === 'off' && saves[0].body['ledger.floor'] === 2000,
+     'each carrying the value it was set to, the floor as a plain number: ' + JSON.stringify(saves[0] && saves[0].body));
+  ok(await pg.evaluate(() => document.getElementById('toast').textContent) === 'Saved.', 'and the owner is told in one word');
+  ok(await pg.evaluate(() => !!document.getElementById('ctl-bar').hidden && !document.querySelector('#s-controls .dial.dirty')),
+     'the bar goes and every mark with it');
+  ok(posted.some(x => x.method === 'GET' && /\/api\/settings\?all=1/.test(x.url)), 'and the dials are read again from the house');
+
+  /* one dial the house takes and one it will not: the taken one loses its
+     mark, the refused one keeps it and carries the reason */
+  posted.length = 0;
+  await pg.fill('#s-controls [data-row="notice.text"] input', 'Read https://example.org for more');
+  await pg.fill('#s-controls [data-row="nightshift.audit"] input', '20');
+  await pg.waitForTimeout(250);
+  await pg.click('#ctl-save');
+  await pg.waitForTimeout(800);
+  const ref = await pg.evaluate(() => {
+    const row = document.querySelector('#s-controls [data-row="notice.text"]');
+    const kept = document.querySelector('#s-controls [data-row="nightshift.audit"]');
+    return { dirty: row.classList.contains('dirty'), hidden: row.querySelector('.why').hidden,
+      why: row.querySelector('.why').textContent, value: row.querySelector('input').value,
+      other: kept.classList.contains('dirty'), n: document.getElementById('ctl-n').textContent,
+      bar: !document.getElementById('ctl-bar').hidden, toast: document.getElementById('toast').textContent };
+  });
+  const second = posted.filter(x => !x.method && /^\/api\/settings/.test(x.url));
+  ok(second.length === 1 && Object.keys(second[0].body).sort().join(',') === 'nightshift.audit,notice.text',
+     'the second save carries only the two dials touched since the first: ' + JSON.stringify(second.map(s => Object.keys(s.body))));
+  ok(ref.dirty && !ref.hidden && /is not a value this dial takes/.test(ref.why),
+     'a dial the house refused keeps its mark and says why, on its own row: ' + JSON.stringify(ref.why));
+  ok(/Read https/.test(ref.value), 'with what was typed still in the field, not snapped back as though nothing happened');
+  ok(!ref.other && ref.n === '1 change', 'the dial the house did take loses its mark, so the bar counts only what is still owed');
+  ok(/^The house refused notice\.text/.test(ref.toast), 'and the refusal is the house\'s own sentence: ' + JSON.stringify(ref.toast));
+  ok(ref.bar, 'the bar stays up, because something is still unsaved');
+
+  await pg.focus('#s-controls [data-row="journal.on"] .sw');
+  await pg.keyboard.press('Enter');
+  await pg.waitForTimeout(250);
+  ok(await pg.evaluate(() => document.querySelector('#s-controls [data-row="journal.on"] .sw').getAttribute('aria-checked')) === 'false'
+     && await pg.evaluate(() => document.getElementById('ctl-n').textContent) === '2 changes',
+     'a switch can be turned from the keyboard alone, and it counts');
+
+  posted.length = 0;
+  await pg.click('#ctl-discard');
+  await pg.waitForTimeout(400);
+  const gone = await pg.evaluate(() => ({
+    dirty: document.querySelectorAll('#s-controls .dial.dirty').length,
+    bar: !!document.getElementById('ctl-bar').hidden,
+    notice: document.querySelector('#s-controls [data-row="notice.text"] input').value,
+    journal: document.querySelector('#s-controls [data-row="journal.on"] .sw').getAttribute('aria-checked'),
+    why: document.querySelector('#s-controls [data-row="notice.text"] .why').hidden }));
+  ok(gone.dirty === 0 && gone.bar && gone.why, 'Discard clears every mark, every reason and the bar with them');
+  ok(gone.notice === '' && gone.journal === 'true', 'and puts every control back to what the house holds');
+  ok(posted.every(x => x.method === 'GET'), 'without asking the house to undo anything');
+  ok(await noSideScroll(pg), 'nothing scrolls sideways');
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-controls.png', fullPage: true });
   await pg.click('nav.bar [data-s="house"]');
   await pg.waitForTimeout(300);
 
@@ -853,6 +1016,66 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
       && [...document.querySelectorAll('.slot .b button.chan')].every(b => vis(b) >= 28);
   });
   ok(tap, 'every control on the Posts surface is tall enough for a thumb');
+  ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
+  await pg.close();
+}
+
+/* ---------------------------------------------------------------------------
+   THE DIALS OPEN FROM THE HASH, WITHOUT PASSING THROUGH HOUSE
+--------------------------------------------------------------------------- */
+for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]]) {
+  console.log('\n' + label + ' · the dials open straight from #controls');
+  const posted = [], errors = [];
+  const pg = await open_(w, h, posted, errors, { hash: '#controls' });
+  ok((await surfaceOn(pg)) === 's-controls', 'a console opened at #controls lands in the dials');
+  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'Controls', 'and the top bar names the room');
+  ok(await pg.evaluate(() => document.querySelectorAll('#s-controls .dial').length) === 8, 'every dial the house has is drawn');
+  ok(await pg.evaluate(() => !!document.querySelector('#s-controls .back')), 'with a way back to House at the top of it');
+  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="house"]').classList.contains('on')), 'and the bar lights House, the door it is behind');
+  ok(await pg.evaluate(() => !!document.getElementById('ctl-bar').hidden), 'nothing is unsaved, so no bar is in the way');
+  ok(await noSideScroll(pg), 'nothing scrolls sideways');
+  ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
+  await pg.close();
+}
+
+/* a save where every dial named was refused: the house answers 400 and says
+   nothing was saved, and the room must keep the mark rather than go quiet */
+{
+  console.log('\nthe dials when the house refuses the whole save');
+  const posted = [], errors = [];
+  const pg = await open_(390, 844, posted, errors, { hash: '#controls' });
+  await pg.fill('#s-controls [data-row="notice.text"] input', 'Come to https://example.org');
+  await pg.waitForTimeout(250);
+  await pg.click('#ctl-save');
+  await pg.waitForTimeout(800);
+  const st = await pg.evaluate(() => {
+    const row = document.querySelector('#s-controls [data-row="notice.text"]');
+    return { dirty: row.classList.contains('dirty'), why: row.querySelector('.why').textContent,
+      value: row.querySelector('input').value, n: document.getElementById('ctl-n').textContent,
+      bar: !document.getElementById('ctl-bar').hidden, toast: document.getElementById('toast').textContent,
+      save: !document.getElementById('ctl-save').disabled };
+  });
+  ok(st.dirty && /is not a value this dial takes/.test(st.why), 'the one dial it named keeps its mark and its reason');
+  ok(st.bar && st.n === '1 change' && st.save, 'the bar stays, still counting one, and Save can be pressed again');
+  ok(/^The house refused/.test(st.toast), 'and the owner is told what the house said: ' + JSON.stringify(st.toast));
+  ok(/Come to https/.test(st.value), 'nothing was quietly rewritten under the owner');
+  /* the 400 is the endpoint answering a refusal, not a fault: it is the one
+     status this scenario asks for on purpose */
+  const stray = errors.filter(e => !/^400 .*\/api\/settings/.test(e) && !/status of 400/.test(e));
+  ok(stray.length === 0, 'no script threw: ' + (stray[0] || 'clean'));
+  await pg.close();
+}
+
+/* the dials with no store behind them: readable, and honest that it cannot save */
+{
+  console.log('\nthe dials when the house has no store to save them in');
+  const posted = [], errors = [];
+  const NOSTORE = () => Object.assign({}, SETTINGS(), { store: false });
+  const pg = await open_(390, 844, posted, errors, { hash: '#controls', settings: NOSTORE });
+  const t = await pg.evaluate(() => document.getElementById('s-controls').innerText);
+  ok(/No store is connected, so nothing here can be saved/.test(t), 'it says so in one plain sentence, above the dials');
+  ok(await pg.evaluate(() => document.querySelectorAll('#s-controls .dial').length) === 8, 'and still shows every dial and what it holds');
+  ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
   await pg.close();
 }

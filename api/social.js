@@ -894,6 +894,9 @@ export function slotState(results) {
    { pending } when it still is not, and { error } when the network gave up
    on it; the walk below is the same for both. A channel is added by adding
    its finisher. */
+/* how long a handed-back container may stay pending before it is given up on */
+const PENDING_MAX_MS = Number(process.env.PENDING_MAX_MS || 2 * 3600 * 1000);
+const NET_NAME = ch => ({ instagram: "Instagram", threads: "Threads" })[ch] || ch;
 const FINISHERS = {
   instagram: finishInstagramReel,
   threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; }
@@ -921,7 +924,18 @@ export async function finishPendingReels(date, out) {
           continue;
         }
         if (had.ok || !had.pending) continue;
-        const r = await FINISHERS[ch](had.pending);
+        let r = await FINISHERS[ch](had.pending);
+        /* A container Instagram never finishes is not transcoding, whatever
+           its status says: the 14:00 reel sat IN_PROGRESS from two in the
+           afternoon until evening while the owner pressed Finish. After this
+           long the container is given up on and the network is recorded as
+           refused in words, so the healer sends the reel again as a fresh
+           container next hour. Nothing was published from the old one, so
+           nothing can be doubled. */
+        if (r.pending && rec.at && Date.now() - Date.parse(rec.at) > PENDING_MAX_MS) {
+          const hours = Math.round((Date.now() - Date.parse(rec.at)) / 3600000);
+          r = { ok: false, gaveUp: true, error: NET_NAME(ch) + " never finished the video in " + hours + " hours; sent again as a fresh one next hour" };
+        }
         if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: ch }); continue; }
         rec.results = { ...rec.results, [ch]: r };
         rec.state = slotState(rec.results);

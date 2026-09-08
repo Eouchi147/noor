@@ -325,6 +325,26 @@ console.log('\ntaken, not yet finished');
   const again = await SOC.finishPendingReels('2026-09-03', { ran: [] });
   ok(again.length === 0, 'running it twice publishes nothing twice');
 
+  /* a container Instagram never finishes: the 14:00 reel sat IN_PROGRESS for
+     five hours while the owner pressed Finish. Fresh, it waits; old, it is
+     given up on in words so the healer sends a fresh one. */
+  phase = 'stuck';
+  const fresh = new Date(Date.now() - 20 * 60000).toISOString();
+  SLOTS_KV.set(key, JSON.stringify({ at: fresh, slot: 'reelA', state: 'pending',
+    results: { facebook: { ok: true, id: 'F' }, instagram: { ok: false, pending: 'CONT' } } }));
+  const young = await SOC.finishPendingReels('2026-09-03', { ran: [] });
+  ok(young.length === 1 && young[0].state === 'pending' && JSON.parse(SLOTS_KV.get(key)).results.instagram.pending === 'CONT',
+     'twenty minutes in, a container still processing is left to process');
+  const old = new Date(Date.now() - 5 * 3600000).toISOString();
+  SLOTS_KV.set(key, JSON.stringify({ at: old, slot: 'reelA', state: 'pending',
+    results: { facebook: { ok: true, id: 'F' }, instagram: { ok: false, pending: 'CONT' } } }));
+  const gave = await SOC.finishPendingReels('2026-09-03', { ran: [] });
+  const rec2 = JSON.parse(SLOTS_KV.get(key));
+  ok(gave.length === 1 && gave[0].finished && gave[0].ok === false && /never finished the video in 5 hours/.test(gave[0].error),
+     'five hours in, it is given up on, in words: ' + (gave[0] && gave[0].error));
+  ok(!rec2.results.instagram.pending && rec2.results.instagram.gaveUp === true && rec2.state === 'partial',
+     'the record drops the container and reads partial, which is what the healer sends again');
+
   globalThis.fetch = realFetch;
 }
 
