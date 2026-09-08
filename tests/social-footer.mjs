@@ -48,10 +48,9 @@ const OPEN = S.filter(s => s.href);
 ok(Array.isArray(S) && S.length === 6, 'NOOR_SOCIAL is one block of six networks at the top of noor-fx.js');
 ok(S.map(s => s.id).join(' ') === 'instagram facebook youtube pinterest telegram threads',
    'the order is the owner\'s order: ' + S.map(s => s.id).join(' · '));
-ok(S.find(s => s.id === 'facebook').href === '',
-   'Facebook is left empty on purpose, for Sam to fill in');
-ok(/Sam fills this one in/.test(FX), 'and a line above it says so');
-ok(OPEN.length === 5, 'five doors are actually open');
+ok(/facebook\.com\/profile\.php\?id=\d+$/.test(S.find(s => s.id === 'facebook').href),
+   'Facebook is the Page\'s own door, by its id until it has a name');
+ok(OPEN.length === 6, 'all six doors are open');
 ok(OPEN.every(s => /^https:\/\/|^https:\/\/t\.me/.test(s.href)), 'every open door is an https link');
 
 /* the point of a shared row is that no page carries the markup */
@@ -113,7 +112,7 @@ for (const p of PAGES) {
   await pg.waitForSelector('[data-noor-social]', { timeout: 8000 }).catch(() => {});
   const m = await measure();
   if (m.n !== 1) { bad.once.push(p + ' (' + m.n + ')'); continue; }
-  if (m.links.length !== 5) bad.five.push(p + ' (' + m.links.length + ')');
+  if (m.links.length !== 6) bad.five.push(p + ' (' + m.links.length + ')');
   if (m.links.map(l => l.label).join(' ') !== want) bad.order.push(p);
   if (!m.links.every(l => l.label)) bad.aria.push(p);
   if (!m.links.every(l => l.rel === 'me noopener')) bad.rel.push(p);
@@ -131,7 +130,7 @@ const say = (k, m) => ok(bad[k].length === 0, m + (bad[k].length ? ' → ' + bad
 ok(PAGES.length === 62, PAGES.length + ' pages carry a footer: ' + rooms.length +
    ' rooms, ' + indexes.length + ' language indexes, and the front page');
 say('once', 'the row is drawn exactly once on every page');
-say('five', 'five links on every page, Facebook not among them while its href is empty');
+say('five', 'six links on every page');
 say('order', 'and always in the owner\'s order: ' + want);
 say('aria', 'every link says its network in an aria-label');
 say('rel', 'every link carries rel="me noopener"');
@@ -194,7 +193,7 @@ const rtl = await pg.evaluate(() => {
   };
 });
 ok(rtl.dir === 'rtl', 'and it is served that way, with the row inside it');
-ok(rtl.n === 5, 'the five doors are all drawn');
+ok(rtl.n === 6, 'the six doors are all drawn');
 ok(rtl.sw <= rtl.vw, 'nothing overflows the 390 viewport (scrollWidth ' + rtl.sw + ')');
 ok(rtl.off < 2, 'the row is centred, not stuck to an edge (' + rtl.off.toFixed(1) + 'px off centre)');
 ok(rtl.inRow, 'and every mark stays inside the row');
@@ -219,7 +218,7 @@ console.log('\n=== 4. sameAs on the front page ===');
   ok(same.length === OPEN.length, 'sameAs holds the ' + OPEN.length + ' open doors, and only those');
   const missing = OPEN.filter(s => !same.includes(s.href)).map(s => s.id);
   ok(missing.length === 0, 'each one is named in sameAs' + (missing.length ? ' → ' + missing.join(', ') : ''));
-  ok(!same.some(u => /facebook/i.test(u)), 'the empty Facebook door is not claimed there either');
+  ok(same.some(u => /facebook\.com/i.test(u)), 'the Facebook door is claimed there too');
 }
 
 /* ---------- 5. nothing broke on the way ---------- */

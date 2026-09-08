@@ -13,9 +13,9 @@
    An entry whose href is empty is not drawn at all.
    ------------------------------------------------------------ */
 var NOOR_SOCIAL = [
-  { id: "instagram", name: "Instagram", href: "https://www.instagram.com/noorcodex" },
-  /* Sam fills this one in: the Page's own URL is not known here. */
-  { id: "facebook",  name: "Facebook",  href: "" },
+  { id: "instagram", name: "Instagram", href: "https://www.instagram.com/noorcodexoflight" },
+  /* the Page has no vanity name yet, so its door is its id */
+  { id: "facebook",  name: "Facebook",  href: "https://www.facebook.com/profile.php?id=61592864417863" },
   { id: "youtube",   name: "YouTube",   href: "https://www.youtube.com/@noorcodex" },
   { id: "pinterest", name: "Pinterest", href: "https://www.pinterest.com/noorcodex" },
   { id: "telegram",  name: "Telegram",  href: "https://t.me/noorcodex" },
