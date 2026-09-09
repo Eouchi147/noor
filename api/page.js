@@ -259,7 +259,12 @@ const BAR = [
 export function shell(o) {
   const title = o.title + " · NOOR Codex of Light";
   const canonical = SITE + o.path;
-  const bar = BAR.map(l => `<a href="${l[1]}"${l[0] === "Search" ? " data-n2-search data-nm-open" : ""}${l[1] === o.active ? ' class="n2-on"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true">${l[2]}</svg>${l[0]}</a>`).join("");
+  /* Search opens the sheet (assets/noor-search.js, fetched by noor-fx.js on a
+     room that does not carry it) and nothing else. It used to carry the menu
+     dial's data-nm-open as well, which on a page that loads the dial always
+     won -- so the bar's Search and the field on the arrival opened two
+     different searches. The dial is the Menu's. */
+  const bar = BAR.map(l => `<a href="${l[1]}"${l[0] === "Search" ? " data-n2-search" : ""}${l[1] === o.active ? ' class="n2-on"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true">${l[2]}</svg>${l[0]}</a>`).join("");
   const ld = [crumbs([["NOOR Codex of Light", "/"], ...(o.crumbs || [])]), ...(o.ld || [])];
   return `<!DOCTYPE html>
 <html lang="en" data-n2="${attr(o.mode || "")}">
@@ -439,8 +444,32 @@ ${walk(prev && ["/path/" + prev.id, prev.titleEn, "Chapter " + prev.id], next &&
       isPartOf: { "@type": "CreativeWorkSeries", name: "The Path of Creation", url: SITE + "/path" },
       author: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE },
       publisher: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE, logo: { "@type": "ImageObject", url: SITE + "/assets/brand/mark-512.png" } } }],
-    body }) };
+    body, tail: GUIDE_TAIL(n) }) };
 }
+/* The quiet guide. noor-guide.js has answered from the sources on the thirty
+   chapters that carry a curated topic -- the Dajjal, the grave, the trials --
+   since it was written, and the two scripts came off the site the day the home
+   was rebuilt. This is the chapter's own room, the fullest telling of it and
+   what search sends a reader to, so it is the first place the pill belongs.
+   Both files sit at the root, outside /assets, so they revalidate: a change to
+   an answer reaches a reader who has been here before. attach() is a no-op on
+   a chapter with no topic, so this costs those chapters one 304. */
+let GUIDE_KEYS = null;
+function guideKeys() {
+  if (GUIDE_KEYS) return GUIDE_KEYS;
+  GUIDE_KEYS = new Set();
+  try {
+    const src = fs.readFileSync(fileOf("noor-guide-data.js"), "utf8");
+    for (const m of src.matchAll(/"(n:\d+|c:[a-z0-9-]+)"\s*:/g)) GUIDE_KEYS.add(m[1]);
+  } catch { /* no data file, no pill: attach() would be a no-op anyway */ }
+  return GUIDE_KEYS;
+}
+/* 61KB of curated answers, so only the thirty chapters that have one pay for
+   them; on the other forty-one the pill would never have appeared. */
+const GUIDE_TAIL = n => guideKeys().has("n:" + Number(n)) ? `<script src="/noor-guide-data.js" defer></script>
+<script src="/noor-guide.js" defer></script>
+<script>addEventListener("load",function(){var g=window.NoorGuide,c=document.getElementById("story");
+if(g&&g.attach&&c)g.attach(c,"n:${Number(n)}",document.title);});</script>` : "";
 function pathIndex() {
   const list = chapters();
   const body = `<section class="n2-idea n2-short n2-in">
