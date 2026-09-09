@@ -74,6 +74,14 @@ jobs:
       - name: install
         run: pip install -r tools/reels/requirements.txt
 
+      # a reel leaves the shelf once every network has it: the site's ledger
+      # of posted reels is copied beside the plan, and the plan leaves those
+      # cards out; the assemble job then takes their files off the shelf and
+      # the store. An unreachable site keeps last week's file.
+      - name: what has already been posted
+        working-directory: tools/reels
+        run: python posted_fetch.py
+
       - name: the plan, from the library
         working-directory: tools/reels
         run: python plan_build.py
@@ -112,6 +120,7 @@ jobs:
           path: |
             tools/reels/plan.json
             tools/reels/verses.json
+            tools/reels/posted.json
           retention-days: 3
 
   render:
@@ -255,6 +264,11 @@ jobs:
           by = {}
           for c in m["cards"]: by[c.get("kind", "light")] = by.get(c.get("kind", "light"), 0) + 1
           print("rendered: %d  " % m["n"] + "  ".join("%s %d" % kv for kv in sorted(by.items())))
+          try:
+              meta = json.load(open("tools/reels/plan.json"))["_meta"]
+              if meta.get("retired"): print("\nretired, every network had them: %d" % meta["retired"])
+          except Exception:
+              pass
           unfit = sorted(glob.glob("reels/*.unfit.json"))
           if unfit:
               print("\nset aside as unfit: " + ", ".join(os.path.basename(u)[:-11] for u in unfit))
@@ -269,6 +283,7 @@ jobs:
             reels
             tools/reels/plan.json
             tools/reels/verses.json
+            tools/reels/posted.json
           branch: reels/rendered
           delete-branch: true
           commit-message: |
@@ -299,7 +314,9 @@ jobs:
             The videos went to the store (GitHub Releases, one release a kind);
             this change carries each reel's sidecar with its URL, and the
             manifest. A video the store refused stays in `reels/` and is
-            tried again next run.
+            tried again next run. A reel every network has taken is on
+            `tools/reels/posted.json` and has left the plan, the shelf and
+            the store; This day, the Names and the du'as stay, they recur.
 
             1080x1920, 30fps, H.264 high, yuv420p, AAC stereo at 48 kHz: the
             bed built in numpy and finished in Pedalboard for every reel (sub,
