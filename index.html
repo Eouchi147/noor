@@ -65,15 +65,39 @@
 <script src="/assets/noor-overrides.js?v=1" defer></script>
 <style>
 /* what is particular to the home page; everything else is the shell */
-.hm-mark{font-family:var(--n2-ar);font-weight:700;font-size:clamp(56px,16vw,84px);line-height:1.15;color:var(--n2-goldhi);margin:0 0 2px;text-shadow:0 0 44px rgba(233,200,106,.28)}
-.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);padding:0 16px;min-height:52px;margin:8px 0 22px;background:rgba(255,254,247,.06)}
+.hm-eyebrow{letter-spacing:.14em;margin-bottom:12px}
+.hm-eyebrow small{letter-spacing:.12em}
+#top{padding-top:calc(var(--n2-safe-top) + 62px);padding-bottom:24px;justify-content:flex-start}
+#top .n2-h1{font-size:clamp(26px,7.4vw,36px);margin-bottom:10px}
+.hm-lead{font-size:15px;line-height:1.45;margin:0 0 12px}
+.hm-ayah{margin:0 0 10px}
+.hm-ayah .n2-quran{font-size:clamp(20px,5.4vw,25px);line-height:1.6;margin:0 0 4px;text-shadow:none}
+.hm-ayah .n2-meaning{font-size:14.5px;line-height:1.45;font-weight:400;margin:0 0 4px;max-width:none}
+.hm-ayah .n2-ref{margin:0}
+/* the three Names: three columns, the Arabic over the transliteration,
+   the glosses as one muted line beneath */
+.hm-names{margin:0 0 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px 8px;text-align:center}
+.hm-names a{color:var(--n2-parch2);text-decoration:none;font-weight:600;font-size:14px;line-height:1.2;white-space:nowrap}
+.hm-names a:hover{color:var(--n2-goldhi)}
+.hm-names span{display:block;font-family:var(--n2-ar);color:var(--n2-goldhi);font-size:20px;line-height:1.35;margin-bottom:2px}
+.hm-names small{grid-column:1/-1;font-size:14px;color:var(--n2-parch3);line-height:1.4;margin-top:2px;text-align:start}
+.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);padding:0 16px;min-height:48px;margin:0 0 10px;background:rgba(255,254,247,.06)}
 .hm-search svg{stroke:var(--n2-goldhi)}
 .hm-search span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hm-search kbd{font:12px/1 var(--n2-mono);color:var(--n2-parch3);border:1px solid var(--n2-line);border-radius:6px;padding:4px 7px}
 @media (hover:none){.hm-search kbd{display:none}}
-.hm-doors li:first-child{grid-column:1/-1}
-.hm-doors li:first-child a{flex-direction:row;justify-content:flex-start;align-items:baseline;gap:10px;min-height:56px}
-@media (min-width:640px){.hm-doors{grid-template-columns:repeat(3,1fr)}.hm-doors li:first-child{grid-column:auto}.hm-doors li:first-child a{flex-direction:column;justify-content:flex-end;align-items:stretch;min-height:76px}}
+/* the toolkit: a shelf under the thumb on a phone (one card, the next
+   peeking), four tiles across on a wider screen */
+.hm-doors{margin:0 -26px 10px;padding:4px 26px;gap:8px}
+.hm-doors>*{flex:0 0 min(64%,240px)}
+.hm-doors a{min-height:0;padding:10px 12px;justify-content:flex-start}
+.hm-doors b{font-size:15px;line-height:1.2}
+.hm-doors b small{display:inline;font-family:var(--n2-sans);font-weight:500;color:var(--n2-parch3);font-size:14px;letter-spacing:0;text-transform:none;margin:0}
+.hm-doors span{display:block;font-size:14px;line-height:1.25;margin-top:3px;color:var(--n2-parch2)}
+@media (min-width:640px){.hm-doors{display:grid;grid-template-columns:repeat(4,1fr);margin:0 0 10px;padding:0;overflow:visible;-webkit-mask-image:none;mask-image:none}.hm-doors>*{flex:none}}
+.hm-more{margin:0;font-size:14px}
+.hm-more a{color:var(--n2-parch3);text-underline-offset:3px}
+@media (min-width:640px){.hm-doors{grid-template-columns:repeat(4,1fr)}}
 #verse .n2-reel{height:min(42svh,400px)}
 @media (min-width:640px){
   #verse.hm-live{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto auto 1fr;column-gap:28px;align-content:center;justify-content:start}
@@ -83,6 +107,8 @@
   #verse.hm-live>.n2-row{align-self:start}
 }
 .hm-top-r{display:flex;gap:8px;flex:none}
+.n2-brand .n2-en{white-space:nowrap}
+@media (max-width:379px){.hm-menu-t{display:none}.n2-pill.hm-menu svg{margin:0}.n2-pill.hm-menu{padding:0 14px}}
 .n2-pill.hm-menu svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;margin-inline-end:6px}
 .n2-h3 .hm-sub{display:block;font-weight:400;font-size:14px;line-height:1.5;color:var(--n2-parch3);margin-top:2px}
 #timeline .n2-num{min-width:3.6em}
@@ -116,7 +142,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
   <a class="n2-brand" href="/"><span class="n2-ar" lang="ar" translate="no">نُور</span><span class="n2-en">Codex of Light</span></a>
   <div class="hm-top-r">
     <a class="n2-pill" href="#langs" id="lang-btn" aria-label="Choose your language"><span id="lang-cur">EN</span></a>
-    <a class="n2-pill hm-menu" href="/#search" data-nm-open aria-label="Search the library"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>Menu</a>
+    <a class="n2-pill hm-menu" href="/#search" data-nm-open aria-label="Search the library"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span class="hm-menu-t">Menu</span></a>
   </div>
 </header>
 
@@ -124,15 +150,23 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 
 <!-- 1 · the arrival -->
 <section class="n2-idea n2-in" id="top">
-<p class="hm-mark" lang="ar" translate="no">نُور</p>
-<h1 class="n2-h1" data-i18n="hero.title">Codex of Light</h1>
-<p class="n2-p n2-wide">The whole library, free forever: no ads, no account, no tracking.</p>
+<p class="n2-eyebrow hm-eyebrow">A free library of Islam <small>· no ads, no account, no tracking</small></p>
+<h1 class="n2-h1">A guide to God, <span class="n2-g">whole and free</span></h1>
+<p class="n2-dim n2-wide hm-lead">The story of Islam told in order, the Qur'an recited surah by surah, a codex for children, and the tools of a masjid: prayer board, khutba, timetable, qibla.</p>
+<div class="hm-ayah">
+<p class="n2-quran" lang="ar" translate="no">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ</p>
+<p class="n2-meaning">And when My servants ask you concerning Me — indeed I am near.</p>
+<p class="n2-ref"><a href="/verse/2-186">Qur'an 2:186 · Al-Baqarah</a></p>
+</div>
+<div class="hm-names"><a href="/allah"><span lang="ar" translate="no">الرَّقِيب</span>Ar-Raqib</a><a href="/allah"><span lang="ar" translate="no">الْقَادِر</span>Al-Qadir</a><a href="/allah"><span lang="ar" translate="no">الرَّحْمَٰن</span>Ar-Rahman</a><small>The Watchful · The All-Powerful · The Most Merciful, whose mercy reaches all that is</small></div>
 <a class="n2-btn n2-glow hm-search" href="/dictionary" id="hm-search" role="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah…</span><kbd aria-hidden="true">/</kbd></a>
-<ul class="n2-rooms hm-doors">
-<li><a href="/path"><b>The Path</b><span>71 chapters, in order</span></a></li>
-<li><a href="/quran"><b>The Mushaf</b><span>114 surahs, recited</span></a></li>
-<li><a href="/dictionary"><b>The Words</b><span>523 explained</span></a></li>
+<ul class="n2-shelf hm-doors">
+<li><a href="/path"><b>Learn <small>· The Path of Creation</small></b><span>71 chapters, from Kun Fayakun to the Hour</span></a></li>
+<li><a href="/quran"><b>Listen <small>· The Mushaf</small></b><span>All 114 surahs, with recitation for every ayah</span></a></li>
+<li><a href="/kids"><b>The children <small>· The Kids' Codex</small></b><span>The Greatest Game</span></a></li>
+<li><a href="/masjid"><b>A masjid <small>· The Masjid Toolbox</small></b><span>Boards, timetables and printables</span></a></li>
 </ul>
+<p class="hm-more"><a href="#library">The whole library</a></p>
 </section>
 
 <!-- 2 · today's light: /api/illuminations fills this in; without it the
@@ -285,7 +319,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 </ul>
 <p class="n2-dim">Visits are counted in aggregate, cookie-free; nothing is sold or shared.</p>
 <h3 class="n2-h3">How it is paid for</h3>
-<p class="n2-p">The Codex runs on one thing alone: the quiet gifts of its readers. Nothing here asks for money. The door is open for whoever wishes to give, and nothing changes for those who do not.</p>
+<p class="n2-p">The Codex runs on one thing alone: the quiet gifts of its readers. Nothing here is asked for. The door of giving is open for whoever wishes; nothing is expected.</p>
 <div class="n2-row hm-give"><a class="n2-btn" href="/donate">Open the door of giving <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 </section>
 
