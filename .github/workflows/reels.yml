@@ -190,7 +190,9 @@ jobs:
     needs: [plan, render]
     if: always() && needs.plan.result == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # the move to the store is paced under GitHub's write limits: a whole
+    # shelf takes about three hours once, a week's reels a few minutes
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
 
