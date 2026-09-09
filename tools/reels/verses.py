@@ -209,7 +209,10 @@ def _fetch_mp3(folder, s, n):
     if os.path.exists(path) and os.path.getsize(path) > 2000: return path
     data = _get(EVERYAYAH % (folder, s, n), binary=True)
     if len(data) < 2000: raise IOError("too small")
-    open(path, "wb").write(data)
+    # written whole or not at all: the render workers fetch side by side now,
+    # and two verses of one surah can share an ayah
+    tmp = "%s.%d.part" % (path, os.getpid())
+    open(tmp, "wb").write(data); os.replace(tmp, path)
     return path
 
 
@@ -227,11 +230,15 @@ def _joined(folder, s, a, b):
             if i < len(parts) - 1:
                 gap = os.path.join(CACHE, "gap.wav")
                 if not os.path.exists(gap):
+                    tmp = os.path.join(CACHE, "gap.%d.part.wav" % os.getpid())
                     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
-                                    "anullsrc=r=44100:cl=mono", "-t", "0.45", gap], check=True)
+                                    "anullsrc=r=44100:cl=mono", "-t", "0.45", tmp], check=True)
+                    os.replace(tmp, gap)
                 f.write("file '%s'\n" % os.path.abspath(gap))
+    tmp = out[:-4] + ".%d.part.wav" % os.getpid()
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", lst,
-                    "-ar", "44100", "-ac", "1", out], check=True)
+                    "-ar", "44100", "-ac", "1", tmp], check=True)
+    os.replace(tmp, out)
     return out
 
 
