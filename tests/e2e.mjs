@@ -14,88 +14,65 @@ async function newPage(ctxOpts = {}) {
   page.on('console', m => { if (m.type() === 'error' && !/favicon|net::|Failed to load resource/i.test(m.text())) errors.push('console: ' + m.text()); });
   return { ctx, page, errors };
 }
+/* The house writes without em or en dashes. Revelation and the words of the
+   Prophet, peace be upon him, are quoted, not written, so the guard reads the
+   page's own prose and leaves a quoted line as the translator set it: the
+   arrival's Qur'an 2:186 carries a dash because Sahih International does. */
 const noDash = async (page, label) => {
-  const has = await page.evaluate(() => /[—–]/.test(document.body.innerText));
-  ok(!has, `no em/en dash rendered (${label})`);
+  const bad = await page.evaluate(() => {
+    const out = [];
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n; (n = w.nextNode());) {
+      if (!/[—–]/.test(n.nodeValue)) continue;
+      if (n.parentElement && n.parentElement.closest(
+        '.n2-quote,.n2-meaning,.n2-quran,.n2-ayah,.n2-ar,.ayah,blockquote,figure,[lang="ar"],[data-quote]')) continue;
+      out.push(n.nodeValue.trim().slice(0, 70));
+    }
+    return out;
+  });
+  ok(bad.length === 0, `no em/en dash in the house's own prose (${label})` +
+     (bad.length ? ' \u2192 ' + bad.slice(0, 2).join(' | ') : ''));
 };
 
-/* 1. index desktop */
-console.log('\n[1] index.html');
+/* 1. the arrival
+   ------------------------------------------------------------------
+   This section used to describe a page that no longer exists: 71 tiles, seven
+   period gates, eight filter chips, a hero stat row, the Kun seal, the nine
+   mizan cards. The home was rebuilt as the shell's arrival on 9 September 2026
+   -- a signpost of six screens -- and the Path it used to hold in tiles is a
+   room of its own at /path, server-rendered, which a static server cannot
+   answer. tests/home2.mjs holds the arrival to its 242 particulars; what is
+   held here is the shape a reader meets, and that nothing throws. */
+console.log('\n[1] the arrival');
 {
   const { ctx, page, errors } = await newPage();
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(700);
-  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' → ' + errors.join(' | ') : ''));
-  ok(await page.locator('.tile').count() === 71, '71 tiles');
-  ok(await page.locator('.gate').count() === 7, '7 period gates (all books open)');
-  ok(await page.locator('.filter-btn').count() === 8, '8 filter chips');
-  ok(await page.locator('#hero-stats .hero-stat').count() === 6, '6 hero stats');
-  ok(await page.locator('.crescent').count() === 1, 'crescent rendered');
-  ok(await page.locator('#geo .gp').count() >= 12, 'sacred-geometry rose paths present');
-  /* The ink goes on the seal, not on the hero, and it goes on when the reader
-     reaches it. Scroll to it the way a reader would, then look. */
-  await page.locator('.path-seal').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(500);
-  ok(await page.evaluate(() => document.querySelector('.path-seal').classList.contains('drawn')), 'Kun draw sequence triggered');
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(300);
-  await page.waitForTimeout(1300);
-  const statVal = await page.locator('#hero-stats [data-count]').first().textContent();
-  ok(statVal === '71', `count-up completed (${statVal})`);
-  await page.screenshot({ path: 'tests/shots/v3-01-hero.png' });
-  await noDash(page, 'index surface');
-
-  await page.locator('.tile[data-id="38"]').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(600);
-  await page.locator('.tile[data-id="38"]').click();
-  await page.waitForTimeout(700);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Badr modal opens (id 38)');
-  await noDash(page, 'Badr modal');
-  ok(await page.locator('#modal-body .entity-link[data-etype="place"]').count() >= 1, 'place link woven into Badr');
-  await page.screenshot({ path: 'tests/shots/v3-02-modal-badr.png' });
-
-  // node → place link navigates to places.html
-  const pl = page.locator('#modal-body .entity-link[data-etype="place"]').first();
-  const pid = await pl.getAttribute('data-eid');
-  await pl.click();
-  await page.waitForURL('**/places.html*', { timeout: 5000 });
-  ok(page.url().includes('open=' + pid), `node→place lands on places.html?open=${pid}`);
   await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'place modal auto-opens');
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
+  ok(await page.locator('.n2-idea').count() === 6, 'six screens');
+  ok(await page.locator('#top .hm-doors a').count() === 4, 'four destinations on the first screen');
+  ok(await page.locator('#hm-search').count() === 1, 'one search, above them');
+  ok(await page.locator('.n2-bar a').count() === 5, 'the bar carries five doors');
+  ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'nothing pushes the page sideways');
+  await page.screenshot({ path: 'tests/shots/v3-01-hero.png' });
+  await noDash(page, 'the arrival');
   await ctx.close();
 }
 
-
-/* 1b. books open + mizan */
-console.log('\n[1b] seven books · mizan section');
+/* 1b. the scale, which is a sheet now and not a section */
+console.log('\n[1b] two lives');
 {
   const { ctx, page, errors } = await newPage();
-  await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(500);
-  ok(await page.evaluate(() => !document.body.innerText.includes('COMING')), 'no book marked COMING');
-  await page.locator('.book-card[data-period="khulafa"]').click();
-  await page.waitForTimeout(700);
-  ok(await page.locator('.tile').count() === 4 && await page.locator('.gate').count() === 1, 'book card click filters Path (Khulafa: 4 tiles)');
-  await page.locator('.tile[data-id="47"]').click();
-  await page.waitForTimeout(600);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'Abu Bakr caliphate chapter opens');
-  await noDash(page, 'khulafa modal');
-  await page.keyboard.press('Escape');
-  /* The menu no longer carries a #mizan link: the doors replaced the long list
-     of anchors. The section is still there, so reach it the way a reader
-     scrolling the page does. */
-  await page.locator('#mizan').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(2600);
-  ok(await page.locator('.mz-card').count() === 9, 'mizan: 9 infographic cards');
-  ok(await page.locator('.mz-debt').count() === 1, 'debt strip in follow card');
-  ok(await page.locator('.mz-s7').count() === 7, 'seven shaded chips render');
-  const c = await page.locator('#mizan [data-mcount="50000"]').textContent();
-  ok(c.replace(/\D/g,'') === '50000', `mizan counters animate (day = ${c})`);
-  await noDash(page, 'mizan section');
-  await page.screenshot({ path: 'tests/shots/v4-mizan.png' });
-  await page.locator('[data-mgo="node:71"]').click();
-  await page.waitForTimeout(700);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'mizan CTA opens Jannah chapter');
+  /* #hm-mizan sits inside the library fold, which is closed until a reader
+     opens it. #mizan is the address the arrival answers for on its own, and
+     it is how a link from another room lands here, so that is the way in. */
+  await page.goto(BASE + '/index.html#mizan', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1400);
+  ok(await page.locator('.hm-sheet').count() === 1, 'the scale opens as a sheet');
+  ok(await page.locator('.hm-sheet .n2-quote').count() === 3, 'three narrations on it');
+  ok(await page.locator('.hm-sheet a[href="/soul"]').count() === 1, 'and the way on to the Journey of the Soul');
+  await noDash(page, 'the scale');
+  ok(errors.length === 0, 'no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
   await ctx.close();
 }
 
@@ -157,11 +134,13 @@ console.log('\n[4] words.html');
   ok(await page.locator('.audio-btn').count() >= 1, 'tilawah button on word ayah');
   await noDash(page, 'word modal');
   await page.screenshot({ path: 'tests/shots/v3-06-word.png' });
+  /* A word's chapter link lands on the arrival at ?node=, which opens the
+     chapter as a preview sheet and points at its room. See section 5. */
   const nl = page.locator('#modal-body .entity-link[data-etype="node"]').first();
   await nl.click();
   await page.waitForURL('**/index.html*', { timeout: 5000 });
-  await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, 'word→node opens node modal');
+  await page.waitForTimeout(1600);
+  ok(await page.locator('.n2-sheet-wrap.n2-show').count() === 1, 'word\u2192chapter opens the chapter');
   await ctx.close();
 }
 
@@ -169,17 +148,30 @@ console.log('\n[4] words.html');
 console.log('\n[5] deep links · nihaya · RTL');
 {
   const { ctx, page } = await newPage();
+  /* ?node= and #node- are links that are out in the world, so they must keep
+     landing. What they open changed on 9 September 2026: the arrival gives the
+     chapter as a preview sheet -- its name, its Arabic, a few lines -- and the
+     chapter itself is a room of its own at /path/:n, server-rendered, with the
+     sequence, the timeline and the shield in it. So the deep link is held to
+     naming the right chapter and carrying the reader on to it. */
   await page.goto(BASE + '/index.html?node=55', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(900);
-  ok(await page.locator('#modal-backdrop.open').count() === 1, '?node=55 auto-opens (Dajjal)');
-  ok(await page.locator('.seq-strip').count() === 1 && await page.locator('.mtimeline li').count() >= 6 && await page.locator('.shield-box li').count() >= 3, 'sequence + timeline + shield intact');
-  await noDash(page, 'Dajjal modal');
+  await page.waitForTimeout(1600);
+  ok(await page.locator('.n2-sheet-wrap.n2-show').count() === 1, '?node=55 auto-opens (Dajjal)');
+  ok(/Dajjal/i.test(await page.locator('.n2-sheet').innerText()), 'and it is the right chapter');
+  ok(await page.locator('.n2-sheet a[href="/path/55"]').count() === 1, 'and it carries the way on to the chapter itself');
+  await noDash(page, 'Dajjal preview');
   await page.keyboard.press('Escape');
-  /* The language <select> became a grid of buttons in the header dropdown when
-     the menu was rebuilt. Set the language the way the buttons do. */
+  await page.waitForTimeout(600);
+  /* The language <select> became a grid of buttons behind the language door,
+     which is opened first. Set the language the way the buttons do. */
+  await page.locator('#lang-btn').click();
+  await page.waitForTimeout(700);
   await page.evaluate(() => document.querySelector('[data-setlang="ar"]').click());
   await page.waitForTimeout(700);
-  ok(await page.evaluate(() => document.documentElement.dir) === 'rtl', 'AR → dir=rtl');
+  ok(await page.evaluate(() => document.documentElement.dir) === 'rtl', 'AR \u2192 dir=rtl');
+  /* choosing a language closes the door behind it, so open it again to come back */
+  await page.locator('#lang-btn').click();
+  await page.waitForTimeout(700);
   await page.evaluate(() => document.querySelector('[data-setlang="en"]').click());
   await page.waitForTimeout(400);
   ok(await page.evaluate(() => document.documentElement.dir) === 'ltr', 'EN → ltr');
@@ -194,9 +186,12 @@ console.log('\n[6] mobile 390×844');
   await page.waitForTimeout(800);
   ok(errors.length === 0, 'no JS errors mobile');
   ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
-  /* The mobile header is the doors sheet now, and clean URLs dropped the .html.
-     What matters is that a phone can still reach Places from the header. */
-  ok(await page.locator('header a[href="/places"], header a[href="places.html"]').count() >= 1, 'mobile header can reach Places');
+  /* The arrival has no header list of rooms any more: the bar under the thumb
+     carries the five doors, and everything else is one tap behind the library
+     fold or the search. What matters is that a phone can still reach a room. */
+  ok(await page.locator('.n2-bar a').count() === 5, 'the bar under the thumb carries five doors');
+  ok(await page.locator('#library a[href="/places"], #library a[href="/places.html"]').count() >= 1,
+     'the library fold can still reach Places');
   await page.screenshot({ path: 'tests/shots/v3-07-hero-mobile.png' });
   await page.goto(BASE + '/words.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
@@ -210,7 +205,7 @@ console.log('\n[7] reduced motion · search');
   const { ctx, page, errors } = await newPage({ reducedMotion: 'reduce' });
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
-  ok(errors.length === 0 && await page.locator('.tile').count() === 71, 'reduced motion healthy');
+  ok(errors.length === 0 && await page.locator('.n2-idea').count() === 6, 'reduced motion healthy: the six screens are all there');
   /* Search is a full overlay built by /assets/noor-search.js: the field is
      #ns-q and the results live in #ns-out. The header magnifier itself now
      opens the nav dial instead (see tests/menu.mjs), so this overlay is
@@ -234,6 +229,8 @@ console.log('\n[7] reduced motion · search');
      right answer, not a miss. */
   ok(landed.modal === 1 || !/index\.html$/.test(landed.url),
      `search result leads somewhere real (${href} \u2192 ${landed.url})`);
+  ok(!/^\/dictionary#/.test(href || ''),
+     'a word result opens the word\'s own room, not an anchor on the 220KB hub');
   await ctx.close();
 }
 
@@ -363,9 +360,14 @@ console.log('\n[11] the mission line · Jumu\'ah');
   await ctx.close();
 }
 {
+  /* The band mounts under #site-header, which the arrival does not have: it
+     was rebuilt on 9 September 2026 as the shell's signpost and carries the
+     guarantee on a screen of its own instead. So the day's band is held here
+     on a room that still carries the shared header. Whether Friday should
+     also reach the arrival is the owner's call, not a thing to assert. */
   const { ctx, page, errors } = await newPage();
-  await page.goto(BASE + '/index.html?jumuah=1', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(900);
+  await page.goto(BASE + '/quran?jumuah=1', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1100);
   const band = await page.evaluate(() => document.body.innerText);
   ok(/Jumu|Kahf|Friday/i.test(band), 'forced Jumu\'ah raises the day\'s band');
   ok(errors.length === 0, 'no JS errors on the Jumu\'ah band');

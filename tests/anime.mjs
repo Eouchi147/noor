@@ -139,13 +139,70 @@ console.log('\n=== 6. the Mushaf: verses are lit, never moved ===');
 }
 
 console.log('\n=== 7. the word pages arrive quietly ===');
+/* The 523 words moved to /dictionary/ on 9 September 2026 and were rebuilt in
+   the shell, so this layer is not theirs any more: the shell runs its own
+   arrival and noor-anime.js must stay out of the way. The promise the section
+   was written for is unchanged -- the opening line and the meaning are fully
+   there once the page settles -- only the address and the engine moved. That
+   the shell's own reveal holds is tests/dictionary2.mjs's job. */
 {
-  const { ctx, page, errors } = await open('/wudu.html');
-  const s = await page.evaluate(() => ({ h1: getComputedStyle(document.querySelector('h1')).opacity,
-    lede: getComputedStyle(document.querySelector('.lede')).opacity, engine: window.NOOR_MO && window.NOOR_MO.engine }));
-  ok(s.engine === 'anime', 'the layer runs on a landing page');
-  ok(s.h1 === '1' && s.lede === '1', 'the opening line and the lede are fully there after the arrival');
+  const { ctx, page, errors } = await open('/dictionary/wudu.html');
+  const s = await page.evaluate(() => ({
+    h1: getComputedStyle(document.querySelector('.n2-h1')).opacity,
+    meaning: getComputedStyle(document.querySelector('.n2-meaning')).opacity,
+    shell: document.documentElement.hasAttribute('data-n2'),
+    engine: window.NOOR_MO && window.NOOR_MO.engine
+  }));
+  ok(s.shell === true, 'a word page is in the shell');
+  ok(!s.engine, 'the illumination layer stays out: the shell has its own arrival');
+  ok(s.h1 === '1' && s.meaning === '1', 'the opening line and the meaning are fully there after the arrival');
   ok(errors.length === 0, 'no page errors');
+  await ctx.close();
+}
+
+console.log('\n=== 8. Search is one sheet, in the night, on every kind of page ===');
+/* assets/noor-search.js builds one sheet for the whole site; noor2.css gives
+   it its shape and its night wherever the shell is -- natively on a shell
+   page, appended by noor-fx.js on an older room. A word page loads neither
+   noor-search.js nor noor-rtl.css of its own, so noor-fx.js fetches the sheet
+   there and this file's CSS is the only thing shaping it: if that ever comes
+   apart, the reader arriving from a reel is the one who sees it. */
+for (const [where, path] of [['a shell page', '/index.html'],
+                             ['an older room', '/heroes.html'],
+                             ['a word page', '/dictionary/wudu.html']]) {
+  const { ctx, page, errors } = await open(path);
+  const s = await page.evaluate(async () => {
+    const open = document.querySelector('#hm-search,.n2-bar [data-n2-search]');
+    if (!open) return { open: false, why: 'no opener' };
+    open.click();
+    await new Promise(r => setTimeout(r, 700));
+    const box = document.querySelector('#noor-search');
+    if (!box || !box.classList.contains('on')) return { open: false };
+    const rgb = el => getComputedStyle(el).backgroundColor.match(/[\d.]+/g).map(Number);
+    const lum = c => (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
+    const f = box.querySelector('.ns-field'), r = f.getBoundingClientRect();
+    const g = f.querySelector('svg').getBoundingClientRect();
+    return {
+      open: true,
+      dial: !!(document.getElementById('nd') || {}).classList,
+      dialOpen: !!document.querySelector('#nd.on'),
+      field: lum(rgb(f)),
+      out: lum(rgb(box.querySelector('.ns-out'))),
+      ink: getComputedStyle(box.querySelector('#ns-q')).color,
+      /* the shape, which a page without noor-rtl.css has only from noor2.css:
+         a field the width of the phone and a magnifier the size of a word */
+      w: Math.round(r.width), h: Math.round(r.height), icon: Math.round(g.height),
+      wide: document.documentElement.scrollWidth > innerWidth
+    };
+  });
+  ok(s.open === true, where + ': Search opens the sheet');
+  ok(s.open && !s.dialOpen, where + ': and not the dial, which is the Menu’s');
+  ok(s.open && s.field < 0.2 && s.out < 0.2, where + ': the sheet is night, not parchment');
+  ok(s.open && /255,\s*254,\s*247/.test(s.ink), where + ': what you type is the parchment ink on it');
+  ok(s.open && s.w > 300 && s.w <= 640 && s.h > 40 && s.h < 80 && s.icon < 30,
+     where + ': the sheet has its shape');
+  ok(s.open && !s.wide, where + ': nothing of it pushes the page sideways');
+  ok(errors.length === 0, where + ': no page errors');
   await ctx.close();
 }
 

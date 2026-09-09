@@ -27,7 +27,9 @@
    folded but the first) and No catch. Every screen carries at most one
    paragraph of prose, and every list is rows under hairlines. On a laptop the
    signpost uses the width: the words on the left, the action and the doors on
-   the right. The shell is loaded at ?v=2.
+   the right. The shell is loaded with a version tail, and the tail is
+   checked only for being there: it moves whenever assets/noor2.css or
+   assets/noor2.js changes, which is the whole point of it.
 
    Static checks need nothing. The browser checks serve the repository on
    :8766 themselves (python3 -m http.server) unless NOOR_BASE names a server,
@@ -72,8 +74,8 @@ console.log('\n=== 1. the file parses ===');
 console.log('\n=== 2. the shell and the wiring ===');
 {
   const need = {
-    'the shell\'s stylesheet, at v=2': /<link[^>]+href="\/assets\/noor2\.css\?v=2"/,
-    'the shell\'s script, at v=2': /<script[^>]+src="\/assets\/noor2\.js\?v=2"[^>]*defer/,
+    'the shell\'s stylesheet, with a version tail': /<link[^>]+href="\/assets\/noor2\.css\?v=\d+"/,
+    'the shell\'s script, with a version tail': /<script[^>]+src="\/assets\/noor2\.js\?v=\d+"[^>]*defer/,
     'the search overlay styles (noor-rtl.css)': /href="\/assets\/noor-rtl\.css/,
     'the menu dial styles': /href="\/assets\/noor-menu\.css/,
     'the search (noor-search.js)': /src="\/assets\/noor-search\.js/,

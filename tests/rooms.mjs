@@ -133,7 +133,13 @@ console.log("\n=== the bar's five doors, and which one each room lights ===");
   const lit = html => { const m = doors(html).match(/<a href="([^"]+)"[^>]*class="n2-on"[^>]*>[\s\S]*?<\/svg>([^<]+)<\/a>/); return m ? m[2] : ""; };
   ok(labels(rendered.today).join(",") === "Today,Qur'an,Story,Words,Search", "the doors are Today, Qur'an, Story, Words, Search (" + labels(rendered.today).join(", ") + ")");
   ok(!/Listen|#listen|Read<\/a>/.test(doors(rendered.today)), "read and listen are one door, Qur'an");
-  ok(/<a href="\/path"[^>]*>/.test(doors(rendered.today)) && /<a href="\/dictionary"[^>]*data-n2-search data-nm-open/.test(doors(rendered.today)), "Story goes to /path; Search opens the page's search, else the words");
+  /* Search opens the sheet and nothing else. It carried data-nm-open too until
+     9 September 2026, and on a page that loads assets/noor-menu.js that
+     listener captured the click and opened the dial instead -- so the bar's
+     Search and the field on the arrival were two different searches, a thumb
+     apart. The dial is the Menu's; the sheet is Search's, everywhere. */
+  ok(/<a href="\/path"[^>]*>/.test(doors(rendered.today)) && /<a href="\/dictionary" data-n2-search>/.test(doors(rendered.today)), "Story goes to /path; Search opens the sheet, and the words without script");
+  ok(!/data-nm-open/.test(doors(rendered.today)), "and the bar does not also reach for the menu's dial");
   ok(lit(rendered.today) === "Today", "the day lights Today");
   ok(lit(rendered.light) === "Today", "the day's own Light lights Today");
   { const other = await call({ kind: "light", id: "ahmad-baba-timbuktu-1593" }); ok(other.code === 200 && lit(other.body) === "" && other.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", "any other Light lights no door, and keeps for a day"); }
@@ -245,7 +251,13 @@ console.log("\n=== the shell ===");
   const twelve = [...css.matchAll(/\{[^}]*font-size:\s*12px[^}]*\}/g)].map(m => m[0]);
   ok(twelve.every(r => /letter-spacing:\s*\.(1[6-9]|[2-9]\d?)em/.test(r) && /--n2-mono/.test(r)), "every 12 px rule is mono and tracked at .16em or more (" + twelve.length + " rules)");
   ok(!/(#C9A227|#E9C86A|--n2-gold)[^;]*;[^}]*background:\s*#FFFEF7/i.test(css), "gold is never set on parchment");
-  ok(js.length < 24 * 1024, "noor2.js is under 24 KB (" + js.length + " bytes)");
+  /* 24 KB until 9 September 2026, when the shell's sheet was given Escape --
+     it says role="dialog", and one that will not answer Escape traps a reader
+     on a keyboard -- and the bar's Search stopped reaching for the menu's
+     dial. Both are behaviour, not decoration, and the file's own comments were
+     cut to their bone first; 25 KB is the new ceiling and it is still a
+     ceiling. Anything that only looks nice belongs in the CSS. */
+  ok(js.length < 25 * 1024, "noor2.js is under 25 KB (" + js.length + " bytes)");
   ok(css.includes("--n2-spring:linear(0, 0.006") && css.includes("@supports (transition-timing-function:linear(0,1))") && !/transition:[^;}]*\blinear\b/.test(css.replace(/linear\(/g, "L(")) && !/transition:[^;}]*\blinear\b/.test(css),
      "the spring is defined with a bezier fallback and nothing moves linearly");
   ok(css.includes("scroll-snap-type:y proximity") && css.includes("scroll-snap-stop:normal") && css.includes(".n2-shelf") && css.includes("overscroll-behavior-x:contain") && css.includes("mask-image"),
@@ -355,7 +367,14 @@ console.log("\n=== the deployment ===");
   const want = ["/light", "/light/:id", "/lights", "/path/:n", "/path", "/verse/:ref", "/verses", "/surah/:n", "/today", "/sitemap-rooms.xml", "/podcast.xml", "/journal/:slug"];
   ok(want.every(s => (v.rewrites || []).some(r => r.source === s)), "every room has its rewrite, and the old ones remain");
   ok(v.functions["api/page.js"] && /lights\/all\.json/.test(v.functions["api/page.js"].includeFiles) && /node\/\*\.json/.test(v.functions["api/page.js"].includeFiles), "api/page.js includes the library's files");
-  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 4, "what was in vercel.json is still there");
+  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 5, "what was in vercel.json is still there");
+  /* The scripts and stylesheets under /assets were immutable for a year while
+     the pages asked for them at a hand-written ?v= that nobody moved, so an
+     edit to any of them reached new readers only. They revalidate now; the
+     fonts and pictures, whose names change when their contents do, do not. */
+  const cc = src => (v.headers.find(h => h.source === src) || { headers: [{}] }).headers[0].value || "";
+  ok(/max-age=300/.test(cc("/assets/(.*)\\.(js|css|mjs|map)")), "a change to a script or a stylesheet reaches a reader who has been here before");
+  ok(/immutable/.test(cc("/assets/(.*)\\.(woff2|woff|ttf|otf|eot|png|jpg|jpeg|gif|svg|webp|avif|ico|mp3|m4a|wav|mp4|webm|pdf|txt)")), "and a font or a picture is still kept for a year");
   ok(v.functions["api/reel.js"] && v.functions["api/reel.js"].maxDuration === 60 && fs.existsSync("api/reel.js"), "api/reel.js may run for a minute");
   ok(!["path.html", "lights.html", "today.html", "verses.html", "surah.html", "light.html"].some(f => fs.existsSync(f)), "no static page collides with a room");
   ok(!["light", "path", "today", "verses", "surah"].some(d => fs.existsSync(d) && fs.statSync(d).isDirectory()), "no folder collides with a shelf (lights/ is why the shelf is /light)");

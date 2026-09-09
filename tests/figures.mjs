@@ -109,7 +109,12 @@ for (const w of WIDTHS) {
         });
       });
       return { out, svgs: document.querySelectorAll('svg').length,
-               overflow: document.body.scrollWidth > innerWidth + 1 };
+               /* what a reader can actually drag. A decorative wisp that
+                  reaches past the edge under overflow-x:clip widens
+                  body.scrollWidth and moves nothing, so the measure is the
+                  scrolling element against its own visible width. */
+               overflow: document.documentElement.scrollWidth >
+                         document.documentElement.clientWidth + 1 };
     });
     figs += found.svgs;
     if (found.overflow) problems.push({ page: path, w, kind: 'page scrolls sideways', a: '' });
