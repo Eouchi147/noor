@@ -359,18 +359,89 @@ console.log('\n[11] the mission line · Jumu\'ah');
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
   await ctx.close();
 }
+/* Friday is a card now, not a band. The band hung off #site-header, which the
+   arrival has not had since it was rebuilt, so the best day of the week
+   reached every room in the house except the one every reader arrives
+   through. And a band is furniture -- there on Tuesday too, so the eye has
+   learned to skip that strip. The card comes once, a breath after the page
+   settles, above the thumb, and goes again whether it is answered or not.
+   What is held: that it comes on Friday and on Thursday evening, on every
+   kind of page; that it asks once and not twice; that it is not there on a
+   Tuesday; that it blocks nothing; and that it does not move for a reader who
+   has asked for no motion. */
+console.log('\n[11b] Friday, once');
 {
-  /* The band mounts under #site-header, which the arrival does not have: it
-     was rebuilt on 9 September 2026 as the shell's signpost and carries the
-     guarantee on a screen of its own instead. So the day's band is held here
-     on a room that still carries the shared header. Whether Friday should
-     also reach the arrival is the owner's call, not a thing to assert. */
+  const FRIDAY = '2026-09-11T10:00:00', TUESDAY = '2026-09-08T10:00:00', EVE = '2026-09-10T19:30:00';
+  /* the clock, pinned before anything on the page runs. The stamp has to be
+     passed in as an argument: an init script is serialised and sent, so a
+     closure over a variable in this file arrives undefined, and the page gets
+     an Invalid Date and no card -- which looks exactly like the bug it would
+     be reporting. */
+  const pin = when => {
+    const F = new Date(when), R = Date;
+    // eslint-disable-next-line no-global-assign
+    Date = class extends R { constructor(...a) { return a.length ? new R(...a) : new R(F.getTime()); } static now() { return F.getTime(); } };
+  };
+  async function look(when, paths) {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    await ctx.addInitScript(pin, when);
+    const page = await ctx.newPage();
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    const out = [];
+    for (const path of paths) {
+      await page.goto(BASE + path, { waitUntil: 'domcontentloaded' });
+      await page.waitForTimeout(3400);
+      out.push(await page.evaluate(() => {
+        const c = document.querySelector('.nj');
+        if (!c) return { card: false };
+        const b = c.getBoundingClientRect();
+        return { card: true, on: c.classList.contains('on'), w: Math.round(b.width),
+                 link: c.querySelector('.nj-a').getAttribute('href'),
+                 locked: getComputedStyle(document.body).overflow === 'hidden',
+                 wide: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+                 bands: document.querySelectorAll('[data-jumuah]').length };
+      }));
+    }
+    await ctx.close();
+    return { out, errors };
+  }
+  const fri = await look(FRIDAY, ['/index.html', '/quran', '/dictionary/sabr']);
+  ok(fri.out[0].card && fri.out[0].on, 'Friday: the card comes on the arrival');
+  ok(fri.out[0].link === '/quran?surah=18', 'and it opens al-Kahf');
+  ok(!fri.out[0].locked && !fri.out[0].wide, 'and it locks nothing and pushes nothing sideways');
+  ok(fri.out[0].bands === 0, 'and no page carries the old band as well');
+  ok(!fri.out[1].card && !fri.out[2].card, 'and it asks once, not on every room after it');
+  ok(fri.errors.length === 0, 'no JS errors on Friday' + (fri.errors.length ? ' \u2192 ' + fri.errors[0].slice(0, 90) : ''));
+  const eve = await look(EVE, ['/index.html']);
+  ok(eve.out[0].card, "Thursday evening: the day has turned, so the card is there");
+  const tue = await look(TUESDAY, ['/index.html', '/quran']);
+  ok(!tue.out[0].card && !tue.out[1].card, 'Tuesday: nothing');
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(BASE + '/index.html?jumuah=1', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(3400);
+    const r = await page.evaluate(() => {
+      const c = document.querySelector('.nj');
+      return c ? { card: true, t: getComputedStyle(c).transitionDuration,
+                   a: getComputedStyle(c.querySelector('.nj-m')).animationName } : { card: false };
+    });
+    ok(r.card && r.t === '0s' && r.a === 'none', 'a reader who asked for no motion is given none');
+    await ctx.close();
+  }
+}
+{
+  /* the one sentence the band still carries, every day */
   const { ctx, page, errors } = await newPage();
-  await page.goto(BASE + '/quran?jumuah=1', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/quran', { waitUntil: 'networkidle' });
   await page.waitForTimeout(1100);
-  const band = await page.evaluate(() => document.body.innerText);
-  ok(/Jumu|Kahf|Friday/i.test(band), 'forced Jumu\'ah raises the day\'s band');
-  ok(errors.length === 0, 'no JS errors on the Jumu\'ah band');
+  const band = await page.evaluate(() => {
+    const d = document.querySelector('[data-noor-sponsor]');
+    return d ? d.innerText : '';
+  });
+  ok(/free|gifts/i.test(band), 'the mission line is on a room that carries the shared header');
+  ok(errors.length === 0, 'no JS errors on the mission line');
   await ctx.close();
 }
 {
