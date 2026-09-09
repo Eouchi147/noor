@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
-<link rel="stylesheet" href="/assets/noor2.css?v=1"/>
+<link rel="stylesheet" href="/assets/noor2.css?v=2"/>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <link rel="stylesheet" href="/assets/noor-menu.css?v=3"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": ["https://www.instagram.com/noorcodexoflight", "https://www.facebook.com/profile.php?id=61592864417863", "https://www.youtube.com/@noorcodex", "https://www.pinterest.com/noorcodex", "https://t.me/noorcodex", "https://www.threads.com/@noorcodexoflight"]}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
@@ -55,7 +55,7 @@
      the service worker, noor-text.js for the prose in other languages, the
      search, the menu dial, the dials (the notice and the journal switch)
      and the corrections layer. -->
-<script src="/assets/noor2.js?v=1" defer></script>
+<script src="/assets/noor2.js?v=2" defer></script>
 <script src="/nodes-index.js?v=101" defer></script>
 <script src="/noor-fx.js" defer></script>
 <script src="/assets/noor-text.js?v=83" defer></script>
@@ -64,40 +64,63 @@
 <script src="/assets/noor-dials.js?v=109" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
 <style>
-/* what is particular to the home page; everything else is the shell */
-.hm-eyebrow{letter-spacing:.14em;margin-bottom:12px}
-.hm-eyebrow small{letter-spacing:.12em}
-#top{padding-top:calc(var(--n2-safe-top) + 62px);padding-bottom:24px;justify-content:flex-start}
-#top .n2-h1{font-size:clamp(26px,7.4vw,36px);margin-bottom:10px}
-.hm-lead{font-size:15px;line-height:1.45;margin:0 0 12px}
-.hm-ayah{margin:0 0 10px}
-.hm-ayah .n2-quran{font-size:clamp(20px,5.4vw,25px);line-height:1.6;margin:0 0 4px;text-shadow:none}
-.hm-ayah .n2-meaning{font-size:14.5px;line-height:1.45;font-weight:400;margin:0 0 4px;max-width:none}
-.hm-ayah .n2-ref{margin:0}
-/* the three Names: three columns, the Arabic over the transliteration,
-   the glosses as one muted line beneath */
-.hm-names{margin:0 0 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px 8px;text-align:center}
-.hm-names a{color:var(--n2-parch2);text-decoration:none;font-weight:600;font-size:14px;line-height:1.2;white-space:nowrap}
-.hm-names a:hover{color:var(--n2-goldhi)}
-.hm-names span{display:block;font-family:var(--n2-ar);color:var(--n2-goldhi);font-size:20px;line-height:1.35;margin-bottom:2px}
-.hm-names small{grid-column:1/-1;font-size:14px;color:var(--n2-parch3);line-height:1.4;margin-top:2px;text-align:start}
-.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);padding:0 16px;min-height:48px;margin:0 0 10px;background:rgba(255,254,247,.06)}
+/* what is particular to the home page; everything else is the shell.
+   Every screen keeps the same rhythm: an eyebrow, then one statement, then
+   one paragraph of prose at most, then rows with hairlines, then at most one
+   action. 24 px between unlike things, 12 px between like ones. */
+
+/* --------------------------------------------------------- 1 · the signpost
+   A statement, one action, four doors, and one quiet way on. Nothing else:
+   the verse, the Names and the longer truth line have screens of their own. */
+#top{justify-content:flex-start;padding-top:calc(var(--n2-safe-top) + 104px);padding-bottom:24px}
+@media (max-width:379px){#top{padding-top:calc(var(--n2-safe-top) + 78px)}}
+.hm-eyebrow{letter-spacing:.1em;color:rgba(233,200,106,.78);margin-bottom:16px}
+#top .n2-h1{font-size:clamp(32px,9vw,36px);line-height:1.06;margin:0 0 14px}
+.hm-lead{font-size:16px;line-height:1.5;margin:0;max-width:34ch;color:var(--n2-parch2)}
+/* 28 px of air, then the one glowing action */
+.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);
+  padding:0 16px;min-height:52px;margin:26px 0 0;background:rgba(255,254,247,.06)}
 .hm-search svg{stroke:var(--n2-goldhi)}
 .hm-search span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hm-search kbd{font:12px/1 var(--n2-mono);color:var(--n2-parch3);border:1px solid var(--n2-line);border-radius:6px;padding:4px 7px}
 @media (hover:none){.hm-search kbd{display:none}}
-/* the toolkit: a shelf under the thumb on a phone (one card, the next
-   peeking), four tiles across on a wider screen */
-.hm-doors{margin:0 -26px 10px;padding:4px 26px;gap:8px}
-.hm-doors>*{flex:0 0 min(64%,240px)}
-.hm-doors a{min-height:0;padding:10px 12px;justify-content:flex-start}
-.hm-doors b{font-size:15px;line-height:1.2}
-.hm-doors b small{display:inline;font-family:var(--n2-sans);font-weight:500;color:var(--n2-parch3);font-size:14px;letter-spacing:0;text-transform:none;margin:0}
-.hm-doors span{display:block;font-size:14px;line-height:1.25;margin-top:3px;color:var(--n2-parch2)}
-@media (min-width:640px){.hm-doors{display:grid;grid-template-columns:repeat(4,1fr);margin:0 0 10px;padding:0;overflow:visible;-webkit-mask-image:none;mask-image:none}.hm-doors>*{flex:none}}
-.hm-more{margin:0;font-size:14px}
-.hm-more a{color:var(--n2-parch3);text-underline-offset:3px}
-@media (min-width:640px){.hm-doors{grid-template-columns:repeat(4,1fr)}}
+/* 24 px of air, then four destinations as rows: the human intent in
+   parchment, the library's own count under it, a gold chevron at the edge */
+.hm-doors{margin:22px 0 0}
+.hm-doors a{min-height:66px;gap:12px;padding:11px 2px}
+.hm-doors b{font-size:17px;font-weight:600;line-height:1.25}
+.hm-doors small{font-family:var(--n2-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--n2-parch3);margin-top:5px;line-height:1.4}
+.hm-doors svg{width:15px;height:15px;flex:none;stroke:var(--n2-goldhi);fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.7;transition:opacity .25s var(--n2-ease)}
+.hm-doors a:hover svg{opacity:1}
+.hm-more{margin:18px 0 0;font-family:var(--n2-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.hm-more a{color:var(--n2-parch3);text-underline-offset:4px}
+.hm-more a:hover{color:var(--n2-goldhi)}
+@media (min-width:900px){
+  .n2-dots{right:calc(50% - 26rem - 26px)}
+  #top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:52px;align-items:center;align-content:center;
+    margin:0 -4rem;padding:calc(var(--n2-safe-top) + 88px) 0 40px}
+  #top>.hm-eyebrow{grid-column:1/-1;margin-bottom:30px}
+  #top .n2-h1{font-size:44px}
+  .hm-lead{font-size:17px}
+  .hm-search{margin-top:0}
+}
+
+/* ------------------------------------------------ 2 · the verse at the door
+   The Arabic large and centred with its own air, the meaning, the reference;
+   the three Names beneath a hairline, each a door to the Ninety-Nine. */
+#ayah .n2-quran{text-align:center;margin:32px 0;text-shadow:0 0 34px rgba(233,200,106,.20)}
+#ayah .n2-meaning{margin:0 0 14px}
+#ayah .n2-ref{margin:0}
+.hm-names{margin:24px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px 8px;text-align:center;padding-top:24px;position:relative}
+.hm-names::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(233,200,106,.30),rgba(233,200,106,.06))}
+.hm-names a{color:var(--n2-parch2);text-decoration:none;font-weight:600;font-size:14px;line-height:1.2;white-space:nowrap}
+.hm-names a:hover{color:var(--n2-goldhi)}
+.hm-names span{display:block;font-family:var(--n2-ar);color:var(--n2-goldhi);font-size:26px;line-height:1.35;margin-bottom:4px}
+.hm-names small{grid-column:1/-1;font-size:14px;color:var(--n2-parch3);line-height:1.45;margin-top:8px;text-align:start}
+
+/* the reel beside its words on a wide screen */
 #verse .n2-reel{height:min(42svh,400px)}
 @media (min-width:640px){
   #verse.hm-live{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto auto 1fr;column-gap:28px;align-content:center;justify-content:start}
@@ -106,19 +129,58 @@
   #verse.hm-live>.n2-ref,#verse.hm-live>.n2-meaning,#verse.hm-live>.n2-credit,#verse.hm-live>.n2-row{grid-column:2}
   #verse.hm-live>.n2-row{align-self:start}
 }
+
+/* ------------------------------------------------------- 5 · the library
+   Eight sections, each a heading over its rooms. The script folds them shut
+   but the first, so the screen is a directory to scan rather than a wall;
+   without the script every room stands open, as it always did. */
+#library{padding-top:calc(var(--n2-safe-top) + 84px)}
+.hm-count{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin:0 0 6px}
+.hm-lib{margin:0}
+.hm-grp{break-inside:avoid;margin:0}
+.hm-grp .n2-h3{margin:14px 0 4px;font-size:12px;font-family:var(--n2-mono);font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--n2-goldhi)}
+.hm-grp .n2-list{margin:0 0 14px}
+.hm-fold .n2-list{margin:0;padding-bottom:12px}
+.hm-grp .n2-list a{min-height:46px;padding:8px 2px}
+.hm-grp .n2-list b{font-size:15px}
+.hm-grp .n2-list small{font-size:14px;margin-top:1px}
+/* folded: the heading becomes the control, its rooms counted at the right */
+.hm-fold .n2-h3{margin:0}
+.hm-fold .n2-h3 button{appearance:none;background:none;border:0;width:100%;cursor:pointer;color:inherit;font:inherit;
+  display:flex;align-items:center;gap:10px;min-height:52px;padding:0 2px;text-align:start;position:relative}
+.hm-fold .n2-h3 button::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,rgba(233,200,106,.30),rgba(233,200,106,.06))}
+.hm-fold .n2-h3 button:focus-visible{outline:2px solid var(--n2-goldhi);outline-offset:2px}
+.hm-fold .hm-n{flex:1;text-align:end;color:var(--n2-parch3);letter-spacing:.16em}
+.hm-fold .hm-caret{flex:none;width:14px;height:14px;stroke:var(--n2-goldhi);fill:none;stroke-width:2;stroke-linecap:round;
+  stroke-linejoin:round;opacity:.75;transform:rotate(180deg);transition:transform .5s var(--n2-spring)}
+.hm-fold.hm-shut .hm-caret{transform:rotate(0deg)}
+.hm-fold .hm-fold-w{display:grid;grid-template-rows:1fr;transition:grid-template-rows .55s var(--n2-spring)}
+.hm-fold.hm-shut .hm-fold-w{grid-template-rows:0fr}
+.hm-fold .hm-fold-w>ul{overflow:hidden;min-height:0}
+.hm-fold.hm-shut .hm-fold-w>ul{visibility:hidden;transition:visibility 0s .55s}
+@media (prefers-reduced-motion:reduce){
+  .hm-fold .hm-fold-w,.hm-fold .hm-caret{transition:none}
+  .hm-fold.hm-shut .hm-fold-w>ul{transition:none}
+}
+@media (min-width:640px){.hm-lib{column-count:2;column-gap:36px}}
+
+/* ------------------------------------------------------------ 6 · no catch
+   The guarantees as rows, one to a line, then the one paragraph and the door */
+.hm-truths{margin:0}
+.hm-truths li{display:flex;align-items:baseline;gap:14px;padding:11px 2px}
+.hm-truths span{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);flex:none;min-width:9.5em}
+.hm-truths b{font-weight:500;font-size:15px;line-height:1.4;color:var(--n2-parch2)}
+#free .n2-h3{margin:24px 0 8px}
+
 .hm-top-r{display:flex;gap:8px;flex:none}
 .n2-brand .n2-en{white-space:nowrap}
 @media (max-width:379px){.hm-menu-t{display:none}.n2-pill.hm-menu svg{margin:0}.n2-pill.hm-menu{padding:0 14px}}
 .n2-pill.hm-menu svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;margin-inline-end:6px}
-.n2-h3 .hm-sub{display:block;font-weight:400;font-size:14px;line-height:1.5;color:var(--n2-parch3);margin-top:2px}
-#timeline .n2-num{min-width:3.6em}
 .n2-eyebrow small[lang="ar"]{font-family:var(--n2-ar);font-size:16px;letter-spacing:0;text-transform:none}
-.hm-count{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin:0 0 6px}
 .hm-langgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:6px 0 14px}
 .hm-langgrid .n2-btn{justify-content:center;padding:0 10px;text-align:center;line-height:1.2}
 @media (max-width:359px){.hm-langgrid{grid-template-columns:1fr 1fr}}
-.n2-facts.hm-truths{margin-bottom:8px}
-.n2-facts.hm-truths b{font-weight:500;color:var(--n2-parch2)}
 .hm-give{margin-top:6px}
 .n2-foot p{margin:0 0 10px}
 .n2-foot .hm-note{font-family:var(--n2-sans);font-size:14px;letter-spacing:0;text-transform:none;line-height:1.6;color:var(--n2-parch3);max-width:44ch}
@@ -131,6 +193,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 .hm-sheet .n2-h3{margin:4px 0 8px;font-size:20px}
 .hm-sheet .n2-title-ar{text-align:left;margin:0 0 4px;font-size:24px}
 [dir="rtl"] .hm-sheet .n2-title-ar{text-align:right}
+.hm-sheet .n2-quote .n2-p{font-size:15px}
 /* the language door noor-fx.js opens sits above the bar, not under it */
 #noor-translate-hint{bottom:calc(var(--n2-bar-h) + 12px)!important}
 </style>
@@ -148,28 +211,36 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 
 <main class="n2-main">
 
-<!-- 1 · the arrival -->
+<!-- 1 · the signpost: a statement, one action, four destinations, one way
+     on. Nothing else stands here; the verse has the screen after it. -->
 <section class="n2-idea n2-in" id="top">
-<p class="n2-eyebrow hm-eyebrow">A free library of Islam <small>· no ads, no account, no tracking</small></p>
+<p class="n2-eyebrow hm-eyebrow">Free · No ads · No account</p>
+<div class="hm-say">
 <h1 class="n2-h1">A guide to God, <span class="n2-g">whole and free</span></h1>
-<p class="n2-dim n2-wide hm-lead">The story of Islam told in order, the Qur'an recited surah by surah, a codex for children, and the tools of a masjid: prayer board, khutba, timetable, qibla.</p>
-<div class="hm-ayah">
+<p class="hm-lead">The religion in one library: to read, to hear, to learn, to teach.</p>
+</div>
+<div class="hm-do">
+<a class="n2-btn n2-glow hm-search" href="/dictionary" id="hm-search" role="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah…</span><kbd aria-hidden="true">/</kbd></a>
+<ul class="n2-list hm-doors">
+<li><a href="/quran"><b>Read the Qur'an<small>114 surahs, recited</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a href="/path"><b>The whole story<small>71 chapters, in order</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a href="/kids"><b>For the children<small>The Kids' Codex</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a href="/masjid"><b>For a masjid<small>Board, khutba, timetable, qibla</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+</ul>
+<p class="hm-more"><a href="#library">Everything else in the library →</a></p>
+</div>
+</section>
+
+<!-- 2 · the verse at the door, and three of His Names -->
+<section class="n2-idea" id="ayah">
+<p class="n2-eyebrow">The promise</p>
 <p class="n2-quran" lang="ar" translate="no">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ</p>
 <p class="n2-meaning">And when My servants ask you concerning Me — indeed I am near.</p>
 <p class="n2-ref"><a href="/verse/2-186">Qur'an 2:186 · Al-Baqarah</a></p>
-</div>
 <div class="hm-names"><a href="/allah"><span lang="ar" translate="no">الرَّقِيب</span>Ar-Raqib</a><a href="/allah"><span lang="ar" translate="no">الْقَادِر</span>Al-Qadir</a><a href="/allah"><span lang="ar" translate="no">الرَّحْمَٰن</span>Ar-Rahman</a><small>The Watchful · The All-Powerful · The Most Merciful, whose mercy reaches all that is</small></div>
-<a class="n2-btn n2-glow hm-search" href="/dictionary" id="hm-search" role="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah…</span><kbd aria-hidden="true">/</kbd></a>
-<ul class="n2-shelf hm-doors">
-<li><a href="/path"><b>Learn <small>· The Path of Creation</small></b><span>71 chapters, from Kun Fayakun to the Hour</span></a></li>
-<li><a href="/quran"><b>Listen <small>· The Mushaf</small></b><span>All 114 surahs, with recitation for every ayah</span></a></li>
-<li><a href="/kids"><b>The children <small>· The Kids' Codex</small></b><span>The Greatest Game</span></a></li>
-<li><a href="/masjid"><b>A masjid <small>· The Masjid Toolbox</small></b><span>Boards, timetables and printables</span></a></li>
-</ul>
-<p class="hm-more"><a href="#library">The whole library</a></p>
 </section>
 
-<!-- 2 · today's light: /api/illuminations fills this in; without it the
+<!-- 3 · today's light: /api/illuminations fills this in; without it the
      screen stays as it is, a door to the day's page -->
 <section class="n2-idea" id="today">
 <p class="n2-eyebrow">Today's light</p>
@@ -178,7 +249,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <div class="n2-row"><a class="n2-btn n2-gold" href="/today">Today's light <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/light">All the Lights</a></div>
 </section>
 
-<!-- 3 · one verse: the reels manifest fills this in with the verse the
+<!-- 4 · one verse: the reels manifest fills this in with the verse the
      rota shows; without it the screen is a door to the shelf -->
 <section class="n2-idea" id="verse">
 <p class="n2-eyebrow">One verse</p>
@@ -187,23 +258,24 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <div class="n2-row"><a class="n2-btn n2-gold" href="/verses">The verses <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/quran">The Mushaf</a></div>
 </section>
 
-<!-- 4 · the library, whole: every room, as assets/menu-index.json groups them -->
+<!-- 5 · the library, whole: every room, as assets/menu-index.json groups
+     them. The Path's row is #timeline and Two Lives is #mizan, the anchors
+     the other rooms and the menu point at; Two Lives opens in a sheet. -->
 <section class="n2-idea n2-short" id="library">
 <p class="n2-eyebrow">The library</p>
 <h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>
-<p class="n2-dim">No ads, no account, no tracking. Every room on the phone, under the thumb.</p>
-<p class="hm-count">41 rooms · 8 sections · all open</p>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-quran">
-<h3 class="n2-h3">The Qur'an<small class="hm-sub">The text itself, and what is needed to hold it</small></h3>
+<p class="hm-count">41 rooms · 8 sections · all free</p>
+<div class="hm-lib">
+<div class="hm-grp">
+<h3 class="n2-h3">The Qur'an</h3>
 <ul class="n2-list">
 <li><a href="/quran"><b>The Mushaf<small>All 114 surahs, with recitation for every ayah</small></b></a></li>
 <li><a href="/arabic"><b>The Letters<small>Learn to read the Arabic script, letter by letter</small></b></a></li>
 <li><a href="/words"><b>The Words of the Path<small>The du'as worth carrying, in Arabic and English</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-belief">
-<h3 class="n2-h3">Belief<small class="hm-sub">Who He is, who He sent, and what is unseen</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">Belief</h3>
 <ul class="n2-list">
 <li><a href="/allah"><b>The Ninety-Nine Names<small>His names, what He is not, and the three doors of tawhid</small></b></a></li>
 <li><a href="/prophets"><b>The 25 Prophets<small>Every prophet named in the Qur'an</small></b></a></li>
@@ -212,9 +284,9 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <li><a href="/unseen"><b>The Unseen<small>Angels, jinn, the barzakh, the signs of the Hour</small></b></a></li>
 <li><a href="/soul"><b>The Journey of the Soul<small>What happens after the last breath</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-worship">
-<h3 class="n2-h3">Worship<small class="hm-sub">How it is actually done</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">Worship</h3>
 <ul class="n2-list">
 <li><a href="/pillars"><b>The Five Pillars<small>Shahadah, salah, zakat, sawm, hajj</small></b></a></li>
 <li><a href="/begin"><b>Begin<small>For anyone new to Islam, from the first day</small></b></a></li>
@@ -223,21 +295,21 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <li><a href="/hajj-plan"><b>Your Pilgrim Plan<small>A plan written from your own answers</small></b></a></li>
 <li><a href="/eid"><b>The Two Eids<small>Fitr and Adha</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-story">
-<h3 class="n2-h3">The Story<small class="hm-sub">Where all of it came from, and where it is going</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">The Story</h3>
 <ul class="n2-list">
-<li><a href="#timeline"><b>The Path of Creation<small>71 chapters, from Kun Fayakun to the Hour</small></b></a></li>
+<li id="timeline"><a href="/path"><b>The Path of Creation<small>71 chapters, from Kun Fayakun to the Hour</small></b></a></li>
 <li><a href="/companions"><b>The Companions<small>The men and women who saw him ﷺ</small></b></a></li>
 <li><a href="/heroes"><b>Heroes of Islam<small>The people who carried it after them</small></b></a></li>
 <li><a href="/characters"><b>Characters<small>Everyone the Codex names</small></b></a></li>
 <li><a href="/places"><b>Places<small>The ground it happened on</small></b></a></li>
 <li><a href="/sermon"><b>The Last Sermon<small>The final khutbah, line by line</small></b></a></li>
-<li><a href="#mizan"><b>Two Lives<small>The scale, and what is on it</small></b></a></li>
+<li id="mizan"><a href="#mizan" id="hm-mizan"><b>Two Lives<small>The scale, and what is on it</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-life">
-<h3 class="n2-h3">Daily Life<small class="hm-sub">The practice as it meets an ordinary week</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">Daily Life</h3>
 <ul class="n2-list">
 <li><a href="/good-life"><b>How to Live a Good Life<small>Tayyiba: a good life, not an easy one</small></b></a></li>
 <li><a href="/three-lives"><b>Three Lives<small>Weigh your own against them</small></b></a></li>
@@ -248,25 +320,25 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <li><a href="/protection"><b>Protection &amp; the Light<small>Sihr, ruqya, the evil eye, and the myths</small></b></a></li>
 <li><a href="/simulation"><b>Are We in a Simulation?<small>The modern question, answered from the text</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-look">
-<h3 class="n2-h3">Look It Up<small class="hm-sub">When you need one thing, fast</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">Look It Up</h3>
 <ul class="n2-list">
 <li><a href="/dictionary"><b>The Encyclopedia of the Path<small>523 words this library uses, defined</small></b></a></li>
 <li><a href="/madrasa"><b>The Classroom<small>The whole curriculum, in order</small></b></a></li>
 <li><a href="/school"><b>The School<small>The full course, for schools and organisations</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-kids">
-<h3 class="n2-h3">Children<small class="hm-sub">Built for them, not simplified for them</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">Children</h3>
 <ul class="n2-list">
 <li><a href="/kids"><b>The Kids' Codex<small>The Greatest Game</small></b></a></li>
 <li><a href="/stories"><b>The Hall of Stories<small>His names, told as stories</small></b></a></li>
 <li><a href="/kids/lanterns"><b>The Lantern Sky<small>Light the whole day with prayer</small></b></a></li>
 </ul>
-</section>
-<section class="n2-idea n2-short n2-group" id="lib-house">
-<h3 class="n2-h3">The House<small class="hm-sub">The building itself</small></h3>
+</div>
+<div class="hm-grp">
+<h3 class="n2-h3">The House</h3>
 <ul class="n2-list">
 <li><a href="/masjid"><b>The Masjid Toolbox<small>Boards, timetables and printables</small></b></a></li>
 <li><a href="/license"><b>For Schools &amp; Organisations<small>Use the Codex in your own place</small></b></a></li>
@@ -274,50 +346,22 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <li><a href="/feedback"><b>Corrections &amp; Ideas<small>Tell us what is wrong</small></b></a></li>
 <li><a href="/legal"><b>Terms &amp; Transparency<small>Where the money goes, and what is collected</small></b></a></li>
 </ul>
+</div>
+</div>
 </section>
 
-<!-- the Path's seven books; the chapters themselves are at /path, and a
-     chapter asked for by ?node= or #node- opens in a sheet below -->
-<section class="n2-idea n2-short" id="timeline">
-<p class="n2-eyebrow">The Path of Creation <small>· 71 chapters</small></p>
-<h2 class="n2-h2">The whole story, <span class="n2-g">in order</span></h2>
-<p class="n2-dim">From Kun Fayakun to the Hour, in 71 chapters, each with its verses, its narrations and its facts. Seven books, read in order.</p>
-<ul class="n2-list">
-<li><a href="/path#bidaya"><span class="n2-num">1–8</span><b>Al-Bidaya<small>Creation, the Arsh, Adam, the Flood</small></b><span class="n2-ar" lang="ar" translate="no">البداية</span></a></li>
-<li><a href="/path#qisas"><span class="n2-num">9–23</span><b>Qisas al-Anbiya<small>The prophets from Nuh to Isa</small></b><span class="n2-ar" lang="ar" translate="no">قصص الأنبياء</span></a></li>
-<li><a href="/path#jahiliyyah"><span class="n2-num">24–26</span><b>Al-Jahiliyyah<small>Arabia before the Light</small></b><span class="n2-ar" lang="ar" translate="no">الجاهلية</span></a></li>
-<li><a href="/path#seerah"><span class="n2-num">27–46</span><b>An-Noor<small>The Seerah of Muhammad ﷺ</small></b><span class="n2-ar" lang="ar" translate="no">النور</span></a></li>
-<li><a href="/path#khulafa"><span class="n2-num">47–50</span><b>Al-Khulafa<small>Companions &amp; the Four Caliphs</small></b><span class="n2-ar" lang="ar" translate="no">الخلفاء</span></a></li>
-<li><a href="/path#umam"><span class="n2-num">51–52</span><b>Al-Umam<small>Islam across the nations</small></b><span class="n2-ar" lang="ar" translate="no">الأمم</span></a></li>
-<li><a href="/path#nihaya"><span class="n2-num">53–71</span><b>Al-Nihaya<small>Signs, Qiyamah, Jannah</small></b><span class="n2-ar" lang="ar" translate="no">النهاية</span></a></li>
-</ul>
-<div class="n2-row"><a class="n2-btn n2-gold" href="/path">All 71 chapters <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-</section>
-
-<!-- Two Lives: 56 rooms of the house link to /#mizan; what stands here is
-     the sources the old page quoted, and nothing said over them -->
-<section class="n2-idea n2-short" id="mizan">
-<p class="n2-eyebrow">Two Lives <small lang="ar" translate="no">· الدُّنْيَا وَالآخِرَة</small></p>
-<h2 class="n2-h2">Two lives, in <span class="n2-g">true scale</span></h2>
-<div class="n2-quote"><p class="n2-p">“By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back.”</p><p class="n2-src">Muslim 2858</p></div>
-<div class="n2-quote"><p class="n2-p">“Be in this world as if you were a stranger, or a traveler on the road.”</p><p class="n2-src">Bukhari 6416</p></div>
-<div class="n2-quote"><p class="n2-p">“Two blessings about which many people are cheated: health and free time.”</p><p class="n2-src">Bukhari 6412</p></div>
-<div class="n2-row"><a class="n2-btn" href="/soul">The Journey of the Soul</a><a class="n2-btn" href="/words">Carry words that last</a></div>
-</section>
-
-<!-- 5 · no catch -->
+<!-- 6 · no catch -->
 <section class="n2-idea" id="free">
 <p class="n2-eyebrow">No catch</p>
 <h2 class="n2-h2">Free means <span class="n2-g">free</span></h2>
-<ul class="n2-facts hm-truths">
+<ul class="n2-list hm-truths">
 <li><span>Ads</span><b>None</b></li>
 <li><span>Account</span><b>None needed</b></li>
 <li><span>Paywall</span><b>None</b></li>
-<li><span>Tracking</span><b>None</b></li>
+<li><span>Tracking</span><b>None: visits counted in aggregate, cookie-free</b></li>
 <li><span>The library</span><b>All of it, on this site</b></li>
 <li><span>For how long</span><b>Forever</b></li>
 </ul>
-<p class="n2-dim">Visits are counted in aggregate, cookie-free; nothing is sold or shared.</p>
 <h3 class="n2-h3">How it is paid for</h3>
 <p class="n2-p">The Codex runs on one thing alone: the quiet gifts of its readers. Nothing here is asked for. The door of giving is open for whoever wishes; nothing is expected.</p>
 <div class="n2-row hm-give"><a class="n2-btn" href="/donate">Open the door of giving <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
@@ -325,7 +369,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 
 </main>
 
-<!-- 6 · the footer. noor-fx.js draws the row of the house's doors on
+<!-- the footer. noor-fx.js draws the row of the house's doors on
      other platforms directly under the footer.note line; no page carries
      that markup itself. -->
 <footer class="n2-foot">
@@ -339,7 +383,8 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <script>
 /* The home page's own wiring. Everything that moves lives in the shell;
    this fills two screens from the library's own answers, opens a chapter of
-   the Path on request, and opens the search and the language door. */
+   the Path or Two Lives on request, and opens the search and the language
+   door. */
 (function () {
   "use strict";
   var doc = document, W = window;
@@ -371,6 +416,19 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     var a2 = t.length - ws.slice(-2).join(" ").length;
     return wrap(a2, t.length);
   }
+  /* the shell numbers each screen's eyebrow once, on arrival; the two living
+     screens are written again when the library answers, so they put their own
+     numeral back rather than losing it. */
+  function renumber(sec) {
+    var all = [].slice.call(doc.querySelectorAll(".n2-idea")), i = all.indexOf(sec);
+    var eb = sec.firstElementChild;
+    if (i < 0 || !eb || !eb.classList.contains("n2-eyebrow") || q(".n2-of", eb)) return;
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var tag = doc.createElement("span");
+    tag.className = "n2-of"; tag.textContent = pad(i + 1) + " / " + pad(all.length);
+    eb.classList.add("n2-numbered"); eb.insertBefore(tag, eb.firstChild);
+  }
+
   function dateLine() {
     var L = lang(), d = new Date(today + "T12:00:00Z");
     try { return d.toLocaleDateString(L === "prs" ? "fa" : (L === "en" ? "en-GB" : L), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).replace(",", ""); }
@@ -395,6 +453,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
         '<div class="n2-row"><a class="n2-btn n2-gold" href="' + esc(url) + '">' + (d.id ? "The whole Light" : "Today’s light") + " " + ARROW + "</a>" +
         '<button class="n2-btn" type="button" data-n2-share="' + esc(d.title + " · NOOR Codex of Light") + '" data-n2-url="' + esc(SITE + url) + '">Share ' + SHARE + "</button>" +
         '<a class="n2-btn" href="/today?date=' + yesterday + '">The day before</a></div>';
+      renumber(sec);
     });
   }
 
@@ -410,11 +469,12 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
   var ROTA = {
     morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
     noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-    afternoon: ["name", "word", "know", "name", "verse", "know", "word"],
+    afternoon: ["name", "word", "know", "verse", "verse", "know", "word"],
     evening:   ["word", "light", "know", "word", "verse", "name", "word"],
-    night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"]
+    night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"],
+    late:      ["verse", "verse", "verse", "verse", "verse", "verse", "verse"]
   };
-  var HALVES = ["morning", "noon", "afternoon", "evening", "night"];
+  var HALVES = ["morning", "noon", "afternoon", "evening", "late", "night"];
   var REEL_EPOCH = Date.UTC(2026, 8, 6);
   function reelStep(kind, dateStr, half) {
     var t = Date.parse(String(dateStr) + "T00:00:00Z");
@@ -474,6 +534,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
         '<div class="n2-row"><a class="n2-btn n2-gold" href="' + esc(url) + '">The verse ' + ARROW + "</a>" +
         '<button class="n2-btn" type="button" data-n2-share="' + esc("Qur’an " + ref + (meaning ? ": " + meaning : "") + " · NOOR Codex of Light") + '" data-n2-url="' + esc(SITE + url) + '">Share ' + SHARE + "</button></div>";
       var r = q("#reelbox"), v = q("video", r), b = q(".n2-play", r);
+      renumber(sec);
       b.addEventListener("click", function () { v.play().then(function () { r.classList.add("n2-playing"); }).catch(function () {}); });
       v.addEventListener("pause", function () { r.classList.remove("n2-playing"); });
       v.addEventListener("play", function () { r.classList.add("n2-playing"); });
@@ -506,6 +567,62 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     sh.el.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("[data-n2-close]")) history.replaceState(null, "", location.pathname); });
   }
 
+  /* ----------------------------------------------------------- the library
+     Eight sections, forty-one rooms. Whole, that is a wall on a phone; so
+     each section's heading becomes its own control and every section but the
+     first is folded shut, on the same spring the rest of the shell moves on.
+     Without this script nothing folds and every room stands open, which is
+     what a crawler and a reader without JavaScript see. */
+  var CARET = '<svg class="hm-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  function fold() {
+    var groups = [].slice.call(doc.querySelectorAll(".hm-grp"));
+    if (!groups.length) return;
+    groups.forEach(function (g, i) {
+      var h = q(".n2-h3", g), list = q(".n2-list", g);
+      if (!h || !list) return;
+      var name = h.textContent, id = "hm-grp-" + i;
+      var wrap = doc.createElement("div"); wrap.className = "hm-fold-w";
+      list.parentNode.insertBefore(wrap, list); wrap.appendChild(list);
+      list.id = id;
+      h.innerHTML = "";
+      var btn = doc.createElement("button");
+      btn.type = "button"; btn.setAttribute("aria-controls", id);
+      btn.innerHTML = esc(name) + '<span class="hm-n">' + list.children.length + "</span>" + CARET;
+      h.appendChild(btn);
+      g.classList.add("hm-fold");
+      var set = function (open) {
+        g.classList.toggle("hm-shut", !open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+      set(i === 0);
+      g.n2open = function () { set(true); };
+      btn.addEventListener("click", function () { set(g.classList.contains("hm-shut")); });
+    });
+  }
+  /* a room asked for by its anchor (/#timeline, /#mizan) opens its section */
+  function openFor(hash) {
+    var el = hash && hash.length > 1 && doc.getElementById(hash.slice(1));
+    var g = el && el.closest && el.closest(".hm-grp");
+    if (g && g.n2open) g.n2open();
+  }
+
+  /* --------------------------------------------------------------- Two Lives
+     56 rooms of the house link to /#mizan. What stands there is the three
+     narrations the old page quoted, in a sheet from the library's row, and
+     nothing said over them. */
+  function mizan() {
+    if (!W.NOOR2) return;
+    var sh = NOOR2.sheet('<div class="hm-sheet">' +
+      '<p class="n2-eyebrow">Two Lives <small lang="ar" translate="no">· الدُّنْيَا وَالآخِرَة</small></p>' +
+      '<h2 class="n2-h3">Two lives, in true scale</h2>' +
+      '<div class="n2-quote"><p class="n2-p">“By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back.”</p><p class="n2-src">Muslim 2858</p></div>' +
+      '<div class="n2-quote"><p class="n2-p">“Be in this world as if you were a stranger, or a traveler on the road.”</p><p class="n2-src">Bukhari 6416</p></div>' +
+      '<div class="n2-quote"><p class="n2-p">“Two blessings about which many people are cheated: health and free time.”</p><p class="n2-src">Bukhari 6412</p></div>' +
+      '<div class="n2-row"><a class="n2-btn n2-gold" href="/soul">The Journey of the Soul ' + ARROW + '</a><a class="n2-btn" href="/words">Words that last</a>' +
+      '<button class="n2-btn" type="button" data-n2-close>Close</button></div></div>');
+    sh.el.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("[data-n2-close]") && location.hash === "#mizan") history.replaceState(null, "", location.pathname); });
+  }
+
   /* ------------------------------------------------------ the language door
      The same doors the head marks with hreflang; the switch is the house's
      own (NOOR_I18N in noor-fx.js), and ?lang= is read there too. */
@@ -529,6 +646,8 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
   function boot() {
     light();
     verse();
+    fold();
+    openFor(location.hash);
     doc.addEventListener("noor:lang", function () { light(); });
     var lb = q("#lang-btn"); if (lb) lb.addEventListener("click", langDoor);
     /* the field opens the search; without the script it is a link to the words */
@@ -540,6 +659,14 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     var sp = new URLSearchParams(location.search);
     var dn = sp.get("node") || (location.hash.match(/^#node-(\d+)$/) || [])[1];
     if (dn) setTimeout(function () { chapter(+dn); }, 250);
+    var mz = q("#hm-mizan"); if (mz) mz.addEventListener("click", function (e) { if (W.NOOR2) { e.preventDefault(); mizan(); } });
+    if (location.hash === "#mizan") setTimeout(mizan, 250);
+    /* the same doors when the hash changes on the page itself */
+    W.addEventListener("hashchange", function () {
+      openFor(location.hash);
+      if (location.hash === "#mizan") return mizan();
+      var m = location.hash.match(/^#node-(\d+)$/); if (m) chapter(+m[1]);
+    });
   }
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();
 })();

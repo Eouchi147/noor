@@ -1001,3 +1001,28 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+/* ================= the second cut's skin =================
+   Every page that is not already in the shell (no data-n2 on <html> or
+   <body>) is dressed by it: assets/noor2.css and assets/noor2-skin.css are
+   appended, assets/noor2.js is loaded, and NOOR2.inject() adds the bar of
+   five doors, the share in the footer and the home-screen offer, and
+   harmonises a night page's header. The kids' games (kids/*.html, not
+   kids.html) keep their own full-screen UI; an embedded room stays bare;
+   the consoles are their own. The version tail matches api/page.js. */
+(function () {
+  "use strict";
+  var H = document.documentElement, p = location.pathname;
+  if (H.hasAttribute("data-n2") || H.getAttribute("data-noor-embed") === "1") return;
+  if (/^\/kids\/./.test(p) || /^\/admin/.test(p)) return;
+  var V = "2", left = 3;
+  function done() { if (--left === 0 && window.NOOR2 && NOOR2.inject) NOOR2.inject(); }
+  function css(href) { var l = document.createElement("link"); l.rel = "stylesheet"; l.href = href; l.onload = done; l.onerror = done; document.head.appendChild(l); }
+  function init() {
+    if (document.body && document.body.hasAttribute("data-n2")) return;
+    css("/assets/noor2.css?v=" + V); css("/assets/noor2-skin.css?v=" + V);
+    var s = document.createElement("script"); s.src = "/assets/noor2.js?v=" + V; s.defer = true; s.onload = done; s.onerror = function () {};
+    document.head.appendChild(s);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();

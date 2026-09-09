@@ -127,6 +127,20 @@ These are not preferences. They are refused, not negotiated.
   previewers are not counted; the count is honest from the marked date.
 - **The Lantern** (`api/_models.js`): the best free model on OpenRouter,
   refreshed from the live list; never probed on page load.
+- **The site's shell** (`assets/noor2.css`, `assets/noor2.js`; the rooms
+  `api/page.js` renders, the home page, and every older page through the
+  skin `assets/noor2-skin.css` that `noor-fx.js` loads where `data-n2` is
+  absent): the reels' night, one idea per screen, everything under the
+  thumb. The bar is five doors, no two alike, decided 9 September 2026 when
+  Sam asked why Read and Listen both went to the Qur'an: Today (the day's
+  light, word and chapter), Qur'an (read and heard in one room), Story (the
+  Path in order), Words (the dictionary), Search (the page's own search,
+  else the words). A verse or a surah lights Qur'an, a chapter Story, a
+  Light lights Today only on its own day. Every movement rides one spring;
+  fades and blurs the bezier; nothing moves under reduced motion
+  (`tests/rooms.mjs` audits the file). The kids' games keep their own
+  screen; a parchment page keeps its parchment and gets only the bar, the
+  room for it and the share.
 - **Paused by Sam:** language auto-detect and per-language SEO.
 
 ## What done means
