@@ -13,6 +13,12 @@ those change every reel, and a reel is only as current as the day it was made.
     python3 render_missing.py --count          how many a run would render, no browser
     python3 render_missing.py --manifest       list what has a video, nothing else
 
+Each card is audited against the safe area in the worker that renders it,
+in the same browser, immediately before its first frame is drawn (REELS_JOBS
+workers, three on a runner), so the audit runs as wide as the rendering and a
+run cut short leaves nothing audited but unrendered. Its verdicts are printed
+as they land, one line a card: `  OK <id>` or `  OUT <id> why`.
+
 Several machines can share one run: with REELS_SHARDS=4 and REELS_SHARD=0..3
 each takes every fourth card of the same interleaved list, so four runners
 finish a shelf in the time one would take a quarter of it. Each then hands
@@ -45,7 +51,8 @@ def todo(args):
                 if not os.path.exists(os.path.join(OUT, c + ".mp4"))
                 and not unfit_still(c, cards[c])]
     # the kinds take turns, so a run that stops early still leaves a balanced
-    # shelf: a verse, a word, a Did you know, a day, then round again
+    # shelf: a verse, a word, a Name, a Did you know, a du'a, a day, then
+    # round again
     want = interleave(want, cards)
     total = len(want)
     shards = max(1, int(os.environ.get("REELS_SHARDS", "1") or 1))
@@ -80,53 +87,38 @@ def main():
     # One verse needs its translation before anything can be measured
     refs = [cards[c]["verse"] for c in want if cards[c].get("kind") == "verse"]
     if refs:
-        print("translations fetched now:", verses.fetch_translations(refs))
+        print("translations fetched now:", verses.fetch_translations(refs), flush=True)
 
-    with sync_playwright() as pw:
-        st = webreel.Stage(pw)
-        # the safe area is proved for everything first. A card that cannot fit
-        # is set aside and named, and the ones that can are still rendered:
-        # one long verse must not cost the week its other reels.
-        bad, good = [], []
-        for nm in want:
-            try:
-                info, worst, out = webreel.audit(st, nm)
-            except SystemExit as e:
-                bad.append((nm, str(e) or "unfit")); continue
-            except Exception as e:
-                # a browser or picture failure is the machine's, not the card's:
-                # the run stops here rather than marking every card unfit
-                raise SystemExit("the renderer failed on %s: %s" % (nm, str(e)[:200]))
-            if out or not info["fits"]:
-                bad.append((nm, str(out[:2] or "does not fit")))
-            else:
-                good.append(nm)
-        for nm, why in bad:
-            print("  OUT", nm, why)
-            mark_unfit(nm, cards[nm], why)
-        want = good
-
-        st.close()
-
-    # the rendering itself, in as many browsers as the machine has cores for:
-    # each worker holds one page and takes every j-th card
+    # the audit and the rendering, in as many browsers as the machine has
+    # cores for: each worker holds one page, takes every j-th card, and proves
+    # the safe area of each card in that page immediately before rendering it.
+    # So the audit runs as wide as the rendering does instead of one card at
+    # a time before any frame is drawn, and a run cut short leaves nothing
+    # audited but unrendered. A card that cannot fit is set aside and named,
+    # and the ones that can are still rendered: one long verse must not cost
+    # the week its other reels. A browser or picture failure is the machine's,
+    # not the card's: it stops the run rather than marking cards unfit.
     jobs = max(1, int(os.environ.get("REELS_JOBS", "1") or 1))
-    faults = []
+    faults, bad = [], []
     try:
         if jobs == 1 or len(want) < 2:
-            faults = _work(want, 0)
+            faults, bad = _work(want, 0)
         else:
             import multiprocessing as mp
             ctx = mp.get_context("spawn")
             parts = [want[i::jobs] for i in range(jobs)]
             with ctx.Pool(jobs) as pool:
-                for f in pool.starmap(_work, [(p_, i) for i, p_ in enumerate(parts)]):
-                    faults += f
+                for f, b in pool.starmap(_work, [(p_, i) for i, p_ in enumerate(parts)]):
+                    faults += f; bad += b
+    except RuntimeError as e:
+        # the machine's failure, raised by a worker: the run stops
+        raise SystemExit(str(e))
     finally:
         # whatever happened, what exists is listed: a run cut short still
         # leaves every finished reel on the shelf and none of the broken ones
         sweep()
         manifest()
+    for nm, why in bad: print("  OUT", nm, why)
     for nm, fb in faults: print("  FAULT", nm, "; ".join(fb))
     if bad: print("%d card(s) set aside as unfit; they are named in reels/<id>.unfit.json" % len(bad))
     if faults:
@@ -168,15 +160,31 @@ def sweep():
 
 
 def _work(names, worker):
-    """render these, in one browser, and hand back the sound faults"""
-    faults = []
-    if not names: return faults
+    """audit and render these, in one browser, and hand back the sound faults
+    and the cards set aside as unfit"""
+    faults, unfit = [], []
+    if not names: return faults, unfit
     cards = webreel.plan()
     with sync_playwright() as pw:
         st = webreel.Stage(pw)
         for nm in names:
             t0 = time.time()
             webreel._SCRIM.clear()
+            # the safe area first, in this same page, measured as pixels
+            try:
+                info, worst, out = webreel.audit(st, nm)
+            except SystemExit as e:
+                why = str(e) or "unfit"
+                print("  OUT", nm, why, flush=True); mark_unfit(nm, cards[nm], why)
+                unfit.append((nm, why)); continue
+            except Exception as e:
+                raise RuntimeError("the renderer failed on %s: %s" % (nm, str(e)[:200]))
+            if out or not info["fits"]:
+                why = str(out[:2] or "does not fit")
+                print("  OUT", nm, why, flush=True); mark_unfit(nm, cards[nm], why)
+                unfit.append((nm, why)); continue
+            t1 = time.time()
+            print("  OK", nm, flush=True)
             try:
                 path = webreel.render(st, nm, out_dir=OUT)
             except (SystemExit, Exception) as e:
@@ -187,11 +195,12 @@ def _work(names, worker):
             bad = sound.check(path, target=sound.target_for(cards[nm].get("kind", "light")))
             if bad:
                 faults.append((nm, bad)); forget(nm)
-            print("[%d] %s  %.0fs  %s" % (worker, path, time.time() - t0,
-                                          "sound ok" if not bad else "SOUND " + "; ".join(bad)),
+            print("[%d] %s  audit %.0fs  render %.0fs  %s"
+                  % (worker, path, t1 - t0, time.time() - t1,
+                     "sound ok" if not bad else "SOUND " + "; ".join(bad)),
                   flush=True)
         st.close()
-    return faults
+    return faults, unfit
 
 
 def forget(cid):
@@ -206,7 +215,7 @@ def interleave(names, cards):
     by = {}
     for nm in names:
         by.setdefault(cards[nm].get("kind", "light"), []).append(nm)
-    order = ["verse", "word", "know", "day", "codex", "light"]
+    order = ["verse", "word", "name", "know", "dua", "day", "light"]
     queues = [by[k] for k in order if by.get(k)] + [v for k, v in by.items() if k not in order]
     out = []
     while any(queues):
@@ -240,7 +249,7 @@ def manifest():
                               .replace("{reciter}", meta.get("reciter", "a reciter")))
         hook = {"light": c.get("hook"), "know": c.get("hook"), "day": c.get("hook"),
                 "word": c.get("term"), "verse": meta.get("ref") or c.get("verse"),
-                "codex": ((c.get("room") or {}).get("t") or "The Codex")}.get(kind, c.get("hook"))
+                "name": c.get("translit"), "dua": c.get("translit")}.get(kind, c.get("hook"))
         row = {"id": cid, "kind": kind, "slot": c["slot"], "hook": hook or "",
                "caption": caption, "secs": meta.get("secs"),
                "cover": os.path.exists(os.path.join(OUT, cid + "-cover.jpg"))}
