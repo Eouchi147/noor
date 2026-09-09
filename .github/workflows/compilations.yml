@@ -1,0 +1,205 @@
+# NOOR - the reels, joined into long-form videos for YouTube
+#
+# A reel lives a day in a feed; the same reels joined end to end are a
+# half-hour video YouTube keeps and searches for years. This workflow
+# downloads the rendered reels from the store (GitHub Releases, one per
+# kind), joins them with ffmpeg without touching a frame, and sends the
+# result to YouTube with the resumable protocol, which a Vercel function
+# cannot do for a three hundred megabyte file. Nothing is written for it:
+# every frame is a reel that was already audited, and the description is the
+# manifest's own text and the library's line (tools/reels/compile.py).
+#
+# The one thing it needs from the owner: the three values the site already
+# holds in Vercel, copied into this repository's secrets under the same
+# names, YT_CLIENT_ID, YT_CLIENT_SECRET and YT_REFRESH_TOKEN (Settings ->
+# Secrets and variables -> Actions). Without them the videos are still built
+# and kept as run artifacts for three days, and the upload step says so in
+# one line.
+#
+# Quota: an upload is about 1,750 of YouTube's 10,000 units a day, so a run
+# sends four at most and stops cleanly if the day is spent; what is left
+# goes next time. Videos are unlisted unless "public" is ticked; a project
+# that has not passed the YouTube API audit keeps them private whatever was
+# asked, and the summary says which.
+
+name: compilations
+
+on:
+  workflow_dispatch:
+    inputs:
+      names:
+        description: "compilations to build, space separated: names, dua, verses-patience, verses-mercy, verses-gratitude, verses-remembrance, words-a-d, words-e-k, words-l-r, words-s-z, know-1 ... (verses, words or know for the whole family)"
+        required: false
+        default: "names dua verses-patience verses-mercy"
+      public:
+        description: "publish on YouTube (unlisted otherwise)"
+        type: boolean
+        required: false
+        default: false
+      again:
+        description: "upload a compilation the ledger already has"
+        type: boolean
+        required: false
+        default: false
+  schedule:
+    # the first Monday of the month, 05:00 UTC: what is not yet uploaded,
+    # four at most (the day-of-month range is the first week; the step
+    # below checks that it is a Monday, since cron's two day fields are OR)
+    - cron: "0 5 1-7 * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: compilations
+  cancel-in-progress: false
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      # on a schedule, only the first Monday; a dispatch runs whenever it is asked
+      - name: the first Monday, or a hand
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "schedule" ] && [ "$(date -u +%u)" != "1" ]; then
+            echo "not a Monday: nothing to do"; echo "go=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.go == '1'
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.go == '1'
+        with:
+          python-version: "3.12"
+
+      # ffmpeg is not on the ubuntu-24.04 image; compile.py needs only it,
+      # curl and the standard library
+      - name: install
+        if: steps.gate.outputs.go == '1'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
+
+      # the inputs reach the shell as variables, never as text in the script
+      - name: the compilations
+        if: steps.gate.outputs.go == '1'
+        working-directory: tools/reels
+        env:
+          PYTHONUNBUFFERED: "1"
+          NAMES: ${{ inputs.names }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          python compile.py --list
+          if [ "$EVENT" = "schedule" ]; then
+            python compile.py --pending --max 4 --out out
+          else
+            # shellcheck disable=SC2086  (the names are meant to split on spaces)
+            python compile.py $NAMES --out out
+          fi
+
+      # the videos survive a failed upload for three days
+      - uses: actions/upload-artifact@v4
+        if: steps.gate.outputs.go == '1' && always()
+        with:
+          name: compilations
+          path: |
+            tools/reels/out/*.mp4
+            tools/reels/out/*.jpg
+            tools/reels/out/*.json
+            tools/reels/out/*.chapters.txt
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: what was made
+        if: steps.gate.outputs.go == '1' && always()
+        run: |
+          echo '### Compilations' >> "$GITHUB_STEP_SUMMARY"
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          try:
+              made = json.load(open("tools/reels/out/made.json"))
+          except Exception:
+              print("nothing was built"); raise SystemExit
+          for m in made:
+              s = int(round(m["secs"])); h, r = divmod(s, 3600); mm, ss = divmod(r, 60)
+              t = ("%d:%02d:%02d" % (h, mm, ss)) if h else ("%d:%02d" % (mm, ss))
+              print("- **%s** · %s · %d reels · %.0f MB · joined by %s" % (m["title"], t, len(m["ids"]), m["bytes"] / 1e6, m["joined"]))
+          PY
+
+      # without the three secrets this says so in one line and stops; the
+      # artifacts above remain
+      - name: to YouTube
+        if: steps.gate.outputs.go == '1'
+        working-directory: tools/reels
+        env:
+          PYTHONUNBUFFERED: "1"
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          PUBLIC: ${{ inputs.public }}
+          AGAIN: ${{ inputs.again }}
+        run: |
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '### On YouTube' >> "$GITHUB_STEP_SUMMARY"
+          flags=""
+          [ "$PUBLIC" = "true" ] && flags="$flags --public"
+          [ "$AGAIN" = "true" ] && flags="$flags --again"
+          # shellcheck disable=SC2086
+          python yt_upload.py out --max 4 --summary "$GITHUB_STEP_SUMMARY" $flags
+
+      - name: the links, for the pull request
+        if: steps.gate.outputs.go == '1'
+        id: links
+        run: |
+          {
+            echo 'body<<EOF'
+            python3 - <<'PY'
+          import json
+          try:
+              book = json.load(open("tools/reels/compilations.json"))
+          except Exception:
+              book = {}
+          for n, r in sorted(book.items(), key=lambda kv: kv[1].get("date", "")):
+              print("- %s · %s · %s (%s)" % (n, r.get("title", ""), r.get("url", ""), r.get("privacy", "")))
+          PY
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      # the ledger goes back through a pull request, as every change does;
+      # with nothing new this step does nothing
+      - name: open a pull request
+        if: steps.gate.outputs.go == '1'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: tools/reels/compilations.json
+          branch: reels/compilations
+          delete-branch: true
+          commit-message: |
+            reels: the compilations uploaded to YouTube
+
+            Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+          title: "Reels: compilations on YouTube"
+          body: |
+            The reels, joined into long-form videos by the `compilations`
+            workflow (`tools/reels/compile.py`) and sent to YouTube
+            (`tools/reels/yt_upload.py`). This change carries the ledger,
+            `tools/reels/compilations.json`, so a compilation is not sent
+            twice.
+
+            Every frame is a reel that was already audited and rendered; the
+            description is the manifest's own text (each reel's hook as a
+            chapter, the reciters it names) and the library's line. Nothing
+            was written for it.
+
+            ${{ steps.links.outputs.body }}
+
+            🤖 Generated with [Claude Code](https://claude.com/claude-code)
