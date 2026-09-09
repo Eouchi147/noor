@@ -45,7 +45,7 @@ const PAGES = [
   ["verse", "verse", { ref: "94-5-6" }, "/verse/94-5-6"],
   ["path", "path", { n: "2" }, "/path/2"],
   ["light", "light", { id: "battle-of-badr-624" }, "/light/battle-of-badr-624"],
-  ["lights", "lights", {}, "/lights"]
+  ["lights", "lights", {}, "/light"]
 ];
 const MIME = { css: "text/css", js: "text/javascript", jpg: "image/jpeg", png: "image/png", svg: "image/svg+xml", json: "application/json" };
 const br = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist"] });

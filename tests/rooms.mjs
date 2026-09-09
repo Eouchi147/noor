@@ -63,7 +63,7 @@ const hasShell = html => /<html lang="en" data-n2/.test(html) && html.includes("
 console.log("\n=== the rooms render whole ===");
 const KINDS = [
   ["light", { kind: "light", id: "battle-of-badr-624" }, "/light/battle-of-badr-624", "Article"],
-  ["lights", { kind: "lights" }, "/lights", "CollectionPage"],
+  ["lights", { kind: "lights" }, "/light", "CollectionPage"],
   ["path", { kind: "path", n: "2" }, "/path/2", "Article"],
   ["paths", { kind: "paths" }, "/path", "CollectionPage"],
   ["verse", { kind: "verse", ref: "94-5-6" }, "/verse/94-5-6", "CreativeWork"],
@@ -252,12 +252,15 @@ console.log("\n=== the deployment ===");
     if (rw.destination.startsWith("/api/podcast")) { if (fs.existsSync(file)) ok(true, rw.source + " → " + file + " exists"); else skip(rw.source + " → " + file + " is owed by the podcast work"); continue; }
     ok(fs.existsSync(file), rw.source + " → " + file + " exists");
   }
-  const want = ["/light/:id", "/lights", "/path/:n", "/path", "/verse/:ref", "/verses", "/surah/:n", "/today", "/sitemap-rooms.xml", "/podcast.xml", "/journal/:slug"];
+  const want = ["/light", "/light/:id", "/lights", "/path/:n", "/path", "/verse/:ref", "/verses", "/surah/:n", "/today", "/sitemap-rooms.xml", "/podcast.xml", "/journal/:slug"];
   ok(want.every(s => (v.rewrites || []).some(r => r.source === s)), "every room has its rewrite, and the old ones remain");
   ok(v.functions["api/page.js"] && /lights\/all\.json/.test(v.functions["api/page.js"].includeFiles) && /node\/\*\.json/.test(v.functions["api/page.js"].includeFiles), "api/page.js includes the library's files");
   ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 4, "what was in vercel.json is still there");
   ok(v.functions["api/reel.js"] && v.functions["api/reel.js"].maxDuration === 60 && fs.existsSync("api/reel.js"), "api/reel.js may run for a minute");
   ok(!["path.html", "lights.html", "today.html", "verses.html", "surah.html", "light.html"].some(f => fs.existsSync(f)), "no static page collides with a room");
+  ok(!["light", "path", "today", "verses", "surah"].some(d => fs.existsSync(d) && fs.statSync(d).isDirectory()), "no folder collides with a shelf (lights/ is why the shelf is /light)");
+  ok(fs.readFileSync("index.html", "utf8").includes('href="/light"') && !fs.readFileSync("index.html", "utf8").includes('href="/lights"'), "the home page links the shelf at /light");
+  ok(!/href="\/lights"/.test(Object.values(rendered).join("")) && !fs.readFileSync("api/sitemap.js", "utf8").includes('"/lights"'), "no room and no sitemap entry points at /lights");
   const robots = fs.readFileSync("robots.txt", "utf8");
   ok(robots.includes("Sitemap: https://noorcodex.com/sitemap.xml") && robots.includes("Sitemap: https://noorcodex.com/sitemap-rooms.xml"), "robots.txt names both sitemaps");
   ok(robots.includes("Disallow: /admin2\n") && robots.includes("Disallow: /admin2.html"), "robots.txt keeps the new console out");
