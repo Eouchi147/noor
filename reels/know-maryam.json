@@ -1,5 +1,10 @@
 {
  "id": "know-maryam",
  "kind": "know",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-know/know-maryam.mp4",
+ "video_asset": 552814612,
+ "store": "release",
+ "bytes": 2258492,
+ "uploaded": "2026-09-09"
 }

@@ -1,5 +1,10 @@
 {
  "id": "dua-sallim",
  "kind": "dua",
- "secs": 18.47
+ "secs": 18.47,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-dua/dua-sallim.mp4",
+ "video_asset": 552774564,
+ "store": "release",
+ "bytes": 2692284,
+ "uploaded": "2026-09-09"
 }

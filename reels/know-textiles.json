@@ -1,5 +1,10 @@
 {
  "id": "know-textiles",
  "kind": "know",
- "secs": 15.29
+ "secs": 15.29,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-know/know-textiles.mp4",
+ "video_asset": 552834689,
+ "store": "release",
+ "bytes": 2372168,
+ "uploaded": "2026-09-09"
 }

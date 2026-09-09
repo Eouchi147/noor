@@ -1,5 +1,10 @@
 {
  "id": "al-battani-solar-year",
  "kind": "light",
- "secs": 21.3
+ "secs": 21.3,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-light/al-battani-solar-year.mp4",
+ "video_asset": 552761282,
+ "store": "release",
+ "bytes": 3180088,
+ "uploaded": "2026-09-09"
 }

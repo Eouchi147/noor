@@ -1,5 +1,10 @@
 {
  "id": "astrolabe-model-of-the-sky",
  "kind": "light",
- "secs": 21.68
+ "secs": 21.68,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-light/astrolabe-model-of-the-sky.mp4",
+ "video_asset": 552763909,
+ "store": "release",
+ "bytes": 3202882,
+ "uploaded": "2026-09-09"
 }

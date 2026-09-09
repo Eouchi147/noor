@@ -1,5 +1,10 @@
 {
  "id": "word-dhikr",
  "kind": "word",
- "secs": 13.05
+ "secs": 13.05,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-dhikr.mp4",
+ "video_asset": 552977649,
+ "store": "release",
+ "bytes": 1852312,
+ "uploaded": "2026-09-09"
 }

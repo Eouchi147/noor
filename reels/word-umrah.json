@@ -1,5 +1,10 @@
 {
  "id": "word-umrah",
  "kind": "word",
- "secs": 17.55
+ "secs": 17.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-umrah.mp4",
+ "video_asset": 553090599,
+ "store": "release",
+ "bytes": 2509986,
+ "uploaded": "2026-09-09"
 }

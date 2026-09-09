@@ -1,5 +1,10 @@
 {
  "id": "word-iman",
  "kind": "word",
- "secs": 13.05
+ "secs": 13.05,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-iman.mp4",
+ "video_asset": 553003660,
+ "store": "release",
+ "bytes": 1897905,
+ "uploaded": "2026-09-09"
 }

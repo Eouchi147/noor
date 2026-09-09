@@ -1,5 +1,10 @@
 {
  "id": "know-book-flap",
  "kind": "know",
- "secs": 15.29
+ "secs": 15.29,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-know/know-book-flap.mp4",
+ "video_asset": 552788641,
+ "store": "release",
+ "bytes": 2340685,
+ "uploaded": "2026-09-09"
 }

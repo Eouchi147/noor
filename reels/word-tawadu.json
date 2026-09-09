@@ -1,5 +1,10 @@
 {
  "id": "word-tawadu",
  "kind": "word",
- "secs": 13.05
+ "secs": 13.05,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-tawadu.mp4",
+ "video_asset": 553085436,
+ "store": "release",
+ "bytes": 1898795,
+ "uploaded": "2026-09-09"
 }

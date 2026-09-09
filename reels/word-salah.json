@@ -1,5 +1,10 @@
 {
  "id": "word-salah",
  "kind": "word",
- "secs": 17.55
+ "secs": 17.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-salah.mp4",
+ "video_asset": 553067484,
+ "store": "release",
+ "bytes": 2526498,
+ "uploaded": "2026-09-09"
 }

@@ -1,5 +1,10 @@
 {
  "id": "block-printed-amulets-fustat",
  "kind": "light",
- "secs": 21.3
+ "secs": 21.3,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-light/block-printed-amulets-fustat.mp4",
+ "video_asset": 552764776,
+ "store": "release",
+ "bytes": 3194508,
+ "uploaded": "2026-09-09"
 }
