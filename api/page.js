@@ -415,7 +415,7 @@ ${N.titleAr ? `<p class="n2-title-ar" lang="ar">${esc(N.titleAr)}</p>` : ""}
 ${img ? `<div class="n2-image" role="img" aria-label="${attr(N.titleEn)}" style="background-image:url('${attr(img)}')"></div>` : ""}
 <div class="n2-row">${go("#story", "Read on", true)}${shareBtn(N.titleEn + " · The Path of Creation, chapter " + n + " · NOOR", SITE + url)}</div>
 </section>
-<section class="n2-idea n2-short" id="story">
+<section class="n2-idea n2-short" id="story"${guideKeys().has("n:" + n) ? ` data-guide="n:${n}"` : ""}>
 <p class="n2-eyebrow">The chapter</p>
 ${paras(unmark(N.details || ""))}
 </section>
@@ -444,16 +444,21 @@ ${walk(prev && ["/path/" + prev.id, prev.titleEn, "Chapter " + prev.id], next &&
       isPartOf: { "@type": "CreativeWorkSeries", name: "The Path of Creation", url: SITE + "/path" },
       author: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE },
       publisher: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE, logo: { "@type": "ImageObject", url: SITE + "/assets/brand/mark-512.png" } } }],
-    body, tail: GUIDE_TAIL(n) }) };
+    body }) };
 }
 /* The quiet guide. noor-guide.js has answered from the sources on the thirty
-   chapters that carry a curated topic -- the Dajjal, the grave, the trials --
-   since it was written, and the two scripts came off the site the day the home
-   was rebuilt. This is the chapter's own room, the fullest telling of it and
-   what search sends a reader to, so it is the first place the pill belongs.
-   Both files sit at the root, outside /assets, so they revalidate: a change to
-   an answer reaches a reader who has been here before. attach() is a no-op on
-   a chapter with no topic, so this costs those chapters one 304. */
+   chapters that carry a curated topic -- the Dajjal, the grave, the trials,
+   Harut and Marut -- since it was written, and its two scripts came off the
+   site the day the home was rebuilt. This is the chapter's own room, the
+   fullest telling of it and what search sends a reader to, so it is the first
+   place the pill belongs.
+
+   The room says nothing but which topic its story wants; noor-fx.js, which is
+   on every page already, fetches the 61KB of answers and hangs the pill. One
+   mechanism for the arrival and the rooms both, and the room ships no script
+   of its own. The keys are read here so a chapter with no topic asks for
+   nothing at all -- which is why noor-guide-data.js is in this function's
+   includeFiles, and why losing it costs a missing pill and never an error. */
 let GUIDE_KEYS = null;
 function guideKeys() {
   if (GUIDE_KEYS) return GUIDE_KEYS;
@@ -464,12 +469,6 @@ function guideKeys() {
   } catch { /* no data file, no pill: attach() would be a no-op anyway */ }
   return GUIDE_KEYS;
 }
-/* 61KB of curated answers, so only the thirty chapters that have one pay for
-   them; on the other forty-one the pill would never have appeared. */
-const GUIDE_TAIL = n => guideKeys().has("n:" + Number(n)) ? `<script src="/noor-guide-data.js" defer></script>
-<script src="/noor-guide.js" defer></script>
-<script>addEventListener("load",function(){var g=window.NoorGuide,c=document.getElementById("story");
-if(g&&g.attach&&c)g.attach(c,"n:${Number(n)}",document.title);});</script>` : "";
 function pathIndex() {
   const list = chapters();
   const body = `<section class="n2-idea n2-short n2-in">
