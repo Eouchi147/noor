@@ -238,9 +238,13 @@ if (chromium) {
   const LIGHT = { date: '2026-09-09', category: 'Libraries', title: 'He called his 1,600 books the smallest library in the family',
     story: 'When a Moroccan army took Timbuktu, its scholars were arrested, and in 1593 Ahmad Baba was taken in chains across the Sahara to Marrakesh.',
     detail: 'Ahmad Baba · Timbuktu and Marrakesh, 1593 CE', id: 'ahmad-baba', src: 'Hunwick, Timbuktu and the Songhay Empire' };
+  /* the rows as the live manifest writes them (seen on noorcodex.com):
+     the reference lives in the id, the hook carries the surah name too,
+     cover is the boolean true (the file is /reels/<id>-cover.jpg) and the
+     video is the release's own https URL */
   const REELS = { n: 2, written: '2026-09-09', cards: [
-    { id: 'verse-94-5-6', kind: 'verse', slot: 'morning', hook: '94:5-6', caption: '94:5-6\n\nFor indeed, with hardship [will be] ease. Indeed, with hardship [will be] ease.\n\nRecited by Mishary Rashid Alafasy. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse', secs: 21, cover: true, reciter: 'Mishary Rashid Alafasy' },
-    { id: 'verse-2-153', kind: 'verse', slot: 'evening', hook: '2:153', caption: '2:153\n\nO you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.\n\nRecited by Abdul Basit. Read the whole surah: noorcodex.com/quran', secs: 24, cover: true, reciter: 'Abdul Basit' }
+    { id: 'verse-1-1-7', kind: 'verse', slot: 'morning', hook: 'Al-Fatiha · 1:1-7', caption: 'Al-Fatiha · 1:1-7\n\nIn the name of Allah, the Entirely Merciful, the Especially Merciful. [All] praise is [due] to Allah, Lord of the worlds.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse', secs: 34.89, cover: true, video: 'https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-1-1-7.mp4', reciter: 'Maher al-Muaiqly' },
+    { id: 'verse-2-153', kind: 'verse', slot: 'evening', hook: 'Al-Baqarah · 2:153', caption: 'Al-Baqarah · 2:153\n\nO you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.\n\nRecited by Abdul Basit. Read the whole surah: noorcodex.com/quran', secs: 24, cover: true, reciter: 'Abdul Basit' }
   ] };
   const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
   const withFixtures = async pg => {
@@ -346,10 +350,11 @@ if (chromium) {
     }));
     ok(st.title.includes('1,600 books') && st.gold === '1,600 books', 'the day\'s Light is on the page with its key phrase in gold');
     ok(st.share === 1 && st.light === '/light/ahmad-baba', 'with a Share button and the door to the whole Light');
-    ok(/^Qur.an 94:5-6$/.test(st.ref), 'the verse is the reel the rota picks today (' + st.ref + ')');
-    ok(/with hardship/.test(st.meaning), 'with its meaning');
-    ok(st.video && st.video.preload === 'none' && st.video.paused && st.video.controls && st.video.inline && /verse-94-5-6-cover\.jpg$/.test(st.video.poster) && st.video.src === '/reels/verse-94-5-6.mp4', 'the reel waits for a tap, with its cover as poster');
-    ok(st.verseLink === '/verse/94-5-6', 'and the verse has its own room');
+    ok(/^Qur.an 1:1-7$/.test(st.ref), 'the verse is the reel the rota picks today, its reference read from the id (' + st.ref + ')');
+    ok(/Lord of the worlds/.test(st.meaning), 'with its meaning, the caption\'s second paragraph');
+    ok(st.video && st.video.preload === 'none' && st.video.paused && st.video.controls && st.video.inline && /\/reels\/verse-1-1-7-cover\.jpg$/.test(st.video.poster) && st.video.src === 'https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-1-1-7.mp4', 'the reel waits for a tap: the release video, the cover at /reels/<id>-cover.jpg');
+    ok(st.verseLink === '/verse/1-1-7', 'and the verse has its own room');
+    ok(/Maher al-Muaiqly/.test(await pg.evaluate(() => document.querySelector('#verse .n2-eyebrow').textContent)), 'the reciter is named');
     ok(st.glow === 1, 'still one glowing thing');
     await pg.evaluate(() => document.getElementById('today').scrollIntoView({ behavior: 'instant' })); await pg.waitForTimeout(1300);
     await pg.screenshot({ path: path.join(SHOTS, 'phone-14-today.png') });
