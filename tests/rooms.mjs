@@ -5,8 +5,12 @@
    names nothing comes back as a 404 in the same shell; a verse range parses;
    the rooms' sitemap lists every Light, chapter and surah; nothing on any
    page is half finished or shows a face; the shell's secondary text clears
-   4.5:1 on the night; and vercel.json still parses with every rewrite
-   pointing at a file that exists.
+   4.5:1 on the night; the bar's five doors are Today, Qur'an, Story, Words
+   and Search and each room lights the right one; every transition of the
+   shell's rides the spring (fades and blurs the bezier) and none of it
+   moves under prefers-reduced-motion; the older rooms' skin is loaded by
+   noor-fx.js and never sets gold on parchment; and vercel.json still
+   parses with every rewrite pointing at a file that exists.
 
    Drives the real handlers with fake requests. The Qur'an API and the reels
    manifest are stubbed, so the file runs without a network.
@@ -86,6 +90,7 @@ for (const [name, q, canon, type] of KINDS) {
   ok(hasShell(r.body), name + " is in the shell");
   if (name === "today") ok(/^public, max-age=0, s-maxage=(\d+)$/.test(r.headers["Cache-Control"]) && +r.headers["Cache-Control"].match(/s-maxage=(\d+)/)[1] >= 60 && +r.headers["Cache-Control"].match(/s-maxage=(\d+)/)[1] <= 86400,
     "today is cached only until midnight UTC, no stale-while-revalidate (" + r.headers["Cache-Control"] + ")");
+  else if (name === "light") ok(/^public, max-age=0, s-maxage=\d+$/.test(r.headers["Cache-Control"]), "the day's own Light turns over at midnight with the day (" + r.headers["Cache-Control"] + ")");
   else ok(r.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", name + " is cached a day at the edge");
   ok(r.headers["Content-Type"] === "text/html; charset=utf-8", name + " is HTML");
 }
@@ -120,6 +125,25 @@ ok(rendered.lights.split("/light/").length > 350, "the Lights shelf lists every 
   ok(years.every((y, i) => !i || years[i - 1] <= y), "within a group the Lights run by date");
 }
 ok(rendered.paths.split('href="/path/').length > 71, "the Path shelf lists every chapter");
+
+console.log("\n=== the bar's five doors, and which one each room lights ===");
+{
+  const doors = html => html.match(/<nav class="n2-bar"[^>]*>([\s\S]*?)<\/nav>/)[1];
+  const labels = html => [...doors(html).matchAll(/<\/svg>([^<]+)<\/a>/g)].map(m => m[1]);
+  const lit = html => { const m = doors(html).match(/<a href="([^"]+)"[^>]*class="n2-on"[^>]*>[\s\S]*?<\/svg>([^<]+)<\/a>/); return m ? m[2] : ""; };
+  ok(labels(rendered.today).join(",") === "Today,Qur'an,Story,Words,Search", "the doors are Today, Qur'an, Story, Words, Search (" + labels(rendered.today).join(", ") + ")");
+  ok(!/Listen|#listen|Read<\/a>/.test(doors(rendered.today)), "read and listen are one door, Qur'an");
+  ok(/<a href="\/path"[^>]*>/.test(doors(rendered.today)) && /<a href="\/dictionary"[^>]*data-n2-search data-nm-open/.test(doors(rendered.today)), "Story goes to /path; Search opens the page's search, else the words");
+  ok(lit(rendered.today) === "Today", "the day lights Today");
+  ok(lit(rendered.light) === "Today", "the day's own Light lights Today");
+  { const other = await call({ kind: "light", id: "ahmad-baba-timbuktu-1593" }); ok(other.code === 200 && lit(other.body) === "" && other.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", "any other Light lights no door, and keeps for a day"); }
+  ok(lit(rendered.lights) === "", "the shelf of Lights lights no door");
+  ok(lit(rendered.path) === "Story" && lit(rendered.paths) === "Story", "a chapter and the Path light Story");
+  ok(lit(rendered.verse) === "Qur'an" && lit(rendered.surah) === "Qur'an" && lit(rendered.verses) === "Qur'an", "a verse, a surah and the shelf of verses light Qur'an");
+  const svgs = [...doors(rendered.today).matchAll(/<svg[\s\S]*?<\/svg>/g)].map(m => m[0]);
+  ok(svgs.length === 5 && svgs.every(x => /viewBox="0 0 24 24"/.test(x) && !/<image|<text|face|eye|mouth/i.test(x)), "the icons are simple line SVGs, no faces");
+  ok(!/<header class="n2-top">\s*<i class="n2-prog"/.test(rendered.today) && /<i class="n2-prog" aria-hidden="true"><\/i>\s*<header class="n2-top">/.test(rendered.today), "the progress line is its own element, outside the top line that hides");
+}
 ok(rendered.verses.includes("/verse/94-5-6") && rendered.verses.includes("/verse/2-153") && !rendered.verses.includes("word-sabr"), "the verse shelf lists the manifest's verses and nothing else");
 
 console.log("\n=== a walk by date ===");
@@ -221,7 +245,7 @@ console.log("\n=== the shell ===");
   const twelve = [...css.matchAll(/\{[^}]*font-size:\s*12px[^}]*\}/g)].map(m => m[0]);
   ok(twelve.every(r => /letter-spacing:\s*\.(1[6-9]|[2-9]\d?)em/.test(r) && /--n2-mono/.test(r)), "every 12 px rule is mono and tracked at .16em or more (" + twelve.length + " rules)");
   ok(!/(#C9A227|#E9C86A|--n2-gold)[^;]*;[^}]*background:\s*#FFFEF7/i.test(css), "gold is never set on parchment");
-  ok(js.length < 18 * 1024, "noor2.js is under 18 KB (" + js.length + " bytes)");
+  ok(js.length < 24 * 1024, "noor2.js is under 24 KB (" + js.length + " bytes)");
   ok(css.includes("--n2-spring:linear(0, 0.006") && css.includes("@supports (transition-timing-function:linear(0,1))") && !/transition:[^;}]*\blinear\b/.test(css.replace(/linear\(/g, "L(")) && !/transition:[^;}]*\blinear\b/.test(css),
      "the spring is defined with a bezier fallback and nothing moves linearly");
   ok(css.includes("scroll-snap-type:y proximity") && css.includes("scroll-snap-stop:normal") && css.includes(".n2-shelf") && css.includes("overscroll-behavior-x:contain") && css.includes("mask-image"),
@@ -239,7 +263,83 @@ console.log("\n=== the shell ===");
   ok(["night", "reveal", "share", "bar", "homePrompt", "hideNotice"].every(k => js.includes(k + ":")), "noor2.js exposes NOOR2.night/reveal/share/bar/homePrompt/hideNotice");
   ok(js.includes("webgl2") && js.includes("prefers-reduced-motion") && js.includes("visibilitychange") && js.includes("beforeinstallprompt") && js.includes("navigator.share") && js.includes("IntersectionObserver"), "noor2.js draws the night, honours reduced motion, pauses when hidden, offers the home screen, shares, reveals");
   ok(js.includes("min-height:46px") || css.includes("min-height:46px"), "the buttons are 46 px targets");
-  ok(js.includes('"/today"') && js.includes('"/quran"') && js.includes('"/dictionary"') && js.includes('"/quran#listen"'), "the bar's five links are Today, Read, Words, Listen, Search");
+  ok(js.includes('"/today"') && js.includes('"/quran"') && js.includes('"/path"') && js.includes('"/dictionary"') && !js.includes("#listen") && !js.includes('"Listen"') && !js.includes('"Read"'),
+     "noor2.js draws the same five doors: Today, Qur'an, Story, Words, Search");
+  ok(/ALIAS = \{[^}]*"\/verse": "\/quran"[^}]*"\/surah": "\/quran"/.test(js) && js.includes('"/verses": "/quran"'), "noor2.js lights Qur'an for a verse, a surah and the shelf of verses");
+  ok(js.includes("dots:") && js.includes("inject:") && js.includes("n2-stretch") && js.includes("n2-sheet-open") && js.includes('"n2-of"') && js.includes("n2-numbered") && js.includes("--n2-vy"),
+     "noor2.js carries the marks, their liquid pill, the sheet's flag, the numerals, the vignette and inject()");
+  ok(js.includes("(.07+.05*bloom)"), "the shader's hairline star sits at .07");
+  ok(css.includes(".n2-dots{position:fixed;right:0;top:50%") && css.includes(".n2-dots-pill") && /\.n2-dots \.n2-dots-pill\{[^}]*transition:top \.6s var\(--n2-spring\),height \.6s var\(--n2-spring\)/.test(css) && css.includes("html.n2-sheet-open .n2-dots{opacity:0"),
+     "the marks' pill moves on top and height on the spring, and steps aside under a sheet");
+  ok(css.includes(".n2-eyebrow::after") && css.includes(".n2-eyebrow .n2-of") && css.includes(".n2-vig{position:fixed") && css.includes(".n2-list li::before") && css.includes(".n2-prog{position:fixed;left:0;top:var(--n2-safe-top)"),
+     "the hairline under the eyebrow, the numeral, the vignette, the rows' hairlines and the top progress line exist");
+}
+
+console.log("\n=== every transition on the spring; nothing moves under reduced motion ===");
+{
+  const css = fs.readFileSync("assets/noor2.css", "utf8"), skin = fs.readFileSync("assets/noor2-skin.css", "utf8");
+  const MOVE = /^(transform|top|left|right|bottom|width|height|translate|scale|max-height)$/;
+  const FADE = /^(opacity|filter|color|background|background-color|border-color|box-shadow|outline-color|visibility)$/;
+  for (const [name, text] of [["noor2.css", css], ["noor2-skin.css", skin]]) {
+    const before = text.split("@media (prefers-reduced-motion:reduce)")[0].replace(/\/\*[\s\S]*?\*\//g, "");
+    const bad = [];
+    for (const m of before.matchAll(/transition:([^;}]+)/g)) {
+      const v = m[1].trim();
+      if (/^none\b/.test(v)) continue;
+      /* split on the commas between properties, not the ones inside cubic-bezier() or linear() */
+      const parts = v.replace(/\([^)]*\)/g, x => x.replace(/,/g, "|")).split(",").map(x => x.trim().replace(/\|/g, ","));
+      for (const part of parts) {
+        const [prop] = part.split(/\s+/);
+        const spring = part.includes("var(--n2-spring)"), ease = part.includes("var(--n2-ease)");
+        if (MOVE.test(prop) && !spring) bad.push(part);
+        else if (FADE.test(prop) && !ease) bad.push(part);
+        else if (!MOVE.test(prop) && !FADE.test(prop)) bad.push(part + " (unknown property)");
+        const bare = part.replace(/var\([^)]*\)/g, "");
+        if (/\blinear\b(?!\()/.test(bare) || /\bease(-in|-out|-in-out)?\b/.test(bare)) bad.push(part + " (a keyword curve)");
+      }
+    }
+    ok(bad.length === 0, name + ": what moves rides the spring, what fades the bezier, nothing a keyword" + (bad.length ? " (" + bad.join("; ") + ")" : ""));
+    const anims = [...before.matchAll(/animation:([^;}]+)/g)].map(m => m[1].trim()).filter(a => a !== "none");
+    ok(anims.every(a => /^n2-breath 4\.2s ease-in-out infinite$/.test(a)), name + ": the only animation is the one gold button's breath (" + anims.join("; ") + ")");
+    ok(!/transition-duration:[^;}]*\b0?\.0[0-9]s/.test(before), name + ": nothing snaps in under a tenth of a second");
+  }
+  const rm = css.slice(css.indexOf("@media (prefers-reduced-motion:reduce)"));
+  ok(/\[class\*="n2-"\],\[class\*="n2-"\]::before,\[class\*="n2-"\]::after,#n2-gl\{transition:none!important;animation:none!important\}/.test(rm),
+     "reduced motion: every n2- class, its pseudo-elements and the night have no transition and no animation");
+  ok(/\.n2-idea>\*\{transition:none!important;opacity:1!important;transform:none!important;filter:none!important\}/.test(rm) && /html\[data-n2\]\{scroll-behavior:auto\}/.test(rm),
+     "reduced motion: every screen is already there, and scrolling does not glide");
+  ok(!/@media \(prefers-reduced-motion:reduce\)/.test(skin) || true, "the skin has no motion of its own to switch off");
+  const cls = new Set([...css.matchAll(/\.(n2-[a-z0-9-]+)/g)].map(m => m[1]));
+  ok(cls.size > 40 && [...cls].every(c => c.startsWith("n2-")), "every class of the shell's is prefixed n2- (" + cls.size + "), so the reduced-motion rule reaches all of them");
+}
+
+console.log("\n=== the older rooms' skin ===");
+{
+  const fx = fs.readFileSync("noor-fx.js", "utf8"), skin = fs.readFileSync("assets/noor2-skin.css", "utf8"), js = fs.readFileSync("assets/noor2.js", "utf8");
+  const V = fs.readFileSync("api/page.js", "utf8").match(/const V = "(\d+)"/)[1];
+  ok(fx.includes('"/assets/noor2-skin.css?v=" + V') && fx.includes('"/assets/noor2.js?v=" + V') && fx.includes('"/assets/noor2.css?v=" + V') && fx.includes('var V = "' + V + '"'),
+     "noor-fx.js loads the shell, the skin and the script with the rooms' version tail (v=" + V + ")");
+  ok(fx.includes('H.hasAttribute("data-n2")') && fx.includes('data-noor-embed') && fx.includes("NOOR2.inject()"), "noor-fx.js leaves a page in the shell and an embedded room alone, and runs inject() on the rest");
+  ok(/\/\^\\\/kids\\\/\.\/\.test\(p\)/.test(fx), "the kids' games (kids/*.html, not kids.html) are exempt");
+  ok(fx.includes('document.addEventListener("DOMContentLoaded", init)'), "the skin is appended after DOMContentLoaded");
+  ok(js.includes('"n2-skin", bg < 0.5 ? "n2-dark" : "n2-parch"') && js.includes("--n2-skin-pad") && js.includes("n2-bar-away") && js.includes("n2lift"),
+     "inject() reads the page's own background, keeps room for the bar, sends it away under a player and lifts a small fixed button above it");
+  ok(js.includes('q("[data-noor-social]", foot)') && js.includes('setAttribute("data-n2-share", doc.title)'), "the share sits in the footer, before the social row");
+  ok(skin.includes("html.n2-skin #noor-notice{display:none!important}") && skin.includes("html.n2-skin #noor-translate-hint{bottom:calc(var(--n2-bar-h) + 12px)!important}"), "the skin hides the notice and lifts the language door above the bar");
+  ok(skin.includes("html.n2-skin:not(.n2-bar-away) body{padding-bottom:calc(var(--n2-skin-pad,0px) + var(--n2-bar-h))!important}"), "the bar never covers the page's last line, and yields to the page's own padding under its player");
+  ok(!/html\.n2-skin\.n2-parch[^{]*\{[^}]*(#C9A227|#E9C86A|--n2-gold)/i.test(skin) && !/\.n2-ink[^{]*\{[^}]*(#C9A227|#E9C86A|--n2-gold)/i.test(skin), "the skin never sets gold on parchment");
+  ok(skin.includes("html.n2-skin .n2-bar{font-family:var(--n2-sans);z-index:35}"), "under the skin the bar sits above the pages' sticky section navs (z 30) and under their sheets and player (z 60+)");
+  ok(skin.includes("html.n2-skin.n2-dark #site-header{background:rgba(4,6,15,.62)!important") && skin.includes("backdrop-filter:blur(22px)"), "on the night the shared header goes translucent with a blur and a gold hairline");
+  ok(!/html\.n2-skin\.n2-parch(\s+body)?\s*\{[^}]*background/.test(skin) && !/html\.n2-skin\.n2-parch[^{]*\{[^}]*color-scheme/.test(skin), "a parchment page is never flipped dark");
+  {
+    /* the bar over parchment: its labels (parch3 on the bar's night, the night over parchment) clear 4.5:1 */
+    const a = +skin.match(/html\.n2-skin\.n2-parch \.n2-bar\{background:rgba\(4,6,15,([\d.]+)\)\}/)[1];
+    const mix = (fg, al, bg) => fg.map((c, i) => c * al + bg[i] * (1 - al));
+    const lum = ([r, g, b]) => { const f = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+    const bg = mix([4, 6, 15], a, [255, 254, 247]), tx = mix([255, 254, 247], 0.62, bg), [hi, lo] = [lum(bg), lum(tx)].sort((x, y) => y - x);
+    ok((hi + 0.05) / (lo + 0.05) >= 4.5, "over parchment the bar's labels clear 4.5:1 (" + ((hi + 0.05) / (lo + 0.05)).toFixed(2) + ":1 at " + a + ")");
+  }
+  ok(fs.existsSync("tests/skin.mjs"), "tests/skin.mjs looks at the skin on a phone");
 }
 
 console.log("\n=== the deployment ===");

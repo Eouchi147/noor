@@ -31,7 +31,7 @@ console.log('\nthe slots');
   const hours = S.SLOTS.map(s => s.at);
   ok(hours.every((h, i) => i === 0 || h >= hours[i - 1]), 'the list stays in clock order');
   ok(new Set(hours).size === hours.length, 'no two slots share an hour');
-  ok(S.REEL_SLOTS.join() === 'reelA,reelC,reelD,reelB,reelE', 'REEL_SLOTS names the five');
+  ok(S.REEL_SLOTS.join() === 'reelA,reelC,reelD,reelB,reelF,reelE', 'REEL_SLOTS names the six, in clock order');
   ok(S.reelHalf('reelA') === 'morning' && S.reelHalf('reelB') === 'evening',
      'each reel slot knows its half of the library');
   ok(S.reelHalf('dusk') === '', 'a slot that is not a reel says so');

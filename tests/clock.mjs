@@ -36,7 +36,10 @@ const CTX = {
   plan: { hijri: { text: '' }, day: {}, leads: [] },
   index: { words: [{ i: 1, t: 'Qalqalah', a: 'قلقلة', s: 'a bounce in the sound' }], path: [] },
   extras: { entry: { s: 'a bounce in the sound', l: '', cat: 'Tajwid', k: 'editorial' } },
-  dials: { polish: false, mode: 'auto', storeOk: true, stories: false }
+  /* cardsFeed: true pins the feed path this promise (the clock per network)
+     was written against; the story-only card of the shipped state is held in
+     tests/cards-stories.mjs, on the same clock */
+  dials: { polish: false, mode: 'auto', storeOk: true, stories: false, cardsFeed: true }
 };
 globalThis.fetch = async (url, opt) => {
   const u = String(url);
