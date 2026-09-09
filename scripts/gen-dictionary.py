@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
 # NOOR · The Encyclopedia of the Path
-# Builds /dictionary.html from build/dict-*.json through the room shell.
-# A reader who does not know a word must be able to type it, half spelled, in
-# any of its transliterations, and land on the meaning in one motion.
-import json, os, re, sys, glob, unicodedata
+# Builds /dictionary.html and the 523 word pages under /dictionary/ from
+# build/dict-*.json, both in the second cut's shell (assets/noor2.css and
+# assets/noor2.js, the same files api/page.js links): the night, one idea per
+# screen, the five doors under the thumb. A reader who does not know a word
+# must be able to type it, half spelled, in any of its transliterations, and
+# land on the meaning in one motion; a stranger who arrives from a reel must
+# meet the word, its Arabic and its meaning on the first screen, and nothing
+# else. Every fact on a page is the entry's own text: the Arabic, the term,
+# the spellings, the two definitions, the level of evidence, the neighbours
+# the editors named. Nothing is added to it here.
+import json, os, re, glob, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-sys.path.insert(0, HERE)
-from room import shell                    # noqa: E402
-from _dict_figs import fig_domains, fig_root, fig_isnad, fig_ahkam   # noqa: E402
 
 OUT = os.path.join(ROOT, "dictionary.html")
+SITE = "https://noorcodex.com"
+OG = SITE + "/assets/brand/og.png"
+V = "2"                                   # the shell's cache-buster; api/page.js carries the same
 CATS = [("aqidah", "Belief", "العَقِيدَة"), ("ibadah", "Worship", "العِبَادَة"),
         ("quran", "The Qur’an", "القُرْآن"), ("hadith", "Hadith", "الحَدِيث"),
         ("fiqh", "Law & life", "الفِقْه"), ("tazkiyah", "The heart", "التَّزْكِيَة"),
         ("tarikh", "History", "التَّارِيخ")]
 CATNAME = {c: n for c, n, _ in CATS}
+CATAR = {c: a for c, _, a in CATS}
 LEVELS = {"quran": ("Qur’an", "Stated directly in the Qur’an"),
           "sunnah": ("Sunnah", "Established in the authentic Sunnah"),
           "debated": ("Scholars differ", "The scholars read this one differently"),
@@ -25,6 +33,16 @@ LEVELS = {"quran": ("Qur’an", "Stated directly in the Qur’an"),
 
 def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def fold(s):
+    """Every spelling a reader might use, down to one shape: no case, no
+       apostrophes, no diacritics, no dashes. "Qadhar" == "qadar"."""
+    s = unicodedata.normalize("NFD", str(s or "").lower())
+    s = re.sub(r"[\u0300-\u036f]", "", s)
+    s = re.sub(r"[’'ʻʼ`]", "", s)
+    s = re.sub(r"[^a-z0-9\u0600-\u06ff]+", " ", s)
+    return s.strip()
 
 
 def load():
@@ -70,375 +88,314 @@ def load():
     return out
 
 
-def build():
-    D = load()
-    counts = {c: sum(1 for e in D if e["cat"] == c) for c, _, _ in CATS}
-    print("dictionary: %d entries · %s" % (len(D), " · ".join("%s %d" % (c, counts[c]) for c, _, _ in CATS)))
 
-    chips = "".join(
-        '<button type="button" class="cchip" data-cat="%s"><span>%s</span><i>%d</i></button>'
-        % (esc(c), esc(n), counts[c]) for c, n, _ in CATS)
-
-    letters = sorted({(e["term"][0].upper() if e["term"][:1].isalpha() else "#") for e in D})
-    rail = "".join('<button type="button" class="lbtn" data-l="%s">%s</button>' % (l, l) for l in letters)
-
-    main = []
-    main.append('<div class="wrapw">')
-    main.append(fig_domains(counts))
-
-    main.append('<div class="finder" id="finder">'
-                '<div class="fin-in">'
-                '<label class="fsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-                'stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/>'
-                '<path d="M20 20l-3.5-3.5"/></svg>'
-                '<input id="dq" type="search" autocomplete="off" spellcheck="false" '
-                'placeholder="Type a word: qadr, ihram, isnad, riba, taqwa" aria-label="Search the encyclopedia"/>'
-                '<button type="button" id="dclear" aria-label="Clear">×</button></label>'
-                '<p class="fcount" id="dcount">%d words</p></div>'
-                '<div class="cchips" id="cchips">'
-                '<button type="button" class="cchip on" data-cat="all"><span>All</span><i>%d</i></button>%s</div>'
-                '<div class="lrail" id="lrail">%s</div></div>' % (len(D), len(D), chips, rail))
-
-    main.append('<div class="dlist" id="dlist">')
-    cur = None
-    for e in D:
-        L = e["term"][0].upper() if e["term"][:1].isalpha() else "#"
-        if L != cur:
-            cur = L
-            main.append('<h2 class="dletter" id="L-%s">%s</h2>' % (L, L))
-        lvl = LEVELS[e["k"]]
-        also = " · ".join(e["also"][:6])
-        # A real <a>, not a button. The buttons were fine for a reader and
-        # invisible to a crawler, which is how 523 pages came to hang off a hub
-        # that never linked to them. The href is the page; data-go keeps the
-        # in-page jump for anyone who has the whole book open.
-        see = "".join('<a class="seelink" href="/dictionary/%s" data-go="%s">%s</a>' % (esc(s), esc(s), esc(s.replace("-", " ")))
-                      for s in e["see"])
-        main.append(
-            '<article class="dent" id="%s" data-cat="%s" data-term="%s" data-also="%s">'
-            '<button type="button" class="dhead" aria-expanded="false">'
-            '<span class="dt">%s</span>'
-            '<span class="dar notranslate" translate="no">%s</span>'
-            '<span class="dcat">%s</span>'
-            '<span class="evb %s" title="%s">%s</span>'
-            '<span class="dchev" aria-hidden="true"></span></button>'
-            '<p class="dshort">%s</p>'
-            '<div class="dbody"><div class="dbi"><p class="dlong">%s</p>%s%s'
-            '<p class="dpage"><a href="/dictionary/%s">Open %s on its own page &rarr;</a></p></div></div>'
-            '</article>'
-            % (esc(e["id"]), esc(e["cat"]), esc(e["term"].lower()), esc(" ".join(e["also"]).lower()),
-               esc(e["term"]), e.get("ar", ""), esc(CATNAME[e["cat"]]), esc(e["k"]), esc(lvl[1]), esc(lvl[0]),
-               esc(e["short"]), esc(e.get("long", "")),
-               ('<p class="dalso"><b>also written</b> %s</p>' % esc(also)) if also else "",
-               ('<div class="dsee"><b>see also</b>%s</div>' % see) if see else "",
-               esc(e["id"]), esc(e["term"])))
-    main.append('</div>')
-    main.append('<p class="dnone" id="dnone" hidden>Nothing under that spelling yet. Try fewer letters, or the '
-                'plain English word: this dictionary indexes every transliteration it knows, and it is still growing. '
-                '<a href="/feedback">Tell us what was missing</a> and it will be added.</p>')
-
-    main.append('<section class="plates"><h2 class="ph">How to read this book</h2>'
-                '<p class="ps">Three plates that make the rest of the encyclopedia easier to use.</p>')
-    main.append(fig_root())
-    main.append(fig_isnad())
-    main.append(fig_ahkam())
-    main.append('</section>')
-
-    main.append('<section class="wgo"><h2>Where to go from here</h2>'
-                '<p class="wgo-s">Every word here has a room behind it.</p><div class="wgo-g" data-mo-stagger>'
-                '<a class="wgo-c mo" href="/quran"><b>The Mushaf</b><span>The Qur’an itself, with recitation for every ayah.</span></a>'
-                '<a class="wgo-c mo" href="/madrasa"><b>The Classroom</b><span>The words in order, as a course rather than a list.</span></a>'
-                '<a class="wgo-c mo" href="/protection"><b>Protection &amp; the Light of Truth</b><span>Sihr, ruqya, the evil eye, and the myths around them.</span></a>'
-                '<a class="wgo-c mo" href="/arabic"><b>Learn Arabic</b><span>The letters, so the roots in this book start to open on their own.</span></a>'
-                '</div></section>')
-    main.append('</div>')
-
-    data = [{"i": e["id"], "t": e["term"], "a": e.get("ar", ""), "l": e["also"],
-             "c": e["cat"], "s": e["short"]} for e in D]
-    payload = ('<script id="dict-data" type="application/json">%s</script>'
-               % json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
-
-    jsonld = ('<script type="application/ld+json">' + json.dumps({
-        "@context": "https://schema.org", "@type": "DefinedTermSet",
-        "name": "The Encyclopedia of the Path",
-        "description": "A dictionary of Islamic terms and concepts, each one defined in plain language with its evidence named.",
-        "url": "https://noorcodex.com/dictionary",
-        "hasDefinedTerm": [{"@type": "DefinedTerm", "name": e["term"], "description": e["short"]} for e in D[:60]],
-    }, ensure_ascii=False) + "</script>")
-
-    html = shell(slug="dictionary", title="The Encyclopedia of the Path",
-                 desc=("A free encyclopedia of Islamic terms: %d words defined in plain language, each with its "
-                       "Arabic, its alternate spellings, its evidence named, and the room that covers it. Search "
-                       "any spelling." % len(D)),
-                 ar="المُعْجَم", kick="A Room of the Codex",
-                 h1="The Encyclopedia of the Path",
-                 lead=("Every word this library uses, defined plainly. Type any spelling you have seen, in any "
-                       "transliteration, and the meaning arrives with its evidence beside it. %d words, and it "
-                       "grows whenever a reader tells us one was missing." % len(D)),
-                 css=CSS, main="".join(main), jsonld=jsonld, extra_js=payload + JS,
-                 footline="Free forever, and it will never sell you a definition.")
-    open(OUT, "w", encoding="utf-8").write(html)
-    print("dictionary.html written · %d KB · %d entries · 4 plates" % (len(html) / 1024, len(D)))
-    n = build_pages(D)
-    print("dictionary/ written · %d word pages" % n)
-    r = retire_root_pages(D)
-    if r: print("root · %d old word page%s removed" % (r, "" if r == 1 else "s"))
-    return D
+# ---------------------------------------------------------------------------
+# THE SHELL
+#
+# The same frame api/page.js renders for a Light, a verse or a chapter, written
+# here in Python so a static page and a served room are one thing: the head a
+# crawler and a messaging app read, the top line, the main, the footer line,
+# the bar of five doors. Nothing of the shell's CSS is pasted: the two files
+# are linked with the version the rooms link, so a change to the shell reaches
+# the encyclopedia the same hour it reaches everything else.
+# ---------------------------------------------------------------------------
+BAR = [
+    ("Today", "/today", '<circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'),
+    ("Qur'an", "/quran", '<path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/>'),
+    ("Story", "/path", '<path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/>'),
+    ("Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'),
+    ("Search", "/dictionary", '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/>'),
+]
+SVG_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>'
+SVG_RIGHT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+SVG_FIND = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>'
+FOOT = ('<footer class="n2-foot">NOOR Codex of Light · free, no ads, no account · '
+        '<a href="/">the library</a> · <a href="/legal">legal</a></footer>')
 
 
-CSS = """
-.wrapw{max-width:60rem;margin:0 auto;padding:0 1rem}
-.fig{background:linear-gradient(170deg,#14100A,#1b2440);border:1px solid rgba(244,212,106,.22);border-radius:18px;padding:1.1rem;margin:1.4rem 0}
-.fig svg{width:100%;max-width:32rem;height:auto;display:block;margin:0 auto}
-.fig.figwide svg{max-width:38rem}
-.fig svg text{font-family:Inter,system-ui,sans-serif}
-.fig .cap{font-size:.74rem;color:rgba(255,254,247,.62);text-align:center;margin:.8rem 0 0;line-height:1.7}
-.fig .cap b{color:rgba(244,212,106,.85)}
-.fg{fill:#F4D46A;font-size:22px;font-weight:800}
-.fgar{fill:#F4D46A;font-size:26px;font-weight:700;font-family:Amiri,serif}
-.fl{fill:#FFFEF7;fill-opacity:.85;font-size:15px;font-weight:700}
-.fs{fill:#FFFEF7;fill-opacity:.5;font-size:12.5px;font-weight:500}
-.s1{fill:none;stroke:#E9C86A;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.s2{fill:none;stroke:#FFFEF7;stroke-opacity:.55;stroke-width:2;stroke-linecap:round}
-.s3{fill:none;stroke:#F4D46A;stroke-opacity:.32;stroke-width:1.6;stroke-linecap:round}
-.f1{fill:#F4D46A;fill-opacity:.16}
-.f2{fill:#F4D46A;fill-opacity:.85}
-.w0{fill:rgba(244,212,106,.85);stroke:#14100A;stroke-width:1.5}
-.w1{fill:rgba(244,212,106,.55);stroke:#14100A;stroke-width:1.5}
-.w2{fill:rgba(255,254,247,.42);stroke:#14100A;stroke-width:1.5}
-.w3{fill:rgba(244,212,106,.3);stroke:#14100A;stroke-width:1.5}
-.leg{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.45rem}
-.leg li{position:relative;padding-inline-start:1rem;font-size:.76rem;line-height:1.7;color:rgba(255,254,247,.66)}
-.leg li::before{content:"";position:absolute;inset-inline-start:0;top:.62rem;width:.36rem;height:.36rem;border-radius:50%;background:#E9C86A}
+def jsonld(obj):
+    return ('<script type="application/ld+json">%s</script>'
+            % json.dumps(obj, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c"))
 
-/* ---------- the finder: one motion from not knowing to knowing ---------- */
-.finder{position:sticky;top:3.5rem;z-index:32;background:rgba(255,254,247,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin:1.4rem -1rem 0;padding:.7rem 1rem .55rem;border-bottom:1px solid rgba(44,36,22,.09)}
-.fin-in{display:flex;align-items:center;gap:.7rem;max-width:60rem;margin:0 auto}
-.fsearch{flex:1 1 auto;display:flex;align-items:center;gap:.55rem;background:#fff;border:1px solid rgba(44,36,22,.16);border-radius:999px;padding:.5rem .85rem;transition:border-color .2s,box-shadow .2s}
-.fsearch:focus-within{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 4px rgba(201,162,39,.14)}
-.fsearch svg{width:1rem;height:1rem;color:rgba(44,36,22,.4);flex:none}
-.fsearch input{flex:1;border:0;outline:0;font:inherit;font-size:.92rem;color:#2C2416;background:none;min-width:0}
-.fsearch input::placeholder{color:rgba(44,36,22,.36)}
-.fsearch input::-webkit-search-cancel-button{display:none}
-#dclear{border:0;background:none;font:inherit;font-size:1.2rem;line-height:1;color:rgba(44,36,22,.35);cursor:pointer;padding:0 .1rem;opacity:0;pointer-events:none;transition:opacity .2s}
-#dclear.on{opacity:1;pointer-events:auto}
-#dclear:hover{color:#2C2416}
-.fcount{flex:0 0 auto;font-size:.7rem;font-weight:700;color:rgba(44,36,22,.45);margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
-.cchips{display:flex;gap:.35rem;overflow-x:auto;scrollbar-width:none;margin-top:.55rem;padding-bottom:.1rem}
-.cchips::-webkit-scrollbar{display:none}
-.cchip{flex:0 0 auto;display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.14);background:#fff;border-radius:999px;padding:.3rem .68rem;font:inherit;font-size:.72rem;font-weight:700;color:rgba(44,36,22,.6);cursor:pointer;transition:all .18s}
-.cchip i{font-style:normal;font-size:.62rem;font-weight:800;color:rgba(44,36,22,.35);font-variant-numeric:tabular-nums}
-.cchip:hover{border-color:rgba(201,162,39,.55);color:#2C2416}
-.cchip.on{background:linear-gradient(135deg,#C9A227,#E9C86A);border-color:transparent;color:#1A160F;box-shadow:0 2px 12px rgba(201,162,39,.3)}
-.cchip.on i{color:rgba(26,22,15,.55)}
-.lrail{display:flex;gap:.12rem;overflow-x:auto;scrollbar-width:none;margin-top:.45rem}
-.lrail::-webkit-scrollbar{display:none}
-.lbtn{flex:0 0 auto;border:0;background:none;font:inherit;font-size:.7rem;font-weight:800;color:rgba(44,36,22,.4);cursor:pointer;padding:.18rem .38rem;border-radius:6px;transition:color .15s,background .15s}
-.lbtn:hover{color:#2C2416;background:rgba(201,162,39,.14)}
-.lbtn[hidden]{display:none}
 
-/* ---------- the entries ---------- */
-.dlist{margin-top:1.3rem}
-.dletter{font-family:Amiri,serif;font-size:1.5rem;font-weight:700;color:#C9A227;margin:1.7rem 0 .5rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.28);scroll-margin-top:11rem}
-.dent{background:#fff;border:1px solid rgba(44,36,22,.11);border-radius:16px;margin-top:.5rem;overflow:hidden;transition:border-color .2s,box-shadow .2s;content-visibility:auto;contain-intrinsic-size:auto 118px;scroll-margin-top:11.5rem}
-.dent:hover{border-color:rgba(201,162,39,.5)}
-.dent.open{border-color:rgba(201,162,39,.65);box-shadow:0 6px 26px rgba(44,36,22,.08)}
-.dent.hit{border-color:rgba(201,162,39,.9);box-shadow:0 0 0 3px rgba(201,162,39,.18)}
-.dhead{width:100%;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;background:none;border:0;font:inherit;text-align:start;padding:.8rem .95rem .2rem;cursor:pointer}
-.dt{font-size:1rem;font-weight:800;color:#2C2416;letter-spacing:-.01em}
-.dar{font-family:Amiri,serif;font-size:1.15rem;color:#8a6d13;line-height:1.4}
-.dcat{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.4);border:1px solid rgba(44,36,22,.13);border-radius:999px;padding:.16rem .48rem}
-.dchev{margin-inline-start:auto;width:.5rem;height:.5rem;border-inline-end:2px solid rgba(44,36,22,.3);border-bottom:2px solid rgba(44,36,22,.3);transform:rotate(45deg);transition:transform .28s cubic-bezier(.22,1,.36,1);flex:none}
-.dent.open .dchev{transform:rotate(-135deg)}
-.dshort{font-size:.86rem;line-height:1.8;color:rgba(44,36,22,.8);margin:0;padding:0 .95rem .85rem}
-.dbody{height:0;overflow:hidden}
-.dbi{padding:0 .95rem 1rem;border-top:1px solid rgba(44,36,22,.07);margin-top:.1rem}
-.dlong{font-size:.85rem;line-height:1.85;color:rgba(44,36,22,.78);margin:.75rem 0 0}
-.dalso{font-size:.75rem;line-height:1.7;color:rgba(44,36,22,.5);margin:.6rem 0 0}
-.dalso b,.dsee b{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#8a6d13;margin-inline-end:.4rem}
-.dsee{margin-top:.6rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
-.seelink{border:1px solid rgba(201,162,39,.35);background:rgba(201,162,39,.09);color:#8a6d13;border-radius:999px;padding:.2rem .55rem;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;transition:background .16s}
-.seelink:hover{background:rgba(201,162,39,.22)}
-.evb{display:inline-flex;align-items:center;gap:.3rem;font-size:.56rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.2rem .48rem;border:1px solid}
-.evb.quran{color:#1d6b3f;border-color:rgba(29,107,63,.5);background:rgba(29,107,63,.11)}
-.evb.sunnah{color:#8a6d13;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.13)}
-.evb.debated{color:#6b4f92;border-color:rgba(107,79,146,.5);background:rgba(107,79,146,.1)}
-.evb.editorial{color:rgba(44,36,22,.55);border-color:rgba(44,36,22,.24);background:rgba(44,36,22,.04)}
-.dent[hidden]{display:none}
-.dpage{margin:.7rem 0 0;font-size:.78rem}.dpage a{font-weight:800;color:#8a6d13;text-decoration:none}.dpage a:hover{text-decoration:underline}
-a.seelink{display:inline-block;text-decoration:none}
-.dletter[hidden]{display:none}
-.dnone{font-size:.88rem;line-height:1.85;color:rgba(44,36,22,.6);background:#fff;border:1px dashed rgba(201,162,39,.45);border-radius:16px;padding:1.1rem 1.15rem;margin-top:1.2rem}
-.dnone a{color:#8a6d13;font-weight:700}
-.plates{margin-top:3rem;padding-top:1.6rem;border-top:1px solid rgba(44,36,22,.12)}
-.ph{font-size:1.15rem;font-weight:800;margin:0;color:#2C2416}
-.ps{font-size:.82rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.3rem 0 0}
-.wgo{max-width:60rem;margin:2.9rem auto 0;padding:1.75rem 0 .4rem;border-top:1px solid rgba(44,36,22,.12)}
-.wgo>h2{font-size:1.06rem;font-weight:800;margin:0;color:#2C2416}
-.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.35rem 0 0}
-.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem}
-@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}
-.wgo-c{display:block;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s,transform .18s,box-shadow .18s}
-.wgo-c:hover{border-color:rgba(201,162,39,.7);transform:translateY(-1px);box-shadow:0 5px 18px rgba(44,36,22,.07)}
-.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#2C2416}
-.wgo-c b::after{content:" \\2192";color:#C9A227}
-.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.68);margin-top:.28rem}
-@media (max-width:560px){.fin-in{gap:.5rem}.fcount{display:none}}
-@media print{.finder,.lrail,.cchips,.wgo{display:none!important}.dbody{height:auto!important}.dent{break-inside:avoid}}
-"""
+def go(href, label, gold=False):
+    """A door. The gold one is the one thing to press on its screen, and it
+       breathes; a screen never carries two."""
+    return '<a class="n2-btn%s" href="%s">%s %s</a>' % (" n2-gold n2-glow" if gold else "", esc(href), esc(label), SVG_RIGHT)
 
-JS = """<script>
+
+def share_btn(text, url):
+    return ('<button class="n2-btn" type="button" data-n2-share="%s" data-n2-url="%s">Share %s</button>'
+            % (esc(text), esc(url), SVG_SHARE))
+
+
+def shell(title, path, desc, body, mode="", active="", pill=None, ld=None, og_type="article",
+          scripts="", style="", tail=""):
+    """title is the page's own; ' · NOOR Codex of Light' is added. path is the
+       address under the site; the canonical is built from it, nothing else."""
+    canonical = SITE + path
+    doors = "".join(
+        '<a href="%s"%s%s><svg viewBox="0 0 24 24" aria-hidden="true">%s</svg>%s</a>'
+        % (href, " data-n2-search data-nm-open" if name == "Search" else "",
+           ' class="n2-on"' if href == active and name != "Search" else "", icon, esc(name))
+        for name, href, icon in BAR)
+    return (
+        '<!DOCTYPE html>\n<html lang="en" dir="ltr" data-n2="%s">\n<head>\n<meta charset="utf-8"/>\n'
+        '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>\n'
+        '<title>%s · NOOR Codex of Light</title>\n'
+        '<meta name="description" content="%s"/>\n'
+        '<link rel="canonical" href="%s"/>\n'
+        '<meta name="theme-color" content="#04060F"/>\n'
+        '<meta property="og:type" content="%s"/>\n'
+        '<meta property="og:site_name" content="NOOR Codex of Light"/>\n'
+        '<meta property="og:title" content="%s"/>\n'
+        '<meta property="og:description" content="%s"/>\n'
+        '<meta property="og:url" content="%s"/>\n'
+        '<meta property="og:image" content="%s"/>\n'
+        '<meta name="twitter:card" content="summary_large_image"/>\n'
+        '<meta name="twitter:title" content="%s"/>\n'
+        '<meta name="twitter:description" content="%s"/>\n'
+        '<meta name="twitter:image" content="%s"/>\n'
+        '<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>\n'
+        '<link rel="icon" href="/assets/brand/mark-32.png" sizes="32x32"/>\n'
+        '<link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>\n'
+        '<link rel="manifest" href="/manifest.webmanifest"/>\n'
+        '<link rel="preconnect" href="https://fonts.googleapis.com"/>\n'
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>\n'
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>\n'
+        '<link rel="stylesheet" href="/assets/noor2.css?v=%s"/>\n'
+        '<script src="/assets/noor2.js?v=%s" defer></script>\n'
+        '<script src="/noor-fx.js" defer></script>\n'
+        '%s%s%s'
+        '</head>\n<body>\n'
+        '<div class="n2-still"></div>\n<i class="n2-prog" aria-hidden="true"></i>\n'
+        '<header class="n2-top">\n'
+        '<a class="n2-brand" href="/"><span class="n2-ar" lang="ar" translate="no">نُور</span><span class="n2-en">Codex of Light</span></a>\n'
+        '%s</header>\n'
+        '<main class="n2-main">\n%s\n</main>\n'
+        '%s\n'
+        '<nav class="n2-bar" aria-label="Rooms"><i class="n2-pill-bg" aria-hidden="true"></i>%s</nav>\n'
+        '%s</body>\n</html>\n'
+    ) % (esc(mode), esc(title), esc(desc), esc(canonical), esc(og_type), esc(title), esc(desc), esc(canonical), OG,
+         esc(title), esc(desc), OG, V, V,
+         scripts, (jsonld(ld) + "\n") if ld else "", ("<style>%s</style>\n" % style) if style else "",
+         ('<a class="n2-pill" href="%s">%s</a>\n' % (esc(pill[0]), esc(pill[1]))) if pill else "",
+         body, FOOT, doors, tail)
+
+
+# ---------------------------------------------------------------------------
+# THE SHELF: the verses a word page may point at
+#
+# A word page offers a door to a verse only when the repository's own data
+# names the word: the label an editor wrote beside a reference in
+# tools/reels/verses.txt ("of the Qur'an, that which is healing and mercy"),
+# or the hook and caption of a rendered verse reel in reels/index.json when
+# that manifest is present. The match is the term itself, whole and as
+# written (apostrophe included, case aside): "Ba'th" does not become "bath",
+# so a verse about a cool bath is never offered as a verse about the
+# resurrection. Neither the id nor the alternate spellings are used: the id
+# is the term with its apostrophe lost, and "will", "say" and "eyes" are
+# spellings in this book, and every one of them is also an English word.
+# ---------------------------------------------------------------------------
+def shelf_verses():
+    rows, seen = [], set()
+
+    def add(ref, text):
+        m = re.match(r"^(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?$", ref or "")
+        if not m or ref in seen or not (text or "").strip():
+            return
+        seen.add(ref)
+        rows.append({"ref": ref, "id": m.group(1) + "-" + m.group(2) + (("-" + m.group(3)) if m.group(3) else ""),
+                     "text": re.sub(r"\s+", " ", text).strip()})
+
+    man = os.path.join(ROOT, "reels", "index.json")
+    if os.path.exists(man):
+        try:
+            for r in (json.load(open(man, encoding="utf-8")).get("cards") or []):
+                if not isinstance(r, dict) or r.get("kind") != "verse":
+                    continue
+                ref = re.sub(r"^(\d+)-", r"\1:", re.sub(r"^verse-", "", str(r.get("id", ""))))
+                add(ref, " ".join(str(r.get(k) or "") for k in ("hook", "caption")))
+        except Exception as e:
+            print("  ! reels/index.json not read: %s" % e)
+    txt = os.path.join(ROOT, "tools", "reels", "verses.txt")
+    if os.path.exists(txt):
+        for line in open(txt, encoding="utf-8"):
+            if "#" not in line:
+                continue
+            ref, label = line.split("#", 1)
+            add(ref.strip(), label)
+    return rows
+
+
+def verses_for(e, shelf, limit=6):
+    key = e["term"].lower().replace("’", "'").strip()
+    if len(key) < 3:
+        return []
+    out = []
+    for r in shelf:
+        hay = " " + re.sub(r"[^a-z0-9'\- ]+", " ", r["text"].lower().replace("’", "'")) + " "
+        if (" " + key + " ") in hay:
+            out.append(r)
+            if len(out) == limit:
+                break
+    return out
+
+
+# ---------------------------------------------------------------------------
+# THE HUB: /dictionary
+#
+# One screen of introduction with the field, then the words as rows grouped by
+# domain, then the rooms behind them. The old hub carried every long
+# definition and a megabyte of markup; the definitions live on the word pages
+# now, and the hub is the finder. The finder is a small script below: it
+# narrows the rows as the reader types, in any spelling the book knows, and
+# still answers #id, ?w=id and #q=word, which the daily posts and the other
+# rooms have always used. The whole library's search is one door away, in
+# the bar and beside the field, exactly as the home page wires it.
+# ---------------------------------------------------------------------------
+HUB_STYLE = (
+    ".dq{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 16px;border:1px solid var(--n2-line);"
+    "border-radius:999px;background:rgba(255,254,247,.06);margin:0 0 10px;transition:border-color .25s var(--n2-ease)}"
+    ".dq:focus-within{border-color:rgba(233,200,106,.4)}"
+    ".dq svg{width:18px;height:18px;stroke:var(--n2-goldhi);fill:none;stroke-width:2;stroke-linecap:round;flex:none}"
+    ".dq input{flex:1;min-width:0;border:0;outline:0;background:none;color:var(--n2-parch);font:500 16px/1.2 var(--n2-sans)}"
+    ".dq input::placeholder{color:var(--n2-parch3)}.dq input::-webkit-search-cancel-button{display:none}"
+    ".dq button{border:0;background:none;color:var(--n2-parch3);font:20px/1 var(--n2-sans);min-width:32px;min-height:32px;cursor:pointer}"
+    ".dq button[hidden]{display:none}"
+    ".n2-group[hidden]{display:none}.n2-list li.hit b{color:var(--n2-goldhi)}"
+    ".n2-h3 .n2-ar{font-family:var(--n2-ar);font-weight:400;color:var(--n2-goldhi);margin-left:6px}"
+    "@media (prefers-reduced-motion:reduce){.dq{transition:none}}"
+)
+
+HUB_JS = """<script>
 (function(){
   "use strict";
-  var raw = document.getElementById("dict-data");
-  var D = []; try { D = JSON.parse(raw.textContent); } catch(e){}
-  var list = document.getElementById("dlist");
-  var q = document.getElementById("dq"), clear = document.getElementById("dclear");
-  var count = document.getElementById("dcount"), none = document.getElementById("dnone");
-  var ents = {}, order = [];
-  [].forEach.call(list.querySelectorAll(".dent"), function(el){ ents[el.id] = el; order.push(el); });
-
-  /* fold every spelling a reader might use down to the same shape:
-     no case, no apostrophes, no diacritics, no dashes. "Qadhar" == "qadar". */
-  function fold(s){
-    return (s||"").toLowerCase()
-      .normalize("NFD").replace(/[\\u0300-\\u036f]/g,"")
-      .replace(/['\\u2019\\u02bb\\u02bc`]/g,"")
-      .replace(/[^a-z0-9\\u0600-\\u06ff ]+/g," ")
-      .replace(/\\s+/g," ").trim();
-  }
-  var IDX = D.map(function(e){
-    return { i:e.i, t:fold(e.t), a:e.a||"", l:(e.l||[]).map(fold), c:e.c, s:fold(e.s) };
-  });
-
-  function score(rec, needle){
-    if (rec.t === needle) return 100;
-    if (rec.l.indexOf(needle) >= 0) return 92;
-    if (rec.t.indexOf(needle) === 0) return 80;
-    for (var i=0;i<rec.l.length;i++) if (rec.l[i].indexOf(needle) === 0) return 72;
-    if (rec.a && rec.a.indexOf(needle) >= 0) return 70;
-    if (rec.t.indexOf(needle) >= 0) return 55;
-    for (var j=0;j<rec.l.length;j++) if (rec.l[j].indexOf(needle) >= 0) return 48;
-    if ((" "+rec.s).indexOf(" "+needle) >= 0) return 30;
-    if (rec.s.indexOf(needle) >= 0) return 14;
-    return 0;
-  }
-
-  var cat = "all", term = "", raf = 0;
+  var q=document.getElementById("dq"),clear=document.getElementById("dclear"),count=document.getElementById("dcount"),
+      none=document.getElementById("dnone"),site=document.getElementById("dsite");
+  if(!q)return;
+  function fold(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"")
+    .replace(/['\\u2019\\u02bb\\u02bc`]/g,"").replace(/[^a-z0-9\\u0600-\\u06ff ]+/g," ").replace(/\\s+/g," ").trim();}
+  var rows=[].map.call(document.querySelectorAll(".n2-list li[data-k]"),function(li){
+    var b=li.querySelector("b"),s=li.querySelector("small"),ar=li.querySelector(".n2-ar");
+    return {el:li,t:fold(b.firstChild.nodeValue),l:li.getAttribute("data-k").split("|"),a:ar?ar.textContent:"",s:fold(s?s.textContent:"")};});
+  var groups=[].slice.call(document.querySelectorAll(".n2-group")),total=rows.length,raf=0,byId={};
+  rows.forEach(function(r){byId[r.el.id]=r;});
+  function score(r,n){
+    if(r.t===n)return 100; if(r.l.indexOf(n)>=0)return 92; if(r.t.indexOf(n)===0)return 80;
+    for(var i=0;i<r.l.length;i++)if(r.l[i].indexOf(n)===0)return 72;
+    if(r.a&&r.a.indexOf(n)>=0)return 70; if(r.t.indexOf(n)>=0)return 55;
+    for(var j=0;j<r.l.length;j++)if(r.l[j].indexOf(n)>=0)return 48;
+    if((" "+r.s).indexOf(" "+n)>=0)return 30; if(r.s.indexOf(n)>=0)return 14; return 0;}
   function run(){
-    raf = 0;
-    var needle = fold(term), n = 0, best = null, bestScore = 0;
-    for (var i=0;i<IDX.length;i++){
-      var rec = IDX[i], el = ents[rec.i];
-      if (!el) continue;
-      var ok = (cat === "all" || rec.c === cat);
-      if (ok && needle) { var s = score(rec, needle); ok = s > 0;
-        if (s > bestScore) { bestScore = s; best = el; } }
-      el.hidden = !ok;
-      el.classList.remove("hit");
-      if (ok) n++;
-    }
-    /* a letter heading with nothing under it is noise */
-    var heads = list.querySelectorAll(".dletter");
-    for (var h=0; h<heads.length; h++){
-      var el2 = heads[h].nextElementSibling, any = false;
-      while (el2 && !el2.classList.contains("dletter")){
-        if (el2.classList.contains("dent") && !el2.hidden) { any = true; break; }
-        el2 = el2.nextElementSibling;
-      }
-      heads[h].hidden = !any;
-    }
-    count.textContent = n === D.length ? (D.length + " words") : (n + (n === 1 ? " word" : " words"));
-    none.hidden = n > 0;
-    clear.classList.toggle("on", !!term);
-    if (needle && best && bestScore >= 72) best.classList.add("hit");
-    syncRail();
-  }
-  function queue(){ if (!raf) raf = requestAnimationFrame(run); }
-
-  function syncRail(){
-    var have = {};
-    [].forEach.call(list.querySelectorAll(".dletter"), function(h){ if(!h.hidden) have[h.textContent.trim()] = 1; });
-    [].forEach.call(document.querySelectorAll(".lbtn"), function(b){ b.hidden = !have[b.dataset.l]; });
-  }
-
-  q.addEventListener("input", function(){ term = q.value; queue(); });
-  clear.addEventListener("click", function(){ q.value = ""; term = ""; q.focus(); run(); });
-  document.getElementById("cchips").addEventListener("click", function(e){
-    var b = e.target.closest(".cchip"); if (!b) return;
-    [].forEach.call(this.querySelectorAll(".cchip"), function(x){ x.classList.toggle("on", x === b); });
-    cat = b.dataset.cat; run();
-  });
-  document.getElementById("lrail").addEventListener("click", function(e){
-    var b = e.target.closest(".lbtn"); if (!b) return;
-    var h = document.getElementById("L-" + b.dataset.l);
-    if (h) h.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-
-  /* expand and collapse, measured rather than guessed, so it never jumps */
-  var G = window.gsap;
-  function toggle(el, force){
-    var open = force === undefined ? !el.classList.contains("open") : force;
-    var body = el.querySelector(".dbody"), inner = el.querySelector(".dbi");
-    el.classList.toggle("open", open);
-    el.querySelector(".dhead").setAttribute("aria-expanded", open ? "true" : "false");
-    var h = inner.getBoundingClientRect().height;
-    if (G) {
-      G.killTweensOf(body);
-      G.fromTo(body, { height: open ? 0 : h }, { height: open ? h : 0, duration: .42,
-        ease: open ? "power3.out" : "power2.inOut",
-        onComplete: function(){ if (open) body.style.height = "auto"; } });
-    } else { body.style.height = open ? "auto" : "0px"; }
-  }
-  list.addEventListener("click", function(e){
-    var go = e.target.closest(".seelink");
-    /* a see-also is a real link now, for the crawler; for a reader with the
-       whole book open, the in-page jump is still the better thing */
-    if (go) { e.preventDefault(); open(go.dataset.go); return; }
-    var head = e.target.closest(".dhead");
-    if (head) toggle(head.parentNode);
-  });
-
-  function open(id){
-    var el = ents[id]; if (!el) return;
-    if (el.hidden) { cat = "all"; term = ""; q.value = ""; run(); }
-    if (!el.classList.contains("open")) toggle(el, true);
-    [].forEach.call(list.querySelectorAll(".dent.hit"), function(x){ x.classList.remove("hit"); });
-    el.classList.add("hit");
-    el.scrollIntoView({ behavior: "smooth", block: "center" });
-    history.replaceState(null, "", "#" + id);
-  }
-  window.NOOR_DICT = { open: open, size: D.length };
-
-  /* arriving from a link, or from the search on any other page.
-     ?w=id is read as a fallback spelling of #id: a social caption mangles a
-     fragment into a hashtag, so the daily word post links with a query
-     instead, and both spellings land on the same entry. */
-  function fromHash(){
-    var h = (location.hash || "").replace(/^#/, "");
-    if (!h) { try { h = new URLSearchParams(location.search).get("w") || ""; } catch (e) {} }
-    if (!h) return;
-    if (ents[h]) { setTimeout(function(){ open(h); }, 120); return; }
-    var pre = h.match(/^q=(.*)$/);           /* /dictionary#q=qadr */
-    if (pre) { q.value = decodeURIComponent(pre[1]); term = q.value; run();
-               setTimeout(function(){ var b = list.querySelector(".dent.hit"); if (b) b.scrollIntoView({behavior:"smooth",block:"center"}); }, 160); }
-  }
-  addEventListener("hashchange", fromHash);
-  fromHash();
-
-  /* the keyboard, for people who live on it */
-  addEventListener("keydown", function(e){
-    if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); q.select(); }
-    else if (e.key === "Escape" && document.activeElement === q) { q.value=""; term=""; run(); q.blur(); }
-    else if (e.key === "Enter" && document.activeElement === q) {
-      var b = list.querySelector(".dent.hit") || list.querySelector(".dent:not([hidden])");
-      if (b) { if (!b.classList.contains("open")) toggle(b, true); b.scrollIntoView({behavior:"smooth",block:"center"}); }
-    }
-  });
+    raf=0; var n=fold(q.value),shown=0,best=null,bs=0;
+    rows.forEach(function(r){var ok=true;if(n){var s=score(r,n);ok=s>0;if(s>bs){bs=s;best=r;}}
+      r.el.hidden=!ok;r.el.classList.remove("hit");if(ok)shown++;});
+    groups.forEach(function(g){var k=g.querySelectorAll(".n2-list li:not([hidden])").length,c=g.querySelector(".n2-h3 .n2-g");
+      g.hidden=!k; if(c)c.textContent="\u00b7 "+(n?k:g.querySelectorAll(".n2-list li").length);});
+    count.textContent=shown===total?total+" words":shown+(shown===1?" word":" words");
+    none.hidden=shown>0; clear.hidden=!q.value;
+    if(n&&best&&bs>=72)best.el.classList.add("hit");}
+  function queue(){if(!raf)raf=requestAnimationFrame(run);}
+  q.addEventListener("input",queue);
+  clear.addEventListener("click",function(){q.value="";run();q.focus();});
+  q.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){q.value="";run();q.blur();}
+    else if(e.key==="Enter"){var b=document.querySelector(".n2-list li.hit a")||document.querySelector(".n2-list li:not([hidden]) a");if(b)location.href=b.href;}});
+  /* the whole library's search, beside the field; without the script a link */
+  if(site)site.addEventListener("click",function(e){if(window.NOOR_SEARCH&&NOOR_SEARCH.open){e.preventDefault();NOOR_SEARCH.open();}});
+  /* arriving from a link or a post: #id, ?w=id (a caption mangles a fragment
+     into a hashtag, so the daily word links with a query), or #q=spelling */
+  function land(){
+    var h=(location.hash||"").replace(/^#/,"");
+    if(!h){try{h=new URLSearchParams(location.search).get("w")||"";}catch(e){}}
+    if(!h)return;
+    var r=byId[h];
+    if(r){q.value="";run();r.el.classList.add("hit");setTimeout(function(){r.el.scrollIntoView({behavior:"smooth",block:"center"});},150);return;}
+    var m=h.match(/^q=(.*)$/);
+    if(m){try{q.value=decodeURIComponent(m[1]);}catch(e){q.value=m[1];}run();
+      setTimeout(function(){var b=document.querySelector(".n2-list li.hit");if(b)b.scrollIntoView({behavior:"smooth",block:"center"});},160);}}
+  addEventListener("hashchange",land); land();
 })();
 </script>"""
 
 
+def build():
+    D = load()
+    counts = {c: sum(1 for e in D if e["cat"] == c) for c, _, _ in CATS}
+    print("dictionary: %d entries · %s" % (len(D), " · ".join("%s %d" % (c, counts[c]) for c, _, _ in CATS)))
+    shelf = shelf_verses()
+
+    main = []
+    main.append(
+        '<section class="n2-idea n2-short n2-in" id="top">\n'
+        '<p class="n2-eyebrow">The words <small>· %d</small></p>\n'
+        '<h1 class="n2-h1">The Encyclopedia <span class="n2-g">of the Path</span></h1>\n'
+        '<p class="n2-p">Every word this library uses, defined plainly. Any spelling, in any transliteration, '
+        'finds the meaning, with its evidence beside it. %d words, and it grows whenever a reader says one was missing.</p>\n'
+        '<label class="dq">%s<input id="dq" type="search" autocomplete="off" spellcheck="false" enterkeyhint="go" '
+        'placeholder="Type a word: qadr, ihram, riba" aria-label="Search the encyclopedia"/>'
+        '<button type="button" id="dclear" aria-label="Clear" hidden>×</button></label>\n'
+        '<p class="n2-src" id="dcount">%d words</p>\n'
+        '<p class="n2-dim" id="dnone" hidden>Nothing under that spelling yet. Fewer letters, or the plain English word, '
+        'may find it: this book indexes every transliteration it knows, and it is still growing. '
+        '<a href="/feedback">Tell us what was missing</a> and it will be added.</p>\n'
+        '<div class="n2-row">%s<a class="n2-btn" href="/#search" id="dsite">The whole library %s</a></div>\n'
+        '</section>' % (len(D), len(D), SVG_FIND, len(D), go("#cat-" + CATS[0][0], "The words, by domain", True), SVG_FIND))
+
+    for c, name, ar in CATS:
+        rows = []
+        for e in D:
+            if e["cat"] != c:
+                continue
+            rows.append(
+                '<li id="%s" data-k="%s"><a href="/dictionary/%s"><b>%s<small>%s</small></b>'
+                '<span class="n2-ar" lang="ar" translate="no">%s</span></a></li>'
+                % (esc(e["id"]), esc("|".join(sorted({fold(a) for a in e["also"] if fold(a)}))), esc(e["id"]),
+                   esc(e["term"]), esc(e["short"]), esc(e.get("ar", ""))))
+        main.append(
+            '<section class="n2-idea n2-short n2-group" id="cat-%s">\n'
+            '<h2 class="n2-h3">%s <span class="n2-g">· %d</span> <span class="n2-ar" lang="ar" translate="no">%s</span></h2>\n'
+            '<ul class="n2-list">%s</ul>\n</section>' % (esc(c), esc(name), counts[c], ar, "".join(rows)))
+
+    main.append(
+        '<section class="n2-idea n2-short" id="rooms">\n'
+        '<p class="n2-eyebrow">Where to go from here</p>\n'
+        '<h2 class="n2-h2">Every word here has <span class="n2-g">a room behind it</span></h2>\n'
+        '<ul class="n2-rooms">\n'
+        '<li><a href="/quran"><b>The Mushaf</b><span>Recited, every ayah</span></a></li>\n'
+        '<li><a href="/madrasa"><b>The Classroom</b><span>The words in order</span></a></li>\n'
+        '<li><a href="/protection"><b>Protection &amp; the Light</b><span>Sihr, ruqya, the evil eye</span></a></li>\n'
+        '<li><a href="/arabic"><b>Learn Arabic</b><span>The letters, then the roots</span></a></li>\n'
+        '</ul>\n'
+        '<div class="n2-row">%s%s</div>\n</section>'
+        % (go("/today", "Today's word", True),
+           share_btn("The Encyclopedia of the Path: %d words of Islam, defined plainly · NOOR Codex of Light" % len(D), SITE + "/dictionary")))
+
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "NOOR Codex of Light", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": "The Encyclopedia of the Path", "item": SITE + "/dictionary"}]},
+        {"@type": "DefinedTermSet", "@id": SITE + "/dictionary#set",
+         "name": "The Encyclopedia of the Path", "url": SITE + "/dictionary", "inLanguage": "en",
+         "description": "A dictionary of Islamic terms and concepts, each one defined in plain language with its evidence named.",
+         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": e["term"], "description": e["short"],
+                             "url": SITE + "/dictionary/" + e["id"]} for e in D[:60]]}]}
+    desc = ("A free encyclopedia of Islamic terms: %d words defined in plain language, each with its "
+            "Arabic, its alternate spellings, its evidence named, and the room that covers it. Search "
+            "any spelling." % len(D))
+    html = shell(title="The Encyclopedia of the Path", path="/dictionary", desc=desc, body="\n".join(main),
+                 mode="reveal top bar share home", active="/dictionary", pill=("/today", "Today's word"),
+                 ld=ld, og_type="website", style=HUB_STYLE, tail=HUB_JS,
+                 scripts='<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>\n'
+                         '<script src="/assets/noor-search.js?v=78" defer></script>\n')
+    open(OUT, "w", encoding="utf-8").write(html)
+    print("dictionary.html written · %d KB · %d entries · %d domains" % (len(html.encode("utf-8")) / 1024, len(D), len(CATS)))
+    n, biggest = build_pages(D, shelf)
+    print("dictionary/ written · %d word pages · largest %s at %.1f KB" % (n, biggest[0], biggest[1] / 1024))
+    r = retire_root_pages(D)
+    if r: print("root · %d old word page%s removed" % (r, "" if r == 1 else "s"))
+    return D
 
 
 # ---------------------------------------------------------------------------
@@ -450,55 +407,36 @@ JS = """<script>
 # hajj and quran, had the same name as a room, and the room won: those two
 # had no page at all. And nothing linked to any of them except each other.
 #
-# So: they live here now, where their canonical always said they did; they are
-# richer than the hub's entry for the same word, so a crawler has a reason to
-# keep both; the hub links to every one; and each links to its neighbours and
-# to the rest of its domain, so the encyclopedia is a web and not a well.
+# So: they live here now, where their canonical always said they did; the hub
+# links to every one; and each links to its neighbours and to the rest of its
+# domain, so the encyclopedia is a web and not a well. Three screens: the
+# word (its Arabic, its name, its short meaning, its spellings), the meaning
+# (the long definition and the level of its evidence), and what sits beside
+# it (the neighbours the editors named, six more from the domain, the shelf's
+# verses that name the word, the doors to the domain and the book).
 # ---------------------------------------------------------------------------
 PAGE_DIR = os.path.join(ROOT, "dictionary")
 
-PAGE_CSS = """
-:root{--ink:#2C2416;--gold:#C9A227;--hi:#F4D46A}
-*{box-sizing:border-box}
-body{margin:0;background:#FFFEF7;color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.85}
-a{color:#8a6d13}
-.top{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid rgba(44,36,22,.08);font-size:.8rem}
-.top .mark{width:1.9rem;height:1.9rem;border-radius:999px;background:#14100A;color:var(--hi);display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;text-decoration:none;font-size:1rem}
-.top .home{font-weight:800;color:var(--ink);text-decoration:none}
-.top .enc{margin-inline-start:auto;text-decoration:none;font-weight:700}
-main{max-width:42rem;margin:0 auto;padding:2.2rem 1.1rem 3rem}
-.crumb{font-size:.72rem;color:rgba(44,36,22,.55);margin:0 0 .9rem}.crumb a{text-decoration:none;font-weight:700}
-.kick{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d13;font-weight:800;margin:0}
-h1{font-size:2rem;font-weight:800;letter-spacing:-.01em;margin:.3rem 0 0;display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
-h1 .ar{font-family:Amiri,serif;font-weight:400;font-size:1.9rem;color:var(--gold)}
-.badge{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid #6b6257;color:#6b6257;border-radius:999px;padding:.24rem .6rem;margin-top:.8rem}
-.lede{font-size:1.02rem;font-weight:600;margin:1rem 0 0}
-h2{font-size:.95rem;font-weight:800;margin:1.8rem 0 .4rem}
-p{font-size:.9rem;margin:.4rem 0;color:rgba(44,36,22,.85)}
-.alt{font-size:.78rem;color:rgba(44,36,22,.55);line-height:2}
-.see{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
-.see a{font-size:.76rem;font-weight:700;text-decoration:none;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.34rem .75rem;color:var(--ink);background:#fff}
-.see a:hover{border-color:var(--gold)}
-.see a .a{font-family:Amiri,serif;color:var(--gold);margin-inline-start:.35rem;font-weight:400}
-.deep{margin-top:2rem;background:linear-gradient(170deg,#14100A,#1b2440);border-radius:16px;padding:1.1rem 1.2rem;color:#FFFEF7}
-.deep p{color:rgba(255,254,247,.75);font-size:.82rem;margin:0 0 .7rem}
-.deep a{color:var(--hi);font-weight:800;text-decoration:none}
-footer{max-width:42rem;margin:0 auto;padding:0 1.1rem 2.4rem;font-size:.7rem;color:rgba(44,36,22,.45)}
-"""
+
+def row(x):
+    return ('<li><a href="/dictionary/%s"><b>%s<small>%s</small></b><span class="n2-ar" lang="ar" translate="no">%s</span></a></li>'
+            % (esc(x["id"]), esc(x["term"]), esc(x["short"]), esc(x.get("ar", ""))))
 
 
-def build_pages(D):
+def build_pages(D, shelf=()):
     os.makedirs(PAGE_DIR, exist_ok=True)
     by_id = {e["id"]: e for e in D}
     by_cat = {}
     for e in D:
         by_cat.setdefault(e["cat"], []).append(e)
-    n = 0
+    n, biggest = 0, ("", 0)
     for e in D:
         term, ar = e["term"], e.get("ar", "")
-        short, long_ = e["short"], e.get("long", "")
+        short, long_ = e["short"], e.get("long", "") or e["short"]
         lvl = LEVELS[e["k"]]
-        url = "https://noorcodex.com/dictionary/" + e["id"]
+        cat = CATNAME[e["cat"]]
+        path = "/dictionary/" + e["id"]
+        url = SITE + path
         # the neighbours the editors named, then six more from the same domain
         see = [by_id[s] for s in e["see"] if s in by_id]
         seen = {e["id"]} | {x["id"] for x in see}
@@ -506,69 +444,59 @@ def build_pages(D):
         # deterministic, spread across the domain rather than alphabetical neighbours
         step = max(1, len(sib) // 6) if sib else 1
         sib = [sib[(i * step) % len(sib)] for i in range(min(6, len(sib)))] if sib else []
-        chip = lambda x: '<a href="/dictionary/%s">%s%s</a>' % (esc(x["id"]), esc(x["term"]),
-               ('<span class="a" translate="no">%s</span>' % x["ar"]) if x.get("ar") else "")
+        verses = verses_for(e, shelf)
+
         ld = {"@context": "https://schema.org", "@graph": [
             {"@type": "DefinedTerm", "@id": url + "#term", "name": term,
-             "alternateName": e["also"][:8], "description": short, "url": url,
-             "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "NOOR Codex · The Words of the Path",
-                                  "url": "https://noorcodex.com/dictionary"}},
+             "alternateName": e["also"][:8], "description": short, "url": url, "inLanguage": "en",
+             "inDefinedTermSet": {"@type": "DefinedTermSet", "@id": SITE + "/dictionary#set",
+                                  "name": "NOOR Codex · The Words of the Path", "url": SITE + "/dictionary"}},
             {"@type": "WebPage", "@id": url, "url": url, "name": "%s · meaning in Islam" % term,
-             "description": short, "inLanguage": "en", "isPartOf": {"@id": "https://noorcodex.com/#site"},
+             "description": short, "inLanguage": "en", "image": OG,
+             "isPartOf": {"@id": SITE + "/#site"}, "mainEntity": {"@id": url + "#term"},
              "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [
-                 {"@type": "ListItem", "position": 1, "name": "NOOR", "item": "https://noorcodex.com/"},
-                 {"@type": "ListItem", "position": 2, "name": "The Encyclopedia of the Path", "item": "https://noorcodex.com/dictionary"},
+                 {"@type": "ListItem", "position": 1, "name": "NOOR", "item": SITE + "/"},
+                 {"@type": "ListItem", "position": 2, "name": "The Encyclopedia of the Path", "item": SITE + "/dictionary"},
                  {"@type": "ListItem", "position": 3, "name": term, "item": url}]}}]}
-        html = (
-            '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8"/>\n'
-            '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>\n'
-            '<title>%s · meaning in Islam · NOOR Codex of Light</title>\n'
-            '<meta name="description" content="%s"/>\n'
-            '<link rel="canonical" href="%s"/>\n'
-            '<meta property="og:title" content="%s · meaning in Islam"/>\n'
-            '<meta property="og:description" content="%s"/>\n'
-            '<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>\n'
-            '<meta property="og:url" content="%s"/>\n'
-            '<meta name="theme-color" content="#14100A"/>\n'
-            '<link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>\n'
-            '<link rel="preconnect" href="https://fonts.googleapis.com"/>\n'
-            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>\n'
-            '<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>\n'
-            '<script type="application/ld+json">%s</script>\n'
-            '<style>%s</style>\n'
-            '<script src="/noor-fx.js" defer></script>\n'
-            '</head>\n<body>\n'
-            '<nav class="top">\n<a class="mark" href="/" aria-label="NOOR Codex of Light">ن</a>\n'
-            '<a class="home" href="/">NOOR Codex of Light</a>\n'
-            '<a class="enc" href="/dictionary">The Encyclopedia &rarr;</a>\n</nav>\n'
-            '<main>\n'
-            '<p class="crumb"><a href="/">NOOR</a> &rsaquo; <a href="/dictionary">The Encyclopedia of the Path</a> &rsaquo; <a href="/dictionary#cat-%s">%s</a></p>\n'
-            '<p class="kick">A word of the Path</p>\n'
-            '<h1>%s <span class="ar" translate="no">%s</span></h1>\n'
-            '<span class="badge" title="%s">%s</span>\n'
-            '<p class="lede">%s</p>\n'
-            '<h2>What does %s mean in Islam?</h2>\n<p>%s</p>\n'
-            '%s'
-            '%s'
-            '%s'
-            '<div class="deep">\n<p>This entry lives inside a free encyclopedia of %d words of the Path, each with its meaning, its Arabic, its evidence, and its neighbours. No ads, no account, no tracking.</p>\n'
-            '<a href="/dictionary#%s">Open %s in the full encyclopedia &rarr;</a>\n</div>\n'
-            '</main>\n'
-            '<footer>NOOR Codex of Light · free forever, no ads, no trackers · <a href="/">noorcodex.com</a></footer>\n'
-            '</body>\n</html>\n'
-        ) % (
-            esc(term), esc(short), url, esc(term), esc(short), url,
-            json.dumps(ld, ensure_ascii=False), PAGE_CSS,
-            esc(e["cat"]), esc(CATNAME[e["cat"]]),
-            esc(term), ar, esc(lvl[1]), esc(lvl[0]), esc(short),
-            esc(term), esc(long_) if long_ else esc(short),
-            ('<h2>Also written</h2><p class="alt">%s</p>\n' % esc(" · ".join(e["also"]))) if e["also"] else "",
-            ('<h2>Words that sit beside it</h2><div class="see">%s</div>\n' % "".join(chip(x) for x in see)) if see else "",
-            ('<h2>More from %s</h2><div class="see">%s</div>\n' % (esc(CATNAME[e["cat"]]), "".join(chip(x) for x in sib))) if sib else "",
-            len(D), esc(e["id"]), esc(term))
+
+        body = [
+            '<section class="n2-idea" id="word">',
+            '<p class="n2-eyebrow">The word <small>· %s</small></p>' % esc(cat),
+            ('<p class="n2-word-ar notranslate" lang="ar" translate="no">%s</p>' % ar) if ar else "",
+            '<h1 class="n2-h1"><span class="n2-g">%s</span></h1>' % esc(term),
+            '<p class="n2-meaning">%s</p>' % esc(short),
+            ('<p class="n2-src">Also written · %s</p>' % esc(" · ".join(e["also"]))) if e["also"] else "",
+            '<div class="n2-row">%s%s</div>' % (
+                go("#meaning", "The meaning", True),
+                share_btn("%s, %s: %s · NOOR Codex of Light" % (term, ar, short) if ar else "%s: %s · NOOR Codex of Light" % (term, short), url)),
+            '</section>',
+            '<section class="n2-idea" id="meaning">',
+            '<p class="n2-eyebrow">The meaning</p>',
+            '<h2 class="n2-h3">What %s means in Islam</h2>' % esc(term),
+            '<p class="n2-p">%s</p>' % esc(long_),
+            '<p class="n2-src">Evidence · %s · %s</p>' % (esc(lvl[0]), esc(lvl[1])),
+            '<div class="n2-row">%s</div>' % go("#beside", "Read beside it", True),
+            '</section>',
+            '<section class="n2-idea n2-short" id="beside">',
+            '<p class="n2-eyebrow">Read beside it</p>',
+            ('<p class="n2-eyebrow">Words that sit beside it</p><ul class="n2-list">%s</ul>' % "".join(row(x) for x in see)) if see else "",
+            ('<p class="n2-eyebrow">More from %s</p><ul class="n2-list">%s</ul>' % (esc(cat), "".join(row(x) for x in sib))) if sib else "",
+            ('<p class="n2-eyebrow">Verses on the shelf that name it</p><ul class="n2-list">%s</ul>' % "".join(
+                '<li><a href="/verse/%s"><span class="n2-num">%s</span><b>%s</b></a></li>' % (esc(v["id"]), esc(v["ref"]), esc(v["text"]))
+                for v in verses)) if verses else "",
+            '<div class="n2-row">%s%s</div>' % (
+                go("/dictionary#cat-" + e["cat"], "All %d words of %s" % (len(by_cat[e["cat"]]), cat)),
+                go("/dictionary#" + e["id"], "The whole encyclopedia")),
+            '</section>',
+        ]
+        html = shell(title="%s · meaning in Islam" % term, path=path, desc=short, body="\n".join(b for b in body if b),
+                     mode="", active="/dictionary", pill=("/dictionary", "The words"), ld=ld)
+        size = len(html.encode("utf-8"))
+        if size > biggest[1]:
+            biggest = (e["id"], size)
         open(os.path.join(PAGE_DIR, e["id"] + ".html"), "w", encoding="utf-8").write(html)
         n += 1
-    return n
+    return n, biggest
 
 
 def retire_root_pages(D):
