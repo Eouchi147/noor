@@ -35,10 +35,13 @@ const realFetch = globalThis.fetch;
 /* the offline scaffolding: enough for composeSlot('word') to build without a
    network, so the test is about the retry and not about the library */
 const CTX = {
+  /* cardsFeed: true pins the feed-era behaviour these promises are about;
+     with the dial off (the shipped state since 9 September 2026) a card is a
+     story only, which tests/cards-stories.mjs holds */
   plan: { hijri: { text: '' }, day: {}, leads: [] },
   index: { words: [{ i: 1, t: 'Qalqalah', a: 'قلقلة', s: 'a bounce in the sound' }], path: [] },
   extras: { entry: { s: 'a bounce in the sound', l: '', cat: 'Tajwid', k: 'editorial' } },
-  dials: { polish: false, mode: 'auto', storeOk: true }
+  dials: { polish: false, mode: 'auto', storeOk: true, cardsFeed: true }
 };
 
 let sent = [];           /* every network call the senders actually made */

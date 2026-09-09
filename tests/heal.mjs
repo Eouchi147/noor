@@ -30,10 +30,13 @@ const realFetch = globalThis.fetch;
 let sent = [], igFails = null, cardOk = true;
 
 const CTX = {
+  /* cardsFeed: true pins the feed-era behaviour these promises are about;
+     with the dial off (the shipped state since 9 September 2026) a card is a
+     story only, which tests/cards-stories.mjs holds */
   plan: { hijri: { text: '' }, day: {}, leads: [] },
   index: { words: [{ i: 1, t: 'Qalqalah', a: 'قلقلة', s: 'a bounce in the sound' }], path: [] },
   extras: { entry: { s: 'a bounce in the sound', l: '', cat: 'Tajwid', k: 'editorial' } },
-  dials: { polish: false, mode: 'auto', storeOk: true, stories: false }
+  dials: { polish: false, mode: 'auto', storeOk: true, stories: false, cardsFeed: true }
 };
 
 globalThis.fetch = async (url, opt) => {

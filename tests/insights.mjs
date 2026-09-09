@@ -56,17 +56,17 @@ globalThis.fetch = async (url, opt) => {
     /* a reel is a video node: only the video names, and only under video_insights */
     const names = mv[2].split(',');
     if (names.some(n => !FBV_OK.has(n))) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
-    return J({ data: names.map(name => ({ name, values: [{ value: name === 'total_video_impressions_unique' ? 300 : 500 }] })) });
+    return J({ data: names.map(name => ({ name, values: [{ value: name === 'post_total_media_view_unique' ? 300 : (name === 'blue_reels_play_count' ? 500 : 4200) }] })) });
   }
   const m = u.match(/\/v21\.0\/([^/]+)\/insights\?metric=(.+)$/);
   if (m) {
     const id = m[1], metrics = m[2];
     if (/^\d+$/.test(id) || id.startsWith('vid')) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
     if (id.startsWith('fb')) {
-      /* Meta today: the names the changelog promised are refused, four others are taken */
+      /* Meta today: the retired names are refused, the four that stand are taken */
       const names = metrics.split(',');
       if (names.some(n => !FB_OK.has(n))) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
-      return J({ data: names.map(name => ({ name, values: [{ value: name === 'post_media_view_unique' ? 55 : 80 }] })) });
+      return J({ data: names.map(name => ({ name, values: [{ value: name === 'post_total_media_view_unique' ? 55 : 80 }] })) });
     }
     if (igMode === 'noperm') return J({ error: { message: '(#10) Application does not have permission for this action', code: 10 } }, 400);
     if (igMode === 'refuse:' + id) return J({ error: { message: 'Unsupported get request. Object with ID does not exist', code: 100, error_subcode: 33 } }, 400);
@@ -76,8 +76,11 @@ globalThis.fetch = async (url, opt) => {
   return J({ error: { message: 'unexpected ' + u } }, 400);
 };
 
-const FB_OK = new Set(['post_media_view_unique', 'post_media_view', 'post_clicks', 'post_reactions_like_total']);
-const FBV_OK = new Set(['total_video_impressions_unique', 'total_video_views']);
+/* Meta on 9 September 2026: post_impressions went on 15 November 2025 and
+   post_impressions_unique on 15 June 2026 (see the top of api/_insights.js);
+   these are the names that stand, and a reel answers only to its own */
+const FB_OK = new Set(['post_total_media_view_unique', 'post_media_view', 'post_clicks', 'post_reactions_like_total']);
+const FBV_OK = new Set(['post_total_media_view_unique', 'blue_reels_play_count', 'post_video_avg_time_watched']);
 const INS = await import('../api/_insights.js');
 
 /* ---------- fixed records: fourteen days, a kind per slot, an id per network ---------- */
@@ -112,6 +115,10 @@ console.log('\ncollecting the records');
   ok(dusk0 && !dusk0.media.instagram && dusk0.media.facebook, 'a network that refused carries no id and is not asked');
   ok(INS.kindOf({ slot: 'reelE', title: 'a hook that is not on the shelf', date: dates[3] }, MANIFEST).startsWith('reel:'), 'a hook off the shelf still gets a reel kind from the rota');
   ok(INS.kindOf({ slot: 'reelE', title: 'x' }, null) === 'reel:reel', 'and with no shelf at all it is simply a reel');
+  /* a card sent as a story only (social.cardsFeed off) carries the story's id, which answers under no post edge */
+  const so = { ...records[dates[1] + '#word'], results: { facebook: { ok: true, id: 'FBSTORY', storyOnly: true, story: { ok: true, id: 'FBSTORY' } }, instagram: { ok: true, id: 'IGSTORY', storyOnly: true, story: { ok: true } }, phone: { ok: true, at: NOW, hand: true } } };
+  const posts2 = await INS.collect(14, { ...opts, readSlot: async (d, s) => (d + '#' + s === dates[1] + '#word') ? so : records[d + '#' + s] || null });
+  ok(posts2.length === 14 * 9 - 1 && !posts2.some(p => p.slot === 'word' && p.date === dates[1]), 'a story-only card is not read as a post: a story answers under no post edge');
 }
 
 console.log('\nthe arithmetic');
@@ -258,7 +265,7 @@ console.log('\nFacebook and YouTube');
   const f = await INS.fetchFacebook('fb_1', { now: NOW });
   const probes = calls.filter(u => /\/fb_1\/insights\?metric=[a-z_]+$/.test(u)).length;
   ok(probes === INS.FB_CANDIDATES.length, 'the first Facebook read asks Meta about every candidate metric, one at a time: ' + probes);
-  ok(f.reach === 55 && f.views === 80 && f.likes === 80 && f.clicks === 80 && f.metrics === 'post_media_view_unique,post_media_view,post_clicks,post_reactions_like_total',
+  ok(f.reach === 55 && f.views === 80 && f.likes === 80 && f.clicks === 80 && f.metrics === 'post_total_media_view_unique,post_media_view,post_clicks,post_reactions_like_total',
      'and reads with exactly the names Meta accepted, unique media views as reach, media views as views: ' + f.metrics);
   const learned = JSON.parse(store.get(INS.K_FBSET));
   ok(learned && learned.set.length === 4, 'the accepted set is remembered');
@@ -272,8 +279,8 @@ console.log('\nFacebook and YouTube');
   store.delete(INS.K_FBVSET); calls = [];
   const v = await INS.fetchFacebook('1753567922516397', { now: NOW });
   ok(calls.every(u => /video_insights/.test(u)) && !calls.some(u => /\/insights\?/.test(u)), 'a video id (no underscore) is asked under video_insights and never under a post\'s edge');
-  ok(v.reach === 300 && v.views === 500 && v.metrics === 'total_video_impressions_unique,total_video_views', 'and reads unique impressions as reach, views as views: ' + v.metrics);
-  ok(JSON.parse(store.get(INS.K_FBVSET)).set.length === 2 && JSON.parse(store.get(INS.K_FBSET)).set.length === 0, 'the video set is remembered on its own key, and does not touch the post set');
+  ok(v.reach === 300 && v.views === 500 && v.metrics === 'post_total_media_view_unique,blue_reels_play_count,post_video_avg_time_watched', 'and reads unique media views as reach, reel plays as views: ' + v.metrics);
+  ok(JSON.parse(store.get(INS.K_FBVSET)).set.length === 3 && JSON.parse(store.get(INS.K_FBSET)).set.length === 0, 'the video set is remembered on its own key, and does not touch the post set');
   store.set(INS.K_FBSET, JSON.stringify({ at: NOW, set: [] }));
   calls = [];
   await INS.fetchFacebook('fb_4', { now: new Date(Date.parse(NOW) + 2 * 3600000).toISOString() });

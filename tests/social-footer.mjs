@@ -66,9 +66,10 @@ const rooms = fs.readdirSync('.').filter(f => f.endsWith('.html'))
   .filter(f => /<footer[\s>]/.test(fs.readFileSync(f, 'utf8')));
 const indexes = fs.readdirSync('.', { withFileTypes: true }).filter(d => d.isDirectory())
   .map(d => path.join(d.name, 'index.html')).filter(p => fs.existsSync(p));
-/* the front page has no <footer> element: its footer is the About band that
-   carries footer.note, and the row belongs directly under that line */
-const PAGES = [...rooms, ...indexes, 'index.html'];
+/* the front page's footer carries footer.note (once the About band, now the
+   second cut's <footer>), and the row belongs directly under that line; it
+   is listed once whichever shape it takes */
+const PAGES = [...new Set([...rooms, ...indexes, 'index.html'])];
 
 const br = await chromium.launch();
 const pg = await br.newPage({ viewport: { width: 390, height: 844 } });
@@ -127,7 +128,7 @@ for (const p of PAGES) {
   if (m.sw > m.cw) bad.scroll.push(p + ' (' + m.sw + '>' + m.cw + ')');
 }
 const say = (k, m) => ok(bad[k].length === 0, m + (bad[k].length ? ' → ' + bad[k].slice(0, 5).join(', ') : ''));
-ok(PAGES.length === 62, PAGES.length + ' pages carry a footer: ' + rooms.length +
+ok(PAGES.length === 62, PAGES.length + ' pages carry a footer: ' + rooms.filter(f => f !== 'index.html').length +
    ' rooms, ' + indexes.length + ' language indexes, and the front page');
 say('once', 'the row is drawn exactly once on every page');
 say('five', 'six links on every page');

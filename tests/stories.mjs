@@ -208,7 +208,9 @@ console.log('\nthrough sendSlot: the record first, then the stories');
   const CTX = { plan: { hijri: { text: '' }, day: {}, leads: [] },
     index: { words: [{ i: 1, t: 'Qalqalah', a: 'قلقلة', s: 'a bounce in the sound' }], path: [] },
     extras: { entry: { s: 'a bounce in the sound', l: '', cat: 'Tajwid', k: 'editorial' } },
-    dials: { polish: false, mode: 'auto', storeOk: true, stories: true } };
+    /* cardsFeed on: the feed-era order this promise is about; a story-only
+       card (the shipped state) is held in tests/cards-stories.mjs */
+    dials: { polish: false, mode: 'auto', storeOk: true, stories: true, cardsFeed: true } };
   const r = await SOC.sendSlot('noorcodex.com', '2026-09-08', 'word', CTX);
   ok(r.ok && r.state === 'sent', 'the word slot is sent');
   const firstRecord = order.indexOf('record'), firstStory = order.findIndex(o => o.endsWith('story') || o === 'fb-story-photo');
