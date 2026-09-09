@@ -810,7 +810,7 @@ export async function addStories(results, post, D, left) {
        tried, and the record says so rather than the function being killed */
     if (typeof left === "function" && left() < STORY_RESERVE_MS) {
       r.story = { ok: false, skipped: "no time left in this run" }; any = true; continue; }
-    try { r.story = await STORY[ch](post); }
+    try { r.story = await STORY[ch](post.video ? { ...post, video: await freshVideoUrl(post.video) } : post); }
     catch (e) { r.story = { ok: false, error: String(e && e.message || e).slice(0, 120) }; }
     any = true;
   }
@@ -1232,8 +1232,32 @@ async function sendWithin(ch, shaped, post, left) {
   finally { clearTimeout(timer); }
 }
 
+/* ---------------------------------------------------------------------------
+   the file, at the moment it is handed over
+
+   The shelf lives on GitHub Releases now. A release download URL is stable
+   for years and answers with a 302 to a signed copy that lives for minutes,
+   and Meta's fetchers do not reliably follow a redirect. So the URL a
+   network is given is the signed one, resolved here, for this network, this
+   second; the manifest keeps the stable one. Anything else (the site's own
+   /reels/ path, a Blob URL) is handed over as it is. Pinterest and YouTube
+   fetch the bytes themselves through fetch(), which follows redirects.
+--------------------------------------------------------------------------- */
+const RELEASE_URL = /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\//;
+export async function freshVideoUrl(url, fetcher) {
+  if (!RELEASE_URL.test(String(url || ""))) return url;
+  const f = fetcher || fetch;
+  try {
+    const r = await f(url, { method: "HEAD", redirect: "manual" });
+    const loc = r && r.headers && typeof r.headers.get === "function" ? r.headers.get("location") : null;
+    if (loc && /^https:\/\//.test(loc)) return loc;
+  } catch { }
+  return url;
+}
+
 async function sendOne(ch, shaped, post, left) {
   const p = { ...post, caption: shaped.text };
+  if (p.video) p.video = await freshVideoUrl(p.video);
   if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
     return { ok: false, err: "no time left in this run for the video pin; retried next hour", error: "no time left in this run for the video pin; retried next hour" };
   if (ch === "facebook")  return await (p.video ? postFacebookReel(p) : postFacebook(p));

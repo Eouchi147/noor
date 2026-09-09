@@ -176,21 +176,64 @@ export async function planDay(dateStr, opts = {}) {
 --------------------------------------------------------------------------- */
 const ROTA = {
   /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week. Five reels a
-     day; the day's card (light) keeps its two halves, morning and evening,
-     the other kinds go anywhere. Across a week: 11 verses, 7 words, 7 of the
-     99 Names, 5 Did you knows, 3 day's cards, 2 du'as of the Path, and This
-     day on its own date. The Codex reel, the brand's own, was retired: it
-     praised the house and taught nothing, and a Name or a du'a is worth
-     more to a stranger than a stat. */
-  morning:   ["verse", "verse", "know", "verse", "name", "verse", "know"],
+     day. Across a week: 11 verses, 9 words, 6 of the 99 Names, 6 Did you
+     knows, 2 day's cards (one in the morning, one in the evening, so both
+     halves of that shelf are walked), 1 du'a of the Path, and This day on
+     its own date. The weights follow the wells: 300 verses and 523 words
+     carry a year without a repeat; the 99 Names and the 18 du'as come round,
+     which is what Names and du'as are for. The Codex reel, the brand's own,
+     was retired on 9 September 2026: it praised the house and taught
+     nothing. */
+  morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
   noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-  afternoon: ["name", "word", "word", "name", "verse", "know", "name"],
-  evening:   ["word", "dua", "light", "know", "light", "name", "light"],
+  afternoon: ["name", "word", "know", "name", "verse", "know", "word"],
+  evening:   ["word", "light", "know", "word", "verse", "name", "word"],
   night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"]
 };
 /* the order the shelf is searched when the kind the rota wants has nothing
    rendered yet (a shelf mid-render, a kind not yet made) */
 const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
+
+/* ---------------------------------------------------------------------------
+   the walk, counted by slot and not by day
+
+   pick() steps by calendar day, which is right for one word or one chapter a
+   day and wrong for a kind that has two slots on a Monday: both slots asked
+   the same day for the same kind and got the same card, and over six months
+   a third of the reels went out twice in one day while half the shelf was
+   never shown. Here the step is the running count of that kind's slots since
+   the epoch, so every slot of a kind is a new step of one walk that visits
+   the whole shelf before it comes round. Adding cards to a kind reshuffles
+   its walk (the stride is chosen against the length), which is the price of
+   a stateless rota and a fair one: a new shelf is a new walk.
+--------------------------------------------------------------------------- */
+const HALVES = ["morning", "noon", "afternoon", "evening", "night"];
+const REEL_EPOCH = Date.UTC(2026, 8, 6);          /* Sunday 6 September 2026 */
+
+export function reelStep(kind, dateStr, half) {
+  const t = Date.parse(String(dateStr) + "T00:00:00Z");
+  if (!isFinite(t)) return 0;
+  const day = Math.floor((t - REEL_EPOCH) / 86400000);
+  const week = Math.floor(day / 7), dow = ((day % 7) + 7) % 7;
+  const hi = HALVES.indexOf(half);
+  let perWeek = 0, before = 0;
+  for (let d = 0; d < 7; d++) for (let h = 0; h < HALVES.length; h++) {
+    if ((ROTA[HALVES[h]] || [])[d] !== kind) continue;
+    perWeek++;
+    if (d < dow || (d === dow && h < hi)) before++;
+  }
+  return week * perWeek + before;
+}
+
+function pickStep(list, step, salt) {
+  if (!list || !list.length) return null;
+  const n = list.length;
+  if (n === 1) return list[0];
+  let stride = (hash32(salt + "|stride") % (n - 1)) + 1;
+  while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
+  const off = hash32(salt + "|offset") % n;
+  return list[(((step * stride + off) % n) + n) % n];
+}
 
 export function chooseReel(cards, dateStr, half, hijri) {
   const all = (cards || []).filter(c => c && c.id);
@@ -212,7 +255,13 @@ export function chooseReel(cards, dateStr, half, hijri) {
        Sunday evening are different steps of one walk, not two walks that
        can land on the same card in the same week. */
     const list = all.filter(c => kindOf(c) === kind && (!c.slot || c.slot === half || kind !== "light"));
-    if (list.length) return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
+    if (list.length) {
+      /* the kind the rota asked for walks by slot count; a stand-in kind (the
+         shelf mid-render) and the day's card, which has one slot a half a
+         week and cannot meet itself, walk by the day as before */
+      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half), "reel:" + kind);
+      return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
+    }
   }
   /* the shelf holds only the old day's cards, filed as morning and evening,
      and a new half (noon, afternoon, night) asked: rather than post nothing,
@@ -435,9 +484,12 @@ export async function slotExtras(base, date, index, slot, hijri) {
   if (half) {
     const man = await grab(base + "/reels/index.json");
     const c = chooseReel(man && Array.isArray(man.cards) ? man.cards : [], date, half, hijri || null);
+    /* the row carries the video's own URL once the shelf is on the Blob
+       store; an older manifest has none, and the file is on the site */
+    const isUrl = v => typeof v === "string" && /^https:\/\//.test(v);
     if (c) out.reel = { ...c,
-      video: base + "/reels/" + c.id + ".mp4",
-      cover: base + "/reels/" + c.id + "-cover.jpg" };
+      video: isUrl(c.video) ? c.video : base + "/reels/" + c.id + ".mp4",
+      cover: isUrl(c.cover) ? c.cover : base + "/reels/" + c.id + "-cover.jpg" };
     return out;
   }
   if (!slot || slot === "dusk") {
