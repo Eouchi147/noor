@@ -1,3 +1,10 @@
+# What never leaves for the deployment. The audit of 9 September 2026 found
+# these on the server and referenced by nothing a reader can open: old text
+# corpora, a duplicate study folder, an empty locales tree, translation
+# scratch, retired data scripts, the motion libraries no page loads, and nine
+# pictures nothing links to. Each was checked against every HTML, JS, CSS and
+# JSON file in the repository before it was listed here. The tests, the
+# notes and the audit trail stay in the repository and out of the build.
 NOOR-HANDOFF.md
 PROGRESS.md
 CHRONOLOGY.md
@@ -10,3 +17,33 @@ specs
 *.bundle
 *.zip
 *.md
+
+# dead weight, unreferenced (audit of 9 September 2026). Every entry is
+# anchored to the root with a leading slash: a bare `text/` would also
+# ignore i18n/text/, which the site reads.
+/text/
+/study 2/
+/locales/
+/i18n/text/qa.json
+/i18n/retranslate.json
+/i18n/text/_esparts/
+/i18n/text/_frparts/
+/quran-study.js
+/nodes.js
+/unseen-data.js
+/nodes-a.js
+/nodes-b.js
+/assets/noor-motion-boot.js
+/assets/noor-motion.js
+/assets/gsap.min.js
+/assets/ScrollTrigger.min.js
+/assets/DrawSVGPlugin.min.js
+/assets/images/sirat.jpg
+/assets/images/arsh.jpg
+/assets/images/sea-split.jpg
+/assets/images/hamza-seal.jpg
+/assets/images/hira-new.jpg
+/assets/images/hira.jpg
+/assets/images/ark.jpg
+/assets/images/kaaba.jpg
+/assets/images/kaaba-night.jpg

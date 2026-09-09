@@ -304,6 +304,7 @@ result.
 | `nl:brief` | The day in three sentences | `_nightshift.js` |
 | `nl:shift` | What the last night shift actually did, and what it cost | `_nightshift.js` |
 | `nsoc:ins:<net>:<id>` | What one post did, as the network last answered it | `_insights.js` |
+| `nsoc:slot:<date>#<slot>` | One slot's record: per network `{ ok, id, error }`; a card since 9 September 2026 carries `{ story, ok, storyOnly }` per Meta network (stories only, `social.cardsFeed` off); `results.phone` is what the owner shared by hand from the console's Reels room, a note and never a network | `social.js` |
 | `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
 | `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
 
@@ -339,6 +340,8 @@ stripped from everything public.
 | `/api/marketing` | admin | The writing room |
 | `/api/house` | admin | The whole house in one call: `?action=steward` reads every record and answers with findings, each with the one call that would fix it; `?action=flow` draws the funnel from posts to gifts. Reads only. |
 | `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate |
+| `/api/reel` | yes | `?id=<reel id>`: the reel's bytes, streamed from the store as `video/mp4` with ranges, so a phone can share the file and a network that refuses the store's URL has one that answers plainly |
+| `/api/podcast` | yes | `/podcast.xml` (rewrite): the verse reels as a podcast feed, RSS 2.0 with the itunes namespace, cached a day |
 | `/api/beacon`, `/api/visitors` | yes (write) | Anonymous counters |
 | `/api/warm` | cron | The nightly breath |
 | `/api/license`, `/api/guardians`, `/api/sponsor-checkout` | none | **Retired sponsor program.** Referenced nowhere. Safe to delete when you are sure. |

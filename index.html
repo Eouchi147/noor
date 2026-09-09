@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-n2="night reveal top share bar">
 <head>
 <meta charset="UTF-8"/>
 <meta name="p:domain_verify" content="17eb9db029c0cbfec69a5f1244d9cfaf"/>
 <meta name="google-site-verification" content="0aRMbafl6BEzL8hntO8Hq-S8-6TWjq7IgLWVpYNLZ34"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="description" content="NOOR · Codex of Light. An illuminated chronological library of Islamic history: creation, the prophets, the Seerah, and the end of time. Qur'an with tilawah, authentic Hadith, classical sources."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
-<meta name="theme-color" content="#14100A"/>
+<meta name="theme-color" content="#04060F"/>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
@@ -25,497 +25,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="NOOR"/>
 <title>NOOR · نُور | Codex of Light</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/tw.css?v=49"/>
-<script src="nodes-index.js?v=101" defer></script>
-<script src="noor-fx.js" defer></script>
-<script src="noor-guide-data.js" defer></script>
-<script src="noor-guide.js" defer></script>
-<script src="sponsor.js" defer></script>
-<script src="noor-ink.js" defer></script>
-<style>
-/* ============ NOOR base ============ */
-:root{--parchment:#FFFEF7;--ink:#2C2416;--gold:#C9A227;--gold-hi:#E9C86A;--sage:#8BA888;--lapis:#1E3A8A;--deep:#14100A}
-html{scroll-behavior:smooth}
-body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
-.font-amiri{font-family:Amiri,serif}
-::selection{background:rgba(201,162,39,.28)}
-
-/* progress */
-#progress{position:fixed;top:0;left:0;height:2.5px;width:0%;z-index:70;background:linear-gradient(90deg,#C9A227,#E9C86A 60%,#8BA888);box-shadow:0 0 10px rgba(201,162,39,.55)}
-
-/* header */
-#site-header{transition:box-shadow .3s,background .3s}
-#site-header.scrolled{box-shadow:0 6px 24px rgba(26,22,15,.08)}
-.logo-seal{transition:transform .5s cubic-bezier(.22,1,.36,1)}
-a:hover .logo-seal{transform:rotate(12deg)}
-
-/* ============ HERO v2 · lapis night ============ */
-#hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#04060F 0%,#080D22 34%,#101530 58%,#232038 76%,#4A3D26 100%);isolation:isolate}
-#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-.aurora{position:absolute;top:-34%;left:-25%;width:150%;height:150%;-webkit-mask-image:linear-gradient(180deg,#000 0 62%,transparent 92%);mask-image:linear-gradient(180deg,#000 0 62%,transparent 92%);z-index:1;pointer-events:none;background:radial-gradient(55% 42% at 30% 55%,rgba(30,58,138,.4),transparent 70%),radial-gradient(45% 38% at 68% 40%,rgba(124,58,237,.20),transparent 70%),radial-gradient(38% 30% at 52% 68%,rgba(201,162,39,.13),transparent 70%);animation:auroraDrift 26s ease-in-out infinite alternate;will-change:transform}
-@keyframes auroraDrift{from{transform:translate3d(-2.5%,0,0) scale(1)}to{transform:translate3d(2.5%,3%,0) scale(1.06)}}
-/* ---- v6 hero: The Rose of Light (Kun Fayakun) ---- */
-.milky{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 34% at 50% 30%,rgba(126,148,222,.10),transparent 68%)}
-.crown{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(190vw,1900px);height:56%;z-index:1;pointer-events:none;background:radial-gradient(60% 100% at 50% 0%,rgba(126,148,222,.16),rgba(90,110,190,.07) 46%,transparent 78%);-webkit-mask-image:linear-gradient(180deg,#000 0 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 0 40%,transparent 100%)}
-@media(min-width:1024px){.crown{height:64%}}
-.rays-wheel{position:absolute;top:38%;left:50%;width:min(150vw,124vh,1180px);aspect-ratio:1;margin-inline-start:calc(min(150vw,124vh,1180px) / -2);margin-top:calc(min(150vw,124vh,1180px) / -2);z-index:2;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 9%,rgba(233,200,106,.045) 11.5%,transparent 14% 21.5%,rgba(233,200,106,.045) 24%,transparent 26.5% 34%,rgba(233,200,106,.045) 36.5%,transparent 39% 46.5%,rgba(233,200,106,.045) 49%,transparent 51.5% 59%,rgba(233,200,106,.045) 61.5%,transparent 64% 71.5%,rgba(233,200,106,.045) 74%,transparent 76.5% 84%,rgba(233,200,106,.045) 86.5%,transparent 89% 100%);mix-blend-mode:screen;animation:wheelSpin 140s linear infinite;will-change:transform;display:none}
-@keyframes wheelSpin{to{transform:rotate(360deg)}}
-.ghost-pos{position:absolute;inset:0 0 12% 0;z-index:1;pointer-events:none;display:grid;place-items:center}
-.ghost-noor{grid-area:1/1;font-family:Amiri,serif;font-size:min(46vw,52vh,430px);line-height:1;color:rgba(233,200,106,.045);text-shadow:0 0 90px rgba(233,200,106,.06);user-select:none}
-.ghost-noor.glow{color:transparent;text-shadow:none;background:linear-gradient(115deg,transparent 30%,rgba(244,227,161,.16) 50%,transparent 70%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;animation:ghostSweep 11s ease-in-out infinite}
-@keyframes ghostSweep{0%,100%{background-position:130% 0;opacity:.4}50%{background-position:-30% 0;opacity:1}}
-.geo-pos{position:absolute;top:38%;left:50%;width:min(86vw,64vh,560px);aspect-ratio:1;margin-inline-start:calc(min(86vw,64vh,560px)/-2);margin-top:calc(min(86vw,64vh,560px)/-2);z-index:2;pointer-events:none}
-#geo{position:absolute;inset:0}
-.geo-halo{position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(233,200,106,.14) 0%,rgba(233,200,106,.05) 34%,transparent 62%);animation:haloBreath 12s ease-in-out infinite alternate;will-change:transform,opacity}
-@keyframes haloBreath{from{transform:scale(.97);opacity:.8}to{transform:scale(1.05);opacity:1}}
-.geo-spin{position:absolute;inset:0;animation:geoSpin 260s linear infinite;will-change:transform}
-.geo-spin.rev{animation:geoSpinRev 190s linear infinite}
-@keyframes geoSpin{to{transform:rotate(360deg)}}
-@keyframes geoSpinRev{to{transform:rotate(-360deg)}}
-.geo-spin>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-#geo .gp{fill:none;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 2s cubic-bezier(.4,0,.2,1);transition-delay:calc(var(--pd,0)*var(--geo-sp,1s))}
-.path-seal.drawn #geo .gp{stroke-dashoffset:0}
-#geo .gpt{opacity:0;transition:opacity 1.6s ease;transition-delay:calc(2.4*var(--geo-sp,1s))}
-.path-seal.drawn #geo .gpt{opacity:.5}
-#geo .gpf{opacity:0;transition:opacity 1.4s ease;transition-delay:calc(2.7*var(--geo-sp,1s))}
-.path-seal.drawn #geo .gpf{opacity:1}
-#geo-core{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.crescent{width:26%;height:26%;margin-bottom:54%;pointer-events:none;animation:moonFloat 12s ease-in-out infinite alternate;will-change:transform;filter:drop-shadow(0 0 26px rgba(244,227,161,.4));opacity:0;transition:opacity 1.6s ease .9s;transform:translate3d(0,0,0)}
-.path-seal.drawn .crescent{opacity:1}
-@keyframes moonFloat{from{transform:translate3d(0,0,0) rotate(-13deg) scale(1)}to{transform:translate3d(0,7px,0) rotate(-10deg) scale(1.02)}}
-.kun-seed{position:absolute;top:38%;left:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#FFFDF2;box-shadow:0 0 18px 6px rgba(244,227,161,.85),0 0 60px 24px rgba(201,162,39,.4);z-index:3;opacity:0;pointer-events:none}
-.path-seal.drawn .kun-seed{animation:kunBloom 1.15s cubic-bezier(.22,1,.36,1) forwards}
-@keyframes kunBloom{0%{opacity:0;transform:scale(.2)}18%{opacity:1}100%{opacity:0;transform:scale(30)}}
-.mist{position:absolute;left:-6%;right:-6%;bottom:8%;height:22%;z-index:3;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(126,148,222,.07) 45%,transparent);animation:mistDrift 38s ease-in-out infinite alternate;will-change:transform}
-@keyframes mistDrift{from{transform:translate3d(-2%,0,0)}to{transform:translate3d(2%,0,0)}}
-@media(min-width:1024px){.rays-wheel{display:block}}
-/* short laptop windows (1280x695 and friends): let the scene breathe */
-@media(min-width:768px) and (max-height:820px){
-  .hero-content{padding-top:5.5rem;padding-bottom:3.5rem}
-  .geo-pos{top:41%}.rays-wheel{top:41%}.kun-seed{top:41%}
-  .ghost-pos{inset:0 0 18% 0}
-}
-@media(max-width:767px){.geo-pos{width:min(92vw,420px);margin-inline-start:calc(min(92vw,420px)/-2);margin-top:calc(min(92vw,420px)/-2);top:36%}:root{--geo-sp:.55s}.geo-halo{inset:-12%}}
-.dune{position:absolute;left:-4%;right:-4%;bottom:-2px;z-index:3;pointer-events:none;will-change:transform}
-.dune svg{display:block;width:100%;height:auto}
-.hero-fade{position:absolute;inset:auto 0 0 0;height:30%;z-index:4;background:linear-gradient(180deg,transparent,var(--parchment));pointer-events:none}
-.hero-content{position:relative;z-index:5}
-.shimmer-gold{background:linear-gradient(100deg,#8a7020 8%,#C9A227 26%,#F4E3A1 42%,#C9A227 58%,#8a7020 92%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5.5s linear infinite}
-@keyframes shimmer{to{background-position:-220% center}}
-.hero-kicker{letter-spacing:.06em;text-shadow:0 0 26px rgba(233,200,106,.4),0 1px 10px rgba(4,6,15,.7)}
-.hero-sub{text-shadow:0 1px 14px rgba(4,6,15,.85)}
-#codex-count{background:linear-gradient(180deg,rgba(44,36,22,.045),rgba(44,36,22,0));border-bottom:1px solid rgba(44,36,22,.06)}
-#codex-count #hero-stats{scrollbar-width:none;-ms-overflow-style:none}
-#codex-count #hero-stats::-webkit-scrollbar{display:none}
-.hero-stat{flex:none;display:flex;align-items:baseline;justify-content:center;gap:.4rem;background:rgba(255,254,247,.75);border:1px solid rgba(201,162,39,.28);white-space:nowrap;min-width:0}
-.hero-stat .v{font-variant-numeric:tabular-nums;line-height:1}
-@media(max-width:639px){.hero-stat{flex-direction:column;align-items:center;gap:.1rem;padding:.5rem .3rem}.hero-stat div:last-child{white-space:normal;text-align:center;line-height:1.25}}
-.btn-gold{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 6px 22px rgba(201,162,39,.35);transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,162,39,.45)}
-.btn-ghost{border:1px solid rgba(255,254,247,.28);color:#FFFEF7;transition:background .25s,transform .25s}
-.btn-ghost:hover{background:rgba(255,254,247,.1);transform:translateY(-2px)}
-.scroll-cue{animation:cue 2.1s ease-in-out infinite;opacity:.65}
-@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
-
-/* ornament divider */
-.ornament{display:flex;align-items:center;gap:14px;justify-content:center;color:rgba(201,162,39,.85)}
-.ornament::before,.ornament::after{content:"";height:1px;flex:0 1 180px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5))}
-.ornament::after{background:linear-gradient(90deg,rgba(201,162,39,.5),transparent)}
-
-/* ============ reveals ============ */
-.reveal{opacity:0;transform:translateY(22px) scale(.985);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms)}
-.reveal.visible{opacity:1;transform:none}
-
-/* ============ books ============ */
-.book-card{position:relative;overflow:hidden;background:#fff;border:1px solid rgba(44,36,22,.08);border-radius:16px;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,border-color .3s}
-.book-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(44,36,22,.1);border-color:rgba(201,162,39,.4)}
-.book-card .corner{position:absolute;top:0;inset-inline-end:0;width:52px;height:52px;background:radial-gradient(circle at top right,rgba(201,162,39,.18),transparent 70%)}
-.book-num{font-variant-numeric:tabular-nums;color:rgba(201,162,39,.9)}
-
-/* ============ period gates ============ */
-.gate{position:relative;overflow:hidden;border-radius:20px;color:#FFFEF7;padding:26px 24px;isolation:isolate}
-.gate .g-ar{text-shadow:0 2px 18px rgba(0,0,0,.35)}
-.gate::after{content:"";position:absolute;inset:10px;border:1px solid rgba(255,254,247,.16);border-radius:14px;pointer-events:none}
-.gate-bidaya{background:radial-gradient(120% 130% at 18% 0%,rgba(233,200,106,.34),transparent 52%),linear-gradient(140deg,#2C2416,#4A3A1E 60%,#2C2416)}
-.gate-qisas{background:radial-gradient(120% 130% at 82% 0%,rgba(139,168,136,.4),transparent 55%),linear-gradient(140deg,#1F241C,#2C3A28 60%,#1F241C)}
-.gate-seerah{background:radial-gradient(120% 140% at 50% -10%,rgba(96,132,214,.35),transparent 55%),linear-gradient(140deg,#141B2E,#1E3A8A 130%)}
-.gate-nihaya{background:radial-gradient(1.4px 1.4px at 12% 30%,rgba(255,253,242,.8),transparent 55%),radial-gradient(1.2px 1.2px at 34% 14%,rgba(255,253,242,.7),transparent 55%),radial-gradient(1.6px 1.6px at 58% 38%,rgba(255,253,242,.62),transparent 55%),radial-gradient(1.2px 1.2px at 78% 18%,rgba(255,253,242,.75),transparent 55%),radial-gradient(1.5px 1.5px at 92% 44%,rgba(255,253,242,.55),transparent 55%),radial-gradient(130% 150% at 50% -18%,rgba(124,58,237,.3),transparent 58%),linear-gradient(150deg,#0B0912,#1A1030 70%,#0B0912)}
-.gate-jahiliyyah{background:radial-gradient(120% 130% at 30% 0%,rgba(146,64,14,.4),transparent 55%),radial-gradient(90% 90% at 80% 100%,rgba(120,113,108,.25),transparent 60%),linear-gradient(140deg,#1C1917,#292019 60%,#1C1917)}
-.gate-khulafa{background:radial-gradient(120% 130% at 70% 0%,rgba(5,150,105,.28),transparent 55%),radial-gradient(90% 110% at 15% 20%,rgba(201,162,39,.22),transparent 55%),linear-gradient(140deg,#0F1D18,#1B3A2E 65%,#0F1D18)}
-.gate-umam{background:radial-gradient(1.3px 1.3px at 18% 40%,rgba(255,253,242,.65),transparent 55%),radial-gradient(1.3px 1.3px at 46% 22%,rgba(255,253,242,.55),transparent 55%),radial-gradient(1.3px 1.3px at 72% 48%,rgba(255,253,242,.6),transparent 55%),radial-gradient(120% 140% at 50% -12%,rgba(14,116,144,.34),transparent 58%),linear-gradient(140deg,#0C1A20,#14303C 65%,#0C1A20)}
-.gate-count{background:rgba(255,254,247,.12);border:1px solid rgba(255,254,247,.24)}
-.chip-jahiliyyah{background:rgba(146,64,14,.22);color:#E7B688;border:1px solid rgba(146,64,14,.45)}
-.chip-khulafa{background:rgba(5,150,105,.18);color:#9BE3C7;border:1px solid rgba(5,150,105,.4)}
-.chip-umam{background:rgba(14,116,144,.2);color:#9AD8E8;border:1px solid rgba(14,116,144,.42)}
-.pattern-khulafa{background:radial-gradient(circle at 40% 30%,rgba(5,150,105,.25) 0%,transparent 52%),radial-gradient(circle at 70% 75%,rgba(201,162,39,.18) 0%,transparent 50%),linear-gradient(150deg,#0F1D18,#1B3A2E)}
-.pattern-umam{background:radial-gradient(1.4px 1.4px at 22% 34%,rgba(255,253,242,.6),transparent 55%),radial-gradient(1.3px 1.3px at 68% 20%,rgba(255,253,242,.5),transparent 55%),radial-gradient(circle at 50% 80%,rgba(14,116,144,.3) 0%,transparent 55%),linear-gradient(160deg,#0C1A20,#17414F)}
-
-/* period rail */
-@media(min-width:1100px){.period-section{position:relative}
-.period-section::before{content:"";position:absolute;top:120px;bottom:26px;inset-inline-start:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.24) 12%,rgba(201,162,39,.24) 88%,transparent);pointer-events:none}}
-
-/* ============ tiles ============ */
-.tile{position:relative;border-radius:20px;min-height:305px;cursor:pointer;-webkit-tap-highlight-color:transparent;outline-offset:3px}
-.tile-inner{position:relative;overflow:hidden;border-radius:20px;min-height:305px;height:100%;isolation:isolate;transform:translateZ(0);transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s;box-shadow:0 4px 14px rgba(26,22,15,.12)}
-.tile:hover .tile-inner{box-shadow:0 22px 44px rgba(26,22,15,.24)}
-.tile-inner.tilting{transition:box-shadow .45s}
-.tile-bg{position:absolute;inset:-6%;background-size:cover;background-position:center;z-index:0;opacity:0;transform:scale(1.12);transition:opacity .7s ease;will-change:transform}
-.tile-bg.bg-loaded{opacity:1}
-.tile-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(168deg,rgba(20,16,10,.62) 0%,rgba(20,16,10,.18) 42%,rgba(20,16,10,.88) 100%)}
-.tile-frame{position:absolute;inset:9px;z-index:2;border:1px solid rgba(233,200,106,.22);border-radius:14px;pointer-events:none;transition:border-color .35s}
-.tile:hover .tile-frame{border-color:rgba(233,200,106,.55)}
-.tile-shine{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 32%,rgba(255,250,225,.16) 46%,rgba(255,250,225,.02) 54%,transparent 66%);transform:translateX(-130%);transition:transform .9s cubic-bezier(.22,1,.36,1)}
-.tile:hover .tile-shine{transform:translateX(130%)}
-.tile-content{position:relative;z-index:3;height:100%;min-height:305px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.35rem 1.3rem;color:#FFFEF7;text-shadow:0 2px 8px rgba(0,0,0,.45)}
-.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .6rem;border-radius:9999px;font-size:.62rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-.chip-bidaya{background:rgba(233,200,106,.16);color:#F0D878;border:1px solid rgba(233,200,106,.3)}
-.chip-qisas{background:rgba(139,168,136,.18);color:#B9D3B6;border:1px solid rgba(139,168,136,.34)}
-.chip-seerah{background:rgba(96,132,214,.2);color:#B7C8F2;border:1px solid rgba(96,132,214,.36)}
-.chip-nihaya{background:rgba(124,58,237,.2);color:#CDB6F7;border:1px solid rgba(124,58,237,.4)}
-.data-chip{font-size:.62rem;font-weight:600;padding:.16rem .5rem;border-radius:9999px;background:rgba(233,200,106,.16);border:1px solid rgba(233,200,106,.32);color:#F0D878;display:inline-block}
-.tile-data-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
-.tile-mini{background:rgba(255,254,247,.1);border:1px solid rgba(233,200,106,.22);border-radius:7px;padding:3px 8px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.tile-mini .lbl{font-size:8px;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,254,247,.55);line-height:1.2}
-.tile-mini .val{font-size:11px;font-weight:600;color:rgba(255,254,247,.93);line-height:1.25}
-.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-/* CSS pattern fallbacks (kept from original system) */
-.pattern-1{background:radial-gradient(circle at 30% 40%,#C9A22733 0%,transparent 50%),linear-gradient(135deg,#1A160F,#2C2416)}
-.pattern-2{background:radial-gradient(ellipse at 70% 20%,#8BA88844 0%,transparent 55%),linear-gradient(160deg,#1F1A12,#2C2416)}
-.pattern-3{background:repeating-linear-gradient(45deg,transparent,transparent 12px,#C9A22711 12px,#C9A22711 24px),linear-gradient(180deg,#221C14,#2C2416)}
-.pattern-4{background:radial-gradient(circle at 50% 80%,#C9A22722 0%,transparent 40%),linear-gradient(200deg,#1A160F,#332B1E)}
-.pattern-5{background:conic-gradient(from 30deg at 50% 50%,#2C2416,#3D3224,#2C2416,#1A160F)}
-.pattern-nihaya{background:radial-gradient(circle at 50% 0%,#C9A22733 0%,transparent 45%),linear-gradient(180deg,#0F0D09 0%,#1A160F 60%,#2C2416 100%)}
-
-/* ============ filter chips ============ */
-.filter-btn{transition:background .25s,color .25s,transform .25s}
-.filter-btn:active{transform:scale(.96)}
-.filter-btn.active{background:var(--ink);color:var(--parchment)}
-
-/* ============ search ============ */
-#search-results{box-shadow:0 18px 44px rgba(26,22,15,.16)}
-.search-hit{transition:background .15s}
-.search-hit:hover{background:rgba(201,162,39,.1)}
-
-/* ============ modal ============ */
-.modal-backdrop{position:fixed;inset:0;z-index:60;background:radial-gradient(120% 100% at 50% 0%,rgba(30,24,12,.55),rgba(12,10,6,.82));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:2rem;opacity:0;pointer-events:none;transition:opacity .32s;overflow-y:auto;overscroll-behavior:contain}
-.modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--parchment);border-radius:22px;max-width:44rem;width:100%;margin-bottom:2.6rem;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(201,162,39,.25);transform:translateY(26px) scale(.975);transition:transform .42s cubic-bezier(.22,1,.36,1);position:relative}
-.modal-backdrop.open .modal{transform:translateY(0) scale(1)}
-@media(min-width:768px){.modal{max-width:48rem}}
-@media(max-width:640px){.modal-backdrop{padding:0;padding-top:max(3.2rem,env(safe-area-inset-top))}.modal{border-radius:22px 22px 0 0;margin-bottom:0;min-height:calc(100vh - 3.2rem)}}
-.modal-hero{height:240px;position:relative;overflow:hidden;background-size:cover;background-position:center}
-.modal-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1)}
-.modal-backdrop.open .modal-hero-bg.kb{animation:kenburns 14s ease-out forwards}
-@keyframes kenburns{to{transform:scale(1.08)}}
-.modal-girih{position:absolute;top:0;left:0;right:0;height:10px;z-index:2;background:repeating-linear-gradient(90deg,rgba(201,162,39,.85) 0 14px,rgba(30,58,138,.85) 14px 18px,rgba(201,162,39,.85) 18px 32px,rgba(139,168,136,.85) 32px 36px);opacity:.9}
-.modal-body{padding:1.7rem 1.6rem 2.3rem}
-@media(min-width:640px){.modal-body{padding:2rem 2.2rem 2.6rem}}
-.mset{opacity:0;transform:translateY(14px);animation:msetIn .55s cubic-bezier(.22,1,.36,1) forwards}
-.mset:nth-of-type(1){animation-delay:.05s}.mset:nth-of-type(2){animation-delay:.12s}.mset:nth-of-type(3){animation-delay:.19s}.mset:nth-of-type(4){animation-delay:.26s}.mset:nth-of-type(5){animation-delay:.33s}.mset:nth-of-type(6){animation-delay:.4s}.mset:nth-of-type(7){animation-delay:.47s}.mset:nth-of-type(8){animation-delay:.54s}.mset:nth-of-type(n+9){animation-delay:.6s}
-@keyframes msetIn{to{opacity:1;transform:none}}
-.sect-h{display:flex;align-items:center;gap:.6rem;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(44,36,22,.45);margin-bottom:.8rem}
-.sect-h::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(201,162,39,.4),transparent)}
-.sect-h .g{color:var(--gold)}
-.modal-prose{font-size:15.5px;line-height:1.8;color:rgba(44,36,22,.9);white-space:pre-line}
-.drop-cap::first-letter{float:left;font-family:Amiri,serif;font-size:3.1rem;line-height:.8;padding-inline-end:.4rem;color:var(--gold);font-weight:700}
-.entity-link{color:#8a7020;font-weight:600;cursor:pointer;border:none;background:linear-gradient(180deg,transparent 72%,rgba(201,162,39,.3) 72%);padding:0;font-size:inherit;font-family:inherit;transition:color .18s,background .18s}
-.entity-link:hover{color:#C9A227;background:linear-gradient(180deg,transparent 68%,rgba(201,162,39,.55) 68%)}
-.seq-strip{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(30,58,138,.07));border:1px solid rgba(201,162,39,.3);border-radius:14px;padding:.72rem .95rem}
-.seq-phase{background:var(--ink);color:var(--parchment);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px}
-.seq-pos{font-weight:700;color:#8a7020;font-size:.8rem}
-.seq-note{font-size:.74rem;color:rgba(44,36,22,.6)}
-.mtimeline{list-style:none;margin:0;padding:0;position:relative}
-.mtimeline::before{content:"";position:absolute;top:10px;bottom:10px;inset-inline-start:13px;width:1.5px;background:linear-gradient(180deg,rgba(201,162,39,.6),rgba(201,162,39,.12))}
-.mtimeline li{position:relative;padding-inline-start:44px;padding-bottom:1rem}
-.mtimeline li:last-child{padding-bottom:0}
-.mtimeline .dot{position:absolute;inset-inline-start:0;top:0;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:700;color:#1A160F;background:linear-gradient(135deg,#E9C86A,#C9A227);box-shadow:0 0 0 3px rgba(201,162,39,.18)}
-.mtimeline .tl-l{font-size:.86rem;font-weight:600;color:rgba(44,36,22,.9)}
-.mtimeline .tl-d{font-size:.76rem;color:rgba(44,36,22,.55);margin-top:1px}
-.shield-box{background:linear-gradient(135deg,rgba(139,168,136,.12),rgba(139,168,136,.04));border:1px solid rgba(139,168,136,.45);border-radius:14px;padding:1rem 1.1rem}
-.shield-box li{display:flex;gap:.55rem;font-size:.84rem;line-height:1.6;color:rgba(44,36,22,.85)}
-.shield-box li+li{margin-top:.5rem}
-.shield-box .s{color:#5a7a58;flex:none;margin-top:.1rem}
-.quran-card{border:1px solid rgba(201,162,39,.38);border-inline-start:3px solid rgba(201,162,39,.75);border-radius:14px;padding:1rem 1.15rem;background:linear-gradient(135deg,#FFFEF7,#FBF6E8)}
-.quran-card+.quran-card{margin-top:.7rem}
-.audio-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .75rem;border-radius:9999px;background:var(--ink);color:var(--parchment);font-size:.68rem;font-weight:600;transition:background .2s,color .2s,box-shadow .2s;cursor:pointer;border:none;position:relative}
-.audio-btn:hover{background:#4A3D26}
-.audio-btn.playing{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;box-shadow:0 0 0 4px rgba(201,162,39,.18)}
-.audio-btn.playing .eq{display:inline-flex}
-.audio-btn .eq{display:none;align-items:flex-end;gap:2px;height:10px}
-.audio-btn .eq i{width:2.5px;background:#1A160F;border-radius:1px;animation:eq .9s ease-in-out infinite}
-.audio-btn .eq i:nth-child(2){animation-delay:.2s}.audio-btn .eq i:nth-child(3){animation-delay:.45s}
-@keyframes eq{0%,100%{height:3px}50%{height:10px}}
-.hadith-item{border-inline-start:2.5px solid rgba(201,162,39,.5);padding:.55rem .9rem;background:rgba(201,162,39,.045);border-radius:0 10px 10px 0;font-size:.85rem;line-height:1.65;color:rgba(44,36,22,.85)}
-.hadith-item+.hadith-item{margin-top:.55rem}
-.hadith-src{display:inline-block;margin-top:.3rem;font-size:.66rem;font-weight:700;letter-spacing:.05em;color:#8a7020;background:rgba(201,162,39,.12);padding:.1rem .5rem;border-radius:999px}
-.facts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-@media(min-width:520px){.facts-grid{grid-template-columns:repeat(3,1fr)}}
-.fact-item{background:linear-gradient(145deg,rgba(201,162,39,.07),rgba(30,58,138,.04));border:1px solid rgba(201,162,39,.2);border-radius:12px;padding:11px 12px;transition:transform .22s,border-color .22s}
-.fact-item:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.5)}
-.lesson-li{display:flex;gap:.6rem;font-size:.87rem;line-height:1.65;color:rgba(44,36,22,.88)}
-.lesson-li+.lesson-li{margin-top:.55rem}
-.lesson-li .s{color:var(--gold);flex:none;margin-top:.05rem}
-.conn-chip{padding:.3rem .75rem;border-radius:9999px;font-size:.73rem;font-weight:600;background:rgba(44,36,22,.05);color:rgba(44,36,22,.75);transition:background .2s,color .2s,transform .2s;border:1px solid transparent}
-.conn-chip:hover{background:rgba(201,162,39,.14);color:var(--ink);border-color:rgba(201,162,39,.4);transform:translateY(-1px)}
-
-/* ============ MIZAN section ============ */
-#mizan{position:relative;overflow:hidden;background:linear-gradient(180deg,#0B0912 0%,#120F20 55%,#0B0912 100%);isolation:isolate}
-#mizan::before{content:"";position:absolute;inset:0;background:radial-gradient(1.3px 1.3px at 12% 22%,rgba(255,253,242,.5),transparent 55%),radial-gradient(1.2px 1.2px at 38% 12%,rgba(255,253,242,.42),transparent 55%),radial-gradient(1.4px 1.4px at 64% 28%,rgba(255,253,242,.46),transparent 55%),radial-gradient(1.2px 1.2px at 86% 16%,rgba(255,253,242,.5),transparent 55%),radial-gradient(120% 90% at 50% 0%,rgba(30,58,138,.22),transparent 60%);pointer-events:none}
-.mz-card{background:linear-gradient(150deg,rgba(255,254,247,.05),rgba(255,254,247,.02));border:1px solid rgba(233,200,106,.24);border-radius:20px;padding:1.5rem 1.6rem;color:#FFFEF7;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
-.mz-card:hover{border-color:rgba(233,200,106,.5);transform:translateY(-2px)}
-.mz-card::after{content:"";position:absolute;inset:9px;border:1px solid rgba(255,254,247,.07);border-radius:14px;pointer-events:none}
-.mz-h{font-weight:700;font-size:1.05rem;color:#F4E3A1;letter-spacing:.01em}
-.mz-quote{font-size:.9rem;line-height:1.7;color:rgba(255,254,247,.82);margin-top:.6rem;font-style:italic}
-.mz-src{display:inline-block;margin-top:.45rem;font-size:.64rem;font-weight:700;letter-spacing:.06em;color:#E9C86A;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.3);padding:.12rem .55rem;border-radius:999px}
-.mz-note{font-size:.8rem;line-height:1.65;color:rgba(255,254,247,.6)}
-.mz-big{font-family:Amiri,serif;font-size:1.5rem;color:#E9C86A;text-shadow:0 0 24px rgba(233,200,106,.35)}
-.mz-row{display:flex;justify-content:space-between;align-items:baseline;font-size:.8rem;color:rgba(255,254,247,.75);margin-bottom:.35rem}
-.mz-row b{color:#F4E3A1;font-variant-numeric:tabular-nums}
-.mz-bar{height:10px;border-radius:999px;background:rgba(255,254,247,.08);overflow:hidden}
-.mz-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C9A227,#E9C86A);transform-origin:left;transform:scaleX(0);transition:transform 1.4s cubic-bezier(.22,1,.36,1)}
-.mz-bar.mz-inf i{background:linear-gradient(90deg,#C9A227,#E9C86A 30%,#8BA888 65%,#5EA0B4)}
-.reveal.visible .mz-bar i{transform:scaleX(1)}
-.mz-mini{background:rgba(255,254,247,.045);border:1px solid rgba(233,200,106,.2);border-radius:12px;padding:.7rem .75rem;display:flex;flex-direction:column;gap:.15rem}
-.mz-mini b{color:#F4E3A1;font-size:1rem;font-variant-numeric:tabular-nums}
-.mz-mini span{font-size:.68rem;color:rgba(255,254,247,.7);line-height:1.4}
-.mz-mini i{font-style:normal;font-size:.6rem;font-weight:700;color:#E9C86A;opacity:.85;margin-top:.15rem}
-.mz-dip{border-radius:14px;padding:.85rem .9rem;font-size:.76rem;line-height:1.55}
-.mz-dip p{color:rgba(255,254,247,.85);font-style:italic;margin-top:.4rem}
-.mz-dip-k{display:block;font-size:.66rem;color:rgba(255,254,247,.55)}
-.mz-dip-v{display:block;font-weight:700;margin-top:.2rem}
-.mz-dip-fire{background:linear-gradient(160deg,rgba(153,27,27,.28),rgba(153,27,27,.08));border:1px solid rgba(239,68,68,.4)}
-.mz-dip-fire .mz-dip-v{color:#F5A9A9}
-.mz-dip-jannah{background:linear-gradient(160deg,rgba(5,150,105,.25),rgba(5,150,105,.06));border:1px solid rgba(52,211,153,.4)}
-.mz-dip-jannah .mz-dip-v{color:#9BE3C7}
-.mz-follow{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-.mz-f{display:flex;flex-direction:column;align-items:center;gap:.2rem;background:rgba(255,254,247,.045);border:1px solid rgba(255,254,247,.12);border-radius:12px;padding:.75rem .4rem;text-align:center;font-size:.72rem;color:rgba(255,254,247,.8)}
-.mz-f em{font-style:normal;font-size:.6rem;color:rgba(255,254,247,.45)}
-.mz-f .mz-fi{font-size:1.15rem;color:rgba(255,254,247,.6)}
-.mz-f-stay{background:rgba(201,162,39,.12);border-color:rgba(233,200,106,.45)}
-.mz-f-stay .mz-fi,.mz-f-stay em{color:#F4E3A1}
-.mz-cta{display:block;text-align:center;padding:.65rem .9rem;border-radius:999px;font-size:.78rem;font-weight:700;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;transition:transform .25s,box-shadow .25s;border:none;cursor:pointer}
-.mz-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(201,162,39,.35)}
-.mz-cta-ghost{background:transparent;border:1px solid rgba(233,200,106,.4);color:#F4E3A1}
-/* v6 mizan additions */
-.mz-debt{display:flex;gap:.65rem;align-items:flex-start;background:rgba(178,64,40,.12);border:1px solid rgba(236,146,96,.3);border-radius:14px;padding:.7rem .8rem}
-.mz-debt-i{color:#F2BE93;font-size:1.05rem;line-height:1.3}
-.mz-debt b{display:block;font-size:.8rem;color:#F4C9A1;margin-bottom:.15rem}
-.mz-debt em{display:block;font-style:normal;font-size:.72rem;color:rgba(255,254,247,.66);line-height:1.55}
-.mz-debt .mz-src{margin-top:.3rem}
-.mz-cap{background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:14px;padding:.85rem .6rem;text-align:center;transition:border-color .3s}
-.mz-cap:hover{border-color:rgba(233,200,106,.5)}
-.mz-cap .mzc-i{display:block;font-size:1.3rem;color:#E9C86A;margin-bottom:.25rem}
-.mz-cap b{display:block;font-size:.85rem;color:#FFFEF7}
-.mz-cap em{display:block;font-style:normal;font-size:.68rem;color:rgba(255,254,247,.55);margin-top:.15rem}
-.mz-leafcard{overflow:hidden}
-.mz-leaves{position:absolute;inset:0;pointer-events:none}
-.mz-leaves i{position:absolute;top:-8%;left:var(--lx);width:9px;height:13px;border-radius:0 11px 0 11px;background:linear-gradient(135deg,#E9C86A,#C9A227);opacity:0;transform:translate3d(0,0,0)}
-.mz-leafcard.visible .mz-leaves i{animation:leafFall var(--ld,12s) linear var(--ls,0s) infinite}
-.mz-leaves i:nth-child(1){--lx:12%;--ld:11s;--ls:.2s}
-.mz-leaves i:nth-child(2){--lx:30%;--ld:14s;--ls:3.4s}
-.mz-leaves i:nth-child(3){--lx:48%;--ld:12.5s;--ls:6.1s}
-.mz-leaves i:nth-child(4){--lx:64%;--ld:15s;--ls:1.6s}
-.mz-leaves i:nth-child(5){--lx:78%;--ld:11.5s;--ls:4.8s}
-.mz-leaves i:nth-child(6){--lx:90%;--ld:13.5s;--ls:8s}
-@keyframes leafFall{0%{opacity:0;transform:translate3d(0,0,0) rotate(0)}8%{opacity:.4}82%{opacity:.32}100%{opacity:0;transform:translate3d(26px,118%,0) rotate(300deg)}}
-.mz-leafcard>*{position:relative}
-.mz-seven{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-.mz-s7{display:flex;align-items:center;gap:.5rem;background:rgba(255,254,247,.05);border:1px solid rgba(233,200,106,.22);border-radius:999px;padding-block:.4rem .4rem;padding-inline:.45rem .8rem;font-size:.74rem;color:rgba(255,254,247,.85);transition:border-color .3s,background .3s}
-.mz-s7:hover{border-color:rgba(233,200,106,.55);background:rgba(233,200,106,.08)}
-.mz-s7 i{font-style:normal;font-family:Amiri,serif;width:1.5rem;height:1.5rem;border-radius:50%;background:rgba(233,200,106,.14);border:1px solid rgba(233,200,106,.35);color:#F4E3A1;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
-.mz-sea{position:relative}
-.mz-wave{animation:mzWave 7s ease-in-out infinite alternate;will-change:transform}
-.mz-wave.w2{animation-duration:9s;animation-delay:-2s}
-@keyframes mzWave{from{transform:translate3d(-6px,0,0)}to{transform:translate3d(6px,0,0)}}
-.mz-drop{animation:mzDrop 3.4s cubic-bezier(.5,0,.8,1) infinite;transform-origin:center}
-@keyframes mzDrop{0%,55%{transform:translateY(0);opacity:0}60%{opacity:1}88%{transform:translateY(26px);opacity:1}92%,100%{transform:translateY(28px);opacity:0}}
-
-/* toasts */
-.noor-toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
-.noor-toast{background:rgba(26,22,15,.94);color:#FFFEF7;font-size:.8rem;padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(201,162,39,.4);opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;max-width:88vw;text-align:center}
-.noor-toast.show{opacity:1;transform:none}
-
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
-  html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none}
-  .mset{opacity:1;transform:none;animation:none}
-}
-
-/* ================= hero v82 · the living library ================= */
-.h2wrap{position:relative;z-index:6;max-width:76rem;margin:0 auto;padding:6.2rem 1.2rem 0}
-.h2grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2.6rem;align-items:center}
-.h2kick{font-size:1.6rem;color:#F4D46A;filter:drop-shadow(0 0 14px rgba(244,212,106,.5));margin:0 0 .5rem}
-.h2title{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.04;font-weight:800;letter-spacing:-.02em;margin:0}
-.h2sub{font-size:.95rem;line-height:1.85;color:rgba(255,254,247,.72);max-width:34rem;margin:1.05rem 0 0}
-.h2phone{display:none}
-.h2search{display:flex;align-items:center;gap:.7rem;width:100%;max-width:34rem;margin-top:1.5rem;
-  background:rgba(20,16,10,.5);border:1px solid rgba(244,212,106,.4);border-radius:16px;
-  padding:.95rem 1.05rem;color:rgba(255,254,247,.62);font:inherit;font-size:.9rem;cursor:text;text-align:start;
-  -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);
-  box-shadow:0 8px 30px rgba(0,0,0,.28);transition:border-color .2s,box-shadow .2s,transform .2s}
-.h2search:hover,.h2search:focus-visible{border-color:#F4D46A;box-shadow:0 10px 40px rgba(201,162,39,.28);transform:translateY(-1px);outline:none}
-.h2search svg{width:1.15rem;height:1.15rem;color:#F4D46A;flex:none}
-.h2search span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.h2search kbd{flex:none;font:700 .68rem/1 Inter,system-ui,sans-serif;color:rgba(255,254,247,.5);
-  border:1px solid rgba(255,254,247,.25);border-radius:6px;padding:.28rem .5rem}
-.h2doors{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;max-width:34rem;margin-top:1rem}
-.h2d{display:block;text-decoration:none;border-radius:13px;padding:.66rem .85rem;
-  background:rgba(20,16,10,.42);border:1px solid rgba(244,212,106,.22);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  transition:transform .2s cubic-bezier(.2,.7,.3,1),border-color .2s,background .2s}
-.h2d b{display:block;font-size:.85rem;font-weight:800;color:#FFFEF7;line-height:1.35}
-.h2d span{display:block;font-size:.68rem;line-height:1.5;color:rgba(255,254,247,.58);margin-top:.12rem}
-.h2d:hover,.h2d:focus-visible{transform:translateY(-2px);border-color:rgba(244,212,106,.6);background:rgba(28,22,13,.6)}
-.h2d:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
-.h2d-first{background:linear-gradient(135deg,#C9A227,#F4D46A 55%,#E9C86A);border-color:rgba(255,240,184,.9)}
-.h2d-first b{color:#1A160F}
-.h2d-first span{color:rgba(26,22,15,.66)}
-.h2d-first:hover{background:linear-gradient(135deg,#D4AC2B,#FFE28A 55%,#F0D177)}
-.h2right{display:grid;gap:.8rem;min-width:0}
-.h2card{background:rgba(20,16,10,.5);border:1px solid rgba(244,212,106,.26);border-radius:18px;
-  -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);
-  box-shadow:0 14px 44px rgba(0,0,0,.3);overflow:hidden}
-.h2c-light #dl-card{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important}
-.h2c-light #dl-card div{background:transparent!important;border-color:rgba(244,212,106,.22)!important}
-.h2c-light #dl-card [style*="linear-gradient(90deg"]{background:linear-gradient(90deg,rgba(244,212,106,.14),transparent)!important}
-.h2c-light #dl-card span,.h2c-light #dl-card p,.h2c-light #dl-card h3,.h2c-light #dl-card b{color:rgba(255,254,247,.82)!important}
-.h2c-light #dl-card [style*="color:#8a6d1a"],.h2c-light #dl-card [style*="color:#C9A227"],.h2c-light #dl-card [style*="color:#8a6d13"]{color:#F4D46A!important}
-.h2c-light #dl-card [style*="letter-spacing:.22em"]{color:#F4D46A!important}
-.h2c-light #dl-card button{color:rgba(255,254,247,.65)!important;border-color:rgba(255,254,247,.3)!important;background:transparent!important}
-.h2c-light #dl-card a{color:#F4D46A!important}
-.h2c-light #dl-card #dl-cat{background:rgba(244,212,106,.14)!important;border:1px solid rgba(244,212,106,.45)!important;color:#F4D46A!important}
-.h2c-light #dl-card #dl-cat:empty{display:none!important}
-.h2c-word{padding:1rem 1.15rem}
-.h2ck{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:rgba(255,254,247,.55);margin:0 0 .45rem}
-.h2wline{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
-.h2wline b{font-size:1.35rem;font-weight:800;color:#FFFEF7}
-.h2wline .font-amiri{font-size:1.3rem;color:#F4D46A}
-.h2ws{font-size:.8rem;line-height:1.7;color:rgba(255,254,247,.7);margin:.4rem 0 .55rem}
-.h2wl{font-size:.74rem;font-weight:800;color:#F4D46A;text-decoration:none}
-.h2wl:hover{text-decoration:underline}
-.h2c-num{display:grid;grid-template-columns:repeat(3,1fr);padding:.9rem .6rem}
-.h2n{text-align:center;padding:.35rem .2rem}
-.h2n b{display:block;font-size:1.3rem;font-weight:800;color:#F4D46A;font-variant-numeric:tabular-nums}
-.h2n span{display:block;font-size:.6rem;letter-spacing:.04em;color:rgba(255,254,247,.55);margin-top:.1rem;line-height:1.4}
-/* the ribbon of rooms, drifting like a caravan */
-.h2mq{position:relative;z-index:8;margin:3rem -1.2rem 0;padding:.85rem 0;border-top:1px solid rgba(201,162,39,.28);
-  overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.h2mq-t{display:inline-flex;align-items:center;gap:1.4rem;white-space:nowrap;will-change:transform;
-  animation:h2drift 46s linear infinite;padding-inline-start:1.4rem}
-.h2mq-t span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.6)}
-.h2mq-t i{font-style:normal;color:#C9A227;font-size:.6rem}
-@keyframes h2drift{to{transform:translateX(-50%)}}
-/* the relocated seal, crowning the Path */
-/* The wheel was drawn for the night sky and was standing on parchment, pale
-   and washed out, with a caption running straight through it because the box
-   was shorter than the emblem inside it. Wheel, caption and the ayah it
-   illustrates are now one lit panel: the emblem sits in a square that is
-   exactly its own size, so nothing can overlap it at any width, and the
-   centring uses a transform rather than a logical margin, which flipped the
-   whole thing off-centre the moment the page turned right to left. */
-.path-medallion{max-width:38rem;margin:0 auto 2.4rem;padding:1.6rem 1.2rem 1.3rem;
-  background:linear-gradient(168deg,#0F1428,#171126 46%,#1d1630);
-  border:1px solid rgba(201,162,39,.34);border-radius:24px;
-  box-shadow:0 22px 60px rgba(12,10,26,.30)}
-.path-seal{position:relative;width:min(72vw,17rem);aspect-ratio:1;margin:0 auto;
-  filter:drop-shadow(0 8px 26px rgba(0,0,0,.45))}
-.path-seal .geo-pos{position:absolute;inset:0;top:0;left:0;width:auto;height:auto;
-  margin:0;transform:none}
-.path-seal-cap{text-align:center;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(255,254,247,.45);font-weight:800;margin:1.1rem 0 1.3rem;line-height:1.7}
-/* the emblem was inked for the night sky; on parchment the same lines
-   are deepened to antique bronze, keeping their relative weights */
-.path-seal #rv-ring{opacity:.85}
-@media (prefers-reduced-motion:reduce){
-  .path-seal #geo .gp,.path-seal #geo .gpt,.path-seal #geo .gpf,.path-seal .crescent{transition:none}
-  .path-seal .kun-seed{display:none}
-}
-#thread{padding-top:2.4rem}
-/* ---- the phone ---------------------------------------------------------
-   A phone screen is one column and one thumb. The first screen therefore
-   holds only what answers "what is this and where do I start": the name,
-   one sentence, the search, one gold way in and three short doors. The
-   living cards sit just under the fold, one at a time, so the reader
-   swipes them rather than squinting at three at once.
-   The hard rule underneath: every grid track is minmax(0,...) and every
-   grid child has min-width:0, or one wide card silently widens the whole
-   page and the text runs off the screen. */
-@media (max-width:56rem){
-  .h2wrap{padding:4.4rem 1.1rem 0}
-  .h2grid{grid-template-columns:minmax(0,1fr);gap:1.5rem}
-  .h2left,.h2right{min-width:0;max-width:100%}
-  .h2kick{font-size:1.25rem;margin-bottom:.35rem}
-  .h2title{font-size:clamp(2.15rem,10.5vw,3.1rem);line-height:1.06}
-  .h2sub{font-size:.92rem;line-height:1.65;margin-top:.7rem}
-  .h2sub.h2more,.h2sub.h2desk{display:none}
-  .h2phone{display:block}
-  /* the tile keeps its light and loses its furniture: the archive arrows are
-     a desk affordance, and the kicker has no business taking two lines */
-  .h2c-light #dl-date{font-size:.63rem;letter-spacing:.02em;white-space:nowrap}
-  .h2ck,.h2c-light [style*="letter-spacing:.22em"]{letter-spacing:.13em;white-space:nowrap;font-size:.6rem}
-  .h2search{margin-top:1.15rem;padding:.86rem .95rem;font-size:.86rem;border-radius:14px}
-  .h2search kbd{display:none}
-  .h2doors{grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;max-width:none;margin-top:.85rem}
-  .h2d{padding:.62rem .5rem;text-align:center;border-radius:12px;
-    display:flex;align-items:center;justify-content:center;min-height:2.9rem}
-  .h2d b{font-size:.78rem;line-height:1.25}
-  .h2d span{display:none}
-  .h2d-first{grid-column:1/-1;text-align:start;display:block;padding:.85rem 1rem;border-radius:14px;min-height:0}
-  .h2d-first b{font-size:.98rem}
-  .h2d-first span{display:block;font-size:.7rem}
-  /* Nothing on a phone's first screen may hide behind a swipe. The three
-     cards were a snap carousel: two thirds of what the Codex offers sat
-     off-screen, and the one card you could see was clipped. They are one
-     column now, each showing everything it has to say, and the counters
-     drop their frame entirely: numbers on the night, not a box. */
-  .h2right{grid-auto-flow:row;grid-template-columns:minmax(0,1fr);gap:.55rem;
-    overflow:visible;margin-inline:0;padding-inline:0;padding-bottom:0}
-  .h2card{scroll-snap-align:none}
-  /* the day's light: enough to want it, not the whole essay */
-  .h2c-light #dl-story{display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;
-    -webkit-box-orient:vertical;overflow:hidden}
-  .h2c-light #dl-card{padding-bottom:.2rem}
-  .h2c-word .h2ws{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;
-    -webkit-box-orient:vertical;overflow:hidden}
-  /* The frame came off these numbers and they landed exactly where the night
-     sky fades into parchment: gold on cream, white on cream, unreadable. They
-     keep their own dark ground on a phone, because the background underneath
-     them is not dark by the time the reader gets there. */
-  .h2c-num{grid-template-columns:repeat(3,minmax(0,1fr));padding:.7rem .4rem;
-    background:rgba(14,11,7,.72);border:1px solid rgba(244,212,106,.2);border-radius:16px;
-    -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2)}
-  .h2n{padding:.3rem .1rem}
-  .h2n b{font-size:1.06rem}
-  .h2n span{font-size:.56rem;color:rgba(255,254,247,.72)}
-  /* the archive arrows stay: browsing back through the lights is the point */
-  .h2c-light #dl-prev,.h2c-light #dl-next{width:1.6rem;height:1.6rem;font-size:.8rem}
-  .h2mq{margin:2rem -1.1rem 0}
-}
-/* very narrow phones: the three doors stack two and one rather than crush */
-@media (max-width:22rem){
-  .h2doors{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .h2d:last-child{grid-column:1/-1}
-}
-@media (prefers-reduced-motion:reduce){
-  .h2mq-t{animation:none}
-  .h2search:hover,.h2d:hover{transform:none}
-}
-@media print{.h2mq,.h2search{display:none}}
-
-.path-ayah{max-width:32rem;margin:0 auto;text-align:center;background:transparent;
-  border:0;border-top:1px solid rgba(201,162,39,.22);border-radius:0;padding:1.3rem .2rem .2rem;color:#FFFEF7}
-.path-ayah .a{font-family:Amiri,serif;font-size:1.5rem;line-height:2;color:#F4D46A;margin:0}
-.path-ayah .e{font-size:.84rem;line-height:1.85;color:rgba(255,254,247,.78);margin:.7rem 0 0}
-.path-ayah .r{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,254,247,.45);font-weight:800;margin:.7rem 0 0}
-.path-ayah .d{display:none}
-</style>
-<style>html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}*{-webkit-tap-highlight-color:transparent}a,button,[role="button"]{touch-action:manipulation}</style>
 <link rel="canonical" href="https://noorcodex.com/"/>
 <link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
 <link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
@@ -532,1340 +41,470 @@ a:hover .logo-seal{transform:rotate(12deg)}
 <link rel="alternate" hreflang="fa" href="https://noorcodex.com/fa"/>
 <link rel="alternate" hreflang="prs" href="https://noorcodex.com/prs"/>
 <link rel="alternate" hreflang="pa" href="https://noorcodex.com/pa"/>
-<link rel="alternate" hreflang="ha" href="https://noorcodex.com/ha"/>
-<link rel="alternate" hreflang="ps" href="https://noorcodex.com/ps"/>
-<link rel="alternate" hreflang="so" href="https://noorcodex.com/so"/>
-<link rel="alternate" hreflang="ku" href="https://noorcodex.com/ku"/>
-<link rel="alternate" hreflang="sw" href="https://noorcodex.com/sw"/>
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": ["https://www.instagram.com/noorcodexoflight", "https://www.facebook.com/profile.php?id=61592864417863", "https://www.youtube.com/@noorcodex", "https://www.pinterest.com/noorcodex", "https://t.me/noorcodex", "https://www.threads.com/@noorcodexoflight"]}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
-<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
-<script src="/assets/noor-hijri.js?v=1" defer></script>
-<script src="/assets/noor-ramadan.js?v=1" defer></script>
-<script src="/assets/noor-overrides.js?v=1" defer></script>
-<script src="/assets/noor-text.js?v=83" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
+<link rel="stylesheet" href="/assets/noor2.css?v=1"/>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
+<link rel="stylesheet" href="/assets/noor-menu.css?v=3"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": ["https://www.instagram.com/noorcodexoflight", "https://www.facebook.com/profile.php?id=61592864417863", "https://www.youtube.com/@noorcodex", "https://www.pinterest.com/noorcodex", "https://t.me/noorcodex", "https://www.threads.com/@noorcodexoflight"]}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
+<!-- The shell (assets/noor2.js) draws the night, the arrivals, the top line,
+     the bar and the sheets. The rest is what the old home page wired and
+     other rooms still depend on: nodes-index.js for the Path's chapters
+     (?node= and #node-), noor-fx.js for the language layer, the beacon and
+     the service worker, noor-text.js for the prose in other languages, the
+     search, the menu dial, the dials (the notice and the journal switch)
+     and the corrections layer. -->
+<script src="/assets/noor2.js?v=1" defer></script>
+<script src="/nodes-index.js?v=101" defer></script>
+<script src="/noor-fx.js" defer></script>
+<script src="/assets/noor-text.js?v=83" defer></script>
 <script src="/assets/noor-search.js?v=78" defer></script>
-  <link rel="stylesheet" href="/assets/figfit.css?v=106"/>
-  <script src="/assets/figfit.js?v=106" defer></script>
-  <script src="/assets/noor-dials.js?v=109" defer></script>
-<script src="/assets/noor-anime.js?v=1" defer></script>
-</head>
-<body class="antialiased">
-<div id="progress"></div>
-
-<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
-<!-- The menu. Its index is fetched on first open rather than inlined, so these
-     54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
 <script src="/assets/noor-menu.js?v=3" defer></script>
-<style id="nav49">
-/* --- self-contained header layout (works with or without the shared sheet) --- */
-/* While the sheet is open the body carries overflow:hidden, and on iOS that
-   quietly breaks position:sticky: the header stops sticking and scrolls away,
-   leaving page content in the strip above the menu and no way to close it
-   without scrolling back to the top. Pinning it for the duration fixes that.
-   The swap is invisible because at any scroll position a sticky header and a
-   fixed one both render at the top of the viewport, and everything behind is
-   covered by the sheet. */
-body.sheet-open #site-header{position:fixed;left:0;right:0;top:0;z-index:70}
-#site-header{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,36,22,.05);font-family:Inter,system-ui,sans-serif}
-#site-header>div:not(#nav-sheet):not(#search-bar){max-width:72rem;margin-left:auto;margin-right:auto;padding-inline-start:1rem;padding-inline-end:1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-@media (min-width:640px){#site-header>div:not(#nav-sheet):not(#search-bar){padding-inline-start:1.5rem;padding-inline-end:1.5rem}}
-#site-header a{text-decoration:none;color:inherit}
-#site-header>div>a:first-child{display:flex;align-items:center;gap:.625rem}
-#site-header>div>a:first-child>div:first-child{width:2rem;height:2rem;border-radius:9999px;background:#2C2416;color:#C9A227;display:flex;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:1rem;font-weight:700;box-shadow:0 0 0 1px rgba(201,162,39,.4);flex:none}
-#site-header>div>a:first-child>div:last-child>div:first-child{font-family:Amiri,serif;font-size:1.125rem;line-height:1;color:#2C2416}
-#site-header>div>a:first-child>div:last-child>div:last-child{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(44,36,22,.45)}
-#site-header nav[aria-label="Primary"]{display:none;align-items:center;gap:1rem;font-size:.875rem;font-weight:500;color:rgba(44,36,22,.65)}
-@media (min-width:1024px){#site-header nav[aria-label="Primary"]{display:flex}}
-#site-header nav[aria-label="Primary"] a{color:inherit;transition:color .15s}
-#site-header nav[aria-label="Primary"] a:hover{color:#2C2416}
-#site-header nav[aria-label="Primary"] a.text-ink{color:#2C2416;font-weight:700}
-#site-header>div>div:last-child{display:flex;align-items:center;gap:.5rem}
-#site-header .give-pill{display:none}
-@media (min-width:640px){#site-header .give-pill{display:inline-block}}
-.dd{position:relative}
-.dd-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;background:none;border:0;font:inherit;color:inherit;padding:0}
-.dd-btn::after{content:"";width:.42rem;height:.42rem;border-inline-end:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
-.dd:hover .dd-btn::after,.dd:focus-within .dd-btn::after{transform:rotate(225deg) translateY(-2px)}
-.dd-mega{position:absolute;right:0;top:100%;padding-top:.65rem;display:none;z-index:70;width:min(46rem,calc(100vw - 2rem))}
-.dd:hover .dd-mega,.dd:focus-within .dd-mega{display:block}
-.dd-mega .mp{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem 1.1rem;background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.25rem;box-shadow:0 28px 64px rgba(44,36,22,.22);padding:1.05rem 1.15rem 1.15rem}
-@media (max-width:1200px){.dd-mega{width:min(31rem,calc(100vw - 2rem))}.dd-mega .mp{grid-template-columns:1fr 1fr}}
-.dd-mega .mg{min-width:0}
-.dd-mega .dd-h{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:.4rem .45rem .25rem;border-bottom:1px solid rgba(201,162,39,.22);margin-bottom:.25rem}
-.dd-mega .dd-h + .dd-h{margin-top:.8rem}
-.dd-mega a{display:block;padding:.32rem .45rem;font-size:.8rem;color:rgba(44,36,22,.75);text-decoration:none;border-radius:.55rem;line-height:1.4}
-.dd-mega a:hover{background:#FFF7DF;color:#2C2416}
-.dd-mega a.mg-give{color:#8a6d13;font-weight:700}
-.give-pill{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F!important;font-weight:800;border-radius:999px;padding:.38rem .95rem;font-size:.78rem;text-decoration:none;transition:transform .15s;white-space:nowrap}
-.give-pill:hover{transform:translateY(-1px)}
-.lang-dd .dd-menu49{position:absolute;right:0;top:100%;padding-top:.6rem;display:none;z-index:75}
-.lang-dd:hover .dd-menu49,.lang-dd:focus-within .dd-menu49{display:block}
-.lang-pane{background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:1rem;box-shadow:0 24px 56px rgba(44,36,22,.22);padding:.8rem;width:19rem;max-height:min(70vh,26rem);overflow:auto}
-.lang-pane .lp-h{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A227;font-weight:800;padding:0 .3rem .45rem}
-.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
-.lang-grid button{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:none;border:1px solid transparent;border-radius:.6rem;padding:.34rem .55rem;font-size:.78rem;color:rgba(44,36,22,.8);cursor:pointer;font-family:inherit;text-align:start}
-.lang-grid button:hover{background:#FFF7DF;color:#2C2416}
-.lang-grid button.on{border-color:rgba(201,162,39,.55);background:rgba(244,212,106,.14);color:#2C2416;font-weight:700}
-.lang-grid button.on::after{content:"✓";color:#C9A227;font-weight:800}
-.lang-note{font-size:.64rem;color:rgba(44,36,22,.5);line-height:1.55;padding:.55rem .3rem 0}
-.lang-chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(44,36,22,.15);border-radius:999px;padding:.3rem .6rem;font-size:.68rem;font-weight:700;color:rgba(44,36,22,.7);background:none;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.04em}
-.lang-chip:hover{border-color:rgba(201,162,39,.5);color:#2C2416}
-#nav-burger{display:none;background:none;border:0;cursor:pointer;padding-block:.45rem .45rem;padding-inline:.45rem .2rem}
-#nav-burger span{display:block;width:1.15rem;height:2px;background:rgba(44,36,22,.75);border-radius:2px;margin:4px 0;transition:transform .3s,opacity .3s}
-@media (max-width:1023.5px){#nav-burger{display:block}}
-body.sheet-open #nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-body.sheet-open #nav-burger span:nth-child(2){opacity:0}
-body.sheet-open #nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-#nav-sheet{position:fixed;left:0;right:0;top:calc(3.5rem + var(--safetop,0px));bottom:0;z-index:60;background:#FFFEF7;overflow:auto;padding:1.1rem 1.25rem 4rem;display:none}
-body.sheet-open #nav-sheet{display:block}
-body.sheet-open{overflow:hidden}
-/* Installed to a home screen there is no browser chrome above the page, so the
-   header sits under the clock and the signal bars. Scoped to standalone on
-   purpose: in an ordinary mobile browser the chrome already holds this space
-   and adding the inset there would push the header down for no reason. */
-:root{--safetop:0px}
-@media (display-mode:standalone),(display-mode:fullscreen){
-  :root{--safetop:env(safe-area-inset-top,0px)}
-  #site-header{padding-top:env(safe-area-inset-top,0px)}
+<script src="/assets/noor-dials.js?v=109" defer></script>
+<script src="/assets/noor-overrides.js?v=1" defer></script>
+<style>
+/* what is particular to the home page; everything else is the shell */
+.hm-mark{font-family:var(--n2-ar);font-weight:700;font-size:clamp(56px,16vw,84px);line-height:1.15;color:var(--n2-goldhi);margin:0 0 2px;text-shadow:0 0 44px rgba(233,200,106,.28)}
+.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);padding:0 16px;min-height:52px;margin:8px 0 22px;background:rgba(255,254,247,.06)}
+.hm-search svg{stroke:var(--n2-goldhi)}
+.hm-search span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm-search kbd{font:12px/1 var(--n2-mono);color:var(--n2-parch3);border:1px solid var(--n2-line);border-radius:6px;padding:4px 7px}
+@media (hover:none){.hm-search kbd{display:none}}
+.hm-doors li:first-child{grid-column:1/-1}
+.hm-doors li:first-child a{flex-direction:row;justify-content:flex-start;align-items:baseline;gap:10px;min-height:56px}
+@media (min-width:640px){.hm-doors{grid-template-columns:repeat(3,1fr)}.hm-doors li:first-child{grid-column:auto}.hm-doors li:first-child a{flex-direction:column;justify-content:flex-end;align-items:stretch;min-height:76px}}
+#verse .n2-reel{height:min(42svh,400px)}
+@media (min-width:640px){
+  #verse.hm-live{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto auto 1fr;column-gap:28px;align-content:center;justify-content:start}
+  #verse.hm-live>.n2-eyebrow{grid-column:1/-1}
+  #verse.hm-live>.n2-reel{grid-column:1;grid-row:2/6;height:min(60svh,480px);margin:0;align-self:start}
+  #verse.hm-live>.n2-ref,#verse.hm-live>.n2-meaning,#verse.hm-live>.n2-credit,#verse.hm-live>.n2-row{grid-column:2}
+  #verse.hm-live>.n2-row{align-self:start}
 }
-html.standalone{--safetop:env(safe-area-inset-top,0px)}
-html.standalone #site-header{padding-top:env(safe-area-inset-top,0px)}
-/* ---- the pinned strip -------------------------------------------------
-   Five rooms, two across, sitting above everything else. This is the whole
-   point of the redesign: the common case is answered before the reader has
-   to choose anything. */
-#nav-sheet .pins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.35rem 0 .4rem}
-#nav-sheet .pin{display:flex;align-items:center;justify-content:center;text-align:center;
-  min-height:3.4rem;padding:.6rem .7rem;border:1px solid rgba(201,162,39,.4);
-  background:linear-gradient(160deg,#FFFDF4,#FFF6E2);border-radius:14px;
-  font-size:.8rem;font-weight:800;color:#2C2416;text-decoration:none;line-height:1.35}
-#nav-sheet .pin:active{background:#FFF1CE}
-#nav-sheet .pin:first-child{grid-column:1 / -1}
-
-/* ---- the doors ---------------------------------------------------------
-   <details> rather than a script: they open with JavaScript unavailable, and
-   a screen reader already knows what a disclosure is. */
-#nav-sheet .door{border-bottom:1px solid rgba(201,162,39,.18)}
-#nav-sheet .door summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;
-  padding:.85rem .1rem;font-size:.95rem;font-weight:800;color:#2C2416;
-  font-family:Inter,system-ui,sans-serif}
-#nav-sheet .door summary::-webkit-details-marker{display:none}
-#nav-sheet .door summary::after{content:"";margin-inline-start:auto;width:.5rem;height:.5rem;flex:none;
-  border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;
-  transform:rotate(45deg);transition:transform .2s ease}
-#nav-sheet .door[open] summary::after{transform:rotate(-135deg)}
-#nav-sheet .door .cnt{font-size:.62rem;font-weight:700;color:rgba(44,36,22,.38);
-  border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.05rem .4rem;line-height:1.6}
-#nav-sheet .door-in{padding:0 0 .6rem}
-/* Said explicitly rather than left to the browser: the sheet's own
-   a.shl{display:block} was out-specifying the built-in hiding, so every
-   door stood open and the redesign achieved nothing. */
-#nav-sheet .door:not([open]) .door-in{display:none}
-@media (prefers-reduced-motion:reduce){#nav-sheet .door summary::after{transition:none}}
-
-#nav-sheet .sh-g{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A227;font-weight:800;margin:1.15rem 0 .35rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,162,39,.22)}
-#nav-sheet .sh-g:first-child{margin-top:.2rem}
-#nav-sheet a.shl{display:block;padding:.5rem .15rem;font-size:.92rem;color:rgba(44,36,22,.8);text-decoration:none;border-radius:.5rem}
-#nav-sheet a.shl:active{background:#FFF7DF}
-#nav-sheet .lang-grid{grid-template-columns:1fr 1fr 1fr}
-@media (max-width:480px){#nav-sheet .lang-grid{grid-template-columns:1fr 1fr}}
-#nav-sheet .sh-give{display:block;text-align:center;margin:1.4rem auto 0;max-width:22rem;background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;font-weight:800;border-radius:999px;padding:.7rem 1.2rem;text-decoration:none}
-
-/* --- the search drawer -------------------------------------------------
-   The magnifier at top right is the only search chrome the house shows.
-   The panel is hard-hidden until it is opened, and it is a floating drawer,
-   never a band across the page. These rules live in the generator so a nav
-   rebuild can never strip them again. */
-#search-bar{display:none}
-#search-bar.open{display:block;position:fixed;top:3.5rem;right:1rem;z-index:72;width:min(26rem,calc(100vw - 2rem))}
-@media (min-width:640px){#search-bar.open{right:1.5rem}}
-body.sheet-open #search-bar{display:none}
-#search-bar .sb-in{background:#FFFEF7;border:1px solid rgba(44,36,22,.14);border-radius:16px;box-shadow:0 20px 48px rgba(26,22,15,.18);padding:.5rem}
-#search-bar input#search-input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:.9rem;line-height:1.4;color:#2C2416;background:#fff;border:1px solid rgba(44,36,22,.15);border-radius:11px;padding:.62rem .8rem;outline:0;-webkit-appearance:none;appearance:none}
-#search-bar input#search-input::placeholder{color:rgba(44,36,22,.4)}
-#search-bar input#search-input:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
-#search-bar #search-results{margin-top:.4rem;max-height:min(58vh,24rem);overflow:auto;background:transparent;border-radius:12px}
-#search-bar #search-results.hidden{display:none}
-
-/* --- the three new doors: let each system supply the face it renders best --- */
-html[lang="zh"] body,html[lang="ja"] body,html[lang="ko"] body{font-family:Inter,system-ui,"PingFang SC","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK SC","Noto Sans CJK JP","Noto Sans CJK KR","Microsoft YaHei","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
-html[lang="zh"] .font-amiri,html[lang="ja"] .font-amiri,html[lang="ko"] .font-amiri{font-family:Amiri,serif}
-html[lang="zh"] p,html[lang="ja"] p,html[lang="ko"] p{line-height:1.95}
-html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{letter-spacing:0}
-
-/* --- paper ---------------------------------------------------------------
-   Choreography must never cost a reader the words. Anything the motion
-   layer is holding back is forced visible before it reaches a printer. */
-@media print{
-  #site-header,#nav-sheet,#search-bar{display:none!important}
-  .mo,.mo-pop,.mo-draw,[data-mo-stagger] .mo,[data-mo-stagger] .mo-pop{
-    opacity:1!important;visibility:visible!important;transform:none!important}
-  .mo-draw path,.mo-draw line,.mo-draw circle,.mo-draw rect,.mo-draw polyline,.mo-draw ellipse{
-    stroke-dasharray:none!important;stroke-dashoffset:0!important;opacity:1!important}
-}
+.hm-top-r{display:flex;gap:8px;flex:none}
+.n2-pill.hm-menu svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;margin-inline-end:6px}
+.n2-h3 .hm-sub{display:block;font-weight:400;font-size:14px;line-height:1.5;color:var(--n2-parch3);margin-top:2px}
+#timeline .n2-num{min-width:3.6em}
+.n2-eyebrow small[lang="ar"]{font-family:var(--n2-ar);font-size:16px;letter-spacing:0;text-transform:none}
+.hm-count{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin:0 0 6px}
+.hm-langgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:6px 0 14px}
+.hm-langgrid .n2-btn{justify-content:center;padding:0 10px;text-align:center;line-height:1.2}
+@media (max-width:359px){.hm-langgrid{grid-template-columns:1fr 1fr}}
+.n2-facts.hm-truths{margin-bottom:8px}
+.n2-facts.hm-truths b{font-weight:500;color:var(--n2-parch2)}
+.hm-give{margin-top:6px}
+.n2-foot p{margin:0 0 10px}
+.n2-foot .hm-note{font-family:var(--n2-sans);font-size:14px;letter-spacing:0;text-transform:none;line-height:1.6;color:var(--n2-parch3);max-width:44ch}
+.n2-foot .hm-langs{text-transform:none;letter-spacing:.04em;margin:0 0 10px}
+/* the row of doors noor-fx.js draws under footer.note, one list for the
+   whole house, sits on the footer's own left edge rather than centred */
+footer.n2-foot>div{text-align:start;padding:0;margin:4px 0 10px;max-width:none}
+footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11px}
+.n2-foot a{white-space:nowrap}
+.hm-sheet .n2-h3{margin:4px 0 8px;font-size:20px}
+.hm-sheet .n2-title-ar{text-align:left;margin:0 0 4px;font-size:24px}
+[dir="rtl"] .hm-sheet .n2-title-ar{text-align:right}
+/* the language door noor-fx.js opens sits above the bar, not under it */
+#noor-translate-hint{bottom:calc(var(--n2-bar-h) + 12px)!important}
 </style>
-<div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
-<a href="/" class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-full bg-ink flex items-center justify-center text-gold font-amiri text-base font-bold ring-1 ring-gold/40">ن</div>
-<div><div class="font-amiri text-lg leading-none text-ink">نُور</div><div class="text-[9px] tracking-[.22em] uppercase text-ink/45">Codex of Light</div></div>
-</a>
-<nav class="hidden lg:flex items-center gap-4 text-sm font-medium text-ink/65" aria-label="Primary">
-<a href="/quran" class="hover:text-ink transition-colors" data-i18n="nav.quran">Qur'an</a>
-<a href="/prophets" class="hover:text-ink transition-colors" data-i18n="nav.prophets">Prophets</a>
-<a href="/hajj" class="hover:text-ink transition-colors" data-i18n="nav.hajj">Hajj</a>
-<a href="/madrasa" class="hover:text-ink transition-colors" data-i18n="nav.madrasa">Madrasa</a>
-<a href="/kids" class="hover:text-ink transition-colors" data-i18n="nav.kids">Kids</a>
-<div class="dd"><button class="dd-btn hover:text-ink" aria-haspopup="menu" data-i18n="nav.library">Library</button>
-<div class="dd-mega" role="menu" aria-label="The Library"><div class="mp">
-<div class="mg">
-<p class="dd-h" data-i18n="g.read">Read</p>
-<a role="menuitem" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
-<a role="menuitem" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a role="menuitem" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a role="menuitem" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
-<p class="dd-h" data-i18n="g.learn">Learn</p>
-<a role="menuitem" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
-<a role="menuitem" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a role="menuitem" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
-<a role="menuitem" href="/allah" data-i18n="m.allah">The Ninety-Nine Names</a>
-<a role="menuitem" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
-<a role="menuitem" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.live">Live</p>
-<a role="menuitem" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
-<a role="menuitem" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
-<a role="menuitem" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a role="menuitem" href="/family" data-i18n="m.family">The Family Room</a>
-<a role="menuitem" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a role="menuitem" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a role="menuitem" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
-<a role="menuitem" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a role="menuitem" href="/eid" data-i18n="m.eid">The Two Eids</a>
-<a role="menuitem" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a role="menuitem" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.story">The Story</p>
-<a role="menuitem" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a role="menuitem" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a role="menuitem" href="/muhammad" data-i18n="m.seerah">The Seerah &middot; Twenty-Three Years</a>
-<a role="menuitem" href="/companions" data-i18n="m.companions">The Companions</a>
-<a role="menuitem" href="/characters" data-i18n="m.characters">Characters</a>
-<a role="menuitem" href="/places" data-i18n="m.places">Places</a>
-<a role="menuitem" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a role="menuitem" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a role="menuitem" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a role="menuitem" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a role="menuitem" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<a role="menuitem" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-</div>
-<div class="mg">
-<p class="dd-h" data-i18n="g.little">Little Ones</p>
-<a role="menuitem" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a role="menuitem" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a role="menuitem" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-<p class="dd-h" data-i18n="g.house">The House</p>
-<a role="menuitem" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a role="menuitem" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a role="menuitem" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-<a role="menuitem" href="/donate" class="mg-give" data-i18n="m.give">Give a Gift</a>
-<a role="menuitem" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a role="menuitem" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-</div>
-</div></div></div>
-</nav>
-<div class="flex items-center gap-2">
-<div class="dd lang-dd"><button class="lang-chip" id="lang-btn" aria-haspopup="menu" aria-label="Choose your language"><span data-ic=globe></span><span id="lang-cur">EN</span></button>
-<div class="dd-menu49"><div class="lang-pane">
-<p class="lp-h" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid notranslate" id="lang-grid" translate="no">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-<button type="button" data-setlang="zh" lang="zh">中文</button>
-<button type="button" data-setlang="ja" lang="ja">日本語</button>
-<button type="button" data-setlang="ko" lang="ko">한국어</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-</div></div></div>
-<a href="/donate" class="give-pill hidden sm:inline-block">✦ <span data-i18n="nav.give">Give</span></a>
-<a id="search-toggle" data-nm-open href="/#search" aria-label="Search the library" title="Search the library" class="lang-chip" style="padding:.3rem .55rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:.82rem;height:.82rem"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
-<button id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-sheet"><span></span><span></span><span></span></button>
-</div>
-</div>
+</head>
+<body>
+<div class="n2-still"></div>
+<header class="n2-top">
+  <i class="n2-prog" aria-hidden="true"></i>
+  <a class="n2-brand" href="/"><span class="n2-ar" lang="ar" translate="no">نُور</span><span class="n2-en">Codex of Light</span></a>
+  <div class="hm-top-r">
+    <a class="n2-pill" href="#langs" id="lang-btn" aria-label="Choose your language"><span id="lang-cur">EN</span></a>
+    <a class="n2-pill hm-menu" href="/#search" data-nm-open aria-label="Search the library"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>Menu</a>
+  </div>
 </header>
-<div id="nav-sheet" role="dialog" aria-label="Menu">
-<p class="sh-g" data-i18n="g.pinned">Most opened</p><div class="pins"><a class="pin" href="/quran" data-i18n="p.quran">The Mushaf</a><a class="pin" href="/good-life" data-i18n="p.goodlife">How to Live Well</a><a class="pin" href="/prophets" data-i18n="p.prophets">The 25 Prophets</a><a class="pin" href="/pillars" data-i18n="p.pillars">The Five Pillars</a><a class="pin" href="/stories" data-i18n="p.stories">The Hall of Stories</a></div>
-<details class="door"><summary><span data-i18n="g.read">Read</span><span class="cnt">4</span></summary><div class="door-in">
-<a class="shl" href="/quran" data-i18n="m.quran">The Mushaf &middot; Study the Qur'an</a>
-<a class="shl" href="/words" data-i18n="m.words">The Words of the Path</a>
-<a class="shl" href="/dictionary" data-i18n="m.dictionary">The Encyclopedia of the Path</a>
-<a class="shl" href="/arabic" data-i18n="m.arabic">Learn Arabic &middot; The Letters</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.learn">Learn</span><span class="cnt">6</span></summary><div class="door-in">
-<a class="shl" href="/begin" data-i18n="m.begin">Begin &middot; New Muslim</a>
-<a class="shl" href="/pillars" data-i18n="m.pillars">The Five Pillars</a>
-<a class="shl" href="/theology" data-i18n="m.theology">Theology &middot; The Branches</a>
-<a class="shl" href="/allah" data-i18n="m.allah">The Ninety-Nine Names</a>
-<a class="shl" href="/madrasa" data-i18n="m.madrasa">The Classroom &middot; Madrasa</a>
-<a class="shl" href="/school" data-i18n="m.school">The School &middot; Full Curriculum</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.live">Live</span><span class="cnt">11</span></summary><div class="door-in">
-<a class="shl" href="/good-life" data-i18n="m.goodlife">How to Live a Good Life</a>
-<a class="shl" href="/three-lives" data-i18n="m.threelives">Three Lives &middot; Weigh Your Own</a>
-<a class="shl" href="/health" data-i18n="m.health">Prophetic Health</a>
-<a class="shl" href="/family" data-i18n="m.family">The Family Room</a>
-<a class="shl" href="/marriage" data-i18n="m.marriage">Marriage &amp; the Home</a>
-<a class="shl" href="/teens" data-i18n="m.teens">For Teenagers</a>
-<a class="shl" href="/protection" data-i18n="m.protection">Protection &amp; the Light</a>
-<a class="shl" href="/ramadan" data-i18n="m.ramadan">Ramadan</a>
-<a class="shl" href="/eid" data-i18n="m.eid">The Two Eids</a>
-<a class="shl" href="/hajj" data-i18n="m.hajj">Hajj &amp; Umrah</a>
-<a class="shl" href="/hajj-plan" data-i18n="m.hajjplan">Your Pilgrim Plan</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.story">The Story</span><span class="cnt">12</span></summary><div class="door-in">
-<a class="shl" href="/#timeline" data-i18n="m.path">The Path of Creation</a>
-<a class="shl" href="/prophets" data-i18n="m.prophets">The 25 Prophets</a>
-<a class="shl" href="/muhammad" data-i18n="m.seerah">The Seerah &middot; Twenty-Three Years</a>
-<a class="shl" href="/companions" data-i18n="m.companions">The Companions</a>
-<a class="shl" href="/characters" data-i18n="m.characters">Characters</a>
-<a class="shl" href="/places" data-i18n="m.places">Places</a>
-<a class="shl" href="/heroes" data-i18n="m.heroes">Heroes of Islam</a>
-<a class="shl" href="/sermon" data-i18n="m.sermon">The Last Sermon</a>
-<a class="shl" href="/unseen" data-i18n="m.unseen">The Unseen &amp; the Mysteries</a>
-<a class="shl" href="/soul" data-i18n="m.soul">The Journey of the Soul</a>
-<a class="shl" href="/#mizan" data-i18n="m.mizan">Two Lives</a>
-<a class="shl" href="/simulation" data-i18n="m.simulation">Are We in a Simulation?</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.little">Little Ones</span><span class="cnt">3</span></summary><div class="door-in">
-<a class="shl" href="/stories" data-i18n="m.stories">The Hall of Stories</a>
-<a class="shl" href="/kids" data-i18n="m.kidscodex">The Kids' Codex</a>
-<a class="shl" href="/kids/lanterns" data-i18n="m.lanterns">The Lantern Sky</a>
-</div></details>
-<details class="door"><summary><span data-i18n="g.house">The House</span><span class="cnt">6</span></summary><div class="door-in">
-<a class="shl" href="/masjid" data-i18n="m.masjid">The Masjid Toolbox</a>
-<a class="shl" href="/license" data-i18n="m.orgs">For Schools &amp; Organizations</a>
-<a class="shl" href="/journal" data-i18n="m.journal">The Guardian's Journal</a>
-<a class="shl" href="/donate" data-i18n="m.give">Give a Gift</a>
-<a class="shl" href="/feedback" data-i18n="m.feedback">Corrections &amp; Ideas</a>
-<a class="shl" href="/legal" data-i18n="m.legal">Terms &amp; Transparency</a>
-</div></details>
-<p class="sh-g" data-i18n="lang.choose">Choose your language</p>
-<div class="lang-grid notranslate" translate="no">
-<button type="button" data-setlang="en" lang="en">English</button>
-<button type="button" data-setlang="ar" lang="ar">العربية</button>
-<button type="button" data-setlang="fr" lang="fr">Français</button>
-<button type="button" data-setlang="es" lang="es">Español</button>
-<button type="button" data-setlang="de" lang="de">Deutsch</button>
-<button type="button" data-setlang="ru" lang="ru">Русский</button>
-<button type="button" data-setlang="tr" lang="tr">Türkçe</button>
-<button type="button" data-setlang="ur" lang="ur">اردو</button>
-<button type="button" data-setlang="hi" lang="hi">हिन्दी</button>
-<button type="button" data-setlang="bn" lang="bn">বাংলা</button>
-<button type="button" data-setlang="id" lang="id">Bahasa Indonesia</button>
-<button type="button" data-setlang="fa" lang="fa">فارسی</button>
-<button type="button" data-setlang="prs" lang="prs">دری</button>
-<button type="button" data-setlang="pa" lang="pa">پنجابی</button>
-<button type="button" data-setlang="ha" lang="ha">Hausa</button>
-<button type="button" data-setlang="ps" lang="ps">پښتو</button>
-<button type="button" data-setlang="so" lang="so">Soomaali</button>
-<button type="button" data-setlang="ku" lang="ku">Kurdî</button>
-<button type="button" data-setlang="sw" lang="sw">Kiswahili</button>
-<button type="button" data-setlang="zh" lang="zh">中文</button>
-<button type="button" data-setlang="ja" lang="ja">日本語</button>
-<button type="button" data-setlang="ko" lang="ko">한국어</button>
-</div>
-<p class="lang-note" data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>
-<a class="sh-give" href="/donate">✦ <span data-i18n="m.give">Give a Gift</span></a>
-</div>
 
+<main class="n2-main">
 
+<!-- 1 · the arrival -->
+<section class="n2-idea n2-in" id="top">
+<p class="hm-mark" lang="ar" translate="no">نُور</p>
+<h1 class="n2-h1" data-i18n="hero.title">Codex of Light</h1>
+<p class="n2-p n2-wide">The whole library, free forever: no ads, no account, no tracking.</p>
+<a class="n2-btn n2-glow hm-search" href="/dictionary" id="hm-search" role="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah…</span><kbd aria-hidden="true">/</kbd></a>
+<ul class="n2-rooms hm-doors">
+<li><a href="/path"><b>The Path</b><span>71 chapters, in order</span></a></li>
+<li><a href="/quran"><b>The Mushaf</b><span>114 surahs, recited</span></a></li>
+<li><a href="/dictionary"><b>The Words</b><span>523 explained</span></a></li>
+</ul>
+</section>
 
+<!-- 2 · today's light: /api/illuminations fills this in; without it the
+     screen stays as it is, a door to the day's page -->
+<section class="n2-idea" id="today">
+<p class="n2-eyebrow">Today's light</p>
+<h2 class="n2-h2">One Light <span class="n2-g">a day</span></h2>
+<p class="n2-p">A thing that happened, with its date, and its source where the card names one: one of the 350 Lights of history and science, chosen each day.</p>
+<div class="n2-row"><a class="n2-btn n2-gold" href="/today">Today's light <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/lights">All the Lights</a></div>
+</section>
 
+<!-- 3 · one verse: the reels manifest fills this in with the verse the
+     rota shows; without it the screen is a door to the shelf -->
+<section class="n2-idea" id="verse">
+<p class="n2-eyebrow">One verse</p>
+<h2 class="n2-h2">One verse, <span class="n2-g">one thought</span></h2>
+<p class="n2-p">Every verse on the shelf, with its recitation and its meaning, grouped by surah.</p>
+<div class="n2-row"><a class="n2-btn n2-gold" href="/verses">The verses <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/quran">The Mushaf</a></div>
+</section>
 
+<!-- 4 · the library, whole: every room, as assets/menu-index.json groups them -->
+<section class="n2-idea n2-short" id="library">
+<p class="n2-eyebrow">The library</p>
+<h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>
+<p class="n2-dim">No ads, no account, no tracking. Every room on the phone, under the thumb.</p>
+<p class="hm-count">41 rooms · 8 sections · all open</p>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-quran">
+<h3 class="n2-h3">The Qur'an<small class="hm-sub">The text itself, and what is needed to hold it</small></h3>
+<ul class="n2-list">
+<li><a href="/quran"><b>The Mushaf<small>All 114 surahs, with recitation for every ayah</small></b></a></li>
+<li><a href="/arabic"><b>The Letters<small>Learn to read the Arabic script, letter by letter</small></b></a></li>
+<li><a href="/words"><b>The Words of the Path<small>The du'as worth carrying, in Arabic and English</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-belief">
+<h3 class="n2-h3">Belief<small class="hm-sub">Who He is, who He sent, and what is unseen</small></h3>
+<ul class="n2-list">
+<li><a href="/allah"><b>The Ninety-Nine Names<small>His names, what He is not, and the three doors of tawhid</small></b></a></li>
+<li><a href="/prophets"><b>The 25 Prophets<small>Every prophet named in the Qur'an</small></b></a></li>
+<li><a href="/muhammad"><b>The Seerah<small>Twenty-three years, his character and his habits</small></b></a></li>
+<li><a href="/theology"><b>Theology<small>The branches, and where they parted</small></b></a></li>
+<li><a href="/unseen"><b>The Unseen<small>Angels, jinn, the barzakh, the signs of the Hour</small></b></a></li>
+<li><a href="/soul"><b>The Journey of the Soul<small>What happens after the last breath</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-worship">
+<h3 class="n2-h3">Worship<small class="hm-sub">How it is actually done</small></h3>
+<ul class="n2-list">
+<li><a href="/pillars"><b>The Five Pillars<small>Shahadah, salah, zakat, sawm, hajj</small></b></a></li>
+<li><a href="/begin"><b>Begin<small>For anyone new to Islam, from the first day</small></b></a></li>
+<li><a href="/ramadan"><b>Ramadan<small>The month, and the tools for it</small></b></a></li>
+<li><a href="/hajj"><b>Hajj &amp; Umrah<small>The rites, step by step, with their evidence</small></b></a></li>
+<li><a href="/hajj-plan"><b>Your Pilgrim Plan<small>A plan written from your own answers</small></b></a></li>
+<li><a href="/eid"><b>The Two Eids<small>Fitr and Adha</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-story">
+<h3 class="n2-h3">The Story<small class="hm-sub">Where all of it came from, and where it is going</small></h3>
+<ul class="n2-list">
+<li><a href="#timeline"><b>The Path of Creation<small>71 chapters, from Kun Fayakun to the Hour</small></b></a></li>
+<li><a href="/companions"><b>The Companions<small>The men and women who saw him ﷺ</small></b></a></li>
+<li><a href="/heroes"><b>Heroes of Islam<small>The people who carried it after them</small></b></a></li>
+<li><a href="/characters"><b>Characters<small>Everyone the Codex names</small></b></a></li>
+<li><a href="/places"><b>Places<small>The ground it happened on</small></b></a></li>
+<li><a href="/sermon"><b>The Last Sermon<small>The final khutbah, line by line</small></b></a></li>
+<li><a href="#mizan"><b>Two Lives<small>The scale, and what is on it</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-life">
+<h3 class="n2-h3">Daily Life<small class="hm-sub">The practice as it meets an ordinary week</small></h3>
+<ul class="n2-list">
+<li><a href="/good-life"><b>How to Live a Good Life<small>Tayyiba: a good life, not an easy one</small></b></a></li>
+<li><a href="/three-lives"><b>Three Lives<small>Weigh your own against them</small></b></a></li>
+<li><a href="/family"><b>The Family Room<small>Children, parents, neighbours</small></b></a></li>
+<li><a href="/marriage"><b>Marriage &amp; the Home<small>From the proposal to the household</small></b></a></li>
+<li><a href="/health"><b>Prophetic Health<small>The body, the plate, the fast, hijama</small></b></a></li>
+<li><a href="/teens"><b>For Teenagers<small>Written for them, not about them</small></b></a></li>
+<li><a href="/protection"><b>Protection &amp; the Light<small>Sihr, ruqya, the evil eye, and the myths</small></b></a></li>
+<li><a href="/simulation"><b>Are We in a Simulation?<small>The modern question, answered from the text</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-look">
+<h3 class="n2-h3">Look It Up<small class="hm-sub">When you need one thing, fast</small></h3>
+<ul class="n2-list">
+<li><a href="/dictionary"><b>The Encyclopedia of the Path<small>523 words this library uses, defined</small></b></a></li>
+<li><a href="/madrasa"><b>The Classroom<small>The whole curriculum, in order</small></b></a></li>
+<li><a href="/school"><b>The School<small>The full course, for schools and organisations</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-kids">
+<h3 class="n2-h3">Children<small class="hm-sub">Built for them, not simplified for them</small></h3>
+<ul class="n2-list">
+<li><a href="/kids"><b>The Kids' Codex<small>The Greatest Game</small></b></a></li>
+<li><a href="/stories"><b>The Hall of Stories<small>His names, told as stories</small></b></a></li>
+<li><a href="/kids/lanterns"><b>The Lantern Sky<small>Light the whole day with prayer</small></b></a></li>
+</ul>
+</section>
+<section class="n2-idea n2-short n2-group" id="lib-house">
+<h3 class="n2-h3">The House<small class="hm-sub">The building itself</small></h3>
+<ul class="n2-list">
+<li><a href="/masjid"><b>The Masjid Toolbox<small>Boards, timetables and printables</small></b></a></li>
+<li><a href="/license"><b>For Schools &amp; Organisations<small>Use the Codex in your own place</small></b></a></li>
+<li><a href="/journal"><b>The Guardian's Journal<small>What the keeper is thinking about</small></b></a></li>
+<li><a href="/feedback"><b>Corrections &amp; Ideas<small>Tell us what is wrong</small></b></a></li>
+<li><a href="/legal"><b>Terms &amp; Transparency<small>Where the money goes, and what is collected</small></b></a></li>
+</ul>
+</section>
 
+<!-- the Path's seven books; the chapters themselves are at /path, and a
+     chapter asked for by ?node= or #node- opens in a sheet below -->
+<section class="n2-idea n2-short" id="timeline">
+<p class="n2-eyebrow">The Path of Creation <small>· 71 chapters</small></p>
+<h2 class="n2-h2">The whole story, <span class="n2-g">in order</span></h2>
+<p class="n2-dim">From Kun Fayakun to the Hour, in 71 chapters, each with its verses, its narrations and its facts. Seven books, read in order.</p>
+<ul class="n2-list">
+<li><a href="/path#bidaya"><span class="n2-num">1–8</span><b>Al-Bidaya<small>Creation, the Arsh, Adam, the Flood</small></b><span class="n2-ar" lang="ar" translate="no">البداية</span></a></li>
+<li><a href="/path#qisas"><span class="n2-num">9–23</span><b>Qisas al-Anbiya<small>The prophets from Nuh to Isa</small></b><span class="n2-ar" lang="ar" translate="no">قصص الأنبياء</span></a></li>
+<li><a href="/path#jahiliyyah"><span class="n2-num">24–26</span><b>Al-Jahiliyyah<small>Arabia before the Light</small></b><span class="n2-ar" lang="ar" translate="no">الجاهلية</span></a></li>
+<li><a href="/path#seerah"><span class="n2-num">27–46</span><b>An-Noor<small>The Seerah of Muhammad ﷺ</small></b><span class="n2-ar" lang="ar" translate="no">النور</span></a></li>
+<li><a href="/path#khulafa"><span class="n2-num">47–50</span><b>Al-Khulafa<small>Companions &amp; the Four Caliphs</small></b><span class="n2-ar" lang="ar" translate="no">الخلفاء</span></a></li>
+<li><a href="/path#umam"><span class="n2-num">51–52</span><b>Al-Umam<small>Islam across the nations</small></b><span class="n2-ar" lang="ar" translate="no">الأمم</span></a></li>
+<li><a href="/path#nihaya"><span class="n2-num">53–71</span><b>Al-Nihaya<small>Signs, Qiyamah, Jannah</small></b><span class="n2-ar" lang="ar" translate="no">النهاية</span></a></li>
+</ul>
+<div class="n2-row"><a class="n2-btn n2-gold" href="/path">All 71 chapters <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</section>
 
+<!-- Two Lives: 56 rooms of the house link to /#mizan; what stands here is
+     the sources the old page quoted, and nothing said over them -->
+<section class="n2-idea n2-short" id="mizan">
+<p class="n2-eyebrow">Two Lives <small lang="ar" translate="no">· الدُّنْيَا وَالآخِرَة</small></p>
+<h2 class="n2-h2">Two lives, in <span class="n2-g">true scale</span></h2>
+<div class="n2-quote"><p class="n2-p">“By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back.”</p><p class="n2-src">Muslim 2858</p></div>
+<div class="n2-quote"><p class="n2-p">“Be in this world as if you were a stranger, or a traveler on the road.”</p><p class="n2-src">Bukhari 6416</p></div>
+<div class="n2-quote"><p class="n2-p">“Two blessings about which many people are cheated: health and free time.”</p><p class="n2-src">Bukhari 6412</p></div>
+<div class="n2-row"><a class="n2-btn" href="/soul">The Journey of the Soul</a><a class="n2-btn" href="/words">Carry words that last</a></div>
+</section>
 
+<!-- 5 · no catch -->
+<section class="n2-idea" id="free">
+<p class="n2-eyebrow">No catch</p>
+<h2 class="n2-h2">Free means <span class="n2-g">free</span></h2>
+<ul class="n2-facts hm-truths">
+<li><span>Ads</span><b>None</b></li>
+<li><span>Account</span><b>None needed</b></li>
+<li><span>Paywall</span><b>None</b></li>
+<li><span>Tracking</span><b>None</b></li>
+<li><span>The library</span><b>All of it, on this site</b></li>
+<li><span>For how long</span><b>Forever</b></li>
+</ul>
+<p class="n2-dim">Visits are counted in aggregate, cookie-free; nothing is sold or shared.</p>
+<h3 class="n2-h3">How it is paid for</h3>
+<p class="n2-p">The Codex runs on one thing alone: the quiet gifts of its readers. Nothing here asks for money. The door is open for whoever wishes to give, and nothing changes for those who do not.</p>
+<div class="n2-row hm-give"><a class="n2-btn" href="/donate">Open the door of giving <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</section>
 
+</main>
 
+<!-- 6 · the footer. noor-fx.js draws the row of the house's doors on
+     other platforms directly under the footer.note line; no page carries
+     that markup itself. -->
+<footer class="n2-foot">
+<p>NOOR Codex of Light · free, no ads, no account</p>
+<p><a href="/license">For schools &amp; organisations</a> · <a href="/journal">The Guardian's Journal</a> · <a href="/feedback">Corrections &amp; ideas</a> · <a href="/legal">Terms &amp; transparency</a></p>
+<p data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
+<nav aria-label="Languages" class="hm-langs" id="langs" translate="no"><a href="/ar" lang="ar">العربية</a> · <a href="/fr" lang="fr">Français</a> · <a href="/es" lang="es">Español</a> · <a href="/de" lang="de">Deutsch</a> · <a href="/ru" lang="ru">Русский</a> · <a href="/tr" lang="tr">Türkçe</a> · <a href="/ur" lang="ur">اردو</a> · <a href="/hi" lang="hi">हिन्दी</a> · <a href="/bn" lang="bn">বাংলা</a> · <a href="/id" lang="id">Bahasa Indonesia</a> · <a href="/fa" lang="fa">فارسی</a> · <a href="/prs" lang="prs">دری</a> · <a href="/pa" lang="pa">پنجابی</a></nav>
+<p class="hm-note" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
+</footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ============ HERO v2 ============ -->
-<style id="hero-sparks">
-/* Tiny lights that live on the landscape: three lamps on the mountain of
-   Hira, a caravan strung along the dunes, and — around the seal further
-   down the page — the ayah of Light circling once every ninety seconds.
-   They flicker; anyone who asked for stillness gets stillness. */
-.rv-lamp{position:absolute;width:5px;height:5px;border-radius:50%;background:#FFE9A8;box-shadow:0 0 10px 3px rgba(255,222,130,.85);animation:rvflk 2.6s ease-in-out infinite;pointer-events:none}
-.rv-car{position:absolute;width:3.5px;height:3.5px;border-radius:50%;background:#F4D46A;box-shadow:0 0 8px 2px rgba(244,212,106,.7);animation:rvflk 3.4s ease-in-out infinite;pointer-events:none}
-@keyframes rvflk{0%,100%{opacity:.55}50%{opacity:1}}
-#rv-ring{position:absolute;inset:0;animation:rvspin 90s linear infinite;transform-origin:center;pointer-events:none}
-/* Text on a path follows the document direction, so the whole ring turned
-   around and drew itself outside its own arc the moment the page went RTL:
-   an Arabic reader saw an empty circle. The ring is a picture, not prose,
-   and always runs the same way; the Arabic inside it still shapes correctly. */
-#rv-ring text{direction:ltr;unicode-bidi:isolate}
-@keyframes rvspin{to{transform:rotate(-360deg)}}
-
-/* ---- the quiet story in the background --------------------------------
-   Nothing here asks to be watched. Over about a minute: the town on the
-   far hill lights its lamps one by one, a caravan crosses the near dune
-   from east to west, and now and then a star falls. It is the night a
-   traveller reads by, told slowly enough that a reader notices it only
-   on the second visit. */
-@keyframes carWalk{
-  0%{transform:translateX(30vw)}
-  100%{transform:translateX(-34vw)}
-}
-@keyframes carGlow{0%,100%{opacity:0}6%,92%{opacity:.85}}
-.rv-car{animation:carWalk 78s linear infinite,carGlow 78s linear infinite}
-@keyframes lampWake{0%,10%{opacity:0}22%,74%{opacity:1}92%,100%{opacity:.12}}
-.rv-lamp{animation:lampWake 34s ease-in-out infinite}
-.night-tale{position:absolute;inset:0;z-index:5;pointer-events:none}
-.shoot{position:absolute;z-index:5;width:96px;height:1.4px;pointer-events:none;opacity:0;
-  background:linear-gradient(90deg,transparent,rgba(255,249,225,.9));border-radius:2px;
-  filter:drop-shadow(0 0 6px rgba(255,240,190,.8))}
-@keyframes shootFall{
-  0%,88%{opacity:0;transform:translate3d(0,0,0) rotate(24deg) scaleX(.2)}
-  90%{opacity:.9;transform:translate3d(0,0,0) rotate(24deg) scaleX(1)}
-  97%{opacity:0;transform:translate3d(-320px,150px,0) rotate(24deg) scaleX(.35)}
-  100%{opacity:0;transform:translate3d(-320px,150px,0) rotate(24deg) scaleX(.2)}
-}
-.shoot.s1{top:16%;right:12%;animation:shootFall 41s linear infinite}
-.shoot.s2{top:9%;right:38%;animation:shootFall 67s linear infinite 23s;width:66px}
-@media (max-width:56rem){.shoot.s2{display:none}.shoot.s1{top:12%;right:8%;width:70px}}
-@media (prefers-reduced-motion:reduce){
-  #rv-ring,.rv-lamp,.rv-car,.shoot{animation:none}
-  .shoot{display:none}.rv-lamp,.rv-car{opacity:.8}
-}
-</style>
-<section id="hero">
-<div class="crown" aria-hidden="true"></div>
-<div class="aurora" aria-hidden="true"></div>
-<div class="milky" aria-hidden="true"></div>
-<div class="ghost-pos" data-depth="0.06" aria-hidden="true"><div class="ghost-noor">نُور</div><div class="ghost-noor glow">نُور</div></div>
-<canvas id="hero-canvas" aria-hidden="true"></canvas>
-<span class="shoot s1" aria-hidden="true"></span><span class="shoot s2" aria-hidden="true"></span>
-<div class="rays-wheel" aria-hidden="true"></div>
-<div class="dune" data-depth="0.1" aria-hidden="true" style="opacity:.6">
-<svg viewBox="0 0 1440 230" preserveAspectRatio="none" style="height:230px">
-<path d="M0,150 C200,105 340,160 540,132 C720,108 830,64 980,96 C1130,126 1330,102 1440,122 L1440,230 L0,230 Z" fill="#0E1224"/>
-<g fill="#0E1224">
-<path d="M1010,96 l0,-46 a5 8 0 0 1 10,0 l0,42 Z"/><path d="M1013,46 l2,-9 2,9 Z"/>
-<circle cx="1054" cy="80" r="21"/><rect x="1032" y="80" width="44" height="18"/>
-<path d="M1054,52 l2,-10 2,10 Z"/>
-<path d="M1102,98 l0,-38 a4.5 7 0 0 1 9,0 l0,36 Z"/><path d="M1104,56 l2,-8 2,8 Z"/>
-<path d="M905,110 c8,-14 6,-26 2,-34 c12,6 16,22 10,36 Z"/><path d="M918,112 c6,-10 5,-20 2,-27 c9,5 12,17 8,28 Z"/>
-</g></svg>
-</div>
-<div class="dune" data-depth="0.22" aria-hidden="true" style="opacity:.8">
-<svg viewBox="0 0 1440 170" preserveAspectRatio="none" style="height:170px"><path d="M0,120 C240,62 470,142 720,106 C950,74 1180,140 1440,90 L1440,170 L0,170 Z" fill="#0A0D1C"/></svg>
-</div>
-<div class="dune" data-depth="0.4" aria-hidden="true">
-<svg viewBox="0 0 1440 130" preserveAspectRatio="none" style="height:130px"><path d="M0,84 C320,130 560,54 860,92 C1120,124 1300,74 1440,98 L1440,130 L0,130 Z" fill="#070910"/></svg>
-</div>
-<div class="night-tale" aria-hidden="true">
-<span class="rv-lamp" style="left:70.4%;bottom:180px;animation-delay:-2s"></span><span class="rv-lamp" style="left:73.1%;bottom:176px;animation-delay:-5.5s"></span><span class="rv-lamp" style="left:76.6%;bottom:172px;animation-delay:-9s"></span>
-<span class="rv-car" style="left:7%;bottom:74px;"></span><span class="rv-car" style="left:11.5%;bottom:80px;"></span><span class="rv-car" style="left:16%;bottom:84px;"></span><span class="rv-car" style="left:21%;bottom:86px;"></span><span class="rv-car" style="left:26.5%;bottom:83px;"></span><span class="rv-car" style="left:32%;bottom:77px;"></span><span class="rv-car" style="left:38%;bottom:70px;"></span><span class="rv-car" style="left:44%;bottom:64px;"></span><span class="rv-car" style="left:50%;bottom:60px;"></span>
-</div>
-<div class="mist" aria-hidden="true"></div>
-<div class="hero-fade" aria-hidden="true"></div>
-
-<div class="h2wrap">
-<div class="h2grid">
-<div class="h2left">
-<p class="h2kick font-amiri notranslate" translate="no">نُورٌ عَلَىٰ نُورٍ</p>
-<h1 class="h2title"><span class="shimmer-gold" data-i18n="hero.title">Codex of Light</span></h1>
-<p class="h2sub h2phone" data-i18n="hero2.short">The whole of Islam, one illuminated library. Free forever.</p>
-<p class="h2sub h2desk" data-i18n="hero2.lead">The whole of Islam, one illuminated library: the story in order, the Qur&rsquo;an recited, every word explained. Free forever.</p>
-<p class="h2sub h2more" data-i18n="hero2.more">A full madrasa, rooms for every age, and a lantern that lights something new each day.</p>
-<button class="h2search" id="h2search" type="button" aria-label="Search the whole Codex">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-<span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah&hellip;</span>
-<kbd aria-hidden="true">/</kbd>
-</button>
-<div class="h2doors">
-<a class="h2d h2d-first" href="#timeline"><b data-i18n="hero.cta.enter">Enter the Path</b><span data-i18n="hero.door.path.s">The whole story, in order, from the first light</span></a>
-<a class="h2d" href="/madrasa"><b data-i18n="hero.door.learn.t">The Classroom</b><span data-i18n="hero.door.learn.s">Step by step, properly taught</span></a>
-<a class="h2d" href="/quran"><b data-i18n="hero2.door.mushaf">The Mushaf</b><span data-i18n="hero2.door.mushaf.s">Every ayah, with recitation</span></a>
-<a class="h2d" href="/kids"><b data-i18n="hero.cta.kids">&#10022; Little Codex</b><span data-i18n="hero.door.kids.s">The same light, for children</span></a>
-</div>
-</div>
-<div class="h2right">
-<div class="h2card h2c-light"><div id="dl-card" style="background:#fff;border:1px solid rgba(201,162,39,.4);border-radius:20px;box-shadow:0 10px 34px rgba(44,36,22,.07);overflow:hidden;touch-action:pan-y">
-<div style="display:flex;align-items:center;gap:.6rem;padding:.7rem .9rem .7rem 1.15rem;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border-bottom:1px solid rgba(201,162,39,.2)">
-<span aria-hidden="true" style="color:#C9A227;font-size:1.05rem">✦</span>
-<span style="font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800">Today's Light</span>
-<span id="dl-date" style="margin-left:auto;font-size:.66rem;color:rgba(44,36,22,.45);text-align:end"></span>
-<button id="dl-prev" type="button" aria-label="Previous day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">‹</button>
-<button id="dl-next" type="button" aria-label="Next day's light" style="flex:none;width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(201,162,39,.5);background:#FFFDF0;color:#8a6d1a;font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1;transition:all .18s">›</button>
-</div>
-<div id="dl-body" style="padding:1.05rem 1.2rem 1.15rem;transition:opacity .22s ease,transform .22s ease">
-<span id="dl-cat" style="display:inline-block;border:1px solid rgba(201,162,39,.45);background:#FFFDF0;color:#6b5510;border-radius:999px;padding:.16rem .65rem;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase">History</span>
-<h3 id="dl-title" style="font-size:1.18rem;font-weight:800;margin:.55rem 0 .35rem;color:#2C2416">A woman founded the world's oldest university</h3>
-<p id="dl-story" style="font-size:.85rem;line-height:1.75;color:rgba(44,36,22,.75);margin:0">In 859 CE, Fatima al-Fihri, a Muslim woman in Fez, spent her inheritance to found al-Qarawiyyin, recognized as the oldest continuously operating degree-granting university on earth. It still teaches today.</p>
-<p id="dl-detail" style="font-size:.7rem;color:#8a6d1a;font-weight:600;margin:.6rem 0 0">Fez, Morocco · 859 CE</p>
-</div>
-</div></div>
-<div class="h2card h2c-word" id="wotd">
-<p class="h2ck"><span aria-hidden="true" style="color:#F4D46A">&#10022;</span>&nbsp; A WORD OF THE PATH</p>
-<div class="h2wline"><b id="wotd-t">Sabr</b><span class="font-amiri notranslate" translate="no" id="wotd-a"></span></div>
-<p id="wotd-s" class="h2ws"></p>
-<a id="wotd-l" class="h2wl" href="/dictionary">Open in the encyclopedia &rarr;</a>
-</div>
-<div class="h2card h2c-num" aria-label="What the library holds">
-<div class="h2n"><b class="mo-count" data-n="114">114</b><span>surahs, recited</span></div>
-<div class="h2n"><b class="mo-count" data-n="25">25</b><span>prophets</span></div>
-<div class="h2n"><b class="mo-count" data-n="523">523</b><span>words explained</span></div>
-<div class="h2n"><b class="mo-count" data-n="106">106</b><span>lessons</span></div>
-<div class="h2n"><b class="mo-count" data-n="21">21</b><span>languages</span></div>
-<div class="h2n"><b>&#8734;</b><span>free forever</span></div>
-</div>
-</div>
-</div>
-<div class="h2mq" aria-hidden="true"><div class="h2mq-t">
-<span>The Mushaf</span><i>&#10022;</i><span>The 25 Prophets</span><i>&#10022;</i><span>The Encyclopedia</span><i>&#10022;</i><span>The Madrasa</span><i>&#10022;</i><span>Hajj &amp; Umrah</span><i>&#10022;</i><span>The Family Room</span><i>&#10022;</i><span>Marriage &amp; the Home</span><i>&#10022;</i><span>For Teenagers</span><i>&#10022;</i><span>Protection &amp; the Light</span><i>&#10022;</i><span>The Unseen</span><i>&#10022;</i><span>Heroes of Islam</span><i>&#10022;</i><span>The Kids&rsquo; Codex</span><i>&#10022;</i><span>The Masjid Toolbox</span><i>&#10022;</i><span>The Journey of the Soul</span><i>&#10022;</i><span>The Mushaf</span><i>&#10022;</i><span>The 25 Prophets</span><i>&#10022;</i><span>The Encyclopedia</span><i>&#10022;</i><span>The Madrasa</span><i>&#10022;</i><span>Hajj &amp; Umrah</span><i>&#10022;</i><span>The Family Room</span><i>&#10022;</i><span>Marriage &amp; the Home</span><i>&#10022;</i><span>For Teenagers</span><i>&#10022;</i><span>Protection &amp; the Light</span><i>&#10022;</i><span>The Unseen</span><i>&#10022;</i><span>Heroes of Islam</span><i>&#10022;</i><span>The Kids&rsquo; Codex</span><i>&#10022;</i><span>The Masjid Toolbox</span><i>&#10022;</i><span>The Journey of the Soul</span><i>&#10022;</i>
-</div></div>
-</div>
 <script>
-(function(){
-"use strict";
-var g=function(id){return document.getElementById(id)};
-var MAXBACK=30, off=0, seen={}, busy=false;
-function dstr(n){ return new Date(Date.now()-n*86400000).toISOString().slice(0,10); }
-/* the reader's chosen language, not the browser's, decides both the words the
-   lantern writes and the way this date is spelled */
-function lang(){
-  try{ if(window.NOOR_I18N&&NOOR_I18N.lang) return NOOR_I18N.lang;
-       return localStorage.getItem("noor_lang")||document.documentElement.lang||"en"; }
-  catch(e){ return document.documentElement.lang||"en"; }
-}
-var DAYWORD={en:["Today","Yesterday"],ar:["اليوم","أمس"],fr:["Aujourd’hui","Hier"],
-  es:["Hoy","Ayer"],de:["Heute","Gestern"],ru:["Сегодня","Вчера"],tr:["Bugün","Dün"],
-  ur:["آج","کل"],hi:["आज","कल"],bn:["আজ","গতকাল"],id:["Hari ini","Kemarin"],
-  fa:["امروز","دیروز"],prs:["امروز","دیروز"],pa:["اَج","کل"],ha:["Yau","Jiya"],
-  ps:["نن","پرون"],so:["Maanta","Shalay"],ku:["Îro","Duh"],sw:["Leo","Jana"],
-  zh:["今天","昨天"],ja:["今日","昨日"],ko:["오늘","어제"]};
-function labelFor(n){
-  var L=lang(), d=new Date(dstr(n)+"T12:00:00Z"), txt;
-  try{ txt=d.toLocaleDateString(L==="prs"?"fa":L,{weekday:"long",month:"long",day:"numeric"}); }
-  catch(e){ txt=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}); }
-  var w=DAYWORD[L]||DAYWORD.en;
-  if(n===0)return w[0]+" · "+txt;
-  if(n===1)return w[1]+" · "+txt;
-  return txt;
-}
-function paint(d,n){
-  if(!d||!d.title){ d={category:"History",title:"The lantern is resting",story:"That day\u2019s light could not be fetched just now. The rest of the Codex still glows; try this arrow again in a moment.",detail:""}; }
-  g("dl-cat").textContent=d.category||"History";
-  g("dl-title").textContent=d.title; g("dl-story").textContent=d.story||""; g("dl-detail").textContent=d.detail||"";
-  g("dl-date").textContent=labelFor(n);
-  g("dl-prev").disabled=n>=MAXBACK; g("dl-prev").style.opacity=n>=MAXBACK?".35":"1";
-  g("dl-next").disabled=n<=0; g("dl-next").style.opacity=n<=0?".35":"1";
-}
-function show(n,dir){
-  if(busy||n<0||n>MAXBACK)return;
-  busy=true; off=n;
-  var b=g("dl-body");
-  b.style.opacity="0"; b.style.transform="translateX("+(dir<0?"14px":"-14px")+")";
-  var url="/api/illuminations?kind=light&lang="+encodeURIComponent(lang())+(n===0?"":"&date="+dstr(n));
-  var done=function(d){
-    setTimeout(function(){
-      paint(d,n);
-      b.style.transform="translateX("+(dir<0?"-14px":"14px")+")";
-      requestAnimationFrame(function(){ b.style.opacity="1"; b.style.transform="translateX(0)"; });
-      busy=false;
-    },170);
-  };
-  if(seen[n])return done(seen[n]);
-  fetch(url).then(function(r){return r.ok?r.json():null}).then(function(d){ if(d)seen[n]=d; done(d); }).catch(function(){ done(null); });
-}
-g("dl-prev").addEventListener("click",function(){show(off+1,-1)});
-g("dl-next").addEventListener("click",function(){show(off-1,1)});
-/* swipe: left for the day before, right for the day after */
-var tx=null;
-g("dl-card").addEventListener("touchstart",function(e){ tx=e.touches[0].clientX; },{passive:true});
-g("dl-card").addEventListener("touchend",function(e){
-  if(tx===null)return;
-  var dx=e.changedTouches[0].clientX-tx; tx=null;
-  if(Math.abs(dx)<48)return;
-  if(dx<0)show(off+1,-1); else show(off-1,1);
-},{passive:true});
-paint(null,0);
-function firstLight(){
-  fetch("/api/illuminations?kind=light&lang="+encodeURIComponent(lang()))
-    .then(function(r){return r.ok?r.json():null})
-    .then(function(d){ if(d){seen[0]=d; paint(d,0);} }).catch(function(){});
-}
-firstLight();
-/* switching language re-lights the tile rather than leaving an English
-   paragraph sitting inside an Arabic page */
-document.addEventListener("noor:lang", function(){
-  seen={}; off=0;
-  paint(null,0);          /* the date word changes even if the light cannot be fetched */
-  firstLight();
-});
-})();
-</script>
-<script>
-/* word of the path · rotates with the civil day, no fetch, no cost */
-(function(){
-  var W=[{"i": "qadr", "t": "Qadr", "a": "القَدَر", "s": "Allah's decree: that He knows, wrote, willed and created all that happens, without forcing anyone to sin."}, {"i": "tawakkul", "t": "Tawakkul", "a": "التَّوَكُّل", "s": "Relying on Allah for the outcome while still doing the work that leads to it."}, {"i": "sabr", "t": "Sabr", "a": "الصَّبْر", "s": "Holding yourself steady under what is hard, without complaint to creation and without giving up."}, {"i": "ihsan", "t": "Ihsan", "a": "الإِحْسَان", "s": "To worship Allah as though you see Him, and if you do not see Him, knowing that He sees you."}, {"i": "taqwa", "t": "Taqwa", "a": "التَّقْوَى", "s": "An alert, careful awareness of Allah that keeps a person away from what harms them."}, {"i": "sakinah", "t": "Sakinah", "a": "السَّكِينَة", "s": "A stillness Allah sends down into the heart, usually at the moment it is least expected."}, {"i": "niyyah", "t": "Niyyah", "a": "نِيَّة", "s": "The intention in the heart that turns an ordinary act into an act of worship."}, {"i": "barakah", "t": "Barakah", "a": "البَرَكَة", "s": "Blessing: a quality Allah puts in a thing so that a small amount goes further than it should."}, {"i": "dhikr", "t": "Dhikr", "a": "الذِّكْر", "s": "Remembrance of Allah, in set phrases and in the wider habit of not forgetting Him."}, {"i": "tawbah", "t": "Tawbah", "a": "التَّوْبَة", "s": "Turning back to Allah from a sin: stopping it, regretting it, and resolving not to return."}, {"i": "ikhlas", "t": "Ikhlas", "a": "الإِخْلَاص", "s": "Doing an act for Allah alone, with no eye on who else is watching."}, {"i": "shukr", "t": "Shukr", "a": "الشُّكْر", "s": "Gratitude that shows: knowing the gift, saying so, and using it as its Giver would like."}, {"i": "fitrah", "t": "Fitrah", "a": "الفِطْرَة", "s": "The natural disposition every person is born with, leaning toward recognising one Creator."}, {"i": "aqidah", "t": "Aqidah", "a": "العَقِيدَة", "s": "The set of things a Muslim holds to be true, as opposed to the things a Muslim does."}, {"i": "sunnah", "t": "Sunnah", "a": "السُّنَّة", "s": "The Prophet's way in belief, worship and conduct, and the measure against which innovation is judged."}, {"i": "hijrah", "t": "Hijrah", "a": "الهِجْرَة", "s": "The Prophet's migration from Makkah to Madinah in 622, the start of the Muslim calendar."}, {"i": "ummah", "t": "Ummah", "a": "الأُمَّة", "s": "The whole body of Muslims, across every land and century, treated as one community."}, {"i": "halal", "t": "Halal", "a": "حَلال", "s": "Permitted. Anything revelation has not forbidden, which is the great majority of things."}, {"i": "amanah", "t": "Amanah", "a": "أَمانة", "s": "A trust: anything placed in your care that you must return, or use exactly as agreed."}, {"i": "adab", "t": "Adab", "a": "الأَدَب", "s": "Good manner in a specific situation: the right way to sit, speak, eat, enter, and ask."}, {"i": "jannah", "t": "Jannah", "a": "الجَنَّة", "s": "Paradise: the garden of lasting delight prepared for the believers, where nothing is lost or spoiled."}, {"i": "ruh", "t": "Ruh", "a": "الرُّوح", "s": "The spirit that gives a body life, whose reality Allah kept to Himself."}, {"i": "wahy", "t": "Wahy", "a": "الوَحْي", "s": "Revelation: Allah's speech conveyed to a prophet, directly, from behind a veil, or through an angel."}, {"i": "tafakkur", "t": "Tafakkur", "a": "التَّفَكُّر", "s": "Deliberate reflection on creation and on your own life, treated as an act of worship."}, {"i": "yaqin", "t": "Yaqin", "a": "اليَقِين", "s": "Certainty: knowledge that has settled to the point where doubt no longer disturbs it."}, {"i": "istiqamah", "t": "Istiqamah", "a": "الاسْتِقَامَة", "s": "Staying straight: keeping to the path steadily, over years, without dramatic swings."}, {"i": "haya", "t": "Haya'", "a": "الحَيَاء", "s": "A modesty that makes a person shrink from what is ugly, before Allah and before people."}];
-  var d=new Date(), start=Date.UTC(d.getFullYear(),0,0);
-  var doy=Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-start)/86400000);
-  var w=W[doy%W.length];
-  var g=function(id){return document.getElementById(id)};
-  g("wotd-t").textContent=w.t; g("wotd-a").textContent=w.a;
-  g("wotd-s").textContent=w.s; g("wotd-l").href="/dictionary/"+w.i;
-})();
-/* the search object opens the sitewide overlay; plain link fallback if JS died */
-(function(){
-  var b=document.getElementById("h2search");
-  if(b) b.addEventListener("click",function(){
-    if(window.NOOR_SEARCH&&window.NOOR_SEARCH.open) window.NOOR_SEARCH.open();
-    else location.href="/dictionary";
-  });
-})();
-/* first-second choreography · type rises, cards land, once, fast, respectful */
-(function(){
-  try{
-    if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var run=function(){
-      if(!window.gsap) return;
-      var tl=gsap.timeline({defaults:{ease:"power3.out"}});
-      tl.from(".h2kick",{y:18,opacity:0,duration:.55})
-        .from(".h2title",{y:26,opacity:0,duration:.7},"-=.35")
-        .from(".h2sub",{y:18,opacity:0,duration:.6},"-=.45")
-        .from(".h2search",{y:16,opacity:0,duration:.5},"-=.4")
-        .from(".h2d",{y:14,opacity:0,duration:.45,stagger:.07},"-=.3")
-        .from(".h2card",{y:22,opacity:0,duration:.6,stagger:.12},"-=.55")
-        .from(".h2mq",{opacity:0,duration:.8},"-=.3");
-    };
-    if(document.readyState==="complete") run();
-    else addEventListener("load",run);
-  }catch(e){}
-})();
-</script>
-</section>
-
-<!-- GUARDIANS BAND -->
-<section id="giving-band" style="background:linear-gradient(90deg,#14100A,#241D12 60%,#2a2110);border-bottom:1px solid rgba(201,162,39,.25)">
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-<p class="font-amiri text-2xl" style="color:#F4D46A">✦</p>
-<div class="flex-1 min-w-[16rem]">
-<p class="text-sm font-bold" style="color:#FFFEF7">Free for everyone, forever. No ads. No trackers.</p>
-<p class="text-[12px] leading-relaxed" style="color:rgba(255,254,247,.6)">The Codex runs on one thing alone: the quiet gifts of its readers. A sadaqa jariyah that keeps shining in every verse read here after you.</p>
-</div>
-<a href="/donate" class="flex-none px-5 py-2.5 rounded-full font-bold text-sm" style="background:linear-gradient(160deg,#F4D46A,#C9A227);color:#241D12">✦ Keep it lit</a>
-</div>
-</section>
-
-<!-- lights already lit · tiny dedication line (AI-gated) -->
-<div id="dedic-strip" hidden style="background:#FFFDF0;border-bottom:1px solid rgba(201,162,39,.2)">
-<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;align-items:center;gap:.5rem;font-size:.7rem;color:rgba(44,36,22,.6);font-family:Inter,system-ui,sans-serif">
-<span aria-hidden="true" style="color:#C9A227;flex:none">✦</span>
-<span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><i id="dedic-strip-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.38)">· a giver’s du’a · say amin</span></span>
-<a href="/donate" style="margin-left:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;font-size:.68rem">Leave yours →</a>
-</div>
-</div>
-<script>
-(function(){
-fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
-  var items=(j&&j.items)||[]; if(!items.length)return;
-  var box=document.getElementById("dedic-strip"), t=document.getElementById("dedic-strip-text"), i=0;
-  function esc(x){return String(x||"").replace(/[<>&"]/g,function(c){return{"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]})}
-  function showItem(){ t.style.opacity="0"; setTimeout(function(){ t.innerHTML="\u201C"+esc(items[i%items.length])+"\u201D"; t.style.opacity="1"; i++; },500); }
-  box.hidden=false; showItem();
-  if(items.length>1) setInterval(showItem, 9000);
-}).catch(function(){});
-})();
-</script>
-
-<!-- the Jumu'ah band is raised sitewide by sponsor.js; one is enough -->
-
-<!-- ============ TODAY'S LIGHT · daily illumination ============ -->
-
-
-<!-- The Hidden Thread · one true connection a day -->
-<section id="thread" style="background:#FFFEF7;border-bottom:1px solid rgba(201,162,39,.15)">
-<div class="path-medallion"><div class="path-seal" aria-hidden="true"><div class="geo-pos" data-depth="0.13" aria-hidden="true">
-<div id="geo">
-<div class="geo-halo"></div>
-<div class="geo-spin">
-<svg viewBox="0 0 200 200" fill="none">
-<circle class="gp" cx="100" cy="100" r="94" pathLength="100" stroke="rgba(233,200,106,.34)" stroke-width="1" style="--pd:0"/>
-<circle class="gpt" cx="100" cy="100" r="88" pathLength="300" stroke="rgba(233,200,106,.45)" stroke-width="0.8" stroke-dasharray="0.6 2.4"/>
-<path class="gp" d="M100,14 L186,100 L100,186 L14,100 Z" pathLength="100" stroke="rgba(233,200,106,.5)" stroke-width="1.1" style="--pd:0.4"/>
-<path class="gp" d="M39,39 H161 V161 H39 Z" pathLength="100" stroke="rgba(233,200,106,.42)" stroke-width="1.1" style="--pd:0.7"/>
-<path class="gp" d="M119.9,52 L148,80.1 L148,119.9 L119.9,148 L80.1,148 L52,119.9 L52,80.1 L80.1,52 Z" pathLength="100" stroke="rgba(233,200,106,.30)" stroke-width="0.9" style="--pd:1.1"/>
-<circle class="gp" cx="100" cy="28" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.4"/>
-<circle class="gp" cx="150.9" cy="49.1" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.5"/>
-<circle class="gp" cx="172" cy="100" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.6"/>
-<circle class="gp" cx="150.9" cy="150.9" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.7"/>
-<circle class="gp" cx="100" cy="172" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.8"/>
-<circle class="gp" cx="49.1" cy="150.9" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:1.9"/>
-<circle class="gp" cx="28" cy="100" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:2"/>
-<circle class="gp" cx="49.1" cy="49.1" r="9" pathLength="100" stroke="rgba(233,200,106,.28)" stroke-width="0.8" style="--pd:2.1"/>
-<g class="gpf" fill="rgba(233,200,106,.55)">
-<path d="M100,3 l1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 -3.4,-1.8 3.4,-1.8 Z"/>
-<path d="M100,186.6 l1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 -3.4,-1.8 3.4,-1.8 Z"/>
-<path d="M3,100 l3.4,-1.8 1.8,-3.4 1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 Z"/>
-<path d="M186.6,100 l3.4,-1.8 1.8,-3.4 1.8,3.4 3.4,1.8 -3.4,1.8 -1.8,3.4 -1.8,-3.4 Z"/>
-</g>
-</svg>
-</div>
-<div class="geo-spin rev">
-<svg viewBox="0 0 200 200" fill="none">
-<path class="gp" d="M100,60 L140,100 L100,140 L60,100 Z" pathLength="100" stroke="rgba(233,200,106,.38)" stroke-width="0.9" style="--pd:2.3"/>
-<circle class="gp" cx="100" cy="100" r="33" pathLength="100" stroke="rgba(233,200,106,.30)" stroke-width="0.8" style="--pd:2.6"/>
-</svg>
-</div>
-<svg id="rv-ring" viewBox="0 0 200 200" aria-hidden="true">
-<defs><path id="rv-ringpath" d="M100,100 m-77,0 a77,77 0 1,1 154,0 a77,77 0 1,1 -154,0"/></defs>
-<text font-size="8.6" fill="rgba(244,212,106,.9)" letter-spacing="1.2">
-<textPath href="#rv-ringpath" startOffset="0%"><tspan font-family="Amiri,serif" font-size="11">اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ</tspan><tspan font-size="6" letter-spacing="2.1" fill="rgba(255,254,247,.75)">&#160;&#160;·&#160;&#160;ALLAH IS THE LIGHT OF THE HEAVENS AND THE EARTH&#160;&#160;·</tspan></textPath>
-</text></svg>
-<div id="geo-core">
-<svg class="crescent" viewBox="0 0 100 100">
-<defs><radialGradient id="mg" cx="38%" cy="38%" r="75%"><stop offset="0%" stop-color="#FFFDF2"/><stop offset="55%" stop-color="#F4E3A1"/><stop offset="100%" stop-color="#C9A227"/></radialGradient><mask id="mm"><rect width="100" height="100" fill="#fff"/><circle cx="63" cy="41" r="34" fill="#000"/></mask></defs>
-<circle cx="50" cy="50" r="36" fill="url(#mg)" mask="url(#mm)"/>
-<circle cx="50" cy="50" r="47" fill="none" stroke="rgba(244,227,161,.16)" stroke-width="0.8"/>
-</svg>
-</div>
-</div>
-</div>
-<div class="kun-seed" aria-hidden="true"></div></div>
-<p class="path-seal-cap">The wheel of the story &middot; from the first light to the last day</p>
-<div class="path-ayah"><p class="a notranslate" translate="no">نُورٌ عَلَىٰ نُورٍ ۗ يَهْدِي اللَّهُ لِنُورِهِ مَن يَشَاءُ</p>
-<p class="e">Light upon light. Allah guides to His light whom He wills. The words that welcomed you above were never a slogan: they are the middle of this ayah, hidden in plain sight.</p>
-<p class="r">An-Nur 24:35 · the verse this whole Codex is named from</p>
-<p class="d">descend into the Codex ↓</p></div>
-</div>
-
-<div class="max-w-3xl mx-auto px-4 sm:px-6 pb-8">
-<div style="background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);border-radius:20px;padding:1.05rem 1.2rem;color:#FFFEF7">
-<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
-<span aria-hidden="true" style="color:#F4D46A">✦</span>
-<span style="font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800">The Hidden Thread</span>
-</div>
-<p id="th-text" style="font-size:.84rem;line-height:1.75;color:rgba(255,254,247,.85);margin:0">Yusuf was thrown into a well by his brothers; Yunus was swallowed by a whale after leaving his. Two darknesses, two prisons no one could open, and one exit: honest words spoken to Allah from the bottom.</p>
-<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem">
-<a id="th-a" href="/prophets#yusuf" style="font-size:.68rem;font-weight:700;color:#F4D46A;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.3rem .75rem;text-decoration:none">Yusuf · the well →</a>
-<a id="th-b" href="/prophets#yunus" style="font-size:.68rem;font-weight:700;color:#F4D46A;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.3rem .75rem;text-decoration:none">Yunus · the whale →</a>
-</div>
-</div>
-</div>
-<script>
-(function(){
-fetch("/api/illuminations?kind=thread&lang="+encodeURIComponent((function(){try{return (window.NOOR_I18N&&NOOR_I18N.lang)||localStorage.getItem("noor_lang")||document.documentElement.lang||"en"}catch(e){return document.documentElement.lang||"en"}})())).then(function(r){return r.ok?r.json():null}).then(function(t){
-  if(!t||!t.text)return;
-  document.getElementById("th-text").textContent=t.text;
-  var a=document.getElementById("th-a"),b=document.getElementById("th-b");
-  if(t.a&&t.a.href){a.href=t.a.href;a.textContent=t.a.label+" →"}
-  if(t.b&&t.b.href){b.href=t.b.href;b.textContent=t.b.label+" →"}
-}).catch(function(){});
-})();
-</script>
-</section>
-
-
-<!-- ============ CODEX COUNTERS (relocated from hero) ============ -->
-<div id="codex-count">
-<div id="hero-stats" class="max-w-5xl mx-auto px-4 py-3.5 grid grid-cols-3 sm:flex sm:justify-center gap-2"></div>
-</div>
-
-<!-- ============ BOOKS ============ -->
-<section id="books" class="max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-4">
-<div class="ornament mb-3 text-xl">۞</div>
-<div class="text-center mb-9">
-<h2 class="text-2xl sm:text-3xl font-bold text-ink mb-1.5" data-i18n="books.title">Seven Books</h2>
-<p class="text-ink/55 text-sm" data-i18n="books.sub">The architecture of the Codex. All seven books are open on the Path.</p>
-</div>
-<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="book-cards"></div>
-</section>
-
-<!-- ============ PATH ============ -->
-<section id="timeline" class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-24">
-<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-<div>
-<h2 class="text-2xl sm:text-3xl font-bold text-ink mb-1" data-i18n="path.title">The Path</h2>
-<p class="text-ink/55 text-sm"><span id="path-count"></span> <span data-i18n="path.sub">Kun Fayakun → Jannah · tap any tile to open its chapter</span></p>
-</div>
-<div class="flex flex-wrap gap-1.5" id="period-filters">
-<button data-period="all" class="filter-btn active px-3 py-1.5 rounded-full text-xs font-semibold bg-ink text-parchment" data-i18n="filter.all">All</button>
-<button data-period="bidaya" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.bidaya">Al-Bidaya</button>
-<button data-period="qisas" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.qisas">Qisas al-Anbiya</button>
-<button data-period="jahiliyyah" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.jahiliyyah">Al-Jahiliyyah</button>
-<button data-period="seerah" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.seerah">Al-Seerah</button>
-<button data-period="khulafa" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.khulafa">Al-Khulafa</button>
-<button data-period="umam" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.umam">Al-Umam</button>
-<button data-period="nihaya" class="filter-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-ink/5 text-ink/70" data-i18n="period.nihaya">Al-Nihaya</button>
-</div>
-</div>
-<div id="path-flow" class="space-y-14"></div>
-</section>
-
-<!-- ============ MIZAN · TWO LIVES IN TRUE SCALE ============ -->
-<section id="mizan">
-<div class="mz-wrap max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative z-10">
-<div class="text-center mb-10">
-<p class="font-amiri text-gold text-2xl sm:text-3xl mb-2">الدُّنْيَا وَالآخِرَة</p>
-<h2 class="text-2xl sm:text-4xl font-bold text-parchment mb-2" data-i18n="mizan.title">Two Lives in True Scale</h2>
-<p class="text-parchment/65 text-sm max-w-2xl mx-auto leading-relaxed" data-i18n="mizan.sub">Not poetry: measurements. What the Qur'an and the authentic Sunnah state, in numbers, about the life you are in and the one you are heading to.</p>
-</div>
-
-<div class="grid md:grid-cols-2 gap-5">
-
-<!-- 1 · The drop and the sea -->
-<div class="mz-card md:col-span-2 reveal">
-<div class="grid md:grid-cols-2 gap-6 items-center">
-<div>
-<h3 class="mz-h" data-i18n="mizan.drop.title">The Finger and the Sea</h3>
-<p class="mz-quote">"By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back."</p>
-<span class="mz-src">Muslim 2858</span>
-<div class="mt-4 flex items-center gap-3">
-<div class="mz-big" data-i18n="mizan.drop.ratio">the drop : the sea</div>
-</div>
-<p class="mz-note mt-3" data-i18n="mizan.drop.note">Everything ever owned, built, or won by every human in history fits in the droplet. The sea is what remains.</p>
-</div>
-<div class="mz-sea" aria-hidden="true">
-<svg viewBox="0 0 400 230" class="w-full h-auto">
-<defs><linearGradient id="seag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#123047"/><stop offset="100%" stop-color="#071620"/></linearGradient></defs>
-<path class="mz-wave w1" d="M0,120 C60,108 120,132 200,120 C280,108 340,132 400,120 L400,230 L0,230 Z" fill="url(#seag)"/>
-<path class="mz-wave w2" d="M0,132 C70,122 140,142 210,132 C290,122 350,142 400,132 L400,230 L0,230 Z" fill="rgba(18,48,71,.65)"/>
-<g class="mz-hand" opacity=".92">
-<path d="M170,0 L230,0 L230,26 C230,40 224,48 216,52 L212,54 L212,64 C212,74 205,80 198,80 C191,80 185,74 185,64 L185,52 C176,48 170,40 170,26 Z" fill="#C9A227"/>
-<path d="M185,52 L212,54" stroke="rgba(20,16,10,.25)" stroke-width="2"/>
-<ellipse cx="198" cy="70" rx="5.5" ry="8" fill="#E9C86A" opacity=".55"/>
-</g>
-<circle class="mz-drop" cx="198" cy="92" r="4" fill="#E9C86A"/>
-<g fill="rgba(233,200,106,.5)"><circle cx="60" cy="150" r="1.4"/><circle cx="330" cy="160" r="1.2"/><circle cx="250" cy="145" r="1.1"/></g>
-</svg>
-</div>
-</div>
-</div>
-
-<!-- 2 · The timeline you are on -->
-<div class="mz-card reveal">
-<h3 class="mz-h" data-i18n="mizan.time.title">The Timeline You Are On</h3>
-<div class="space-y-4 mt-4">
-<div>
-<div class="mz-row"><span data-i18n="mizan.time.you">This life, the ummah's span</span><b>~<span data-mcount="70">0</span> <span data-i18n="mizan.years">years</span></b></div>
-<div class="mz-bar"><i style="width:2.2%"></i></div>
-<span class="mz-src">Tirmidhi 3550</span>
-</div>
-<div>
-<div class="mz-row"><span data-i18n="mizan.time.day">One Day of the Rising</span><b><span data-mcount="50000">0</span> <span data-i18n="mizan.years">years</span></b></div>
-<div class="mz-bar"><i style="width:64%"></i></div>
-<span class="mz-src">Qur'an 70:4 · lightened for the believer (Ahmad)</span>
-</div>
-<div>
-<div class="mz-row"><span data-i18n="mizan.time.forever">Then the abode that does not end</span><b>∞</b></div>
-<div class="mz-bar mz-inf"><i style="width:100%"></i></div>
-<span class="mz-src">Khulud · 2:25, 98:8</span>
-</div>
-</div>
-<p class="mz-note mt-4" data-i18n="mizan.time.note">On the Day itself, the deniers will estimate this whole life as "an hour of a day" (10:45). Divide seventy by forever: this life rounds to zero, except in what it purchases.</p>
-</div>
-
-<!-- 3 · Exchange rates -->
-<div class="mz-card reveal">
-<h3 class="mz-h" data-i18n="mizan.fx.title">Exchange Rates of the Next World</h3>
-<div class="grid grid-cols-2 gap-2.5 mt-4">
-<div class="mz-mini"><b><span data-mcount="83">0</span>+ <span data-i18n="mizan.years">years</span></b><span data-i18n="mizan.fx.qadr">one night, Laylat al-Qadr</span><i>97:3</i></div>
-<div class="mz-mini"><b>×<span data-mcount="700">0</span>+</b><span data-i18n="mizan.fx.grain">one grain given in charity</span><i>2:261</i></div>
-<div class="mz-mini"><b>2 <span data-i18n="mizan.years">years</span></b><span data-i18n="mizan.fx.arafah">one fast on Arafah</span><i>Muslim 1162</i></div>
-<div class="mz-mini"><b>&gt; <span data-i18n="mizan.fx.dunya">the dunya</span></b><span data-i18n="mizan.fx.fajr">two rak'ahs before Fajr</span><i>Muslim 725</i></div>
-<div class="mz-mini"><b data-i18n="mizan.fx.whipb">a whip's length</b><span data-i18n="mizan.fx.whip">of Jannah outweighs it all</span><i>Bukhari 6415</i></div>
-<div class="mz-mini"><b data-i18n="mizan.fx.wordsb">two words</b><span data-i18n="mizan.fx.words">heavy on the Scale</span><i>Bukhari 7563</i></div>
-</div>
-<p class="mz-note mt-4" data-i18n="mizan.fx.note">No market on earth posts rates like these. They are posted, in writing, for the life that lasts.</p>
-</div>
-
-<!-- 4 · One dip -->
-<div class="mz-card reveal">
-<h3 class="mz-h" data-i18n="mizan.dip.title">The Dip That Resets Memory</h3>
-<div class="grid grid-cols-2 gap-3 mt-4">
-<div class="mz-dip mz-dip-fire">
-<span class="mz-dip-k" data-i18n="mizan.dip.k1">The most comfortable denier who ever lived</span>
-<span class="mz-dip-v" data-i18n="mizan.dip.v1">one dip in the Fire:</span>
-<p>"O son of Adam, have you ever seen any good? He says: No, by Allah, my Lord."</p>
-</div>
-<div class="mz-dip mz-dip-jannah">
-<span class="mz-dip-k" data-i18n="mizan.dip.k2">The most afflicted believer who ever lived</span>
-<span class="mz-dip-v" data-i18n="mizan.dip.v2">one dip in Jannah:</span>
-<p>"O son of Adam, have you ever seen any hardship? He says: No, by Allah, my Lord."</p>
-</div>
-</div>
-<span class="mz-src">Muslim 2807</span>
-<p class="mz-note mt-3" data-i18n="mizan.dip.note">One immersion erases the entire memory of seventy years. That is the actual weight of every luxury envied and every hardship feared here.</p>
-</div>
-
-<!-- 5 · What follows you -->
-<div class="mz-card reveal">
-<h3 class="mz-h" data-i18n="mizan.follow.title">What Actually Follows You</h3>
-<div class="mz-follow mt-4">
-<div class="mz-f"><span class="mz-fi"><span data-ic=home></span></span><span data-i18n="mizan.follow.family">Family</span><em data-i18n="mizan.follow.returns">turns back at the grave</em></div>
-<div class="mz-f"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.wealth">Wealth</span><em data-i18n="mizan.follow.returns2">turns back at the grave</em></div>
-<div class="mz-f mz-f-stay"><span class="mz-fi">✦</span><span data-i18n="mizan.follow.deeds">Deeds</span><em data-i18n="mizan.follow.stays">stay with you</em></div>
-</div>
-<span class="mz-src">Bukhari 6514 · Muslim 2960</span>
-<div class="mz-debt mt-3">
-<span class="mz-debt-i"><span data-ic=calc></span></span>
-<div>
-<b data-i18n="mizan.follow.debt">And one thing waits ahead: debt</b>
-<em data-i18n="mizan.follow.debtNote">Death does not erase it. The martyr is forgiven everything except his debt, and the believer's soul stays attached to what he owes until it is settled. Pay it, or arrange it, while arranging is still yours.</em>
-<span class="mz-src">Muslim 1886 · Tirmidhi 1078 (hasan)</span>
-</div>
-</div>
-<p class="mz-quote mt-3">"The son of Adam says: my wealth, my wealth. And is anything yours except what you ate and finished, wore and wore out, or gave and sent ahead?"</p>
-<span class="mz-src">Muslim 2958 · and 18:46: "the enduring good deeds are better"</span>
-</div>
-
-<!-- 7 · Two capitals -->
-<div class="mz-card reveal">
-<h3 class="mz-h" data-i18n="mizan.cap.title">Two Capitals, Spent Blind</h3>
-<div class="grid grid-cols-2 gap-3 mt-4">
-<div class="mz-cap"><span class="mzc-i">+</span><b data-i18n="mizan.cap.health">Health</b><em data-i18n="mizan.cap.healthNote">works only while it lasts</em></div>
-<div class="mz-cap"><span class="mzc-i"><span data-ic=clock></span></span><b data-i18n="mizan.cap.time">Free time</b><em data-i18n="mizan.cap.timeNote">leaves without notice</em></div>
-</div>
-<p class="mz-quote mt-3">"Two blessings about which many people are cheated: health and free time."</p>
-<span class="mz-src">Bukhari 6412</span>
-<p class="mz-note mt-3" data-i18n="mizan.cap.note">The only two currencies any deed is ever bought with. Both are draining while you read this sentence, and the next life pays out exactly what they purchased.</p>
-</div>
-
-<!-- 8 · Pain is not wasted -->
-<div class="mz-card reveal mz-leafcard">
-<div class="mz-leaves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-<h3 class="mz-h" data-i18n="mizan.leaf.title">Nothing Here Hurts for Free</h3>
-<p class="mz-quote">"No fatigue, nor disease, nor sorrow, nor sadness, nor hurt, nor distress befalls a Muslim, even the prick he receives from a thorn, but Allah expiates some of his sins for it."</p>
-<span class="mz-src">Bukhari 5641</span>
-<p class="mz-quote mt-2">"No Muslim is afflicted by any harm but Allah sheds his sins as a tree sheds its leaves."</p>
-<span class="mz-src">Bukhari 5660 · Muslim 2571</span>
-<p class="mz-note mt-3" data-i18n="mizan.leaf.note">Here, pain subtracts from what stands against you: every fever, worry, and thorn quietly lightens the load. That exchange runs only on this side of the grave.</p>
-</div>
-
-<!-- 9 · Seven shaded -->
-<div class="mz-card md:col-span-2 reveal">
-<h3 class="mz-h" data-i18n="mizan.shade.title">Shade, on the Day There Is None</h3>
-<p class="mz-quote">"Seven, Allah will shade them in His shade on the Day when there is no shade but His."</p>
-<span class="mz-src">Bukhari 660 · Muslim 1031</span>
-<div class="mz-seven mt-4">
-<div class="mz-s7"><i>١</i><span data-i18n="mizan.shade.s1">A just leader</span></div>
-<div class="mz-s7"><i>٢</i><span data-i18n="mizan.shade.s2">A youth raised in worship</span></div>
-<div class="mz-s7"><i>٣</i><span data-i18n="mizan.shade.s3">A heart hung on the mosques</span></div>
-<div class="mz-s7"><i>٤</i><span data-i18n="mizan.shade.s4">Two who love each other for Allah alone</span></div>
-<div class="mz-s7"><i>٥</i><span data-i18n="mizan.shade.s5">One who is called by beauty and answers: I fear Allah</span></div>
-<div class="mz-s7"><i>٦</i><span data-i18n="mizan.shade.s6">A hand that gives so secretly the left does not know</span></div>
-<div class="mz-s7"><i>٧</i><span data-i18n="mizan.shade.s7">Eyes that weep alone, remembering Allah</span></div>
-</div>
-<p class="mz-note mt-4" data-i18n="mizan.shade.note">Fifty thousand years of sun, and shade is bought here, now, mostly for free: none of the seven requires wealth, and every one of them is available today.</p>
-</div>
-
-<!-- 6 · The traveler · close -->
-<div class="mz-card md:col-span-2 reveal">
-<div class="grid md:grid-cols-3 gap-5 items-center">
-<div class="md:col-span-2">
-<h3 class="mz-h" data-i18n="mizan.trav.title">The Rider and the Tree</h3>
-<p class="mz-quote">"What have I to do with this world? I and this world are but as a rider who shades himself under a tree, then moves on and leaves it."</p>
-<span class="mz-src">Tirmidhi 2377</span>
-<p class="mz-quote mt-2">"Be in this world as if you were a stranger, or a traveler on the road."</p>
-<span class="mz-src">Bukhari 6416</span>
-<p class="mz-note mt-3" data-i18n="mizan.trav.note">If this world weighed as much as a mosquito's wing with Allah, He would not have given a denier a sip of its water (Tirmidhi 2320). It weighs less; so travel light, and load the mount with what the next country accepts.</p>
-</div>
-<div class="flex flex-col gap-2.5">
-<button class="mz-cta" data-mgo="node:71" data-i18n="mizan.cta.jannah">See the destination · Jannah</button>
-<a class="mz-cta" href="/words" data-i18n="mizan.cta.words">Carry words that last</a>
-<a class="mz-cta mz-cta-ghost" href="#timeline" data-i18n="mizan.cta.path">Walk the Path again</a>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-</section>
-
-<!--WGO-->
-<style>.wgo{max-width:62rem;margin:2.9rem auto 0;padding:1.75rem 1rem .4rem;border-top:1px solid rgba(44,36,22,.12)}.wgo>h2{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;margin:0;color:#2C2416;font-family:Inter,system-ui,sans-serif;line-height:1.35}.wgo>.wgo-s{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:.35rem 0 0;max-width:34rem}.wgo-g{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.05rem}@media(min-width:38rem){.wgo-g{grid-template-columns:1fr 1fr}}.wgo-c{display:block;text-decoration:none;background:#fff;border:1px solid rgba(44,36,22,.12);border-radius:16px;padding:.85rem .95rem;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}.wgo-c:hover,.wgo-c:focus-visible{border-color:rgba(201,162,39,.7);transform:translateY(-1px);box-shadow:0 5px 18px rgba(44,36,22,.07)}.wgo-c b{display:block;font-size:.9rem;font-weight:800;color:#2C2416;line-height:1.45;font-family:Inter,system-ui,sans-serif}.wgo-c b::after{content:" \2192";color:#C9A227}.wgo-c span{display:block;font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.68);margin-top:.28rem;font-family:Inter,system-ui,sans-serif}</style>
-<section class="wgo" aria-labelledby="wgo-h">
-<h2 id="wgo-h">Where to go from here</h2>
-<p class="wgo-s">The Path is the whole story in order. These are the rooms readers walk into once they have reached the end of it.</p>
-<div class="wgo-g">
-<a class="wgo-c" href="/soul"><b>The Journey of the Soul</b><span>The ten stations after the last breath, which is where the scale you just read ends up.</span></a>
-<a class="wgo-c" href="/unseen"><b>The Unseen and the Mysteries</b><span>Angels, jinn, the signs of the Hour and the myths he ﷺ corrected, every claim badged for its evidence.</span></a>
-<a class="wgo-c" href="/pillars"><b>The Five Pillars</b><span>What all of this asks of an ordinary week: the five things a Muslim life is built on.</span></a>
-<a class="wgo-c" href="/prophets"><b>The 25 Prophets</b><span>The same chain told life by life instead of year by year, with every verse recited.</span></a>
-</div>
-</section>
-<!--/WGO-->
-<!-- ============ ABOUT ============ -->
-<section id="about" class="bg-ink text-parchment py-14 relative overflow-hidden">
-<div class="absolute inset-0 opacity-40 pattern-nihaya" aria-hidden="true"></div>
-<div class="relative max-w-3xl mx-auto px-4 text-center">
-<p class="font-amiri text-xl sm:text-2xl text-gold mb-2">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ إِلَىٰ رَبِّهَا نَاظِرَةٌ</p>
-<p class="text-parchment/75 text-sm leading-relaxed mb-5">“Faces that Day will be radiant, looking at their Lord.” (75:22-23)</p>
-<p class="text-parchment/60 text-sm leading-relaxed max-w-xl mx-auto mb-5" data-i18n="hero.subtitle">From the Throne over the water to the radiant faces looking at their Lord: an illuminated chronicle of creation, the prophets, the Seerah, and the end of time.</p>
-<p class="text-xs text-parchment/45 leading-relaxed max-w-xl mx-auto" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
-<div class="mt-8 pt-6 border-t border-parchment/10 max-w-md mx-auto">
-<p class="font-amiri text-gold text-lg mb-1.5">صَدَقَةٌ جَارِيَة</p>
-<p class="text-xs text-parchment/55 leading-relaxed" data-i18n="about.dedication">This Codex is offered as sadaqah jariyah, an ongoing gift, kept burning for one heart in particular: a daughter of ancient Khorasan, where knowledge stayed alight for centuries. She will recognize herself. Whatever light this work carries, may its reward reach her first.</p>
-<p class="mt-2 text-[10px] text-parchment/35">"When the child of Adam dies, his works end except three, and the first is a charity that keeps flowing." · Muslim 1631</p>
-</div>
-<div id="sponsor-slot"></div>
-<p class="mt-3 text-[10px] tracking-[.14em] uppercase"><a href="/donate" class="text-gold/55 hover:text-gold">✦ Become a Guardian of the Codex</a></p>
-<p class="mt-6 text-[11px] tracking-[.18em] uppercase text-gold/70" data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
-<nav aria-label="Languages" class="mt-4 text-[11px] leading-loose text-parchment/45">
-<a href="/ar" class="hover:text-gold" lang="ar">العربية</a> · <a href="/fr" class="hover:text-gold" lang="fr">Français</a> · <a href="/es" class="hover:text-gold" lang="es">Español</a> · <a href="/de" class="hover:text-gold" lang="de">Deutsch</a> · <a href="/ru" class="hover:text-gold" lang="ru">Русский</a> · <a href="/tr" class="hover:text-gold" lang="tr">Türkçe</a> · <a href="/ur" class="hover:text-gold" lang="ur">اردو</a> · <a href="/hi" class="hover:text-gold" lang="hi">हिन्दी</a> · <a href="/bn" class="hover:text-gold" lang="bn">বাংলা</a> · <a href="/id" class="hover:text-gold" lang="id">Bahasa Indonesia</a> · <a href="/fa" class="hover:text-gold" lang="fa">فارسی</a> · <a href="/prs" class="hover:text-gold" lang="prs">دری</a> · <a href="/pa" class="hover:text-gold" lang="pa">پنجابی</a> · <a href="/ha" class="hover:text-gold" lang="ha">Hausa</a> · <a href="/ps" class="hover:text-gold" lang="ps">پښتو</a> · <a href="/so" class="hover:text-gold" lang="so">Soomaali</a> · <a href="/ku" class="hover:text-gold" lang="ku">Kurdî</a> · <a href="/sw" class="hover:text-gold" lang="sw">Kiswahili</a> · <a href="/zh" class="hover:text-gold" lang="zh">中文</a> · <a href="/ja" class="hover:text-gold" lang="ja">日本語</a> · <a href="/ko" class="hover:text-gold" lang="ko">한국어</a>
-<div class="mt-6 max-w-xl mx-auto rounded-2xl px-5 py-4 text-left" style="background:rgba(255,254,247,.05);border:1.5px solid rgba(233,200,106,.35)">
-<div class="flex items-center gap-4 flex-wrap">
-<span style="font-size:1.6rem"><span data-ic=school></span></span>
-<div style="flex:1;min-width:14rem">
-<p class="text-sm font-bold text-parchment">Run a masjid, Islamic school, or app?</p>
-<p class="text-xs text-parchment/60 leading-relaxed mt-0.5">Embed the whole Codex in your own website: the Mushaf, the 106-lesson Classroom, the Kids' Codex, all of it, ad-free under your name. From $19/month, cancel anytime. Teach for free? Embed free.</p>
-</div>
-<a href="/license" class="font-bold text-xs rounded-full px-4 py-2" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;white-space:nowrap">See licensing →</a>
-</div>
-</div>
-</nav>
-
-</div>
-</section>
-
-<!-- ============ MODAL ============ -->
-<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Codex chapter">
-<div class="modal" id="modal">
-<div class="modal-girih" aria-hidden="true"></div>
-<div class="modal-hero" id="modal-hero"></div>
-<div class="modal-body" id="modal-body"></div>
-<button id="modal-close" class="absolute top-4 right-3.5 w-9 h-9 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-gold hover:text-ink transition-colors z-10" aria-label="Close">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-</button>
-</div>
-</div>
-
-<script defer>
-document.addEventListener("DOMContentLoaded", () => {
-"use strict";
-const $ = id => document.getElementById(id);
-
-const PERIODS = {
-  bidaya:{ar:"البداية", nameKey:"period.bidaya", descKey:"period.bidaya.desc", gate:"gate-bidaya"},
-  qisas:{ar:"قصص الأنبياء", nameKey:"period.qisas", descKey:"period.qisas.desc", gate:"gate-qisas"},
-  jahiliyyah:{ar:"الجاهلية", nameKey:"period.jahiliyyah", descKey:"period.jahiliyyah.desc", gate:"gate-jahiliyyah"},
-  seerah:{ar:"السيرة", nameKey:"period.seerah", descKey:"period.seerah.desc", gate:"gate-seerah"},
-  khulafa:{ar:"الخلفاء", nameKey:"period.khulafa", descKey:"period.khulafa.desc", gate:"gate-khulafa"},
-  umam:{ar:"الأمم", nameKey:"period.umam", descKey:"period.umam.desc", gate:"gate-umam"},
-  nihaya:{ar:"النهاية", nameKey:"period.nihaya", descKey:"period.nihaya.desc", gate:"gate-nihaya"}
-};
-const BOOKS = [
-  {n:1,name:"Al-Bidaya",ar:"البداية",dk:"book.1.desc",period:"bidaya",range:"1-8"},
-  {n:2,name:"Qisas al-Anbiya",ar:"قصص الأنبياء",dk:"book.2.desc",period:"qisas",range:"9-23"},
-  {n:3,name:"Al-Jahiliyyah",ar:"الجاهلية",dk:"book.3.desc",period:"jahiliyyah",range:"24-26"},
-  {n:4,name:"An-Noor",ar:"النور",dk:"book.4.desc",period:"seerah",range:"27-46"},
-  {n:5,name:"Al-Khulafa",ar:"الخلفاء",dk:"book.5.desc",period:"khulafa",range:"47-50"},
-  {n:6,name:"Al-Umam",ar:"الأمم",dk:"book.6.desc",period:"umam",range:"51-52"},
-  {n:7,name:"Al-Nihaya",ar:"النهاية",dk:"book.7.desc",period:"nihaya",range:"53-71"}
-];
-let currentFilter = "all";
-let lastFocus = null;
-
-/* ---------- hero stats ---------- */
-function renderStats(){
-  const M = (typeof NOOR_META !== "undefined") ? NOOR_META : {nodes:NODES.length, characters:98, places:34, words:18, quran:0, hadith:0};
-  $("hero-stats").innerHTML = [
-    [M.nodes, t("stats.nodes")], [M.characters, t("stats.characters")],
-    [M.places, t("stats.places")], [M.words, t("stats.words")],
-    [M.quran, t("stats.quran")], [M.hadith, t("stats.hadith")]
-  ].map(([v,l]) => `<div class="hero-stat px-3 py-1.5 rounded-full text-ink"><div class="v text-sm font-bold text-gold" data-count="${v}">0</div><div class="text-[9px] uppercase tracking-wider text-ink/45">${l}</div></div>`).join("");
-  $("hero-stats").querySelectorAll("[data-count]").forEach((el,i) => setTimeout(() => NoorFX.countUp(el, +el.dataset.count, 1000), 150 + i*90));
-}
-
-/* ---------- books ---------- */
-function renderBooks(){
-  $("book-cards").innerHTML = BOOKS.map((b,i) => `
-    <div class="book-card reveal p-4 cursor-pointer" style="--d:${i*45}ms" data-period="${b.period}" role="button" tabindex="0" aria-label="${b.name}">
-      <div class="corner"></div>
-      <div class="flex items-start justify-between">
-        <div class="font-amiri text-xl text-ink mb-0.5">${b.ar}</div>
-        <div class="book-num text-xs font-bold">${String(b.n).padStart(2,"0")}</div>
-      </div>
-      <div class="font-semibold text-sm text-ink mb-0.5">${b.name}</div>
-      <div class="text-xs text-ink/50 mb-2.5">${t(b.dk)}</div>
-      <div class="flex items-center justify-between">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-gold">${t("books.inpath")}</span>
-        <span class="text-[10px] text-ink/35 font-mono">${b.range}</span>
-      </div>
-    </div>`).join("");
-  $("book-cards").querySelectorAll(".book-card").forEach(card => {
-    const go = () => {
-      const btn = document.querySelector(`.filter-btn[data-period="${card.dataset.period}"]`);
-      if (btn) btn.click();
-      document.getElementById("timeline").scrollIntoView({behavior: NoorFX.REDUCED ? "auto" : "smooth"});
-    };
-    card.addEventListener("click", go);
-    card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
-  });
-}
-
-/* ---------- tiles ---------- */
-function tileHtml(n, i){
-  n = NOOR_I18N.loc("nodes", n);
-  const facts = (n.facts||[]).slice(0,3).map(f => `<div class="tile-mini"><div class="lbl">${f.label}</div><div class="val">${f.value}</div></div>`).join("");
-  return `
-  <article class="tile reveal" style="--d:${(i%9)*55}ms" data-id="${n.id}" role="button" tabindex="0" aria-label="${n.titleEn}">
-    <div class="tile-inner">
-      <div class="tile-bg ${n.pattern||""}" ${n.image?`data-bg="${n.image}"`:'style="opacity:1;transform:scale(1.05)"'}></div>
-      <div class="tile-overlay"></div>
-      <div class="tile-frame"></div>
-      <div class="tile-shine"></div>
-      <div class="tile-content">
-        <div class="flex items-center justify-between mb-1.5">
-          <span class="chip chip-${n.period}">${t(PERIODS[n.period].nameKey)}</span>
-          <span class="text-[10px] text-parchment/50 font-mono">#${String(n.id).padStart(2,"0")}</span>
-        </div>
-        ${n.metric?`<div class="mb-1.5"><span class="data-chip">${n.metric}</span></div>`:""}
-        <h3 class="font-semibold text-[15.5px] leading-snug mb-0.5">${n.titleEn}</h3>
-        <p class="font-amiri text-parchment/90 text-sm mb-1">${n.titleAr}</p>
-        <p class="text-xs text-parchment/65 line-clamp-2">${n.summary||""}</p>
-        ${facts?`<div class="tile-data-row">${facts}</div>`:""}
-      </div>
-    </div>
-  </article>`;
-}
-function renderPath(filter){
-  currentFilter = filter;
-  const flow = $("path-flow");
-  const keys = filter === "all" ? Object.keys(PERIODS) : [filter];
-  flow.innerHTML = keys.map(k => {
-    const list = NODES.filter(n => n.period === k);
-    if (!list.length) return "";
-    return `
-    <section class="period-section">
-      <div class="gate ${PERIODS[k].gate} reveal mb-7">
-        <div class="flex flex-wrap items-end justify-between gap-3 relative z-10">
-          <div>
-            <div class="g-ar font-amiri text-3xl sm:text-4xl text-gold mb-1">${PERIODS[k].ar}</div>
-            <div class="font-semibold text-parchment">${t(PERIODS[k].nameKey)}</div>
-            <div class="text-parchment/60 text-xs mt-0.5">${t(PERIODS[k].descKey)}</div>
-          </div>
-          <span class="gate-count px-3 py-1 rounded-full text-xs font-semibold">${list[0].id}-${list[list.length-1].id}</span>
-        </div>
-      </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">${list.map(tileHtml).join("")}</div>
-    </section>`;
-  }).join("");
-  $("path-count").textContent = (filter === "all" ? NODES.length : NODES.filter(n => n.period === filter).length) + " ·";
-  flow.querySelectorAll(".tile").forEach(tl => {
-    tl.addEventListener("click", () => openModal(+tl.dataset.id));
-    tl.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(+tl.dataset.id); } });
-  });
-  NoorFX.initLazyBg(flow); NoorFX.initReveal(flow); NoorFX.initTilt(flow);
-}
-
-/* ---------- modal ---------- */
-function sect(title, inner, extraCls){ return `<div class="mset mt-7 ${extraCls||""}"><h3 class="sect-h"><span class="g">۞</span>${title}</h3>${inner}</div>`; }
-/* The timeline index carries what the list shows. The details prose, the
-   verses and the narrations for a node are three hundred and thirty kilobytes
-   across all seventy one, so they are fetched one node at a time when a node
-   is actually opened, and kept for the rest of the visit. */
-const NCACHE = Object.create(null);
-function nodeFull(id){
-  if (NCACHE[id]) return Promise.resolve(NCACHE[id]);
-  return fetch("/node/" + id + ".json")
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(j){ if (j) NCACHE[id] = j; return j; })
-    .catch(function(){ return null; });
-}
-function openModal(id, push = true){
-  const light = NODES.find(x => x.id === id);
-  if (!light) return;
-  /* open immediately with what the index already holds, then fill in the rest
-     when it lands. A reader on a slow connection sees the node open at once
-     rather than waiting on a request. */
-  nodeFull(id).then(function(full){
-    if (!full || cur_modal_id !== id) return;
-    keptScroll = $("modal-backdrop").scrollTop;
-    renderModal(full, false);
-  });
-  cur_modal_id = id;
-  return renderModal(NCACHE[id] || light, push);
-}
-let cur_modal_id = null, keptScroll = 0;
-function renderModal(n, push = true){
-  if (!n) return;
-  n = NOOR_I18N.loc("nodes", n);
-  lastFocus = document.activeElement;
-  const hero = $("modal-hero"), body = $("modal-body");
-  hero.className = "modal-hero " + (n.image ? "" : (n.pattern||""));
-  hero.innerHTML = `
-    ${n.image?`<div class="modal-hero-bg kb" style="background-image:url('${n.image}')"></div>`:""}
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10"></div>
-    <div class="absolute bottom-0 left-0 right-0 p-5 text-parchment">
-      <div class="flex items-center gap-2 mb-1.5"><span class="chip chip-${n.period}">${t(PERIODS[n.period].nameKey)}</span>${n.metric?`<span class="data-chip">${n.metric}</span>`:""}</div>
-      <h2 class="text-xl sm:text-2xl font-bold leading-tight">${n.titleEn}</h2>
-      <p class="font-amiri text-lg opacity-90">${n.titleAr}</p>
-    </div>`;
-
-  let html = "";
-  if (n.sequence) html += `<div class="mset seq-strip"><span class="seq-phase">${n.sequence.phase}</span><span class="seq-pos">${n.sequence.position}</span>${n.sequence.note?`<span class="seq-note">${n.sequence.note}</span>`:""}</div>`;
-  const detailsTxt = n.details || n.summary || "";
-  const dropCls = /^["“”«']/.test(detailsTxt.trim()) ? "" : " drop-cap";
-  html += `<div class="mset ${n.sequence?"mt-6":""}">
-    <p class="font-amiri text-gold text-base mb-3">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-    <div class="modal-prose${dropCls}">${linkify(detailsTxt)}</div></div>`;
-  if (n.timeline && n.timeline.length) html += sect(t("modal.order"),
-    `<ol class="mtimeline">${n.timeline.map((s,i)=>`<li><span class="dot">${i+1}</span><div class="tl-l">${linkify(s.label)}</div>${s.detail?`<div class="tl-d">${linkify(s.detail)}</div>`:""}</li>`).join("")}</ol>`);
-  if (n.protection && n.protection.length) html += sect(t("modal.shield"),
-    `<div class="shield-box"><ul>${n.protection.map(p=>`<li><span class="s">+</span><span>${linkify(p)}</span></li>`).join("")}</ul></div>`);
-  if (n.quran && n.quran.length) html += sect(t("modal.quran"),
-    n.quran.map(q=>`<div class="quran-card">
-      <div class="flex items-start justify-between gap-2 mb-2">
-        <span class="text-xs font-bold text-gold pt-1">${q.ref}</span>
-        <button class="audio-btn" data-ref="${q.ref}"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${t("modal.tilawah")}<span class="eq"><i></i><i></i><i></i></span></button>
-      </div>
-      ${q.ar?`<p class="font-amiri text-lg text-ink leading-loose text-right mb-2" dir="rtl">${q.ar}</p>`:""}
-      ${q.en?`<p class="text-sm text-ink/70 leading-relaxed">${q.en}</p>`:""}
-    </div>`).join(""));
-  if (n.hadith && n.hadith.length) html += sect(t("modal.hadith"),
-    n.hadith.map(h=>{
-      const txt = typeof h === "object" ? h.text : h, src = typeof h === "object" ? h.source : "";
-      return `<div class="hadith-item">${linkify(txt)}${src?`<br><span class="hadith-src">${src}</span>`:""}</div>`;
-    }).join(""));
-  if (n.facts && n.facts.length) html += sect(t("modal.facts"),
-    `<div class="facts-grid">${n.facts.map(f=>`<div class="fact-item"><div class="text-[10px] uppercase tracking-wide text-ink/40 mb-0.5">${f.label}</div><div class="text-sm font-semibold text-ink leading-snug">${f.value}</div></div>`).join("")}</div>`);
-  if (n.lessons && n.lessons.length) html += sect(t("modal.lessons"),
-    `<ul>${n.lessons.map(l=>`<li class="lesson-li"><span class="s">✦</span><span>${linkify(l)}</span></li>`).join("")}</ul>`);
-  if (n.connections && n.connections.length) html += sect(t("modal.connected"),
-    `<div class="flex flex-wrap gap-1.5">${n.connections.map(cid=>{
-      const cn = NODES.find(x=>x.id===cid);
-      return cn?`<button class="conn-chip" data-conn="${cid}">#${cid} · ${cn.titleEn.split(":")[0].trim()}</button>`:"";
-    }).join("")}</div>`);
-  html += `<div class="mset mt-8 pt-4 border-t border-ink/8 flex items-center justify-between text-xs text-ink/40">
-    <span>${t("modal.node")} ${n.id} · ${t(PERIODS[n.period].nameKey)}</span>
-    <button id="modal-close-2" class="text-gold font-semibold hover:underline">${t("modal.close")}</button></div>`;
-  body.innerHTML = html;
-
-  body.querySelectorAll(".audio-btn").forEach(b => b.onclick = () => playAyah(b.dataset.ref, b));
-  body.querySelectorAll("[data-conn]").forEach(b => b.onclick = () => openModal(+b.dataset.conn));
-  const c2 = $("modal-close-2"); if (c2) c2.onclick = closeModal;
-  bindEntityLinks(body, { node: nid => openModal(nid) });
-  if (window.NoorGuide) NoorGuide.attach(body, "n:" + n.id, n.titleEn);
-
-  $("modal-backdrop").classList.add("open");
-  document.body.style.overflow = "hidden";
-  if (push) history.replaceState(null, "", "?node=" + n.id);
-  /* The refill pass runs when the full record lands. It must not throw the
-     reader back to the top of a modal they have started reading, and it must
-     not steal focus a second time. */
-  if (push) {
-    $("modal-backdrop").scrollTop = 0;
-    setTimeout(() => $("modal-close").focus({preventScroll:true}), 60);
-  } else {
-    $("modal-backdrop").scrollTop = keptScroll;
+/* The home page's own wiring. Everything that moves lives in the shell;
+   this fills two screens from the library's own answers, opens a chapter of
+   the Path on request, and opens the search and the language door. */
+(function () {
+  "use strict";
+  var doc = document, W = window;
+  function q(s, r) { return (r || doc).querySelector(s); }
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+  function lang() {
+    try { if (W.NOOR_I18N && NOOR_I18N.lang) return NOOR_I18N.lang; return localStorage.getItem("noor_lang") || doc.documentElement.lang || "en"; }
+    catch (e) { return doc.documentElement.lang || "en"; }
   }
-}
-function closeModal(){
-  $("modal-backdrop").classList.remove("open");
-  document.body.style.overflow = "";
-  stopAyah();
-  history.replaceState(null, "", location.pathname);
-  if (lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true});
-}
-$("modal-close").addEventListener("click", closeModal);
-$("modal-backdrop").addEventListener("click", e => { if (e.target === e.currentTarget) closeModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+  function getJSON(url) {
+    return fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>';
+  var PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l11-7z"/></svg>';
+  var SITE = "https://noorcodex.com";
+  var today = new Date().toISOString().slice(0, 10);
 
-/* ---------- filters ---------- */
-$("period-filters").addEventListener("click", e => {
-  const btn = e.target.closest(".filter-btn"); if (!btn) return;
-  document.querySelectorAll(".filter-btn").forEach(b => { b.classList.remove("active","bg-ink","text-parchment"); b.classList.add("bg-ink/5","text-ink/70"); });
-  btn.classList.add("active","bg-ink","text-parchment"); btn.classList.remove("bg-ink/5","text-ink/70");
-  renderPath(btn.dataset.period);
-});
+  /* the key phrase, set in gold: the same rule as api/page.js keyPhrase */
+  function keyPhrase(title) {
+    var t = String(title || "").trim();
+    var wrap = function (a, b) { return esc(t.slice(0, a)) + '<span class="n2-g">' + esc(t.slice(a, b)) + "</span>" + esc(t.slice(b)); };
+    var m = t.match(/\d[\d,.]*(?:\s+[A-Za-z'’-]+)?/);
+    if (m) return wrap(m.index, m.index + m[0].length);
+    m = t.match(/(?:^|\s)([A-Z][\w'’-]*(?:\s+(?:ibn|bin|al|of)\s+)?(?:\s+[A-Z][\w'’-]*)+)/);
+    if (m && m.index > 0) { var a = m.index + m[0].length - m[1].length; return wrap(a, a + m[1].length); }
+    var ws = t.split(/\s+/);
+    if (ws.length < 3) return esc(t);
+    var a2 = t.length - ws.slice(-2).join(" ").length;
+    return wrap(a2, t.length);
+  }
+  function dateLine() {
+    var L = lang(), d = new Date(today + "T12:00:00Z");
+    try { return d.toLocaleDateString(L === "prs" ? "fa" : (L === "en" ? "en-GB" : L), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).replace(",", ""); }
+    catch (e) { return d.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }); }
+  }
 
-/* ---------- search ---------- */
-/* arriving from another room with #search opens it too */
+  /* ---------------------------------------------------------- today's light
+     /api/illuminations?kind=light, exactly as the old page asked it, again
+     when the language changes. A failed fetch leaves the door as it is. */
+  function light() {
+    getJSON("/api/illuminations?kind=light&lang=" + encodeURIComponent(lang())).then(function (d) {
+      if (!d || !d.title) return;
+      var sec = q("#today"); if (!sec) return;
+      var url = d.id ? "/light/" + encodeURIComponent(d.id) : "/today";
+      var yesterday = new Date(Date.parse(today) - 86400000).toISOString().slice(0, 10);
+      sec.innerHTML =
+        '<p class="n2-eyebrow">Today’s light <small>· ' + esc(dateLine()) + "</small></p>" +
+        '<h2 class="n2-h2">' + keyPhrase(d.title) + "</h2>" +
+        (d.story ? '<p class="n2-p">' + esc(d.story) + "</p>" : "") +
+        (d.detail ? '<p class="n2-date">' + esc(d.detail) + "</p>" : "") +
+        (d.src ? '<p class="n2-src">Source · ' + esc(d.src) + "</p>" : "") +
+        '<div class="n2-row"><a class="n2-btn n2-gold" href="' + esc(url) + '">' + (d.id ? "The whole Light" : "Today’s light") + " " + ARROW + "</a>" +
+        '<button class="n2-btn" type="button" data-n2-share="' + esc(d.title + " · NOOR Codex of Light") + '" data-n2-url="' + esc(SITE + url) + '">Share ' + SHARE + "</button>" +
+        '<a class="n2-btn" href="/today?date=' + yesterday + '">The day before</a></div>';
+    });
+  }
 
-/* ---------- header shadow ---------- */
-addEventListener("scroll", () => $("site-header").classList.toggle("scrolled", scrollY > 8), {passive:true});
+  /* ------------------------------------------------------------- one verse
+     The rota's walk, copied faithfully from api/_schedule.js (hash32, gcd,
+     ROTA, HALVES, REEL_EPOCH, reelStep, pickStep), so the verse here is the
+     verse the poster shows on the networks the same day. The half is the
+     first of the day's five slots that carries a verse; on a day with none
+     the walk stands where it will next move, which is the next verse to go
+     out. The manifest lists only cards with a rendered video. */
+  function hash32(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+  var ROTA = {
+    morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
+    noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
+    afternoon: ["name", "word", "know", "name", "verse", "know", "word"],
+    evening:   ["word", "light", "know", "word", "verse", "name", "word"],
+    night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"]
+  };
+  var HALVES = ["morning", "noon", "afternoon", "evening", "night"];
+  var REEL_EPOCH = Date.UTC(2026, 8, 6);
+  function reelStep(kind, dateStr, half) {
+    var t = Date.parse(String(dateStr) + "T00:00:00Z");
+    if (!isFinite(t)) return 0;
+    var day = Math.floor((t - REEL_EPOCH) / 86400000);
+    var week = Math.floor(day / 7), dow = ((day % 7) + 7) % 7;
+    var hi = HALVES.indexOf(half);
+    var perWeek = 0, before = 0;
+    for (var d = 0; d < 7; d++) for (var h = 0; h < HALVES.length; h++) {
+      if ((ROTA[HALVES[h]] || [])[d] !== kind) continue;
+      perWeek++;
+      if (d < dow || (d === dow && h < hi)) before++;
+    }
+    return week * perWeek + before;
+  }
+  function pickStep(list, step, salt) {
+    if (!list || !list.length) return null;
+    var n = list.length;
+    if (n === 1) return list[0];
+    var stride = (hash32(salt + "|stride") % (n - 1)) + 1;
+    while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
+    var off = hash32(salt + "|offset") % n;
+    return list[(((step * stride + off) % n) + n) % n];
+  }
+  function verse() {
+    getJSON("/reels/index.json").then(function (j) {
+      var cards = (j && j.cards) || [];
+      var list = cards.filter(function (c) { return c && c.id && (c.kind || "light") === "verse"; });
+      if (!list.length) return;
+      var dow = new Date(today + "T12:00:00Z").getUTCDay();
+      var half = HALVES.filter(function (h) { return ROTA[h][dow] === "verse"; })[0] || "morning";
+      var c = pickStep(list, reelStep("verse", today, half), "reel:verse");
+      if (!c) return;
+      var isUrl = function (v) { return typeof v === "string" && /^https:\/\//.test(v); };
+      var video = isUrl(c.video) ? c.video : "/reels/" + c.id + ".mp4";
+      var cover = isUrl(c.cover) ? c.cover : (c.cover ? "/reels/" + c.id + "-cover.jpg" : "");
+      /* the caption was written beside the video: the reference, the meaning,
+         then the reciter's line; only a caption in that shape is read */
+      var paras = String(c.caption || "").split(/\n\s*\n/);
+      var ref = String(c.hook || paras[0] || "").replace(/^Qur['’]an\s+/i, "").trim();
+      var meaning = (paras.length >= 3 && /\d+:\d+/.test(paras[0]) && /[A-Za-z]/.test(paras[1]) && !/^Recited by/i.test(paras[1])) ? paras[1].trim() : "";
+      var id = String(c.id).replace(/^verse-/, "");
+      var url = "/verse/" + encodeURIComponent(id);
+      var sec = q("#verse"); if (!sec || !/^\d{1,3}:\d{1,3}/.test(ref)) return;
+      sec.classList.add("hm-live");
+      sec.innerHTML =
+        '<p class="n2-eyebrow">One verse' + (c.reciter ? ' <small>· recited by ' + esc(c.reciter) + "</small>" : "") + "</p>" +
+        '<div class="n2-reel" id="reelbox"><video playsinline controls preload="none"' + (cover ? ' poster="' + esc(cover) + '"' : "") + ' src="' + esc(video) + '" aria-label="The reel for Qur’an ' + esc(ref) + '"></video>' +
+        '<button class="n2-play" type="button" aria-label="Play the reel"><span>' + PLAY + "</span></button></div>" +
+        '<p class="n2-ref">Qur’an ' + esc(ref) + "</p>" +
+        (meaning ? '<p class="n2-meaning">' + esc(meaning) + "</p>" : "") +
+        '<p class="n2-credit">' + (meaning ? "Saheeh International · " : "") + 'the recitation alone, nothing under it</p>' +
+        '<div class="n2-row"><a class="n2-btn n2-gold" href="' + esc(url) + '">The verse ' + ARROW + "</a>" +
+        '<button class="n2-btn" type="button" data-n2-share="' + esc("Qur’an " + ref + (meaning ? ": " + meaning : "") + " · NOOR Codex of Light") + '" data-n2-url="' + esc(SITE + url) + '">Share ' + SHARE + "</button></div>";
+      var r = q("#reelbox"), v = q("video", r), b = q(".n2-play", r);
+      b.addEventListener("click", function () { v.play().then(function () { r.classList.add("n2-playing"); }).catch(function () {}); });
+      v.addEventListener("pause", function () { r.classList.remove("n2-playing"); });
+      v.addEventListener("play", function () { r.classList.add("n2-playing"); });
+    });
+  }
 
-/* ---------- language ---------- */
-var _ls=$("lang-switch"); if(_ls){_ls.value=NOOR_I18N.lang;_ls.addEventListener("change",e=>NOOR_I18N.setLang(e.target.value));}
-window.NoorPage = { rerender(){ renderStats(); renderBooks(); renderPath(currentFilter); } };
+  /* ------------------------------------------------- a chapter of the Path
+     ?node=N and #node-N are what the poster and the menu dial link to. The
+     chapter opens in a sheet from the index nodes-index.js already carries,
+     and its first lesson arrives from /node/N.json; the whole chapter is its
+     own room at /path/N. */
+  function chapter(n) {
+    /* nodes-index.js declares NODES with const: a global binding, not a
+       property of window */
+    var N = typeof NODES !== "undefined" && NODES.find(function (x) { return x.id === n; });
+    if (!N || !W.NOOR2) return;
+    var url = "/path/" + n;
+    var sh = NOOR2.sheet('<div class="hm-sheet">' +
+      '<p class="n2-eyebrow">The Path <small>· chapter ' + n + " of " + NODES.length + "</small></p>" +
+      (N.titleAr ? '<p class="n2-title-ar" lang="ar" translate="no">' + esc(N.titleAr) + "</p>" : "") +
+      '<h2 class="n2-h3">' + esc(N.titleEn) + "</h2>" +
+      '<p>' + esc(N.summary || "") + '</p><p id="hm-lesson"></p>' +
+      '<div class="n2-row"><a class="n2-btn n2-gold" href="' + url + '">Read the chapter ' + ARROW + "</a>" +
+      '<button class="n2-btn" type="button" data-n2-share="' + esc(N.titleEn + " · The Path of Creation, chapter " + n + " · NOOR") + '" data-n2-url="' + SITE + url + '">Share ' + SHARE + "</button>" +
+      '<button class="n2-btn" type="button" data-n2-close>Close</button></div></div>');
+    getJSON("/node/" + n + ".json").then(function (full) {
+      var p = q("#hm-lesson", sh.el);
+      if (full && full.lessons && full.lessons[0] && p) p.innerHTML = "<b>" + esc(String(full.lessons[0]).replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1")) + "</b>";
+    });
+    sh.el.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("[data-n2-close]")) history.replaceState(null, "", location.pathname); });
+  }
 
-/* ---------- boot ---------- */
-NOOR_I18N.apply();
-renderStats(); renderBooks(); renderPath("all");
-NoorFX.initReveal(); NoorFX.initProgress($("progress"));
-NoorFX.initHeroCanvas($("hero-canvas"));
-NoorFX.initParallax($("hero"));
-/* Kun: the wheel inks itself in when the reader reaches it */
-(() => {
-  const seal = document.querySelector(".path-seal");
-  if (!seal) return;
-  if (!("IntersectionObserver" in window)) { seal.classList.add("drawn"); return; }
-  new IntersectionObserver((es, o) => {
-    es.forEach(e => { if (e.isIntersecting) { seal.classList.add("drawn"); o.disconnect(); } });
-  }, { threshold: 0.3 }).observe(seal);
+  /* ------------------------------------------------------ the language door
+     The same doors the head marks with hreflang; the switch is the house's
+     own (NOOR_I18N in noor-fx.js), and ?lang= is read there too. */
+  var LANGS = [["en", "English"], ["ar", "العربية"], ["fr", "Français"], ["es", "Español"], ["de", "Deutsch"], ["ru", "Русский"], ["tr", "Türkçe"],
+    ["ur", "اردو"], ["hi", "हिन्दी"], ["bn", "বাংলা"], ["id", "Bahasa Indonesia"], ["fa", "فارسی"], ["prs", "دری"], ["pa", "پنجابی"]];
+  function langDoor(e) {
+    e.preventDefault();
+    if (!W.NOOR2) return;
+    var cur = lang();
+    var sh = NOOR2.sheet('<p class="n2-eyebrow" data-i18n="lang.choose">Choose your language</p><div class="hm-langgrid" translate="no">' +
+      LANGS.map(function (l) { return '<button type="button" class="n2-btn' + (l[0] === cur ? " n2-gold" : "") + '" lang="' + l[0] + '" data-setlang="' + l[0] + '">' + l[1] + "</button>"; }).join("") +
+      '</div><p data-i18n="lang.note">The Codex answers in your language. The deepest rooms are still being carried over, wave by wave; what is not yet carried stays in English.</p>' +
+      '<div class="n2-row"><button class="n2-btn" type="button" data-n2-close>Close</button></div>');
+    sh.el.addEventListener("click", function (ev) {
+      var b = ev.target.closest && ev.target.closest("[data-setlang]"); if (!b) return;
+      if (W.NOOR_I18N) NOOR_I18N.setLang(b.getAttribute("data-setlang"));
+      sh.close();
+    });
+  }
+
+  function boot() {
+    light();
+    verse();
+    doc.addEventListener("noor:lang", function () { light(); });
+    var lb = q("#lang-btn"); if (lb) lb.addEventListener("click", langDoor);
+    /* the field opens the search; without the script it is a link to the words */
+    var sb = q("#hm-search"); if (sb) sb.addEventListener("click", function (e) {
+      if (W.NOOR_SEARCH && NOOR_SEARCH.open) { e.preventDefault(); NOOR_SEARCH.open(); }
+    });
+    /* arriving with #search from another room opens it too */
+    if (location.hash === "#search" && W.NOOR_SEARCH && NOOR_SEARCH.open) setTimeout(NOOR_SEARCH.open, 200);
+    var sp = new URLSearchParams(location.search);
+    var dn = sp.get("node") || (location.hash.match(/^#node-(\d+)$/) || [])[1];
+    if (dn) setTimeout(function () { chapter(+dn); }, 250);
+  }
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();
 })();
-NoorFX.initTileDrift();
-
-/* mizan: counters on first reveal + CTA */
-const mz = $("mizan");
-if (mz) {
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    io.disconnect();
-    mz.querySelectorAll("[data-mcount]").forEach((el,i) => setTimeout(() => NoorFX.countUp(el, +el.dataset.mcount, 1400), 200 + i*160));
-  }), { threshold: 0.15 });
-  io.observe(mz);
-  mz.querySelectorAll("[data-mgo]").forEach(b => b.addEventListener("click", () => {
-    const [kind, id] = b.dataset.mgo.split(":");
-    if (kind === "node") openModal(+id);
-  }));
-}
-
-/* deep links: ?node=ID or #node-ID */
-const sp = new URLSearchParams(location.search);
-const dn = sp.get("node") || (location.hash.match(/^#node-(\d+)$/)||[])[1];
-if (dn && NODES.find(x => x.id === +dn)) setTimeout(() => openModal(+dn, false), 250);
-});
 </script>
-
 </body>
 </html>

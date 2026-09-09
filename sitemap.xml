@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://noorcodex.com/</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -17,6 +18,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/ar</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -31,52 +33,8 @@
     <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
   </url>
   <url>
-    <loc>https://noorcodex.com/ko</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ko"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
-    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
-    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
-  </url>
-  <url>
-    <loc>https://noorcodex.com/ja</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ja"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
-    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
-    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
-  </url>
-  <url>
-    <loc>https://noorcodex.com/zh</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/zh"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://noorcodex.com/fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://noorcodex.com/es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://noorcodex.com/de"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://noorcodex.com/ru"/>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://noorcodex.com/tr"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://noorcodex.com/ur"/>
-    <xhtml:link rel="alternate" hreflang="hi" href="https://noorcodex.com/hi"/>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
-    <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
-  </url>
-  <url>
     <loc>https://noorcodex.com/fr</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -92,6 +50,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/es</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -107,6 +66,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/de</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -122,6 +82,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/ru</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -137,6 +98,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/tr</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -152,6 +114,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/ur</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -167,6 +130,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/hi</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -182,6 +146,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/bn</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -197,6 +162,7 @@
   </url>
   <url>
     <loc>https://noorcodex.com/id</loc>
+    <lastmod>2026-09-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://noorcodex.com/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://noorcodex.com/ar"/>
@@ -210,697 +176,715 @@
     <xhtml:link rel="alternate" hreflang="bn" href="https://noorcodex.com/bn"/>
     <xhtml:link rel="alternate" hreflang="id" href="https://noorcodex.com/id"/>
   </url>
-  <url><loc>https://noorcodex.com/quran</loc></url>
-  <url><loc>https://noorcodex.com/arabic</loc></url>
-  <url><loc>https://noorcodex.com/pillars</loc></url>
-  <url><loc>https://noorcodex.com/school</loc></url>
-  <url><loc>https://noorcodex.com/madrasa</loc></url>
-  <url><loc>https://noorcodex.com/kids/cradle</loc></url>
-  <url><loc>https://noorcodex.com/license</loc></url>
-  <url><loc>https://noorcodex.com/kids/letters</loc></url>
-  <url><loc>https://noorcodex.com/latif</loc></url>
-  <url><loc>https://noorcodex.com/begin</loc></url>
-  <url><loc>https://noorcodex.com/theology</loc></url>
-  <url><loc>https://noorcodex.com/prophets</loc></url>
-  <url><loc>https://noorcodex.com/muhammad</loc></url>
-  <url><loc>https://noorcodex.com/allah</loc></url>
-  <url><loc>https://noorcodex.com/characters</loc></url>
-  <url><loc>https://noorcodex.com/companions</loc></url>
-  <url><loc>https://noorcodex.com/health</loc></url>
-  <url><loc>https://noorcodex.com/kids</loc></url>
-  <url><loc>https://noorcodex.com/places</loc></url>
-  <url><loc>https://noorcodex.com/donate</loc></url>
-  <url><loc>https://noorcodex.com/legal</loc></url>
-  <url><loc>https://noorcodex.com/words</loc></url>
-  <url><loc>https://noorcodex.com/kids/practice</loc></url>
-  <url><loc>https://noorcodex.com/kids/island</loc></url>
-  <url><loc>https://noorcodex.com/kids/echo</loc></url>
-  <url><loc>https://noorcodex.com/kids/kaaba-builder</loc></url>
-  <url><loc>https://noorcodex.com/kids/orchard</loc></url>
-  <url><loc>https://noorcodex.com/kids/story-steps</loc></url>
-  <url><loc>https://noorcodex.com/kids/star-catcher</loc></url>
-  <url><loc>https://noorcodex.com/kids/zamzam</loc></url>
-  <url><loc>https://noorcodex.com/kids/ark-pairs</loc></url>
-  <url><loc>https://noorcodex.com/kids/yunus</loc></url>
-  <url><loc>https://noorcodex.com/kids/mushaf</loc></url>
-  <url><loc>https://noorcodex.com/kids/strong</loc></url>
-<url><loc>https://noorcodex.com/fa</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/prs</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/pa</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/ha</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/ps</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/so</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/ku</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/sw</loc><lastmod>2026-08-12</lastmod></url>
-<url><loc>https://noorcodex.com/unseen</loc><lastmod>2026-08-12</lastmod><priority>0.9</priority></url>
-<url><loc>https://noorcodex.com/good-life</loc><lastmod>2026-08-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-<url><loc>https://noorcodex.com/simulation</loc><lastmod>2026-08-21</lastmod><priority>0.9</priority></url>
-<url><loc>https://noorcodex.com/journal</loc><lastmod>2026-08-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://noorcodex.com/journal-rules</loc><lastmod>2026-08-21</lastmod><priority>0.4</priority></url>
-<url><loc>https://noorcodex.com/sermon</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
-<url><loc>https://noorcodex.com/soul</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
-<url><loc>https://noorcodex.com/masjid/</loc><lastmod>2026-08-12</lastmod><priority>0.8</priority></url>
-<url><loc>https://noorcodex.com/kids/lanterns</loc><lastmod>2026-08-12</lastmod><priority>0.6</priority></url>
+  <url><loc>https://noorcodex.com/quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/arabic</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/pillars</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/school</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/madrasa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/cradle</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/license</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/letters</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/latif</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/begin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/theology</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/prophets</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/muhammad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/allah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/characters</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/companions</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/health</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/places</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/donate</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/legal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/words</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/practice</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/island</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/echo</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/kaaba-builder</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/orchard</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/story-steps</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/star-catcher</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/zamzam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/ark-pairs</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/yunus</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/mushaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/kids/strong</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://noorcodex.com/fa</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://noorcodex.com/prs</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://noorcodex.com/pa</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://noorcodex.com/ps</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://noorcodex.com/unseen</loc><lastmod>2026-09-09</lastmod><priority>0.9</priority></url>
+<url><loc>https://noorcodex.com/good-life</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+<url><loc>https://noorcodex.com/simulation</loc><lastmod>2026-09-09</lastmod><priority>0.9</priority></url>
+<url><loc>https://noorcodex.com/journal</loc><lastmod>2026-09-09</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/journal-rules</loc><lastmod>2026-09-09</lastmod><priority>0.4</priority></url>
+<url><loc>https://noorcodex.com/sermon</loc><lastmod>2026-09-09</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/soul</loc><lastmod>2026-09-09</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/masjid/</loc><lastmod>2026-09-09</lastmod><priority>0.8</priority></url>
+<url><loc>https://noorcodex.com/kids/lanterns</loc><lastmod>2026-09-09</lastmod><priority>0.6</priority></url>
   <url>
     <loc>https://noorcodex.com/family</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/protection</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/dictionary</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/heroes</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/feedback</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/masjid/khutba</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/masjid/timetable</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/masjid/qibla</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/masjid/start</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/masjid/setup</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/sabur</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/ghaffar</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/adl</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/wadud</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/razzaq</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/shakur</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/hadi</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/stories/jabbar</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/ramadan</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/hajj</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/eid</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://noorcodex.com/hajj-plan</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url><loc>https://noorcodex.com/marriage</loc></url>
-  <url><loc>https://noorcodex.com/teens</loc></url>
-  <!-- WORDS -->
-  <url><loc>https://noorcodex.com/dictionary/aqidah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawhid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawhid-al-rububiyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawhid-al-uluhiyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/asma-wa-sifat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istiwa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tashbih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tafwid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ruyat-allah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shirk</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shirk-asghar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kufr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nifaq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/takfir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iman</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/islam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ihsan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/arkan-al-iman</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fitrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qadr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qada</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ikhtiyar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ajal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/al-ghayb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wahy</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ilham</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nubuwwah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kutub</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mujizah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/karamah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istidraj</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ruh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nafs</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/malaikah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kiraman-katibin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/munkar-wa-nakir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/malak-al-mawt</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jinn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iblis</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shaytan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qarin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/barzakh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/adhab-al-qabr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qiyamah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ashrat-al-saah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dajjal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mahdi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nuzul-isa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/yajuj-wa-majuj</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bath</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hisab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahifah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mizan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sirat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hawd</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shafaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jannah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jahannam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/akhirah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sunnah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bidah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ahl-al-sunnah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ashari</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maturidi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/athari</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawassul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wasilah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istighathah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/arsh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kursi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/lawh-mahfuz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qalam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sidrat-al-muntaha</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ahl-al-fatrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shahadah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/laylat-al-qadr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/aqiqah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/udhiyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kalam-allah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fiqh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/usul-al-fiqh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shariah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijtihad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/taqlid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/madhhab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hanafi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maliki</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shafii</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hanbali</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijma</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qiyas</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/urf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maslahah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/darurah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rukhsah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/azimah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/halal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/haram</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/makruh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mustahabb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mandub</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mubah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fard</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wajib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fard-ayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fard-kifayah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/niyyah-fiqh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nikah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mahr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/walimah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/talaq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iddah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mahram</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/awrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riba</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/gharar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/aqd</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/amanah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/waqf-endowment</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wasiyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mirath</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qisas</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/diyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hudud</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tazir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bayah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dhimmah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jizyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zakat-al-mal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fatwa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qadi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maqasid-al-shariah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qawaid-fiqhiyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istihsan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istishab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sadd-al-dharai</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ikhtilaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mukallaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wali-nikah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nafaqah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/radaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/faskh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mutah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zina</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riddah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bay</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijarah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/murabahah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mudarabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/takaful</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dhabihah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khamr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ulum-al-hadith</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hadith</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hadith-qudsi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/athar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khabar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/isnad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sanad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/matn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rawi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riwayah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muhaddith</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hafiz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ilm-al-rijal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jarh-wa-tadil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/thiqah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/adalah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dabt</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/majhul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/matruk</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tadlis</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ananah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sama</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijazah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hasan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/daif</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mawdu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/la-asla-lahu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hasan-li-ghayrihi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahih-li-ghayrihi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hasan-sahih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hukm</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/takhrij</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mutawatir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ahad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mashhur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/aziz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/gharib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/marfu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mawquf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maqtu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tabii</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/musnad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muttasil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mursal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/munqati</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mudal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muallaq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shadhdh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/munkar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/illah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mudraj</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maqlub</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mudtarib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mutabaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shahid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/itibar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mukhtalif-al-hadith</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fadail-al-amal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riwayah-bil-mana</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kutub-sittah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahihayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muttafaq-alayh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahih-al-bukhari</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahih-muslim</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sunan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jami</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muwatta</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/musannaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mustadrak</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/arbain-nawawi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riyad-al-salihin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kutub-arbaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/amal-ahl-al-madinah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/five-daily-prayers</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rakah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qiyam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ruku</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sujud</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tashahhud</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/taslim</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/takbir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/niyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khushu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qunut</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/witr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tahajjud</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/duha</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tarawih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sunnah-rawatib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jumuah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khutbah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salat-al-eid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salat-al-janazah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istikharah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qasr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jamaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/adhan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iqamah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qiblah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sujud-al-sahw</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sujud-al-tilawah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qada-al-fawait</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/taharah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wudu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghusl</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tayammum</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/najasah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hadath</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/janabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hayd</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/masah-al-khuffayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/siwak</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sawm</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/suhur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iftar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/itikaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kaffarah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fidyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zakat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nisab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hawl</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zakat-al-fitr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sadaqah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sadaqah-jariyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/asnaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khums</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hajj</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/umrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ihram</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mahzurat-al-ihram</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/miqat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/talbiyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sai</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wuquf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/arafah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muzdalifah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mina</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jamarat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hady</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/halq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/taqsir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tahallul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tamattu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ulum-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mushaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ayah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/surah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/juz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/juz-amma</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hizb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rub-al-hizb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/manzil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ruku-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mufassal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/huruf-muqattaat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fatihah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/basmalah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istiadhah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sadaqallah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/makki</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/madani</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nuzul-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/asbab-an-nuzul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jam-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rasm-uthmani</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ahruf-sabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qiraat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hafs</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/warsh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijazah-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mutun-tajwid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nasikh-mansukh</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muhkam-mutashabih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/munasabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/gharib-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/amthal-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/aqsam-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ijaz-al-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tafsir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mufassir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tafsir-bil-mathur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/israiliyyat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tadabbur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tarjamah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tilawah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tartil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tadwir</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hadr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mujawwad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qari</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tajwid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/makharij</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sifat-al-huruf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nun-sakinah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/izhar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/idgham</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/iqlab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ikhfa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghunnah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qalqalah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/madd</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tafkhim-tarqiq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imalah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/waqf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/saktah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/lahn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hifz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hafiz-quran</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/murajaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khatm</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sajdah-tilawah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mass-al-mushaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sirah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tabiun</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tabi-al-tabiin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salaf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khulafa-rashidun</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khilafah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ummah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/makkah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/madinah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/masjid-al-haram</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/masjid-an-nabawi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/masjid-al-aqsa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rawdah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijr-ismail</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zamzam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/safa-marwah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maqam-ibrahim</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jannat-al-baqi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/jahiliyyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/am-al-fil</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghar-hira</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shib-abi-talib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijrah-habashah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/isra-miraj</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bayat-al-aqabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghar-thawr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sahifat-al-madinah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghazwah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/badr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/uhud</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khandaq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hudaybiyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khaybar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghazwat-mutah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fath-makkah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hunayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tabuk</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hajjat-al-wada</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khutbat-al-wada</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ansar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muhajirun</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ahl-al-bayt</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ummahat-al-muminin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/asharah-mubashsharah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khadijah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/aishah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/fatimah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/abu-bakr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/umar-ibn-al-khattab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/uthman-ibn-affan</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ali-ibn-abi-talib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hamzah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/bilal</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/musab-ibn-umayr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khalid-ibn-al-walid</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salman-al-farisi</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/abu-hurayrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hasan-ibn-ali</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/husayn-ibn-ali</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hurub-al-riddah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/al-fitnah-al-ula</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/karbala</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/banu-umayyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/umar-ibn-abd-al-aziz</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/abu-hanifah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam-malik</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam-al-shafii</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam-ahmad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam-al-bukhari</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/imam-muslim</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijri-calendar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ashura</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tazkiyah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qalb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/taqwa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ikhlas</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/riya</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sidq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sabr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shukr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawakkul</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rida</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khawf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/raja</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mahabbah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/khushu-al-qalb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dhikr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dua</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istighfar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawbah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/inabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muhasabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muraqabah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/zuhd</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wara</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qanaah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hilm</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/afw</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/rahmah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/adab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/akhlaq</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/haya</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salamat-al-sadr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kadhib</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghibah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/namimah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/husn-al-zann</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hasad</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kibr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ujb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tawadu</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghadab</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/waswasah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghaflah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/qaswat-al-qalb</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/kabair</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/shubuhat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hawa</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ghadd-al-basar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mujahadah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/istiqamah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tafakkur</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/yaqin</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sakinah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sharh-al-sadr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/dunya</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sakha</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/suhbah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nasihah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/adhkar</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tasbih</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/salawat</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/wird</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tasawwuf</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tariqah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/maqam</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/barakah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tabarruk</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ruqya</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/muawwidhatayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/ayn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/sihr</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/nushrah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/mass-al-jinn</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/tamimah</loc></url>
-  <url><loc>https://noorcodex.com/dictionary/hijama</loc></url>
+  <url><loc>https://noorcodex.com/marriage</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/teens</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aqidah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawhid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawhid-al-rububiyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawhid-al-uluhiyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/asma-wa-sifat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istiwa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tashbih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tafwid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ruyat-allah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shirk</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shirk-asghar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kufr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nifaq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/takfir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iman</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/islam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ihsan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/arkan-al-iman</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fitrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qadr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qada</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ikhtiyar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ajal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/al-ghayb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wahy</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ilham</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nubuwwah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kutub</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mujizah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/karamah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istidraj</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ruh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nafs</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/malaikah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kiraman-katibin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/munkar-wa-nakir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/malak-al-mawt</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jinn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iblis</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shaytan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qarin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/barzakh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/adhab-al-qabr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qiyamah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ashrat-al-saah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dajjal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mahdi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nuzul-isa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/yajuj-wa-majuj</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bath</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hisab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahifah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mizan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sirat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hawd</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shafaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jannah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jahannam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/akhirah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sunnah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bidah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ahl-al-sunnah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ashari</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maturidi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/athari</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawassul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wasilah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istighathah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/arsh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kursi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/lawh-mahfuz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qalam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sidrat-al-muntaha</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ahl-al-fatrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shahadah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/laylat-al-qadr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aqiqah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/udhiyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kalam-allah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fiqh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/usul-al-fiqh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shariah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijtihad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/taqlid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/madhhab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hanafi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maliki</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shafii</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hanbali</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijma</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qiyas</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/urf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maslahah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/darurah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rukhsah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/azimah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/halal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/haram</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/makruh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mustahabb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mandub</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mubah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fard</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wajib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fard-ayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fard-kifayah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/niyyah-fiqh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nikah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mahr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/walimah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/talaq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iddah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mahram</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/awrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riba</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/gharar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aqd</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/amanah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/waqf-endowment</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wasiyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mirath</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qisas</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/diyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hudud</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tazir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bayah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dhimmah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jizyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zakat-al-mal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fatwa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qadi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maqasid-al-shariah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qawaid-fiqhiyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istihsan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istishab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sadd-al-dharai</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ikhtilaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mukallaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wali-nikah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nafaqah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/radaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/faskh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mutah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zina</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riddah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bay</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijarah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/murabahah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mudarabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/takaful</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dhabihah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khamr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ulum-al-hadith</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hadith</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hadith-qudsi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/athar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khabar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/isnad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sanad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/matn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rawi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riwayah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muhaddith</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hafiz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ilm-al-rijal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jarh-wa-tadil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/thiqah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/adalah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dabt</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/majhul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/matruk</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tadlis</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ananah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sama</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijazah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hasan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/daif</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mawdu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/la-asla-lahu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hasan-li-ghayrihi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahih-li-ghayrihi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hasan-sahih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hukm</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/takhrij</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mutawatir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ahad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mashhur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aziz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/gharib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/marfu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mawquf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maqtu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tabii</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/musnad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muttasil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mursal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/munqati</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mudal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muallaq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shadhdh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/munkar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/illah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mudraj</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maqlub</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mudtarib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mutabaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shahid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/itibar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mukhtalif-al-hadith</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fadail-al-amal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riwayah-bil-mana</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kutub-sittah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahihayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muttafaq-alayh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahih-al-bukhari</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahih-muslim</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sunan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jami</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muwatta</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/musannaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mustadrak</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/arbain-nawawi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riyad-al-salihin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kutub-arbaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/amal-ahl-al-madinah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/five-daily-prayers</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rakah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qiyam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ruku</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sujud</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tashahhud</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/taslim</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/takbir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/niyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khushu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qunut</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/witr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tahajjud</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/duha</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tarawih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sunnah-rawatib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jumuah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khutbah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salat-al-eid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salat-al-janazah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istikharah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qasr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jamaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/adhan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iqamah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qiblah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sujud-al-sahw</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sujud-al-tilawah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qada-al-fawait</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/taharah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wudu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghusl</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tayammum</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/najasah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hadath</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/janabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hayd</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/masah-al-khuffayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/siwak</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sawm</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/suhur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iftar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/itikaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kaffarah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fidyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zakat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nisab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hawl</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zakat-al-fitr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sadaqah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sadaqah-jariyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/asnaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khums</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hajj</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/umrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ihram</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mahzurat-al-ihram</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/miqat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/talbiyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sai</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wuquf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/arafah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muzdalifah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mina</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jamarat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hady</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/halq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/taqsir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tahallul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tamattu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ulum-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mushaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ayah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/surah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/juz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/juz-amma</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hizb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rub-al-hizb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/manzil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ruku-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mufassal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/huruf-muqattaat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fatihah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/basmalah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istiadhah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sadaqallah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/makki</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/madani</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nuzul-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/asbab-an-nuzul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jam-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rasm-uthmani</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ahruf-sabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qiraat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hafs</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/warsh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijazah-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mutun-tajwid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nasikh-mansukh</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muhkam-mutashabih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/munasabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/gharib-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/amthal-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aqsam-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ijaz-al-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tafsir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mufassir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tafsir-bil-mathur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/israiliyyat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tadabbur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tarjamah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tilawah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tartil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tadwir</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hadr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mujawwad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qari</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tajwid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/makharij</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sifat-al-huruf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nun-sakinah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/izhar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/idgham</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/iqlab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ikhfa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghunnah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qalqalah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/madd</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tafkhim-tarqiq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imalah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/waqf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/saktah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/lahn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hifz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hafiz-quran</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/murajaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khatm</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sajdah-tilawah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mass-al-mushaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sirah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tabiun</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tabi-al-tabiin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salaf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khulafa-rashidun</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khilafah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ummah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/makkah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/madinah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/masjid-al-haram</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/masjid-an-nabawi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/masjid-al-aqsa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rawdah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijr-ismail</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zamzam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/safa-marwah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maqam-ibrahim</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jannat-al-baqi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/jahiliyyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/am-al-fil</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghar-hira</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shib-abi-talib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijrah-habashah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/isra-miraj</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bayat-al-aqabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghar-thawr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sahifat-al-madinah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghazwah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/badr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/uhud</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khandaq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hudaybiyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khaybar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghazwat-mutah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fath-makkah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hunayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tabuk</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hajjat-al-wada</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khutbat-al-wada</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ansar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muhajirun</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ahl-al-bayt</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ummahat-al-muminin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/asharah-mubashsharah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khadijah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/aishah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/fatimah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/abu-bakr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/umar-ibn-al-khattab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/uthman-ibn-affan</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ali-ibn-abi-talib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hamzah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/bilal</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/musab-ibn-umayr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khalid-ibn-al-walid</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salman-al-farisi</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/abu-hurayrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hasan-ibn-ali</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/husayn-ibn-ali</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hurub-al-riddah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/al-fitnah-al-ula</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/karbala</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/banu-umayyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/umar-ibn-abd-al-aziz</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/abu-hanifah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam-malik</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam-al-shafii</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam-ahmad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam-al-bukhari</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/imam-muslim</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijri-calendar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ashura</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tazkiyah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qalb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/taqwa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ikhlas</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/riya</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sidq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sabr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shukr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawakkul</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rida</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khawf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/raja</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mahabbah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/khushu-al-qalb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dhikr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dua</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istighfar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawbah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/inabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muhasabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muraqabah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/zuhd</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wara</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qanaah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hilm</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/afw</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/rahmah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/adab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/akhlaq</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/haya</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salamat-al-sadr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kadhib</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghibah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/namimah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/husn-al-zann</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hasad</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kibr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ujb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tawadu</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghadab</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/waswasah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghaflah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/qaswat-al-qalb</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/kabair</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/shubuhat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hawa</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ghadd-al-basar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mujahadah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/istiqamah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tafakkur</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/yaqin</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sakinah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sharh-al-sadr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/dunya</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sakha</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/suhbah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nasihah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/adhkar</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tasbih</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/salawat</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/wird</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tasawwuf</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tariqah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/maqam</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/barakah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tabarruk</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ruqya</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/muawwidhatayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/ayn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/sihr</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/nushrah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/mass-al-jinn</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/tamimah</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://noorcodex.com/dictionary/hijama</loc><lastmod>2026-09-09</lastmod></url>
   <!-- /WORDS -->
 </urlset>

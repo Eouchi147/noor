@@ -7,12 +7,9 @@ var CORE = [
   "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate", "/unseen", "/sermon", "/soul",
   "/family","/protection","/dictionary","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",
   "/assets/tw.css?v=49", "/noor-fx.js", "/noor-ink.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
-  /* The motion libraries are deliberately NOT here. Precaching them would put
-     a hundred and sixteen kilobytes onto exactly the phones the loader was
-     written to spare: it decides per page and per device whether motion is
-     worth its weight, and a service worker that fetches them anyway would
-     quietly undo that decision. The loader itself is three kilobytes. */
-  "/assets/noor-motion-boot.js",
+  /* The motion libraries and their loader are no longer deployed (see
+     .vercelignore): no page called them, and a precache entry for a file
+     that is not there is a failed fetch on every install. */
   "/assets/noor-hijri.js", "/assets/noor-ramadan.js", "/assets/noor-ramadan.css", "/assets/noor-overrides.js",
   "/assets/brand/mark.svg", "/assets/brand/mark-192.png", "/assets/brand/mark-512.png",
   "/manifest.webmanifest"

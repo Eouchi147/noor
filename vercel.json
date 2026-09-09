@@ -12,6 +12,15 @@
     },
     "api/house.js": {
       "maxDuration": 60
+    },
+    "api/page.js": {
+      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"
+    },
+    "api/sitemap.js": {
+      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"
+    },
+    "api/reel.js": {
+      "maxDuration": 60
     }
   },
   "cleanUrls": true,
@@ -80,6 +89,46 @@
     {
       "source": "/threads/callback",
       "destination": "/api/threads?action=callback"
+    },
+    {
+      "source": "/light/:id",
+      "destination": "/api/page?kind=light&id=:id"
+    },
+    {
+      "source": "/lights",
+      "destination": "/api/page?kind=lights"
+    },
+    {
+      "source": "/path/:n",
+      "destination": "/api/page?kind=path&n=:n"
+    },
+    {
+      "source": "/path",
+      "destination": "/api/page?kind=paths"
+    },
+    {
+      "source": "/verse/:ref",
+      "destination": "/api/page?kind=verse&ref=:ref"
+    },
+    {
+      "source": "/verses",
+      "destination": "/api/page?kind=verses"
+    },
+    {
+      "source": "/surah/:n",
+      "destination": "/api/page?kind=surah&n=:n"
+    },
+    {
+      "source": "/today",
+      "destination": "/api/page?kind=today"
+    },
+    {
+      "source": "/sitemap-rooms.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/podcast.xml",
+      "destination": "/api/podcast"
     }
   ]
 }

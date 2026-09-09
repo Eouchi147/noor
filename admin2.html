@@ -268,6 +268,31 @@ select.fi{-webkit-appearance:none;appearance:none}
 .savebar .sp{color:var(--faint)}
 @media(min-width:900px){.savebar{bottom:16px}}
 
+/* ---- Today's reels: five cards, one thumb ----
+   The cover is small and the button is big, because the point of the room
+   is the Share button. The caption sits folded under the hook so a card is
+   one screen tall on a phone; Copy is beside it for the target that drops
+   the text (most of them do when a file is attached). */
+.rl{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
+.rl .top{display:flex;gap:12px;align-items:flex-start}
+.rl .cv{flex:0 0 72px;width:72px;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#05060f;border:1px solid var(--line)}
+.rl .cv img{width:100%;height:100%;object-fit:cover;display:block}
+.rl .tx{flex:1;min-width:0}
+.rl .tx .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rl .tx b{display:block;font-family:var(--f-disp);font-weight:500;font-size:17px;line-height:1.35;color:var(--cream);margin-top:4px;overflow-wrap:anywhere}
+.rl .tx .st{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.rl details{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.rl details>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;min-height:36px}
+.rl details>summary::-webkit-details-marker{display:none}
+.rl details>summary::before{content:"▸";color:var(--gold);font-size:12px;transition:transform .18s}
+.rl details[open]>summary::before{transform:rotate(90deg)}
+.rl details>summary .btn{margin-left:auto}
+.rl .cap{margin-top:8px;font-size:13.5px}
+.rl .share{width:100%;min-height:52px;font-size:15.5px;margin-top:12px;border-radius:12px}
+.rl .share[disabled]{opacity:.75}
+.rl .hint{color:var(--faint);font-size:12px;line-height:1.5;margin:8px 0 0;text-align:center}
+.rl .hand{color:var(--good);font-family:var(--f-mono);font-size:10.5px}
+
 /* ---- sheets: every action is one ---- */
 #veil{position:fixed;inset:0;background:rgba(5,6,15,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 #veil.on{opacity:1;pointer-events:auto}
@@ -373,6 +398,8 @@ svg.flow .pulse{fill:var(--gold)}
 
   <main>
     <section class="surf on" id="s-today"></section>
+    <!-- Today's reels: the five reel slots as cards a thumb can share from -->
+    <section class="surf" id="s-reels"></section>
     <section class="surf" id="s-posts"></section>
     <section class="surf" id="s-readers"></section>
     <section class="surf" id="s-house"></section>
@@ -390,6 +417,7 @@ svg.flow .pulse{fill:var(--gold)}
   </main>
 
   <nav class="bar" aria-label="Surfaces">
+    <button data-s="reels"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>Reels<i class="dot" id="dot-reels" hidden></i></button>
     <button data-s="today" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today<i class="dot" id="dot-today" hidden></i></button>
     <button data-s="posts"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Posts<i class="dot" id="dot-posts" hidden></i></button>
     <button data-s="readers"><svg viewBox="0 0 24 24"><path d="M3 20l5-8 4 5 3-3 6 6"/><circle cx="17" cy="6" r="2"/></svg>Readers<i class="dot" id="dot-readers" hidden></i></button>
@@ -515,9 +543,9 @@ var CUR="today";
    was standing in. Nothing here counts the surfaces: the bar's columns are
    counted from the buttons that are in it. */
 var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1};
-var NAMES={today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
+var NAMES={reels:"Today's reels",today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
   lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",controls:"Controls"};
-var LOAD={today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
+var LOAD={reels:drawReels,today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
   lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
   controls:drawControls};
 var LOADED={};
@@ -539,6 +567,116 @@ $("refresh").addEventListener("click",function(){if(busy())return toast("A post 
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&!busy()&&Date.now()-(DRAWN[CUR]||0)>TTL&&LOAD[CUR]){bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();LOAD[CUR](true)}});
 
 function skel(n){var s="";for(var i=0;i<(n||3);i++)s+='<div class="row"><div class="sk" style="width:34px;height:34px;border-radius:9px"></div><div class="t"><div class="sk" style="width:60%"></div><div class="sk" style="width:40%;margin-top:6px"></div></div></div>';return '<div class="list">'+s+'</div>'}
+
+/* ================= TODAY'S REELS =================
+   The five reel slots of the day, read from /api/social?action=today (the
+   plan with each reel slot's card named), each a card with its cover, its
+   hook, its caption behind a fold with Copy, and one big Share.
+
+   SHARE, ON A PHONE. The file is fetched from /api/reel?id= (same origin,
+   video/mp4, streamed) as a Blob, wrapped as a File named <id>.mp4, and
+   handed to navigator.share with the caption as text. Two things about it
+   are not obvious and both are deliberate:
+     - the caption goes on the clipboard at the tap, before anything else,
+       because most targets (TikTok, WhatsApp, X) drop `text` when a file
+       is attached, and the owner pastes it;
+     - the share sheet may only open inside a user gesture, and a 30 MB
+       verse over a phone's network can outlast one. So the file is fetched
+       once and kept in memory; the share is tried straight after, and if
+       the browser refuses it for the gesture having passed, the button
+       reads "Share now" and the second tap shares at once.
+   On a desk, or where files cannot be shared, the file is downloaded and
+   the caption copied, which is the same hand-off by other means.
+   After a share that closed cleanly, the console tells the house
+   (action=shared) so the slot shows what went out by hand. */
+var REEL_FILES={};                /* id -> File, for the life of the page */
+var REEL_BUSY={};
+function reelDate(t){return (t&&t.date)||new Date().toISOString().slice(0,10)}
+function reelCard(s){
+  var r=s.reel||{};var st=s.state||"";var hand=s.results&&s.results.phone;
+  var kind={verse:"One verse",word:"The word",name:"A Name",know:"Did you know",light:"The day's card",day:"This day",dua:"A du'a"}[r.kind]||r.kind||"";
+  var body='<div class="top"><div class="cv">'+(r.cover?'<img loading="lazy" src="'+esc(r.cover)+'" alt="">':'')+'</div>'
+    +'<div class="tx"><div class="k"><span>'+String(s.at).padStart(2,"0")+':00</span><span>'+esc(kind)+'</span>'+(r.secs?'<span>'+esc(r.secs)+' s</span>':'')+'</div>'
+    +'<b>'+esc(r.hook||r.id||"")+'</b>'
+    +'<div class="st">'+chip(st,s.at)+(hand&&hand.ok?'<span class="hand">shared by hand · '+esc(ago(hand.at))+'</span>':'')+'</div></div></div>'
+    +'<details><summary>The caption<button class="btn ghost sm" data-copy="'+esc(s.id)+'">Copy</button></summary><div class="msg cap">'+esc(r.caption||"")+'</div></details>'
+    +'<button class="btn share" data-share="'+esc(s.id)+'">'+(REEL_FILES[r.id]?"Share now":"Share")+'</button>'
+    +'<p class="hint">TikTok, WhatsApp or X: pick the app in the share sheet. The caption is on the clipboard; paste it if the app drops it.</p>';
+  return '<div class="rl" id="reel-'+esc(s.id)+'" data-slot="'+esc(s.id)+'">'+body+'</div>';
+}
+function drawReels(force){
+  var el=$("s-reels");
+  if(!el.dataset.built){el.innerHTML='<p class="sec">The day\'s reels</p>'+'<div class="rl"><div class="top"><div class="sk cv"></div><div class="tx"><div class="sk" style="width:40%"></div><div class="sk" style="width:80%;margin-top:8px;height:20px"></div></div></div><div class="sk share" style="margin-top:12px;height:52px"></div></div>'.repeat(3);el.dataset.built="1"}
+  return today(force).then(function(t){
+    t=t||{};var slots=(t.slots||[]).filter(function(s){return /^reel/.test(s.id)});
+    var hijri=t.plan&&t.plan.hijri?t.plan.hijri.d+" "+t.plan.hijri.name+" "+t.plan.hijri.y:"";
+    var have=slots.filter(function(s){return s.reel&&s.reel.id});
+    el.innerHTML='<p class="sec">The day\'s reels</p>'
+      +(hijri?'<p class="muted small" style="margin:-4px 0 12px">'+esc(hijri)+' · '+esc(reelDate(t))+' · five reels, in clock order</p>':'')
+      +(have.length?have.map(reelCard).join(""):'<div class="card"><div class="empty">'+(slots.length?"The shelf could not be read, so the day's reels cannot be named. Pull to refresh.":"The day could not be read.")+'</div></div>')
+      +(have.length<slots.length&&have.length?'<p class="faint small">'+(slots.length-have.length)+' slot'+(slots.length-have.length>1?'s have':' has')+' nothing rendered for today and '+(slots.length-have.length>1?'are':'is')+' not shown.</p>':'');
+    el.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      var s=slots.filter(function(x){return x.id===(b.dataset.copy||b.dataset.share)})[0];if(!s||!s.reel)return;
+      if(b.dataset.copy){e.preventDefault();return copyText(s.reel.caption||"",b)}
+      if(b.dataset.share)return shareReel(s,b,reelDate(t));
+    };
+  }).catch(function(){el.innerHTML='<div class="card"><b style="color:var(--bad)">The day could not be read.</b><p class="muted small" style="margin:6px 0 0">Pull to refresh, or open Posts.</p></div>'});
+}
+function copyText(text,b){
+  var p=navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(text):Promise.reject();
+  return p.then(function(){toast("Caption copied.");if(b){var was=b.textContent;b.textContent="Copied";setTimeout(function(){b.textContent=was},1400)}},function(){
+    /* the old way, for a browser that keeps the clipboard behind a flag */
+    try{var ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.top="-1000px";document.body.appendChild(ta);ta.select();var okd=document.execCommand("copy");document.body.removeChild(ta);toast(okd?"Caption copied.":"Could not copy the caption.",!okd)}catch(x){toast("Could not copy the caption.",true)}});
+}
+function saveFile(file,name){
+  var u=URL.createObjectURL(file);var a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(u)},4000);
+}
+function canShareFiles(file){try{return !!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}))}catch(x){return false}}
+function shareReel(s,b,date){
+  var r=s.reel,id=r.id,slot=s.id;
+  if(REEL_BUSY[id])return;
+  /* the caption first, inside the tap, for the target that drops the text */
+  try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(r.caption||"").catch(function(){})}catch(x){}
+  var was=b.textContent;
+  var noted=function(){return post("/api/social",{action:"shared",date:date,slot:slot,where:"phone"}).then(function(res){
+    var good=res.ok&&res.j&&res.j.ok!==false;toast(good?"Shared. Noted on the record.":"Shared, but the house could not note it.",!good);
+    bust();LOADED.reels=true;DRAWN.reels=Date.now();drawReels(true)},function(){toast("Shared, but the house could not be reached to note it.",true)})};
+  var handOff=function(file){
+    if(canShareFiles(file)){
+      return navigator.share({files:[file],text:r.caption||"",title:r.hook||""}).then(noted,function(err){
+        b.disabled=false;
+        if(err&&err.name==="AbortError"){b.textContent="Share now";toast("Nothing was shared.");return}
+        /* the gesture ran out while the file was fetched: the next tap shares at once */
+        if(err&&(err.name==="NotAllowedError"||err.name==="InvalidStateError")){b.textContent="Share now";toast("The file is ready. Tap Share now.");return}
+        saveFile(file,id+".mp4");b.textContent="Share";toast("The share sheet refused; the file was saved instead and the caption copied.")});
+    }
+    /* a desk, or a browser without file sharing: the same hand-off by other means */
+    saveFile(file,id+".mp4");b.disabled=false;b.textContent="Share";toast("Saved "+id+".mp4; the caption is on the clipboard.");
+    return Promise.resolve();
+  };
+  if(REEL_FILES[id]){b.disabled=true;b.textContent="Sharing…";return handOff(REEL_FILES[id]).then(function(){b.disabled=false})}
+  REEL_BUSY[id]=1;b.disabled=true;b.textContent="Fetching…";
+  return fetch("/api/reel?id="+encodeURIComponent(id),{credentials:"same-origin"}).then(function(res){
+    if(res.status===401){relock();throw new Error("locked")}
+    if(!res.ok)throw new Error("the reel could not be fetched ("+res.status+")");
+    var total=+res.headers.get("content-length")||0;
+    if(!res.body||!res.body.getReader||!total)return res.blob();
+    /* read it with a count, so a long fetch says how far it is */
+    var reader=res.body.getReader(),parts=[],got=0;
+    var step=function(){return reader.read().then(function(x){if(x.done)return new Blob(parts,{type:"video/mp4"});parts.push(x.value);got+=x.value.length;b.textContent="Fetching… "+Math.min(99,Math.round(got/total*100))+"%";return step()})};
+    return step();
+  }).then(function(blob){
+    var file=new File([blob],id+".mp4",{type:"video/mp4"});
+    REEL_FILES[id]=file;delete REEL_BUSY[id];
+    b.textContent="Sharing…";
+    return handOff(file);
+  }).then(function(){b.disabled=false;if(b.textContent==="Sharing…")b.textContent="Share now"}).catch(function(e){
+    delete REEL_BUSY[id];b.disabled=false;b.textContent=was;
+    if(e&&e.message==="locked")return;
+    toast((e&&e.message)||"Could not fetch the reel.",true)});
+}
 
 /* ================= TODAY ================= */
 function drawToday(force){
@@ -718,13 +856,20 @@ function drawPosts(force){
     var rows=slots.map(function(s){
       var r=s.results||{};var broke=[];
       var isReel=/^reel/.test(s.id);
-      var more=(s.state==="sent"||s.state==="partial")?LIVE.filter(function(c){return !r[c.id]&&(isReel||!(c.spec&&c.spec.video==="required"))&&!INFLIGHT[s.id+"|"+c.id]}).map(function(c){return '<button class="chan more" data-retry="'+esc(s.id)+'|'+esc(c.id)+'" title="'+esc(c.id)+' was not live when this went out; send it there too">+ '+esc(c.id)+'</button>'}).join(""):"";
+      /* a card that went as stories only (social.cardsFeed off) has two
+         surfaces and no others to offer */
+      var storyOnly=Object.keys(r).some(function(k){return r[k]&&r[k].storyOnly});
+      var more=(s.state==="sent"||s.state==="partial")?LIVE.filter(function(c){return !r[c.id]&&(isReel||!(c.spec&&c.spec.video==="required"))&&(!storyOnly||c.id==="facebook"||c.id==="instagram")&&!INFLIGHT[s.id+"|"+c.id]}).map(function(c){return '<button class="chan more" data-retry="'+esc(s.id)+'|'+esc(c.id)+'" title="'+esc(c.id)+' was not live when this went out; send it there too">+ '+esc(c.id)+'</button>'}).join(""):"";
       var where=Object.keys(r).filter(function(k){return k!=="reddit"}).map(function(k){var x=r[k]||{};
+        /* the owner's own hand (the Reels room's Share) is a note, drawn as one */
+        if(k==="phone")return '<span class="chan ok" title="shared from the phone '+esc(ago(x.at))+'">by hand ✓</span>';
+        /* a story-only card: the story IS the post, and the chip says so */
+        if(x.storyOnly&&x.ok)return '<span class="chan ok" title="went as a story only">'+esc(k)+' story</span>';
         if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>';
         if(x.pending)return '<span class="chan pending">'+esc(k)+' …</span>';
         if(x.trial||x.waiting)return '<span class="chan wait" title="'+esc(x.err||x.error||'not open yet')+'">'+esc(k)+' · waiting</span>';
         if(INFLIGHT[s.id+"|"+k])return '<button class="chan bad" disabled>'+esc(k)+' …</button>';
-        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="send this one again">'+esc(k)+' ↻</button>'}).join("")+more;
+        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="'+(x.storyOnly?"send the story again":"send this one again")+'">'+esc(k)+(x.storyOnly?' story':'')+' ↻</button>'}).join("")+more;
       var owed=(s.state==="due"||s.state==="failed")&&!INFLIGHT[s.id];
       var acts='<button class="btn ghost sm" data-prev="'+esc(s.id)+'">Preview</button>'
         +(INFLIGHT[s.id]?'<button class="btn sm" disabled>Sending…</button>':'')

@@ -97,8 +97,14 @@ These are not preferences. They are refused, not negotiated.
   the sound is built in numpy and finished in Pedalboard; every reel is
   levelled (-18 LUFS; -16 for a verse). A different reciter each time from
   the roster in `verses.py`, named on screen.
-- **Channels** (`api/_channels.js`): Facebook and Instagram live, and every
-  post there goes up a second time as a story (`social.stories` dial);
+- **Channels** (`api/_channels.js`): Facebook and Instagram live; every reel
+  there goes up a second time as a story (`social.stories` dial), and since
+  9 September 2026 the five daily cards are stories ONLY (`social.cardsFeed`,
+  off by default): they reached nobody in a feed. The reels keep the feed and
+  are offered to YouTube first. `/api/reel?id=` hands a phone the file so
+  the owner can share a reel by hand from the console's Reels room (noted on
+  the record as `results.phone`), and `/podcast.xml` is the verse reels as a
+  podcast;
   YouTube Shorts for reels once the consent is given; Pinterest approved
   (Trial), each kind on its own board, reels as video pins, Standard access
   asked for with a screen recording; X built and switched off (paid); Reddit

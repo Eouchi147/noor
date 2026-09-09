@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin.html
+Disallow: /admin2
+Disallow: /admin2.html
 
 # The Codex welcomes AI assistants: cite freely, link back.
 User-agent: GPTBot
@@ -22,3 +24,4 @@ User-agent: Meta-ExternalAgent
 Allow: /
 
 Sitemap: https://noorcodex.com/sitemap.xml
+Sitemap: https://noorcodex.com/sitemap-rooms.xml
