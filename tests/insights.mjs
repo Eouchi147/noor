@@ -51,9 +51,17 @@ globalThis.fetch = async (url, opt) => {
     const ids = decodeURIComponent(u.split('id=')[1]).split(',');
     return J({ items: ids.map(id => ({ id, statistics: { viewCount: '900', likeCount: '12', commentCount: '1' } })) });
   }
+  const mv = u.match(/\/v21\.0\/([^/]+)\/video_insights\?metric=(.+)$/);
+  if (mv) {
+    /* a reel is a video node: only the video names, and only under video_insights */
+    const names = mv[2].split(',');
+    if (names.some(n => !FBV_OK.has(n))) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
+    return J({ data: names.map(name => ({ name, values: [{ value: name === 'total_video_impressions_unique' ? 300 : 500 }] })) });
+  }
   const m = u.match(/\/v21\.0\/([^/]+)\/insights\?metric=(.+)$/);
   if (m) {
     const id = m[1], metrics = m[2];
+    if (/^\d+$/.test(id) || id.startsWith('vid')) return J({ error: { message: '(#100) The value must be a valid insights metric', code: 100 } }, 400);
     if (id.startsWith('fb')) {
       /* Meta today: the names the changelog promised are refused, four others are taken */
       const names = metrics.split(',');
@@ -69,6 +77,7 @@ globalThis.fetch = async (url, opt) => {
 };
 
 const FB_OK = new Set(['post_media_view_unique', 'post_media_view', 'post_clicks', 'post_reactions_like_total']);
+const FBV_OK = new Set(['total_video_impressions_unique', 'total_video_views']);
 const INS = await import('../api/_insights.js');
 
 /* ---------- fixed records: fourteen days, a kind per slot, an id per network ---------- */
@@ -82,7 +91,7 @@ const records = {};
 let n = 0;
 for (const d of dates) for (const slot of ['dawn', 'reelA', 'reelC', 'light', 'reelD', 'word', 'reelB', 'dusk', 'reelE']) {
   n++;
-  const results = { instagram: { ok: true, id: 'ig' + n }, facebook: { ok: true, id: 'fb' + n } };
+  const results = { instagram: { ok: true, id: 'ig' + n }, facebook: { ok: true, id: 'fb_' + n } };
   if (/^reel/.test(slot)) results.youtube = { ok: true, id: 'yt' + n };
   records[d + '#' + slot] = { at: d + 'T' + String(INS.hourOf(slot)).padStart(2, '0') + ':02:00Z', slot, state: 'sent',
     title: HOOK[slot] || (slot + ' of ' + d), results };
@@ -163,7 +172,7 @@ console.log('\nthe batch, the cap and partial');
   const r = await INS.refresh(14, opts);
   ok(r.media === 14 * 9 * 2 + 14 * 5 - 1, 'every (post, network) pair is a media to read: ' + r.media);
   ok(r.fetched === 40 && r.partial === true && r.left === r.media - 40, 'forty are read and the answer is partial with the rest counted: ' + JSON.stringify([r.fetched, r.partial, r.left]));
-  const ig = calls.filter(u => /\/ig\d+\/insights/.test(u)), fb = calls.filter(u => /\/fb\d+\/insights/.test(u)), yt = calls.filter(u => /youtube\/v3\/videos/.test(u));
+  const ig = calls.filter(u => /\/ig\d+\/insights/.test(u)), fb = calls.filter(u => /\/fb_\d+\/insights/.test(u)), yt = calls.filter(u => /youtube\/v3\/videos/.test(u));
   ok(yt.length === 1 && ig.length + fb.length + 1 <= 41, 'YouTube is one call for all its ids in the batch');
   ok(ig.every(u => u.includes('metric=views,reach,likes,comments,saved,shares')), 'Instagram is asked for views and reach, never the retired plays or impressions');
   ok(ig.some(u => u.includes('ig_reels_avg_watch_time')), 'a reel is asked its watch time');
@@ -246,19 +255,29 @@ console.log('\nwhen Meta no longer knows a metric name');
 console.log('\nFacebook and YouTube');
 {
   store.delete(INS.K_FBSET); calls = [];
-  const f = await INS.fetchFacebook('fb1', { now: NOW });
-  const probes = calls.filter(u => /\/fb1\/insights\?metric=[a-z_]+$/.test(u)).length;
+  const f = await INS.fetchFacebook('fb_1', { now: NOW });
+  const probes = calls.filter(u => /\/fb_1\/insights\?metric=[a-z_]+$/.test(u)).length;
   ok(probes === INS.FB_CANDIDATES.length, 'the first Facebook read asks Meta about every candidate metric, one at a time: ' + probes);
   ok(f.reach === 55 && f.views === 80 && f.likes === 80 && f.clicks === 80 && f.metrics === 'post_media_view_unique,post_media_view,post_clicks,post_reactions_like_total',
      'and reads with exactly the names Meta accepted, unique media views as reach, media views as views: ' + f.metrics);
   const learned = JSON.parse(store.get(INS.K_FBSET));
   ok(learned && learned.set.length === 4, 'the accepted set is remembered');
   calls = [];
-  const f2 = await INS.fetchFacebook('fb2', { now: NOW });
+  const f2 = await INS.fetchFacebook('fb_2', { now: NOW });
   ok(f2.reach === 55 && calls.length === 1, 'the next post asks once, with the remembered set, and probes nothing');
   store.set(INS.K_FBSET, JSON.stringify({ at: NOW, set: ['post_impressions'] }));
-  const f3 = await INS.fetchFacebook('fb3', { now: NOW });
+  const f3 = await INS.fetchFacebook('fb_3', { now: NOW });
   ok(f3.error && f3.code === 100 && JSON.parse(store.get(INS.K_FBSET)).set.length === 0, 'a remembered name Meta stops taking is refused once and forgotten, so the next read learns again');
+  /* a reel on Facebook is a video node: its own edge, its own names, its own learned set */
+  store.delete(INS.K_FBVSET); calls = [];
+  const v = await INS.fetchFacebook('1753567922516397', { now: NOW });
+  ok(calls.every(u => /video_insights/.test(u)) && !calls.some(u => /\/insights\?/.test(u)), 'a video id (no underscore) is asked under video_insights and never under a post\'s edge');
+  ok(v.reach === 300 && v.views === 500 && v.metrics === 'total_video_impressions_unique,total_video_views', 'and reads unique impressions as reach, views as views: ' + v.metrics);
+  ok(JSON.parse(store.get(INS.K_FBVSET)).set.length === 2 && JSON.parse(store.get(INS.K_FBSET)).set.length === 0, 'the video set is remembered on its own key, and does not touch the post set');
+  store.set(INS.K_FBSET, JSON.stringify({ at: NOW, set: [] }));
+  calls = [];
+  await INS.fetchFacebook('fb_4', { now: new Date(Date.parse(NOW) + 2 * 3600000).toISOString() });
+  ok(calls.filter(u => /\/fb_4\/insights\?metric=[a-z_]+$/.test(u)).length === INS.FB_CANDIDATES.length, 'an empty set is asked about again after an hour, not after a week');
   const y = await INS.fetchYouTube(['yt1', 'yt2'], { now: NOW });
   ok(y.yt1 && y.yt1.views === 900 && y.yt1.likes === 12 && y.yt1.reach === null, 'a Short: views and likes, no reach');
   const none = await INS.fetchYouTube(['zz'], { now: NOW, fetch: async u => /youtube\/v3/.test(String(u)) ? ({ ok: true, status: 200, json: async () => ({ items: [] }) }) : ({ ok: true, status: 200, json: async () => ({ access_token: 'a' }) }) });

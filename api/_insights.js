@@ -81,6 +81,20 @@ export const FB_CANDIDATES = [
 ];
 export const K_FBSET = "nsoc:ins:fbset";
 const FBSET_MS = 7 * 86400 * 1000;
+const FBSET_EMPTY_MS = 3600 * 1000;           /* a set with nothing in it is asked about again within the hour */
+/* A reel on Facebook is a VIDEO node, not a post: its id has no underscore
+   (a post's id is <page>_<post>), it answers under /video_insights, and it
+   takes none of the post names. The first live learning ran on a reel and
+   learned that Meta takes nothing, for a week. So videos have their own
+   candidates, their own learned set and their own key. */
+export const FB_VIDEO_CANDIDATES = [
+  "total_video_impressions_unique", "total_video_impressions", "total_video_views",
+  "total_video_10s_views", "total_video_avg_time_watched"
+];
+export const K_FBVSET = "nsoc:ins:fbvset";
+const isVideoId = id => !/_/.test(String(id));
+const FBV_REACH = ["total_video_impressions_unique"];
+const FBV_VIEWS = ["total_video_views", "total_video_impressions"];
 /* which candidate stands for which column, first found first served */
 const FB_REACH = ["post_total_media_view_unique", "post_media_view_unique", "post_impressions_unique"];
 const FB_VIEWS = ["post_media_view", "post_impressions", "post_video_views"];
@@ -89,17 +103,19 @@ const firstOf = (m, names) => { for (const n of names) if (m[n] != null) return 
 /* the set Meta accepts, learned once on a real post and remembered */
 export async function fbMetricSet(id, tok, opts = {}) {
   const nowMs = nowMsOf(opts.now);
-  const [c] = await cacheRead([K_FBSET], opts);
-  if (c && c.at && nowMs - Date.parse(c.at) < FBSET_MS && Array.isArray(c.set)) return c.set;
+  const video = isVideoId(id);
+  const key = video ? K_FBVSET : K_FBSET;
+  const edge = video ? "video_insights" : "insights";
+  const [c] = await cacheRead([key], opts);
+  if (c && c.at && Array.isArray(c.set) && nowMs - Date.parse(c.at) < (c.set.length ? FBSET_MS : FBSET_EMPTY_MS)) return c.set;
   const set = [];
-  for (const name of FB_CANDIDATES) {
+  for (const name of (video ? FB_VIDEO_CANDIDATES : FB_CANDIDATES)) {
     let r;
-    try { r = await graphGet(`${GRAPH_FB}/${id}/insights?metric=${name}`, tok, opts.fetch); } catch { continue; }
-    if (r.ok && rows(r.j)[name] != null) set.push(name);
-    else if (r.ok) set.push(name);              /* accepted, empty today: still a name Meta takes */
+    try { r = await graphGet(`${GRAPH_FB}/${id}/${edge}?metric=${name}`, tok, opts.fetch); } catch { continue; }
+    if (r.ok) set.push(name);                   /* accepted, even if empty today: a name Meta takes */
     else if (permissionMissing(metaCode(r.j), metaErr(r.j))) return { needs: metaErr(r.j) || "permission" };
   }
-  await cacheWrite(K_FBSET, { at: new Date(nowMs).toISOString(), set }, opts);
+  await cacheWrite(key, { at: new Date(nowMs).toISOString(), set }, opts);
   return set;
 }
 
@@ -268,20 +284,21 @@ export async function fetchFacebook(id, opts = {}) {
   const learned = await fbMetricSet(id, tok, opts);
   if (learned && learned.needs) return { at: now, error: "Facebook refused the insights: " + learned.needs, code: 10 };
   const set = Array.isArray(learned) ? learned : [];
-  if (!set.length) return { at: now, error: "Meta accepts none of the post metrics the house knows; the names need a look", code: 100 };
+  const video = isVideoId(id);
+  if (!set.length) return { at: now, error: "Meta accepts none of the " + (video ? "video" : "post") + " metrics the house knows; the names need a look", code: 100 };
   let r;
-  try { r = await graphGet(`${GRAPH_FB}/${id}/insights?metric=${set.join(",")}`, tok, opts.fetch); }
+  try { r = await graphGet(`${GRAPH_FB}/${id}/${video ? "video_insights" : "insights"}?metric=${set.join(",")}`, tok, opts.fetch); }
   catch (e) { return { at: now, error: String(e && e.message || e).slice(0, 160) }; }
   if (r.ok) {
     const m = rows(r.j);
-    return { at: now, reach: firstOf(m, FB_REACH), views: firstOf(m, FB_VIEWS),
+    return { at: now, reach: firstOf(m, video ? FBV_REACH : FB_REACH), views: firstOf(m, video ? FBV_VIEWS : FB_VIEWS),
              clicks: m.post_clicks != null ? m.post_clicks : null,
              likes: m.post_reactions_like_total != null ? m.post_reactions_like_total : null, metrics: set.join(",") };
   }
   const code = metaCode(r.j), msg = metaErr(r.j) || ("http " + r.status);
   /* a set that was accepted last week and is refused today is forgotten, so
      the next read learns again rather than failing for six more days */
-  if (unknownMetric(code, msg)) { try { await cacheWrite(K_FBSET, { at: new Date(0).toISOString(), set: [] }, opts); } catch { } }
+  if (unknownMetric(code, msg)) { try { await cacheWrite(video ? K_FBVSET : K_FBSET, { at: new Date(0).toISOString(), set: [] }, opts); } catch { } }
   return { at: now, error: msg, code };
 }
 
