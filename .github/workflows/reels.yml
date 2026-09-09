@@ -9,9 +9,11 @@
 # Seven kinds of reel come out of one plan (tools/reels/plan.json): the day's
 # card, Did you know?, This day, The word, One of the 99 Names, a du'a of the
 # Path and One verse. The plan is rebuilt from the library at the start of
-# every run, so a word added to the dictionary, a card added to know.json or a
-# Name edited in allah.html is scheduled by being there. Only cards with no
-# video yet are rendered.
+# every run, so a word added to the dictionary, a card added to know.json or
+# light.json, or a Name edited in allah.html is scheduled by being there. Only
+# cards with no video yet are rendered. The finished videos live on GitHub
+# Releases (one release per kind, free, outside the repository's size); the
+# repository keeps a small sidecar per reel and the manifest.
 #
 # Three jobs. "plan" builds and audits the plan once, fetches the translations
 # once, and counts what is missing. "render" is a matrix: as many machines as
@@ -34,6 +36,10 @@ on:
         description: "how many machines may render at once (each takes up to 60 reels)"
         required: false
         default: "8"
+      gather:
+        description: "the id of an earlier run whose rendered files are gathered and shelved by this workflow's assemble job instead of rendering anything (after a change to the workflow itself; artifacts live three days)"
+        required: false
+        default: ""
   schedule:
     - cron: "0 4 * * 1"
 
@@ -86,6 +92,8 @@ jobs:
           NOOR_NO_PEDALBOARD: "1"
         run: |
           todo=$(python render_missing.py --count ${{ github.event.inputs.ids }} | tail -1)
+          # gathering an earlier run's files: nothing is rendered here
+          [ -n "${{ github.event.inputs.gather }}" ] && todo=0
           max=${{ github.event.inputs.machines || 8 }}
           n=$(( (todo + PER_MACHINE - 1) / PER_MACHINE ))
           [ "$n" -gt "$max" ] && n=$max
@@ -191,12 +199,15 @@ jobs:
           name: reels-plan
           path: tools/reels
 
+      # what the machines made: this run's, or an earlier run's when gathering
       - uses: actions/download-artifact@v4
-        if: needs.plan.outputs.todo != '0'
+        if: needs.plan.outputs.todo != '0' || github.event.inputs.gather != ''
         with:
           pattern: reels-made-*
           path: reels
           merge-multiple: true
+          run-id: ${{ github.event.inputs.gather || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
@@ -207,10 +218,27 @@ jobs:
       - name: install
         run: pip install -r tools/reels/requirements.txt
 
+      # the videos live on the store, not in the repository: each one goes up
+      # under its own name (GitHub Releases, one release per kind, free; or
+      # Vercel Blob when REELS_STORE is blob and the token is set), the
+      # sidecar keeps the URL, the local file goes.
+      - name: the shelf moves to the store
+        working-directory: tools/reels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          REELS_STORE: ${{ vars.REELS_STORE }}
+        run: |
+          if [ "$REELS_STORE" = "blob" ]; then npm install --no-save --silent @vercel/blob; fi
+          python shelf_store.py
+
       - name: the manifest, from what has a video
         working-directory: tools/reels
         env:
           NOOR_NO_PEDALBOARD: "1"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          REELS_STORE: ${{ vars.REELS_STORE }}
         run: python render_missing.py --manifest
 
       - name: what came out
@@ -265,6 +293,11 @@ jobs:
             five frames of every movement the timeline makes, and a card that
             does not fit is set aside and named in `reels/<id>.unfit.json`
             rather than shipped.
+
+            The videos went to the store (GitHub Releases, one release a kind);
+            this change carries each reel's sidecar with its URL, and the
+            manifest. A video the store refused stays in `reels/` and is
+            tried again next run.
 
             1080x1920, 30fps, H.264 high, yuv420p, AAC stereo at 48 kHz: the
             bed built in numpy and finished in Pedalboard for every reel (sub,
