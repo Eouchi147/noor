@@ -417,14 +417,18 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
       var isUrl = function (v) { return typeof v === "string" && /^https:\/\//.test(v); };
       var video = isUrl(c.video) ? c.video : "/reels/" + c.id + ".mp4";
       var cover = isUrl(c.cover) ? c.cover : (c.cover ? "/reels/" + c.id + "-cover.jpg" : "");
-      /* the caption was written beside the video: the reference, the meaning,
-         then the reciter's line; only a caption in that shape is read */
-      var paras = String(c.caption || "").split(/\n\s*\n/);
-      var ref = String(c.hook || paras[0] || "").replace(/^Qur['’]an\s+/i, "").trim();
-      var meaning = (paras.length >= 3 && /\d+:\d+/.test(paras[0]) && /[A-Za-z]/.test(paras[1]) && !/^Recited by/i.test(paras[1])) ? paras[1].trim() : "";
+      /* the row as the manifest writes it: the reference lives in the id
+         (verse-1-1-7 is 1:1-7; the hook carries the surah name as well, so
+         it is not read as a reference); the caption was written beside the
+         video as the reference, the meaning, then the reciter's line, and
+         the meaning is its second paragraph */
       var id = String(c.id).replace(/^verse-/, "");
+      var m = id.match(/^(\d{1,3})-(\d{1,3})(?:-(\d{1,3}))?$/);
+      var sec = q("#verse"); if (!sec || !m) return;
+      var ref = m[1] + ":" + m[2] + (m[3] ? "-" + m[3] : "");
+      var paras = String(c.caption || "").split(/\n\s*\n/).map(function (p) { return p.trim(); });
+      var meaning = (paras.length >= 2 && /[A-Za-z]/.test(paras[1]) && !/^Recited by/i.test(paras[1]) && !/^#/.test(paras[1])) ? paras[1] : "";
       var url = "/verse/" + encodeURIComponent(id);
-      var sec = q("#verse"); if (!sec || !/^\d{1,3}:\d{1,3}/.test(ref)) return;
       sec.classList.add("hm-live");
       sec.innerHTML =
         '<p class="n2-eyebrow">One verse' + (c.reciter ? ' <small>· recited by ' + esc(c.reciter) + "</small>" : "") + "</p>" +
