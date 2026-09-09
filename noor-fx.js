@@ -1026,3 +1026,88 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
+
+/* ================= the search a shell page was missing =================
+   The bar the shell draws has five doors and the fifth is Search. It opens
+   assets/noor-search.js's sheet -- but only where that file is on the page.
+   The 523 word pages, rebuilt in the shell on 9 September 2026, were not
+   given it: their Search was a bare link, and a reader who arrived from a
+   reel, tapped it, and wanted the meaning of another word was put down in
+   front of a 220KB directory instead of a field to type in. Those pages are
+   where the reels land, so that is the search that matters most.
+
+   8KB, and only where it is missing: a page that already loads the sheet, or
+   has no Search to open it, is left exactly as it is. The bar is drawn by
+   noor2.js, which may still be arriving, so the wait is for the door and not
+   for the clock -- and it gives up rather than watch forever. */
+(function () {
+  "use strict";
+  if (window.NOOR_SEARCH) return;
+  if (document.querySelector('script[src*="noor-search.js"]')) return;
+  var tries = 0;
+  function add() {
+    if (window.NOOR_SEARCH || document.querySelector('script[src*="noor-search.js"]')) return;
+    var s = document.createElement("script");
+    s.src = "/assets/noor-search.js?v=79";
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+  function look() {
+    if (window.NOOR_SEARCH) return;
+    if (document.querySelector("[data-n2-search]")) return add();
+    if (++tries > 20) return;                       /* ~5 s, then let it be */
+    setTimeout(look, 250);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", look);
+  else look();
+})();
+
+/* ================= the quiet guide, wherever a box asks for it =============
+   noor-guide.js answers from the sources on the thirty chapters that carry a
+   curated topic -- the Dajjal, the grave, the trials, Harut and Marut. When
+   the home was rebuilt in the shell on 9 September 2026 its two scripts were
+   not carried over and the pill went off the arrival: the chapters a reader is
+   most likely to be uneasy in lost the one thing there to steady them.
+
+   A page that wants it says so on the box that should carry it --
+   data-guide="n:55" -- and this fetches the 61KB of answers once, the first
+   time such a box appears, and never on a page that has none. attach() is a
+   no-op for a chapter with no topic, so a wrong key costs nothing. The sheets
+   of the shell are built after this file runs, so new boxes are watched for;
+   the observer is dropped once the answers are in and the first box is served,
+   and re-armed by the next one, which keeps a long session cheap. */
+(function () {
+  "use strict";
+  var doc = document, asked = null, seen = "data-guide-done";
+  function load() {
+    if (asked) return asked;
+    asked = new Promise(function (done) {
+      var left = 2, bad = 0;
+      ["/noor-guide-data.js", "/noor-guide.js"].forEach(function (src) {
+        var t = doc.createElement("script");
+        t.src = src; t.defer = true;
+        t.onerror = function () { bad = 1; };
+        t.onload = t.onerror = function () { if (--left === 0) done(!bad); };
+        doc.head.appendChild(t);
+      });
+    });
+    return asked;
+  }
+  function serve(box) {
+    if (!box || box.hasAttribute(seen)) return;
+    box.setAttribute(seen, "");
+    var key = box.getAttribute("data-guide");
+    load().then(function (ok) {
+      if (!ok || !window.NoorGuide || !NoorGuide.attach) return;
+      if (doc.contains(box)) NoorGuide.attach(box, key, doc.title);
+    });
+  }
+  function sweep() { var l = doc.querySelectorAll("[data-guide]:not([" + seen + "])"), i = 0; for (; i < l.length; i++) serve(l[i]); }
+  function watch() {
+    sweep();
+    if (!window.MutationObserver) return;
+    new MutationObserver(sweep).observe(doc.body, { childList: true, subtree: true });
+  }
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", watch);
+  else watch();
+})();

@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
-<link rel="stylesheet" href="/assets/noor2.css?v=2"/>
+<link rel="stylesheet" href="/assets/noor2.css?v=3"/>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <link rel="stylesheet" href="/assets/noor-menu.css?v=3"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": ["https://www.instagram.com/noorcodexoflight", "https://www.facebook.com/profile.php?id=61592864417863", "https://www.youtube.com/@noorcodex", "https://www.pinterest.com/noorcodex", "https://t.me/noorcodex", "https://www.threads.com/@noorcodexoflight"]}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
@@ -55,12 +55,12 @@
      the service worker, noor-text.js for the prose in other languages, the
      search, the menu dial, the dials (the notice and the journal switch)
      and the corrections layer. -->
-<script src="/assets/noor2.js?v=2" defer></script>
+<script src="/assets/noor2.js?v=3" defer></script>
 <script src="/nodes-index.js?v=101" defer></script>
 <script src="/noor-fx.js" defer></script>
 <script src="/assets/noor-text.js?v=83" defer></script>
-<script src="/assets/noor-search.js?v=78" defer></script>
-<script src="/assets/noor-menu.js?v=3" defer></script>
+<script src="/assets/noor-search.js?v=79" defer></script>
+<script src="/assets/noor-menu.js?v=4" defer></script>
 <script src="/assets/noor-dials.js?v=109" defer></script>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
 <style>
@@ -205,7 +205,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
   <a class="n2-brand" href="/"><span class="n2-ar" lang="ar" translate="no">نُور</span><span class="n2-en">Codex of Light</span></a>
   <div class="hm-top-r">
     <a class="n2-pill" href="#langs" id="lang-btn" aria-label="Choose your language"><span id="lang-cur">EN</span></a>
-    <a class="n2-pill hm-menu" href="/#search" data-nm-open aria-label="Search the library"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span class="hm-menu-t">Menu</span></a>
+    <a class="n2-pill hm-menu" href="/#search" data-nm-open aria-label="Open the menu: every room of the library, by section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span class="hm-menu-t">Menu</span></a>
   </div>
 </header>
 
@@ -564,6 +564,10 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
       var p = q("#hm-lesson", sh.el);
       if (full && full.lessons && full.lessons[0] && p) p.innerHTML = "<b>" + esc(String(full.lessons[0]).replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1")) + "</b>";
     });
+    /* the quiet guide, on the chapters that carry one: the box says which
+       topic it wants and noor-fx.js fetches the answers and hangs the pill.
+       api/page.js does the same in the chapter's own room. */
+    var gb = q(".hm-sheet", sh.el); if (gb) gb.setAttribute("data-guide", "n:" + n);
     sh.el.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("[data-n2-close]")) history.replaceState(null, "", location.pathname); });
   }
 
@@ -650,7 +654,11 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     openFor(location.hash);
     doc.addEventListener("noor:lang", function () { light(); });
     var lb = q("#lang-btn"); if (lb) lb.addEventListener("click", langDoor);
-    /* the field opens the search; without the script it is a link to the words */
+    /* The field opens the search: the sheet, the same one the bar's Search and
+       the "/" key open. The Menu pill opens the dial, the other job. Until 9
+       September 2026 the bar's Search carried the dial's attribute too and the
+       dial won it, so the field and the bar opened two different products, a
+       thumb apart. Without the script the field stays a link to the words. */
     var sb = q("#hm-search"); if (sb) sb.addEventListener("click", function (e) {
       if (W.NOOR_SEARCH && NOOR_SEARCH.open) { e.preventDefault(); NOOR_SEARCH.open(); }
     });

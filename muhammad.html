@@ -217,7 +217,14 @@ footer a:hover{text-decoration:underline}
 .day{background:linear-gradient(180deg,var(--night),#0C0E1C,var(--night))}
 .dayfig{position:relative; margin-top:2.8rem}
 #arc{width:100%; height:auto; display:block; overflow:visible}
-.arc-lab{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; fill:#8C8F9E}
+/* The arc is drawn in a 900-unit box and set to the width of the page, so its
+   type is scaled by whatever that width is: .68rem of it landed at 3.9 real
+   pixels on a 360 px phone, which is not small type, it is no type. The label
+   is sized in the box's own units against the width it will be seen at, so it
+   reads at about 13 px on a phone and 15 on a desk. */
+.arc-lab{font-size:16px; letter-spacing:.16em; text-transform:uppercase; fill:#8C8F9E}
+@media (max-width:44rem){ .arc-lab{font-size:22px} }
+@media (max-width:26rem){ .arc-lab{font-size:32px; letter-spacing:.1em} }
 .hab{display:grid; gap:.7rem; margin-top:1.6rem; grid-template-columns:1fr}
 @media (min-width:46rem){ .hab{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:70rem){ .hab{grid-template-columns:repeat(3,1fr)} }
