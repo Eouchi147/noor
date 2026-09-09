@@ -32,7 +32,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "1";                                  /* the shell's cache-buster */
+const V = "2";                                  /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
@@ -242,11 +242,18 @@ const walk = (prev, next) => (prev || next) ? `<div class="n2-walk">` +
 /* ---------------------------------------------------------------------------
    the shell
 --------------------------------------------------------------------------- */
+/* the bar: five doors, no two alike, the same five assets/noor2.js draws.
+   Today is the day's light, word and chapter; Qur'an is the Mushaf, read and
+   heard in one room; Story is the Path of Creation in order; Words is the
+   dictionary; Search opens the page's own search where it has one, else the
+   words. `active` names the door a room lights: a verse or a surah lights
+   Qur'an, a chapter lights Story, a Light lights Today only when it is the
+   day's, and a shelf lights nothing. */
 const BAR = [
-  ["Today", "/today", '<path d="M12 3l2.4 5.2L20 9l-4.2 3.8L17 18.5 12 15.6 7 18.5l1.2-5.7L4 9l5.6-.8z"/>'],
-  ["Read", "/quran", '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5V5.5M8 7h8M8 11h6"/>'],
+  ["Today", "/today", '<circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'],
+  ["Qur'an", "/quran", '<path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/>'],
+  ["Story", "/path", '<path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/>'],
   ["Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'],
-  ["Listen", "/quran#listen", '<path d="M5 9v6h4l5 4V5L9 9z"/><path d="M17 8a5 5 0 0 1 0 8"/>'],
   ["Search", "/dictionary", '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/>']
 ];
 export function shell(o) {
@@ -285,8 +292,8 @@ ${jsonld(ld)}
 </head>
 <body>
 <div class="n2-still"></div>
+<i class="n2-prog" aria-hidden="true"></i>
 <header class="n2-top">
-  <i class="n2-prog" aria-hidden="true"></i>
   <a class="n2-brand" href="/"><span class="n2-ar" lang="ar">نُور</span><span class="n2-en">Codex of Light</span></a>
   ${o.pill ? `<a class="n2-pill" href="${attr(o.pill[0])}">${esc(o.pill[1])}</a>` : ""}
 </header>
@@ -320,10 +327,15 @@ ${ROOMS()}</section>` }) };
 /* ---------------------------------------------------------------------------
    one Light
 --------------------------------------------------------------------------- */
-function lightPage(id) {
+async function lightPage(id, host) {
   const L = lightById(String(id || ""));
   if (!L) return notFound("Light");
   const url = "/light/" + L.id;
+  /* the day's light lights Today in the bar, and then the page turns over
+     at midnight UTC with the day; any other Light lights no door */
+  const today = isoDate(new Date());
+  const card = await dayLight(host, today, today);
+  const isToday = !!(card && card.id === L.id);
   const words = relatedWords(L.t + " " + L.s);
   const more = relatedLights(L);
   const body = `<section class="n2-idea">
@@ -341,7 +353,7 @@ ${lightList(more, "More Lights")}
 <div class="n2-row">${go("/light", "All " + lights().length + " Lights")}${go("/today", "Today's light")}</div>
 </section>`;
   const html = shell({
-    title: L.t, path: url, desc: clip(L.s, 158), active: "/today", crumbs: [["The Lights", "/light"], [L.t, url]],
+    title: L.t, path: url, desc: clip(L.s, 158), active: isToday ? "/today" : "", crumbs: [["The Lights", "/light"], [L.t, url]],
     pill: ["/light", "All Lights"],
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: L.t, description: clip(L.s, 200), articleSection: L.c || "",
       url: SITE + url, mainEntityOfPage: SITE + url, image: OG_DEFAULT, inLanguage: "en",
@@ -349,7 +361,7 @@ ${lightList(more, "More Lights")}
       publisher: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE, logo: { "@type": "ImageObject", url: SITE + "/assets/brand/mark-512.png" } },
       keywords: (L.tags || []).join(", ") }],
     body });
-  return { status: 200, html };
+  return { status: 200, html, cache: isToday ? untilMidnight() : undefined };
 }
 function lightsIndex() {
   const groups = new Map();
@@ -419,7 +431,7 @@ ${walk(prev && ["/path/" + prev.id, prev.titleEn, "Chapter " + prev.id], next &&
 <div class="n2-row">${go("/path", "All " + list.length + " chapters")}${go("/?node=" + n, "In the Path room")}</div>
 </section>`;
   return { status: 200, html: shell({
-    title: N.titleEn + " · The Path, chapter " + n, path: url, desc: clip(N.summary || N.details, 158), active: "/today",
+    title: N.titleEn + " · The Path, chapter " + n, path: url, desc: clip(N.summary || N.details, 158), active: "/path",
     crumbs: [["The Path of Creation", "/path"], [N.titleEn, url]], pill: ["/path", "The Path"],
     image: img ? SITE + img : "",
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: N.titleEn, alternativeHeadline: N.titleAr || undefined, description: clip(N.summary, 200),
@@ -441,7 +453,7 @@ ${periodDesc(p) ? `<p class="n2-dim">${esc(periodDesc(p))}</p>` : ""}
 <ul class="n2-list">${list.filter(c => c.period === p).map(c => `<li><a href="/path/${c.id}"><span class="n2-num">${c.id}</span><b>${esc(c.titleEn)}${c.metric ? `<small>${esc(c.metric)}</small>` : ""}</b><span class="n2-ar" lang="ar">${esc(c.titleAr || "")}</span></a></li>`).join("")}</ul>
 </section>`).join("\n");
   return { status: 200, html: shell({ title: "The Path of Creation", path: "/path", desc: "The story of Islam told in order, from Kun Fayakun to the Hour, in " + list.length + " chapters.",
-    ogType: "website", mode: "reveal top bar share home", active: "", crumbs: [["The Path of Creation", "/path"]],
+    ogType: "website", mode: "reveal top bar share home", active: "/path", crumbs: [["The Path of Creation", "/path"]],
     ld: [{ "@context": "https://schema.org", "@type": "CollectionPage", name: "The Path of Creation", url: SITE + "/path", numberOfItems: list.length }], body }) };
 }
 
@@ -593,6 +605,10 @@ async function dayLight(host, date, today) {
   if (!top) return null;
   return { date, category: top.c, title: top.t, story: top.s, detail: top.d, id: top.id, src: top.src || "", source: "library" };
 }
+const untilMidnight = () => {
+  const now = Date.now(), midnight = Date.UTC(new Date(now).getUTCFullYear(), new Date(now).getUTCMonth(), new Date(now).getUTCDate() + 1);
+  return "public, max-age=0, s-maxage=" + Math.max(60, Math.floor((midnight - now) / 1000));
+};
 async function todayPage(dateRaw, host) {
   const today = isoDate(new Date());
   let date = String(dateRaw || "").slice(0, 10);
@@ -610,8 +626,7 @@ async function todayPage(dateRaw, host) {
   const url = "/today" + (isToday ? "" : "?date=" + date);
   /* today's page turns over at midnight UTC, so the edge may keep it only
      until then; a dated page is a record and keeps for a day */
-  const now = Date.now(), midnight = Date.UTC(new Date(now).getUTCFullYear(), new Date(now).getUTCMonth(), new Date(now).getUTCDate() + 1);
-  const cache = isToday ? "public, max-age=0, s-maxage=" + Math.max(60, Math.floor((midnight - now) / 1000)) : CACHE;
+  const cache = isToday ? untilMidnight() : CACHE;
   const shift = k => { const d = new Date(date + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + k); return isoDate(d); };
   const prev = age < 30 ? ["/today?date=" + shift(-1), longDate(shift(-1)), "The day before"] : null;
   const next = age > 0 ? [(age === 1 ? "/today" : "/today?date=" + shift(1)), longDate(shift(1)), "The day after"] : null;
@@ -662,7 +677,7 @@ ${walk(prev, next)}
 --------------------------------------------------------------------------- */
 export async function render(kind, q = {}, host = "") {
   switch (kind) {
-    case "light": return lightPage(q.id);
+    case "light": return lightPage(q.id, host);
     case "lights": return lightsIndex();
     case "path": return chapterPage(q.n);
     case "paths": return pathIndex();

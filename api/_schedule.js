@@ -57,6 +57,10 @@ export const SLOTS = [
   { id: "reelD", at: 14, needsDate: false, reel: "afternoon" },
   { id: "word",  at: 16, needsDate: false },
   { id: "reelB", at: 17, needsDate: false, reel: "evening" },
+  /* the sixth reel of the day is always a verse: the owner's rule of 9
+     September 2026, that no day passes without the Qur'an on the shelf
+     going out, and at least twice */
+  { id: "reelF", at: 19, needsDate: false, reel: "late" },
   { id: "dusk",  at: 20, needsDate: false },
   { id: "reelE", at: 21, needsDate: false, reel: "night" }
 ];
@@ -178,20 +182,25 @@ export async function planDay(dateStr, opts = {}) {
    shelf is still being filled.
 --------------------------------------------------------------------------- */
 const ROTA = {
-  /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week. Five reels a
-     day. Across a week: 11 verses, 9 words, 6 of the 99 Names, 6 Did you
-     knows, 2 day's cards (one in the morning, one in the evening, so both
-     halves of that shelf are walked), 1 du'a of the Path, and This day on
-     its own date. The weights follow the wells: 300 verses and 523 words
-     carry a year without a repeat; the 99 Names and the 18 du'as come round,
-     which is what Names and du'as are for. The Codex reel, the brand's own,
-     was retired on 9 September 2026: it praised the house and taught
-     nothing. */
+  /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week. Six reels a
+     day, and the sixth (19:00, "late") is always One verse: the whole
+     library stands on the Qur'an, and the owner asked on 9 September 2026
+     that no day pass without at least two verse reels. With the Wednesday
+     afternoon turned from a Name to a verse, every day of the week now
+     carries two or three. Across a week: 19 verses, 9 words, 5 of the 99
+     Names, 6 Did you knows, 2 day's cards (one in the morning, one in the
+     evening, so both halves of that shelf are walked), 1 du'a of the Path,
+     and This day on its own date. The weights follow the wells: 600 verses
+     and 523 words carry half a year without a repeat; the 99 Names and the
+     18 du'as come round, which is what Names and du'as are for. The Codex
+     reel, the brand's own, was retired on 9 September 2026: it praised the
+     house and taught nothing. */
   morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
   noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-  afternoon: ["name", "word", "know", "name", "verse", "know", "word"],
+  afternoon: ["name", "word", "know", "verse", "verse", "know", "word"],
   evening:   ["word", "light", "know", "word", "verse", "name", "word"],
-  night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"]
+  night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"],
+  late:      ["verse", "verse", "verse", "verse", "verse", "verse", "verse"]
 };
 /* the order the shelf is searched when the kind the rota wants has nothing
    rendered yet (a shelf mid-render, a kind not yet made) */
@@ -210,7 +219,7 @@ const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
    its walk (the stride is chosen against the length), which is the price of
    a stateless rota and a fair one: a new shelf is a new walk.
 --------------------------------------------------------------------------- */
-const HALVES = ["morning", "noon", "afternoon", "evening", "night"];
+const HALVES = ["morning", "noon", "afternoon", "evening", "late", "night"];
 const REEL_EPOCH = Date.UTC(2026, 8, 6);          /* Sunday 6 September 2026 */
 
 export function reelStep(kind, dateStr, half) {
