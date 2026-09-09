@@ -95,6 +95,10 @@
       "destination": "/api/page?kind=light&id=:id"
     },
     {
+      "source": "/light",
+      "destination": "/api/page?kind=lights"
+    },
+    {
       "source": "/lights",
       "destination": "/api/page?kind=lights"
     },
