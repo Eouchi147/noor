@@ -12,7 +12,7 @@ decodes it itself, so nothing passes through numpy on the way.
     python3 webreel.py sufi shatir      render some of them
     python3 webreel.py --audit          only check the safe area
 """
-import io, json, os, subprocess, sys, tempfile, time
+import base64, io, json, math, os, subprocess, sys, tempfile, time
 import numpy as np
 from PIL import Image
 from playwright.sync_api import sync_playwright
@@ -22,7 +22,7 @@ import verses
 from spec import W, H, FPS, SAFE_TOP, SAFE_BOTTOM, SAFE_L, SAFE_R, ease
 
 MAX_SECS = 58.0          # Instagram takes up to 90; nobody watches 90
-CENTRED = ("word", "verse")
+CENTRED = ("word", "verse", "name", "dua")   # every kind is centred now
 JPEG_Q = 94              # the frames go to ffmpeg as JPEG: the encoder decodes them itself
 
 PAGE = "file://" + os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "type.html")
@@ -44,13 +44,21 @@ class Stage:
         self.errs = []
         self.p.on("pageerror", lambda e: self.errs.append(str(e)))
         self.p.goto(PAGE)
-        self.p.wait_for_function("() => document.fonts.status === 'loaded'")
+        # every face the page declares, fetched now and not on first use: a
+        # font-display:block face is only loaded when text first asks for it,
+        # so the first card set in Amiri or the mono was measured against the
+        # fallback's metrics, and stood a pixel from where every later card
+        # in the same page stood. Now the first build is like every other.
+        self.p.evaluate("() => Promise.all(Array.from(document.fonts).map(f => f.load()))")
+        self.p.wait_for_function("() => document.fonts.status === 'loaded' && "
+                                 "Array.from(document.fonts).every(f => f.status === 'loaded')")
         if self.errs: raise RuntimeError("the page did not load cleanly: " + self.errs[0])
         # the picture must exist before a single card is built; a browser
         # without WebGL fails here, loudly, not as 300 unfit cards
         info = self.p.evaluate("() => { NOORSCENE.init(); return NOORSCENE.info(); }")
         if not info or not info.get("ok"): raise RuntimeError("no picture: " + str(info))
         self.gl = info
+        self.cdp = None
 
     def build(self, card, secs):
         """build, then step the type down until the resting column clears"""
@@ -68,8 +76,39 @@ class Stage:
     def at(self, t):
         """the type alone, with alpha: for the safe-area audit"""
         self.p.evaluate("t=>NOORREEL.seek(t)", t)
-        return Image.open(io.BytesIO(
-            self.p.screenshot(omit_background=True, type="png"))).convert("RGBA")
+        return Image.open(io.BytesIO(self._png())).convert("RGBA")
+
+    def _png(self):
+        """the viewport as a lossless PNG with a transparent ground.
+
+        Playwright's own screenshot() does the same capture, but has Chromium
+        compress the PNG at its default level, and on a still frame full of
+        type that is half of what the frame costs. Asked through the protocol
+        directly with optimizeForSpeed the encoder takes its fast level: the
+        same pixels, byte for byte once decoded, sooner by half on such a
+        frame and by a tenth on a blurred one, where the paint is the cost.
+        A Chromium that does not know the flag gets the slow path, not an
+        error.
+        """
+        if self.cdp is None:
+            try: self.cdp = self.p.context.new_cdp_session(self.p)
+            except Exception: self.cdp = False
+        if self.cdp:
+            try:
+                self.cdp.send("Emulation.setDefaultBackgroundColorOverride",
+                              {"color": {"r": 0, "g": 0, "b": 0, "a": 0}})
+                try:
+                    return base64.b64decode(self.cdp.send(
+                        "Page.captureScreenshot", {"format": "png", "optimizeForSpeed": True})["data"])
+                finally:
+                    self.cdp.send("Emulation.setDefaultBackgroundColorOverride", {})
+            except Exception:
+                self.cdp = False       # not understood here: the slow path from now on
+        return self.p.screenshot(omit_background=True, type="png")
+
+    def cues(self):
+        """every moment the built timeline moves something: see NOORREEL.cues"""
+        return self.p.evaluate("() => NOORREEL.cues()")
 
     def frame(self, t):
         """the finished frame, picture and words, as JPEG bytes"""
@@ -94,12 +133,13 @@ def plan():
 
 
 KIND_FIELDS = {
-    "light": ("eyebrow", "hook", "key", "date", "lines"),
-    "know":  ("eyebrow", "hook", "key", "date", "lines"),
-    "day":   ("eyebrow", "num", "month", "ar", "hook", "key", "lines", "todo"),
-    "word":  ("eyebrow", "ar", "term", "short", "long"),
-    "verse": ("eyebrow", "ar", "ref", "sents", "reciter", "verse"),
-    "codex": ("build", "counts", "zeros", "room", "ask"),
+    "light": ("hook", "key", "date", "lines"),
+    "know":  ("hook", "key", "date", "lines"),
+    "day":   ("num", "month", "ar", "hook", "key", "lines", "todo"),
+    "word":  ("ar", "term", "short", "long"),
+    "name":  ("ar", "translit", "meaning", "line"),
+    "dua":   ("ar", "translit", "meaning", "line"),
+    "verse": ("ar", "ref", "sents", "reciter", "verse"),
 }
 
 
@@ -138,17 +178,22 @@ def prepare(stage, name, secs=None):
     if kind == "verse":
         vpath, who = verses.audio_for(plan()[name])
         vx, vdur = sound.load_voice(vpath)
-        start = 2.6
+        start = 2.0
         card["rec"] = {"start": start, "dur": vdur}
         card["reciter"] = "Recited by " + who
-        secs = min(MAX_SECS, round(start + vdur + 1.9 + 3.0, 2))
-        if start + vdur + 3.2 > MAX_SECS:
+        secs = round(start + vdur + 4.2, 2)
+        if secs > MAX_SECS:
             raise SystemExit(f"{name}: the recitation is {vdur:.0f}s, too long for a reel")
         voice = (vx, start)
         env = sound.envelope(vx, FPS)
         pulse = True
-    secs = secs or cfg["secs"]
+    secs = secs or cfg.get("secs") or 20.0
     info = stage.build(card, secs)
+    # the type layer decides how long its own choreography needs to be: the
+    # length follows from the words, not from a number written in the plan
+    secs = round(float(info.get("secs") or secs), 2)
+    if secs > MAX_SECS:
+        raise SystemExit(f"{name}: {secs:.0f}s is longer than a reel should be")
     if pulse is not None:
         stage.pulse(list(env), start)
     return {"cfg": cfg, "card": card, "secs": secs, "info": info,
@@ -219,16 +264,73 @@ def render(stage, name, out_dir="out"):
     return out
 
 
-def audit(stage, name, every=5):
+AUDIT_EVERY = 10   # the coarse stride of the audit, in frames
+AUDIT_ARRIVAL = 5  # frames drawn from the start of every tween
+INK = 24           # alpha above which a pixel counts as ink
+
+
+def audit_frames(cues, nframes, every=AUDIT_EVERY):
+    """which frames the audit draws: every `every`-th, and the first five of
+    every tween the timeline holds (NOORREEL.cues, one entry per target).
+
+    This used to be every fifth frame of the reel, and this is not weaker
+    than that, only cheaper where the old stride was spending its frames on
+    nothing. Ink can only reach further than its resting place while a
+    tween is moving it, and elements only appear at cue times: between two
+    cues nothing arrives and nothing is pushed, and the fades of earlier
+    blocks only make ink fainter. So the box of ink over the whole reel is
+    the box at rest, which the coarse stride sees over and over, together
+    with the reach of every arrival and every departure, which are looked
+    at here on purpose rather than met by chance.
+
+    An arrival eases out (outCubic, outQuint, outExpo): a word that enters
+    42px low and blurred is furthest from home as it appears, and its blur,
+    which spreads ink sideways for a few frames as the word brightens, has
+    peaked, to the pixel, within four frames of every fade-in the timeline
+    uses. The first five frames of every tween are drawn. Every fifth frame
+    saw exactly one of those five, and after them only frames nearer rest.
+
+    A departure that moves (a sentence of a long verse leaving upward as the
+    next arrives) reaches further the longer it runs, until it is too faint
+    to count, so every frame of a fade-out is drawn from its start to its
+    end: the whole of what the old stride could have seen of it. The glows
+    are not measured at all: the audit puts them out first (NOORREEL.decor).
+
+    What this buys: a long verse, which is mostly rest, has a third fewer
+    frames drawn than before; a short card, whose opening is all arrivals,
+    somewhat more, and the moments that matter are looked at on purpose
+    rather than met by chance. Each frame costs less, see
+    Stage._png; the run is faster because the audit is done in the workers,
+    three wide, beside the rendering.
+    """
+    take = set(range(0, nframes, every))
+    for s, e, prop, a, b in cues:
+        if prop == "color": continue                       # colour is not geometry
+        first = int(math.ceil(s * FPS - 1e-6))
+        if prop == "opacity" and a is not None and b is not None and b < a and b * 255 < INK:
+            last = int(math.floor(e * FPS + 1e-6))          # a fade-out: all of it
+        else:
+            last = first + AUDIT_ARRIVAL - 1                # an arrival: its first frames
+        take.update(range(max(0, first), min(nframes, last + 1)))
+    return sorted(take)
+
+
+def audit(stage, name, every=AUDIT_EVERY):
     """the ink of the type layer, measured against the safe rectangle"""
     p = prepare(stage, name)
     secs, info = p["secs"], p["info"]
+    cues = stage.cues()
+    # the audit leans on the timeline's own list of moments; a page that
+    # cannot show it, or shows one without the way home in it, is a broken
+    # renderer and stops the run rather than a quietly thinner audit
+    if not any(abs(c[0] - float(info["tClose"])) < 1e-3 for c in cues):
+        raise RuntimeError("the type layer lists no cue at tClose for %s" % name)
     stage.p.evaluate("() => NOORREEL.decor(false)")
     worst, bad = [W, H, 0, 0], []
-    for i in range(0, int(FPS * secs), every):
+    for i in audit_frames(cues, int(FPS * secs), every):
         t = i / float(FPS)
         a = np.asarray(stage.at(t))[..., 3]
-        ys, xs = np.where(a > 24)
+        ys, xs = np.where(a > INK)
         if not len(xs): continue
         bb = (int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max()))
         worst = [min(worst[0], bb[0]), min(worst[1], bb[1]),
