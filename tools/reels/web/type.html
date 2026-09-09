@@ -1,195 +1,84 @@
 <!doctype html><html><head><meta charset="utf-8">
 <title>NOOR reel type layer</title>
 <style>
+/* NOOR reel · the type layer, v2.
+   One idea on the screen at a time, centred in the safe rectangle, in three
+   colours: the site's night behind (drawn by the shader), parchment for what
+   is read, gold for what is named. No stat grid, no build number, no ticks,
+   no eyebrow, no end card asking for anything. The type is the picture. */
 @font-face{font-family:NoorB;src:url(noor-card-bold.ttf) format("truetype");font-weight:700;font-display:block}
 @font-face{font-family:NoorR;src:url(noor-card-regular.ttf) format("truetype");font-weight:400;font-display:block}
+@font-face{font-family:NoorM;src:url(noor-mono.ttf) format("truetype");font-weight:400;font-display:block}
 /* Amiri, by Khaled Hosny, SIL Open Font License (amiri-OFL.txt): the Arabic
    the site sets its dictionary in, and the Quran cut it sets the Mushaf in */
 @font-face{font-family:Amiri;src:url(amiri-regular.ttf) format("truetype");font-weight:400;font-display:block}
 @font-face{font-family:Amiri;src:url(amiri-bold.ttf) format("truetype");font-weight:700;font-display:block}
 @font-face{font-family:AmiriQuran;src:url(amiri-quran.ttf) format("truetype");font-weight:400;font-display:block}
 :root{
-  --gold:#E9C86A; --cream:#FFF9E3; --muted:#B0BAD6; --parch:#F3E7BE; --text:#DCE3F2;
-  --safeT:270px; --safeB:1500px; --safeL:87px; --safeR:950px;
+  /* the site's own tokens: index.html :root and tailwind.config.cjs */
+  --night:#04060F; --gold:#C9A227; --goldhi:#E9C86A; --parch:#FFFEF7;
+  --parch-2:rgba(255,254,247,.86); --parch-3:rgba(255,254,247,.62);
+  --safeT:270px; --safeB:1500px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;overflow:hidden}
-body{background:#070912}
+body{background:var(--night);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
 #gl{position:absolute;left:0;top:0;width:1080px;height:1920px;display:block}
 body.type-only{background:transparent} body.type-only #gl{display:none}
-body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+/* the audit measures the words; a glow is light, not information, so every
+   glowing thing is put out before the ink is measured */
+body.type-only .key,body.type-only .ar,body.type-only .quran,
+body.type-only .smallar{text-shadow:none!important}
 
 #stage{position:absolute;inset:0}
 
-/* the one thing that is not type: a bloom that opens the reel */
-#flare{position:absolute;left:-210px;top:-330px;width:1500px;height:1500px;
-  transform:scale(.2);opacity:0;pointer-events:none;
-  background:radial-gradient(circle,rgba(233,200,106,.42) 0%,rgba(233,200,106,.13) 34%,rgba(233,200,106,0) 66%)}
-#streak{position:absolute;left:0;top:0;width:1080px;height:2px;opacity:0;
-  background:linear-gradient(90deg,rgba(233,200,106,0),rgba(255,249,227,.95),rgba(233,200,106,0));
-  filter:blur(1px)}
+/* one screen: one idea. They stand in the same place and take turns; JS puts
+   each one's top so that it is centred in the safe rectangle. */
+.screen{position:absolute;left:146px;width:788px;display:flow-root;text-align:center}
+.screen>*{opacity:0;--b:0px;filter:blur(var(--b));will-change:opacity,transform,filter}
 
-/* ---------------------------------------------------------------------
-   the column: the light card, Did you know? and This day, top left
-   --------------------------------------------------------------------- */
-#col{position:absolute;left:96px;top:var(--safeT);width:830px;display:flow-root}
+/* what is read */
+.hook{font-family:NoorB,sans-serif;font-weight:700;color:var(--parch);letter-spacing:-.006em}
+.hook .w{display:inline-block;opacity:0;--b:0px;filter:blur(var(--b));will-change:opacity,transform,filter}
+.hook .w.key{color:var(--goldhi);--g:0;
+  text-shadow:0 0 calc(var(--g)*34px) rgba(233,200,106,calc(var(--g)*.55)),
+              0 0 calc(var(--g)*12px) rgba(233,200,106,calc(var(--g)*.45))}
+/* a line of substance is the whole reason a stranger stopped: it is set large
+   and at full brightness, and the one number or name it turns on is gold */
+.line{font-family:NoorR,sans-serif;color:var(--parch)}
+.line .g{color:var(--goldhi)}
+.date{font-family:NoorR,sans-serif;color:var(--goldhi);letter-spacing:.15em;text-transform:uppercase}
+.num{font-family:NoorB,sans-serif;font-weight:700;color:var(--goldhi);letter-spacing:-.03em;line-height:.9}
+.month{font-family:NoorB,sans-serif;font-weight:700;color:var(--parch);letter-spacing:.2em;text-transform:uppercase}
+.monthar{font-family:Amiri,serif;color:var(--parch-3);direction:rtl}
+.todo{font-family:NoorB,sans-serif;font-weight:700;color:var(--goldhi)}
 
-.markrow{display:flex;align-items:center;gap:0;height:118px;flex-direction:column;
-  align-items:flex-start;justify-content:flex-start}
-.mrule{width:46px;height:3px;background:var(--gold);transform-origin:left center;
-  transform:scaleX(0);margin-top:6px}
-.mline{display:flex;align-items:center;gap:18px;margin-top:17px}
-.brand{font:700 34px NoorB,sans-serif;color:var(--gold);letter-spacing:.21em;display:flex}
-.brand span{opacity:0;display:inline-block}
-.mdiv{width:2px;height:32px;background:var(--gold);opacity:0}
-.cat{font:700 26px NoorB,sans-serif;color:var(--muted);letter-spacing:.16em;opacity:0}
+/* the Arabic: a word, a name, a du'a */
+.ar{font-family:Amiri,serif;font-weight:700;color:var(--goldhi);direction:rtl;--g:1;
+  text-shadow:0 0 calc(var(--g)*46px) rgba(233,200,106,calc(var(--g)*.30))}
+.translit{font-family:NoorB,sans-serif;font-weight:700;color:var(--parch);letter-spacing:.22em;text-transform:uppercase}
+.translit .w{display:inline-block;opacity:0;white-space:pre}
+.meaning{font-family:NoorR,sans-serif;color:var(--parch-2)}
+.sentence{font-family:NoorR,sans-serif;color:var(--parch-2)}
 
-h1#hook{font-family:NoorB,sans-serif;font-weight:700;color:var(--cream);
-  line-height:1.17;letter-spacing:-.005em;position:relative}
-h1#hook .w{display:inline-block;opacity:0;--b:0px;filter:blur(var(--b));
-  transform-origin:0 50%;
-  will-change:transform,filter,opacity}
-h1#hook .w.key{color:var(--gold)}
-#uline{position:absolute;height:4px;background:var(--gold);opacity:.85;
-  transform-origin:left center;transform:scaleX(0);border-radius:2px}
+/* One verse */
+/* the Qur'an breathes: --g is the reciter's own loudness, set frame by frame */
+.quran{font-family:AmiriQuran,Amiri,serif;color:var(--parch);direction:rtl;--g:0;
+  text-shadow:0 0 calc(24px + var(--g)*44px) rgba(233,200,106,calc(.09 + var(--g)*.30))}
+.ref{font-family:NoorM,ui-monospace,monospace;color:var(--goldhi);letter-spacing:.2em}
+.trans{position:relative}
+.trans .s{position:absolute;left:0;right:0;top:0;font-family:NoorR,sans-serif;color:var(--parch-2);
+  opacity:0;--b:0px;filter:blur(var(--b));will-change:opacity,transform,filter}
+.credit{font-family:NoorR,sans-serif;color:var(--parch-3);letter-spacing:.04em}
 
-.dl{margin-top:26px;height:92px}
-.drule{width:150px;height:3px;background:var(--gold);transform-origin:left center;transform:scaleX(0)}
-.date{display:block;margin-top:18px;font:400 30px NoorR,sans-serif;color:var(--muted);
-  letter-spacing:.10em}
-.date span{opacity:0;display:inline-block;white-space:pre}
-
-#body{margin-top:92px}
-.blk{opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
-.blk + .blk{margin-top:26px}
-.blk div{font-family:NoorR,sans-serif;color:var(--cream)}
-
-.close{margin-top:46px;opacity:0}
-.close .crule{width:46px;height:3px;background:var(--gold);margin-bottom:18px}
-.close .site{font:400 30px NoorR,sans-serif;color:var(--gold);letter-spacing:.10em}
-.close .sub{margin-top:12px;font:400 26px NoorR,sans-serif;color:var(--muted)}
-
-/* This day: the numeral of the date, above the name of the day */
-#daynum{display:none;align-items:flex-end;gap:26px;margin:4px 0 22px}
-#daynum .n{font:700 200px NoorB,sans-serif;color:var(--gold);line-height:.86;letter-spacing:-.03em;
-  opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
-#daynum .m{display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
-#daynum .m b{font:700 40px NoorB,sans-serif;color:var(--cream);letter-spacing:.10em;opacity:0}
-#daynum .m i{font:400 46px Amiri,serif;color:var(--muted);font-style:normal;opacity:0;direction:rtl;text-align:left;line-height:1.1}
-#todo{display:none;margin-top:30px;font:700 36px NoorB,sans-serif;color:var(--gold);line-height:1.3;opacity:0;--b:0px;filter:blur(var(--b))}
-
-/* ---------------------------------------------------------------------
-   The Codex: a blueprint of the library, in the house mono
-   --------------------------------------------------------------------- */
-@font-face{font-family:NoorM;src:url(noor-mono.ttf) format("truetype");font-weight:400;font-display:block}
-@font-face{font-family:NoorM;src:url(noor-mono-bold.ttf) format("truetype");font-weight:700;font-display:block}
-#hud{position:absolute;left:96px;top:var(--safeT);width:830px;display:none;flex-direction:column;gap:0;font-family:NoorM,ui-monospace,monospace;color:var(--muted)}
-#hud .h{display:flex;justify-content:space-between;align-items:baseline;font-size:24px;letter-spacing:.14em;color:var(--gold);opacity:0}
-#hud .h i{font-style:normal;color:var(--muted);font-size:22px;letter-spacing:.08em}
-#hud .rule{height:2px;background:var(--gold);transform-origin:left center;transform:scaleX(0);margin:18px 0 34px}
-#hud .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
-#hud .cnt{opacity:0;--b:0px;filter:blur(var(--b));border:1px solid rgba(126,155,209,.35);border-radius:6px;padding:16px 18px;position:relative;background:rgba(5,8,20,.35)}
-#hud .cnt:before{content:"";position:absolute;left:-1px;top:-1px;width:14px;height:14px;border-left:2px solid var(--gold);border-top:2px solid var(--gold)}
-#hud .cnt b{display:block;font-size:92px;line-height:.95;color:var(--cream);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-#hud .cnt span{display:block;margin-top:10px;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-#hud .cnt.zero b{color:var(--gold)}
-#hud .room{margin-top:34px;opacity:0;--b:0px;filter:blur(var(--b))}
-#hud .room .k{font-size:22px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
-#hud .room .t{font:700 60px NoorB,sans-serif;color:var(--cream);line-height:1.1;margin-top:8px;letter-spacing:-.01em}
-#hud .room .d{font:400 34px NoorR,sans-serif;color:var(--text);margin-top:10px;line-height:1.35}
-#hud .ask{margin-top:36px;opacity:0}
-#hud .ask .l1{font:700 64px NoorB,sans-serif;color:var(--gold);line-height:1.05;letter-spacing:-.01em}
-#hud .ask .l2{margin-top:14px;font-size:30px;letter-spacing:.06em;color:var(--cream)}
-#hud .ask .l3{margin-top:18px;font-size:30px;letter-spacing:.12em;color:var(--gold)}
-
-/* ---------------------------------------------------------------------
-   the centred stage: The word and One verse
-   --------------------------------------------------------------------- */
-#mid{position:absolute;left:96px;top:var(--safeT);width:830px;display:none;flex-direction:column;
-  align-items:center;text-align:center}
-#mid .markrow{align-items:center;height:auto;margin-bottom:0}
-#mid .mrule{margin:6px auto 0}
-#mid .mline{margin-top:14px}
-#ar{font:700 170px Amiri,serif;color:var(--gold);direction:rtl;line-height:1.30;margin-top:48px;
-  opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity;max-width:830px}
-#term{margin-top:10px;font:700 40px NoorB,sans-serif;color:var(--cream);letter-spacing:.20em;text-transform:uppercase;
-  display:flex;justify-content:center;flex-wrap:wrap}
-#term span{opacity:0;display:inline-block;white-space:pre}
-.crule2{width:150px;height:3px;background:var(--gold);transform-origin:center;transform:scaleX(0);margin-top:40px}
-#short{margin-top:38px;font:400 44px NoorR,sans-serif;color:var(--cream);line-height:1.36;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
-#long{margin-top:28px;font:400 32px NoorR,sans-serif;color:var(--muted);line-height:1.42;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
-
-/* One verse: the Arabic in the Quran cut, then the meaning sentence by sentence */
-#ayah{font:400 76px AmiriQuran,Amiri,serif;color:var(--parch);direction:rtl;line-height:1.9;margin-top:40px;
-  max-width:830px;text-align:center;opacity:0;--b:0px;filter:blur(var(--b));will-change:transform,filter,opacity}
-#ref{margin-top:18px;font:400 28px NoorR,sans-serif;color:var(--muted);letter-spacing:.16em;opacity:0}
-#trans{margin-top:40px;width:800px;text-align:center}
-#trans .s{font:400 40px NoorR,sans-serif;color:var(--cream);line-height:1.40;opacity:0;--b:0px;filter:blur(var(--b));
-  display:block;will-change:transform,filter,opacity}
-#trans .s + .s{margin-top:12px}
-#trans.replace{position:relative}
-#trans.replace .s{position:absolute;left:0;right:0;top:0;margin:0}
-#reciter{margin-top:34px;font:400 28px NoorR,sans-serif;color:var(--muted);letter-spacing:.06em;opacity:0}
-#mid .close{text-align:center;margin-top:34px}
-#mid .close .crule{margin:0 auto 18px}
+/* the way out: the idea again, small, and where it came from */
+.smallhook{font-family:NoorB,sans-serif;font-weight:700;color:var(--parch-2)}
+.smallar{font-family:Amiri,serif;font-weight:700;color:var(--goldhi);direction:rtl}
+.site{font-family:NoorM,ui-monospace,monospace;color:var(--goldhi);letter-spacing:.22em}
 </style></head>
 <body>
 <canvas id="gl"></canvas>
-<div id="stage">
-  <div id="flare"></div>
-  <div id="streak"></div>
-  <div id="col">
-    <div class="markrow">
-      <i class="mrule"></i>
-      <div class="mline">
-        <span class="brand" id="brand"></span>
-        <i class="mdiv"></i>
-        <span class="cat" id="cat"></span>
-      </div>
-    </div>
-    <div id="daynum"><span class="n" id="dayn"></span><span class="m"><b id="daym"></b><i id="dayar"></i></span></div>
-    <h1 id="hook"></h1><i id="uline"></i>
-    <div class="dl"><i class="drule"></i><span class="date" id="date"></span></div>
-    <div id="body"></div>
-    <div id="todo"></div>
-    <div id="close" class="close">
-      <div class="crule"></div>
-      <div class="site">NOORCODEX.COM</div>
-      <div class="sub">the whole story, free</div>
-    </div>
-  </div>
-  <div id="hud">
-    <div class="h"><span id="hud-brand">NOOR · CODEX OF LIGHT</span><i id="hud-build"></i></div>
-    <div class="rule"></div>
-    <div class="grid" id="hud-grid"></div>
-    <div class="room" id="hud-room"><div class="k" id="hud-room-k"></div><div class="t" id="hud-room-t"></div><div class="d" id="hud-room-d"></div></div>
-    <div class="ask" id="hud-ask"><div class="l1" id="hud-l1"></div><div class="l2" id="hud-l2"></div><div class="l3" id="hud-l3"></div></div>
-  </div>
-  <div id="mid">
-    <div class="markrow">
-      <i class="mrule"></i>
-      <div class="mline">
-        <span class="brand" id="brand2"></span>
-        <i class="mdiv"></i>
-        <span class="cat" id="cat2"></span>
-      </div>
-    </div>
-    <div id="ar"></div>
-    <div id="term"></div>
-    <div id="ayah"></div>
-    <div id="ref"></div>
-    <i class="crule2" id="crule2"></i>
-    <div id="short"></div>
-    <div id="long"></div>
-    <div id="trans"></div>
-    <div id="reciter"></div>
-    <div id="close2" class="close">
-      <div class="crule"></div>
-      <div class="site" id="site2">NOORCODEX.COM</div>
-      <div class="sub" id="sub2">the whole story, free</div>
-    </div>
-  </div>
-</div>
+<div id="stage"></div>
 <script src="anime.min.js"></script>
 <script src="scene.js"></script>
 <script src="type.js"></script>
