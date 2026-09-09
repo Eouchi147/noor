@@ -54,5 +54,23 @@ a.solid{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border:
 <a href="/begin">Begin the path</a>
 </div>
 </div>
+<script>
+/* A word that used to live at the site root now lives under /dictionary/, where
+   its canonical and the sitemap always pointed (9 September 2026). An old link
+   or a bookmark lands here; if the path names a word the encyclopedia knows,
+   this hands the reader straight to it rather than to an apology. */
+(function () {
+  "use strict";
+  var m = /^\/([a-z0-9][a-z0-9-]{1,60})\/?$/.exec(location.pathname);
+  if (!m) return;
+  var id = m[1];
+  fetch("/assets/dict-index.json", { cache: "force-cache" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (d && d.words && d.words[id]) location.replace("/dictionary/" + id + location.search + location.hash);
+    })
+    .catch(function () { });
+})();
+</script>
 </body>
 </html>
