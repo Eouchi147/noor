@@ -4,7 +4,7 @@
 Called by the workflow with no arguments, so a card added to plan.json is
 rendered on the next run and nothing already rendered is rendered again. A
 card is rendered when its video is in reels/, or when its sidecar says the
-video is on the Blob store (shelf_blob.py moves it there after the render). Given
+video is on the store (shelf_store.py moves it there after the render). Given
 ids, it renders exactly those and overwrites them. Given "all", it renders the
 whole library again, which is what a change to the picture or the sound needs:
 those change every reel, and a reel is only as current as the day it was made.
@@ -258,11 +258,11 @@ def orphans(cards):
         if cid in cards: continue
         if f.endswith(".json") and not f.endswith(".unfit.json"):
             # the video on the store goes with its sidecar, best effort
-            m = stored(cid)
-            for u in (m.get("video"), m.get("cover")):
-                if u:
-                    try: subprocess.run(["node", os.path.join(HERE, "blob.mjs"), "del", u], capture_output=True, timeout=60)
-                    except Exception: pass
+            try:
+                import shelf_store
+                shelf_store.take_off(stored(cid))
+            except Exception:
+                pass
         try: os.remove(os.path.join(OUT, f)); gone.append(f)
         except OSError: pass
     if gone: print("taken off the shelf, no card in the plan: %d file(s)" % len(gone))
@@ -282,6 +282,16 @@ def manifest():
     orphans(cards)
     out = []
     for cid in sorted(cards):
+        if unfit_still(cid, cards[cid]) and has_video(cid):
+            # set aside this run, but a video from an earlier cut is still on
+            # the shelf: a card that does not fit today does not ship yesterday
+            try:
+                import shelf_store
+                shelf_store.take_off(stored(cid))
+            except Exception:
+                pass
+            forget(cid)
+            print("  OUT", cid, "unfit; the older video is taken off the shelf")
         if not has_video(cid): continue
         c = cards[cid]
         kind = c.get("kind", "light")
