@@ -21,10 +21,11 @@ Two stores, one of them free:
 
 Run by the assemble job after every machine's files are gathered into reels/
 and before the manifest is written. For every video in reels/ whose card is
-in the plan: upload the video and the cover (overwriting), write the URLs
-into the sidecar reels/<id>.json (a verse sidecar keeps its reciter, ref and
-meaning), and remove the local files, so the pull request carries the
-sidecar and not the video. The sidecar with a `video` URL is what "rendered"
+in the plan: upload the video (overwriting; the cover too with
+REELS_STORE_COVERS=1, otherwise the hundred kilobyte cover stays in the
+repository), write the URL into the sidecar reels/<id>.json (a verse sidecar
+keeps its reciter, ref and meaning), and remove the local video, so the pull
+request carries the sidecar and not the video. The sidecar with a `video` URL is what "rendered"
 means from now on.
 
 Without any token nothing moves and the run says so once: the videos stay in
@@ -43,6 +44,7 @@ REPO = os.environ.get("GITHUB_REPOSITORY", "Eouchi147/noor")
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
 STORE = os.environ.get("REELS_STORE") or ("blob" if os.environ.get("BLOB_READ_WRITE_TOKEN") and not TOKEN else "release")
 TYPES = {".mp4": "video/mp4", ".jpg": "image/jpeg"}
+COVERS = os.environ.get("REELS_STORE_COVERS") == "1" or STORE == "blob"
 
 
 def have_store():
@@ -53,18 +55,43 @@ def have_store():
 
 # ---------------------------------------------------------------- GitHub
 
-def _req(method, url, body=None, ctype="application/json", raw=None):
+# GitHub allows about 500 content-creating requests an hour and 80 a minute
+# per token, and a run's GITHUB_TOKEN has 1,000 requests an hour in all. A
+# shelf of 1,265 videos is therefore paced: one upload every PACE seconds,
+# a little under eight a minute, three hours for the whole shelf once and a
+# few minutes for a week's new reels after that.
+PACE = float(os.environ.get("REELS_STORE_PACE", "8"))
+_last_write = 0.0
+
+
+def _req(method, url, body=None, ctype="application/json", raw=None, tries=4):
+    global _last_write
     data = raw if raw is not None else (json.dumps(body).encode() if body is not None else None)
-    req = urllib.request.Request(url, data=data, method=method, headers={
-        "Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28", "Content-Type": ctype,
-        "User-Agent": "NOOR reels"})
-    try:
-        with urllib.request.urlopen(req, timeout=120) as r:
-            t = r.read()
-            return r.status, (json.loads(t) if t and r.headers.get("Content-Type", "").startswith("application/json") else t)
-    except urllib.error.HTTPError as e:
-        return e.code, e.read()[:300]
+    writes = method in ("POST", "DELETE", "PATCH")
+    for attempt in range(tries):
+        if writes:
+            wait = PACE - (time.time() - _last_write)
+            if wait > 0: time.sleep(wait)
+        req = urllib.request.Request(url, data=data, method=method, headers={
+            "Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28", "Content-Type": ctype,
+            "User-Agent": "NOOR reels"})
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                t = r.read()
+                if writes: _last_write = time.time()
+                return r.status, (json.loads(t) if t and r.headers.get("Content-Type", "").startswith("application/json") else t)
+        except urllib.error.HTTPError as e:
+            if writes: _last_write = time.time()
+            if e.code in (403, 429, 502, 503) and attempt < tries - 1:
+                # rate limited or a hiccup: wait what GitHub asks, or a minute
+                ra = e.headers.get("Retry-After") if e.headers else None
+                time.sleep(float(ra) if ra and ra.isdigit() else 60.0 * (attempt + 1))
+                continue
+            return e.code, e.read()[:300]
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            if attempt < tries - 1: time.sleep(20.0 * (attempt + 1)); continue
+            return 0, str(e)[:300]
 
 
 _RELEASES = {}
@@ -190,7 +217,12 @@ def move(dry=False):
                 meta["store"] = "blob"
             else:
                 meta["video"], meta["video_asset"] = release_put(mp4, kind, cid + ".mp4")
-                if os.path.exists(cover): meta["cover"], meta["cover_asset"] = release_put(cover, kind, cid + "-cover.jpg")
+                # the cover is a hundred kilobytes and is read by the console and
+                # the poster far more often than the video: it stays in the
+                # repository unless asked to go too (REELS_STORE_COVERS=1), which
+                # also keeps the upload count, and so the hours, in half
+                if COVERS and os.path.exists(cover):
+                    meta["cover"], meta["cover_asset"] = release_put(cover, kind, cid + "-cover.jpg")
                 meta["store"] = "release"
             meta["bytes"] = os.path.getsize(mp4)
             meta["uploaded"] = time.strftime("%Y-%m-%d")
@@ -198,7 +230,7 @@ def move(dry=False):
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=1)
             os.remove(mp4)
-            if os.path.exists(cover): os.remove(cover)
+            if meta.get("cover") and os.path.exists(cover): os.remove(cover)
             moved += 1
             print("  moved", cid, meta["video"], flush=True)
         except Exception as e:
