@@ -1146,6 +1146,79 @@ export async function runDaily(host, date, opts = {}) {
 const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
 const K_RED = "nsoc:reddit:last";
 const K_SAID = "nsoc:said";        /* the last things actually published */
+const K_POSTED = "nsoc:reels:posted";   /* reel id -> the date every network had it */
+
+/* ---------------------------------------------------------------------------
+   a reel leaves the shelf once every network has it
+
+   The owner's rule of 9 September 2026: a reel that is up on the networks is
+   not needed any more. So the poster keeps a ledger, reel id to the date the
+   whole slot went out, and the weekly render run reads it (the public
+   `posted` action below) and drops those cards from the plan; a card that
+   leaves the plan leaves the shelf, video, sidecar and store asset together,
+   by the rule render_missing.py already keeps. Nothing here deletes anything.
+
+   "Every network has it" is the slot's own state: `sent` means each live
+   network that was asked answered yes, none is still processing and none
+   refused (a half sent slot is `partial` and stays until the healer mends it).
+   A network that is not open yet (Pinterest on Trial until its review,
+   YouTube until its consent) is not waited for: it could not take the reel
+   and may not be able to for months; when it opens, it starts with the
+   reels of that day. A slot is not final the minute it is written -- a
+   video story can still be in a network's hands, the healer may still be at
+   work -- so the ledger follows the record (a pending story takes the reel
+   off it again until the finisher has published the story) and is read
+   with a margin besides: a reel counts as posted POSTED_GRACE_DAYS after
+   its date. This day, the Names and the du'as are on the ledger like the
+   rest; which kinds actually retire is the plan builder's decision (they
+   recur by design, and it keeps them).
+--------------------------------------------------------------------------- */
+const POSTED_GRACE_DAYS = Number(process.env.POSTED_GRACE_DAYS) > 0 ? Number(process.env.POSTED_GRACE_DAYS) : 3;
+
+export function reelDone(rec) {
+  if (!rec || !rec.reel || rec.state !== "sent") return false;
+  const rs = Object.values(rec.results || {});
+  /* a video story still in a network's hands needs the file a little longer */
+  if (rs.some(r => r && r.story && r.story.pending)) return false;
+  return true;
+}
+
+/* a reel's record names the card, so the ledger can say which reel went;
+   a record written again (a retry, a finished container) keeps the name */
+function nameReel(rec, post, prev) {
+  if (post && post.reel && post.key) { rec.reel = String(post.key); rec.kind = post.kind || "light"; }
+  else if (prev && prev.reel) { rec.reel = prev.reel; rec.kind = prev.kind; }
+  return rec;
+}
+
+async function notePosted(date, rec) {
+  if (!kvReady() || !rec || !rec.reel) return;
+  /* the record is written more than once as a slot goes out (the feed post,
+     then the stories, then whatever the finisher and the healer mend), and
+     the ledger says what the latest record says */
+  const cmd = reelDone(rec) ? ["HSET", K_POSTED, String(rec.reel), String(date)]
+                            : ["HDEL", K_POSTED, String(rec.reel)];
+  try { await kv([cmd]); } catch { }
+}
+
+/* the ledger, less the last few days: what the render run may retire */
+export async function postedReels(today, grace) {
+  if (!kvReady()) return {};
+  const g = grace == null ? POSTED_GRACE_DAYS : grace;
+  const cut = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z") - g * 86400000;
+  let raw = [];
+  try { raw = (await kv([["HGETALL", K_POSTED]]))[0] || []; } catch { return {}; }
+  /* a REST store answers a hash as a flat list, a socket store the same; an
+     object is accepted too, for the day one of them changes its mind */
+  const pairs = Array.isArray(raw) ? raw : Object.entries(raw).flat();
+  const out = {};
+  for (let i = 0; i + 1 < pairs.length; i += 2) {
+    const id = String(pairs[i]), d = String(pairs[i + 1]);
+    const t = Date.parse(d + "T00:00:00Z");
+    if (isFinite(t) && t <= cut) out[id] = d;
+  }
+  return out;
+}
 
 /* ---------------------------------------------------------------------------
    what has already been said
@@ -1188,6 +1261,10 @@ async function writeSlot(date, slot, rec) {
   try { await kv([["SET", K_SLOT(date, slot), JSON.stringify(rec)],
                   ["LPUSH", K_LOG, JSON.stringify({ at: rec.at, date, slot, state: rec.state })],
                   ["LTRIM", K_LOG, "0", "200"]]); } catch { }
+  /* every path that finishes a reel (the send, the healer, a retry, a
+     container finished later) writes its record here, so here is the one
+     place the ledger is kept */
+  await notePosted(date, rec);
 }
 
 /* which channels are live right now, minus the ones that must never auto-send */
@@ -1397,6 +1474,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
 
   const rec = { at: out.at, slot: slotId, state: slotState(results),
     title: post.title, lvl: post.lvl, results };
+  nameReel(rec, post);
   /* the record is written BEFORE the stories: if the function is cut off
      while a story is being made, the feed post is already on the record and
      cannot be sent a second time next hour */
@@ -1486,6 +1564,9 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   const results = { ...((rec && rec.results) || {}), [ch]: r };
   const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
                  title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
+  /* the reel's name stays on the record through a retry, so the slot the
+     healer mends lands on the ledger like one that went out clean */
+  nameReel(next, post, rec);
   await writeSlot(date, slotId, next);
   return { ...out, ok: !!r.ok, state: next.state, result: r, results };
 }
@@ -1944,6 +2025,7 @@ export async function runDue(host, date, now, opts = {}) {
 
     const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
+    nameReel(rec, post);
     /* on the record first, then the stories: see sendSlot */
     await writeSlot(date, slot.id, rec);
     if (await addStories(results, { ...post, date }, D, left)) await writeSlot(date, slot.id, rec);
@@ -2103,12 +2185,24 @@ export default async function handler(req, res) {
      signed, fifteen minute `state` this route issued is the proof instead. */
   const pinCallback = String(q0.action || "") === "pin-callback"
     && pinStateOk(q0.state, process.env.ADMIN_SECRET || "");
+  /* the ledger of posted reels is public: it names reels that are already on
+     the public feeds and nothing else, and the render run on GitHub reads it
+     with no key of the house's in its hands */
+  const publicLedger = req.method === "GET" && String(q0.action || "") === "posted";
 
   const gate = ownerGate(req);
-  if (!gate.ok && !cronMayRun && !pinCallback) return json(res, gate.code, { ok: false, reason: gate.reason });
+  if (!gate.ok && !cronMayRun && !pinCallback && !publicLedger) return json(res, gate.code, { ok: false, reason: gate.reason });
 
   if (req.method === "GET") {
     const action = String(q.action || "preview");
+    if (action === "posted") {
+      const posted = await postedReels(new Date().toISOString().slice(0, 10));
+      /* cacheable, unlike the rest of this route: it changes five times a day
+         at most and the ledger is read once a week */
+      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=300");
+      return res.status(200).json({ ok: true, n: Object.keys(posted).length, grace_days: POSTED_GRACE_DAYS, posted });
+    }
     /* Step one: send the owner to Pinterest. */
     if (action === "pin-auth") {
       const id = process.env.PIN_APP_ID, secret = process.env.ADMIN_SECRET || "";
