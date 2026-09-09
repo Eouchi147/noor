@@ -209,11 +209,13 @@ then three seconds of the way home.
 
 The rota in `api/_schedule.js` gives five reel slots a day to the kinds by
 weekday (morning 08:00, noon 11:00, afternoon 14:00, evening 17:00, night
-21:00 UTC). Across a week that is 12 verses, 11 words, 8 Did you knows, 3
-day's cards and The Codex on Friday evening; a This day reel takes the
-morning of its own Hijri date. With 150 verses and 106 words on the shelf the
-walk runs about three months before a verse comes round again.
-`node tests/reels-kinds.mjs` holds it.
+21:00 UTC). Across a week that is 11 verses, 9 words, 6 Names, 6 Did you
+knows, 2 day's cards and a du'a on Thursday night; a This day reel takes the
+morning of its own Hijri date. Each kind is walked by the running count of
+its slots since Sunday 6 September 2026 (`reelStep`), so no card is shown
+twice in a day and, with 300 verses on the shelf, a verse does not come round
+inside six months. `node tests/reels-kinds.mjs` holds it, including a walk
+of the whole six months.
 
 ## How one gets posted
 
@@ -248,10 +250,33 @@ function may spend it hands back the container id, the slot is recorded as
 takes a reel in three phases and fetches the file itself, so none of the bytes
 pass through the site.
 
-`node tests/reels.mjs` holds all of that with Meta stubbed: 46 checks, including
+`node tests/reels.mjs` holds all of that with Meta stubbed: 78 checks, including
 that a token never reaches a URL, that a pending container is finished later
 rather than lost, and that a reel post with no video is refused rather than sent
 as a photo.
+
+### A reel leaves the shelf once every network has it
+
+The owner's rule of 9 September 2026: a reel that is up on the networks is
+not needed any more. The poster keeps a ledger, reel id to the date the
+whole slot went out (`nsoc:reels:posted`, written by `writeSlot` whenever a
+reel's record reads `sent`: every live network answered yes, none is still
+processing, no story container is pending). It answers the ledger in public
+at `/api/social?action=posted`, less the last three days, because a slot is
+not final the minute it is written. The weekly render run copies that
+answer into `posted.json` (`posted_fetch.py`, which keeps the old file when
+the site cannot be read), `plan_build.py` leaves those cards out of the
+plan, and `render_missing.py --manifest` takes a card that is not in the
+plan off the shelf: the sidecar, the cover, and the video on the store. Four
+kinds retire, a verse, a word, a Did you know and a day's card; This day,
+the Names and the du'as recur by design and stay. `node tests/retire.mjs`
+holds it: what counts as done, the margin, the public read, and that a slot
+the healer mends lands on the ledger like one that went out clean.
+
+The shelf therefore drains at about 28 reels a week, and is refilled by
+adding cards: verse references to `verses.txt`, Did you knows to
+`know.json`, day's cards to `light.json`; the dictionary is on the shelf
+whole.
 
 ## Adding a card
 
@@ -269,22 +294,37 @@ as a photo.
 
 ## How the workflow renders
 
-`.github/workflows/reels.yml` is three jobs. `plan` builds and audits the plan
-once, fetches the translations once, and counts what is missing
-(`render_missing.py --count`). `render` is a matrix of up to four machines
-(the `machines` input), each taking every n-th card of the same interleaved
-list (`REELS_SHARD` of `REELS_SHARDS`) and at most 80 (`REELS_MAX`); each
-hands what it made on as an artifact. `assemble` gathers them, writes the
-manifest (`render_missing.py --manifest`) and opens one pull request. A
-machine that dies takes only its own share with it. On a private repository
-the four machines together spend about 400 of the 2,000 free minutes a month
-to fill the shelf once; the weekly run after that renders only what is new.
+`.github/workflows/reels.yml` is three jobs. `plan` copies the ledger of
+posted reels, builds and audits the plan once, fetches the translations
+once, and counts what is missing (`render_missing.py --count`). `render` is
+a matrix of as many machines as the count needs, up to the `machines` input
+(eight by default, sixteen at most), each taking every n-th card of the same
+interleaved list (`REELS_SHARD` of `REELS_SHARDS`) and at most 60
+(`REELS_MAX`), three at a time (`REELS_JOBS`); each hands what it made on as
+an artifact. `assemble` gathers them, moves every finished video to the
+store (`shelf_store.py`), writes the manifest (`render_missing.py
+--manifest`) and opens one pull request that carries the sidecars, the
+manifest, the plan and the ledger, not the videos. A machine that dies takes
+only its own share with it. The `gather` input names an earlier run whose
+artifacts are shelved instead of rendering, for the week a change to the
+workflow itself lands after a night's render. The repository is public, so
+the minutes are free; the run is also scheduled for Monday 04:00 UTC, when
+it renders what is new and retires what has been posted.
 
 ## What the files are
 
 Each card renders `reels/<id>.mp4` and `reels/<id>-cover.jpg`. 1080x1920, 30fps,
 H.264 high, yuv420p, and an AAC stereo track at 48 kHz and 96 kbit: about
-1.8 MB in all. The audio track is not optional even when it is quiet, because
+3.5 MB in all. The video does not stay in the repository: `shelf_store.py`
+puts it on the store, a GitHub release tagged `reels-<kind>` (one per kind,
+free, outside the repository's size, with the run's own token; Vercel Blob
+behind `REELS_STORE=blob` and its token), paced at one upload every eight
+seconds under GitHub's write limits, and the sidecar `reels/<id>.json` keeps
+the URL and the asset id. A release link answers with a short lived
+redirect, so `freshVideoUrl` in `api/social.js` resolves it for each network
+at the second the file is handed over. The cover stays in the repository,
+where the console and the poster read it often (`REELS_STORE_COVERS=1`
+sends it too). The audio track is not optional even when it is quiet, because
 without an audio stream Instagram treats the file as malformed. The cover
 exists because the profile grid otherwise takes frame zero, which is the
 picture before a single word has arrived.

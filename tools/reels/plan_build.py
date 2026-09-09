@@ -233,6 +233,40 @@ def dua_cards():
     return cards
 
 
+# a reel leaves the shelf once every network has it (the owner's rule of 9
+# September 2026). posted.json is the site's ledger, copied by
+# posted_fetch.py: reel id to the date the whole slot went out. A card on it
+# is left out of the plan, and a card out of the plan is taken off the shelf
+# by render_missing.py, video, sidecar and store asset together. Four kinds
+# retire: a verse, a word, a Did you know and a day's card are each said
+# once. The other three recur by design and stay: This day returns on its
+# own Hijri date every year, the 99 Names and the du'as of the Path come
+# round on their walk.
+RETIRE = {"verse", "word", "know", "light"}
+
+
+def posted():
+    try:
+        d = json.load(open(os.path.join(HERE, "posted.json"), encoding="utf-8"))
+        p = d.get("posted")
+        return {str(k): str(v) for k, v in p.items()} if isinstance(p, dict) else {}
+    except (OSError, ValueError, AttributeError):
+        return {}
+
+
+def retire(cards):
+    gone, by = {}, {}
+    for cid, day in posted().items():
+        c = cards.get(cid)
+        if c is None or c.get("kind", "light") not in RETIRE: continue
+        gone[cid] = day
+        by[c.get("kind", "light")] = by.get(c.get("kind", "light"), 0) + 1
+        del cards[cid]
+    if gone:
+        print("  retired      %d (posted, every network had them) %s" % (len(gone), by))
+    return len(gone)
+
+
 def main():
     doc = json.load(open(PLAN, encoding="utf-8")) if os.path.exists(PLAN) else {"_meta": {}, "cards": {}}
     old = doc.get("cards", {})
@@ -272,9 +306,10 @@ def main():
         new = build()
         cards.update(new)
         print("  %-12s %d" % (build.__name__.replace("_cards", ""), len(new)))
+    retired = retire(cards)
     counts = {}
     for v in cards.values(): counts[v.get("kind", "light")] = counts.get(v.get("kind", "light"), 0) + 1
-    doc["_meta"] = {**doc.get("_meta", {}), "n": len(cards), "kinds": counts,
+    doc["_meta"] = {**doc.get("_meta", {}), "n": len(cards), "kinds": counts, "retired": retired,
                     "built": "plan_build.py from the library; light.json and know.json are written by hand"}
     doc["cards"] = cards
     json.dump(doc, open(PLAN, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
