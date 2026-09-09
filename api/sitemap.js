@@ -20,7 +20,7 @@ const day = v => { const m = String(v || "").match(/^\d{4}-\d{2}-\d{2}/); return
 export async function urls() {
   const out = [];
   const today = new Date().toISOString().slice(0, 10);
-  out.push(["/today", today], ["/lights", LAST_CONTENT_CHANGE], ["/path", LAST_CONTENT_CHANGE], ["/verses", LAST_CONTENT_CHANGE]);
+  out.push(["/today", today], ["/light", LAST_CONTENT_CHANGE], ["/path", LAST_CONTENT_CHANGE], ["/verses", LAST_CONTENT_CHANGE]);
   for (const L of lights()) out.push(["/light/" + L.id, LAST_CONTENT_CHANGE]);
   for (const c of chapters()) out.push(["/path/" + c.id, LAST_CONTENT_CHANGE]);
   for (let n = 1; n <= 114; n++) out.push(["/surah/" + n, LAST_CONTENT_CHANGE]);

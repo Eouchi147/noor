@@ -16,7 +16,8 @@
 // Nothing is written here.
 //
 // Reached through rewrites in vercel.json:
-//   /light/<id>   ?kind=light&id=      /lights   ?kind=lights
+//   /light/<id>   ?kind=light&id=      /light    ?kind=lights  (/lights is
+//   taken by the lights/ folder on the filesystem, so the shelf is singular)
 //   /path/<n>     ?kind=path&n=        /path     ?kind=paths
 //   /verse/<ref>  ?kind=verse&ref=     /verses   ?kind=verses
 //   /surah/<n>    ?kind=surah&n=       /today    ?kind=today[&date=]
@@ -303,7 +304,7 @@ const ROOMS = () => `<ul class="n2-rooms">
 <li><a href="/path"><b>The Path</b><span>${chapters().length || 71} chapters, in order</span></a></li>
 <li><a href="/dictionary"><b>The Words</b><span>${Object.keys(dictionary()).length || 523} explained</span></a></li>
 <li><a href="/allah"><b>The Names</b><span>the ninety-nine</span></a></li>
-<li><a href="/lights"><b>The Lights</b><span>${lights().length || 350} true things</span></a></li>
+<li><a href="/light"><b>The Lights</b><span>${lights().length || 350} true things</span></a></li>
 <li><a href="/kids"><b>Little Codex</b><span>for children</span></a></li>
 </ul>`;
 
@@ -337,11 +338,11 @@ ${L.src ? `<p class="n2-src">Source · ${esc(L.src)}</p>` : ""}
 <p class="n2-eyebrow">Read beside it</p>
 ${wordList(words, "The words")}
 ${lightList(more, "More Lights")}
-<div class="n2-row">${go("/lights", "All " + lights().length + " Lights")}${go("/today", "Today's light")}</div>
+<div class="n2-row">${go("/light", "All " + lights().length + " Lights")}${go("/today", "Today's light")}</div>
 </section>`;
   const html = shell({
-    title: L.t, path: url, desc: clip(L.s, 158), active: "/today", crumbs: [["The Lights", "/lights"], [L.t, url]],
-    pill: ["/lights", "All Lights"],
+    title: L.t, path: url, desc: clip(L.s, 158), active: "/today", crumbs: [["The Lights", "/light"], [L.t, url]],
+    pill: ["/light", "All Lights"],
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: L.t, description: clip(L.s, 200), articleSection: L.c || "",
       url: SITE + url, mainEntityOfPage: SITE + url, image: OG_DEFAULT, inLanguage: "en",
       author: { "@type": "Organization", name: "NOOR Codex of Light", url: SITE },
@@ -364,9 +365,9 @@ function lightsIndex() {
 <h2 class="n2-h3">${esc(groupLabel(k))} <span class="n2-g">· ${groups.get(k).length}</span></h2>
 <ul class="n2-list">${groups.get(k).map(L => `<li><a href="/light/${attr(L.id)}"><b>${esc(L.t)}<small>${esc(L.d || "")}</small></b></a></li>`).join("")}</ul>
 </section>`).join("\n");
-  return { status: 200, html: shell({ title: "The Lights", path: "/lights", desc: lights().length + " Lights of history and science, each with its date, and its source where the card names one.",
-    ogType: "website", mode: "reveal top bar share home", active: "", crumbs: [["The Lights", "/lights"]],
-    ld: [{ "@context": "https://schema.org", "@type": "CollectionPage", name: "The Lights", url: SITE + "/lights", numberOfItems: lights().length }], body }) };
+  return { status: 200, html: shell({ title: "The Lights", path: "/light", desc: lights().length + " Lights of history and science, each with its date, and its source where the card names one.",
+    ogType: "website", mode: "reveal top bar share home", active: "", crumbs: [["The Lights", "/light"]],
+    ld: [{ "@context": "https://schema.org", "@type": "CollectionPage", name: "The Lights", url: SITE + "/light", numberOfItems: lights().length }], body }) };
 }
 
 /* ---------------------------------------------------------------------------
@@ -621,8 +622,8 @@ ${paras(esc(card.story))}
 ${card.detail ? `<p class="n2-date">${esc(card.detail)}</p>` : ""}
 ${card.src ? `<p class="n2-src">Source · ${esc(card.src)}</p>` : ""}
 <p class="n2-src">${esc(longDate(date))} · ${h.d} ${esc(hijriName(h.m))} ${h.y} AH</p>
-<div class="n2-row">${card.id && lightById(card.id) ? go("/light/" + card.id, "The whole Light", true) : go("/lights", "The Lights", true)}${shareBtn(card.title + " · NOOR Codex of Light", SITE + (card.id && lightById(card.id) ? "/light/" + card.id : "/today"))}</div>`
-  : `<h1 class="n2-h1">The lantern is <span class="n2-g">resting</span></h1><p class="n2-p">The day's Light could not be read just now. The rest of the library is open.</p><div class="n2-row">${go("/lights", "The Lights", true)}</div>`}
+<div class="n2-row">${card.id && lightById(card.id) ? go("/light/" + card.id, "The whole Light", true) : go("/light", "The Lights", true)}${shareBtn(card.title + " · NOOR Codex of Light", SITE + (card.id && lightById(card.id) ? "/light/" + card.id : "/today"))}</div>`
+  : `<h1 class="n2-h1">The lantern is <span class="n2-g">resting</span></h1><p class="n2-p">The day's Light could not be read just now. The rest of the library is open.</p><div class="n2-row">${go("/light", "The Lights", true)}</div>`}
 </section>
 ${entry ? `<section class="n2-idea">
 <p class="n2-eyebrow">The word <small>· ${esc(entry.cat || "")}</small></p>
