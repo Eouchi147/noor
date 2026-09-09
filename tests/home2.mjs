@@ -35,6 +35,8 @@ const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
 const count = (s, re) => (s.match(re) || []).length;
+const MENU = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/menu-index.json'), 'utf8'));
+const menuItem = title => { for (const s of MENU.sections) for (const it of s.items) if (it.t === title) return it; return null; };
 
 console.log('\n=== 1. the file parses ===');
 {
@@ -117,10 +119,46 @@ console.log('\n=== 3. the promises ===');
   for (const bad of ['hero-stats', 'mo-count', 'h2mq', 'marquee', 'countUp', 'codex-count'])
     ok(!html.includes(bad), 'no ' + bad + ' (no counters, no marquee)');
   ok(!/autoplay/.test(html), 'no auto-playing video');
-  ok(html.includes('<p class="n2-p n2-wide">The whole library, free forever: no ads, no account, no tracking.</p>'), 'the line of truth is on the page, in the register of the house');
+  ok(html.includes('A free library of Islam <small>· no ads, no account, no tracking</small>'), 'the line of truth opens the page, in the register of the house');
   ok(html.includes('<h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>'), 'the library screen says the same, with the key word in gold');
   ok(html.includes('with its date, and its source where the card names one'), 'the Lights claim a source only where a card names one');
   ok(!/whole of Islam/i.test(html), 'no "the whole of Islam"');
+  /* the arrival: the thesis, the verse, the three Names, the toolkit */
+  ok(/<p class="n2-eyebrow hm-eyebrow">A free library of Islam <small>· no ads, no account, no tracking<\/small><\/p>/.test(html), 'the eyebrow says what this is and what it is not');
+  ok(/<h1 class="n2-h1">A guide to God, <span class="n2-g">whole and free<\/span><\/h1>/.test(html), 'the headline is the thesis, its key phrase in gold');
+  ok(/prayer board, khutba, timetable, qibla/.test(html) && /codex for children/.test(html) && /recited surah by surah/.test(html) && /told in order/.test(html), 'one sentence names the four things a stranger can do here');
+  ok(/<p class="n2-quran" lang="ar" translate="no">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ<\/p>/.test(html), 'Qur\'an 2:186, the first half, in the Uthmani script');
+  ok(html.includes('<p class="n2-meaning">And when My servants ask you concerning Me — indeed I am near.</p>'), 'with the first sentence of the Saheeh International meaning; the rest is on /verse/2-186');
+  ok(/<p class="n2-ref"><a href="\/verse\/2-186">Qur'an 2:186 · Al-Baqarah<\/a><\/p>/.test(html), 'and its reference links to /verse/2-186');
+  {
+    const q = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/reels/quran-uthmani.json'), 'utf8'));
+    ok(String(q.verses['2:186'] || '').startsWith('وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ'), 'the Arabic is the library\'s own Uthmani text, letter for letter');
+    const src = fs.readFileSync(path.join(ROOT, 'allah.html'), 'utf8');
+    for (const [ar, tr, gloss] of [['الرَّقِيب', 'Ar-Raqib', 'The Watchful'], ['الْقَادِر', 'Al-Qadir', 'The All-Powerful'], ['الرَّحْمَٰن', 'Ar-Rahman', 'The Most Merciful, whose mercy reaches all that is']]) {
+      ok(src.includes('["' + ar + '","' + tr + '","' + gloss + '"'), 'allah.html glosses ' + tr + ' as "' + gloss + '"');
+      ok(html.includes('<span lang="ar" translate="no">' + ar + '</span>' + tr + '</a>') && html.includes(gloss), 'the arrival carries ' + tr + ' with that gloss, linking to /allah');
+    }
+    ok(count(html, /<a href="\/allah"><span lang="ar"/g) === 3, 'three Names, three doors to /allah');
+    for (const [href, label, room] of [['/path', 'Learn', 'The Path of Creation'], ['/quran', 'Listen', 'The Mushaf'], ['/kids', 'The children', "The Kids' Codex"], ['/masjid', 'A masjid', 'The Masjid Toolbox']]) {
+      const item = menuItem(room);
+      /* the menu sends The Path to this page's own anchor; the door goes to its room */
+      ok(item && (item.u === href || (href === '/path' && item.u === '/#timeline')) && html.includes('<li><a href="' + href + '"><b>' + label + ' <small>· ' + room + '</small></b><span>' + item.d.replace(/&/g, '&amp;') + '</span></a></li>'), 'the toolkit door "' + label + '" is ' + room + ' with its own line from the menu index');
+    }
+    ok(/<p class="hm-more"><a href="#library">The whole library<\/a><\/p>/.test(html), 'and a fifth quiet link opens the whole library');
+    ok(count(html, /n2-glow/g) === 1 && /n2-glow hm-search/.test(html), 'the search is still the one glowing action');
+  }
+  /* no second person outside a control's label and the quoted verse */
+  {
+    let text = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<!--[\s\S]*?-->/g, '');
+    text = text.replace(/aria-label="[^"]*"/g, '').replace(/<p class="n2-meaning">[^<]*<\/p>/g, '').replace(/<div class="n2-quote">[\s\S]*?<\/div>/g, '');
+    /* the rooms' own lines out of the menu index are the library's words, not this page's */
+    const menu = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/menu-index.json'), 'utf8'));
+    for (const s of menu.sections) for (const it of s.items) { text = text.split(it.d.replace(/&/g, '&amp;')).join(''); text = text.split(it.t.replace(/&/g, '&amp;')).join(''); text = text.split(s.s).join(''); }
+    const hits = [...text.replace(/<[^>]+>/g, ' ').matchAll(/\b(you|your|yours|yourself)\b/gi)].map(m => m[0]);
+    ok(!hits.length, 'no second person in the page\'s own copy' + (hits.length ? ' (' + hits.length + ': ' + hits.slice(0, 4).join(', ') + ')' : ''));
+  }
+  ok(html.includes('Nothing here is asked for. The door of giving is open for whoever wishes; nothing is expected.'), 'the stance on giving is the owner\'s, as structural copy');
+  ok(Buffer.byteLength(html) < 42 * 1024, 'the page is under 42 KB (' + Buffer.byteLength(html) + ')');
 }
 
 console.log('\n=== 4. the structured data ===');
@@ -290,6 +328,22 @@ if (chromium) {
     ok(st.social === 1 && st.socialIn && st.socialIn.foot && st.socialIn.links.length === 6, 'noor-fx.js drew the row of six doors once, inside the footer');
     ok(st.socialIn && Math.abs(st.socialIn.x - st.socialIn.tx) < 2, 'and its first mark sits on the footer\'s left edge with the text');
     ok(st.minFont >= 12, 'no type under 12 px on a phone (' + st.minFont + ')');
+    const fit = await pg.evaluate(() => { const t = document.getElementById('top'), q = t.querySelector('.n2-quran'), r = q.getBoundingClientRect();
+      return { bottom: t.lastElementChild.getBoundingClientRect().bottom, bar: document.querySelector('.n2-bar').getBoundingClientRect().top, clip: q.scrollWidth > q.clientWidth + 1 || r.left < 0 || r.right > innerWidth,
+        doors: [...t.querySelectorAll('.hm-doors a')].map(a => a.getAttribute('href')), names: t.querySelectorAll('.hm-names a').length, verse: !!t.querySelector('a[href="/verse/2-186"]') }; });
+    ok(fit.bottom <= fit.bar, 'the arrival fits one iPhone 13 height above the bar (' + Math.round(fit.bottom) + ' <= ' + Math.round(fit.bar) + ')');
+    ok(!fit.clip, 'the Arabic of 2:186 is not clipped');
+    ok(fit.doors.join(' ') === '/path /quran /kids /masjid' && fit.names === 3 && fit.verse, 'the toolkit, the three Names and the verse are in the DOM');
+    const namesRow = () => pg.evaluate(() => { const as = [...document.querySelectorAll('.hm-names a')].map(a => a.getBoundingClientRect()); return { oneRow: Math.max(...as.map(r => r.top)) - Math.min(...as.map(r => r.top)) < 2, clipped: [...document.querySelectorAll('.hm-names a')].some(a => a.scrollWidth > a.clientWidth + 1) }; });
+    let nr = await namesRow();
+    ok(nr.oneRow && !nr.clipped, 'the three Names hold one row at 390');
+    await pg.setViewportSize({ width: 360, height: 780 }); await pg.waitForTimeout(500);
+    nr = await namesRow();
+    const fit360 = await pg.evaluate(() => { const t = document.getElementById('top'), q = t.querySelector('.n2-quran'); return { bottom: t.lastElementChild.getBoundingClientRect().bottom, bar: document.querySelector('.n2-bar').getBoundingClientRect().top, clip: q.scrollWidth > q.clientWidth + 1, wide: document.documentElement.scrollWidth <= innerWidth + 1 }; });
+    ok(nr.oneRow && !nr.clipped, 'and at 360');
+    ok(fit360.bottom <= fit360.bar && !fit360.clip && fit360.wide, 'the arrival fits a 360 by 780 phone above the bar (' + Math.round(fit360.bottom) + ' <= ' + Math.round(fit360.bar) + '), Arabic whole, no sideways scroll');
+    await pg.screenshot({ path: path.join(SHOTS, 'phone-1-arrival-360.png') });
+    await pg.setViewportSize({ width: 390, height: 844 }); await pg.waitForTimeout(400);
     await pg.screenshot({ path: path.join(SHOTS, 'phone-1-arrival.png') });
     for (const [id, name] of [['today', 'phone-2-today-bare'], ['verse', 'phone-3-verse-bare'], ['library', 'phone-4-library'], ['lib-story', 'phone-5-story'], ['timeline', 'phone-6-path'], ['mizan', 'phone-7-two-lives'], ['free', 'phone-8-no-catch']]) {
       await pg.evaluate(i => document.getElementById(i).scrollIntoView({ behavior: 'instant', block: 'start' }), id);
