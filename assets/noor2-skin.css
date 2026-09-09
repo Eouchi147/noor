@@ -1,0 +1,59 @@
+/* NOOR · noor2-skin.css · the second cut's skin for the older rooms.
+   Loaded by noor-fx.js, after noor2.css, on every page that is not already
+   in the shell (no data-n2); NOOR2.inject() sets the classes on <html>:
+   n2-skin always; n2-dark on a page whose own background is night (the
+   Names, the Kids' Codex, the Lantern Sky); n2-parch on a parchment page
+   (the 523 dictionary words, the encyclopedia, the Mushaf, the journal),
+   which keeps its parchment: only the bar, the room for it, and the share
+   are added there, and gold is never set on the parchment itself.
+   On the night the skin harmonises what is there: the shared sticky header
+   goes translucent night with a gold hairline, hairlines go gold, and the
+   share in the footer wears the shell's button. n2-bar-away is set while a
+   wide fixed thing of the page's own (the Mushaf's player, a sheet) holds
+   the bottom edge: the bar slides away and the page's own padding stands.
+   Every transition here is the shell's spring or its bezier, and nothing
+   moves under prefers-reduced-motion (noor2.css switches every n2- class
+   off). Nothing decorative that carries no meaning. */
+
+/* ------------------------------------------------- room under the thumb */
+html.n2-skin:not(.n2-bar-away) body{padding-bottom:calc(var(--n2-skin-pad,0px) + var(--n2-bar-h))!important}
+html.n2-skin #noor-notice{display:none!important}
+html.n2-skin #noor-translate-hint{bottom:calc(var(--n2-bar-h) + 12px)!important}
+/* above the pages' sticky furniture (section navs at z 30), under their
+   sheets and the Mushaf's player (z 60 and up), which send it away anyway */
+html.n2-skin .n2-bar{font-family:var(--n2-sans);z-index:35}
+html.n2-skin .n2-toast{z-index:36}
+/* over parchment the bar's night is denser, so its labels keep 4.5:1 */
+html.n2-skin.n2-parch .n2-bar{background:rgba(4,6,15,.9)}
+
+/* ---------------------------------------------------------- the share */
+.n2-skin-share{justify-content:center;margin:18px 0 6px;padding:0 16px}
+/* a light footer on a parchment page: the button in ink, no gold */
+.n2-skin-share.n2-ink .n2-btn{color:#2C2416;border-color:rgba(44,36,22,.28);background:rgba(44,36,22,.04);backdrop-filter:none;-webkit-backdrop-filter:none}
+.n2-skin-share.n2-ink .n2-btn:hover{background:rgba(44,36,22,.08);border-color:rgba(44,36,22,.5)}
+.n2-skin-share.n2-ink .n2-btn:focus-visible{outline-color:#2C2416}
+
+/* -------------------------------------------------- the night, harmonised */
+html.n2-skin.n2-dark #site-header{background:rgba(4,6,15,.62)!important;-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
+  border-bottom:1px solid rgba(233,200,106,.14)!important;color:var(--n2-parch2)}
+html.n2-skin.n2-dark #site-header>div>a:first-child>div:first-child{background:rgba(233,200,106,.12);color:var(--n2-goldhi);box-shadow:0 0 0 1px rgba(233,200,106,.35)}
+html.n2-skin.n2-dark #site-header>div>a:first-child>div:last-child>div:first-child{color:var(--n2-goldhi)}
+html.n2-skin.n2-dark #site-header>div>a:first-child>div:last-child>div:last-child{color:var(--n2-parch3)}
+html.n2-skin.n2-dark #site-header nav[aria-label="Primary"]{color:var(--n2-parch3)}
+html.n2-skin.n2-dark #site-header nav[aria-label="Primary"] a:hover,html.n2-skin.n2-dark #site-header nav[aria-label="Primary"] a.text-ink{color:var(--n2-parch)}
+html.n2-skin.n2-dark #site-header .lang-chip{color:var(--n2-parch2);border-color:rgba(233,200,106,.3)}
+html.n2-skin.n2-dark #site-header .lang-chip:hover{color:var(--n2-goldhi);border-color:rgba(233,200,106,.55)}
+html.n2-skin.n2-dark #site-header .dd-btn{color:inherit}
+html.n2-skin.n2-dark #nav-burger span{background:var(--n2-parch2)}
+html.n2-skin.n2-dark [data-noor-sponsor]{background:rgba(233,200,106,.06)!important;border-bottom:1px solid rgba(233,200,106,.14)!important}
+html.n2-skin.n2-dark [data-noor-sponsor] .nsp-t,html.n2-skin.n2-dark [data-noor-sponsor] span{color:var(--n2-parch3)!important}
+html.n2-skin.n2-dark [data-noor-sponsor] a{color:var(--n2-goldhi)!important}
+html.n2-skin.n2-dark footer{border-top-color:rgba(233,200,106,.16)}
+html.n2-skin.n2-dark hr{border-color:rgba(233,200,106,.16)}
+html.n2-skin.n2-dark .noor-social-link{border-color:rgba(233,200,106,.22)}
+
+/* ------------------------------------------------------------ the bar */
+/* the bar's own transitions are in noor2.css; the pages under it keep their
+   own sticky headers, which are never covered because the bar is at the
+   bottom and the headers at the top */
+@media print{html.n2-skin body{padding-bottom:0!important}}

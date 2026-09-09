@@ -10,9 +10,18 @@
    dots only, never for words. Type is never under 14 px on a phone; 12 px is
    allowed only for the mono eyebrows, tracked at .16em or wider.
    Motion: one settled spring (--n2-spring, a linear() curve, with a bezier
-   where linear() is not understood) for everything that moves in space;
-   the bezier for fades and blurs, which must not overshoot. Nothing moves
-   linearly, and nothing moves at all under prefers-reduced-motion. */
+   where linear() is not understood) for everything that moves in space:
+   the bar's pill, the marks' pill, the sheet, the toast, the buttons, the
+   cards, the top line; the bezier (--n2-ease) only for fades, blurs and
+   colour, which must not overshoot. Nothing moves linearly, and nothing
+   moves at all under prefers-reduced-motion (tests/rooms.mjs audits every
+   transition and animation in this file against that rule).
+   Depth without clutter: the hairline star behind the hook (in the shader),
+   a gold hairline under each eyebrow with the screen's numeral at its right
+   ("01 / 05"), a soft gold vignette that follows the screen being read, the
+   column of marks at the right edge (one per screen, the read one a longer
+   gold pill that moves as a liquid), gold hairlines between list rows, and
+   one quiet progress line at the very top. Nothing that carries no meaning. */
 
 :root{
   --n2-night:#04060F; --n2-night2:#0A1024;
@@ -53,18 +62,26 @@ html[data-n2] ::selection{background:rgba(233,200,106,.35);color:var(--n2-parch)
 .n2-still{background:
   radial-gradient(60% 40% at 50% 46%,rgba(233,200,106,.20),transparent 70%),
   linear-gradient(180deg,#0A1024 0%,#04060F 100%)}
-#n2-gl{opacity:0;transition:opacity 1.2s ease}
+#n2-gl{opacity:0;transition:opacity 1.2s var(--n2-ease)}
 #n2-gl.n2-on{opacity:1}
+/* a soft gold vignette that follows the screen being read: one element,
+   twice the viewport tall, moved on the spring to the hook of the screen */
+.n2-vig{position:fixed;left:0;right:0;top:0;height:200vh;height:200svh;z-index:1;pointer-events:none;
+  background:radial-gradient(52% 22% at 50% 50%,rgba(233,200,106,.11),rgba(233,200,106,.035) 45%,transparent 72%);
+  transform:translateY(calc(var(--n2-vy,46vh) - 100vh));transition:transform 1.1s var(--n2-spring),opacity .6s var(--n2-ease);opacity:0}
+html.n2-live .n2-vig{opacity:1}
 
 /* ------------------------------------------------- one line at the top */
 .n2-top{position:fixed;top:0;left:0;right:0;z-index:20;
   padding:calc(var(--n2-safe-top) + 10px) 20px 12px;
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   background:linear-gradient(180deg,rgba(4,6,15,.94),rgba(4,6,15,0));
-  transition:transform .45s var(--n2-ease),opacity .35s;pointer-events:none}
+  transition:transform .6s var(--n2-spring),opacity .35s var(--n2-ease);pointer-events:none}
 .n2-top>*{pointer-events:auto}
-.n2-prog{position:absolute;left:0;bottom:0;height:1px;width:100%;background:linear-gradient(90deg,var(--n2-gold),var(--n2-goldhi));
-  transform-origin:left;transform:scaleX(var(--n2-p,0));transition:transform .3s var(--n2-ease);pointer-events:none}
+/* the quiet progress line: how far down the whole page the reader is, at
+   the very top, its own element so it stays when the top line hides */
+.n2-prog{position:fixed;left:0;top:var(--n2-safe-top);z-index:21;height:1px;width:100%;background:linear-gradient(90deg,var(--n2-gold),var(--n2-goldhi));
+  transform-origin:left;transform:scaleX(var(--n2-p,0));transition:transform .5s var(--n2-spring);pointer-events:none;opacity:.9}
 .n2-top.n2-hide{transform:translateY(-100%);opacity:0}
 .n2-brand{display:inline-flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--n2-parch);min-height:46px;align-items:center}
 .n2-brand .n2-ar{font-family:var(--n2-ar);font-size:24px;color:var(--n2-goldhi);line-height:1}
@@ -72,7 +89,9 @@ html[data-n2] ::selection{background:rgba(233,200,106,.35);color:var(--n2-parch)
 .n2-pill{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);
   text-decoration:none;border:1px solid var(--n2-line);border-radius:999px;padding:0 14px;min-height:46px;display:inline-flex;align-items:center;
   background:rgba(4,6,15,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.n2-pill{transform:scale(var(--ms,1));transition:color .25s var(--n2-ease),border-color .25s var(--n2-ease),transform .6s var(--n2-spring)}
 .n2-pill:hover{color:var(--n2-goldhi);border-color:rgba(233,200,106,.4)}
+.n2-pill.n2-press{--ms:.96;transition-duration:.25s,.25s,.15s} .n2-pill.n2-release{--ms:1.02}
 
 /* ------------------------------------------------ one idea per screen */
 .n2-main{position:relative;z-index:2;max-width:44rem;margin:0 auto}
@@ -93,8 +112,13 @@ html[data-n2] ::selection{background:rgba(233,200,106,.35);color:var(--n2-parch)
 /* without the script the page still reads: the script adds n2-live */
 html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 
-.n2-eyebrow{font-family:var(--n2-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--n2-goldhi);margin:0 0 18px}
+.n2-eyebrow{font-family:var(--n2-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--n2-goldhi);margin:0 0 18px;position:relative;line-height:1.5}
 .n2-eyebrow small{font-family:var(--n2-mono);font-size:12px;color:var(--n2-parch3);letter-spacing:.18em}
+/* a gold hairline under every eyebrow, fading to the right, drawn inside
+   the margin so it adds no height; the screen's numeral ("01 / 05", set by
+   the script on pages of two or more screens) floats at its right */
+.n2-eyebrow::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:linear-gradient(90deg,rgba(233,200,106,.38),rgba(233,200,106,.08) 70%,rgba(233,200,106,0))}
+.n2-eyebrow .n2-of{float:right;margin:0 0 0 14px;font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;color:var(--n2-parch3);font-variant-numeric:tabular-nums;white-space:nowrap}
 .n2-h1,.n2-h2{font-family:var(--n2-sans);font-weight:800;letter-spacing:-.018em;line-height:1.08;margin:0 0 16px;text-wrap:balance;color:var(--n2-parch)}
 .n2-h1{font-size:clamp(28px,8vw,38px)} .n2-h2{font-size:clamp(24px,7vw,32px)}
 .n2-h3{font-family:var(--n2-sans);font-weight:600;font-size:18px;line-height:1.3;margin:22px 0 8px;color:var(--n2-parch)}
@@ -126,7 +150,8 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-reel .n2-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,6,15,.25);
   border:0;cursor:pointer;color:var(--n2-parch);padding:0}
 .n2-reel .n2-play span{display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;
-  background:rgba(4,6,15,.55);border:1px solid rgba(233,200,106,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  background:rgba(4,6,15,.55);border:1px solid rgba(233,200,106,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .6s var(--n2-spring)}
+.n2-reel .n2-play:hover span{transform:scale(1.06)} .n2-reel .n2-play:active span{transform:scale(.96)}
 .n2-reel .n2-play svg{width:28px;height:28px;margin-left:4px}
 .n2-reel.n2-playing .n2-play{display:none}
 
@@ -136,9 +161,9 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
   font:600 14px/1.2 var(--n2-sans);letter-spacing:.01em;text-decoration:none;
   min-height:46px;padding:0 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
   transform:translate(var(--mx,0px),var(--my,0px)) scale(var(--ms,1));will-change:transform;
-  transition:background .25s,transform .6s var(--n2-spring),border-color .25s,box-shadow .4s;
+  transition:background .25s var(--n2-ease),transform .6s var(--n2-spring),border-color .25s var(--n2-ease),box-shadow .4s var(--n2-ease);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.n2-btn.n2-mag,.n2-bar a.n2-mag{transition-duration:.25s,.18s,.25s,.4s;transition-timing-function:ease,var(--n2-ease)}
+.n2-btn.n2-mag,.n2-bar a.n2-mag{transition-duration:.25s,.22s,.25s,.4s}
 .n2-btn.n2-press,.n2-bar a.n2-press{--ms:.96;transition-duration:.15s}
 .n2-btn.n2-release,.n2-bar a.n2-release{--ms:1.02}
 .n2-btn:hover{background:rgba(233,200,106,.10);border-color:rgba(233,200,106,.4)}
@@ -152,13 +177,13 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-btn:focus-visible,.n2-bar a:focus-visible,.n2-pill:focus-visible,.n2-brand:focus-visible{outline:2px solid var(--n2-goldhi);outline-offset:3px}
 .n2-toast{position:fixed;left:50%;bottom:calc(var(--n2-bar-h) + 18px);transform:translate(-50%,10px);opacity:0;z-index:25;
   background:rgba(255,254,247,.94);color:#1a1405;font:600 14px/1 var(--n2-sans);padding:13px 18px;border-radius:999px;
-  transition:opacity .35s,transform .35s var(--n2-ease);pointer-events:none;white-space:nowrap}
+  transition:opacity .35s var(--n2-ease),transform .6s var(--n2-spring);pointer-events:none;white-space:nowrap}
 .n2-toast.n2-show{opacity:1;transform:translate(-50%,0)}
 
 /* ------------------------------------------- lists: rooms, shelves, walks */
 .n2-rooms{list-style:none;margin:6px 0 24px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .n2-rooms li a{display:flex;flex-direction:column;justify-content:flex-end;min-height:76px;padding:12px 14px;border:1px solid var(--n2-line);
-  border-radius:14px;text-decoration:none;color:var(--n2-parch);background:rgba(255,254,247,.035);transition:background .25s,transform .25s var(--n2-ease)}
+  border-radius:14px;text-decoration:none;color:var(--n2-parch);background:rgba(255,254,247,.035);transition:background .25s var(--n2-ease),transform .6s var(--n2-spring)}
 .n2-rooms li a:active{transform:scale(.98)} .n2-rooms li a:hover{background:rgba(233,200,106,.08)}
 .n2-rooms b{font-size:15px;font-weight:600;line-height:1.3}
 .n2-rooms span{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin-top:4px}
@@ -172,15 +197,17 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-shelf::-webkit-scrollbar{display:none}
 .n2-shelf>*{flex:0 0 min(78%,300px);scroll-snap-align:center;scroll-snap-stop:normal}
 .n2-shelf a{display:flex;flex-direction:column;justify-content:flex-end;min-height:120px;height:100%;padding:14px;border:1px solid var(--n2-line);border-radius:16px;
-  text-decoration:none;color:var(--n2-parch);background:rgba(255,254,247,.035);transition:background .25s,transform .6s var(--n2-spring)}
+  text-decoration:none;color:var(--n2-parch);background:rgba(255,254,247,.035);transition:background .25s var(--n2-ease),transform .6s var(--n2-spring)}
 .n2-shelf a:active{transform:scale(.98)} .n2-shelf a:hover{background:rgba(233,200,106,.08)}
 .n2-shelf b{font-size:15px;font-weight:600;line-height:1.35}
 .n2-shelf small{display:block;font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin-top:6px}
 .n2-list{list-style:none;margin:6px 0 24px;padding:0}
-.n2-list li{border-top:1px solid var(--n2-line)}
-.n2-list li:last-child{border-bottom:1px solid var(--n2-line)}
-.n2-list a{display:flex;align-items:center;gap:14px;min-height:56px;padding:12px 2px;text-decoration:none;color:var(--n2-parch)}
-.n2-list a:hover b{color:var(--n2-goldhi)}
+.n2-list li{position:relative}
+.n2-list li::before,.n2-list li:last-child::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(233,200,106,.30),rgba(233,200,106,.06))}
+.n2-list li:last-child::after{top:auto;bottom:0}
+.n2-list a{display:flex;align-items:center;gap:14px;min-height:56px;padding:12px 2px;text-decoration:none;color:var(--n2-parch);transition:transform .6s var(--n2-spring)}
+.n2-list a:active{transform:translateX(4px)}
+.n2-list a:hover b{color:var(--n2-goldhi)} .n2-list b{transition:color .25s var(--n2-ease)}
 .n2-list b{font-weight:600;font-size:16px;line-height:1.35;flex:1}
 .n2-list .n2-num{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;color:var(--n2-parch3);min-width:2.6em}
 .n2-list .n2-ar{font-family:var(--n2-ar);font-size:20px;color:var(--n2-goldhi);direction:rtl;line-height:1.2}
@@ -188,7 +215,7 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 
 .n2-walk{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
 .n2-walk a{flex:1 1 40%;min-height:46px;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--n2-line);
-  border-radius:14px;text-decoration:none;color:var(--n2-parch);font-size:14px;font-weight:600;line-height:1.3;background:rgba(255,254,247,.035);transition:transform .6s var(--n2-spring),background .25s}
+  border-radius:14px;text-decoration:none;color:var(--n2-parch);font-size:14px;font-weight:600;line-height:1.3;background:rgba(255,254,247,.035);transition:transform .6s var(--n2-spring),background .25s var(--n2-ease)}
 .n2-walk a:active{transform:scale(.98)} .n2-walk a:hover{background:rgba(233,200,106,.08)}
 .n2-walk a.n2-next{justify-content:flex-end;text-align:right}
 .n2-walk a .n2-walk-t{display:block;min-width:0}
@@ -216,16 +243,36 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
   border-top:1px solid rgba(233,200,106,.12);font-family:var(--n2-sans)}
 .n2-bar a{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:52px;justify-content:center;text-decoration:none;position:relative;z-index:1;
   color:var(--n2-parch3);font:500 14px/1 var(--n2-sans);letter-spacing:.02em;border-radius:12px;
-  transform:translate(var(--mx,0px),var(--my,0px)) scale(var(--ms,1));transition:color .25s,background .25s,transform .6s var(--n2-spring)}
+  transform:translate(var(--mx,0px),var(--my,0px)) scale(var(--ms,1));transition:color .25s var(--n2-ease),background .25s var(--n2-ease),transform .6s var(--n2-spring)}
 .n2-pill-bg{position:absolute;left:8px;top:8px;height:52px;width:0;border-radius:12px;background:rgba(233,200,106,.10);border:1px solid rgba(233,200,106,.18);
-  opacity:0;transform:translateX(0);transition:transform .7s var(--n2-spring),width .7s var(--n2-spring),opacity .4s;pointer-events:none}
+  opacity:0;transform:translateX(0);transition:transform .7s var(--n2-spring),width .7s var(--n2-spring),opacity .4s var(--n2-ease);pointer-events:none}
 .n2-pill-bg.n2-show{opacity:1}
 .n2-bar a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .n2-bar a.n2-on{color:var(--n2-goldhi)} .n2-bar a:active{background:rgba(233,200,106,.08)}
+.n2-bar.n2-away{transform:translateY(110%)}
+@media (min-width:900px){.n2-bar.n2-away{transform:translate(-50%,110%)}}
+.n2-bar{transition:transform .7s var(--n2-spring)}
+
+/* ------------------------------------------------ the marks at the right:
+   one per screen, the read one under a longer gold pill. The pill is one
+   element: on a move it first stretches to cover both marks, then settles
+   on the new one, both on the spring, so it travels as a liquid. Hidden
+   from assistive tech: the screens keep their headings. */
+.n2-dots{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:19;display:flex;flex-direction:column;gap:6px;padding:6px 4px;margin:0;
+  transition:opacity .35s var(--n2-ease);pointer-events:auto}
+/* each mark is a 22 by 12 hit box with a 4 px dot at its centre */
+.n2-dots i{display:block;width:22px;height:12px;position:relative;cursor:pointer;margin:0;padding:0}
+.n2-dots i::before{content:"";position:absolute;left:9px;top:4px;width:4px;height:4px;border-radius:50%;background:rgba(255,254,247,.22);transition:background .35s var(--n2-ease)}
+.n2-dots i.n2-on::before{background:rgba(255,254,247,.06)}
+.n2-dots .n2-dots-pill{position:absolute;left:13px;width:4px;height:14px;border-radius:2px;background:var(--n2-goldhi);box-shadow:0 0 10px rgba(233,200,106,.45);
+  transition:top .6s var(--n2-spring),height .6s var(--n2-spring);pointer-events:none;top:5px}
+.n2-dots .n2-dots-pill.n2-stretch{transition:top .32s var(--n2-spring),height .32s var(--n2-spring)}
+html.n2-sheet-open .n2-dots{opacity:0;pointer-events:none}
+@media (min-width:900px){.n2-dots{right:calc(50% - 22rem - 26px)}}
 @media (min-width:900px){.n2-bar{left:50%;right:auto;width:min(44rem,100%);transform:translateX(-50%);border-radius:18px 18px 0 0;border-left:1px solid rgba(233,200,106,.12);border-right:1px solid rgba(233,200,106,.12)}}
 
 /* a sheet: rises on the spring, a handle to pull it shut, the safe area kept */
-.n2-sheet-wrap{position:fixed;inset:0;z-index:30;background:rgba(4,6,15,.55);opacity:0;transition:opacity .35s;
+.n2-sheet-wrap{position:fixed;inset:0;z-index:30;background:rgba(4,6,15,.55);opacity:0;transition:opacity .35s var(--n2-ease);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .n2-sheet-wrap.n2-show{opacity:1}
 .n2-sheet{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--n2-night2);color:var(--n2-parch);
@@ -245,7 +292,8 @@ html[data-n2] #noor-notice{display:none!important}
 @media (prefers-reduced-motion:reduce){
   html[data-n2]{scroll-behavior:auto}
   .n2-idea>*{transition:none!important;opacity:1!important;transform:none!important;filter:none!important}
-  .n2-top,.n2-btn,.n2-bar a,.n2-toast,.n2-sheet,.n2-sheet-wrap,.n2-pill-bg,.n2-prog,.n2-walk a,.n2-shelf a,#n2-gl{transition:none!important}
+  /* nothing of the shell's moves: every n2- class, its pseudo-elements, and the night */
+  [class*="n2-"],[class*="n2-"]::before,[class*="n2-"]::after,#n2-gl{transition:none!important;animation:none!important}
   .n2-btn,.n2-bar a{transform:none!important}
   .n2-glow{animation:none!important}
 }
@@ -253,7 +301,7 @@ html[data-n2] #noor-notice{display:none!important}
   .n2-idea{padding-left:32px;padding-right:32px}
   .n2-top{padding-left:28px;padding-right:28px}
 }
-@media print{.n2-bar,.n2-top,#n2-gl,.n2-still,.n2-sheet-wrap,.n2-toast{display:none!important}
+@media print{.n2-bar,.n2-top,#n2-gl,.n2-still,.n2-vig,.n2-dots,.n2-prog,.n2-sheet-wrap,.n2-toast{display:none!important}
   html[data-n2],html[data-n2] body{background:#fff;color:#111}
   .n2-g,.n2-eyebrow,.n2-ref,.n2-main a{color:#6b5410}
   .n2-p,.n2-dim,.n2-meaning,.n2-date,.n2-src,.n2-credit,.n2-foot,.n2-h1,.n2-h2,.n2-h3{color:#111}}

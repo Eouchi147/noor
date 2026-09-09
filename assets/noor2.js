@@ -1,16 +1,22 @@
 /* NOOR · noor2.js · the second cut's shell, for any page that wants it.
-   Draws the reels' night on a fixed canvas (half resolution, 30 fps, paused
-   when hidden, one frame under reduced motion, the CSS still beneath when
-   WebGL2 is absent); reveals each .n2-idea as it enters; hides the top line
-   while reading down; lights the bar's link and slides its pill; shares
-   with the phone's own sheet or the clipboard; offers the home screen once
-   after the second visit. The physics: buttons lean to a pointer and press
-   on a spring under a thumb; sheets rise and are pulled shut; the glow
-   eases behind the words being read and swells on each arrival and press;
-   a hairline under the top line shows how far a long screen is read. All
-   off under reduced motion. No dependency, no build. Runs by itself when
-   <html> or <body> carries data-n2 (empty: everything; or the parts wanted).
-   window.NOOR2 = { night, reveal, share, bar, sheet, homePrompt, hideNotice }. */
+   The reels' night on a fixed canvas (half resolution, 30 fps, paused when
+   hidden, one frame under reduced motion, the CSS still beneath without
+   WebGL2); each .n2-idea revealed as it enters; the top line hidden while
+   reading down; the bar's door lit, its pill slid; the phone's own share or
+   the clipboard; the home screen offered once after the second visit. The
+   physics: buttons lean to a pointer and press on a spring; sheets rise and
+   are pulled shut; the glow and a soft vignette ease behind the words being
+   read; a hairline at the very top shows how far down the page the reader
+   is; marks at the right edge, one per screen, carry a gold pill that moves
+   as a liquid; each screen's eyebrow is numbered. All off under reduced
+   motion. No dependency, no build. Runs by itself when <html> or <body>
+   carries data-n2 (empty: everything; or the parts wanted). NOOR2.inject()
+   dresses a page that is not in the shell (the older rooms, via noor-fx.js):
+   the bar, the share in the footer, the home-screen offer, and the classes
+   noor2-skin.css dresses by (n2-skin; n2-dark or n2-parch by the page's own
+   background; n2-bar-away while a player or sheet of its own holds the
+   bottom edge). window.NOOR2 = { night, reveal, share, bar, sheet,
+   homePrompt, hideNotice, toast, dots, inject }. */
 (function () {
   "use strict";
   var doc = document, W = window;
@@ -36,7 +42,8 @@
     "vec2 g=(uv-centre)*vec2(1.,.86);float L=length(g);" +
     "col+=goldHi*exp(-L*L*6.)*.16*amt;col+=gold*exp(-L*2.8)*.055*amt;" +
     "float hz=fbm(uv*1.7+vec2(t*.013,-t*.008));col+=gold*hz*.018*(.5+.5*amt)*(1.-smoothstep(.25,.85,L));" +
-    "float d1=starD(uv-centre*.55,.88,8.,3.,-1.5708+t*.017);col+=gold*exp(-d1*d1/(.0019*.0019))*(.055+.045*bloom);" +
+    /* the hairline star behind the hook, .07 at rest */
+    "float d1=starD(uv-centre*.55,.88,8.,3.,-1.5708+t*.017);col+=gold*exp(-d1*d1/(.0019*.0019))*(.07+.05*bloom);" +
     "for(int i=0;i<2;i++){float sc=15.+float(i)*11.;vec2 p=uv*sc+vec2(t*.004*(1.+float(i)),t*.006);vec2 cell=floor(p),f=fract(p)-.5;float h=hash(cell+float(i)*31.7);" +
     "if(h>.972){vec2 o=vec2(hash(cell+1.3),hash(cell+2.7))-.5;float tw=.55+.45*sin(t*(.5+1.4*hash(cell+5.1))+h*40.);col+=.22*tw*exp(-dot(f-o*.6,f-o*.6)*300.)*vec3(1.,.985,.94);}}" +
     "col=1.-exp(-col*1.25);col=pow(max(col,0.),vec3(.96));col*=1.-.62*pow(length(uv*vec2(.80,.58)),2.1);" +
@@ -95,42 +102,77 @@
     ideas.forEach(function (s) { io.observe(s); });
   }
 
-  /* ------------------------------------------------- the read, once a frame:
-     the screen under the viewport's centre is the one being read; the light
-     moves behind its hook, the hairline shows how far down a tall screen the
-     reader is, the top line hides on the way down. */
+  /* the marks: one per screen (two to twelve; forty groups are a list), the
+     read one under a gold pill that stretches over both and settles. */
+  var marks = null, pill = null, curIdx = -1, pillT, hold = 0;
+  function dots(root) {
+    var ideas = all(".n2-idea", root);
+    if (ideas.length < 2 || ideas.length > 12 || q(".n2-dots")) return null;
+    var box = el("div", "n2-dots"); box.setAttribute("aria-hidden", "true");
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    ideas.forEach(function (s, i) {
+      var m = el("i"); m.addEventListener("click", function () { mark(i); hold = Date.now() + 900; s.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); bloom = 1; });
+      box.appendChild(m);
+      var e = s.firstElementChild;
+      if (e && e.classList.contains("n2-eyebrow") && !q(".n2-of", e)) { e.classList.add("n2-numbered"); e.insertBefore(el("span", "n2-of", pad(i + 1) + " / " + pad(ideas.length)), e.firstChild); }
+    });
+    pill = el("b", "n2-dots-pill"); box.appendChild(pill);
+    doc.body.appendChild(box); marks = all("i", box);
+    return box;
+  }
+  function mark(i) {
+    if (!marks || i === curIdx || !marks[i]) return;
+    var from = curIdx; curIdx = i;
+    marks.forEach(function (m, k) { m.classList.toggle("n2-on", k === i); });
+    var t = marks[i].offsetTop - 1, h = marks[i].offsetHeight + 2;
+    var settle = function () { pill.classList.remove("n2-stretch"); pill.style.top = t + "px"; pill.style.height = h + "px"; };
+    clearTimeout(pillT);
+    if (from < 0 || reduce) return settle();
+    var f = marks[from].offsetTop - 1;
+    pill.classList.add("n2-stretch");
+    pill.style.top = Math.min(f, t) + "px"; pill.style.height = (Math.abs(t - f) + h) + "px";
+    pillT = setTimeout(settle, 240);
+  }
+
+  /* the read, once a frame: the screen under the viewport's centre is the
+     one being read; the light, the vignette and the mark follow it. */
   var lastY = 0, ticking = false;
   function onRead() {
     ticking = false;
-    var y = W.scrollY || 0, vh = W.innerHeight, top = q(".n2-top");
+    var y = W.scrollY || 0, vh = W.innerHeight, top = q(".n2-top"), prog = q(".n2-prog"), vig = q(".n2-vig");
     if (top) top.classList.toggle("n2-hide", y > lastY && y > 60);
     lastY = y;
-    var cur = null;
-    all(".n2-idea").some(function (s) { var r = s.getBoundingClientRect(); if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = s; return true; } });
+    var room = doc.documentElement.scrollHeight - vh;
+    if (prog) prog.style.setProperty("--n2-p", room > 40 ? Math.max(0, Math.min(1, y / room)) : 0);
+    var cur = null, idx = -1, ideas = all(".n2-idea");
+    ideas.some(function (s, i) { var r = s.getBoundingClientRect(); if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = s; idx = i; return true; } });
     if (!cur) return;
-    var hook = q(".n2-h1,.n2-h2,.n2-quran,.n2-word-ar,.n2-reel,.n2-h3", cur), h = cur.getBoundingClientRect();
-    if (hook) { var b = hook.getBoundingClientRect(); focusTo = Math.max(0.12, Math.min(0.88, (b.top + b.height / 2) / vh)); }
-    if (top) top.style.setProperty("--n2-p", h.height > vh + 40 ? Math.max(0, Math.min(1, -h.top / (h.height - vh))) : 0);
+    if (Date.now() > hold) mark(idx);
+    var hook = q(".n2-h1,.n2-h2,.n2-quran,.n2-word-ar,.n2-reel,.n2-h3", cur);
+    if (hook) {
+      var b = hook.getBoundingClientRect(), c = b.top + b.height / 2;
+      focusTo = Math.max(0.12, Math.min(0.88, c / vh));
+      if (vig) vig.style.setProperty("--n2-vy", Math.round(Math.max(vh * 0.15, Math.min(vh * 0.85, c))) + "px");
+    }
   }
   function topLine() {
-    if (q(".n2-top") && !q(".n2-prog")) q(".n2-top").appendChild(el("i", "n2-prog"));
+    if (!q(".n2-prog")) { var p = el("i", "n2-prog"); p.setAttribute("aria-hidden", "true"); doc.body.appendChild(p); }
+    if (!q(".n2-vig")) { var v = el("i", "n2-vig"); v.setAttribute("aria-hidden", "true"); doc.body.insertBefore(v, q(".n2-main") || doc.body.firstChild); }
     W.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onRead); } }, { passive: true });
     W.addEventListener("resize", onRead);
     onRead();
   }
 
-  /* ---------------------------------------------------- the touch, the pull:
-     a button leans to a pointer within 28 px by 6 px at most and springs
-     back; under a thumb it presses to .96 and lets go through 1.02. Transform
-     only, one frame at a time, still under reduced motion. */
+  /* the touch: a lean to the pointer by 6 px at most; a press to .96 */
   function physics() {
-    if (reduce) return;
-    var sel = ".n2-btn,.n2-bar a", fine = W.matchMedia && W.matchMedia("(hover: hover) and (pointer: fine)").matches, raf = 0;
+    if (reduce || doc.n2phys) return;
+    doc.n2phys = 1;
+    var sel = ".n2-btn,.n2-bar a,.n2-pill", fine = W.matchMedia && W.matchMedia("(hover: hover) and (pointer: fine)").matches, raf = 0;
     if (fine) doc.addEventListener("pointermove", function (e) {
       if (raf) return;
       raf = requestAnimationFrame(function () {
         raf = 0;
-        all(sel).forEach(function (b) {
+        all(".n2-btn,.n2-bar a").forEach(function (b) {
           var r = b.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
           var near = Math.abs(dx) < r.width / 2 + 28 && Math.abs(dy) < r.height / 2 + 28;
           if (near || b.classList.contains("n2-mag")) { b.classList.toggle("n2-mag", near); b.style.setProperty("--mx", (near ? dx / (r.width / 2 + 28) * 6 : 0).toFixed(1) + "px"); b.style.setProperty("--my", (near ? dy / (r.height / 2 + 28) * 6 : 0).toFixed(1) + "px"); }
@@ -163,6 +205,7 @@
     return Promise.resolve();
   }
   function wireShare() {
+    if (doc.n2share) return; doc.n2share = 1;
     doc.addEventListener("click", function (e) {
       var b = e.target.closest && e.target.closest("[data-n2-share]"); if (!b) return;
       e.preventDefault();
@@ -170,14 +213,19 @@
     });
   }
 
-  /* the bar */
+  /* the bar: five doors, no two alike. Today: the day's light, word and
+     chapter. Qur'an: the Mushaf, read and heard in one room. Story: the Path
+     in order. Words: the dictionary. Search: the page's own search, else the
+     words. A verse or surah lights Qur'an, a chapter Story, a Light lights
+     Today only when it is the day's (the page says so). */
   var LINKS = [
-    ["Today", "/today", '<path d="M12 3l2.4 5.2L20 9l-4.2 3.8L17 18.5 12 15.6 7 18.5l1.2-5.7L4 9l5.6-.8z"/>'],
-    ["Read", "/quran", '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5V5.5M8 7h8M8 11h6"/>'],
+    ["Today", "/today", '<circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'],
+    ["Qur'an", "/quran", '<path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/>'],
+    ["Story", "/path", '<path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/>'],
     ["Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'],
-    ["Listen", "/quran#listen", '<path d="M5 9v6h4l5 4V5L9 9z"/><path d="M17 8a5 5 0 0 1 0 8"/>'],
     ["Search", "/dictionary", '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/>']
   ];
+  var ALIAS = { "/verse": "/quran", "/verses": "/quran", "/surah": "/quran", "/words": "/dictionary" };
   function bar(active) {
     var nav = q(".n2-bar");
     if (!nav) {
@@ -187,36 +235,35 @@
       }).join("");
       doc.body.appendChild(nav);
     }
-    var here = String(active || location.pathname).replace(/\/+$/, "") || "/";
+    var here = String(active || location.pathname).replace(/\.html$/, "").replace(/\/+$/, "") || "/";
+    Object.keys(ALIAS).forEach(function (k) { if (here === k || here.indexOf(k + "/") === 0) here = ALIAS[k]; });
     var links = all("a", nav), hit = null;
     links.forEach(function (a) {
       var p = a.getAttribute("href").split("#")[0].replace(/\/+$/, "") || "/";
       if (!hit && !a.hasAttribute("data-n2-search") && (p === here || (p !== "/" && here.indexOf(p + "/") === 0))) hit = a;
     });
-    /* no link owns this address: the page's own choice stands */
     if (hit || !q(".n2-on", nav)) links.forEach(function (a) { a.classList.toggle("n2-on", a === hit); });
-    /* the pill slides to the lit room */
-    var pill = q(".n2-pill-bg", nav) || nav.insertBefore(el("i", "n2-pill-bg"), nav.firstChild), on = q(".n2-on", nav);
-    if (on) { var r = on.getBoundingClientRect(), n = nav.getBoundingClientRect(); pill.style.width = r.width + "px"; pill.style.transform = "translateX(" + (r.left - n.left) + "px)"; pill.classList.add("n2-show"); }
-    else pill.classList.remove("n2-show");
-    if (!nav.n2wired) { nav.n2wired = 1; W.addEventListener("resize", function () { bar(active); }); }
-    /* Search opens the page's own search (the magnifier's box or the menu
-       dial); a page with neither goes to the dictionary */
-    var s = q("[data-n2-search]", nav);
-    if (s) s.addEventListener("click", function (e) {
-      if (W.NOOR_SEARCH && W.NOOR_SEARCH.open) { e.preventDefault(); W.NOOR_SEARCH.open(); }
-    });
+    var pb = q(".n2-pill-bg", nav) || nav.insertBefore(el("i", "n2-pill-bg"), nav.firstChild), on = q(".n2-on", nav);
+    if (on) { var r = on.getBoundingClientRect(), n = nav.getBoundingClientRect(); pb.style.width = r.width + "px"; pb.style.transform = "translateX(" + (r.left - n.left) + "px)"; pb.classList.add("n2-show"); }
+    else pb.classList.remove("n2-show");
+    if (!nav.n2wired) {
+      nav.n2wired = 1; W.addEventListener("resize", function () { bar(active); });
+      var s = q("[data-n2-search]", nav);
+      if (s) s.addEventListener("click", function (e) {
+        if (W.NOOR_SEARCH && W.NOOR_SEARCH.open) { e.preventDefault(); W.NOOR_SEARCH.open(); }
+      });
+    }
     return nav;
   }
 
-  /* --- a sheet: rises on the spring; closes on a tap outside, its close
-     button, or a pull past 80 px */
+  /* a sheet: rises on the spring; closes on a tap outside, its close button,
+     or a pull past 80 px; the marks step aside while it is open */
   function sheet(html) {
     var wrap = el("div", "n2-sheet-wrap", '<div class="n2-sheet" role="dialog"><i class="n2-handle"></i>' + html + "</div>");
     var box = q(".n2-sheet", wrap), y0 = null, dy = 0, raf = 0;
     doc.body.appendChild(wrap);
-    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); bloom = 1; }
-    function close() { wrap.classList.remove("n2-show"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500); }
+    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); doc.documentElement.classList.add("n2-sheet-open"); bloom = 1; }
+    function close() { wrap.classList.remove("n2-show"); doc.documentElement.classList.remove("n2-sheet-open"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500); }
     wrap.addEventListener("click", function (e) { if (e.target === wrap || (e.target.closest && e.target.closest("[data-n2-close]"))) close(); });
     box.addEventListener("pointerdown", function (e) { if (e.target.closest("a,button,input")) return; y0 = e.clientY; box.classList.add("n2-drag"); box.setPointerCapture(e.pointerId); });
     box.addEventListener("pointermove", function (e) {
@@ -256,7 +303,56 @@
 
   function hideNotice() { var n = q("#noor-notice"); if (n && n.parentNode) n.parentNode.removeChild(n); }
 
-  W.NOOR2 = { night: night, reveal: reveal, share: share, bar: bar, sheet: sheet, homePrompt: homePrompt, hideNotice: hideNotice, toast: toast };
+  /* the skin: a wide fixed thing of the page's own at the bottom edge (a
+     player) sends the bar away while it shows; a small one is lifted */
+  function lum(c) {
+    var m = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/.exec(c || "");
+    if (!m || (m[4] !== undefined && +m[4] < 0.5)) return -1;
+    return (0.2126 * m[1] + 0.7152 * m[2] + 0.0722 * m[3]) / 255;
+  }
+  function inject() {
+    var H = doc.documentElement, B = doc.body;
+    if (!B || H.hasAttribute("data-n2") || B.hasAttribute("data-n2") || H.classList.contains("n2-skin")) return;
+    var bg = lum(getComputedStyle(B).backgroundColor); if (bg < 0) bg = lum(getComputedStyle(H).backgroundColor); if (bg < 0) bg = 1;
+    H.style.setProperty("--n2-skin-pad", getComputedStyle(B).paddingBottom || "0px");
+    H.classList.add("n2-skin", bg < 0.5 ? "n2-dark" : "n2-parch");
+    var nav = bar(); wireShare(); physics();
+    var foot = q("footer");
+    if (foot && !q("[data-n2-share]", foot)) {
+      var fl = lum(getComputedStyle(foot).backgroundColor); if (fl < 0) fl = bg;
+      var row = el("div", "n2-row n2-skin-share" + (fl >= 0.5 ? " n2-ink" : ""));
+      var btn = el("button", "n2-btn", 'Share <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>');
+      btn.type = "button"; btn.setAttribute("data-n2-share", doc.title); row.appendChild(btn);
+      var soc = q("[data-noor-social]", foot); if (soc) foot.insertBefore(row, soc); else foot.appendChild(row);
+    }
+    homePrompt(); hideNotice();
+    var cand = [], scanned = 0, raf = 0;
+    function scan() { scanned = Date.now(); cand = all("body *").filter(function (e) { return getComputedStyle(e).position === "fixed"; }); }
+    function check() {
+      raf = 0;
+      var vh = W.innerHeight, vw = W.innerWidth, barH = nav.offsetHeight || 72, away = false;
+      cand.forEach(function (e) {
+        if (e === nav || e.n2lift || (e.closest && e.closest(".n2-bar,.n2-toast,.n2-sheet-wrap,.n2-dots,#noor-translate-hint"))) return;
+        var cs = getComputedStyle(e), r = e.getBoundingClientRect();
+        if (cs.display === "none" || cs.visibility === "hidden" || +cs.opacity < 0.05 || cs.pointerEvents === "none" || +cs.zIndex < 0 || r.height < 1 || r.top >= vh - 1 || r.bottom <= vh - barH) return;
+        if (r.width >= vw * 0.8 && r.height >= 40) away = true;
+        else if (r.top > vh * 0.5 && r.width < vw * 0.5) { e.n2lift = 1; e.style.setProperty("bottom", Math.round(vh - r.bottom + barH) + "px", "important"); }
+      });
+      nav.classList.toggle("n2-away", away); H.classList.toggle("n2-bar-away", away);
+    }
+    function ask() { if (!raf) raf = requestAnimationFrame(check); }
+    scan(); check();
+    W.addEventListener("resize", ask); doc.addEventListener("transitionend", ask, true);
+    try {
+      new MutationObserver(function (ms) {
+        if (ms.some(function (m) { return m.type === "childList"; }) && Date.now() - scanned > 500) scan();
+        ask(); setTimeout(ask, 450);
+      }).observe(B, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style"] });
+    } catch (e) { setInterval(function () { scan(); check(); }, 1500); }
+    return nav;
+  }
+
+  W.NOOR2 = { night: night, reveal: reveal, share: share, bar: bar, sheet: sheet, homePrompt: homePrompt, hideNotice: hideNotice, toast: toast, dots: dots, inject: inject };
 
   /* the run */
   function boot() {
@@ -268,6 +364,7 @@
     if (has("night") && !q(".n2-still")) doc.body.insertBefore(el("div", "n2-still"), doc.body.firstChild);
     if (has("night")) night();
     if (has("reveal")) reveal();
+    if (has("reveal")) dots();
     if (has("top")) topLine();
     if (has("share")) wireShare();
     if (has("bar")) bar();
