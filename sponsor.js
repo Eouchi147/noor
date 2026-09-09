@@ -2,9 +2,12 @@
    that program is retired. What remains is the one sentence every page
    carries: the library is free, forever, on the gifts of its readers.
 
-   And on Friday it steps aside. Jumu'ah has the better claim on the strip
-   at the top of the page, so from maghrib on Thursday until maghrib on
-   Friday the band carries the day itself and points at al-Kahf. */
+   Friday used to take this strip from maghrib on Thursday until maghrib on
+   Friday. It has moved to a card in noor-fx.js, which reaches every page --
+   the arrival among them, which this band cannot, because it hangs off the
+   shared header and the arrival has none. A band is furniture, there on
+   Tuesday as well, and the eye learns to skip that strip; Jumu'ah is better
+   served by something that comes once and then goes. */
 (function () {
   "use strict";
   var path = location.pathname;
@@ -16,20 +19,12 @@
   try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
   if (inFrame || /[?&]embed=1/.test(location.search)) return;  /* embeds stay commerce-free */
 
-  /* The Islamic day turns at sunset, so Jumu'ah begins on Thursday evening.
-     Without a location we cannot know the reader's maghrib, so we take the
-     ordinary convention: after six in the evening on Thursday, and all of
-     Friday until six. ?jumuah=1 forces it on for a look. */
+  /* Friday moved. It is a card in noor-fx.js now -- once, above the thumb, on
+     every page including the arrival, which this band cannot reach. The rule
+     for when Jumu'ah begins (after six on Thursday, all of Friday until six,
+     ?jumuah=1 to force it) lives there with it. What is left here is the one
+     sentence the house carries every day. */
   var DIALS = null;                 /* filled by /api/settings, may never arrive */
-  function isJumuah() {
-    try { if (/[?&]jumuah=1/.test(location.search)) return true; } catch (e) {}
-    if (DIALS && DIALS["jumuah.mode"] === "on") return true;
-    if (DIALS && DIALS["jumuah.mode"] === "off") return false;
-    var d = new Date(), day = d.getDay(), h = d.getHours();
-    if (day === 5) return h < 18;               /* Friday, until maghrib */
-    if (day === 4) return h >= 18;              /* Thursday evening, once it has turned */
-    return false;
-  }
 
   var MISSION = {
     mark: "✦",
@@ -41,17 +36,6 @@
     border: "rgba(44,36,22,.06)",
   };
 
-  var JUMUAH = {
-    mark: "☾",
-    text: "<b style=\"color:#8a6d13;font-weight:800\">Jumu’ah Mubarak.</b> The Prophet ﷺ called Friday the best day the sun rises upon. " +
-          "Wash, wear your good clothes, send prayers upon him ﷺ abundantly, and give something, even small. " +
-          "There is an hour in this day when du’a is not refused; spend it like treasure.",
-    href: "/quran?surah=18",
-    cta: "Open Surah Al-Kahf →",
-    tone: "rgba(44,36,22,.72)",
-    bg: "linear-gradient(90deg,rgba(201,162,39,.16),rgba(244,212,106,.07) 55%,transparent 90%)",
-    border: "rgba(201,162,39,.28)",
-  };
 
   function remount() {
     var old = document.querySelector("[data-noor-sponsor]");
@@ -93,7 +77,7 @@
   function mount() {
     var hdr = document.getElementById("site-header");
     if (!hdr || !hdr.parentNode || document.querySelector("[data-noor-sponsor]")) return;
-    if (DIALS && DIALS["sponsor.band"] === false && !isJumuah()) return;
+    if (DIALS && DIALS["sponsor.band"] === false) return;
     /* On a phone the Jumu'ah reminder ran five lines and pushed the page
        itself below the fold. It keeps its whole text, but folds to three
        lines there; the reminder is a whisper before the door, not the door. */
@@ -104,7 +88,13 @@
         "[data-noor-sponsor] .nsp-t{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}";
       document.head.appendChild(st);
     }
-    var j = isJumuah(), M = j ? JUMUAH : MISSION;
+    /* Friday is noor-fx.js's now: a card that comes once, a breath after the
+       page settles, and goes again -- on every page, the arrival included,
+       which this band never reached because it hangs off the shared header
+       and the arrival has none. A band is furniture and the eye learns to
+       skip it; the day deserves better than a strip it has already learned
+       to skip. What is left here is the one sentence, every day. */
+    var j = false, M = MISSION;
     var d = document.createElement("div");
     d.setAttribute("data-noor-sponsor", "");
     if (j) d.setAttribute("data-jumuah", "");

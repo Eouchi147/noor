@@ -1111,3 +1111,110 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", watch);
   else watch();
 })();
+
+/* ================= Friday, once, quietly =================================
+   Jumu'ah had a band across the top of the page, drawn by sponsor.js under
+   the shared header. The arrival has no shared header any more, so from the
+   day the home was rebuilt the best day of the week reached every room in the
+   house except the one every reader arrives through.
+
+   A band is also the wrong shape for it. A band is furniture: it is there on
+   Tuesday too, so the eye has already learned to skip that strip of the page.
+   This is a card that comes once, on Friday, a breath after the page has
+   settled, above the thumb where the bar is -- and then goes, whether it is
+   answered or not, and does not come again until the next Jumu'ah. Nothing is
+   covered, nothing is blocked, no scroll is locked: a reader who ignores it
+   loses nothing and is not asked twice.
+
+   The Islamic day turns at sunset, so Jumu'ah begins on Thursday evening.
+   Without the reader's location we cannot know their maghrib, so the ordinary
+   convention: after six on Thursday, and all of Friday until six -- the same
+   rule sponsor.js used, kept here so both agree. ?jumuah=1 forces it on for a
+   look. The words are the house's own, from the band it replaces. */
+(function () {
+  "use strict";
+  var doc = document, W = window, p = location.pathname;
+  if (/(^|\/)admin/.test(p) || /(^|\/)kids\//.test(p)) return;   /* no cards near children */
+  if (/[?&]embed=1/.test(location.search)) return;
+  try { if (W.self !== W.top) return; } catch (e) { return; }
+
+  function jumuah() {
+    try { if (/[?&]jumuah=1/.test(location.search)) return "forced"; } catch (e) {}
+    var d = new Date(), day = d.getDay(), h = d.getHours();
+    if (day === 5 && h < 18) return d.toISOString().slice(0, 10);
+    if (day === 4 && h >= 18) {                    /* the eve: key it to Friday */
+      var f = new Date(d.getTime() + 86400000);
+      return f.toISOString().slice(0, 10);
+    }
+    return null;
+  }
+  function seen(k, set) {
+    try {
+      if (set) return localStorage.setItem("noor-jumuah", k);
+      return localStorage.getItem("noor-jumuah") === k;
+    } catch (e) { return set ? null : false; }
+  }
+
+  var CSS = ''
+    + '.nj{position:fixed;left:50%;transform:translate(-50%,140%);bottom:calc(var(--n2-bar-h,0px) + 14px + env(safe-area-inset-bottom,0px));'
+    + 'width:min(420px,calc(100vw - 28px));z-index:34;box-sizing:border-box;padding:14px 16px 13px;border-radius:18px;'
+    + 'background:rgba(10,16,36,.94);border:1px solid rgba(233,200,106,.34);'
+    + 'box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 44px rgba(233,200,106,.07);'
+    + '-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);opacity:0;'
+    + 'font-family:Inter,system-ui,sans-serif;color:rgba(255,254,247,.86);'
+    + 'transition:transform .62s cubic-bezier(.2,.7,.2,1),opacity .4s cubic-bezier(.2,.7,.2,1)}'
+    + '.nj.on{transform:translate(-50%,0);opacity:1}'
+    + '.nj-h{display:flex;align-items:center;gap:9px;margin:0 0 7px}'
+    + '.nj-m{font-size:17px;line-height:1;color:#E9C86A;animation:njb 6s ease-in-out infinite}'
+    + '@keyframes njb{0%,100%{opacity:.72}50%{opacity:1}}'
+    + '.nj-e{flex:1;font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;'
+    + 'text-transform:uppercase;color:#E9C86A}'
+    + '.nj-x{flex:none;width:26px;height:26px;margin:-4px -6px -4px 0;border:0;background:none;cursor:pointer;'
+    + 'color:rgba(255,254,247,.5);font-size:17px;line-height:1;border-radius:8px}'
+    + '.nj-x:hover{color:#E9C86A}'
+    + '.nj-p{margin:0;font-size:13.5px;line-height:1.6;color:rgba(255,254,247,.72)}'
+    + '.nj-a{display:inline-block;margin-top:11px;font-size:13.5px;font-weight:600;color:#E9C86A;'
+    + 'text-decoration:none;border-bottom:1px solid rgba(233,200,106,.36);padding-bottom:2px}'
+    + '.nj-a:hover{border-bottom-color:#E9C86A}'
+    + '@media (prefers-reduced-motion:reduce){.nj{transition:none}.nj-m{animation:none}}'
+    + '@media print{.nj{display:none}}';
+
+  function show(key) {
+    if (doc.querySelector(".nj") || doc.querySelector("[data-jumuah]")) return;
+    var st = doc.createElement("style"); st.id = "nj-css"; st.textContent = CSS; doc.head.appendChild(st);
+    var c = doc.createElement("aside");
+    c.className = "nj";
+    c.setAttribute("role", "note");
+    c.setAttribute("aria-label", "Jumu'ah");
+    c.innerHTML =
+      '<p class="nj-h"><span class="nj-m" aria-hidden="true">☾</span>' +
+      '<span class="nj-e">Jumu’ah Mubarak</span>' +
+      '<button class="nj-x" type="button" aria-label="Close">×</button></p>' +
+      '<p class="nj-p">The Prophet ﷺ called Friday the best day the sun rises upon. ' +
+      'Send prayers upon him abundantly, and give something, even small. There is an hour in this day ' +
+      'when du’a is not refused.</p>' +
+      '<a class="nj-a" href="/quran?surah=18">Open Surah Al-Kahf →</a>';
+    doc.body.appendChild(c);
+    if (key !== "forced") seen(key, 1);       /* asked once, answered or not */
+    requestAnimationFrame(function () { requestAnimationFrame(function () { c.classList.add("on"); }); });
+    var gone = false;
+    function go() {
+      if (gone) return; gone = true;
+      c.classList.remove("on");
+      setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 700);
+    }
+    c.querySelector(".nj-x").addEventListener("click", go);
+    c.querySelector(".nj-a").addEventListener("click", go);
+    /* it leaves on its own if it is not wanted: a reminder, not a demand */
+    setTimeout(go, 22000);
+  }
+
+  function start() {
+    var key = jumuah();
+    if (!key) return;
+    if (key !== "forced" && seen(key)) return;
+    setTimeout(function () { show(key); }, 2200);
+  }
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
