@@ -1,5 +1,10 @@
 {
  "id": "word-tawaf",
  "kind": "word",
- "secs": 17.55
+ "secs": 17.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-tawaf.mp4",
+ "video_asset": 553085763,
+ "store": "release",
+ "bytes": 2529941,
+ "uploaded": "2026-09-09"
 }

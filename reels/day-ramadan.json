@@ -1,5 +1,10 @@
 {
  "id": "day-ramadan",
  "kind": "day",
- "secs": 18.87
+ "secs": 18.87,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-day/day-ramadan.mp4",
+ "video_asset": 552768650,
+ "store": "release",
+ "bytes": 2666520,
+ "uploaded": "2026-09-09"
 }

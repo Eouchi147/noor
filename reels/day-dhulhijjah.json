@@ -1,5 +1,10 @@
 {
  "id": "day-dhulhijjah",
  "kind": "day",
- "secs": 19.66
+ "secs": 19.66,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-day/day-dhulhijjah.mp4",
+ "video_asset": 552766993,
+ "store": "release",
+ "bytes": 2780854,
+ "uploaded": "2026-09-09"
 }

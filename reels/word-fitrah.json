@@ -1,5 +1,10 @@
 {
  "id": "word-fitrah",
  "kind": "word",
- "secs": 13.05
+ "secs": 13.05,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-fitrah.mp4",
+ "video_asset": 552982238,
+ "store": "release",
+ "bytes": 1890069,
+ "uploaded": "2026-09-09"
 }

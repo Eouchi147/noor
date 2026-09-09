@@ -1,5 +1,10 @@
 {
  "id": "day-tasua",
  "kind": "day",
- "secs": 23.21
+ "secs": 23.21,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-day/day-tasua.mp4",
+ "video_asset": 552769934,
+ "store": "release",
+ "bytes": 3287300,
+ "uploaded": "2026-09-09"
 }

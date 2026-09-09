@@ -1,5 +1,10 @@
 {
  "id": "word-hilm",
  "kind": "word",
- "secs": 17.55
+ "secs": 17.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-hilm.mp4",
+ "video_asset": 552994725,
+ "store": "release",
+ "bytes": 2591361,
+ "uploaded": "2026-09-09"
 }

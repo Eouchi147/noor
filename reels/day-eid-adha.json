@@ -1,5 +1,10 @@
 {
  "id": "day-eid-adha",
  "kind": "day",
- "secs": 22.82
+ "secs": 22.82,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-day/day-eid-adha.mp4",
+ "video_asset": 552767241,
+ "store": "release",
+ "bytes": 3127374,
+ "uploaded": "2026-09-09"
 }

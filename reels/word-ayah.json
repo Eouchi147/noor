@@ -1,5 +1,10 @@
 {
  "id": "word-ayah",
  "kind": "word",
- "secs": 17.55
+ "secs": 17.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-ayah.mp4",
+ "video_asset": 552972251,
+ "store": "release",
+ "bytes": 2512996,
+ "uploaded": "2026-09-09"
 }

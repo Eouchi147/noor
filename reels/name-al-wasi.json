@@ -1,5 +1,10 @@
 {
  "id": "name-al-wasi",
  "kind": "name",
- "secs": 18.0
+ "secs": 18.0,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-name/name-al-wasi.mp4",
+ "video_asset": 552865275,
+ "store": "release",
+ "bytes": 2578517,
+ "uploaded": "2026-09-09"
 }

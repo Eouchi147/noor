@@ -1,5 +1,10 @@
 {
  "id": "word-zuhd",
  "kind": "word",
- "secs": 13.05
+ "secs": 13.05,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-zuhd.mp4",
+ "video_asset": 553098059,
+ "store": "release",
+ "bytes": 1893096,
+ "uploaded": "2026-09-09"
 }

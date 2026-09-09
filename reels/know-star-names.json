@@ -1,5 +1,10 @@
 {
  "id": "know-star-names",
  "kind": "know",
- "secs": 15.64
+ "secs": 15.64,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-know/know-star-names.mp4",
+ "video_asset": 552832314,
+ "store": "release",
+ "bytes": 2370136,
+ "uploaded": "2026-09-09"
 }

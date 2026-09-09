@@ -1,0 +1,6 @@
+{
+ "_note": "reels every network has taken, id to date, from https://noorcodex.com/api/social?action=posted; plan_build.py leaves them out of the plan and the shelf lets them go. This file only grows.",
+ "fetched": "2026-09-09",
+ "n": 0,
+ "posted": {}
+}

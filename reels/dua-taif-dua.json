@@ -1,5 +1,10 @@
 {
  "id": "dua-taif-dua",
  "kind": "dua",
- "secs": 18.47
+ "secs": 18.47,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-dua/dua-taif-dua.mp4",
+ "video_asset": 552776117,
+ "store": "release",
+ "bytes": 2781355,
+ "uploaded": "2026-09-09"
 }

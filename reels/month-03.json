@@ -1,5 +1,10 @@
 {
  "id": "month-03",
  "kind": "day",
- "secs": 19.26
+ "secs": 19.26,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-day/month-03.mp4",
+ "video_asset": 552843010,
+ "store": "release",
+ "bytes": 2839848,
+ "uploaded": "2026-09-09"
 }
