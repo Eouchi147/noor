@@ -131,7 +131,7 @@ export async function fbMetricSet(id, tok, opts = {}) {
 --------------------------------------------------------------------------- */
 export const KIND_LABEL = {
   "reel:verse": "verse reels", "reel:word": "word reels", "reel:know": "Did you know reels",
-  "reel:day": "This day reels", "reel:light": "day's-card reels", "reel:codex": "Codex reels", "reel:reel": "reels",
+  "reel:day": "This day reels", "reel:light": "day's-card reels", "reel:name": "Name reels", "reel:dua": "du'a reels", "reel:reel": "reels",
   "card:dawn": "dawn cards", "card:light": "day's cards", "card:word": "word cards", "card:dusk": "chapter cards", "card:lead": "coming-up cards"
 };
 export const kindLabel = k => KIND_LABEL[k] || String(k || "").replace(/^(reel|card):/, "");

@@ -32,10 +32,14 @@ These are not preferences. They are refused, not negotiated.
 - **Journal anonymity is absolute.** Nothing in any console, page or log
   shows a journal commenter's mail or address beyond what the old console
   already shows.
-- **Sound:** no percussion, no pulse, no third in the pitch set (the
-  suspended set only), and **nothing at all under the Qur'an**: when a verse
-  is recited the bed is silent. A tempo grid may shape the timing; it is
-  never sounded.
+- **Sound:** **nothing at all under the Qur'an**: a verse reel is the
+  recitation alone, shaped (a high-pass, a gentle de-ess, a slow compressor,
+  a short warm plate) and nothing else, silence before and after. Every other
+  reel carries a bed built in numpy: deep sub bass, a warm pad, and one
+  muted, damped, cinematic drum (a felt boom, a muted tom, a brush ghost; no
+  kit, no cymbal, no clap, no bright skin) in a sparse half-time pattern the
+  owner approved on 9 September 2026 after refusing a daf. No third in the
+  pitch set. No sample, no license: everything synthesised.
 - **Money:** 2.5% zakat computed on gross first; the private ledger in the
   console; a household floor whose figure is set in Controls (The Ledger) or
   the `LEDGER_FLOOR` variable and lives only there, never in this repository.
@@ -62,12 +66,16 @@ These are not preferences. They are refused, not negotiated.
 
 ## What is decided
 
-- **The reels** (`tools/reels/README.md`): six kinds share five slots a day
-  (08, 11, 14, 17, 21 UTC): the day's card, Did you know?, This day, The
-  word, One verse, and The Codex (the brand's own reel, Friday evenings). A
-  rota by weekday, one no-repeat walk per kind, a This day reel on its own
-  Hijri date; 150 verses and 106 words on the shelf. The render workflow
-  spreads a shelf over up to four machines and opens one pull request.
+- **The reels** (`tools/reels/README.md`): seven kinds share five slots a
+  day (08, 11, 14, 17, 21 UTC): One verse, The word, one of the 99 Names, Did
+  you know?, the day's card, This day, and a du'a of the Path. The Codex reel
+  (the brand's own) was retired on 9 September 2026: it praised the house
+  and taught nothing. A rota by weekday (11 verses, 7 words, 7 Names, 5 Did
+  you knows, 3 day's cards, 2 du'as a week), one no-repeat walk per kind, a
+  This day reel on its own Hijri date; 458 cards on the shelf. One idea per
+  screen, night and gold, no HUD, no stat, no end card asking to be
+  followed; every frame measured against the safe area. The render workflow
+  spreads a shelf over up to eight machines and opens one pull request.
   The picture is a shader in the browser; the words are anime.js on a tempo
   grid per kind; the sound is built in numpy and finished in Pedalboard;
   every reel is levelled (-18 LUFS; -16 for a verse). A different reciter
@@ -116,8 +124,10 @@ tells him what to drag and what to press. Not before.
 
 ## What is next
 
-The Codex and the second cut of the reels (shader picture, grid, sound
-chain) are shipping now. Then: the Telegram bot and channel made in Sam's
-Telegram, and the two variables; the YouTube consent in Sam's browser; more day's cards and Did you knows; the achievements room by field
-and era; the internal linking audit once the dictionary pull request is
-live; Instagram insights so the rota can lean on what strangers watch.
+The second cut of the reels (shader picture, tempo grid, the muted drum,
+seven kinds, 458 cards) was rendered on GitHub on 9 September 2026 and
+waits in the `reels/rendered` pull request. Then: the Telegram bot and
+channel made in Sam's Telegram, and the two variables; more day's cards
+and Did you knows; the achievements room by field and era; the internal
+linking audit once the dictionary pull request is live; the rota leaning
+on what the insights say strangers watch.

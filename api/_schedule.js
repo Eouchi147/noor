@@ -177,17 +177,20 @@ export async function planDay(dateStr, opts = {}) {
 const ROTA = {
   /* Sun Mon Tue Wed Thu Fri Sat -- by the UTC day of the week. Five reels a
      day; the day's card (light) keeps its two halves, morning and evening,
-     the other kinds go anywhere. Across a week: 12 verses, 11 words, 8 Did
-     you knows, 3 day's cards, 1 Codex, and This day on its own date. */
-  morning:   ["verse", "verse", "know", "verse", "word", "verse", "know"],
-  noon:      ["word", "know", "verse", "word", "know", "word", "verse"],
-  afternoon: ["verse", "word", "word", "know", "verse", "know", "word"],
-  evening:   ["word", "word", "light", "know", "light", "codex", "light"],
-  night:     ["know", "verse", "verse", "word", "word", "verse", "verse"]
+     the other kinds go anywhere. Across a week: 11 verses, 7 words, 7 of the
+     99 Names, 5 Did you knows, 3 day's cards, 2 du'as of the Path, and This
+     day on its own date. The Codex reel, the brand's own, was retired: it
+     praised the house and taught nothing, and a Name or a du'a is worth
+     more to a stranger than a stat. */
+  morning:   ["verse", "verse", "know", "verse", "name", "verse", "know"],
+  noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
+  afternoon: ["name", "word", "word", "name", "verse", "know", "name"],
+  evening:   ["word", "dua", "light", "know", "light", "name", "light"],
+  night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"]
 };
-/* The Codex, the brand's own reel, has Friday evening and no other turn; if
-   none is rendered yet the word takes the evening as before */
-const FALLBACK = ["verse", "word", "know", "light"];
+/* the order the shelf is searched when the kind the rota wants has nothing
+   rendered yet (a shelf mid-render, a kind not yet made) */
+const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
 
 export function chooseReel(cards, dateStr, half, hijri) {
   const all = (cards || []).filter(c => c && c.id);
@@ -200,7 +203,7 @@ export function chooseReel(cards, dateStr, half, hijri) {
     if (today.length) return today[0];
   }
   const want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
-  const order = [want, ...(want === "codex" ? ["word"] : []), ...FALLBACK.filter(k => k !== want)];
+  const order = [want, ...FALLBACK.filter(k => k !== want)];
   for (const kind of order) {
     /* the old manifests carried no kind and no other kind than light; a card
        without a slot is fine anywhere, one with a slot keeps to its half.
