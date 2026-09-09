@@ -231,7 +231,8 @@
     if (!nav) {
       nav = el("nav", "n2-bar"); nav.setAttribute("aria-label", "Rooms");
       nav.innerHTML = LINKS.map(function (l) {
-        return '<a href="' + l[1] + '"' + (l[0] === "Search" ? ' data-n2-search data-nm-open' : "") + '><svg viewBox="0 0 24 24" aria-hidden="true">' + l[2] + "</svg>" + l[0] + "</a>";
+        /* Search opens the sheet; the dial is the Menu's (see api/page.js) */
+        return '<a href="' + l[1] + '"' + (l[0] === "Search" ? ' data-n2-search' : "") + '><svg viewBox="0 0 24 24" aria-hidden="true">' + l[2] + "</svg>" + l[0] + "</a>";
       }).join("");
       doc.body.appendChild(nav);
     }
@@ -256,14 +257,16 @@
     return nav;
   }
 
-  /* a sheet: rises on the spring; closes on a tap outside, its close button,
-     or a pull past 80 px; the marks step aside while it is open */
+  /* a sheet: rises on the spring; closes on a tap outside, its close button, a
+     pull past 80 px, or Escape (it says role="dialog", and one that will not
+     answer Escape traps a keyboard); the marks step aside while it is open */
   function sheet(html) {
-    var wrap = el("div", "n2-sheet-wrap", '<div class="n2-sheet" role="dialog"><i class="n2-handle"></i>' + html + "</div>");
+    var wrap = el("div", "n2-sheet-wrap", '<div class="n2-sheet" role="dialog" aria-modal="true"><i class="n2-handle"></i>' + html + "</div>");
     var box = q(".n2-sheet", wrap), y0 = null, dy = 0, raf = 0;
     doc.body.appendChild(wrap);
-    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); doc.documentElement.classList.add("n2-sheet-open"); bloom = 1; }
-    function close() { wrap.classList.remove("n2-show"); doc.documentElement.classList.remove("n2-sheet-open"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500); }
+    function esc(e) { if (e.key === "Escape") close(); }
+    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); doc.documentElement.classList.add("n2-sheet-open"); doc.addEventListener("keydown", esc); bloom = 1; }
+    function close() { doc.removeEventListener("keydown", esc); wrap.classList.remove("n2-show"); doc.documentElement.classList.remove("n2-sheet-open"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500); }
     wrap.addEventListener("click", function (e) { if (e.target === wrap || (e.target.closest && e.target.closest("[data-n2-close]"))) close(); });
     box.addEventListener("pointerdown", function (e) { if (e.target.closest("a,button,input")) return; y0 = e.clientY; box.classList.add("n2-drag"); box.setPointerCapture(e.pointerId); });
     box.addEventListener("pointermove", function (e) {

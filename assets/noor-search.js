@@ -164,6 +164,16 @@
     document.body.classList.remove("ns-open");
   }
 
+  /* One search on a page, not two.
+
+     The library has two doors and they are not the same job. The Menu pill
+     opens assets/noor-menu.js's dial: the map of the house, browsed by
+     section. Search -- the bar's Search, the field on the arrival, the "/"
+     key -- opens this sheet: you type a word and the answer is under your
+     thumb. Until 9 September 2026 the bar's Search carried the dial's own
+     attribute as well, so on one screen the field opened the sheet and the
+     bar opened the dial: two different products from two controls a finger
+     apart. Now Search is this, everywhere, and the Menu is the dial. */
   addEventListener("keydown", function (e) {
     if (e.key === "Escape" && openNow) close();
     else if ((e.key === "/" || (e.key === "k" && (e.metaKey || e.ctrlKey))) && !openNow) {

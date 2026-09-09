@@ -687,7 +687,11 @@ function buildThings(){
   SECTIONS.forEach(s=>(s.items||[]).forEach(it=>THINGS.push({kind:"Rooms",t:it.t,d:it.d,u:it.u})));
   PATH.forEach(n=>THINGS.push({kind:"The Path",t:n.t,d:"chapter "+n.i,u:"/#node-"+n.i}));
   for(let i=1;i<=114;i++)THINGS.push({kind:"Surahs",t:"Surah "+i,d:"open the Mushaf at "+i,u:"/quran?surah="+i});
-  WORDS.forEach(w=>THINGS.push({kind:"Words",t:w.t,d:w.s,u:"/dictionary#"+w.i}));
+  /* each word has had its own room since 9 September 2026: /dictionary/<id>.
+     The hub still anchors every row, so /dictionary#<id> did not break -- it
+     just dropped the reader into a 220KB directory to click a second time for
+     the page they had already named. The word's own room is the answer. */
+  WORDS.forEach(w=>THINGS.push({kind:"Words",t:w.t,d:w.s,u:"/dictionary/"+w.i}));
   THINGS.forEach(o=>o.f=fold(o.t+" "+(o.d||"")));
 }
 const ORDER=["Rooms","Words","The Path","Surahs"];
