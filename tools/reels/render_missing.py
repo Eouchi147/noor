@@ -2,7 +2,9 @@
 """Render every card in plan.json that has no video yet.
 
 Called by the workflow with no arguments, so a card added to plan.json is
-rendered on the next run and nothing already rendered is rendered again. Given
+rendered on the next run and nothing already rendered is rendered again. A
+card is rendered when its video is in reels/, or when its sidecar says the
+video is on the Blob store (shelf_blob.py moves it there after the render). Given
 ids, it renders exactly those and overwrites them. Given "all", it renders the
 whole library again, which is what a change to the picture or the sound needs:
 those change every reel, and a reel is only as current as the day it was made.
@@ -25,7 +27,9 @@ finish a shelf in the time one would take a quarter of it. Each then hands
 its files to the one that writes the manifest (--manifest) and opens the
 pull request; the workflow in .github/workflows/reels.yml is that dance.
 """
-import json, os, sys, time
+import json, os, subprocess, sys, time
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 from playwright.sync_api import sync_playwright
 
 import sound
@@ -45,10 +49,11 @@ def todo(args):
     unknown = [w for w in want if w not in cards]
     if unknown: raise SystemExit("not in plan.json: " + ", ".join(unknown))
     if not want:
-        # a card with a video is done; a card marked unfit is known and is
-        # not tried again unless it is named or the plan changes its copy
+        # a card with a video is done, here or on the store; a card marked
+        # unfit is known and is not tried again unless it is named or the
+        # plan changes its copy
         want = [c for c in cards
-                if not os.path.exists(os.path.join(OUT, c + ".mp4"))
+                if not has_video(c)
                 and not unfit_still(c, cards[c])]
     # the kinds take turns, so a run that stops early still leaves a balanced
     # shelf: a verse, a word, a Name, a Did you know, a du'a, a day, then
@@ -128,6 +133,22 @@ def main():
 
 def unfit_path(cid):
     return os.path.join(OUT, cid + ".unfit.json")
+
+
+def stored(cid):
+    """the sidecar's word on where the video is: {video, cover} URLs on the
+    Blob store, written by shelf_blob.py, or an empty dict"""
+    try:
+        m = json.load(open(os.path.join(OUT, cid + ".json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return m if isinstance(m, dict) and str(m.get("video", "")).startswith(("https://", "file://")) else {}
+
+
+def has_video(cid):
+    """rendered means a video here in reels/, or a sidecar that says the
+    video is on the store"""
+    return os.path.exists(os.path.join(OUT, cid + ".mp4")) or bool(stored(cid))
 
 
 def copy_hash(card):
@@ -224,6 +245,30 @@ def interleave(names, cards):
     return out
 
 
+def orphans(cards):
+    """the shelf is what the plan says: a file whose card is no longer in
+    plan.json (a kind retired, an id renamed) is taken off, so the manifest
+    and the folder never disagree and a retired reel cannot be posted"""
+    gone = []
+    for f in sorted(os.listdir(OUT)):
+        if f == "index.json": continue
+        cid = f
+        for suf in (".unfit.json", "-cover.jpg", ".part.mp4", ".mp4", ".json"):
+            if f.endswith(suf): cid = f[:-len(suf)]; break
+        if cid in cards: continue
+        if f.endswith(".json") and not f.endswith(".unfit.json"):
+            # the video on the store goes with its sidecar, best effort
+            m = stored(cid)
+            for u in (m.get("video"), m.get("cover")):
+                if u:
+                    try: subprocess.run(["node", os.path.join(HERE, "blob.mjs"), "del", u], capture_output=True, timeout=60)
+                    except Exception: pass
+        try: os.remove(os.path.join(OUT, f)); gone.append(f)
+        except OSError: pass
+    if gone: print("taken off the shelf, no card in the plan: %d file(s)" % len(gone))
+    return gone
+
+
 def manifest():
     """List what actually has a video, for the poster to choose from.
 
@@ -234,9 +279,10 @@ def manifest():
     post time.
     """
     cards = webreel.plan()
+    orphans(cards)
     out = []
     for cid in sorted(cards):
-        if not os.path.exists(os.path.join(OUT, cid + ".mp4")): continue
+        if not has_video(cid): continue
         c = cards[cid]
         kind = c.get("kind", "light")
         meta = {}
@@ -252,7 +298,13 @@ def manifest():
                 "name": c.get("translit"), "dua": c.get("translit")}.get(kind, c.get("hook"))
         row = {"id": cid, "kind": kind, "slot": c["slot"], "hook": hook or "",
                "caption": caption, "secs": meta.get("secs"),
-               "cover": os.path.exists(os.path.join(OUT, cid + "-cover.jpg"))}
+               "cover": os.path.exists(os.path.join(OUT, cid + "-cover.jpg")) or bool(meta.get("cover"))}
+        # where the video is: on the store, the row carries the URLs and the
+        # poster uses them as they are; in reels/, the poster builds the old
+        # path from the id, so an old manifest and a new one read alike
+        if str(meta.get("video", "")).startswith(("https://", "file://")):
+            row["video"] = meta["video"]
+            if meta.get("cover"): row["cover"] = meta["cover"]
         if kind == "day": row["hm"], row["hd"] = c.get("hm"), c.get("hd")
         if kind == "verse":
             if not meta.get("reciter"): continue   # no sidecar, no caption: not listed

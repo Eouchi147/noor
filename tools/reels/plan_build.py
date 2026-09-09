@@ -2,11 +2,12 @@
 """NOOR reel · build plan.json from the sources.
 
 plan.json is the one file the workflow renders from. Two of its kinds are
-written by hand and audited (light, in plan.json itself, and know, in
-know.json); the other five are drawn straight from the library so that the
-words on screen are the library's own words:
+written by hand and audited (light, in light.json, and know, in know.json);
+the other five are drawn straight from the library so that the words on
+screen are the library's own words:
 
-    word   build/dict-*.json         the Arabic, the term, the short and long
+    word   build/dict-*.json         every word of the dictionary: the Arabic,
+                                     the term, the short and long
     day    calendar.json             the fixed days and the twelve months,
                                      exported from api/_calendar.js
     verse  verses.txt                references only; text and translation
@@ -74,10 +75,22 @@ def dictionary():
     return out
 
 
+def word_list(D):
+    """every word of the dictionary: the hundred and six chosen by hand first,
+    in their order, then the rest of the 523 by category and name, so the
+    shelf holds the whole dictionary and a word is never written twice.
+    A second shelf of words is what carries the account past its third month."""
+    seen, out = set(), []
+    for w in WORDS:
+        if w in D and w not in seen: seen.add(w); out.append(w)
+    rest = sorted((cat, w) for w, (cat, e) in D.items() if w not in seen)
+    return out + [w for cat, w in rest]
+
+
 def word_cards():
     D = dictionary()
     cards = {}
-    for i, w in enumerate(WORDS):
+    for i, w in enumerate(word_list(D)):
         if w not in D: print("  no such word:", w); continue
         cat, e = D[w]
         long = first_sentence(e.get("long", ""))
@@ -223,7 +236,17 @@ def dua_cards():
 def main():
     doc = json.load(open(PLAN, encoding="utf-8")) if os.path.exists(PLAN) else {"_meta": {}, "cards": {}}
     old = doc.get("cards", {})
-    kept = {k: v for k, v in old.items() if v.get("kind", "light") in ("light", "know")}
+    # the two hand written kinds live in their own files now, light.json and
+    # know.json, so a new card is a small file to commit rather than a line
+    # in a megabyte of plan; a light card still in an old plan.json is kept
+    kept = {k: v for k, v in old.items() if v.get("kind", "light") == "light"}
+    try:
+        light = json.load(open(os.path.join(HERE, "light.json"), encoding="utf-8"))["cards"]
+    except FileNotFoundError:
+        light = {}
+    for k, v in light.items():
+        v = dict(v); v["kind"] = "light"
+        kept[k] = v
     know = json.load(open(os.path.join(HERE, "know.json"), encoding="utf-8"))["cards"]
     for k, v in know.items():
         v = dict(v); v["kind"] = "know"
@@ -234,6 +257,16 @@ def main():
                          "scene": ["rosette", "pages", "moon", "ripples", "arcade", "epicycles"][h32(k + "s") % 6],
                          "secs": 13, "cue": 0}
         kept[k] = v
+    # a day's card written by hand and dropped into plan.json without a look
+    # gets one the same way a Did you know does, decided from its id for good
+    for k, v in kept.items():
+        if v.get("kind", "light") == "light" and "slot" not in v:
+            v["slot"] = "morning" if h32(k) % 2 else "evening"
+        if v.get("kind", "light") == "light" and "look" not in v:
+            n, kk = STARS[h32(k) % len(STARS)]
+            v["look"] = {"pal": PALS[h32(k + "p") % len(PALS)], "seed": h32(k) % 1000, "n": n, "k": kk,
+                         "scene": ["rosette", "pages", "moon", "ripples", "arcade", "epicycles"][h32(k + "s") % 6],
+                         "secs": 21, "cue": 1}
     cards = dict(kept)
     for build in (word_cards, day_cards, verse_cards, name_cards, dua_cards):
         new = build()
@@ -242,7 +275,7 @@ def main():
     counts = {}
     for v in cards.values(): counts[v.get("kind", "light")] = counts.get(v.get("kind", "light"), 0) + 1
     doc["_meta"] = {**doc.get("_meta", {}), "n": len(cards), "kinds": counts,
-                    "built": "plan_build.py from the library; light and know cards are written by hand"}
+                    "built": "plan_build.py from the library; light.json and know.json are written by hand"}
     doc["cards"] = cards
     json.dump(doc, open(PLAN, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("plan.json: %d cards %s" % (len(cards), counts))

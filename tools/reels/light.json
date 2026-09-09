@@ -1,0 +1,1793 @@
+{
+ "note": "The day's cards, written by hand from lights/all.json under BRIEF.md: a hook, a dateline, three lines. Every fact is in the source card; copy_audit.py proves it. plan_build.py reads this file; a card here with no slot or look is given one from its id.",
+ "kind": "light",
+ "cards": {
+  "al-sufi-andromeda-964": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A little cloud in his star book was another galaxy",
+   "key": "another galaxy",
+   "date": "Abd al-Rahman al-Sufi · Isfahan, 964",
+   "lines": [
+    "In 964 the Persian astronomer Abd al-Rahman al-Sufi finished his Book of Fixed Stars in Isfahan.",
+    "He checked every star in Ptolemy's catalogue with his own eyes, and in Andromeda he described a small cloud.",
+    "It is the earliest known record of the Andromeda galaxy, which no one understood as separate until the 1920s."
+   ],
+   "caption": "Al-Sufi went through Ptolemy's catalogue constellation by constellation and drew each one twice, as seen on a globe and as seen in the sky. He also wrote down the Arabic names Bedouin observers were already using. His book was copied and translated for six hundred years, and many star names in use today come through it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Isfahan #Andromeda #StarNames #Stargazing",
+   "look": {
+    "scene": "andromeda",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 352,
+    "secs": 21
+   }
+  },
+  "ibn-al-shatir-copernicus": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A mosque timekeeper's lunar model matches Copernicus exactly",
+   "key": "matches Copernicus exactly",
+   "date": "Ibn al-Shatir · Damascus",
+   "lines": [
+    "Ibn al-Shatir kept the prayer times at the Umayyad Mosque in Damascus and built the sundial for its minaret.",
+    "In 1957 Victor Roberts showed his model of the moon is identical to the one Copernicus published in 1543.",
+    "No Latin translation of Ibn al-Shatir is known, Copernicus never names him, and no route between them has been found."
+   ],
+   "caption": "Ibn al-Shatir rebuilt planetary astronomy out of uniform circular motions alone, discarding Ptolemy's equant and off centre circles. Victor Roberts worked with E. S. Kennedy in Beirut, and found that several parameters match as well. Some scholars argue for transmission through Byzantine Greek manuscripts, others for two men solving the same problem the same way. One difference is plain: Ibn al-Shatir kept the earth at the centre, and Copernicus moved it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Damascus #Mathematics #MedievalHistory",
+   "look": {
+    "scene": "epicycles",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 136,
+    "secs": 21
+   }
+  },
+  "qalawun-hospital-1284": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "A Cairo hospital was endowed to turn nobody away",
+   "key": "turn nobody away",
+   "date": "Qalawun · Cairo, 1284",
+   "lines": [
+    "The Mamluk sultan Qalawun founded a hospital in Cairo in 1284, on the site of a former Fatimid palace.",
+    "Its endowment deed survives, setting out separate wards, a pharmacy, a library and a salaried staff of physicians.",
+    "Payment was never required of the patient, and the site has served the sick almost continuously since."
+   ],
+   "caption": "The deed also provided for oculists and surgeons, and for an allowance paid on discharge to sick people who could not work. Qalawun's complex held a school and his tomb as well as the hospital. Endowed hospitals of this kind, called bimaristans, existed across the Muslim world from the ninth century, and an eye hospital still operates on the Cairo site.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Cairo #Egypt #Bimaristan #Charity",
+   "look": {
+    "scene": "arcade",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 678,
+    "secs": 21
+   }
+  },
+  "ibn-al-nafis-circulation-1242": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "He corrected Galen on the heart and was lost for centuries",
+   "key": "lost for centuries",
+   "date": "Ibn al-Nafis · Cairo, around 1242",
+   "lines": [
+    "Around 1242 in Cairo, the Syrian physician Ibn al-Nafis wrote on the anatomy in Ibn Sina's Canon.",
+    "He held that the wall of the heart is solid, and that blood must go from the right chamber to the lungs and back.",
+    "That is the pulmonary circulation, described three centuries before European anatomists."
+   ],
+   "caption": "The accepted view, from Galen and from Ibn Sina alike, was that blood crossed from the right side of the heart to the left through invisible pores. Ibn al-Nafis wrote that there are no pores, and that the blood mixes with air in the lungs. His text then sat unread until a physician, Muhyi al-Din al-Tatawi, found it in a Berlin manuscript and published on it in 1924.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #Anatomy #History #Cairo #HistoryOfScience",
+   "look": {
+    "scene": "ripples",
+    "pal": "green",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 890,
+    "secs": 21
+   }
+  },
+  "al-jazari-machines-1206": {
+   "slot": "morning",
+   "eyebrow": "Engineering",
+   "hook": "An engineer drew about fifty machines and how to build them",
+   "key": "how to build them",
+   "date": "Al-Jazari · Diyarbakir, 1206",
+   "lines": [
+    "In 1206, at the Artuqid court in Diyarbakir, al-Jazari finished his Book of Knowledge of Ingenious Mechanical Devices.",
+    "It sets out about fifty machines with exploded diagrams and step by step instructions, from water clocks to pumps.",
+    "He wrote that he would describe nothing he had not built and tested himself. He died the year the book was completed."
+   ],
+   "caption": "Among the machines are an elephant clock combining Indian, Greek, Chinese and Arab parts, hand washing basins that pour and refill, and musical automata. Historians of technology point to his use of the crankshaft joined to a connecting rod, and of segmental gears and a camshaft, in machines that actually worked.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #History #HistoryOfScience #Automata #Inventions #Mechanics",
+   "look": {
+    "scene": "epicycles",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 0,
+    "seed": 934,
+    "secs": 21
+   }
+  },
+  "tusi-couple": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "Two rolling circles turn a circle into a straight line",
+   "key": "a straight line",
+   "date": "Nasir al-Din al-Tusi · 1247",
+   "lines": [
+    "Ptolemy's models needed the equant, a point about which a planet swept equal angles though it was not the centre.",
+    "In 1247 Nasir al-Din al-Tusi rolled a small circle inside a circle of twice its diameter, tracing a straight line.",
+    "Circular motions alone can therefore produce oscillation, and the construction is called the Tusi couple."
+   ],
+   "caption": "The equant predicted well and it broke the rule that motion in the heavens is uniform and circular, so astronomers had complained about it for centuries. Al-Tusi's answer removed the need for it. The same construction appears, drawn the same way and with no attribution, in Copernicus's book of 1543, and how it got there is a standing question.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #Mathematics #Geometry #History #HistoryOfScience #MedievalHistory",
+   "look": {
+    "scene": "epicycles",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 576,
+    "secs": 21
+   }
+  },
+  "al-battani-solar-year": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "He measured the year and was off by two minutes",
+   "key": "off by two minutes",
+   "date": "Al-Battani · Raqqa, 877 to 918",
+   "lines": [
+    "Al-Battani observed from Raqqa, on the Euphrates, from about 877 until 918, with instruments he had built himself.",
+    "He put the solar year at 365 days, 5 hours, 46 minutes and 24 seconds, about two minutes and twenty seconds short.",
+    "His tables were translated into Latin in the twelfth century, and Copernicus cites him repeatedly in the book of 1543."
+   ],
+   "caption": "Al-Battani also found that the point at which the sun is furthest from the earth had shifted since Ptolemy recorded its position, which meant the Greek tables were not simply to be copied forward. In Europe he was known as Albategnius. There is a crater on the moon carrying his Latin name.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Calendar #Stargazing #MedievalHistory",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 562,
+    "secs": 21
+   }
+  },
+  "fatima-al-fihri-qarawiyyin": {
+   "slot": "morning",
+   "eyebrow": "Learning",
+   "hook": "She spent her inheritance on a mosque that has never closed",
+   "key": "has never closed",
+   "date": "Fatima al-Fihri · Fez, 859",
+   "lines": [
+    "Fatima al-Fihri's family migrated from Kairouan to Fez in the early ninth century.",
+    "When her father died she spent her share of his estate on a mosque, built in 859, in the migrants' quarter.",
+    "That mosque, al-Qarawiyyin, gathered teaching circles, then a library, then salaried professors, and never closed."
+   ],
+   "caption": "Al-Qarawiyyin issued certificates to those who studied there, and UNESCO and Guinness both list it as the oldest existing degree granting institution. Tradition holds that Fatima fasted while the building work went on. Almost everything told about her comes from Ibn Abi Zar's chronicle, written some five centuries later, and historians say plainly that earlier evidence for her life is thin.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Education #History #Morocco #Fez #Universities #Libraries #WomenInHistory",
+   "look": {
+    "scene": "arcade",
+    "pal": "sand",
+    "n": 12,
+    "k": 5,
+    "cue": 0,
+    "seed": 172,
+    "secs": 21
+   }
+  },
+  "al-razi-case-records": {
+   "slot": "morning",
+   "eyebrow": "Medicine",
+   "hook": "Al-Razi wrote down the cases where he was wrong",
+   "key": "where he was wrong",
+   "date": "Al-Razi · Rayy and Baghdad",
+   "lines": [
+    "Abu Bakr al-Razi was born in Rayy, near modern Tehran, and ran hospitals there and in Baghdad.",
+    "His case notes record particular patients, the treatment given and whether it worked, including the times it did not.",
+    "He argued that medicine advances only when a physician trusts a careful observation over a great name."
+   ],
+   "caption": "The Hawi, the book al-Razi is best known for, was not written by him for readers. His students assembled it after his death from his working notebooks, which is why it reads as it does: an authority quoted, then Greek and Indian opinion, then a mark meaning mine, followed by what he had seen at the bedside. His book of doubts about Galen held that Galen's own method demanded exactly that.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #History #Baghdad #HistoryOfScience #Books",
+   "look": {
+    "scene": "pages",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 958,
+    "secs": 21
+   }
+  },
+  "ulugh-beg-catalogue-1437": {
+   "slot": "morning",
+   "eyebrow": "Astronomy",
+   "hook": "A governor remeasured the sky and catalogued 1,018 stars",
+   "key": "1,018 stars",
+   "date": "Ulugh Beg · Samarkand, 1437",
+   "lines": [
+    "In the 1420s Ulugh Beg, governor of Samarkand, built an observatory around a sextant arc about forty metres in radius.",
+    "In 1437 his team completed the Zij-i Sultani, a catalogue of 1,018 stars measured fresh, not copied from Ptolemy.",
+    "Their value for the length of the year is within about a minute of the modern figure."
+   ],
+   "caption": "The great arc was sunk into a trench cut in the rock so that it could not shift. Ulugh Beg was a grandson of Timur, and by all accounts more interested in the sky than in ruling. He was killed in 1449, and the buried arc of his instrument was rediscovered by excavation in 1908 and can be visited today.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #History #HistoryOfScience #Samarkand #Observatory #Stargazing",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 834,
+    "secs": 21
+   }
+  },
+  "zubayda-pilgrim-road-831": {
+   "slot": "morning",
+   "eyebrow": "Water",
+   "hook": "A caliph's wife paid for the water on the Makkah road",
+   "key": "paid for the water",
+   "date": "Zubayda bint Ja'far · died 831 CE",
+   "lines": [
+    "Zubayda bint Ja'far, wife of Harun al-Rashid, made the hajj and saw pilgrims dying of thirst on the way.",
+    "She spent her own fortune on wells, cisterns, paved stretches and waystations along some 1,500 kilometres of desert.",
+    "The route has been called Darb Zubayda, Zubayda's Road, ever since."
+   ],
+   "caption": "Her wells were not the end of it. Zubayda also paid for a spring channel at Makkah that carried water into the city itself, and the remains of her pools and milestones are still mapped across Iraq and Saudi Arabia. She died in 831, and her name survived not through a battle or a dynasty but through drinking water.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #History #Hajj #Makkah #Abbasid #Archaeology #Water",
+   "look": {
+    "scene": "ripples",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 898,
+    "secs": 21
+   }
+  },
+  "timbuktu-manuscripts-rescue-2013": {
+   "slot": "morning",
+   "eyebrow": "Libraries",
+   "hook": "Timbuktu's manuscripts were smuggled out in footlockers",
+   "key": "smuggled out in footlockers",
+   "date": "Timbuktu to Bamako · 2012 to 2013",
+   "lines": [
+    "Armed groups took Timbuktu in 2012, and its libraries held centuries of work on law, astronomy and medicine.",
+    "The librarian Abdel Kader Haidara organised an evacuation by car, donkey and boat down the Niger, past checkpoints.",
+    "By early 2013 an estimated 350,000 manuscripts had reached houses in Bamako."
+   ],
+   "caption": "Many of these manuscripts had never left the families who copied them, and they cover law, astronomy, medicine, poetry and mathematics. Volunteers packed them into metal footlockers and rice sacks and moved them a few at a time. Some were burned in Timbuktu, but far fewer than first reported, and the collections are now being conserved and digitised in the south of the country.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Timbuktu #Mali #Manuscripts #Libraries #BookHistory #History",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 677,
+    "secs": 21
+   }
+  },
+  "astrolabe-model-of-the-sky": {
+   "slot": "morning",
+   "eyebrow": "Instruments",
+   "hook": "An astrolabe is a model of the sky, held in the hand",
+   "key": "model of the sky",
+   "date": "Oldest dated example by Nastulus · 927 CE",
+   "lines": [
+    "A star or the sun is sighted through the bar on the back, and its height above the horizon is read off the rim.",
+    "Turning the openwork grid on the front until it matches gives the time of day or night, with no arithmetic needed.",
+    "Muslim makers turned it into a standard object, engraved with prayer times and the direction of Makkah."
+   ],
+   "caption": "The geometry behind it is Greek: flattening the sphere of the sky onto a disc goes back to Hipparchus. The same instrument gives the direction being faced, where any other star has got to, and the height of the tower across the street. Chaucer wrote a manual for one in English, for his ten year old son.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Astronomy #IslamicHistory #Astrolabe #HistoryOfScience #Navigation #MedievalHistory",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 0,
+    "seed": 314,
+    "secs": 21
+   }
+  },
+  "banu-musa-ingenious-devices": {
+   "slot": "morning",
+   "eyebrow": "Engineering",
+   "hook": "Three brothers designed machines that regulated themselves",
+   "key": "regulated themselves",
+   "date": "Banu Musa · Baghdad, c. 850 CE",
+   "lines": [
+    "Muhammad, Ahmad and al-Hasan, the sons of Musa ibn Shakir, were astronomers in ninth century Baghdad.",
+    "Around 850 they produced the Book of Ingenious Devices, about a hundred machines that mostly look like toys.",
+    "The surprise is a hidden control: a float rises with the liquid and closes a valve, holding a condition steady."
+   ],
+   "caption": "That is feedback, a machine keeping a condition steady with no hand on it: a siphon that empties a chamber at a set level, a lamp that trims its own wick and draws up its own oil. The brothers were patrons as well as builders, paying translators out of their own pockets. Their book also describes a grab for lifting objects off a riverbed, and Donald Hill translated it into English in 1979.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Engineering #HistoryOfScience #Baghdad #Automation #Inventions",
+   "look": {
+    "scene": "epicycles",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 734,
+    "secs": 21
+   }
+  },
+  "block-printed-amulets-fustat": {
+   "slot": "morning",
+   "eyebrow": "Printing",
+   "hook": "Arabic was printed on paper before printing existed in Europe",
+   "key": "before printing existed",
+   "date": "Fustat, Egypt · c. 10th to 14th centuries",
+   "lines": [
+    "They are narrow strips of paper carrying Qur'anic verses and prayers, rolled into metal amulet cases.",
+    "About sixty survive, printed from carved blocks, most of them dug up at Fustat, the old settlement under Cairo.",
+    "The trade stayed with street sellers and never moved to books, and historians still disagree about why."
+   ],
+   "caption": "The strips come from medieval Egypt and Syria and date from roughly the tenth to the fourteenth centuries. Printing on paper was practised in Arabic long before it existed in Europe, yet it stayed confined to amulets sold in the street, a trade of low standing. Historians give various reasons, from the prestige of the copyist's hand to the economics of a strong manuscript trade, and none of them is settled.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Printing #BookHistory #Egypt #Cairo #Archaeology #MedievalHistory",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 153,
+    "secs": 21
+   }
+  },
+  "hijri-calendar-epoch-622": {
+   "slot": "evening",
+   "eyebrow": "Calendar",
+   "hook": "The Muslim year counts from a departure, not a birth",
+   "key": "departure, not a birth",
+   "date": "Set under Umar ibn al-Khattab · c. 638 CE",
+   "lines": [
+    "Around 638 CE the caliph Umar ibn al-Khattab and his advisers had to decide where the Muslim calendar should begin.",
+    "They chose the Hijra, the migration from Makkah to Yathrib, and the first day of year 1 falls on 16 July 622.",
+    "Every Islamic date since is counted from a group of refugees arriving in a town that agreed to take them in."
+   ],
+   "caption": "The choice was deliberate. Umar and his advisers passed over the birth of the Prophet ﷺ, the first revelation and every victory, and took the migration instead, because that was when a scattered community became a society with obligations to one another. By the standard reckoning that day, the first of Muharram in year 1, falls in the Julian calendar.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijri #Calendar #Makkah #Madinah #History",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 2,
+    "seed": 249,
+    "secs": 21
+   }
+  },
+  "constitution-of-medina-622": {
+   "slot": "evening",
+   "eyebrow": "Governance",
+   "hook": "Medina's founding document named Jews as part of one community",
+   "key": "part of one community",
+   "date": "Yathrib, later Madinah · 622 CE",
+   "lines": [
+    "Soon after arriving in Yathrib in 622, the Prophet ﷺ set out the terms on which a mixed town would live.",
+    "The early biographer Ibn Ishaq preserved it: it names the tribes and puts the Jewish clans in one community.",
+    "Historians treat it as one of the earliest written constitutional documents anywhere."
+   ],
+   "caption": "The document is usually called the Sahifa, or Constitution of Medina. It states that the listed clans form one community alongside the believers, guarantees them their religion, fixes who pays blood money for whom, requires joint defence of the town, and sends disputes to arbitration rather than feud. It was written for a place with more than one faith in it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #History #Governance #Constitution #Interfaith",
+   "look": {
+    "scene": "pages",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 555,
+    "secs": 21
+   }
+  },
+  "zakat-is-growth": {
+   "slot": "evening",
+   "eyebrow": "Charity",
+   "hook": "The word for alms means growth, not deduction",
+   "key": "growth, not deduction",
+   "date": "Root z k w, growth and purity",
+   "lines": [
+    "Zakat is the obligatory portion of accumulated wealth handed over each year.",
+    "Its root z k w means to grow and to increase, and also to be pure, and the noun is used of a plant that thrives.",
+    "So the term for taking a fortieth out of savings is a word about the pile getting larger."
+   ],
+   "caption": "Arabic takes purity and increase from the same three letters because a thing cleaned of what spoils it grows better. The Qur'an uses the same verb of the self in the chapter of the sun: he has succeeded who causes it to grow, and he has failed who buries it. One verb covers a bank balance and a person.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Zakat #Charity #Arabic #Language #Quran #IslamicHistory",
+   "look": {
+    "scene": "ripples",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 478,
+    "secs": 21
+   }
+  },
+  "longest-verse-is-a-contract": {
+   "slot": "evening",
+   "eyebrow": "Structure",
+   "hook": "The longest verse in the Qur'an is about debt",
+   "key": "is about debt",
+   "date": "Surah al-Baqarah, verse 282",
+   "lines": [
+    "Verse 282 of Surah al-Baqarah is the longest single verse in the Qur'an, longer than most of the short chapters.",
+    "It is a commercial instruction: when a debt is contracted for a fixed term, write it down and bring witnesses.",
+    "The most space given to any one subject goes to keeping an accurate record of what one person owes another."
+   ],
+   "caption": "The verse is not about prayer or paradise. It asks for a scribe to write justly, tells the one who owes to dictate, allows for a debtor who cannot dictate, and permits a pledge instead of a written record when travelling. It also says the writing down should not be thought beneath anyone, whether the sum is small or large.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Finance #Contracts #Ethics #Arabic",
+   "look": {
+    "scene": "pages",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 105,
+    "secs": 21
+   }
+  },
+  "fasting-is-not-about-hunger": {
+   "slot": "evening",
+   "eyebrow": "Ramadan",
+   "hook": "Leaving food is not wanted if false speech stays",
+   "key": "if false speech stays",
+   "date": "Abu Hurayra · Ramadan",
+   "lines": [
+    "Going without water in a hot country is hard enough to feel like an achievement in itself.",
+    "The Prophet ﷺ said that whoever does not give up false speech, Allah has no need of his leaving food and drink.",
+    "Ramadan is a month of restraint in speech and temper, with the hunger as its least important part."
+   ],
+   "caption": "The report is blunt about what the fast is for, and it refuses to accept thirst as an achievement on its own. In another narration the Prophet ﷺ told a fasting person who is insulted or dragged into an argument to say, twice, that he is fasting, and to leave it there. The hunger is the most visible part of the month and the least important.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #Fasting #Hadith #Faith #IslamicHistory #Spirituality",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 556,
+    "secs": 21
+   }
+  },
+  "smile-counts-as-charity": {
+   "slot": "evening",
+   "eyebrow": "Charity",
+   "hook": "Smiling in the face of a brother counts as charity",
+   "key": "counts as charity",
+   "date": "Abu Dharr al-Ghifari",
+   "lines": [
+    "Abu Dharr al-Ghifari came from a poor tribe and had almost nothing he could give away.",
+    "The Prophet ﷺ told him that smiling in the face of his brother was an act of charity.",
+    "What is asked for is attention rather than money, and the poorest man in the mosque had as much of that as anyone."
+   ],
+   "caption": "Abu Dharr worried openly that the rich were buying rewards he could not afford. The answer changed the currency. He was also told not to think little of any good deed, even meeting another person with a cheerful face. The point was practical rather than sentimental.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hadith #Charity #Kindness #Companions #Faith",
+   "look": {
+    "scene": "rosette",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 153,
+    "secs": 21
+   }
+  },
+  "hafs-and-warsh-today": {
+   "slot": "evening",
+   "eyebrow": "Readings",
+   "hook": "The Qur'an in Morocco is recited differently from Cairo",
+   "key": "recited differently",
+   "date": "Hafs, Warsh, Qalun and al-Duri",
+   "lines": [
+    "Each canonical reading comes through named students, usually two, so ten readings arrive as twenty transmissions.",
+    "Most of the world reads Hafs from Asim of Kufa; Morocco and much of West Africa read Warsh from Nafi of Madinah.",
+    "The same text, in more than one transmitted form, on shelves a few hours' flight apart."
+   ],
+   "caption": "The Cairo edition of 1924 printed Hafs from Asim, and that reading spread with it. A printed Warsh Qur'an looks noticeably different on the page, with different vowel signs and spellings. Parts of Libya read Qalun from the same Nafi, and Sudan and the Horn read al-Duri from Abu Amr. Algeria and Mauritania read Warsh alongside Morocco.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Morocco #Cairo #WestAfrica #Qiraat #Recitation",
+   "look": {
+    "scene": "pages",
+    "pal": "sand",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 340,
+    "secs": 21
+   }
+  },
+  "safa-marwa-inside-the-mosque": {
+   "slot": "evening",
+   "eyebrow": "Hajj",
+   "hook": "Two hills of a woman's search now stand inside a mosque",
+   "key": "inside a mosque",
+   "date": "Safa and Marwa · Hajj and Umrah",
+   "lines": [
+    "Safa and Marwa are two rock outcrops a little under four hundred metres apart.",
+    "Pilgrims walk between them seven times, roughly three kilometres, in memory of Hagar looking for water for Ismail.",
+    "The expansions enclosed the whole route inside the mosque, and the bare rock of Safa is still exposed behind glass."
+   ],
+   "caption": "The Qur'an names both hills and calls them among the symbols of Allah. For most of history the walk ran along an open street with shops on it, until the Saudi expansions enclosed it, air conditioned it and later stacked it on several levels to move larger crowds. The rock is fenced at one end so that what people are walking between can still be seen.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Hajj #Umrah #Pilgrimage #IslamicHistory #Quran #Heritage",
+   "look": {
+    "scene": "arcade",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 1,
+    "seed": 529,
+    "secs": 21
+   }
+  },
+  "quba-first-mosque-622": {
+   "slot": "evening",
+   "eyebrow": "Madinah",
+   "hook": "The first mosque was built by hand at Quba",
+   "key": "built by hand",
+   "date": "Quba, outside Yathrib · 622",
+   "lines": [
+    "In 622 the Prophet ﷺ reached the outskirts of Yathrib and stopped for several days at Quba, among palm groves.",
+    "A mosque went up there before he travelled on, palm trunks and mud brick, with reports of him carrying stones himself.",
+    "The building on the site now is modern. The foundation date is not."
+   ],
+   "caption": "The commentators generally identify Quba with the mosque the Qur'an calls founded on God consciousness from the first day. He kept visiting it after moving into the town, and the practice of going out to Quba on a Saturday is recorded from him.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quba #Mosque #Architecture #Heritage #Seerah",
+   "look": {
+    "scene": "arcade",
+    "pal": "green",
+    "n": 8,
+    "k": 3,
+    "cue": 0,
+    "seed": 135,
+    "secs": 21
+   }
+  },
+  "makkah-taken-630": {
+   "slot": "evening",
+   "eyebrow": "Makkah",
+   "hook": "The city that drove him out was told: go, you are free",
+   "key": "go, you are free",
+   "date": "Makkah · Ramadan, 630 CE",
+   "lines": [
+    "In Ramadan, 630 CE, the Prophet ﷺ entered Makkah with a large force and the city fell with very little fighting.",
+    "He had been driven out eight years earlier. Asked what they expected, the people said good, from a generous brother.",
+    "Bilal, who had been tortured in that city as a slave, climbed onto the roof of the Ka'ba and called the prayer."
+   ],
+   "caption": "Members of his family had been killed by people now standing in front of him. A general amnesty followed, with a short list of exceptions, and most of those were pardoned as well. The accounts date the entry to Ramadan of the eighth year after the migration.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Seerah #History #Mercy #Ramadan",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 216,
+    "secs": 21
+   }
+  },
+  "farewell-sermon-632": {
+   "slot": "evening",
+   "eyebrow": "Hajj",
+   "hook": "The farewell sermon was given from the back of a camel",
+   "key": "back of a camel",
+   "date": "Plain of Arafah · Dhul Hijjah, 632",
+   "lines": [
+    "On the plain of Arafah in Dhul Hijjah, 632, the Prophet ﷺ addressed the largest gathering he ever spoke to.",
+    "He spoke from the back of his camel, with a man repeating his words to the crowd standing behind.",
+    "The sermon cancelled blood feuds and interest, and the first claim it cancelled was one owed to his own family."
+   ],
+   "caption": "The interest cancelled first of all was owed to his own uncle, and the men were told that their wives have rights over them. Jabir ibn Abdullah, then a young man, gave an account of the whole pilgrimage that runs to several pages in Muslim's collection. In the version preserved in other collections the sermon states that no Arab has any superiority over a non Arab except in God consciousness. He died within three months.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hajj #Arafah #Seerah #Hadith #History",
+   "look": {
+    "scene": "rosette",
+    "pal": "sand",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 934,
+    "secs": 21
+   }
+  },
+  "four-sacred-months": {
+   "slot": "evening",
+   "eyebrow": "Calendar",
+   "hook": "Four months of the twelve were closed to war",
+   "key": "closed to war",
+   "date": "Dhul Qa'dah, Dhul Hijjah, Muharram, Rajab",
+   "lines": [
+    "The Qur'an states that the number of months with Allah is twelve, and that four of them are sacred.",
+    "The four are Dhul Qa'dah, Dhul Hijjah, Muharram and Rajab, three consecutive and one standing alone.",
+    "It is a calendar doing the work of a peace treaty, in a place where no authority was strong enough to enforce one."
+   ],
+   "caption": "The truce those months carried was older than Islam and was kept by tribes who agreed on very little else. Caravans moved, pilgrims travelled, and blood feuds paused for a quarter of every year. The verse confirms the arrangement rather than creating it, and dates the twelve months to the day the heavens and the earth were created.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #IslamicHistory #Calendar #Muharram #Rajab #History",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 960,
+    "secs": 21
+   }
+  },
+  "ring-composition": {
+   "slot": "evening",
+   "eyebrow": "Structure",
+   "hook": "Some chapters are built as a ring around a centre",
+   "key": "ring around a centre",
+   "date": "Farahi, Islahi, Cuypers, Farrin",
+   "lines": [
+    "Hamiduddin Farahi, an Indian scholar who died in 1930, argued that each chapter has a single organising theme.",
+    "Michel Cuypers and Raymond Farrin describe the pattern as ring composition, sections mirroring outward from a middle.",
+    "It treats the jumps between subjects as a shape to be found rather than a defect to be explained."
+   ],
+   "caption": "Farahi's student Amin Ahsan Islahi worked the idea through the whole book in an Urdu commentary. Cuypers read Surah al-Ma'ida this way and Farrin al-Baqarah, so that the first section answers the last and the pivot sits at the centre. The approach is one reading among several, and it is contested.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Tafsir #IslamicHistory #Scholarship #Literature #Structure",
+   "look": {
+    "scene": "rosette",
+    "pal": "night",
+    "n": 12,
+    "k": 5,
+    "cue": 1,
+    "seed": 324,
+    "secs": 21
+   }
+  },
+  "laylat-al-qadr-pardon-dua": {
+   "slot": "evening",
+   "eyebrow": "Ramadan",
+   "hook": "Aisha asked what to say if she found the night",
+   "key": "found the night",
+   "date": "Aisha · Laylat al-Qadr",
+   "lines": [
+    "Aisha asked the Prophet ﷺ what she should say if she knew which night was Laylat al-Qadr.",
+    "The words he gave her ask for pardon: O Allah, You are the one who pardons and You love to pardon, so pardon me.",
+    "On the night the Qur'an calls better than a thousand months, what she was told to ask was that a record be wiped."
+   ],
+   "caption": "She was not told to ask for anything material. The Arabic verb is afw, which carries the sense of erasing a thing rather than overlooking it while still remembering it. The report is in the collections of Tirmidhi and Ibn Majah, and Tirmidhi himself graded it hasan sahih.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Ramadan #LaylatAlQadr #Quran #Hadith #Dua #IslamicHistory",
+   "look": {
+    "scene": "moon",
+    "pal": "night",
+    "n": 8,
+    "k": 3,
+    "cue": 2,
+    "seed": 560,
+    "secs": 21
+   }
+  },
+  "salah-prayer-and-blessing": {
+   "slot": "evening",
+   "eyebrow": "Prayer",
+   "hook": "The word for prayer also means blessing the Prophet ﷺ",
+   "key": "also means blessing",
+   "date": "Surah Ta-Ha",
+   "lines": [
+    "Salah is the ritual prayer performed five times a day, and the same word is used for blessing the Prophet ﷺ.",
+    "The Qur'an gives its purpose in three words in Surah Ta-Ha: establish the prayer for My remembrance.",
+    "The verse makes the standing and bowing an instrument of memory, putting salah and dhikr into one sentence."
+   ],
+   "caption": "The same word, from the same root, is what God and the angels are said to do for the Prophet ﷺ, and what believers do when they say the formula asking for peace upon him. The lexicographers connect the root with supplication and with turning towards. The purpose the verse gives is not reward, not protection, not good order.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #Quran #Salah #Prayer #Arabic #Language #Dhikr",
+   "look": {
+    "scene": "rosette",
+    "pal": "green",
+    "n": 10,
+    "k": 4,
+    "cue": 1,
+    "seed": 231,
+    "secs": 21
+   }
+  },
+  "umm-salamah-hudaybiyyah": {
+   "src": "umm-salamah-hudaybiyyah",
+   "eyebrow": "Companions",
+   "hook": "Her advice saved the treaty at Hudaybiyyah",
+   "key": "saved the treaty",
+   "date": "Umm Salamah · Hudaybiyyah, 628",
+   "lines": [
+    "At Hudaybiyyah in 628 the Prophet ﷺ told the men to slaughter their animals and shave their heads, and nobody moved.",
+    "Umm Salamah advised him to say nothing further, go out, slaughter his own camel and call his barber.",
+    "He did, and when they saw it they got up and did the same, some of them shaving one another."
+   ],
+   "caption": "The terms accepted that year were no pilgrimage, a ten year truce, and a clause returning defectors to Quraysh. The companions found them humiliating, and the order to end the state of pilgrimage met silence. Bukhari's account of the treaty preserves the episode, with her advice named as the thing that broke the deadlock.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hudaybiyyah #Companions #WomenInHistory #Seerah #History",
+   "look": {
+    "pal": "green",
+    "seed": 326,
+    "n": 10,
+    "k": 4,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "nusaybah-at-uhud": {
+   "src": "nusaybah-at-uhud",
+   "eyebrow": "Companions",
+   "hook": "She went to Uhud with a waterskin and ended up fighting",
+   "key": "ended up fighting",
+   "date": "Nusaybah bint Ka'b · Uhud, 625",
+   "lines": [
+    "Nusaybah bint Ka'b of the Banu Najjar went out to Uhud in 625 to carry water and tend the wounded.",
+    "When the lines broke she took up a sword and a bow and stood among the small group that held their ground.",
+    "The Prophet ﷺ is recorded saying that wherever he turned at Uhud, right or left, he saw her defending him."
+   ],
+   "caption": "She took a deep wound to the shoulder that day, one that took a year to heal, with her husband and her sons beside her. Eight years later, at Yamama in 633, she fought again in her sixties and lost a hand. The early biographers Ibn Sa'd and Ibn Hisham name her, and she is known as Umm Ammarah.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Uhud #Companions #WomenInHistory #Seerah #Madinah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 51,
+    "n": 16,
+    "k": 7,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "asma-two-belts": {
+   "src": "asma-two-belts",
+   "eyebrow": "Companions",
+   "hook": "She tore her belt in two and gained a name",
+   "key": "gained a name",
+   "date": "Asma bint Abi Bakr · Makkah, 622",
+   "lines": [
+    "When the Prophet ﷺ and Abu Bakr hid in the cave of Thawr in 622, Abu Bakr's daughter Asma carried food out to them.",
+    "With nothing to tie the bundle, she cut her waist belt in two, one half for the food and the other for the waterskin.",
+    "From that she was called Dhat al-Nitaqayn, the woman of the two belts."
+   ],
+   "caption": "Asma was pregnant during the migration and gave birth at Quba on arrival. Seventy years later, blind and about a hundred years old, she is reported to have told her son Abdullah ibn al-Zubayr, besieged in Makkah and asking whether to surrender, that a sheep does not suffer from being skinned once it has been slaughtered. She died in 73 AH, 692 CE.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijra #Companions #WomenInHistory #Makkah #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 869,
+    "n": 12,
+    "k": 5,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "umm-sulaym-dowry": {
+   "src": "umm-sulaym-dowry",
+   "eyebrow": "Companions",
+   "hook": "Her dowry was that he become Muslim",
+   "key": "he become Muslim",
+   "date": "Umm Sulaym bint Milhan · Madinah",
+   "lines": [
+    "Umm Sulaym bint Milhan of Madinah was widowed with a small son, Anas, whom she sent to serve the Prophet ﷺ.",
+    "When Abu Talha, then still a pagan, proposed to her, she told him that his accepting Islam would be her dowry.",
+    "He did, the marriage went ahead, and early scholars cite the report on what may count as a valid dower."
+   ],
+   "caption": "She told him she would not refuse a man like him, but that she could not marry an unbeliever, and that she would ask for nothing else. The report is preserved by an-Nasa'i and others. She went out at Hunayn while pregnant, carrying a dagger, and said she was keeping it for anyone who came near her.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #WomenInHistory #Marriage #Seerah #History",
+   "look": {
+    "pal": "green",
+    "seed": 252,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "rufaida-tent-hospital": {
+   "src": "rufaida-tent-hospital",
+   "eyebrow": "Companions",
+   "hook": "A tent in the mosque was the first field hospital",
+   "key": "first field hospital",
+   "date": "Rufaida al-Aslamia · Madinah, 627 CE",
+   "lines": [
+    "Rufaida al-Aslamia learned medicine from her father and set up a tent inside the Prophet's ﷺ mosque for the wounded.",
+    "When Sa'd ibn Mu'adh was struck in the arm by an arrow at the battle of the Trench in 627, he was carried to her tent.",
+    "The wounded were treated inside the mosque, not away from it."
+   ],
+   "caption": "The Prophet ﷺ ordered that Sa'd be carried to her tent so that he could visit him easily. The early biographers record that she trained other women and was given a share of the spoils for her service. Nursing histories now cite her as the earliest named Muslim nurse.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Medicine #MedicalHistory #Nursing #WomenInHistory #Madinah #History",
+   "look": {
+    "pal": "night",
+    "seed": 216,
+    "n": 10,
+    "k": 4,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "fatimah-hand-mill": {
+   "src": "fatimah-hand-mill",
+   "eyebrow": "Companions",
+   "hook": "She asked for a servant and was taught a formula",
+   "key": "taught a formula",
+   "date": "Fatimah and Ali · Madinah",
+   "lines": [
+    "Fatimah bint Muhammad came to her father with hands blistered from a hand mill, to ask for a servant.",
+    "He told her instead to say subhanallah thirty three times, alhamdulillah thirty three, allahu akbar thirty four.",
+    "Ali, her husband, reported that he never left it off after hearing it."
+   ],
+   "caption": "He did not give her a servant, and said that the formula, said when she went to bed, would be better for her than one. The household in question was the Prophet's ﷺ own daughter and his cousin, so whatever the decision meant for the wider question of servants, the exemption did not start at home.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Dhikr #Companions #Sunnah #Madinah #WomenInHistory #History",
+   "look": {
+    "pal": "sand",
+    "seed": 580,
+    "n": 10,
+    "k": 4,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "sumayyah-first-martyr": {
+   "src": "sumayyah-first-martyr",
+   "eyebrow": "Companions",
+   "hook": "The first person killed for this religion was a slave woman",
+   "key": "a slave woman",
+   "date": "Sumayyah bint Khayyat · Makkah, c. 615 CE",
+   "lines": [
+    "Sumayyah bint Khayyat was an enslaved woman in Makkah, married to Yasir and the mother of Ammar.",
+    "The family had no clan to protect them, so they were tortured in the open, and Abu Jahl killed her with a spear.",
+    "Muslim tradition counts her as the first person killed for the faith, before any battle and before the migration."
+   ],
+   "caption": "She was elderly. The same reports preserve the Prophet ﷺ passing the family under torture and telling them to be patient, that their appointed place was Paradise. He could not stop it, because he had no clan strong enough either, while men of the great families were left alone.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Companions #WomenInHistory #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 536,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "bilal-footsteps-in-paradise": {
+   "src": "bilal-footsteps-in-paradise",
+   "eyebrow": "Companions",
+   "hook": "He heard Bilal's footsteps ahead of him in Paradise",
+   "key": "footsteps ahead of him",
+   "date": "Bilal ibn Rabah · Madinah",
+   "lines": [
+    "The Prophet ﷺ asked Bilal to name the deed he most hoped for, having heard his sandals ahead of him in Paradise.",
+    "Bilal said he never did the ritual washing, day or night, without praying with it whatever was written for him.",
+    "No fasting record, no battle, no charity: a small private habit kept at odd hours is the deed the report preserves."
+   ],
+   "caption": "Bilal ibn Rabah was an Abyssinian former slave who had been dragged over hot stones in Makkah for refusing to recant. It is not an impressive answer, and that is why it is worth keeping. Abu Hurayra transmitted the report.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Bilal #Companions #Prayer #Sunnah #Madinah #History",
+   "look": {
+    "pal": "night",
+    "seed": 529,
+    "n": 12,
+    "k": 5,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "salman-al-farisi-search": {
+   "src": "salman-al-farisi-search",
+   "eyebrow": "Companions",
+   "hook": "He crossed three countries looking for one man",
+   "key": "looking for one man",
+   "date": "Salman al-Farisi · Persia to Madinah",
+   "lines": [
+    "Salman al-Farisi was born near Isfahan, the son of a Zoroastrian landowner who locked him in to stop him leaving.",
+    "His last teacher told him a prophet was about to appear in a land of date palms between two fields of black rock.",
+    "Sold as a slave, he ended up in Madinah, and recognised the place from the description before he met the man."
+   ],
+   "caption": "He left anyway, followed a Christian monk to Syria, and served a succession of teachers. His freedom was bought under a contract requiring three hundred date palms and a weight of gold, and the Prophet ﷺ planted the palms with him. He later proposed digging the trench that saved the city.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Persia #Companions #Isfahan #Madinah #Seerah #History",
+   "look": {
+    "pal": "green",
+    "seed": 130,
+    "n": 10,
+    "k": 4,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "suhayb-ar-rumi-price": {
+   "src": "suhayb-ar-rumi-price",
+   "eyebrow": "Companions",
+   "hook": "He gave up everything he owned to be allowed to leave",
+   "key": "everything he owned",
+   "date": "Suhayb ar-Rumi · Makkah to Madinah, 622",
+   "lines": [
+    "Suhayb ibn Sinan was an Arab boy captured by Byzantine raiders, which is why Makkah called him ar-Rumi, the Roman.",
+    "Quraysh stopped him leaving for Madinah, so he asked whether they would let him go if he gave them all of it.",
+    "They agreed, he told them where the money was buried, and he rode out with nothing."
+   ],
+   "caption": "He had been freed, become a merchant and grown wealthy, and Quraysh told him he had arrived among them with nothing and would not leave with a fortune. Early commentators connect his case to the verse about the man who sells himself seeking the pleasure of Allah, and the reports say the Prophet ﷺ told him twice that the sale had been profitable.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijra #Companions #Makkah #Madinah #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 907,
+    "n": 12,
+    "k": 5,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "ammar-two-bricks": {
+   "src": "ammar-two-bricks",
+   "eyebrow": "Companions",
+   "hook": "He carried two bricks while everyone else carried one",
+   "key": "two bricks",
+   "date": "Ammar ibn Yasir · Madinah, then Siffin 657",
+   "lines": [
+    "When the mosque at Madinah was built, Ammar ibn Yasir carried two mud bricks at a time while the others carried one.",
+    "The Prophet ﷺ brushed the dust off him and said that the transgressing party would be the ones to kill him.",
+    "He was killed at Siffin in 657, and both camps quoted the saying at once: whichever side killed him stood named in it."
+   ],
+   "caption": "Ammar had watched both his parents die under torture in Makkah. He lived to be over ninety and died fighting on Ali's side against the army of Muawiya. It is one of the few prophetic sayings that became a live political argument within a single generation.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #Siffin #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 185,
+    "n": 12,
+    "k": 5,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "zayd-ibn-haritha-named": {
+   "src": "zayd-ibn-haritha-named",
+   "eyebrow": "Companions",
+   "hook": "The only companion named in the Qur'an was a freed slave",
+   "key": "a freed slave",
+   "date": "Zayd ibn Haritha · died at Mu'ta, 629 CE",
+   "lines": [
+    "Zayd ibn Haritha was taken as a boy in a raid and sold in Makkah, where he ended up in the household of the Prophet ﷺ.",
+    "When his father and uncle found him and came with a ransom, he was given the choice, chose to stay, and was freed.",
+    "He is the only one of the companions mentioned by name in the Qur'an, in Surah Al-Ahzab."
+   ],
+   "caption": "For a time he was called Zayd ibn Muhammad, until the Qur'an ended the practice of giving adopted sons the name of the adopter and told believers to call them by their own fathers. He commanded the army at Mu'ta in 629 and was killed there.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quran #Companions #Makkah #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 288,
+    "n": 8,
+    "k": 3,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "julaybib-counted": {
+   "src": "julaybib-counted",
+   "eyebrow": "Companions",
+   "hook": "He asked after one man and found him among the dead",
+   "key": "among the dead",
+   "date": "Julaybib · Madinah",
+   "lines": [
+    "Julaybib was a poor man of unknown lineage in Madinah, short, thought unattractive, with no family to speak for him.",
+    "After a battle the companions named their dead, and the Prophet ﷺ said that he had lost Julaybib.",
+    "He found him beside seven men Julaybib had killed, carried the body himself and said: he is of me and I am of him."
+   ],
+   "caption": "The Prophet ﷺ had arranged his marriage himself, going to a man of the Ansar to ask for his daughter and receiving a refusal until the girl herself agreed to it. Nobody else had counted him. Abu Barza al-Aslami transmitted the report.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #Sunnah #Belonging #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 718,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "abu-dharr-and-the-servant": {
+   "src": "abu-dharr-and-the-servant",
+   "eyebrow": "Companions",
+   "hook": "He insulted a man's mother and had to be corrected",
+   "key": "had to be corrected",
+   "date": "Abu Dharr al-Ghifari · Rabadha",
+   "lines": [
+    "Abu Dharr al-Ghifari abused a servant by referring to his mother's colour.",
+    "The Prophet ﷺ told him they are brothers under his hand, to be fed from what he ate and clothed from what he wore.",
+    "Years later Al-Ma'rur ibn Suwayd found Abu Dharr and his servant wearing the same cloth, and asked why."
+   ],
+   "caption": "The Prophet ﷺ said that Abu Dharr was a man in whom something of the age before Islam still remained, and added that they were not to be burdened with more than they could bear, and if they were, then helped. The correction was kept because of what came next, and that is how the report reached us.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Sunnah #Companions #Equality #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 683,
+    "n": 12,
+    "k": 5,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "khabbab-the-blacksmith": {
+   "src": "khabbab-the-blacksmith",
+   "eyebrow": "Companions",
+   "hook": "A blacksmith asked when the help was coming",
+   "key": "the help was coming",
+   "date": "Khabbab ibn al-Aratt · Makkah",
+   "lines": [
+    "Khabbab ibn al-Aratt made swords in Makkah and was among the first to accept Islam.",
+    "He found the Prophet ﷺ resting in the shade of the Ka'ba and asked him to seek help for them and to pray for them.",
+    "The answer: Allah would complete this matter until a rider could go from Sana to Hadramawt fearing nobody but Allah."
+   ],
+   "caption": "The answer was not comfort. He described believers before them combed with iron combs and sawn in half who did not leave their religion, and told Khabbab that he was being hasty. Khabbab was enslaved, and his owner is reported to have pressed him down onto heated stones.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Companions #Sunnah #Patience #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 842,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "ibn-umm-maktum-abasa": {
+   "src": "ibn-umm-maktum-abasa",
+   "eyebrow": "Companions",
+   "hook": "A blind man interrupted and the Qur'an took his side",
+   "key": "took his side",
+   "date": "Abdullah ibn Umm Maktum · Makkah",
+   "lines": [
+    "Abdullah ibn Umm Maktum, blind and poor, came to the Prophet ﷺ while he was occupied with the leading men of Quraysh.",
+    "He interrupted with a question of his own, and was frowned at and turned away from.",
+    "Surah Abasa opens with it, he frowned and turned away, and that passage stands in the Qur'an Muslims recite in prayer."
+   ],
+   "caption": "The Prophet ﷺ had been hoping the men of Quraysh might accept Islam. Afterwards he is reported to have greeted Ibn Umm Maktum by asking whether he needed anything, and he twice left him in charge of Madinah while he was away from the city.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quran #Companions #Disability #Makkah #Seerah #History",
+   "look": {
+    "pal": "green",
+    "seed": 186,
+    "n": 8,
+    "k": 3,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "abdurrahman-ibn-awf-market": {
+   "src": "abdurrahman-ibn-awf-market",
+   "eyebrow": "Companions",
+   "hook": "Offered half of another man's wealth, he asked for the market",
+   "key": "asked for the market",
+   "date": "Abdurrahman ibn Awf · Madinah, 622 CE",
+   "lines": [
+    "When the migrants reached Madinah with nothing, the Prophet ﷺ paired each of them with a man of the city.",
+    "Sa'd ibn al-Rabi offered Abdurrahman ibn Awf half of his property, and Abdurrahman answered: show me the market.",
+    "He died among the wealthiest men in Madinah, and the whole of it began with a refusal of charity."
+   ],
+   "caption": "His full answer was: may Allah bless you in your family and your wealth, show me the market. He traded in dried yoghurt and butter, and before long came to the Prophet ﷺ with the yellow trace of perfume on him and said that he had married. He was told to hold a wedding meal even if only with one sheep.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #Trade #Work #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 812,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "anas-ten-years-no-rebuke": {
+   "src": "anas-ten-years-no-rebuke",
+   "eyebrow": "Companions",
+   "hook": "Ten years of service and not one rebuke",
+   "key": "not one rebuke",
+   "date": "Anas ibn Malik · Madinah, ten years",
+   "lines": [
+    "Anas ibn Malik was about ten when his mother brought him to the Prophet ﷺ to serve him, and he stayed for ten years.",
+    "His summary: he never said uff to me, and never asked why I had done a thing or why I had not done it.",
+    "Caught playing in the street on an errand, he was asked with a smile whether he had gone where he was told."
+   ],
+   "caption": "Anas lived into his nineties at Basra and is the source of well over a thousand reports about how the household actually ran. The errand story is his too: the Prophet ﷺ came up behind him, took hold of the back of his neck, and smiled.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #Sunnah #Children #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 612,
+    "n": 10,
+    "k": 4,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "kab-ibn-malik-fifty-days": {
+   "src": "kab-ibn-malik-fifty-days",
+   "eyebrow": "Companions",
+   "hook": "He told the truth about staying behind and lost fifty days",
+   "key": "lost fifty days",
+   "date": "Ka'b ibn Malik · Tabuk and Madinah, 630 CE",
+   "lines": [
+    "Ka'b ibn Malik had no excuse for missing the expedition to Tabuk in 630: he had meant to go, put it off, and stayed.",
+    "More than eighty other men came back with excuses and were accepted, while he told the truth and was told to wait.",
+    "For fifty nights nobody in Madinah spoke to him, until the Qur'an announced forgiveness for the three left behind."
+   ],
+   "caption": "Two others were cut off with him, their wives were sent away from them, and Ka'b described the earth becoming strange to him. The verse speaks of the earth, vast as it is, closing in upon them. He said afterwards that he never told a lie again, and his own account runs for pages in Bukhari.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Tabuk #Companions #Repentance #Truth #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 806,
+    "n": 10,
+    "k": 4,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "hatib-and-the-letter": {
+   "src": "hatib-and-the-letter",
+   "eyebrow": "Companions",
+   "hook": "He wrote to the enemy and Badr saved him",
+   "key": "Badr saved him",
+   "date": "Hatib ibn Abi Balta'a · Madinah, 630 CE",
+   "lines": [
+    "In 630, while the march on Makkah was being prepared in secret, Hatib ibn Abi Balta'a sent a letter warning Quraysh.",
+    "It was intercepted, and Umar asked permission to strike his neck.",
+    "The Prophet ﷺ refused: Hatib had been at Badr, and Allah had looked upon the people of Badr and forgiven them."
+   ],
+   "caption": "Riders were sent after the woman carrying the letter. Asked why, Hatib said he had no doubt about the religion, but that he had no clan in Makkah to protect his family and had wanted a favour owed to him there. The report is preserved with his excuse intact, including the part where he admits the letter was his.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Badr #Companions #Mercy #Makkah #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 711,
+    "n": 12,
+    "k": 5,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "do-not-curse-him-he-loves-allah": {
+   "src": "do-not-curse-him-he-loves-allah",
+   "eyebrow": "Judgement",
+   "hook": "They cursed a man for drinking and were told to stop",
+   "key": "told to stop",
+   "date": "Umar ibn al-Khattab · Madinah",
+   "lines": [
+    "A man in Madinah was brought in repeatedly for drinking and lashed for it.",
+    "Someone in the crowd said, may Allah curse him, how often he is brought here.",
+    "The Prophet ﷺ said: do not curse him, for by Allah, I know that he loves Allah and His Messenger."
+   ],
+   "caption": "The punishment was carried out and the contempt was refused. Two separate things are held apart: what a community does about an offence, and what it is entitled to conclude about the person committing it. Bukhari placed the report in the chapters on legal punishments, which is where the collector thought a prohibition on cursing belonged.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Sunnah #Mercy #Madinah #Hadith #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 950,
+    "n": 8,
+    "k": 3,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "uhud-defeat-recorded-625": {
+   "src": "uhud-defeat-recorded-625",
+   "eyebrow": "Early Islam",
+   "hook": "The Qur'an recorded the defeat at Uhud in detail",
+   "key": "recorded the defeat",
+   "date": "Mount Uhud, north of Madinah · 625 CE",
+   "lines": [
+    "At Uhud in 625, a year after the victory at Badr, the Muslims were beaten.",
+    "Archers left the hill they were told to hold, some seventy men were killed, and the Prophet ﷺ was wounded in the face.",
+    "Surah Al Imran goes through the day at length and assigns the cause: they had disputed and disobeyed."
+   ],
+   "caption": "The verse says they disobeyed after being shown what they wanted. The community's own scripture preserves its worst military day, with the reasons named, and very few religious traditions keep a defeat in the canon and refuse to explain it as anyone else's fault. The Prophet's ﷺ uncle Hamza was among the dead.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Uhud #Quran #Madinah #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 846,
+    "n": 8,
+    "k": 3,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "trench-dug-at-madinah-627": {
+   "src": "trench-dug-at-madinah-627",
+   "eyebrow": "Early Islam",
+   "hook": "A Persian idea kept ten thousand men out of Madinah",
+   "key": "A Persian idea",
+   "date": "The Trench, Madinah · 627 CE",
+   "lines": [
+    "In 627 a coalition of Makkan and allied tribes, put by the sources at around ten thousand men, marched on Madinah.",
+    "Salman al-Farisi proposed a trench across the north, the only side not protected by lava fields and palm groves.",
+    "It was not an Arab tactic, the cavalry had no answer to it, and the siege broke up after about a month with no battle."
+   ],
+   "caption": "The Muslims dug for weeks in cold weather and hunger, the Prophet ﷺ working in the line with them, and a storm scattered the camp. The idea came from a former slave who had grown up in Persia and been born a Zoroastrian near Isfahan.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Khandaq #Salman #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 765,
+    "n": 16,
+    "k": 7,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "hudaybiyyah-treaty-628": {
+   "src": "hudaybiyyah-treaty-628",
+   "eyebrow": "Diplomacy",
+   "hook": "A treaty that looked like defeat was called a victory",
+   "key": "called a victory",
+   "date": "Hudaybiyyah, outside Makkah · 628 CE",
+   "lines": [
+    "In 628 the Prophet ﷺ set out for Makkah to perform the lesser pilgrimage and was stopped at Hudaybiyyah.",
+    "The terms looked bad: turn back this year, a ten year truce, and any Makkan who defected to him must be returned.",
+    "Surah Al-Fath, revealed on the way back, calls it a clear victory, and Makkah was taken within two years."
+   ],
+   "caption": "Umar objected openly. Even the wording was conceded, with the document dropping the titles Quraysh refused, and any of his own people who went the other way need not be returned. The truce let people move and talk freely, conversions rose sharply, and Makkah was taken with almost no fighting.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hudaybiyyah #Diplomacy #Quran #Makkah #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 567,
+    "n": 12,
+    "k": 5,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "prophet-death-632": {
+   "src": "prophet-death-632",
+   "eyebrow": "Madinah",
+   "hook": "Abu Bakr answered the crisis of his death with a verse",
+   "key": "with a verse",
+   "date": "Madinah · Rabi al-Awwal, 11 AH, 632 CE",
+   "lines": [
+    "The Prophet ﷺ died in Madinah in Rabi al-Awwal of the eleventh year after the migration, 632 CE, in Aisha's room.",
+    "Umar refused at first to accept that he was dead.",
+    "Abu Bakr went out and recited the verse: Muhammad is only a messenger, and messengers have passed away before him."
+   ],
+   "caption": "He was buried where he died. Abu Bakr came in and uncovered his face before he went out to the people. The verse in Surah Al Imran asks whether they would turn back if he died, and Umar said his legs would not carry him. The exact day is given as the twelfth by most of the sources, though some give the first or the second.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Quran #AbuBakr #Seerah #History",
+   "look": {
+    "pal": "night",
+    "seed": 510,
+    "n": 8,
+    "k": 3,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "year-of-sorrow-619": {
+   "src": "year-of-sorrow-619",
+   "eyebrow": "Makkah",
+   "hook": "The year he lost his wife and his uncle",
+   "key": "wife and his uncle",
+   "date": "Makkah and Ta'if · c. 619 CE",
+   "lines": [
+    "Around 619 CE, in a few months, the Prophet ﷺ lost Khadijah, his wife of some twenty five years, his first believer.",
+    "He also lost Abu Talib, the uncle whose clan protection had kept him alive in Makkah: the Year of Sorrow.",
+    "At Ta'if, looking for support, he was driven out by a crowd that stoned him until his sandals filled with blood."
+   ],
+   "caption": "The exact year is usually given as 619 and sometimes as 620. With the protection gone he returned to a city where he could now be attacked openly. The migration to Madinah followed about three years later.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Khadijah #Taif #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 379,
+    "n": 16,
+    "k": 7,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "yamama-633-quran-collected": {
+   "src": "yamama-633-quran-collected",
+   "eyebrow": "Qur'an",
+   "hook": "Seventy reciters died and the Qur'an was gathered",
+   "key": "Seventy reciters died",
+   "date": "Yamama and Madinah · 633 CE",
+   "lines": [
+    "At Yamama in 633, fighting against Musaylima, about seventy of the men who had memorised the Qur'an were killed.",
+    "Umar argued to Abu Bakr that if this kept happening, parts of the text would be lost with the men who carried them.",
+    "Abu Bakr gave the work to Zayd ibn Thabit, who said that moving a mountain would have been lighter."
+   ],
+   "caption": "Abu Bakr hesitated, on the ground that the Prophet ﷺ had not done it, then agreed. Zayd gathered the text from written pieces and from the memories of the men who had it, and the sheets stayed with Abu Bakr, then Umar, then Umar's daughter Hafsa.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Quran #Manuscripts #Madinah #AbuBakr #History",
+   "look": {
+    "pal": "night",
+    "seed": 764,
+    "n": 8,
+    "k": 3,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "haram-makkah-how-it-grew": {
+   "src": "haram-makkah-how-it-grew",
+   "eyebrow": "Makkah",
+   "hook": "The Haram at Makkah began as an open space between houses",
+   "key": "open space between houses",
+   "date": "Masjid al-Haram, Makkah · 638 CE onward",
+   "lines": [
+    "In the Prophet's ﷺ lifetime the Kaaba stood in a small courtyard with private houses pressed around it and no wall.",
+    "Around 638 the caliph Umar bought the nearest houses, pulled them down and put a low wall around the cleared ground.",
+    "Saudi expansions since 1955 have taken the enclosure past 350,000 square metres, and each stage removed older fabric."
+   ],
+   "caption": "Uthman widened it again, and the Abbasid caliph al-Mahdi spent heavily between 777 and 781 to enlarge the courtyard and bring the Kaaba nearer its centre. The arcades most photographed in old prints were Ottoman work of the 1570s, and most of them are gone, which historians of architecture objected to at the time.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Architecture #Hajj #Kaaba #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 418,
+    "n": 8,
+    "k": 3,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "zamzam-well-under-the-mataf": {
+   "src": "zamzam-well-under-the-mataf",
+   "eyebrow": "Water",
+   "hook": "Zamzam is a shallow well in a dry valley floor",
+   "key": "a shallow well",
+   "date": "Wadi Ibrahim, Makkah",
+   "lines": [
+    "Zamzam sits about twenty metres east of the Kaaba, in the bed of the Wadi Ibrahim, and is roughly thirty metres deep.",
+    "The upper part passes through loose sand and gravel, the lower is cut into fractured rock, where most water enters.",
+    "Today the well head is sealed below the circumambulation floor, and the water is pumped, treated and piped to taps."
+   ],
+   "caption": "Pilgrims once drew it by bucket, then by hand pump. Now it is treated with ultraviolet light and goes to a bottling plant at Kudai as well as to the taps. The Saudi Geological Survey monitors the water level continuously, because heavy pumping during Hajj draws it down and it recovers afterwards.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Zamzam #Hajj #Water #Geology #History",
+   "look": {
+    "pal": "night",
+    "seed": 996,
+    "n": 8,
+    "k": 3,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "arafat-plain-of-standing": {
+   "src": "arafat-plain-of-standing",
+   "eyebrow": "Hajj",
+   "hook": "A pilgrim who misses this afternoon has missed the Hajj",
+   "key": "has missed the Hajj",
+   "date": "Plain of Arafat, near Makkah",
+   "lines": [
+    "Arafat is a flat, stony plain about twenty kilometres southeast of Makkah, with a granite hill at its edge.",
+    "Pilgrims stand there from midday until sunset on the ninth of Dhul Hijjah, the one rite the Hajj cannot do without.",
+    "For a few hours it holds more than two million people, all standing outdoors together, doing nothing except asking."
+   ],
+   "caption": "The hill at the edge is called Jabal al-Rahmah. The Prophet ﷺ delivered the sermon of his farewell pilgrimage there in 632, and a hadith reports him saying that Hajj is Arafat. The plain is empty and closed for most of the year.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hajj #Arafat #Makkah #Prayer #Sunnah #History",
+   "look": {
+    "pal": "night",
+    "seed": 246,
+    "n": 8,
+    "k": 3,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "mina-tent-city-and-jamarat": {
+   "src": "mina-tent-city-and-jamarat",
+   "eyebrow": "Hajj",
+   "hook": "Mina is a city of tents empty fifty weeks a year",
+   "key": "empty fifty weeks",
+   "date": "Mina, near Makkah",
+   "lines": [
+    "Mina is a narrow valley five kilometres east of Makkah where pilgrims sleep for three or four nights of the Hajj.",
+    "After a fire in 1997 killed hundreds, the canvas was replaced by about a hundred thousand fibreglass coated tents.",
+    "The Jamarat bridge was rebuilt between 2006 and 2009 because crowds crushed on the old one, worst in 1990 and in 2015."
+   ],
+   "caption": "The tents stand on fixed steel frames, laid out in numbered streets with their own hospitals and fire mains. Pilgrims throw pebbles at three stone markers there. The current Jamarat is a multi level bridge with separate ramps for each direction, designed for a flow measured in hundreds of thousands per hour, and it has been rebuilt twice.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hajj #Mina #Makkah #Engineering #History",
+   "look": {
+    "pal": "sand",
+    "seed": 568,
+    "n": 8,
+    "k": 3,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "masjid-nabawi-palm-trunks": {
+   "src": "masjid-nabawi-palm-trunks",
+   "eyebrow": "Madinah",
+   "hook": "The Prophet's mosque began with palm trunks and a gravel floor",
+   "key": "palm trunks",
+   "date": "Al-Masjid al-Nabawi, Madinah · 622 CE onward",
+   "lines": [
+    "When the Prophet ﷺ reached Yathrib in 622 he bought a plot used for drying dates and built on it.",
+    "It had mud brick walls, columns of palm trunks, a roof of palm fronds that leaked, and a floor of earth and gravel.",
+    "The building now holds more than a million people, around a plot bought for drying dates."
+   ],
+   "caption": "A shaded bench along one wall, the Suffa, housed companions who had nowhere else. Umar and Uthman enlarged it, and the Umayyad governor rebuilt it between 707 and 709, adding the concave prayer niche and minarets and taking in the room where the Prophet ﷺ was buried. A dome was raised over that room in 1279 and painted green in 1837.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Architecture #Mosque #Seerah #History",
+   "look": {
+    "pal": "green",
+    "seed": 979,
+    "n": 12,
+    "k": 5,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "quba-mosque-first-built": {
+   "src": "quba-mosque-first-built",
+   "eyebrow": "Madinah",
+   "hook": "He walked out to Quba every Saturday to pray two units",
+   "key": "every Saturday",
+   "date": "Quba, Madinah · 622 CE",
+   "lines": [
+    "The Prophet ﷺ stopped at Quba for several days before entering Yathrib in 622 and had a mosque built there.",
+    "Bukhari and Muslim record that afterwards he went out to Quba every Saturday, sometimes riding and sometimes walking.",
+    "He prayed two units there, and the present building, rebuilt in the 1980s, is about three kilometres from his mosque."
+   ],
+   "caption": "Quba was a settlement on the southern edge of Yathrib, and its mosque was the first built after the migration. Many commentators identify it with a mosque the Qur'an praises as founded from the first day, though others read that verse as referring to the Prophet's ﷺ own mosque in the town.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Quba #Prayer #Sunnah #Mosque #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 794,
+    "n": 8,
+    "k": 3,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "cave-of-hira-jabal-al-nour": {
+   "src": "cave-of-hira-jabal-al-nour",
+   "eyebrow": "Makkah",
+   "hook": "The cave of the first revelation is smaller than most rooms",
+   "key": "smaller than most rooms",
+   "date": "Jabal al-Nour, Makkah",
+   "lines": [
+    "Hira is a cleft near the top of Jabal al-Nour, a steep hill about four kilometres northeast of the Kaaba.",
+    "The cave is roughly the length of a man lying down and about a metre and a half wide, its opening facing the Kaaba.",
+    "The Prophet ﷺ withdrew there for nights at a time, and the first verses came to him in that space during Ramadan."
+   ],
+   "caption": "The climb takes most people over an hour, and thousands of pilgrims make it each season. Visiting the cave is not part of Umrah or Hajj and carries no rite, which scholars in Makkah repeat every year.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Hira #Revelation #Ramadan #Quran #History",
+   "look": {
+    "pal": "night",
+    "seed": 451,
+    "n": 12,
+    "k": 5,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "cave-of-thawr-hijra": {
+   "src": "cave-of-thawr-hijra",
+   "eyebrow": "Makkah",
+   "hook": "The cave in the Qur'an held two men for three nights",
+   "key": "for three nights",
+   "date": "Jabal Thawr, Makkah · 622 CE",
+   "lines": [
+    "Jabal Thawr rises south of Makkah, higher and harder to climb than Jabal al-Nour.",
+    "In 622 the Prophet ﷺ and Abu Bakr hid in a cave near its summit for three nights while Quraysh combed the roads north.",
+    "The Qur'an describes the second of two when they were in the cave, and one said to his companion not to grieve."
+   ],
+   "caption": "Only then did they set out for Yathrib by a coastal route. The familiar detail of a spider's web and nesting doves across the entrance comes from later biographical literature, not from the Qur'an, and hadith scholars have long noted that its chains are weak.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Hijra #Quran #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 231,
+    "n": 16,
+    "k": 7,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "mount-uhud-madinah": {
+   "src": "mount-uhud-madinah",
+   "eyebrow": "Madinah",
+   "hook": "A mountain the Prophet said loves us and we love it",
+   "key": "we love it",
+   "date": "Jabal Uhud, Madinah · battle 3 AH, 625 CE",
+   "lines": [
+    "Uhud is a red granite ridge a few kilometres north of the Prophet's mosque, standing apart from the ranges around it.",
+    "The battle at its foot in 625 cost the Muslims about seventy dead, after archers left the hill they were told to hold.",
+    "Bukhari and Muslim record the Prophet ﷺ saying of it that this is a mountain that loves us and we love it."
+   ],
+   "caption": "The name, meaning single or alone, is usually traced to the ridge standing apart. The Prophet's uncle Hamza was among the dead. The archers' hill, Jabal al-Rumat, is still there, a rise of a few metres beside the cemetery of the fallen.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Uhud #Sunnah #Seerah #History",
+   "look": {
+    "pal": "sand",
+    "seed": 467,
+    "n": 16,
+    "k": 7,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "badr-wells-on-the-caravan-road": {
+   "src": "badr-wells-on-the-caravan-road",
+   "eyebrow": "Early Islam",
+   "hook": "Badr was a watering stop on the road to Syria",
+   "key": "a watering stop",
+   "date": "Badr, Hijaz · 17 Ramadan 2 AH, 624 CE",
+   "lines": [
+    "Badr lies about 130 kilometres southwest of Madinah, near the caravan route to Syria, and it had wells.",
+    "Whoever held the wells chose where an army could stand, and on 17 Ramadan of year 2 the Muslims reached them first.",
+    "The whole engagement turned on water in a dry valley."
+   ],
+   "caption": "The smaller Muslim force filled in the rest of the wells. The place is an ordinary town today, with a mosque, a museum and a walled graveyard holding the fourteen Muslims who died in the battle. Historians still argue about exactly which depressions in the ground were the wells.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Badr #Ramadan #Water #Madinah #Seerah #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 821,
+    "n": 12,
+    "k": 5,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "aqsa-compound-fourteen-hectares": {
+   "src": "aqsa-compound-fourteen-hectares",
+   "eyebrow": "Jerusalem",
+   "hook": "Al-Aqsa is the whole enclosure, not only the silver dome",
+   "key": "the whole enclosure",
+   "date": "Al-Haram al-Sharif, Jerusalem",
+   "lines": [
+    "In Muslim usage al-Masjid al-Aqsa names the entire walled enclosure in Jerusalem, about fourteen and a half hectares.",
+    "It includes the Dome of the Rock, the silver domed hall at the southern end, courtyards, fountains and cisterns.",
+    "The Qur'an calls it the farthest mosque in the verse about the Prophet ﷺ being taken by night."
+   ],
+   "caption": "The congregational hall has been destroyed and rebuilt repeatedly, mainly by earthquakes: the shocks of 748 and 1033 each brought much of it down, and its present columns and arcades are largely eleventh century work with Fatimid, Crusader, Ayyubid and modern repairs on top. The wooden pulpit installed by Salah ad-Din's order was burned in an arson attack in 1969 and replaced in 2007.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Jerusalem #AlAqsa #Architecture #Quran #History",
+   "look": {
+    "pal": "sand",
+    "seed": 925,
+    "n": 12,
+    "k": 5,
+    "scene": "rosette",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "umayyad-mosque-damascus-layers": {
+   "src": "umayyad-mosque-damascus-layers",
+   "eyebrow": "Damascus",
+   "hook": "Four religions built on the same rectangle in Damascus",
+   "key": "Four religions",
+   "date": "Damascus · 705 to 715 CE",
+   "lines": [
+    "The Great Mosque of Damascus stands inside a walled rectangle that began as an Aramean temple precinct to Hadad.",
+    "It became a Roman temple of Jupiter, and by the fourth century held a Christian basilica of John the Baptist.",
+    "After the conquest of 635 the two communities used parts of the site alongside each other for about seventy years."
+   ],
+   "caption": "In 705 the caliph al-Walid took over the church and built the mosque that stands now, finished around 715. Sources differ on the terms, some reporting compensation and other churches given in exchange, others plain seizure. A shrine inside is said to hold the head of John the Baptist, and Christian as well as Muslim visitors still stop at it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Damascus #Architecture #Umayyad #Syria #Interfaith #History",
+   "look": {
+    "pal": "night",
+    "seed": 859,
+    "n": 12,
+    "k": 5,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "cordoba-mezquita-arches": {
+   "src": "cordoba-mezquita-arches",
+   "eyebrow": "Al-Andalus",
+   "hook": "Cordoba's double arches made short columns carry a high roof",
+   "key": "double arches",
+   "date": "Cordoba · begun 785 CE",
+   "lines": [
+    "Abd al-Rahman I began the mosque of Cordoba in 785 on the site of a church, first shared and then bought.",
+    "His builders had Roman and Visigothic columns too short for the roof they wanted, so they stacked two arches on each.",
+    "It worked, and the hall was extended three times, ending with around 850 columns."
+   ],
+   "caption": "The arches are a lower horseshoe and an upper semicircle, banded in red brick and pale stone. Cordoba fell to Castile in 1236 and the building became a cathedral, and in 1523 a Renaissance nave was cut into the middle of the hall. Mass is said there daily, and Muslim prayer in the building is not permitted.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Cordoba #AlAndalus #Architecture #Spain #History",
+   "look": {
+    "pal": "green",
+    "seed": 65,
+    "n": 16,
+    "k": 7,
+    "scene": "pages",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "alhambra-no-victor-but-god": {
+   "src": "alhambra-no-victor-but-god",
+   "eyebrow": "Al-Andalus",
+   "hook": "One sentence is carved thousands of times across the Alhambra",
+   "key": "thousands of times",
+   "date": "Granada · Nasrid work, 1238 to 1391",
+   "lines": [
+    "The Alhambra was built on a ridge above Granada by the Nasrid sultans, mostly between 1238 and 1391.",
+    "Running through its decoration, in courtyards and over doorways, is the Nasrid motto: there is no victor but Allah.",
+    "A dynasty that survived by paying tribute to Castile wrote it on every wall of the palace they lost in 1492."
+   ],
+   "caption": "Its walls are not carved stone but moulded plaster, cut and painted while damp, which is why so much detail was possible and why so much of it has had to be repaired. The motto appears in cursive and in angular script, and scholars who have counted the inscriptions put its repetitions in the thousands.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Alhambra #AlAndalus #Architecture #Calligraphy #Granada #History",
+   "look": {
+    "pal": "dusk",
+    "seed": 321,
+    "n": 12,
+    "k": 5,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "kairouan-great-mosque-minaret": {
+   "src": "kairouan-great-mosque-minaret",
+   "eyebrow": "North Africa",
+   "hook": "The oldest standing minaret is a square tower in Tunisia",
+   "key": "oldest standing minaret",
+   "date": "Kairouan, Tunisia · founded 670, rebuilt 836",
+   "lines": [
+    "Uqba ibn Nafi founded Kairouan in 670 as a garrison in the Tunisian steppe.",
+    "Its great mosque was rebuilt several times, and what stands is essentially the Aghlabid work of around 836.",
+    "Its massive three tiered square tower is generally taken to be the oldest minaret still standing anywhere."
+   ],
+   "caption": "The rebuilding of 836 was the work of the Aghlabid ruler Ziyadat Allah I, and the lower section of the tower may be older still. The prayer hall rests on roughly four hundred columns carried in from Roman and Byzantine ruins across the region, no two bays quite alike. The city became the centre where Maliki law was written down, in Sahnun's Mudawwana.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Kairouan #Tunisia #Architecture #Minaret #History",
+   "look": {
+    "pal": "night",
+    "seed": 356,
+    "n": 8,
+    "k": 3,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "qarawiyyin-library-fez": {
+   "src": "qarawiyyin-library-fez",
+   "eyebrow": "Libraries",
+   "hook": "One of the world's oldest working libraries reopened in 2016",
+   "key": "oldest working libraries",
+   "date": "Fez, Morocco · restored 2012 to 2016",
+   "lines": [
+    "The library of the Qarawiyyin in Fez holds about four thousand manuscripts and has been in use since medieval times.",
+    "By 2012 it had broken gutters, damp in the walls and a collection at risk.",
+    "Aziza Chaouni, an engineer and architect from Fez, led the restoration, and it opened to readers again in 2016."
+   ],
+   "caption": "Among the manuscripts are a ninth century copy of Malik's Muwatta written on parchment and a fourteenth century copy of Ibn Khaldun's Muqaddimah. The restoration put in a new drainage system, solar panels and climate control for the manuscript room, and kept its old door with four locks, whose keys are held by four different people.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Fez #Morocco #Libraries #Manuscripts #WomenInHistory #History",
+   "look": {
+    "pal": "night",
+    "seed": 468,
+    "n": 8,
+    "k": 3,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "djenne-mud-mosque-replastering": {
+   "src": "djenne-mud-mosque-replastering",
+   "eyebrow": "West Africa",
+   "hook": "A whole town replasters its mosque in a single day",
+   "key": "a single day",
+   "date": "Djenne, Mali · rebuilt 1906 to 1907",
+   "lines": [
+    "The Great Mosque of Djenne in Mali is the largest mud brick building in the world.",
+    "Its walls are coated in banco, a mud and rice husk plaster that the rainy season washes away every year.",
+    "Each spring the town replasters it: masons direct, men carry the mud, women bring water, and it is done in one day."
+   ],
+   "caption": "The masons belong to the local guild, and the bundles of palm wood that stick out of the walls, the toron, are the permanent scaffolding they climb. The present building dates from 1906 and 1907, raised on the footprint of a much older mosque, and how closely it follows the earlier one is still debated by historians of the region.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Djenne #Mali #Architecture #WestAfrica #Craft #History",
+   "look": {
+    "pal": "night",
+    "seed": 938,
+    "n": 8,
+    "k": 3,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "kizimkazi-inscription-zanzibar": {
+   "src": "kizimkazi-inscription-zanzibar",
+   "eyebrow": "Swahili Coast",
+   "hook": "A dated inscription of 1107 sits in a Zanzibar village mosque",
+   "key": "inscription of 1107",
+   "date": "Kizimkazi, Zanzibar · 500 AH, 1107 CE",
+   "lines": [
+    "In the fishing village of Kizimkazi, at the southern tip of Zanzibar, a small mosque carries a foundation inscription.",
+    "It is cut into coral stone in floriated Kufic script, and gives a date corresponding to 1107.",
+    "That makes it the oldest dated Islamic inscription known in East Africa."
+   ],
+   "caption": "The inscription sits in the prayer niche. Coral stone is the local building material along the whole coast, quarried soft from the reef and hardening in the air. Excavations further north at Shanga on the Kenyan coast have found the postholes of a timber mosque dating from around the eighth century, rebuilt in stone later. Islam arrived on this coast by sea and by trade, and it left dated stone behind it.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Zanzibar #SwahiliCoast #Archaeology #Africa #History",
+   "look": {
+    "pal": "night",
+    "seed": 916,
+    "n": 10,
+    "k": 4,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "xian-great-mosque-pagoda-minaret": {
+   "src": "xian-great-mosque-pagoda-minaret",
+   "eyebrow": "China",
+   "hook": "The minaret in Xi'an is a wooden pagoda in a garden",
+   "key": "a wooden pagoda",
+   "date": "Xi'an, China · standing buildings from 1384",
+   "lines": [
+    "The Great Mosque of Xi'an sits in the old Muslim quarter of the city, at the eastern end of what was the Silk Road.",
+    "It is a Chinese temple compound: four walled courtyards on a long axis, timber halls with upturned roofs, a garden.",
+    "The minaret is a three storey octagonal wooden pavilion, and there is no dome."
+   ],
+   "caption": "Tradition dates a mosque here to 742, and the buildings standing now are mostly Ming work from 1384 onward with later repairs. It looks nothing like a mosque in Cairo or Istanbul, with memorial arches and stone tablets among the halls. The axis runs east to west rather than north to south, because the prayer hall at the far end has to face Makkah.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #China #Xian #Architecture #SilkRoad #History",
+   "look": {
+    "pal": "night",
+    "seed": 283,
+    "n": 16,
+    "k": 7,
+    "scene": "ripples",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "morning"
+  },
+  "sarajevo-gazi-husrev-beg-waqf": {
+   "src": "sarajevo-gazi-husrev-beg-waqf",
+   "eyebrow": "Bosnia",
+   "hook": "A 1531 endowment in Sarajevo still pays for its own library",
+   "key": "still pays",
+   "date": "Sarajevo · endowed 1531",
+   "lines": [
+    "In 1531 Gazi Husrev-beg, the Ottoman governor of Bosnia, endowed a mosque, a madrasa, a library and a covered market.",
+    "The market's rents were to pay for the rest, and the endowment survived empires and still funds the library.",
+    "During the siege of Sarajevo, 1992 to 1995, it was moved by hand between hiding places and came through intact."
+   ],
+   "caption": "The library now holds more than ten thousand manuscripts in Arabic, Turkish, Persian and Bosnian. The same deed endowed a public bath and a soup kitchen, and the books were moved box by box. The city's National and University Library was less fortunate: it was shelled and burned in August 1992, and something like a million and a half books and periodicals were lost.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Sarajevo #Bosnia #Libraries #Waqf #Manuscripts #History",
+   "look": {
+    "pal": "sand",
+    "seed": 440,
+    "n": 10,
+    "k": 4,
+    "scene": "epicycles",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "konya-green-dome-rumi": {
+   "src": "konya-green-dome-rumi",
+   "eyebrow": "Konya",
+   "hook": "The green dome over Rumi covers a museum, not a lodge",
+   "key": "not a lodge",
+   "date": "Konya, Turkey · tomb from 1274",
+   "lines": [
+    "Rumi died in Konya in December 1273, and a tomb was raised over him under a fluted cone of turquoise glazed tiles.",
+    "Around it grew the mother lodge of the Mevlevi order, where novices were trained for a thousand and one days.",
+    "In 1925 the Turkish Republic closed all dervish lodges, and the building reopened in 1926 as a museum."
+   ],
+   "caption": "He was buried beside his father, the tomb was raised with Seljuk patronage, and the city has been repairing the tiles ever since. The museum receives well over a million visitors a year, more than any other museum in the country in some years, and the turning ceremony is now performed as a cultural programme, most fully in the week of his death.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Konya #Rumi #Sufism #Poetry #Turkey #History",
+   "look": {
+    "pal": "night",
+    "seed": 588,
+    "n": 10,
+    "k": 4,
+    "scene": "arcade",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  },
+  "kalyan-minaret-bukhara": {
+   "src": "kalyan-minaret-bukhara",
+   "eyebrow": "Bukhara",
+   "hook": "A brick tower in Bukhara has stood since 1127",
+   "key": "since 1127",
+   "date": "Bukhara, Uzbekistan · 1127 CE",
+   "lines": [
+    "The Kalyan minaret in Bukhara was finished in 1127 for the Karakhanid ruler Arslan Khan, in baked brick.",
+    "It is about forty six metres high, worked into fourteen bands, each a different pattern laid up in the brick itself.",
+    "The city was destroyed by the Mongols in 1220 and the minaret was left standing."
+   ],
+   "caption": "It tapers, and sits on a deep foundation packed with reeds. A well known story says Genghis Khan ordered it spared after his hat fell off as he looked up, which is a good story with no early source behind it. The mosque beside it was rebuilt in the sixteenth century, so the tower is the older thing on the square by four hundred years.\n\nRead the whole thing free at noorcodex.com\n\n#NoorCodexOfLight #Islam #IslamicHistory #Bukhara #Uzbekistan #Architecture #CentralAsia #SilkRoad #History",
+   "look": {
+    "pal": "green",
+    "seed": 224,
+    "n": 8,
+    "k": 3,
+    "scene": "moon",
+    "secs": 21,
+    "cue": 1
+   },
+   "slot": "evening"
+  }
+ }
+}
