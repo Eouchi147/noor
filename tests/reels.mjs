@@ -84,6 +84,22 @@ console.log('\nchoosing the day\'s reel');
   ok(ev.reel.video === 'https://h/reels/' + ev.reel.id + '.mp4', 'the video url is built from the id');
   ok(ev.reel.cover === 'https://h/reels/' + ev.reel.id + '-cover.jpg', 'and the cover beside it');
 
+  /* the shelf on the store: a row that carries its own URLs is used as it is,
+     and a row without them (an older manifest) still builds the site path */
+  const stored = { cards: [{ id: 's1', slot: 'evening', hook: 'h', caption: 'c',
+    video: 'https://abc.public.blob.vercel-storage.com/reels/s1.mp4',
+    cover: 'https://abc.public.blob.vercel-storage.com/reels/s1-cover.jpg' },
+    { id: 's2', slot: 'evening', hook: 'h', caption: 'c', cover: true },
+    { id: 's3', slot: 'evening', hook: 'h', caption: 'c', video: 'javascript:alert(1)' }] };
+  globalThis.fetch = async u => String(u).endsWith('/reels/index.json') ? { ok: true, json: async () => stored } : { ok: false };
+  const got = {};
+  for (let i = 1; i <= 9; i++) { const r = await S.slotExtras('https://h', '2026-09-1' + (i % 10), null, 'reelB'); if (r.reel) got[r.reel.id] = r.reel; }
+  ok(got.s1 && got.s1.video === 'https://abc.public.blob.vercel-storage.com/reels/s1.mp4' && got.s1.cover.endsWith('/reels/s1-cover.jpg'),
+     'a row with its own https URLs is posted from the store: ' + (got.s1 && got.s1.video));
+  ok(got.s2 && got.s2.video === 'https://h/reels/s2.mp4' && got.s2.cover === 'https://h/reels/s2-cover.jpg',
+     'a row without URLs still points at the site');
+  ok(got.s3 && got.s3.video === 'https://h/reels/s3.mp4', 'anything that is not an https URL is not trusted as one');
+
   globalThis.fetch = async () => { throw new Error('no manifest'); };
   const none = await S.slotExtras('https://h', '2026-09-01', null, 'reelA');
   ok(none.reel === null, 'an unreachable manifest composes to nothing, and does not throw');
@@ -349,5 +365,23 @@ console.log('\ntaken, not yet finished');
 }
 
 globalThis.fetch = realFetch;
+
+/* ------------------------------------------------- the file, handed over */
+console.log('\nthe release URL, resolved at the moment of sending');
+{
+  const SOC = await import('../api/social.js');
+  const rel = 'https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-94-5-6.mp4';
+  const signed = 'https://release-assets.githubusercontent.com/github-production-release-asset/1/abc?se=2026&sig=x';
+  const calls = [];
+  const f = async (u, o) => { calls.push([u, o && o.method, o && o.redirect]); return { status: 302, headers: { get: h => h === 'location' ? signed : null } }; };
+  ok(await SOC.freshVideoUrl(rel, f) === signed, 'a release download URL becomes the signed file it redirects to');
+  ok(calls.length === 1 && calls[0][1] === 'HEAD' && calls[0][2] === 'manual', 'asked with HEAD and the redirect left unfollowed: ' + JSON.stringify(calls[0]));
+  ok(await SOC.freshVideoUrl('https://noorcodex.com/reels/x.mp4', f) === 'https://noorcodex.com/reels/x.mp4' && calls.length === 1, 'any other URL is handed over as it is, and nothing is asked');
+  const dead = async () => { throw new Error('no network'); };
+  ok(await SOC.freshVideoUrl(rel, dead) === rel, 'when the redirect cannot be read, the stable URL goes instead of nothing');
+  const odd = async () => ({ status: 302, headers: { get: () => 'javascript:alert(1)' } });
+  ok(await SOC.freshVideoUrl(rel, odd) === rel, 'a location that is not https is not trusted');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

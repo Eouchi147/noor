@@ -33,14 +33,14 @@ console.log('\nthe rota');
 {
   const morn = week.map(d => kind(S.chooseReel(MAN, d, 'morning', null)));
   const eve = week.map(d => kind(S.chooseReel(MAN, d, 'evening', null)));
-  ok(morn.join() === 'verse,verse,know,verse,name,verse,know', 'mornings Sun..Sat: ' + morn.join(' '));
-  ok(eve.join() === 'word,dua,light,know,light,name,light', 'evenings Sun..Sat: ' + eve.join(' '));
-  ok(morn.filter(k => k === 'verse').length === 4, 'four verses a week in the morning');
+  ok(morn.join() === 'verse,verse,know,light,name,verse,know', 'mornings Sun..Sat: ' + morn.join(' '));
+  ok(eve.join() === 'word,light,know,word,verse,name,word', 'evenings Sun..Sat: ' + eve.join(' '));
+  ok(morn.filter(k => k === 'verse').length === 3, 'three verses a week in the morning');
   const halves = ['morning', 'noon', 'afternoon', 'evening', 'night'];
   const week5 = week.map(d => halves.map(h => kind(S.chooseReel(MAN, d, h, null))));
   ok(week5.every(r => r.length === 5 && r.every(Boolean)), 'five reels a day, every half of every day has a kind');
   const tally = {}; week5.flat().forEach(k => tally[k] = (tally[k] || 0) + 1);
-  ok(tally.verse === 11 && tally.word === 7 && tally.name === 7 && tally.know === 5 && tally.light === 3 && tally.dua === 2 && !tally.codex, 'a week is 11 verses, 7 words, 7 Names, 5 Did you knows, 3 day\'s cards, 2 du\'as, and no Codex: ' + JSON.stringify(tally));
+  ok(tally.verse === 11 && tally.word === 9 && tally.name === 6 && tally.know === 6 && tally.light === 2 && tally.dua === 1 && !tally.codex, 'a week is 11 verses, 9 words, 6 Names, 6 Did you knows, 2 day\'s cards, 1 du\'a, and no Codex: ' + JSON.stringify(tally));
   ok(week5.every(r => !(r[1] === 'light' || r[2] === 'light' || r[4] === 'light')), 'the day\'s card keeps to its two halves');
   const a = S.chooseReel(MAN, '2026-09-07', 'morning', null), b = S.chooseReel(MAN, '2026-09-07', 'morning', null);
   ok(a.id === b.id, 'the same date always chooses the same card');
@@ -96,8 +96,8 @@ console.log('\nan empty shelf');
   ok(m && kind(m) === 'word', 'a verse morning with no verses rendered yet becomes a word, not silence');
   const noName = S.chooseReel(MAN.filter(c => c.kind !== 'name'), '2026-09-11', 'evening', null);
   ok(noName && kind(noName) === 'verse', 'a Friday evening with no Name rendered yet takes the first kind on the shelf, a verse');
-  const noDua = S.chooseReel(MAN.filter(c => c.kind !== 'dua'), '2026-09-07', 'evening', null);
-  ok(noDua && kind(noDua) === 'verse', "a Monday evening with no du'a rendered yet does the same");
+  const noDua = S.chooseReel(MAN.filter(c => c.kind !== 'dua'), '2026-09-10', 'night', null);
+  ok(noDua && kind(noDua) === 'verse', "a Thursday night with no du'a rendered yet does the same");
   const nothing = S.chooseReel(MAN.filter(c => c.kind === 'day'), '2026-09-07', 'morning', null);
   ok(nothing === null, 'only day reels on the shelf, and not their day: nothing, honestly');
 }
@@ -123,6 +123,27 @@ console.log('\nthe old shelf and the new halves');
   ok(got.every(Boolean), 'every one of the five halves gets a reel from the old shelf rather than nothing');
   ok(got[0].slot === 'morning' && got[3].slot === 'evening', 'morning and evening keep to their own cards');
   ok(new Set(got.map(c => c.id)).size >= 3, 'the new halves walk the shelf on their own, so a day does not show one card five times');
+}
+
+
+console.log('\nsix months on the full shelf');
+{
+  const man = [];
+  const add = (k, n, slot) => { for (let i = 0; i < n; i++) man.push({ id: k + '-' + i, kind: k, hook: 'h', caption: 'c', ...(slot ? { slot: i % 2 ? 'evening' : 'morning' } : {}) }); };
+  add('verse', 300); add('word', 523); add('name', 99); add('know', 225); add('light', 79, true); add('dua', 18);
+  const halves = ['morning', 'noon', 'afternoon', 'evening', 'night'];
+  const seen = {}; let twice = 0;
+  for (let d = 0; d < 182; d++) {
+    const dt = new Date(Date.UTC(2026, 8, 10 + d)).toISOString().slice(0, 10);
+    const today = new Set();
+    for (const h of halves) { const c = S.chooseReel(man, dt, h, null); if (today.has(c.id)) twice++; today.add(c.id); seen[c.id] = (seen[c.id] || 0) + 1; }
+  }
+  ok(twice === 0, 'no card is shown twice in one day: ' + twice);
+  const max = k => Math.max(...Object.entries(seen).filter(([id]) => id.startsWith(k + '-')).map(([, v]) => v));
+  const shown = k => Object.keys(seen).filter(id => id.startsWith(k + '-')).length;
+  ok(max('verse') === 1 && shown('verse') === 286, 'every verse posted in six months is a different one: ' + shown('verse') + ' of 300');
+  ok(max('word') === 1 && max('know') === 1 && max('light') === 1, 'and so is every word, Did you know and day\'s card');
+  ok(shown('name') === 99 && max('name') <= 2, 'the 99 Names all come round before any is shown a second time');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
