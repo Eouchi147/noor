@@ -82,9 +82,17 @@ These are not preferences. They are refused, not negotiated.
   own Hijri date. One idea per screen, night and gold, no HUD, no stat, no
   end card asking to be followed; every frame measured against the safe
   area. The render workflow spreads a shelf over up to sixteen machines, the
-  finished videos go to a Vercel Blob store (`shelf_blob.py`, the token a
-  repository secret) and the repository keeps one small sidecar per reel and
-  the manifest; a card that leaves the plan leaves the shelf. The picture is
+  finished videos go to the store, a GitHub release per kind (`shelf_store.py`,
+  free, outside the repository's size, paced under GitHub's write limits;
+  Vercel Blob behind `REELS_STORE=blob`), the repository keeps one small
+  sidecar per reel and the manifest, and the poster resolves a release link
+  at the second it hands a network the file. A card that leaves the plan
+  leaves the shelf, store asset and all; and **a reel leaves the shelf once
+  every network has it** (Sam's rule of 9 September 2026): the poster's
+  ledger (`/api/social?action=posted`, three days behind) is copied into
+  `posted.json` by the weekly run and those cards leave the plan. A verse, a
+  word, a Did you know and a day's card retire; This day, the Names and the
+  du'as recur and stay. The picture is
   a shader in the browser; the words are anime.js on a tempo grid per kind;
   the sound is built in numpy and finished in Pedalboard; every reel is
   levelled (-18 LUFS; -16 for a verse). A different reciter each time from
@@ -134,11 +142,14 @@ tells him what to drag and what to press. Not before.
 ## What is next
 
 The second cut of the reels (shader picture, tempo grid, the muted drum,
-seven kinds) was rendered on GitHub on 9 September 2026 and the shelf
-grew to 1,265 cards the same night. Then: the shelf onto the Blob store
-once the token is set; a narrated branch for the Did you know, day's card
-and This day reels (Sam's own voice tool, the library's own words, never
-under the Qur'an); the Telegram bot and channel made in Sam's Telegram, and
-the two variables; the achievements room by field and era; the internal
-linking audit once the dictionary pull request is live; the rota leaning
-on what the insights say strangers watch.
+seven kinds) was rendered on GitHub on 9 September 2026, the shelf grew to
+1,265 cards the same night, and the shelf moved to GitHub Releases the day
+after, with posted reels retiring weekly. Then: a longer verse list
+(`verses.txt`, curated and audited, so the plan keeps refilling as the
+shelf drains at 28 a week); a narrated branch for the Did you know, day's
+card and This day reels (Sam's own voice tool, the library's own words,
+never under the Qur'an); the Telegram bot and channel made in Sam's
+Telegram, and the two variables; a one-time rewrite of the git history to
+drop the 1.3 GB of old video it still carries; the achievements room by
+field and era; the internal linking audit once the dictionary pull request
+is live; the rota leaning on what the insights say strangers watch.
