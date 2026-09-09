@@ -14,9 +14,12 @@
        20:00 UTC  dusk    one chapter of the Path
        21:00 UTC  reelE   a reel (night)
 
-   Every card also goes out a second time as a story on Facebook and
-   Instagram (api/social.js, addStories), so nine posts a day become eighteen
-   surfaces, well inside Instagram's hundred a day.
+   Every reel also goes out a second time as a story on Facebook and
+   Instagram (api/social.js, addStories). The five cards are stories ONLY
+   since 9 September 2026 (social.cardsFeed, off by default): they reach
+   nobody in a feed, so the reels keep the feed and the cards keep the
+   followers who open stories. Ten stories and five reels a day, well inside
+   Instagram's hundred.
 
    Two design decisions worth stating, because both were tempting to get wrong.
 

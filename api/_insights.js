@@ -29,10 +29,51 @@
    saved, shares, total_interactions and the average watch time; a card has
    the same set without the watch time. If Meta refuses a name (code 100) the
    call is made once more with the bare set, so a renamed metric costs a
-   column, not the read. The Facebook post metrics are the ones Meta's own
-   changelog leaves standing after June 2026 (post_total_media_view_unique
-   for reach, post_impressions, post_clicks, post_reactions_like_total); the
-   same fallback covers them.
+   column, not the read.
+
+   THE FACEBOOK NAMES, AND WHAT META RETIRED, read from Meta's own pages on
+   9 September 2026 (the house speaks v21.0, available until 21 January
+   2027 per https://developers.facebook.com/docs/graph-api/changelog/):
+
+     15 November 2025  `post_impressions` retired for every API version.
+                       Meta's notice of 15 August 2025, 90 days ahead, names
+                       the "impressions" and "page fans" metrics as retired
+                       and "views" as the replacement for impressions, and
+                       names no replacement for page fans:
+                       https://developers.facebook.com/blog/post/2025/08/15/page-insights-api-updates/
+                       "the API will return an invalid metric error", which
+                       is the (#100) this file was seeing. The post-level
+                       name that stands for views, `post_media_view`, is the
+                       v21.0 reference's (Post Media View), not the blog's;
+                       the same reference lists `page_follows`, not a
+                       `page_followers`, so nothing here relies on the latter.
+     15 June 2026      `post_impressions_unique` retired, replaced by
+                       `post_total_media_view_unique`; with it every unique
+                       impressions variant (paid, organic, viral, nonviral,
+                       fan) and `post_video_views_unique`, none replaced.
+                       https://docs.supermetrics.com/docs/facebook-insights-field-changes-june-30-2026
+                       The v21.0 reference marks the same names "Deprecated
+                       above Graph API v25":
+                       https://developers.facebook.com/docs/graph-api/reference/v21.0/insights
+     earlier           `post_engaged_users` (the unique engagement family,
+                       gone with the 30 October 2024 batch) and
+                       `post_media_view_unique`, which was never a documented
+                       name, are dropped from the candidates below.
+
+   So a post is asked for post_total_media_view_unique (reach),
+   post_media_view (views), post_clicks and post_reactions_like_total, all
+   four standing in the v21.0 reference. A Facebook REEL is a video node and
+   answers under /video_insights with the reel names Meta introduced on
+   15 December 2022 (https://developers.facebook.com/blog/post/2022/12/15/introducing-reels-metrics-api/):
+   blue_reels_play_count and fb_reels_total_plays (plays),
+   post_video_avg_time_watched, post_video_view_time,
+   post_video_social_actions, post_video_likes_by_reaction_type; its reach
+   was `post_impressions_unique`, retired 15 June 2026 as above, so
+   post_total_media_view_unique is tried in its place and the total_video_*
+   names (https://developers.facebook.com/docs/graph-api/reference/video/video_insights/)
+   stay as candidates for an ordinary video. The learner below keeps only
+   what Meta actually accepts, so a name that is refused costs a probe and
+   not the read.
 
    THE PERMISSION. An Instagram token made for publishing may lack
    instagram_manage_insights. Meta answers code 10 or 200, or names the
@@ -64,20 +105,20 @@ export const IG_METRICS = {
   imageBare: ["reach", "likes", "comments", "saved", "shares"]
 };
 export const FB_METRICS = {
-  full: ["post_total_media_view_unique", "post_impressions", "post_clicks", "post_reactions_like_total"],
-  bare: ["post_impressions", "post_clicks", "post_reactions_like_total"]
+  full: ["post_total_media_view_unique", "post_media_view", "post_clicks", "post_reactions_like_total"],
+  bare: ["post_media_view", "post_clicks", "post_reactions_like_total"]
 };
-/* Meta answered "(#100) The value must be a valid insights metric" to BOTH
-   sets above, 44 posts running, on the first live read: the names a changelog
-   promised are not the names the API takes today, and the API does not say
-   which it takes. So the house asks it, once: each candidate below is tried
-   alone on a real post, the ones Meta accepts are kept under nsoc:ins:fbset
-   for a week, and every read after that asks for exactly those. A new name
-   Meta introduces is added here; nothing else needs to change. */
+/* Meta answered "(#100) The value must be a valid insights metric" to the
+   old sets, 44 posts running, on the first live read: half the names were
+   retired (see the dates at the top) and the API does not say which it
+   takes. So the house asks it, once: each candidate below is tried alone on
+   a real post, the ones Meta accepts are kept under nsoc:ins:fbset for a
+   week, and every read after that asks for exactly those. Every name here
+   stands in the v21.0 reference on 9 September 2026; a new name Meta
+   introduces is added here and nothing else needs to change. */
 export const FB_CANDIDATES = [
-  "post_total_media_view_unique", "post_media_view_unique", "post_impressions_unique",
-  "post_media_view", "post_impressions", "post_video_views",
-  "post_clicks", "post_reactions_like_total", "post_engaged_users"
+  "post_total_media_view_unique", "post_media_view", "post_video_views",
+  "post_clicks", "post_reactions_like_total"
 ];
 export const K_FBSET = "nsoc:ins:fbset";
 const FBSET_MS = 7 * 86400 * 1000;
@@ -87,17 +128,22 @@ const FBSET_EMPTY_MS = 3600 * 1000;           /* a set with nothing in it is ask
    takes none of the post names. The first live learning ran on a reel and
    learned that Meta takes nothing, for a week. So videos have their own
    candidates, their own learned set and their own key. */
+/* The reel names first (what the house posts IS a reel), then the names an
+   ordinary video answers to, so one learner covers both. The retired
+   `post_impressions_unique` (a reel's reach until 15 June 2026) is not
+   asked for; its successor is. */
 export const FB_VIDEO_CANDIDATES = [
-  "total_video_impressions_unique", "total_video_impressions", "total_video_views",
-  "total_video_10s_views", "total_video_avg_time_watched"
+  "post_total_media_view_unique", "blue_reels_play_count", "fb_reels_total_plays",
+  "post_video_avg_time_watched", "post_video_view_time", "post_video_social_actions", "post_video_likes_by_reaction_type",
+  "total_video_impressions_unique", "total_video_views", "total_video_avg_time_watched"
 ];
 export const K_FBVSET = "nsoc:ins:fbvset";
 const isVideoId = id => !/_/.test(String(id));
-const FBV_REACH = ["total_video_impressions_unique"];
-const FBV_VIEWS = ["total_video_views", "total_video_impressions"];
+const FBV_REACH = ["post_total_media_view_unique", "total_video_impressions_unique"];
+const FBV_VIEWS = ["blue_reels_play_count", "fb_reels_total_plays", "total_video_views"];
 /* which candidate stands for which column, first found first served */
-const FB_REACH = ["post_total_media_view_unique", "post_media_view_unique", "post_impressions_unique"];
-const FB_VIEWS = ["post_media_view", "post_impressions", "post_video_views"];
+const FB_REACH = ["post_total_media_view_unique"];
+const FB_VIEWS = ["post_media_view", "post_video_views"];
 const firstOf = (m, names) => { for (const n of names) if (m[n] != null) return m[n]; return null; };
 
 /* the set Meta accepts, learned once on a real post and remembered */
@@ -184,7 +230,10 @@ export async function collect(days, opts = {}) {
     const media = {};
     for (const net of ["instagram", "facebook", "youtube"]) {
       const x = r.results[net];
-      if (x && x.ok && x.id) media[net] = String(x.id);
+      /* a card sent as a story only (social.cardsFeed off) carries the
+         STORY's id: a story is gone in a day and answers under no post
+         edge, so it is not read and not counted as a post */
+      if (x && x.ok && x.id && !x.storyOnly) media[net] = String(x.id);
     }
     if (!Object.keys(media).length) continue;
     posts.push({ date: r.date, slot: r.slot, hour: hourOf(r.slot), kind, reel: REEL_SLOTS.includes(r.slot),

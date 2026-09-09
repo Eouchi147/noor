@@ -26,6 +26,15 @@
 // 4. The token belongs to the owner. Created in Meta's tools, pasted into the
 //    host's environment, never generated, never logged, never stored here.
 //
+// AND, SINCE 9 SEPTEMBER 2026
+//
+//    The five daily cards are stories, not feed posts (social.cardsFeed, off
+//    by default; see cardIsStoryOnly). The five reels keep the feed, offered
+//    to YouTube first. What the owner shares from the phone by hand is noted
+//    on the record as results.phone (action=shared) and never mistaken for a
+//    network. The console's Today room reads action=today for the day's
+//    reels, and api/reel.js hands the phone the bytes.
+//
 // AND THE RULE UNDER ALL FOUR
 //
 //    Read failures mean off, in every direction. If the store cannot be read,
@@ -41,7 +50,8 @@
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
-import { planDay, buildSlot, dueNow, slotExtras, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
+import { planDay, buildSlot, dueNow, slotExtras, chooseReel, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
+import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
 import { chooseLight } from "./_lights.js";
@@ -136,9 +146,20 @@ export function normMode(v) {
   return "";
 }
 
+/* social.cardsFeed: THE CARDS LEAVE THE FEED.
+
+   The owner's decision of 9 September 2026, after reading the insights: the
+   five daily cards (dawn, lead, light, word, dusk) reach nobody in a feed,
+   and the reels are what strangers watch. So a card is a story now, on
+   Facebook and Instagram, and nothing else: it still greets the followers
+   who open stories, it still carries the library's words, and it no longer
+   sits in the grid making the account read as a poster of posters. The
+   reels keep the feed. The dial is OFF by default (cards to stories only);
+   ON is the old behaviour, a feed post with a story after it, kept for the
+   day the owner wants it back. */
 export async function dials() {
   /* the shipped state, and the state a store that will not answer gets */
-  const v = { mode: "off", fb: true, ig: true, polish: true, stories: true, storeOk: false };
+  const v = { mode: "off", fb: true, ig: true, polish: true, stories: true, cardsFeed: false, storeOk: false };
   if (!kvReady()) return v;
   try {
     const raw = (await kv([["GET", K_SET]]))[0];
@@ -154,7 +175,8 @@ export async function dials() {
     if (o["social.ig"] === false) v.ig = false;
     if (o["social.polish"] === false) v.polish = false;
     if (o["social.stories"] === false) v.stories = false;
-  } catch { return { mode: "off", fb: true, ig: true, polish: true, stories: true, storeOk: false }; }
+    if (o["social.cardsFeed"] === true || normMode(o["social.cardsFeed"]) === "auto") v.cardsFeed = true;
+  } catch { return { mode: "off", fb: true, ig: true, polish: true, stories: true, cardsFeed: false, storeOk: false }; }
   return v;
 }
 
@@ -817,6 +839,95 @@ export async function addStories(results, post, D, left) {
   return any;
 }
 
+/* A CARD IS A STORY, AND NOTHING ELSE.
+
+   With social.cardsFeed off (the shipped state since 9 September 2026) a
+   card slot -- dawn, lead, light, word, dusk -- is composed exactly as it
+   was: the record, the said-key, the image pre-flight. What changes is where
+   it goes. No feed channel is asked. The story senders above are asked
+   directly, one per live Meta network, and each answer is put on the record
+   under that network in a shape the rest of the file already reads:
+
+       { story: r, ok: r.ok, storyOnly: true, id, error, code, ... }
+
+   `ok`, `pending`, `skipped`, `code` and `error` are lifted off the story's
+   own answer so slotState, healable, healDue, diagnoseSlot and the console
+   read a story-only slot the way they read a feed post; `story` keeps the
+   whole answer so a reader can see it was a story; `storyOnly` is how a
+   retry knows to send it as one again. A story-only slot that fails is
+   healed like a feed post: retryChannel reads the flag off the record and
+   sends the story again, through the same bounded, backing-off net.
+
+   The stories dial (social.stories) does not govern this. That dial is about
+   the SECOND surface after a feed post; for a card the story is the post,
+   and a card sent nowhere would be a slot that reads sent and never was. */
+export const cardIsStoryOnly = (post, D) => !!post && !post.video && !post.reel && !(D && D.cardsFeed === true);
+
+function storyResult(r) {
+  const s = r && typeof r === "object" ? r : { ok: false, error: "no answer" };
+  const out = { story: s, ok: !!s.ok, storyOnly: true };
+  if (s.id) out.id = s.id;
+  if (s.pending) out.pending = s.pending;
+  if (s.skipped) out.skipped = s.skipped;
+  if (s.fatal) out.fatal = true;
+  if (s.code != null) out.code = s.code;
+  if (s.sub != null) out.sub = s.sub;
+  if (!s.ok && (s.error || s.err)) { out.error = String(s.error || s.err); out.err = out.error; }
+  return out;
+}
+
+async function sendStoryOnly(ch, post) {
+  if (!STORY[ch]) {
+    const why = "cards go to stories only, and " + ch + " has no story surface";
+    return { ok: false, fatal: true, storyOnly: true, error: why, err: why };
+  }
+  let r;
+  try { r = await STORY[ch](post); }
+  catch (e) { r = { ok: false, error: String(e && e.message || e).slice(0, 120) }; }
+  return storyResult(r);
+}
+
+/* the story-only send of one card to the live Meta networks, on the run's
+   clock; `imgWhy` is the pre-flight's refusal when the caller ran one */
+async function storyOnlyResults(post, date, chans, left, imgWhy) {
+  const results = {};
+  for (const ch of chans) {
+    if (!post.image) {
+      results[ch] = { ok: false, fatal: true, storyOnly: true, error: "needs an image", err: "needs an image" }; continue; }
+    if (imgWhy) { results[ch] = { ok: false, storyOnly: true, error: imgWhy, err: imgWhy, pre: true }; continue; }
+    try { results[ch] = await sendWithin(ch, null, { ...post, date }, left, sendStoryOnly); }
+    catch (e) {
+      const m = String(e && e.message || e).slice(0, 120);
+      results[ch] = { ok: false, storyOnly: true, error: m, err: m };
+    }
+  }
+  /* every result written here is a story-only result, including the ones
+     the clock wrote (late) and the ones nothing answered: a slot whose two
+     networks were both cut by the clock carried no mark at all, recordWay
+     read it as a feed slot, and the healer sent the card to the FEED */
+  for (const ch of Object.keys(results)) if (results[ch] && typeof results[ch] === "object") results[ch].storyOnly = true;
+  return results;
+}
+
+/* which live channels a story-only card is offered to: the ones with a
+   story surface, in the order the stories are made */
+const storyChannels = post => liveChannels(post).filter(c => !!STORY[c]);
+
+/* how a slot went, read off its record: "story" when any network on it was
+   sent a story only, "feed" when networks are on it without that mark (a
+   reel, or a card from before 9 September 2026), null when no network has
+   answered for it yet. A Reddit draft and the owner's own phone note are
+   not networks and do not say. */
+function recordWay(rec) {
+  const rs = Object.values((rec && rec.results) || {}).filter(r => r && typeof r === "object" && !r.draft && !r.hand);
+  if (rs.some(r => r.storyOnly === true)) return "story";
+  /* a feed result is one a network actually answered for, yes or no; a
+     result the clock wrote, the pre-flight wrote, or nobody wrote (late,
+     pre, skipped) decides nothing, and the dial does */
+  if (rs.some(r => !r.late && !r.pre && !r.skipped && (r.ok || r.error || r.err || r.pending))) return "feed";
+  return null;
+}
+
 /* Facebook takes a reel in three phases and fetches the file itself, so none
    of the bytes pass through here. */
 async function postFacebookReel(post) {
@@ -865,7 +976,10 @@ async function postFacebookReel(post) {
    and picked up by the finisher.
 --------------------------------------------------------------------------- */
 export function slotState(results) {
-  const live = Object.entries(results || {}).filter(([c]) => !CH.draftOnly.has(c));
+  /* `phone` is the owner's own hand (the Today room's Share button, recorded
+     by the `shared` action): a note of what went out by hand, never a
+     network, so it can neither make a slot sent nor keep it from going */
+  const live = Object.entries(results || {}).filter(([c, r]) => !CH.draftOnly.has(c) && c !== "phone" && !(r && r.hand));
   const anySent = live.some(([, r]) => r && r.ok);
   const anyPending = live.some(([, r]) => r && r.pending && !r.ok);
   /* a channel that is not configured did not fail; it was never asked */
@@ -1267,6 +1381,38 @@ async function writeSlot(date, slot, rec) {
   await notePosted(date, rec);
 }
 
+/* ---------------------------------------------------------------------------
+   what went out by hand
+
+   The Today room hands a reel to the phone's share sheet, and the phone
+   tells nobody where it went. So the console asks the owner's browser to
+   say "shared", once, after the sheet closes, and the slot's record gains
+   results.phone = { ok, at }. It is a note, not a network: slotState
+   ignores it, the healer never reads it, the ledger of posted reels does
+   not count it. Idempotent: a second press keeps the first time. A slot the
+   machine has not reached yet gets a record with no state, so it stays due.
+--------------------------------------------------------------------------- */
+export async function markShared(date, slotId, where) {
+  const at = new Date().toISOString();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return { ok: false, code: 400, error: "date must be YYYY-MM-DD" };
+  if (!SLOT_IDS.includes(slotId)) return { ok: false, code: 400, date, slot: slotId, error: "no such slot" };
+  if (!kvReady()) return { ok: false, code: 409, error: "no store is configured, so nothing can be remembered" };
+  /* THE ONLY KEY IS "phone". The first cut took any lower-case word, which
+     meant a body saying where=instagram would have written { ok: true }
+     over Instagram's real answer and the slot would have read sent about a
+     post no network had. A hand is not a network; it gets one key and the
+     record's networks are never written by this route. */
+  const w = String(where == null || where === "" ? "phone" : where);
+  if (w !== "phone") return { ok: false, code: 400, error: "a share by hand is noted as \"phone\" and nothing else; " + JSON.stringify(w).slice(0, 40) + " is not accepted" };
+  const rec = (await readSlot(date, slotId)) || { at, slot: slotId, title: "", results: {} };
+  rec.results = rec.results || {};
+  const had = rec.results[w];
+  if (had && had.ok) return { ok: true, date, slot: slotId, where: w, at: had.at, already: true };
+  rec.results = { ...rec.results, [w]: { ok: true, at, hand: true } };
+  await writeSlot(date, slotId, rec);
+  return { ok: true, date, slot: slotId, where: w, at };
+}
+
 /* which channels are live right now, minus the ones that must never auto-send */
 export function liveChannels(post) {
   return CH.ALL.filter(c => !CH.draftOnly.has(c) && CH.configured[c] && CH.configured[c]())
@@ -1297,16 +1443,34 @@ const PIN_VIDEO_RESERVE_MS = Number(process.env.PIN_VIDEO_RESERVE_MS || 36000);
 const WRITE_RESERVE_MS = Number(process.env.WRITE_RESERVE_MS || 6000);
 const CHANNEL_MIN_MS = Number(process.env.CHANNEL_MIN_MS || 8000);
 const OUT_OF_TIME = "no time left in this run for this network; retried next hour";
-async function sendWithin(ch, shaped, post, left) {
+/* `send` is the sender put on the clock: the feed sender by default, the
+   story-only sender for a card (it takes the channel and the post). */
+async function sendWithin(ch, shaped, post, left, send) {
   const began = Date.now();
+  const go = send ? () => send(ch, post) : () => sendOne(ch, shaped, post, left);
   const stamp = r => { if (r && typeof r === "object") r.ms = Date.now() - began; return r; };
-  if (typeof left !== "function") return stamp(await sendOne(ch, shaped, post, left));
+  if (typeof left !== "function") return stamp(await go());
   const room = left() - WRITE_RESERVE_MS;
   if (room < CHANNEL_MIN_MS) return stamp({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true });
   let timer;
   const clock = new Promise(r => { timer = setTimeout(() => r({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true }), room); });
-  try { return stamp(await Promise.race([sendOne(ch, shaped, post, left), clock])); }
+  try { return stamp(await Promise.race([go(), clock])); }
   finally { clearTimeout(timer); }
+}
+
+/* THE ORDER A REEL IS OFFERED IN.
+
+   YouTube Shorts is the network that shows a reel to the most strangers,
+   and its upload is the slowest thing in the run: the bytes are fetched and
+   forwarded, not handed over by URL. Asked last, it was the one cut by the
+   clock. So a reel goes to YouTube first, then Instagram, Facebook, Threads,
+   Telegram, Pinterest. This only orders; the SET of channels is still the
+   reel's `only` list met with what is live. A card keeps the old order. */
+const SEND_ORDER = ["youtube", "instagram", "facebook", "threads", "telegram", "pinterest"];
+export function orderChannels(chans, post) {
+  if (!post || !post.video) return chans;
+  const rank = c => { const i = SEND_ORDER.indexOf(c); return i < 0 ? SEND_ORDER.length + Math.max(0, CH.ALL.indexOf(c)) : i; };
+  return chans.slice().sort((a, b) => rank(a) - rank(b));
 }
 
 /* ---------------------------------------------------------------------------
@@ -1385,7 +1549,9 @@ export async function composeSlot(host, date, slotId, opts = {}) {
 }
 
 export async function sendSlot(host, date, slotId, opts = {}) {
-  const D = await dials();
+  /* a caller with the dials in hand (the tests, a run that read them
+     already) hands them down; the store is asked otherwise */
+  const D = opts.dials || await dials();
   const out = { date, slot: slotId, at: new Date().toISOString() };
   if (!SLOT_IDS.includes(slotId)) return { ...out, ok: false, error: "no such slot" };
 
@@ -1422,10 +1588,13 @@ export async function sendSlot(host, date, slotId, opts = {}) {
     return { ...out, ok: false, repeat: true, title: post.title,
              error: "this has already been published recently, so it was not sent again" };
 
-  const results = {};
+  let results = {};
   /* the same narrowing the cron does: a reel names the only channels that can
-     show one, and there is no Reddit draft to write from a video */
-  const chans = post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post);
+     show one, and there is no Reddit draft to write from a video; a card
+     with the feed switched off names the story surfaces and nothing else */
+  const storyOnly = cardIsStoryOnly(post, D);
+  const chans = storyOnly ? storyChannels(post)
+    : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post);
 
   /* THE PRE-FLIGHT, ON THE PATH THAT ACTUALLY POSTS.
 
@@ -1445,12 +1614,15 @@ export async function sendSlot(host, date, slotId, opts = {}) {
      seconds later and does not wait long. Asking for it first means the render
      has already happened by the time it does. */
   let imgWhy = "";
-  if (post.image && chans.some(c => CH.SPEC[c] && CH.SPEC[c].image === "required")) {
+  /* a story is a picture on both networks, so a story-only card is checked
+     whatever the feed specs say */
+  if (post.image && (storyOnly || chans.some(c => CH.SPEC[c] && CH.SPEC[c].image === "required"))) {
     const img = await imageReachable(post.image);
     if (!img.ok) imgWhy = img.why;
   }
 
-  for (const ch of chans) {
+  if (storyOnly) results = await storyOnlyResults(post, date, chans, left, imgWhy);
+  else for (const ch of chans) {
     const shaped = CH.shape(post, ch);
     if (CH.SPEC[ch].image === "required" && !shaped.image) {
       results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
@@ -1480,10 +1652,11 @@ export async function sendSlot(host, date, slotId, opts = {}) {
      cannot be sent a second time next hour */
   await writeSlot(date, slotId, rec);
   if (rec.state !== "failed") await noteSaid(key);
-  /* the same thing, as a story, wherever the feed post landed */
-  if (await addStories(results, { ...post, date }, opts.dials || await dials(), left))
+  /* the same thing, as a story, wherever the feed post landed (a story-only
+     card already IS its stories, and addStories passes it by) */
+  if (await addStories(results, { ...post, date }, D, left))
     await writeSlot(date, slotId, rec);
-  return { ...out, ok: rec.state !== "failed", state: rec.state, title: post.title, results };
+  return { ...out, ok: rec.state !== "failed", state: rec.state, title: post.title, storyOnly: storyOnly || undefined, results };
 }
 
 /* ---------------------------------------------------------------------------
@@ -1544,16 +1717,30 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
     return { ...out, ok: false, fatal: true, drift: true, error: why };
   }
 
+  /* A retry sends the thing the way the SLOT went, read off its record: a
+     record whose networks took (or refused) stories is sent a story again,
+     whatever the dial says today; a record from before the cards left the
+     feed, with no such mark on any network, is sent a feed post, so the
+     missing half of a feed-era slot matches the half that landed; a card
+     with no network on its record yet is offered what the dial says now. */
+  const D = opts.dials || await dials();
+  const way = recordWay(rec);
+  const asStory = way ? way === "story" : cardIsStoryOnly(post, D);
+  if (asStory && !STORY[ch])
+    return { ...out, ok: false, fatal: true, storyOnly: true,
+             error: "cards go to stories only, and " + ch + " has no story surface" };
+
   const shaped = CH.shape(post, ch);
-  if (CH.SPEC[ch].image === "required" && !shaped.image)
+  const needsImage = asStory || CH.SPEC[ch].image === "required";
+  if (needsImage && !(asStory ? post.image : shaped.image))
     return { ...out, ok: false, fatal: true, error: "needs an image and has none" };
-  if (CH.SPEC[ch].image === "required") {
-    const img = await imageReachable(shaped.image, opts.preflightMs);
+  if (needsImage) {
+    const img = await imageReachable(asStory ? post.image : shaped.image, opts.preflightMs);
     if (!img.ok) return { ...out, ok: false, pre: true, error: img.why };
   }
 
   let r;
-  try { r = await sendOne(ch, shaped, { ...post, date }); }
+  try { r = asStory ? await sendStoryOnly(ch, { ...post, date }) : await sendOne(ch, shaped, { ...post, date }); }
   catch (e) { const m = String(e && e.message || e).slice(0, 160); r = { ok: false, error: m, err: m }; }
 
   /* every attempt is stamped on the result, so the healer can be bounded and
@@ -1633,6 +1820,7 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
   if (r && r.code != null) out.code = r.code;
   if (r && r.sub != null) out.sub = r.sub;
   if (r && r.step) out.step = r.step;
+  if (r && r.storyOnly) out.storyOnly = true;     /* a card sent as a story: the retry is a story too */
 
   if (r && r.ok) return { ...out, ok: true, cause: "nothing: this one went out", fix: "none", canRetry: false };
   if (r && r.pending)
@@ -1998,12 +2186,15 @@ export async function runDue(host, date, now, opts = {}) {
       continue;
     }
 
-    const results = {};
+    let results = {};
     /* A reel names the channels that can show one. The others would fall back
-       to its cover, and a still frame of a video is a poor post. */
-    const chans = post.only ? liveChannels(post).filter(c => post.only.includes(c))
-                            : liveChannels(post);
-    for (const ch of chans) {
+       to its cover, and a still frame of a video is a poor post. A card with
+       the feed switched off goes to the story surfaces and nowhere else. */
+    const storyOnly = cardIsStoryOnly(post, D);
+    const chans = storyOnly ? storyChannels(post)
+      : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post);
+    if (storyOnly) results = await storyOnlyResults(post, date, chans, left, "");
+    else for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
       try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left); }
@@ -2274,24 +2465,39 @@ export default async function handler(req, res) {
        which is the half the owner actually asks about -- and without it the
        room kept offering to send a post that had already been sent. So the
        state of each slot is read back and returned alongside. */
+    /* `today` is `plan` with the reels named: for each reel slot, the card
+       the rota chose (id, kind, hook, caption, cover, video) read off the
+       shelf once, so the console's Today room can show the day's five reels
+       and hand one to the phone without composing five posts. */
     if (action === "plan" || action === "today") {
       const plan = await planDay(date);
       const now = new Date(), hour = now.getUTCHours();
       const slots = [];
+      const shelf = action === "today" ? await readManifest(host) : null;
       for (const s of SLOTS) {
         if (!plan.slots.includes(s.id)) continue;
         const rec = await readSlot(date, s.id);
-        slots.push({
+        const row = {
           id: s.id, at: s.at,
-          state: rec ? rec.state : (hour >= s.at ? "due" : "waiting"),
+          /* a record with no state is the owner's own note (a phone share)
+             on a slot the machine has not reached: still due, or waiting */
+          state: rec && rec.state ? rec.state : (hour >= s.at ? "due" : "waiting"),
           title: rec ? rec.title : "",
           sentAt: rec ? rec.at : null,
           results: rec ? rec.results : null
-        });
+        };
+        if (shelf && s.reel) {
+          const c = chooseReel(shelf.cards, date, s.reel, plan.hijri || null);
+          const r = c ? rowUrls(c, host) : null;
+          row.reel = r ? { id: r.id, kind: r.kind || "light", hook: r.hook || "", caption: r.caption || "",
+                           cover: r.cover, video: r.video, secs: r.secs != null ? r.secs : null } : null;
+        }
+        slots.push(row);
       }
       /* the legacy single-post record, so a hand-sent day still reads as sent */
       const legacy = await readDay(date);
-      return json(res, 200, { ok: true, plan, slots, nowHour: hour,
+      return json(res, 200, { ok: true, plan, slots, nowHour: hour, date,
+        shelf: shelf ? { n: shelf.n, written: shelf.written } : undefined,
         legacy: legacy && !legacy.err ? { state: legacy.state, at: legacy.at, title: legacy.title } : null });
     }
     /* the Reddit drafts waiting for a human, with their one-click links */
@@ -2355,6 +2561,14 @@ export default async function handler(req, res) {
     }
     if (body.action === "renewed")
       return json(res, 200, await markTokenRenewed(String(body.which || "both"), body.at));
+    /* the owner shared a reel from the phone (the Today room's Share button:
+       TikTok, WhatsApp, X, whichever app the share sheet offered), and says
+       so, so the console shows what went out by hand beside what the
+       machine sent */
+    if (body.action === "shared") {
+      const r = await markShared(String(body.date || date), String(body.slot || ""), String(body.where || "phone"));
+      return json(res, r.ok ? 200 : (r.code || 409), r);
+    }
     /* send one named slot now, regardless of its hour */
     /* publish anything a network took and had not finished with, now, rather
        than at the top of the next hour */

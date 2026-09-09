@@ -100,8 +100,13 @@ export const DIALS = {
                          g: "The social machine", n: "How the day's post goes out",
                          h: "off: nothing is ever sent on a schedule, and you can still post by hand from this room. approve: every morning it writes the post and leaves it in the queue for you, and nothing reaches a network until you press Post. auto: it posts once a morning with nobody in the loop. Climb one rung at a time. Sit on approve for a fortnight and read what the feed actually looks like before you trust auto, because the two network calls have never been run against your live accounts." },
   "social.stories":    { t: "bool", def: true,
-                         g: "The social machine", n: "Also post each thing as a story",
-                         h: "Every reel and every card that lands on Facebook or Instagram is posted there a second time as a story: a surface followers open without scrolling, gone in a day, never in the grid. Off means the feed post only." },
+                         g: "The social machine", n: "Also post each reel as a story",
+                         h: "Every reel that lands on Facebook or Instagram is posted there a second time as a story: a surface followers open without scrolling, gone in a day, never in the grid. Off means the feed post only. A card is a story already (see the next dial) and is not governed by this one." },
+  /* the owner's decision of 9 September 2026: the cards reach nobody in a
+     feed, so they go to the stories and nowhere else. Read in social.js. */
+  "social.cardsFeed":  { t: "bool", def: false,
+                         g: "The social machine", n: "Put the daily cards in the feed too",
+                         h: "Off: the five daily cards (dawn, coming up, the day's card, the word, the chapter) go out as stories on Facebook and Instagram only, and the reels keep the feed. On: the old behaviour, each card as a feed post with a story after it." },
   "social.fb":         { t: "bool", def: true,
                          g: "The social machine", n: "Send to Facebook",
                          h: "Needs FB_PAGE_ID and FB_PAGE_TOKEN in Vercel. Posts the card as a photo with the caption underneath." },

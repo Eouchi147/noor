@@ -180,7 +180,9 @@ export async function gather(opts = {}) {
       const rs = (w.rec && w.rec.results) || {};
       for (const net of ["instagram", "facebook", "youtube"]) {
         const r = rs[net];
-        if (r && r.ok && r.id) media.push({ net, id: String(r.id), key: K_INS(net, String(r.id)) });
+        /* a card sent as a story only carries the story's id, which no
+           post edge answers for: not media to read (see _insights collect) */
+        if (r && r.ok && r.id && !r.storyOnly) media.push({ net, id: String(r.id), key: K_INS(net, String(r.id)) });
       }
     }
     const got = media.length ? await (opts.cacheRead || cacheRead)(media.map(m => m.key), opts) : [];
