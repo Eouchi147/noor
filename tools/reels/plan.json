@@ -1,7 +1,7 @@
 {
  "_meta": {
   "written": "2026-09-03",
-  "n": 373,
+  "n": 458,
   "source": "lights/all.json",
   "brief": "BRIEF.md",
   "kinds": {
@@ -10,7 +10,8 @@
    "word": 106,
    "day": 21,
    "verse": 150,
-   "codex": 32
+   "name": 99,
+   "dua": 18
   },
   "built": "plan_build.py from the library; light and know cards are written by hand"
  },
@@ -6243,1828 +6244,2110 @@
     "scene": "halo"
    }
   },
-  "codex-quran": {
-   "kind": "codex",
-   "src": "/quran",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Mushaf",
-    "d": "All 114 surahs, with recitation for every ayah"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Mushaf. All 114 surahs, with recitation for every ayah\nnoorcodex.com/quran\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "name-ar-rahman": {
+   "kind": "name",
+   "src": "ar-rahman",
+   "slot": "morning",
+   "ar": "الرَّحْمَٰن",
+   "translit": "Ar-Rahman",
+   "meaning": "The Most Merciful, whose mercy reaches all that is",
+   "line": "It is mercy in the intensive form, the form Arabic keeps for a quality so full it overflows the one who has it.",
+   "caption": "Ar-Rahman (الرَّحْمَٰن). The Most Merciful, whose mercy reaches all that is. It is mercy in the intensive form, the form Arabic keeps for a quality so full it overflows the one who has it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 339,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
+    "pal": "green",
+    "seed": 235,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
    }
   },
-  "codex-arabic": {
-   "kind": "codex",
-   "src": "/arabic",
+  "name-ar-raheem": {
+   "kind": "name",
+   "src": "ar-raheem",
    "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Letters",
-    "d": "Learn to read the Arabic script, letter by letter"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Letters. Learn to read the Arabic script, letter by letter\nnoorcodex.com/arabic\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "ar": "الرَّحِيم",
+   "translit": "Ar-Raheem",
+   "meaning": "The Bestower of Mercy, especially upon those who believe",
+   "line": "The two mercies are paired in the opening line of the Book and they are not a repetition.",
+   "caption": "Ar-Raheem (الرَّحِيم). The Bestower of Mercy, especially upon those who believe. The two mercies are paired in the opening line of the Book and they are not a repetition.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 299,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
+    "pal": "green",
+    "seed": 975,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
    }
   },
-  "codex-words": {
-   "kind": "codex",
-   "src": "/words",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Words of the Path",
-    "d": "The du'as worth carrying, in Arabic and English"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Words of the Path. The du'as worth carrying, in Arabic and English\nnoorcodex.com/words\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "name-al-malik": {
+   "kind": "name",
+   "src": "al-malik",
+   "slot": "morning",
+   "ar": "الْمَلِك",
+   "translit": "Al-Malik",
+   "meaning": "The King, who owns without being owned",
+   "line": "A king in Arabic is not merely the one who rules but the one who owns, whose command over a thing runs all the way down.",
+   "caption": "Al-Malik (الْمَلِك). The King, who owns without being owned. A king in Arabic is not merely the one who rules but the one who owns, whose command over a thing runs all the way down.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 122,
+    "pal": "night",
+    "seed": 125,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-quddus": {
+   "kind": "name",
+   "src": "al-quddus",
+   "slot": "evening",
+   "ar": "الْقُدُّوس",
+   "translit": "Al-Quddus",
+   "meaning": "The Most Holy, free of every defect",
+   "line": "It means removed from the whole category of defect, so far outside it that the comparison never begins.",
+   "caption": "Al-Quddus (الْقُدُّوس). The Most Holy, free of every defect. It means removed from the whole category of defect, so far outside it that the comparison never begins.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 974,
     "n": 8,
     "k": 3,
-    "scene": "codex",
-    "secs": 10
+    "scene": "name",
+    "secs": 20
    }
   },
-  "codex-allah": {
-   "kind": "codex",
-   "src": "/allah",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Ninety-Nine Names",
-    "d": "His names, what He is not, and the three doors of tawhid"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Ninety-Nine Names. His names, what He is not, and the three doors of tawhid\nnoorcodex.com/allah\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "name-as-salam": {
+   "kind": "name",
+   "src": "as-salam",
+   "slot": "morning",
+   "ar": "السَّلَام",
+   "translit": "As-Salam",
+   "meaning": "The Source of Peace, and free of all that disturbs it",
+   "line": "As-Salam is the Name that says He is free of every wound.",
+   "caption": "As-Salam (السَّلَام). The Source of Peace, and free of all that disturbs it. As-Salam is the Name that says He is free of every wound.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 571,
+    "pal": "night",
+    "seed": 528,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mu-min": {
+   "kind": "name",
+   "src": "al-mu-min",
+   "slot": "evening",
+   "ar": "الْمُؤْمِن",
+   "translit": "Al-Mu'min",
+   "meaning": "The Granter of Security",
+   "line": "The same root gives us faith and safety, and that is not an accident of language.",
+   "caption": "Al-Mu'min (الْمُؤْمِن). The Granter of Security. The same root gives us faith and safety, and that is not an accident of language.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 689,
     "n": 12,
     "k": 5,
-    "scene": "codex",
-    "secs": 10
+    "scene": "name",
+    "secs": 20
    }
   },
-  "codex-prophets": {
-   "kind": "codex",
-   "src": "/prophets",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The 25 Prophets",
-    "d": "Every prophet named in the Qur'an"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The 25 Prophets. Every prophet named in the Qur'an\nnoorcodex.com/prophets\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "name-al-muhaymin": {
+   "kind": "name",
+   "src": "al-muhaymin",
+   "slot": "morning",
+   "ar": "الْمُهَيْمِن",
+   "translit": "Al-Muhaymin",
+   "meaning": "The Guardian who watches over all",
+   "line": "Al-Muhaymin is the guardian who is over the thing, not beside it.",
+   "caption": "Al-Muhaymin (الْمُهَيْمِن). The Guardian who watches over all. Al-Muhaymin is the guardian who is over the thing, not beside it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
+    "pal": "green",
+    "seed": 933,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-aziz": {
+   "kind": "name",
+   "src": "al-aziz",
+   "slot": "evening",
+   "ar": "الْعَزِيز",
+   "translit": "Al-'Aziz",
+   "meaning": "The Almighty, whom nothing overcomes",
+   "line": "The root holds two ideas that English separates: strength and preciousness.",
+   "caption": "Al-'Aziz (الْعَزِيز). The Almighty, whom nothing overcomes. The root holds two ideas that English separates: strength and preciousness.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 209,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-jabbar": {
+   "kind": "name",
+   "src": "al-jabbar",
+   "slot": "morning",
+   "ar": "الْجَبَّار",
+   "translit": "Al-Jabbar",
+   "meaning": "The Compeller, who sets the broken right",
+   "line": "This Name frightens people who meet it only in translation, because The Compeller sounds like a tyrant.",
+   "caption": "Al-Jabbar (الْجَبَّار). The Compeller, who sets the broken right. This Name frightens people who meet it only in translation, because The Compeller sounds like a tyrant.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 213,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mutakabbir": {
+   "kind": "name",
+   "src": "al-mutakabbir",
+   "slot": "evening",
+   "ar": "الْمُتَكَبِّر",
+   "translit": "Al-Mutakabbir",
+   "meaning": "The Supreme in Greatness",
+   "line": "The Qur'an uses the same root for the arrogance of Pharaoh and of Iblis, and says the gates of heaven are not opened to those who treat its signs with this.",
+   "caption": "Al-Mutakabbir (الْمُتَكَبِّر). The Supreme in Greatness. The Qur'an uses the same root for the arrogance of Pharaoh and of Iblis, and says the gates of heaven are not opened to those who treat its signs with this.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 942,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-khaliq": {
+   "kind": "name",
+   "src": "al-khaliq",
+   "slot": "morning",
+   "ar": "الْخَالِق",
+   "translit": "Al-Khaliq",
+   "meaning": "The Creator",
+   "line": "The Arabic does not mean to make something out of nothing in the vague sense; it carries measure in it, the sense of a thing determined and proportioned before it exists.",
+   "caption": "Al-Khaliq (الْخَالِق). The Creator. The Arabic does not mean to make something out of nothing in the vague sense; it carries measure in it, the sense of a thing determined and proportioned before it exists.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 80,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-bari": {
+   "kind": "name",
+   "src": "al-bari",
+   "slot": "evening",
+   "ar": "الْبَارِئ",
+   "translit": "Al-Bari'",
+   "meaning": "The Originator, who makes from nothing",
+   "line": "Al-Bari' is the second motion: what was measured now stands apart, distinct, actually there.",
+   "caption": "Al-Bari' (الْبَارِئ). The Originator, who makes from nothing. Al-Bari' is the second motion: what was measured now stands apart, distinct, actually there.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 830,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-musawwir": {
+   "kind": "name",
+   "src": "al-musawwir",
+   "slot": "morning",
+   "ar": "الْمُصَوِّر",
+   "translit": "Al-Musawwir",
+   "meaning": "The Fashioner of Forms",
+   "line": "Not that a human being exists, but that this one has this face, and no other face in the history of the world has been quite it.",
+   "caption": "Al-Musawwir (الْمُصَوِّر). The Fashioner of Forms. Not that a human being exists, but that this one has this face, and no other face in the history of the world has been quite it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 92,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ghaffar": {
+   "kind": "name",
+   "src": "al-ghaffar",
+   "slot": "evening",
+   "ar": "الْغَفَّار",
+   "translit": "Al-Ghaffar",
+   "meaning": "The Ever-Forgiving",
+   "line": "To forgive in Arabic is to place something over the fault so it no longer shows and no longer harms.",
+   "caption": "Al-Ghaffar (الْغَفَّار). The Ever-Forgiving. To forgive in Arabic is to place something over the fault so it no longer shows and no longer harms.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 465,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-qahhar": {
+   "kind": "name",
+   "src": "al-qahhar",
+   "slot": "morning",
+   "ar": "الْقَهَّار",
+   "translit": "Al-Qahhar",
+   "meaning": "The All-Subduing",
+   "line": "Not that He wins arguments, but that nothing has independent standing against Him at all: not the tyrant, not the illness, not death, not the one who denies Him and dies comfortable in his bed.",
+   "caption": "Al-Qahhar (الْقَهَّار). The All-Subduing. Not that He wins arguments, but that nothing has independent standing against Him at all: not the tyrant, not the illness, not death, not the one who denies Him and dies comfortable in his bed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 700,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wahhab": {
+   "kind": "name",
+   "src": "al-wahhab",
+   "slot": "evening",
+   "ar": "الْوَهَّاب",
+   "translit": "Al-Wahhab",
+   "meaning": "The Bestower, who gives without being asked",
+   "line": "Arabic has several words for giving, and this is the one with no transaction in it.",
+   "caption": "Al-Wahhab (الْوَهَّاب). The Bestower, who gives without being asked. Arabic has several words for giving, and this is the one with no transaction in it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 561,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ar-razzaq": {
+   "kind": "name",
+   "src": "ar-razzaq",
+   "slot": "morning",
+   "ar": "الرَّزَّاق",
+   "translit": "Ar-Razzaq",
+   "meaning": "The Provider",
+   "line": "It is everything that comes to you and keeps you going, including the things you did not ask for and did not see coming.",
+   "caption": "Ar-Razzaq (الرَّزَّاق). The Provider. It is everything that comes to you and keeps you going, including the things you did not ask for and did not see coming.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 976,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-fattah": {
+   "kind": "name",
+   "src": "al-fattah",
+   "slot": "evening",
+   "ar": "الْفَتَّاح",
+   "translit": "Al-Fattah",
+   "meaning": "The Opener, who opens what was closed",
+   "line": "One root, three meanings, and they are the same act seen from three sides.",
+   "caption": "Al-Fattah (الْفَتَّاح). The Opener, who opens what was closed. One root, three meanings, and they are the same act seen from three sides.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 950,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-alim": {
+   "kind": "name",
+   "src": "al-alim",
+   "slot": "morning",
+   "ar": "الْعَلِيم",
+   "translit": "Al-'Alim",
+   "meaning": "The All-Knowing",
+   "line": "His is not acquired, never absent, and includes what has not happened and what would have happened had you chosen otherwise.",
+   "caption": "Al-'Alim (الْعَلِيم). The All-Knowing. His is not acquired, never absent, and includes what has not happened and what would have happened had you chosen otherwise.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 345,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-qabid": {
+   "kind": "name",
+   "src": "al-qabid",
+   "slot": "evening",
+   "ar": "الْقَابِض",
+   "translit": "Al-Qabid",
+   "meaning": "The Withholder",
+   "line": "He constricts: the provision narrows, the chest tightens, the way that was open is not.",
+   "caption": "Al-Qabid (الْقَابِض). The Withholder. He constricts: the provision narrows, the chest tightens, the way that was open is not.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 520,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-basit": {
+   "kind": "name",
+   "src": "al-basit",
+   "slot": "morning",
+   "ar": "الْبَاسِط",
+   "translit": "Al-Basit",
+   "meaning": "The Extender",
+   "line": "He expands: the provision widens, the chest opens, the road runs.",
+   "caption": "Al-Basit (الْبَاسِط). The Extender. He expands: the provision widens, the chest opens, the road runs.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 613,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-khafid": {
+   "kind": "name",
+   "src": "al-khafid",
+   "slot": "evening",
+   "ar": "الْخَافِض",
+   "translit": "Al-Khafid",
+   "meaning": "The Abaser",
+   "line": "He lowers the arrogant, and He lowers the heads of those who come to Him, and only one of the two is a fall.",
+   "caption": "Al-Khafid (الْخَافِض). The Abaser. He lowers the arrogant, and He lowers the heads of those who come to Him, and only one of the two is a fall.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 268,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ar-rafi": {
+   "kind": "name",
+   "src": "ar-rafi",
+   "slot": "morning",
+   "ar": "الرَّافِع",
+   "translit": "Ar-Rafi'",
+   "meaning": "The Exalter",
+   "line": "The historical record keeps embarrassing the rankings: the ones remembered were shepherds, orphans, freed slaves, a man who could not read.",
+   "caption": "Ar-Rafi' (الرَّافِع). The Exalter. The historical record keeps embarrassing the rankings: the ones remembered were shepherds, orphans, freed slaves, a man who could not read.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 446,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mu-izz": {
+   "kind": "name",
+   "src": "al-mu-izz",
+   "slot": "evening",
+   "ar": "الْمُعِزّ",
+   "translit": "Al-Mu'izz",
+   "meaning": "The Giver of Honour",
+   "line": "The Qur'an's example is deliberately hard: the Prophet's community spent years despised in Makkah, and the honour arrived without the despising being removed first.",
+   "caption": "Al-Mu'izz (الْمُعِزّ). The Giver of Honour. The Qur'an's example is deliberately hard: the Prophet's community spent years despised in Makkah, and the honour arrived without the despising being removed first.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 147,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mudhill": {
+   "kind": "name",
+   "src": "al-mudhill",
+   "slot": "morning",
+   "ar": "الْمُذِلّ",
+   "translit": "Al-Mudhill",
+   "meaning": "The Giver of Dishonour",
+   "line": "The verse pairs it with the giving of honour inside a single sentence spoken by a man asking for sovereignty, which is where the pair belongs: both hands are His, and the same hand does both.",
+   "caption": "Al-Mudhill (الْمُذِلّ). The Giver of Dishonour. The verse pairs it with the giving of honour inside a single sentence spoken by a man asking for sovereignty, which is where the pair belongs: both hands are His, and the same hand does both.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 816,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-as-sami": {
+   "kind": "name",
+   "src": "as-sami",
+   "slot": "evening",
+   "ar": "السَّمِيع",
+   "translit": "As-Sami'",
+   "meaning": "The All-Hearing",
+   "line": "As-Sami' hears every language at once, hears what is said and what is only formed and swallowed, hears the prayer of the person who has no words left.",
+   "caption": "As-Sami' (السَّمِيع). The All-Hearing. As-Sami' hears every language at once, hears what is said and what is only formed and swallowed, hears the prayer of the person who has no words left.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 414,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-basir": {
+   "kind": "name",
+   "src": "al-basir",
+   "slot": "morning",
+   "ar": "الْبَصِير",
+   "translit": "Al-Basir",
+   "meaning": "The All-Seeing",
+   "line": "The root covers sight and insight, so this is not surveillance.",
+   "caption": "Al-Basir (الْبَصِير). The All-Seeing. The root covers sight and insight, so this is not surveillance.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 724,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hakam": {
+   "kind": "name",
+   "src": "al-hakam",
+   "slot": "evening",
+   "ar": "الْحَكَم",
+   "translit": "Al-Hakam",
+   "meaning": "The Judge, whose ruling is final",
+   "line": "Every human verdict is provisional, appealable, sometimes bought.",
+   "caption": "Al-Hakam (الْحَكَم). The Judge, whose ruling is final. Every human verdict is provisional, appealable, sometimes bought.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 879,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-adl": {
+   "kind": "name",
+   "src": "al-adl",
+   "slot": "morning",
+   "ar": "الْعَدْل",
+   "translit": "Al-'Adl",
+   "meaning": "The Utterly Just",
+   "line": "Justice in Arabic is a word about balance, about a thing being placed exactly where it belongs.",
+   "caption": "Al-'Adl (الْعَدْل). The Utterly Just. Justice in Arabic is a word about balance, about a thing being placed exactly where it belongs.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 566,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-latif": {
+   "kind": "name",
+   "src": "al-latif",
+   "slot": "evening",
+   "ar": "اللَّطِيف",
+   "translit": "Al-Latif",
+   "meaning": "The Subtle and the Gentle, whose kindness reaches unseen",
+   "line": "He is subtle: His knowledge reaches into what is too fine to be seen, and His acting is so quiet it is usually only visible looking backwards.",
+   "caption": "Al-Latif (اللَّطِيف). The Subtle and the Gentle, whose kindness reaches unseen. He is subtle: His knowledge reaches into what is too fine to be seen, and His acting is so quiet it is usually only visible looking backwards.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 776,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-khabir": {
+   "kind": "name",
+   "src": "al-khabir",
+   "slot": "morning",
+   "ar": "الْخَبِير",
+   "translit": "Al-Khabir",
+   "meaning": "The All-Aware",
+   "line": "'Alim is knowledge of the thing; Khabir is knowledge of what is inside it.",
+   "caption": "Al-Khabir (الْخَبِير). The All-Aware. 'Alim is knowledge of the thing; Khabir is knowledge of what is inside it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 198,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-halim": {
+   "kind": "name",
+   "src": "al-halim",
+   "slot": "evening",
+   "ar": "الْحَلِيم",
+   "translit": "Al-Halim",
+   "meaning": "The Forbearing, who does not hasten to punish",
+   "line": "Hilm is not the absence of anger; it is power that declines to move at speed.",
+   "caption": "Al-Halim (الْحَلِيم). The Forbearing, who does not hasten to punish. Hilm is not the absence of anger; it is power that declines to move at speed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 736,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-azim": {
+   "kind": "name",
+   "src": "al-azim",
+   "slot": "morning",
+   "ar": "الْعَظِيم",
+   "translit": "Al-'Azim",
+   "meaning": "The Magnificent",
+   "line": "The root is the word for bone, the hard structure everything else hangs on.",
+   "caption": "Al-'Azim (الْعَظِيم). The Magnificent. The root is the word for bone, the hard structure everything else hangs on.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 902,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ghafur": {
+   "kind": "name",
+   "src": "al-ghafur",
+   "slot": "evening",
+   "ar": "الْغَفُور",
+   "translit": "Al-Ghafur",
+   "meaning": "The Much-Forgiving",
+   "line": "Ghaffar is the intensive of repetition, Ghafur is the intensive of extent: the covering is total.",
+   "caption": "Al-Ghafur (الْغَفُور). The Much-Forgiving. Ghaffar is the intensive of repetition, Ghafur is the intensive of extent: the covering is total.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 314,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ash-shakur": {
+   "kind": "name",
+   "src": "ash-shakur",
+   "slot": "morning",
+   "ar": "الشَّكُور",
+   "translit": "Ash-Shakur",
+   "meaning": "The Most Appreciative, who repays little with much",
+   "line": "The root's agricultural sense is the key: a beast described as shakur gives far more than the feed would explain.",
+   "caption": "Ash-Shakur (الشَّكُور). The Most Appreciative, who repays little with much. The root's agricultural sense is the key: a beast described as shakur gives far more than the feed would explain.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 251,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ali": {
+   "kind": "name",
+   "src": "al-ali",
+   "slot": "evening",
+   "ar": "الْعَلِيّ",
+   "translit": "Al-'Ali",
+   "meaning": "The Most High",
+   "line": "His highness is not a position in space, and the Book is careful about this: vision does not reach Him, nothing is like Him, He is not contained.",
+   "caption": "Al-'Ali (الْعَلِيّ). The Most High. His highness is not a position in space, and the Book is careful about this: vision does not reach Him, nothing is like Him, He is not contained.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 413,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-kabir": {
+   "kind": "name",
+   "src": "al-kabir",
+   "slot": "morning",
+   "ar": "الْكَبِير",
+   "translit": "Al-Kabir",
+   "meaning": "The Most Great",
+   "line": "Al-Kabir names greatness that does not depend on anything being compared to it.",
+   "caption": "Al-Kabir (الْكَبِير). The Most Great. Al-Kabir names greatness that does not depend on anything being compared to it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 668,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hafiz": {
+   "kind": "name",
+   "src": "al-hafiz",
+   "slot": "evening",
+   "ar": "الْحَفِيظ",
+   "translit": "Al-Hafiz",
+   "meaning": "The Preserver",
+   "line": "He preserves the Book, which is why a boy in Indonesia and an old man in Morocco recite the same consonants.",
+   "caption": "Al-Hafiz (الْحَفِيظ). The Preserver. He preserves the Book, which is why a boy in Indonesia and an old man in Morocco recite the same consonants.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 830,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muqit": {
+   "kind": "name",
+   "src": "al-muqit",
+   "slot": "morning",
+   "ar": "الْمُقِيت",
+   "translit": "Al-Muqit",
+   "meaning": "The Sustainer, who gives each thing its measure",
+   "line": "Qut is not a feast; it is the exact amount that keeps a living thing alive.",
+   "caption": "Al-Muqit (الْمُقِيت). The Sustainer, who gives each thing its measure. Qut is not a feast; it is the exact amount that keeps a living thing alive.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 269,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hasib": {
+   "kind": "name",
+   "src": "al-hasib",
+   "slot": "evening",
+   "ar": "الْحَسِيب",
+   "translit": "Al-Hasib",
+   "meaning": "The Reckoner, who is enough",
+   "line": "He is the Reckoner who counts everything precisely, and He is the One who is enough.",
+   "caption": "Al-Hasib (الْحَسِيب). The Reckoner, who is enough. He is the Reckoner who counts everything precisely, and He is the One who is enough.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 818,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-jalil": {
+   "kind": "name",
+   "src": "al-jalil",
+   "slot": "morning",
+   "ar": "الْجَلِيل",
+   "translit": "Al-Jalil",
+   "meaning": "The Majestic",
+   "line": "Majesty in the Qur'an is never separated from generosity, and the pairing is the whole doctrine.",
+   "caption": "Al-Jalil (الْجَلِيل). The Majestic. Majesty in the Qur'an is never separated from generosity, and the pairing is the whole doctrine.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 595,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-karim": {
+   "kind": "name",
+   "src": "al-karim",
+   "slot": "evening",
+   "ar": "الْكَرِيم",
+   "translit": "Al-Karim",
+   "meaning": "The Most Generous",
+   "line": "Karam in Arabic is not a behaviour, it is a nature: the noble person gives because of what he is, not because of who is watching or who asked.",
+   "caption": "Al-Karim (الْكَرِيم). The Most Generous. Karam in Arabic is not a behaviour, it is a nature: the noble person gives because of what he is, not because of who is watching or who asked.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 435,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ar-raqib": {
+   "kind": "name",
+   "src": "ar-raqib",
+   "slot": "morning",
+   "ar": "الرَّقِيب",
+   "translit": "Ar-Raqib",
+   "meaning": "The Watchful",
+   "line": "The root is physical: the neck, and the watcher who keeps his eye on it.",
+   "caption": "Ar-Raqib (الرَّقِيب). The Watchful. The root is physical: the neck, and the watcher who keeps his eye on it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 919,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mujib": {
+   "kind": "name",
+   "src": "al-mujib",
+   "slot": "evening",
+   "ar": "الْمُجِيب",
+   "translit": "Al-Mujib",
+   "meaning": "The Responsive, who answers the one who calls",
+   "line": "The Qur'an's phrasing is careful and often missed: I respond to the call of the caller when he calls Me.",
+   "caption": "Al-Mujib (الْمُجِيب). The Responsive, who answers the one who calls. The Qur'an's phrasing is careful and often missed: I respond to the call of the caller when he calls Me.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 134,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wasi": {
+   "kind": "name",
+   "src": "al-wasi",
+   "slot": "morning",
+   "ar": "الْوَاسِع",
+   "translit": "Al-Wasi'",
+   "meaning": "The All-Encompassing",
+   "line": "Wideness is the idea: His mercy has room, His knowledge has room, His giving has room.",
+   "caption": "Al-Wasi' (الْوَاسِع). The All-Encompassing. Wideness is the idea: His mercy has room, His knowledge has room, His giving has room.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 828,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hakim": {
+   "kind": "name",
+   "src": "al-hakim",
+   "slot": "evening",
+   "ar": "الْحَكِيم",
+   "translit": "Al-Hakim",
+   "meaning": "The All-Wise",
+   "line": "He is not only aware of everything; He places everything, and places it rightly, including the parts that look to us like errors in the design.",
+   "caption": "Al-Hakim (الْحَكِيم). The All-Wise. He is not only aware of everything; He places everything, and places it rightly, including the parts that look to us like errors in the design.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 705,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wadud": {
+   "kind": "name",
+   "src": "al-wadud",
+   "slot": "morning",
+   "ar": "الْوَدُود",
+   "translit": "Al-Wadud",
+   "meaning": "The Most Loving",
+   "line": "The Qur'an says He is Al-Ghafur, Al-Wadud, in that order, in a surah about believers being burned alive for their faith: forgiving, and affectionate.",
+   "caption": "Al-Wadud (الْوَدُود). The Most Loving. The Qur'an says He is Al-Ghafur, Al-Wadud, in that order, in a surah about believers being burned alive for their faith: forgiving, and affectionate.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 687,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-majid": {
+   "kind": "name",
+   "src": "al-majid",
+   "slot": "evening",
+   "ar": "الْمَجِيد",
+   "translit": "Al-Majid",
+   "meaning": "The Most Glorious",
+   "line": "Majd is glory that combines two things: honour so complete it cannot be added to, and generosity so wide it cannot be exhausted.",
+   "caption": "Al-Majid (الْمَجِيد). The Most Glorious. Majd is glory that combines two things: honour so complete it cannot be added to, and generosity so wide it cannot be exhausted.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 507,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ba-ith": {
+   "kind": "name",
+   "src": "al-ba-ith",
+   "slot": "morning",
+   "ar": "الْبَاعِث",
+   "translit": "Al-Ba'ith",
+   "meaning": "The Resurrector",
+   "line": "The same verb sends a messenger and raises a body from a grave, and the Book uses them side by side deliberately.",
+   "caption": "Al-Ba'ith (الْبَاعِث). The Resurrector. The same verb sends a messenger and raises a body from a grave, and the Book uses them side by side deliberately.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 112,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ash-shahid": {
+   "kind": "name",
+   "src": "ash-shahid",
+   "slot": "evening",
+   "ar": "الشَّهِيد",
+   "translit": "Ash-Shahid",
+   "meaning": "The Witness, from whom nothing is hidden",
+   "line": "To witness in Arabic requires presence: a witness is someone who was there.",
+   "caption": "Ash-Shahid (الشَّهِيد). The Witness, from whom nothing is hidden. To witness in Arabic requires presence: a witness is someone who was there.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 810,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-haqq": {
+   "kind": "name",
+   "src": "al-haqq",
+   "slot": "morning",
+   "ar": "الْحَقّ",
+   "translit": "Al-Haqq",
+   "meaning": "The Truth, and the only thing that does not pass",
+   "line": "One word in Arabic carries truth, reality, and what is rightfully owed, and the overlap is the doctrine.",
+   "caption": "Al-Haqq (الْحَقّ). The Truth, and the only thing that does not pass. One word in Arabic carries truth, reality, and what is rightfully owed, and the overlap is the doctrine.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 744,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wakil": {
+   "kind": "name",
+   "src": "al-wakil",
+   "slot": "evening",
+   "ar": "الْوَكِيل",
+   "translit": "Al-Wakil",
+   "meaning": "The Trustee, to whom affairs are handed",
+   "line": "Tawakkul, the state the Book keeps commanding, is not passivity: you appoint the agent and then you do your part without carrying what is not yours.",
+   "caption": "Al-Wakil (الْوَكِيل). The Trustee, to whom affairs are handed. Tawakkul, the state the Book keeps commanding, is not passivity: you appoint the agent and then you do your part without carrying what is not yours.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 552,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-qawiyy": {
+   "kind": "name",
+   "src": "al-qawiyy",
+   "slot": "morning",
+   "ar": "الْقَوِيّ",
+   "translit": "Al-Qawiyy",
+   "meaning": "The All-Strong",
+   "line": "The verse pairs it with subtlety, so the power is not blunt.",
+   "caption": "Al-Qawiyy (الْقَوِيّ). The All-Strong. The verse pairs it with subtlety, so the power is not blunt.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 349,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-matin": {
+   "kind": "name",
+   "src": "al-matin",
+   "slot": "evening",
+   "ar": "الْمَتِين",
+   "translit": "Al-Matin",
+   "meaning": "The Firm, whose strength does not tire",
+   "line": "Where Al-Qawiyy is strength that acts, Al-Matin is strength that does not tire and does not thin out.",
+   "caption": "Al-Matin (الْمَتِين). The Firm, whose strength does not tire. Where Al-Qawiyy is strength that acts, Al-Matin is strength that does not tire and does not thin out.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 531,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-waliyy": {
+   "kind": "name",
+   "src": "al-waliyy",
+   "slot": "morning",
+   "ar": "الْوَلِيّ",
+   "translit": "Al-Waliyy",
+   "meaning": "The Protecting Friend",
+   "line": "It is the word for the guardian at a marriage, for the ally in a treaty, for the near friend.",
+   "caption": "Al-Waliyy (الْوَلِيّ). The Protecting Friend. It is the word for the guardian at a marriage, for the ally in a treaty, for the near friend.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 725,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hamid": {
+   "kind": "name",
+   "src": "al-hamid",
+   "slot": "evening",
+   "ar": "الْحَمِيد",
+   "translit": "Al-Hamid",
+   "meaning": "The Praiseworthy",
+   "line": "Shukr is a response to a benefit received; hamd is owed for what a thing is in itself, benefit or not.",
+   "caption": "Al-Hamid (الْحَمِيد). The Praiseworthy. Shukr is a response to a benefit received; hamd is owed for what a thing is in itself, benefit or not.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 150,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muhsi": {
+   "kind": "name",
+   "src": "al-muhsi",
+   "slot": "morning",
+   "ar": "الْمُحْصِي",
+   "translit": "Al-Muhsi",
+   "meaning": "The One who counts all things",
+   "line": "The root comes from counting with stones, one pebble per item, which is as concrete as counting gets.",
+   "caption": "Al-Muhsi (الْمُحْصِي). The One who counts all things. The root comes from counting with stones, one pebble per item, which is as concrete as counting gets.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 546,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mubdi": {
+   "kind": "name",
+   "src": "al-mubdi",
+   "slot": "evening",
+   "ar": "الْمُبْدِئ",
+   "translit": "Al-Mubdi'",
+   "meaning": "The Originator, who begins",
+   "line": "The Qur'an uses this verb as a challenge: is there any of your partners who begins creation and then repeats it?",
+   "caption": "Al-Mubdi' (الْمُبْدِئ). The Originator, who begins. The Qur'an uses this verb as a challenge: is there any of your partners who begins creation and then repeats it?\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 493,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mu-id": {
+   "kind": "name",
+   "src": "al-mu-id",
+   "slot": "morning",
+   "ar": "الْمُعِيد",
+   "translit": "Al-Mu'id",
+   "meaning": "The Restorer, who begins it again",
+   "line": "This is the Qur'an's standing argument for the resurrection, made from ordinary observation rather than from mystery: you have already seen Him do the difficult version of this.",
+   "caption": "Al-Mu'id (الْمُعِيد). The Restorer, who begins it again. This is the Qur'an's standing argument for the resurrection, made from ordinary observation rather than from mystery: you have already seen Him do the difficult version of this.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 879,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muhyi": {
+   "kind": "name",
+   "src": "al-muhyi",
+   "slot": "evening",
+   "ar": "الْمُحْيِي",
+   "translit": "Al-Muhyi",
+   "meaning": "The Giver of Life",
+   "line": "He gives life, and the Qur'an keeps pointing at the same evidence: look at dead ground after rain.",
+   "caption": "Al-Muhyi (الْمُحْيِي). The Giver of Life. He gives life, and the Qur'an keeps pointing at the same evidence: look at dead ground after rain.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 517,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mumit": {
+   "kind": "name",
+   "src": "al-mumit",
+   "slot": "morning",
+   "ar": "الْمُمِيت",
+   "translit": "Al-Mumit",
+   "meaning": "The Bringer of Death",
+   "line": "Death in the Qur'an is not the failure of a system; it is an act, appointed and precise.",
+   "caption": "Al-Mumit (الْمُمِيت). The Bringer of Death. Death in the Qur'an is not the failure of a system; it is an act, appointed and precise.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 598,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hayy": {
+   "kind": "name",
+   "src": "al-hayy",
+   "slot": "evening",
+   "ar": "الْحَيّ",
+   "translit": "Al-Hayy",
+   "meaning": "The Ever-Living",
+   "line": "Everything else that lives is borrowing, and the loan is called back.",
+   "caption": "Al-Hayy (الْحَيّ). The Ever-Living. Everything else that lives is borrowing, and the loan is called back.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 444,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-qayyum": {
+   "kind": "name",
+   "src": "al-qayyum",
+   "slot": "morning",
+   "ar": "الْقَيُّوم",
+   "translit": "Al-Qayyum",
+   "meaning": "The Self-Subsisting, upon whom all else stands",
+   "line": "He stands by Himself, needing nothing to hold Him up, and everything else stands by Him.",
+   "caption": "Al-Qayyum (الْقَيُّوم). The Self-Subsisting, upon whom all else stands. He stands by Himself, needing nothing to hold Him up, and everything else stands by Him.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 932,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wajid": {
+   "kind": "name",
+   "src": "al-wajid",
+   "slot": "evening",
+   "ar": "الْوَاجِد",
+   "translit": "Al-Wajid",
+   "meaning": "The Finder, who lacks nothing",
+   "line": "The Name is not in the Qur'an as a noun, and the closest thing the Book says instead is stated flatly: you are the ones in need of Allah, and Allah is the Free of need.",
+   "caption": "Al-Wajid (الْوَاجِد). The Finder, who lacks nothing. The Name is not in the Qur'an as a noun, and the closest thing the Book says instead is stated flatly: you are the ones in need of Allah, and Allah is the Free of need.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 687,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-majid-65": {
+   "kind": "name",
+   "src": "al-majid-65",
+   "slot": "morning",
+   "ar": "الْمَاجِد",
+   "translit": "Al-Majid",
+   "meaning": "The Noble",
+   "line": "Two Names from one root sit in this list, and the pair is a good example of why the enumeration should be read carefully rather than as a list of ninety-nine separate facts.",
+   "caption": "Al-Majid (الْمَاجِد). The Noble. Two Names from one root sit in this list, and the pair is a good example of why the enumeration should be read carefully rather than as a list of ninety-nine separate facts.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 32,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wahid": {
+   "kind": "name",
+   "src": "al-wahid",
+   "slot": "evening",
+   "ar": "الْوَاحِد",
+   "translit": "Al-Wahid",
+   "meaning": "The One",
+   "line": "Wahid is one in the sense of unique in rank: there is no other of this kind.",
+   "caption": "Al-Wahid (الْوَاحِد). The One. Wahid is one in the sense of unique in rank: there is no other of this kind.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 207,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ahad": {
+   "kind": "name",
+   "src": "al-ahad",
+   "slot": "morning",
+   "ar": "الْأَحَد",
+   "translit": "Al-Ahad",
+   "meaning": "The Unique, who has no second",
+   "line": "Ahad is the more absolute: not one of a series, not one that could be joined by a second, not one that has parts.",
+   "caption": "Al-Ahad (الْأَحَد). The Unique, who has no second. Ahad is the more absolute: not one of a series, not one that could be joined by a second, not one that has parts.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 397,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-as-samad": {
+   "kind": "name",
+   "src": "as-samad",
+   "slot": "evening",
+   "ar": "الصَّمَد",
+   "translit": "As-Samad",
+   "meaning": "The Eternal Refuge, needing none, needed by all",
+   "line": "A rock called samad is one with no cavity, nothing missing inside it.",
+   "caption": "As-Samad (الصَّمَد). The Eternal Refuge, needing none, needed by all. A rock called samad is one with no cavity, nothing missing inside it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 551,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-qadir": {
+   "kind": "name",
+   "src": "al-qadir",
+   "slot": "morning",
+   "ar": "الْقَادِر",
+   "translit": "Al-Qadir",
+   "meaning": "The All-Powerful",
+   "line": "The root joins power and measure, which is the whole idea: His power is never crude.",
+   "caption": "Al-Qadir (الْقَادِر). The All-Powerful. The root joins power and measure, which is the whole idea: His power is never crude.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 273,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muqtadir": {
+   "kind": "name",
+   "src": "al-muqtadir",
+   "slot": "evening",
+   "ar": "الْمُقْتَدِر",
+   "translit": "Al-Muqtadir",
+   "meaning": "The Determiner, who brings power to bear",
+   "line": "The Book almost never lets a Name of might stand without showing where it lands.",
+   "caption": "Al-Muqtadir (الْمُقْتَدِر). The Determiner, who brings power to bear. The Book almost never lets a Name of might stand without showing where it lands.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 337,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muqaddim": {
+   "kind": "name",
+   "src": "al-muqaddim",
+   "slot": "morning",
+   "ar": "الْمُقَدِّم",
+   "translit": "Al-Muqaddim",
+   "meaning": "The Expediter, who brings forward",
+   "line": "Which nation rises now and which waits; which prayer is answered this year; which person, unqualified in every visible way, is put in front.",
+   "caption": "Al-Muqaddim (الْمُقَدِّم). The Expediter, who brings forward. Which nation rises now and which waits; which prayer is answered this year; which person, unqualified in every visible way, is put in front.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 519,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mu-akhkhir": {
+   "kind": "name",
+   "src": "al-mu-akhkhir",
+   "slot": "evening",
+   "ar": "الْمُؤَخِّر",
+   "translit": "Al-Mu'akhkhir",
+   "meaning": "The Delayer, who holds back",
+   "line": "Every delay you have been given is this Name at work, including the ones you took for a sign that nothing was being noticed.",
+   "caption": "Al-Mu'akhkhir (الْمُؤَخِّر). The Delayer, who holds back. Every delay you have been given is this Name at work, including the ones you took for a sign that nothing was being noticed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 477,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-awwal": {
+   "kind": "name",
+   "src": "al-awwal",
+   "slot": "morning",
+   "ar": "الْأَوَّل",
+   "translit": "Al-Awwal",
+   "meaning": "The First, before whom there is nothing",
+   "line": "He is the First, and the Name is not about being early.",
+   "caption": "Al-Awwal (الْأَوَّل). The First, before whom there is nothing. He is the First, and the Name is not about being early.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 913,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-akhir": {
+   "kind": "name",
+   "src": "al-akhir",
+   "slot": "evening",
+   "ar": "الْآخِر",
+   "translit": "Al-Akhir",
+   "meaning": "The Last, after whom there is nothing",
+   "line": "Everything you can name has a term, including the sun, including this planet, including the memory of your name.",
+   "caption": "Al-Akhir (الْآخِر). The Last, after whom there is nothing. Everything you can name has a term, including the sun, including this planet, including the memory of your name.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 626,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-az-zahir": {
+   "kind": "name",
+   "src": "az-zahir",
+   "slot": "morning",
+   "ar": "الظَّاهِر",
+   "translit": "Az-Zahir",
+   "meaning": "The Manifest, above whom there is nothing",
+   "line": "He is the Manifest: nothing is above Him, and nothing is more evident.",
+   "caption": "Az-Zahir (الظَّاهِر). The Manifest, above whom there is nothing. He is the Manifest: nothing is above Him, and nothing is more evident.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 256,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-batin": {
+   "kind": "name",
+   "src": "al-batin",
+   "slot": "evening",
+   "ar": "الْبَاطِن",
+   "translit": "Al-Batin",
+   "meaning": "The Hidden, nearer than anything",
+   "line": "He is the Hidden, and the word means inward rather than absent.",
+   "caption": "Al-Batin (الْبَاطِن). The Hidden, nearer than anything. He is the Hidden, and the word means inward rather than absent.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 384,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-wali": {
+   "kind": "name",
+   "src": "al-wali",
+   "slot": "morning",
+   "ar": "الْوَالِي",
+   "translit": "Al-Wali",
+   "meaning": "The Governor of all that happens",
+   "line": "The verse says of a people whose ruin has been decided that they have, besides Him, no wali at all.",
+   "caption": "Al-Wali (الْوَالِي). The Governor of all that happens. The verse says of a people whose ruin has been decided that they have, besides Him, no wali at all.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 123,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muta-ali": {
+   "kind": "name",
+   "src": "al-muta-ali",
+   "slot": "evening",
+   "ar": "الْمُتَعَالِي",
+   "translit": "Al-Muta'ali",
+   "meaning": "The Most Exalted",
+   "line": "The Qur'anic form is al-Muta'al, without the final letter the enumeration usually gives it, and it appears once, at the end of a verse about knowing the unseen and the witnessed.",
+   "caption": "Al-Muta'ali (الْمُتَعَالِي). The Most Exalted. The Qur'anic form is al-Muta'al, without the final letter the enumeration usually gives it, and it appears once, at the end of a verse about knowing the unseen and the witnessed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 294,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-barr": {
+   "kind": "name",
+   "src": "al-barr",
+   "slot": "morning",
+   "ar": "الْبَرّ",
+   "translit": "Al-Barr",
+   "meaning": "The Source of Goodness",
+   "line": "The verse where the Name appears is spoken by people already safe, remembering what they used to do: we used to call upon Him; indeed it is He who is the Beneficent, the Merciful.",
+   "caption": "Al-Barr (الْبَرّ). The Source of Goodness. The verse where the Name appears is spoken by people already safe, remembering what they used to do: we used to call upon Him; indeed it is He who is the Beneficent, the Merciful.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 642,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-at-tawwab": {
+   "kind": "name",
+   "src": "at-tawwab",
+   "slot": "evening",
+   "ar": "التَّوَّاب",
+   "translit": "At-Tawwab",
+   "meaning": "The Ever-Relenting, who turns to the one who turns",
+   "line": "The word is the same in both directions, and that is the entire teaching.",
+   "caption": "At-Tawwab (التَّوَّاب). The Ever-Relenting, who turns to the one who turns. The word is the same in both directions, and that is the entire teaching.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 805,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muntaqim": {
+   "kind": "name",
+   "src": "al-muntaqim",
+   "slot": "morning",
+   "ar": "الْمُنْتَقِم",
+   "translit": "Al-Muntaqim",
+   "meaning": "The Avenger of wrong",
+   "line": "This Name never appears in the Qur'an detached from a cause.",
+   "caption": "Al-Muntaqim (الْمُنْتَقِم). The Avenger of wrong. This Name never appears in the Qur'an detached from a cause.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 410,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-afuww": {
+   "kind": "name",
+   "src": "al-afuww",
+   "slot": "evening",
+   "ar": "الْعَفُوّ",
+   "translit": "Al-'Afuww",
+   "meaning": "The Pardoner, who erases the trace",
+   "line": "It is the word in the supplication reported to have been taught to 'A'ishah for the Night of Decree, asking the One who loves to efface, to efface.",
+   "caption": "Al-'Afuww (الْعَفُوّ). The Pardoner, who erases the trace. It is the word in the supplication reported to have been taught to 'A'ishah for the Night of Decree, asking the One who loves to efface, to efface.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 575,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ar-ra-uf": {
+   "kind": "name",
+   "src": "ar-ra-uf",
+   "slot": "morning",
+   "ar": "الرَّءُوف",
+   "translit": "Ar-Ra'uf",
+   "meaning": "The Most Kind",
+   "line": "Rahmah is wide; ra'fah is the wince at another's pain, the tenderness that moves before thinking.",
+   "caption": "Ar-Ra'uf (الرَّءُوف). The Most Kind. Rahmah is wide; ra'fah is the wince at another's pain, the tenderness that moves before thinking.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 591,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-malik-al-mulk": {
+   "kind": "name",
+   "src": "malik-al-mulk",
+   "slot": "evening",
+   "ar": "مَالِكُ الْمُلْك",
+   "translit": "Malik al-Mulk",
+   "meaning": "Owner of all sovereignty",
+   "line": "The taking is inside the good, and the sentence does not flinch from saying so.",
+   "caption": "Malik al-Mulk (مَالِكُ الْمُلْك). Owner of all sovereignty. The taking is inside the good, and the sentence does not flinch from saying so.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 118,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-dhul-jalali-wal-ikram": {
+   "kind": "name",
+   "src": "dhul-jalali-wal-ikram",
+   "slot": "morning",
+   "ar": "ذُو الْجَلَالِ وَالْإِكْرَام",
+   "translit": "Dhul-Jalali wal-Ikram",
+   "meaning": "Lord of Majesty and Honour",
+   "line": "The Qur'an gives this title twice in one surah, and both times at the point where everything else has been removed.",
+   "caption": "Dhul-Jalali wal-Ikram (ذُو الْجَلَالِ وَالْإِكْرَام). Lord of Majesty and Honour. The Qur'an gives this title twice in one surah, and both times at the point where everything else has been removed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 778,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-muqsit": {
+   "kind": "name",
+   "src": "al-muqsit",
+   "slot": "evening",
+   "ar": "الْمُقْسِط",
+   "translit": "Al-Muqsit",
+   "meaning": "The Equitable",
+   "line": "",
+   "caption": "Al-Muqsit (الْمُقْسِط). The Equitable.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 622,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-jami": {
+   "kind": "name",
+   "src": "al-jami",
+   "slot": "morning",
+   "ar": "الْجَامِع",
+   "translit": "Al-Jami'",
+   "meaning": "The Gatherer, who will bring all together",
+   "line": "The verse is a prayer said by people of understanding: our Lord, You will gather the people for a Day about which there is no doubt.",
+   "caption": "Al-Jami' (الْجَامِع). The Gatherer, who will bring all together. The verse is a prayer said by people of understanding: our Lord, You will gather the people for a Day about which there is no doubt.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 413,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-ghani": {
+   "kind": "name",
+   "src": "al-ghani",
+   "slot": "evening",
+   "ar": "الْغَنِيّ",
+   "translit": "Al-Ghani",
+   "meaning": "The Self-Sufficient",
+   "line": "The Arabic for rich is not about having much; it is about needing nothing.",
+   "caption": "Al-Ghani (الْغَنِيّ). The Self-Sufficient. The Arabic for rich is not about having much; it is about needing nothing.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 171,
+    "n": 16,
+    "k": 7,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mughni": {
+   "kind": "name",
+   "src": "al-mughni",
+   "slot": "morning",
+   "ar": "الْمُغْنِي",
+   "translit": "Al-Mughni",
+   "meaning": "The Enricher",
+   "line": "The Book's teaching on this is consistent: richness is not in the quantity of possessions.",
+   "caption": "Al-Mughni (الْمُغْنِي). The Enricher. The Book's teaching on this is consistent: richness is not in the quantity of possessions.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 559,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-mani": {
+   "kind": "name",
+   "src": "al-mani",
+   "slot": "evening",
+   "ar": "الْمَانِع",
+   "translit": "Al-Mani'",
+   "meaning": "The Withholder",
+   "line": "He withholds, and the verse makes it symmetrical: what He opens to people of mercy, none can withhold; what He withholds, none can release.",
+   "caption": "Al-Mani' (الْمَانِع). The Withholder. He withholds, and the verse makes it symmetrical: what He opens to people of mercy, none can withhold; what He withholds, none can release.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 284,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ad-darr": {
+   "kind": "name",
+   "src": "ad-darr",
+   "slot": "morning",
+   "ar": "الضَّارّ",
+   "translit": "Ad-Darr",
+   "meaning": "The One who allows harm",
+   "line": "This is the hardest Name in the list and the enumeration puts it deliberately next to its opposite.",
+   "caption": "Ad-Darr (الضَّارّ). The One who allows harm. This is the hardest Name in the list and the enumeration puts it deliberately next to its opposite.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 652,
+    "n": 10,
+    "k": 4,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-an-nafi": {
+   "kind": "name",
+   "src": "an-nafi",
+   "slot": "evening",
+   "ar": "النَّافِع",
+   "translit": "An-Nafi'",
+   "meaning": "The One who brings benefit",
+   "line": "The verse pairs them exactly: if He touches you with adversity, none can remove it but He, and if He intends good for you, none can repel His bounty.",
+   "caption": "An-Nafi' (النَّافِع). The One who brings benefit. The verse pairs them exactly: if He touches you with adversity, none can remove it but He, and if He intends good for you, none can repel His bounty.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 963,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-an-nur": {
+   "kind": "name",
+   "src": "an-nur",
+   "slot": "morning",
+   "ar": "النُّور",
+   "translit": "An-Nur",
+   "meaning": "The Light",
+   "line": "The Book chose a parable where an argument would have been possible, which is itself the teaching.",
+   "caption": "An-Nur (النُّور). The Light. The Book chose a parable where an argument would have been possible, which is itself the teaching.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 324,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-hadi": {
+   "kind": "name",
+   "src": "al-hadi",
+   "slot": "evening",
+   "ar": "الْهَادِي",
+   "translit": "Al-Hadi",
+   "meaning": "The Guide",
+   "line": "Arabic distinguishes showing the road from taking someone down it, and He does both.",
+   "caption": "Al-Hadi (الْهَادِي). The Guide. Arabic distinguishes showing the road from taking someone down it, and He does both.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 579,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-badi": {
+   "kind": "name",
+   "src": "al-badi",
+   "slot": "morning",
+   "ar": "الْبَدِيع",
+   "translit": "Al-Badi'",
+   "meaning": "The Incomparable Originator",
+   "line": "The Qur'an says it of the heavens and the earth, and then adds the mechanism, which is not a mechanism: when He decrees a matter, He says to it Be, and it is.",
+   "caption": "Al-Badi' (الْبَدِيع). The Incomparable Originator. The Qur'an says it of the heavens and the earth, and then adds the mechanism, which is not a mechanism: when He decrees a matter, He says to it Be, and it is.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 196,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-baqi": {
+   "kind": "name",
+   "src": "al-baqi",
+   "slot": "evening",
+   "ar": "الْبَاقِي",
+   "translit": "Al-Baqi",
+   "meaning": "The Everlasting",
+   "line": "The verse is one of the most quoted in the Book: everyone upon the earth will perish, and there remains the Face of your Lord, Owner of Majesty and Honour.",
+   "caption": "Al-Baqi (الْبَاقِي). The Everlasting. The verse is one of the most quoted in the Book: everyone upon the earth will perish, and there remains the Face of your Lord, Owner of Majesty and Honour.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 168,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-al-warith": {
+   "kind": "name",
+   "src": "al-warith",
+   "slot": "morning",
+   "ar": "الْوَارِث",
+   "translit": "Al-Warith",
+   "meaning": "The Inheritor of all",
+   "line": "An heir is who a thing goes to when its holder is finished.",
+   "caption": "Al-Warith (الْوَارِث). The Inheritor of all. An heir is who a thing goes to when its holder is finished.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 2,
+    "n": 8,
+    "k": 3,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-ar-rashid": {
+   "kind": "name",
+   "src": "ar-rashid",
+   "slot": "evening",
+   "ar": "الرَّشِيد",
+   "translit": "Ar-Rashid",
+   "meaning": "The Guide to what is right",
+   "line": "Rushd is guidance from the inside: the settled good judgement of someone who no longer needs supervising.",
+   "caption": "Ar-Rashid (الرَّشِيد). The Guide to what is right. Rushd is guidance from the inside: the settled good judgement of someone who no longer needs supervising.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 899,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "name-as-sabur": {
+   "kind": "name",
+   "src": "as-sabur",
+   "slot": "morning",
+   "ar": "الصَّبُور",
+   "translit": "As-Sabur",
+   "meaning": "The Most Patient",
+   "line": "Sabr is not endurance because there is no alternative; it is restraint by choice, holding a position that could be abandoned.",
+   "caption": "As-Sabur (الصَّبُور). The Most Patient. Sabr is not endurance because there is no alternative; it is restraint by choice, holding a position that could be abandoned.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 113,
+    "n": 12,
+    "k": 5,
+    "scene": "name",
+    "secs": 20
+   }
+  },
+  "dua-hasbunallah": {
+   "kind": "dua",
+   "src": "w-hasbunallah",
+   "slot": "evening",
+   "ar": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+   "translit": "Hasbunallahu wa ni'mal-wakil",
+   "meaning": "Allah is sufficient for us, and the best Disposer of affairs",
+   "line": "Said by Ibrahim flying toward the fire, and by Muhammad ﷺ facing the gathered confederates.",
+   "caption": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ\n\nAllah is sufficient for us, and the best Disposer of affairs. Said by Ibrahim flying toward the fire, and by Muhammad ﷺ facing the gathered confederates.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 838,
+    "n": 8,
+    "k": 3,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-dhunnun": {
+   "kind": "dua",
+   "src": "w-dhunnun",
+   "slot": "morning",
+   "ar": "لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",
+   "translit": "La ilaha illa anta, subhanaka, inni kuntu minaz-zalimin",
+   "meaning": "None has the right to be worshipped but You; glory be to You; I have been of the wrongdoers",
+   "line": "Three clauses in triple darkness; the Prophet ﷺ guaranteed the formula for every Muslim who uses it.",
+   "caption": "لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ\n\nNone has the right to be worshipped but You; glory be to You; I have been of the wrongdoers. Three clauses in triple darkness; the Prophet ﷺ guaranteed the formula for every Muslim who uses it.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "dusk",
+    "seed": 416,
+    "n": 10,
+    "k": 4,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-rabbana-zalamna": {
+   "kind": "dua",
+   "src": "w-rabbana-zalamna",
+   "slot": "evening",
+   "ar": "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+   "translit": "Rabbana zalamna anfusana wa il-lam taghfir lana wa tarhamna lanakunanna minal-khasirin",
+   "meaning": "Our Lord, we have wronged ourselves; if You do not forgive us and have mercy on us, we will surely be among the losers",
+   "line": "The sentence Adam and Hawwa said together at the bottom of the first fall; the template of every tawbah since.",
+   "caption": "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ\n\nOur Lord, we have wronged ourselves; if You do not forgive us and have mercy on us, we will surely be among the losers. The sentence Adam and Hawwa said together at the bottom of the first fall; the template of every tawbah since.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "sand",
+    "seed": 170,
+    "n": 8,
+    "k": 3,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-bismillah-majreha": {
+   "kind": "dua",
+   "src": "w-bismillah-majreha",
+   "slot": "morning",
+   "ar": "بِسْمِ اللَّهِ مَجْرَاهَا وَمُرْسَاهَا",
+   "translit": "Bismillahi majraha wa mursaha",
+   "meaning": "In the name of Allah is its course and its anchorage",
+   "line": "Nuh's boarding announcement over waves like mountains: journeys run on the Name, not the hull.",
+   "caption": "بِسْمِ اللَّهِ مَجْرَاهَا وَمُرْسَاهَا\n\nIn the name of Allah is its course and its anchorage. Nuh's boarding announcement over waves like mountains: journeys run on the Name, not the hull.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 718,
+    "n": 8,
+    "k": 3,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-rabbi-inni": {
+   "kind": "dua",
+   "src": "w-rabbi-inni",
+   "slot": "evening",
+   "ar": "رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",
+   "translit": "Rabbi inni lima anzalta ilayya min khayrin faqir",
+   "meaning": "My Lord, I am, for whatever good You send down to me, in need",
+   "line": "Musa at the well of Madyan: no money, no country, no request line, and everything granted within the hour.",
+   "caption": "رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ\n\nMy Lord, I am, for whatever good You send down to me, in need. Musa at the well of Madyan: no money, no country, no request line, and everything granted within the hour.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 48,
+    "n": 8,
+    "k": 3,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-rabbishrah": {
+   "kind": "dua",
+   "src": "w-rabbishrah",
+   "slot": "morning",
+   "ar": "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",
+   "translit": "Rabbi-shrah li sadri, wa yassir li amri, wahlul uqdatan min lisani, yafqahu qawli",
+   "meaning": "My Lord, expand for me my chest, ease for me my affair, and untie the knot from my tongue, that they may understand my speech",
+   "line": "Assigned to Pharaoh at the burning tree, Musa asked for capacity, ease, clarity, and a partner; all granted in one sentence.",
+   "caption": "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي\n\nMy Lord, expand for me my chest, ease for me my affair, and untie the knot from my tongue, that they may understand my speech. Assigned to Pharaoh at the burning tree, Musa asked for capacity, ease, clarity, and a partner; all granted in one sentence.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "green",
+    "seed": 303,
+    "n": 12,
+    "k": 5,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-inna-maiya": {
+   "kind": "dua",
+   "src": "w-inna-maiya",
+   "slot": "evening",
+   "ar": "كَلَّا ۖ إِنَّ مَعِيَ رَبِّي سَيَهْدِينِ",
+   "translit": "Kalla, inna ma'iya rabbi, sayahdin",
+   "meaning": "No indeed; my Lord is with me; He will guide me",
+   "line": "Sea ahead, army behind, a nation panicking: Musa's answer arrived one verse before the road did.",
+   "caption": "كَلَّا ۖ إِنَّ مَعِيَ رَبِّي سَيَهْدِينِ\n\nNo indeed; my Lord is with me; He will guide me. Sea ahead, army behind, a nation panicking: Musa's answer arrived one verse before the road did.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 420,
+    "n": 8,
+    "k": 3,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-la-tahzan": {
+   "kind": "dua",
+   "src": "w-la-tahzan",
+   "slot": "morning",
+   "ar": "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا",
+   "translit": "La tahzan, innallaha ma'ana",
+   "meaning": "Do not grieve; indeed Allah is with us",
+   "line": "Whispered to one frightened friend under a hundred hunting feet, then bequeathed to every afraid believer since.",
+   "caption": "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا\n\nDo not grieve; indeed Allah is with us. Whispered to one frightened friend under a hundred hunting feet, then bequeathed to every afraid believer since.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
     "seed": 358,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-muhammad": {
-   "kind": "codex",
-   "src": "/muhammad",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Seerah",
-    "d": "Twenty-three years, his character and his habits"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Seerah. Twenty-three years, his character and his habits\nnoorcodex.com/muhammad\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 649,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-theology": {
-   "kind": "codex",
-   "src": "/theology",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Theology",
-    "d": "The branches, and where they parted"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Theology. The branches, and where they parted\nnoorcodex.com/theology\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 512,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-unseen": {
-   "kind": "codex",
-   "src": "/unseen",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Unseen",
-    "d": "Angels, jinn, the barzakh, the signs of the Hour"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Unseen. Angels, jinn, the barzakh, the signs of the Hour\nnoorcodex.com/unseen\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 375,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-soul": {
-   "kind": "codex",
-   "src": "/soul",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Journey of the Soul",
-    "d": "What happens after the last breath"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Journey of the Soul. What happens after the last breath\nnoorcodex.com/soul\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 107,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-pillars": {
-   "kind": "codex",
-   "src": "/pillars",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Five Pillars",
-    "d": "Shahadah, salah, zakat, sawm, hajj"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Five Pillars. Shahadah, salah, zakat, sawm, hajj\nnoorcodex.com/pillars\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 970,
     "n": 10,
     "k": 4,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-begin": {
-   "kind": "codex",
-   "src": "/begin",
+  "dua-taif-dua": {
+   "kind": "dua",
+   "src": "w-taif-dua",
    "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Begin",
-    "d": "For anyone new to Islam, from the first day"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Begin. For anyone new to Islam, from the first day\nnoorcodex.com/begin\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "ar": "اللَّهُمَّ إِلَيْكَ أَشْكُو ضَعْفَ قُوَّتِي",
+   "translit": "Allahumma ilayka ashku da'fa quwwati, wa qillata hilati, wa hawani 'alan-nas",
+   "meaning": "O Allah, to You I complain of my weakness, my scarcity of means, and my insignificance before people",
+   "line": "Bleeding outside Ta'if's wall, the Prophet ﷺ weighed only one thing: whether his Lord was displeased.",
+   "caption": "اللَّهُمَّ إِلَيْكَ أَشْكُو ضَعْفَ قُوَّتِي\n\nO Allah, to You I complain of my weakness, my scarcity of means, and my insignificance before people. Bleeding outside Ta'if's wall, the Prophet ﷺ weighed only one thing: whether his Lord was displeased.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 547,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-ramadan": {
-   "kind": "codex",
-   "src": "/ramadan",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Ramadan",
-    "d": "The month, and the tools for it"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Ramadan. The month, and the tools for it\nnoorcodex.com/ramadan\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 377,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-hajj": {
-   "kind": "codex",
-   "src": "/hajj",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Hajj & Umrah",
-    "d": "The rites, step by step, with their evidence"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Hajj & Umrah. The rites, step by step, with their evidence\nnoorcodex.com/hajj\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 765,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-eid": {
-   "kind": "codex",
-   "src": "/eid",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Two Eids",
-    "d": "Fitr and Adha"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Two Eids. Fitr and Adha\nnoorcodex.com/eid\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 421,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-timeline": {
-   "kind": "codex",
-   "src": "/#timeline",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Path of Creation",
-    "d": "71 chapters, from Kun Fayakun to the Hour"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Path of Creation. 71 chapters, from Kun Fayakun to the Hour\nnoorcodex.com\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 525,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-companions": {
-   "kind": "codex",
-   "src": "/companions",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Companions",
-    "d": "The men and women who saw him ﷺ"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Companions. The men and women who saw him ﷺ\nnoorcodex.com/companions\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 541,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-heroes": {
-   "kind": "codex",
-   "src": "/heroes",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Heroes of Islam",
-    "d": "The people who carried it after them"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Heroes of Islam. The people who carried it after them\nnoorcodex.com/heroes\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 466,
+    "pal": "sand",
+    "seed": 614,
     "n": 10,
     "k": 4,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-characters": {
-   "kind": "codex",
-   "src": "/characters",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Characters",
-    "d": "Everyone the Codex names"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Characters. Everyone the Codex names\nnoorcodex.com/characters\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "dua-sallim": {
+   "kind": "dua",
+   "src": "w-sallim",
+   "slot": "morning",
+   "ar": "اللَّهُمَّ سَلِّمْ سَلِّمْ",
+   "translit": "Allahumma sallim, sallim",
+   "meaning": "O Allah, bring them through safely, bring them through",
+   "line": "On the Sirat, over the Fire, the messengers who split seas will be saying two words on behalf of the crossers.",
+   "caption": "اللَّهُمَّ سَلِّمْ سَلِّمْ\n\nO Allah, bring them through safely, bring them through. On the Sirat, over the Fire, the messengers who split seas will be saying two words on behalf of the crossers.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 160,
-    "n": 10,
-    "k": 4,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-places": {
-   "kind": "codex",
-   "src": "/places",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Places",
-    "d": "The ground it happened on"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Places. The ground it happened on\nnoorcodex.com/places\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 408,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-sermon": {
-   "kind": "codex",
-   "src": "/sermon",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Last Sermon",
-    "d": "The final khutbah, line by line"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Last Sermon. The final khutbah, line by line\nnoorcodex.com/sermon\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 50,
-    "n": 10,
-    "k": 4,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-good-life": {
-   "kind": "codex",
-   "src": "/good-life",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "How to Live a Good Life",
-    "d": "Tayyiba: a good life, not an easy one"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: How to Live a Good Life. Tayyiba: a good life, not an easy one\nnoorcodex.com/good-life\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 741,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-three-lives": {
-   "kind": "codex",
-   "src": "/three-lives",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Three Lives",
-    "d": "Weigh your own against them"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Three Lives. Weigh your own against them\nnoorcodex.com/three-lives\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 661,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-family": {
-   "kind": "codex",
-   "src": "/family",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Family Room",
-    "d": "Children, parents, neighbours"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Family Room. Children, parents, neighbours\nnoorcodex.com/family\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 557,
+    "pal": "sand",
+    "seed": 485,
     "n": 12,
     "k": 5,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-marriage": {
-   "kind": "codex",
-   "src": "/marriage",
+  "dua-subhan": {
+   "kind": "dua",
+   "src": "w-subhan",
    "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Marriage & the Home",
-    "d": "From the proposal to the household"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Marriage & the Home. From the proposal to the household\nnoorcodex.com/marriage\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ",
+   "translit": "Subhanallahi wa bihamdih, subhanallahil-azim",
+   "meaning": "Glory to Allah and praise Him; glory to Allah the Magnificent",
+   "line": "Light on the tongue, heavy on the Scale, beloved to the Most Merciful: the closing hadith of Sahih al-Bukhari.",
+   "caption": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ\n\nGlory to Allah and praise Him; glory to Allah the Magnificent. Light on the tongue, heavy on the Scale, beloved to the Most Merciful: the closing hadith of Sahih al-Bukhari.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 502,
+    "pal": "sand",
+    "seed": 702,
     "n": 8,
     "k": 3,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-health": {
-   "kind": "codex",
-   "src": "/health",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Prophetic Health",
-    "d": "The body, the plate, the fast, hijama"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Prophetic Health. The body, the plate, the fast, hijama\nnoorcodex.com/health\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "dua-shahada": {
+   "kind": "dua",
+   "src": "w-shahada",
+   "slot": "morning",
+   "ar": "لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ",
+   "translit": "La ilaha illallah, Muhammadur-rasulullah",
+   "meaning": "None has the right to be worshipped but Allah; Muhammad is the Messenger of Allah",
+   "line": "The best thing said by him ﷺ and the prophets before him; the card that outweighs ninety-nine scrolls.",
+   "caption": "لَا إِلَٰهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ\n\nNone has the right to be worshipped but Allah; Muhammad is the Messenger of Allah. The best thing said by him ﷺ and the prophets before him; the card that outweighs ninety-nine scrolls.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 852,
+    "pal": "night",
+    "seed": 161,
+    "n": 12,
+    "k": 5,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-adhan-dua": {
+   "kind": "dua",
+   "src": "w-adhan-dua",
+   "slot": "evening",
+   "ar": "اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ",
+   "translit": "Allahumma rabba hadhihid-da'watit-tammah... ab'ath-hu maqamam-mahmudan alladhi wa'adtah",
+   "meaning": "O Allah, Lord of this perfect call... raise him to the praised station You promised him",
+   "line": "Thirty seconds after every adhan, the ummah nominates its Prophet for the station he will hold on the Day.",
+   "caption": "اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ\n\nO Allah, Lord of this perfect call... raise him to the praised station You promised him. Thirty seconds after every adhan, the ummah nominates its Prophet for the station he will hold on the Day.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 702,
+    "n": 10,
+    "k": 4,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-sayyid-istighfar": {
+   "kind": "dua",
+   "src": "w-sayyid-istighfar",
+   "slot": "morning",
+   "ar": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ",
+   "translit": "Allahumma anta rabbi, la ilaha illa ant, khalaqtani wa ana abduk...",
+   "meaning": "O Allah, You are my Lord; none has the right to be worshipped but You; You created me and I am Your servant...",
+   "line": "Covenant renewed, blessing acknowledged, sin confessed: said with certainty, it prices a day at Jannah.",
+   "caption": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ\n\nO Allah, You are my Lord; none has the right to be worshipped but You; You created me and I am Your servant.... Covenant renewed, blessing acknowledged, sin confessed: said with certainty, it prices a day at Jannah.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 373,
+    "n": 12,
+    "k": 5,
+    "scene": "dua",
+    "secs": 21
+   }
+  },
+  "dua-hawqala": {
+   "kind": "dua",
+   "src": "w-hawqala",
+   "slot": "evening",
+   "ar": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+   "translit": "La hawla wa la quwwata illa billah",
+   "meaning": "There is no power to change and no strength except by Allah",
+   "line": "The Prophet ﷺ stopped Abu Musa on the road to hand him this sentence and name its vault.",
+   "caption": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ\n\nThere is no power to change and no strength except by Allah. The Prophet ﷺ stopped Abu Musa on the road to hand him this sentence and name its vault.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
+   "look": {
+    "pal": "night",
+    "seed": 4,
     "n": 8,
     "k": 3,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-teens": {
-   "kind": "codex",
-   "src": "/teens",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "For Teenagers",
-    "d": "Written for them, not about them"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: For Teenagers. Written for them, not about them\nnoorcodex.com/teens\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "dua-salawat": {
+   "kind": "dua",
+   "src": "w-salawat",
+   "slot": "morning",
+   "ar": "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ",
+   "translit": "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammad, kama sallayta 'ala Ibrahim...",
+   "meaning": "O Allah, send Your salat upon Muhammad and the family of Muhammad, as You sent it upon Ibrahim...",
+   "line": "Every tashahhud joins the final Prophet to the first Khalil; one saying returns ten from Allah.",
+   "caption": "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ\n\nO Allah, send Your salat upon Muhammad and the family of Muhammad, as You sent it upon Ibrahim.... Every tashahhud joins the final Prophet to the first Khalil; one saying returns ten from Allah.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 469,
-    "n": 16,
-    "k": 7,
-    "scene": "codex",
-    "secs": 10
+    "pal": "night",
+    "seed": 16,
+    "n": 10,
+    "k": 4,
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-protection": {
-   "kind": "codex",
-   "src": "/protection",
+  "dua-rabbana-atina": {
+   "kind": "dua",
+   "src": "w-rabbana-atina",
    "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Protection & the Light",
-    "d": "Sihr, ruqya, the evil eye, and the myths"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Protection & the Light. Sihr, ruqya, the evil eye, and the myths\nnoorcodex.com/protection\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+   "ar": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+   "translit": "Rabbana atina fid-dunya hasanah, wa fil-akhirati hasanah, wa qina 'adhaban-nar",
+   "meaning": "Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire",
+   "line": "Both worlds in one breath, revealed among the rites of Hajj as the correction of one-world asking.",
+   "caption": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ\n\nOur Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire. Both worlds in one breath, revealed among the rites of Hajj as the correction of one-world asking.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
-    "seed": 770,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
+    "pal": "night",
+    "seed": 997,
+    "n": 12,
+    "k": 5,
+    "scene": "dua",
+    "secs": 21
    }
   },
-  "codex-simulation": {
-   "kind": "codex",
-   "src": "/simulation",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "Are We in a Simulation?",
-    "d": "The modern question, answered from the text"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: Are We in a Simulation?. The modern question, answered from the text\nnoorcodex.com/simulation\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
+  "dua-inna-lillah": {
+   "kind": "dua",
+   "src": "w-inna-lillah",
+   "slot": "morning",
+   "ar": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
+   "translit": "Inna lillahi wa inna ilayhi raji'un",
+   "meaning": "Indeed we belong to Allah, and indeed to Him we return",
+   "line": "Umm Salamah said it over her husband's death, added the taught du'a, and was compensated with the Prophet ﷺ himself.",
+   "caption": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ\n\nIndeed we belong to Allah, and indeed to Him we return. Umm Salamah said it over her husband's death, added the taught du'a, and was compensated with the Prophet ﷺ himself.\n\nEvery word of the Path, who first said it and what it did, free at noorcodex.com/words\n\n#WordsOfThePath #Dua #Islam #Quran #Arabic #NoorCodexOfLight",
    "look": {
-    "pal": "codex",
+    "pal": "night",
     "seed": 412,
-    "n": 10,
-    "k": 4,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-dictionary": {
-   "kind": "codex",
-   "src": "/dictionary",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Encyclopedia of the Path",
-    "d": "523 words this library uses, defined"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Encyclopedia of the Path. 523 words this library uses, defined\nnoorcodex.com/dictionary\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 973,
-    "n": 12,
-    "k": 5,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-madrasa": {
-   "kind": "codex",
-   "src": "/madrasa",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Classroom",
-    "d": "The whole curriculum, in order"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Classroom. The whole curriculum, in order\nnoorcodex.com/madrasa\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 476,
     "n": 8,
     "k": 3,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-kids": {
-   "kind": "codex",
-   "src": "/kids",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Kids' Codex",
-    "d": "The Greatest Game"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Kids' Codex. The Greatest Game\nnoorcodex.com/kids\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 344,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
-   }
-  },
-  "codex-stories": {
-   "kind": "codex",
-   "src": "/stories",
-   "slot": "evening",
-   "build": "build 2026.09",
-   "counts": [
-    [
-     523,
-     "words"
-    ],
-    [
-     114,
-     "surahs"
-    ],
-    [
-     350,
-     "lights"
-    ],
-    [
-     71,
-     "chapters"
-    ]
-   ],
-   "zeros": [
-    [
-     0,
-     "ads"
-    ],
-    [
-     0,
-     "accounts"
-    ],
-    [
-     0,
-     "tracking"
-    ]
-   ],
-   "room": {
-    "k": "today's room",
-    "t": "The Hall of Stories",
-    "d": "His names, told as stories"
-   },
-   "ask": {
-    "l1": "One light a day.",
-    "l2": "Follow. Save this. Send it to one person.",
-    "l3": "NOORCODEX.COM · FREE, NO ADS, NO ACCOUNT"
-   },
-   "caption": "NOOR is a free Islamic library: 523 words defined, all 114 surahs with recitation, 350 lights of history and science, the Path in 71 chapters. No ads, no account, no tracking, ever.\n\nToday's room: The Hall of Stories. His names, told as stories\nnoorcodex.com/stories\n\nFollow for one light a day.\n\n#Islam #Muslim #Quran #IslamicLibrary #NoorCodexOfLight",
-   "look": {
-    "pal": "codex",
-    "seed": 954,
-    "n": 8,
-    "k": 3,
-    "scene": "codex",
-    "secs": 10
+    "scene": "dua",
+    "secs": 21
    }
   }
  }
