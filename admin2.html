@@ -407,6 +407,8 @@ svg.flow .pulse{fill:var(--gold)}
 "use strict";
 /* ---------- the small kit ---------- */
 var $=function(id){return document.getElementById(id)};
+/* a reel's file: the manifest row's own URL once the shelf is on the store, else the file on the site */
+var reelUrl=function(c,what){var u=c&&c[what];if(typeof u==="string"&&/^https:\/\//.test(u))return u;return "/reels/"+(c&&c.id||"")+(what==="cover"?"-cover.jpg":".mp4")};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
 var relock=function(){$("app").classList.remove("on");$("gate").hidden=false;$("err").textContent="The key has expired. Enter it again.";$("enter").disabled=false};
 var answer=function(r){if(r.status===401){relock();return{ok:false,status:401,j:{},locked:true}}return r.json().catch(function(){return null}).then(function(j){return{ok:r.ok,status:r.status,j:j}})};
@@ -747,7 +749,7 @@ function drawPosts(force){
       +'<p class="sec">What has gone out</p><details class="fold"><summary>The log<span class="pill">'+((lg.log||[]).length)+'</span></summary><div class="in">'+((lg.log||[]).slice(0,30).map(function(l){return '<div class="small" style="padding:5px 0;border-bottom:1px solid var(--line)"><code style="background:none;border:0;padding:0">'+esc(String(l.at||"").slice(5,16).replace("T"," "))+'</code> '+esc(l.slot||"")+' <span class="'+(l.state==="sent"?"":"muted")+'">'+esc(l.state||"")+'</span></div>'}).join("")||'<div class="empty">Nothing yet.</div>')+'</div></details>';
     /* the reels build only when opened */
     var fold=$("reels-fold");fold.dataset.cards=JSON.stringify(cards.map(function(c){return{id:c.id,hook:c.hook,slot:c.slot,caption:c.caption}}));
-    fold.addEventListener("toggle",function(){if(fold.open&&!fold.dataset.built){fold.dataset.built="1";var cs=JSON.parse(fold.dataset.cards);$("reel-grid").innerHTML=cs.map(function(c){return '<div class="reel" data-reel="'+esc(c.id)+'"><img loading="lazy" src="/reels/'+esc(c.id)+'-cover.jpg" alt=""><b>'+esc(c.hook)+'</b></div>'}).join("")}});
+    fold.addEventListener("toggle",function(){if(fold.open&&!fold.dataset.built){fold.dataset.built="1";var cs=JSON.parse(fold.dataset.cards);$("reel-grid").innerHTML=cs.map(function(c){return '<div class="reel" data-reel="'+esc(c.id)+'"><img loading="lazy" src="'+esc(reelUrl(c,"cover"))+'" alt=""><b>'+esc(c.hook)+'</b></div>'}).join("")}});
     el.onclick=function(e){
       var b=e.target.closest("button,[data-red],[data-reel]");if(!b)return;
       if(b.dataset.mode)return setMode(b.dataset.mode);
@@ -760,7 +762,7 @@ function drawPosts(force){
       if(b.dataset.renew){b.disabled=true;return post("/api/social",{action:"renewed",which:b.dataset.renew}).then(function(r){var good=r.ok&&r.j.ok!==false;toast(good?"Clock reset.":(r.j.why||r.j.error||"It refused."),!good);bust();drawPosts(true)}).catch(unreachable(b))}
       if(b.dataset.red!=null){var h=heldR[+b.dataset.red]||{};return sheet('<h2>'+esc(h.title||"Reddit draft")+'</h2><p class="sub">'+esc(h.slot||"")+' · copy it, then post it yourself where it belongs.</p><div class="msg">'+esc(h.text||h.body||"")+'</div><div class="acts"><button class="btn" id="cp">Copy the draft</button><button class="btn ghost" id="cl">Close</button></div>')
         ,setTimeout(function(){$("cp").onclick=function(){navigator.clipboard.writeText(h.text||h.body||"").then(function(){toast("Copied.")},function(){toast("Could not copy.",true)})};$("cl").onclick=closeSheet},0)}
-      if(b.dataset.reel){var c=JSON.parse(fold.dataset.cards).filter(function(x){return x.id===b.dataset.reel})[0]||{};return sheet('<h2 style="font-size:17px">'+esc(c.hook)+'</h2><p class="sub">'+esc(c.slot)+' · '+esc(c.id)+'</p><video src="/reels/'+esc(c.id)+'.mp4" poster="/reels/'+esc(c.id)+'-cover.jpg" controls playsinline preload="none" style="width:100%;border-radius:12px;background:#05060f;aspect-ratio:9/16;max-height:60svh"></video><details style="margin-top:12px"><summary class="muted small" style="cursor:pointer">The caption</summary><div class="msg small" style="margin-top:8px">'+esc(c.caption||"")+'</div></details>')}
+      if(b.dataset.reel){var c=JSON.parse(fold.dataset.cards).filter(function(x){return x.id===b.dataset.reel})[0]||{};return sheet('<h2 style="font-size:17px">'+esc(c.hook)+'</h2><p class="sub">'+esc(c.slot)+' · '+esc(c.id)+'</p><video src="'+esc(reelUrl(c,"video"))+'" poster="'+esc(reelUrl(c,"cover"))+'" controls playsinline preload="none" style="width:100%;border-radius:12px;background:#05060f;aspect-ratio:9/16;max-height:60svh"></video><details style="margin-top:12px"><summary class="muted small" style="cursor:pointer">The caption</summary><div class="msg small" style="margin-top:8px">'+esc(c.caption||"")+'</div></details>')}
     };
   }).catch(function(e){console.error(e);el.innerHTML='<div class="card"><b style="color:var(--bad)">The posts could not be read.</b><div class="muted small" style="margin-top:6px">'+esc(e&&e.message||e)+'</div></div>'});
 }

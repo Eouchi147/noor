@@ -52,7 +52,9 @@ These are not preferences. They are refused, not negotiated.
 - Sam drags files into GitHub's web UI (100 files per drag). He is never
   asked to run a terminal or git command. Nothing is ever pushed to the
   live repository by anyone else; pull requests opened by the workflows
-  (`reels`, `dictionary`) are merged by him.
+  (`reels`, `dictionary`) are merged by him, except the `reels` ones, which
+  he allowed the house to merge on his behalf on 9 September 2026 after
+  reading their summary.
 - Sam types every secret himself: passwords, tokens, API keys, codes, card
   details. A page may show a token once after a consent flow; the house
   keeps no copy. Terms and agreements are accepted only with his explicit
@@ -70,16 +72,23 @@ These are not preferences. They are refused, not negotiated.
   day (08, 11, 14, 17, 21 UTC): One verse, The word, one of the 99 Names, Did
   you know?, the day's card, This day, and a du'a of the Path. The Codex reel
   (the brand's own) was retired on 9 September 2026: it praised the house
-  and taught nothing. A rota by weekday (11 verses, 7 words, 7 Names, 5 Did
-  you knows, 3 day's cards, 2 du'as a week), one no-repeat walk per kind, a
-  This day reel on its own Hijri date; 458 cards on the shelf. One idea per
-  screen, night and gold, no HUD, no stat, no end card asking to be
-  followed; every frame measured against the safe area. The render workflow
-  spreads a shelf over up to eight machines and opens one pull request.
-  The picture is a shader in the browser; the words are anime.js on a tempo
-  grid per kind; the sound is built in numpy and finished in Pedalboard;
-  every reel is levelled (-18 LUFS; -16 for a verse). A different reciter
-  each time from the roster in `verses.py`, named on screen.
+  and taught nothing. The shelf is 1,265 cards: 300 verses, all 523 words of
+  the dictionary, the 99 Names, 225 Did you knows and 79 day's cards written
+  by hand from the Lights (`know.json`, `light.json`, every fact proved by
+  `copy_audit.py`), 21 This days, 18 du'as. A rota by weekday (11 verses, 9
+  words, 6 Names, 6 Did you knows, 2 day's cards, 1 du'a a week), each kind
+  walked by the running count of its slots so nothing is shown twice in a
+  day and a verse is not shown twice in six months; a This day reel on its
+  own Hijri date. One idea per screen, night and gold, no HUD, no stat, no
+  end card asking to be followed; every frame measured against the safe
+  area. The render workflow spreads a shelf over up to sixteen machines, the
+  finished videos go to a Vercel Blob store (`shelf_blob.py`, the token a
+  repository secret) and the repository keeps one small sidecar per reel and
+  the manifest; a card that leaves the plan leaves the shelf. The picture is
+  a shader in the browser; the words are anime.js on a tempo grid per kind;
+  the sound is built in numpy and finished in Pedalboard; every reel is
+  levelled (-18 LUFS; -16 for a verse). A different reciter each time from
+  the roster in `verses.py`, named on screen.
 - **Channels** (`api/_channels.js`): Facebook and Instagram live, and every
   post there goes up a second time as a story (`social.stories` dial);
   YouTube Shorts for reels once the consent is given; Pinterest approved
@@ -125,9 +134,11 @@ tells him what to drag and what to press. Not before.
 ## What is next
 
 The second cut of the reels (shader picture, tempo grid, the muted drum,
-seven kinds, 458 cards) was rendered on GitHub on 9 September 2026 and
-waits in the `reels/rendered` pull request. Then: the Telegram bot and
-channel made in Sam's Telegram, and the two variables; more day's cards
-and Did you knows; the achievements room by field and era; the internal
+seven kinds) was rendered on GitHub on 9 September 2026 and the shelf
+grew to 1,265 cards the same night. Then: the shelf onto the Blob store
+once the token is set; a narrated branch for the Did you know, day's card
+and This day reels (Sam's own voice tool, the library's own words, never
+under the Qur'an); the Telegram bot and channel made in Sam's Telegram, and
+the two variables; the achievements room by field and era; the internal
 linking audit once the dictionary pull request is live; the rota leaning
 on what the insights say strangers watch.
