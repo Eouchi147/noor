@@ -1,679 +1,706 @@
-/* NOOR reel · the type layer, animated with the same anime.js build the site
-   uses (assets/anime.min.js, v4.5.0, custom NOOR build).
+/* NOOR reel · the type layer, v2, animated with the same anime.js build the
+   site uses (assets/anime.min.js, v4.5.0, custom NOOR build).
 
    The reel is rendered a frame at a time by a headless browser, so the
    timeline never plays: it is built paused and seeked to an exact millisecond
    for every frame. That is why nothing here uses requestAnimationFrame.
 
-   Five kinds of card share this file and one opening: a bloom, a streak of
-   light across the frame, and the mark drawing itself.
+   ONE IDEA PER SCREEN. A card is a short sequence of screens, each centred in
+   the safe rectangle, each arriving on a beat, holding long enough to be
+   read, and leaving before the next one comes. Nothing is stacked, nothing
+   is crowded, and there is no furniture: no stat grid, no build number, no
+   ticks, no category label, no end card asking to be followed.
 
-     light   the day's card: a claim, a dateline, three sentences   (top left)
-     know    Did you know?: the same column, one sentence, gone by 13 s
-     day     This day: the numeral of the Hijri date, the name of the day
-     word    The word: the Arabic word itself, centred, then what it means
-     verse   One verse: the Arabic in the Quran cut, the meaning arriving
-             sentence by sentence under the recitation, whose length the
-             renderer measured from the audio file and passed in
+   Seven kinds share this file:
 
-   Every build hands back INFO with the moments the sound is placed on, so the
-   notes land on what the picture does. */
+     light  the day's card:  hook, dateline, three lines, the hook again
+     know   Did you know?:   the same shape, one line of evidence
+     day    This day:        the numeral of the Hijri date, the day, its lines
+     word   The word:        the Arabic, how to say it, what it means
+     name   One of the 99:   the Name, how to say it, what it means, one line
+     dua    Words of the Path: the du'a, how to say it, what it means, one line
+     verse  One verse:       the Uthmani text, breathing with the recitation,
+                             the meaning arriving beneath it sentence by
+                             sentence, and the reciter credited at the end
+
+   Motion: outExpo and outQuint, nothing shorter than 300 ms, nothing that
+   snaps. Every build hands back INFO with the moments the sound is placed on,
+   and how long the card wants to be, so the picture and the bed are one
+   timeline. */
 (function () {
   "use strict";
   var A = window.anime;
   var SAFE_T = 270, SAFE_B = 1500;
-  var HOOK_SIZES = [78, 72, 66, 60, 56, 52, 48];
-  /* the body has a legibility floor: on a phone, 36px of a 1080px frame is
-     about the size Instagram sets its own caption at, and below that the
-     substance stops being read. So the hook gives way first, and only if no
-     hook size at all can house a 36px body does the body drop further. */
-  var BODY_SIZES = [44, 42, 40, 38, 36];
-  var BODY_TIGHT = [34, 32];
+  var MID = (SAFE_T + SAFE_B) / 2;          /* every screen is centred here */
+  var AVAIL = SAFE_B - SAFE_T - 60;         /* 30px of air top and bottom */
+  var COL_L = 146, COL_W = 788;             /* inset from the safe edges: a
+                                               blurred, glowing word bleeds */
+  var FLOOR = 0.52;                         /* the smallest a screen may be set */
+
+  /* every kind has a tempo, between 76 and 88, and every moment of its
+     timeline is quantised to an eighth of it, so the words, the swells of
+     light and the drum all land together. One verse has no tempo: the
+     recitation sets the time. */
+  var BPM = { light: 80, know: 84, day: 76, word: 80, name: 78, dua: 76, verse: 0 };
 
   var el = function (id) { return document.getElementById(id); };
-  var T = null, INFO = null, FIT = null, SECS = 0, KIND = "light";
   var ms = function (s) { return Math.round(s * 1000); };
+  var T = null, INFO = null, SECS = 0, KIND = "light";
+  var STAGE = null, SCREENS = [], AYAH = null;
+  var GRID = { bpm: 0, beat: 0, eighth: 0, bar: 0 };
 
-  /* THE GRID. Every kind has a tempo, and every moment in its timeline is
-     quantised to an eighth of that tempo, so the words, the swells and the
-     notes all land together. No beat is ever sounded: the grid is felt.
-     One verse has no grid, because the recitation sets the time. */
-  var BPM = { light: 96, know: 108, day: 84, word: 92, verse: 0, codex: 120 };
-  var GRID = { bpm: 0, eighth: 0, beat: 0, bar: 0 };
   function grid(kind) {
     var b = BPM[kind] || 0;
-    GRID = b ? { bpm: b, beat: 60 / b, eighth: 30 / b, bar: 240 / b } : { bpm: 0, beat: 0, eighth: 0, bar: 0 };
+    GRID = b ? { bpm: b, beat: 60 / b, eighth: 30 / b, bar: 240 / b }
+             : { bpm: 0, beat: 0, eighth: 0, bar: 0 };
     return GRID;
   }
-  /* to the nearest eighth, never earlier than `min` */
-  function q(t, min) {
-    if (!GRID.eighth) return t;
-    var v = Math.round(t / GRID.eighth) * GRID.eighth;
-    if (min != null && v < min) v += GRID.eighth;
-    return v;
+  /* to the nearest eighth, and always to a whole millisecond, so a time and
+     the cue the audit reads back off the timeline are the same number */
+  function q(t) {
+    if (GRID.eighth) t = Math.round(t / GRID.eighth) * GRID.eighth;
+    return Math.round(t * 1000) / 1000;
   }
-  /* to the next beat at or after t */
-  function qb(t) { if (!GRID.beat) return t; return Math.ceil(t / GRID.beat - 1e-6) * GRID.beat; }
 
-  /* what the picture is told each frame, from what the type is doing */
-  var SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.42, secs: 0, pulse: null, pulseStart: 0, fps: 30 };
+  /* ---------------------------------------------------------------- the scene */
+  var SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.46, secs: 0,
+                pulse: null, pulseStart: 0, fps: 30 };
+
   function bloomAt(t, list, rise, fall) {
     var a = 0;
-    for (var i = 0; i < list.length; i++) { var u = t - list[i]; if (u < 0) continue; a += Math.min(1, u / rise) * Math.exp(-Math.max(0, u - rise) / fall); }
+    for (var i = 0; i < list.length; i++) {
+      var u = t - list[i];
+      if (u < 0) continue;
+      a += Math.min(1, u / rise) * Math.exp(-Math.max(0, u - rise) / fall);
+    }
     return Math.min(1, a);
   }
+
   function scenePush(t) {
     var pulse = 0;
-    if (SCENE.pulse) { var i = Math.floor((t - SCENE.pulseStart) * SCENE.fps); if (i >= 0 && i < SCENE.pulse.length) pulse = SCENE.pulse[i]; }
-    var lift = Math.max(0, Math.min(1, (t - 0.2) / 2.2));
+    if (SCENE.pulse) {
+      var i = Math.floor((t - SCENE.pulseStart) * SCENE.fps);
+      if (i >= 0 && i < SCENE.pulse.length) pulse = SCENE.pulse[i];
+    }
+    /* the Qur'an breathes with the voice: the glow on the Uthmani text is the
+       reciter's own loudness, frame by frame */
+    if (AYAH) AYAH.style.setProperty("--g", pulse.toFixed(3));
     window.NOORSCENE.frame({
       t: t,
-      cue: Math.max(0, Math.min(1, (t - SCENE.cue) / 1.6)),
-      bloom: bloomAt(t, SCENE.blooms, 0.22, 0.9),
-      hit: bloomAt(t, SCENE.hits, 0.06, 0.35),
+      cue: Math.max(0, Math.min(1, (t - SCENE.cue) / 1.8)),
+      bloom: bloomAt(t, SCENE.blooms, 0.30, 1.1),
+      hit: bloomAt(t, SCENE.hits, 0.09, 0.42),
       pulse: pulse,
-      recede: SCENE.recede ? Math.max(0, Math.min(1, (t - SCENE.recede) / 1.4)) : 0,
+      recede: SCENE.recede ? Math.max(0, Math.min(1, (t - SCENE.recede) / 1.6)) : 0,
       focus: SCENE.focus,
-      scrim: 0.25 + 0.45 * lift,
-      progress: SCENE.secs ? t / SCENE.secs : 0,
-      beat: GRID.beat ? (t / GRID.beat) % 1 : 0
+      scrim: 0.35,
+      progress: SCENE.secs ? t / SCENE.secs : 0
     });
   }
 
-  function letters(node, text, cls) {
-    node.textContent = "";
-    for (var i = 0; i < text.length; i++) {
-      var s = document.createElement("span");
-      s.textContent = text[i];
-      if (cls) s.className = cls;
-      node.appendChild(s);
-    }
-    return node.querySelectorAll("span");
+  /* ---------------------------------------------------------------- the screens */
+  function reset() {
+    if (T) { try { T.revert(); } catch (e) { } T = null; }
+    STAGE = el("stage");
+    STAGE.textContent = "";
+    SCREENS = []; AYAH = null;
+    SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.46, secs: 0,
+              pulse: null, pulseStart: 0, fps: 30 };
   }
 
-  /* the hook is split into words so it can arrive as speech does, and the key
-     phrase is marked so it can be coloured and underlined on its own */
-  function splitHook(text, key) {
-    var hook = el("hook");
-    hook.textContent = "";
-    /* the key is located by position, not by its first word, so "a straight
-       line" in "turn a circle into a straight line" golds the right "a" */
+  function screen() {
+    var d = document.createElement("div");
+    d.className = "screen";
+    d.style.left = COL_L + "px"; d.style.width = COL_W + "px";
+    STAGE.appendChild(d);
+    SCREENS.push(d);
+    d._items = [];
+    return d;
+  }
+
+  /* one element on a screen. `base` is its size before the fitter has had its
+     say; `lh` its line height; `gap` the air above it. */
+  function put(scr, cls, text, base, lh, gap) {
+    var d = document.createElement("div");
+    d.className = cls;
+    if (text != null) d.textContent = text;
+    d.dataset.base = base;
+    d.style.lineHeight = String(lh);
+    if (gap) d.dataset.gap = gap;
+    scr.appendChild(d);
+    scr._items.push(d);
+    return d;
+  }
+
+  /* a line of substance gets a screen to itself, set large and at full
+     brightness with its number or name in gold. 42px is the floor: a line
+     smaller than that is not read on a phone in a feed, so a card whose line
+     will not fit at 42 is unfit rather than unreadable. */
+  function lineScreen(text) {
+    var s = screen();
+    var d = put(s, "line", null, 56, 1.40, 0);
+    d.dataset.min = 42;
+    goldLine(d, text);
+    return s;
+  }
+
+  /* THE GOLD IN A LINE. One thing in a line of substance is turned gold: the
+     first number in it, or the first proper name, whichever comes first, and
+     nothing at all if it has neither. The rule is mechanical on purpose,
+     because a rule that guessed would sooner or later gild the wrong word:
+
+       a number is a run of digits with its thousands commas and its ordinal
+       ending if it has one (964, 1,000, 14th);
+       a name is a capitalised word that is not the first word of the line
+       (that one is capitalised by grammar, not by being a name) and is not
+       one of the words grammar capitalises anyway, run forward through the
+       words after it while they are capitalised too, or are the particles
+       that hold an Arabic name together, so "Ibn al-Haytham" and
+       "Abd al-Rahman al-Sufi" arrive whole.
+  */
+  /* the words grammar capitalises at the head of a sentence, which are not
+     names however they are set. A name that is also one of these does not
+     exist in the library's own text, and if it ever does it simply stays
+     white, which is the safe way to be wrong. */
+  var NOT_A_NAME = new RegExp("^(" + (
+    "The A An In On At By For From And But Not No Nor Neither Both Or If So As Of To With " +
+    "It Its He She They We You His Her Their That This These Those There Here " +
+    "When What Where Who Why How Which While Since Until Because Though Although " +
+    "Each Every Any All Many Most Some Few Several Other Another Such Only Just " +
+    "One Two Three Four Five Six Seven Eight Nine Ten Half Twice Once " +
+    "Today Now Then Later Earlier Still Yet Even Like Unlike Together " +
+    "After Before During Within Under Over Above Below Across Around Between " +
+    "Among Along Behind Beyond Near Next Into Through Without Against About " +
+    "Nobody Anyone Everyone Nothing Something Everything Its").split(" ").join("|") + ")$");
+  var A_NUMBER = /^\d[\d,.]*(?:st|nd|rd|th)?[.,;:]?$/;
+  var PARTICLE = /^(al|ad|ar|as|az|ash|el|ul|ibn|bin|bint|abu|abd|umm)-?[A-Za-z]/;
+  var bare = function (w) { return String(w).replace(/[.,;:!?]$/, ""); };
+
+  function namey(w) {
+    var b = bare(w);
+    return (/^[A-Z][A-Za-z'’\-]*$/.test(b) && !NOT_A_NAME.test(b)) ||
+           (PARTICLE.test(b) && /[A-Z]/.test(b));
+  }
+  var ENDS_CLAUSE = /[,;:]$/;                       /* a name stops at a comma */
+
+  function goldRun(list) {
+    for (var i = 0; i < list.length; i++) {
+      if (A_NUMBER.test(list[i])) return [i, i];
+      if (i === 0) continue;                       /* grammar, not a name */
+      var w = bare(list[i]);
+      if (!/^[A-Z][A-Za-z'’\-]*$/.test(w) || NOT_A_NAME.test(w)) continue;
+      var j = i;
+      if (ENDS_CLAUSE.test(list[i])) return [i, i];
+      while (j + 1 < list.length && j - i < 3) {   /* four words is a long name */
+        if (!namey(list[j + 1])) break;
+        j++;
+        if (ENDS_CLAUSE.test(list[j])) break;
+      }
+      /* the first word of the line was passed over because grammar capitalises
+         it; if the name runs on from it, it belongs to the name after all
+         ("Abu Bakr al-Razi", "Zubayda bint Ja'far") */
+      while (i > 0 && namey(list[i - 1]) && !ENDS_CLAUSE.test(list[i - 1]) && j - i < 3) i--;
+      return [i, j];
+    }
+    return null;
+  }
+
+  function goldLine(node, text) {
+    node.textContent = "";
+    var list = String(text).split(/\s+/);
+    var run = goldRun(list);
+    if (!run) { node.textContent = text; return node; }
+    var before = list.slice(0, run[0]).join(" ");
+    var gold = list.slice(run[0], run[1] + 1).join(" ");
+    var after = list.slice(run[1] + 1).join(" ");
+    var tail = gold.match(/[.,;:!?]$/);            /* the stop belongs to the
+                                                      sentence, not the name */
+    if (tail) { gold = gold.slice(0, -1); after = tail[0] + (after ? " " + after : ""); }
+    if (before) node.appendChild(document.createTextNode(before + " "));
+    var g = document.createElement("i");
+    g.className = "g"; g.style.fontStyle = "normal"; g.textContent = gold;
+    node.appendChild(g);
+    if (after) node.appendChild(document.createTextNode((tail ? "" : " ") + after));
+    return node;
+  }
+
+  /* a line of type split into words, so it can arrive as speech does.
+     The box itself is lit: only the words inside it are animated, and a box
+     left at the stylesheet's opacity 0 would hide every one of them. */
+  function words(node, text, key) {
+    node.textContent = "";
+    node.style.opacity = 1;
     var keyWords = [], firstKey = -1;
     if (key) {
-      var i = text.toLowerCase().indexOf(key.toLowerCase());
+      var i = text.toLowerCase().indexOf(String(key).toLowerCase());
       if (i >= 0) {
         keyWords = text.slice(i, i + key.length).split(/\s+/);
         firstKey = text.slice(0, i).trim() ? text.slice(0, i).trim().split(/\s+/).length : 0;
       }
     }
     var need = keyWords.slice();
-    var words = text.split(/\s+/);
-    words.forEach(function (w, i) {
+    var list = text.split(/\s+/);
+    list.forEach(function (w, i) {
       var s = document.createElement("span");
       s.className = "w";
       s.textContent = w;
       if (need.length && i >= firstKey && w.replace(/[^\w'’-]/g, "") ===
-          need[0].replace(/[^\w'’-]/g, "")) {
-        s.classList.add("key"); need.shift();
-      }
-      hook.appendChild(s);
-      if (i < words.length - 1) hook.appendChild(document.createTextNode(" "));
+          need[0].replace(/[^\w'’-]/g, "")) { s.classList.add("key"); need.shift(); }
+      node.appendChild(s);
+      if (i < list.length - 1) node.appendChild(document.createTextNode(" "));
     });
-    return hook.querySelectorAll(".w");
+    return node.querySelectorAll(".w");
   }
 
-  function applyBody(px) {
-    el("body").querySelectorAll(".blk div").forEach(function (d) {
-      d.style.fontSize = px + "px";
-      d.style.lineHeight = Math.round(px * 1.34) + "px";
+  /* the fitter: each screen is set as large as it can be and still stand
+     inside the safe rectangle with air above and below, then centred there.
+     It is measured at rest, with everything in place, because a column
+     measured while it is being built is not the column that renders. */
+  function applyScale(scr, sc) {
+    scr._sc = sc;
+    scr.querySelectorAll("[data-base],[data-gap]").forEach(function (e) {
+      if (e.dataset.base)
+        e.style.fontSize = Math.max(parseFloat(e.dataset.min || 16),
+                                    Math.round(parseFloat(e.dataset.base) * sc)) + "px";
+      if (e.dataset.gap)
+        e.style.marginTop = Math.round(parseFloat(e.dataset.gap) * sc) + "px";
     });
+    if (scr._trans) sizeTrans(scr._trans);
   }
 
-  function fitColumn() {
-    var hook = el("hook"), col = el("col");
-    var avail = SAFE_B - SAFE_T - 46;   // descenders, and the rise a block
-                                        // still has to travel when it arrives
-    function tryPass(sizes, tight) {
-      for (var a = 0; a < HOOK_SIZES.length; a++) {
-        hook.style.fontSize = HOOK_SIZES[a] + "px";
-        var lines = Math.round(hook.getBoundingClientRect().height /
-                               (HOOK_SIZES[a] * 1.17));
-        if (lines > 4) continue;
-        for (var b = 0; b < sizes.length; b++) {
-          applyBody(sizes[b]);
-          if (col.getBoundingClientRect().height <= avail)
-            return { hook: HOOK_SIZES[a], body: sizes[b], lines: lines,
-                     fits: true, tight: !!tight };
-        }
+  function sizeTrans(box) {
+    var h = 0;
+    box.querySelectorAll(".s").forEach(function (s) { h = Math.max(h, s.getBoundingClientRect().height); });
+    box.style.height = Math.ceil(h) + "px";
+  }
+
+  function place(scr) {
+    var h = scr.getBoundingClientRect().height;
+    scr.style.top = Math.round(MID - h / 2) + "px";
+    return h;
+  }
+
+  /* too tall, or too wide. Wide happens: a transliteration is one word set in
+     capitals with a fifth of an em between the letters, and
+     "Muhammadur-rasulullah" at 40px is fifty pixels wider than the column,
+     which centres it and hangs it over both safe edges. A word cannot be
+     broken, so the screen is set smaller until it is inside. */
+  function over(scr) {
+    return scr.getBoundingClientRect().height > AVAIL || scr.scrollWidth > COL_W;
+  }
+
+  function fitAll() {
+    var ok = true, tight = false;
+    SCREENS.forEach(function (scr) {
+      var sc = 1.0;
+      applyScale(scr, sc);
+      while (over(scr) && sc > FLOOR) {
+        sc -= 0.04; applyScale(scr, sc);
       }
-      return null;
-    }
-    return tryPass(BODY_SIZES, false) || tryPass(BODY_TIGHT, true) ||
-           { hook: 48, body: 32, lines: 99, fits: false, tight: true };
+      if (over(scr)) ok = false;
+      if (sc < 0.8) tight = true;
+      place(scr);
+    });
+    return { fits: ok, tight: tight };
   }
 
-  /* The coarse fit measures the column while it is being built, and that is
-     not the same column that renders: with the timeline in place the resting
-     layout came out eighty pixels taller. So the last word belongs to a
-     measurement taken with everything at rest, driven from outside and checked
-     against the rendered pixels rather than trusted. */
   function rest() {
-    T.seek(SECS * 1000);
-    var b = el(KIND === "codex" ? "hud-ask" : (KIND === "word" || KIND === "verse") ? "close2" : "close")
-              .getBoundingClientRect().bottom;
-    T.seek(0);
+    var b = 0;
+    SCREENS.forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      b = Math.max(b, r.bottom);
+    });
     return b;
   }
 
   function shrink() {
-    var f = FIT;
-    if (KIND === "codex") { f.fits = false; INFO.fits = false; return false; }
-    if (KIND === "word") {
-      if (f.short > 36) { f.short -= 2; el("short").style.fontSize = f.short + "px"; }
-      else if (f.ar > 110) { f.ar -= 20; el("ar").style.fontSize = f.ar + "px"; }
-      else if (f.long > 28) { f.long -= 2; el("long").style.fontSize = f.long + "px"; }
-      else { f.fits = false; INFO.fits = false; return false; }
-      f.tight = f.short < 40; INFO.tight = f.tight; return true;
-    }
-    if (KIND === "verse") {
-      if (f.trans > 32) { f.trans -= 2; setTrans(f.trans); }
-      else if (f.ayah > 40) { f.ayah -= 6; el("ayah").style.fontSize = f.ayah + "px"; el("ayah").style.lineHeight = (f.ayah >= 60 ? 1.9 : 1.75) + ""; }
-      else { f.fits = false; INFO.fits = false; return false; }
-      f.tight = f.trans < 36; INFO.tight = f.tight; return true;
-    }
-    if (f.body > 30) { f.body -= 2; applyBody(f.body); f.tight = f.body < 36; }
-    else if (f.hook > 44) {
-      f.hook -= 4; el("hook").style.fontSize = f.hook + "px"; f.tight = true;
-    } else { f.fits = false; INFO.fits = false; return false; }
-    underline();
-    INFO.hookPx = f.hook; INFO.bodyPx = f.body;
-    INFO.tight = !!f.tight; INFO.fits = f.fits;
+    /* the screen that is furthest out of its rectangle gives way first; when
+       none of them can give any more, the card is unfit */
+    var worst = null, h = 0;
+    SCREENS.forEach(function (s) {
+      var r = Math.max(s.getBoundingClientRect().height / AVAIL, s.scrollWidth / COL_W);
+      if (r > h) { h = r; worst = s; }
+    });
+    if (!worst || (worst._sc || 1) <= FLOOR) { INFO.fits = false; return false; }
+    applyScale(worst, (worst._sc || 1) - 0.05);
+    place(worst);
+    INFO.tight = true;
     return true;
   }
 
-  /* the gold rule under the surprise, measured once the type has settled */
-  function underline() {
-    var keys = el("hook").querySelectorAll(".w.key");
-    var u = el("uline");
-    if (!keys.length) { u.style.display = "none"; return; }
-    u.style.display = "";
-    var col = el("col").getBoundingClientRect();
-    var last = keys[keys.length - 1].getBoundingClientRect();
-    var l = last.left, r = last.right, t = last.bottom;
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i].getBoundingClientRect();
-      if (Math.abs(k.bottom - t) < 6) { l = Math.min(l, k.left); r = Math.max(r, k.right); }
+  /* ---------------------------------------------------------------- the motion */
+  function arrive(tl, target, at, o) {
+    o = o || {};
+    tl.add(target, {
+      opacity: [0, o.to == null ? 1 : o.to],
+      translateY: [o.dy == null ? 26 : o.dy, 0],
+      "--b": [(o.blur == null ? 9 : o.blur) + "px", "0px"],
+      duration: o.dur || 860,
+      ease: o.ease || "outExpo",
+      delay: o.delay || 0
+    }, ms(at));
+  }
+
+  function depart(tl, target, at, o) {
+    o = o || {};
+    tl.add(target, {
+      opacity: 0, translateY: -14, "--b": "5px",
+      duration: o.dur || 680, ease: "inOutQuad"
+    }, ms(at));
+  }
+
+  /* a screen: its items arrive one after another from `at`, and the whole of
+     it leaves at `out`. Returns when the last item has landed. */
+  function showScreen(tl, scr, at, out, stepIn) {
+    var step = stepIn == null ? (GRID.eighth ? GRID.eighth * 2 : 0.75) : stepIn;
+    var t = at;
+    scr._items.forEach(function (item, i) {
+      if (item._custom) { t = item._custom(tl, t); return; }
+      arrive(tl, item, t, item._in);
+      SCENE.hits.push(t);
+      t += (i === 0 ? step : step * 0.85);
+    });
+    if (out != null) depart(tl, scr._items, out);
+    return t - step * 0.85;
+  }
+
+  /* ---------------------------------------------------------------- light, know */
+  function buildLight(card) {
+    var lines = card.lines || [];
+    var s1 = screen();
+    var hook = put(s1, "hook", null, 74, 1.20, 0);
+    var ws = words(hook, card.hook || "", card.key);
+
+    var s2 = screen();
+    put(s2, "date", (card.date || "").replace(/\s+/g, " "), 38, 1.42, 0);
+
+    var body = lines.map(lineScreen);
+
+    var s9 = screen();
+    put(s9, "smallhook", card.hook || "", 40, 1.30, 0);
+    put(s9, "site", "noorcodex.com", 30, 1.4, 46);
+
+    var f = fitAll();
+
+    var E = GRID.eighth, B = GRID.beat;
+    var step = Math.min(0.19, Math.max(0.11, E / 2));
+    var tHook = q(0.5);
+    var hookEnd = q(tHook + (ws.length - 1) * step + 0.86);
+    var outHook = q(hookEnd + B * 2.4);
+    var tDate = q(outHook + B * 0.5);
+    var outDate = q(tDate + B * 3);
+    /* one line of evidence is held longer than one of three: a Did you know
+       has only that line, and the reel is over as soon as it is read */
+    var hold = lines.length > 1 ? B * 4 : B * 6.2;
+
+    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
+    tl.add(ws, { opacity: [0, 1], translateY: [34, 0], "--b": ["11px", "0px"],
+                 duration: 860, delay: A.stagger(ms(step)) }, ms(tHook));
+    /* the surprise does not rule itself under: it warms */
+    var keys = s1.querySelectorAll(".w.key");
+    if (keys.length) {
+      tl.add(keys, { color: ["#FFFEF7", "#E9C86A"], "--g": [0, 1],
+                     duration: 1000, ease: "outQuad" }, ms(hookEnd - 0.2));
+      tl.add(keys, { "--g": 0.45, duration: 900, ease: "inOutQuad" }, ms(hookEnd + 1.1));
     }
-    u.style.left = (l - col.left) + "px";
-    u.style.top = (t - col.top - 8) + "px";
-    u.style.width = (r - l) + "px";
-  }
+    depart(tl, s1._items, outHook);
 
-  function setTrans(px) {
-    el("trans").querySelectorAll(".s").forEach(function (d) {
-      d.style.fontSize = px + "px";
-      d.style.lineHeight = Math.round(px * 1.40) + "px";
+    arrive(tl, s2._items[0], tDate, { dy: 18, blur: 7, dur: 900 });
+    depart(tl, s2._items, outDate);
+
+    /* one screen leaves as the next arrives: half a beat of overlap, so the
+       frame is never empty and nothing ever snaps */
+    var at = q(outDate + B * 0.5), tBody = at;
+    body.forEach(function (s) {
+      arrive(tl, s._items[0], at, { dy: 22, dur: 900 });
+      SCENE.hits.push(at);
+      depart(tl, s._items, q(at + hold));
+      at = q(at + hold + B * 0.5);
     });
-  }
-
-  /* which of the two stages a kind uses, and a clean slate on it */
-  function stage(kind) {
-    var mid = kind === "word" || kind === "verse";
-    var hud = kind === "codex";
-    /* a previous card's timeline leaves its last values as inline styles:
-       an opacity 1 on the close, a transform on a word. Every one of them
-       goes, so each card starts from the stylesheet and nothing else. */
-    if (T) { try { T.revert(); } catch (e) { } T = null; }
-    document.querySelectorAll("#stage [style]").forEach(function (e) { e.removeAttribute("style"); });
-    el("mid").style.top = "";
-    el("col").style.display = (mid || hud) ? "none" : "flow-root";
-    el("mid").style.display = mid ? "flex" : "none";
-    el("hud").style.display = hud ? "flex" : "none";
-    SCENE = { cue: 0, blooms: [], hits: [], recede: 0, focus: 0.42, secs: 0, pulse: null, pulseStart: 0, fps: 30 };
-    el("daynum").style.display = "none";
-    el("todo").style.display = "none";
-    el("body").style.marginTop = "";
-    el("date").parentNode.style.display = "";
-    ["ar", "term", "ayah", "ref", "short", "long", "trans", "reciter"].forEach(function (id) {
-      el(id).textContent = ""; el(id).style.display = "";
-    });
-    el("crule2").style.display = "";
-    el("trans").classList.remove("replace"); el("trans").style.height = "";
-  }
-
-  /* the opening every kind shares: a bloom, a streak, the mark */
-  function opening(tl, brand, cat, rule, div) {
-    tl.add("#flare", { opacity: [0, .70, 0], scale: [.25, 1.30],
-                       duration: 780, ease: "outQuad" }, 0);
-    tl.add("#streak", { opacity: [0, 1, 0], top: ["18%", "34%"],
-                        scaleX: [.2, 1], duration: 620, ease: "outQuint" }, 40);
-    tl.add(rule, { scaleX: [0, 1], duration: 460 }, 120);
-    tl.add(brand + " span", { opacity: [0, 1], translateY: [14, 0],
-                              duration: 380, delay: A.stagger(38) }, 200);
-    tl.add(div, { opacity: [0, .55], scaleY: [0, 1], duration: 320 }, 420);
-    tl.add(cat, { opacity: [0, 1], translateX: [-10, 0], duration: 420 }, 470);
-  }
-
-  /* ------------------------------------------------------------------ light / know */
-  function buildLight(card, secs) {
-    el("cat").textContent = (card.eyebrow || "").toUpperCase();
-    letters(el("brand"), "NOOR");
-    var words = splitHook(card.hook, card.key);
-    letters(el("date"), (card.date || "").toUpperCase());
-
-    var body = el("body");
-    body.textContent = "";
-    (card.lines || []).forEach(function (line) {
-      var blk = document.createElement("div");
-      blk.className = "blk";
-      var d = document.createElement("div");
-      d.textContent = line;
-      blk.appendChild(d);
-      body.appendChild(blk);
-    });
-    var blocks = body.querySelectorAll(".blk");
-    var f = fitColumn();
-
-    /* --- when everything happens, in seconds, on the grid --- */
-    var n = words.length;
-    var HK_START = q(0.18), HK_STEP = GRID.eighth ? Math.max(GRID.eighth / 2, Math.min(GRID.eighth, 0.62 / n)) : Math.min(0.062, Math.max(0.030, 0.62 / n));
-    var hookEnd = q(HK_START + (n - 1) * HK_STEP + 0.52);
-    var tDate = qb(Math.max(hookEnd + 0.18, 1.25));
-    var tBody = qb(tDate + 1.15);
-    var tClose = q(secs - 3.2);
-    var step = q(Math.max(2.1, (tClose - tBody - 0.6) / Math.max(1, blocks.length)));
-
-    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
-    opening(tl, "#brand", "#cat", "#col .mrule", "#col .mdiv");
-
-    /* the claim, word by word, out of blur */
-    tl.add("#hook .w", {
-      opacity: [0, 1], translateY: [42, 0], scale: [1.03, 1],
-      "--b": ["8px", "0px"],
-      duration: 520, delay: A.stagger(ms(HK_STEP))
-    }, ms(HK_START));
-
-    /* the surprise turns gold, then underlines itself */
-    if (el("hook").querySelector(".w.key")) {
-      tl.add("#hook .w.key", { color: ["#FFF9E3", "#E9C86A"], duration: 420 },
-             ms(hookEnd - 0.30));
-      tl.add("#uline", { scaleX: [0, 1], duration: 560, ease: "outExpo" },
-             ms(hookEnd - 0.12));
-    }
-
-    /* where and when */
-    tl.add(".drule", { scaleX: [0, 1], duration: 620 }, ms(tDate));
-    tl.add("#date span", { opacity: [0, 1], translateY: [8, 0],
-                           duration: 280, delay: A.stagger(9) }, ms(tDate + 0.18));
-
-    /* the substance, one block at a time, the earlier ones stepping back */
-    blocks.forEach(function (blk, i) {
-      var at = tBody + i * step;
-      tl.add(blk, { opacity: [0, 1], translateY: [18, 0], "--b": ["6px", "0px"],
-                    duration: 640 }, ms(at));
-      for (var j = 0; j < i; j++)
-        tl.add(blocks[j], { opacity: 1 - Math.min(.52, .26 * (i - j)),
-                            duration: 520 }, ms(at));
-    });
-
-    /* the way home */
-    tl.add("#close", { opacity: [0, 1], translateY: [18, 0], duration: 620 },
-           ms(tClose));
-
+    var tClose = q(at);
+    arrive(tl, s9._items[0], tClose, { dy: 20, dur: 900 });
+    arrive(tl, s9._items[1], q(tClose + B), { dy: 14, dur: 820 });
     tl.pause();
-    T = tl; FIT = f;
-    underline();
-    INFO = { fits: f.fits, tight: !!f.tight, hookPx: f.hook, bodyPx: f.body, lines: f.lines,
-             tDate: tDate, tBody: tBody, tClose: tClose, step: step,
-             hookEnd: hookEnd, height: el("col").getBoundingClientRect().height,
-             cover: tDate + 1.1, grid: GRID };
-    SCENE.cue = tBody + step * 0.5; SCENE.blooms = [0, hookEnd - 0.3, tClose]; SCENE.hits = [0, hookEnd - 0.3, tBody, tClose];
-    SCENE.recede = tBody - 0.5; SCENE.focus = 0.30;
-    tl.seek(0);
-    return INFO;
+    T = tl;
+
+    SCENE.cue = tBody;
+    SCENE.blooms = [0.15, hookEnd - 0.2, tBody, tClose];
+    SCENE.hits = [0.15, hookEnd - 0.2, tDate, tClose, q(tClose + B)].concat(SCENE.hits);
+    SCENE.recede = 0; SCENE.focus = 0.46;
+    return { fits: f.fits, tight: f.tight, hookPx: Math.round(74 * (s1._sc || 1)),
+             bodyPx: Math.round(56 * ((body[0] || s2)._sc || 1)),
+             lines: lines.length, secs: Math.round((tClose + B * 4.4) * 100) / 100,
+             tHook: tHook, hookEnd: hookEnd, tDate: tDate, tBody: tBody,
+             step: hold + B, tClose: tClose, cover: q(hookEnd + 0.6) };
   }
 
-  /* ------------------------------------------------------------------ day */
-  function buildDay(card, secs) {
-    /* card: num "10", month "Muharram", ar "المحرم", hook "Ashura", key,
-       lines [one or two], todo "Fast, if you are able." (optional) */
-    el("cat").textContent = (card.eyebrow || "THIS DAY").toUpperCase();
-    letters(el("brand"), "NOOR");
-    var dn = el("daynum"); dn.style.display = "flex";
-    el("dayn").textContent = String(card.num || "");
-    el("daym").textContent = String(card.month || "").toUpperCase();
-    el("dayar").textContent = card.ar || "";
-    var words = splitHook(card.hook, card.key);
-    el("date").parentNode.style.display = "none";
-    var body = el("body");
-    body.textContent = "";
-    body.style.marginTop = "40px";
-    (card.lines || []).forEach(function (line) {
-      var blk = document.createElement("div"); blk.className = "blk";
-      var d = document.createElement("div"); d.textContent = line;
-      blk.appendChild(d); body.appendChild(blk);
-    });
-    var blocks = body.querySelectorAll(".blk");
-    var todo = el("todo");
-    if (card.todo) { todo.style.display = "block"; todo.textContent = card.todo; }
-    var f = fitColumn();
+  /* ---------------------------------------------------------------- this day */
+  function buildDay(card) {
+    var lines = card.lines || [];
+    var s1 = screen();
+    put(s1, "num", String(card.num || ""), 210, 0.9, 0);
+    put(s1, "month", String(card.month || "").toUpperCase(), 44, 1.3, 34);
+    put(s1, "monthar", card.ar || "", 52, 1.4, 14);
 
-    var n = words.length;
-    var tNum = q(0.42), tHook = qb(1.10), HK_STEP = GRID.eighth ? GRID.eighth / 2 : Math.min(0.062, Math.max(0.030, 0.62 / n));
-    var hookEnd = q(tHook + (n - 1) * HK_STEP + 0.52);
-    var tBody = qb(hookEnd + 0.55);
-    var tClose = q(secs - 3.0);
-    var step = q(Math.max(1.9, (tClose - tBody - (card.todo ? 1.6 : 0.4)) / Math.max(1, blocks.length)));
-    var tTodo = q(tBody + blocks.length * step - 0.2);
+    var s2 = screen();
+    var hook = put(s2, "hook", null, 72, 1.20, 0);
+    var ws = words(hook, card.hook || "", card.key);
 
-    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
-    opening(tl, "#brand", "#cat", "#col .mrule", "#col .mdiv");
-    /* the date, big, out of blur; the month beside it */
-    tl.add("#dayn", { opacity: [0, 1], translateY: [30, 0], scale: [1.06, 1], "--b": ["10px", "0px"],
-                      duration: 700, ease: "outQuint" }, ms(tNum));
-    tl.add("#daym", { opacity: [0, 1], translateX: [-14, 0], duration: 460 }, ms(tNum + 0.30));
-    tl.add("#dayar", { opacity: [0, .9], translateX: [-10, 0], duration: 460 }, ms(tNum + 0.44));
-    tl.add("#hook .w", { opacity: [0, 1], translateY: [42, 0], scale: [1.03, 1], "--b": ["8px", "0px"],
-                         duration: 520, delay: A.stagger(ms(HK_STEP)) }, ms(tHook));
-    if (el("hook").querySelector(".w.key")) {
-      tl.add("#hook .w.key", { color: ["#FFF9E3", "#E9C86A"], duration: 420 }, ms(hookEnd - 0.30));
-      tl.add("#uline", { scaleX: [0, 1], duration: 560, ease: "outExpo" }, ms(hookEnd - 0.12));
+    var body = lines.map(lineScreen);
+
+    var s4 = null;
+    if (card.todo) { s4 = screen(); put(s4, "todo", card.todo, 52, 1.34, 0); }
+
+    var s9 = screen();
+    put(s9, "smallhook", card.hook || "", 40, 1.30, 0);
+    put(s9, "site", "noorcodex.com", 30, 1.4, 46);
+
+    var f = fitAll();
+    var E = GRID.eighth, B = GRID.beat;
+    var step = Math.min(0.19, Math.max(0.11, E / 2));
+
+    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
+    var tNum = q(0.5);
+    arrive(tl, s1._items[0], tNum, { dy: 34, blur: 14, dur: 1100, ease: "outQuint" });
+    arrive(tl, s1._items[1], q(tNum + B), { dy: 16, dur: 820 });
+    arrive(tl, s1._items[2], q(tNum + B * 1.5), { dy: 14, dur: 820, to: 0.85 });
+    var outNum = q(tNum + B * 4.4);
+    depart(tl, s1._items, outNum);
+
+    var tHook = q(outNum + B * 0.5);
+    tl.add(ws, { opacity: [0, 1], translateY: [32, 0], "--b": ["11px", "0px"],
+                 duration: 860, delay: A.stagger(ms(step)) }, ms(tHook));
+    var hookEnd = q(tHook + (ws.length - 1) * step + 0.86);
+    var keys = s2.querySelectorAll(".w.key");
+    if (keys.length) {
+      tl.add(keys, { color: ["#FFFEF7", "#E9C86A"], "--g": [0, 1], duration: 1000, ease: "outQuad" },
+             ms(hookEnd - 0.2));
+      tl.add(keys, { "--g": 0.45, duration: 900, ease: "inOutQuad" }, ms(hookEnd + 1.1));
     }
-    blocks.forEach(function (blk, i) {
-      var at = tBody + i * step;
-      tl.add(blk, { opacity: [0, 1], translateY: [18, 0], "--b": ["6px", "0px"], duration: 640 }, ms(at));
-      for (var j = 0; j < i; j++)
-        tl.add(blocks[j], { opacity: 1 - Math.min(.52, .26 * (i - j)), duration: 520 }, ms(at));
+    var outHook = q(hookEnd + B * 2.4);
+    depart(tl, s2._items, outHook);
+
+    var at = q(outHook + B * 0.5), tBody = at, hold = B * 4.6;
+    body.forEach(function (s) {
+      arrive(tl, s._items[0], at, { dy: 22, dur: 900 });
+      SCENE.hits.push(at);
+      depart(tl, s._items, q(at + hold));
+      at = q(at + hold + B * 0.5);
     });
-    if (card.todo)
-      tl.add("#todo", { opacity: [0, 1], translateY: [14, 0], "--b": ["6px", "0px"], duration: 600 }, ms(tTodo));
-    tl.add("#close", { opacity: [0, 1], translateY: [18, 0], duration: 620 }, ms(tClose));
+    var tTodo = null;
+    if (s4) {
+      tTodo = at;
+      arrive(tl, s4._items[0], at, { dy: 22, dur: 900 });
+      SCENE.hits.push(at);
+      depart(tl, s4._items, q(at + B * 4));
+      at = q(at + B * 4.5);
+    }
+    var tClose = q(at);
+    arrive(tl, s9._items[0], tClose, { dy: 20, dur: 900 });
+    arrive(tl, s9._items[1], q(tClose + B), { dy: 14, dur: 820 });
     tl.pause();
-    T = tl; FIT = f;
-    underline();
-    INFO = { fits: f.fits, tight: !!f.tight, hookPx: f.hook, bodyPx: f.body, lines: blocks.length,
-             tDate: tNum, tBody: tBody, tClose: tClose, step: step, hookEnd: hookEnd,
-             tTodo: card.todo ? tTodo : null,
-             height: el("col").getBoundingClientRect().height, cover: hookEnd + 0.9, grid: GRID };
-    SCENE.cue = tNum; SCENE.blooms = [0, tNum, hookEnd - 0.3, tClose]; SCENE.hits = [0, tNum, hookEnd - 0.3, tBody, tClose];
-    if (card.todo) { SCENE.blooms.push(tTodo); SCENE.hits.push(tTodo); }
-    SCENE.recede = tBody - 0.5; SCENE.focus = 0.30;
-    tl.seek(0);
-    return INFO;
+    T = tl;
+
+    SCENE.cue = tNum;
+    SCENE.blooms = [0.15, tNum, hookEnd - 0.2, tClose];
+    SCENE.hits = [0.15, tNum, tHook, hookEnd - 0.2, tClose].concat(SCENE.hits);
+    SCENE.focus = 0.46;
+    return { fits: f.fits, tight: f.tight, hookPx: Math.round(72 * (s2._sc || 1)),
+             bodyPx: Math.round(56 * ((body[0] || s1)._sc || 1)), lines: lines.length,
+             secs: Math.round((tClose + B * 4.4) * 100) / 100,
+             tHook: tHook, hookEnd: hookEnd, tDate: tNum, tBody: tBody, tTodo: tTodo,
+             step: hold + B, tClose: tClose, cover: q(tNum + 1.2) };
   }
 
-  /* ------------------------------------------------------------------ the centred stage */
-  function fitMid(f, apply) {
-    var avail = SAFE_B - SAFE_T - 46;
-    var mid = el("mid");
-    for (var i = 0; i < 40; i++) {
-      apply(f);
-      var h = mid.getBoundingClientRect().height;
-      if (h <= avail) {
-        f.fits = true;
-        /* the block stands in the middle of the safe rectangle, not at its top */
-        mid.style.top = Math.round(SAFE_T + Math.max(0, (avail - h) * 0.5)) + "px";
-        return f;
-      }
-      if (!step(f)) break;
-    }
-    f.fits = false; return f;
-    function step(f) {
-      if (f.short != null) {
-        if (f.short > 36) { f.short -= 2; return true; }
-        if (f.ar > 110) { f.ar -= 20; return true; }
-        if (f.long > 28) { f.long -= 2; return true; }
-        return false;
-      }
-      if (f.trans > 32) { f.trans -= 2; return true; }
-      if (f.ayah > 40) { f.ayah -= 6; return true; }
-      return false;
-    }
-  }
+  /* ------------------------------------------------- the word, a Name, a du'a */
+  function buildArabic(card, kind) {
+    /* three shapes of the same reel: the Arabic, how to say it, what it
+       means, and one sentence of substance. A reader should be able to say
+       the word by the end, so the transliteration is on screen twice. */
+    var big = kind === "dua" ? 96 : (kind === "name" ? 150 : 156);
+    var s1 = screen();
+    var ar = put(s1, "ar", card.ar || "", big, kind === "dua" ? 1.7 : 1.34, 0);
+    var tr = put(s1, "translit", null, 40, 1.32, 52);
+    var tws = words(tr, card.translit || card.term || "", null);
 
-  function buildWord(card, secs) {
-    /* card: ar "العَقِيدَة", term "Aqidah", eyebrow "The word · belief",
-       short "...", long "one sentence" */
-    el("cat2").textContent = (card.eyebrow || "THE WORD").toUpperCase();
-    letters(el("brand2"), "NOOR");
-    el("ar").textContent = card.ar || "";
-    letters(el("term"), card.term || "");
-    el("ayah").style.display = "none"; el("ref").style.display = "none";
-    el("trans").style.display = "none"; el("reciter").style.display = "none";
-    el("short").textContent = card.short || "";
-    el("long").textContent = card.long || "";
-    if (!card.long) el("long").style.display = "none";
-    el("site2").textContent = "NOORCODEX.COM/DICTIONARY";
-    el("sub2").textContent = "one of 523 words, explained free";
+    var s2 = screen();
+    put(s2, "translit", card.translit || card.term || "", 34, 1.3, 0);
+    put(s2, "meaning", card.meaning || card.short || "", 50, 1.40, 44);
 
-    var f = fitMid({ ar: 170, short: 44, long: 32, tight: false }, function (f) {
-      el("ar").style.fontSize = f.ar + "px";
-      el("short").style.fontSize = f.short + "px";
-      el("long").style.fontSize = f.long + "px";
-      f.tight = f.short < 40;
-    });
+    var s3 = null, sentence = card.line || card.long || "";
+    if (sentence) { s3 = screen(); put(s3, "sentence", sentence, 44, 1.44, 0); }
 
-    var tAr = qb(0.55), tTerm = q(tAr + 0.7), tRule = q(tTerm + 0.6), tShort = qb(tRule + 0.4);
-    var tLong = qb(Math.min(tShort + 3.6, secs - 6.4));
-    var tClose = q(secs - 3.0);
-    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
-    opening(tl, "#brand2", "#cat2", "#mid .mrule", "#mid .mdiv");
-    /* the word itself, out of light */
-    tl.add("#ar", { opacity: [0, 1], scale: [1.08, 1], "--b": ["14px", "0px"],
-                    duration: 1100, ease: "outQuint" }, ms(tAr));
-    tl.add("#term span", { opacity: [0, 1], translateY: [10, 0], duration: 320,
-                           delay: A.stagger(22) }, ms(tTerm));
-    tl.add("#crule2", { scaleX: [0, 1], duration: 620, ease: "outExpo" }, ms(tRule));
-    tl.add("#short", { opacity: [0, 1], translateY: [18, 0], "--b": ["6px", "0px"], duration: 700 }, ms(tShort));
-    if (card.long) {
-      tl.add("#long", { opacity: [0, 1], translateY: [16, 0], "--b": ["6px", "0px"], duration: 700 }, ms(tLong));
-      tl.add("#short", { opacity: .74, duration: 520 }, ms(tLong));
+    var s9 = screen();
+    put(s9, "smallar", card.ar || "", kind === "dua" ? 44 : 64, 1.5, 0);
+    put(s9, "site", "noorcodex.com", 30, 1.4, 46);
+
+    var f = fitAll();
+    var B = GRID.beat, E = GRID.eighth;
+
+    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
+    var tAr = q(0.6);
+    tl.add(ar, { opacity: [0, 1], scale: [1.06, 1], "--b": ["16px", "0px"],
+                 duration: 1500, ease: "outQuint" }, ms(tAr));
+    var tTerm = q(tAr + B * 2);
+    tl.add(tws, { opacity: [0, 1], translateY: [16, 0], duration: 760,
+                  delay: A.stagger(90) }, ms(tTerm));
+    var outAr = q(tTerm + B * 3.4);
+    depart(tl, s1._items, outAr);
+
+    var tMean = q(outAr + B * 0.5);
+    arrive(tl, s2._items[0], tMean, { dy: 14, dur: 820, to: 0.8 });
+    arrive(tl, s2._items[1], q(tMean + B), { dy: 22, dur: 940 });
+    var outMean = q(tMean + B * 5.4);
+    depart(tl, s2._items, outMean);
+
+    var tSent = null, at = outMean;
+    if (s3) {
+      tSent = q(outMean + B * 0.5);
+      arrive(tl, s3._items[0], tSent, { dy: 22, dur: 940 });
+      at = q(tSent + B * 5.4);
+      depart(tl, s3._items, at);
     }
-    tl.add("#close2", { opacity: [0, 1], translateY: [18, 0], duration: 620 }, ms(tClose));
+    var tClose = q(at + B * 0.5);
+    arrive(tl, s9._items[0], tClose, { dy: 18, dur: 940 });
+    arrive(tl, s9._items[1], q(tClose + B), { dy: 14, dur: 820 });
     tl.pause();
-    T = tl; FIT = f;
-    var ab = el("ar").getBoundingClientRect();
-    SCENE.cue = tAr; SCENE.blooms = [0, tAr, tShort, tClose]; SCENE.hits = [0, tAr, tRule, tShort, tClose];
-    if (card.long) SCENE.hits.push(tLong);
-    SCENE.recede = tShort - 0.5; SCENE.focus = (ab.top + ab.height * 0.5) / 1920;
-    INFO = { fits: f.fits, tight: !!f.tight, arPx: f.ar, shortPx: f.short, grid: GRID,
-             focus: (ab.top + ab.height * 0.5) / 1920,
-             tAr: tAr, tTerm: tTerm, tRule: tRule, tShort: tShort, tLong: card.long ? tLong : null,
-             tClose: tClose, tDate: tTerm, tBody: tShort, step: 3.6, hookEnd: tAr + 0.9,
-             height: el("mid").getBoundingClientRect().height, cover: tShort + 0.9 };
-    tl.seek(0);
-    return INFO;
+    T = tl;
+
+    SCENE.cue = tAr;
+    SCENE.blooms = [0.15, tAr, tMean, tClose].concat(tSent ? [tSent] : []);
+    SCENE.hits = [0.15, tAr, tTerm, tMean, q(tMean + B), tClose].concat(tSent ? [tSent] : []);
+    SCENE.focus = 0.46;
+    return { fits: f.fits, tight: f.tight, arPx: Math.round(big * (s1._sc || 1)),
+             hookPx: Math.round(big * (s1._sc || 1)),
+             bodyPx: Math.round(50 * (s2._sc || 1)), shortPx: Math.round(50 * (s2._sc || 1)),
+             secs: Math.round((tClose + B * 4.4) * 100) / 100,
+             tAr: tAr, tTerm: tTerm, tShort: tMean, tLong: tSent,
+             tHook: tAr, hookEnd: q(tAr + 1.5), tDate: tTerm, tBody: tMean,
+             step: B * 5.4, tClose: tClose, cover: q(tAr + 1.6) };
   }
 
-  function buildVerse(card, secs) {
-    /* card: ar "...", ref "AL-BAQARAH · 2:255", sents ["..",".."], reciter
-       "Recited by Abdul Basit Abd us-Samad", rec {start, dur} measured by the
-       renderer from the audio file itself */
-    el("cat2").textContent = (card.eyebrow || "ONE VERSE").toUpperCase();
-    letters(el("brand2"), "NOOR");
-    el("ar").style.display = "none"; el("term").style.display = "none";
-    el("short").style.display = "none"; el("long").style.display = "none";
-    el("crule2").style.display = "none";
-    el("ayah").textContent = card.ar || "";
-    el("ref").textContent = String(card.ref || "").toUpperCase();
-    var trans = el("trans"); trans.textContent = "";
-    (card.sents || []).forEach(function (s) {
-      var d = document.createElement("span"); d.className = "s"; d.textContent = s;
-      trans.appendChild(d);
+  /* ---------------------------------------------------------------- one verse */
+  function buildVerse(card) {
+    /* the Uthmani text large and centred, breathing with the recitation; the
+       meaning beneath it, sentence by sentence, one at a time; the reference
+       small. Nothing else moves. The end is the reciter, in one line. */
+    var rec = card.rec || { start: 2.0, dur: 8.0 };
+    var s1 = screen();
+    AYAH = put(s1, "quran", card.ar || "", 80, 1.95, 0);
+    put(s1, "ref", String(card.ref || "").toUpperCase(), 28, 1.4, 40);
+    var box = document.createElement("div");
+    box.className = "trans"; box.dataset.gap = 52;
+    box.style.opacity = 1;            /* the sentences inside it do the fading */
+    s1.appendChild(box);
+    (card.sents || []).forEach(function (txt) {
+      var d = document.createElement("span");
+      d.className = "s"; d.textContent = txt;
+      d.dataset.base = 42; d.style.lineHeight = "1.42";
+      box.appendChild(d);
     });
-    var sents = trans.querySelectorAll(".s");
-    el("reciter").textContent = card.reciter || "";
-    el("site2").textContent = "NOORCODEX.COM/QURAN";
-    el("sub2").textContent = "read it, hear it, understand it, free";
+    s1._trans = box;
+    s1._items = [AYAH, s1.querySelector(".ref"), box];
+    var sents = box.querySelectorAll(".s");
 
-    var applyV = function (f) {
-      el("ayah").style.fontSize = f.ayah + "px";
-      el("ayah").style.lineHeight = (f.ayah >= 60 ? 1.9 : 1.75) + "";
-      setTrans(f.trans);
-      f.tight = f.trans < 36;
-    };
-    var f = fitMid({ ayah: 76, trans: 40, tight: false }, applyV);
-    /* a long verse: the sentences of the meaning take turns in one box
-       instead of stacking, so the Arabic keeps its size and the whole still
-       stands inside the safe rectangle */
-    var replace = false;
-    if (!f.fits && sents.length > 1) {
-      replace = true;
-      trans.classList.add("replace");
-      f = fitMid({ ayah: 76, trans: 40, tight: false }, function (f) {
-        applyV(f);
-        var hmax = 0;
-        sents.forEach(function (x) { hmax = Math.max(hmax, x.getBoundingClientRect().height); });
-        trans.style.height = Math.ceil(hmax) + "px";
-      });
-    }
+    var s9 = screen();
+    put(s9, "credit", card.reciter || "", 30, 1.4, 0);
 
-    var rec = card.rec || { start: 2.6, dur: Math.max(4, secs - 8) };
-    var tAyah = 0.70, tRef = 1.45;
-    var tEnd = rec.start + rec.dur;              // the recitation ends here
-    var tRec = tEnd + 1.1, tClose = tEnd + 1.9;   // the bed is back by tEnd + 0.55
-    /* each sentence arrives where its share of the words falls in the
-       recitation, so the meaning keeps pace with the voice */
+    var f = fitAll();
+
+    var tAyah = 0.6, tRef = 1.45;
+    var tEnd = rec.start + rec.dur;
+    var tCredit = Math.round((tEnd + 1.35) * 1000) / 1000;
+    var secs = Math.round((tEnd + 4.2) * 100) / 100;
+
+    /* each sentence of the meaning arrives where its share of the words falls
+       in the recitation, so the meaning keeps pace with the voice */
     var lens = [], total = 0;
     sents.forEach(function (s) { lens.push(s.textContent.length); total += s.textContent.length; });
     var at = [], acc = 0;
     for (var i = 0; i < lens.length; i++) {
-      at.push(rec.start + 0.35 + (rec.dur - 1.2) * (acc / Math.max(1, total)));
+      at.push(Math.round((rec.start + 0.5 + (rec.dur - 1.4) * (acc / Math.max(1, total))) * 1000) / 1000);
       acc += lens[i];
     }
-    var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outCubic" } });
-    opening(tl, "#brand2", "#cat2", "#mid .mrule", "#mid .mdiv");
-    tl.add("#ayah", { opacity: [0, 1], scale: [1.04, 1], "--b": ["12px", "0px"],
-                      duration: 1300, ease: "outQuint" }, ms(tAyah));
-    tl.add("#ref", { opacity: [0, 1], translateY: [8, 0], duration: 480 }, ms(tRef));
-    sents.forEach(function (s, i) {
-      tl.add(s, { opacity: [0, 1], translateY: [16, 0], "--b": ["6px", "0px"], duration: 720 }, ms(at[i]));
-      if (replace) {
-        /* the sentence before leaves as this one arrives */
-        if (i) tl.add(sents[i - 1], { opacity: 0, translateY: -10, duration: 420 }, ms(at[i] - 0.1));
-      } else {
-        for (var j = 0; j < i; j++)
-          tl.add(sents[j], { opacity: 1 - Math.min(.45, .22 * (i - j)), duration: 600 }, ms(at[i]));
-      }
-    });
-    tl.add("#reciter", { opacity: [0, 1], translateY: [8, 0], duration: 560 }, ms(tRec));
-    tl.add("#close2", { opacity: [0, 1], translateY: [18, 0], duration: 620 }, ms(tClose));
-    tl.pause();
-    T = tl; FIT = f;
-    var yb = el("ayah").getBoundingClientRect();
-    SCENE.cue = tAyah; SCENE.blooms = [0, tAyah, tEnd + 0.9, tClose]; SCENE.hits = [0, tAyah, tEnd + 0.9];
-    SCENE.recede = rec.start - 0.5; SCENE.focus = (yb.top + yb.height * 0.5) / 1920;
-    INFO = { fits: f.fits, tight: !!f.tight, ayahPx: f.ayah, transPx: f.trans, grid: GRID,
-             focus: (yb.top + yb.height * 0.5) / 1920,
-             tAyah: tAyah, tRef: tRef, recStart: rec.start, recEnd: tEnd, sentAt: at,
-             tReciter: tRec, tClose: tClose,
-             tDate: tRef, tBody: rec.start, step: 3.0, hookEnd: tAyah + 1.0,
-             height: el("mid").getBoundingClientRect().height, cover: tAyah + 1.5 };
-    tl.seek(0);
-    return INFO;
-  }
 
-  /* ------------------------------------------------------------------ codex */
-  function buildCodex(card, secs) {
-    /* card: build "1448.03", counts [[523,"words"],[114,"surahs"],...] (six),
-       zeros [[0,"ads"],[0,"accounts"],[0,"tracking"]], room {k,t,d},
-       ask {l1,l2,l3} */
-    el("hud-build").textContent = card.build || "";
-    var g = el("hud-grid"); g.textContent = "";
-    var counts = (card.counts || []).concat(card.zeros || []);
-    counts.forEach(function (c) {
-      var d = document.createElement("div"); d.className = "cnt" + (Number(c[0]) === 0 ? " zero" : "");
-      var b = document.createElement("b"); b.textContent = "0"; b.dataset.to = String(c[0]);
-      var sp = document.createElement("span"); sp.textContent = c[1];
-      d.appendChild(b); d.appendChild(sp); g.appendChild(d);
-    });
-    var room = card.room || {};
-    el("hud-room-k").textContent = room.k || "today's room";
-    el("hud-room-t").textContent = room.t || "";
-    el("hud-room-d").textContent = room.d || "";
-    var ask = card.ask || {};
-    el("hud-l1").textContent = ask.l1 || "One light a day.";
-    el("hud-l2").textContent = ask.l2 || "Follow. Save this. Send it to one person.";
-    el("hud-l3").textContent = ask.l3 || "NOORCODEX.COM";
-
-    var cells = g.querySelectorAll(".cnt");
-    var f = { fits: true, tight: false };
-    var avail = SAFE_B - SAFE_T - 46;
-    for (var pass = 0; pass < 6; pass++) {
-      if (el("hud").getBoundingClientRect().height <= avail) break;
-      var b = cells[0] ? parseInt(getComputedStyle(cells[0].querySelector("b")).fontSize) : 60;
-      cells.forEach(function (c) { c.querySelector("b").style.fontSize = (b - 10) + "px"; });
-      el("hud-room-t").style.fontSize = (parseInt(getComputedStyle(el("hud-room-t")).fontSize) - 4) + "px";
-      f.tight = true;
-    }
-    f.fits = el("hud").getBoundingClientRect().height <= avail;
-
-    /* hard cadence: everything on the beat at 120 */
-    var B = GRID.beat, E = GRID.eighth;
-    var tHead = q(0.25), tRule = tHead + E, tCount = qb(tHead + B), tRoom = qb(tCount + B * cells.length * 0.5 + B);
-    var tAsk = qb(tRoom + 2 * B), tClose = tAsk;
-    if (tAsk > secs - 3.0) { tAsk = q(secs - 3.0); tClose = tAsk; }
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
-    tl.add("#flare", { opacity: [0, .5, 0], scale: [.25, 1.2], duration: 500, ease: "outQuad" }, 0);
-    tl.add("#hud .h", { opacity: [0, 1], translateY: [10, 0], duration: 260 }, ms(tHead));
-    tl.add("#hud .rule", { scaleX: [0, 1], duration: 380 }, ms(tRule));
-    cells.forEach(function (c, i) {
-      var at = tCount + i * B * 0.5;
-      tl.add(c, { opacity: [0, 1], translateY: [14, 0], "--b": ["4px", "0px"], duration: 240 }, ms(at));
-      /* the number counts up over one beat, in steps that land on eighths */
-      var b = c.querySelector("b"), to = Number(b.dataset.to);
-      tl.add({ v: 0 }, { v: to, duration: ms(B * 1.5), ease: "outCubic", modifier: A.utils.round(0),
-        onUpdate: function (self) { b.textContent = String(Math.round(self.targets[0].v)); } }, ms(at));
+    tl.add(AYAH, { opacity: [0, 1], scale: [1.03, 1], "--b": ["14px", "0px"],
+                   duration: 1700, ease: "outQuint" }, ms(tAyah));
+    arrive(tl, s1._items[1], tRef, { dy: 10, dur: 900 });
+    sents.forEach(function (s, i) {
+      arrive(tl, s, at[i], { dy: 18, dur: 900 });
+      if (i) depart(tl, sents[i - 1], Math.round((at[i] - 0.12) * 1000) / 1000, { dur: 620 });
     });
-    tl.add("#hud-room", { opacity: [0, 1], translateY: [16, 0], "--b": ["6px", "0px"], duration: 320 }, ms(tRoom));
-    tl.add("#hud-ask", { opacity: [0, 1], translateY: [18, 0], duration: 320 }, ms(tAsk));
-    tl.add("#hud-l1", { scale: [1.06, 1], duration: 380 }, ms(tAsk));
+    var outAll = Math.round((tEnd + 0.8) * 1000) / 1000;
+    depart(tl, [AYAH, s1._items[1], sents[sents.length - 1]], outAll, { dur: 900 });
+    arrive(tl, s9._items[0], tCredit, { dy: 14, dur: 940 });
     tl.pause();
-    T = tl; FIT = f;
-    var hits = [0, tHead, tRule];
-    cells.forEach(function (c, i) { hits.push(tCount + i * B * 0.5); });
-    hits.push(tRoom, tAsk);
-    SCENE.cue = tRoom; SCENE.blooms = [0, tCount, tRoom, tAsk]; SCENE.hits = hits;
-    SCENE.recede = 0; SCENE.focus = 0.66;
-    INFO = { fits: f.fits, tight: f.tight, tHead: tHead, tCount: tCount, tRoom: tRoom, tAsk: tAsk, tClose: tClose,
-             cells: cells.length, tDate: tHead, tBody: tCount, step: B * 0.5, hookEnd: tRule, grid: GRID,
-             cover: tRoom + 0.6, height: el("hud").getBoundingClientRect().height };
-    tl.seek(0);
-    return INFO;
+    T = tl;
+
+    SCENE.cue = tAyah;
+    SCENE.blooms = [0.15, tAyah, tCredit];
+    SCENE.hits = [0.15, tAyah, tRef, tCredit];
+    SCENE.focus = 0.46;
+    return { fits: f.fits, tight: f.tight, ayahPx: Math.round(80 * (s1._sc || 1)),
+             hookPx: Math.round(80 * (s1._sc || 1)), transPx: Math.round(42 * (s1._sc || 1)),
+             bodyPx: Math.round(42 * (s1._sc || 1)),
+             secs: secs, tAyah: tAyah, tRef: tRef, recStart: rec.start, recEnd: tEnd,
+             sentAt: at, tReciter: tCredit, tHook: tAyah, hookEnd: tAyah + 1.7,
+             tDate: tRef, tBody: rec.start, step: 3.0, tClose: tCredit,
+             cover: Math.round((tAyah + 1.9) * 100) / 100 };
   }
 
+  /* ---------------------------------------------------------------- the door */
   window.NOORREEL = {
     build: function (card, secs) {
       KIND = card.kind || "light";
-      SECS = secs;
       grid(KIND);
-      stage(KIND);
-      SCENE.secs = secs;
+      reset();
       if (!window.NOORSCENE) throw new Error("scene.js did not load: no picture");
       var lk = card.look || {};
-      window.NOORSCENE.card({ kind: KIND, seed: lk.seed, n: lk.n, k: lk.k, pal: lk.pal, month: card.hm || 1 });
+      window.NOORSCENE.card({ seed: lk.seed, n: lk.n, k: lk.k });
       var info;
-      if (KIND === "day") info = buildDay(card, secs);
-      else if (KIND === "word") info = buildWord(card, secs);
-      else if (KIND === "verse") info = buildVerse(card, secs);
-      else if (KIND === "codex") info = buildCodex(card, secs);
-      else info = buildLight(card, secs);
+      if (KIND === "day") info = buildDay(card);
+      else if (KIND === "word") info = buildArabic(card, "word");
+      else if (KIND === "name") info = buildArabic(card, "name");
+      else if (KIND === "dua") info = buildArabic(card, "dua");
+      else if (KIND === "verse") info = buildVerse(card);
+      else info = buildLight(card);
+      SECS = info.secs || secs;
+      SCENE.secs = SECS;
+      info.height = rest() - (SCREENS.length ? SCREENS[0].getBoundingClientRect().top : 0);
+      info.grid = GRID;
       info.scene = { cue: SCENE.cue, blooms: SCENE.blooms, hits: SCENE.hits, focus: SCENE.focus };
+      INFO = info;
+      T.seek(0);
       scenePush(0);
       return info;
     },
-    /* the recitation's loudness per frame, so the picture can breathe with it */
+    /* the recitation's loudness per frame, so the light can breathe with it */
     pulse: function (arr, start, fps) { SCENE.pulse = arr; SCENE.pulseStart = start; SCENE.fps = fps || 30; },
     seek: function (t) { T.seek(Math.max(0, t * 1000)); scenePush(Math.max(0, t)); },
     rest: rest,
     shrink: shrink,
-    /* the opening bloom and streak are light, not information: the safe area
-       audit measures the words, so it turns them off first */
+    /* the glow is light, not information: the safe area audit measures the
+       words, so it turns the glow and the picture off first */
     decor: function (on) {
-      var v = on ? "" : "none";
-      el("flare").style.display = v; el("streak").style.display = v;
       document.body.classList.toggle("type-only", !on);
     },
-    info: function () { return INFO; }
+    info: function () { return INFO; },
+    /* every moment the timeline moves something, for the safe-area audit:
+       one entry per tween of every target, [start, end, property, from, to]
+       in seconds, walked off the built timeline itself so a staggered word is
+       listed at its own time, not its group's */
+    cues: function () {
+      var out = [];
+      if (!T) return out;
+      for (var c = T._head; c; c = c._next)
+        for (var w = c._head; w; w = w._next) {
+          var s = (c._offset + w._startTime) / 1000,
+              a = Number(w._fromNumber), b = Number(w._toNumber);
+          out.push([s, s + w._changeDuration / 1000, String(w.property),
+                    isFinite(a) ? a : null, isFinite(b) ? b : null]);
+        }
+      return out;
+    }
   };
 })();
