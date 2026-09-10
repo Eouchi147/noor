@@ -32,7 +32,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "6";                                  /* the shell's cache-buster; noor-fx.js carries the same */
+const V = "7";                                  /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
@@ -621,6 +621,45 @@ async function versesIndex() {
 /* ---------------------------------------------------------------------------
    one surah
 --------------------------------------------------------------------------- */
+/* study/1..114.json were each written with four fields the surah page has
+   never drawn: movements (the surah cut into its passages, 511 of them,
+   each with its verse range), passages (432 verses worth knowing, each with
+   why), virtue (what is said about reciting it, with its source AND a
+   grading of that source), and connections (229 links between surahs, each
+   with the reason they travel together). Two hundred and eighty-three
+   kilobytes of written, sourced study, on every one of the hundred and
+   fourteen surah pages, read by nothing.
+
+   The grading is the reason virtue is drawn at all. Fifty-six surahs are
+   marked "none" and say so plainly -- no authentic report establishes a
+   merit for reciting this one -- and twenty-two are marked "debated" and
+   name the dispute. A library that prints the famous virtue of every surah
+   without saying which are established is doing the reader harm; this data
+   was written not to. The badge is the house's own, the one the parchment
+   rooms have worn since the first cut, in the shell's dialect. */
+const EV = { sunnah: ["n2-ev-sunnah", "Sunnah-confirmed", "established by authentic hadith"],
+             debated: ["n2-ev-debated", "Scholars differ", "the gradings are not settled"],
+             none: ["n2-ev-none", "No virtue report", "no authentic report establishes a merit for reciting it"] };
+const evBadge = level => { const e = EV[level]; return e ? `<span class="n2-ev ${e[0]}" role="img" aria-label="${attr(e[1] + ": " + e[2])}">${esc(e[1])}</span>` : ""; };
+/* A movement is a range of the surah, so it opens the Mushaf at its first
+   verse rather than telling the reader to go and find it. */
+const movements = (rows, n) => (rows && rows.length) ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">How it moves</p><ul class="n2-list">${rows.map(m => {
+  const start = String(m.range || "").match(/\d+/);
+  const href = start ? "/quran?surah=" + n + "&ayah=" + start[0] : "/quran?surah=" + n;
+  return `<li><a href="${attr(href)}"><span class="n2-num">${esc(m.range || "")}</span><b>${esc(m.h || "")}${m.note ? `<small>${esc(m.note)}</small>` : ""}</b></a></li>`;
+}).join("")}</ul></section>` : "";
+const passages = (rows, n) => (rows && rows.length) ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">Verses worth knowing</p><ul class="n2-list n2-notes">${rows.map(v => {
+  const r = parseRef(v.ref);
+  const href = r ? "/verse/" + r.id : "/quran?surah=" + n;
+  return `<li><a href="${attr(href)}"><span class="n2-num">${esc(v.ref || "")}</span><b>${esc(v.why || "")}</b></a></li>`;
+}).join("")}</ul></section>` : "";
+/* On the fifty-six surahs with no established virtue, src is the sentence
+   "no authentic virtue report" -- which is what the badge already says. A
+   source line is printed only when it cites something: a book and a number. */
+const cites = src => /\d/.test(String(src || ""));
+const virtue = v => (v && v.text) ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">On reciting it</p>
+<p class="n2-p">${esc(v.text)}</p>
+<p class="n2-src">${evBadge(v.level)}${cites(v.src) ? esc(v.src) : ""}</p></section>` : "";
 async function surahPage(nRaw) {
   const n = Number(nRaw);
   if (!(Number.isInteger(n) && n >= 1 && n <= 114)) return notFound("surah");
@@ -645,11 +684,18 @@ ${ar ? `<p class="n2-title-ar" lang="ar">${esc(ar)}</p>` : ""}
 </section>
 ${(S.context || []).length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The context</p>${S.context.map(p => `<p class="n2-p">${esc(p)}</p>`).join("")}</section>` : ""}
 ${S.name_story ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The name</p>${paras(esc(S.name_story))}</section>` : ""}
+${movements(S.movements, n)}
 ${(S.themes || []).length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The themes</p>${S.themes.map(t => `<h2 class="n2-h3">${esc(t.t)}</h2><p class="n2-p">${esc(t.d)}</p>`).join("")}</section>` : ""}
 ${(S.heart || []).length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The heart of it</p>${S.heart.map(p => `<p class="n2-p">${esc(p)}</p>`).join("")}</section>` : ""}
+${passages(S.passages, n)}
+${virtue(S.virtue)}
 <section class="n2-idea n2-short" id="beside">
 <p class="n2-eyebrow">Read beside it</p>
 ${verses.length ? `<p class="n2-eyebrow">On the shelf</p><ul class="n2-list">${verses.map(r => `<li><a href="/verse/${attr(r.ref.replace(":", "-"))}"><span class="n2-num">${esc(r.ref)}</span><b>${esc(r.hook && r.hook !== r.ref ? r.hook : "Qur'an " + r.ref)}</b></a></li>`).join("")}</ul>` : ""}
+${(S.connections || []).length ? `<p class="n2-eyebrow">Surahs it travels with</p><ul class="n2-list">${S.connections.map(c => {
+  const to = surahRow(+c.to);
+  return to ? `<li><a href="/surah/${+c.to}"><span class="n2-num">${+c.to}</span><b>${esc(to.translit)}${c.why ? `<small>${esc(c.why)}</small>` : ""}</b><span class="n2-ar" lang="ar">${esc(to.name || "")}</span></a></li>` : "";
+}).join("")}</ul>` : ""}
 ${walk(prevRow && ["/surah/" + (n - 1), prevRow.translit, "Surah " + (n - 1)], nextRow && ["/surah/" + (n + 1), nextRow.translit, "Surah " + (n + 1)])}
 <div class="n2-row">${go("/quran?surah=" + n, "The Mushaf")}${go("/verses", "Every verse on the shelf")}</div>
 </section>`;
