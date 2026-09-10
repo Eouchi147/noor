@@ -165,7 +165,13 @@ const PROBE = () => {
     if (bg.unknown) { out.unknownBg++; continue; }
 
     const ink = over(fg, bg);
-    out.inks[hex(ink)] = (out.inks[hex(ink)] || 0) + 1;
+    /* A drawing of paper keeps its own inks. The masjid timetable and the qibla
+       card are laid out in millimetres at exactly the size they print, and their
+       palette is a printer's rather than the screen's -- #4a3a10, #5c5344, the
+       cream of a Friday row. Counting those here reports drift that is really a
+       second, deliberate palette. Their contrast is still measured like anything
+       else; only the census leaves them out. */
+    if (!el.closest('#sheet,#card')) out.inks[hex(ink)] = (out.inks[hex(ink)] || 0) + 1;
     const cr = ratio(ink, bg);
     /* WCAG large text: >=24px, or >=18.66px at 700+ */
     const large = size >= 24 || (size >= 18.66 && weight >= 700);
@@ -238,7 +244,7 @@ console.log('  scanned ' + scanned + ' page loads across ' + PAGES.length + ' pa
        card in the house stays a cream band. The floor catches the text uses it
        can name; the rest wants the token split in two.
      · nine shell pages keep a cream sticky header from the parchment cut. */
-const CEILING = { unreadable: 170, tiny: 424, inks: 79 };
+const CEILING = { unreadable: 0, tiny: 362, inks: 72 };
 const ratchet = (name, got, cap) => {
   if (got > cap) { fail++; console.log('  FAIL ' + name + ' got worse: ' + got + ' (ceiling ' + cap + ')'); }
   else { pass++; console.log('  ✓ ' + name + ': ' + got + (got ? ' left, ceiling ' + cap + (got < cap ? ' -- lower it to ' + got : '') : ' -- clear')); }
