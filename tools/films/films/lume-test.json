@@ -1,0 +1,78 @@
+{
+  "slug": "lume-test",
+  "id": "lume-test",
+  "title": "The light layer",
+  "chapters": [
+    {
+      "id": "one",
+      "beats": [
+        {
+          "kind": "title",
+          "eyebrow": "NOOR · a test of the light",
+          "text": "One",
+          "hold": 5,
+          "shot": "in",
+          "lume": {
+            "kind": "orb",
+            "place": "over"
+          }
+        },
+        {
+          "kind": "statement",
+          "text": "Held in many hands at once.",
+          "hold": 6,
+          "shot": "push",
+          "lume": {
+            "kind": "lattice",
+            "rings": [
+              1,
+              3,
+              6,
+              10,
+              15
+            ]
+          }
+        },
+        {
+          "kind": "statement",
+          "text": "And carried.",
+          "hold": 5,
+          "shot": "drift",
+          "lume": {
+            "kind": "stream"
+          }
+        },
+        {
+          "kind": "statement",
+          "text": "Five times, every day, for fourteen centuries.",
+          "hold": 5,
+          "shot": "pull",
+          "lume": {
+            "kind": "ring",
+            "count": 3
+          }
+        },
+        {
+          "kind": "statement",
+          "text": "Side by side.",
+          "hold": 5,
+          "shot": "push",
+          "lume": {
+            "kind": "card",
+            "faces": [
+              {
+                "text": "610"
+              },
+              {
+                "text": "632"
+              },
+              {
+                "text": "651"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
