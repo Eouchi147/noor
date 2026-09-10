@@ -19,7 +19,7 @@ description: nothing is cropped.
 import argparse, json, os, subprocess, sys, time
 
 from playwright.sync_api import sync_playwright
-from spec import FPS, FRAMES, JPEG_Q, LUME_SCALE
+from spec import FPS, FRAMES, JPEG_Q, LUME_SS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAGE = "file://" + os.path.join(HERE, "web", "film.html")
@@ -70,9 +70,11 @@ class Stage:
         if self.errs:
             raise RuntimeError("the stage did not load cleanly: " + self.errs[0])
         self.p.evaluate("() => NOORGROUND.size()")
-        #  The light layer is drawn at LUME_SCALE of the frame and stretched;
-        #  bloom is low frequency and does not care. 192 ms -> 120 ms.
-        self.p.evaluate("s => NOORLUME.scale(s)", LUME_SCALE)
+        #  The scene is drawn into a buffer LUME_SS times the frame in each
+        #  direction and boxed down to it by the resolve shader. The canvas the
+        #  page composites is exactly the frame, which is the only size that
+        #  costs anything -- see the measurements in web/lume.js.
+        self.p.evaluate("n => NOORLUME.supersample(n)", LUME_SS)
 
     def build(self, chapter):
         info = self.p.evaluate("([c, f]) => NOORFILM.build(c, f)", [chapter, self.f["name"]])

@@ -27,7 +27,13 @@ FRAMES = {"wide": WIDE, "tall": TALL}
 #  CRF 17, and no eye has ever met the JPEGs.
 JPEG_Q = 90
 
-#  The light layer renders at this fraction of the frame and is stretched to
-#  fill it. See tools/films/web/lume.js: a glow drawn at sixty per cent and
-#  scaled up is the same glow.
-LUME_SCALE = 0.62
+#  How many samples of the light layer each finished pixel is boxed down from,
+#  in each direction: 2 means the scene is drawn at four times the area and
+#  resolved by the shader that composites the bloom. This is the antialiasing,
+#  and it is the difference between an edge and a staircase.
+#
+#  The first cut of this went the other way -- it drew the layer at 62% of the
+#  frame and let the browser stretch it up, on the reasoning that bloom is low
+#  frequency. Bloom is. The silhouettes inside it are not, and magnifying them
+#  magnified every step. See the note in web/lume.js.
+LUME_SS = 2
