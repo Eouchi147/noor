@@ -61,6 +61,57 @@ html.n2-night.noor-phase-dhul-hijjah .nrb-link{color:#FFFEF7;background:linear-g
 html.n2-night.noor-ramadan body{background:#0A1024}
 html.n2-night.noor-eid body{background:#0A1024}
 html.n2-night.noor-eid .nrb-link{color:#FFFEF7}
+html.n2-night .ns-field{background:#0A1024}
+html.n2-night .ns-field svg{color:rgba(255,254,247,.4)}
+html.n2-night .ns-field input{color:#FFFEF7}
+html.n2-night .ns-x{border:1px solid rgba(255,254,247,.18);color:rgba(255,254,247,.45)}
+html.n2-night .ns-out{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night .ns-more{color:rgba(255,254,247,.42)}
+html.n2-night .ns-hit b{color:#FFFEF7}
+html.n2-night .ns-s{color:rgba(255,254,247,.62)}
+html.n2-night .ns-hint{color:rgba(255,254,247,.55)}
+html.n2-night #lantern-open{color:#FFFEF7}
+html.n2-night #lantern-panel{background:#0A1024;border:1px solid rgba(255,254,247,.14)}
+html.n2-night #lantern-panel .lm-top{border-bottom:1px solid rgba(255,254,247,.1);background:linear-gradient(170deg,#0A1024,#0D1428)}
+html.n2-night #lantern-panel .lm-top b{color:#FFFEF7}
+html.n2-night #lantern-panel .lm-sub{color:rgba(255,254,247,.5)}
+html.n2-night #lantern-panel .lm-x{color:rgba(255,254,247,.4)}
+html.n2-night #lantern-panel .lm-hi{color:rgba(255,254,247,.55)}
+html.n2-night #lantern-panel .lm-you{color:#FFFEF7}
+html.n2-night #lantern-panel .lm-lamp{background:#0A1024;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.85)}
+html.n2-night #lantern-panel .lm-out{background:#0A1024;color:#FF5050}
+html.n2-night #lantern-panel .lm-ask{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night #lantern-panel .lm-ask input{border:1px solid rgba(255,254,247,.16)}
+html.n2-night #lantern-panel .lm-ask button{color:#FFFEF7}
+html.n2-night .nk-sound.is-muted .nk-sound-btn{border-color:rgba(10,16,36,.25)}
+html.n2-night .ntrack{background:rgba(10,16,36,.07)}
+html.n2-night .ntrack.nendless{background:rgba(10,16,36,.07)}
+html.n2-night .nendless .nbar{background:linear-gradient(90deg,rgba(10,16,36,.22) 0%,rgba(10,16,36,.22) 70%,rgba(244,212,106,.5) 100%)}
+html.n2-night .ncol{border:1px solid rgba(10,16,36,.12);background:rgba(10,16,36,.03)}
+html.n2-night{--vellum:#0D1428;--vellum-2:#111A33;--jink:#FFFEF7;--jink-soft:rgba(255,254,247,.72);--jink-faint:rgba(255,254,247,.45)}
+html.n2-night .jseal i{box-shadow:inset 0 0 0 1px rgba(13,20,40,.28),0 1px 3px rgba(58,46,28,.3)}
+html.n2-night .jform{background:rgba(10,16,36,.72)}
+html.n2-night .jform input,html.n2-night .jform textarea{background:#0A1024;border:1px solid rgba(255,254,247,.18)}
+html.n2-night{--parchment:#0A1024;--ink:#FFFEF7;--soft:rgba(255,254,247,.6)}
+html.n2-night .kp{background:#0A1024}
+html.n2-night .kf{color:#C19A1D}
+html.n2-night input,html.n2-night select,html.n2-night textarea{background:#0A1024}
+html.n2-night .hint{color:rgba(255,254,247,.52)}
+html.n2-night .btn-gold{color:#FFFEF7}
+html.n2-night .btn-ghost{color:#C19A1D}
+html.n2-night .btn-quiet{color:rgba(255,254,247,.6)}
+html.n2-night .chip{background:#0A1024;color:rgba(255,254,247,.8)}
+html.n2-night .chip:hover{background:#0D1428}
+html.n2-night .ar-block{background:#0A1024}
+html.n2-night .translit{color:rgba(255,254,247,.72)}
+html.n2-night .trans{color:rgba(255,254,247,.82)}
+html.n2-night .src{color:rgba(255,254,247,.5)}
+html.n2-night .note{color:rgba(255,254,247,.7)}
+html.n2-night .note b{color:#C19A1D}
+html.n2-night .warnbox{color:#D7931E}
+html.n2-night .ref{color:rgba(255,254,247,.62);border:1px solid rgba(255,254,247,.1)}
+html.n2-night .kmark{color:rgba(255,254,247,.42)}
+html.n2-night .kmark a{color:rgba(255,254,247,.55)}
 html.n2-night{--panel:rgba(10,16,36,.035)}
 html.n2-night .door{background:linear-gradient(180deg,rgba(10,16,36,.04),transparent)}
 html.n2-night .not{background:linear-gradient(180deg,rgba(10,16,36,.04),transparent)}
@@ -860,9 +911,9 @@ html.n2-night .sh-notes{color:#FFFEF7}
 html.n2-night .sh-notes b{color:#C19A1D}
 html.n2-night .sh-mark{border-top:.2mm solid rgba(255,254,247,.22)}
 @media print{
+html.n2-night body.kit{background:#0A1024;color:#FFFEF7}
 html.n2-night,html.n2-night body{background:#0A1024}
 html.n2-night #pc{border:.4mm solid rgba(255,254,247,.75)}
-html.n2-night body.kit{background:#0A1024;color:#FFFEF7}
 html.n2-night #sheet .top{border-bottom:2px solid #FFFEF7}
 html.n2-night #sheet .pt .m{color:#FFFEF7}
 html.n2-night #sheet .pt .gd{color:#FFFEF7}
