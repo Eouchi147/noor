@@ -19,7 +19,7 @@ description: nothing is cropped.
 import argparse, json, os, subprocess, sys, time
 
 from playwright.sync_api import sync_playwright
-from spec import FPS, FRAMES, JPEG_Q
+from spec import FPS, FRAMES, JPEG_Q, LUME_SCALE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAGE = "file://" + os.path.join(HERE, "web", "film.html")
@@ -37,10 +37,26 @@ class Stage:
 
     def __init__(self, pw, frame):
         self.f = frame
+        #  ASKING FOR ANGLE COST MORE THAN TWICE THE RENDER AND MADE THE
+        #  PICTURE WORSE.
+        #
+        #  These flags were added to be sure WebGL would come up on a runner
+        #  with no GPU. It comes up without them: Chromium falls back to
+        #  SwiftShader on its own and reports WebGL 2.0 either way. What the
+        #  flags changed was the path the whole PAGE is composited and read
+        #  back through, and the screenshot is nearly all of the frame time.
+        #  Measured on this runner, same page, same frame, ten frames each:
+        #
+        #      --use-gl=angle --use-angle=swiftshader ...    453 ms a frame
+        #      --enable-unsafe-swiftshader only             192 ms a frame
+        #
+        #  The drawing itself is 5 ms of that. It is worth knowing which half
+        #  of a render is the picture and which half is the photograph of it.
+        #  The one flag that stays lets a software WebGL context be created
+        #  at all, which newer Chromium refuses without it.
         self.b = pw.chromium.launch(args=[
             "--force-color-profile=srgb", "--font-render-hinting=none",
-            "--use-gl=angle", "--use-angle=swiftshader",
-            "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
+            "--enable-unsafe-swiftshader"])
         self.p = self.b.new_page(viewport={"width": frame["w"], "height": frame["h"]},
                                  device_scale_factor=1)
         self.errs = []
@@ -54,6 +70,9 @@ class Stage:
         if self.errs:
             raise RuntimeError("the stage did not load cleanly: " + self.errs[0])
         self.p.evaluate("() => NOORGROUND.size()")
+        #  The light layer is drawn at LUME_SCALE of the frame and stretched;
+        #  bloom is low frequency and does not care. 192 ms -> 120 ms.
+        self.p.evaluate("s => NOORLUME.scale(s)", LUME_SCALE)
 
     def build(self, chapter):
         info = self.p.evaluate("([c, f]) => NOORFILM.build(c, f)", [chapter, self.f["name"]])
