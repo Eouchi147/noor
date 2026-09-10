@@ -95,6 +95,36 @@ RGB_RE = re.compile(
     r"(?:[,/]\s*(var\([^()]*\)|[\d.]+%?)\s*)?\)", re.I)
 HOUSE = re.compile(r"#[0-9a-fA-F]{3,8}\b|rgba?\(", re.I)
 
+#  ---------------------------------------------------------------------------
+#  --parchment is not a ground. It is a colour with two jobs.
+#
+#  The first cut turned the token over -- :root{--parchment:#0A1024} -- on the
+#  reasoning that the parchment is the floor and the floor goes dark. Counted
+#  across the house: 59 declarations use it as a ground and 126 use it as ink.
+#  It is used as writing more than twice as often as it is used as paper, and
+#  flipping it painted every one of those 126 dark-on-dark. That is what put
+#  "FREE FOREVER · NO ADS · NO TRACKERS · NO ACCOUNT" on the gift page in near
+#  black on near black: the chips say color:color-mix(in srgb,var(--parchment)
+#  60%,transparent), which is exactly right on parchment and exactly wrong once
+#  the token means navy.
+#
+#  So the token is left alone -- in the night --parchment is still the light --
+#  and the ground uses are turned by the same rule everything else is turned
+#  by: the property says so. background:var(--parchment) becomes the night's
+#  ground; color:var(--parchment) was already the light and stays it. A token
+#  with two jobs cannot be given one value; a declaration only ever has one.
+#  ---------------------------------------------------------------------------
+GROUND_NAMES = ("parch", "paper", "cream", "surface", "card", "sheet", "page")
+GTOK = re.compile(r"var\(\s*(--[\w-]*(?:%s)[\w-]*)\s*(?:,[^()]*)?\)"
+                  % "|".join(GROUND_NAMES), re.I)
+
+
+def ground_token(name):
+    """The night ground this parchment-family token becomes in a background."""
+    n = name.lower()
+    return "#0D1428" if ("cream" in n or "card" in n or "surface" in n) else "#0A1024"
+
+
 
 def bits(h):
     h = h.lstrip("#")
@@ -182,6 +212,44 @@ def night_dark(rgb):
     return _rgb((NIGHT_H, min(NIGHT_S, s), l))
 
 
+#  ---------------------------------------------------------------------------
+#  A dark colour the house writes with.
+#
+#  lift() already rescues a literal dark colour that is passed to `color` -- the
+#  sealing red on the Hajj rulings, the lapis on Theology -- because a dark red
+#  on a dark ground is not dim, it is absent. It never rescued the same colour
+#  held in a custom property, because a custom property has no property to ask.
+#  So the journal's --jseal (#7B2D26) stayed exactly as it was and the notice at
+#  the top of the journal -- "Read this before anything else" -- came out at
+#  1.9:1 on its own card.
+#
+#  The name cannot answer this one: --jseal does not contain "ink". What answers
+#  it is how the house actually uses the token. A dark colour that is only ever
+#  passed to color/fill/stroke is writing, and writing must be lifted. A dark
+#  colour that is also passed to a background is a band somewhere, and lifting
+#  it would put a bright stripe in a dark room. So the tree is read once and the
+#  tokens that are ever used as a ground are collected; everything else that is
+#  dark and coloured gets lifted. Nothing is listed, so nothing goes stale.
+#  ---------------------------------------------------------------------------
+GROUND_TOKENS = set()
+VAR_IN_BG = re.compile(r"background[\w-]*\s*:\s*[^;{}]*?var\(\s*(--[\w-]+)", re.I)
+
+
+def read_ground_tokens():
+    for dp, dn, fn in os.walk(ROOT):
+        if any(os.sep + x in dp or dp.endswith(os.sep + x) for x in SKIP_DIRS):
+            continue
+        for f in fn:
+            if not (f.endswith(".html") or f.endswith(".css")):
+                continue
+            try:
+                src = open(os.path.join(dp, f), encoding="utf-8", errors="ignore").read()
+            except OSError:
+                continue
+            for m in VAR_IN_BG.finditer(src):
+                GROUND_TOKENS.add(m.group(1).lower())
+
+
 def turned(rgb, prop):
     """The colour this one becomes in the night, or None to leave it alone."""
     flat, l = neutral(rgb)
@@ -189,6 +257,8 @@ def turned(rgb, prop):
         p = prop.strip().lower()
         if p.startswith(("color", "fill", "stroke", "-webkit-text-fill")) and l < DARK:
             return lift(rgb)
+        if p.startswith("--") and l < DARK and p not in GROUND_TOKENS:
+            return lift(rgb)          # a dark colour the house only writes with
         return None
     p = prop.strip().lower()
     if p.startswith("--"):
@@ -209,8 +279,9 @@ def turned(rgb, prop):
         if any(k in p for k in ("ink", "text", "fg", "foreground", "type")) \
            or p in ("--soft", "--lapis", "--muted", "--dim", "--quiet", "--faint"):
             return PARCH if l <= DARK else None
-        if any(k in p for k in ("parch", "paper", "cream", "surface", "card", "bg", "sheet", "page")):
-            return ground_for(l) if l >= LIGHT else None
+        if any(k in p for k in GROUND_NAMES) or "bg" in p:
+            #  left as it is: its ground uses are turned where they are written
+            return None
         return ground_for(l) if l >= LIGHT else None
     if p.startswith(GROUND) or "shadow" in p:
         if l >= LIGHT: return ground_for(l)
@@ -247,6 +318,9 @@ def lift(rgb):
 
 
 def turn(val, prop):
+    if prop.strip().lower().startswith(GROUND):
+        val = GTOK.sub(lambda m: ground_token(m.group(1)), val)
+
     def hx(m):
         rgb = bits(m.group(0))
         if not rgb: return m.group(0)
@@ -260,6 +334,71 @@ def turn(val, prop):
         return "%s(%d,%d,%d%s)" % (fn, t[0], t[1], t[2], ("," + a) if a else "")
 
     return RGB_RE.sub(rgb, HEX_RE.sub(hx, val))
+
+
+#  ---------------------------------------------------------------------------
+#  A room that was already written in the night.
+#
+#  The test for "convert this room" was "it loads noor-fx.js and is not the
+#  shell", and that is a test for *reachable*, not for *parchment*. kids.html
+#  passes it and is not a parchment room at all: it opens
+#  body{background:var(--deep);color:var(--parchment)} -- a night sky with the
+#  parchment used as the writing. Turning its tokens over turned the room
+#  inside out. The white "Little Codex" went black, the seven star tiles grew
+#  cream bands under white labels, and each star got a black rectangle where a
+#  transparent ground had been. September 2026: this ate the Little Codex
+#  whole, and it was the one room in the house that never needed converting.
+#
+#  So ask the room what colour its own floor is before touching it. Resolve the
+#  var() against the room's own :root, take the luminance, and if the ground is
+#  already dark then the room is already in the night: skip it entire.
+#  ---------------------------------------------------------------------------
+ROOT_RE = re.compile(r":root[^{]*\{([^}]*)\}")
+BODY_RE = re.compile(r"(?m)^[^@{}/]*\bbody\b[^{}]*\{([^}]*)\}")
+
+
+def _tokens(style):
+    out = {}
+    for m in ROOT_RE.finditer(style):
+        for d in m.group(1).split(";"):
+            if ":" not in d: continue
+            k, v = d.split(":", 1)
+            k = k.strip()
+            if k.startswith("--"): out[k] = v.strip()
+    return out
+
+
+def _resolve(val, tok, depth=0):
+    if depth > 4: return val
+    m = re.search(r"var\(\s*(--[\w-]+)\s*(?:,([^()]*))?\)", val)
+    if not m: return val
+    sub = tok.get(m.group(1)) or (m.group(2) or "").strip()
+    return _resolve(val[:m.start()] + sub + val[m.end():], tok, depth + 1)
+
+
+def already_night(html):
+    """True when the room paints itself a dark floor in its own <style>."""
+    for style in re.findall(r"<style>([\s\S]*?)</style>", html):
+        style = re.sub(r"/\*[\s\S]*?\*/", "", style)
+        tok = _tokens(style)
+        for m in BODY_RE.finditer(style):
+            decl = m.group(1)
+            for d in decl.split(";"):
+                if ":" not in d: continue
+                prop, val = d.split(":", 1)
+                if prop.strip().lower() not in ("background", "background-color"):
+                    continue
+                v = _resolve(val, tok)
+                hx = HEX_RE.search(v)
+                rgb = bits(hx.group(0)) if hx else None
+                if rgb is None:
+                    mm = RGB_RE.search(v)
+                    if mm: rgb = (int(mm.group(2)), int(mm.group(3)), int(mm.group(4)))
+                if rgb is None: continue
+                _, l = neutral(rgb)
+                if l < LIGHT * 0.62:      # a floor this dark is already the night
+                    return True
+    return False
 
 
 def rooms():
@@ -276,6 +415,8 @@ def rooms():
             except OSError:
                 continue
             if "data-n2=" in s[:600] or "noor-fx.js" not in s:
+                continue
+            if already_night(s):
                 continue
             yield os.path.relpath(p, ROOT), s
 
@@ -296,11 +437,43 @@ def rooms():
 #  rule for finding the next one: grep the HTML for href="...css", and anything
 #  that is not in this list and not a room's own <style> is unturned.
 SHARED = ["assets/tw.css", "assets/hub.css", "assets/noor-ramadan.css",
-          "assets/figfit.css", "assets/noor-rtl.css", "assets/kids-engine.css",
+          "assets/figfit.css", "assets/noor-rtl.css",
           "assets/anim.css", "assets/journal.css", "masjid/kit.css"]
 
 
+#  ---------------------------------------------------------------------------
+#  Paper has no night.
+#
+#  Two rooms in the house draw a sheet of paper on the screen: the masjid's
+#  monthly timetable and the qibla card. Both are laid out in millimetres at
+#  exactly the size they print, so that what the browser measures is what the
+#  printer puts on the wall, and both say so in their own CSS --
+#  print-color-adjust:exact, which means "these colours are ink, do not
+#  re-render them."
+#
+#  The night turned them anyway, and turned them inconsistently, because the
+#  rule that decides is chroma: the Friday row's #F0DFAE is saturated enough to
+#  read as a colour and was left cream, while the alternating #ECE5D4 beside it
+#  is not and went dark. One table, two grounds, one set of classes -- and the
+#  legibility floor then "fixed" the ink for whichever ground it happened to
+#  measure, which put the Friday row at 1.2:1. That is the one document in this
+#  house that gets pinned up in front of a congregation.
+#
+#  A drawing of paper is not a room. It does not get a night.
+#  ---------------------------------------------------------------------------
+PAPER = {
+    "masjid/timetable.html": re.compile(r"^\s*(?:#sheet|\.sh-|table\.tt|\.page)"),
+    "masjid/qibla.html":     re.compile(r"^\s*#card"),
+}
+
+
+def paper(rel, sel):
+    rx = PAPER.get(rel)
+    return bool(rx) and any(rx.match(one) for one in sel.split(","))
+
+
 def build():
+    read_ground_tokens()
     seen = collections.OrderedDict()          # (at, selector, turned decl) -> who wanted it
     pages = 0
     for name in SHARED:
@@ -309,30 +482,38 @@ def build():
             continue
         css = re.sub(r"/\*[\s\S]*?\*/", "", open(p, encoding="utf-8", errors="ignore").read())
         for at, inner in at_blocks(css):
+            if PRINT.match(at):
+                continue
             for sel, decl in flat_rules(inner):
                 if foundational(sel):
                     continue
-                if not HOUSE.search(decl):
+                if not (HOUSE.search(decl) or GTOK.search(decl)):
                     continue
                 t = inverted(decl) or only_changed(decl)
                 if not t:
                     continue
-                seen.setdefault((at, scope(sel), t), set()).add(name)
+                seen.setdefault((at, sel, t), set()).add(name)
     for rel, html in rooms():
         pages += 1
         for style in re.findall(r"<style>([\s\S]*?)</style>", html):
             # strip comments so a colour named in prose is never converted
             style = re.sub(r"/\*[\s\S]*?\*/", "", style)
             for at, inner in at_blocks(style):
+                if PRINT.match(at):
+                    continue
                 for sel, decl in flat_rules(inner):
-                    if foundational(sel):
+                    if foundational(sel) or paper(rel, sel):
                         continue
-                    if not (HOUSE.search(decl) or INVERTED.search(decl)):
+                    #  a rule already written for the night is somebody's answer,
+                    #  not a question. Turning it again turns it back.
+                    if "n2-night" in sel:
+                        continue
+                    if not (HOUSE.search(decl) or INVERTED.search(decl) or GTOK.search(decl)):
                         continue
                     t = inverted(decl) or only_changed(decl)
                     if not t:
                         continue
-                    key = (at, scope(sel), t)
+                    key = (at, sel, t)
                     seen.setdefault(key, set()).add(rel)
     return seen, pages
 
@@ -358,9 +539,107 @@ def inverted(decl):
         p = prop.strip().lower()
         if p.startswith(("background", "background-color")) and re.search(r"var\(\s*--(?:ink|deep)\b", val, re.I):
             out.append("%s:%s" % (p, RAISED))
+            if p == "background":
+                out += kin(decl)
         elif p.startswith(("color", "fill", "stroke")) and re.search(r"var\(\s*--parch", val, re.I):
             out.append("%s:#FFFEF7" % p)
     return ";".join(out) or None
+
+
+#  ---------------------------------------------------------------------------
+#  The background shorthand resets the rest of the background.
+#
+#  begin.html paints its heading with a gradient through the letterforms:
+#     .shimmer-sage{background:linear-gradient(...);background-size:200% 100%;
+#                   -webkit-background-clip:text;background-clip:text;
+#                   color:transparent;animation:shimb 7s linear infinite}
+#  Turning the two sage stops over and re-emitting `background:` alone is a
+#  shorthand, and a shorthand resets every longhand it covers -- so
+#  background-clip went back to border-box, the gradient stopped being poured
+#  through the letters and painted the whole box instead, and the title of the
+#  page became a coloured bar with no writing in it. September 2026.
+#
+#  A rule that says background and also says how that background is clipped,
+#  sized, repeated or placed carries those along when it is restated. The
+#  colour is the only thing this script is allowed to change; everything the
+#  shorthand would silently take with it is put back.
+#  ---------------------------------------------------------------------------
+BG_KIN = ("-webkit-background-clip", "background-clip", "background-size",
+          "background-repeat", "background-position", "background-origin",
+          "background-attachment", "background-blend-mode")
+
+
+def kin(decl):
+    """The background longhands this rule also sets, verbatim."""
+    out = []
+    for d in split_decls(decl):
+        if ":" not in d:
+            continue
+        prop, val = d.split(":", 1)
+        if prop.strip().lower() in BG_KIN:
+            out.append("%s:%s" % (prop.strip(), val.strip()))
+    return out
+
+
+#  ---------------------------------------------------------------------------
+#  Ink that sits on a ground the night is not moving must not move either.
+#
+#  The Prophets page ends with a gold button: background:#C9A227;color:#241D12.
+#  Gold is a colour with an opinion and is never turned -- it was chosen to sit
+#  on both grounds, and that is the whole reason the house holds together. The
+#  dark ink on it is a neutral, so it *was* turned, and the button came out as
+#  parchment on gold: 2.4:1, the last unreadable thing left on the site.
+#
+#  The pair was chosen together. If a rule paints its own ground and that ground
+#  is staying exactly where it is, then the writing on it is already correct,
+#  whatever the page behind them is doing.
+#  ---------------------------------------------------------------------------
+def keeps_its_ground(decl):
+    #  Only an opaque ground counts. `background:transparent`, `background:none`
+    #  and a 5%-alpha wash are not grounds: the ink on them is sitting on the
+    #  page, and the page is exactly what is moving.
+    for d in split_decls(decl):
+        if ":" not in d:
+            continue
+        prop, val = d.split(":", 1)
+        p = prop.strip().lower()
+        if not p.startswith(GROUND):
+            continue
+        if GTOK.search(val):
+            return False                       # a parchment token: it moves
+        opaque, moved = False, False
+        for m in HEX_RE.finditer(val):
+            rgb = bits(m.group(0))
+            if not rgb:
+                continue
+            h = m.group(0).lstrip("#")
+            if len(h) == 8 and int(h[6:8], 16) < 153:
+                continue                       # a hex with alpha, and it is a wash
+            if len(h) == 4 and int(h[3] * 2, 16) < 153:
+                continue
+            opaque = True
+            if turned(rgb, p) is not None:
+                moved = True
+        for m in RGB_RE.finditer(val):
+            a = m.group(5)
+            if a and not a.startswith("var(") and float(a.rstrip("%")) / (100.0 if a.endswith("%") else 1.0) < 0.6:
+                continue
+            opaque = True
+            rgb = (int(m.group(2)), int(m.group(3)), int(m.group(4)))
+            if turned(rgb, p) is not None:
+                moved = True
+        return opaque and not moved
+    return False
+
+
+#  A background clipped to the text is not a ground: it is the writing.
+#
+#  .shimmer pours a gradient through its letterforms -- gold, a bright flash of
+#  parchment at the halfway stop, gold again. Read as a ground, that flash is a
+#  cream panel and the night turns it navy, which puts a dark hole through the
+#  middle of a gold heading. The property says "background" and the clip says
+#  "these are letters", and the clip is the one telling the truth.
+CLIP_TEXT = re.compile(r"(?:-webkit-)?background-clip\s*:\s*text", re.I)
 
 
 def only_changed(decl):
@@ -373,16 +652,25 @@ def only_changed(decl):
        property of every rule came to 141 KB, of which the colours were a
        fifth."""
     out = []
+    writing = bool(CLIP_TEXT.search(decl))
+    fixed = keeps_its_ground(decl)
     for d in split_decls(decl):
         if ":" not in d:
             continue
         prop, val = d.split(":", 1)
-        if not HOUSE.search(val):
+        if not (HOUSE.search(val) or GTOK.search(val)):
             continue
-        t = turn(val, prop)
+        asked = prop
+        if writing and prop.strip().lower().startswith(GROUND):
+            asked = "color"          # clipped to the text: turn it as ink
+        elif fixed and prop.strip().lower().startswith(INK):
+            continue                 # its ground is not moving; nor is it
+        t = turn(val, asked)
         if t.strip() == val.strip():
             continue
         out.append("%s:%s" % (prop.strip(), t.strip()))
+    if out and any(o.split(":", 1)[0].strip().lower() == "background" for o in out):
+        out += kin(decl)
     return ";".join(out)
 
 
@@ -403,6 +691,14 @@ def split_decls(decl):
             buf.append(ch)
     if buf: out.append("".join(buf))
     return [x for x in (y.strip() for y in out) if x]
+
+
+#  @media print is paper, and paper has no night. The house's print blocks say
+#  things like body.kit{background:#fff;color:#000} -- the deliberate act of
+#  taking a night page back to ink on a page -- and turning those over emitted
+#  colour:#FFFEF7 inside @media print, which is white ink on white paper. An
+#  imam printing Friday's sermon would have got a blank sheet.
+PRINT = re.compile(r"^@media\b[^{]*\bprint\b", re.I)
 
 
 def at_blocks(style):
@@ -447,22 +743,92 @@ def foundational(sel):
     return any(UNIVERSAL.search(one.strip()) for one in sel.split(","))
 
 
-def scope(sel):
-    """Every selector is answered only where the night has been asked for."""
+#  A keyframe's steps are offsets, not selectors. `0%`, `50%`, `from`, `to`:
+#  flat_rules() hands them over like any other rule and the first cut scoped
+#  them, which put `html.n2-night 100%{background:#0A1024}` in the sheet -- a
+#  selector that matches nothing and parses as garbage. They are dropped here.
+STEP = re.compile(r"^(?:\d+(?:\.\d+)?%|from|to)$", re.I)
+
+
+def scope(sel, room=False):
+    """Every selector is answered only where the night has been asked for.
+
+       `room` marks a rule that was read out of one page's own <style> rather
+       than a stylesheet the whole house links. Those rules carry class names
+       that belong to a single room, and a class name is not a namespace: the
+       Little Codex has a <span class="moon"> holding the word "Codex" and the
+       moon-phase dial in another room has a .moon that is a conic gradient, so
+       the dial's night rule painted a gold wedge across the child's wordmark.
+       Worse, a room's :root{--parchment} turned over became a house-wide token
+       flip, and the Little Codex writes its white text as color:var(--parchment)
+       -- so the whole header went black on black. September 2026.
+
+       A rule read from one room may only answer in a room of that kind, and
+       noor-fx.js decides which those are by measuring: it reads the page's own
+       ground before it asks for the night, and adds .n2-room only where that
+       ground was light. A room that was already dark is never repainted, and
+       the list of them is never written down anywhere to fall out of date."""
+    at = "html.n2-night.n2-room" if room else "html.n2-night"
     parts = []
     for one in sel.split(","):
         one = one.strip()
-        if not one or one.startswith("@") or one.startswith("%"):
+        if not one or one.startswith("@") or STEP.match(one):
             continue
         if one in (":root", "html"):
-            parts.append("html.n2-night")
+            parts.append(at)
         elif one.startswith("html"):
-            parts.append("html.n2-night" + one[4:])
+            parts.append(at + one[4:])
         elif one.startswith("body"):
-            parts.append("html.n2-night body" + one[4:])
+            parts.append(at + " body" + one[4:])
         else:
-            parts.append("html.n2-night " + one)
+            parts.append(at + " " + one)
     return ",".join(parts)
+
+
+#  ---------------------------------------------------------------------------
+#  A rule with no class in it belongs to one room and to no other.
+#
+#  .n2-room keeps a room's rules off the pages that were never parchment. It
+#  does not keep them off each other, and it cannot: `main p{color:#2C2416}` in
+#  the twenty language front doors turns into light writing, and then answers
+#  on /begin, where the Seeker's card is still a cream panel -- white on cream,
+#  which is nothing at all. A class name is at least a weak namespace. A bare
+#  element name is not even that.
+#
+#  These are rare (fourteen rules in seventy-one rooms), so they are simply
+#  addressed to the rooms that asked for them. noor-fx.js stamps the room's own
+#  path on <html> and the selector names it.
+#  ---------------------------------------------------------------------------
+def room_slug(rel):
+    p = rel[:-5] if rel.endswith(".html") else rel
+    if p.endswith("/index"):
+        p = p[:-6]
+    if p == "index":
+        p = ""
+    return p or "home"
+
+
+NAMED = re.compile(r"[.#\[]")
+
+
+def addressed(sel, rooms):
+    """The same selector, said once per room that wanted it."""
+    out = []
+    for r in sorted(rooms):
+        at = 'html.n2-night.n2-room[data-room="%s"]' % room_slug(r)
+        for one in sel.split(","):
+            one = one.strip()
+            if not one or one.startswith("@") or STEP.match(one):
+                continue
+            if one in (":root", "html"):
+                out.append(at)
+            elif one.startswith("html"):
+                out.append(at + one[4:])
+            elif one.startswith("body"):
+                out.append(at + " body" + one[4:])
+            else:
+                out.append(at + " " + one)
+    return ",".join(out)
 
 
 HEAD = """/* NOOR · noor2-night.css · the older rooms, read in the night.
@@ -484,8 +850,26 @@ HEAD = """/* NOOR · noor2-night.css · the older rooms, read in the night.
 def main():
     seen, pages = build()
     by_at = collections.OrderedDict()
+    shared = set(SHARED)
     for (at, sel, decl), who in seen.items():
-        by_at.setdefault(at, []).append((sel, decl, who))
+        #  a rule the whole house links answers everywhere; a rule read out of
+        #  one page's own <style> answers only in a room that was parchment.
+        #
+        #  A token flip is always room-scoped, whichever it came from. It is the
+        #  most far-reaching shape a rule has -- :root{--parchment:#0A1024}
+        #  repaints every element in the document that ever named that token,
+        #  including ones in rooms that never linked the sheet it came from. The
+        #  Little Codex writes its white wordmark as color:var(--parchment) and
+        #  does not link hub.css, and hub.css's flip blacked it out anyway.
+        tokens = any(d.strip().startswith("--") for d in split_decls(decl))
+        own = who.isdisjoint(shared)
+        if own and not NAMED.search(sel):
+            s2 = addressed(sel, who)
+        else:
+            s2 = scope(sel, room=tokens or own)
+        if not s2:
+            continue
+        by_at.setdefault(at, []).append((s2, decl, who))
     if "--report" in sys.argv:
         print("parchment rooms read: %d" % pages)
         print("rules turned over   : %d" % len(seen))

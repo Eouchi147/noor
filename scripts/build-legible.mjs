@@ -99,7 +99,7 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
      kills the hover into the bargain. The first draft of this script did
      exactly that. Utilities may still carry a SIZE floor -- .text-[9px] is
      precisely the right place to say "not 9px" -- but never a colour. */
-  const UTILITY = /^(text-|font-|hover:|focus:|active:|underline$|uppercase$|lowercase$|capitalize$|italic$|not-italic$|tracking-|leading-|opacity-|bg-|border-|decoration-|placeholder-|caret-|accent-)/;
+  const UTILITY = /^(text-|font-|hover:|focus:|active:|underline$|uppercase$|lowercase$|capitalize$|italic$|not-italic$|tracking-|leading-|opacity-|bg-|border-|decoration-|placeholder-|caret-|accent-|notranslate$|sr-only$|visually-hidden$|screen-reader-text$)/;
   const sel = (el, forColour) => {
     const cls = (el.className && typeof el.className === 'string') ? el.className.trim().split(/\s+/) : [];
     let keep = cls.filter(c => c && !NOISE.test(c));
@@ -125,6 +125,7 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
      hovers over and still wins. */
   const RULES = { color: [], size: [] };
   for (const sh of document.styleSheets) {
+    if (/noor2-legible/.test(sh.href || '')) continue;               /* never read our own answer */
     let rs; try { rs = sh.cssRules; } catch (e) { continue; }        /* cross-origin */
     const walk = list => { for (const r of list || []) {
       if (r.cssRules && !r.selectorText) { walk(r.cssRules); continue; }   /* @media, @supports */
@@ -143,8 +144,16 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
     for (const sel of RULES[kind]) {
       /* :hover and friends describe a state, not this element at rest */
       if (/:(hover|focus|active|visited|target|checked)\b/.test(sel)) continue;
+      /* A bare element selector is not a place to write a colour. `a` wins the
+         cascade on one dim link in one room, and the floor then answers it as
+         `html a` -- which is every link in the house. That is how a salmon
+         link colour, lifted out of a 1.93:1 failure on one card, arrived on
+         all 602 pages. If the winner is `a` or `p` or `h3`, the element's own
+         classes are the honest target, even though they are narrower. */
+      if (!/[.#[]/.test(sel)) continue;
       for (const one of sel.split(',')) {
         const t = one.trim(); if (!t) continue;
+        if (!/[.#[]/.test(t)) continue;
         try { if (el.matches(t)) best = t; } catch (e) {}
       }
     }
@@ -252,6 +261,21 @@ for (const path of PAGES) {
   try {
     await pg.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 20000 });
     await pg.waitForTimeout(2300);
+    /* Measure the house, not the house wearing last week's floor.
+       The floor is injected by noor-fx.js like every other sheet, so a rebuild
+       walks pages that are already carrying the previous answer. Two things go
+       wrong. Everything the old sheet fixed now measures as passing, so it is
+       dropped from the new sheet -- and fails again the moment the new sheet
+       ships. And the winner search finds the old sheet's own rules and copies
+       them forward, which is how `html .notranslate{color:#a07e16}` survived
+       being added to the utility filter: it was no longer being derived, it was
+       being read back out of the file it had been written to. A generator that
+       reads its own output is not measuring anything.
+       So: turn it off, let the style recalc land, then look. */
+    await pg.evaluate(() => {
+      for (const sh of document.styleSheets) if (/noor2-legible/.test(sh.href || '')) sh.disabled = true;
+    });
+    await pg.waitForTimeout(250);
     const rows = await pg.evaluate(PROBE, { MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE });
     seenPages++;
     for (const r of rows) {
