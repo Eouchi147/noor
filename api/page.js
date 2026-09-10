@@ -32,7 +32,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "5";                                  /* the shell's cache-buster; noor-fx.js carries the same */
+const V = "6";                                  /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
@@ -52,7 +52,14 @@ export const lights = () => once("lights", () => { const j = readJSON("lights/al
 export const lightById = id => lights().find(L => L.id === id) || null;
 export const dictionary = () => once("dict", () => { const j = readJSON("assets/dict-index.json"); return (j && j.words && typeof j.words === "object") ? j.words : {}; });
 const menuIndex = () => once("menu", () => readJSON("assets/menu-index.json") || { words: [], path: [] });
-const labels = () => once("labels", () => readJSON("i18n/en.json") || {});
+/* i18n/en.json is a pack of five shelves -- ui, nodes, characters, places,
+   words -- and the hand-written chrome keys live on the ui shelf. This read
+   the whole pack and looked the keys up on the outside of it, so every
+   lookup missed: /path has been heading its seven sections "bidaya",
+   "qisas", "jahiliyyah" since the pack was reshaped, and every chapter page
+   has been saying "chapter 55 of 71 - nihaya". Seven names and seven
+   descriptions, translated into twenty-one languages, went nowhere. */
+const labels = () => once("labels", () => (readJSON("i18n/en.json") || {}).ui || {});
 /* nodes-index.js is a script: `const NODES=[...]`; the array literal is sliced out */
 export const chapters = () => once("nodes", () => {
   const s = readText("nodes-index.js") || "";
@@ -408,6 +415,30 @@ function lightsIndex() {
    in profile and is held back here, by the house rule, whatever the room
    does with it. */
 const HELD_BACK = new Set(["assets/manuscripts/adam.jpg"]);
+/* Nineteen chapters of Al-Nihaya were written with three fields no page has
+   ever drawn: where the chapter falls in the order of the Hour, the events
+   it contains in the order they come, and -- on the three that describe a
+   trial a person can actually be caught in -- what shields you from it.
+   A hundred and eighteen sourced events, sitting in node/53..71.json since
+   they were written, read by nothing.
+
+   They are drawn here because this is the chapter's own room. The order of
+   the Hour is the one place on the site where sequence is the content: a
+   reader who wants to know whether the Sun rising in the west comes before
+   or after the Dajjal is asking exactly what these fields answer, and the
+   answer was already written. */
+const seqBand = q => (q && (q.phase || q.position || q.note)) ? `<section class="n2-idea n2-short">
+<p class="n2-eyebrow">Where it falls</p>
+<ul class="n2-facts">${q.phase ? `<li><span>Phase</span><b>${esc(q.phase)}</b></li>` : ""}${q.position ? `<li><span>Position</span><b>${esc(q.position)}</b></li>` : ""}</ul>
+${q.note ? `<p class="n2-dim" style="margin-top:12px">${esc(q.note)}</p>` : ""}
+</section>` : "";
+/* The label is the event; the line under it is where it is written. Nothing
+   is invented here: every detail line in the data already carries its own
+   source, so the spine is the data and not a gloss on it. */
+const timeline = rows => (rows && rows.length) ? `<p class="n2-eyebrow">The order of events</p><ol class="n2-tl">${rows.map(r =>
+  `<li><b>${esc(r.label || "")}</b>${r.detail ? `<small>${esc(r.detail)}</small>` : ""}</li>`).join("")}</ol>` : "";
+const shield = rows => (rows && rows.length) ? `<p class="n2-eyebrow" style="margin-top:26px">The shield</p><ul class="n2-shield">${rows.map(r =>
+  `<li>${esc(r)}</li>`).join("")}</ul>` : "";
 function chapterPage(nRaw) {
   const n = Number(nRaw);
   const N = chapter(n);
@@ -427,6 +458,7 @@ ${N.titleAr ? `<p class="n2-title-ar" lang="ar">${esc(N.titleAr)}</p>` : ""}
 ${img ? `<div class="n2-image" role="img" aria-label="${attr(N.titleEn)}" style="background-image:url('${attr(img)}')"></div>` : ""}
 <div class="n2-row">${go("#story", "Read on", true)}${shareBtn(N.titleEn + " · The Path of Creation, chapter " + n + " · NOOR", SITE + url)}</div>
 </section>
+${seqBand(N.sequence)}
 <section class="n2-idea n2-short" id="story"${guideKeys().has("n:" + n) ? ` data-guide="n:${n}"` : ""}>
 <p class="n2-eyebrow">The chapter</p>
 ${paras(unmark(N.details || ""))}
@@ -437,6 +469,8 @@ ${(N.quran || []).length ? `<section class="n2-idea n2-short"><p class="n2-eyebr
 }).join("") + "</section>" : ""}
 ${(N.hadith || []).length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The narrations</p>` + N.hadith.map(h =>
   `<div class="n2-quote"><p class="n2-p">${esc(h.text)}</p><p class="n2-src">${esc(h.source || "")}</p></div>`).join("") + "</section>" : ""}
+${(N.timeline || []).length || (N.protection || []).length ? `<section class="n2-idea n2-short" id="order">` +
+  timeline(N.timeline) + shield(N.protection) + "</section>" : ""}
 ${(N.lessons || []).length || (N.facts || []).length ? `<section class="n2-idea n2-short">` +
   ((N.lessons || []).length ? `<p class="n2-eyebrow">What it teaches</p><ul class="n2-list">${N.lessons.map(l => `<li><a href="#story"><b>${esc(l)}</b></a></li>`).join("")}</ul>` : "") +
   ((N.facts || []).length ? `<p class="n2-eyebrow" style="margin-top:22px">The facts</p><ul class="n2-facts">${N.facts.map(f => `<li><span>${esc(f.label)}</span><b>${esc(f.value)}</b></li>`).join("")}</ul>` : "") + "</section>" : ""}
