@@ -215,6 +215,25 @@ console.log('\na reel slot is untouched, and YouTube is asked first');
      'a reel is offered YouTube first, then Instagram, Facebook, Threads, Telegram, Pinterest');
   ok(SOC.orderChannels(['facebook', 'instagram', 'youtube'], { video: 'v' }).join() === 'youtube,instagram,facebook', 'the set is what is live; only the order changes');
   ok(SOC.orderChannels(['facebook', 'instagram'], { image: 'i' }).join() === 'facebook,instagram', 'a card keeps its order');
+  {
+    /* Six networks share fifty five seconds and YouTube can take half of it,
+       so a FIXED queue means the same three are never reached: Threads,
+       Telegram and Pinterest were last every hour of every day. Whoever the
+       clock cut last time on this slot leads next time. */
+    const ALL = ['facebook', 'instagram', 'youtube', 'pinterest', 'telegram', 'threads'];
+    const cut = { results: { threads: { late: true }, telegram: { late: true }, pinterest: { late: true },
+                             youtube: { ok: true }, instagram: { ok: true }, facebook: { ok: true } } };
+    ok(SOC.orderChannels(ALL, { video: 'v' }, cut).join() === 'threads,telegram,pinterest,youtube,instagram,facebook',
+      'the three the clock cut lead the next hour, in their own order');
+    const one = { results: { pinterest: { late: true }, youtube: { ok: true } } };
+    ok(SOC.orderChannels(ALL, { video: 'v' }, one).join() === 'pinterest,youtube,instagram,facebook,threads,telegram',
+      'and one that was cut goes to the front alone');
+    const refused = { results: { threads: { ok: false, err: 'refused' } } };
+    ok(SOC.orderChannels(ALL, { video: 'v' }, refused).join() === 'youtube,instagram,facebook,threads,telegram,pinterest',
+      'a network that REFUSED is not owed time: that is the healer\'s business, and the order is unchanged');
+    ok(SOC.orderChannels(ALL, { image: 'i' }, cut).join() === ALL.join(),
+      'and a card is never reordered, whatever happened last hour');
+  }
   /* end to end: with YouTube connected, it is the first network called */
   process.env.YT_CLIENT_ID = 'c'; process.env.YT_CLIENT_SECRET = 's'; process.env.YT_REFRESH_TOKEN = 'r';
   const order = [];
