@@ -47,3 +47,57 @@ specs
 /assets/images/ark.jpg
 /assets/images/kaaba.jpg
 /assets/images/kaaba-night.jpg
+
+# ---------------------------------------------------------------------------
+# THE SECOND PASS · 10 September 2026
+#
+# The first audit went after files nothing links to. This one goes after whole
+# folders that ship because nobody ever said not to: the generators, their
+# source data, and the two rendering tools. None of it is served, and none of
+# it is read by a function at runtime -- which was checked rather than assumed.
+# The complete set of paths any serverless function opens is:
+#
+#     assets/dict-index.json      assets/menu-index.json
+#     i18n/en.json                lights/all.json
+#     node/*                      study/*
+#     reels/index.json            nodes-index.js
+#     noor-guide-data.js          tools/reels/quran-uthmani.json
+#                                 tools/reels/verses.txt
+#
+# Those last two are why tools/ is trimmed rather than dropped: vercel.json
+# lists them in includeFiles, and a parent directory that never arrives cannot
+# have a file included out of it. Everything else under tools/ goes.
+#
+# api/_nightshift.js names "build/lights-*.json" in a string. It is telling a
+# reader where a light was written, not opening it; grep for readJSON, readText
+# and readFileSync across api/ and build/ appears in none of them.
+#
+# About 11.5 MB of a 54 MB deployment.
+/scripts/
+/build/
+/.build-src/
+/.github/
+/tools/films/
+/tools/reels/web/
+/tools/reels/__pycache__/
+/tools/reels/plan.json
+/tools/reels/know.json
+/tools/reels/light.json
+/tools/reels/calendar.json
+
+# Superseded, and still being uploaded. The menu moved into the shell that
+# noor-fx.js draws on every page, and its search opens assets/noor-search.js;
+# no page has linked either of these since. scripts/nav49.py was still writing
+# the tags for them into a header no page carries any more -- that is fixed in
+# the same commit, because a file that stops shipping and a script that keeps
+# asking for it is a 404 waiting for whoever runs the generator next.
+/assets/noor-menu.js
+/assets/noor-menu.css
+
+# The card faces. They are read by scripts/gen-card-fonts.py, which embeds
+# them into api/_cardfont.js as bytes; the browser never asks for the files.
+/assets/fonts/
+
+# The lantern, twice. assets/noor-lantern.js is on nine pages and stays; this
+# is the older copy at the root, which nothing has linked since it moved.
+/lantern.js
