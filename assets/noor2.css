@@ -227,6 +227,26 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-facts li{border:1px solid var(--n2-line);border-radius:12px;padding:10px 12px;background:rgba(255,254,247,.03)}
 .n2-facts span{display:block;font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin-bottom:4px}
 .n2-facts b{font-weight:600;font-size:15px;line-height:1.35}
+/* the order of events a chapter names: a spine down the side with a mark at
+   each step, the event on the line and its source under it. Written in
+   logical properties so the spine moves to the right of the text in Arabic,
+   Urdu, Farsi, Dari, Pashto and Kurdish without a second rule. */
+.n2-tl{list-style:none;margin:8px 0 0;padding:0;padding-inline-start:22px;position:relative}
+.n2-tl::before{content:"";position:absolute;inset-inline-start:5px;top:8px;bottom:8px;width:1px;
+  background:linear-gradient(180deg,rgba(233,200,106,.45),rgba(233,200,106,.10))}
+.n2-tl li{position:relative;padding:0 0 16px}
+.n2-tl li:last-child{padding-bottom:0}
+.n2-tl li::before{content:"";position:absolute;inset-inline-start:-21px;top:7px;width:9px;height:9px;border-radius:50%;
+  background:var(--n2-night);border:1px solid var(--n2-goldhi);box-shadow:0 0 0 3px var(--n2-night)}
+.n2-tl b{display:block;font-weight:600;font-size:15px;line-height:1.4;color:var(--n2-parch)}
+.n2-tl small{display:block;font-size:13px;line-height:1.5;color:var(--n2-parch3);margin-top:3px}
+
+/* what the chapter says to actually do about the trial it describes */
+.n2-shield{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.n2-shield li{border:1px solid var(--n2-line);border-inline-start:2px solid rgba(233,200,106,.45);
+  border-radius:12px;padding:11px 14px;background:rgba(233,200,106,.05);
+  font-size:15px;line-height:1.5;color:var(--n2-parch2)}
+
 .n2-quote{margin:0 0 14px;padding:0 0 0 16px;border-left:2px solid rgba(233,200,106,.4)}
 .n2-quote .n2-p{margin-bottom:6px}
 .n2-image{width:100%;max-width:420px;height:min(24svh,200px);border-radius:16px;background-size:cover;background-position:center;
