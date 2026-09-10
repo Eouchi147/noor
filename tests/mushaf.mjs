@@ -94,6 +94,7 @@ ok(await page.locator('#a-142 .vx').count()===0,'2:142, the next verse over, doe
 console.log('\n=== 2. the panel opens with real content ===');
 await page.goto(BASE+'/quran?surah=1',{waitUntil:'domcontentloaded'});
 await page.waitForSelector('.ayah');
+await page.locator('#a-4').focus();
 await page.locator('#a-4 .vx').click();
 await page.waitForSelector('#vp-4 .vsense',{timeout:8000});
 const p4=await page.locator('#vp-4').innerText();
@@ -105,10 +106,12 @@ ok(/Muslim 395/.test(p4),'the source is printed with it');
 ok(await page.locator('#vp-4 .vlink').count()===2,'two cross links');
 ok(!/Nothing has been written/.test(p4),'no empty state on a written verse');
 ok(await page.locator('#a-4 .vx').getAttribute('aria-expanded')==='true','aria-expanded is true');
+await page.locator('#a-4').focus();
 await page.locator('#a-4 .vx').click();
 ok(await page.locator('#vp-4').isHidden(),'clicking again folds it away');
 
 console.log('\n=== 3. a cross link travels ===');
+await page.locator('#a-7').focus();
 await page.locator('#a-7 .vx').click();
 await page.waitForSelector('#vp-7 .vlink');
 await page.locator('#vp-7 .vlink').first().click();
@@ -121,7 +124,7 @@ await page.waitForSelector('.ayah');
 await page.evaluate(()=>window.scrollTo(0,0));
 await page.waitForTimeout(200);
 /* a verse far below the fold: following must bring it up */
-await page.locator('#a-40 .playbtn').click();
+await page.locator('#a-40 .ar').click();
 await page.waitForTimeout(900);
 let box=await page.locator('#a-40').boundingBox();
 ok(box && box.y>0 && box.y<420,'a verse below the fold is brought into view (y='+(box?Math.round(box.y):'null')+')');
@@ -146,14 +149,14 @@ const before=await page.evaluate(()=>scrollY);
    is exactly the false move this assertion is checking the page itself
    never makes. The click still lands the same; only Playwright's own
    pre-click scroll is skipped so it cannot masquerade as the page's. */
-await page.locator('#'+comfy+' .playbtn').click({force:true});
+await page.locator('#'+comfy+' .ar').click({force:true});
 await page.waitForTimeout(800);
 const after=await page.evaluate(()=>scrollY);
 ok(Math.abs(after-before)<8,'a verse already in view is left exactly where it is ('+before+' -> '+after+')');
 
 /* the reader's own gesture stops the following */
 await page.evaluate(()=>window.scrollTo(0,0));
-await page.locator('#a-60 .playbtn').click();
+await page.locator('#a-60 .ar').click();
 await page.waitForTimeout(800);
 await page.mouse.wheel(0,700);
 await page.waitForTimeout(300);
@@ -186,12 +189,12 @@ TONE=TONE_LONG;
 
 /* tapping a verse is itself a request to be shown that verse */
 await page.evaluate(()=>window.scrollTo(0,0));
-await page.locator('#a-60 .playbtn').click();
+await page.locator('#a-60 .ar').click();
 await page.waitForTimeout(700);
 await page.mouse.wheel(0,900);
 await page.waitForTimeout(250);
 ok(await page.evaluate(()=>!NOOR_MUSHAF.follow),'following is off again');
-await page.locator('#a-61 .playbtn').click();
+await page.locator('#a-61 .ar').click();
 await page.waitForTimeout(800);
 ok(await page.evaluate(()=>NOOR_MUSHAF.follow),'tapping a verse re-arms following: the reader is looking at it');
 

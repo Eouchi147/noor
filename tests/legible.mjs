@@ -243,8 +243,17 @@ console.log('  scanned ' + scanned + ' page loads across ' + PAGES.length + ' pa
      · /kids writes with --parchment, which the night must turn dark or every
        card in the house stays a cream band. The floor catches the text uses it
        can name; the rest wants the token split in two.
-     · nine shell pages keep a cream sticky header from the parchment cut. */
-const CEILING = { unreadable: 0, tiny: 326, inks: 72 };
+     · nine shell pages keep a cream sticky header from the parchment cut.
+
+   inks 72 -> 75. This is the one ratchet that counts tidiness rather than
+   readability, and the Mushaf's contrast pass spent three of them: the
+   translation under each ayah went from an inherited 82% to its own 94%, the
+   recitation settings' sub-labels from 40% to 66%, and the study panel's
+   eyebrow and source line from 45% and 50% to 68%. Every alpha used was
+   already in the house's vocabulary; what is new is those alphas composited
+   over grounds they had not sat on before. Picking a colour to hold a counter
+   down rather than to be read would be the wrong way round. */
+const CEILING = { unreadable: 0, tiny: 326, inks: 74 };
 const ratchet = (name, got, cap) => {
   if (got > cap) { fail++; console.log('  FAIL ' + name + ' got worse: ' + got + ' (ceiling ' + cap + ')'); }
   else { pass++; console.log('  ✓ ' + name + ': ' + got + (got ? ' left, ceiling ' + cap + (got < cap ? ' -- lower it to ' + got : '') : ' -- clear')); }

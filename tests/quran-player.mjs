@@ -8,7 +8,11 @@
 
      · the room opens without a single script error
      · the bar is fixed to the bottom edge and stays there through a scroll
-     · one tap plays, the next pauses, and the player says which it is
+     · one tap ON THE VERSE plays it, the next pauses, and the player says which
+     it is. That is the room's own gesture and always was: tapping an ayah
+     starts it, a long press copies it. The three written actions under a
+     verse are the fallback, and they belong to the verse the reader is on --
+     seven verses on a phone used to mean twenty one buttons.
      · the verse being recited is the one lit, and its line follows the audio
      · next and previous move the light, and tapping a verse starts there
      · a reader who scrolls away is offered the recitation back on a pill
@@ -86,9 +90,18 @@ const FAKE = () => {
       setTimeout(() => { if (!me.paused && me.onplaying) me.onplaying(); }, 10);
       this._t = setInterval(() => {
         if (me.paused) return;
+        /* the two ways a recitation dies on a phone, on demand:
+           __STALL  the bytes stop arriving and the clock stops, with no
+                    event of any kind -- the element is not paused, not
+                    ended, and not progressing
+           __DROP_ENDED  the ayah reaches its own end and `ended` never
+                    fires, which iOS does often enough to matter */
+        if (window.__STALL) return;
         me.currentTime = Math.min(DUR, me.currentTime + STEP * me.playbackRate);
         if (me.currentTime >= DUR) {
-          clearInterval(me._t); me.paused = true;
+          clearInterval(me._t);
+          if (window.__DROP_ENDED) { window.__DROPPED = (window.__DROPPED || 0) + 1; return; }
+          me.paused = true;
           if (me.onended) me.onended();
           return;
         }
@@ -199,7 +212,7 @@ for (const W of [390, 1280]) {
   await page.screenshot({ path: 'tests/shots/quran-' + W + '-idle.png', fullPage: false });
 
   console.log('\n=== 3. one tap plays, the next pauses ===');
-  await page.locator('#a-2 .playbtn').click();
+  await page.locator('#a-2 .ar').click();
   await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 1, { timeout: 8000 });
   await page.waitForTimeout(500);                       /* the bar rises in a third of a second */
   ok(await page.evaluate(() => !NOOR_MUSHAF.paused), 'tapping a verse starts it playing');
@@ -217,6 +230,21 @@ for (const W of [390, 1280]) {
   await page.locator('#p-toggle').click();
   await page.waitForTimeout(250);
   ok(await page.evaluate(() => !NOOR_MUSHAF.paused), 'and starts it again');
+
+  /* The glyph used to be written into the button itself, which threw the
+     word away with it: the first time a surah was played, every "Listen" on
+     the page turned into a bare triangle, and a triangle in ink at 55% is
+     something a reader on a dark card cannot find. */
+  ok(await page.locator('#a-2 .playbtn > span').innerText().then(t => /^Listen$/.test(t.trim())), 'a verse that has been played still says Listen');
+  ok(await page.locator('#a-2 .playbtn .eq').count() === 1, 'and its mark is the equaliser while it sounds');
+  {
+    const marks = await page.evaluate(() => [...document.querySelectorAll('.playbtn .vg')].map(g => getComputedStyle(g).color));
+    const chroma = c => { const m = c.match(/\d+/g) || [0, 0, 0]; const n = m.slice(0, 3).map(Number); return (Math.max(...n) - Math.min(...n)) / 255; };
+    ok(marks.length === 7 && marks.every(c => chroma(c) >= 0.18), 'every play mark is gold, so the night leaves it alone (' + marks[0] + ')');
+  }
+  await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
+  await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
+  ok(await page.locator('#a-2 .playbtn > span').innerText().then(t => /^Listen$/.test(t.trim())), 'and it still says Listen after a pause and a restart');
 
   console.log('\n=== 4. the verse being recited carries the light ===');
   ok(await page.locator('.ayah.playing').count() === 1, 'exactly one verse is lit');
@@ -284,6 +312,11 @@ for (const W of [390, 1280]) {
   ok(afterTap.pre === 6, 'and verse 7 is the one being fetched ahead');
 
   console.log('\n=== 6b. a verse leaves with its reference ===');
+  /* A verse shows its three written actions when the reader is ON it, and
+     giving it keyboard focus is one of the ways to be on it -- the way that
+     does not also start reciting, which is exactly what a reader wanting to
+     COPY a verse needs. Every .ayah carries tabindex="0" for this. */
+  await page.locator('#a-4').focus();
   await page.locator('#a-4 .copyb').click();
   await page.waitForSelector('#q-toast', { timeout: 4000 });
   ok(await page.locator('#q-toast').innerText().then(t => /1:4 copied/.test(t)), 'the copy button says which verse it took');
@@ -296,7 +329,7 @@ for (const W of [390, 1280]) {
   console.log('\n=== 7. the reader who walks away is offered the way back ===');
   await open(page, 2);
   await page.evaluate(() => scrollTo(0, 0));
-  await page.locator('#a-3 .playbtn').click();
+  await page.locator('#a-3 .ar').click();
   await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 2, { timeout: 8000 });
   ok(await page.locator('#p-pill').isHidden(), 'while the reader is with the recitation there is no pill');
   await page.mouse.wheel(0, 1400);
@@ -391,6 +424,61 @@ for (const W of [390, 1280]) {
     .then(() => ok(true, 'and the deep link follows the reader (' + page.url().split('?')[1] + ')'))
     .catch(() => ok(false, 'and the deep link follows the reader (' + page.url().split('?')[1] + ')'));
 
+  /* ============ the room is one design, and stays one ============
+     It had become a hybrid: a Tailwind card from the first cut wrapping the
+     verses, the reciting verse getting a second card inside that, twenty one
+     buttons on a seven verse surah, four button shapes in one player bar and
+     four corner radii on one screen. Each of those is easy to reintroduce by
+     accident, so each is held here. */
+  console.log('\n=== 9b. one design, not two ===');
+  ok(await page.locator('#room-body .bg-white').count() === 0, 'the verses are not in a card');
+  ok(await page.locator('.mushaf').count() === 1, 'they are a document on the page');
+  {
+    /* something has to be reciting for the mark of reciting to be measured */
+    await page.locator('#a-2 .ar').click();
+    await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 1, { timeout: 8000 });
+    await page.waitForTimeout(500);
+    const box = await page.evaluate(() => {
+      const a = document.querySelector('.ayah.playing') || document.querySelector('.ayah');
+      const cs = getComputedStyle(a);
+      return { bg: cs.backgroundColor, radius: cs.borderRadius };
+    });
+    ok(/rgba\(0, 0, 0, 0\)|transparent/.test(box.bg), 'and the verse being recited is not a box either (' + box.bg + ')');
+    const spine = await page.evaluate(() => {
+      const a = document.querySelector('.ayah.playing'), b = document.querySelector('.ayah:not(.playing)');
+      if (!a || !b) return null;
+      const on = getComputedStyle(a, '::before'), off = getComputedStyle(b, '::before');
+      return { on: +on.opacity, off: +off.opacity, w: on.width };
+    });
+    /* read while it may still be arriving, so this asks that it is there and
+       that the verses which are not being recited do not have one */
+    ok(spine && spine.on > 0.5 && spine.off === 0 && parseFloat(spine.w) > 0,
+      'it is marked by a spine of light down its leading edge (' + JSON.stringify(spine) + ')');
+  }
+  {
+    /* the actions belong to the verse the reader is on, and to no other */
+    const shown = await page.evaluate(() => [...document.querySelectorAll('.ayah')]
+      .filter(a => getComputedStyle(a.querySelector('.arow')).opacity !== '0').length);
+    ok(shown <= 2, 'only the verse the reader is on carries its actions (' + shown + ' of ' + (await page.locator('.ayah').count()) + ')');
+    const stable = await page.evaluate(() => {
+      const rows = [...document.querySelectorAll('.arow')].map(r => Math.round(r.getBoundingClientRect().height));
+      return rows.every(h => h === rows[0]) && rows[0] > 0;
+    });
+    ok(stable, 'every row keeps the same height, so a recitation moving on never slides the page');
+  }
+  {
+    /* one radius family: 999px is reserved for the surah's name and the one
+       control a thumb finds without looking */
+    const round = await page.evaluate(() => [...document.querySelectorAll(
+      '#qnav button,#qnav select,#player button,.ayah button')]
+      .filter(b => b.offsetParent)
+      .map(b => ({ id: b.id || b.className, r: parseFloat(getComputedStyle(b).borderTopLeftRadius) || 0,
+                   h: Math.round(b.getBoundingClientRect().height) }))
+      .filter(x => x.r >= x.h / 2 - 1 && x.h > 0)
+      .map(x => String(x.id).slice(0, 22)));
+    ok(round.length <= 2, 'nothing is a pill but the surah and the play control (' + (round.join(', ') || 'none') + ')');
+  }
+
   console.log('\n=== 10. the shape of the room ===');
   const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   ok(wide <= 1, 'nothing pushes the page sideways (' + wide + 'px over)');
@@ -423,11 +511,56 @@ for (const W of [390, 1280]) {
   await ctx.close();
 }
 
+/* ============================================================================
+   The recitation that stops but does not say so.
+
+   Al-Baqarah, played to the end, stopped after a couple of verses with the
+   verse still lit and the equaliser still moving. The engine watched only
+   whether a verse had STARTED: onplaying cleared the watch and from then on
+   nothing in the room was looking at the recitation at all. So the two ways
+   a recitation dies on a phone -- the bytes stopping mid-ayah with no event,
+   and iOS never firing `ended` -- were both invisible, permanent, and looked
+   exactly like working.
+   ========================================================================= */
+console.log('\n================ a recitation that stalls ================');
+{
+  const { ctx, page, errors } = await room(390, 844);
+  await open(page, 2);
+  /* "Listen to surah" is the reader's own way of asking for the whole thing,
+     which is what Al-Baqarah was being played with */
+  await page.locator('#t-listen').click();
+  await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 0, { timeout: 8000 });
+  await page.waitForTimeout(400);
+  ok(await page.evaluate(() => NOOR_MUSHAF.continuous), 'the surah is playing to its end');
+
+  console.log('\n=== the bytes stop arriving in the middle of an ayah ===');
+  await page.evaluate(() => { window.__STALL = true; });
+  await page.waitForTimeout(6500);
+  ok(await page.locator('#p-sub').innerText().then(t => /buffering/i.test(t)),
+    'within a few seconds of nothing the player says buffering, instead of pretending (' + (await page.locator('#p-sub').innerText()) + ')');
+  await page.evaluate(() => { window.__STALL = false; });
+  await page.waitForTimeout(2600);
+  ok(await page.locator('#p-sub').innerText().then(t => !/buffering/i.test(t)),
+    'and takes it back the moment the clock moves again');
+
+  console.log('\n=== the ayah ends and `ended` never fires ===');
+  await page.evaluate(() => { window.__DROP_ENDED = true; });
+  const at = await page.evaluate(() => NOOR_MUSHAF.playingIdx);
+  await page.waitForFunction(a => NOOR_MUSHAF.playingIdx > a, at, { timeout: 30000 })
+    .then(() => ok(true, 'the recitation still moves to the next verse (' + at + ' → ' + (at + 1) + ')'))
+    .catch(() => ok(false, 'the recitation still moves to the next verse'));
+  ok(await page.evaluate(() => window.__DROPPED > 0), 'and it was the heartbeat that found it, not the event (' + (await page.evaluate(() => window.__DROPPED)) + ' dropped)');
+  ok(await page.locator('.ayah.playing').count() === 1, 'exactly one verse is lit, and it is the new one');
+  await page.evaluate(() => { window.__DROP_ENDED = false; });
+  ok(errors.filter(mine).length === 0, 'nothing threw (' + (errors.filter(mine)[0] || 'clean') + ')');
+  await ctx.close();
+}
+
 console.log('\n================ reduced motion ================');
 {
   const { ctx, page, errors } = await room(390, 844, { reducedMotion: 'reduce' });
   await open(page, 1);
-  await page.locator('#a-2 .playbtn').click();
+  await page.locator('#a-2 .ar').click();
   await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 1, { timeout: 8000 });
   await page.waitForTimeout(600);
   ok(await page.locator('.ayah.playing').count() === 1, 'the verse being recited is still lit');
