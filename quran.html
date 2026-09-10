@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-n2-top>
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-<meta name="description" content="The NOOR Mushaf: read, listen, translate and understand the Qur'an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
+<meta name="description" content="The NOOR Mushaf: read, listen, translate and understand the Qur'an, an illuminated reading room. Uthmani script, eighteen reciters, translations in nineteen languages, surah gates and guided context."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="NOOR · Codex of Light"/>
 <meta property="og:title" content="Qur&#x27;an · NOOR Codex of Light"/>
-<meta property="og:description" content="The NOOR Mushaf: read, listen, translate and understand the Qur&#x27;an, an illuminated reading room. Uthmani script, Alafasy recitation, Saheeh International and French translations, surah gates and guided context."/>
+<meta property="og:description" content="The NOOR Mushaf: read, listen, translate and understand the Qur&#x27;an, an illuminated reading room. Uthmani script, eighteen reciters, translations in nineteen languages, surah gates and guided context."/>
 <meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
@@ -101,6 +101,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 /* navigator toolbar */
 .tool{border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.34rem .8rem;font-size:.75rem;font-weight:600;color:rgba(44,36,22,.75);background:#fff;transition:all .2s;cursor:pointer;font-family:inherit}
 .tool:hover{border-color:var(--gold);color:var(--ink)}
+.qnone{margin:10px 14px 0;font-size:12px;line-height:1.6;color:rgba(255,254,247,.6);max-width:46rem}
 .tool.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
 .navarrow{width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
 .navarrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
@@ -389,7 +390,7 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 .snone{font-size:.8rem;color:rgba(44,36,22,.5);padding:1rem .6rem}
 </style>
 <link rel="canonical" href="https://noorcodex.com/quran"/>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "The Qur'an · NOOR Mushaf", "url": "https://noorcodex.com/quran", "inLanguage": ["en", "ar"], "description": "Read, listen, translate and understand the Qur'an: all 114 surahs in Uthmani script with per-verse recitation by Mishary Rashid Alafasy and English and French translations.", "isPartOf": {"@id": "https://noorcodex.com/#site"}, "about": {"@type": "Book", "name": "The Qur'an", "inLanguage": "ar"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "The Qur'an · NOOR Mushaf", "url": "https://noorcodex.com/quran", "inLanguage": ["ar","en","fr","es","de","ru","tr","ur","hi","bn","id","fa","ps","ku","ha","so","sw","zh","ja","ko"], "description": "Read, listen, translate and understand the Qur'an: all 114 surahs in Uthmani script, eighteen reciters and translations in nineteen languages.", "isPartOf": {"@id": "https://noorcodex.com/#site"}, "about": {"@type": "Book", "name": "The Qur'an", "inLanguage": "ar"}}</script>
 <link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
 <script src="/assets/noor-hijri.js?v=1" defer></script>
 <script src="/assets/noor-ramadan.js?v=1" defer></script>
@@ -788,7 +789,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="max-w-6xl mx-auto px-4 py-2">
 <div class="qrow qrow1">
 <button class="navarrow" id="prev-s" aria-label="Previous surah" disabled>‹</button>
-<select id="surah-select" aria-label="Choose surah"><option value="">, Choose a surah, </option></select>
+<select id="surah-select" aria-label="Choose surah"><option value="">Choose a surah</option></select>
 <button class="navarrow" id="next-s" aria-label="Next surah" disabled>›</button>
 <button type="button" id="q-pick" aria-haspopup="dialog" aria-label="Choose a surah"><b>Choose a surah</b></button>
 <button class="tool" id="t-gates">☰ Browse the 114 gates</button>
@@ -797,10 +798,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 </div>
 <div class="qrow qrow2">
 <button class="tool on" id="t-trans">Translation</button>
-<select id="t-lang" class="tool" style="appearance:auto">
-<option value="en.sahih">EN · Saheeh Intl</option>
-<option value="fr.hamidullah">FR · Hamidullah</option>
-</select>
+<select id="t-lang" class="tool" style="appearance:auto" aria-label="Translation"></select>
 </div>
 </div>
 </nav>
@@ -896,17 +894,17 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <div class="pbar" id="p-bar" title="Seek within this verse"><i id="p-fill"></i></div>
 <div id="p-sheet">
 <div class="pset">
-<div class="pset-row"><span class="lb">Reciter<small>The recitation this room carries</small></span><span class="val">Mishary Rashid Alafasy</span></div>
+<div class="pset-row"><span class="lb">Reciter<small>Eighteen voices, every one of them checked</small></span><select id="o-reciter" class="olang" aria-label="Reciter"></select></div>
 <div class="pset-row"><span class="lb">Repeat this verse<small>It comes round until you stop it</small></span><button type="button" class="opt" id="o-repeat" role="switch" aria-checked="false">Off</button></div>
 <div class="pset-row"><span class="lb">Play to the end of the surah</span><button type="button" class="opt" id="o-auto" role="switch" aria-checked="false">Off</button></div>
 <div class="pset-row"><span class="lb">Speed</span><span class="seg" id="o-rate" role="group" aria-label="Playback speed"><button type="button" data-rate="0.75">0.75×</button><button type="button" data-rate="1" class="on" aria-pressed="true">1×</button><button type="button" data-rate="1.25">1.25×</button></span></div>
-<div class="pset-row"><span class="lb">Translation</span><select id="o-lang" class="olang" aria-label="Translation"><option value="en.sahih">EN · Saheeh Intl</option><option value="fr.hamidullah">FR · Hamidullah</option></select><button type="button" class="opt" id="o-trans" role="switch" aria-checked="true">On</button></div>
+<div class="pset-row"><span class="lb">Translation</span><select id="o-lang" class="olang" aria-label="Translation"></select><button type="button" class="opt" id="o-trans" role="switch" aria-checked="true">On</button></div>
 <div class="pset-row"><span class="lb">Text size</span><span class="seg" id="o-size" role="group" aria-label="Size of the Arabic text"><button type="button" data-size="-" aria-label="Smaller text">A−</button><button type="button" data-size="+" aria-label="Larger text">A+</button></span></div>
 </div>
 </div>
 <div class="inner">
 <div class="prow prow-a">
-<button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub">Alafasy</span></button>
+<button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub"></span></button>
 <button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
 <button class="pbtn" id="p-more" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
 <button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
@@ -923,7 +921,10 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <footer class="bg-ink text-parchment py-10 mt-6 relative overflow-hidden">
 <div class="relative max-w-3xl mx-auto px-4 text-center">
 <p class="font-amiri text-gold text-lg mb-2">نُورٌ عَلَىٰ نُورٍ</p>
-<p class="text-xs text-parchment/50 leading-relaxed">Text: Uthmani mushaf via AlQuran Cloud · Recitation: Mishary Rashid Alafasy · Translations: Saheeh International, Muhammad Hamidullah. The Qur'an is unchanged; only the doorway is new.</p>
+<!-- The one condition Tanzil's grant actually makes is that the Project is
+     named and linked. It was not, which put this room out of compliance with
+     the terms of the text it serves. It is named now, first. -->
+<p class="text-xs text-parchment/50 leading-relaxed">Arabic text: the Uthmani mushaf of the <a href="https://tanzil.net" rel="noopener" class="hover:text-gold">Tanzil Project</a>, used with permission for non-commercial purposes. Translations: Tanzil and its translators, likewise non-commercial; the English is Talal Itani's Clear Qur'an, under CC BY-ND 4.0. Recitations: <a href="https://alquran.cloud" rel="noopener" class="hover:text-gold">AlQuran Cloud</a> and islamic.network, redistributed by their permission from the reciters. The Qur'an is unchanged; only the doorway is new.</p>
 <a href="/#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
 <p class="mt-3 text-[10px] text-parchment/35"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 </div>
@@ -937,11 +938,94 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 const SURAHS=[[1,"Al-Fatiha","الفاتحة","The Opening",7,"M"],[2,"Al-Baqarah","البقرة","The Cow",286,"D"],[3,"Aal Imran","آل عمران","Family of Imran",200,"D"],[4,"An-Nisa","النساء","The Women",176,"D"],[5,"Al-Ma'idah","المائدة","The Table Spread",120,"D"],[6,"Al-An'am","الأنعام","The Cattle",165,"M"],[7,"Al-A'raf","الأعراف","The Heights",206,"M"],[8,"Al-Anfal","الأنفال","The Spoils of War",75,"D"],[9,"At-Tawbah","التوبة","The Repentance",129,"D"],[10,"Yunus","يونس","Jonah",109,"M"],[11,"Hud","هود","Hud",123,"M"],[12,"Yusuf","يوسف","Joseph",111,"M"],[13,"Ar-Ra'd","الرعد","The Thunder",43,"D"],[14,"Ibrahim","إبراهيم","Abraham",52,"M"],[15,"Al-Hijr","الحجر","The Rocky Tract",99,"M"],[16,"An-Nahl","النحل","The Bee",128,"M"],[17,"Al-Isra","الإسراء","The Night Journey",111,"M"],[18,"Al-Kahf","الكهف","The Cave",110,"M"],[19,"Maryam","مريم","Mary",98,"M"],[20,"Ta-Ha","طه","Ta-Ha",135,"M"],[21,"Al-Anbiya","الأنبياء","The Prophets",112,"M"],[22,"Al-Hajj","الحج","The Pilgrimage",78,"D"],[23,"Al-Mu'minun","المؤمنون","The Believers",118,"M"],[24,"An-Nur","النور","The Light",64,"D"],[25,"Al-Furqan","الفرقان","The Criterion",77,"M"],[26,"Ash-Shu'ara","الشعراء","The Poets",227,"M"],[27,"An-Naml","النمل","The Ant",93,"M"],[28,"Al-Qasas","القصص","The Stories",88,"M"],[29,"Al-Ankabut","العنكبوت","The Spider",69,"M"],[30,"Ar-Rum","الروم","The Romans",60,"M"],[31,"Luqman","لقمان","Luqman",34,"M"],[32,"As-Sajdah","السجدة","The Prostration",30,"M"],[33,"Al-Ahzab","الأحزاب","The Confederates",73,"D"],[34,"Saba","سبأ","Sheba",54,"M"],[35,"Fatir","فاطر","The Originator",45,"M"],[36,"Ya-Sin","يس","Ya-Sin",83,"M"],[37,"As-Saffat","الصافات","Those Ranged in Ranks",182,"M"],[38,"Sad","ص","Sad",88,"M"],[39,"Az-Zumar","الزمر","The Groups",75,"M"],[40,"Ghafir","غافر","The Forgiver",85,"M"],[41,"Fussilat","فصلت","Explained in Detail",54,"M"],[42,"Ash-Shura","الشورى","The Consultation",53,"M"],[43,"Az-Zukhruf","الزخرف","The Gold Adornments",89,"M"],[44,"Ad-Dukhan","الدخان","The Smoke",59,"M"],[45,"Al-Jathiyah","الجاثية","The Kneeling",37,"M"],[46,"Al-Ahqaf","الأحقاف","The Wind-Curved Sandhills",35,"M"],[47,"Muhammad","محمد","Muhammad",38,"D"],[48,"Al-Fath","الفتح","The Victory",29,"D"],[49,"Al-Hujurat","الحجرات","The Rooms",18,"D"],[50,"Qaf","ق","Qaf",45,"M"],[51,"Adh-Dhariyat","الذاريات","The Winnowing Winds",60,"M"],[52,"At-Tur","الطور","The Mount",49,"M"],[53,"An-Najm","النجم","The Star",62,"M"],[54,"Al-Qamar","القمر","The Moon",55,"M"],[55,"Ar-Rahman","الرحمن","The Most Merciful",78,"D"],[56,"Al-Waqi'ah","الواقعة","The Inevitable",96,"M"],[57,"Al-Hadid","الحديد","The Iron",29,"D"],[58,"Al-Mujadilah","المجادلة","The Pleading Woman",22,"D"],[59,"Al-Hashr","الحشر","The Exile",24,"D"],[60,"Al-Mumtahanah","الممتحنة","She Who is Examined",13,"D"],[61,"As-Saff","الصف","The Ranks",14,"D"],[62,"Al-Jumu'ah","الجمعة","Friday",11,"D"],[63,"Al-Munafiqun","المنافقون","The Hypocrites",11,"D"],[64,"At-Taghabun","التغابن","Mutual Loss and Gain",18,"D"],[65,"At-Talaq","الطلاق","The Divorce",12,"D"],[66,"At-Tahrim","التحريم","The Prohibition",12,"D"],[67,"Al-Mulk","الملك","The Sovereignty",30,"M"],[68,"Al-Qalam","القلم","The Pen",52,"M"],[69,"Al-Haqqah","الحاقة","The Reality",52,"M"],[70,"Al-Ma'arij","المعارج","The Ascending Stairways",44,"M"],[71,"Nuh","نوح","Noah",28,"M"],[72,"Al-Jinn","الجن","The Jinn",28,"M"],[73,"Al-Muzzammil","المزمل","The Enshrouded One",20,"M"],[74,"Al-Muddaththir","المدثر","The Cloaked One",56,"M"],[75,"Al-Qiyamah","القيامة","The Resurrection",40,"M"],[76,"Al-Insan","الإنسان","Man",31,"D"],[77,"Al-Mursalat","المرسلات","Those Sent Forth",50,"M"],[78,"An-Naba","النبأ","The Great News",40,"M"],[79,"An-Nazi'at","النازعات","Those Who Pull Out",46,"M"],[80,"Abasa","عبس","He Frowned",42,"M"],[81,"At-Takwir","التكوير","The Folding Up",29,"M"],[82,"Al-Infitar","الانفطار","The Cleaving",19,"M"],[83,"Al-Mutaffifin","المطففين","The Defrauders",36,"M"],[84,"Al-Inshiqaq","الانشقاق","The Splitting Open",25,"M"],[85,"Al-Buruj","البروج","The Constellations",22,"M"],[86,"At-Tariq","الطارق","The Night-Comer",17,"M"],[87,"Al-A'la","الأعلى","The Most High",19,"M"],[88,"Al-Ghashiyah","الغاشية","The Overwhelming",26,"M"],[89,"Al-Fajr","الفجر","The Dawn",30,"M"],[90,"Al-Balad","البلد","The City",20,"M"],[91,"Ash-Shams","الشمس","The Sun",15,"M"],[92,"Al-Layl","الليل","The Night",21,"M"],[93,"Ad-Duha","الضحى","The Morning Brightness",11,"M"],[94,"Ash-Sharh","الشرح","The Opening of the Breast",8,"M"],[95,"At-Tin","التين","The Fig",8,"M"],[96,"Al-Alaq","العلق","The Clot",19,"M"],[97,"Al-Qadr","القدر","The Night of Decree",5,"M"],[98,"Al-Bayyinah","البينة","The Clear Evidence",8,"D"],[99,"Az-Zalzalah","الزلزلة","The Earthquake",8,"D"],[100,"Al-Adiyat","العاديات","The Coursers",11,"M"],[101,"Al-Qari'ah","القارعة","The Calamity",11,"M"],[102,"At-Takathur","التكاثر","The Rivalry in Increase",8,"M"],[103,"Al-Asr","العصر","The Declining Day",3,"M"],[104,"Al-Humazah","الهمزة","The Slanderer",9,"M"],[105,"Al-Fil","الفيل","The Elephant",5,"M"],[106,"Quraysh","قريش","Quraysh",4,"M"],[107,"Al-Ma'un","الماعون","The Small Kindnesses",7,"M"],[108,"Al-Kawthar","الكوثر","The Abundance",3,"M"],[109,"Al-Kafirun","الكافرون","The Disbelievers",6,"M"],[110,"An-Nasr","النصر","The Divine Support",3,"D"],[111,"Al-Masad","المسد","The Palm Fiber",5,"M"],[112,"Al-Ikhlas","الإخلاص","The Sincerity",4,"M"],[113,"Al-Falaq","الفلق","The Daybreak",5,"M"],[114,"An-Nas","الناس","Mankind",6,"M"]];
 const INTROS={1:"The Mother of the Book. Seven verses that are themselves a conversation: you praise, you ask, He answers. Recited in every unit of every prayer, no Muslim ever graduates from it.",2:"The longest surah: law, memory and mercy woven together in Madinah. It holds Ayat al-Kursi (255) and closes with two verses the Prophet ﷺ said suffice whoever recites them at night.",12:"The most beautiful of stories, revealed whole in the Year of Sorrow: betrayal, patience, temptation resisted, and a family restored. Yusuf forgives before he is asked.",18:"The Friday surah. Four stories, the sleepers, the two gardens, Musa and al-Khadir, Dhul-Qarnayn, each answering a trial: faith, wealth, knowledge, power.",19:"Maryam: a surah named for a woman, carried by the letter-sounds Kaf-Ha-Ya-Ayn-Sad. Zakariyya's whisper, Maryam's labour, and Isa speaking from the cradle.",36:"Often called the heart of the Qur'an. Resurrection argued from a dead earth brought to life, and one man from the far side of the city who ran to warn his people.",55:"Ar-Rahman: a refrain: 'so which of the favours of your Lord will you both deny?', returning thirty-one times, addressed to humans and jinn together.",56:"Al-Waqi'ah sorts humanity into three companies on the Day: the foremost, the right, the left. The Prophet's ﷺ companions recited it against poverty of heart.",67:"Al-Mulk: sovereignty argued from the flight of birds and the seven heavens without flaw. A protector in the grave for those who kept its company.",93:"Revealed when revelation paused and the Prophet ﷺ feared abandonment: 'Your Lord has not forsaken you, nor does He hate you.' The morning light after night.",94:"Ash-Sharh: 'Did We not expand for you your breast?', with the promise stated twice so it cannot be missed: with hardship comes ease.",97:"Laylat al-Qadr, the night the Qur'an descended, better than a thousand months. Peace it is, until the rising of dawn.",112:"A third of the Qur'an in four verses: Allah, One, Eternal, unbegotten and unbegetting, without equal. The creed at its purest.",113:"First of the two refuges. From the evil of what He created, of darkness gathering, of knots blown upon, of the envier, you flee to the Lord of the daybreak.",114:"The last word of the Book is refuge in its Lord from the whisperer, and the reminder that the quietest enemy is the one inside the chest."};
 
+/* ================= the voices, and the languages =================
+   Every reciter below was checked one at a time against the CDN this room
+   already uses, at each bitrate the service lists, at the first ayah and at
+   ayah 3000, and only the ones that answered are here. The bitrate is part
+   of the entry because there is no universal one: Abdul Basit is 64 and 404s
+   at 128, Muhammad Ayyoub is 128 and 404s at 64. Getting that wrong is a
+   reciter who is simply silent, which is how the English recitation the
+   service lists has been silent here all along: it exists only at 192.
+
+   The licence is not open, and this is the honest description of it. The
+   recitations are redistributed by alquran.cloud under permission the
+   reciters gave them, for non commercial use, and they say plainly that the
+   reciters keep their copyright and may ask for a recording to be removed.
+   The Codex is inside that permission as a non profit. It would not be
+   inside it the day the Codex charges for anything. */
+const RECITERS=[
+ ["ar.alafasy",128,"Mishary Rashid Alafasy","مشاري العفاسي"],
+ ["ar.husary",128,"Mahmoud Khalil Al-Husary","محمود خليل الحصري"],
+ ["ar.husarymujawwad",128,"Al-Husary · Mujawwad","الحصري · المجود"],
+ ["ar.minshawi",128,"Muhammad Siddiq Al-Minshawi","محمد صديق المنشاوي"],
+ ["ar.minshawimujawwad",64,"Al-Minshawi · Mujawwad","المنشاوي · المجود"],
+ ["ar.abdulbasitmurattal",64,"Abdul Basit · Murattal","عبد الباسط · المرتل"],
+ ["ar.abdurrahmaansudais",64,"Abdurrahman As-Sudais","عبد الرحمن السديس"],
+ ["ar.saoodshuraym",64,"Saood Ash-Shuraym","سعود الشريم"],
+ ["ar.mahermuaiqly",128,"Maher Al-Muaiqly","ماهر المعيقلي"],
+ ["ar.shaatree",128,"Abu Bakr Ash-Shaatree","أبو بكر الشاطري"],
+ ["ar.hudhaify",128,"Ali Al-Hudhaify","علي الحذيفي"],
+ ["ar.ahmedajamy",128,"Ahmed Al-Ajamy","أحمد العجمي"],
+ ["ar.muhammadayyoub",128,"Muhammad Ayyoub","محمد أيوب"],
+ ["ar.muhammadjibreel",128,"Muhammad Jibreel","محمد جبريل"],
+ ["ar.hanirifai",64,"Hani Ar-Rifai","هاني الرفاعي"],
+ ["ar.abdullahbasfar",64,"Abdullah Basfar","عبد الله بصفر"],
+ ["ar.aymanswoaid",64,"Ayman Suwaid","أيمن سويد"],
+ ["ar.abdulsamad",64,"Abdul Basit Abdul Samad","عبد الباسط عبد الصمد"],
+];
+const RMAP=Object.fromEntries(RECITERS.map(r=>[r[0],r]));
+
+/* The nineteen languages this service actually carries a Qur'an in, one
+   edition each, every one of them loaded and read before it was put here.
+   Dari and Punjabi have none at all, which the room says rather than
+   pretending otherwise.
+
+   None of these is open source. Every one is a copyrighted work by a living
+   or recent translator, offered by Tanzil for non commercial use only. The
+   single exception is the English, Talal Itani's Clear Qur'an, which is
+   explicitly CC BY-ND 4.0. It replaces Saheeh International, a commercially
+   published book from 1997 with no free licence anywhere. */
+const TRANSLATIONS=[
+ ["en.itani","EN","English","Talal Itani · Clear Qur'an"],
+ ["fr.hamidullah","FR","Français","Muhammad Hamidullah"],
+ ["es.garcia","ES","Español","Isa García"],
+ ["de.bubenheim","DE","Deutsch","Bubenheim & Elyas"],
+ ["ru.kuliev","RU","Русский","Эльмир Кулиев"],
+ ["tr.diyanet","TR","Türkçe","Diyanet İşleri"],
+ ["ur.jalandhry","UR","اردو","فتح محمد جالندهری"],
+ ["hi.hindi","HI","हिन्दी","फ़ारूक़ ख़ान & नदवी"],
+ ["bn.bengali","BN","বাংলা","মুহিউদ্দীন খান"],
+ ["id.indonesian","ID","Indonesia","Kementerian Agama"],
+ ["fa.makarem","FA","فارسی","ناصر مکارم شیرازی"],
+ ["ps.abdulwali","PS","پښتو","عبدالولي خان"],
+ ["ku.asan","KU","کوردی","برهان محمد أمين"],
+ ["ha.gumi","HA","Hausa","Abubakar Mahmoud Gumi"],
+ ["so.abduh","SO","Soomaali","Mahmud Muhammad Abduh"],
+ ["sw.barwani","SW","Kiswahili","Ali Muhsin Al-Barwani"],
+ ["zh.jian","ZH","中文","马坚"],
+ ["ja.japanese","JA","日本語","日本語訳"],
+ ["ko.korean","KO","한국어","한국어 번역"],
+];
+/* the reader's own language, if the Qur'an exists in it */
+function transForLang(code){
+  const c=String(code||"").toLowerCase().split("-")[0];
+  const hit=TRANSLATIONS.find(t=>t[0].split(".")[0]===c);
+  return hit?hit[0]:"en.itani";
+}
+let reciter="ar.alafasy";
+try{const r=localStorage.getItem("noor-quran-reciter");if(r&&RMAP[r])reciter=r;}catch(e){}
+function reciterName(){return (RMAP[reciter]||RMAP["ar.alafasy"])[2];}
+function reciterShort(){return reciterName().split(" · ")[0].split(" ").slice(-1)[0];}
 const $=id=>document.getElementById(id);
 const gatesWrap=$("gates-wrap"), roomBody=$("room-body"), roomHead=$("room-head"), aside=$("gates-aside");
 let cur=null, ayahs=[], trans=[], transOn=true, audio=null, playingIdx=-1, continuous=false, paused=false;
 let chaining=false;   /* true only while the recitation is crossing into the next surah */
-let transEdition="en.sahih";
+let transEdition=(function(){
+  try{const saved=localStorage.getItem("noor-quran-trans");
+      if(saved&&TRANSLATIONS.some(t=>t[0]===saved))return saved;}catch(e){}
+  /* a reader who set the house to Urdu should not have to ask twice */
+  return transForLang((window.NOOR_I18N&&NOOR_I18N.lang)||document.documentElement.lang);
+})();
 
 /* ---------- navigator ---------- */
 const sel=$("surah-select");
@@ -1315,15 +1399,22 @@ roomHead.addEventListener("click",e=>{if(!e.target.closest||!e.target.closest("#
    sure callbacks from a replaced audio object can never resurrect playback. */
 function srcsFor(i){if(window.NOOR_QURAN_TEST&&NOOR_QURAN_TEST.srcs)return NOOR_QURAN_TEST.srcs(i);
  const a=ayahs[i];const g=a.number,s3=String(cur).padStart(3,"0"),a3=String(a.numberInSurah).padStart(3,"0");
- return[`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${g}.mp3`,
-        `https://everyayah.com/data/Alafasy_128kbps/${s3}${a3}.mp3`,
-        `https://cdn.islamic.network/quran/audio/64/ar.alafasy/${g}.mp3`,
-        `https://verses.quran.com/Alafasy/mp3/${s3}${a3}.mp3`];}
+ const R=RMAP[reciter]||RMAP["ar.alafasy"], id=R[0], kbps=R[1];
+ /* The bitrate belongs to the reciter: asking for 128 where only 64 exists is
+    a 404 and a voice that never speaks. The chain is the chosen reciter at
+    its own bitrate, then the other bitrate in case the service has both, then
+    Alafasy, who is always there, so a reader is never left in silence.
+    No query string is ever appended: the CDN answers a URL with one as a 404. */
+ const at=k=>`https://cdn.islamic.network/quran/audio/${k}/${id}/${g}.mp3`;
+ const out=[at(kbps), at(kbps===128?64:128)];
+ if(id!=="ar.alafasy"){out.push(`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${g}.mp3`);}
+ out.push(`https://everyayah.com/data/Alafasy_128kbps/${s3}${a3}.mp3`);
+ return out;}
 function playerShow(on){$("player").classList.toggle("show",on);document.body.classList.toggle("has-player",on);
  measurePlayer();if(!on)pill(false);}
 function playerLabel(extra){if(playingIdx<0||!ayahs[playingIdx])return;
  $("p-title").textContent=SURAHS[cur-1][1]+" · verse "+ayahs[playingIdx].numberInSurah+" / "+SURAHS[cur-1][4];
- $("p-sub").textContent=extra||((repeatOne?"Repeat · ":"")+(continuous?"To the end · ":"")+(rate!==1?rate+"× · ":"")+"Alafasy");}
+ $("p-sub").textContent=extra||((repeatOne?"Repeat · ":"")+(continuous?"To the end · ":"")+(rate!==1?rate+"× · ":"")+reciterShort());}
 const EQ=`<span class="eq"><i></i><i></i><i></i></span>`;
 const ICO_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
 const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
@@ -1624,7 +1715,7 @@ function mediaSession(on){
   const a=ayahs[playingIdx];
   navigator.mediaSession.metadata=new MediaMetadata({
    title:SURAHS[cur-1][1]+" · verse "+(a?a.numberInSurah:"")+" / "+SURAHS[cur-1][4],
-   artist:"Alafasy",album:"NOOR · Codex of Light",
+   artist:reciterName(),album:"NOOR · Codex of Light",
    artwork:[{src:"/assets/brand/mark-180.png",sizes:"180x180",type:"image/png"}]});
   navigator.mediaSession.playbackState=paused?"paused":"playing";
   navigator.mediaSession.setActionHandler("play",()=>$("p-toggle").click());
@@ -1698,6 +1789,7 @@ $("p-stop").addEventListener("click",stopAudio);
 $("t-trans").addEventListener("click",()=>{transOn=!transOn;$("t-trans").classList.toggle("on",transOn);
  document.querySelectorAll(".trans").forEach(p=>p.classList.toggle("hidden",!transOn));transBtn();});
 $("t-lang").addEventListener("change",e=>{transEdition=e.target.value;
+ try{localStorage.setItem("noor-quran-trans",transEdition);}catch(err){}
  const o=$("o-lang");if(o&&o.value!==e.target.value)o.value=e.target.value;
  if(cur)openSurah(cur,1);});
 
@@ -1750,6 +1842,44 @@ $("o-trans").addEventListener("click",()=>$("t-trans").click());
    once the navigator has folded away */
 $("o-lang").addEventListener("change",e=>{$("t-lang").value=e.target.value;
  $("t-lang").dispatchEvent(new Event("change"));});
+
+/* ---------- filling the two pickers, and remembering the choice ----------
+   Both translation selects carry the same list and are kept in step, because
+   one of them is in the navigator and the other is in the player's sheet, and
+   a reader who changes it in one place has changed it. */
+(function fillPickers(){
+  const opt=(v,t)=>{const o=document.createElement("option");o.value=v;o.textContent=t;return o;};
+
+  RECITERS.forEach(r=>$("o-reciter").appendChild(opt(r[0], r[2])));
+  $("o-reciter").value=reciter;
+  $("o-reciter").addEventListener("change",e=>{
+    reciter=RMAP[e.target.value]?e.target.value:"ar.alafasy";
+    try{localStorage.setItem("noor-quran-reciter",reciter);}catch(err){}
+    /* a voice changed mid verse restarts that verse in the new voice rather
+       than finishing in the old one */
+    if(playingIdx>=0){const i=playingIdx;killAudio();playAyah(i);}
+    else playerLabel();
+  });
+
+  [["t-lang",t=>t[1]+" · "+t[2]],["o-lang",t=>t[1]+" · "+t[2]]].forEach(([id,label])=>{
+    const el=$(id); if(!el) return;
+    TRANSLATIONS.forEach(t=>el.appendChild(opt(t[0], label(t))));
+    el.value=transEdition;
+  });
+
+  /* Dari and Punjabi have no Qur'an on this service, so a reader in either
+     language is told that, once, rather than shown English and left to
+     wonder whether the room simply ignored them. */
+  const mine=((window.NOOR_I18N&&NOOR_I18N.lang)||document.documentElement.lang||"en").split("-")[0];
+  if((mine==="prs"||mine==="pa")&&$("t-status")){
+    const n=document.createElement("p");
+    n.className="qnone";
+    n.textContent=mine==="prs"
+      ? "There is no Dari rendering of the Qur'an on the service this room reads from yet. The English is shown here until there is."
+      : "There is no Punjabi rendering of the Qur'an on the service this room reads from yet. The English is shown here until there is.";
+    const nav=document.getElementById("qnav"); if(nav&&!document.querySelector(".qnone")) nav.appendChild(n);
+  }
+})();
 $("o-size").addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-size]");if(!b)return;
  setSize(fontStep+(b.dataset.size==="+"?1:-1));});
 function setSize(k){fontStep=Math.max(0,Math.min(FSIZES.length-1,k));

@@ -1029,6 +1029,74 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
    harmonises a night page's header. The kids' games (kids/*.html, not
    kids.html) keep their own full-screen UI; an embedded room stays bare;
    the consoles are their own. The version tail matches api/page.js. */
+/* ================== the old rooms wear the same top line ==================
+   Fifty two rooms of the house still carry #site-header: a Tailwind bar with
+   the brand, five room names, a magnifier, a giving pill and a language chip,
+   and under it 250 lines of a menu sheet baked into every one of those files.
+   The shell has all of that already, drawn once: the brand on the left, the
+   language and the menu on the right, the five doors along the bottom, and a
+   More sheet that reads the house's own index rather than a copy.
+
+   A room that carries data-n2-top on <html> gets the shell's top line in place
+   of its own. The old header is not deleted, because parts of it are wired
+   into the room's own script; it is hidden, and its height stops being taken.
+   Everything else on the page is untouched.
+
+   This runs before the right hand below, so a converted room ends up with the
+   language and the menu like every other. */
+(function () {
+  "use strict";
+  var D = document;
+  function convert() {
+    var H = D.documentElement;
+    if (!H.hasAttribute("data-n2-top")) return true;
+    if (D.querySelector("header.n2-top")) return true;
+    var old = D.getElementById("site-header");
+    if (!old) return false;
+
+    var top = D.createElement("header");
+    top.className = "n2-top";
+    top.innerHTML =
+      '<a class="n2-brand" href="/"><span class="n2-ar notranslate" lang="ar" translate="no">\u0646\u064f\u0648\u0631</span>' +
+      '<span class="n2-en">Codex of Light</span></a>';
+    old.parentNode.insertBefore(top, old);
+
+    /* hidden, not removed: the room's own script holds references into it, and
+       a search or a sheet that still calls one of them must not throw */
+    var css = D.createElement("style");
+    css.id = "n2-top-swap";
+    css.textContent =
+      "#site-header,body.sheet-open #site-header{display:none!important}" +
+      /* The old bar was sticky and took its own height out of the flow. The
+         shell's is fixed and takes none, so without this the first thing on
+         the page, which on the Qur'an is the giving ribbon, is drawn under
+         the brand. --n2-top-h is measured below and is there for a room that
+         has something of its own sticking to the top line. */
+      "body{padding-top:var(--n2-top-h,68px)}" +
+      "[class*='sticky'][class*='top-']{top:var(--n2-top-h,68px)!important}";
+    if (!D.getElementById("n2-top-swap")) D.head.appendChild(css);
+
+    function measure() {
+      var h = Math.round(top.getBoundingClientRect().height) || 68;
+      D.documentElement.style.setProperty("--n2-top-h", h + "px");
+    }
+    measure();
+    requestAnimationFrame(measure);
+    setTimeout(measure, 600);
+    try { new ResizeObserver(measure).observe(top); } catch (e) { addEventListener("resize", measure, { passive: true }); }
+    return true;
+  }
+  function watch() {
+    if (convert()) return;
+    try {
+      var mo = new MutationObserver(function () { if (convert()) mo.disconnect(); });
+      mo.observe(D.documentElement, { childList: true, subtree: true });
+      setTimeout(function () { try { mo.disconnect(); } catch (e) {} }, 12000);
+    } catch (e) {}
+  }
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", watch); else watch();
+})();
+
 /* ===================== the top line's right hand =========================
    Every page in the house wears the same top line: the brand on the left, and
    on the arrival two doors on the right -- the language, and the menu. The
