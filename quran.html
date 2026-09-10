@@ -48,12 +48,12 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #gates-aside.folded{display:none}
 .gbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.6rem}
 .gbar .gsearch{flex:1 1 15rem;min-width:0}
-.gview{border:1px solid rgba(44,36,22,.14);background:#fff;color:rgba(44,36,22,.6);border-radius:999px;padding:.3rem .75rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s}
+.gview{border:1px solid rgba(44,36,22,.14);background:#fff;color:rgba(44,36,22,.68);border-radius:999px;padding:.3rem .75rem;font-size:.79rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s}
 .gview:hover{border-color:var(--gold);color:var(--ink)}
 .gview.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
-.glegend{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;font-size:.66rem;color:rgba(44,36,22,.5);margin:0 .15rem .7rem}
-.glegend b{font-weight:600;color:rgba(44,36,22,.55)}
-#gate-count{margin-left:auto;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,36,22,.4)}
+.glegend{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;font-size:.78rem;color:rgba(44,36,22,.68);margin:0 .15rem .7rem}
+.glegend b{font-weight:600;color:rgba(44,36,22,.68)}
+#gate-count{margin-left:auto;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:rgba(44,36,22,.68)}
 #gates-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.6rem,1fr));gap:.55rem}
 @media (min-width:640px){#gates-wrap{grid-template-columns:repeat(auto-fill,minmax(11.6rem,1fr));gap:.7rem}}
 .gate{position:relative;display:flex;flex-direction:column;align-items:center;gap:.1rem;width:100%;padding:.9rem .6rem .8rem;text-align:center;font-family:inherit;color:var(--ink);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.05rem;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease;content-visibility:auto;contain-intrinsic-size:auto 9.5rem}
@@ -65,14 +65,14 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .gate .seal::after{content:"";position:absolute;inset:-3px;border:1px solid rgba(201,162,39,.22);border-radius:999px}
 .gate.md .seal::before{border-style:dashed;border-color:rgba(138,155,110,.6)}
 .gate .gar{font-family:Amiri,serif;font-size:1.35rem;line-height:1.5;color:var(--gold);direction:rtl}
-.gate .gen{font-size:.82rem;font-weight:700;line-height:1.3}
-.gate .gmn{font-size:.63rem;color:rgba(44,36,22,.5);line-height:1.35}
+.gate .gen{font-size:.88rem;font-weight:700;line-height:1.35}
+.gate .gmn{font-size:.78rem;color:rgba(44,36,22,.68);line-height:1.45}
 .gate .gmeta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.28rem;margin-top:.42rem}
-.gchip{font-size:.55rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:999px;padding:.1rem .45rem;border:1px solid transparent;white-space:nowrap}
+.gchip{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.1rem .45rem;border:1px solid transparent;white-space:nowrap}
 .gchip.mk{color:#8a6d13;background:#FFF7DF;border-color:rgba(201,162,39,.35)}
 .gchip.md{color:#4d5c38;background:#F3F6EC;border-color:rgba(138,155,110,.45)}
-.gate .gct{font-size:.58rem;color:rgba(44,36,22,.45)}
-.gate .gfull{position:absolute;top:.42rem;right:.5rem;font-size:.6rem;color:var(--gold);line-height:1}
+.gate .gct{font-size:.78rem;color:rgba(44,36,22,.68)}
+.gate .gfull{position:absolute;top:.42rem;right:.5rem;font-size:.78rem;color:var(--gold);line-height:1}
 .gate.deep{border-color:rgba(201,162,39,.3)}
 #gates-wrap.list{grid-template-columns:1fr;gap:.3rem}
 @media (min-width:640px){#gates-wrap.list{grid-template-columns:1fr 1fr;gap:.35rem}}
@@ -90,9 +90,9 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
    between two ayat is not decoration: it is how a reader knows where one
    ends. It is drawn in gold, which sits on both grounds, at a strength that
    was looked at rather than guessed. */
-.ayah{border-bottom:1px solid rgba(201,162,39,.28);padding:1.15rem .35rem;scroll-margin-top:150px}
-.ayah:last-child{border-bottom:0}
-.ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
+/* The verse is declared once, under THE READING SURFACE below. It used to be
+   declared here as well, and again after that, which is how a room ends up
+   reading as two designs at the same time. */
 /* The first cut's box and its gold coin were both still declared here, dead,
    overridden two hundred lines further down. A rule nobody can see is a rule
    the next person has to read anyway. Both are gone; the spine of light and
@@ -104,7 +104,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @keyframes eqq{0%,100%{height:4px}50%{height:12px}}
 @media (prefers-reduced-motion:reduce){.eq i{animation:none;height:8px}}
 .bismillah{font-family:'Amiri Quran',Amiri,serif;font-size:1.9rem;text-align:center;color:#241D12;padding:.8rem 0 .2rem}
-.bismillah small{display:block;font-family:Inter;font-size:.68rem;color:rgba(44,36,22,.5);letter-spacing:.14em;text-transform:uppercase;margin-top:.35rem}
+.bismillah small{display:block;font-family:Inter;font-size:.79rem;color:rgba(44,36,22,.68);letter-spacing:.12em;text-transform:uppercase;margin-top:.35rem}
 /* ONE RADIUS SCALE FOR THE WHOLE ROOM.
    There were four on one screen: 999px pills in the toolbar, 28px on the card
    the verses were in, 16px on the card the reciting verse got, 12px on the
@@ -132,45 +132,53 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06));background-size:200% 100%;animation:skl 1.2s linear infinite;border-radius:.5rem}
 @keyframes skl{to{background-position:-200% 0}}
 #room{max-width:48rem;margin-inline:auto}
-.rh-study{margin-top:.9rem;border:1px solid rgba(244,212,106,.45);background:rgba(244,212,106,.07);color:#F4D46A;border-radius:999px;padding:.34rem .95rem;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s}
+.rh-study{margin-top:.9rem;border:1px solid rgba(244,212,106,.45);background:rgba(244,212,106,.07);color:#F4D46A;border-radius:999px;padding:.5rem 1rem;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s}
 .rh-study:hover{background:rgba(244,212,106,.16);border-color:rgba(244,212,106,.75)}
 /* the study companion */
 #study-slot{margin-top:1.5rem}
-.sp{position:relative;background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.17),transparent 62%),linear-gradient(160deg,#1A160F,#241D12);border:1px solid rgba(201,162,39,.38);border-radius:1.3rem;padding:1.5rem 1.15rem 1.6rem;color:#FFFEF7;overflow:hidden}
+/* ---------- the study companion, brought into the room --------------------
+   It was written when the page around it was cream, so it is a warm brown card
+   with a gold glow in it: exactly right against parchment, and against the
+   night a second era sitting in the middle of the first. It is the same panel
+   -- same content, same order -- on the room's own surface, at the room's own
+   radius, and with nothing in it under twelve pixels. Its labels were as small
+   as 9.6px, which is not a label, it is a rumour of one. */
+.sp{position:relative;background:#0D1428;border:1px solid rgba(201,162,39,.34);
+  border-radius:calc(var(--r) + 4px);padding:1.5rem 1.15rem 1.6rem;color:#FFFEF7;overflow:hidden}
 @media (min-width:640px){.sp{padding:1.7rem 1.6rem 1.8rem}}
-.sp-eye{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
-.sp-title{font-size:1.25rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
-.sp-title span{font-weight:400;font-size:.9rem;color:rgba(255,254,247,.6)}
-.sp-line{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,254,247,.68);margin:.35rem 0 0}
-.sp-k{display:flex;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
+.sp-eye{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
+.sp-title{font-size:1.4rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
+.sp-title span{font-weight:400;font-size:.95rem;color:rgba(255,254,247,.6)}
+.sp-line{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,254,247,.68);margin:.35rem 0 0}
+.sp-k{display:flex;align-items:center;gap:.5rem;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
 .sp-k::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
-.sp-p{font-size:.85rem;line-height:1.85;color:rgba(255,254,247,.84);margin:.6rem 0}
-.sp-heart{border-inline-start:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 16px 16px 0;padding:.9rem 1.05rem;margin:.5rem 0}
-.sp-heart p{font-size:.88rem;line-height:1.85;color:rgba(255,254,247,.92);margin:.5rem 0;font-style:italic}
+.sp-p{font-size:.96rem;line-height:1.8;color:rgba(255,254,247,.84);margin:.6rem 0}
+.sp-heart{border-inline-start:3px solid rgba(244,212,106,.55);background:rgba(255,254,247,.05);border-radius:0 var(--r) var(--r) 0;padding:.9rem 1.05rem;margin:.5rem 0}
+.sp-heart p{font-size:.96rem;line-height:1.8;color:rgba(255,254,247,.92);margin:.5rem 0;font-style:italic}
 .sp-heart p:first-child{margin-top:0}.sp-heart p:last-child{margin-bottom:0}
 .sp-themes{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.2rem}
-.sp-chip{font-size:.7rem;font-weight:700;color:rgba(255,254,247,.85);border:1px solid rgba(244,212,106,.32);background:rgba(244,212,106,.07);border-radius:999px;padding:.26rem .7rem}
-.sp-theme{flex:1 1 13rem;border:1px solid rgba(244,212,106,.26);background:rgba(255,254,247,.045);border-radius:14px;padding:.6rem .75rem}
-.sp-theme b{display:block;font-size:.73rem;color:#F4D46A;letter-spacing:.02em}
-.sp-theme span{display:block;font-size:.74rem;line-height:1.65;color:rgba(255,254,247,.72);margin-top:.2rem}
-.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:start;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:14px;padding:.65rem .8rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.sp-chip{font-size:.8rem;font-weight:700;color:rgba(255,254,247,.88);border:1px solid rgba(244,212,106,.32);background:rgba(244,212,106,.07);border-radius:9px;padding:.3rem .7rem}
+.sp-theme{flex:1 1 13rem;border:1px solid rgba(244,212,106,.26);background:rgba(255,254,247,.045);border-radius:var(--r);padding:.7rem .85rem}
+.sp-theme b{display:block;font-size:.85rem;color:#F4D46A;letter-spacing:.02em}
+.sp-theme span{display:block;font-size:.86rem;line-height:1.7;color:rgba(255,254,247,.8);margin-top:.2rem}
+.sp-btn{display:flex;width:100%;gap:.7rem;align-items:flex-start;text-align:start;font-family:inherit;background:rgba(255,254,247,.05);border:1px solid rgba(244,212,106,.24);border-radius:var(--r);padding:.7rem .85rem;margin:.45rem 0;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
 .sp-btn:hover{background:rgba(244,212,106,.11);border-color:rgba(244,212,106,.5);transform:translateY(-1px)}
 .sp-btn:focus-visible{outline:2px solid rgba(244,212,106,.8);outline-offset:2px}
-.sp-btn .ic{flex:none;width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.09);color:#F4D46A;display:grid;place-items:center}
+.sp-btn .ic{flex:none;width:2.2rem;height:2.2rem;border-radius:11px;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.09);color:#F4D46A;display:grid;place-items:center}
 .sp-btn .ic svg{width:.8rem;height:.8rem;display:block}
 .sp-btn .tx{min-width:0}
-.sp-btn b{display:block;font-size:.74rem;color:#F4D46A;letter-spacing:.03em}
-.sp-btn span{display:block;font-size:.78rem;line-height:1.6;color:rgba(255,254,247,.78);margin-top:.12rem}
+.sp-btn b{display:block;font-size:.85rem;color:#F4D46A;letter-spacing:.03em}
+.sp-btn span{display:block;font-size:.88rem;line-height:1.65;color:rgba(255,254,247,.84);margin-top:.12rem}
 .sp-links{display:grid;gap:.45rem}
 @media (min-width:640px){.sp-links{grid-template-columns:1fr 1fr}}
-.sp-virtue{border:1px solid rgba(244,212,106,.28);background:rgba(255,254,247,.045);border-radius:16px;padding:.9rem 1rem}
-.sp-virtue p{font-size:.82rem;line-height:1.75;color:rgba(255,254,247,.85);margin:0}
+.sp-virtue{border:1px solid rgba(244,212,106,.28);background:rgba(255,254,247,.045);border-radius:var(--r);padding:.9rem 1rem}
+.sp-virtue p{font-size:.93rem;line-height:1.75;color:rgba(255,254,247,.9);margin:0}
 .sp-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;align-items:center}
-.sp-badge{font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;border:1px solid}
+.sp-badge{font-size:.79rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:8px;padding:.2rem .55rem;border:1px solid}
 .sp-badge.ok{color:#cfe0b4;border-color:rgba(138,155,110,.55);background:rgba(138,155,110,.14)}
 .sp-badge.weak{color:#F3C9A0;border-color:rgba(214,150,90,.55);background:rgba(214,150,90,.13)}
-.sp-src{font-size:.72rem;letter-spacing:.05em;color:rgba(255,254,247,.68)}
-.sp-note{font-size:.74rem;line-height:1.7;color:rgba(255,254,247,.55);border-top:1px solid rgba(244,212,106,.18);margin-top:1.4rem;padding-top:.8rem}
+.sp-src{font-size:.8rem;letter-spacing:.03em;color:rgba(255,254,247,.74)}
+.sp-note{font-size:.84rem;line-height:1.7;color:rgba(255,254,247,.7);border-top:1px solid rgba(244,212,106,.18);margin-top:1.4rem;padding-top:.8rem}
 /* the movements band, the animated figure of a deep surah */
 .sp-fig{margin:.3rem 0 .2rem}
 .sp-fig svg{display:block;width:100%;height:auto;overflow:visible}
@@ -183,7 +191,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @keyframes mvgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (prefers-reduced-motion:reduce){.mvseg{animation:none}}
 .sp-mv{display:grid;gap:.4rem;margin-top:.7rem}
-.sp-mv .rg{font-size:.6rem;font-weight:800;letter-spacing:.08em;color:#F4D46A;background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.3);border-radius:999px;padding:.14rem .5rem;white-space:nowrap}
+.sp-mv .rg{display:inline-block;font-size:.76rem;font-weight:800;letter-spacing:.05em;color:#F4D46A;background:rgba(244,212,106,.12);border:1px solid rgba(244,212,106,.3);border-radius:8px;padding:.18rem .5rem;white-space:nowrap}
 /* ---------- the player ----------------------------------------------------
    On a phone this bar is the page. It sits on the bottom edge, clear of the
    home indicator, and every control in it is a thumb's width. Nothing here is
@@ -240,18 +248,18 @@ body.has-player{padding-bottom:calc(var(--ph,124px) + .6rem)}
 .pset{padding:.5rem .75rem .35rem;border-bottom:1px solid rgba(244,212,106,.14)}
 .pset-row{display:flex;align-items:center;gap:.6rem;min-height:48px;padding:.35rem 0;border-top:1px solid rgba(244,212,106,.22)}
 .pset-row:first-child{border-top:0}
-.pset-row>.lb{flex:1;min-width:0;font-size:.8rem;color:rgba(255,254,247,.92)}
+.pset-row>.lb{flex:1;min-width:0;font-size:.88rem;color:rgba(255,254,247,.92)}
 /* .4 measures 3.77 to 1 on this ground, under the floor, and 10px is under
    the type floor as well */
-.pset-row>.lb small{display:block;font-size:.72rem;color:rgba(255,254,247,.66);margin-top:.15rem;line-height:1.45}
-.pset-row .val{font-size:.74rem;font-weight:700;color:#F4D46A}
-.opt{min-height:44px;min-width:64px;border-radius:var(--r);border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .85rem}
+.pset-row>.lb small{display:block;font-size:.79rem;color:rgba(255,254,247,.66);margin-top:.15rem;line-height:1.45}
+.pset-row .val{font-size:.8rem;font-weight:700;color:#F4D46A}
+.opt{min-height:44px;min-width:64px;border-radius:var(--r);border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;padding:0 .85rem}
 .opt[aria-checked="true"]{background:rgba(244,212,106,.9);color:#1A160F;border-color:transparent}
 .opt:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
-.olang{min-height:44px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:rgba(255,254,247,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;padding:0 .55rem;cursor:pointer}
+.olang{min-height:44px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:rgba(255,254,247,.05);color:#F4D46A;font:inherit;font-size:.8rem;font-weight:700;padding:0 .55rem;cursor:pointer}
 .olang:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
 .seg{display:flex;gap:.3rem}
-.seg button{min-height:44px;min-width:48px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:none;color:rgba(255,254,247,.7);font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .6rem}
+.seg button{min-height:44px;min-width:48px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:none;color:rgba(255,254,247,.78);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;padding:0 .6rem}
 .seg button.on{background:rgba(244,212,106,.9);color:#1A160F;border-color:transparent}
 .seg button:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
 
@@ -320,101 +328,128 @@ html[dir="rtl"] #player .pbar i{transform-origin:right center}
 #p-follow.off{opacity:.45;border-style:dashed}
 @media (prefers-reduced-motion:reduce){#player .pbar i{transition:none}}
 
-/* ---------- the verse being recited ---------------------------------------
-   Light on a page, not a highlighter. The ayah keeps its own colour and gains
-   a little gold air around the letters; a hairline underneath fills as the
-   recitation crosses it, right to left, the way the script runs; and the word
-   at hand is a shade brighter than its neighbours. Everything that moves here
-   is a text-shadow, a colour or a transform on one verse: the surah is never
-   redrawn on a tick. */
-#room{--ar-size:1.65rem}
-.ayah .ar{font-size:var(--ar-size)}
+/* ============================================================================
+   THE READING SURFACE
+   ----------------------------------------------------------------------------
+   This block had become four blocks. A verse was declared at the top of the
+   sheet, redeclared two hundred lines down, and redeclared again under a
+   comment explaining why the second one was wrong -- so the room read as two
+   designs at once: a headline hero from the first cut, a toolbar that had
+   grown a control at a time, and a verse that was a right-aligned line, a
+   left-aligned line, and forty four pixels of nothing between them.
+
+   It is one design now, and the design is a COLUMN AND A GUTTER.
+
+     the gutter   holds the one thing the room is for -- the recitation --
+                  as a control that is always there, at forty four pixels,
+                  in gold, with the ayah's number under it. Nothing about
+                  the play control is revealed, hovered, or earned: it is
+                  the first thing beside every verse, on every device.
+
+     the column   holds the scripture and its meaning, hanging off one edge,
+                  at one measure, in one rhythm. The two lines are no longer
+                  strangers at opposite sides of a wide screen.
+
+   Between two verses there is a rule, and the rule is drawn in the ink of the
+   page rather than in gold: gold at a quarter is a warm smudge in the night
+   and a ghost on parchment. Ink at .16 turns over with the palette and is a
+   line in both.
+   ============================================================================ */
+#room{--ar-size:1.72rem;--gut:2.9rem}
+@media (min-width:768px){#room{--ar-size:2rem;--gut:3.1rem}}
+.mushaf{margin-top:1.1rem}
+
+.ayah{
+  position:relative;
+  display:grid;
+  grid-template-columns:var(--gut) minmax(0,1fr);
+  column-gap:.9rem;
+  align-items:start;
+  padding:1.15rem .1rem 3rem .9rem;
+  border-bottom:1px solid rgba(44,36,22,.16);
+  scroll-margin-top:150px;
+  transition:background-color .26s ease}
+.ayah:last-child{border-bottom:0}
+@media (max-width:560px){.ayah{padding:1rem .1rem 2.75rem .8rem}}
+.ayah:focus{outline:none}
+.ayah:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
+
 /* THE VERSE BEING RECITED IS MARKED BY LIGHT, NOT BY A BOX.
-   It used to get a background and a radius of its own -- a card inside the
-   card the list was already in. A rectangle around one ayah says "widget".
-   A line of light down its leading edge says "here", which is the only thing
-   it needs to say, and it says it without drawing another shape on a page
-   that already had too many. */
-.ayah{position:relative;transition:background-color .26s ease}
-.ayah::before{content:"";position:absolute;inset-block:.5rem;inset-inline-start:-1rem;width:2px;
-  border-radius:2px;background:linear-gradient(180deg,rgba(244,212,106,.9),rgba(201,162,39,.25));
+   A line down its leading edge and a breath of gold on the ground: enough to
+   find the place at a glance, not enough to become a widget. */
+.ayah::before{content:"";position:absolute;inset-block:.5rem;inset-inline-start:0;width:2px;
+  border-radius:2px;background:linear-gradient(180deg,rgba(244,212,106,.95),rgba(201,162,39,.3));
   opacity:0;transform:scaleY(.4);transform-origin:top;
   transition:opacity .28s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
 .ayah.playing::before{opacity:1;transform:scaleY(1)}
-.ayah .ar{transition:text-shadow .26s ease}
+
+/* ---------- the gutter ----------------------------------------------------
+   "The play button next to each verse looks dark on dark, we can't even see
+   it." It was a text button in a row that only appeared on the verse you were
+   already on -- which is to say, on a page of two hundred and eighty six
+   verses, nowhere. So it stopped being a thing to reveal and became a thing
+   to see: a bordered gold control, forty four pixels, beside every ayah, with
+   the ayah's number printed beneath it in the mono the house counts in. */
+.vrail{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;padding-top:.55rem}
+.playbtn{
+  width:var(--gut);height:var(--gut);flex:none;padding:0;
+  display:grid;place-items:center;
+  border:1px solid rgba(201,162,39,.5);border-radius:var(--r);
+  background:rgba(201,162,39,.1);color:var(--gold);cursor:pointer;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease}
+.playbtn .vg{display:grid;place-items:center;width:1.05rem;height:1.05rem;color:inherit}
+.playbtn .vg svg{width:1.05rem;height:1.05rem}
+.playbtn:hover,.playbtn:focus-visible{background:rgba(201,162,39,.22);border-color:var(--gold);transform:translateY(-1px)}
+.playbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* sounding: the one filled shape on the reading surface. The ink on it is a
+   chromatic brown on purpose -- the night turns neutrals over and would have
+   written parchment on gold. */
+/* A filled gold control keeps its dark ink in both lights. The ground is
+   written as a literal on purpose: scripts/build-night.py leaves the ink of
+   a rule alone only when it can SEE that the rule paints its own opaque
+   ground, and var(--gold) is not something it can read. Written as var()
+   this came out gold-on-gold at 1.05:1. */
+.playbtn.on{background:#C9A227;border-color:#C9A227;color:#3B2A05}
+.playbtn.on:hover{background:#F4D46A;border-color:#F4D46A;color:#3B2A05}
+.vno{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:.78rem;font-weight:600;
+  letter-spacing:.03em;color:rgba(44,36,22,.68);font-variant-numeric:tabular-nums;line-height:1}
+#room .ayah.playing .vno{color:#8a6d13}
+
+/* ---------- the column ---------------------------------------------------- */
+.ayah .ar{grid-column:2;margin:0;
+  font-family:'Amiri Quran',Amiri,serif;font-size:var(--ar-size);line-height:1.95;
+  color:#241D12;text-align:end;direction:rtl;
+  transition:text-shadow .26s ease}
 .ayah.playing .ar{text-shadow:0 0 14px rgba(201,162,39,.30),0 0 3px rgba(201,162,39,.16)}
 .ayah .ar .w{transition:color .22s ease,text-shadow .22s ease}
 .ayah.playing .ar .w.now{color:#14100A;text-shadow:0 0 16px rgba(244,212,106,.75),0 0 5px rgba(201,162,39,.55)}
-.kline{display:block;height:2px;margin:.45rem .15rem 0;border-radius:2px;background:rgba(201,162,39,.12);opacity:0;transition:opacity .26s ease}
+/* the hairline the recitation fills, right to left, the way the script runs */
+.kline{grid-column:2;display:block;height:2px;margin:.5rem 0 0;border-radius:2px;
+  background:rgba(201,162,39,.16);opacity:0;transition:opacity .26s ease}
 .ayah.playing .kline{opacity:1}
 .kline i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(201,162,39,.35),#C9A227 55%,#F4D46A);
   transform:scaleX(0);transform-origin:right center;transition:transform .14s linear;will-change:transform}
 html[dir="rtl"] .kline i{transform-origin:right center}
-.arow{margin-top:.45rem;display:flex;align-items:flex-start;gap:.6rem}
-/* the three actions of a verse are one shape now: see .vact below */
+/* The meaning is the half of the page most readers actually read, so it is
+   set like text and not like a caption. */
+.ayah .trans{grid-column:2;margin:.6rem 0 0;font-size:1rem;line-height:1.78;
+  color:rgba(44,36,22,.94);max-width:38rem}
+.ayah .vpan{grid-column:2}
 
-/* ================== the verse, made quiet ==================
-   Every action on a verse used to be a filled circle: a gold coin holding the
-   number, a ringed play button at one end of the translation, a copy button at
-   the other, and a line of letterspaced capitals under it. Four controls, three
-   alignments, six thousand times.
+/* ---------- the two quiet actions ------------------------------------------
+   Copy and Study belong to the verse the reader is ON: the one being recited,
+   the one they tapped, or the one holding keyboard focus. Every other verse is
+   just the verse.
 
-   Now: the Arabic, the meaning under it in one column, and three quiet actions
-   in a row beneath. They are text with a glyph, not buttons with a ring, and
-   they are the same forty four pixels high a thumb needs. The number stays
-   where the tradition puts it, at the end of the line, as a hairline roundel
-   instead of a coin. */
-/* THE NUMBER IS A NUMERAL, NOT A COIN.
-   It was a filled gold disc, then a ringed one. Both are objects sitting on
-   the text. A mushaf numbers its verses; it does not decorate them. This is
-   the numeral, in the mono the rest of the house counts in, at the end of
-   the line where the tradition puts it, and it gets out of the way. */
-.medallion{display:inline-flex;align-items:center;justify-content:center;
-  min-width:1.5rem;height:1.5rem;border-radius:0;
-  background:none;border:0;
-  color:rgba(201,162,39,.7);font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-  font-size:.72rem;font-weight:500;letter-spacing:.06em;
-  margin-inline-start:.6rem;vertical-align:middle;box-shadow:none;
-  transition:color .22s ease}
-.ayah.playing .medallion{color:#F4D46A}
-
-/* the surah's own head: the one box left on the reading surface, because it
-   is a header and not a widget, and it wears the room's radius like the rest */
-.surahhead{border-radius:var(--r)}
-/* the page the verses sit on: one measure, one rhythm, no border */
-.mushaf{margin-top:1.25rem}
-.ayah{padding:1.5rem 0 .55rem}
-.ayah:focus{outline:none}
-.ayah:focus-visible{outline:2px solid rgba(244,212,106,.6);outline-offset:6px;border-radius:6px}
-/* The translation is the half of the page most readers actually read. It was
-   inheriting a body colour that the night hands over at 82%, which reads as
-   grey beside the Arabic at full strength. It gets its own ink, at the top
-   of the range, and a size that does not ask to be squinted at. */
-.ayah .trans{margin-top:.75rem;font-size:.98rem;line-height:1.75;max-width:42rem;color:rgba(44,36,22,.94)}
-/* TWENTY ONE CONTROLS BECOME THREE.
-   Every verse used to carry its own Listen / Copy / Study, always. Seven
-   verses on a phone is twenty one buttons, and a page of the Qur'an with
-   twenty one buttons on it is a control panel with some scripture in it.
-
-   The actions belong to the verse you are ON: the one being recited, the one
-   you tapped, or the one holding keyboard focus. Every other verse is just
-   the verse. The row keeps its height while hidden so nothing jumps when it
-   arrives, and it is inert to the finger and to assistive tech until it is
-   the current one. */
-/* THE ROW ALWAYS TAKES ITS SPACE, AND ONLY EVER FADES.
-   The first attempt collapsed it to nothing, which was tidier and wrong: a
-   recitation moving from one verse to the next collapses a row above the
-   fold and expands one below it, and the page slides under the reader's eye
-   while they are reading. Scroll anchoring cannot help with a height that is
-   animating. tests/mushaf.mjs catches exactly this -- "the recitation
-   advanced and the page did not move".
-
-   So the height is constant and only the ink changes. The forty four pixels
-   under each verse are not a hole; they are the air a printed mushaf leaves
-   between two ayat, and the verse's own padding was reduced to pay for them. */
-.arow{display:flex;align-items:center;gap:.1rem;flex-wrap:wrap;
-  margin-top:.5rem;height:44px;opacity:0;pointer-events:none;
-  transition:opacity .26s ease}
+   The row is taken out of the flow entirely and laid in the air the verse
+   already keeps beneath its meaning, so arriving and leaving cannot move a
+   single pixel of the page -- which is the promise tests/mushaf.mjs holds this
+   room to, and the first attempt at hiding this row broke it by collapsing a
+   height instead. */
+.arow{position:absolute;inset-block-end:.4rem;
+  inset-inline-start:calc(.9rem + var(--gut) + .9rem);
+  display:flex;align-items:center;gap:.1rem;height:44px;
+  opacity:0;pointer-events:none;transition:opacity .24s ease}
 .arow>*{visibility:hidden}
 .ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow,.ayah:hover>.arow{
   opacity:1;pointer-events:auto}
@@ -425,36 +460,92 @@ html[dir="rtl"] .kline i{transform-origin:right center}
   .ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow{opacity:1;pointer-events:auto}
   .ayah.playing>.arow>*,.ayah.at>.arow>*,.ayah:focus-within>.arow>*{visibility:visible}}
 @media (prefers-reduced-motion:reduce){.arow{transition:opacity .12s ease}}
-
-/* one shape for all three, so the row reads as a row and not as a toolbar */
 .vact{display:inline-flex;align-items:center;gap:.42rem;
   min-height:44px;padding:0 .7rem;margin-inline-start:-.7rem;
   background:none;border:0;border-radius:var(--r);cursor:pointer;
   font-family:inherit;font-size:.76rem;font-weight:600;letter-spacing:.01em;
-  color:rgba(44,36,22,.55);transition:color .18s ease,background-color .18s ease}
+  color:rgba(44,36,22,.62);transition:color .18s ease,background-color .18s ease}
 .vact+.vact{margin-inline-start:0}
-.vact svg{width:.88rem;height:.88rem;flex:none;opacity:.85}
-.vact:hover,.vact:focus-visible{color:#8a6d13;background:rgba(201,162,39,.07)}
-/* The verse's own play mark is gold, on parchment and in the night both.
-   The night turns ink over and leaves gold where it is by design, so an ink
-   triangle at 55% -- which is what this was -- is a grey shape on a cream
-   card and very nearly nothing on a dark one. Gold is also the truthful
-   colour here: of the three actions on a verse this is the one the page is
-   really for. */
-.vact .vg{display:inline-flex;align-items:center;justify-content:center;width:.95rem;height:.95rem;flex:none}
-.playbtn .vg{color:var(--gold)}
-.playbtn .vg svg{width:.95rem;height:.95rem;opacity:1}
-.playbtn.on .vg{color:var(--gold-hi)}
+.vact svg{width:.9rem;height:.9rem;flex:none;opacity:.9}
+#room .vact:hover,#room .vact:focus-visible{color:#8a6d13;background:rgba(201,162,39,.09)}
 .vact:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .vact .vxc{font-style:normal;font-size:.8rem;opacity:.6;transition:transform .22s ease}
 .vact.on .vxc{transform:rotate(90deg)}
-.vact.on{color:var(--gold)}
-/* The verse being recited used to say so with a filled chip behind its own
-   Listen -- a fifth rectangle on a screen that already had four. It says so
-   by being gold and by the spine of light down the verse, which is the same
-   signal said once instead of twice. */
-.playbtn.on{color:var(--gold)}
-@media (max-width:400px){ .vact span{font-size:.72rem} }
+#room .vact.on{color:#8a6d13}
+@media (max-width:400px){.vact span{font-size:.78rem}}
+
+/* ---------- the surah's masthead ------------------------------------------
+   It was a dark card floating on a dark page -- a rectangle with a gradient
+   inside it, which in the night is a shape you can only find by its edge, and
+   the "line between the suras" a reader could not see. A surah does not need
+   a box. It needs its name, said once, at the top of its own page: the number
+   and the facts in the mono the house counts in, the name at the size of a
+   title, the Arabic in gold at the trailing edge, and one rule under all of
+   it -- the same rule that separates two ayat, so the page has one language
+   for "this ends here". */
+.shead{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:.9rem;
+  padding:1.5rem 0 1.05rem;border-bottom:1px solid rgba(44,36,22,.16)}
+.shead-k{margin:0;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(44,36,22,.66);line-height:1.5}
+.shead h2{margin:.44rem 0 0;font-size:1.85rem;font-weight:800;letter-spacing:-.022em;
+  line-height:1.14;color:#2C2416;text-wrap:balance}
+.shead h2 em{font-style:normal;font-weight:500;color:rgba(44,36,22,.64)}
+.shead-ar{margin:0;font-family:'Amiri Quran',Amiri,serif;font-size:2.25rem;line-height:1.5;
+  color:var(--gold);direction:rtl;white-space:nowrap}
+.shead-i{margin:1.05rem 0 0;font-size:.98rem;line-height:1.78;color:rgba(44,36,22,.84);max-width:38rem}
+@media (max-width:560px){
+  .shead{grid-template-columns:1fr;align-items:start;gap:.15rem}
+  .shead h2{font-size:1.45rem}
+  /* it is set rtl, so its own start edge is the right one */
+  .shead-ar{font-size:1.75rem;text-align:start;margin-top:.4rem}
+  .shead-i{font-size:.94rem}
+}
+/* Once a surah is open this is a reading room. The arrival's headline and the
+   day's verse are the front door; they are not the page you read on. */
+body.reading #qhero,body.reading #vlamp{display:none}
+
+/* ---------- one shape for the toolbar -------------------------------------
+   "The option for the Qur'an player has dark on dark illegible items, and you
+   did not make clear how to change reciters." Both were the same fault: eight
+   controls at four weights, centred in a row, none of them saying which one
+   the room is for.
+
+   They are two groups now -- where you are, and what you do -- and exactly one
+   of them is filled: Listen. The filled state and the engaged state are both
+   written in a chromatic brown on gold rather than in a neutral, because the
+   night turns neutrals over and would otherwise have written parchment on
+   gold, which is the illegibility this is fixing. */
+#qnav .qgrp{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;min-width:0}
+#qnav .qrow.qrow1{justify-content:space-between;gap:.5rem}
+#qnav .qrow.qrow2{justify-content:flex-start;gap:.15rem;margin-top:.1rem}
+/* What a reader chooses about how they read is a set of choices, not a second
+   row of buttons: quieter, smaller, and out of the way of the one control the
+   room is for. */
+#qnav .qrow2 .tool{border-color:transparent;background:none;min-height:44px;
+  font-size:.76rem;padding:.3rem .6rem;font-weight:600}
+#qnav .qrow2 .tool:hover{border-color:rgba(201,162,39,.45)}
+#qnav .qrow2 select.tool{border-color:rgba(44,36,22,.18)}
+#qnav .qrow2 .tlab{font-size:.78rem;letter-spacing:.02em;margin-inline-start:.5rem}
+/* On a phone these four choices wrapped onto two more lines and pushed the
+   surah off the top of the screen, with "Reciter" orphaned from the control it
+   names. They stay on one line and scroll. */
+@media (max-width:560px){
+  #qnav .qrow.qrow2{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;padding-block:.1rem}
+  #qnav .qrow.qrow2::-webkit-scrollbar{display:none}
+  #qnav .qrow2>*{flex:none}
+  #qnav #t-recite{max-width:11rem}
+}
+.qstat{font-size:.7rem;color:rgba(44,36,22,.55);font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+#qnav .tool.primary{background:#C9A227;border-color:#C9A227;color:#3B2A05;font-weight:700}
+#qnav .tool.primary:hover{background:#F4D46A;border-color:#F4D46A;color:#3B2A05}
+#qnav .tool.on,#qnav .tool.primary.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A;font-weight:700}
+#qnav .tool.on:hover,#qnav .tool.primary.on:hover{background:#4A360A;border-color:var(--gold);color:#F4D46A}
+#gates-aside .gview.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A}
+#room .tool.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A}
+/* the companion opens from the masthead, and wears the room's radius */
+.rh-study{border-radius:var(--r);margin-top:1.05rem}
 
 /* ================== the player, made one line ==================
    Six controls, five of them the same ringed circle, in two rows, with the
@@ -489,9 +580,17 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 #p-open:hover{background:rgba(244,212,106,.07)}
 #p-open #p-title{display:block;font-size:.82rem;font-weight:700;color:#FFFEF7;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.25}
-#p-open #p-sub{display:block;font-size:.68rem;color:rgba(255,254,247,.5);
+/* This line names the reciter, which is the one question the bar was not
+   answering, and it was set at 10px in half-strength ink. It is the answer:
+   it is readable. */
+#p-open #p-sub{display:block;font-size:.79rem;color:rgba(255,254,247,.72);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.3}
 #player .pbar{height:2px}
+/* "The player settings option is not obvious." It was a bare glyph among five
+   other bare glyphs. It keeps its place and takes an outline, so the one
+   control that opens something reads as a control. */
+.pbtn.ring{border:1px solid rgba(244,212,106,.42);border-radius:var(--r)}
+.pbtn.ring[aria-expanded="true"]{background:#3B2A05;border-color:rgba(201,162,39,.7);color:#F4D46A}
 
 /* A thumb needs forty four pixels and the house does not make exceptions for
    a narrow phone, so nothing here shrinks below it. What gives instead is the
@@ -504,7 +603,7 @@ html[dir="rtl"] .kline i{transform-origin:right center}
   .pbtn svg,.pbtn.step svg{width:1.05rem;height:1.05rem}
   #p-open{padding-inline:.3rem}
   #p-open #p-title{font-size:.78rem}
-  #p-open #p-sub{font-size:.64rem}
+  #p-open #p-sub{font-size:.76rem}
 }
 
 .ayah{cursor:pointer}
@@ -981,13 +1080,17 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <nav id="qnav" class="sticky top-[94px] md:top-14 z-30 bg-parchment border-b border-ink/5">
 <div class="max-w-6xl mx-auto px-4 py-2">
 <div class="qrow qrow1">
+<div class="qgrp">
 <button class="navarrow" id="prev-s" aria-label="Previous surah" disabled>‹</button>
 <select id="surah-select" aria-label="Choose surah"><option value="">Choose a surah</option></select>
 <button class="navarrow" id="next-s" aria-label="Next surah" disabled>›</button>
 <button type="button" id="q-pick" aria-haspopup="dialog" aria-label="Choose a surah"><b>Choose a surah</b></button>
+</div>
+<div class="qgrp">
 <button class="tool" id="t-gates">☰ Browse the 114 gates</button>
-<button class="tool" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
-<span id="t-status" class="text-[11px] text-ink/40"></span>
+<button class="tool primary" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
+<span id="t-status" class="qstat"></span>
+</div>
 </div>
 <div class="qrow qrow2">
 <button class="tool on" id="t-trans">Translation</button>
@@ -1109,7 +1212,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <button class="pbtn step" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
 <button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub"></span></button>
 <button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
-<button class="pbtn" id="p-more" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
+<button class="pbtn ring" id="p-more" title="Recitation settings: reciter, repeat, speed and size" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
 <button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
 </div>
 </div>
@@ -1298,16 +1401,17 @@ async function openSurah(n,gotoAyah,user){
   $("prev-s").disabled=n<=1; $("next-s").disabled=n>=114;
   if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
   const[num,en,ar,meaning,count,place]=SURAHS[n-1];
+  document.body.classList.add("reading");   /* the arrival's hero is a front door, not a reading room */
   roomHead.innerHTML=`
-   <div class="surahhead overflow-hidden border border-ink/8 ih-fff7d1a6">
-     <div class="px-5 py-6 text-center">
-       <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
-       <h2 class="font-bold text-xl ih-6db3a931">${num} · ${en} <span class="font-normal text-sm ih-fe5a3e6f">, ${meaning}</span></h2>
-       <p class="text-[11px] mt-1 ih-1274b372">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
-       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3 ih-2953e9dd">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
-       <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>
+   <header class="shead">
+     <div>
+       <p class="shead-k">Surah ${num} of 114 · ${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
+       <h2>${en}<em> · ${meaning}</em></h2>
      </div>
-   </div>`;
+     <p class="shead-ar" translate="no">${ar}</p>
+   </header>
+   <p class="shead-i">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
+   <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>`;
   roomBody.innerHTML=`<div class="space-y-4 py-6">${Array.from({length:4},()=>`<div class="skel h-16"></div>`).join("")}</div>`;
   $("t-status").textContent="Opening…";
   if(user)setTimeout(()=>roomHead.scrollIntoView({behavior:"smooth",block:"start"}),60);  /* jump straight to the reader */
@@ -1355,11 +1459,14 @@ function renderAyahs(n){
        return out;},[])
      .map(w=>`<span class="w">${esc(w)}</span>`).join(" ");
    return `<article class="ayah" id="a-${v}" data-i="${i}" tabindex="0">
-    <p class="ar" translate="no">${ar}<span class="medallion" translate="no">${v}</span></p>
+    <div class="vrail">
+      <button class="playbtn" type="button" data-play="${i}" aria-label="Play ayah ${v}"><i class="vg" aria-hidden="true">${TRI}</i></button>
+      <span class="vno" aria-hidden="true">${v}</span>
+    </div>
+    <p class="ar" translate="no">${ar}</p>
     <span class="kline" aria-hidden="true"><i></i></span>
     <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
     <div class="arow">
-      <button class="vact playbtn" data-play="${i}" aria-label="Play ayah ${v}"><i class="vg" aria-hidden="true">${TRI}</i><span>Listen</span></button>
       <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
       ${hasVerse(n,v)?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
     </div>${hasVerse(n,v)?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
@@ -1760,6 +1867,12 @@ function setPlaying(i,loading){playingIdx=i;
  if(i<0){progress(0);pill(false);return;}
  const el=roomBody.querySelector(`.ayah[data-i="${i}"]`), b=el&&el.querySelector(".playbtn");
  if(el){el.classList.add("playing");el.setAttribute("aria-current","true");
+  /* The verse being recited IS the verse the reader is on. They used to be two
+     separate ideas -- the one you tapped and the one that is sounding -- and on
+     a page where the actions belong to the verse you are on, that meant two
+     verses could carry them at once, three with a cursor resting on a third.
+     One reader is on one verse. */
+  setAt(el);
   prevAy=el;followEl=el;karaokeBind(el);if(follow)scrollToVerse(el);else pill(true);}
  if(b){paintBtn(b,loading?1:2);prevBtn=b;}
  playerLabel(loading?"loading recitation…":null);}
@@ -2080,7 +2193,7 @@ $("t-lang").addEventListener("change",e=>{transEdition=e.target.value;
    of a verse with its reference. None of it changes a verse, a translation or
    a source; it only changes what the hand can reach. */
 
-let repeatOne=false, rate=1, fontStep=2;
+let repeatOne=false, rate=1, fontStep=3;
 const FSIZES=[1.3,1.45,1.65,1.9,2.15,2.45];
 
 /* the bar's own height is the page's bottom margin and the pill's floor */

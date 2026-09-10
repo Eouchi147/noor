@@ -88,7 +88,7 @@
     if (!document.getElementById("nsp-css")) {
       var st = document.createElement("style");
       st.id = "nsp-css";
-      st.textContent = "@media (max-width:56rem){[data-noor-sponsor]>div{padding:.42rem .9rem!important;font-size:.68rem!important;line-height:1.55!important}" +
+      st.textContent = "@media (max-width:56rem){[data-noor-sponsor]>div{padding:.42rem .9rem!important;font-size:.79rem!important;line-height:1.55!important}" +
         "[data-noor-sponsor] .nsp-t{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}";
       document.head.appendChild(st);
     }
@@ -105,7 +105,7 @@
       ";border-bottom:1px solid " + M.border;
     d.innerHTML =
       '<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;' +
-      'align-items:center;gap:.55rem;font-size:.71rem;line-height:1.6;color:' + M.tone +
+      'align-items:center;gap:.55rem;font-size:.79rem;line-height:1.6;color:' + M.tone +
       ';font-family:Inter,system-ui,sans-serif;flex-wrap:wrap">' +
       '<span aria-hidden="true" style="color:rgba(201,162,39,.9);font-size:inherit">' + M.mark + "</span>" +
       "<span class=\"nsp-t\" style=\"flex:1 1 16rem;min-width:0\">" + M.text + "</span>" +

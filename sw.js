@@ -2,7 +2,7 @@
    Pages: network first, cached copy when the road is dark.
    Assets: cached first, refreshed quietly behind the scenes.
    APIs and other origins are never intercepted. */
-var V = "noor-v121";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
+var V = "noor-v122";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
 var CORE = [
   "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate", "/unseen", "/sermon", "/soul",
   "/family","/protection","/dictionary","/ask","/mizan","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",

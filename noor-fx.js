@@ -1233,7 +1233,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      addressed to that room, which is a change to every page that wears it.
      Bumped to 9 for: the Mushaf's reading surface rebuilt as one design, and
      the shell's own bar on a converted room made opaque. */
-  var V = "9", left = 0, started = false;
+  var V = "10", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
