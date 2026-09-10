@@ -93,8 +93,10 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .ayah{border-bottom:1px solid rgba(201,162,39,.28);padding:1.15rem .35rem;scroll-margin-top:150px}
 .ayah:last-child{border-bottom:0}
 .ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
-.ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);border-radius:.75rem}
-.medallion{display:inline-flex;align-items:center;justify-content:center;min-width:1.9rem;height:1.9rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-size:.72rem;font-weight:800;margin-inline-start:.5rem;vertical-align:middle;box-shadow:0 1px 4px rgba(201,162,39,.5)}
+/* The first cut's box and its gold coin were both still declared here, dead,
+   overridden two hundred lines further down. A rule nobody can see is a rule
+   the next person has to read anyway. Both are gone; the spine of light and
+   the numeral are below, once. */
 /* .playbtn is a .vact now */
 .eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
 .eq i{width:2.5px;background:currentColor;border-radius:2px;animation:eqq 1s ease-in-out infinite}
@@ -103,12 +105,27 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (prefers-reduced-motion:reduce){.eq i{animation:none;height:8px}}
 .bismillah{font-family:'Amiri Quran',Amiri,serif;font-size:1.9rem;text-align:center;color:#241D12;padding:.8rem 0 .2rem}
 .bismillah small{display:block;font-family:Inter;font-size:.68rem;color:rgba(44,36,22,.5);letter-spacing:.14em;text-transform:uppercase;margin-top:.35rem}
+/* ONE RADIUS SCALE FOR THE WHOLE ROOM.
+   There were four on one screen: 999px pills in the toolbar, 28px on the card
+   the verses were in, 16px on the card the reciting verse got, 12px on the
+   chip inside that. Four radii is four designers. The room now has two, and
+   the second one is a rule rather than a taste:
+
+     --r     14px   everything a finger presses
+     999px          reserved for exactly two things -- the surah's own name,
+                    which is the room's title, and the main play control,
+                    which is the one thing a thumb finds without looking.
+
+   Nothing else in this room is round. */
+:root{--r:14px}
 /* navigator toolbar */
-.tool{border:1px solid rgba(44,36,22,.14);border-radius:999px;padding:.34rem .8rem;font-size:.75rem;font-weight:600;color:rgba(44,36,22,.75);background:#fff;transition:all .2s;cursor:pointer;font-family:inherit}
+.tool{border:1px solid rgba(44,36,22,.14);border-radius:var(--r);padding:.5rem .85rem;font-size:.78rem;font-weight:600;color:rgba(44,36,22,.78);background:#fff;transition:border-color .2s,color .2s,background-color .2s;cursor:pointer;font-family:inherit;min-height:40px}
 .tool:hover{border-color:var(--gold);color:var(--ink)}
+/* the surah's name is the room's title, so it keeps the pill */
+#q-pick{border-radius:999px}
 .qnone{margin:10px 14px 0;font-size:12px;line-height:1.6;color:rgba(255,254,247,.6);max-width:46rem}
 .tool.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
-.navarrow{width:2.1rem;height:2.1rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
+.navarrow{width:2.4rem;height:2.4rem;border-radius:var(--r);border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
 .navarrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
 .navarrow:disabled{opacity:.3;cursor:default}
 #surah-select{border:1.5px solid rgba(201,162,39,.5);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF8E1);color:var(--ink);font-weight:700;font-size:.8rem;padding:.34rem .9rem;max-width:14rem;font-family:inherit}
@@ -186,12 +203,21 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #p-open:hover{background:rgba(244,212,106,.07)}
 #p-open b{display:block;color:#F4D46A;font-size:.84rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #p-open span{display:block;color:rgba(255,254,247,.55);font-size:.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pbtn{flex:none;width:44px;height:44px;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;cursor:pointer;display:grid;place-items:center;transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;padding:0}
+/* ONE BUTTON FAMILY IN THE PLAYER.
+   It had four shapes in one bar: a big filled circle, two flat dark squares,
+   three outlined circles. Four shapes is four ideas about what a button is.
+
+   There is one now -- .pbtn, the same square-shouldered 44 with the room's
+   own radius -- and exactly one exception: .pbtn.main, the circle a thumb
+   finds without looking. Previous and next are the same family as the rest,
+   because they are the same KIND of thing as the rest: something you press
+   when you have decided to. */
+.pbtn{flex:none;width:44px;height:44px;border-radius:var(--r);border:1px solid rgba(244,212,106,.30);background:rgba(244,212,106,.05);color:#F4D46A;cursor:pointer;display:grid;place-items:center;transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;padding:0}
 .pbtn svg{width:1.05rem;height:1.05rem;display:block}
-.pbtn:hover{background:rgba(244,212,106,.14);border-color:rgba(244,212,106,.7)}
+.pbtn:hover{background:rgba(244,212,106,.14);border-color:rgba(244,212,106,.6)}
 .pbtn:active{transform:scale(.94)}
 .pbtn:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
-.pbtn.step{width:48px;height:48px}
+.pbtn.step{width:48px;height:48px;border-radius:var(--r)}
 .pbtn.step svg{width:1.2rem;height:1.2rem}
 .pbtn.main{width:60px;height:60px;background:radial-gradient(circle at 40% 32%,#F4D46A,#C9A227);color:#241D12;border:0;
   box-shadow:0 4px 18px rgba(201,162,39,.45),inset 0 1px 0 rgba(255,255,255,.35)}
@@ -219,13 +245,13 @@ body.has-player{padding-bottom:calc(var(--ph,124px) + .6rem)}
    the type floor as well */
 .pset-row>.lb small{display:block;font-size:.72rem;color:rgba(255,254,247,.66);margin-top:.15rem;line-height:1.45}
 .pset-row .val{font-size:.74rem;font-weight:700;color:#F4D46A}
-.opt{min-height:44px;min-width:64px;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .85rem}
+.opt{min-height:44px;min-width:64px;border-radius:var(--r);border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .85rem}
 .opt[aria-checked="true"]{background:rgba(244,212,106,.9);color:#1A160F;border-color:transparent}
 .opt:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
-.olang{min-height:44px;border-radius:999px;border:1px solid rgba(244,212,106,.35);background:rgba(255,254,247,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;padding:0 .55rem;cursor:pointer}
+.olang{min-height:44px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:rgba(255,254,247,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;padding:0 .55rem;cursor:pointer}
 .olang:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
 .seg{display:flex;gap:.3rem}
-.seg button{min-height:44px;min-width:48px;border-radius:999px;border:1px solid rgba(244,212,106,.35);background:none;color:rgba(255,254,247,.7);font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .6rem}
+.seg button{min-height:44px;min-width:48px;border-radius:var(--r);border:1px solid rgba(244,212,106,.35);background:none;color:rgba(255,254,247,.7);font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .6rem}
 .seg button.on{background:rgba(244,212,106,.9);color:#1A160F;border-color:transparent}
 .seg button:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
 
@@ -303,8 +329,18 @@ html[dir="rtl"] #player .pbar i{transform-origin:right center}
    redrawn on a tick. */
 #room{--ar-size:1.65rem}
 .ayah .ar{font-size:var(--ar-size)}
-.ayah{transition:background-color .26s ease}
-.ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.09),rgba(201,162,39,.02) 72%,transparent)}
+/* THE VERSE BEING RECITED IS MARKED BY LIGHT, NOT BY A BOX.
+   It used to get a background and a radius of its own -- a card inside the
+   card the list was already in. A rectangle around one ayah says "widget".
+   A line of light down its leading edge says "here", which is the only thing
+   it needs to say, and it says it without drawing another shape on a page
+   that already had too many. */
+.ayah{position:relative;transition:background-color .26s ease}
+.ayah::before{content:"";position:absolute;inset-block:.5rem;inset-inline-start:-1rem;width:2px;
+  border-radius:2px;background:linear-gradient(180deg,rgba(244,212,106,.9),rgba(201,162,39,.25));
+  opacity:0;transform:scaleY(.4);transform-origin:top;
+  transition:opacity .28s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+.ayah.playing::before{opacity:1;transform:scaleY(1)}
 .ayah .ar{transition:text-shadow .26s ease}
 .ayah.playing .ar{text-shadow:0 0 14px rgba(201,162,39,.30),0 0 3px rgba(201,162,39,.16)}
 .ayah .ar .w{transition:color .22s ease,text-shadow .22s ease}
@@ -328,26 +364,72 @@ html[dir="rtl"] .kline i{transform-origin:right center}
    they are the same forty four pixels high a thumb needs. The number stays
    where the tradition puts it, at the end of the line, as a hairline roundel
    instead of a coin. */
+/* THE NUMBER IS A NUMERAL, NOT A COIN.
+   It was a filled gold disc, then a ringed one. Both are objects sitting on
+   the text. A mushaf numbers its verses; it does not decorate them. This is
+   the numeral, in the mono the rest of the house counts in, at the end of
+   the line where the tradition puts it, and it gets out of the way. */
 .medallion{display:inline-flex;align-items:center;justify-content:center;
-  min-width:1.55rem;height:1.55rem;border-radius:999px;
-  background:none;border:1px solid rgba(201,162,39,.42);
-  color:#C9A227;font-family:Inter,system-ui,sans-serif;font-size:.66rem;font-weight:700;
-  letter-spacing:0;margin-inline-start:.55rem;vertical-align:middle;box-shadow:none;
-  transition:border-color .22s ease,color .22s ease}
-.ayah.playing .medallion{border-color:rgba(244,212,106,.85);color:#F4D46A}
+  min-width:1.5rem;height:1.5rem;border-radius:0;
+  background:none;border:0;
+  color:rgba(201,162,39,.7);font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  font-size:.72rem;font-weight:500;letter-spacing:.06em;
+  margin-inline-start:.6rem;vertical-align:middle;box-shadow:none;
+  transition:color .22s ease}
+.ayah.playing .medallion{color:#F4D46A}
 
-.ayah{padding:1.35rem .35rem 1.05rem}
+/* the surah's own head: the one box left on the reading surface, because it
+   is a header and not a widget, and it wears the room's radius like the rest */
+.surahhead{border-radius:var(--r)}
+/* the page the verses sit on: one measure, one rhythm, no border */
+.mushaf{margin-top:1.25rem}
+.ayah{padding:1.5rem 0 .55rem}
+.ayah:focus{outline:none}
+.ayah:focus-visible{outline:2px solid rgba(244,212,106,.6);outline-offset:6px;border-radius:6px}
 /* The translation is the half of the page most readers actually read. It was
    inheriting a body colour that the night hands over at 82%, which reads as
    grey beside the Arabic at full strength. It gets its own ink, at the top
    of the range, and a size that does not ask to be squinted at. */
 .ayah .trans{margin-top:.75rem;font-size:.98rem;line-height:1.75;max-width:42rem;color:rgba(44,36,22,.94)}
-.arow{margin-top:.55rem;display:flex;align-items:center;gap:.1rem;flex-wrap:wrap}
+/* TWENTY ONE CONTROLS BECOME THREE.
+   Every verse used to carry its own Listen / Copy / Study, always. Seven
+   verses on a phone is twenty one buttons, and a page of the Qur'an with
+   twenty one buttons on it is a control panel with some scripture in it.
+
+   The actions belong to the verse you are ON: the one being recited, the one
+   you tapped, or the one holding keyboard focus. Every other verse is just
+   the verse. The row keeps its height while hidden so nothing jumps when it
+   arrives, and it is inert to the finger and to assistive tech until it is
+   the current one. */
+/* THE ROW ALWAYS TAKES ITS SPACE, AND ONLY EVER FADES.
+   The first attempt collapsed it to nothing, which was tidier and wrong: a
+   recitation moving from one verse to the next collapses a row above the
+   fold and expands one below it, and the page slides under the reader's eye
+   while they are reading. Scroll anchoring cannot help with a height that is
+   animating. tests/mushaf.mjs catches exactly this -- "the recitation
+   advanced and the page did not move".
+
+   So the height is constant and only the ink changes. The forty four pixels
+   under each verse are not a hole; they are the air a printed mushaf leaves
+   between two ayat, and the verse's own padding was reduced to pay for them. */
+.arow{display:flex;align-items:center;gap:.1rem;flex-wrap:wrap;
+  margin-top:.5rem;height:44px;opacity:0;pointer-events:none;
+  transition:opacity .26s ease}
+.arow>*{visibility:hidden}
+.ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow,.ayah:hover>.arow{
+  opacity:1;pointer-events:auto}
+.ayah.playing>.arow>*,.ayah.at>.arow>*,.ayah:focus-within>.arow>*,.ayah:hover>.arow>*{visibility:visible}
+@media (hover:none){
+  .ayah:hover>.arow{opacity:0;pointer-events:none}
+  .ayah:hover>.arow>*{visibility:hidden}
+  .ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow{opacity:1;pointer-events:auto}
+  .ayah.playing>.arow>*,.ayah.at>.arow>*,.ayah:focus-within>.arow>*{visibility:visible}}
+@media (prefers-reduced-motion:reduce){.arow{transition:opacity .12s ease}}
 
 /* one shape for all three, so the row reads as a row and not as a toolbar */
 .vact{display:inline-flex;align-items:center;gap:.42rem;
   min-height:44px;padding:0 .7rem;margin-inline-start:-.7rem;
-  background:none;border:0;border-radius:10px;cursor:pointer;
+  background:none;border:0;border-radius:var(--r);cursor:pointer;
   font-family:inherit;font-size:.76rem;font-weight:600;letter-spacing:.01em;
   color:rgba(44,36,22,.55);transition:color .18s ease,background-color .18s ease}
 .vact+.vact{margin-inline-start:0}
@@ -367,8 +449,11 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 .vact .vxc{font-style:normal;font-size:.8rem;opacity:.6;transition:transform .22s ease}
 .vact.on .vxc{transform:rotate(90deg)}
 .vact.on{color:var(--gold)}
-/* the verse being recited says so in its own action, not in a second colour */
-.playbtn.on{color:#8a6d13;background:rgba(201,162,39,.11)}
+/* The verse being recited used to say so with a filled chip behind its own
+   Listen -- a fifth rectangle on a screen that already had four. It says so
+   by being gold and by the spine of light down the verse, which is the same
+   signal said once instead of twice. */
+.playbtn.on{color:var(--gold)}
 @media (max-width:400px){ .vact span{font-size:.72rem} }
 
 /* ================== the player, made one line ==================
@@ -386,7 +471,8 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 .pbtn svg{width:1.15rem;height:1.15rem;display:block}
 .pbtn:hover{background:rgba(244,212,106,.10);color:#F4D46A;border-color:transparent}
 .pbtn:active{transform:none}
-.pbtn.step{width:44px;height:44px}
+/* previous and next are the family, not two more circles */
+.pbtn.step{width:44px;height:44px;border-radius:var(--r)}
 .pbtn.step svg{width:1.15rem;height:1.15rem}
 .pbtn.on{background:rgba(244,212,106,.14);color:#F4D46A;border-color:transparent}
 .pbtn.main{width:48px;height:48px;border-radius:999px;margin-inline:.1rem;
@@ -397,7 +483,7 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 
 /* the title takes the room the circles were taking */
 #p-open{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
-  gap:.05rem;padding:.2rem .55rem;margin:0;background:none;border:0;border-radius:10px;
+  gap:.05rem;padding:.2rem .55rem;margin:0;background:none;border:0;border-radius:var(--r);
   text-align:start;cursor:pointer;font-family:inherit;min-height:44px;
   transition:background-color .18s ease}
 #p-open:hover{background:rgba(244,212,106,.07)}
@@ -892,7 +978,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 </section>
 
 <!-- NAVIGATOR, always one tap from any surah -->
-<nav id="qnav" class="sticky top-[94px] md:top-14 z-30 bg-parchment/95 backdrop-blur border-b border-ink/5">
+<nav id="qnav" class="sticky top-[94px] md:top-14 z-30 bg-parchment border-b border-ink/5">
 <div class="max-w-6xl mx-auto px-4 py-2">
 <div class="qrow qrow1">
 <button class="navarrow" id="prev-s" aria-label="Previous surah" disabled>‹</button>
@@ -1213,7 +1299,7 @@ async function openSurah(n,gotoAyah,user){
   if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
   const[num,en,ar,meaning,count,place]=SURAHS[n-1];
   roomHead.innerHTML=`
-   <div class="rounded-2xl overflow-hidden border border-ink/8 ih-fff7d1a6">
+   <div class="surahhead overflow-hidden border border-ink/8 ih-fff7d1a6">
      <div class="px-5 py-6 text-center">
        <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
        <h2 class="font-bold text-xl ih-6db3a931">${num} · ${en} <span class="font-normal text-sm ih-fe5a3e6f">, ${meaning}</span></h2>
@@ -1268,7 +1354,7 @@ function renderAyahs(n){
        if(/^[\u06D6-\u06ED]+$/.test(w)&&out.length)out[out.length-1]+=" "+w; else out.push(w);
        return out;},[])
      .map(w=>`<span class="w">${esc(w)}</span>`).join(" ");
-   return `<article class="ayah" id="a-${v}" data-i="${i}">
+   return `<article class="ayah" id="a-${v}" data-i="${i}" tabindex="0">
     <p class="ar" translate="no">${ar}<span class="medallion" translate="no">${v}</span></p>
     <span class="kline" aria-hidden="true"><i></i></span>
     <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
@@ -1277,12 +1363,23 @@ function renderAyahs(n){
       <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
       ${hasVerse(n,v)?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
     </div>${hasVerse(n,v)?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
-  roomBody.innerHTML=`<div class="bg-white rounded-2xl border border-ink/8 px-4 sm:px-7 py-2 mt-4">${html}</div>
+  /* THE VERSES ARE NOT IN A BOX.
+     They used to be wrapped in a card, and the verse being recited got a
+     second card inside that, and the study companion a third inside that.
+     Three nested rectangles around a page of the Qur'an. A mushaf is a
+     document: the text sits on the page, and what separates one ayah from the
+     next is rhythm and a hairline, not a border. */
+  roomBody.innerHTML=`<div class="mushaf">${html}</div>
    <div id="study-slot"></div>
    <div class="flex justify-between items-center py-5 text-sm">
      ${cur>1?`<button class="tool" onclick="openSurah(${cur-1},1,true)">‹ ${SURAHS[cur-2][1]}</button>`:"<span></span>"}
      ${cur<114?`<button class="tool" onclick="openSurah(${cur+1},1,true)">${SURAHS[cur][1]} ›</button>`:"<span></span>"}
    </div>`;
+  /* A reader has to be ON a verse for that verse to show its actions, so the
+     reader starts on the first one. Otherwise a surah opens with no control
+     visible anywhere and the room looks like it does nothing, which is the
+     failure mode of every design that hides its affordances. */
+  setAt(roomBody.querySelector(".ayah"));
   mountStudy(n);
 }
 
@@ -1909,6 +2006,27 @@ function surahEnded(){
    playAyah(0);
  }).catch(()=>{chaining=false;stopAudio();});
 }
+/* Tapping a verse's body says "this is the one I am on", which is what shows
+   its three actions. It is deliberately NOT the same gesture as tapping play:
+   a reader who wants to copy an ayah should not have to start reciting it
+   first. One verse is current at a time, the way one verse is recited at a
+   time. */
+var atAyah = null;
+function setAt(el) {
+  if (atAyah === el) return;
+  if (atAyah) atAyah.classList.remove("at");
+  atAyah = el || null;
+  if (atAyah) atAyah.classList.add("at");
+}
+roomBody.addEventListener("click", e => {
+  if (e.target.closest("button,a,select,input,.vpan")) return;
+  setAt(e.target.closest && e.target.closest(".ayah"));
+});
+roomBody.addEventListener("focusin", e => {
+  const a = e.target.closest && e.target.closest(".ayah");
+  if (a) setAt(a);
+});
+
 roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(!b)return;
  bless();
  const i=+b.dataset.play;

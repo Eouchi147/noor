@@ -1085,8 +1085,15 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
          behind it. A converted room is a long document: the page scrolls
          straight through the transparent half and the brand ends up written
          across a verse. On these rooms it gets a ground of its own. */
-      "header.n2-top{background:rgba(4,6,15,.92);-webkit-backdrop-filter:saturate(1.4) blur(14px);" +
-      "backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(233,200,106,.10)}";
+      /* .92 was not enough. On a phone, in the Mushaf, the surah's own
+         summary read straight through the brand -- "The Mother of the Book,
+         seven verses" written across CODEX OF LIGHT. backdrop-filter is also
+         the first thing a browser drops when it is busy or when it is drawing
+         in software, and when it goes the eight per cent becomes all of it.
+         A bar a document scrolls under is opaque. The blur stays for the
+         browsers that keep it, but nothing depends on it any more. */
+      "header.n2-top{background:#04060F;-webkit-backdrop-filter:saturate(1.4) blur(14px);" +
+      "backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(233,200,106,.12)}";
     if (!D.getElementById("n2-top-swap")) D.head.appendChild(css);
 
     function measure() {
@@ -1223,8 +1230,10 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      Bumped to 7 for: .n2-ev, the evidence badge in the shell's dialect, and
      .n2-notes, a list whose line is a note rather than a name.
      Bumped to 8 for: noor2-night.css rebuilt with every room's own rules
-     addressed to that room, which is a change to every page that wears it. */
-  var V = "8", left = 0, started = false;
+     addressed to that room, which is a change to every page that wears it.
+     Bumped to 9 for: the Mushaf's reading surface rebuilt as one design, and
+     the shell's own bar on a converted room made opaque. */
+  var V = "9", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
