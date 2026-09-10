@@ -2,10 +2,10 @@
    Pages: network first, cached copy when the road is dark.
    Assets: cached first, refreshed quietly behind the scenes.
    APIs and other origins are never intercepted. */
-var V = "noor-v115";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
+var V = "noor-v116";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
 var CORE = [
   "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate", "/unseen", "/sermon", "/soul",
-  "/family","/protection","/dictionary","/ask","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",
+  "/family","/protection","/dictionary","/ask","/mizan","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",
   "/assets/tw.css?v=49", "/noor-fx.js", "/noor-ink.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
   /* The motion libraries and their loader are no longer deployed (see
      .vercelignore): no page called them, and a precache entry for a file

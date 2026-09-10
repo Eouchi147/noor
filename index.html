@@ -93,6 +93,25 @@
 .hm-names span{display:block;font-family:var(--n2-ar);color:var(--n2-goldhi);font-size:26px;line-height:1.35;margin-bottom:4px}
 .hm-names small{grid-column:1/-1;font-size:14px;color:var(--n2-parch3);line-height:1.45;margin-top:8px;text-align:start}
 
+/* Two Lives, on the arrival: the first of the nine measurements, whole.
+   The other eight are a room of their own at /mizan. */
+#mizan{padding-bottom:calc(var(--n2-bar-h) + 26px)}
+#mizan .n2-row{margin-top:22px}
+.hm-mz{margin-top:22px;display:grid;gap:18px;align-items:center;text-align:start}
+@media (min-width:720px){.hm-mz{grid-template-columns:1fr auto;gap:26px}}
+.hm-mz-q{font-style:italic;color:var(--n2-parch2);margin-top:8px}
+.hm-mz .n2-src{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--n2-goldhi);background:rgba(201,162,39,.14);border:1px solid rgba(233,200,106,.28);border-radius:999px;padding:3px 10px}
+.hm-mz-big{font-family:var(--n2-ar);font-size:26px;line-height:1.3;color:var(--n2-goldhi);text-shadow:0 0 24px rgba(233,200,106,.35);margin:16px 0 0}
+.hm-mz-n{color:var(--n2-parch3);font-size:14px;margin-top:10px}
+.hm-mz-sea{justify-self:center;width:min(100%,340px)}
+.hm-mz-sea svg{width:100%;height:auto;display:block}
+.hm-wave{animation:hmWave 7s ease-in-out infinite alternate;will-change:transform}
+.hm-wave.w2{animation-duration:9s;animation-delay:-2s}
+@keyframes hmWave{from{transform:translate3d(-6px,0,0)}to{transform:translate3d(6px,0,0)}}
+.hm-drop{animation:hmDrop 3.4s cubic-bezier(.5,0,.8,1) infinite;transform-origin:center}
+@keyframes hmDrop{0%,55%{transform:translateY(0);opacity:0}60%{opacity:1}88%{transform:translateY(26px);opacity:1}92%,100%{transform:translateY(28px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.hm-wave,.hm-drop{animation:none}}
+
 /* the reel beside its words on a wide screen */
 #verse .n2-reel{height:min(42svh,400px)}
 @media (min-width:640px){
@@ -244,8 +263,8 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 </section>
 
 <!-- 5 · the library, whole: every room, as assets/menu-index.json groups
-     them. The Path's row is #timeline and Two Lives is #mizan, the anchors
-     the other rooms and the menu point at; Two Lives opens in a sheet. -->
+     them. The Path's row is #timeline; Two Lives is its own room at /mizan
+     and the section below carries the #mizan anchor the house points at. -->
 <section class="n2-idea n2-short" id="library">
 <p class="n2-eyebrow">The library</p>
 <h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>
@@ -290,7 +309,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <li><a href="/characters"><b>Characters<small>Everyone the Codex names</small></b></a></li>
 <li><a href="/places"><b>Places<small>The ground it happened on</small></b></a></li>
 <li><a href="/sermon"><b>The Last Sermon<small>The final khutbah, line by line</small></b></a></li>
-<li id="mizan"><a href="#mizan" id="hm-mizan"><b>Two Lives<small>The scale, and what is on it</small></b></a></li>
+<li><a href="/mizan"><b>Two Lives<small>The scale, and what is on it</small></b></a></li>
 </ul>
 </div>
 <div class="hm-grp">
@@ -335,7 +354,40 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 </div>
 </section>
 
-<!-- 6 · no catch -->
+<!-- 6 · Two Lives · 107 links in 52 rooms point at /mizan, so the anchor
+     has to be a real thing and not a sheet. The first measurement stands
+     here in full, the other eight are a tap away at /mizan. -->
+<section class="n2-idea n2-short" id="mizan">
+<p class="n2-eyebrow">Two Lives <small lang="ar" translate="no">· الدُّنْيَا وَالآخِرَة</small></p>
+<h2 class="n2-h2" data-i18n="mizan.title">Two Lives in True Scale</h2>
+<p class="n2-p" data-i18n="mizan.sub">Not poetry: measurements. What the Qur'an and the authentic Sunnah state, in numbers, about the life you are in and the one you are heading to.</p>
+<div class="hm-mz">
+<div class="hm-mz-t">
+<h3 class="n2-h3" data-i18n="mizan.drop.title">The Finger and the Sea</h3>
+<p class="n2-p hm-mz-q">&ldquo;By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back.&rdquo;</p>
+<p class="n2-src">Muslim 2858</p>
+<p class="hm-mz-big" data-i18n="mizan.drop.ratio">the drop : the sea</p>
+<p class="n2-p hm-mz-n" data-i18n="mizan.drop.note">Everything ever owned, built, or won by every human in history fits in the droplet. The sea is what remains.</p>
+</div>
+<div class="hm-mz-sea" aria-hidden="true">
+<svg viewBox="0 0 400 230" width="400" height="230">
+<defs><linearGradient id="hmseag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#123047"/><stop offset="100%" stop-color="#071620"/></linearGradient></defs>
+<path class="hm-wave w1" d="M0,120 C60,108 120,132 200,120 C280,108 340,132 400,120 L400,230 L0,230 Z" fill="url(#hmseag)"/>
+<path class="hm-wave w2" d="M0,132 C70,122 140,142 210,132 C290,122 350,142 400,132 L400,230 L0,230 Z" fill="rgba(18,48,71,.65)"/>
+<g opacity=".92">
+<path d="M170,0 L230,0 L230,26 C230,40 224,48 216,52 L212,54 L212,64 C212,74 205,80 198,80 C191,80 185,74 185,64 L185,52 C176,48 170,40 170,26 Z" fill="#C9A227"/>
+<path d="M185,52 L212,54" stroke="rgba(20,16,10,.25)" stroke-width="2"/>
+<ellipse cx="198" cy="70" rx="5.5" ry="8" fill="#E9C86A" opacity=".55"/>
+</g>
+<circle class="hm-drop" cx="198" cy="92" r="4" fill="#E9C86A"/>
+<g fill="rgba(233,200,106,.5)"><circle cx="60" cy="150" r="1.4"/><circle cx="330" cy="160" r="1.2"/><circle cx="250" cy="145" r="1.1"/></g>
+</svg>
+</div>
+</div>
+<div class="n2-row"><a class="n2-btn n2-gold" href="/mizan">The other eight measurements <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/soul">The Journey of the Soul</a></div>
+</section>
+
+<!-- 7 · no catch -->
 <section class="n2-idea" id="free">
 <p class="n2-eyebrow">No catch</p>
 <h2 class="n2-h2">Free means <span class="n2-g">free</span></h2>
@@ -588,29 +640,13 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
       btn.addEventListener("click", function () { set(g.classList.contains("hm-shut")); });
     });
   }
-  /* a room asked for by its anchor (/#timeline, /#mizan) opens its section */
+  /* a room asked for by its anchor (/#timeline, /mizan) opens its section */
   function openFor(hash) {
     var el = hash && hash.length > 1 && doc.getElementById(hash.slice(1));
     var g = el && el.closest && el.closest(".hm-grp");
     if (g && g.n2open) g.n2open();
   }
 
-  /* --------------------------------------------------------------- Two Lives
-     56 rooms of the house link to /#mizan. What stands there is the three
-     narrations the old page quoted, in a sheet from the library's row, and
-     nothing said over them. */
-  function mizan() {
-    if (!W.NOOR2) return;
-    var sh = NOOR2.sheet('<div class="hm-sheet">' +
-      '<p class="n2-eyebrow">Two Lives <small lang="ar" translate="no">· الدُّنْيَا وَالآخِرَة</small></p>' +
-      '<h2 class="n2-h3">Two lives, in true scale</h2>' +
-      '<div class="n2-quote"><p class="n2-p">“By Allah, this world beside the Hereafter is nothing but as when one of you dips this finger of his into the sea: so let him see what it brings back.”</p><p class="n2-src">Muslim 2858</p></div>' +
-      '<div class="n2-quote"><p class="n2-p">“Be in this world as if you were a stranger, or a traveler on the road.”</p><p class="n2-src">Bukhari 6416</p></div>' +
-      '<div class="n2-quote"><p class="n2-p">“Two blessings about which many people are cheated: health and free time.”</p><p class="n2-src">Bukhari 6412</p></div>' +
-      '<div class="n2-row"><a class="n2-btn n2-gold" href="/soul">The Journey of the Soul ' + ARROW + '</a><a class="n2-btn" href="/words">Words that last</a>' +
-      '<button class="n2-btn" type="button" data-n2-close>Close</button></div></div>');
-    sh.el.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("[data-n2-close]") && location.hash === "#mizan") history.replaceState(null, "", location.pathname); });
-  }
 
   /* ------------------------------------------------------ the language door
      The same doors the head marks with hreflang; the switch is the house's
@@ -662,12 +698,9 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     }
     var dn = sp.get("node") || (location.hash.match(/^#node-(\d+)$/) || [])[1];
     if (dn) setTimeout(function () { chapter(+dn); }, 250);
-    var mz = q("#hm-mizan"); if (mz) mz.addEventListener("click", function (e) { if (W.NOOR2) { e.preventDefault(); mizan(); } });
-    if (location.hash === "#mizan") setTimeout(mizan, 250);
     /* the same doors when the hash changes on the page itself */
     W.addEventListener("hashchange", function () {
       openFor(location.hash);
-      if (location.hash === "#mizan") return mizan();
       var m = location.hash.match(/^#node-(\d+)$/); if (m) chapter(+m[1]);
     });
   }
