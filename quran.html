@@ -88,9 +88,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
 .ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);border-radius:.75rem}
 .medallion{display:inline-flex;align-items:center;justify-content:center;min-width:1.9rem;height:1.9rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-size:.72rem;font-weight:800;margin-inline-start:.5rem;vertical-align:middle;box-shadow:0 1px 4px rgba(201,162,39,.5)}
-.playbtn{width:2rem;height:2rem;border-radius:999px;border:1px solid rgba(44,36,22,.15);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:#fff;transition:all .2s;cursor:pointer}
-.playbtn:hover{border-color:var(--gold);color:var(--gold)}
-.playbtn.on{background:var(--gold);border-color:var(--gold);color:#241D12}
+/* .playbtn is a .vact now */
 .eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
 .eq i{width:2.5px;background:currentColor;border-radius:2px;animation:eqq 1s ease-in-out infinite}
 .eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
@@ -238,12 +236,7 @@ body.has-player{padding-bottom:calc(var(--ph,124px) + .6rem)}
    The expander is deliberately quiet. It sits under the translation as a rule
    and a few small capitals, so a page of two hundred verses does not turn into
    a page of two hundred buttons. */
-.vx{margin-block:.15rem 0;margin-inline-start:2.75rem;display:inline-flex;align-items:center;gap:.4rem;min-height:44px;font-size:.63rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:rgba(44,36,22,.42);background:none;border:0;padding:.15rem 0;cursor:pointer;font-family:inherit;transition:color .18s}
-.vx::before{content:"";width:.85rem;height:1px;background:currentColor;opacity:.6;flex:none}
-.vx:hover,.vx:focus-visible{color:#8a6d13}
-.vx.on{color:#8a6d13}
-.vx .vxc{display:inline-block;transition:transform .22s}
-.vx.on .vxc{transform:rotate(90deg)}
+/* Study is one of the three actions now: see .vact below */
 html[dir="rtl"] .vx.on .vxc{transform:rotate(-90deg)}
 .vpan{margin-block:.65rem .25rem;margin-inline-start:2.75rem;border-inline-start:2px solid rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.07),rgba(201,162,39,.02));border-start-end-radius:14px;border-end-end-radius:14px;padding:.9rem 1rem}
 .vwords{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .85rem;direction:rtl}
@@ -313,13 +306,98 @@ html[dir="rtl"] #player .pbar i{transform-origin:right center}
   transform:scaleX(0);transform-origin:right center;transition:transform .14s linear;will-change:transform}
 html[dir="rtl"] .kline i{transform-origin:right center}
 .arow{margin-top:.45rem;display:flex;align-items:flex-start;gap:.6rem}
-.playbtn{flex:none;width:44px;height:44px;border-radius:999px;border:1px solid rgba(44,36,22,.15);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:#fff;transition:border-color .2s,color .2s,background .2s;cursor:pointer}
-.playbtn svg{width:1rem;height:1rem}
-.playbtn:focus-visible,.copyb:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.arow .trans{flex:1;min-width:0;padding-top:.55rem}
-.copyb{flex:none;width:44px;height:44px;border-radius:999px;border:1px solid transparent;background:none;color:rgba(44,36,22,.35);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:color .2s,border-color .2s}
-.copyb svg{width:.95rem;height:.95rem}
-.copyb:hover{color:#8a6d13;border-color:rgba(201,162,39,.4)}
+/* the three actions of a verse are one shape now: see .vact below */
+
+/* ================== the verse, made quiet ==================
+   Every action on a verse used to be a filled circle: a gold coin holding the
+   number, a ringed play button at one end of the translation, a copy button at
+   the other, and a line of letterspaced capitals under it. Four controls, three
+   alignments, six thousand times.
+
+   Now: the Arabic, the meaning under it in one column, and three quiet actions
+   in a row beneath. They are text with a glyph, not buttons with a ring, and
+   they are the same forty four pixels high a thumb needs. The number stays
+   where the tradition puts it, at the end of the line, as a hairline roundel
+   instead of a coin. */
+.medallion{display:inline-flex;align-items:center;justify-content:center;
+  min-width:1.55rem;height:1.55rem;border-radius:999px;
+  background:none;border:1px solid rgba(201,162,39,.42);
+  color:#C9A227;font-family:Inter,system-ui,sans-serif;font-size:.66rem;font-weight:700;
+  letter-spacing:0;margin-inline-start:.55rem;vertical-align:middle;box-shadow:none;
+  transition:border-color .22s ease,color .22s ease}
+.ayah.playing .medallion{border-color:rgba(244,212,106,.85);color:#F4D46A}
+
+.ayah{padding:1.35rem .35rem 1.05rem}
+.ayah .trans{margin-top:.7rem;font-size:.9rem;line-height:1.75;max-width:42rem}
+.arow{margin-top:.55rem;display:flex;align-items:center;gap:.1rem;flex-wrap:wrap}
+
+/* one shape for all three, so the row reads as a row and not as a toolbar */
+.vact{display:inline-flex;align-items:center;gap:.42rem;
+  min-height:44px;padding:0 .7rem;margin-inline-start:-.7rem;
+  background:none;border:0;border-radius:10px;cursor:pointer;
+  font-family:inherit;font-size:.76rem;font-weight:600;letter-spacing:.01em;
+  color:rgba(44,36,22,.55);transition:color .18s ease,background-color .18s ease}
+.vact+.vact{margin-inline-start:0}
+.vact svg{width:.88rem;height:.88rem;flex:none;opacity:.85}
+.vact:hover,.vact:focus-visible{color:#8a6d13;background:rgba(201,162,39,.07)}
+.vact:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.vact .vxc{font-style:normal;font-size:.8rem;opacity:.6;transition:transform .22s ease}
+.vact.on .vxc{transform:rotate(90deg)}
+.vact.on{color:#8a6d13}
+/* the verse being recited says so in its own action, not in a second colour */
+.playbtn.on{color:#8a6d13;background:rgba(201,162,39,.11)}
+@media (max-width:400px){ .vact span{font-size:.72rem} }
+
+/* ================== the player, made one line ==================
+   Six controls, five of them the same ringed circle, in two rows, with the
+   title squeezed against them. Now: one row. One filled circle, which is the
+   only thing a thumb reaches for without looking, and five bare glyphs around
+   the title. The progress line runs the full width above them, where a
+   progress line belongs. */
+#player .inner{padding:.15rem .6rem .35rem}
+.prow{display:flex;align-items:center;gap:.15rem}
+.prow-b{justify-content:flex-start;gap:.15rem;margin-top:0}
+.pbtn{flex:none;width:44px;height:44px;border-radius:12px;border:0;background:none;
+  color:rgba(244,212,106,.72);cursor:pointer;display:grid;place-items:center;
+  transition:color .18s ease,background-color .18s ease;padding:0}
+.pbtn svg{width:1.15rem;height:1.15rem;display:block}
+.pbtn:hover{background:rgba(244,212,106,.10);color:#F4D46A;border-color:transparent}
+.pbtn:active{transform:none}
+.pbtn.step{width:44px;height:44px}
+.pbtn.step svg{width:1.15rem;height:1.15rem}
+.pbtn.on{background:rgba(244,212,106,.14);color:#F4D46A;border-color:transparent}
+.pbtn.main{width:48px;height:48px;border-radius:999px;margin-inline:.1rem;
+  background:linear-gradient(155deg,#F4D46A,#C9A227);color:#241D12;
+  box-shadow:0 3px 14px rgba(201,162,39,.34)}
+.pbtn.main svg{width:1.25rem;height:1.25rem}
+.pbtn.main:hover{background:linear-gradient(155deg,#F7DE87,#D2AC2C);box-shadow:0 5px 18px rgba(201,162,39,.46)}
+
+/* the title takes the room the circles were taking */
+#p-open{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  gap:.05rem;padding:.2rem .55rem;margin:0;background:none;border:0;border-radius:10px;
+  text-align:start;cursor:pointer;font-family:inherit;min-height:44px;
+  transition:background-color .18s ease}
+#p-open:hover{background:rgba(244,212,106,.07)}
+#p-open #p-title{display:block;font-size:.82rem;font-weight:700;color:#FFFEF7;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.25}
+#p-open #p-sub{display:block;font-size:.68rem;color:rgba(255,254,247,.5);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.3}
+#player .pbar{height:2px}
+
+/* A thumb needs forty four pixels and the house does not make exceptions for
+   a narrow phone, so nothing here shrinks below it. What gives instead is the
+   title: it has min-width 0 so it takes whatever is left, and a floor of 44 so
+   it is still a target when there is almost nothing left. Five glyphs at 44,
+   the play at 48, the title at 44 and the gaps come to 327 pixels, which fits
+   the narrowest phone the house supports. */
+#p-open{min-width:44px}
+@media (max-width:430px){
+  .pbtn svg,.pbtn.step svg{width:1.05rem;height:1.05rem}
+  #p-open{padding-inline:.3rem}
+  #p-open #p-title{font-size:.78rem}
+  #p-open #p-sub{font-size:.64rem}
+}
+
 .ayah{cursor:pointer}
 /* a long press on the script is the house's own copy, so the phone's callout
    is not raised over it; the translation below stays selectable as it was */
@@ -903,16 +981,14 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 </div>
 </div>
 <div class="inner">
-<div class="prow prow-a">
-<button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub"></span></button>
-<button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
-<button class="pbtn" id="p-more" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
-<button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
-</div>
 <div class="prow prow-b">
 <button class="pbtn step" id="p-prev" aria-label="Previous verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2.4v14H6zM19.5 5v14L9.6 12z"/></svg></button>
 <button class="pbtn main" id="p-toggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
 <button class="pbtn step" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
+<button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub"></span></button>
+<button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
+<button class="pbtn" id="p-more" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
+<button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
 </div>
 </div>
 </div>
@@ -1159,11 +1235,12 @@ function renderAyahs(n){
    return `<article class="ayah" id="a-${v}" data-i="${i}">
     <p class="ar" translate="no">${ar}<span class="medallion" translate="no">${v}</span></p>
     <span class="kline" aria-hidden="true"><i></i></span>
+    <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
     <div class="arow">
-      <button class="playbtn" data-play="${i}" aria-label="Play ayah ${v}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      <p class="trans text-[13.5px] leading-relaxed text-ink/70 ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
-      <button class="copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg></button>
-    </div>${hasVerse(n,v)?`<button type="button" class="vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><span class="vxc">›</span>Study this verse</button><div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
+      <button class="vact playbtn" data-play="${i}" aria-label="Play ayah ${v}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Listen</span></button>
+      <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
+      ${hasVerse(n,v)?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
+    </div>${hasVerse(n,v)?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
   roomBody.innerHTML=`<div class="bg-white rounded-2xl border border-ink/8 px-4 sm:px-7 py-2 mt-4">${html}</div>
    <div id="study-slot"></div>
    <div class="flex justify-between items-center py-5 text-sm">

@@ -1073,7 +1073,14 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
          the brand. --n2-top-h is measured below and is there for a room that
          has something of its own sticking to the top line. */
       "body{padding-top:var(--n2-top-h,68px)}" +
-      "[class*='sticky'][class*='top-']{top:var(--n2-top-h,68px)!important}";
+      "[class*='sticky'][class*='top-']{top:var(--n2-top-h,68px)!important}" +
+      /* The shell's top line fades to nothing at its lower edge, which is right
+         on the arrival, where each screen is its own panel and little passes
+         behind it. A converted room is a long document: the page scrolls
+         straight through the transparent half and the brand ends up written
+         across a verse. On these rooms it gets a ground of its own. */
+      "header.n2-top{background:rgba(4,6,15,.92);-webkit-backdrop-filter:saturate(1.4) blur(14px);" +
+      "backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(233,200,106,.10)}";
     if (!D.getElementById("n2-top-swap")) D.head.appendChild(css);
 
     function measure() {
