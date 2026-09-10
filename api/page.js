@@ -32,7 +32,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "2";                                  /* the shell's cache-buster; noor-fx.js carries the same */
+const V = "3";                                  /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
@@ -254,7 +254,7 @@ const BAR = [
   ["Qur'an", "/quran", '<path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/>'],
   ["Story", "/path", '<path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/>'],
   ["Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'],
-  ["Search", "/dictionary", '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/>']
+  ["More", "/#search", '<circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/>']
 ];
 export function shell(o) {
   const title = o.title + " · NOOR Codex of Light";
@@ -264,7 +264,18 @@ export function shell(o) {
      dial's data-nm-open as well, which on a page that loads the dial always
      won -- so the bar's Search and the field on the arrival opened two
      different searches. The dial is the Menu's. */
-  const bar = BAR.map(l => `<a href="${l[1]}"${l[0] === "Search" ? " data-n2-search" : ""}${l[1] === o.active ? ' class="n2-on"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true">${l[2]}</svg>${l[0]}</a>`).join("");
+  /* /noor-fx.js is the house layer: the language door, the beacon, the service
+     worker, the social row, the quiet guide's provider and Friday's card.
+     Every other page in the house loads it -- the 523 word pages of the shell
+     among them -- and these rooms were the one kind that did not, so a chapter
+     could declare its guide topic with nothing listening, and Friday reached
+     every room but these. It knows a page of the shell and leaves it alone. */
+  /* The fifth door is the map of the house and the search in one sheet, drawn
+     by noor-fx.js. Five doors cannot reach forty-two rooms; the other
+     thirty-seven used to be behind a dial that only the arrival carried, so a
+     reader standing in a room on a phone could not get to the Prophets at all.
+     Without any script it is a link to /#search, which the arrival answers. */
+  const bar = BAR.map(l => `<a href="${l[1]}"${l[0] === "More" ? " data-n2-more" : ""}${l[1] === o.active ? ' class="n2-on"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true">${l[2]}</svg>${l[0]}</a>`).join("");
   const ld = [crumbs([["NOOR Codex of Light", "/"], ...(o.crumbs || [])]), ...(o.ld || [])];
   return `<!DOCTYPE html>
 <html lang="en" data-n2="${attr(o.mode || "")}">
@@ -293,6 +304,7 @@ ${o.noindex ? '<meta name="robots" content="noindex"/>' : ""}<meta name="theme-c
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
 <link rel="stylesheet" href="/assets/noor2.css?v=${V}"/>
 <script src="/assets/noor2.js?v=${V}" defer></script>
+<script src="/noor-fx.js" defer></script>
 ${jsonld(ld)}
 </head>
 <body>
