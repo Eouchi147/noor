@@ -63,6 +63,20 @@ def have_store():
 PACE = float(os.environ.get("REELS_STORE_PACE", "8"))
 _last_write = 0.0
 
+# A GitHub Actions job is killed at five hours with no warning and no output,
+# which is how run #10 spent ten hours of machines and shipped nothing. The
+# shelf stops uploading before that, hands back what it has, and lets the
+# manifest and the pull request happen. What did not go up is deleted rather
+# than committed, because a card with no video in the store and no video here
+# is simply not in the manifest, stays in the plan, and is rendered again next
+# run: a few hundred megabytes of mp4 in a pull request helps nobody.
+BUDGET = float(os.environ.get("REELS_STORE_BUDGET", "13800"))   # 3h50m
+_started = time.time()
+
+
+def out_of_time():
+    return BUDGET > 0 and (time.time() - _started) > BUDGET
+
 
 def _req(method, url, body=None, ctype="application/json", raw=None, tries=4):
     global _last_write
@@ -70,8 +84,17 @@ def _req(method, url, body=None, ctype="application/json", raw=None, tries=4):
     writes = method in ("POST", "DELETE", "PATCH")
     for attempt in range(tries):
         if writes:
+            # The pace is one write STARTED every PACE seconds, which is what
+            # GitHub counts. Measuring from the end of the last write instead
+            # made every cycle PACE plus the upload itself: a three megabyte
+            # video takes about eight seconds to send, so eight became sixteen,
+            # and the three hours this file promises became five and three
+            # quarters. The job ceiling is five, so the shelf could never
+            # finish in one run. Run #10 died at 1,090 of 1,265 with nothing
+            # to show for nearly ten hours of machines.
             wait = PACE - (time.time() - _last_write)
             if wait > 0: time.sleep(wait)
+            _last_write = time.time()
         req = urllib.request.Request(url, data=data, method=method, headers={
             "Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28", "Content-Type": ctype,
@@ -79,10 +102,8 @@ def _req(method, url, body=None, ctype="application/json", raw=None, tries=4):
         try:
             with urllib.request.urlopen(req, timeout=300) as r:
                 t = r.read()
-                if writes: _last_write = time.time()
                 return r.status, (json.loads(t) if t and r.headers.get("Content-Type", "").startswith("application/json") else t)
         except urllib.error.HTTPError as e:
-            if writes: _last_write = time.time()
             if e.code in (403, 429, 502, 503) and attempt < tries - 1:
                 # rate limited or a hiccup: wait what GitHub asks, or a minute
                 ra = e.headers.get("Retry-After") if e.headers else None
@@ -200,10 +221,13 @@ def move(dry=False):
     try: plan = json.load(open(os.path.join(HERE, "plan.json"), encoding="utf-8"))["cards"]
     except (OSError, ValueError, KeyError): plan = None
     ids = sorted(f[:-4] for f in os.listdir(OUT) if f.endswith(".mp4") and not f.endswith(".part.mp4"))
-    moved, faults = 0, []
+    moved, faults, left = 0, [], []
     for cid in ids:
         if plan is not None and cid not in plan:
             continue            # not a card any more: the manifest step takes it off the shelf
+        if out_of_time():
+            left.append(cid)
+            continue
         kind = (plan or {}).get(cid, {}).get("kind", "light")
         mp4 = os.path.join(OUT, cid + ".mp4")
         cover = os.path.join(OUT, cid + "-cover.jpg")
@@ -237,7 +261,15 @@ def move(dry=False):
             # the video stays where it is; the manifest still lists it from
             # the local file, and the next run tries again
             faults.append((cid, str(e)[:200])); print("  KEPT", cid, e, flush=True)
-    print("%d moved to the %s store, %d kept in reels/" % (moved, STORE, len(faults)))
+    if left:
+        for cid in left:
+            for f in (cid + ".mp4", cid + "-cover.jpg"):
+                try: os.remove(os.path.join(OUT, f))
+                except OSError: pass
+        print("  the clock: %d not uploaded this run and taken back off the shelf; "
+              "they stay in the plan and are rendered again next run" % len(left), flush=True)
+    print("%d moved to the %s store, %d kept in reels/, %d left to the next run"
+          % (moved, STORE, len(faults), len(left)))
     return 1 if faults else 0
 
 
