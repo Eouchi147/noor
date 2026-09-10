@@ -1459,6 +1459,39 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     e.preventDefault(); e.stopPropagation();
     open();
   }, true);
+  /* ------------------------------------------------- the door says "More"
+     523 word pages and a handful of others were built with the fifth door as
+     Search: a magnifier, labelled Search, pointing at /dictionary. They open
+     this same sheet -- it answers their door as readily as the new one -- but
+     a reader crossing from a word page to a rendered room found the last
+     door in the bar had changed its name and its picture, which is exactly
+     the inconsistency that was complained about.
+
+     Rebuilding all 523 pages to change two elements is a poor trade for the
+     reader, who gets nothing from it, so the door is corrected where it
+     stands. The pages will carry it themselves at the next rebuild; until
+     then the house is one house on every screen. */
+  function relabel() {
+    var bar = doc.querySelector(".n2-bar");
+    if (!bar || bar.querySelector("[data-n2-more]")) return;
+    var a = bar.querySelector("a[data-n2-search],a[data-nm-open]");
+    if (!a) return;
+    a.setAttribute("data-n2-more", "");
+    a.setAttribute("href", "/#search");
+    var svg = a.querySelector("svg");
+    if (svg) svg.innerHTML = '<circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/>' +
+      '<circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/>';
+    /* the label is the bar's own last text node, not a wrapper we can assume */
+    for (var n = a.lastChild; n; n = n.previousSibling) {
+      if (n.nodeType === 3 && n.nodeValue.trim()) { n.nodeValue = "More"; return; }
+      if (n.nodeType === 1 && n.tagName !== "SVG" && n.textContent.trim()) { n.textContent = "More"; return; }
+    }
+  }
+  /* the bar may be the page's own or drawn later by noor2.js, so look twice */
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", relabel); else relabel();
+  var relooks = 0;
+  var reloop = setInterval(function () { relabel(); if (++relooks > 16) clearInterval(reloop); }, 250);
+
   W.addEventListener("keydown", function (e) {
     if (openNow) return;
     if (e.key !== "/" && !(e.key === "k" && (e.metaKey || e.ctrlKey))) return;
