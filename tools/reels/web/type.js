@@ -384,8 +384,8 @@
 
     var E = GRID.eighth, B = GRID.beat;
     var step = Math.min(0.19, Math.max(0.11, E / 2));
-    var tHook = q(0.5);
-    var hookEnd = q(tHook + (ws.length - 1) * step + 0.86);
+    var tHook = 0;
+    var hookEnd = q(tHook + (ws.length - 1) * step + 0.46);
     var outHook = q(hookEnd + B * 2.4);
     var tDate = q(outHook + B * 0.5);
     var outDate = q(tDate + B * 3);
@@ -394,8 +394,8 @@
     var hold = lines.length > 1 ? B * 4 : B * 6.2;
 
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
-    tl.add(ws, { opacity: [0, 1], translateY: [34, 0], "--b": ["11px", "0px"],
-                 duration: 860, delay: A.stagger(ms(step)) }, ms(tHook));
+    tl.add(ws, { opacity: [0.38, 1], translateY: [15, 0], "--b": ["8px", "0px"],
+                 duration: 440, delay: A.stagger(ms(step)) }, ms(tHook));
     /* the surprise does not rule itself under: it warms */
     var keys = s1.querySelectorAll(".w.key");
     if (keys.length) {
@@ -468,8 +468,8 @@
     depart(tl, s1._items, outNum);
 
     var tHook = q(outNum + B * 0.5);
-    tl.add(ws, { opacity: [0, 1], translateY: [32, 0], "--b": ["11px", "0px"],
-                 duration: 860, delay: A.stagger(ms(step)) }, ms(tHook));
+    tl.add(ws, { opacity: [0.38, 1], translateY: [15, 0], "--b": ["8px", "0px"],
+                 duration: 440, delay: A.stagger(ms(step)) }, ms(tHook));
     var hookEnd = q(tHook + (ws.length - 1) * step + 0.86);
     var keys = s2.querySelectorAll(".w.key");
     if (keys.length) {
@@ -538,18 +538,26 @@
     var B = GRID.beat, E = GRID.eighth;
 
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
-    var tAr = q(0.6);
-    tl.add(ar, { opacity: [0, 1], scale: [1.06, 1], "--b": ["16px", "0px"],
-                 duration: 1500, ease: "outQuint" }, ms(tAr));
-    var tTerm = q(tAr + B * 2);
-    tl.add(tws, { opacity: [0, 1], translateY: [16, 0], duration: 760,
-                  delay: A.stagger(90) }, ms(tTerm));
-    var outAr = q(tTerm + B * 3.4);
+    /* The opening used to be: nothing for 0.6s, the Arabic easing in over
+       1.5s, the transliteration two beats behind it, and the English meaning
+       at 5.85s. Measured against Facebook's own numbers -- 332 views, 27 of
+       them lasting three seconds -- the reel was still fading in when the
+       viewer had already gone. So the card now says what it is in the first
+       frame: the word is there at 0.05s, its name a fifth of a second later,
+       and the whole opening screen is legible before the second one begins.
+       The ease and the bloom are untouched; only the waiting is gone. */
+    var tAr = 0;
+    tl.add(ar, { opacity: [0.42, 1], scale: [1.03, 1], "--b": ["11px", "0px"],
+                 duration: 460, ease: "outQuint" }, ms(tAr));
+    var tTerm = q(tAr + 0.14);
+    tl.add(tws, { opacity: [0.22, 1], translateY: [9, 0], duration: 380,
+                  delay: A.stagger(60) }, ms(tTerm));
+    var outAr = q(tTerm + B * 3.0);
     depart(tl, s1._items, outAr);
 
-    var tMean = q(outAr + B * 0.5);
-    arrive(tl, s2._items[0], tMean, { dy: 14, dur: 820, to: 0.8 });
-    arrive(tl, s2._items[1], q(tMean + B), { dy: 22, dur: 940 });
+    var tMean = q(outAr + B * 0.35);
+    arrive(tl, s2._items[0], tMean, { dy: 12, dur: 540, to: 0.8 });
+    arrive(tl, s2._items[1], q(tMean + B * 0.55), { dy: 16, dur: 620 });
     var outMean = q(tMean + B * 5.4);
     depart(tl, s2._items, outMean);
 
@@ -607,7 +615,7 @@
 
     var f = fitAll();
 
-    var tAyah = 0.6, tRef = 1.45;
+    var tAyah = 0, tRef = 0.42;
     var tEnd = rec.start + rec.dur;
     var tCredit = Math.round((tEnd + 1.35) * 1000) / 1000;
     var secs = Math.round((tEnd + 4.2) * 100) / 100;
@@ -623,9 +631,9 @@
     }
 
     var tl = A.createTimeline({ autoplay: false, defaults: { ease: "outExpo" } });
-    tl.add(AYAH, { opacity: [0, 1], scale: [1.03, 1], "--b": ["14px", "0px"],
-                   duration: 1700, ease: "outQuint" }, ms(tAyah));
-    arrive(tl, s1._items[1], tRef, { dy: 10, dur: 900 });
+    tl.add(AYAH, { opacity: [0.40, 1], scale: [1.02, 1], "--b": ["11px", "0px"],
+                   duration: 580, ease: "outQuint" }, ms(tAyah));
+    arrive(tl, s1._items[1], tRef, { dy: 8, dur: 520 });
     sents.forEach(function (s, i) {
       arrive(tl, s, at[i], { dy: 18, dur: 900 });
       if (i) depart(tl, sents[i - 1], Math.round((at[i] - 0.12) * 1000) / 1000, { dur: 620 });
