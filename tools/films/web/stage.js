@@ -60,12 +60,12 @@
      is only ever split at spaces, which is a boundary Arabic joining does not
      cross, and a word arrives whole or not at all. */
   function letters(node, text) { return words(node, text); }
-  function layer() {
-    var d = el("div", "beat");
-    d.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column;" +
-      "align-items:center;justify-content:center;gap:inherit;opacity:0";
-    return d;
-  }
+  /* The beat's own box used to be written as an inline style, which meant no
+     stylesheet could ever move it: the rule that lifts the words clear of a
+     figure in the light layer lost to it silently, and a sentence went on
+     landing across the middle of the thing it was describing. It is a class
+     now, declared in film.html, where the two frame shapes are declared too. */
+  function layer() { return el("div", "beat"); }
 
   /* ---- the beats ------------------------------------------------------- *
      Every builder gets (beat, node, tl, t0) and returns nothing. It hangs its
@@ -254,6 +254,9 @@
     var g = function (a) { return [a[0] * PARALLAX, a[1] * PARALLAX]; };
     tl.add(gr, { scale: f(m.s), translateX: g(m.x), translateY: g(m.y),
                  ease: m.ease, duration: dur }, at);
+    /* The light layer is NOT given this move. It has a camera of its own --
+       a perspective dolly rather than a scale -- and giving it both would be
+       the shot applied twice. See SHOT in web/lume.js. */
   }
 
   /* ---- building a chapter --------------------------------------------- */
@@ -265,6 +268,11 @@
     TL = A.createTimeline({ autoplay: false, defaults: { ease: OUT } });
     var t = 0;
     var FADE_IN = 520, FADE_OUT = 620;
+    /* A beat may ask for an object in the light layer as well as words. It is
+       collected here rather than built by the beat, because that layer is not
+       DOM and is not on this timeline: it is seeked from the same millisecond
+       and computes its own state. */
+    var lume = [];
 
     (chapter.beats || []).forEach(function (b) {
       var node = layer();
@@ -276,18 +284,28 @@
          camera is still moving as the beat leaves. A move that stops before
          the picture does is a move you notice. */
       shoot(b.shot, TL, t, hold_ms + FADE_OUT);
+      if (b.lume) {
+        var L = {}; for (var kk in b.lume) L[kk] = b.lume[kk];
+        L.at = t; L.dur = hold_ms; L.shot = b.shot || "push"; L.fade = FADE_IN;
+        lume.push(L);
+        node.classList.add("has-lume");
+        if (b.lume.place === "over") node.classList.add("over");
+      }
       TL.add(node, { opacity: [1, 0], y: [0, -34], ease: OUT, duration: FADE_OUT }, t + hold_ms);
       t += hold_ms + Math.round((b.gap != null ? b.gap : .45) * 1000);
     });
 
     DUR = t;
     TL.pause();
-    return { duration: DUR, beats: (chapter.beats || []).length };
+    if (window.NOORLUME) NOORLUME.mount(lume);
+    return { duration: DUR, beats: (chapter.beats || []).length, lume: lume.length };
   }
 
   function seek(ms) {
+    var at = Math.max(0, Math.min(DUR, ms));
     if (window.NOORGROUND) NOORGROUND.draw(ms);
-    if (TL) TL.seek(Math.max(0, Math.min(DUR, ms)));
+    if (window.NOORLUME) NOORLUME.draw(at);
+    if (TL) TL.seek(at);
   }
 
   window.NOORFILM = {

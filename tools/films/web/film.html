@@ -24,6 +24,12 @@
 
   #ground{position:fixed;inset:0;width:100%;height:100%;display:block;
     transform-origin:50% 50%;will-change:transform}
+  /* THE LIGHT LAYER sits between the room and the words: the figures are
+     objects in a space now, not drawings on a page. It carries its own
+     camera -- a real dolly, not a scale -- so the near thing grows faster
+     than the far one when the shot walks in. See web/lume.js. */
+  #lume{position:fixed;inset:0;width:100%;height:100%;display:block;
+    transform-origin:50% 50%;will-change:transform;pointer-events:none}
   #vig{position:fixed;inset:0;pointer-events:none}
 
   /* THE CAMERA.
@@ -95,12 +101,28 @@
   html[data-frame="wide"] .gloss{font-size:22px;letter-spacing:.2em}
   html[data-frame="tall"] .gloss{font-size:24px;letter-spacing:.18em}
 
-  .g{color:var(--goldhi)}
+  /* WHEN THE LIGHT LAYER HAS AN OBJECT ON SCREEN, THE WORDS GET OUT OF ITS WAY.
+     Both layers were centred, so a sentence landed across the middle of the
+     figure it was describing and neither could be read. The type moves to the
+     lower band and the object keeps the frame -- which is also the right
+     hierarchy: the film is the animation, and the line under it is a caption
+     on the thing you are already looking at. A beat can ask for the old
+     behaviour with "place": "over", which is what a title wants. */
+  .beat{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:inherit;opacity:0}
+  .beat.has-lume{justify-content:flex-end}
+  html[data-frame="wide"] .beat.has-lume{padding-bottom:74px}
+  html[data-frame="tall"] .beat.has-lume{padding-bottom:150px}
+  .beat.has-lume .body{max-width:30ch}
+  .beat.has-lume.over{justify-content:center;padding-bottom:0}
+
+    .g{color:var(--goldhi)}
   .tok{display:inline-block;white-space:pre}
   .lt{display:inline-block}
 </style>
 
 <canvas id="ground"></canvas>
+<canvas id="lume"></canvas>
 <div id="stage"><div id="hold"></div></div>
 <svg id="vig" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
   <defs>
@@ -113,6 +135,8 @@
 </svg>
 
 <script src="anime.min.js"></script>
+<script src="three.min.js"></script>
 <script src="ground.js"></script>
 <script src="figures.js"></script>
+<script src="lume.js"></script>
 <script src="stage.js"></script>
