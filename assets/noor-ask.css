@@ -1,0 +1,111 @@
+/* NOOR · the asking field
+   ---------------------------------------------------------------------------
+   The arrival is a question and a field. It works with no JavaScript at all:
+   what ships in the HTML is a real search form and six real links into the
+   rooms that answer them. assets/noor-ask.js then upgrades those links into
+   answers that open in place, and the field into live search over the whole
+   library. Nothing here depends on the upgrade having happened. */
+
+.ask{max-width:34rem;margin:0 auto;width:100%}
+/* .1em, not .18: the shell writes the screen number into this same line
+   ("01 / 06"), and at 360px the wider tracking pushed it onto a second row.
+   The house set .1em on its own eyebrows for exactly this reason. */
+.ask-eyebrow{font-family:var(--n2-mono,"IBM Plex Mono",monospace);font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(233,200,106,.78);margin:0 0 14px}
+.ask-h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;letter-spacing:-.02em;font-weight:800;
+  margin:0 0 12px;text-wrap:balance}
+.ask-h1 .g{color:var(--n2-goldhi,#E9C86A)}
+.ask-lead{font-size:15.5px;line-height:1.5;margin:0;max-width:32ch;color:var(--n2-parch2,rgba(255,254,247,.72))}
+
+/* the field ---------------------------------------------------------------- */
+.ask-field{display:flex;align-items:center;gap:10px;margin:24px 0 0;padding:0 14px;min-height:54px;
+  border:1px solid var(--n2-line,rgba(255,254,247,.16));border-radius:14px;
+  background:rgba(255,254,247,.06);
+  transition:border-color .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s cubic-bezier(.2,.7,.3,1),
+             background .28s cubic-bezier(.2,.7,.3,1)}
+.ask-field:focus-within{border-color:rgba(233,200,106,.55);background:rgba(255,254,247,.08);
+  box-shadow:0 0 0 4px rgba(233,200,106,.10),0 10px 30px rgba(0,0,0,.22)}
+.ask-field svg{width:19px;height:19px;flex:none;fill:none;stroke:var(--n2-goldhi,#E9C86A);
+  stroke-width:2;stroke-linecap:round}
+.ask-field input{flex:1;min-width:0;background:none;border:0;outline:0;padding:14px 0;
+  font:inherit;font-size:16px;color:var(--n2-parch,#FFFEF7);-webkit-appearance:none;appearance:none}
+.ask-field input::placeholder{color:var(--n2-parch3,rgba(255,254,247,.5))}
+.ask-field input::-webkit-search-cancel-button{-webkit-appearance:none}
+.ask-field kbd{font:12px/1 var(--n2-mono,"IBM Plex Mono",monospace);color:var(--n2-parch3,rgba(255,254,247,.5));
+  border:1px solid var(--n2-line,rgba(255,254,247,.16));border-radius:6px;padding:4px 7px;flex:none}
+@media (hover:none){.ask-field kbd{display:none}}
+
+/* the questions ------------------------------------------------------------ */
+.ask-list{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--n2-line,rgba(255,254,247,.10))}
+.ask-list li{border-bottom:1px solid var(--n2-line,rgba(255,254,247,.10))}
+.ask-q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px 2px;background:none;border:0;text-align:start;font:inherit;font-size:15.5px;
+  line-height:1.35;color:var(--n2-parch,#FFFEF7);text-decoration:none;cursor:pointer;
+  transition:color .2s ease}
+.ask-q:hover{color:var(--n2-goldhi,#E9C86A)}
+.ask-q .cv{width:15px;height:15px;flex:none;fill:none;stroke:var(--n2-goldhi,#E9C86A);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.62;
+  transition:transform .34s cubic-bezier(.2,.7,.3,1),opacity .2s ease}
+.ask-q:hover .cv{opacity:1}
+.ask-q[aria-expanded="true"] .cv{transform:rotate(90deg);opacity:1}
+.ask-q[aria-expanded="true"]{color:var(--n2-goldhi,#E9C86A)}
+
+/* the answer, opening in place --------------------------------------------- */
+.ask-a{overflow:hidden;height:0;opacity:0;
+  transition:height .38s cubic-bezier(.2,.7,.3,1),opacity .26s ease}
+.ask-a.on{opacity:1}
+.ask-a-in{padding:2px 0 16px}
+.ask-a .m{font-size:16px;line-height:1.45;margin:0 0 10px;color:var(--n2-parch,#FFFEF7);font-weight:600}
+.ask-a .p{font-size:14.5px;line-height:1.72;margin:0;color:var(--n2-parch2,rgba(255,254,247,.74))}
+.ask-a .foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:14px}
+.ask-a .ev{font-family:var(--n2-mono,"IBM Plex Mono",monospace);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(233,200,106,.82);border:1px solid rgba(233,200,106,.3);
+  border-radius:999px;padding:4px 10px}
+.ask-a .go{font-family:var(--n2-mono,"IBM Plex Mono",monospace);font-size:12px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--n2-goldhi,#E9C86A);text-decoration:none;
+  border-bottom:1px solid rgba(233,200,106,.4);padding-bottom:2px}
+.ask-a .go:hover{border-bottom-color:var(--n2-goldhi,#E9C86A)}
+
+/* live results ------------------------------------------------------------- */
+.ask-grp{font-family:var(--n2-mono,"IBM Plex Mono",monospace);font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--n2-parch3,rgba(255,254,247,.5));margin:16px 0 2px;padding:0 2px}
+.ask-r{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 2px;
+  text-decoration:none;color:var(--n2-parch,#FFFEF7);border-bottom:1px solid var(--n2-line,rgba(255,254,247,.10))}
+.ask-r b{font-weight:600;font-size:15px;line-height:1.3;display:block}
+.ask-r b em{font-style:normal;font-family:Amiri,serif;font-size:15px;color:var(--n2-goldhi,#E9C86A);
+  margin-inline-start:8px}
+.ask-r i{font-style:normal;display:block;font-size:12.5px;line-height:1.45;margin-top:3px;
+  color:var(--n2-parch3,rgba(255,254,247,.5))}
+.ask-r .cv{width:14px;height:14px;flex:none;fill:none;stroke:var(--n2-goldhi,#E9C86A);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+.ask-r:hover{color:var(--n2-goldhi,#E9C86A)}
+.ask-r:hover .cv{opacity:1}
+.ask-none{font-size:14px;line-height:1.6;color:var(--n2-parch2,rgba(255,254,247,.72));margin:18px 0 0}
+.ask-none a{color:var(--n2-goldhi,#E9C86A)}
+
+/* Present, and unseen. `hidden` would take this out of the accessibility tree
+   as well as off the screen, and then the result count it carries is announced
+   to nobody -- which is the one reader it exists for. */
+.ask-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+.ask-more{margin:16px 0 0;font-family:var(--n2-mono,"IBM Plex Mono",monospace);font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase}
+.ask-more a{color:var(--n2-parch3,rgba(255,254,247,.5));text-decoration:none;
+  border-bottom:1px solid transparent;padding-bottom:2px}
+.ask-more a:hover{color:var(--n2-goldhi,#E9C86A);border-bottom-color:rgba(233,200,106,.4)}
+.ask-more span{color:var(--n2-parch3,rgba(255,254,247,.32));margin:0 8px}
+
+@media (min-width:900px){
+  .ask{max-width:36rem}
+  .ask-h1{font-size:42px}
+  .ask-lead{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ask-a,.ask-q .cv,.ask-field{transition:none}
+}
+
+/* On a light ground the same markup has to read too: the gift page and the
+   parchment rooms both carry this block. Colours come from the house tokens
+   above wherever they exist; these are the fallbacks for a light page. */
+html.n2-room .ask-q{color:var(--n2-parch,#2C2416)}
