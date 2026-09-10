@@ -32,7 +32,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "4";                                  /* the shell's cache-buster; noor-fx.js carries the same */
+const V = "5";                                  /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
