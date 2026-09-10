@@ -1049,10 +1049,16 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   var D = document;
   function convert() {
     var H = D.documentElement;
-    if (!H.hasAttribute("data-n2-top")) return true;
+    /* Every room with #site-header is converted. It was opt in for one room
+       while the shape of it was being proved; fifty two rooms carry that bar
+       and there is no reason for any of them to keep it. A room that turns
+       out to need its own can say so with data-n2-keep-top, and an embedded
+       room is left alone entirely. */
+    if (H.hasAttribute("data-n2-keep-top")) return true;
+    if (H.getAttribute("data-noor-embed") === "1") return true;
     if (D.querySelector("header.n2-top")) return true;
     var old = D.getElementById("site-header");
-    if (!old) return false;
+    if (!old) return true;   /* not one of those rooms; nothing to do */
 
     var top = D.createElement("header");
     top.className = "n2-top";
@@ -1093,14 +1099,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     try { new ResizeObserver(measure).observe(top); } catch (e) { addEventListener("resize", measure, { passive: true }); }
     return true;
   }
-  function watch() {
-    if (convert()) return;
-    try {
-      var mo = new MutationObserver(function () { if (convert()) mo.disconnect(); });
-      mo.observe(D.documentElement, { childList: true, subtree: true });
-      setTimeout(function () { try { mo.disconnect(); } catch (e) {} }, 12000);
-    } catch (e) {}
-  }
+  function watch() { convert(); }
   if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", watch); else watch();
 })();
 
