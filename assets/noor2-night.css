@@ -150,750 +150,751 @@ html.n2-night .warnbox{color:#D7931E}
 html.n2-night .ref{color:rgba(255,254,247,.62);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.1)}
 html.n2-night .kmark{color:rgba(255,254,247,.42)}
 html.n2-night .kmark a{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room #ahero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room .ring{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(10,16,36,.12) 0)}
-html.n2-night.n2-room .sub{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .lt{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .lt.sel{background:#0A1024}
-html.n2-night.n2-room .lt .g{color:#FFFEF7}
-html.n2-night.n2-room .lt .n{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room #lens{box-shadow:0 18px 44px rgba(10,13,20,.25)}
-html.n2-night.n2-room .fcell{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .hearbtn.playing{background:#0F121A}
-html.n2-night.n2-room .hk{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .hk.sel{background:#0A1024}
-html.n2-night.n2-room .hk .hg{color:#FFFEF7}
-html.n2-night.n2-room .hk .hn{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .hkbase button{background:rgba(10,16,36,.08)}
-html.n2-night.n2-room .sm{background:#0A1024;border:1.5px solid rgba(255,254,247,.1);color:#FFFEF7}
-html.n2-night.n2-room .sm.moonlit{background:#0D1428}
-html.n2-night.n2-room #smshow{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room #smshow .eq{color:#FFFEF7}
-html.n2-night.n2-room #smshow .lab{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .badge-moon{background:#0D1428;color:#659FF6}
-html.n2-night.n2-room .bw{background:#0A1024;border:1.5px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .bw.sel{background:#0A1024}
-html.n2-night.n2-room .bw .ar{color:#FFFEF7}
-html.n2-night.n2-room #quest{background:linear-gradient(165deg,#0A0D14,#171d31 60%,#1d2a45)}
-html.n2-night.n2-room #qbar{background:rgba(10,16,36,.1)}
-html.n2-night.n2-room .qopt{background:rgba(10,16,36,.07)}
-html.n2-night.n2-room .qmode button{background:rgba(10,16,36,.07)}
-html.n2-night.n2-room .dd-menu>p:first-child{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .dd-menu>a:last-child{border-bottom:1px solid rgba(255,254,247,.1);box-shadow:0 22px 44px rgba(22,28,44,.18)}
-html.n2-night.n2-room .dd-menu a{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .dd-menu a:hover{color:#FFFEF7;background:#0D1428!important}
-html.n2-night.n2-room .wgo{border-top:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .wgo>h2{color:#FFFEF7}
-html.n2-night.n2-room .wgo>.wgo-s{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .wgo-c{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .wgo-c:hover,html.n2-night.n2-room .wgo-c:focus-visible{box-shadow:0 5px 18px rgba(22,28,44,.07)}
-html.n2-night.n2-room .wgo-c b{color:#FFFEF7}
-html.n2-night.n2-room .wgo-c span{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room #bhero{background:linear-gradient(178deg,#0A0D14,#161920 60%,#1F2330 100%)}
-html.n2-night.n2-room #bhero .dawn{background:radial-gradient(ellipse 55% 42% at 50% 0%,rgba(110,122,155,.28),transparent 65%),radial-gradient(ellipse 40% 30% at 78% 10%,rgba(201,162,39,.16),transparent 70%)}
-html.n2-night.n2-room .sq-card{background:#0A1024;box-shadow:0 8px 26px color-mix(in srgb, var(--ink,#161C2C) 6%, transparent)}
-html.n2-night.n2-room .card{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
-html.n2-night.n2-room .card p,html.n2-night.n2-room .card li{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .step{border-bottom:1px dashed rgba(255,254,247,.1)}
-html.n2-night.n2-room .step p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .sage-box{background:linear-gradient(120deg,rgba(110,122,155,.12),rgba(110,122,155,.03))}
-html.n2-night.n2-room .sage-box p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .rung{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .rung p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room details.faq{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
-html.n2-night.n2-room details.faq p{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .aya-card{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.14),transparent 70%),linear-gradient(160deg,#0F121A,#121724)}
-html.n2-night.n2-room .ih-0789fb06.ih-0789fb06.ih-0789fb06{color:var(--ink,#FFFEF7)}
-html.n2-night.n2-room .ih-cc0c9161.ih-cc0c9161.ih-cc0c9161{color:color-mix(in srgb, var(--ink,#FFFEF7) 75%, transparent)}
-html.n2-night.n2-room .gh-fade{background:linear-gradient(180deg,transparent,#0A1024)}
-html.n2-night.n2-room .lead{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .gcard{background:#0A1024;box-shadow:0 14px 44px rgba(22,28,44,.1)}
-html.n2-night.n2-room .amt{border:1.5px solid rgba(255,254,247,.16);background:#0A1024}
-html.n2-night.n2-room .amt .v{color:#FFFEF7}
-html.n2-night.n2-room .amt .u{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .amt.on{background:#0D1428}
-html.n2-night.n2-room #custom{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
-html.n2-night.n2-room .mrow{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .trust{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .imp{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .costs{background:#0A1024}
-html.n2-night.n2-room .costrow{color:rgba(255,254,247,.78);border-bottom:1px dashed rgba(255,254,247,.12)}
-html.n2-night.n2-room .costrow .cs{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .costs-f{color:rgba(255,254,247,.72);border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .qa{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room #thanks{background:linear-gradient(160deg,#0A1024,#0A1024)}
-html.n2-night.n2-room .dua{color:#C19A1D}
-html.n2-night.n2-room .ih-0c4d2277.ih-0c4d2277.ih-0c4d2277{color:color-mix(in srgb, var(--ink,#FFFEF7) 50%, transparent)}
-html.n2-night.n2-room .ih-129c484c.ih-129c484c.ih-129c484c{color:#FF5136}
-html.n2-night.n2-room .ih-38944dbe.ih-38944dbe.ih-38944dbe{color:#FFFEF7}
-html.n2-night.n2-room .ih-700136a5.ih-700136a5.ih-700136a5{border:1px solid rgba(255,254,247,.12);color:color-mix(in srgb, var(--ink,#FFFEF7) 72%, transparent)}
-html.n2-night.n2-room .ih-8e93a3ea.ih-8e93a3ea.ih-8e93a3ea{color:#C19A1D}
-html.n2-night.n2-room .ih-b7f359d5.ih-b7f359d5.ih-b7f359d5{color:color-mix(in srgb, var(--ink,#FFFEF7) 40%, transparent)}
-html.n2-night.n2-room .ih-d041e53b.ih-d041e53b.ih-d041e53b{color:color-mix(in srgb, var(--ink,#FFFEF7) 70%, transparent)}
-html.n2-night.n2-room .rhero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room .rsec .sub{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .card{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
-html.n2-night.n2-room .card p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .ghost{border:1px solid rgba(255,254,247,.22);color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .fig{background:linear-gradient(170deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .rfoot{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .rfoot p{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .rfoot a{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .evb.editorial{color:rgba(255,254,247,.62);border-color:rgba(255,254,247,.28);background:rgba(22,28,44,.05)}
-html.n2-night.n2-room .ref{color:rgba(255,254,247,.6);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .vplay.playing{background:#161C2C;border-color:#FFFEF7}
-html.n2-night.n2-room .secnav{background:rgba(10,16,36,.93);border-bottom:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .secnav a{color:rgba(255,254,247,.55);border:1px solid rgba(255,254,247,.13);background:#0A1024}
-html.n2-night.n2-room .secnav a:hover{color:#FFFEF7}
-html.n2-night.n2-room .tr{color:rgba(255,254,247,.48)}
-html.n2-night.n2-room .open{box-shadow:0 8px 30px rgba(22,28,44,.07)}
-html.n2-night.n2-room .keys{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .keys div{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .ref .rn{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .fk{fill:#FFFEF7}
-html.n2-night.n2-room .ec{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .ec:hover{box-shadow:0 12px 30px rgba(22,28,44,.1)}
-html.n2-night.n2-room .ec-tr{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .ec-when{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .ecn{color:rgba(255,254,247,.48)}
-html.n2-night.n2-room .eidsec.fitr{background:linear-gradient(172deg,#0A0D14,#161f38 62%,#1d2947)}
-html.n2-night.n2-room .eidsec.adha{background:linear-gradient(172deg,#0E1322,#1D2742 58%,#6A2F4E)}
-html.n2-night.n2-room .eidsec .card{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .eidsec .fig{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .eidsec .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.14)}
-html.n2-night.n2-room .eidsec .evb.editorial{border-color:rgba(10,16,36,.24);background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .dua{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .dua .ar{color:#FFFEF7}
-html.n2-night.n2-room .dua .tl{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .dua .mn{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .dua .dx{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .zc-l{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .zf label{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .zf input{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .zc-out{color:rgba(255,254,247,.7);background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .zc-out b{color:#FFFEF7}
-html.n2-night.n2-room .zc-n{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .fl-c{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .fl-c:hover{box-shadow:0 10px 26px rgba(22,28,44,.09)}
-html.n2-night.n2-room .eidsec .fl-c{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .fl-c span:last-child{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .rc-ram{background:linear-gradient(166deg,#0A0D16,#182142 60%,#1F2C52)}
-html.n2-night.n2-room .rc-hajj{background:linear-gradient(166deg,#0B0D12,#171E30 58%,#222B43)}
-html.n2-night.n2-room .rc:hover{box-shadow:0 14px 34px rgba(22,28,44,.18)}
-html.n2-night.n2-room .band{background:linear-gradient(170deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .band p{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .rc-proph{background:linear-gradient(166deg,#0A0D14,#1A2133 58%,#242E4A)}
-html.n2-night.n2-room .rc-fam{background:linear-gradient(166deg,#0A0C12,#1B2133 58%,#2A324A)}
-html.n2-night.n2-room .week{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .wk-c{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .wk-l{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .bx{background:#0A1024}
-html.n2-night.n2-room .wkl .tx{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .wkl input:checked~.tx{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .wk-reset{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .wk-reset:hover{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .fbo{background:#0A1024;border:1px solid rgba(255,254,247,.14)}
-html.n2-night.n2-room .fbo.on{background:#0A1024}
-html.n2-night.n2-room .fbo span{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .fbf label{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .fbf textarea,html.n2-night.n2-room .fbf input{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .fbhint{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .fbnote{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .fbok{background:#121B35}
-html.n2-night.n2-room .fbquiet{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .stepn{background:#161C2C}
-html.n2-night.n2-room .qv{background:linear-gradient(170deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .hon p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .care p.k{color:#FF5D4F}
-html.n2-night.n2-room .care p{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .wk .d{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .wk .d p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .ih-1312da75.ih-1312da75.ih-1312da75{color:#FF5D4F}
-html.n2-night.n2-room .gift{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .gift p{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .wizc{background:#0A1024;box-shadow:0 10px 34px rgba(22,28,44,.07)}
-html.n2-night.n2-room .wizbar{background:rgba(22,28,44,.09)}
-html.n2-night.n2-room .wizk .of{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .wizh{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .opt{background:#0A1024;border:1px solid rgba(255,254,247,.14)}
-html.n2-night.n2-room .opt:hover{box-shadow:0 5px 16px rgba(22,28,44,.06)}
-html.n2-night.n2-room .opt .mk{background:#0A1024}
-html.n2-night.n2-room .opt.on{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .opt .od{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .fld input{border:1px solid rgba(255,254,247,.16);background:#0A1024}
-html.n2-night.n2-room .fld .hint{color:rgba(255,254,247,.48)}
-html.n2-night.n2-room .lnk{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .lnk:hover{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .saved{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .plansec .sub{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room #planhead{background:linear-gradient(168deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .fact{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .warn p{color:#FF5050}
-html.n2-night.n2-room .dn small{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .dg{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .dl{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .blk+.blk{border-top:1px solid rgba(255,254,247,.07)}
-html.n2-night.n2-room .blk .bt{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .blks{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .carry{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .carry li{color:rgba(255,254,247,.75);background:#0A1024}
-html.n2-night.n2-room .rite .rg{color:rgba(255,254,247,.48)}
-html.n2-night.n2-room .rk-p{color:#FF5050}
-html.n2-night.n2-room .rk-s{color:rgba(255,254,247,.55);border-color:rgba(255,254,247,.22);background:rgba(22,28,44,.04)}
-html.n2-night.n2-room .pflag{color:#FF5050}
-html.n2-night.n2-room .stp li{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .stp li+li{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .sch+.sch{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .sp{color:rgba(255,254,247,.74)}
-html.n2-night.n2-room .tal{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .tal .ar{color:#FFFEF7}
-html.n2-night.n2-room .tal .trl{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .tal .mean{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .tal .src{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .grp .gs{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .tick li{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .tick li+li{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .tick li.you{color:#FFFEF7}
-html.n2-night.n2-room .idea+.idea{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .idea .id{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room .phase{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .emg{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .emf .ev{color:#FFFEF7;border-bottom:1px solid rgba(255,254,247,.28)}
-html.n2-night.n2-room .emf .ev.blank{color:rgba(255,254,247,.3)}
-html.n2-night.n2-room .hopen{fill:rgba(255,254,247,.6)}
-html.n2-night.n2-room .hband1{fill:rgba(255,80,80,.24)}
-html.n2-night.n2-room #pc{background:#0A1024;color:#FFFEF7;border:1px solid rgba(255,254,247,.18);box-shadow:0 10px 34px rgba(22,28,44,.15)}
-html.n2-night.n2-room #pc .pchead{border-bottom:.7mm solid #FFFEF7}
-html.n2-night.n2-room #pc .pchead h3{color:#FFFEF7}
-html.n2-night.n2-room #pc .pchead .pcs{color:#C19A1D}
-html.n2-night.n2-room #pc .pcb{background:#0A1024}
-html.n2-night.n2-room #pc .pcb.plain{background:#0A1024;border-color:rgba(255,254,247,.3)}
-html.n2-night.n2-room #pc ol.pcord li{color:#FFFEF7}
-html.n2-night.n2-room #pc ol.pcord li+li{border-top:.15mm solid rgba(255,254,247,.16)}
-html.n2-night.n2-room #pc ol.pcord li .pcw{color:#C19A1D}
-html.n2-night.n2-room #pc .rp{background:#111A33;color:#FF5050}
-html.n2-night.n2-room #pc .rs{background:#111A33;color:#FFFEF7}
-html.n2-night.n2-room #pc .pcline{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcline b{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcline .k{color:#C19A1D}
-html.n2-night.n2-room #pc .pcfld+.pcfld{border-top:.15mm solid rgba(255,254,247,.16)}
-html.n2-night.n2-room #pc .pcfld .fk{color:#C19A1D}
-html.n2-night.n2-room #pc .pcfld .fv{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcfld .fv.blank{border-bottom:.2mm dotted rgba(255,254,247,.5)}
-html.n2-night.n2-room #pc .pcduas{border-top:.5mm solid #FFFEF7}
-html.n2-night.n2-room #pc .pcd .dar{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcd .dtr{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcd .dmn{color:#FFFEF7}
-html.n2-night.n2-room #pc .pcfoot{border-top:.2mm solid rgba(255,254,247,.25)}
-html.n2-night.n2-room #pc .pcfoot b{color:#C19A1D}
-html.n2-night.n2-room #pc .pcfold{border-top:.2mm dashed rgba(255,254,247,.32)}
-html.n2-night.n2-room #pc .pcfold span{background:#0A1024}
-html.n2-night.n2-room #pc .pckey{color:#FFFEF7}
-html.n2-night.n2-room #pc ul.pcdont li{color:#FFFEF7}
-html.n2-night.n2-room .pcnote{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .secnav{background:rgba(10,16,36,.94);border-bottom:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .tnote{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .tbl{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .tbl tbody th{color:#FFFEF7}
-html.n2-night.n2-room .tbl td{color:rgba(255,254,247,.76)}
-html.n2-night.n2-room .tbl tbody tr+tr{border-top:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .check{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .ck-c{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .ck-l{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .ckl .tx{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .ckl input:checked~.tx{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .ck-reset{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .ck-reset:hover{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .door{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .door .dh{color:#FFFEF7}
-html.n2-night.n2-room .door .dd{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .door .dfree{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .bdoor .bdh{color:#FFFEF7}
-html.n2-night.n2-room .bdoor .bdd{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .th-stars i{background:#0A1024}
-html.n2-night.n2-room .th-fade{background:linear-gradient(180deg,transparent,#0A1024)}
-html.n2-night.n2-room .th-chip{background:rgba(10,16,36,.08)}
-html.n2-night.n2-room .th-lead{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .th-quote{color:rgba(255,254,247,.85)}
-html.n2-night.n2-room .d-sci{background:linear-gradient(160deg,rgba(136,144,168,.12),rgba(136,144,168,.04))}
-html.n2-night.n2-room .d-sci .d-tag{background:rgba(136,144,168,.18)}
-html.n2-night.n2-room .d-s p,html.n2-night.n2-room .d-sci p{color:rgba(255,254,247,.85)}
-html.n2-night.n2-room .d-note{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .food{background:#0A1024}
-html.n2-night.n2-room .food:hover{box-shadow:0 14px 30px rgba(22,28,44,.09)}
-html.n2-night.n2-room .f-tx{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .f-chip{background:rgba(136,144,168,.14)}
-html.n2-night.n2-room .wd{color:rgba(255,254,247,.45);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .moons{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .da-stop{background:#0A1024}
-html.n2-night.n2-room .da-d{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .da-s{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .hy{background:#0A1024}
-html.n2-night.n2-room .hy p{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room .cent{background:#111A33;color:#FFFEF7}
-html.n2-night.n2-room .cent-i{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room #rail a{background:rgba(22,28,44,.18)}
-html.n2-night.n2-room .honest{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .hj-fig{background:linear-gradient(170deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .hjc{background:#0A1024}
-html.n2-night.n2-room .hjc p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .hjc.warn{background:#0A1024}
-html.n2-night.n2-room .hjc.warn h3{color:#FF5050}
-html.n2-night.n2-room .hjb.e{color:rgba(255,254,247,.62);border-color:rgba(255,254,247,.28);background:rgba(22,28,44,.05)}
-html.n2-night.n2-room .hjsafe{background:#0A1024}
-html.n2-night.n2-room .hjsafe h3{color:#FF5050}
-html.n2-night.n2-room .hjsafe p.l{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .hjsafe li{color:rgba(255,254,247,.84)}
-html.n2-night.n2-room .hjsafe li+li{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .ih-90f207c2.ih-90f207c2.ih-90f207c2{color:#FF5050}
-html.n2-night.n2-room .argloss{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .dotsep{color:rgba(255,254,247,.32)}
-html.n2-night.n2-room .door{background:linear-gradient(168deg,#0A0D14,#1a2340 58%,#22305a);box-shadow:0 14px 34px rgba(10,13,20,.16)}
-html.n2-night.n2-room .door:hover{box-shadow:0 20px 44px rgba(10,13,20,.26)}
-html.n2-night.n2-room .ribbon{background:linear-gradient(170deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .rib-band.b1{background:rgba(10,16,36,.028)}
-html.n2-night.n2-room .rf-l{background:linear-gradient(to right,rgba(10,13,20,.92),transparent)}
-html.n2-night.n2-room .rib-read{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .ribarrow{border:1px solid rgba(255,254,247,.16);background:#0A1024}
-html.n2-night.n2-room .ribarrow:hover{background:#0A1024}
-html.n2-night.n2-room .cv{border-inline-end:1.7px solid rgba(255,254,247,.6);border-bottom:1.7px solid rgba(255,254,247,.6)}
-html.n2-night.n2-room .hall-head{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .hall-l{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .lg{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .pcard.lit{box-shadow:0 0 0 3px rgba(244,212,106,.28),0 10px 26px rgba(22,28,44,.1)}
-html.n2-night.n2-room .pc-m{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .pc-t{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .pc-body p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .pc-light p{color:#BF9925}
-html.n2-night.n2-room .pc-cav{background:rgba(22,28,44,.035);border:1px dashed rgba(255,254,247,.18)}
-html.n2-night.n2-room .pc-ck{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .pc-cav p{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .gc-m{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .gcard p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .gc-now p{color:#BF9925}
-html.n2-night.n2-room .closeband{border:1px solid rgba(255,254,247,.12);background:linear-gradient(160deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .cb-p{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .ih-0af206d0.ih-0af206d0.ih-0af206d0{color:color-mix(in srgb, var(--ink,#FFFEF7) 80%, transparent)}
+html.n2-night.n2-room[data-room="arabic"] #ahero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="arabic"] .ring{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(10,16,36,.12) 0)}
+html.n2-night.n2-room[data-room="arabic"] .sub{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="arabic"] .lt{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="arabic"] .lt.sel{background:#0A1024}
+html.n2-night.n2-room[data-room="arabic"] .lt .g{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] .lt .n{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="arabic"] #lens{box-shadow:0 18px 44px rgba(10,13,20,.25)}
+html.n2-night.n2-room[data-room="arabic"] .fcell{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="arabic"] .hearbtn.playing{background:#0F121A}
+html.n2-night.n2-room[data-room="arabic"] .hk{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="arabic"] .hk.sel{background:#0A1024}
+html.n2-night.n2-room[data-room="arabic"] .hk .hg{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] .hk .hn{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="arabic"] .hkbase button{background:rgba(10,16,36,.08)}
+html.n2-night.n2-room[data-room="arabic"] .sm{background:#0A1024;border:1.5px solid rgba(255,254,247,.1);color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] .sm.moonlit{background:#0D1428}
+html.n2-night.n2-room[data-room="arabic"] #smshow{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="arabic"] #smshow .eq{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] #smshow .lab{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="arabic"] .badge-moon{background:#0D1428;color:#659FF6}
+html.n2-night.n2-room[data-room="arabic"] .bw{background:#0A1024;border:1.5px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="arabic"] .bw.sel{background:#0A1024}
+html.n2-night.n2-room[data-room="arabic"] .bw .ar{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] #quest{background:linear-gradient(165deg,#0A0D14,#171d31 60%,#1d2a45)}
+html.n2-night.n2-room[data-room="arabic"] #qbar{background:rgba(10,16,36,.1)}
+html.n2-night.n2-room[data-room="arabic"] .qopt{background:rgba(10,16,36,.07)}
+html.n2-night.n2-room[data-room="arabic"] .qmode button{background:rgba(10,16,36,.07)}
+html.n2-night.n2-room[data-room="arabic"] .dd-menu>p:first-child,html.n2-night.n2-room[data-room="pillars"] .dd-menu>p:first-child{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="arabic"] .dd-menu>a:last-child,html.n2-night.n2-room[data-room="pillars"] .dd-menu>a:last-child{border-bottom:1px solid rgba(255,254,247,.1);box-shadow:0 22px 44px rgba(22,28,44,.18)}
+html.n2-night.n2-room[data-room="arabic"] .dd-menu a,html.n2-night.n2-room[data-room="pillars"] .dd-menu a{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="arabic"] .dd-menu a:hover,html.n2-night.n2-room[data-room="pillars"] .dd-menu a:hover{color:#FFFEF7;background:#0D1428!important}
+html.n2-night.n2-room[data-room="arabic"] .wgo,html.n2-night.n2-room[data-room="begin"] .wgo,html.n2-night.n2-room[data-room="characters"] .wgo,html.n2-night.n2-room[data-room="companions"] .wgo,html.n2-night.n2-room[data-room="donate"] .wgo,html.n2-night.n2-room[data-room="family"] .wgo,html.n2-night.n2-room[data-room="feedback"] .wgo,html.n2-night.n2-room[data-room="good-life"] .wgo,html.n2-night.n2-room[data-room="hajj"] .wgo,html.n2-night.n2-room[data-room="health"] .wgo,html.n2-night.n2-room[data-room="heroes"] .wgo,html.n2-night.n2-room[data-room="latif"] .wgo,html.n2-night.n2-room[data-room="legal"] .wgo,html.n2-night.n2-room[data-room="license"] .wgo,html.n2-night.n2-room[data-room="madrasa"] .wgo,html.n2-night.n2-room[data-room="masjid"] .wgo,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo,html.n2-night.n2-room[data-room="masjid/setup"] .wgo,html.n2-night.n2-room[data-room="masjid/start"] .wgo,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo,html.n2-night.n2-room[data-room="pillars"] .wgo,html.n2-night.n2-room[data-room="places"] .wgo,html.n2-night.n2-room[data-room="prophets"] .wgo,html.n2-night.n2-room[data-room="protection"] .wgo,html.n2-night.n2-room[data-room="quran"] .wgo,html.n2-night.n2-room[data-room="ramadan"] .wgo,html.n2-night.n2-room[data-room="school"] .wgo,html.n2-night.n2-room[data-room="sermon"] .wgo,html.n2-night.n2-room[data-room="simulation"] .wgo,html.n2-night.n2-room[data-room="soul"] .wgo,html.n2-night.n2-room[data-room="stories/adl"] .wgo,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo,html.n2-night.n2-room[data-room="stories/hadi"] .wgo,html.n2-night.n2-room[data-room="stories"] .wgo,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo,html.n2-night.n2-room[data-room="stories/sabur"] .wgo,html.n2-night.n2-room[data-room="stories/shakur"] .wgo,html.n2-night.n2-room[data-room="stories/wadud"] .wgo,html.n2-night.n2-room[data-room="theology"] .wgo,html.n2-night.n2-room[data-room="three-lives"] .wgo,html.n2-night.n2-room[data-room="unseen"] .wgo,html.n2-night.n2-room[data-room="words"] .wgo{border-top:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="arabic"] .wgo>h2,html.n2-night.n2-room[data-room="begin"] .wgo>h2,html.n2-night.n2-room[data-room="characters"] .wgo>h2,html.n2-night.n2-room[data-room="companions"] .wgo>h2,html.n2-night.n2-room[data-room="donate"] .wgo>h2,html.n2-night.n2-room[data-room="family"] .wgo>h2,html.n2-night.n2-room[data-room="feedback"] .wgo>h2,html.n2-night.n2-room[data-room="good-life"] .wgo>h2,html.n2-night.n2-room[data-room="hajj"] .wgo>h2,html.n2-night.n2-room[data-room="health"] .wgo>h2,html.n2-night.n2-room[data-room="heroes"] .wgo>h2,html.n2-night.n2-room[data-room="latif"] .wgo>h2,html.n2-night.n2-room[data-room="legal"] .wgo>h2,html.n2-night.n2-room[data-room="license"] .wgo>h2,html.n2-night.n2-room[data-room="madrasa"] .wgo>h2,html.n2-night.n2-room[data-room="masjid"] .wgo>h2,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo>h2,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo>h2,html.n2-night.n2-room[data-room="masjid/setup"] .wgo>h2,html.n2-night.n2-room[data-room="masjid/start"] .wgo>h2,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo>h2,html.n2-night.n2-room[data-room="pillars"] .wgo>h2,html.n2-night.n2-room[data-room="places"] .wgo>h2,html.n2-night.n2-room[data-room="prophets"] .wgo>h2,html.n2-night.n2-room[data-room="protection"] .wgo>h2,html.n2-night.n2-room[data-room="quran"] .wgo>h2,html.n2-night.n2-room[data-room="ramadan"] .wgo>h2,html.n2-night.n2-room[data-room="school"] .wgo>h2,html.n2-night.n2-room[data-room="sermon"] .wgo>h2,html.n2-night.n2-room[data-room="simulation"] .wgo>h2,html.n2-night.n2-room[data-room="soul"] .wgo>h2,html.n2-night.n2-room[data-room="stories/adl"] .wgo>h2,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo>h2,html.n2-night.n2-room[data-room="stories/hadi"] .wgo>h2,html.n2-night.n2-room[data-room="stories"] .wgo>h2,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo>h2,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo>h2,html.n2-night.n2-room[data-room="stories/sabur"] .wgo>h2,html.n2-night.n2-room[data-room="stories/shakur"] .wgo>h2,html.n2-night.n2-room[data-room="stories/wadud"] .wgo>h2,html.n2-night.n2-room[data-room="theology"] .wgo>h2,html.n2-night.n2-room[data-room="three-lives"] .wgo>h2,html.n2-night.n2-room[data-room="unseen"] .wgo>h2,html.n2-night.n2-room[data-room="words"] .wgo>h2{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="begin"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="characters"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="companions"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="donate"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="family"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="feedback"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="good-life"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="hajj"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="health"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="heroes"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="latif"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="legal"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="license"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="madrasa"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid/setup"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid/start"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="pillars"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="places"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="prophets"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="protection"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="quran"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="ramadan"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="school"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="sermon"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="simulation"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="soul"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/adl"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/hadi"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/sabur"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/shakur"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="stories/wadud"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="theology"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="three-lives"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="unseen"] .wgo>.wgo-s,html.n2-night.n2-room[data-room="words"] .wgo>.wgo-s{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="arabic"] .wgo-c,html.n2-night.n2-room[data-room="begin"] .wgo-c,html.n2-night.n2-room[data-room="characters"] .wgo-c,html.n2-night.n2-room[data-room="companions"] .wgo-c,html.n2-night.n2-room[data-room="donate"] .wgo-c,html.n2-night.n2-room[data-room="family"] .wgo-c,html.n2-night.n2-room[data-room="feedback"] .wgo-c,html.n2-night.n2-room[data-room="good-life"] .wgo-c,html.n2-night.n2-room[data-room="hajj"] .wgo-c,html.n2-night.n2-room[data-room="health"] .wgo-c,html.n2-night.n2-room[data-room="heroes"] .wgo-c,html.n2-night.n2-room[data-room="latif"] .wgo-c,html.n2-night.n2-room[data-room="legal"] .wgo-c,html.n2-night.n2-room[data-room="license"] .wgo-c,html.n2-night.n2-room[data-room="madrasa"] .wgo-c,html.n2-night.n2-room[data-room="marriage"] .wgo-c,html.n2-night.n2-room[data-room="masjid"] .wgo-c,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo-c,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo-c,html.n2-night.n2-room[data-room="masjid/setup"] .wgo-c,html.n2-night.n2-room[data-room="masjid/start"] .wgo-c,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo-c,html.n2-night.n2-room[data-room="pillars"] .wgo-c,html.n2-night.n2-room[data-room="places"] .wgo-c,html.n2-night.n2-room[data-room="prophets"] .wgo-c,html.n2-night.n2-room[data-room="protection"] .wgo-c,html.n2-night.n2-room[data-room="quran"] .wgo-c,html.n2-night.n2-room[data-room="ramadan"] .wgo-c,html.n2-night.n2-room[data-room="school"] .wgo-c,html.n2-night.n2-room[data-room="sermon"] .wgo-c,html.n2-night.n2-room[data-room="simulation"] .wgo-c,html.n2-night.n2-room[data-room="soul"] .wgo-c,html.n2-night.n2-room[data-room="stories/adl"] .wgo-c,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo-c,html.n2-night.n2-room[data-room="stories/hadi"] .wgo-c,html.n2-night.n2-room[data-room="stories"] .wgo-c,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo-c,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo-c,html.n2-night.n2-room[data-room="stories/sabur"] .wgo-c,html.n2-night.n2-room[data-room="stories/shakur"] .wgo-c,html.n2-night.n2-room[data-room="stories/wadud"] .wgo-c,html.n2-night.n2-room[data-room="teens"] .wgo-c,html.n2-night.n2-room[data-room="theology"] .wgo-c,html.n2-night.n2-room[data-room="three-lives"] .wgo-c,html.n2-night.n2-room[data-room="unseen"] .wgo-c,html.n2-night.n2-room[data-room="words"] .wgo-c{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="arabic"] .wgo-c:hover,html.n2-night.n2-room[data-room="arabic"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="begin"] .wgo-c:hover,html.n2-night.n2-room[data-room="begin"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="characters"] .wgo-c:hover,html.n2-night.n2-room[data-room="characters"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="companions"] .wgo-c:hover,html.n2-night.n2-room[data-room="companions"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="donate"] .wgo-c:hover,html.n2-night.n2-room[data-room="donate"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="family"] .wgo-c:hover,html.n2-night.n2-room[data-room="family"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="feedback"] .wgo-c:hover,html.n2-night.n2-room[data-room="feedback"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="good-life"] .wgo-c:hover,html.n2-night.n2-room[data-room="good-life"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="hajj"] .wgo-c:hover,html.n2-night.n2-room[data-room="hajj"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="health"] .wgo-c:hover,html.n2-night.n2-room[data-room="health"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="heroes"] .wgo-c:hover,html.n2-night.n2-room[data-room="heroes"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="latif"] .wgo-c:hover,html.n2-night.n2-room[data-room="latif"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="legal"] .wgo-c:hover,html.n2-night.n2-room[data-room="legal"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="license"] .wgo-c:hover,html.n2-night.n2-room[data-room="license"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="madrasa"] .wgo-c:hover,html.n2-night.n2-room[data-room="madrasa"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid/setup"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid/setup"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid/start"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid/start"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo-c:hover,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="pillars"] .wgo-c:hover,html.n2-night.n2-room[data-room="pillars"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="places"] .wgo-c:hover,html.n2-night.n2-room[data-room="places"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="prophets"] .wgo-c:hover,html.n2-night.n2-room[data-room="prophets"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="quran"] .wgo-c:hover,html.n2-night.n2-room[data-room="quran"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="ramadan"] .wgo-c:hover,html.n2-night.n2-room[data-room="ramadan"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="school"] .wgo-c:hover,html.n2-night.n2-room[data-room="school"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="sermon"] .wgo-c:hover,html.n2-night.n2-room[data-room="sermon"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="simulation"] .wgo-c:hover,html.n2-night.n2-room[data-room="simulation"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="soul"] .wgo-c:hover,html.n2-night.n2-room[data-room="soul"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/adl"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/adl"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/hadi"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/hadi"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/sabur"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/sabur"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/shakur"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/shakur"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="stories/wadud"] .wgo-c:hover,html.n2-night.n2-room[data-room="stories/wadud"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="theology"] .wgo-c:hover,html.n2-night.n2-room[data-room="theology"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="three-lives"] .wgo-c:hover,html.n2-night.n2-room[data-room="three-lives"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="unseen"] .wgo-c:hover,html.n2-night.n2-room[data-room="unseen"] .wgo-c:focus-visible,html.n2-night.n2-room[data-room="words"] .wgo-c:hover,html.n2-night.n2-room[data-room="words"] .wgo-c:focus-visible{box-shadow:0 5px 18px rgba(22,28,44,.07)}
+html.n2-night.n2-room[data-room="arabic"] .wgo-c b,html.n2-night.n2-room[data-room="begin"] .wgo-c b,html.n2-night.n2-room[data-room="characters"] .wgo-c b,html.n2-night.n2-room[data-room="companions"] .wgo-c b,html.n2-night.n2-room[data-room="donate"] .wgo-c b,html.n2-night.n2-room[data-room="family"] .wgo-c b,html.n2-night.n2-room[data-room="feedback"] .wgo-c b,html.n2-night.n2-room[data-room="good-life"] .wgo-c b,html.n2-night.n2-room[data-room="hajj"] .wgo-c b,html.n2-night.n2-room[data-room="health"] .wgo-c b,html.n2-night.n2-room[data-room="heroes"] .wgo-c b,html.n2-night.n2-room[data-room="latif"] .wgo-c b,html.n2-night.n2-room[data-room="legal"] .wgo-c b,html.n2-night.n2-room[data-room="license"] .wgo-c b,html.n2-night.n2-room[data-room="madrasa"] .wgo-c b,html.n2-night.n2-room[data-room="marriage"] .wgo-c b,html.n2-night.n2-room[data-room="masjid"] .wgo-c b,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo-c b,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo-c b,html.n2-night.n2-room[data-room="masjid/setup"] .wgo-c b,html.n2-night.n2-room[data-room="masjid/start"] .wgo-c b,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo-c b,html.n2-night.n2-room[data-room="pillars"] .wgo-c b,html.n2-night.n2-room[data-room="places"] .wgo-c b,html.n2-night.n2-room[data-room="prophets"] .wgo-c b,html.n2-night.n2-room[data-room="protection"] .wgo-c b,html.n2-night.n2-room[data-room="quran"] .wgo-c b,html.n2-night.n2-room[data-room="ramadan"] .wgo-c b,html.n2-night.n2-room[data-room="school"] .wgo-c b,html.n2-night.n2-room[data-room="sermon"] .wgo-c b,html.n2-night.n2-room[data-room="simulation"] .wgo-c b,html.n2-night.n2-room[data-room="soul"] .wgo-c b,html.n2-night.n2-room[data-room="stories/adl"] .wgo-c b,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo-c b,html.n2-night.n2-room[data-room="stories/hadi"] .wgo-c b,html.n2-night.n2-room[data-room="stories"] .wgo-c b,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo-c b,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo-c b,html.n2-night.n2-room[data-room="stories/sabur"] .wgo-c b,html.n2-night.n2-room[data-room="stories/shakur"] .wgo-c b,html.n2-night.n2-room[data-room="stories/wadud"] .wgo-c b,html.n2-night.n2-room[data-room="teens"] .wgo-c b,html.n2-night.n2-room[data-room="theology"] .wgo-c b,html.n2-night.n2-room[data-room="three-lives"] .wgo-c b,html.n2-night.n2-room[data-room="unseen"] .wgo-c b,html.n2-night.n2-room[data-room="words"] .wgo-c b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="arabic"] .wgo-c span,html.n2-night.n2-room[data-room="begin"] .wgo-c span,html.n2-night.n2-room[data-room="characters"] .wgo-c span,html.n2-night.n2-room[data-room="companions"] .wgo-c span,html.n2-night.n2-room[data-room="donate"] .wgo-c span,html.n2-night.n2-room[data-room="family"] .wgo-c span,html.n2-night.n2-room[data-room="feedback"] .wgo-c span,html.n2-night.n2-room[data-room="good-life"] .wgo-c span,html.n2-night.n2-room[data-room="hajj"] .wgo-c span,html.n2-night.n2-room[data-room="health"] .wgo-c span,html.n2-night.n2-room[data-room="heroes"] .wgo-c span,html.n2-night.n2-room[data-room="latif"] .wgo-c span,html.n2-night.n2-room[data-room="legal"] .wgo-c span,html.n2-night.n2-room[data-room="license"] .wgo-c span,html.n2-night.n2-room[data-room="madrasa"] .wgo-c span,html.n2-night.n2-room[data-room="marriage"] .wgo-c span,html.n2-night.n2-room[data-room="masjid"] .wgo-c span,html.n2-night.n2-room[data-room="masjid/khutba"] .wgo-c span,html.n2-night.n2-room[data-room="masjid/qibla"] .wgo-c span,html.n2-night.n2-room[data-room="masjid/setup"] .wgo-c span,html.n2-night.n2-room[data-room="masjid/start"] .wgo-c span,html.n2-night.n2-room[data-room="masjid/timetable"] .wgo-c span,html.n2-night.n2-room[data-room="pillars"] .wgo-c span,html.n2-night.n2-room[data-room="places"] .wgo-c span,html.n2-night.n2-room[data-room="prophets"] .wgo-c span,html.n2-night.n2-room[data-room="protection"] .wgo-c span,html.n2-night.n2-room[data-room="quran"] .wgo-c span,html.n2-night.n2-room[data-room="ramadan"] .wgo-c span,html.n2-night.n2-room[data-room="school"] .wgo-c span,html.n2-night.n2-room[data-room="sermon"] .wgo-c span,html.n2-night.n2-room[data-room="simulation"] .wgo-c span,html.n2-night.n2-room[data-room="soul"] .wgo-c span,html.n2-night.n2-room[data-room="stories/adl"] .wgo-c span,html.n2-night.n2-room[data-room="stories/ghaffar"] .wgo-c span,html.n2-night.n2-room[data-room="stories/hadi"] .wgo-c span,html.n2-night.n2-room[data-room="stories"] .wgo-c span,html.n2-night.n2-room[data-room="stories/jabbar"] .wgo-c span,html.n2-night.n2-room[data-room="stories/razzaq"] .wgo-c span,html.n2-night.n2-room[data-room="stories/sabur"] .wgo-c span,html.n2-night.n2-room[data-room="stories/shakur"] .wgo-c span,html.n2-night.n2-room[data-room="stories/wadud"] .wgo-c span,html.n2-night.n2-room[data-room="teens"] .wgo-c span,html.n2-night.n2-room[data-room="theology"] .wgo-c span,html.n2-night.n2-room[data-room="three-lives"] .wgo-c span,html.n2-night.n2-room[data-room="unseen"] .wgo-c span,html.n2-night.n2-room[data-room="words"] .wgo-c span{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="begin"] #bhero{background:linear-gradient(178deg,#0A0D14,#161920 60%,#1F2330 100%)}
+html.n2-night.n2-room[data-room="begin"] #bhero .dawn{background:radial-gradient(ellipse 55% 42% at 50% 0%,rgba(110,122,155,.28),transparent 65%),radial-gradient(ellipse 40% 30% at 78% 10%,rgba(201,162,39,.16),transparent 70%)}
+html.n2-night.n2-room[data-room="begin"] .sq-card{background:#0A1024;box-shadow:0 8px 26px color-mix(in srgb, var(--ink,#161C2C) 6%, transparent)}
+html.n2-night.n2-room[data-room="begin"] .card,html.n2-night.n2-room[data-room="theology"] .card{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
+html.n2-night.n2-room[data-room="begin"] .card p,html.n2-night.n2-room[data-room="begin"] .card li{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="begin"] .step{border-bottom:1px dashed rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="begin"] .step p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="begin"] .sage-box,html.n2-night.n2-room[data-room="theology"] .sage-box{background:linear-gradient(120deg,rgba(110,122,155,.12),rgba(110,122,155,.03))}
+html.n2-night.n2-room[data-room="begin"] .sage-box p,html.n2-night.n2-room[data-room="theology"] .sage-box p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="begin"] .rung{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="begin"] .rung p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="begin"] details.faq{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
+html.n2-night.n2-room[data-room="begin"] details.faq p{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="begin"] .aya-card,html.n2-night.n2-room[data-room="latif"] .aya-card,html.n2-night.n2-room[data-room="theology"] .aya-card{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.14),transparent 70%),linear-gradient(160deg,#0F121A,#121724)}
+html.n2-night.n2-room[data-room="begin"] .ih-0789fb06.ih-0789fb06.ih-0789fb06{color:var(--ink,#FFFEF7)}
+html.n2-night.n2-room[data-room="begin"] .ih-cc0c9161.ih-cc0c9161.ih-cc0c9161{color:color-mix(in srgb, var(--ink,#FFFEF7) 75%, transparent)}
+html.n2-night.n2-room[data-room="donate"] .gh-fade,html.n2-night.n2-room[data-room="legal"] .gh-fade{background:linear-gradient(180deg,transparent,#0A1024)}
+html.n2-night.n2-room[data-room="donate"] .lead{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="donate"] .gcard{background:#0A1024;box-shadow:0 14px 44px rgba(22,28,44,.1)}
+html.n2-night.n2-room[data-room="donate"] .amt{border:1.5px solid rgba(255,254,247,.16);background:#0A1024}
+html.n2-night.n2-room[data-room="donate"] .amt .v{color:#FFFEF7}
+html.n2-night.n2-room[data-room="donate"] .amt .u{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="donate"] .amt.on{background:#0D1428}
+html.n2-night.n2-room[data-room="donate"] #custom{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
+html.n2-night.n2-room[data-room="donate"] .mrow{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="donate"] .trust{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="donate"] .imp{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="donate"] .costs{background:#0A1024}
+html.n2-night.n2-room[data-room="donate"] .costrow{color:rgba(255,254,247,.78);border-bottom:1px dashed rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="donate"] .costrow .cs{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="donate"] .costs-f{color:rgba(255,254,247,.72);border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="donate"] .qa{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="donate"] #thanks{background:linear-gradient(160deg,#0A1024,#0A1024)}
+html.n2-night.n2-room[data-room="donate"] .dua{color:#C19A1D}
+html.n2-night.n2-room[data-room="donate"] .ih-0c4d2277.ih-0c4d2277.ih-0c4d2277,html.n2-night.n2-room[data-room="madrasa"] .ih-0c4d2277.ih-0c4d2277.ih-0c4d2277{color:color-mix(in srgb, var(--ink,#FFFEF7) 50%, transparent)}
+html.n2-night.n2-room[data-room="donate"] .ih-129c484c.ih-129c484c.ih-129c484c{color:#FF5136}
+html.n2-night.n2-room[data-room="donate"] .ih-38944dbe.ih-38944dbe.ih-38944dbe,html.n2-night.n2-room[data-room="school"] .ih-38944dbe.ih-38944dbe.ih-38944dbe{color:#FFFEF7}
+html.n2-night.n2-room[data-room="donate"] .ih-700136a5.ih-700136a5.ih-700136a5{border:1px solid rgba(255,254,247,.12);color:color-mix(in srgb, var(--ink,#FFFEF7) 72%, transparent)}
+html.n2-night.n2-room[data-room="donate"] .ih-8e93a3ea.ih-8e93a3ea.ih-8e93a3ea,html.n2-night.n2-room[data-room="madrasa"] .ih-8e93a3ea.ih-8e93a3ea.ih-8e93a3ea{color:#C19A1D}
+html.n2-night.n2-room[data-room="donate"] .ih-b7f359d5.ih-b7f359d5.ih-b7f359d5{color:color-mix(in srgb, var(--ink,#FFFEF7) 40%, transparent)}
+html.n2-night.n2-room[data-room="donate"] .ih-d041e53b.ih-d041e53b.ih-d041e53b{color:color-mix(in srgb, var(--ink,#FFFEF7) 70%, transparent)}
+html.n2-night.n2-room[data-room="eid"] .rhero,html.n2-night.n2-room[data-room="family"] .rhero,html.n2-night.n2-room[data-room="feedback"] .rhero,html.n2-night.n2-room[data-room="good-life"] .rhero,html.n2-night.n2-room[data-room="hajj-plan"] .rhero,html.n2-night.n2-room[data-room="hajj"] .rhero,html.n2-night.n2-room[data-room="heroes"] .rhero,html.n2-night.n2-room[data-room="journal-rules"] .rhero,html.n2-night.n2-room[data-room="journal"] .rhero,html.n2-night.n2-room[data-room="marriage"] .rhero,html.n2-night.n2-room[data-room="masjid"] .rhero,html.n2-night.n2-room[data-room="masjid/start"] .rhero,html.n2-night.n2-room[data-room="protection"] .rhero,html.n2-night.n2-room[data-room="ramadan"] .rhero,html.n2-night.n2-room[data-room="sermon"] .rhero,html.n2-night.n2-room[data-room="simulation"] .rhero,html.n2-night.n2-room[data-room="soul"] .rhero,html.n2-night.n2-room[data-room="stories/adl"] .rhero,html.n2-night.n2-room[data-room="stories/ghaffar"] .rhero,html.n2-night.n2-room[data-room="stories/hadi"] .rhero,html.n2-night.n2-room[data-room="stories"] .rhero,html.n2-night.n2-room[data-room="stories/jabbar"] .rhero,html.n2-night.n2-room[data-room="stories/razzaq"] .rhero,html.n2-night.n2-room[data-room="stories/sabur"] .rhero,html.n2-night.n2-room[data-room="stories/shakur"] .rhero,html.n2-night.n2-room[data-room="stories/wadud"] .rhero,html.n2-night.n2-room[data-room="teens"] .rhero,html.n2-night.n2-room[data-room="three-lives"] .rhero,html.n2-night.n2-room[data-room="unseen"] .rhero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="eid"] .rsec .sub,html.n2-night.n2-room[data-room="family"] .rsec .sub,html.n2-night.n2-room[data-room="feedback"] .rsec .sub,html.n2-night.n2-room[data-room="good-life"] .rsec .sub,html.n2-night.n2-room[data-room="hajj-plan"] .rsec .sub,html.n2-night.n2-room[data-room="hajj"] .rsec .sub,html.n2-night.n2-room[data-room="heroes"] .rsec .sub,html.n2-night.n2-room[data-room="journal-rules"] .rsec .sub,html.n2-night.n2-room[data-room="journal"] .rsec .sub,html.n2-night.n2-room[data-room="marriage"] .rsec .sub,html.n2-night.n2-room[data-room="masjid"] .rsec .sub,html.n2-night.n2-room[data-room="masjid/start"] .rsec .sub,html.n2-night.n2-room[data-room="protection"] .rsec .sub,html.n2-night.n2-room[data-room="ramadan"] .rsec .sub,html.n2-night.n2-room[data-room="sermon"] .rsec .sub,html.n2-night.n2-room[data-room="simulation"] .rsec .sub,html.n2-night.n2-room[data-room="soul"] .rsec .sub,html.n2-night.n2-room[data-room="stories/adl"] .rsec .sub,html.n2-night.n2-room[data-room="stories/ghaffar"] .rsec .sub,html.n2-night.n2-room[data-room="stories/hadi"] .rsec .sub,html.n2-night.n2-room[data-room="stories"] .rsec .sub,html.n2-night.n2-room[data-room="stories/jabbar"] .rsec .sub,html.n2-night.n2-room[data-room="stories/razzaq"] .rsec .sub,html.n2-night.n2-room[data-room="stories/sabur"] .rsec .sub,html.n2-night.n2-room[data-room="stories/shakur"] .rsec .sub,html.n2-night.n2-room[data-room="stories/wadud"] .rsec .sub,html.n2-night.n2-room[data-room="teens"] .rsec .sub,html.n2-night.n2-room[data-room="three-lives"] .rsec .sub,html.n2-night.n2-room[data-room="unseen"] .rsec .sub{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="eid"] .card,html.n2-night.n2-room[data-room="family"] .card,html.n2-night.n2-room[data-room="feedback"] .card,html.n2-night.n2-room[data-room="good-life"] .card,html.n2-night.n2-room[data-room="hajj-plan"] .card,html.n2-night.n2-room[data-room="hajj"] .card,html.n2-night.n2-room[data-room="heroes"] .card,html.n2-night.n2-room[data-room="journal-rules"] .card,html.n2-night.n2-room[data-room="journal"] .card,html.n2-night.n2-room[data-room="marriage"] .card,html.n2-night.n2-room[data-room="masjid"] .card,html.n2-night.n2-room[data-room="masjid/start"] .card,html.n2-night.n2-room[data-room="protection"] .card,html.n2-night.n2-room[data-room="ramadan"] .card,html.n2-night.n2-room[data-room="sermon"] .card,html.n2-night.n2-room[data-room="simulation"] .card,html.n2-night.n2-room[data-room="soul"] .card,html.n2-night.n2-room[data-room="stories/adl"] .card,html.n2-night.n2-room[data-room="stories/ghaffar"] .card,html.n2-night.n2-room[data-room="stories/hadi"] .card,html.n2-night.n2-room[data-room="stories"] .card,html.n2-night.n2-room[data-room="stories/jabbar"] .card,html.n2-night.n2-room[data-room="stories/razzaq"] .card,html.n2-night.n2-room[data-room="stories/sabur"] .card,html.n2-night.n2-room[data-room="stories/shakur"] .card,html.n2-night.n2-room[data-room="stories/wadud"] .card,html.n2-night.n2-room[data-room="teens"] .card,html.n2-night.n2-room[data-room="three-lives"] .card,html.n2-night.n2-room[data-room="unseen"] .card{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="eid"] .card p,html.n2-night.n2-room[data-room="family"] .card p,html.n2-night.n2-room[data-room="feedback"] .card p,html.n2-night.n2-room[data-room="good-life"] .card p,html.n2-night.n2-room[data-room="hajj-plan"] .card p,html.n2-night.n2-room[data-room="hajj"] .card p,html.n2-night.n2-room[data-room="heroes"] .card p,html.n2-night.n2-room[data-room="journal-rules"] .card p,html.n2-night.n2-room[data-room="journal"] .card p,html.n2-night.n2-room[data-room="marriage"] .card p,html.n2-night.n2-room[data-room="masjid"] .card p,html.n2-night.n2-room[data-room="masjid/start"] .card p,html.n2-night.n2-room[data-room="protection"] .card p,html.n2-night.n2-room[data-room="ramadan"] .card p,html.n2-night.n2-room[data-room="sermon"] .card p,html.n2-night.n2-room[data-room="simulation"] .card p,html.n2-night.n2-room[data-room="soul"] .card p,html.n2-night.n2-room[data-room="stories/adl"] .card p,html.n2-night.n2-room[data-room="stories/ghaffar"] .card p,html.n2-night.n2-room[data-room="stories/hadi"] .card p,html.n2-night.n2-room[data-room="stories"] .card p,html.n2-night.n2-room[data-room="stories/jabbar"] .card p,html.n2-night.n2-room[data-room="stories/razzaq"] .card p,html.n2-night.n2-room[data-room="stories/sabur"] .card p,html.n2-night.n2-room[data-room="stories/shakur"] .card p,html.n2-night.n2-room[data-room="stories/wadud"] .card p,html.n2-night.n2-room[data-room="teens"] .card p,html.n2-night.n2-room[data-room="three-lives"] .card p,html.n2-night.n2-room[data-room="unseen"] .card p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="eid"] .ghost,html.n2-night.n2-room[data-room="family"] .ghost,html.n2-night.n2-room[data-room="feedback"] .ghost,html.n2-night.n2-room[data-room="good-life"] .ghost,html.n2-night.n2-room[data-room="hajj-plan"] .ghost,html.n2-night.n2-room[data-room="hajj"] .ghost,html.n2-night.n2-room[data-room="heroes"] .ghost,html.n2-night.n2-room[data-room="journal-rules"] .ghost,html.n2-night.n2-room[data-room="journal"] .ghost,html.n2-night.n2-room[data-room="marriage"] .ghost,html.n2-night.n2-room[data-room="masjid"] .ghost,html.n2-night.n2-room[data-room="masjid/start"] .ghost,html.n2-night.n2-room[data-room="protection"] .ghost,html.n2-night.n2-room[data-room="ramadan"] .ghost,html.n2-night.n2-room[data-room="sermon"] .ghost,html.n2-night.n2-room[data-room="simulation"] .ghost,html.n2-night.n2-room[data-room="soul"] .ghost,html.n2-night.n2-room[data-room="stories/adl"] .ghost,html.n2-night.n2-room[data-room="stories/ghaffar"] .ghost,html.n2-night.n2-room[data-room="stories/hadi"] .ghost,html.n2-night.n2-room[data-room="stories"] .ghost,html.n2-night.n2-room[data-room="stories/jabbar"] .ghost,html.n2-night.n2-room[data-room="stories/razzaq"] .ghost,html.n2-night.n2-room[data-room="stories/sabur"] .ghost,html.n2-night.n2-room[data-room="stories/shakur"] .ghost,html.n2-night.n2-room[data-room="stories/wadud"] .ghost,html.n2-night.n2-room[data-room="teens"] .ghost,html.n2-night.n2-room[data-room="three-lives"] .ghost,html.n2-night.n2-room[data-room="unseen"] .ghost{border:1px solid rgba(255,254,247,.22);color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="eid"] .fig,html.n2-night.n2-room[data-room="family"] .fig,html.n2-night.n2-room[data-room="feedback"] .fig,html.n2-night.n2-room[data-room="good-life"] .fig,html.n2-night.n2-room[data-room="hajj-plan"] .fig,html.n2-night.n2-room[data-room="hajj"] .fig,html.n2-night.n2-room[data-room="heroes"] .fig,html.n2-night.n2-room[data-room="journal-rules"] .fig,html.n2-night.n2-room[data-room="journal"] .fig,html.n2-night.n2-room[data-room="marriage"] .fig,html.n2-night.n2-room[data-room="masjid"] .fig,html.n2-night.n2-room[data-room="masjid/start"] .fig,html.n2-night.n2-room[data-room="protection"] .fig,html.n2-night.n2-room[data-room="ramadan"] .fig,html.n2-night.n2-room[data-room="sermon"] .fig,html.n2-night.n2-room[data-room="simulation"] .fig,html.n2-night.n2-room[data-room="soul"] .fig,html.n2-night.n2-room[data-room="stories/adl"] .fig,html.n2-night.n2-room[data-room="stories/ghaffar"] .fig,html.n2-night.n2-room[data-room="stories/hadi"] .fig,html.n2-night.n2-room[data-room="stories"] .fig,html.n2-night.n2-room[data-room="stories/jabbar"] .fig,html.n2-night.n2-room[data-room="stories/razzaq"] .fig,html.n2-night.n2-room[data-room="stories/sabur"] .fig,html.n2-night.n2-room[data-room="stories/shakur"] .fig,html.n2-night.n2-room[data-room="stories/wadud"] .fig,html.n2-night.n2-room[data-room="teens"] .fig,html.n2-night.n2-room[data-room="three-lives"] .fig,html.n2-night.n2-room[data-room="unseen"] .fig{background:linear-gradient(170deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="eid"] .rfoot,html.n2-night.n2-room[data-room="family"] .rfoot,html.n2-night.n2-room[data-room="feedback"] .rfoot,html.n2-night.n2-room[data-room="good-life"] .rfoot,html.n2-night.n2-room[data-room="hajj-plan"] .rfoot,html.n2-night.n2-room[data-room="hajj"] .rfoot,html.n2-night.n2-room[data-room="heroes"] .rfoot,html.n2-night.n2-room[data-room="journal-rules"] .rfoot,html.n2-night.n2-room[data-room="journal"] .rfoot,html.n2-night.n2-room[data-room="marriage"] .rfoot,html.n2-night.n2-room[data-room="masjid"] .rfoot,html.n2-night.n2-room[data-room="masjid/start"] .rfoot,html.n2-night.n2-room[data-room="protection"] .rfoot,html.n2-night.n2-room[data-room="ramadan"] .rfoot,html.n2-night.n2-room[data-room="sermon"] .rfoot,html.n2-night.n2-room[data-room="simulation"] .rfoot,html.n2-night.n2-room[data-room="soul"] .rfoot,html.n2-night.n2-room[data-room="stories/adl"] .rfoot,html.n2-night.n2-room[data-room="stories/ghaffar"] .rfoot,html.n2-night.n2-room[data-room="stories/hadi"] .rfoot,html.n2-night.n2-room[data-room="stories"] .rfoot,html.n2-night.n2-room[data-room="stories/jabbar"] .rfoot,html.n2-night.n2-room[data-room="stories/razzaq"] .rfoot,html.n2-night.n2-room[data-room="stories/sabur"] .rfoot,html.n2-night.n2-room[data-room="stories/shakur"] .rfoot,html.n2-night.n2-room[data-room="stories/wadud"] .rfoot,html.n2-night.n2-room[data-room="teens"] .rfoot,html.n2-night.n2-room[data-room="three-lives"] .rfoot,html.n2-night.n2-room[data-room="unseen"] .rfoot{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="eid"] .rfoot p,html.n2-night.n2-room[data-room="family"] .rfoot p,html.n2-night.n2-room[data-room="feedback"] .rfoot p,html.n2-night.n2-room[data-room="good-life"] .rfoot p,html.n2-night.n2-room[data-room="hajj-plan"] .rfoot p,html.n2-night.n2-room[data-room="hajj"] .rfoot p,html.n2-night.n2-room[data-room="heroes"] .rfoot p,html.n2-night.n2-room[data-room="journal-rules"] .rfoot p,html.n2-night.n2-room[data-room="journal"] .rfoot p,html.n2-night.n2-room[data-room="marriage"] .rfoot p,html.n2-night.n2-room[data-room="masjid"] .rfoot p,html.n2-night.n2-room[data-room="masjid/start"] .rfoot p,html.n2-night.n2-room[data-room="protection"] .rfoot p,html.n2-night.n2-room[data-room="ramadan"] .rfoot p,html.n2-night.n2-room[data-room="sermon"] .rfoot p,html.n2-night.n2-room[data-room="simulation"] .rfoot p,html.n2-night.n2-room[data-room="soul"] .rfoot p,html.n2-night.n2-room[data-room="stories/adl"] .rfoot p,html.n2-night.n2-room[data-room="stories/ghaffar"] .rfoot p,html.n2-night.n2-room[data-room="stories/hadi"] .rfoot p,html.n2-night.n2-room[data-room="stories"] .rfoot p,html.n2-night.n2-room[data-room="stories/jabbar"] .rfoot p,html.n2-night.n2-room[data-room="stories/razzaq"] .rfoot p,html.n2-night.n2-room[data-room="stories/sabur"] .rfoot p,html.n2-night.n2-room[data-room="stories/shakur"] .rfoot p,html.n2-night.n2-room[data-room="stories/wadud"] .rfoot p,html.n2-night.n2-room[data-room="teens"] .rfoot p,html.n2-night.n2-room[data-room="three-lives"] .rfoot p,html.n2-night.n2-room[data-room="unseen"] .rfoot p{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="eid"] .rfoot a,html.n2-night.n2-room[data-room="family"] .rfoot a,html.n2-night.n2-room[data-room="feedback"] .rfoot a,html.n2-night.n2-room[data-room="good-life"] .rfoot a,html.n2-night.n2-room[data-room="hajj-plan"] .rfoot a,html.n2-night.n2-room[data-room="hajj"] .rfoot a,html.n2-night.n2-room[data-room="heroes"] .rfoot a,html.n2-night.n2-room[data-room="journal-rules"] .rfoot a,html.n2-night.n2-room[data-room="journal"] .rfoot a,html.n2-night.n2-room[data-room="marriage"] .rfoot a,html.n2-night.n2-room[data-room="masjid"] .rfoot a,html.n2-night.n2-room[data-room="masjid/start"] .rfoot a,html.n2-night.n2-room[data-room="protection"] .rfoot a,html.n2-night.n2-room[data-room="ramadan"] .rfoot a,html.n2-night.n2-room[data-room="sermon"] .rfoot a,html.n2-night.n2-room[data-room="simulation"] .rfoot a,html.n2-night.n2-room[data-room="soul"] .rfoot a,html.n2-night.n2-room[data-room="stories/adl"] .rfoot a,html.n2-night.n2-room[data-room="stories/ghaffar"] .rfoot a,html.n2-night.n2-room[data-room="stories/hadi"] .rfoot a,html.n2-night.n2-room[data-room="stories"] .rfoot a,html.n2-night.n2-room[data-room="stories/jabbar"] .rfoot a,html.n2-night.n2-room[data-room="stories/razzaq"] .rfoot a,html.n2-night.n2-room[data-room="stories/sabur"] .rfoot a,html.n2-night.n2-room[data-room="stories/shakur"] .rfoot a,html.n2-night.n2-room[data-room="stories/wadud"] .rfoot a,html.n2-night.n2-room[data-room="teens"] .rfoot a,html.n2-night.n2-room[data-room="three-lives"] .rfoot a,html.n2-night.n2-room[data-room="unseen"] .rfoot a{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="eid"] .evb.editorial,html.n2-night.n2-room[data-room="family"] .evb.editorial,html.n2-night.n2-room[data-room="feedback"] .evb.editorial,html.n2-night.n2-room[data-room="good-life"] .evb.editorial,html.n2-night.n2-room[data-room="hajj-plan"] .evb.editorial,html.n2-night.n2-room[data-room="hajj"] .evb.editorial,html.n2-night.n2-room[data-room="heroes"] .evb.editorial,html.n2-night.n2-room[data-room="journal-rules"] .evb.editorial,html.n2-night.n2-room[data-room="journal"] .evb.editorial,html.n2-night.n2-room[data-room="marriage"] .evb.editorial,html.n2-night.n2-room[data-room="masjid"] .evb.editorial,html.n2-night.n2-room[data-room="masjid/start"] .evb.editorial,html.n2-night.n2-room[data-room="protection"] .evb.editorial,html.n2-night.n2-room[data-room="quran"] .evb.editorial,html.n2-night.n2-room[data-room="ramadan"] .evb.editorial,html.n2-night.n2-room[data-room="sermon"] .evb.editorial,html.n2-night.n2-room[data-room="simulation"] .evb.editorial,html.n2-night.n2-room[data-room="soul"] .evb.editorial,html.n2-night.n2-room[data-room="stories/adl"] .evb.editorial,html.n2-night.n2-room[data-room="stories/ghaffar"] .evb.editorial,html.n2-night.n2-room[data-room="stories/hadi"] .evb.editorial,html.n2-night.n2-room[data-room="stories"] .evb.editorial,html.n2-night.n2-room[data-room="stories/jabbar"] .evb.editorial,html.n2-night.n2-room[data-room="stories/razzaq"] .evb.editorial,html.n2-night.n2-room[data-room="stories/sabur"] .evb.editorial,html.n2-night.n2-room[data-room="stories/shakur"] .evb.editorial,html.n2-night.n2-room[data-room="stories/wadud"] .evb.editorial,html.n2-night.n2-room[data-room="teens"] .evb.editorial,html.n2-night.n2-room[data-room="three-lives"] .evb.editorial,html.n2-night.n2-room[data-room="unseen"] .evb.editorial{color:rgba(255,254,247,.62);border-color:rgba(255,254,247,.28);background:rgba(22,28,44,.05)}
+html.n2-night.n2-room[data-room="eid"] .ref,html.n2-night.n2-room[data-room="family"] .ref,html.n2-night.n2-room[data-room="feedback"] .ref,html.n2-night.n2-room[data-room="good-life"] .ref,html.n2-night.n2-room[data-room="hajj-plan"] .ref,html.n2-night.n2-room[data-room="hajj"] .ref,html.n2-night.n2-room[data-room="heroes"] .ref,html.n2-night.n2-room[data-room="journal-rules"] .ref,html.n2-night.n2-room[data-room="journal"] .ref,html.n2-night.n2-room[data-room="marriage"] .ref,html.n2-night.n2-room[data-room="masjid"] .ref,html.n2-night.n2-room[data-room="masjid/start"] .ref,html.n2-night.n2-room[data-room="protection"] .ref,html.n2-night.n2-room[data-room="ramadan"] .ref,html.n2-night.n2-room[data-room="sermon"] .ref,html.n2-night.n2-room[data-room="simulation"] .ref,html.n2-night.n2-room[data-room="soul"] .ref,html.n2-night.n2-room[data-room="stories/adl"] .ref,html.n2-night.n2-room[data-room="stories/ghaffar"] .ref,html.n2-night.n2-room[data-room="stories/hadi"] .ref,html.n2-night.n2-room[data-room="stories"] .ref,html.n2-night.n2-room[data-room="stories/jabbar"] .ref,html.n2-night.n2-room[data-room="stories/razzaq"] .ref,html.n2-night.n2-room[data-room="stories/sabur"] .ref,html.n2-night.n2-room[data-room="stories/shakur"] .ref,html.n2-night.n2-room[data-room="stories/wadud"] .ref,html.n2-night.n2-room[data-room="teens"] .ref,html.n2-night.n2-room[data-room="three-lives"] .ref,html.n2-night.n2-room[data-room="unseen"] .ref{color:rgba(255,254,247,.6);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="eid"] .vplay.playing,html.n2-night.n2-room[data-room="family"] .vplay.playing,html.n2-night.n2-room[data-room="feedback"] .vplay.playing,html.n2-night.n2-room[data-room="good-life"] .vplay.playing,html.n2-night.n2-room[data-room="hajj-plan"] .vplay.playing,html.n2-night.n2-room[data-room="hajj"] .vplay.playing,html.n2-night.n2-room[data-room="heroes"] .vplay.playing,html.n2-night.n2-room[data-room="journal-rules"] .vplay.playing,html.n2-night.n2-room[data-room="journal"] .vplay.playing,html.n2-night.n2-room[data-room="marriage"] .vplay.playing,html.n2-night.n2-room[data-room="masjid"] .vplay.playing,html.n2-night.n2-room[data-room="masjid/start"] .vplay.playing,html.n2-night.n2-room[data-room="protection"] .vplay.playing,html.n2-night.n2-room[data-room="ramadan"] .vplay.playing,html.n2-night.n2-room[data-room="sermon"] .vplay.playing,html.n2-night.n2-room[data-room="simulation"] .vplay.playing,html.n2-night.n2-room[data-room="soul"] .vplay.playing,html.n2-night.n2-room[data-room="stories/adl"] .vplay.playing,html.n2-night.n2-room[data-room="stories/ghaffar"] .vplay.playing,html.n2-night.n2-room[data-room="stories/hadi"] .vplay.playing,html.n2-night.n2-room[data-room="stories"] .vplay.playing,html.n2-night.n2-room[data-room="stories/jabbar"] .vplay.playing,html.n2-night.n2-room[data-room="stories/razzaq"] .vplay.playing,html.n2-night.n2-room[data-room="stories/sabur"] .vplay.playing,html.n2-night.n2-room[data-room="stories/shakur"] .vplay.playing,html.n2-night.n2-room[data-room="stories/wadud"] .vplay.playing,html.n2-night.n2-room[data-room="teens"] .vplay.playing,html.n2-night.n2-room[data-room="three-lives"] .vplay.playing,html.n2-night.n2-room[data-room="unseen"] .vplay.playing{background:#161C2C;border-color:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .secnav,html.n2-night.n2-room[data-room="family"] .secnav,html.n2-night.n2-room[data-room="protection"] .secnav,html.n2-night.n2-room[data-room="ramadan"] .secnav,html.n2-night.n2-room[data-room="sermon"] .secnav,html.n2-night.n2-room[data-room="soul"] .secnav{background:rgba(10,16,36,.93);border-bottom:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="eid"] .secnav a,html.n2-night.n2-room[data-room="family"] .secnav a,html.n2-night.n2-room[data-room="hajj"] .secnav a,html.n2-night.n2-room[data-room="protection"] .secnav a,html.n2-night.n2-room[data-room="ramadan"] .secnav a,html.n2-night.n2-room[data-room="sermon"] .secnav a,html.n2-night.n2-room[data-room="soul"] .secnav a{color:rgba(255,254,247,.55);border:1px solid rgba(255,254,247,.13);background:#0A1024}
+html.n2-night.n2-room[data-room="eid"] .secnav a:hover,html.n2-night.n2-room[data-room="family"] .secnav a:hover,html.n2-night.n2-room[data-room="hajj"] .secnav a:hover,html.n2-night.n2-room[data-room="protection"] .secnav a:hover,html.n2-night.n2-room[data-room="ramadan"] .secnav a:hover,html.n2-night.n2-room[data-room="sermon"] .secnav a:hover,html.n2-night.n2-room[data-room="soul"] .secnav a:hover{color:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .tr,html.n2-night.n2-room[data-room="family"] .tr,html.n2-night.n2-room[data-room="hajj-plan"] .tr,html.n2-night.n2-room[data-room="hajj"] .tr,html.n2-night.n2-room[data-room="protection"] .tr,html.n2-night.n2-room[data-room="ramadan"] .tr,html.n2-night.n2-room[data-room="sermon"] .tr,html.n2-night.n2-room[data-room="soul"] .tr{color:rgba(255,254,247,.48)}
+html.n2-night.n2-room[data-room="eid"] .open,html.n2-night.n2-room[data-room="family"] .open,html.n2-night.n2-room[data-room="hajj-plan"] .open,html.n2-night.n2-room[data-room="hajj"] .open,html.n2-night.n2-room[data-room="protection"] .open,html.n2-night.n2-room[data-room="ramadan"] .open,html.n2-night.n2-room[data-room="sermon"] .open,html.n2-night.n2-room[data-room="soul"] .open,html.n2-night.n2-room[data-room="unseen"] .open{box-shadow:0 8px 30px rgba(22,28,44,.07)}
+html.n2-night.n2-room[data-room="eid"] .keys,html.n2-night.n2-room[data-room="family"] .keys,html.n2-night.n2-room[data-room="hajj"] .keys,html.n2-night.n2-room[data-room="protection"] .keys,html.n2-night.n2-room[data-room="ramadan"] .keys,html.n2-night.n2-room[data-room="sermon"] .keys,html.n2-night.n2-room[data-room="soul"] .keys{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="eid"] .keys div,html.n2-night.n2-room[data-room="family"] .keys div,html.n2-night.n2-room[data-room="hajj"] .keys div,html.n2-night.n2-room[data-room="protection"] .keys div,html.n2-night.n2-room[data-room="ramadan"] .keys div,html.n2-night.n2-room[data-room="sermon"] .keys div,html.n2-night.n2-room[data-room="soul"] .keys div{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="eid"] .ref .rn,html.n2-night.n2-room[data-room="family"] .ref .rn,html.n2-night.n2-room[data-room="hajj-plan"] .ref .rn,html.n2-night.n2-room[data-room="hajj"] .ref .rn,html.n2-night.n2-room[data-room="protection"] .ref .rn,html.n2-night.n2-room[data-room="ramadan"] .ref .rn{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="eid"] .fk{fill:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .ec{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="eid"] .ec:hover{box-shadow:0 12px 30px rgba(22,28,44,.1)}
+html.n2-night.n2-room[data-room="eid"] .ec-tr{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="eid"] .ec-when{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="eid"] .ecn{color:rgba(255,254,247,.48)}
+html.n2-night.n2-room[data-room="eid"] .eidsec.fitr{background:linear-gradient(172deg,#0A0D14,#161f38 62%,#1d2947)}
+html.n2-night.n2-room[data-room="eid"] .eidsec.adha{background:linear-gradient(172deg,#0E1322,#1D2742 58%,#6A2F4E)}
+html.n2-night.n2-room[data-room="eid"] .eidsec .card{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="eid"] .eidsec .fig{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="eid"] .eidsec .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.14)}
+html.n2-night.n2-room[data-room="eid"] .eidsec .evb.editorial{border-color:rgba(10,16,36,.24);background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="eid"] .dua,html.n2-night.n2-room[data-room="protection"] .dua,html.n2-night.n2-room[data-room="ramadan"] .dua{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="eid"] .dua .ar,html.n2-night.n2-room[data-room="protection"] .dua .ar,html.n2-night.n2-room[data-room="ramadan"] .dua .ar{color:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .dua .tl,html.n2-night.n2-room[data-room="ramadan"] .dua .tl{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="eid"] .dua .mn,html.n2-night.n2-room[data-room="ramadan"] .dua .mn{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="eid"] .dua .dx,html.n2-night.n2-room[data-room="ramadan"] .dua .dx{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="eid"] .zc-l,html.n2-night.n2-room[data-room="ramadan"] .zc-l{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="eid"] .zf label,html.n2-night.n2-room[data-room="ramadan"] .zf label{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="eid"] .zf input,html.n2-night.n2-room[data-room="ramadan"] .zf input{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .zc-out,html.n2-night.n2-room[data-room="ramadan"] .zc-out{color:rgba(255,254,247,.7);background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="eid"] .zc-out b,html.n2-night.n2-room[data-room="ramadan"] .zc-out b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="eid"] .zc-n,html.n2-night.n2-room[data-room="ramadan"] .zc-n{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="eid"] .fl-c,html.n2-night.n2-room[data-room="ramadan"] .fl-c{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="eid"] .fl-c:hover,html.n2-night.n2-room[data-room="ramadan"] .fl-c:hover{box-shadow:0 10px 26px rgba(22,28,44,.09)}
+html.n2-night.n2-room[data-room="eid"] .eidsec .fl-c{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="eid"] .fl-c span:last-child,html.n2-night.n2-room[data-room="ramadan"] .fl-c span:last-child{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="eid"] .rc-ram{background:linear-gradient(166deg,#0A0D16,#182142 60%,#1F2C52)}
+html.n2-night.n2-room[data-room="eid"] .rc-hajj{background:linear-gradient(166deg,#0B0D12,#171E30 58%,#222B43)}
+html.n2-night.n2-room[data-room="eid"] .rc:hover{box-shadow:0 14px 34px rgba(22,28,44,.18)}
+html.n2-night.n2-room[data-room="eid"] .band,html.n2-night.n2-room[data-room="family"] .band,html.n2-night.n2-room[data-room="hajj"] .band,html.n2-night.n2-room[data-room="ramadan"] .band,html.n2-night.n2-room[data-room="sermon"] .band,html.n2-night.n2-room[data-room="soul"] .band,html.n2-night.n2-room[data-room="unseen"] .band{background:linear-gradient(170deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="eid"] .band p,html.n2-night.n2-room[data-room="family"] .band p,html.n2-night.n2-room[data-room="hajj"] .band p,html.n2-night.n2-room[data-room="ramadan"] .band p,html.n2-night.n2-room[data-room="sermon"] .band p,html.n2-night.n2-room[data-room="soul"] .band p,html.n2-night.n2-room[data-room="unseen"] .band p{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="eid"] .rc-proph{background:linear-gradient(166deg,#0A0D14,#1A2133 58%,#242E4A)}
+html.n2-night.n2-room[data-room="eid"] .rc-fam{background:linear-gradient(166deg,#0A0C12,#1B2133 58%,#2A324A)}
+html.n2-night.n2-room[data-room="family"] .week{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="family"] .wk-c,html.n2-night.n2-room[data-room="protection"] .wk-c{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="family"] .wk-l,html.n2-night.n2-room[data-room="protection"] .wk-l{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="family"] .bx,html.n2-night.n2-room[data-room="hajj"] .bx,html.n2-night.n2-room[data-room="protection"] .bx,html.n2-night.n2-room[data-room="ramadan"] .bx{background:#0A1024}
+html.n2-night.n2-room[data-room="family"] .wkl .tx,html.n2-night.n2-room[data-room="protection"] .wkl .tx{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="family"] .wkl input:checked~.tx,html.n2-night.n2-room[data-room="protection"] .wkl input:checked~.tx{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="family"] .wk-reset,html.n2-night.n2-room[data-room="protection"] .wk-reset{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="family"] .wk-reset:hover,html.n2-night.n2-room[data-room="protection"] .wk-reset:hover{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="feedback"] .fbo{background:#0A1024;border:1px solid rgba(255,254,247,.14)}
+html.n2-night.n2-room[data-room="feedback"] .fbo.on{background:#0A1024}
+html.n2-night.n2-room[data-room="feedback"] .fbo span{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="feedback"] .fbf label{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="feedback"] .fbf textarea,html.n2-night.n2-room[data-room="feedback"] .fbf input{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
+html.n2-night.n2-room[data-room="feedback"] .fbhint{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="feedback"] .fbnote{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="feedback"] .fbok{background:#121B35}
+html.n2-night.n2-room[data-room="feedback"] .fbquiet{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="feedback"] .stepn{background:#161C2C}
+html.n2-night.n2-room[data-room="good-life"] .qv,html.n2-night.n2-room[data-room="simulation"] .qv,html.n2-night.n2-room[data-room="three-lives"] .qv{background:linear-gradient(170deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="good-life"] .hon p,html.n2-night.n2-room[data-room="simulation"] .hon p,html.n2-night.n2-room[data-room="three-lives"] .hon p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="good-life"] .care p.k,html.n2-night.n2-room[data-room="three-lives"] .care p.k{color:#FF5D4F}
+html.n2-night.n2-room[data-room="good-life"] .care p,html.n2-night.n2-room[data-room="three-lives"] .care p{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="good-life"] .wk .d{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="good-life"] .wk .d p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="good-life"] .ih-1312da75.ih-1312da75.ih-1312da75{color:#FF5D4F}
+html.n2-night.n2-room[data-room="hajj-plan"] .gift{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="hajj-plan"] .gift p{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="hajj-plan"] .wizc{background:#0A1024;box-shadow:0 10px 34px rgba(22,28,44,.07)}
+html.n2-night.n2-room[data-room="hajj-plan"] .wizbar{background:rgba(22,28,44,.09)}
+html.n2-night.n2-room[data-room="hajj-plan"] .wizk .of{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="hajj-plan"] .wizh{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="hajj-plan"] .opt{background:#0A1024;border:1px solid rgba(255,254,247,.14)}
+html.n2-night.n2-room[data-room="hajj-plan"] .opt:hover{box-shadow:0 5px 16px rgba(22,28,44,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .opt .mk{background:#0A1024}
+html.n2-night.n2-room[data-room="hajj-plan"] .opt.on{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj-plan"] .opt .od{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="hajj-plan"] .fld input{border:1px solid rgba(255,254,247,.16);background:#0A1024}
+html.n2-night.n2-room[data-room="hajj-plan"] .fld .hint{color:rgba(255,254,247,.48)}
+html.n2-night.n2-room[data-room="hajj-plan"] .lnk{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="hajj-plan"] .lnk:hover{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="hajj-plan"] .saved{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="hajj-plan"] .plansec .sub{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="hajj-plan"] #planhead{background:linear-gradient(168deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="hajj-plan"] .fact{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .warn p{color:#FF5050}
+html.n2-night.n2-room[data-room="hajj-plan"] .dn small{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="hajj-plan"] .dg,html.n2-night.n2-room[data-room="hajj"] .dg{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="hajj-plan"] .dl,html.n2-night.n2-room[data-room="hajj"] .dl{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="hajj-plan"] .blk+.blk{border-top:1px solid rgba(255,254,247,.07)}
+html.n2-night.n2-room[data-room="hajj-plan"] .blk .bt{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="hajj-plan"] .blks{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="hajj-plan"] .carry{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj-plan"] .carry li{color:rgba(255,254,247,.75);background:#0A1024}
+html.n2-night.n2-room[data-room="hajj-plan"] .rite .rg{color:rgba(255,254,247,.48)}
+html.n2-night.n2-room[data-room="hajj-plan"] .rk-p,html.n2-night.n2-room[data-room="hajj"] .rk-p{color:#FF5050}
+html.n2-night.n2-room[data-room="hajj-plan"] .rk-s,html.n2-night.n2-room[data-room="hajj"] .rk-s{color:rgba(255,254,247,.55);border-color:rgba(255,254,247,.22);background:rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="hajj-plan"] .pflag,html.n2-night.n2-room[data-room="hajj"] .pflag{color:#FF5050}
+html.n2-night.n2-room[data-room="hajj-plan"] .stp li{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="hajj-plan"] .stp li+li{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .sch+.sch,html.n2-night.n2-room[data-room="hajj"] .sch+.sch{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .sp,html.n2-night.n2-room[data-room="hajj"] .sp{color:rgba(255,254,247,.74)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tal,html.n2-night.n2-room[data-room="hajj"] .tal{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tal .ar,html.n2-night.n2-room[data-room="hajj"] .tal .ar{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] .tal .trl,html.n2-night.n2-room[data-room="hajj"] .tal .trl{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tal .mean,html.n2-night.n2-room[data-room="hajj"] .tal .mean{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tal .src{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="hajj-plan"] .grp .gs{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tick li{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tick li+li{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .tick li.you{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] .idea+.idea{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="hajj-plan"] .idea .id{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="hajj-plan"] .phase{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="hajj-plan"] .emg{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj-plan"] .emf .ev{color:#FFFEF7;border-bottom:1px solid rgba(255,254,247,.28)}
+html.n2-night.n2-room[data-room="hajj-plan"] .emf .ev.blank{color:rgba(255,254,247,.3)}
+html.n2-night.n2-room[data-room="hajj-plan"] .hopen,html.n2-night.n2-room[data-room="hajj"] .hopen{fill:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="hajj-plan"] .hband1,html.n2-night.n2-room[data-room="hajj"] .hband1{fill:rgba(255,80,80,.24)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc{background:#0A1024;color:#FFFEF7;border:1px solid rgba(255,254,247,.18);box-shadow:0 10px 34px rgba(22,28,44,.15)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pchead{border-bottom:.7mm solid #FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pchead h3{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pchead .pcs{color:#C19A1D}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcb{background:#0A1024}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcb.plain{background:#0A1024;border-color:rgba(255,254,247,.3)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc ol.pcord li{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc ol.pcord li+li{border-top:.15mm solid rgba(255,254,247,.16)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc ol.pcord li .pcw{color:#C19A1D}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .rp{background:#111A33;color:#FF5050}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .rs{background:#111A33;color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcline{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcline b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcline .k{color:#C19A1D}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfld+.pcfld{border-top:.15mm solid rgba(255,254,247,.16)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfld .fk{color:#C19A1D}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfld .fv{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfld .fv.blank{border-bottom:.2mm dotted rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcduas{border-top:.5mm solid #FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcd .dar{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcd .dtr{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcd .dmn{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfoot{border-top:.2mm solid rgba(255,254,247,.25)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfoot b{color:#C19A1D}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfold{border-top:.2mm dashed rgba(255,254,247,.32)}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pcfold span{background:#0A1024}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc .pckey{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] #pc ul.pcdont li{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj-plan"] .pcnote{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="hajj"] .secnav{background:rgba(10,16,36,.94);border-bottom:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="hajj"] .tnote{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="hajj"] .tbl{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="hajj"] .tbl tbody th{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj"] .tbl td{color:rgba(255,254,247,.76)}
+html.n2-night.n2-room[data-room="hajj"] .tbl tbody tr+tr{border-top:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="hajj"] .check{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj"] .ck-c{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="hajj"] .ck-l{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="hajj"] .ckl .tx{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="hajj"] .ckl input:checked~.tx{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="hajj"] .ck-reset{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="hajj"] .ck-reset:hover{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="hajj"] .door{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="hajj"] .door .dh{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj"] .door .dd{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="hajj"] .door .dfree{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="hajj"] .bdoor .bdh{color:#FFFEF7}
+html.n2-night.n2-room[data-room="hajj"] .bdoor .bdd{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="health"] .th-stars i{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .th-fade{background:linear-gradient(180deg,transparent,#0A1024)}
+html.n2-night.n2-room[data-room="health"] .th-chip{background:rgba(10,16,36,.08)}
+html.n2-night.n2-room[data-room="health"] .th-lead{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="health"] .th-quote{color:rgba(255,254,247,.85)}
+html.n2-night.n2-room[data-room="health"] .d-sci{background:linear-gradient(160deg,rgba(136,144,168,.12),rgba(136,144,168,.04))}
+html.n2-night.n2-room[data-room="health"] .d-sci .d-tag{background:rgba(136,144,168,.18)}
+html.n2-night.n2-room[data-room="health"] .d-s p,html.n2-night.n2-room[data-room="health"] .d-sci p{color:rgba(255,254,247,.85)}
+html.n2-night.n2-room[data-room="health"] .d-note{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="health"] .food{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .food:hover{box-shadow:0 14px 30px rgba(22,28,44,.09)}
+html.n2-night.n2-room[data-room="health"] .f-tx{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="health"] .f-chip{background:rgba(136,144,168,.14)}
+html.n2-night.n2-room[data-room="health"] .wd{color:rgba(255,254,247,.45);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="health"] .moons{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="health"] .da-stop{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .da-d{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="health"] .da-s{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="health"] .hy{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .hy p{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="health"] .cent{background:#111A33;color:#FFFEF7}
+html.n2-night.n2-room[data-room="health"] .cent-i{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="health"] #rail a{background:rgba(22,28,44,.18)}
+html.n2-night.n2-room[data-room="health"] .honest{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="health"] .hj-fig{background:linear-gradient(170deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="health"] .hjc{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .hjc p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="health"] .hjc.warn{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .hjc.warn h3{color:#FF5050}
+html.n2-night.n2-room[data-room="health"] .hjb.e{color:rgba(255,254,247,.62);border-color:rgba(255,254,247,.28);background:rgba(22,28,44,.05)}
+html.n2-night.n2-room[data-room="health"] .hjsafe{background:#0A1024}
+html.n2-night.n2-room[data-room="health"] .hjsafe h3{color:#FF5050}
+html.n2-night.n2-room[data-room="health"] .hjsafe p.l{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="health"] .hjsafe li{color:rgba(255,254,247,.84)}
+html.n2-night.n2-room[data-room="health"] .hjsafe li+li{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="health"] .ih-90f207c2.ih-90f207c2.ih-90f207c2{color:#FF5050}
+html.n2-night.n2-room[data-room="heroes"] .argloss{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="heroes"] .dotsep{color:rgba(255,254,247,.32)}
+html.n2-night.n2-room[data-room="heroes"] .door{background:linear-gradient(168deg,#0A0D14,#1a2340 58%,#22305a);box-shadow:0 14px 34px rgba(10,13,20,.16)}
+html.n2-night.n2-room[data-room="heroes"] .door:hover{box-shadow:0 20px 44px rgba(10,13,20,.26)}
+html.n2-night.n2-room[data-room="heroes"] .ribbon{background:linear-gradient(170deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="heroes"] .rib-band.b1{background:rgba(10,16,36,.028)}
+html.n2-night.n2-room[data-room="heroes"] .rf-l{background:linear-gradient(to right,rgba(10,13,20,.92),transparent)}
+html.n2-night.n2-room[data-room="heroes"] .rib-read{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="heroes"] .ribarrow{border:1px solid rgba(255,254,247,.16);background:#0A1024}
+html.n2-night.n2-room[data-room="heroes"] .ribarrow:hover{background:#0A1024}
+html.n2-night.n2-room[data-room="heroes"] .cv{border-inline-end:1.7px solid rgba(255,254,247,.6);border-bottom:1.7px solid rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="heroes"] .hall-head{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="heroes"] .hall-l{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="heroes"] .lg{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="heroes"] .pcard.lit{box-shadow:0 0 0 3px rgba(244,212,106,.28),0 10px 26px rgba(22,28,44,.1)}
+html.n2-night.n2-room[data-room="heroes"] .pc-m{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="heroes"] .pc-t{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="heroes"] .pc-body p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="heroes"] .pc-light p{color:#BF9925}
+html.n2-night.n2-room[data-room="heroes"] .pc-cav{background:rgba(22,28,44,.035);border:1px dashed rgba(255,254,247,.18)}
+html.n2-night.n2-room[data-room="heroes"] .pc-ck{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="heroes"] .pc-cav p{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="heroes"] .gc-m{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="heroes"] .gcard p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="heroes"] .gc-now p{color:#BF9925}
+html.n2-night.n2-room[data-room="heroes"] .closeband{border:1px solid rgba(255,254,247,.12);background:linear-gradient(160deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="heroes"] .cb-p{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="journal-rules"] .ih-0af206d0.ih-0af206d0.ih-0af206d0{color:color-mix(in srgb, var(--ink,#FFFEF7) 80%, transparent)}
 html.n2-night.n2-room[data-room="journal"] main{background:#0D1428}
 html.n2-night.n2-room[data-room="journal"] body{background:#0D1428}
-html.n2-night.n2-room #lhero{background:linear-gradient(178deg,#0A0D14 0%,#1A1D24 60%,#252B3A 100%)}
-html.n2-night.n2-room .ch-gate .orn{background:radial-gradient(circle at 40% 35%,#21242E,#0A0D14)}
-html.n2-night.n2-room .story p{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .heart-box p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .hadith-chip{border:1px solid rgba(255,254,247,.1);background:#0A1024}
-html.n2-night.n2-room .hadith-chip p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .latif-thread small{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .door{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .door .n{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .door .t{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .moon{background:conic-gradient(from 180deg,#F4D46A var(--f,50%),rgba(22,28,44,.12) 0)}
-html.n2-night.n2-room .snav{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .snav a,html.n2-night.n2-room .snav span.off{background:#0A1024;border:1px solid rgba(255,254,247,.12);color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .snav a:hover{color:#FFFEF7}
-html.n2-night.n2-room .snav .k{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .snav span.off{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .ih-f7d81c08.ih-f7d81c08.ih-f7d81c08{background:radial-gradient(circle at 50% 20%,rgba(196,137,155,.28),transparent 60%),linear-gradient(165deg,#0A0D14,#21242E)}
+html.n2-night.n2-room[data-room="latif"] #lhero{background:linear-gradient(178deg,#0A0D14 0%,#1A1D24 60%,#252B3A 100%)}
+html.n2-night.n2-room[data-room="latif"] .ch-gate .orn{background:radial-gradient(circle at 40% 35%,#21242E,#0A0D14)}
+html.n2-night.n2-room[data-room="latif"] .story p{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="latif"] .heart-box p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="latif"] .hadith-chip,html.n2-night.n2-room[data-room="theology"] .hadith-chip{border:1px solid rgba(255,254,247,.1);background:#0A1024}
+html.n2-night.n2-room[data-room="latif"] .hadith-chip p,html.n2-night.n2-room[data-room="theology"] .hadith-chip p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="latif"] .latif-thread small{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="latif"] .door{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="latif"] .door .n{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="latif"] .door .t{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="latif"] .moon{background:conic-gradient(from 180deg,#F4D46A var(--f,50%),rgba(22,28,44,.12) 0)}
+html.n2-night.n2-room[data-room="latif"] .snav,html.n2-night.n2-room[data-room="stories/adl"] .snav,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav,html.n2-night.n2-room[data-room="stories/hadi"] .snav,html.n2-night.n2-room[data-room="stories/jabbar"] .snav,html.n2-night.n2-room[data-room="stories/razzaq"] .snav,html.n2-night.n2-room[data-room="stories/sabur"] .snav,html.n2-night.n2-room[data-room="stories/shakur"] .snav,html.n2-night.n2-room[data-room="stories/wadud"] .snav{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="latif"] .snav a,html.n2-night.n2-room[data-room="latif"] .snav span.off,html.n2-night.n2-room[data-room="stories/adl"] .snav a,html.n2-night.n2-room[data-room="stories/adl"] .snav span.off,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav a,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav span.off,html.n2-night.n2-room[data-room="stories/hadi"] .snav a,html.n2-night.n2-room[data-room="stories/hadi"] .snav span.off,html.n2-night.n2-room[data-room="stories/jabbar"] .snav a,html.n2-night.n2-room[data-room="stories/jabbar"] .snav span.off,html.n2-night.n2-room[data-room="stories/razzaq"] .snav a,html.n2-night.n2-room[data-room="stories/razzaq"] .snav span.off,html.n2-night.n2-room[data-room="stories/sabur"] .snav a,html.n2-night.n2-room[data-room="stories/sabur"] .snav span.off,html.n2-night.n2-room[data-room="stories/shakur"] .snav a,html.n2-night.n2-room[data-room="stories/shakur"] .snav span.off,html.n2-night.n2-room[data-room="stories/wadud"] .snav a,html.n2-night.n2-room[data-room="stories/wadud"] .snav span.off{background:#0A1024;border:1px solid rgba(255,254,247,.12);color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="latif"] .snav a:hover,html.n2-night.n2-room[data-room="stories/adl"] .snav a:hover,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav a:hover,html.n2-night.n2-room[data-room="stories/hadi"] .snav a:hover,html.n2-night.n2-room[data-room="stories/jabbar"] .snav a:hover,html.n2-night.n2-room[data-room="stories/razzaq"] .snav a:hover,html.n2-night.n2-room[data-room="stories/sabur"] .snav a:hover,html.n2-night.n2-room[data-room="stories/shakur"] .snav a:hover,html.n2-night.n2-room[data-room="stories/wadud"] .snav a:hover{color:#FFFEF7}
+html.n2-night.n2-room[data-room="latif"] .snav .k,html.n2-night.n2-room[data-room="stories/adl"] .snav .k,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav .k,html.n2-night.n2-room[data-room="stories/hadi"] .snav .k,html.n2-night.n2-room[data-room="stories/jabbar"] .snav .k,html.n2-night.n2-room[data-room="stories/razzaq"] .snav .k,html.n2-night.n2-room[data-room="stories/sabur"] .snav .k,html.n2-night.n2-room[data-room="stories/shakur"] .snav .k,html.n2-night.n2-room[data-room="stories/wadud"] .snav .k{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="latif"] .snav span.off,html.n2-night.n2-room[data-room="stories/adl"] .snav span.off,html.n2-night.n2-room[data-room="stories/ghaffar"] .snav span.off,html.n2-night.n2-room[data-room="stories/hadi"] .snav span.off,html.n2-night.n2-room[data-room="stories/jabbar"] .snav span.off,html.n2-night.n2-room[data-room="stories/razzaq"] .snav span.off,html.n2-night.n2-room[data-room="stories/sabur"] .snav span.off,html.n2-night.n2-room[data-room="stories/shakur"] .snav span.off,html.n2-night.n2-room[data-room="stories/wadud"] .snav span.off{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="latif"] .ih-f7d81c08.ih-f7d81c08.ih-f7d81c08{background:radial-gradient(circle at 50% 20%,rgba(196,137,155,.28),transparent 60%),linear-gradient(165deg,#0A0D14,#21242E)}
 html.n2-night.n2-room[data-room="legal"] h3{color:#FFFEF7}
-html.n2-night.n2-room .lead,html.n2-night.n2-room p.t{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .card{background:#0A1024}
-html.n2-night.n2-room .toc a{background:#0A1024;color:#C19A1D}
-html.n2-night.n2-room .toc a:hover{background:#0D1428}
-html.n2-night.n2-room ul.t{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .upd{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room p.sub{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .room{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .room p{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .demo iframe{background:#0A1024}
-html.n2-night.n2-room .step{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .step p{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .toggle button{background:#0A1024;border:1.5px solid rgba(255,254,247,.15);color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .plan{background:#0A1024;border:1.5px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .plan .pr .cur{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .plan .pr .amt{color:#FFFEF7}
-html.n2-night.n2-room .plan .pr span{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .plan ul{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .perr{color:#FF5136}
-html.n2-night.n2-room .gen{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .gen label{color:#C19A1D}
-html.n2-night.n2-room .gen select{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
-html.n2-night.n2-room .code{background:#0A0D14}
-html.n2-night.n2-room .qa{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .qa p{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room #welcome{background:linear-gradient(160deg,#0A1024,#0A1024)}
-html.n2-night.n2-room #welcome p{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="legal"] .lead,html.n2-night.n2-room[data-room="legal"] p.t{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="legal"] .card{background:#0A1024}
+html.n2-night.n2-room[data-room="legal"] .toc a{background:#0A1024;color:#C19A1D}
+html.n2-night.n2-room[data-room="legal"] .toc a:hover{background:#0D1428}
+html.n2-night.n2-room[data-room="legal"] ul.t{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="legal"] .upd{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="license"] p.sub{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="license"] .room{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="license"] .room p{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="license"] .demo iframe{background:#0A1024}
+html.n2-night.n2-room[data-room="license"] .step{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="license"] .step p{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="license"] .toggle button{background:#0A1024;border:1.5px solid rgba(255,254,247,.15);color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="license"] .plan{background:#0A1024;border:1.5px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="license"] .plan .pr .cur{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="license"] .plan .pr .amt{color:#FFFEF7}
+html.n2-night.n2-room[data-room="license"] .plan .pr span{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="license"] .plan ul{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="license"] .perr{color:#FF5136}
+html.n2-night.n2-room[data-room="license"] .gen{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="license"] .gen label{color:#C19A1D}
+html.n2-night.n2-room[data-room="license"] .gen select{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
+html.n2-night.n2-room[data-room="license"] .code{background:#0A0D14}
+html.n2-night.n2-room[data-room="license"] .qa{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="license"] .qa p{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="license"] #welcome{background:linear-gradient(160deg,#0A1024,#0A1024)}
+html.n2-night.n2-room[data-room="license"] #welcome p{color:rgba(255,254,247,.7)}
 html.n2-night.n2-room[data-room="license"] footer{border-top:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .ih-18602565.ih-18602565.ih-18602565{background:color-mix(in srgb, #0A1024 7%, transparent)}
-html.n2-night.n2-room .ih-5a1ab87e.ih-5a1ab87e.ih-5a1ab87e{background:color-mix(in srgb, #0A1024 10%, transparent)}
-html.n2-night.n2-room .ih-7a8f59af.ih-7a8f59af.ih-7a8f59af{color:color-mix(in srgb, var(--ink,#FFFEF7) 55%, transparent)}
-html.n2-night.n2-room .ih-d29a3628.ih-d29a3628.ih-d29a3628{background:linear-gradient(150deg,#0A0D14,#1d2a45)}
+html.n2-night.n2-room[data-room="license"] .ih-18602565.ih-18602565.ih-18602565{background:color-mix(in srgb, #0A1024 7%, transparent)}
+html.n2-night.n2-room[data-room="license"] .ih-5a1ab87e.ih-5a1ab87e.ih-5a1ab87e{background:color-mix(in srgb, #0A1024 10%, transparent)}
+html.n2-night.n2-room[data-room="license"] .ih-7a8f59af.ih-7a8f59af.ih-7a8f59af,html.n2-night.n2-room[data-room="madrasa"] .ih-7a8f59af.ih-7a8f59af.ih-7a8f59af{color:color-mix(in srgb, var(--ink,#FFFEF7) 55%, transparent)}
+html.n2-night.n2-room[data-room="license"] .ih-d29a3628.ih-d29a3628.ih-d29a3628{background:linear-gradient(150deg,#0A0D14,#1d2a45)}
 html.n2-night.n2-room[data-room="madrasa"] body{background:linear-gradient(180deg,#0A1024,#0A1024 20rem)}
-html.n2-night.n2-room .trk{background:linear-gradient(175deg,#0A1024,#0A1024);box-shadow:0 1px 0 rgba(10,16,36,.9) inset,0 14px 34px rgba(20,31,60,.07)}
-html.n2-night.n2-room .trk-head .tt span{color:rgba(193,154,29,.6)}
-html.n2-night.n2-room .les:hover{background:#0A1024}
-html.n2-night.n2-room .ringm{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(20,31,60,.07) 0)}
-html.n2-night.n2-room .trk.hit{box-shadow:0 0 0 2px rgba(201,162,39,.55),0 18px 44px rgba(20,31,60,.14)}
-html.n2-night.n2-room .card{background:linear-gradient(175deg,#0A1024,#0A1024);box-shadow:0 1px 0 rgba(10,16,36,.9) inset,0 18px 44px rgba(20,31,60,.08)}
-html.n2-night.n2-room .lbar{background:rgba(20,31,60,.08)}
-html.n2-night.n2-room .qo:hover{box-shadow:0 8px 18px rgba(20,31,60,.08)}
-html.n2-night.n2-room header.top{background:rgba(10,16,36,.92);border-bottom:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .brand .n{background:#161C2C}
-html.n2-night.n2-room .brand span{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .backbtn{color:#C19A1D}
-html.n2-night.n2-room #mhero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room #mhero .tbar{background:rgba(10,16,36,.12)}
-html.n2-night.n2-room .trk{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .trk-head .tt span{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .ringm{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(22,28,44,.08) 0)}
-html.n2-night.n2-room .ringm b{color:#C19A1D}
-html.n2-night.n2-room .trk-desc{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .lessons{border-top:1px solid rgba(255,254,247,.07)}
-html.n2-night.n2-room .les{border-bottom:1px solid rgba(255,254,247,.05)}
-html.n2-night.n2-room .les .st{border:1.5px solid rgba(255,254,247,.15);color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .les .mn{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .cert-row span{color:#C19A1D}
-html.n2-night.n2-room .lbar{background:rgba(22,28,44,.08)}
-html.n2-night.n2-room .card{background:#0A1024;box-shadow:0 14px 40px rgba(22,28,44,.08)}
-html.n2-night.n2-room .card p.body{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .lg{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .lg .g{color:#FFFEF7}
-html.n2-night.n2-room .lg .n{color:#C19A1D}
-html.n2-night.n2-room .lg .s{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .pr{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .pr .a{color:#FFFEF7}
-html.n2-night.n2-room .pr .b{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .stepsl li{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .vplay.playing{background:#0F121A}
-html.n2-night.n2-room .tipc{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .nbtn.ghost{color:#C19A1D}
-html.n2-night.n2-room .qo{background:#0A1024;border:1.5px solid rgba(255,254,247,.14)}
-html.n2-night.n2-room .qo.good{background:#0D1428}
-html.n2-night.n2-room .qo.bad{background:#111A33}
-html.n2-night.n2-room .qfb.no{color:#FF5136}
-html.n2-night.n2-room #cert{background:linear-gradient(170deg,#0A1024,#FFF3D1);color:#FFFEF7}
-html.n2-night.n2-room #cert .tname{color:#C19A1D}
-html.n2-night.n2-room #cert .date{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room #cert .sealn{background:#161C2C}
-html.n2-night.n2-room #cert-name{border:1.5px solid rgba(255,254,247,.2);background:#0A1024}
-html.n2-night.n2-room .freeline{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .mstrip{border-bottom:1px solid rgba(255,254,247,.08);background:#0A1024}
-html.n2-night.n2-room .mstrip .brand .n{background:#161C2C}
-html.n2-night.n2-room .mstrip .brand span span{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room #phero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room .col b{color:#FFFEF7}
-html.n2-night.n2-room .hero-hadith{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .phead .whisper{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .pcard{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
-html.n2-night.n2-room .pcard p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .hadith{background:#0A1024;color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .fact{background:#0A1024}
-html.n2-night.n2-room .fact .l{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .ptime{background:rgba(10,16,36,.9)}
-html.n2-night.n2-room .ptime .nm{color:#FFFEF7}
-html.n2-night.n2-room .ptime .tm{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .coin{background:radial-gradient(circle at 34% 30%,#0A1024,transparent 55%),#111A33;border:1px solid rgba(255,254,247,.15)}
-html.n2-night.n2-room .coin.gold{background:radial-gradient(circle at 34% 30%,#0A1024,transparent 55%),linear-gradient(135deg,#C9A227,#F4D46A)}
-html.n2-night.n2-room .zcat{background:#0A1024;color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .zcalc label{color:#C19A1D}
-html.n2-night.n2-room #zin{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
-html.n2-night.n2-room .zcalc .fine{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .fastlabels{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .jstep{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
-html.n2-night.n2-room .jstep span{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .stand{background:linear-gradient(165deg,#0A0D14,#171d31 60%,#1d2a45)}
-html.n2-night.n2-room .ih-bdcef76c.ih-bdcef76c.ih-bdcef76c{color:color-mix(in srgb, var(--ink,#FFFEF7) 60%, transparent)}
-html.n2-night.n2-room #phero{background:linear-gradient(178deg,#0A0D14,#0F121A 55%,#10172A 100%)}
-html.n2-night.n2-room .ptile{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .ptile:hover{box-shadow:0 12px 26px rgba(22,28,44,.12)}
-html.n2-night.n2-room .ptile.open{background:linear-gradient(165deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .ptile .meta{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .ptile .mns{background:#0D1428}
-html.n2-night.n2-room .art .inner{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.18),transparent 60%),linear-gradient(160deg,#0F121A,#121724);box-shadow:0 24px 60px rgba(10,13,20,.35)}
-html.n2-night.n2-room .vc{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .hc{background:rgba(10,16,36,.045)}
-html.n2-night.n2-room .fig .bar{background:rgba(10,16,36,.08)}
-html.n2-night.n2-room .cdot{background:rgba(10,16,36,.14)}
-html.n2-night.n2-room .split .sb{background:linear-gradient(90deg,rgba(110,122,155,.85),rgba(110,122,155,.55));color:#FFFEF7}
-html.n2-night.n2-room .ptile.rasul{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.30),transparent 62%),linear-gradient(165deg,#0A0D14,#121724)}
-html.n2-night.n2-room .rise-motes i{background:#111A33}
-html.n2-night.n2-room .alive-b i{background:#111A33}
-html.n2-night.n2-room .ih-4e4621e7.ih-4e4621e7.ih-4e4621e7{background:color-mix(in srgb, #0A1024 5%, transparent)}
-html.n2-night.n2-room .ih-ceb6a776.ih-ceb6a776.ih-ceb6a776{background:radial-gradient(circle at 50% 20%,rgba(201,162,39,.25),transparent 60%),linear-gradient(165deg,#0A0D14,#121724)}
-html.n2-night.n2-room .claim b{color:#B686FF}
-html.n2-night.n2-room .dua .trl{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .dua .mean{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .foot{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .tells{background:#0A1024}
-html.n2-night.n2-room .tl-print{border:1px solid rgba(255,254,247,.2);background:#0A1024;color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .tl-print:hover{color:#FFFEF7}
-html.n2-night.n2-room .tl-l{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room .tl-list li{color:rgba(255,254,247,.84)}
-html.n2-night.n2-room .tl-list li+li{border-top:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .plan{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .pl dd{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .week{background:#0A1024}
-html.n2-night.n2-room .wgo-c:hover{box-shadow:0 5px 18px rgba(22,28,44,.07)}
-html.n2-night.n2-room #qhero{background:linear-gradient(175deg,#0A0D14 0%,#0F121A 55%,#121724 100%)}
-html.n2-night.n2-room .gview{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .gview.on{background:#111A33}
-html.n2-night.n2-room .glegend{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .glegend b{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room #gate-count{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .gate{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .gate:hover{background:linear-gradient(168deg,#0A1024,#0A1024)}
-html.n2-night.n2-room .gate.active{background:linear-gradient(160deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .gate .seal{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)}
-html.n2-night.n2-room .gate .gmn{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .gchip.mk{background:#0D1428}
-html.n2-night.n2-room .gchip.md{color:#FFFEF7;background:#0D1428}
-html.n2-night.n2-room .gate .gct{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .ayah{border-bottom:1px solid rgba(255,254,247,.07)}
-html.n2-night.n2-room .ayah .ar{color:#FFFEF7}
-html.n2-night.n2-room .bismillah{color:#FFFEF7}
-html.n2-night.n2-room .bismillah small{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .tool{border:1px solid rgba(255,254,247,.14);color:rgba(255,254,247,.75);background:#0A1024}
-html.n2-night.n2-room .tool.on{background:#111A33}
-html.n2-night.n2-room .navarrow{border:1px solid rgba(255,254,247,.15);background:#0A1024}
-html.n2-night.n2-room #surah-select{background:linear-gradient(160deg,#0A1024,#0A1024)}
-html.n2-night.n2-room .skel{background:linear-gradient(90deg,rgba(22,28,44,.06),rgba(22,28,44,.12),rgba(22,28,44,.06));background-size:200% 100%}
-html.n2-night.n2-room .sp{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.17),transparent 62%),linear-gradient(160deg,#0F121A,#121724)}
-html.n2-night.n2-room .sp-heart{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .sp-theme{background:rgba(10,16,36,.045)}
-html.n2-night.n2-room .sp-btn{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .sp-virtue{background:rgba(10,16,36,.045)}
-html.n2-night.n2-room .sp-badge.ok{background:rgba(110,122,155,.14)}
-html.n2-night.n2-room .mvnum{fill:#FFFEF7}
-html.n2-night.n2-room #player{background:linear-gradient(180deg,#11151F,#0A0D14);box-shadow:0 -10px 34px rgba(10,13,20,.45)}
-html.n2-night.n2-room .pbtn.main{box-shadow:0 4px 18px rgba(201,162,39,.45),inset 0 1px 0 rgba(10,16,36,.35)}
-html.n2-night.n2-room .pbtn.main:hover{box-shadow:0 8px 26px rgba(201,162,39,.62),inset 0 1px 0 rgba(10,16,36,.35)}
-html.n2-night.n2-room .olang{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room #p-pill{background:linear-gradient(160deg,#121724,#0A0D14);box-shadow:0 8px 24px rgba(10,13,20,.35)}
-html.n2-night.n2-room .vw{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .vw b{color:#FFFEF7}
-html.n2-night.n2-room .vw em{color:rgba(255,254,247,.58)}
-html.n2-night.n2-room .vsense{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .vnote{border-top:1px dashed rgba(255,254,247,.13)}
-html.n2-night.n2-room .vnote p{color:rgba(255,254,247,.74)}
-html.n2-night.n2-room .vsrc{color:rgba(255,254,247,.48)}
-html.n2-night.n2-room .vlinks{border-top:1px dashed rgba(255,254,247,.13)}
-html.n2-night.n2-room .vlinks h6{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .vlink{background:#0A1024;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .vnone,html.n2-night.n2-room .vwait{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .ayah.playing .ar .w.now{color:#FFFEF7}
-html.n2-night.n2-room .vact{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room #q-toast{background:#0F121A;box-shadow:0 10px 30px rgba(10,13,20,.35)}
-html.n2-night.n2-room #q-pick{background:linear-gradient(160deg,#0A1024,#0D1428)}
-html.n2-night.n2-room #s-scrim{background:rgba(10,13,20,.55)}
-html.n2-night.n2-room #s-sheet{background:#0A1024;box-shadow:0 -18px 50px rgba(10,13,20,.4)}
-html.n2-night.n2-room #s-sheet .sh-top{border-bottom:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room #s-search{background:#0A1024;border:1px solid rgba(255,254,247,.15)}
-html.n2-night.n2-room #s-close{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .srow:hover{background:#0A1024}
-html.n2-night.n2-room .srow.on{background:linear-gradient(160deg,#0A1024,#FFF1CE)}
-html.n2-night.n2-room .srow .sn{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)}
-html.n2-night.n2-room .srow .st span{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .snone{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .ih-41c4c868.ih-41c4c868.ih-41c4c868{background:linear-gradient(160deg,#0A0D14,#121724)}
-html.n2-night.n2-room .ih-fff7d1a6.ih-fff7d1a6.ih-fff7d1a6{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#0A0D14,#121724)}
-html.n2-night.n2-room .st-rest{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .st-t{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .st-s{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .rsec.ten .st-rest{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .klist.rest .krl:hover{border-color:rgba(255,254,247,.1)}
-html.n2-night.n2-room .stop{background:linear-gradient(166deg,#0A0D14,#182142 62%,#1F2C52)}
-html.n2-night.n2-room .stop.now{background:linear-gradient(166deg,#0C101C,#25204A 60%,#33285C)}
-html.n2-night.n2-room .eidlink{background:linear-gradient(166deg,#0E1322,#1D2742 58%,#6A2F4E)}
-html.n2-night.n2-room .eidlink:hover{box-shadow:0 16px 38px rgba(22,32,58,.28)}
-html.n2-night.n2-room .prep-c{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .prep-bar{background:rgba(22,28,44,.08)}
-html.n2-night.n2-room .prl{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .px{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .prl input:checked~.pt b{color:rgba(255,254,247,.36)}
-html.n2-night.n2-room .today{box-shadow:0 10px 34px rgba(22,28,44,.08)}
-html.n2-night.n2-room .t-day{background:linear-gradient(158deg,#0A0D14,#20304f)}
-html.n2-night.n2-room .t-greg{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .dnav{border:1px solid rgba(255,254,247,.16);background:#0A1024;color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .dnav:hover{color:#FFFEF7}
-html.n2-night.n2-room .t-win{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .tw-s{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .t-loc{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .t-loc-l{color:rgba(255,254,247,.58)}
-html.n2-night.n2-room .tf label{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .tf input,html.n2-night.n2-room .tf select{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .tf-h{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .t-ref{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .d-tr{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .d-t{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .t-off{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .t-off-k{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .t-off-l{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .alld{border:1px solid rgba(255,254,247,.12);background:#0A1024}
-html.n2-night.n2-room .alld summary{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .ad-list li{border-top:1px solid rgba(255,254,247,.07)}
-html.n2-night.n2-room .ad-list p{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .kp-c{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .kp-bar{background:rgba(22,28,44,.08)}
-html.n2-night.n2-room .kp-l{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .kp-reset{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .kp-reset:hover{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .krl{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .ks{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .kx{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .krl input:checked~.kt b,html.n2-night.n2-room .krl input:checked~.kn{color:rgba(255,254,247,.36)}
-html.n2-night.n2-room .rsec.ten{background:linear-gradient(172deg,#0A0D14,#161f38 62%,#1d2947)}
-html.n2-night.n2-room .rsec.ten .card{background:rgba(10,16,36,.045)}
-html.n2-night.n2-room .rsec.ten .fig{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .rsec.ten .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.14)}
-html.n2-night.n2-room .rsec.ten .evb.editorial{border-color:rgba(10,16,36,.24);background:rgba(10,16,36,.06)}
-html.n2-night.n2-room #shero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room .sub{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .pcard p{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .stage{background:#0A1024}
-html.n2-night.n2-room .stage>summary .st span{color:rgba(255,254,247,.55)}
-html.n2-night.n2-room .trait{background:#0D1428;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .subj{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .subj b{color:#C19A1D}
-html.n2-night.n2-room .subj ul{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .wday{background:#0A1024}
-html.n2-night.n2-room .wday .w{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .live{background:linear-gradient(150deg,#0A0D14,#1d2a45)}
-html.n2-night.n2-room .live a.lt{background:rgba(10,16,36,.08)}
-html.n2-night.n2-room .miles ul{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .proj{background:#0A1024}
-html.n2-night.n2-room .proj p{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .proj .lvl{background:#0D1428;color:#659FF6}
-html.n2-night.n2-room .dd-mega .mp{background:#0A1024;border:1px solid rgba(255,254,247,.1);box-shadow:0 28px 64px rgba(22,28,44,.22)}
-html.n2-night.n2-room .dd-mega a{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .dd-mega a:hover{background:#0D1428;color:#FFFEF7}
-html.n2-night.n2-room .evb.mixed{color:#4DA9D9}
-html.n2-night.n2-room .card.pass{box-shadow:0 6px 26px rgba(22,28,44,.055)}
-html.n2-night.n2-room .pass p{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .words .wa{color:#FFFEF7}
-html.n2-night.n2-room .words .we{color:rgba(255,254,247,.9)}
-html.n2-night.n2-room .aside{background:rgba(22,28,44,.03);border:1px dashed rgba(255,254,247,.2)}
-html.n2-night.n2-room .aside .as-k{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .aside p{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room .beside .bt{color:rgba(255,254,247,.62)}
-html.n2-night.n2-room .qe{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .brk .b{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
-html.n2-night.n2-room .brk .b h4{color:#FFFEF7}
-html.n2-night.n2-room .brk .b p{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .stop{background:linear-gradient(168deg,#0A1024,#0D1428)}
-html.n2-night.n2-room .stop p{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room #thero{background:linear-gradient(178deg,#0A0D14,#161c2c 60%,#1d2a45 100%)}
-html.n2-night.n2-room .card p,html.n2-night.n2-room .card li{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .prose p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .trunk .lbl{color:rgba(255,254,247,.65)}
-html.n2-night.n2-room .trunk .bar{background:rgba(22,28,44,.08)}
-html.n2-night.n2-room .epoch p{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .ih-069b811d.ih-069b811d.ih-069b811d{background:radial-gradient(circle at 50% 20%,rgba(51,80,124,.4),transparent 60%),linear-gradient(165deg,#0A0D14,#1d2a45)}
-html.n2-night.n2-room .raw{color:rgba(255,254,247,.88)}
-html.n2-night.n2-room .raw b{color:#FFFEF7}
-html.n2-night.n2-room .dark{background:linear-gradient(172deg,#0A0D14,#10131A)}
-html.n2-night.n2-room .door{background:linear-gradient(170deg,#0A0D14,#1b2440)}
-html.n2-night.n2-room .tick span.nf i{border-color:rgba(10,16,36,.3);background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .floor li{color:rgba(255,254,247,.84)}
-html.n2-night.n2-room .floor li b{color:#FFFEF7}
-html.n2-night.n2-room .yr i{background:rgba(10,16,36,.09)}
-html.n2-night.n2-room .ev-debated{color:#C19A1D}
-html.n2-night.n2-room .ev-corrected{color:#F48367}
-html.n2-night.n2-room .ev-mixed{color:#FFFEF7;border-color:rgba(255,254,247,.35);background:rgba(55,60,74,.06)}
-html.n2-night.n2-room .evp{background:#0D1428}
-html.n2-night.n2-room .evp .cl{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .evp .bound{color:#F48367}
-html.n2-night.n2-room .evp .note{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .ref{color:rgba(255,254,247,.55);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .lgd{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .lg-r{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .lg-f{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .ufs{background:rgba(10,16,36,.93);border-bottom:1px solid rgba(255,254,247,.08)}
-html.n2-night.n2-room .uf{color:rgba(255,254,247,.55);border:1px solid rgba(255,254,247,.13);background:#0A1024}
-html.n2-night.n2-room .uf:hover{color:#FFFEF7}
-html.n2-night.n2-room .ug-c{background:rgba(10,16,36,.12);border:1px solid rgba(10,16,36,.24)}
-html.n2-night.n2-room .g-angels{background:radial-gradient(120% 130% at 18% 0%,rgba(233,200,106,.34),transparent 52%),linear-gradient(140deg,#161C2C,#1E2A4A 60%,#161C2C)}
-html.n2-night.n2-room .g-jinn{background:radial-gradient(120% 130% at 30% 0%,rgba(146,64,14,.44),transparent 55%),linear-gradient(140deg,#17181C,#12192E 60%,#17181C)}
-html.n2-night.n2-room .g-peoples{background:radial-gradient(120% 130% at 74% 0%,rgba(160,140,96,.32),transparent 55%),linear-gradient(140deg,#16181F,#222838 62%,#16181F)}
-html.n2-night.n2-room .g-signs{background:radial-gradient(1.4px 1.4px at 12% 30%,rgba(10,16,36,.8),transparent 55%),radial-gradient(1.2px 1.2px at 34% 14%,rgba(10,16,36,.7),transparent 55%),radial-gradient(1.6px 1.6px at 58% 38%,rgba(10,16,36,.62),transparent 55%),radial-gradient(1.2px 1.2px at 78% 18%,rgba(10,16,36,.75),transparent 55%),radial-gradient(130% 150% at 50% -18%,rgba(124,58,237,.3),transparent 58%),linear-gradient(150deg,#0B0912,#101830 70%,#0B0912)}
-html.n2-night.n2-room .ut-b{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
-html.n2-night.n2-room .ut-b:hover{box-shadow:0 14px 30px rgba(20,31,60,.1)}
-html.n2-night.n2-room .ut-cat{color:rgba(255,254,247,.42)}
-html.n2-night.n2-room .ut-hook{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .um-back{background:radial-gradient(120% 100% at 50% 0%,rgba(12,17,30,.55),rgba(6,8,12,.84))}
-html.n2-night.n2-room .umw{background:#0A1024;box-shadow:0 40px 90px rgba(10,13,20,.45)}
-html.n2-night.n2-room .um-rule{background:repeating-linear-gradient(90deg,rgba(201,162,39,.9) 0 14px,rgba(30,58,138,.75) 14px 18px,rgba(201,162,39,.9) 18px 32px,rgba(136,144,168,.8) 32px 36px)}
-html.n2-night.n2-room .um-x{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .um-x:hover{background:#161C2C;border-color:#FFFEF7}
-html.n2-night.n2-room .um-foot{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .ub-hook{color:rgba(255,254,247,.6)}
-html.n2-night.n2-room .ub-p p{color:rgba(255,254,247,.84)}
-html.n2-night.n2-room .ub-src{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .ub-src>b{color:rgba(255,254,247,.45)}
-html.n2-night.n2-room .fig .cap .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.16)}
-html.n2-night.n2-room .ember-p{background:radial-gradient(130% 120% at 50% 110%,rgba(201,88,20,.35),transparent 58%),linear-gradient(178deg,#0A0D14,#10172A)}
-html.n2-night.n2-room .night-p{background:radial-gradient(130% 130% at 50% -10%,rgba(96,132,214,.28),transparent 58%),linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45)}
-html.n2-night.n2-room .feat-a{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .stars{background:radial-gradient(1.4px 1.4px at 14% 22%,rgba(10,16,36,.75),transparent 55%),radial-gradient(1.2px 1.2px at 32% 62%,rgba(10,16,36,.6),transparent 55%),radial-gradient(1.5px 1.5px at 58% 18%,rgba(10,16,36,.7),transparent 55%),radial-gradient(1.2px 1.2px at 76% 48%,rgba(10,16,36,.55),transparent 55%),radial-gradient(1.4px 1.4px at 88% 26%,rgba(10,16,36,.65),transparent 55%)}
-html.n2-night.n2-room .chp{background:rgba(10,16,36,.05)}
-html.n2-night.n2-room .chp[open]{background:rgba(10,16,36,.07)}
-html.n2-night.n2-room .chp-r .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.16)}
-html.n2-night.n2-room .chp .ev{background:rgba(10,16,36,.06)}
-html.n2-night.n2-room .chp .ev-mixed{border-color:rgba(17,26,51,.4)}
-html.n2-night.n2-room .chp .ev-editorial{border-color:rgba(17,26,51,.35)}
+html.n2-night.n2-room[data-room="madrasa"] .trk{background:linear-gradient(175deg,#0A1024,#0A1024);box-shadow:0 1px 0 rgba(10,16,36,.9) inset,0 14px 34px rgba(20,31,60,.07)}
+html.n2-night.n2-room[data-room="madrasa"] .trk-head .tt span{color:rgba(193,154,29,.6)}
+html.n2-night.n2-room[data-room="madrasa"] .les:hover{background:#0A1024}
+html.n2-night.n2-room[data-room="madrasa"] .ringm{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(20,31,60,.07) 0)}
+html.n2-night.n2-room[data-room="madrasa"] .trk.hit{box-shadow:0 0 0 2px rgba(201,162,39,.55),0 18px 44px rgba(20,31,60,.14)}
+html.n2-night.n2-room[data-room="madrasa"] .card{background:linear-gradient(175deg,#0A1024,#0A1024);box-shadow:0 1px 0 rgba(10,16,36,.9) inset,0 18px 44px rgba(20,31,60,.08)}
+html.n2-night.n2-room[data-room="madrasa"] .lbar{background:rgba(20,31,60,.08)}
+html.n2-night.n2-room[data-room="madrasa"] .qo:hover{box-shadow:0 8px 18px rgba(20,31,60,.08)}
+html.n2-night.n2-room[data-room="madrasa"] header.top{background:rgba(10,16,36,.92);border-bottom:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="madrasa"] .brand .n{background:#161C2C}
+html.n2-night.n2-room[data-room="madrasa"] .brand span{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="madrasa"] .backbtn{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] #mhero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="madrasa"] #mhero .tbar{background:rgba(10,16,36,.12)}
+html.n2-night.n2-room[data-room="madrasa"] .trk{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="madrasa"] .trk-head .tt span{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="madrasa"] .ringm{background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(22,28,44,.08) 0)}
+html.n2-night.n2-room[data-room="madrasa"] .ringm b{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] .trk-desc{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="madrasa"] .lessons{border-top:1px solid rgba(255,254,247,.07)}
+html.n2-night.n2-room[data-room="madrasa"] .les{border-bottom:1px solid rgba(255,254,247,.05)}
+html.n2-night.n2-room[data-room="madrasa"] .les .st{border:1.5px solid rgba(255,254,247,.15);color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="madrasa"] .les .mn{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="madrasa"] .cert-row span{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] .lbar{background:rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="madrasa"] .card{background:#0A1024;box-shadow:0 14px 40px rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="madrasa"] .card p.body{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="madrasa"] .lg{background:#0A1024;border:1.5px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="madrasa"] .lg .g{color:#FFFEF7}
+html.n2-night.n2-room[data-room="madrasa"] .lg .n{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] .lg .s{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="madrasa"] .pr{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="madrasa"] .pr .a{color:#FFFEF7}
+html.n2-night.n2-room[data-room="madrasa"] .pr .b{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="madrasa"] .stepsl li{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="madrasa"] .vplay.playing,html.n2-night.n2-room[data-room="pillars"] .vplay.playing,html.n2-night.n2-room[data-room="school"] .vplay.playing{background:#0F121A}
+html.n2-night.n2-room[data-room="madrasa"] .tipc{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="madrasa"] .nbtn.ghost{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] .qo{background:#0A1024;border:1.5px solid rgba(255,254,247,.14)}
+html.n2-night.n2-room[data-room="madrasa"] .qo.good{background:#0D1428}
+html.n2-night.n2-room[data-room="madrasa"] .qo.bad{background:#111A33}
+html.n2-night.n2-room[data-room="madrasa"] .qfb.no{color:#FF5136}
+html.n2-night.n2-room[data-room="madrasa"] #cert{background:linear-gradient(170deg,#0A1024,#FFF3D1);color:#FFFEF7}
+html.n2-night.n2-room[data-room="madrasa"] #cert .tname{color:#C19A1D}
+html.n2-night.n2-room[data-room="madrasa"] #cert .date{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="madrasa"] #cert .sealn{background:#161C2C}
+html.n2-night.n2-room[data-room="madrasa"] #cert-name{border:1.5px solid rgba(255,254,247,.2);background:#0A1024}
+html.n2-night.n2-room[data-room="madrasa"] .freeline{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="madrasa"] .mstrip{border-bottom:1px solid rgba(255,254,247,.08);background:#0A1024}
+html.n2-night.n2-room[data-room="madrasa"] .mstrip .brand .n{background:#161C2C}
+html.n2-night.n2-room[data-room="madrasa"] .mstrip .brand span span{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="pillars"] #phero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="pillars"] .col b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="pillars"] .hero-hadith{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="pillars"] .phead .whisper{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="pillars"] .pcard,html.n2-night.n2-room[data-room="school"] .pcard{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
+html.n2-night.n2-room[data-room="pillars"] .pcard p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="pillars"] .hadith,html.n2-night.n2-room[data-room="school"] .hadith{background:#0A1024;color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="pillars"] .fact{background:#0A1024}
+html.n2-night.n2-room[data-room="pillars"] .fact .l{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="pillars"] .ptime{background:rgba(10,16,36,.9)}
+html.n2-night.n2-room[data-room="pillars"] .ptime .nm{color:#FFFEF7}
+html.n2-night.n2-room[data-room="pillars"] .ptime .tm{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="pillars"] .coin{background:radial-gradient(circle at 34% 30%,#0A1024,transparent 55%),#111A33;border:1px solid rgba(255,254,247,.15)}
+html.n2-night.n2-room[data-room="pillars"] .coin.gold{background:radial-gradient(circle at 34% 30%,#0A1024,transparent 55%),linear-gradient(135deg,#C9A227,#F4D46A)}
+html.n2-night.n2-room[data-room="pillars"] .zcat{background:#0A1024;color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="pillars"] .zcalc label{color:#C19A1D}
+html.n2-night.n2-room[data-room="pillars"] #zin{border:1.5px solid rgba(255,254,247,.18);background:#0A1024}
+html.n2-night.n2-room[data-room="pillars"] .zcalc .fine{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="pillars"] .fastlabels{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="pillars"] .jstep{background:#0A1024;border:1px solid rgba(255,254,247,.09)}
+html.n2-night.n2-room[data-room="pillars"] .jstep span{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="pillars"] .stand{background:linear-gradient(165deg,#0A0D14,#171d31 60%,#1d2a45)}
+html.n2-night.n2-room[data-room="pillars"] .ih-bdcef76c.ih-bdcef76c.ih-bdcef76c,html.n2-night.n2-room[data-room="prophets"] .ih-bdcef76c.ih-bdcef76c.ih-bdcef76c{color:color-mix(in srgb, var(--ink,#FFFEF7) 60%, transparent)}
+html.n2-night.n2-room[data-room="prophets"] #phero{background:linear-gradient(178deg,#0A0D14,#0F121A 55%,#10172A 100%)}
+html.n2-night.n2-room[data-room="prophets"] .ptile{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="prophets"] .ptile:hover{box-shadow:0 12px 26px rgba(22,28,44,.12)}
+html.n2-night.n2-room[data-room="prophets"] .ptile.open{background:linear-gradient(165deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="prophets"] .ptile .meta{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="prophets"] .ptile .mns{background:#0D1428}
+html.n2-night.n2-room[data-room="prophets"] .art .inner{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.18),transparent 60%),linear-gradient(160deg,#0F121A,#121724);box-shadow:0 24px 60px rgba(10,13,20,.35)}
+html.n2-night.n2-room[data-room="prophets"] .vc{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="prophets"] .hc{background:rgba(10,16,36,.045)}
+html.n2-night.n2-room[data-room="prophets"] .fig .bar{background:rgba(10,16,36,.08)}
+html.n2-night.n2-room[data-room="prophets"] .cdot{background:rgba(10,16,36,.14)}
+html.n2-night.n2-room[data-room="prophets"] .split .sb{background:linear-gradient(90deg,rgba(110,122,155,.85),rgba(110,122,155,.55));color:#FFFEF7}
+html.n2-night.n2-room[data-room="prophets"] .ptile.rasul{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.30),transparent 62%),linear-gradient(165deg,#0A0D14,#121724)}
+html.n2-night.n2-room[data-room="prophets"] .rise-motes i{background:#111A33}
+html.n2-night.n2-room[data-room="prophets"] .alive-b i{background:#111A33}
+html.n2-night.n2-room[data-room="prophets"] .ih-4e4621e7.ih-4e4621e7.ih-4e4621e7{background:color-mix(in srgb, #0A1024 5%, transparent)}
+html.n2-night.n2-room[data-room="prophets"] .ih-ceb6a776.ih-ceb6a776.ih-ceb6a776{background:radial-gradient(circle at 50% 20%,rgba(201,162,39,.25),transparent 60%),linear-gradient(165deg,#0A0D14,#121724)}
+html.n2-night.n2-room[data-room="protection"] .claim b{color:#B686FF}
+html.n2-night.n2-room[data-room="protection"] .dua .trl{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="protection"] .dua .mean{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="protection"] .foot{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="protection"] .tells{background:#0A1024}
+html.n2-night.n2-room[data-room="protection"] .tl-print{border:1px solid rgba(255,254,247,.2);background:#0A1024;color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="protection"] .tl-print:hover{color:#FFFEF7}
+html.n2-night.n2-room[data-room="protection"] .tl-l{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="protection"] .tl-list li{color:rgba(255,254,247,.84)}
+html.n2-night.n2-room[data-room="protection"] .tl-list li+li{border-top:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="protection"] .plan{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="protection"] .pl dd{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="protection"] .week{background:#0A1024}
+html.n2-night.n2-room[data-room="protection"] .wgo-c:hover{box-shadow:0 5px 18px rgba(22,28,44,.07)}
+html.n2-night.n2-room[data-room="quran"] #qhero{background:linear-gradient(175deg,#0A0D14 0%,#0F121A 55%,#121724 100%)}
+html.n2-night.n2-room[data-room="quran"] .gview{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="quran"] .gview.on{background:#111A33}
+html.n2-night.n2-room[data-room="quran"] .glegend{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="quran"] .glegend b{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="quran"] #gate-count{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="quran"] .gate{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="quran"] .gate:hover{background:linear-gradient(168deg,#0A1024,#0A1024)}
+html.n2-night.n2-room[data-room="quran"] .gate.active{background:linear-gradient(160deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="quran"] .gate .seal{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)}
+html.n2-night.n2-room[data-room="quran"] .gate .gmn{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="quran"] .gchip.mk{background:#0D1428}
+html.n2-night.n2-room[data-room="quran"] .gchip.md{color:#FFFEF7;background:#0D1428}
+html.n2-night.n2-room[data-room="quran"] .gate .gct{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="quran"] .ayah .ar{color:#FFFEF7}
+html.n2-night.n2-room[data-room="quran"] .bismillah{color:#FFFEF7}
+html.n2-night.n2-room[data-room="quran"] .bismillah small{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="quran"] .tool{border:1px solid rgba(255,254,247,.14);color:rgba(255,254,247,.75);background:#0A1024}
+html.n2-night.n2-room[data-room="quran"] .tool.on{background:#111A33}
+html.n2-night.n2-room[data-room="quran"] .navarrow{border:1px solid rgba(255,254,247,.15);background:#0A1024}
+html.n2-night.n2-room[data-room="quran"] #surah-select{background:linear-gradient(160deg,#0A1024,#0A1024)}
+html.n2-night.n2-room[data-room="quran"] .skel{background:linear-gradient(90deg,rgba(22,28,44,.06),rgba(22,28,44,.12),rgba(22,28,44,.06));background-size:200% 100%}
+html.n2-night.n2-room[data-room="quran"] .sp{background:radial-gradient(circle at 50% 0%,rgba(201,162,39,.17),transparent 62%),linear-gradient(160deg,#0F121A,#121724)}
+html.n2-night.n2-room[data-room="quran"] .sp-heart{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="quran"] .sp-theme{background:rgba(10,16,36,.045)}
+html.n2-night.n2-room[data-room="quran"] .sp-btn{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="quran"] .sp-virtue{background:rgba(10,16,36,.045)}
+html.n2-night.n2-room[data-room="quran"] .sp-badge.ok{background:rgba(110,122,155,.14)}
+html.n2-night.n2-room[data-room="quran"] .mvnum{fill:#FFFEF7}
+html.n2-night.n2-room[data-room="quran"] #player{background:linear-gradient(180deg,#11151F,#0A0D14);box-shadow:0 -10px 34px rgba(10,13,20,.45)}
+html.n2-night.n2-room[data-room="quran"] .pbtn.main{box-shadow:0 4px 18px rgba(201,162,39,.45),inset 0 1px 0 rgba(10,16,36,.35)}
+html.n2-night.n2-room[data-room="quran"] .pbtn.main:hover{box-shadow:0 8px 26px rgba(201,162,39,.62),inset 0 1px 0 rgba(10,16,36,.35)}
+html.n2-night.n2-room[data-room="quran"] .olang{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="quran"] #p-pill{background:linear-gradient(160deg,#121724,#0A0D14);box-shadow:0 8px 24px rgba(10,13,20,.35)}
+html.n2-night.n2-room[data-room="quran"] .vw{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="quran"] .vw b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="quran"] .vw em{color:rgba(255,254,247,.58)}
+html.n2-night.n2-room[data-room="quran"] .vsense{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="quran"] .vnote{border-top:1px dashed rgba(255,254,247,.13)}
+html.n2-night.n2-room[data-room="quran"] .vnote p{color:rgba(255,254,247,.74)}
+html.n2-night.n2-room[data-room="quran"] .vsrc{color:rgba(255,254,247,.48)}
+html.n2-night.n2-room[data-room="quran"] .vlinks{border-top:1px dashed rgba(255,254,247,.13)}
+html.n2-night.n2-room[data-room="quran"] .vlinks h6{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="quran"] .vlink{background:#0A1024;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="quran"] .vnone,html.n2-night.n2-room[data-room="quran"] .vwait{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="quran"] .ayah.playing .ar .w.now{color:#FFFEF7}
+html.n2-night.n2-room[data-room="quran"] .ayah .trans{color:rgba(255,254,247,.94)}
+html.n2-night.n2-room[data-room="quran"] .vact{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="quran"] #q-toast{background:#0F121A;box-shadow:0 10px 30px rgba(10,13,20,.35)}
+html.n2-night.n2-room[data-room="quran"] #qnav .tlab{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="quran"] #q-pick{background:linear-gradient(160deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="quran"] #s-scrim{background:rgba(10,13,20,.55)}
+html.n2-night.n2-room[data-room="quran"] #s-sheet{background:#0A1024;box-shadow:0 -18px 50px rgba(10,13,20,.4)}
+html.n2-night.n2-room[data-room="quran"] #s-sheet .sh-top{border-bottom:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="quran"] #s-search{background:#0A1024;border:1px solid rgba(255,254,247,.15)}
+html.n2-night.n2-room[data-room="quran"] #s-close{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="quran"] .srow:hover{background:#0A1024}
+html.n2-night.n2-room[data-room="quran"] .srow.on{background:linear-gradient(160deg,#0A1024,#FFF1CE)}
+html.n2-night.n2-room[data-room="quran"] .srow .sn{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)}
+html.n2-night.n2-room[data-room="quran"] .srow .st span{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="quran"] .snone{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="quran"] .ih-41c4c868.ih-41c4c868.ih-41c4c868{background:linear-gradient(160deg,#0A0D14,#121724)}
+html.n2-night.n2-room[data-room="quran"] .ih-fff7d1a6.ih-fff7d1a6.ih-fff7d1a6{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#0A0D14,#121724)}
+html.n2-night.n2-room[data-room="ramadan"] .st-rest{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="ramadan"] .st-t{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="ramadan"] .st-s{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten .st-rest{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="ramadan"] .klist.rest .krl:hover{border-color:rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .stop{background:linear-gradient(166deg,#0A0D14,#182142 62%,#1F2C52)}
+html.n2-night.n2-room[data-room="ramadan"] .stop.now{background:linear-gradient(166deg,#0C101C,#25204A 60%,#33285C)}
+html.n2-night.n2-room[data-room="ramadan"] .eidlink{background:linear-gradient(166deg,#0E1322,#1D2742 58%,#6A2F4E)}
+html.n2-night.n2-room[data-room="ramadan"] .eidlink:hover{box-shadow:0 16px 38px rgba(22,32,58,.28)}
+html.n2-night.n2-room[data-room="ramadan"] .prep-c{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="ramadan"] .prep-bar{background:rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="ramadan"] .prl{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .px{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="ramadan"] .prl input:checked~.pt b{color:rgba(255,254,247,.36)}
+html.n2-night.n2-room[data-room="ramadan"] .today{box-shadow:0 10px 34px rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="ramadan"] .t-day{background:linear-gradient(158deg,#0A0D14,#20304f)}
+html.n2-night.n2-room[data-room="ramadan"] .t-greg{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="ramadan"] .dnav{border:1px solid rgba(255,254,247,.16);background:#0A1024;color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="ramadan"] .dnav:hover{color:#FFFEF7}
+html.n2-night.n2-room[data-room="ramadan"] .t-win{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="ramadan"] .tw-s{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="ramadan"] .t-loc{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .t-loc-l{color:rgba(255,254,247,.58)}
+html.n2-night.n2-room[data-room="ramadan"] .tf label{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .tf input,html.n2-night.n2-room[data-room="ramadan"] .tf select{border:1px solid rgba(255,254,247,.18);background:#0A1024;color:#FFFEF7}
+html.n2-night.n2-room[data-room="ramadan"] .tf-h{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .t-ref{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .d-tr{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .d-t{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="ramadan"] .t-off{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .t-off-k{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .t-off-l{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .alld{border:1px solid rgba(255,254,247,.12);background:#0A1024}
+html.n2-night.n2-room[data-room="ramadan"] .alld summary{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="ramadan"] .ad-list li{border-top:1px solid rgba(255,254,247,.07)}
+html.n2-night.n2-room[data-room="ramadan"] .ad-list p{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="ramadan"] .kp-c{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="ramadan"] .kp-bar{background:rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="ramadan"] .kp-l{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="ramadan"] .kp-reset{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="ramadan"] .kp-reset:hover{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="ramadan"] .krl{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="ramadan"] .ks{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="ramadan"] .kx{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="ramadan"] .krl input:checked~.kt b,html.n2-night.n2-room[data-room="ramadan"] .krl input:checked~.kn{color:rgba(255,254,247,.36)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten{background:linear-gradient(172deg,#0A0D14,#161f38 62%,#1d2947)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten .card{background:rgba(10,16,36,.045)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten .fig{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.14)}
+html.n2-night.n2-room[data-room="ramadan"] .rsec.ten .evb.editorial{border-color:rgba(10,16,36,.24);background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="school"] #shero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="school"] .sub{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="school"] .pcard p{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="school"] .stage{background:#0A1024}
+html.n2-night.n2-room[data-room="school"] .stage>summary .st span{color:rgba(255,254,247,.55)}
+html.n2-night.n2-room[data-room="school"] .trait{background:#0D1428;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="school"] .subj{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="school"] .subj b{color:#C19A1D}
+html.n2-night.n2-room[data-room="school"] .subj ul{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="school"] .wday{background:#0A1024}
+html.n2-night.n2-room[data-room="school"] .wday .w{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="school"] .live{background:linear-gradient(150deg,#0A0D14,#1d2a45)}
+html.n2-night.n2-room[data-room="school"] .live a.lt{background:rgba(10,16,36,.08)}
+html.n2-night.n2-room[data-room="school"] .miles ul{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="school"] .proj{background:#0A1024}
+html.n2-night.n2-room[data-room="school"] .proj p{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="school"] .proj .lvl{background:#0D1428;color:#659FF6}
+html.n2-night.n2-room[data-room="school"] .dd-mega .mp{background:#0A1024;border:1px solid rgba(255,254,247,.1);box-shadow:0 28px 64px rgba(22,28,44,.22)}
+html.n2-night.n2-room[data-room="school"] .dd-mega a{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="school"] .dd-mega a:hover{background:#0D1428;color:#FFFEF7}
+html.n2-night.n2-room[data-room="sermon"] .evb.mixed,html.n2-night.n2-room[data-room="soul"] .evb.mixed{color:#4DA9D9}
+html.n2-night.n2-room[data-room="sermon"] .card.pass{box-shadow:0 6px 26px rgba(22,28,44,.055)}
+html.n2-night.n2-room[data-room="sermon"] .pass p{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="sermon"] .words .wa{color:#FFFEF7}
+html.n2-night.n2-room[data-room="sermon"] .words .we{color:rgba(255,254,247,.9)}
+html.n2-night.n2-room[data-room="sermon"] .aside{background:rgba(22,28,44,.03);border:1px dashed rgba(255,254,247,.2)}
+html.n2-night.n2-room[data-room="sermon"] .aside .as-k{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="sermon"] .aside p{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="sermon"] .beside .bt{color:rgba(255,254,247,.62)}
+html.n2-night.n2-room[data-room="sermon"] .qe{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="simulation"] .brk .b{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="simulation"] .brk .b h4{color:#FFFEF7}
+html.n2-night.n2-room[data-room="simulation"] .brk .b p{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="soul"] .stop{background:linear-gradient(168deg,#0A1024,#0D1428)}
+html.n2-night.n2-room[data-room="soul"] .stop p{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="theology"] #thero{background:linear-gradient(178deg,#0A0D14,#161c2c 60%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="theology"] .card p,html.n2-night.n2-room[data-room="theology"] .card li{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="theology"] .prose p{color:rgba(255,254,247,.8)}
+html.n2-night.n2-room[data-room="theology"] .trunk .lbl{color:rgba(255,254,247,.65)}
+html.n2-night.n2-room[data-room="theology"] .trunk .bar{background:rgba(22,28,44,.08)}
+html.n2-night.n2-room[data-room="theology"] .epoch p{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="theology"] .ih-069b811d.ih-069b811d.ih-069b811d{background:radial-gradient(circle at 50% 20%,rgba(51,80,124,.4),transparent 60%),linear-gradient(165deg,#0A0D14,#1d2a45)}
+html.n2-night.n2-room[data-room="three-lives"] .raw{color:rgba(255,254,247,.88)}
+html.n2-night.n2-room[data-room="three-lives"] .raw b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="three-lives"] .dark{background:linear-gradient(172deg,#0A0D14,#10131A)}
+html.n2-night.n2-room[data-room="three-lives"] .door{background:linear-gradient(170deg,#0A0D14,#1b2440)}
+html.n2-night.n2-room[data-room="three-lives"] .tick span.nf i{border-color:rgba(10,16,36,.3);background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="three-lives"] .floor li{color:rgba(255,254,247,.84)}
+html.n2-night.n2-room[data-room="three-lives"] .floor li b{color:#FFFEF7}
+html.n2-night.n2-room[data-room="three-lives"] .yr i{background:rgba(10,16,36,.09)}
+html.n2-night.n2-room[data-room="unseen"] .ev-debated{color:#C19A1D}
+html.n2-night.n2-room[data-room="unseen"] .ev-corrected{color:#F48367}
+html.n2-night.n2-room[data-room="unseen"] .ev-mixed{color:#FFFEF7;border-color:rgba(255,254,247,.35);background:rgba(55,60,74,.06)}
+html.n2-night.n2-room[data-room="unseen"] .evp{background:#0D1428}
+html.n2-night.n2-room[data-room="unseen"] .evp .cl{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="unseen"] .evp .bound{color:#F48367}
+html.n2-night.n2-room[data-room="unseen"] .evp .note{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="unseen"] .ref{color:rgba(255,254,247,.55);background:rgba(22,28,44,.05);border:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="unseen"] .lgd{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="unseen"] .lg-r{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="unseen"] .lg-f{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="unseen"] .ufs{background:rgba(10,16,36,.93);border-bottom:1px solid rgba(255,254,247,.08)}
+html.n2-night.n2-room[data-room="unseen"] .uf{color:rgba(255,254,247,.55);border:1px solid rgba(255,254,247,.13);background:#0A1024}
+html.n2-night.n2-room[data-room="unseen"] .uf:hover{color:#FFFEF7}
+html.n2-night.n2-room[data-room="unseen"] .ug-c{background:rgba(10,16,36,.12);border:1px solid rgba(10,16,36,.24)}
+html.n2-night.n2-room[data-room="unseen"] .g-angels{background:radial-gradient(120% 130% at 18% 0%,rgba(233,200,106,.34),transparent 52%),linear-gradient(140deg,#161C2C,#1E2A4A 60%,#161C2C)}
+html.n2-night.n2-room[data-room="unseen"] .g-jinn{background:radial-gradient(120% 130% at 30% 0%,rgba(146,64,14,.44),transparent 55%),linear-gradient(140deg,#17181C,#12192E 60%,#17181C)}
+html.n2-night.n2-room[data-room="unseen"] .g-peoples{background:radial-gradient(120% 130% at 74% 0%,rgba(160,140,96,.32),transparent 55%),linear-gradient(140deg,#16181F,#222838 62%,#16181F)}
+html.n2-night.n2-room[data-room="unseen"] .g-signs{background:radial-gradient(1.4px 1.4px at 12% 30%,rgba(10,16,36,.8),transparent 55%),radial-gradient(1.2px 1.2px at 34% 14%,rgba(10,16,36,.7),transparent 55%),radial-gradient(1.6px 1.6px at 58% 38%,rgba(10,16,36,.62),transparent 55%),radial-gradient(1.2px 1.2px at 78% 18%,rgba(10,16,36,.75),transparent 55%),radial-gradient(130% 150% at 50% -18%,rgba(124,58,237,.3),transparent 58%),linear-gradient(150deg,#0B0912,#101830 70%,#0B0912)}
+html.n2-night.n2-room[data-room="unseen"] .ut-b{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="unseen"] .ut-b:hover{box-shadow:0 14px 30px rgba(20,31,60,.1)}
+html.n2-night.n2-room[data-room="unseen"] .ut-cat{color:rgba(255,254,247,.42)}
+html.n2-night.n2-room[data-room="unseen"] .ut-hook{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="unseen"] .um-back{background:radial-gradient(120% 100% at 50% 0%,rgba(12,17,30,.55),rgba(6,8,12,.84))}
+html.n2-night.n2-room[data-room="unseen"] .umw{background:#0A1024;box-shadow:0 40px 90px rgba(10,13,20,.45)}
+html.n2-night.n2-room[data-room="unseen"] .um-rule{background:repeating-linear-gradient(90deg,rgba(201,162,39,.9) 0 14px,rgba(30,58,138,.75) 14px 18px,rgba(201,162,39,.9) 18px 32px,rgba(136,144,168,.8) 32px 36px)}
+html.n2-night.n2-room[data-room="unseen"] .um-x{border:1px solid rgba(255,254,247,.14);background:#0A1024;color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="unseen"] .um-x:hover{background:#161C2C;border-color:#FFFEF7}
+html.n2-night.n2-room[data-room="unseen"] .um-foot{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="unseen"] .ub-hook{color:rgba(255,254,247,.6)}
+html.n2-night.n2-room[data-room="unseen"] .ub-p p{color:rgba(255,254,247,.84)}
+html.n2-night.n2-room[data-room="unseen"] .ub-src{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="unseen"] .ub-src>b{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="unseen"] .fig .cap .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.16)}
+html.n2-night.n2-room[data-room="unseen"] .ember-p{background:radial-gradient(130% 120% at 50% 110%,rgba(201,88,20,.35),transparent 58%),linear-gradient(178deg,#0A0D14,#10172A)}
+html.n2-night.n2-room[data-room="unseen"] .night-p{background:radial-gradient(130% 130% at 50% -10%,rgba(96,132,214,.28),transparent 58%),linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45)}
+html.n2-night.n2-room[data-room="unseen"] .feat-a{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="unseen"] .stars{background:radial-gradient(1.4px 1.4px at 14% 22%,rgba(10,16,36,.75),transparent 55%),radial-gradient(1.2px 1.2px at 32% 62%,rgba(10,16,36,.6),transparent 55%),radial-gradient(1.5px 1.5px at 58% 18%,rgba(10,16,36,.7),transparent 55%),radial-gradient(1.2px 1.2px at 76% 48%,rgba(10,16,36,.55),transparent 55%),radial-gradient(1.4px 1.4px at 88% 26%,rgba(10,16,36,.65),transparent 55%)}
+html.n2-night.n2-room[data-room="unseen"] .chp{background:rgba(10,16,36,.05)}
+html.n2-night.n2-room[data-room="unseen"] .chp[open]{background:rgba(10,16,36,.07)}
+html.n2-night.n2-room[data-room="unseen"] .chp-r .ref{background:rgba(10,16,36,.07);border-color:rgba(10,16,36,.16)}
+html.n2-night.n2-room[data-room="unseen"] .chp .ev{background:rgba(10,16,36,.06)}
+html.n2-night.n2-room[data-room="unseen"] .chp .ev-mixed{border-color:rgba(17,26,51,.4)}
+html.n2-night.n2-room[data-room="unseen"] .chp .ev-editorial{border-color:rgba(17,26,51,.35)}
 html.n2-night.n2-room[data-room="ar"] body,html.n2-night.n2-room[data-room="bn"] body,html.n2-night.n2-room[data-room="de"] body,html.n2-night.n2-room[data-room="es"] body,html.n2-night.n2-room[data-room="fa"] body,html.n2-night.n2-room[data-room="fr"] body,html.n2-night.n2-room[data-room="ha"] body,html.n2-night.n2-room[data-room="hi"] body,html.n2-night.n2-room[data-room="id"] body,html.n2-night.n2-room[data-room="ja"] body,html.n2-night.n2-room[data-room="ko"] body,html.n2-night.n2-room[data-room="ku"] body,html.n2-night.n2-room[data-room="masjid/setup"] body,html.n2-night.n2-room[data-room="pa"] body,html.n2-night.n2-room[data-room="prs"] body,html.n2-night.n2-room[data-room="ps"] body,html.n2-night.n2-room[data-room="ru"] body,html.n2-night.n2-room[data-room="so"] body,html.n2-night.n2-room[data-room="sw"] body,html.n2-night.n2-room[data-room="tr"] body,html.n2-night.n2-room[data-room="ur"] body,html.n2-night.n2-room[data-room="zh"] body{background:#0A1024;color:#FFFEF7}
 html.n2-night.n2-room[data-room="ar"] main p,html.n2-night.n2-room[data-room="bn"] main p,html.n2-night.n2-room[data-room="de"] main p,html.n2-night.n2-room[data-room="es"] main p,html.n2-night.n2-room[data-room="fa"] main p,html.n2-night.n2-room[data-room="fr"] main p,html.n2-night.n2-room[data-room="ha"] main p,html.n2-night.n2-room[data-room="hi"] main p,html.n2-night.n2-room[data-room="id"] main p,html.n2-night.n2-room[data-room="ja"] main p,html.n2-night.n2-room[data-room="ko"] main p,html.n2-night.n2-room[data-room="ku"] main p,html.n2-night.n2-room[data-room="pa"] main p,html.n2-night.n2-room[data-room="prs"] main p,html.n2-night.n2-room[data-room="ps"] main p,html.n2-night.n2-room[data-room="ru"] main p,html.n2-night.n2-room[data-room="so"] main p,html.n2-night.n2-room[data-room="sw"] main p,html.n2-night.n2-room[data-room="tr"] main p,html.n2-night.n2-room[data-room="ur"] main p,html.n2-night.n2-room[data-room="zh"] main p{color:rgba(255,254,247,.8)}
-html.n2-night.n2-room .rooms a{background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .note{color:rgba(255,254,247,.55);background:#0A1024}
-html.n2-night.n2-room .langs{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .before{background:#0A1024;border:1px solid rgba(255,254,247,.13);box-shadow:0 2px 10px rgba(22,28,44,.04)}
-html.n2-night.n2-room .before p{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .epi{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .mv h2{color:#FFFEF7}
-html.n2-night.n2-room .mv p{color:rgba(255,254,247,.87)}
-html.n2-night.n2-room .honest p{color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .honest strong{color:#FFFEF7}
-html.n2-night.n2-room .hallnote{color:rgba(255,254,247,.4)}
-html.n2-night.n2-room .door{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
-html.n2-night.n2-room .door:hover{box-shadow:0 14px 30px rgba(22,28,44,.09)}
-html.n2-night.n2-room .door .tr em{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .door h3{color:#FFFEF7}
-html.n2-night.n2-room .door .set{color:rgba(255,254,247,.63)}
-html.n2-night.n2-room .door .note{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .door .wc{color:rgba(255,254,247,.38)}
-html.n2-night.n2-room .close{border-top:1px solid rgba(255,254,247,.1)}
-html.n2-night.n2-room .close p{color:rgba(255,254,247,.68)}
-html.n2-night.n2-room .freeline{color:rgba(255,254,247,.72)}
-html.n2-night.n2-room .tool{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
-html.n2-night.n2-room .tool:hover{box-shadow:0 16px 34px rgba(22,28,44,.1)}
-html.n2-night.n2-room .tool .one{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .tool .meta dd{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .tool.lead{background:linear-gradient(180deg,#0A1024,#0A1024)}
-html.n2-night.n2-room #timebar{background:rgba(10,16,36,.94)}
-html.n2-night.n2-room .part{background:#0A1024}
-html.n2-night.n2-room .part .guide{color:rgba(255,254,247,.66)}
-html.n2-night.n2-room .check{color:rgba(255,254,247,.82);border-bottom:1px solid rgba(255,254,247,.06)}
-html.n2-night.n2-room .srule{border-top:1px solid rgba(255,254,247,.07)}
-html.n2-night.n2-room .srule p{color:rgba(255,254,247,.7)}
-html.n2-night.n2-room .pagenote{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .rose .ring{stroke:rgba(255,254,247,.3)}
-html.n2-night.n2-room .rose .tick{stroke:rgba(255,254,247,.38)}
-html.n2-night.n2-room .rose .tick.maj{stroke:rgba(255,254,247,.7)}
-html.n2-night.n2-room .rose .lab{fill:rgba(255,254,247,.7)}
-html.n2-night.n2-room .rose .kaaba{fill:#FFFEF7}
-html.n2-night.n2-room .rose .hub{fill:#FFFEF7}
-html.n2-night.n2-room .hero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
-html.n2-night.n2-room .card{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
+html.n2-night.n2-room[data-room="ar"] .rooms a,html.n2-night.n2-room[data-room="bn"] .rooms a,html.n2-night.n2-room[data-room="de"] .rooms a,html.n2-night.n2-room[data-room="es"] .rooms a,html.n2-night.n2-room[data-room="fa"] .rooms a,html.n2-night.n2-room[data-room="fr"] .rooms a,html.n2-night.n2-room[data-room="ha"] .rooms a,html.n2-night.n2-room[data-room="hi"] .rooms a,html.n2-night.n2-room[data-room="id"] .rooms a,html.n2-night.n2-room[data-room="ja"] .rooms a,html.n2-night.n2-room[data-room="ko"] .rooms a,html.n2-night.n2-room[data-room="ku"] .rooms a,html.n2-night.n2-room[data-room="pa"] .rooms a,html.n2-night.n2-room[data-room="prs"] .rooms a,html.n2-night.n2-room[data-room="ps"] .rooms a,html.n2-night.n2-room[data-room="ru"] .rooms a,html.n2-night.n2-room[data-room="so"] .rooms a,html.n2-night.n2-room[data-room="sw"] .rooms a,html.n2-night.n2-room[data-room="tr"] .rooms a,html.n2-night.n2-room[data-room="ur"] .rooms a,html.n2-night.n2-room[data-room="zh"] .rooms a{background:#0A1024;color:#FFFEF7}
+html.n2-night.n2-room[data-room="ar"] .note,html.n2-night.n2-room[data-room="bn"] .note,html.n2-night.n2-room[data-room="de"] .note,html.n2-night.n2-room[data-room="es"] .note,html.n2-night.n2-room[data-room="fa"] .note,html.n2-night.n2-room[data-room="fr"] .note,html.n2-night.n2-room[data-room="ha"] .note,html.n2-night.n2-room[data-room="hi"] .note,html.n2-night.n2-room[data-room="id"] .note,html.n2-night.n2-room[data-room="ja"] .note,html.n2-night.n2-room[data-room="ko"] .note,html.n2-night.n2-room[data-room="ku"] .note,html.n2-night.n2-room[data-room="pa"] .note,html.n2-night.n2-room[data-room="prs"] .note,html.n2-night.n2-room[data-room="ps"] .note,html.n2-night.n2-room[data-room="ru"] .note,html.n2-night.n2-room[data-room="so"] .note,html.n2-night.n2-room[data-room="sw"] .note,html.n2-night.n2-room[data-room="tr"] .note,html.n2-night.n2-room[data-room="ur"] .note,html.n2-night.n2-room[data-room="zh"] .note{color:rgba(255,254,247,.55);background:#0A1024}
+html.n2-night.n2-room[data-room="ar"] .langs,html.n2-night.n2-room[data-room="bn"] .langs,html.n2-night.n2-room[data-room="de"] .langs,html.n2-night.n2-room[data-room="es"] .langs,html.n2-night.n2-room[data-room="fa"] .langs,html.n2-night.n2-room[data-room="fr"] .langs,html.n2-night.n2-room[data-room="ha"] .langs,html.n2-night.n2-room[data-room="hi"] .langs,html.n2-night.n2-room[data-room="id"] .langs,html.n2-night.n2-room[data-room="ja"] .langs,html.n2-night.n2-room[data-room="ko"] .langs,html.n2-night.n2-room[data-room="ku"] .langs,html.n2-night.n2-room[data-room="pa"] .langs,html.n2-night.n2-room[data-room="prs"] .langs,html.n2-night.n2-room[data-room="ps"] .langs,html.n2-night.n2-room[data-room="ru"] .langs,html.n2-night.n2-room[data-room="so"] .langs,html.n2-night.n2-room[data-room="sw"] .langs,html.n2-night.n2-room[data-room="tr"] .langs,html.n2-night.n2-room[data-room="ur"] .langs,html.n2-night.n2-room[data-room="zh"] .langs{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="stories/adl"] .before,html.n2-night.n2-room[data-room="stories/ghaffar"] .before,html.n2-night.n2-room[data-room="stories/hadi"] .before,html.n2-night.n2-room[data-room="stories/jabbar"] .before,html.n2-night.n2-room[data-room="stories/razzaq"] .before,html.n2-night.n2-room[data-room="stories/sabur"] .before,html.n2-night.n2-room[data-room="stories/shakur"] .before,html.n2-night.n2-room[data-room="stories/wadud"] .before{background:#0A1024;border:1px solid rgba(255,254,247,.13);box-shadow:0 2px 10px rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="stories/adl"] .before p,html.n2-night.n2-room[data-room="stories/ghaffar"] .before p,html.n2-night.n2-room[data-room="stories/hadi"] .before p,html.n2-night.n2-room[data-room="stories/jabbar"] .before p,html.n2-night.n2-room[data-room="stories/razzaq"] .before p,html.n2-night.n2-room[data-room="stories/sabur"] .before p,html.n2-night.n2-room[data-room="stories/shakur"] .before p,html.n2-night.n2-room[data-room="stories/wadud"] .before p{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="stories/adl"] .epi,html.n2-night.n2-room[data-room="stories/ghaffar"] .epi,html.n2-night.n2-room[data-room="stories/hadi"] .epi,html.n2-night.n2-room[data-room="stories/jabbar"] .epi,html.n2-night.n2-room[data-room="stories/razzaq"] .epi,html.n2-night.n2-room[data-room="stories/sabur"] .epi,html.n2-night.n2-room[data-room="stories/shakur"] .epi,html.n2-night.n2-room[data-room="stories/wadud"] .epi{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="stories/adl"] .mv h2,html.n2-night.n2-room[data-room="stories/ghaffar"] .mv h2,html.n2-night.n2-room[data-room="stories/hadi"] .mv h2,html.n2-night.n2-room[data-room="stories/jabbar"] .mv h2,html.n2-night.n2-room[data-room="stories/razzaq"] .mv h2,html.n2-night.n2-room[data-room="stories/sabur"] .mv h2,html.n2-night.n2-room[data-room="stories/shakur"] .mv h2,html.n2-night.n2-room[data-room="stories/wadud"] .mv h2{color:#FFFEF7}
+html.n2-night.n2-room[data-room="stories/adl"] .mv p,html.n2-night.n2-room[data-room="stories/ghaffar"] .mv p,html.n2-night.n2-room[data-room="stories/hadi"] .mv p,html.n2-night.n2-room[data-room="stories/jabbar"] .mv p,html.n2-night.n2-room[data-room="stories/razzaq"] .mv p,html.n2-night.n2-room[data-room="stories/sabur"] .mv p,html.n2-night.n2-room[data-room="stories/shakur"] .mv p,html.n2-night.n2-room[data-room="stories/wadud"] .mv p{color:rgba(255,254,247,.87)}
+html.n2-night.n2-room[data-room="stories"] .honest p{color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="stories"] .honest strong{color:#FFFEF7}
+html.n2-night.n2-room[data-room="stories"] .hallnote{color:rgba(255,254,247,.4)}
+html.n2-night.n2-room[data-room="stories"] .door{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="stories"] .door:hover{box-shadow:0 14px 30px rgba(22,28,44,.09)}
+html.n2-night.n2-room[data-room="stories"] .door .tr em{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="stories"] .door h3{color:#FFFEF7}
+html.n2-night.n2-room[data-room="stories"] .door .set{color:rgba(255,254,247,.63)}
+html.n2-night.n2-room[data-room="stories"] .door .note{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="stories"] .door .wc{color:rgba(255,254,247,.38)}
+html.n2-night.n2-room[data-room="stories"] .close{border-top:1px solid rgba(255,254,247,.1)}
+html.n2-night.n2-room[data-room="stories"] .close p{color:rgba(255,254,247,.68)}
+html.n2-night.n2-room[data-room="masjid"] .freeline{color:rgba(255,254,247,.72)}
+html.n2-night.n2-room[data-room="masjid"] .tool{background:#0A1024;border:1px solid rgba(255,254,247,.12);box-shadow:0 2px 10px rgba(22,28,44,.04)}
+html.n2-night.n2-room[data-room="masjid"] .tool:hover{box-shadow:0 16px 34px rgba(22,28,44,.1)}
+html.n2-night.n2-room[data-room="masjid"] .tool .one{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="masjid"] .tool .meta dd{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="masjid"] .tool.lead{background:linear-gradient(180deg,#0A1024,#0A1024)}
+html.n2-night.n2-room[data-room="masjid/khutba"] #timebar{background:rgba(10,16,36,.94)}
+html.n2-night.n2-room[data-room="masjid/khutba"] .part{background:#0A1024}
+html.n2-night.n2-room[data-room="masjid/khutba"] .part .guide{color:rgba(255,254,247,.66)}
+html.n2-night.n2-room[data-room="masjid/khutba"] .check{color:rgba(255,254,247,.82);border-bottom:1px solid rgba(255,254,247,.06)}
+html.n2-night.n2-room[data-room="masjid/khutba"] .srule{border-top:1px solid rgba(255,254,247,.07)}
+html.n2-night.n2-room[data-room="masjid/khutba"] .srule p{color:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .pagenote,html.n2-night.n2-room[data-room="masjid/timetable"] .pagenote{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .ring{stroke:rgba(255,254,247,.3)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .tick{stroke:rgba(255,254,247,.38)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .tick.maj{stroke:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .lab{fill:rgba(255,254,247,.7)}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .kaaba{fill:#FFFEF7}
+html.n2-night.n2-room[data-room="masjid/qibla"] .rose .hub{fill:#FFFEF7}
+html.n2-night.n2-room[data-room="masjid/setup"] .hero{background:linear-gradient(178deg,#0A0D14,#151b2e 55%,#1d2a45 100%)}
+html.n2-night.n2-room[data-room="masjid/setup"] .card{background:#0A1024;border:1px solid rgba(255,254,247,.12)}
 html.n2-night.n2-room[data-room="masjid/setup"] label{color:#C2982A}
 html.n2-night.n2-room[data-room="masjid/setup"] input,html.n2-night.n2-room[data-room="masjid/setup"] select,html.n2-night.n2-room[data-room="masjid/setup"] textarea{background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .hint{color:rgba(255,254,247,.5)}
-html.n2-night.n2-room .ghost{color:#C19A1D}
-html.n2-night.n2-room #linkbox{background:#0A0D14}
-html.n2-night.n2-room .preview{border:1px solid rgba(255,254,247,.15)}
-html.n2-night.n2-room .steps{color:rgba(255,254,247,.78)}
-html.n2-night.n2-room .qib{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .qib b{color:#C19A1D}
-html.n2-night.n2-room .jrow{background:#0A1024}
-html.n2-night.n2-room .prevrow{color:rgba(255,254,247,.75)}
-html.n2-night.n2-room .jwarn{color:#FF5050}
-html.n2-night.n2-room .jauto{color:#C19A1D}
-html.n2-night.n2-room .tsel,html.n2-night.n2-room .msel{border:1px solid rgba(255,254,247,.2);background:#0A1024;color:#FFFEF7}
-html.n2-night.n2-room .ck label{border-bottom:1px solid rgba(255,254,247,.06);color:rgba(255,254,247,.82)}
-html.n2-night.n2-room .ckmark{color:rgba(255,254,247,.45)}
+html.n2-night.n2-room[data-room="masjid/setup"] .hint{color:rgba(255,254,247,.5)}
+html.n2-night.n2-room[data-room="masjid/setup"] .ghost{color:#C19A1D}
+html.n2-night.n2-room[data-room="masjid/setup"] #linkbox{background:#0A0D14}
+html.n2-night.n2-room[data-room="masjid/setup"] .preview{border:1px solid rgba(255,254,247,.15)}
+html.n2-night.n2-room[data-room="masjid/setup"] .steps{color:rgba(255,254,247,.78)}
+html.n2-night.n2-room[data-room="masjid/setup"] .qib{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="masjid/setup"] .qib b{color:#C19A1D}
+html.n2-night.n2-room[data-room="masjid/setup"] .jrow{background:#0A1024}
+html.n2-night.n2-room[data-room="masjid/setup"] .prevrow{color:rgba(255,254,247,.75)}
+html.n2-night.n2-room[data-room="masjid/setup"] .jwarn{color:#FF5050}
+html.n2-night.n2-room[data-room="masjid/setup"] .jauto{color:#C19A1D}
+html.n2-night.n2-room[data-room="masjid/setup"] .tsel,html.n2-night.n2-room[data-room="masjid/setup"] .msel{border:1px solid rgba(255,254,247,.2);background:#0A1024;color:#FFFEF7}
+html.n2-night.n2-room[data-room="masjid/start"] .ck label{border-bottom:1px solid rgba(255,254,247,.06);color:rgba(255,254,247,.82)}
+html.n2-night.n2-room[data-room="masjid/start"] .ckmark{color:rgba(255,254,247,.45)}
