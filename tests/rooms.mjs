@@ -111,6 +111,41 @@ ok(rendered.path.includes("Adam from Clay") && rendered.path.includes('href="/pa
 ok(!rendered.path.includes("/assets/manuscripts/adam.jpg"), "chapter 2's plate is held back (a face in profile)");
 { const r3 = await call({ kind: "path", n: "3" }); ok(r3.body.includes("/assets/manuscripts/hawwa-garden.jpg"), "chapter 3's plate is used because the file exists and shows no face"); }
 ok(rendered.path.includes("Muslim 854") && rendered.path.includes("/verse/2-30"), "the chapter carries its narration and links its verse");
+/* The seven periods are named and described in i18n/en.json under the ui
+   shelf, and api/page.js used to read the pack from the outside, so /path
+   headed its seven sections "bidaya", "qisas", "jahiliyyah" and every
+   chapter said "chapter 55 of 71 - nihaya". Fourteen keys in twenty-one
+   languages, live on seventy-two pages, saying nothing. */
+ok(/chapter 2 of 71 · Al-Bidaya/.test(rendered.path), "the chapter names its period, not its slug");
+{
+  const heads = [...rendered.paths.matchAll(/<h2 class="n2-h3">([^<]*)<\/h2>/g)].map(m => m[1]);
+  ok(heads.join("|") === "Al-Bidaya|Qisas al-Anbiya|Al-Jahiliyyah|Al-Seerah|Al-Khulafa|Al-Umam|Al-Nihaya", "the Path's seven sections are named (" + heads.join(", ") + ")");
+  ok(!heads.some(h => /^[a-z]+$/.test(h)), "and not one of them is a raw slug");
+  ok((rendered.paths.match(/<h2 class="n2-h3">[^<]*<\/h2>\n<p class="n2-dim">/g) || []).length === 7, "each section carries its description");
+}
+/* Nineteen chapters of Al-Nihaya carry the order of the Hour: where each
+   falls, the events inside it, and on three of them what shields you.
+   A hundred and eighteen sourced events that no page drew until now. */
+{
+  const c55 = await call({ kind: "path", n: "55" });
+  const b = c55.body;
+  ok(/Where it falls/.test(b) && /<span>Phase<\/span><b>Major Signs<\/b>/.test(b) && /<span>Position<\/span><b>1st of the Ten<\/b>/.test(b), "the Dajjal says where he falls in the order");
+  const tl = (b.match(/<ol class="n2-tl">([\s\S]*?)<\/ol>/) || ["", ""])[1];
+  ok(tl.split("<li>").length - 1 === 7, "and draws his seven events in order (" + (tl.split("<li>").length - 1) + ")");
+  ok(tl.includes("Ludd&#39;s gate") && tl.includes("Muslim 2937"), "each event keeps the source it was written with, and its text is escaped");
+  const sh = (b.match(/<ul class="n2-shield">([\s\S]*?)<\/ul>/) || ["", ""])[1];
+  ok(sh.split("<li>").length - 1 === 4, "and the four shields against him are drawn (" + (sh.split("<li>").length - 1) + ")");
+  ok(sh.includes("Surat al-Kahf") && sh.includes("Muslim 809"), "the shield keeps its source too");
+  ok(!/Where it falls/.test(rendered.path) && !/n2-tl/.test(rendered.path) && !/n2-shield/.test(rendered.path), "a chapter with none of the three draws none of the three");
+  let drawn = 0, events = 0;
+  for (let n = 53; n <= 71; n++) {
+    const r = await call({ kind: "path", n: String(n) });
+    const rows = (r.body.match(/<ol class="n2-tl">([\s\S]*?)<\/ol>/) || ["", ""])[1];
+    const c = rows.split("<li>").length - 1;
+    if (c) { drawn++; events += c; }
+  }
+  ok(drawn === 19 && events === 118, "all nineteen chapters of the Hour draw all 118 events (" + drawn + " chapters, " + events + " events)");
+}
 ok(rendered.today.includes("Badr is the only battle") && rendered.today.includes("The word") && rendered.today.includes("The Path"), "the day shows the home page's light, the word and the chapter");
 ok(rendered.today.includes("/today?date="), "the day walks to the day before");
 ok(rendered.lights.split("/light/").length > 350, "the Lights shelf lists every Light");
