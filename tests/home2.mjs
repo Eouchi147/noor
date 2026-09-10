@@ -146,12 +146,21 @@ console.log('\n=== 3. the promises ===');
     ok(rows.length === 6 && /^Ads: None$/.test(rows[0]) && rows.some(r => /^Account: None/.test(r)) && rows.some(r => /^Tracking: None/.test(r)) && rows.some(r => /^Paywall: None$/.test(r)),
       'the line of truth is told as rows, one guarantee to a line (' + rows.length + ')');
   }
-  ok(html.includes('<h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>'), 'the library screen says the same, with the key word in gold');
+  ok(html.includes('<h2 class="n2-h2" data-noor-1>The whole library, <span class="n2-g">free</span></h2>'), 'the library screen says the same, with the key word in gold, and reads as one sentence in every language');
   ok(html.includes('with its date, and its source where the card names one'), 'the Lights claim a source only where a card names one');
   ok(!/whole of Islam/i.test(html), 'no "the whole of Islam"');
   /* the arrival: the question, the verse, the three Names, the toolkit */
   ok(/<p class="n2-eyebrow ask-eyebrow">Free · No ads · No account<\/p>/.test(html), 'the arrival opens with the short guarantee, three words wide');
-  ok(/<h1 class="n2-h1 ask-h1">What do you want <span class="g">to know\?<\/span><\/h1>/.test(html), 'the headline is the question itself, its second half in gold');
+  ok(/<h1 class="n2-h1 ask-h1" data-noor-1>What do you want <span class="g">to know\?<\/span><\/h1>/.test(html), 'the headline is the question itself, its second half in gold');
+  {
+    /* Five headings on this page are one sentence styled in two halves. Every
+       one of them must be marked data-noor-1, or a translator is handed two
+       fragments and the language that reorders them gets nonsense. */
+    const split = [...html.matchAll(/<(h1|h2)([^>]*)>([^<]*)<span class="(?:n2-)?g">/g)];
+    const unmarked = split.filter(m => !/data-noor-1/.test(m[2])).map(m => m[3].trim());
+    ok(split.length === 5 && !unmarked.length,
+      'all five two-tone headings are read as one sentence' + (unmarked.length ? ' (unmarked: ' + unmarked.join(' / ') + ')' : ' (' + split.length + ')'));
+  }
   {
     const lead = (html.match(/<p class="ask-lead">([^<]*)<\/p>/) || [])[1] || '';
     ok(lead === 'The whole religion in one library, free and complete, and every answer carries the source it came from. Ask in your own words.', 'one paragraph under the question says what the library is, and what to do');
@@ -219,9 +228,9 @@ console.log('\n=== 3. the promises ===');
       /* a narration, and any line the library already carries in nineteen languages,
          speak in their own voice and not the page's */
       .replace(/<p class="n2-p hm-mz-q">[^<]*<\/p>/g, '').replace(/<([a-z0-9]+)([^>]*\bdata-i18n="mizan\.[^"]*"[^>]*)>[\s\S]*?<\/\1>/g, '');
-    const askedIt = [text.replace(/[\s\S]*(<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>)[\s\S]*/, '$1'), text.replace(/[\s\S]*(<p class="ask-lead">[^<]*<\/p>)[\s\S]*/, '$1')];
+    const askedIt = [text.replace(/[\s\S]*(<h1 class="n2-h1 ask-h1"[^>]*>[\s\S]*?<\/h1>)[\s\S]*/, '$1'), text.replace(/[\s\S]*(<p class="ask-lead">[^<]*<\/p>)[\s\S]*/, '$1')];
     ok(askedIt.every(s => /\b(you|your)\b/i.test(s)), 'the arrival asks its question in the second person, and asks for an answer');
-    text = text.replace(/<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>/, '').replace(/<p class="ask-lead">[^<]*<\/p>/, '');
+    text = text.replace(/<h1 class="n2-h1 ask-h1"[^>]*>[\s\S]*?<\/h1>/, '').replace(/<p class="ask-lead">[^<]*<\/p>/, '');
     /* the rooms' own lines out of the menu index are the library's words, not this page's */
     const menu = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/menu-index.json'), 'utf8'));
     for (const s of menu.sections) for (const it of s.items) { text = text.split(it.d.replace(/&/g, '&amp;')).join(''); text = text.split(it.t.replace(/&/g, '&amp;')).join(''); text = text.split(s.s).join(''); }
@@ -229,7 +238,21 @@ console.log('\n=== 3. the promises ===');
     ok(!hits.length, 'no second person in the page\'s own copy' + (hits.length ? ' (' + hits.length + ': ' + hits.slice(0, 4).join(', ') + ')' : ''));
   }
   ok(html.includes('Nothing here is asked for. The door of giving is open for whoever wishes; nothing is expected.'), 'the stance on giving is the owner\'s, as structural copy');
-  ok(Buffer.byteLength(html) < 48 * 1024, 'the page is under 48 KB (' + Buffer.byteLength(html) + ')');
+  /* The budget is what keeps the first screen fast. It has been raised twice
+   in one day, both times for something the owner asked for: Two Lives
+   restored to the arrival, and the eight language doors that existed on
+   the site but were linked from nowhere, with the note that says which
+   parts of the library are translated and which are not yet. */
+  ok(Buffer.byteLength(html) < 50 * 1024, 'the page is under 50 KB (' + Buffer.byteLength(html) + ')');
+  {
+    /* every door the house has, and no door that is not a page */
+    const doors = [...html.matchAll(/<nav aria-label="Languages"[^>]*>([\s\S]*?)<\/nav>/g)][0][1];
+    const codes = [...doors.matchAll(/href="\/([a-z]{2,3})"/g)].map(m => m[1]);
+    const packs = fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2,3}\.json$/.test(f) && f !== 'en.json').map(f => f.replace('.json', ''));
+    const unreachable = packs.filter(c => !codes.includes(c));
+    ok(!unreachable.length, 'every language the house speaks has a door on the arrival' + (unreachable.length ? ' (unreachable: ' + unreachable.join(', ') + ')' : ' (' + codes.length + ')'));
+    ok(codes.every(c => fs.existsSync(path.join(ROOT, c, 'index.html'))), 'and every door is a page that exists');
+  }
 }
 
 console.log('\n=== 4. the structured data ===');
@@ -613,7 +636,14 @@ if (chromium) {
        measurements, the counters run, the bars fill. */
     await pg.goto('about:blank'); await pg.goto(BASE + '/mizan.html', { waitUntil: 'load' });  /* python's http.server has no cleanUrls; Vercel serves this as /mizan */ await pg.waitForTimeout(1200);
     await pg.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { scrollTo(0, y); await new Promise(r => setTimeout(r, 90)); } });
-    await pg.waitForTimeout(1200);
+    /* the counters ease over 1.4s with a stagger, so wait for them to settle
+       rather than for a guessed number of milliseconds: a fixed sleep reads
+       697 instead of 700 whenever the machine is a little slow. */
+    await pg.waitForFunction(() => {
+      const n = [...document.querySelectorAll('[data-mcount]')];
+      return n.length > 0 && n.every(e => e.textContent.replace(/[^\d]/g, '') === e.getAttribute('data-mcount'));
+    }, { timeout: 8000 }).catch(() => {});
+    await pg.waitForTimeout(300);
     const room = await pg.evaluate(() => ({
       cards: document.querySelectorAll('#mizan .mz-card').length,
       hidden: [...document.querySelectorAll('#mizan .mz-card')].filter(c => +getComputedStyle(c).opacity < .9).length,
