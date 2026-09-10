@@ -43,7 +43,17 @@
   function load() {
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
-    loading = fetch("/assets/search-index.json?v=78", { cache: "force-cache" })
+    /* By its plain path, and without force-cache. Both mattered.
+       ?v=78 is its own key at the edge, and that key was still holding the
+       half-destroyed index -- 523 words, 30 rooms, and none of the 1,183
+       entities -- so a hard reload fetched the broken file just as faithfully
+       as a warm one. force-cache then told the browser never to ask again.
+       Between them, every search on every page was answering out of a copy
+       that had lost every prophet, companion, place and surah, and no amount
+       of restoring the file on the server could reach it.
+       The plain path is one key, and the JSON cache rule on it is
+       max-age=0, must-revalidate, which is what we actually want here. */
+    loading = fetch("/assets/search-index.json", { cache: "no-cache" })
       .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (j) {
         var groups = j.g || [], order = {}, names = {};
