@@ -400,6 +400,7 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
   <link rel="stylesheet" href="/assets/figfit.css?v=106"/>
   <script src="/assets/figfit.js?v=106" defer></script>
   <script src="/assets/noor-dials.js?v=109" defer></script>
+
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -807,16 +808,16 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 <!-- The Verse Lamp · one ayah a day, reflected -->
 <div id="vlamp" style="max-width:44rem;margin:1rem auto 0;padding:0 1rem">
-<div style="background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);border-radius:18px;padding:1rem 1.1rem;color:#FFFEF7">
+<div class="ih-41c4c868" style="border-radius:18px;padding:1rem 1.1rem">
 <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-<span aria-hidden="true" style="color:#F4D46A">✦</span>
-<span style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800">The Verse Lamp</span>
-<b id="vl-ref" style="font-size:.72rem;color:color-mix(in srgb, var(--parchment,#FFFEF7) 75%, transparent);margin-left:auto">Qur'an 2:286</b>
+<span class="ih-03499c6a" aria-hidden="true">✦</span>
+<span class="ih-03499c6a" style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;font-weight:800">The Verse Lamp</span>
+<b class="ih-2953e9dd" id="vl-ref" style="font-size:.72rem;margin-left:auto">Qur'an 2:286</b>
 </div>
-<p id="vl-text" style="font-size:.82rem;line-height:1.75;color:color-mix(in srgb, var(--parchment,#FFFEF7) 85%, transparent);margin:.55rem 0 0">Allah does not burden a soul beyond what it can carry. Whatever today weighs, the verse is a scale in your favor: the load was measured by the One who made your shoulders. Read it slowly, then stand up again.</p>
+<p class="ih-20e639ad" id="vl-text" style="font-size:.82rem;line-height:1.75;margin:.55rem 0 0">Allah does not burden a soul beyond what it can carry. Whatever today weighs, the verse is a scale in your favor: the load was measured by the One who made your shoulders. Read it slowly, then stand up again.</p>
 <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;align-items:center">
-<button id="vl-play" type="button" style="display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.08);color:#F4D46A;border-radius:999px;padding:.32rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit"><svg viewBox="0 0 24 24" fill="currentColor" style="width:.6rem;height:.6rem" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Listen</button>
-<a id="vl-open" href="/quran?surah=2&ayah=286" style="font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.32rem .8rem">Open in the Mushaf →</a>
+<button class="ih-3adc0d22" id="vl-play" type="button" style="display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.32rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit"><svg viewBox="0 0 24 24" fill="currentColor" style="width:.6rem;height:.6rem" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Listen</button>
+<a class="ih-52454c26" id="vl-open" href="/quran?surah=2&ayah=286" style="font-size:.68rem;font-weight:700;text-decoration:none;border-radius:999px;padding:.32rem .8rem">Open in the Mushaf →</a>
 </div>
 </div>
 </div>
@@ -848,7 +849,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <p class="glegend">
 <span class="gchip mk">Makkan</span><b>revealed before the migration</b>
 <span class="gchip md">Madinan</span><b>revealed after it</b>
-<span style="color:#C9A227" aria-hidden="true">✦</span><b>every surah opened in full by the study companion</b>
+<span class="ih-031328a5" aria-hidden="true">✦</span><b>every surah opened in full by the study companion</b>
 <span id="gate-count"></span>
 </p>
 <div id="gates-wrap" role="list"></div>
@@ -1016,12 +1017,12 @@ async function openSurah(n,gotoAyah,user){
   if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
   const[num,en,ar,meaning,count,place]=SURAHS[n-1];
   roomHead.innerHTML=`
-   <div class="rounded-2xl overflow-hidden border border-ink/8" style="background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)">
+   <div class="rounded-2xl overflow-hidden border border-ink/8 ih-fff7d1a6">
      <div class="px-5 py-6 text-center">
        <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
-       <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 55%, transparent)">, ${meaning}</span></h2>
-       <p class="text-[11px] mt-1" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 50%, transparent)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
-       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 75%, transparent)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
+       <h2 class="font-bold text-xl ih-6db3a931">${num} · ${en} <span class="font-normal text-sm ih-fe5a3e6f">, ${meaning}</span></h2>
+       <p class="text-[11px] mt-1 ih-1274b372">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
+       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3 ih-2953e9dd">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
        <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>
      </div>
    </div>`;
@@ -1887,5 +1888,19 @@ window.NOOR_MUSHAF={
  get fill(){const f=kFill&&kFill.style.transform.match(/scaleX\(([\d.]+)\)/);return f?+f[1]:0}};
 })();
 </script>
-</body>
+
+
+
+<style>/* hoisted from style attributes by scripts/hoist-inline.py */
+.ih-031328a5.ih-031328a5.ih-031328a5{color:#C9A227}
+.ih-03499c6a.ih-03499c6a.ih-03499c6a{color:#F4D46A}
+.ih-1274b372.ih-1274b372.ih-1274b372{color:color-mix(in srgb, var(--parchment,#FFFEF7) 50%, transparent)}
+.ih-20e639ad.ih-20e639ad.ih-20e639ad{color:color-mix(in srgb, var(--parchment,#FFFEF7) 85%, transparent)}
+.ih-2953e9dd.ih-2953e9dd.ih-2953e9dd{color:color-mix(in srgb, var(--parchment,#FFFEF7) 75%, transparent)}
+.ih-3adc0d22.ih-3adc0d22.ih-3adc0d22{border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.08);color:#F4D46A}
+.ih-41c4c868.ih-41c4c868.ih-41c4c868{background:linear-gradient(160deg,#14100A,#241D12);border:1px solid rgba(201,162,39,.45);color:#FFFEF7}
+.ih-52454c26.ih-52454c26.ih-52454c26{color:#F4D46A;border:1px solid rgba(244,212,106,.4)}
+.ih-6db3a931.ih-6db3a931.ih-6db3a931{color:#FFFEF7}
+.ih-fe5a3e6f.ih-fe5a3e6f.ih-fe5a3e6f{color:color-mix(in srgb, var(--parchment,#FFFEF7) 55%, transparent)}
+.ih-fff7d1a6.ih-fff7d1a6.ih-fff7d1a6{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)}</style></body>
 </html>

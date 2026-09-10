@@ -36,6 +36,12 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .font-amiri{font-family:Amiri,serif}
 #bhero{position:relative;overflow:hidden;background:linear-gradient(178deg,#14100A,#1A2016 60%,#22301f 100%);color:#FFFEF7}
 #bhero .dawn{position:absolute;inset:-15%;background:radial-gradient(ellipse 55% 42% at 50% 0%,rgba(138,155,110,.28),transparent 65%),radial-gradient(ellipse 40% 30% at 78% 10%,rgba(201,162,39,.16),transparent 70%);pointer-events:none}
+/* The Seeker's card. This was an inline style, and an inline style is the one
+   place a stylesheet cannot reach: the night could not turn its ground, so it
+   stayed a cream panel while its text -- color:var(--ink) -- turned light, and
+   the card read white on white. A class can be answered; a style attribute
+   cannot. */
+.sq-card{background:var(--parchment,#FFFEF7);border:1px solid rgba(201,162,39,.4);border-radius:18px;padding:1rem 1.15rem;box-shadow:0 8px 26px color-mix(in srgb, var(--ink,#2C2416) 6%, transparent)}
 .shimmer-sage{background:linear-gradient(100deg,#8A9B6E 15%,#F4D46A 50%,#8A9B6E 85%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimb 7s linear infinite}
 @keyframes shimb{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.shimmer-sage{animation:none}}
@@ -81,6 +87,7 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
   <script src="/assets/figfit.js?v=106" defer></script>
   <script src="/assets/noor-dials.js?v=109" defer></script>
 <script src="/assets/noor-anime.js?v=1" defer></script>
+
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -458,7 +465,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <section id="bhero">
 <div class="dawn" aria-hidden="true"></div>
 <div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
-<p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">أَسْلَمْتُ لِرَبِّ الْعَالَمِينَ</p>
+<p class="font-amiri text-2xl sm:text-3xl mb-3 ih-03499c6a">أَسْلَمْتُ لِرَبِّ الْعَالَمِينَ</p>
 <h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-sage">You Just Became New</span></h1>
 <p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">For converts and reverts: what actually just happened, what to do in your first day and your first forty, and how to survive the wobbles, without pretending you grew up with this.</p>
 <p class="mt-5 text-[11px] tracking-[.18em] uppercase text-white/40">You are not a beginner at being loved by Allah</p>
@@ -468,14 +475,14 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <main class="max-w-2xl mx-auto px-5 py-10">
 <!-- The Seeker's Question · one honest answer a day -->
 <div style="max-width:44rem;margin:1.2rem auto 0;padding:0 1rem">
-<div style="background:var(--parchment,#FFFEF7);border:1px solid rgba(201,162,39,.4);border-radius:18px;padding:1rem 1.15rem;box-shadow:0 8px 26px color-mix(in srgb, var(--ink,#2C2416) 6%, transparent)">
+<div class="sq-card">
 <div style="display:flex;align-items:center;gap:.5rem">
-<span aria-hidden="true" style="color:#C9A227">✦</span>
-<span style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1a;font-weight:800">The Seeker's Question · today</span>
+<span class="ih-031328a5" aria-hidden="true">✦</span>
+<span class="ih-edfa5c62" style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;font-weight:800">The Seeker's Question · today</span>
 </div>
-<p id="sq-q" style="font-size:.92rem;font-weight:800;color:var(--ink,#2C2416);margin:.5rem 0 .3rem">What does the word Islam actually mean?</p>
-<p id="sq-a" style="font-size:.82rem;line-height:1.75;color:color-mix(in srgb, var(--ink,#2C2416) 75%, transparent);margin:0">Islam comes from the Arabic root s-l-m, the same root as salam, peace. It means entering peace by surrendering to the One who made you: not defeat, but the relief of putting down a weight on the only shoulders that can carry everything. A Muslim is simply one who does that.</p>
-<a id="sq-link" href="/begin" style="display:inline-block;margin-top:.55rem;font-size:.68rem;font-weight:700;color:#8a6d13;text-decoration:none">Begin the path →</a>
+<p class="ih-0789fb06" id="sq-q" style="font-size:.92rem;font-weight:800;margin:.5rem 0 .3rem">What does the word Islam actually mean?</p>
+<p class="ih-cc0c9161" id="sq-a" style="font-size:.82rem;line-height:1.75;margin:0">Islam comes from the Arabic root s-l-m, the same root as salam, peace. It means entering peace by surrendering to the One who made you: not defeat, but the relief of putting down a weight on the only shoulders that can carry everything. A Muslim is simply one who does that.</p>
+<a class="ih-d5859949" id="sq-link" href="/begin" style="display:inline-block;margin-top:.55rem;font-size:.68rem;font-weight:700;text-decoration:none">Begin the path →</a>
 </div>
 </div>
 <script>
@@ -595,5 +602,14 @@ fetch("/api/illuminations?kind=question").then(function(r){return r.ok?r.json():
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 </script>
-</body>
+
+
+
+<style>/* hoisted from style attributes by scripts/hoist-inline.py */
+.ih-031328a5.ih-031328a5.ih-031328a5{color:#C9A227}
+.ih-03499c6a.ih-03499c6a.ih-03499c6a{color:#F4D46A}
+.ih-0789fb06.ih-0789fb06.ih-0789fb06{color:var(--ink,#2C2416)}
+.ih-cc0c9161.ih-cc0c9161.ih-cc0c9161{color:color-mix(in srgb, var(--ink,#2C2416) 75%, transparent)}
+.ih-d5859949.ih-d5859949.ih-d5859949{color:#8a6d13}
+.ih-edfa5c62.ih-edfa5c62.ih-edfa5c62{color:#8a6d1a}</style></body>
 </html>

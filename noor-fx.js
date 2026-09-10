@@ -1028,9 +1028,13 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      the masjid's sermon text finally readable in it sat on the server for an
      hour while every visitor kept getting the one where it was 1.17:1.
      Bumped to 4 for: the night reading four more stylesheets, --soft turning,
-     and noor2-legible.css. api/page.js carries the same number; tests/rooms.mjs
-     checks the two agree. */
-  var V = "4", left = 0, started = false;
+     and noor2-legible.css.
+     Bumped to 5 for: the night no longer painting rooms that were already dark,
+     --parchment left alone and its grounds turned by property instead, the
+     background shorthand no longer eating background-clip, and a legibility
+     floor measured with itself switched off. api/page.js carries the same
+     number; tests/rooms.mjs checks the two agree. */
+  var V = "5", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
@@ -1051,7 +1055,45 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
        background to decide whether the bar and the footer's share button
        should be dressed for night or for parchment, and it must not be asked
        while the page is still the colour it is about to stop being. */
+    /* Was this room ever parchment?
+
+       The night sheet is generated from the rooms' own styles, and until
+       September 2026 every rule it produced answered on every page. That was
+       fine while the rooms it read and the rooms it painted were the same set.
+       They are not: kids.html, allah.html and muhammad.html were written in
+       the night to begin with -- body{background:var(--deep);color:var(
+       --parchment)} -- so the parchment is their *writing*. Turning the house
+       tokens over turned those rooms inside out: the Little Codex wordmark went
+       black on black, its star tiles grew cream bands under white labels, and a
+       moon-phase dial from another room painted a gold wedge across the word
+       "Codex", because .moon is a class name and a class name is not a
+       namespace.
+
+       So the room is asked what colour its own floor is, before the night is
+       put on it. A light floor is a parchment room and gets .n2-room, which is
+       what every rule read out of a room's <style> is scoped to. A dark floor
+       is already the night and is left exactly as its author wrote it. Nothing
+       is listed, so nothing can fall out of date: a room written dark tomorrow
+       is protected the day it lands. */
+    var lit = 1;
+    for (var el = document.body; el; el = el.parentElement) {
+      var m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,\/]\s*([\d.]+))?/
+        .exec(getComputedStyle(el).backgroundColor || "");
+      if (!m || (m[4] !== undefined && parseFloat(m[4]) < 0.5)) continue;
+      lit = (0.2126 * +m[1] + 0.7152 * +m[2] + 0.0722 * +m[3]) / 255;
+      break;
+    }
     H.classList.add("n2-night");
+    if (lit >= 0.45) H.classList.add("n2-room");
+    /* Which room this is. A handful of the night's rules were read out of a
+       room's <style> and have no class in them at all -- main p, footer, label,
+       input, h3 -- and a bare element name is not a namespace: the language
+       front doors' `main p` turned light and then answered on /begin, where the
+       Seeker's card is still cream, and wrote white on cream. Those rules are
+       addressed to the room that asked for them, and this is the address. */
+    var rp = location.pathname.replace(/\/+$/, "").replace(/\.html$/, "");
+    if (/\/index$/.test(rp)) rp = rp.slice(0, -6);
+    H.setAttribute("data-room", rp.replace(/^\/+/, "") || "home");
     var SHEETS = ["/assets/noor2.css", "/assets/noor2-skin.css",
                   "/assets/noor2-night.css", "/assets/noor2-legible.css"];
     waitFor(SHEETS.length + 1);            /* the sheets, and noor2.js */

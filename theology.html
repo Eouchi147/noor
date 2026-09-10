@@ -88,6 +88,7 @@ h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem}
   <script src="/assets/figfit.js?v=106" defer></script>
   <script src="/assets/noor-dials.js?v=109" defer></script>
 <script src="/assets/noor-anime.js?v=1" defer></script>
+
 </head>
 <body class="antialiased">
 <div id="progress"></div>
@@ -465,7 +466,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <section data-ink=soft id="thero">
 <div class="rays" aria-hidden="true"></div>
 <div class="relative z-[2] max-w-3xl mx-auto px-4 pt-16 pb-14 text-center">
-<p class="font-amiri text-2xl sm:text-3xl mb-3" style="color:#F4D46A">وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا</p>
+<p class="font-amiri text-2xl sm:text-3xl mb-3 ih-03499c6a">وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا</p>
 <h1 class="text-3xl sm:text-5xl font-bold mb-4"><span class="shimmer-lapis">How the River Branched</span></h1>
 <p class="text-white/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">One Book, one qibla, one Prophet ﷺ, so why are there madhhabs, Sunni and Shia, Sufis and Salafis? A calm map of how the schools formed, what they actually disagree about, and how much of the river never branched at all.</p>
 </div>
@@ -578,13 +579,13 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 
 <!-- CLOSING -->
 <section class="reveal mt-12 text-center">
-<div class="rounded-2xl overflow-hidden" style="background:radial-gradient(circle at 50% 20%,rgba(51,80,124,.4),transparent 60%),linear-gradient(165deg,#14100A,#1d2a45)">
+<div class="rounded-2xl overflow-hidden ih-069b811d">
 <div class="px-6 py-10">
-<p class="font-amiri text-3xl mb-3" style="color:#F4D46A">وَلَا تَفَرَّقُوا</p>
-<p class="text-sm max-w-md mx-auto leading-relaxed" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 80%, transparent)">"Hold fast to the rope of Allah, all together, and do not divide." (Aal Imran 3:103). The river branched; the water is one. Learn the branches so that no one can frighten you with them, then go back to drinking.</p>
+<p class="font-amiri text-3xl mb-3 ih-03499c6a">وَلَا تَفَرَّقُوا</p>
+<p class="text-sm max-w-md mx-auto leading-relaxed ih-187280cb">"Hold fast to the rope of Allah, all together, and do not divide." (Aal Imran 3:103). The river branched; the water is one. Learn the branches so that no one can frighten you with them, then go back to drinking.</p>
 <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm">
-<a href="/#timeline" class="px-4 py-2 rounded-full font-semibold" style="background:#C9A227;color:#241D12">Walk the Path →</a>
-<a href="/quran" class="px-4 py-2 rounded-full border border-white/25 font-semibold" style="color:#FFFEF7">Open the Mushaf →</a>
+<a href="/#timeline" class="px-4 py-2 rounded-full font-semibold ih-071fbc5d">Walk the Path →</a>
+<a href="/quran" class="px-4 py-2 rounded-full border border-white/25 font-semibold ih-6db3a931">Open the Mushaf →</a>
 </div>
 </div>
 </div>
@@ -617,5 +618,13 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 </script>
-</body>
+
+
+
+<style>/* hoisted from style attributes by scripts/hoist-inline.py */
+.ih-03499c6a.ih-03499c6a.ih-03499c6a{color:#F4D46A}
+.ih-069b811d.ih-069b811d.ih-069b811d{background:radial-gradient(circle at 50% 20%,rgba(51,80,124,.4),transparent 60%),linear-gradient(165deg,#14100A,#1d2a45)}
+.ih-071fbc5d.ih-071fbc5d.ih-071fbc5d{background:#C9A227;color:#241D12}
+.ih-187280cb.ih-187280cb.ih-187280cb{color:color-mix(in srgb, var(--parchment,#FFFEF7) 80%, transparent)}
+.ih-6db3a931.ih-6db3a931.ih-6db3a931{color:#FFFEF7}</style></body>
 </html>
