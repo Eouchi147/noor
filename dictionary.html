@@ -47,7 +47,7 @@
 <label class="dq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><input id="dq" type="search" autocomplete="off" spellcheck="false" enterkeyhint="go" placeholder="Type a word: qadr, ihram, riba" aria-label="Search the encyclopedia"/><button type="button" id="dclear" aria-label="Clear" hidden>×</button></label>
 <p class="n2-src" id="dcount">523 words</p>
 <p class="n2-dim" id="dnone" hidden>Nothing under that spelling yet. Fewer letters, or the plain English word, may find it: this book indexes every transliteration it knows, and it is still growing. <a href="/feedback">Tell us what was missing</a> and it will be added.</p>
-<div class="n2-row"><a class="n2-btn n2-gold n2-glow" href="#cat-aqidah">The words, by domain <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/#search" id="dsite">The whole library <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg></a></div>
+<div class="n2-row"><a class="n2-btn n2-gold n2-glow" href="#cat-aqidah">The words, by domain <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/#search" id="dsite" data-n2-more>The whole library <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg></a></div>
 </section>
 <section class="n2-idea n2-short n2-group" id="cat-aqidah">
 <h2 class="n2-h3">Belief <span class="n2-g">· 77</span> <span class="n2-ar" lang="ar" translate="no">العَقِيدَة</span></h2>
@@ -90,12 +90,12 @@
 </section>
 </main>
 <footer class="n2-foot">NOOR Codex of Light · free, no ads, no account · <a href="/">the library</a> · <a href="/legal">legal</a></footer>
-<nav class="n2-bar" aria-label="Rooms"><i class="n2-pill-bg" aria-hidden="true"></i><a href="/today"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Today</a><a href="/quran"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/></svg>Qur'an</a><a href="/path"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/></svg>Story</a><a href="/dictionary" class="n2-on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M4 6h16M4 12h10"/></svg>Words</a><a href="/dictionary" data-n2-search data-nm-open><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>Search</a></nav>
+<nav class="n2-bar" aria-label="Rooms"><i class="n2-pill-bg" aria-hidden="true"></i><a href="/today"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Today</a><a href="/quran"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/></svg>Qur'an</a><a href="/path"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/></svg>Story</a><a href="/dictionary" class="n2-on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M4 6h16M4 12h10"/></svg>Words</a><a href="/#search" data-n2-more><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/></svg>More</a></nav>
 <script>
 (function(){
   "use strict";
   var q=document.getElementById("dq"),clear=document.getElementById("dclear"),count=document.getElementById("dcount"),
-      none=document.getElementById("dnone"),site=document.getElementById("dsite");
+      none=document.getElementById("dnone");
   if(!q)return;
   function fold(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/['\u2019\u02bb\u02bc`]/g,"").replace(/[^a-z0-9\u0600-\u06ff ]+/g," ").replace(/\s+/g," ").trim();}
@@ -126,7 +126,9 @@
     if(e.key==="Escape"){q.value="";run();q.blur();}
     else if(e.key==="Enter"){var b=document.querySelector(".n2-list li.hit a")||document.querySelector(".n2-list li:not([hidden]) a");if(b)location.href=b.href;}});
   /* the whole library's search, beside the field; without the script a link */
-  if(site)site.addEventListener("click",function(e){if(window.NOOR_SEARCH&&NOOR_SEARCH.open){e.preventDefault();NOOR_SEARCH.open();}});
+  /* the whole-library door is data-n2-more now: noor-fx.js answers it with the
+     map of the house and the search in one sheet, the same door the bar opens.
+     Nothing is wired here, so there is nothing here to go stale. */
   /* arriving from a link or a post: #id, ?w=id (a caption mangles a fragment
      into a hashtag, so the daily word links with a query), or #q=spelling */
   function land(){

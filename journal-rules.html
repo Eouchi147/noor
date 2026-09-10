@@ -83,8 +83,6 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -458,7 +456,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 
 <article class="card"><p class="pill">What is refused</p>
 <h3 style="margin-top:.5rem">A short list, and nothing outside it</h3>
-<ul style="font-size:.87rem;line-height:1.95;color:rgba(44,36,22,.8);padding-inline-start:1.15rem;margin:.4rem 0 0">
+<ul style="font-size:.87rem;line-height:1.95;color:color-mix(in srgb, var(--ink,#2C2416) 80%, transparent);padding-inline-start:1.15rem;margin:.4rem 0 0">
 <li>spam, scams and selling of any kind</li>
 <li>coarse or sexual language, because children read this library</li>
 <li>anything unlawful</li>

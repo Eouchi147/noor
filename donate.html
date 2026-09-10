@@ -87,8 +87,6 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -467,10 +465,10 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <p class="text-base max-w-lg mx-auto leading-relaxed mt-3" style="color:rgba(243,239,226,.9)">One person pays for the Codex. It stays free for as long as he can pay for it, and he intends to pay for it for a long time.</p>
 
 <div style="display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:1.1rem">
-<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.6);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">Free forever</span>
-<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.6);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No ads</span>
-<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.6);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No trackers</span>
-<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,254,247,.6);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No account</span>
+<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb, var(--parchment,#FFFEF7) 60%, transparent);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">Free forever</span>
+<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb, var(--parchment,#FFFEF7) 60%, transparent);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No ads</span>
+<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb, var(--parchment,#FFFEF7) 60%, transparent);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No trackers</span>
+<span style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb, var(--parchment,#FFFEF7) 60%, transparent);border:1px solid rgba(233,200,106,.3);border-radius:999px;padding:.3rem .75rem">No account</span>
 </div>
 
 <p style="margin-top:1.4rem"><a href="/" style="display:inline-flex;align-items:center;gap:.4rem;min-height:48px;padding:.6rem 1.3rem;border:1px solid rgba(233,200,106,.45);border-radius:999px;color:#F3EFE2;text-decoration:none;font-size:.9rem">Take me back to the Codex &rarr;</a></p>
@@ -504,21 +502,21 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="amts" id="amts" role="radiogroup" aria-label="Gift amount"></div>
 <div id="custom-wrap" hidden>
 <input id="custom" type="number" inputmode="decimal" min="1" placeholder="Your amount"/>
-<p id="custom-range" style="margin:.35rem 0 0;font-size:.66rem;color:rgba(44,36,22,.5);text-align:center"></p>
+<p id="custom-range" style="margin:.35rem 0 0;font-size:.66rem;color:color-mix(in srgb, var(--ink,#2C2416) 50%, transparent);text-align:center"></p>
 </div>
 <div class="mrow"><input type="checkbox" id="monthly"/><label for="monthly" style="all:unset;cursor:pointer">Make it a monthly light · a sadaqa jariyah that keeps giving every month. Cancel anytime with one click from your receipt.</label></div>
 <button class="cta" id="give">✦ <span id="give-label">Give a Gift</span></button>
 <p id="give-err" hidden style="margin:.55rem 0 0;font-size:.72rem;color:#8a2c1d;text-align:center;line-height:1.55"></p>
-<p style="font-size:.66rem;color:rgba(44,36,22,.5);margin:.5rem 0 0;line-height:1.5">Your Gift supports the continued operation of the Codex. It is not directed toward a specific cause.</p>
+<p style="font-size:.66rem;color:color-mix(in srgb, var(--ink,#2C2416) 50%, transparent);margin:.5rem 0 0;line-height:1.5">Your Gift supports the continued operation of the Codex. It is not directed toward a specific cause.</p>
 <div class="trust"><span>Secure checkout by Stripe</span><span>·</span><span>Your own currency</span><span>·</span><span>No account needed</span><span>·</span><span>Leave a du’a at checkout · shown with no name, ever</span></div>
-<div style="margin-top:.9rem;background:linear-gradient(90deg,rgba(11,18,48,.05),rgba(11,18,48,.02));border:1px solid rgba(11,18,48,.12);border-radius:12px;padding:.7rem .95rem;font-size:.75rem;line-height:1.7;color:rgba(44,36,22,.72)">
+<div style="margin-top:.9rem;background:linear-gradient(90deg,rgba(11,18,48,.05),rgba(11,18,48,.02));border:1px solid rgba(11,18,48,.12);border-radius:12px;padding:.7rem .95rem;font-size:.75rem;line-height:1.7;color:color-mix(in srgb, var(--ink,#2C2416) 72%, transparent)">
 <b style="color:#1A160F">Anonymous to everyone but Allah.</b> No names, no handles, no public record. If you leave a du’a it appears alone, unsigned, so the community can answer with amin. “…a man who gives charity so secretly that his left hand does not know what his right hand has given.” · Bukhari
 </div>
 </div>
 
-<div id="dedic" hidden style="margin-top:1.5rem;background:linear-gradient(90deg,rgba(201,162,39,.1),rgba(201,162,39,.03));border:1px solid rgba(201,162,39,.35);border-radius:14px;padding:.6rem .95rem;display:flex;align-items:center;gap:.55rem;font-size:.76rem;color:rgba(44,36,22,.7);line-height:1.55">
+<div id="dedic" hidden style="margin-top:1.5rem;background:linear-gradient(90deg,rgba(201,162,39,.1),rgba(201,162,39,.03));border:1px solid rgba(201,162,39,.35);border-radius:14px;padding:.6rem .95rem;display:flex;align-items:center;gap:.55rem;font-size:.76rem;color:color-mix(in srgb, var(--ink,#2C2416) 70%, transparent);line-height:1.55">
 <span aria-hidden="true" style="color:#C9A227;flex:none">✦</span>
-<span style="min-width:0"><i id="dedic-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:rgba(44,36,22,.4);font-size:.66rem;white-space:nowrap">· a giver’s du’a · say amin</span></span>
+<span style="min-width:0"><i id="dedic-text" style="font-style:italic;transition:opacity .5s"></i> <span style="color:color-mix(in srgb, var(--ink,#2C2416) 40%, transparent);font-size:.66rem;white-space:nowrap">· a giver’s du’a · say amin</span></span>
 </div>
 
 <div style="margin-top:1.6rem">

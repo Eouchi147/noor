@@ -1056,19 +1056,30 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
    for the clock -- and it gives up rather than watch forever. */
 (function () {
   "use strict";
-  if (window.NOOR_SEARCH) return;
-  if (document.querySelector('script[src*="noor-search.js"]')) return;
+  /* A page counts as having the search when it can answer find(), not when
+     something called NOOR_SEARCH is present: the retired sheet defined that
+     same global with open() and no find(), so testing the name alone made
+     this loader stand down on precisely the pages that needed it. */
+  function able() { return !!(window.NOOR_SEARCH && window.NOOR_SEARCH.find); }
+  window.NOOR_NEED_SEARCH = function () {
+    if (able()) return Promise.resolve(true);
+    if (!window.__noorSearchLoad) window.__noorSearchLoad = new Promise(function (done) {
+      var s = document.createElement("script");
+      /* by its plain path, never ?v=nn -- a version query is its own cache
+         key, and the stale copy lives under one of them */
+      s.src = "/assets/noor-search.js";
+      s.onload = function () { done(able()); };
+      s.onerror = function () { done(false); };
+      document.head.appendChild(s);
+    });
+    return window.__noorSearchLoad;
+  };
+  if (able()) return;
   var tries = 0;
-  function add() {
-    if (window.NOOR_SEARCH || document.querySelector('script[src*="noor-search.js"]')) return;
-    var s = document.createElement("script");
-    s.src = "/assets/noor-search.js?v=79";
-    s.defer = true;
-    document.head.appendChild(s);
-  }
+  function add() { window.NOOR_NEED_SEARCH(); }
   function look() {
-    if (window.NOOR_SEARCH) return;
-    if (document.querySelector("[data-n2-search]")) return add();
+    if (able()) return;
+    if (document.querySelector("[data-n2-search],[data-n2-more]")) return add();
     if (++tries > 20) return;                       /* ~5 s, then let it be */
     setTimeout(look, 250);
   }
@@ -1351,10 +1362,19 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   function look() {
     var term = input.value.trim();
     if (term.length < 2) return drawMap();
-    var S = W.NOOR_SEARCH;
-    if (!S || !S.find) return;                 /* the index is still arriving */
     var mine = term;
-    S.find(term).then(function (groups) { if (input.value.trim() === mine) drawHits(groups, mine); });
+    var go = function () {
+      var S = W.NOOR_SEARCH;
+      if (!S || !S.find) return;
+      S.find(term).then(function (groups) { if (input.value.trim() === mine) drawHits(groups, mine); });
+    };
+    /* If the page is carrying a copy of the retired search, fetch the one that
+       can answer and then look again -- rather than returning in silence and
+       leaving the reader typing into a field that never replies. */
+    if (W.NOOR_SEARCH && W.NOOR_SEARCH.find) return go();
+    if (W.NOOR_NEED_SEARCH) W.NOOR_NEED_SEARCH().then(function (ok) {
+      if (ok && input.value.trim() === mine) go();
+    });
   }
 
   function shell() {
@@ -1413,9 +1433,11 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     doc.body.style.overflow = "hidden";
     drawMap();
     requestAnimationFrame(function () { box.classList.add("on"); });
+    setTimeout(function () { if (openNow) box.classList.add("on"); }, 90);
     doc.addEventListener("keydown", esckey);
     /* warm the index while a reader is reading the map */
     if (W.NOOR_SEARCH && W.NOOR_SEARCH.find) W.NOOR_SEARCH.find("");
+    else if (W.NOOR_NEED_SEARCH) W.NOOR_NEED_SEARCH();
     setTimeout(function () { if (matchMedia("(hover:hover)").matches) input.focus(); }, 60);
   }
   function close() {
