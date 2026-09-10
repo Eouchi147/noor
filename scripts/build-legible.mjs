@@ -45,7 +45,7 @@ const DECOR_SIZE = 40;
 /* one of every kind of page, and every room the night script touched that
    carries its own small print */
 const PAGES = [
-  '/index.html', '/today', '/quran', '/dictionary', '/dictionary/abu-bakr',
+  '/index.html', '/ask', '/today', '/quran', '/dictionary', '/dictionary/abu-bakr',
   '/prophets', '/allah', '/companions', '/heroes', '/places', '/arabic',
   '/hajj', '/hajj-plan', '/ramadan', '/kids', '/teens', '/madrasa', '/family',
   '/soul', '/unseen', '/theology', '/pillars', '/words', '/begin', '/donate',
