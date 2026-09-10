@@ -572,6 +572,17 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     } catch (e) {}
     var b = document.getElementById("translate-btn");
     if (b) b.addEventListener("click", function () { showChooser(); });
+    /* Any page may ask for the chooser. Until now only a page carrying
+       #translate-btn could open it, which meant the 1,135 rendered rooms --
+       /today, every Path chapter, every verse, every surah -- had no way to
+       change language at all: their top line was a brand and nothing else. */
+    window.NOOR_LANG = { choose: showChooser };
+    document.addEventListener("click", function (e) {
+      var t = e.target && e.target.closest ? e.target.closest("[data-noor-lang]") : null;
+      if (!t) return;
+      e.preventDefault();
+      showChooser();
+    }, true);
     var lang = detected();
     if (!lang || onGateway()) return;
     var dismissed = false, shown = false;
@@ -1010,6 +1021,97 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
    harmonises a night page's header. The kids' games (kids/*.html, not
    kids.html) keep their own full-screen UI; an embedded room stays bare;
    the consoles are their own. The version tail matches api/page.js. */
+/* ===================== the top line's right hand =========================
+   Every page in the house wears the same top line: the brand on the left, and
+   on the arrival two doors on the right -- the language, and the menu. The
+   1,135 rooms rendered by api/page.js and the 523 dictionary words wear the
+   left half only. Tapping Today from the bar landed a reader on a page with no
+   way to change language and no way to reach any other room except the five in
+   the bar. The arrival built those two doors in its own markup, so they were
+   never part of the shell, and everything the shell dresses went without them.
+
+   They belong to the shell. This adds them to any top line that has no right
+   hand of its own, which leaves the arrival exactly as it is. */
+(function () {
+  "use strict";
+  var W = window, D = document;
+  function dress() {
+    var top = D.querySelector("header.n2-top");
+    if (!top || top.querySelector(".n2-top-r, .hm-top-r")) return;
+    if (D.documentElement.getAttribute("data-noor-embed") === "1") return;
+
+    var r = D.createElement("div");
+    r.className = "n2-top-r";
+
+    var lang = D.createElement("a");
+    lang.className = "n2-pill n2-top-lang";
+    lang.href = "#lang";
+    lang.setAttribute("data-noor-lang", "");
+    lang.setAttribute("aria-label", "Choose your language");
+    lang.textContent = ((W.NOOR_I18N && NOOR_I18N.lang) || D.documentElement.lang || "en")
+      .split("-")[0].toUpperCase();
+
+    var menu = D.createElement("a");
+    menu.className = "n2-pill n2-top-menu";
+    menu.href = "/#search";
+    menu.setAttribute("data-nm-open", "");
+    menu.setAttribute("aria-label", "Open the menu: every room of the library, by section");
+    menu.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Menu</span>';
+
+    r.appendChild(lang);
+    r.appendChild(menu);
+    top.appendChild(r);
+    /* three pills and a wordmark do not fit a 390px phone; the room's own pill
+       is the one that yields, because the two doors are the same on every page
+       and the reader learns where they are. */
+    if (top.querySelectorAll(".n2-pill").length > 2) top.classList.add("n2-top-3");
+
+    var css = D.createElement("style");
+    css.id = "n2-top-r-css";
+    css.textContent =
+      ".n2-top-r{display:flex;gap:8px;flex:none;margin-inline-start:auto}" +
+      ".n2-top-menu svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;" +
+        "stroke-linecap:round;margin-inline-end:6px}" +
+      ".n2-top-lang{font-family:var(--n2-mono,ui-monospace,monospace);letter-spacing:.08em}" +
+      "@media (max-width:420px){.n2-top-menu span{display:none}" +
+        ".n2-top-menu svg{margin:0}.n2-top-menu{padding:0 12px}}" +
+      "@media (max-width:520px){.n2-top-3 .n2-brand .n2-en{display:none}}";
+    if (!D.getElementById("n2-top-r-css")) D.head.appendChild(css);
+
+    /* the pill follows the reader's choice */
+    D.addEventListener("noor:lang", function (e) {
+      var c = (e && e.detail && e.detail.lang) || (W.NOOR_I18N && NOOR_I18N.lang);
+      if (c) lang.textContent = String(c).split("-")[0].toUpperCase();
+    });
+  }
+  /* The top line arrives three different ways: written into the page (the
+     arrival), rendered by api/page.js, or built by NOOR2.inject() after the
+     shell's stylesheets land. The third is the common case and it happens
+     after DOMContentLoaded, so waiting for the document is not enough -- the
+     first cut of this ran, found no header, and left every room in the house
+     exactly as it had been. Watch for it instead. */
+  function watch() {
+    dress();
+    if (D.querySelector("header.n2-top .n2-top-r")) return;
+    try {
+      var mo = new MutationObserver(function () {
+        dress();
+        if (D.querySelector("header.n2-top .n2-top-r")) mo.disconnect();
+      });
+      mo.observe(D.documentElement, { childList: true, subtree: true });
+      setTimeout(function () { try { mo.disconnect(); } catch (e) {} }, 12000);
+    } catch (e) {
+      var n = 0, t = setInterval(function () {
+        dress();
+        if (++n > 40 || D.querySelector("header.n2-top .n2-top-r")) clearInterval(t);
+      }, 300);
+    }
+  }
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", watch);
+  else watch();
+})();
+
 (function () {
   "use strict";
   var H = document.documentElement, p = location.pathname;
