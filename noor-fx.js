@@ -139,7 +139,7 @@ const NOOR_I18N = {
         /* PACK_V: force-cache means a reader who visited before keeps the pack
            they first downloaded, forever, unless the URL changes. Bump this on
            every release that ships translations, exactly like noor-text.js. */
-        const r = await fetch(`/i18n/${code}.json?v=83`, {cache:"force-cache"});
+        const r = await fetch(`/i18n/${code}.json?v=84`, {cache:"force-cache"});
         if (r.ok) { const j = await r.json(); this.packs[code] = Object.assign({}, UI_EN, j.ui || j); this.fullPacks[code] = j; }
         else toast(this.t("lang.fallback"));
       } catch (e) { toast(this.t("lang.fallback")); }

@@ -57,7 +57,7 @@
 <script src="/assets/noor2.js?v=3" defer></script>
 <script src="/nodes-index.js?v=101" defer></script>
 <script src="/noor-fx.js" defer></script>
-<script src="/assets/noor-text.js?v=83" defer></script>
+<script src="/assets/noor-text.js?v=86" defer></script>
 <script src="/assets/noor-search.js?v=79" defer></script>
 <script src="/assets/noor-dials.js?v=109" defer></script>
 <link rel="stylesheet" href="/assets/noor-ask.css?v=1"/>
@@ -177,6 +177,10 @@
 .n2-foot p{margin:0 0 10px}
 .n2-foot .hm-note{font-family:var(--n2-sans);font-size:14px;letter-spacing:0;text-transform:none;line-height:1.6;color:var(--n2-parch3);max-width:44ch}
 .n2-foot .hm-langs{text-transform:none;letter-spacing:.04em;margin:0 0 10px}
+/* Nine of the twenty one names are written right to left. Without an
+   isolate the separators are pulled into each Arabic run and the row
+   reads as if it had double and missing dots. */
+.hm-langs a{unicode-bidi:isolate}
 /* the row of doors noor-fx.js draws under footer.note, one list for the
    whole house, sits on the footer's own left edge rather than centred */
 footer.n2-foot>div{text-align:start;padding:0;margin:4px 0 10px;max-width:none}
@@ -215,7 +219,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
      links. assets/noor-ask.js upgrades them; nothing needs the upgrade. -->
 <section class="n2-idea n2-in ask" id="top" data-noor-ask>
 <p class="n2-eyebrow ask-eyebrow">Free · No ads · No account</p>
-<h1 class="n2-h1 ask-h1">What do you want <span class="g">to know?</span></h1>
+<h1 class="n2-h1 ask-h1" data-noor-1>What do you want <span class="g">to know?</span></h1>
 <p class="ask-lead">The whole religion in one library, free and complete, and every answer carries the source it came from. Ask in your own words.</p>
 <form class="ask-field" role="search" action="/ask" method="get">
 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
@@ -248,7 +252,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
      screen stays as it is, a door to the day's page -->
 <section class="n2-idea" id="today">
 <p class="n2-eyebrow">Today's light</p>
-<h2 class="n2-h2">One Light <span class="n2-g">a day</span></h2>
+<h2 class="n2-h2" data-noor-1>One Light <span class="n2-g">a day</span></h2>
 <p class="n2-p">A thing that happened, with its date, and its source where the card names one: one of the 350 Lights of history and science, chosen each day.</p>
 <div class="n2-row"><a class="n2-btn n2-gold" href="/today">Today's light <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/light">All the Lights</a></div>
 </section>
@@ -257,7 +261,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
      rota shows; without it the screen is a door to the shelf -->
 <section class="n2-idea" id="verse">
 <p class="n2-eyebrow">One verse</p>
-<h2 class="n2-h2">One verse, <span class="n2-g">one thought</span></h2>
+<h2 class="n2-h2" data-noor-1>One verse, <span class="n2-g">one thought</span></h2>
 <p class="n2-p">Every verse on the shelf, with its recitation and its meaning, grouped by surah.</p>
 <div class="n2-row"><a class="n2-btn n2-gold" href="/verses">The verses <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="n2-btn" href="/quran">The Mushaf</a></div>
 </section>
@@ -267,7 +271,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
      and the section below carries the #mizan anchor the house points at. -->
 <section class="n2-idea n2-short" id="library">
 <p class="n2-eyebrow">The library</p>
-<h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>
+<h2 class="n2-h2" data-noor-1>The whole library, <span class="n2-g">free</span></h2>
 <p class="hm-count">41 rooms · 8 sections · all free</p>
 <div class="hm-lib">
 <div class="hm-grp">
@@ -390,7 +394,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <!-- 7 · no catch -->
 <section class="n2-idea" id="free">
 <p class="n2-eyebrow">No catch</p>
-<h2 class="n2-h2">Free means <span class="n2-g">free</span></h2>
+<h2 class="n2-h2" data-noor-1>Free means <span class="n2-g">free</span></h2>
 <ul class="n2-list hm-truths">
 <li><span>Ads</span><b>None</b></li>
 <li><span>Account</span><b>None needed</b></li>
@@ -413,7 +417,8 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <p>NOOR Codex of Light · free, no ads, no account</p>
 <p><a href="/license">For schools &amp; organisations</a> · <a href="/journal">The Guardian's Journal</a> · <a href="/feedback">Corrections &amp; ideas</a> · <a href="/legal">Terms &amp; transparency</a></p>
 <p data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
-<nav aria-label="Languages" class="hm-langs" id="langs" translate="no"><a href="/ar" lang="ar">العربية</a> · <a href="/fr" lang="fr">Français</a> · <a href="/es" lang="es">Español</a> · <a href="/de" lang="de">Deutsch</a> · <a href="/ru" lang="ru">Русский</a> · <a href="/tr" lang="tr">Türkçe</a> · <a href="/ur" lang="ur">اردو</a> · <a href="/hi" lang="hi">हिन्दी</a> · <a href="/bn" lang="bn">বাংলা</a> · <a href="/id" lang="id">Bahasa Indonesia</a> · <a href="/fa" lang="fa">فارسی</a> · <a href="/prs" lang="prs">دری</a> · <a href="/pa" lang="pa">پنجابی</a></nav>
+<nav aria-label="Languages" class="hm-langs" id="langs" translate="no"><a href="/ar" lang="ar">العربية</a> · <a href="/fr" lang="fr">Français</a> · <a href="/es" lang="es">Español</a> · <a href="/de" lang="de">Deutsch</a> · <a href="/ru" lang="ru">Русский</a> · <a href="/tr" lang="tr">Türkçe</a> · <a href="/ur" lang="ur">اردو</a> · <a href="/hi" lang="hi">हिन्दी</a> · <a href="/bn" lang="bn">বাংলা</a> · <a href="/id" lang="id">Bahasa Indonesia</a> · <a href="/fa" lang="fa">فارسی</a> · <a href="/prs" lang="prs">دری</a> · <a href="/pa" lang="pa">پنجابی</a> · <a href="/ps" lang="ps">پښتو</a> · <a href="/ku" lang="ku">Kurdî</a> · <a href="/ha" lang="ha">Hausa</a> · <a href="/so" lang="so">Soomaali</a> · <a href="/sw" lang="sw">Kiswahili</a> · <a href="/zh" lang="zh">中文</a> · <a href="/ja" lang="ja">日本語</a> · <a href="/ko" lang="ko">한국어</a></nav>
+<p class="hm-note hm-tr">This page is in all twenty one languages. The rest of the library is in English, French and Arabic today, and the other eighteen are being written as gifts allow. Nothing behind a language that is not finished is hidden: it is simply still in English.</p>
 <p class="hm-note" data-i18n="about.text">NOOR is an educational and contemplative Codex. Content from the Qur'an, authentic Hadith, and classical sources. Prophets and companions are represented by light and seals only, never faces. Not a source of legal rulings.</p>
 </footer>
 
