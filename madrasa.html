@@ -194,8 +194,6 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -723,7 +721,7 @@ function paint(){
     h+='<div class="card done-card"><span class="big">'+(passed?"<span data-ic=lamp></span>":"<span data-ic=lamp></span>")+'</span><h2>'+(passed?"Lesson complete, mashaAllah":"Almost there")+'</h2><p class="score">'+score+"%</p>"+
        '<p class="body" style="text-align:center">'+(passed?"This light is yours now; it stays lit in your progress.":"You need 70% to pass. Walk the cards once more; the letters and the answers will meet you halfway.")+"</p>"+
        (passed?('<div style="margin-top:1rem;padding-top:1rem;border-top:1px dashed rgba(201,162,39,.4)">'+
-        '<p style="font-size:.72rem;color:rgba(44,36,22,.55);line-height:1.65;margin:0 0 .6rem">This lesson reached you free because someone before you kept the lamp lit. Pass the light on:</p>'+
+        '<p style="font-size:.72rem;color:color-mix(in srgb, var(--ink,#2C2416) 55%, transparent);line-height:1.65;margin:0 0 .6rem">This lesson reached you free because someone before you kept the lamp lit. Pass the light on:</p>'+
         '<div style="display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap">'+
         '<a href="https://wa.me/?text='+encodeURIComponent("I am studying Islam properly on this free madrasa, 106 lessons with quizzes and an ijazah at the end. Completely free: https://noorcodex.com/madrasa")+'" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:800;color:#1A160F;background:linear-gradient(135deg,#C9A227,#E9C86A);border-radius:999px;padding:.45rem 1rem;text-decoration:none">Share on WhatsApp</a>'+
         '<a href="https://t.me/share/url?url=https%3A%2F%2Fnoorcodex.com%2Fmadrasa&text='+encodeURIComponent("A free madrasa: 106 interactive lessons on Islam, ages 0 to 18, with an ijazah ✦")+'" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:700;color:#6b5510;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:.45rem 1rem;text-decoration:none">Telegram</a>'+
@@ -770,11 +768,11 @@ function showCert(tid){
   box.innerHTML='<div id="certwrap"><div id="cert">'+
    '<p class="bism" translate="no">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>'+
    '<h2>IJAZAH OF COMPLETION</h2>'+
-   '<p style="font-size:.72rem;color:rgba(44,36,22,.55)">The Madrasa of Light bears witness that</p>'+
+   '<p style="font-size:.72rem;color:color-mix(in srgb, var(--ink,#2C2416) 55%, transparent)">The Madrasa of Light bears witness that</p>'+
    '<div class="who" id="cert-who">'+esc((store["name"]||""))+'</div>'+
-   '<p style="font-size:.72rem;color:rgba(44,36,22,.55);margin-top:.4rem">has completed, with understanding, the track</p>'+
+   '<p style="font-size:.72rem;color:color-mix(in srgb, var(--ink,#2C2416) 55%, transparent);margin-top:.4rem">has completed, with understanding, the track</p>'+
    '<p class="tname">'+t.icon+" "+esc(t.name)+' · <span class="font-amiri notranslate" translate="no">'+t.ar+"</span></p>"+
-   '<p style="font-size:.68rem;color:rgba(44,36,22,.5);margin-top:.5rem">'+t.lessons.length+" lessons · every source cited · knowledge carried in the old way</p>"+
+   '<p style="font-size:.68rem;color:color-mix(in srgb, var(--ink,#2C2416) 50%, transparent);margin-top:.5rem">'+t.lessons.length+" lessons · every source cited · knowledge carried in the old way</p>"+
    '<div class="sealn" translate="no">ن</div>'+
    '<p class="date">'+today+" · noorcodex.com/madrasa · free for every person, forever</p>"+
    "</div></div>"+

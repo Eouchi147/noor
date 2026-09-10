@@ -118,8 +118,6 @@ footer a{color:#8a6d13;text-decoration:none;font-weight:600}
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -502,14 +500,14 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div id="gate-card" style="background:linear-gradient(150deg,#14100A,#1d2a45);border:1.5px solid rgba(244,212,106,.45);border-radius:20px;padding:1.3rem 1.2rem;margin:1.6rem 0 0;color:#FFFEF7">
 <p style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0 0 .5rem">Before anything else · an honest question</p>
 <h2 style="font-size:1.15rem;font-weight:800;margin:0 0 .35rem">Does your institution charge students or members for its teaching?</h2>
-<p style="font-size:.78rem;line-height:1.65;color:rgba(255,254,247,.72);margin:0 0 .9rem">This is a trust-based declaration; nobody will audit you. NOOR keeps the core experience free for institutions that teach for free. Commercial products and platforms always license.</p>
+<p style="font-size:.78rem;line-height:1.65;color:color-mix(in srgb, var(--parchment,#FFFEF7) 72%, transparent);margin:0 0 .9rem">This is a trust-based declaration; nobody will audit you. NOOR keeps the core experience free for institutions that teach for free. Commercial products and platforms always license.</p>
 <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-<button id="gate-no" style="background:rgba(255,254,247,.1);border:1px solid rgba(244,212,106,.5);color:#FFF7DF;border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">No · we teach for free</button>
+<button id="gate-no" style="background:color-mix(in srgb, var(--parchment,#FFFEF7) 10%, transparent);border:1px solid rgba(244,212,106,.5);color:#FFF7DF;border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">No · we teach for free</button>
 <a href="#plans" style="background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-radius:999px;padding:.6rem 1.2rem;font-size:.8rem;font-weight:800;text-decoration:none">Yes · show the license</a>
 </div>
-<div id="gate-free" hidden style="margin-top:1rem;background:rgba(255,254,247,.07);border:1px dashed rgba(244,212,106,.5);border-radius:14px;padding:.9rem 1rem">
+<div id="gate-free" hidden style="margin-top:1rem;background:color-mix(in srgb, var(--parchment,#FFFEF7) 7%, transparent);border:1px dashed rgba(244,212,106,.5);border-radius:14px;padding:.9rem 1rem">
 <b style="font-size:.9rem">Then the Codex is yours, free.</b>
-<p style="font-size:.76rem;line-height:1.7;color:rgba(255,254,247,.78);margin:.4rem 0 0">The embed code lower on this page is yours to take right now, today, without asking anyone: that is the whole point of the trust gate. If you would like your institution counted among the houses that carry the light, and a note when new rooms open, write one line to <b>hello@noorcodex.com</b>. Optional, always. Teaching given freely is the reason this house exists.</p>
+<p style="font-size:.76rem;line-height:1.7;color:color-mix(in srgb, var(--parchment,#FFFEF7) 78%, transparent);margin:.4rem 0 0">The embed code lower on this page is yours to take right now, today, without asking anyone: that is the whole point of the trust gate. If you would like your institution counted among the houses that carry the light, and a note when new rooms open, write one line to <b>hello@noorcodex.com</b>. Optional, always. Teaching given freely is the reason this house exists.</p>
 </div>
 </div>
 <script>document.getElementById("gate-no").addEventListener("click",function(){var f=document.getElementById("gate-free");f.hidden=false;this.style.opacity=".55";f.scrollIntoView({behavior:"smooth",block:"nearest"})});</script>
@@ -592,7 +590,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 
 <h2 class="sec">Your embed code</h2>
 <p class="sub">Pick a room, copy the line, paste it anywhere HTML lives. The optional script makes the frame size itself to its content.</p>
-<p style="font-size:.7rem;color:rgba(44,36,22,.55);line-height:1.6;margin:.4rem 0 .6rem">Taking the code is accepting the trust above: free when your teaching is free, licensed when you charge students or members, or when the Codex lives inside a commercial product.</p>
+<p style="font-size:.7rem;color:color-mix(in srgb, var(--ink,#2C2416) 55%, transparent);line-height:1.6;margin:.4rem 0 .6rem">Taking the code is accepting the trust above: free when your teaching is free, licensed when you charge students or members, or when the Codex lives inside a commercial product.</p>
 <div class="gen">
 <label for="roomsel">Room to embed</label>
 <select id="roomsel">

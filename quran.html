@@ -407,8 +407,6 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 <header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
 <!-- The menu. Its index is fetched on first open rather than inlined, so these
      54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
 <style id="nav49">
 /* --- self-contained header layout (works with or without the shared sheet) --- */
 /* While the sheet is open the body carries overflow:hidden, and on iOS that
@@ -813,9 +811,9 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
 <span aria-hidden="true" style="color:#F4D46A">✦</span>
 <span style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800">The Verse Lamp</span>
-<b id="vl-ref" style="font-size:.72rem;color:rgba(255,254,247,.75);margin-left:auto">Qur'an 2:286</b>
+<b id="vl-ref" style="font-size:.72rem;color:color-mix(in srgb, var(--parchment,#FFFEF7) 75%, transparent);margin-left:auto">Qur'an 2:286</b>
 </div>
-<p id="vl-text" style="font-size:.82rem;line-height:1.75;color:rgba(255,254,247,.85);margin:.55rem 0 0">Allah does not burden a soul beyond what it can carry. Whatever today weighs, the verse is a scale in your favor: the load was measured by the One who made your shoulders. Read it slowly, then stand up again.</p>
+<p id="vl-text" style="font-size:.82rem;line-height:1.75;color:color-mix(in srgb, var(--parchment,#FFFEF7) 85%, transparent);margin:.55rem 0 0">Allah does not burden a soul beyond what it can carry. Whatever today weighs, the verse is a scale in your favor: the load was measured by the One who made your shoulders. Read it slowly, then stand up again.</p>
 <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;align-items:center">
 <button id="vl-play" type="button" style="display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgba(244,212,106,.5);background:rgba(244,212,106,.08);color:#F4D46A;border-radius:999px;padding:.32rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit"><svg viewBox="0 0 24 24" fill="currentColor" style="width:.6rem;height:.6rem" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Listen</button>
 <a id="vl-open" href="/quran?surah=2&ayah=286" style="font-size:.68rem;font-weight:700;color:#F4D46A;text-decoration:none;border:1px solid rgba(244,212,106,.4);border-radius:999px;padding:.32rem .8rem">Open in the Mushaf →</a>
@@ -1021,9 +1019,9 @@ async function openSurah(n,gotoAyah,user){
    <div class="rounded-2xl overflow-hidden border border-ink/8" style="background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#14100A,#241D12)">
      <div class="px-5 py-6 text-center">
        <p class="font-quran text-4xl text-gold mb-1" translate="no">${ar}</p>
-       <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:rgba(255,254,247,.55)">, ${meaning}</span></h2>
-       <p class="text-[11px] mt-1" style="color:rgba(255,254,247,.5)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
-       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:rgba(255,254,247,.75)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
+       <h2 class="font-bold text-xl" style="color:#FFFEF7">${num} · ${en} <span class="font-normal text-sm" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 55%, transparent)">, ${meaning}</span></h2>
+       <p class="text-[11px] mt-1" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 50%, transparent)">${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
+       <p class="text-[13px] leading-relaxed max-w-xl mx-auto mt-3" style="color:color-mix(in srgb, var(--parchment,#FFFEF7) 75%, transparent)">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
        <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>
      </div>
    </div>`;
