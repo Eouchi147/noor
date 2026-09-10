@@ -116,6 +116,72 @@ def ground_for(l):
     return NIGHT[-1][1]
 
 
+def _hsl(rgb):
+    r, g, b = [v / 255 for v in rgb]
+    mx, mn = max(r, g, b), min(r, g, b)
+    L = (mx + mn) / 2
+    if mx == mn: return (0.0, 0.0, L)
+    d = mx - mn
+    S = d / (2 - mx - mn) if L > .5 else d / (mx + mn)
+    if mx == r:   H = (g - b) / d + (6 if g < b else 0)
+    elif mx == g: H = (b - r) / d + 2
+    else:         H = (r - g) / d + 4
+    return (H / 6, S, L)
+
+
+def _rgb(hsl):
+    h, s, l = hsl
+    if s == 0:
+        v = int(round(l * 255)); return (v, v, v)
+    q = l * (1 + s) if l < .5 else l + s - l * s
+    p_ = 2 * l - q
+    def f(t):
+        t = (t + 1) % 1
+        if t < 1/6: return p_ + (q - p_) * 6 * t
+        if t < 1/2: return q
+        if t < 2/3: return p_ + (q - p_) * (2/3 - t) * 6
+        return p_
+    return tuple(int(round(v * 255)) for v in (f(h + 1/3), f(h), f(h - 1/3)))
+
+
+#  The night's own hue and how saturated it is, read off the palette above so
+#  the two can never drift apart.
+NIGHT_H, NIGHT_S, _ = _hsl(NIGHT[-1][1])
+
+
+def night_dark(rgb):
+    """A dark ground, kept exactly as deep and as rich as it was, in the night's
+    own hue instead of its old one.
+
+    "A dark band stays a band" was right about value and silent about hue, and
+    that is how the Prophets hero ended up a warm brown ramp -- #14100A to
+    #2A2110, hue 36 to 39 degrees -- meeting the navy page at #0D1428, hue 224,
+    on a hard horizontal edge. Two low-chroma colours from opposite temperature
+    families butting together with no bridge do not read as rich. They read as
+    dirty, and the gold glow laid over that hero had nothing cool to be warm
+    against, so the one deliberate accent in the house stopped working too.
+
+    It was not caught because chroma here is measured as (max-min)/255, which
+    structurally under-reports tint on dark colours: a colour that dark cannot
+    span much of 0-255 whatever its hue. All three hero stops scored 0.04-0.10
+    against a 0.18 threshold while their own saturation was 0.27-0.45.
+
+    So: keep the lightness, which is what carries the hierarchy; keep the
+    saturation, which is what carries the richness; take the night's hue. A
+    neutral dark has no saturation to keep and stays neutral, which is already
+    harmonious. A dark that is already cool barely moves. Only the warm ones
+    travel, and they travel to where the rest of the house lives.
+    """
+    h, s, l = _hsl(rgb)
+    if s < 0.04:
+        return None                    # a neutral has no hue to move; leave it be
+    away = abs(h - NIGHT_H)
+    away = min(away, 1 - away) * 360
+    if away < 30:
+        return None                    # already in the family; do not churn it
+    return _rgb((NIGHT_H, min(NIGHT_S, s), l))
+
+
 def turned(rgb, prop):
     """The colour this one becomes in the night, or None to leave it alone."""
     flat, l = neutral(rgb)
@@ -147,7 +213,8 @@ def turned(rgb, prop):
             return ground_for(l) if l >= LIGHT else None
         return ground_for(l) if l >= LIGHT else None
     if p.startswith(GROUND) or "shadow" in p:
-        return ground_for(l) if l >= LIGHT else None      # a dark band stays a band
+        if l >= LIGHT: return ground_for(l)
+        return night_dark(rgb)         # a dark band stays a band, in the night's hue
     if p.startswith(INK):
         if l <= DARK: return PARCH                        # the writing, and the hairlines
         if l >= LIGHT and p.startswith(("border", "outline", "column-rule")):
