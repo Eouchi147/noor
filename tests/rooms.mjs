@@ -105,6 +105,27 @@ ok(rendered.verse.includes("/dictionary/sabr"), "the verse reads beside the capt
 ok(/isPartOf/.test(rendered.verse), "the verse's JSON-LD names what it is part of");
 ok(rendered.surah.includes("Al-Baqarah") && rendered.surah.includes("286 verses") && rendered.surah.includes("Madinah"), "the surah shows name, count and place from the API");
 ok(rendered.surah.includes("The context") && rendered.surah.includes("The name") && rendered.surah.includes("The themes") && rendered.surah.includes("The heart of it"), "the surah carries its study material");
+/* study/1..114.json carry four more fields the page never drew: how the
+   surah moves, the verses worth knowing, what is said about reciting it,
+   and the surahs it travels with. 283 KB of written, sourced study on 114
+   pages, read by nothing. Counted here, all of it, so it cannot go quiet. */
+{
+  const count = (h, eyebrow) => ((h.match(new RegExp(eyebrow + "<\\/p><ul class=\"n2-list[^\"]*\">([\\s\\S]*?)<\\/ul>")) || ["", ""])[1].split("<li>").length - 1);
+  ok(rendered.surah.includes("How it moves") && rendered.surah.includes("Verses worth knowing") && rendered.surah.includes("On reciting it") && rendered.surah.includes("Surahs it travels with"), "the surah carries its four other shelves too");
+  ok(count(rendered.surah, "How it moves") === 6 && rendered.surah.includes("Three kinds of people"), "Al-Baqarah is cut into its six movements (" + count(rendered.surah, "How it moves") + ")");
+  ok(rendered.surah.includes('href="/quran?surah=2&amp;ayah=21"'), "and a movement opens the Mushaf at its own first verse");
+  ok(count(rendered.surah, "Verses worth knowing") === 4 && rendered.surah.includes("/verse/2-255"), "its four verses worth knowing link to their own rooms");
+  ok(count(rendered.surah, "Surahs it travels with") === 2 && rendered.surah.includes('href="/surah/3"'), "and the surahs it travels with are named");
+  /* the grading is the point: 56 surahs have no established virtue and say
+     so, and printing the famous virtue of every surah without saying which
+     are established would be doing the reader harm */
+  const grade = async n => { const r = await call({ kind: "surah", n: String(n) }); return [(r.body.match(/n2-ev-(\w+)/) || [])[1], r.body]; };
+  const [g2, b2] = await grade(2), [g11, b11] = await grade(11), [g5, b5] = await grade(5);
+  ok(g2 === "sunnah" && b2.includes("Sunnah-confirmed") && b2.includes("Muslim 780"), "Al-Baqarah's virtue is badged as established, with its sources");
+  ok(g11 === "debated" && b11.includes("Scholars differ") && b11.includes("at-Tirmidhi 3297"), "Surah Hud's is badged as disputed, and names the dispute");
+  ok(g5 === "none" && b5.includes("No virtue report"), "Al-Ma'idah's says plainly that no authentic report establishes one");
+  ok(!/n2-ev-none[\s\S]{0,400}no authentic virtue report/.test(b5), "and does not print a source line that only repeats the badge");
+}
 ok(rendered.surah.includes('href="/surah/1"') && rendered.surah.includes('href="/surah/3"'), "the surah walks to its neighbours");
 ok(rendered.surah.includes("/verse/2-153"), "the surah links its shelved verse");
 ok(rendered.path.includes("Adam from Clay") && rendered.path.includes('href="/path/1"') && rendered.path.includes('href="/path/3"'), "the chapter walks to its neighbours");
@@ -246,6 +267,22 @@ console.log("\n=== the Qur'an API being down ===");
   const s = await call({ kind: "surah", n: "112" });
   ok(s.code === 200 && s.body.includes("Al-Ikhlas") && s.body.includes("4 verses"), "a surah the API cannot give still renders from the reels' Qur'an table");
   apiDown = false;
+}
+
+/* The sweep is last on purpose: rendering all 114 surah pages caches each
+   one's meta, and the block above needs surah 112 to arrive with no meta at
+   all so the fallback table is what answers. */
+console.log("\n=== all 114 surah pages ===");
+{
+  const count = (h, eyebrow) => ((h.match(new RegExp(eyebrow + "<\\/p><ul class=\"n2-list[^\"]*\">([\\s\\S]*?)<\\/ul>")) || ["", ""])[1].split("<li>").length - 1);
+  let mv = 0, ps = 0, cn = 0, badged = 0;
+  for (let n = 1; n <= 114; n++) {
+    const r = await call({ kind: "surah", n: String(n) });
+    mv += count(r.body, "How it moves"); ps += count(r.body, "Verses worth knowing"); cn += count(r.body, "Surahs it travels with");
+    if (/n2-ev-/.test(r.body)) badged++;
+  }
+  ok(mv === 511 && ps === 432 && cn === 229 && badged === 114,
+    "every surah draws all of it: " + mv + " movements, " + ps + " passages, " + cn + " connections, " + badged + " virtue gradings");
 }
 
 console.log("\n=== the rooms' sitemap ===");
