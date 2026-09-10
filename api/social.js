@@ -1747,7 +1747,16 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
      can wait between tries instead of hammering a network that is down */
   /* the send that failed in the first place was attempt one, whether or not
      it was stamped -- records written before this existed carry no count */
-  r = { ...r, tries: Number((had && had.tries) || 1) + 1, lastTry: out.at };
+  /* A person pressing Retry is not the healer using up its budget. The count
+     bounds the automatic net (HEAL_MAX_TRIES, four); counting a human's press
+     against it meant three presses on a stubborn row silently switched the
+     hourly net off for that row, for the rest of the day, without saying so.
+     A hand and a machine are stamped separately now. */
+  const byHand = !!(opts && opts.byHand);
+  r = byHand
+    ? { ...r, hands: Number((had && had.hands) || 0) + 1, lastTry: out.at,
+        tries: Number((had && had.tries) || 1) }
+    : { ...r, tries: Number((had && had.tries) || 1) + 1, lastTry: out.at };
   const results = { ...((rec && rec.results) || {}), [ch]: r };
   const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
                  title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
@@ -1978,6 +1987,19 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
   /* the network's own code first, because it is the only thing here it stands behind */
   const hit = FAULTS.find(f => f.when(Number(out.code), Number(out.sub || 0)));
   if (hit) { out.cause = hit.cause; out.fix = hit.fix; out.steps = hit.steps.slice(); }
+  else if (/no time left in this run/i.test(String(out.said || ""))) {
+    /* Nothing is wrong with the post. Six networks are served from one
+       55-second run and this one was at the back of the queue when the clock
+       ran out. Saying "fix the hashtags" under that sentence sent the owner
+       looking for a fault that was not there. */
+    out.cause = "nothing is wrong with this post: the run ran out of time before it reached "
+      + NET + ", because six networks are served from one 55-second function";
+    out.fix = "retry";
+    out.steps = ["Press Retry: on its own, with the whole budget to itself, it sends.",
+                 "The hourly run also retries it by itself.",
+                 "If this keeps happening to the same networks every day, the run needs splitting, not the post fixing."];
+    out.canRetry = true;
+  }
   else {
     const broke = out.checks.filter(c => !c.ok);
     if (broke.length) {
@@ -1985,6 +2007,19 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
       out.fix = broke.some(c => c.name === "the card image") ? "retry" : "manual";
       out.steps = broke.map(c => "Fix " + c.name + " -- " + c.detail);
       if (out.fix === "retry") out.steps.push("Then press Retry on this row.");
+    } else if (/hashtag|character|too long|caption/i.test(String(out.said || ""))) {
+      /* It failed on the shape, and the shape it would go out with now is
+         within what this network states for itself. The caption is not written
+         again -- CH.shape() trims the trailing hashtag wall to the network's
+         own cap and cuts the length after -- so pressing Retry sends a post
+         this network can accept, rather than the identical refusal. */
+      out.cause = "it was refused for its shape, and the shape has been corrected: "
+        + "the post now sits inside what " + NET + " allows";
+      out.fix = "retry";
+      out.steps = ["The caption was written for the network with the widest limits and reused here.",
+                   "It is trimmed to " + NET + "'s own cap before sending now.",
+                   "Press Retry."];
+      out.canRetry = true;
     } else {
       out.cause = out.said
         ? "no cause we can establish. Every check above passes now, so this reads as a bad minute at " + NET + " rather than something wrong with the post"
@@ -2039,6 +2074,13 @@ export function healable(r) {
 }
 
 export function healDue(r, nowMs) {
+  /* A network the clock cut was never asked, so it did not fail: counting it
+     as a try spends the healer's four on a queue problem and then gives up on
+     a post that nothing is wrong with. Threads, Telegram and Pinterest sit at
+     the back of a six-network queue in a 55-second run and are cut most days;
+     before this they exhausted their tries by lunchtime and stayed red until
+     midnight. A cut is a postponement. */
+  if (r && r.late) return true;
   const tries = Number(r.tries || 1);
   if (tries >= HEAL_MAX_TRIES) return false;
   const wait = (HEAL_BACKOFF[Math.min(tries, HEAL_BACKOFF.length - 1)] || 0) * 60000;
@@ -2585,8 +2627,10 @@ export default async function handler(req, res) {
        alone. This is what a half-failed slot needs; send-slot with force is
        what would post it twice. */
     if (body.action === "retry-channel") {
+      /* byHand: this arrived from the console, so it does not spend the
+         automatic healer's four tries. See the note in retryChannel. */
       const r = await retryChannel(host, String(body.date || date), String(body.slot || ""),
-                                   String(body.where || ""), { force: !!body.force });
+                                   String(body.where || ""), { force: !!body.force, byHand: true });
       return json(res, r.ok ? 200 : 409, r);
     }
     if (body.action === "skip") {

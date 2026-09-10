@@ -91,7 +91,63 @@ export const SPEC = {
 
 /* one post, told six different ways. `p` is what compose() built:
    { title, body, todo[], basis, url, link, image, tags[] } */
+/* ---------------------------------------------------------------------------
+   the cap each network states for itself
+   ---------------------------------------------------------------------------
+   A reel's caption is written once, beside the video, and audited once. Then it
+   is handed to every network. Instagram allows thirty hashtags and the caption
+   is written for Instagram, so it carries six or eight; Threads allows two, and
+   the reel-caption path returned it whole. On 10 September 2026 every reel of
+   the day failed at Threads with "the hashtags -- 3 of 2 allowed", forever,
+   because a retry re-sent the identical caption. A post refused for a reason
+   the house can see and fix is not a failure to report; it is a shape to
+   correct before sending.
+
+   The trailing hashtag block is the one that yields: hashtags at the end are a
+   wall, hashtags inside a sentence are words. So the extras are dropped from
+   the end, and the sentence is untouched. The length cut runs after, because
+   dropping tags changes the length. */
+function capTags(text, max) {
+  if (!text || !(max >= 0)) return text;
+  const RE = /#[\p{L}\p{N}_]+/gu;
+  const hits = [...String(text).matchAll(RE)];
+  if (hits.length <= max) return text;
+  let out = String(text);
+  /* from the end, so the wall goes before any tag that is part of a sentence */
+  for (let i = hits.length - 1; i >= max; i--) {
+    const h = hits[i];
+    out = out.slice(0, h.index) + out.slice(h.index + h[0].length);
+  }
+  return out.replace(/[ \t]{2,}/g, " ").replace(/\n{3,}/g, "\n\n")
+            .replace(/[ \t]+$/gm, "").trim();
+}
+
+/* What a network would refuse about a post, said in the network's own terms.
+   The healer asks this before it retries, so "Fix it" can reshape rather than
+   re-send the same refusal. */
+export function faultsOf(shaped, ch) {
+  const s = SPEC[ch];
+  if (!s || !shaped) return [];
+  const out = [];
+  const text = String(shaped.text || "");
+  const tags = (text.match(/#[\p{L}\p{N}_]+/gu) || []).length;
+  if (tags > s.tags) out.push({ what: "tags", said: tags + " of " + s.tags + " hashtags allowed" });
+  if (text.length > s.chars) out.push({ what: "chars", said: text.length + " of " + s.chars + " characters" });
+  if (s.image === "required" && !shaped.image) out.push({ what: "image", said: "this network requires a picture" });
+  if (s.video === "required" && !shaped.video) out.push({ what: "video", said: "this network requires a video" });
+  return out;
+}
+
 export function shape(p, ch) {
+  const s = SPEC[ch];
+  if (!s) return null;
+  const out = shapeRaw(p, ch);
+  if (!out || typeof out.text !== "string") return out;
+  const capped = capTags(out.text, s.tags);
+  return capped === out.text ? out : { ...out, text: cut(capped, s.chars) };
+}
+
+function shapeRaw(p, ch) {
   const s = SPEC[ch]; if (!s) return null;
   const tags = (p.tags || []).slice(0, s.tags).join(" ");
   const link = p.link || "";
