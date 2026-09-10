@@ -1221,8 +1221,10 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      Bumped to 6 for: .n2-tl and .n2-shield, the spine and the shield the
      nineteen chapters of Al-Nihaya draw their order of events on.
      Bumped to 7 for: .n2-ev, the evidence badge in the shell's dialect, and
-     .n2-notes, a list whose line is a note rather than a name. */
-  var V = "7", left = 0, started = false;
+     .n2-notes, a list whose line is a note rather than a name.
+     Bumped to 8 for: noor2-night.css rebuilt with every room's own rules
+     addressed to that room, which is a change to every page that wears it. */
+  var V = "8", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;

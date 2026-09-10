@@ -84,7 +84,14 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #gates-wrap.list .gmn,#gates-wrap.list .gmeta{display:none}
 #gates-wrap.list .gfull{position:static;order:8}
 /* ayah cards */
-.ayah{border-bottom:1px solid rgba(44,36,22,.07);padding:1.15rem .35rem;scroll-margin-top:150px}
+/* A verse used to end in a hairline at 7% of the ink, which is a line you
+   can only find if you already know it is there -- and in the night, where
+   the same 7% is white on near-black, it is nothing at all. The separation
+   between two ayat is not decoration: it is how a reader knows where one
+   ends. It is drawn in gold, which sits on both grounds, at a strength that
+   was looked at rather than guessed. */
+.ayah{border-bottom:1px solid rgba(201,162,39,.28);padding:1.15rem .35rem;scroll-margin-top:150px}
+.ayah:last-child{border-bottom:0}
 .ayah .ar{font-family:'Amiri Quran',Amiri,serif;font-size:1.65rem;line-height:2.3;color:#241D12;text-align:end;direction:rtl}
 .ayah.playing{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);border-radius:.75rem}
 .medallion{display:inline-flex;align-items:center;justify-content:center;min-width:1.9rem;height:1.9rem;border-radius:999px;background:radial-gradient(circle at 40% 35%,#F4D46A,#C9A227);color:#241D12;font-size:.72rem;font-weight:800;margin-inline-start:.5rem;vertical-align:middle;box-shadow:0 1px 4px rgba(201,162,39,.5)}
@@ -117,7 +124,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sp-eye{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
 .sp-title{font-size:1.25rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
 .sp-title span{font-weight:400;font-size:.9rem;color:rgba(255,254,247,.6)}
-.sp-line{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,254,247,.45);margin:.3rem 0 0}
+.sp-line{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,254,247,.68);margin:.35rem 0 0}
 .sp-k{display:flex;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:1.5rem 0 .55rem}
 .sp-k::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(244,212,106,.35),transparent)}
 .sp-p{font-size:.85rem;line-height:1.85;color:rgba(255,254,247,.84);margin:.6rem 0}
@@ -145,7 +152,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sp-badge{font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;border:1px solid}
 .sp-badge.ok{color:#cfe0b4;border-color:rgba(138,155,110,.55);background:rgba(138,155,110,.14)}
 .sp-badge.weak{color:#F3C9A0;border-color:rgba(214,150,90,.55);background:rgba(214,150,90,.13)}
-.sp-src{font-size:.62rem;letter-spacing:.06em;color:rgba(255,254,247,.5)}
+.sp-src{font-size:.72rem;letter-spacing:.05em;color:rgba(255,254,247,.68)}
 .sp-note{font-size:.74rem;line-height:1.7;color:rgba(255,254,247,.55);border-top:1px solid rgba(244,212,106,.18);margin-top:1.4rem;padding-top:.8rem}
 /* the movements band, the animated figure of a deep surah */
 .sp-fig{margin:.3rem 0 .2rem}
@@ -205,10 +212,12 @@ body.has-player{padding-bottom:calc(var(--ph,124px) + .6rem)}
 #p-sheet.open{max-height:26rem;overflow-y:auto;visibility:visible}
 @media (prefers-reduced-motion:reduce){#p-sheet{transition:none}}
 .pset{padding:.5rem .75rem .35rem;border-bottom:1px solid rgba(244,212,106,.14)}
-.pset-row{display:flex;align-items:center;gap:.6rem;min-height:48px;padding:.2rem 0;border-top:1px solid rgba(244,212,106,.1)}
+.pset-row{display:flex;align-items:center;gap:.6rem;min-height:48px;padding:.35rem 0;border-top:1px solid rgba(244,212,106,.22)}
 .pset-row:first-child{border-top:0}
-.pset-row>.lb{flex:1;min-width:0;font-size:.78rem;color:rgba(255,254,247,.75)}
-.pset-row>.lb small{display:block;font-size:.63rem;color:rgba(255,254,247,.4);margin-top:.1rem}
+.pset-row>.lb{flex:1;min-width:0;font-size:.8rem;color:rgba(255,254,247,.92)}
+/* .4 measures 3.77 to 1 on this ground, under the floor, and 10px is under
+   the type floor as well */
+.pset-row>.lb small{display:block;font-size:.72rem;color:rgba(255,254,247,.66);margin-top:.15rem;line-height:1.45}
 .pset-row .val{font-size:.74rem;font-weight:700;color:#F4D46A}
 .opt{min-height:44px;min-width:64px;border-radius:999px;border:1px solid rgba(244,212,106,.4);background:rgba(244,212,106,.05);color:#F4D46A;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;padding:0 .85rem}
 .opt[aria-checked="true"]{background:rgba(244,212,106,.9);color:#1A160F;border-color:transparent}
@@ -328,7 +337,11 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 .ayah.playing .medallion{border-color:rgba(244,212,106,.85);color:#F4D46A}
 
 .ayah{padding:1.35rem .35rem 1.05rem}
-.ayah .trans{margin-top:.7rem;font-size:.9rem;line-height:1.75;max-width:42rem}
+/* The translation is the half of the page most readers actually read. It was
+   inheriting a body colour that the night hands over at 82%, which reads as
+   grey beside the Arabic at full strength. It gets its own ink, at the top
+   of the range, and a size that does not ask to be squinted at. */
+.ayah .trans{margin-top:.75rem;font-size:.98rem;line-height:1.75;max-width:42rem;color:rgba(44,36,22,.94)}
 .arow{margin-top:.55rem;display:flex;align-items:center;gap:.1rem;flex-wrap:wrap}
 
 /* one shape for all three, so the row reads as a row and not as a toolbar */
@@ -340,10 +353,20 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 .vact+.vact{margin-inline-start:0}
 .vact svg{width:.88rem;height:.88rem;flex:none;opacity:.85}
 .vact:hover,.vact:focus-visible{color:#8a6d13;background:rgba(201,162,39,.07)}
+/* The verse's own play mark is gold, on parchment and in the night both.
+   The night turns ink over and leaves gold where it is by design, so an ink
+   triangle at 55% -- which is what this was -- is a grey shape on a cream
+   card and very nearly nothing on a dark one. Gold is also the truthful
+   colour here: of the three actions on a verse this is the one the page is
+   really for. */
+.vact .vg{display:inline-flex;align-items:center;justify-content:center;width:.95rem;height:.95rem;flex:none}
+.playbtn .vg{color:var(--gold)}
+.playbtn .vg svg{width:.95rem;height:.95rem;opacity:1}
+.playbtn.on .vg{color:var(--gold-hi)}
 .vact:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .vact .vxc{font-style:normal;font-size:.8rem;opacity:.6;transition:transform .22s ease}
 .vact.on .vxc{transform:rotate(90deg)}
-.vact.on{color:#8a6d13}
+.vact.on{color:var(--gold)}
 /* the verse being recited says so in its own action, not in a second colour */
 .playbtn.on{color:#8a6d13;background:rgba(201,162,39,.11)}
 @media (max-width:400px){ .vact span{font-size:.72rem} }
@@ -421,6 +444,12 @@ html[dir="rtl"] .kline i{transform-origin:right center}
    it, where a strip of the page used to scroll through the gap */
 #qnav{top:calc(3.5rem + var(--safetop,0px))}
 #qnav .qrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.45rem}
+/* the second row of the navigator: what a reader chooses about how they read
+   this page. Translation and Reciter are the same kind of decision and sit
+   as the same kind of control. */
+#qnav .tlab{font-size:.75rem;font-weight:600;color:rgba(44,36,22,.75);letter-spacing:.01em}
+#qnav #t-recite{max-width:13rem;text-overflow:ellipsis}
+@media (max-width:430px){#qnav #t-recite{max-width:9.5rem}}
 #qnav .qrow2{max-height:6rem;opacity:1;overflow:hidden;transition:max-height .28s ease,opacity .2s ease,margin .28s ease}
 body.qscrolled #qnav .qrow2{max-height:0;opacity:0;margin:0}
 body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
@@ -877,6 +906,13 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <div class="qrow qrow2">
 <button class="tool on" id="t-trans">Translation</button>
 <select id="t-lang" class="tool" style="appearance:auto" aria-label="Translation"></select>
+<!-- The reciter used to live only inside the player's settings sheet, behind
+     a bare glyph, which meant a reader who wanted a different voice had to
+     find a control that did not say what it was. It belongs here, beside the
+     translation, where the choices about how you read this page already are.
+     The two selects are kept in step. -->
+<span class="tlab" id="t-recite-lab">Reciter</span>
+<select id="t-recite" class="tool" style="appearance:auto" aria-label="Reciter"></select>
 </div>
 </div>
 </nav>
@@ -1002,7 +1038,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
      the terms of the text it serves. It is named now, first. -->
 <p class="text-xs text-parchment/50 leading-relaxed">Arabic text: the Uthmani mushaf of the <a href="https://tanzil.net" rel="noopener" class="hover:text-gold">Tanzil Project</a>, used with permission for non-commercial purposes. Translations: Tanzil and its translators, likewise non-commercial; the English is Talal Itani's Clear Qur'an, under CC BY-ND 4.0. Recitations: <a href="https://alquran.cloud" rel="noopener" class="hover:text-gold">AlQuran Cloud</a> and islamic.network, redistributed by their permission from the reciters. The Qur'an is unchanged; only the doorway is new.</p>
 <a href="/#timeline" class="inline-block mt-4 text-sm text-gold hover:underline">← Back to the Path</a>
-<p class="mt-3 text-[10px] text-parchment/35"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
+<p class="mt-3 text-xs text-parchment/60"><a href="/donate" class="hover:text-gold">✦ Become a Guardian of the Codex</a></p>
 </div>
 </footer>
 
@@ -1237,7 +1273,7 @@ function renderAyahs(n){
     <span class="kline" aria-hidden="true"><i></i></span>
     <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
     <div class="arow">
-      <button class="vact playbtn" data-play="${i}" aria-label="Play ayah ${v}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Listen</span></button>
+      <button class="vact playbtn" data-play="${i}" aria-label="Play ayah ${v}"><i class="vg" aria-hidden="true">${TRI}</i><span>Listen</span></button>
       <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
       ${hasVerse(n,v)?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
     </div>${hasVerse(n,v)?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
@@ -1500,7 +1536,7 @@ function listenLabel(on){autoBtn();$("t-listen").innerHTML=on
  ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
  :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>${narrow()?"Listen":"Listen to surah"}`;}
 addEventListener("resize",()=>{gatesLabel();listenLabel(continuous);},{passive:true});
-const TRI=`<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+const TRI=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
 const LOAD=`<span style="font-weight:800;letter-spacing:1px">…</span>`;
 
 /* ---------- following the recitation ----------
@@ -1572,8 +1608,13 @@ addEventListener("keydown",e=>{if(/^(Arrow|Page|Home|End)/.test(e.key)||e.key===
    Al-Baqarah, which is precisely the jank a phone in battery saver reports.
    The previous verse and its button are remembered instead. */
 let prevAy=null, prevBtn=null;
+/* This used to write the glyph into the BUTTON, which threw away the word
+   beside it: the first time a surah was played every "Listen" on the page
+   became a bare triangle, and a bare triangle in the night is a shape a
+   reader cannot find. The glyph has its own slot now and the word stays. */
 function paintBtn(b,state){if(!b)return;      /* 0 idle, 1 loading, 2 sounding */
- b.classList.toggle("on",state>0);b.innerHTML=state===2?EQ:state===1?LOAD:TRI;}
+ b.classList.toggle("on",state>0);
+ const g=b.querySelector(".vg")||b;g.innerHTML=state===2?EQ:state===1?LOAD:TRI;}
 function progress(f){const b=$("p-fill");
  if(b)b.style.transform="scaleX("+Math.max(0,Math.min(1,f||0))+")";}
 
@@ -1692,11 +1733,11 @@ function preloadNext(i){
  try{const a=idle();quiet(a);a.src=srcsFor(j)[0];a.load();pre={i:j,el:a};}catch(e){pre=null;}
 }
 
-let watchdog=null,failStreak=0,retryRound=0,retryFor=-1,stuckAt=-1;
+let watchdog=null,failStreak=0,retryRound=0,retryFor=-1,stuckAt=-1,stalling=false;
 function clearWatch(){if(watchdog){clearTimeout(watchdog);watchdog=null;}}
-function killAudio(){clearWatch();
+function killAudio(){clearWatch();beatOff();
  if(audio){quiet(audio);try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}}
-function stopAudio(){killAudio();dropPre();sweepOff();
+function stopAudio(){killAudio();dropPre();sweepOff();beatOff();stalling=false;
  setPlaying(-1);continuous=false;paused=false;stuckAt=-1;retryRound=0;playerShow(false);progress(0);
  autoBtn();sheetOpen(false);
  setFollow(true);            /* the next listen starts following again */
@@ -1719,6 +1760,54 @@ function ayahFailed(i){
  paused=true;setToggle(false);playerLabel("could not load · tap play to try again");
  say("Verse "+n+" could not be loaded. Tap play to try again.",9000);
 }
+
+/* ---------- the heartbeat ----------
+   The watch below only ever asked whether a verse had STARTED. onplaying
+   cleared it, and from that moment nothing in this room was looking at the
+   recitation at all. Two things happen on a phone that this left with no
+   answer whatsoever:
+
+     · The bytes stop arriving in the middle of an ayah. The audio CDN rate
+       limits a visitor who has just asked it for two hundred files in a
+       row -- which is exactly what listening to Al-Baqarah straight through
+       does -- and the element then sits there: not paused, not ended, not
+       progressing, with no event of any kind.
+
+     · The ayah reaches its own end and the browser never fires `ended`.
+       iOS drops that event often enough that any player trading elements
+       will meet it, and this one trades an element every single verse.
+
+   Both look identical to a reader, and identical to working: the verse stays
+   lit, the equaliser keeps moving, and the recitation is over. So this
+   watches currentTime instead of readyState, and it runs for as long as the
+   verse does rather than only until it begins. */
+let beat=null,beatAt=-1,beatStill=0;
+function beatOff(){if(beat){clearInterval(beat);beat=null;}beatAt=-1;beatStill=0;}
+function beatOn(me,i,srcIdx){
+ beatOff();
+ beat=setInterval(()=>{
+  if(audio!==me){beatOff();return;}
+  if(paused||me.paused){beatAt=me.currentTime;beatStill=0;return;}
+  const t=me.currentTime;
+  if(t>beatAt+0.05){beatAt=t;beatStill=0;
+   if(stalling){stalling=false;playerLabel();}
+   return;}
+  beatStill++;
+  /* the ayah is sitting at its own end and `ended` never came: end it here,
+     which is the same code path the event would have taken */
+  if(me.duration&&t>=me.duration-0.35&&beatStill>=2){endedNow(me,i);return;}
+  if(beatStill===2){stalling=true;playerLabel("buffering…");}   /* four seconds: say so */
+  if(beatStill===5){try{me.play();}catch(e){}}     /* a stalled element often takes a nudge */
+  if(beatStill>=9){beatOff();stalling=false;next(me,i,srcIdx);}   /* nothing is coming: the next mirror */
+ },2000);
+}
+/* the end of a verse, whether the browser said so or the heartbeat found it */
+function endedNow(me,i){if(audio!==me)return;
+ clearWatch();beatOff();stalling=false;sweepOff();paint(1);
+ if(repeatOne){playAyah(i);return;}          /* the verse comes round again */
+ if(!continuous){stopAudio();return;}
+ if(i+1<ayahs.length){playAyah(i+1);return;}
+ surahEnded();}
 
 /* the watch: gives up only when nothing has ARRIVED for a long while, never
    because something has not yet started */
@@ -1762,13 +1851,9 @@ function playAyah(i,srcIdx){srcIdx=srcIdx||0;
  try{me.playbackRate=rate;}catch(e){}
  paused=false;setToggle(true);playerShow(true);progress(0);setPlaying(i,true);
  mediaSession(true);
- me.onplaying=()=>{if(audio!==me)return;clearWatch();failStreak=0;retryRound=0;retryFor=-1;markSounding(i);sweepOn();preloadNext(i);};
+ me.onplaying=()=>{if(audio!==me)return;clearWatch();beatOn(me,i,srcIdx);failStreak=0;retryRound=0;retryFor=-1;markSounding(i);sweepOn();preloadNext(i);};
  me.ontimeupdate=()=>{if(audio!==me)return;if(me.duration)paint(me.currentTime/me.duration);};
- me.onended=()=>{if(audio!==me)return;clearWatch();sweepOff();paint(1);
-  if(repeatOne){playAyah(i);return;}          /* the verse comes round again */
-  if(!continuous){stopAudio();return;}
-  if(i+1<ayahs.length){playAyah(i+1);return;}
-  surahEnded();};
+ me.onended=()=>endedNow(me,i);
  me.onerror=()=>next(me,i,srcIdx);
  if(me.error){next(me,i,srcIdx);return;}
  armWatch(me,i,srcIdx);
@@ -1927,15 +2012,22 @@ $("o-lang").addEventListener("change",e=>{$("t-lang").value=e.target.value;
 (function fillPickers(){
   const opt=(v,t)=>{const o=document.createElement("option");o.value=v;o.textContent=t;return o;};
 
-  RECITERS.forEach(r=>$("o-reciter").appendChild(opt(r[0], r[2])));
-  $("o-reciter").value=reciter;
-  $("o-reciter").addEventListener("change",e=>{
-    reciter=RMAP[e.target.value]?e.target.value:"ar.alafasy";
-    try{localStorage.setItem("noor-quran-reciter",reciter);}catch(err){}
-    /* a voice changed mid verse restarts that verse in the new voice rather
-       than finishing in the old one */
-    if(playingIdx>=0){const i=playingIdx;killAudio();playAyah(i);}
-    else playerLabel();
+  /* two reciter pickers, the same list, kept in step: one in the navigator
+     where a reader looks for it, one in the player's sheet where a listener
+     already is. Changing either has changed the reciter. */
+  ["o-reciter","t-recite"].forEach(id=>{
+    const el=$(id); if(!el) return;
+    RECITERS.forEach(r=>el.appendChild(opt(r[0], r[2])));
+    el.value=reciter;
+    el.addEventListener("change",e=>{
+      reciter=RMAP[e.target.value]?e.target.value:"ar.alafasy";
+      try{localStorage.setItem("noor-quran-reciter",reciter);}catch(err){}
+      ["o-reciter","t-recite"].forEach(o=>{const x=$(o);if(x&&x!==e.target)x.value=reciter;});
+      /* a voice changed mid verse restarts that verse in the new voice rather
+         than finishing in the old one */
+      if(playingIdx>=0){const i=playingIdx;killAudio();playAyah(i);}
+      else playerLabel();
+    });
   });
 
   [["t-lang",t=>t[1]+" · "+t[2]],["o-lang",t=>t[1]+" · "+t[2]]].forEach(([id,label])=>{
