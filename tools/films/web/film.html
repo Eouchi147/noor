@@ -1,0 +1,118 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>NOOR · film stage</title>
+<!-- The faces are the reels' own, not a second copy: one set of files, one
+     set of licences, and a card and a film that are set in the same type. -->
+<style>
+  @font-face{font-family:'NoorCard';src:url(../../reels/web/noor-card-regular.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'NoorCard';src:url(../../reels/web/noor-card-bold.ttf) format('truetype');font-weight:700;font-display:block}
+  @font-face{font-family:'NoorMono';src:url(../../reels/web/noor-mono.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'Amiri';src:url(../../reels/web/amiri-regular.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'Amiri';src:url(../../reels/web/amiri-bold.ttf) format('truetype');font-weight:700;font-display:block}
+  @font-face{font-family:'AmiriQuran';src:url(../../reels/web/amiri-quran.ttf) format('truetype');font-weight:400;font-display:block}
+
+  :root{
+    --night:#04060F; --night2:#0A1024; --deep:#02030A;
+    --gold:#C9A227; --goldhi:#E9C86A; --goldpale:#F4E2AE;
+    --parch:#FFFEF7;
+    --p86:rgba(255,254,247,.86); --p62:rgba(255,254,247,.62); --p38:rgba(255,254,247,.38);
+    --line:rgba(233,200,106,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--deep)}
+  body{font-family:'NoorCard',system-ui,sans-serif;color:var(--parch);-webkit-font-smoothing:antialiased}
+
+  #ground{position:fixed;inset:0;width:100%;height:100%;display:block;
+    transform-origin:50% 50%;will-change:transform}
+  #vig{position:fixed;inset:0;pointer-events:none}
+
+  /* THE CAMERA.
+     A film that never moves is a slideshow with good typography. There are
+     two planes and the camera moves them at different rates, which is what
+     depth is: the ground answers a push with a fraction of it, so the figure
+     comes toward you and the world stays where it is. Both are transforms,
+     so they cost nothing to composite and mean the same thing in either
+     frame shape. */
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    transform-origin:50% 50%;will-change:transform;backface-visibility:hidden}
+  #hold{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+  html[data-frame="wide"] #hold{width:1440px;height:860px;gap:56px}
+  html[data-frame="tall"] #hold{width:920px;height:1480px;gap:76px}
+
+  /* The figure is the film. It takes the room, and the words live under it. */
+  .fig{position:relative;display:flex;align-items:center;justify-content:center;width:100%}
+  html[data-frame="wide"] .fig{height:660px}
+  html[data-frame="tall"] .fig{height:900px}
+  .fig svg{overflow:visible;width:100%;height:100%}
+
+  .words{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+  html[data-frame="tall"] .words{gap:26px}
+  .rule{width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--goldhi),transparent);opacity:0}
+
+  .eyebrow{font-family:'NoorMono',ui-monospace,monospace;text-transform:uppercase;color:var(--goldhi);opacity:.9}
+  html[data-frame="wide"] .eyebrow{font-size:22px;letter-spacing:.34em}
+  html[data-frame="tall"] .eyebrow{font-size:24px;letter-spacing:.30em}
+
+  .h1{font-weight:700;line-height:1.06;letter-spacing:-.015em;
+     text-shadow:0 0 60px rgba(233,200,106,.14)}
+  html[data-frame="wide"] .h1{font-size:96px}
+  html[data-frame="tall"] .h1{font-size:88px}
+
+  .h2{font-weight:700;line-height:1.1;letter-spacing:-.01em}
+  html[data-frame="wide"] .h2{font-size:62px}
+  html[data-frame="tall"] .h2{font-size:60px}
+
+  .body{color:var(--p86);line-height:1.45;max-width:24ch}
+  html[data-frame="wide"] .body{font-size:42px;max-width:24ch}
+  html[data-frame="tall"] .body{font-size:44px;max-width:17ch}
+  .body.sm{color:var(--p62)}
+  html[data-frame="wide"] .body.sm{font-size:30px;max-width:20ch}
+  html[data-frame="tall"] .body.sm{font-size:32px;max-width:15ch}
+
+  /* The Arabic is set in three sizes, each a class of its own. An em on top
+     of a class that already declares a font-size is measured against the
+     PARENT, not the class, which is how the derived word came out at eleven
+     pixels the first time this was drawn. */
+  .ar{font-family:'Amiri',serif;direction:rtl;color:var(--goldpale);line-height:1.45;
+     text-shadow:0 0 46px rgba(233,200,106,.34),0 0 12px rgba(233,200,106,.18)}
+  html[data-frame="wide"] .ar-xl{font-size:168px;letter-spacing:.02em}
+  html[data-frame="tall"] .ar-xl{font-size:140px;letter-spacing:.02em}
+  html[data-frame="wide"] .ar-lg{font-size:104px}
+  html[data-frame="tall"] .ar-lg{font-size:96px}
+  html[data-frame="wide"] .ar-md{font-size:64px}
+  html[data-frame="tall"] .ar-md{font-size:62px}
+  .quran{font-family:'AmiriQuran','Amiri',serif;direction:rtl;color:var(--parch);line-height:1.95;
+     text-shadow:0 0 52px rgba(233,200,106,.30),0 0 14px rgba(255,254,247,.14)}
+  html[data-frame="wide"] .quran{font-size:74px}
+  html[data-frame="tall"] .quran{font-size:64px}
+
+  .src{font-family:'NoorMono',ui-monospace,monospace;color:var(--p38);text-transform:uppercase}
+  html[data-frame="wide"] .src{font-size:20px;letter-spacing:.2em}
+  html[data-frame="tall"] .src{font-size:22px;letter-spacing:.18em}
+
+  .gloss{font-family:'NoorMono',ui-monospace,monospace;color:var(--p62);text-transform:uppercase}
+  html[data-frame="wide"] .gloss{font-size:22px;letter-spacing:.2em}
+  html[data-frame="tall"] .gloss{font-size:24px;letter-spacing:.18em}
+
+  .g{color:var(--goldhi)}
+  .tok{display:inline-block;white-space:pre}
+  .lt{display:inline-block}
+</style>
+
+<canvas id="ground"></canvas>
+<div id="stage"><div id="hold"></div></div>
+<svg id="vig" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <radialGradient id="vg" cx="50%" cy="46%" r="72%">
+      <stop offset="48%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity=".74"/>
+    </radialGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#vg)"/>
+</svg>
+
+<script src="anime.min.js"></script>
+<script src="ground.js"></script>
+<script src="figures.js"></script>
+<script src="stage.js"></script>
