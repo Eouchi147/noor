@@ -461,9 +461,16 @@ SHARED = ["assets/tw.css", "assets/hub.css", "assets/noor-ramadan.css",
 #
 #  A drawing of paper is not a room. It does not get a night.
 #  ---------------------------------------------------------------------------
+#  The patterns end at a token boundary on purpose. Written without one,
+#  `.page` also matched `.pagenote` -- the line of chrome UNDER the sheet that
+#  says what the sheet is -- and held it out of the night. It only ever read
+#  because the qibla card happens to name a class `.pagenote` too, and that
+#  rule used to be emitted for the whole house. Room-addressing the rules took
+#  the accident away and left the note at 1.09 to 1.
 PAPER = {
-    "masjid/timetable.html": re.compile(r"^\s*(?:#sheet|\.sh-|table\.tt|\.page)"),
-    "masjid/qibla.html":     re.compile(r"^\s*#card"),
+#  `.sh-` is a prefix and stays one; the rest are whole names.
+    "masjid/timetable.html": re.compile(r"^\s*(?:\.sh-|(?:#sheet|table\.tt|\.page)(?![\w-]))"),
+    "masjid/qibla.html":     re.compile(r"^\s*#card(?![\w-])"),
 }
 
 
@@ -863,7 +870,22 @@ def main():
         #  does not link hub.css, and hub.css's flip blacked it out anyway.
         tokens = any(d.strip().startswith("--") for d in split_decls(decl))
         own = who.isdisjoint(shared)
-        if own and not NAMED.search(sel):
+        #  A rule read out of one page's own <style> is addressed to the rooms
+        #  that wrote it, WHATEVER shape its selector has.
+        #
+        #  This used to address only selectors that named no class, id or
+        #  attribute, on the reasoning that a class name is specific enough to
+        #  be its own namespace. It is not. Two people writing two rooms reach
+        #  for the same short word: .opt, .card, .tool, .row, .box. The Pilgrim
+        #  Plan writes .opt for a cream answer card and the Mushaf writes .opt
+        #  for a gold pill in its recitation settings, and the turned-over cream
+        #  -- background:#0A1024 -- landed on the gold pill and left its dark
+        #  ink sitting on a dark ground at a contrast of 1.05 to 1. "Play to the
+        #  end of the surah: On" was invisible on a phone.
+        #
+        #  A token flip stays room-wide, because it repaints anything in the
+        #  document that named the token, not only what the room styled.
+        if own and not tokens:
             s2 = addressed(sel, who)
         else:
             s2 = scope(sel, room=tokens or own)
