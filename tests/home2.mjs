@@ -194,13 +194,13 @@ console.log('\n=== 3. the promises ===');
     ok(!/hm-ayah|hm-names[^{]*>[\s\S]{0,40}<\/section>/.test(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"'))), 'no verse, no Names and no second paragraph on the arrival');
     /* the verse at the door is the second screen, set whole */
     const ideas = [...html.matchAll(/<section class="n2-idea[^"]*" id="([^"]+)"/g)].map(m => m[1]);
-    ok(ideas.join(' ') === 'top ayah today verse library free', 'six screens, in order: ' + ideas.join(' · '));
+    ok(ideas.join(' ') === 'top ayah today verse library mizan free', 'seven screens, in order: ' + ideas.join(' · '));
     ok(/<section class="n2-idea" id="ayah">\s*<p class="n2-eyebrow">The promise<\/p>\s*<p class="n2-quran"[\s\S]*?<p class="n2-meaning">[\s\S]*?<p class="n2-ref">[\s\S]*?<div class="hm-names">[\s\S]*?<\/section>/.test(html), 'the verse screen is the Arabic, the meaning, the reference and the three Names, in that order');
     {
       const arrival = html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"'));
       ok(count(arrival, /<form/g) === 1 && !/n2-btn/.test(arrival), 'the field is the one action on the arrival: no button stands beside it');
     }
-    ok(!/<section[^>]*id="(timeline|mizan|lib-[a-z]+)"/.test(html), 'no screen for the books of the Path, Two Lives or a single group: they are rows of the library');
+    ok(!/<section[^>]*id="(timeline|lib-[a-z]+)"/.test(html), 'no screen for the books of the Path or a single group: they are rows of the library');
     ok(/<ul class="n2-list hm-truths">/.test(html) && !/n2-facts/.test(html), 'the guarantees are rows under hairlines, not a grid of boxes');
     /* one paragraph of prose per screen, everywhere */
     {
@@ -215,7 +215,10 @@ console.log('\n=== 3. the promises ===');
      whole of it, and the rest of the page keeps the house's voice. */
   {
     let text = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<!--[\s\S]*?-->/g, '');
-    text = text.replace(/aria-label="[^"]*"/g, '').replace(/<p class="n2-meaning">[^<]*<\/p>/g, '').replace(/<div class="n2-quote">[\s\S]*?<\/div>/g, '');
+    text = text.replace(/aria-label="[^"]*"/g, '').replace(/<p class="n2-meaning">[^<]*<\/p>/g, '').replace(/<div class="n2-quote">[\s\S]*?<\/div>/g, '')
+      /* a narration, and any line the library already carries in nineteen languages,
+         speak in their own voice and not the page's */
+      .replace(/<p class="n2-p hm-mz-q">[^<]*<\/p>/g, '').replace(/<([a-z0-9]+)([^>]*\bdata-i18n="mizan\.[^"]*"[^>]*)>[\s\S]*?<\/\1>/g, '');
     const askedIt = [text.replace(/[\s\S]*(<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>)[\s\S]*/, '$1'), text.replace(/[\s\S]*(<p class="ask-lead">[^<]*<\/p>)[\s\S]*/, '$1')];
     ok(askedIt.every(s => /\b(you|your)\b/i.test(s)), 'the arrival asks its question in the second person, and asks for an answer');
     text = text.replace(/<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>/, '').replace(/<p class="ask-lead">[^<]*<\/p>/, '');
@@ -226,7 +229,7 @@ console.log('\n=== 3. the promises ===');
     ok(!hits.length, 'no second person in the page\'s own copy' + (hits.length ? ' (' + hits.length + ': ' + hits.slice(0, 4).join(', ') + ')' : ''));
   }
   ok(html.includes('Nothing here is asked for. The door of giving is open for whoever wishes; nothing is expected.'), 'the stance on giving is the owner\'s, as structural copy');
-  ok(Buffer.byteLength(html) < 45 * 1024, 'the page is under 45 KB (' + Buffer.byteLength(html) + ')');
+  ok(Buffer.byteLength(html) < 48 * 1024, 'the page is under 48 KB (' + Buffer.byteLength(html) + ')');
 }
 
 console.log('\n=== 4. the structured data ===');
@@ -264,9 +267,11 @@ console.log('\n=== 5. every door is real ===');
   for (const s of menu.sections) for (const it of s.items) {
     if (it.u === '/donate') continue;                     /* the door of giving is its own screen */
     rooms++;
-    /* the menu sends the Path to /#timeline: on this page that is the row of the Path itself, whose door is /path; /#mizan is the Two Lives row, which opens its sheet */
+    /* the menu sends the Path to /#timeline: on this page that is the row of the Path
+       itself, whose door is /path. Two Lives is a room of its own now, so its row is
+       an ordinary door like every other. */
     const u = it.u === '/#timeline' ? '/path' : it.u.replace(/^\/#/, '#');
-    const re = new RegExp((it.u === '/#timeline' ? '<li id="timeline">' : it.u === '/#mizan' ? '<li id="mizan">' : '<li>') + '<a href="' + u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"' + (it.u === '/#mizan' ? ' id="hm-mizan"' : '') + '><b>' + it.t.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '<small>' + it.d.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</small>');
+    const re = new RegExp((it.u === '/#timeline' ? '<li id="timeline">' : '<li>') + '<a href="' + u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"><b>' + it.t.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '<small>' + it.d.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</small>');
     if (!re.test(html)) lost.push(it.u);
   }
   ok(!lost.length, 'every room of the menu index is a door on the page' + (lost.length ? ' (lost: ' + lost.join(', ') + ')' : ' (' + rooms + ')'));
@@ -279,7 +284,22 @@ console.log('\n=== 5. every door is real ===');
   const src = fs.readFileSync(path.join(ROOT, 'nodes-index.js'), 'utf8');
   const NODES = JSON.parse(src.match(/const\s+NODES\s*=\s*(\[[\s\S]*?\]);/)[1]);
   ok(new RegExp(NODES.length + ' chapters, from Kun Fayakun').test(html), 'the Path counts ' + NODES.length + ' chapters in the library');
-  ok(/"#mizan"/.test(html) && /Muslim 2858/.test(html) && /Bukhari 6416/.test(html) && /Bukhari 6412/.test(html) && /function mizan\(\)/.test(html), 'Two Lives keeps its three narrations, in a sheet');
+  ok(/id="mizan"/.test(html) && /Muslim 2858/.test(html) && /data-i18n="mizan.title"/.test(html) && /data-i18n="mizan.drop.note"/.test(html) && /href="\/mizan"/.test(html) && !/function mizan\(\)/.test(html),
+    'the arrival carries the first measurement whole, in the keys the nineteen languages already carry, and the door to the other eight');
+  {
+    /* Two Lives itself: the nine cards, restored, every one of the 59 keys rendered */
+    const mz = fs.readFileSync(path.join(ROOT, 'mizan.html'), 'utf8');
+    const fxs = fs.readFileSync(path.join(ROOT, 'noor-fx.js'), 'utf8');
+    const want = new Set([...fxs.matchAll(/"(mizan\.[^"]+)"/g)].map(m => m[1]));
+    const got = new Set([...mz.matchAll(/data-i18n="(mizan\.[^"]+)"/g)].map(m => m[1]));
+    const lost = [...want].filter(k => !got.has(k));
+    ok(!lost.length, 'every one of the ' + want.size + ' Two Lives strings is rendered somewhere in the room' + (lost.length ? ' (lost: ' + lost.join(', ') + ')' : ''));
+    ok(count(mz, /class="mz-card/g) === 9, 'the nine measurements are all there (' + count(mz, /class="mz-card/g) + ')');
+    for (const src of ['Muslim 2858', 'Tirmidhi 3550', 'Qur\'an 70:4', 'Muslim 2807', 'Bukhari 6514', 'Bukhari 6412', 'Bukhari 5641', 'Bukhari 660', 'Tirmidhi 2377'])
+      ok(mz.includes(src), 'the room still names its source: ' + src);
+    ok(!/data-mgo/.test(mz) && mz.includes('href="/path/71"'), 'the Jannah button is a door to the chapter, not a call to a function that no longer exists');
+    ok(!/<script src="[^"]*tailwind/.test(mz) && count(mz, /#mizan \.grid\{display:grid\}/g) === 1, 'the utilities the block needs are written out once, scoped to the section');
+  }
   /* the footer's doors are the house's one list */
   const fx = fs.readFileSync(path.join(ROOT, 'noor-fx.js'), 'utf8');
   const social = [...fx.matchAll(/href: "(https:[^"]+)"/g)].map(m => m[1]);
@@ -499,12 +519,19 @@ if (chromium) {
     ok(await pg.evaluate(() => { const g = document.querySelectorAll('.hm-grp')[3]; return !g.classList.contains('hm-shut') && g.querySelector('button').getAttribute('aria-expanded') === 'true'; }), 'a heading opens its section');
     await pg.evaluate(() => document.getElementById('mizan').scrollIntoView({ behavior: 'instant', block: 'center' })); await pg.waitForTimeout(500);
     await pg.screenshot({ path: path.join(SHOTS, 'phone-6-library-story.png') });
-    /* the Two Lives row, inside that section, opens its sheet */
-    await pg.click('#hm-mizan'); await pg.waitForTimeout(900);
-    const mz = await pg.evaluate(() => (document.querySelector('.n2-sheet-wrap.n2-show .n2-sheet') || {}).textContent || '');
-    ok(/Two lives, in true scale/.test(mz) && /Muslim 2858/.test(mz) && /Bukhari 6412/.test(mz), 'the Two Lives row opens the three narrations in a sheet');
+    /* Two Lives stands on the arrival: the first measurement, whole, with the
+       sea moving and the door to the other eight. */
+    const mz = await pg.evaluate(() => {
+      const s = document.getElementById('mizan');
+      s.scrollIntoView({ behavior: 'instant', block: 'start' });
+      return { text: s.textContent, sea: !!s.querySelector('.hm-mz-sea svg'), door: !!s.querySelector('a[href="/mizan"]'),
+               overflow: document.documentElement.scrollWidth > window.innerWidth + 1 };
+    });
+    await pg.waitForTimeout(700);
+    ok(/Two Lives in True Scale/.test(mz.text) && /Muslim 2858/.test(mz.text) && /the drop : the sea/.test(mz.text),
+      'the arrival carries the first measurement, its narration and its source');
+    ok(mz.sea && mz.door && !mz.overflow, 'the sea is drawn, the door to the other eight is there, and nothing scrolls sideways');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-7-two-lives.png') });
-    await pg.click('.n2-sheet [data-n2-close]'); await pg.waitForTimeout(600);
     /* A question opens its answer where it stands: the words of the room that
        answers it, and the door into that room. One at a time, so tapping a
        second shuts the first -- the arrival never becomes a wall of prose. */
@@ -582,8 +609,25 @@ if (chromium) {
     await pg.screenshot({ path: path.join(SHOTS, 'phone-13-chapter.png') });
     await pg.goto(BASE + '/#node-71', { waitUntil: 'load' }); await pg.waitForTimeout(1800);
     ok(await pg.evaluate(() => /chapter 71 of 71/.test((document.querySelector('.n2-sheet-wrap.n2-show .n2-sheet') || {}).textContent || '')), '#node-71 opens the last chapter');
-    await pg.goto('about:blank'); await pg.goto(BASE + '/#mizan', { waitUntil: 'load' }); await pg.waitForTimeout(1800);
-    ok(await pg.evaluate(() => /Muslim 2858/.test((document.querySelector('.n2-sheet-wrap.n2-show .n2-sheet') || {}).textContent || '')), '/#mizan, the door 56 rooms point at, opens Two Lives');
+    /* /mizan, the door 126 links in 57 files point at, is the room itself: nine
+       measurements, the counters run, the bars fill. */
+    await pg.goto('about:blank'); await pg.goto(BASE + '/mizan.html', { waitUntil: 'load' });  /* python's http.server has no cleanUrls; Vercel serves this as /mizan */ await pg.waitForTimeout(1200);
+    await pg.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { scrollTo(0, y); await new Promise(r => setTimeout(r, 90)); } });
+    await pg.waitForTimeout(1200);
+    const room = await pg.evaluate(() => ({
+      cards: document.querySelectorAll('#mizan .mz-card').length,
+      hidden: [...document.querySelectorAll('#mizan .mz-card')].filter(c => +getComputedStyle(c).opacity < .9).length,
+      counters: [...document.querySelectorAll('[data-mcount]')].map(e => e.textContent.replace(/[^\d]/g, '')),
+      bars: [...document.querySelectorAll('.mz-bar i')].map(e => getComputedStyle(e).transform),
+      overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+      leaves: document.querySelectorAll('.mz-leaves i').length,
+      seven: document.querySelectorAll('.mz-s7').length,
+    }));
+    ok(room.cards === 9 && room.hidden === 0, 'all nine measurements are there and every one of them is revealed (' + room.cards + ', ' + room.hidden + ' still dark)');
+    ok(room.counters.join(' ') === '70 50000 83 700', 'the four counters have counted (' + room.counters.join(' ') + ')');
+    ok(room.bars.every(t => t === 'none' || /matrix\(1,/.test(t)), 'the three bars of the timeline have filled');
+    ok(room.leaves === 6 && room.seven === 7 && !room.overflow, 'the leaves fall, the seven are seven, and it does not scroll sideways');
+    await pg.screenshot({ path: path.join(SHOTS, 'phone-7b-mizan-room.png'), fullPage: true });
     await pg.goto('about:blank'); await pg.goto(BASE + '/#timeline', { waitUntil: 'load' }); await pg.waitForTimeout(1800);
     /* the Path's row lives in a folded section, so the anchor must unfold it */
     ok(await pg.evaluate(() => { const el = document.getElementById('timeline'), g = el.closest('.hm-grp'); return !g.classList.contains('hm-shut') && el.getBoundingClientRect().height > 0; }), '/#timeline, the menu\'s door to the Path, unfolds the section it lives in');
@@ -630,7 +674,7 @@ if (chromium) {
     ok((await pg.evaluate(() => document.querySelector('#verse .n2-eyebrow').textContent)).includes(want.reciter), 'the reciter is named');
     ok(st.glow === 0, 'still nothing glowing of itself');
     const nums = await pg.evaluate(() => [...document.querySelectorAll('.n2-idea')].map(s => ((s.firstElementChild || {}).querySelector ? (s.firstElementChild.querySelector('.n2-of') || {}).textContent : '') || ''));
-    ok(nums.join(' ') === '01 / 06 02 / 06 03 / 06 04 / 06 05 / 06 06 / 06', 'every screen keeps its numeral once the library has answered (' + nums.join(' · ') + ')');
+    ok(nums.join(' ') === '01 / 07 02 / 07 03 / 07 04 / 07 05 / 07 06 / 07 07 / 07', 'every screen keeps its numeral once the library has answered (' + nums.join(' · ') + ')');
     await pg.evaluate(() => document.getElementById('today').scrollIntoView({ behavior: 'instant' })); await pg.waitForTimeout(1300);
     await pg.screenshot({ path: path.join(SHOTS, 'phone-14-today.png') });
     await pg.evaluate(() => document.getElementById('verse').scrollIntoView({ behavior: 'instant' })); await pg.waitForTimeout(1300);

@@ -417,7 +417,7 @@ console.log("\n=== the deployment ===");
   ok(robots.includes("Disallow: /admin2\n") && robots.includes("Disallow: /admin2.html"), "robots.txt keeps the new console out");
   const sm = fs.readFileSync("sitemap.xml", "utf8");
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  ok(locs.length === 607, "the static sitemap holds 607 pages (" + locs.length + ")");
+  ok(locs.length === 608, "the static sitemap holds 608 pages (" + locs.length + ")");
   ok(!["ha", "ja", "ko", "ku", "so", "sw", "zh"].some(l => locs.includes("https://noorcodex.com/" + l)), "the seven thin language roots are gone");
   ok((sm.match(/<lastmod>/g) || []).length === locs.length && sm.includes("<lastmod>2026-09-09</lastmod>"), "every static page carries a lastmod");
   const ign = fs.readFileSync(".vercelignore", "utf8");
