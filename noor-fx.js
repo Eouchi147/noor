@@ -1219,8 +1219,10 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      floor measured with itself switched off. api/page.js carries the same
      number; tests/rooms.mjs checks the two agree.
      Bumped to 6 for: .n2-tl and .n2-shield, the spine and the shield the
-     nineteen chapters of Al-Nihaya draw their order of events on. */
-  var V = "6", left = 0, started = false;
+     nineteen chapters of Al-Nihaya draw their order of events on.
+     Bumped to 7 for: .n2-ev, the evidence badge in the shell's dialect, and
+     .n2-notes, a list whose line is a note rather than a name. */
+  var V = "7", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
