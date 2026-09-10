@@ -323,10 +323,13 @@ def nav_html(prefix, active):
         sheet_groups.append("\n".join(rows))
 
     return """<header id="site-header" class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-ink/5">
-<!-- The menu. Its index is fetched on first open rather than inlined, so these
-     54 pages do not each carry 120KB of it. The magnifier above opens it. -->
-<link rel="stylesheet" href="/assets/noor-menu.css?v=3">
-<script src="/assets/noor-menu.js?v=3" defer></script>
+<!-- The menu is the shell's now. noor-fx.js draws the bar on every page in the
+     house and its Search opens assets/noor-search.js, so the two files this
+     header used to link -- assets/noor-menu.css and assets/noor-menu.js -- have
+     not been on a page for months. They were still being written here, and
+     still being uploaded to the deployment. Both are gone from the build; the
+     tags go with them, so re-running this generator cannot resurrect a pair of
+     404s. -->
 %s
 <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
 <a href="/" class="flex items-center gap-2.5">
