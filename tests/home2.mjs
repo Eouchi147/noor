@@ -3,16 +3,18 @@
    The home page was rebuilt on the second cut's shell (assets/noor2.css and
    noor2.js). Two things are held here.
 
-   THE WIRING. Everything the old page wired that other rooms still lean on
-   is still there: the search -- which is the More sheet now, the map of the
-   house and the search in one door -- the language layer with its
-   hreflang doors, the beacon and the service worker (noor-fx.js), the
-   dials, the Path's ?node= and #node- deep links, the give door, the footer
+   THE WIRING. Everything the old page wired that other rooms still lean on is
+   still there: the search -- which the arrival wears as a field of its own
+   now, while the menu door and the bar's fifth door still open it as the More
+   sheet, the map of the house -- the language layer with its hreflang doors,
+   the beacon and the service worker (noor-fx.js), the dials, the Path's
+   ?node= and #node- deep links, the give door, the footer
    doors, the structured data, the meta tags and the canonical. Every room
    in assets/menu-index.json is a real link on the page, grouped as the menu
    groups them, and every internal link resolves to a file or a rewrite.
 
-   THE PROMISE. Pinch zoom is allowed, there is one glowing thing, one door
+   THE PROMISE. Pinch zoom is allowed, nothing glows of itself -- the one
+   action is the field, and it lights only under the hand -- there is one door
    of giving and no word that hurries anyone. The verse screen walks the
    reels shelf with the same stride as api/_schedule.js, so what the page
    shows is what the poster shows. And when the library's answers cannot be
@@ -20,15 +22,20 @@
    never an error.
 
    THE SHAPE. Six screens, so the shell's marks column draws. The first is a
-   signpost and nothing else: an eyebrow, a headline of two lines, ONE line of
-   prose, the search, four destinations as rows with hairlines and a chevron,
-   and one quiet way on. It ends by 700 px at 390 by 844 and by 640 at 360 by
-   780, well clear of the bar. Then the verse of 2:186 with the three Names on
+   question and nothing else: an eyebrow, the question in two lines, ONE
+   paragraph of prose, the field, six questions as rows with hairlines and a
+   chevron, and one quiet way on. The six stand clear of the bar at 390 by 844
+   and at 360 by 780, and at 390 the whole arrival does. Six real links and a
+   real form ship in the HTML, so the arrival works with no script at all; the
+   script then turns the six into disclosures that open their answer in place,
+   one at a time, and the field into live search over the whole library. The
+   four destinations the signpost used to carry are rows of the library now,
+   like every other room. Then the verse of 2:186 with the three Names on
    a screen of its own, Today's light, One verse, the library (eight sections
    folded but the first) and No catch. Every screen carries at most one
    paragraph of prose, and every list is rows under hairlines. On a laptop the
-   signpost uses the width: the words on the left, the action and the doors on
-   the right. The shell is loaded with a version tail, and the tail is
+   arrival holds one reading column in the middle, the marks column clear to
+   its right. The shell is loaded with a version tail, and the tail is
    checked only for being there: it moves whenever assets/noor2.css or
    assets/noor2.js changes, which is the whole point of it.
 
@@ -101,8 +108,9 @@ console.log('\n=== 2. the shell and the wiring ===');
     'the #search arrival': /location\.hash === "#search"/,
     'the language pill NOOR_I18N syncs (#lang-cur)': /id="lang-cur"/,
     'the language door sets the house language': /NOOR_I18N\.setLang\(b\.getAttribute\("data-setlang"\)\)/,
-    'the search field opens the search': /NOOR_SEARCH\.open\(\)/,
-    'the menu door': /data-nm-open/,
+    'the asking field\'s own block (noor-ask.css)': /href="\/assets\/noor-ask\.css/,
+    'the asking field, and the script that upgrades it (noor-ask.js)': /src="\/assets\/noor-ask\.js[^>]*defer[\s\S]*<section[^>]*id="top"[^>]*data-noor-ask/,
+    'the menu door, which opens the More sheet the field used to': /data-nm-open/,
     'the share buttons use the shell': /data-n2-share=/,
     'the play button and a video that waits for a tap': /<video playsinline controls preload=\\?"none\\?"/,
     'the noor:lang event re-lights the day': /addEventListener\("noor:lang"/
@@ -126,7 +134,7 @@ console.log('\n=== 3. the promises ===');
   ok(/Open the door of giving/.test(html), 'and it is worded as a door, not an ask');
   for (const w of ['only today', 'hurry', 'limited', 'urgent', 'last chance', 'countdown', 'don\'t miss', 'act now'])
     ok(!new RegExp(w, 'i').test(html), 'no "' + w + '"');
-  ok(count(html, /n2-glow/g) === 1, 'one thing glows, and only one');
+  ok(count(html, /n2-glow/g) === 0 && count(html, /class="ask-field"/g) === 1, 'nothing glows of itself, and there is one action to glow: the field');
   const visible = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]+>/g, ' ');
   ok(!/!/.test(visible), 'no exclamation mark anywhere on the page');
   ok(!/user-scalable/.test(html), 'user-scalable is not set at all');
@@ -141,14 +149,14 @@ console.log('\n=== 3. the promises ===');
   ok(html.includes('<h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>'), 'the library screen says the same, with the key word in gold');
   ok(html.includes('with its date, and its source where the card names one'), 'the Lights claim a source only where a card names one');
   ok(!/whole of Islam/i.test(html), 'no "the whole of Islam"');
-  /* the arrival: the thesis, the verse, the three Names, the toolkit */
-  ok(/<p class="n2-eyebrow hm-eyebrow">Free · No ads · No account<\/p>/.test(html), 'the signpost opens with the short guarantee, three words wide');
-  ok(/<h1 class="n2-h1">A guide to God, <span class="n2-g">whole and free<\/span><\/h1>/.test(html), 'the headline is the thesis, its key phrase in gold');
+  /* the arrival: the question, the verse, the three Names, the toolkit */
+  ok(/<p class="n2-eyebrow ask-eyebrow">Free · No ads · No account<\/p>/.test(html), 'the arrival opens with the short guarantee, three words wide');
+  ok(/<h1 class="n2-h1 ask-h1">What do you want <span class="g">to know\?<\/span><\/h1>/.test(html), 'the headline is the question itself, its second half in gold');
   {
-    const lead = (html.match(/<p class="hm-lead">([^<]*)<\/p>/) || [])[1] || '';
-    ok(lead === 'The religion in one library: to read, to hear, to learn, to teach.', 'one line under the headline says what the library is');
-    ok(lead.length <= 72, 'and it is short enough for two lines on a phone (' + lead.length + ' characters)');
-    ok(count(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"')), /<p class="(n2-p|n2-dim|hm-lead)"/g) === 1, 'the signpost carries exactly one line of prose');
+    const lead = (html.match(/<p class="ask-lead">([^<]*)<\/p>/) || [])[1] || '';
+    ok(lead === 'The whole religion in one library, free and complete, and every answer carries the source it came from. Ask in your own words.', 'one paragraph under the question says what the library is, and what to do');
+    ok(lead.length <= 140, 'and it is short enough to read in a breath (' + lead.length + ' characters)');
+    ok(count(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"')), /<p class="(n2-p|n2-dim|ask-lead)"/g) === 1, 'the arrival carries exactly one paragraph of prose');
   }
   ok(/<p class="n2-quran" lang="ar" translate="no">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ<\/p>/.test(html), 'Qur\'an 2:186, the first half, in the Uthmani script');
   ok(html.includes('<p class="n2-meaning">And when My servants ask you concerning Me — indeed I am near.</p>'), 'with the first sentence of the Saheeh International meaning; the rest is on /verse/2-186');
@@ -162,34 +170,55 @@ console.log('\n=== 3. the promises ===');
       ok(html.includes('<span lang="ar" translate="no">' + ar + '</span>' + tr + '</a>') && html.includes(gloss), 'the arrival carries ' + tr + ' with that gloss, linking to /allah');
     }
     ok(count(html, /<a href="\/allah"><span lang="ar"/g) === 3, 'three Names, three doors to /allah');
-    /* the four destinations: the human intent, the library's own count under
-       it, a chevron at the edge; rows of the house's own list, with hairlines */
-    const CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
-    for (const [href, label, line, room] of [['/quran', "Read the Qur'an", '114 surahs, recited', 'The Mushaf'], ['/path', 'The whole story', '71 chapters, in order', 'The Path of Creation'], ['/kids', 'For the children', "The Kids' Codex", "The Kids' Codex"], ['/masjid', 'For a masjid', 'Board, khutba, timetable, qibla', 'The Masjid Toolbox']]) {
+    /* the six questions: what somebody actually asks, a chevron at the edge;
+       rows under hairlines, and every one of them a real link before any
+       script runs, so the arrival works with JavaScript switched off */
+    const asked = [...html.matchAll(/<li><a class="ask-q" href="([^"]+)"><span>([^<]+)<\/span><svg class="cv"[^>]*>[\s\S]*?<\/svg><\/a><\/li>/g)];
+    ok(asked.length === 6 && count(html, /<ul class="ask-list" data-ask-list>/g) === 1, 'the six questions are one list of rows, not a grid of tiles (' + asked.length + ')');
+    ok(asked.every(m => /^\/[a-z]/.test(m[1])) && new Set(asked.map(m => m[1])).size === 6, 'each ships as a real link into the room that answers it (' + asked.map(m => m[1]).join(' ') + ')');
+    ok(asked.every(m => /\?$/.test(m[2])), 'and each is worded the way somebody would ask it, question mark and all');
+    /* the field before the upgrade: a form, an action, a named input. With no
+       script at all, typing and pressing enter is a GET to /ask */
+    ok(/<form class="ask-field" role="search" action="\/ask" method="get">/.test(html)
+      && /<input id="ask-in" name="q" type="search"/.test(html)
+      && /<label class="notranslate" for="ask-in" hidden>Ask anything<\/label>/.test(html),
+      'the field is a real search form with a named input and a label: without a script it is a GET to /ask');
+    /* the four destinations the signpost used to carry by hand are still one
+       tap from the arrival: they are rows of the library, in the menu's words */
+    const shelf = html.slice(html.indexOf('id="library"'), html.indexOf('id="free"'));
+    for (const [href, room] of [['/quran', 'The Mushaf'], ['/path', 'The Path of Creation'], ['/kids', "The Kids' Codex"], ['/masjid', 'The Masjid Toolbox']]) {
       const item = menuItem(room);
-      ok(item && (item.u === href || (href === '/path' && item.u === '/#timeline')) && html.includes('<li><a href="' + href + '"><b>' + label + '<small>' + line + '</small></b>' + CHEV + '</a></li>'), 'the destination "' + label + '" is ' + room + ', under it "' + line + '"');
+      ok(item && (item.u === href || (href === '/path' && item.u === '/#timeline')) && shelf.includes('<a href="' + href + '"><b>' + room + '<small>'), 'the door to ' + room + ' is a row of the library now, at ' + href);
     }
-    ok(/<ul class="n2-list hm-doors">/.test(html) && count(html, /<ul class="n2-list hm-doors">[\s\S]*?<\/ul>/g) === 1, 'the four destinations are one list of rows, not a grid of tiles');
-    ok(/<p class="hm-more"><a href="#library">Everything else in the library →<\/a><\/p>/.test(html), 'and one quiet way on to the whole library');
-    ok(!/hm-ayah|hm-names[^{]*>[\s\S]{0,40}<\/section>/.test(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"'))), 'no verse, no Names and no second paragraph on the signpost');
+    ok(/<p class="ask-more"><a href="\/ask">Every question →<\/a><span aria-hidden="true">·<\/span><a href="#library">The whole library →<\/a><\/p>/.test(html), 'and one quiet way on: every question, and the whole library');
+    ok(!/hm-ayah|hm-names[^{]*>[\s\S]{0,40}<\/section>/.test(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"'))), 'no verse, no Names and no second paragraph on the arrival');
     /* the verse at the door is the second screen, set whole */
     const ideas = [...html.matchAll(/<section class="n2-idea[^"]*" id="([^"]+)"/g)].map(m => m[1]);
     ok(ideas.join(' ') === 'top ayah today verse library free', 'six screens, in order: ' + ideas.join(' · '));
     ok(/<section class="n2-idea" id="ayah">\s*<p class="n2-eyebrow">The promise<\/p>\s*<p class="n2-quran"[\s\S]*?<p class="n2-meaning">[\s\S]*?<p class="n2-ref">[\s\S]*?<div class="hm-names">[\s\S]*?<\/section>/.test(html), 'the verse screen is the Arabic, the meaning, the reference and the three Names, in that order');
-    ok(count(html, /n2-glow/g) === 1 && /n2-glow hm-search/.test(html), 'the search is still the one glowing action');
+    {
+      const arrival = html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"'));
+      ok(count(arrival, /<form/g) === 1 && !/n2-btn/.test(arrival), 'the field is the one action on the arrival: no button stands beside it');
+    }
     ok(!/<section[^>]*id="(timeline|mizan|lib-[a-z]+)"/.test(html), 'no screen for the books of the Path, Two Lives or a single group: they are rows of the library');
     ok(/<ul class="n2-list hm-truths">/.test(html) && !/n2-facts/.test(html), 'the guarantees are rows under hairlines, not a grid of boxes');
     /* one paragraph of prose per screen, everywhere */
     {
       const secs = html.replace(/<script[\s\S]*?<\/script>/g, '').split(/<section class="n2-idea/).slice(1);
-      const loud = secs.map(x => ({ id: (x.match(/id="([^"]+)"/) || [])[1], n: count(x, /<p class="(n2-p|n2-dim|hm-lead)"/g) })).filter(x => x.n > 1);
+      const loud = secs.map(x => ({ id: (x.match(/id="([^"]+)"/) || [])[1], n: count(x, /<p class="(n2-p|n2-dim|ask-lead)"/g) })).filter(x => x.n > 1);
       ok(!loud.length, 'no screen carries more than one paragraph of prose' + (loud.length ? ' (' + loud.map(x => x.id + ':' + x.n).join(', ') + ')' : ''));
     }
   }
-  /* no second person outside a control's label and the quoted verse */
+  /* No second person outside a control's label, the quoted verse and the one
+     question the arrival asks. The field speaks to the reader because it is a
+     question put to them and a request to answer it; those two lines are the
+     whole of it, and the rest of the page keeps the house's voice. */
   {
     let text = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<!--[\s\S]*?-->/g, '');
     text = text.replace(/aria-label="[^"]*"/g, '').replace(/<p class="n2-meaning">[^<]*<\/p>/g, '').replace(/<div class="n2-quote">[\s\S]*?<\/div>/g, '');
+    const askedIt = [text.replace(/[\s\S]*(<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>)[\s\S]*/, '$1'), text.replace(/[\s\S]*(<p class="ask-lead">[^<]*<\/p>)[\s\S]*/, '$1')];
+    ok(askedIt.every(s => /\b(you|your)\b/i.test(s)), 'the arrival asks its question in the second person, and asks for an answer');
+    text = text.replace(/<h1 class="n2-h1 ask-h1">[\s\S]*?<\/h1>/, '').replace(/<p class="ask-lead">[^<]*<\/p>/, '');
     /* the rooms' own lines out of the menu index are the library's words, not this page's */
     const menu = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/menu-index.json'), 'utf8'));
     for (const s of menu.sections) for (const it of s.items) { text = text.split(it.d.replace(/&/g, '&amp;')).join(''); text = text.split(it.t.replace(/&/g, '&amp;')).join(''); text = text.split(s.s).join(''); }
@@ -351,9 +380,11 @@ if (chromium) {
       notice: !!document.querySelector('#noor-notice'),
       social: document.querySelectorAll('[data-noor-social]').length,
       socialIn: (r => r ? { foot: !!r.closest('footer'), links: [...r.querySelectorAll('a')].map(a => a.getAttribute('href')), left: r.getBoundingClientRect().left, x: r.querySelector('a svg').getBoundingClientRect().left, tx: r.previousElementSibling.getBoundingClientRect().left } : null)(document.querySelector('[data-noor-social]')),
-      minFont: Math.min(...[...document.querySelectorAll('main *')].filter(e => e.innerText && e.children.length === 0).map(e => parseFloat(getComputedStyle(e).fontSize)))
+      minFont: Math.min(...[...document.querySelectorAll('main *')].filter(e => e.innerText && e.children.length === 0 && !e.closest('.ask-more')).map(e => parseFloat(getComputedStyle(e).fontSize))),
+      wayOn: (a => a ? { size: parseFloat(getComputedStyle(a).fontSize), face: getComputedStyle(a).fontFamily, caps: getComputedStyle(a).textTransform } : null)(document.querySelector('.ask-more a')),
+      field: document.querySelectorAll('.ask-field').length
     }));
-    ok(st.glow === 1, 'one glowing thing in the DOM');
+    ok(st.glow === 0 && st.field === 1, 'nothing glows of itself in the DOM, and there is one action to glow: the field');
     ok(st.still && st.gl, 'the night is drawn (the still, and the canvas over it)');
     ok(st.bar === 5 && st.top, 'the bar has its five rooms and the top line its mark');
     ok(st.ideas >= 6 && st.ideas <= 7, 'six or seven screens, so the marks column draws (' + st.ideas + ')');
@@ -366,37 +397,47 @@ if (chromium) {
     ok(st.firstIn, 'the arrival is lit before the observer runs');
     ok(st.social === 1 && st.socialIn && st.socialIn.foot && st.socialIn.links.length === 6, 'noor-fx.js drew the row of six doors once, inside the footer');
     ok(st.socialIn && Math.abs(st.socialIn.x - st.socialIn.tx) < 2, 'and its first mark sits on the footer\'s left edge with the text');
-    ok(st.minFont >= 12, 'no type under 12 px on a phone (' + st.minFont + ')');
+    ok(st.minFont >= 12, 'no type under 12 px on a phone, the way on apart (' + st.minFont + ')');
+    /* the way on is the eyebrow's register -- mono, caps, tracked -- and it is
+       the one place on the page that sits under the floor, at 11.5 */
+    ok(st.wayOn && st.wayOn.size >= 11 && /Mono|mono/.test(st.wayOn.face) && st.wayOn.caps === 'uppercase', 'and the way on is a tracked mono label, not prose (' + (st.wayOn || {}).size + ' px)');
     const box = e => { const r = e.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, h: r.height, w: r.width, left: r.left, right: r.right }; };
     const fitOf = () => pg.evaluate(() => {
       const bx = e => { const r = e.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, h: r.height, w: r.width, left: r.left, right: r.right }; };
       const t = document.getElementById('top'), a = document.getElementById('ayah'), q = a.querySelector('.n2-quran'), r = q.getBoundingClientRect();
       const lines = e => Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight));
-      const doors = [...t.querySelectorAll('.hm-doors a')].map(x => Object.assign(bx(x), { href: x.getAttribute('href'), chev: !!x.querySelector('svg'), mono: getComputedStyle(x.querySelector('small')).fontFamily,
-        titleSize: parseFloat(getComputedStyle(x.querySelector('b')).fontSize), monoLines: Math.round(x.querySelector('small').getBoundingClientRect().height / parseFloat(getComputedStyle(x.querySelector('small')).lineHeight)) }));
-      const eb = t.querySelector('.n2-eyebrow'), h = t.querySelector('.n2-h1'), se = t.querySelector('#hm-search'), more = t.querySelector('.hm-more');
+      const qs = [...t.querySelectorAll('.ask-q')].map(x => Object.assign(bx(x), { tag: x.tagName, href: x.getAttribute('data-url') || x.getAttribute('href'),
+        expanded: x.getAttribute('aria-expanded'), chev: !!x.querySelector('svg.cv'), size: parseFloat(getComputedStyle(x).fontSize) }));
+      const eb = t.querySelector('.n2-eyebrow'), h = t.querySelector('.n2-h1'), fd = t.querySelector('.ask-field'), list = t.querySelector('.ask-list'), more = t.querySelector('.ask-more');
+      const want = ['p.ask-eyebrow', 'h1.ask-h1', 'p.ask-lead', 'form.ask-field', 'p[data-ask-live]', 'ul.ask-list', 'p.ask-more'];
       return { end: bx(more).bottom, bar: bx(document.querySelector('.n2-bar')).top, clip: q.scrollWidth > q.clientWidth + 1 || r.left < 0 || r.right > innerWidth,
-        doors, eyebrow: bx(eb), eyebrowLines: lines(eb), h1: bx(h), h1Lines: lines(h), lead: bx(t.querySelector('.hm-lead')), leadLines: lines(t.querySelector('.hm-lead')),
-        search: bx(se), more: bx(more), kids: [...t.children].length,
+        qs, eyebrow: bx(eb), eyebrowLines: lines(eb), h1: bx(h), h1Lines: lines(h), lead: bx(t.querySelector('.ask-lead')), leadLines: lines(t.querySelector('.ask-lead')),
+        field: bx(fd), list: bx(list), more: bx(more),
+        kids: [...t.children].length, inOrder: [...t.children].every((c, i) => !!want[i] && c.matches(want[i])),
+        input: (i => i ? { name: i.name, type: i.type } : null)(t.querySelector('.ask-field input')),
         names: a.querySelectorAll('.hm-names a').length, verse: !!a.querySelector('a[href="/verse/2-186"]'), second: document.querySelectorAll('.n2-idea')[1] === a,
         wide: document.documentElement.scrollWidth <= innerWidth + 1 }; });
     let fit = await fitOf();
-    /* the signpost, measured: statement, then action, then the four doors */
-    ok(fit.end <= 700, 'the signpost ends by 700 px at 390 by 844 (' + Math.round(fit.end) + ')');
-    ok(fit.end <= fit.bar - 40, 'and clears the bar with room to spare (bar at ' + Math.round(fit.bar) + ')');
+    /* the arrival, measured: the question, then the field, then the six */
+    ok(fit.list.bottom <= fit.bar, 'the six questions stand clear of the bar at 390 by 844 (' + Math.round(fit.list.bottom) + ' <= ' + Math.round(fit.bar) + ')');
+    ok(fit.end <= fit.bar, 'and so does the way on beneath them (' + Math.round(fit.end) + ')');
     ok(fit.eyebrowLines === 1, 'the eyebrow holds one line beside its numeral');
-    ok(fit.h1Lines <= 2 && fit.h1.h >= 60, 'the headline is two lines, not three (' + fit.h1Lines + ')');
-    ok(fit.leadLines <= 2, 'the line under it is two lines at most (' + fit.leadLines + ')');
-    ok(Math.round(fit.search.top - fit.lead.bottom) >= 24, 'air before the search (' + Math.round(fit.search.top - fit.lead.bottom) + ' px)');
-    ok(fit.search.h >= 50 && fit.search.h <= 58, 'the search is the one action, about 52 px tall (' + Math.round(fit.search.h) + ')');
-    ok(Math.round(fit.doors[0].top - fit.search.bottom) >= 20, 'air before the doors (' + Math.round(fit.doors[0].top - fit.search.bottom) + ' px)');
-    ok(fit.doors.length === 4 && fit.doors.every(d => d.h >= 64 && d.h <= 76), 'four rows, each 64 to 76 px tall (' + fit.doors.map(d => Math.round(d.h)).join(', ') + ')');
-    ok(fit.doors.every((d, i) => i === 0 || d.top > fit.doors[i - 1].top + 40), 'they stack as a vertical list, one under the other');
-    ok(fit.doors.every(d => Math.abs(d.w - fit.doors[0].w) < 2 && d.w > 250), 'each row is the full width, so the whole row is the door');
-    ok(fit.doors.every(d => d.chev && /Mono|mono/.test(d.mono) && d.titleSize >= 16.5 && d.monoLines === 1), 'each row has its chevron, its 17 px title and one mono line under it');
-    ok(fit.doors.map(d => d.href).join(' ') === '/quran /path /kids /masjid', 'the rows are the Qur\'an, the story, the children, a masjid');
-    ok(fit.h1.top < fit.search.top && fit.search.top < fit.doors[0].top && fit.doors[3].bottom < fit.more.top, 'statement, then action, then the four doors, then the way on');
-    ok(fit.kids === 3, 'the signpost holds three things and no more: the eyebrow, what is said, what is done');
+    ok(fit.h1Lines <= 2 && fit.h1.h >= 60, 'the question is two lines, not three (' + fit.h1Lines + ')');
+    ok(fit.leadLines <= 4, 'the paragraph under it is four lines at most (' + fit.leadLines + ')');
+    ok(Math.round(fit.field.top - fit.lead.bottom) >= 20, 'air before the field (' + Math.round(fit.field.top - fit.lead.bottom) + ' px)');
+    ok(fit.field.h >= 50 && fit.field.h <= 58, 'the field is the one action, about 54 px tall (' + Math.round(fit.field.h) + ')');
+    ok(fit.input && fit.input.name === 'q' && fit.input.type === 'search', 'and it is a named search input, so the form degrades to a GET (' + JSON.stringify(fit.input) + ')');
+    ok(Math.round(fit.qs[0].top - fit.field.bottom) >= 16, 'air before the questions (' + Math.round(fit.qs[0].top - fit.field.bottom) + ' px)');
+    ok(fit.qs.length === 6 && fit.qs.every(d => d.h >= 44 && d.h <= 76), 'six rows, each 44 to 76 px tall (' + fit.qs.map(d => Math.round(d.h)).join(', ') + ')');
+    ok(fit.qs.every((d, i) => i === 0 || d.top > fit.qs[i - 1].top + 20), 'they stack as a vertical list, one under the other');
+    ok(fit.qs.every(d => Math.abs(d.w - fit.qs[0].w) < 2 && d.w > 250), 'each row is the full width, so the whole row is the question');
+    ok(fit.qs.every(d => d.chev && d.size >= 15), 'each row has its chevron and its 15 px line (' + fit.qs[0].size + ')');
+    /* the upgrade has run: the six links are six disclosures now, all shut,
+       each still carrying the href it shipped with as the room it opens */
+    ok(fit.qs.every(d => d.tag === 'BUTTON' && d.expanded === 'false'), 'once the script has run each question is a button, shut (' + fit.qs.map(d => d.tag.toLowerCase() + ':' + d.expanded).join(' ') + ')');
+    ok(fit.qs.map(d => d.href).join(' ') === '/dictionary/islam /dictionary/tawhid /theology#women /dictionary/nuzul-isa /dictionary/salah /dictionary/shahadah', 'and keeps the room it shipped with (' + fit.qs.map(d => d.href).join(' ') + ')');
+    ok(fit.h1.top < fit.field.top && fit.field.top < fit.qs[0].top && fit.qs[5].bottom <= fit.more.top, 'the question, then the field, then the six, then the way on');
+    ok(fit.kids === 7 && fit.inOrder, 'the arrival holds seven things and no more: the eyebrow, the question, the line under it, the field, the live line, the six and the way on (' + fit.kids + ')');
     ok(fit.second && fit.names === 3 && fit.verse, 'the verse of 2:186 with the three Names is the second screen');
     ok(!fit.clip, 'the Arabic of 2:186 is not clipped');
     /* the verse screen breathes, measured where it is read */
@@ -417,10 +458,13 @@ if (chromium) {
     nr = await namesRow();
     fit = await fitOf();
     ok(nr.oneRow && !nr.clipped, 'and at 360');
-    ok(fit.end <= 640, 'the signpost ends by 640 px at 360 by 780 (' + Math.round(fit.end) + ')');
-    ok(fit.end <= fit.bar && !fit.clip && fit.wide, 'it clears the bar there too (' + Math.round(fit.end) + ' <= ' + Math.round(fit.bar) + '), Arabic whole, no sideways scroll');
-    ok(fit.h1Lines <= 2 && fit.leadLines <= 2 && fit.eyebrowLines === 1, 'the headline, the line and the eyebrow keep their line counts at 360');
-    ok(fit.doors.every(d => d.h >= 64 && d.h <= 76 && d.monoLines === 1), 'the rows keep their height and their one mono line at 360 (' + fit.doors.map(d => Math.round(d.h)).join(', ') + ')');
+    /* at 360 by 780 the six still stand whole above the bar; the way on under
+       them falls behind it, a hair of scroll away, which is the price of six
+       questions rather than four doors */
+    ok(fit.list.bottom <= fit.bar, 'the six questions stand clear of the bar at 360 by 780 too (' + Math.round(fit.list.bottom) + ' <= ' + Math.round(fit.bar) + ')');
+    ok(!fit.clip && fit.wide, 'the Arabic is whole there, and nothing scrolls sideways');
+    ok(fit.h1Lines <= 2 && fit.leadLines <= 4 && fit.eyebrowLines === 1, 'the question, the paragraph and the eyebrow keep their line counts at 360');
+    ok(fit.qs.length === 6 && fit.qs.every(d => d.h >= 44 && d.h <= 76), 'the rows keep their height at 360 (' + fit.qs.map(d => Math.round(d.h)).join(', ') + ')');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-1-arrival-360.png') });
     await pg.setViewportSize({ width: 390, height: 844 }); await pg.waitForTimeout(400);
     await pg.screenshot({ path: path.join(SHOTS, 'phone-1-arrival.png') });
@@ -461,13 +505,55 @@ if (chromium) {
     ok(/Two lives, in true scale/.test(mz) && /Muslim 2858/.test(mz) && /Bukhari 6412/.test(mz), 'the Two Lives row opens the three narrations in a sheet');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-7-two-lives.png') });
     await pg.click('.n2-sheet [data-n2-close]'); await pg.waitForTimeout(600);
-    /* The field opens the same sheet the bar's fifth door does: the map of the
-       house when it is empty, the search once two letters are typed. Before 9
-       September 2026 the field opened one thing and the bar another, and the
-       map existed only on this page, behind a dial. */
+    /* A question opens its answer where it stands: the words of the room that
+       answers it, and the door into that room. One at a time, so tapping a
+       second shuts the first -- the arrival never becomes a wall of prose. */
     await pg.evaluate(() => window.scrollTo(0, 0)); await pg.waitForTimeout(600);
-    await pg.click('#hm-search'); await pg.waitForTimeout(700);
-    ok(await pg.evaluate(() => !!document.querySelector('.nmr.on')), 'the search field opens the More sheet');
+    /* the one action lights only under the hand: dark until it is used */
+    const lit = await pg.evaluate(async () => {
+      const f = document.querySelector('.ask-field'), off = getComputedStyle(f).boxShadow;
+      document.getElementById('ask-in').focus();
+      let on = off;                                   /* the ring is a transition: wait it out */
+      for (let i = 0; i < 40 && !/233, 200, 106/.test(on); i++) { await new Promise(r => setTimeout(r, 50)); on = getComputedStyle(f).boxShadow; }
+      document.getElementById('ask-in').blur(); window.scrollTo(0, 0);
+      return { off: off, on: on };
+    });
+    ok(lit.off === 'none' && /233, 200, 106/.test(lit.on), 'the field is dark until it is used, and then it carries the gold ring (' + lit.off + ' → ' + lit.on.split(')')[0] + ')');
+    await pg.waitForTimeout(400);
+    await pg.evaluate(() => document.querySelectorAll('.ask-q')[0].click()); await pg.waitForTimeout(900);
+    const one = await pg.evaluate(() => {
+      const b = document.querySelectorAll('.ask-q')[0], p = b.parentNode.querySelector('.ask-a');
+      return { exp: b.getAttribute('aria-expanded'), open: document.querySelectorAll('.ask-a.on').length,
+        tall: p ? Math.round(p.getBoundingClientRect().height) : 0,
+        prose: p ? ((p.querySelector('p.p') || {}).textContent || '').length : 0,
+        go: p ? (p.querySelector('a.go') || {}).getAttribute('href') : null,
+        inside: p ? p.closest('li') === b.parentNode : false };
+    });
+    ok(one.exp === 'true' && one.open === 1 && one.tall > 100, 'tapping a question opens its answer where it stands (' + one.tall + ' px)');
+    ok(one.prose > 80 && one.go === '/dictionary/islam' && one.inside, 'the panel is a paragraph and a door into the room that answers it (' + one.prose + ' characters)');
+    await pg.screenshot({ path: path.join(SHOTS, 'phone-10-answer.png') });
+    await pg.evaluate(() => document.querySelectorAll('.ask-q')[3].click()); await pg.waitForTimeout(900);
+    const two = await pg.evaluate(() => ({ exp: [...document.querySelectorAll('.ask-q')].map(b => b.getAttribute('aria-expanded')),
+      open: document.querySelectorAll('.ask-a.on').length, go: [...document.querySelectorAll('.ask-a.on a.go')].map(a => a.getAttribute('href')) }));
+    ok(two.open === 1 && two.go.join('') === '/dictionary/nuzul-isa' && two.exp.join(' ') === 'false false false true false false', 'a second question shuts the first: one answer is open at a time (' + two.exp.join(' ') + ')');
+    /* two letters and the whole library answers in the same list: the
+       questions that match first, then the rooms, the words, the people */
+    await pg.fill('#ask-in', 'pray'); await pg.waitForTimeout(1600);
+    const found = await pg.evaluate(() => ({ rows: document.querySelectorAll('.ask-list a.ask-r').length,
+      qs: document.querySelectorAll('.ask-list .ask-q').length, first: (document.querySelector('.ask-list li') || {}).className,
+      groups: [...document.querySelectorAll('.ask-grp')].map(g => g.textContent), live: (document.querySelector('[data-ask-live]') || {}).textContent || '' }));
+    ok(found.rows > 4 && found.first === 'ask-grp' && found.groups[0] === 'Answered here', 'two letters replace the six with results, the questions that match put first (' + found.groups.slice(0, 3).join(' · ') + ')');
+    ok(/^\d+ results? for pray$/.test(found.live), 'and the live line says how many, in the reader\'s own words (' + found.live + ')');
+    await pg.screenshot({ path: path.join(SHOTS, 'phone-10b-results.png') });
+    await pg.fill('#ask-in', ''); await pg.waitForTimeout(1200);
+    const back = await pg.evaluate(() => ({ qs: [...document.querySelectorAll('.ask-list .ask-q')].map(b => b.tagName + ':' + b.getAttribute('aria-expanded') + ':' + b.getAttribute('data-url')),
+      items: document.querySelectorAll('.ask-list > li').length, open: document.querySelectorAll('.ask-a.on').length }));
+    ok(back.items === 6 && back.qs.length === 6 && back.open === 0, 'clearing the field puts the six back, all shut (' + back.items + ')');
+    ok(back.qs.every(q => /^BUTTON:false:\//.test(q)), 'and they are buttons again, each with its room (' + back.qs[0] + ')');
+    /* the More sheet the field used to open is the menu door's now, and the
+       bar's fifth door: the map of the house, whole */
+    await pg.click('.hm-menu'); await pg.waitForTimeout(900);
+    ok(await pg.evaluate(() => !!document.querySelector('.nmr.on')), 'the menu door opens the More sheet');
     ok(await pg.evaluate(() => document.querySelectorAll('.nmr .nmr-r').length === 42),
        'and it is the whole library: forty-two rooms');
     ok(await pg.evaluate(() => !document.getElementById('nd')), 'and the dial it replaced is gone');
@@ -542,7 +628,7 @@ if (chromium) {
     ok(st.video && st.video.preload === 'none' && st.video.paused && st.video.controls && st.video.inline && new RegExp('/reels/' + want.id + '-cover\\.jpg$').test(st.video.poster) && st.video.src === wantVideo, 'the reel waits for a tap: the video where the row says, the cover at /reels/<id>-cover.jpg');
     ok(st.verseLink === '/verse/' + wantId, 'and the verse has its own room');
     ok((await pg.evaluate(() => document.querySelector('#verse .n2-eyebrow').textContent)).includes(want.reciter), 'the reciter is named');
-    ok(st.glow === 1, 'still one glowing thing');
+    ok(st.glow === 0, 'still nothing glowing of itself');
     const nums = await pg.evaluate(() => [...document.querySelectorAll('.n2-idea')].map(s => ((s.firstElementChild || {}).querySelector ? (s.firstElementChild.querySelector('.n2-of') || {}).textContent : '') || ''));
     ok(nums.join(' ') === '01 / 06 02 / 06 03 / 06 04 / 06 05 / 06 06 / 06', 'every screen keeps its numeral once the library has answered (' + nums.join(' · ') + ')');
     await pg.evaluate(() => document.getElementById('today').scrollIntoView({ behavior: 'instant' })); await pg.waitForTimeout(1300);
@@ -558,15 +644,17 @@ if (chromium) {
     await withFixtures(pg);
     await pg.goto(BASE + '/', { waitUntil: 'load' }); await settle(pg);
     ok(await pg.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), 'the page does not scroll sideways on a laptop');
-    const dk = await pg.evaluate(() => { const t = document.getElementById('top'), h = t.querySelector('.n2-h1').getBoundingClientRect(), s = t.querySelector('#hm-search').getBoundingClientRect(), d = t.querySelector('.hm-doors').getBoundingClientRect(), e = t.querySelector('.n2-eyebrow').getBoundingClientRect();
-      const dots = document.querySelector('.n2-dots').getBoundingClientRect(), main = document.querySelector('.n2-main').getBoundingClientRect();
-      return { twoCols: s.left > h.right && d.left > h.right, sameBand: Math.abs(h.top - s.top) < 170, above: t.querySelector('.hm-more').getBoundingClientRect().bottom <= document.querySelector('.n2-bar').getBoundingClientRect().top,
-        wideTop: t.getBoundingClientRect().width > main.width + 100, dotsClear: dots.left + 8 >= t.getBoundingClientRect().right && dots.right <= innerWidth, eyebrowSpans: e.width > h.width + 100,
-        h1Lines: Math.round(h.height / parseFloat(getComputedStyle(t.querySelector('.n2-h1')).lineHeight)), rows: [...t.querySelectorAll('.hm-doors a')].map(a => Math.round(a.getBoundingClientRect().height)) }; });
-    ok(dk.twoCols && dk.sameBand && dk.h1Lines <= 2, 'on a laptop the headline is on the left in two lines, the search and the doors on the right');
-    ok(dk.above, 'and the whole signpost sits above the bar at 1280 by 800');
-    ok(dk.wideTop && dk.dotsClear && dk.eyebrowSpans, 'the signpost uses the width, the marks column beside it, the eyebrow across both columns');
-    ok(dk.rows.every(h => h >= 64 && h <= 80), 'the four rows keep their height on a laptop (' + dk.rows.join(', ') + ')');
+    const dk = await pg.evaluate(() => { const t = document.getElementById('top'), h = t.querySelector('.n2-h1').getBoundingClientRect(), s = t.querySelector('.ask-field').getBoundingClientRect(), d = t.querySelector('.ask-list').getBoundingClientRect(), e = t.querySelector('.n2-eyebrow').getBoundingClientRect();
+      const dots = document.querySelector('.n2-dots').getBoundingClientRect(), box = t.getBoundingClientRect();
+      return { oneCol: Math.abs(s.left - h.left) < 2 && Math.abs(d.left - h.left) < 2 && Math.abs(e.left - h.left) < 2 && s.top > h.bottom && d.top > s.bottom,
+        centred: Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2, column: box.width <= 620 && box.width >= 480, width: Math.round(box.width),
+        above: d.bottom <= document.querySelector('.n2-bar').getBoundingClientRect().top,
+        dotsClear: dots.left + 8 >= box.right && dots.right <= innerWidth,
+        h1Lines: Math.round(h.height / parseFloat(getComputedStyle(t.querySelector('.n2-h1')).lineHeight)), rows: [...t.querySelectorAll('.ask-q')].map(a => Math.round(a.getBoundingClientRect().height)) }; });
+    ok(dk.oneCol && dk.h1Lines <= 2, 'on a laptop the arrival is one column: the question in two lines, then the field, then the six');
+    ok(dk.above, 'and the six questions sit above the bar at 1280 by 800');
+    ok(dk.centred && dk.column && dk.dotsClear, 'the arrival holds a reading column in the middle of the screen (' + dk.width + ' px wide), the marks column clear to its right');
+    ok(dk.rows.length === 6 && dk.rows.every(h => h >= 44 && h <= 60), 'the six rows keep their height on a laptop (' + dk.rows.join(', ') + ')');
     await pg.screenshot({ path: path.join(SHOTS, 'desk-1-arrival.png') });
     await pg.evaluate(() => document.getElementById('today').scrollIntoView({ behavior: 'instant' })); await pg.waitForTimeout(1300);
     await pg.screenshot({ path: path.join(SHOTS, 'desk-2-today.png') });
