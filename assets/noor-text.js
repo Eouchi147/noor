@@ -57,9 +57,59 @@
 
   var ATTRS = ["placeholder", "aria-label", "title", "alt"];
 
+  /* ---- a sentence that is styled in two halves is still one sentence ----
+     "What do you want <span class=g>to know?</span>" is two text nodes, so
+     the layer would hand a translator "What do you want" and "to know?"
+     separately and get back two halves that do not make a sentence in a
+     language that orders its words differently.
+
+     An element marked data-noor-1 is read as one string, with a bar where
+     the styling breaks it:
+
+         What do you want |to know?
+         Que voulez-vous |savoir ?
+         ما الذي تريد |معرفته؟
+
+     The translator keeps the bar; the layer splits on it and puts each part
+     back where it came from, so the gold half stays gold in every language.
+     A translation with the wrong number of bars is refused and the English
+     stands, which is the same promise the rest of the layer makes. */
+  var ONE = "__noorOne";
+  function joinOne(el) {
+    var parts = [], ns = [];
+    for (var c = el.firstChild; c; c = c.nextSibling) {
+      if (c.nodeType === 3) { parts.push(c.nodeValue); ns.push(c); }
+      else if (c.nodeType === 1 && c.firstChild && c.firstChild.nodeType === 3 && !c.firstChild.nextSibling) {
+        parts.push(c.firstChild.nodeValue); ns.push(c.firstChild);
+      } else return null;   /* anything deeper is not this simple shape */
+    }
+    return ns.length > 1 ? { nodes: ns, en: norm(parts.join("|")) } : null;
+  }
+  function ones(root, pack) {
+    var n = 0, scope = (root && root.querySelectorAll) ? root : document;
+    var list = scope.querySelectorAll("[data-noor-1]");
+    if (scope.matches && scope.matches("[data-noor-1]")) list = [scope].concat([].slice.call(list));
+    [].forEach.call(list, function (el) {
+      var j = joinOne(el);
+      if (!j) return;
+      j.nodes.forEach(function (x) { if (x[ORIG] === undefined) x[ORIG] = x.nodeValue; x[ONE] = 1; });
+      var restore = function () { j.nodes.forEach(function (x) { if (x.nodeValue !== x[ORIG]) x.nodeValue = x[ORIG]; }); };
+      if (!pack) return restore();
+      var en = norm(j.nodes.map(function (x) { return x[ORIG]; }).join("|"));
+      var t = pack[key(en)];
+      if (t === undefined) return restore();
+      var got = String(t).split("|");
+      if (got.length !== j.nodes.length) return restore();   /* the bar was lost in translation */
+      j.nodes.forEach(function (x, i) { x.nodeValue = got[i]; });
+      n++;
+    });
+    return n;
+  }
+
   function applyTo(root, pack) {
-    var swapped = 0;
+    var swapped = ones(root, pack);
     walk(root, function (n) {
+      if (n[ONE]) return;
       var raw = n.nodeValue;
       if (!raw || !/\S/.test(raw)) return;
       if (!translatable(n)) return;
@@ -97,7 +147,7 @@
     if (code === "en") return Promise.resolve(null);
     if (CACHE[code]) return Promise.resolve(CACHE[code]);
     /* PACK_V: bump with every release that ships new packs, or readers keep stale translations forever */
-    return fetch("/i18n/text/" + code + ".json?v=85", { cache: "force-cache" })
+    return fetch("/i18n/text/" + code + ".json?v=86", { cache: "force-cache" })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (!j) return null;
