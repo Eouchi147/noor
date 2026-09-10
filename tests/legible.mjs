@@ -253,7 +253,16 @@ console.log('  scanned ' + scanned + ' page loads across ' + PAGES.length + ' pa
    already in the house's vocabulary; what is new is those alphas composited
    over grounds they had not sat on before. Picking a colour to hold a counter
    down rather than to be read would be the wrong way round. */
-const CEILING = { unreadable: 0, tiny: 326, inks: 74 };
+/* tiny 326 -> 294, inks 74 -> 73. The Mushaf's redesign of 10 September paid
+   for both. Thirty two pieces of writing on that room came up off the floor:
+   the player's reciter line (10px at half strength -- the one line that
+   answers "who is this voice", set as if it were a footnote), the whole
+   recitation settings sheet at 11.5px, the study companion's labels at 9.6px,
+   the surah gates' revelation chips and ayat counts, and the house's own
+   mission strip, which is on all six hundred pages. The ink count fell by one
+   because those raises reused alphas the house already had rather than
+   inventing new ones. */
+const CEILING = { unreadable: 0, tiny: 294, inks: 73 };
 const ratchet = (name, got, cap) => {
   if (got > cap) { fail++; console.log('  FAIL ' + name + ' got worse: ' + got + ' (ceiling ' + cap + ')'); }
   else { pass++; console.log('  ✓ ' + name + ': ' + got + (got ? ' left, ceiling ' + cap + (got < cap ? ' -- lower it to ' + got : '') : ' -- clear')); }

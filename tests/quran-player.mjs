@@ -231,20 +231,50 @@ for (const W of [390, 1280]) {
   await page.waitForTimeout(250);
   ok(await page.evaluate(() => !NOOR_MUSHAF.paused), 'and starts it again');
 
-  /* The glyph used to be written into the button itself, which threw the
-     word away with it: the first time a surah was played, every "Listen" on
-     the page turned into a bare triangle, and a triangle in ink at 55% is
-     something a reader on a dark card cannot find. */
-  ok(await page.locator('#a-2 .playbtn > span').innerText().then(t => /^Listen$/.test(t.trim())), 'a verse that has been played still says Listen');
-  ok(await page.locator('#a-2 .playbtn .eq').count() === 1, 'and its mark is the equaliser while it sounds');
+  /* THE PLAY CONTROL IS NEVER HIDDEN AND NEVER SWALLOWED.
+     Two faults, one promise. It used to be a text button in a row that only
+     appeared on the verse the reader was already on -- which on a page of two
+     hundred and eighty six verses is nowhere -- and painting it once threw the
+     word beside it away. It lives in the verse's own gutter now: a bordered
+     gold control at forty four pixels beside EVERY ayah, with the ayah's
+     number printed under it. This holds it to all of that at once. */
   {
-    const marks = await page.evaluate(() => [...document.querySelectorAll('.playbtn .vg')].map(g => getComputedStyle(g).color));
-    const chroma = c => { const m = c.match(/\d+/g) || [0, 0, 0]; const n = m.slice(0, 3).map(Number); return (Math.max(...n) - Math.min(...n)) / 255; };
-    ok(marks.length === 7 && marks.every(c => chroma(c) >= 0.18), 'every play mark is gold, so the night leaves it alone (' + marks[0] + ')');
+    const rail = await page.evaluate(() => [...document.querySelectorAll('.ayah')].map(a => {
+      const b = a.querySelector('.playbtn'), n = a.querySelector('.vno');
+      if (!b || !n) return null;
+      const r = b.getBoundingClientRect(), c = getComputedStyle(b);
+      return { w: Math.round(r.width), h: Math.round(r.height), o: +c.opacity,
+               vis: c.visibility, num: n.textContent.trim() };
+    }));
+    ok(rail.length === 7 && rail.every(x => x), 'every verse carries its own play control');
+    ok(rail.every(x => x.w >= 40 && x.h >= 40), 'each one is a thumb-sized target (' + rail[0].w + '×' + rail[0].h + ')');
+    ok(rail.every(x => x.o === 1 && x.vis === 'visible'), 'and it is visible at rest, on every verse, with nothing to hover or reveal');
+    ok(rail.map(x => x.num).join(',') === '1,2,3,4,5,6,7', 'and each still prints its own number (' + rail.map(x => x.num).join(',') + ')');
+  }
+  ok(await page.locator('#a-2 .playbtn .eq').count() === 1, 'the sounding verse wears the equaliser');
+  {
+    const marks = await page.evaluate(() => [...document.querySelectorAll('.playbtn')].map(b => {
+      const c = getComputedStyle(b);
+      return { fg: c.color, bg: c.backgroundColor, on: b.classList.contains('on') };
+    }));
+    const px = c => (c.match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
+    const chroma = c => { const n = px(c); return (Math.max(...n) - Math.min(...n)) / 255; };
+    const lum = c => { const [r, g, b] = px(c).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+                       return .2126 * r + .7152 * g + .0722 * b; };
+    const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+    const idle = marks.filter(m => !m.on), lit = marks.filter(m => m.on);
+    ok(idle.length === 6 && idle.every(m => chroma(m.fg) >= 0.18),
+      'a resting mark is gold, so the night leaves it alone (' + idle[0].fg + ')');
+    /* The one that is sounding is filled. Its ink was a neutral once and the
+       night turned it to parchment: white on gold, 1.5:1. It is a colour now,
+       and this is the measurement that says so. */
+    ok(lit.length === 1 && ratio(lit[0].fg, lit[0].bg) >= 4.5,
+      'the sounding one is filled, and its ink reads on the fill (' +
+      ratio(lit[0].fg, lit[0].bg).toFixed(2) + ':1, ' + lit[0].fg + ' on ' + lit[0].bg + ')');
   }
   await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
   await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
-  ok(await page.locator('#a-2 .playbtn > span').innerText().then(t => /^Listen$/.test(t.trim())), 'and it still says Listen after a pause and a restart');
+  ok(await page.locator('#a-2 .vno').innerText().then(t => t.trim() === '2'), 'and the number under it survives a pause and a restart');
 
   console.log('\n=== 4. the verse being recited carries the light ===');
   ok(await page.locator('.ayah.playing').count() === 1, 'exactly one verse is lit');
@@ -457,9 +487,17 @@ for (const W of [390, 1280]) {
   }
   {
     /* the actions belong to the verse the reader is on, and to no other */
-    const shown = await page.evaluate(() => [...document.querySelectorAll('.ayah')]
-      .filter(a => getComputedStyle(a.querySelector('.arow')).opacity !== '0').length);
-    ok(shown <= 2, 'only the verse the reader is on carries its actions (' + shown + ' of ' + (await page.locator('.ayah').count()) + ')');
+    /* read it at rest. The row fades over a quarter of a second, so a verse the
+       reader has just left is still visibly on its way out when the recitation
+       has already moved on -- which is the fade doing its job, not two verses
+       carrying their actions. */
+    await page.waitForTimeout(450);
+    const why = await page.evaluate(() => [...document.querySelectorAll('.ayah')]
+      .filter(a => parseFloat(getComputedStyle(a.querySelector('.arow')).opacity) > 0.5)
+      .map(a => a.id + '[' + ['at','playing'].filter(c => a.classList.contains(c)).join(' ')
+        + (a.matches(':focus-within') ? ' focus' : '') + (a.matches(':hover') ? ' hover' : '') + ']'));
+    const shown = why.length;
+    ok(shown <= 2, 'only the verse the reader is on carries its actions (' + shown + ' of ' + (await page.locator('.ayah').count()) + ': ' + why.join(', ') + ')');
     const stable = await page.evaluate(() => {
       const rows = [...document.querySelectorAll('.arow')].map(r => Math.round(r.getBoundingClientRect().height));
       return rows.every(h => h === rows[0]) && rows[0] > 0;

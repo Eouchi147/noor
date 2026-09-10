@@ -60,7 +60,15 @@ const page=await ctx.newPage();
 
 const errors=[]; page.on('pageerror',e=>errors.push(String(e)));
 page.on('console',m=>{ if(m.type()==='error') errors.push('console: '+m.text()); });
-page.on('requestfailed',r=>errors.push('reqfail: '+r.url()));
+/* A request the browser cancelled because the test navigated away is not a
+   page error. Section 3 leaves the Mushaf on surah 4 and section 4 does a hard
+   goto to surah 2 while the study companion for 4 is still on the wire; the
+   abort that follows is the harness's own doing, and counting it as a fault
+   made a passing room look broken. Everything else still counts. */
+page.on('requestfailed',r=>{
+  const why=(r.failure()&&r.failure().errorText)||'';
+  if(/ERR_ABORTED/.test(why))return;
+  errors.push('reqfail: '+r.url()+' ('+why+')');});
 page.on('response',r=>{ if(r.status()>=400) errors.push('http '+r.status()+': '+r.url()); });
 
 const audioHits=[];
