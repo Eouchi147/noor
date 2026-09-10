@@ -39,6 +39,18 @@ assert all(str(v).strip() for v in b.values()), 'empty value';print('ok',len(b))
 7. Keep Western digits.
 8. A string that is only punctuation, a number, or a reference is copied
    through unchanged.
+8a. **A vertical bar `|` inside a string is a styling break inside one
+   sentence, and your translation must carry exactly the same number of
+   bars.** The two halves are printed in different colours, side by side, as
+   one line. Put the bar where the same break falls naturally in your
+   language, which is often not the same place as in English:
+
+       What do you want |to know?      ->  Que voulez-vous |savoir ?
+       The whole library, |free        ->  المكتبة كلها، |مجانا
+
+   Never delete the bar, never add one, and never put a space on both sides
+   of it unless the English has one there. A translation with the wrong
+   number of bars is thrown away and the English is shown instead.
 9. Short interface strings are buttons and labels: translate them as the
    shortest natural imperative or noun, not as a sentence.
 
