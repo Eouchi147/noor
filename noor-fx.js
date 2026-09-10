@@ -1217,8 +1217,10 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      --parchment left alone and its grounds turned by property instead, the
      background shorthand no longer eating background-clip, and a legibility
      floor measured with itself switched off. api/page.js carries the same
-     number; tests/rooms.mjs checks the two agree. */
-  var V = "5", left = 0, started = false;
+     number; tests/rooms.mjs checks the two agree.
+     Bumped to 6 for: .n2-tl and .n2-shield, the spine and the shield the
+     nineteen chapters of Al-Nihaya draw their order of events on. */
+  var V = "6", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
