@@ -333,7 +333,41 @@ for (const W of [390, 1280]) {
   ok(await page.locator('#a-1 .trans').isHidden(), 'the translation can be put away');
   await page.locator('#o-trans').click();
   ok(await page.locator('#a-1 .trans').isVisible(), 'and brought back');
-  ok(await page.locator('#o-lang option').count() === 2, 'the two translations the room carries are both offered (Saheeh, Hamidullah)');
+  {
+    /* The room offered two translations on a site that claims twenty one
+       languages, and one reciter where the service carries thirty two.
+       Both pickers are built from a table now, and the test reads the table
+       rather than repeating it, so a voice or a language added later is
+       covered the moment it is added. */
+    const T = await page.evaluate(() => ({
+      langs: [...document.querySelectorAll('#o-lang option')].map(o => o.value),
+      langs2: [...document.querySelectorAll('#t-lang option')].map(o => o.value),
+      voices: [...document.querySelectorAll('#o-reciter option')].map(o => o.value),
+    }));
+    ok(T.langs.length >= 19 && T.langs.join() === T.langs2.join(),
+      'every language the room has a Qur\'an in is offered, the same list in both places (' + T.langs.length + ')');
+    ok(T.langs[0] === 'en.itani',
+      'the English is the one text here with a licence that permits it: Talal Itani, CC BY-ND 4.0');
+    ok(!T.langs.includes('en.sahih'),
+      'and Saheeh International, a published book with no free licence, is not served');
+    ok(T.voices.length >= 18 && T.voices[0] === 'ar.alafasy',
+      'eighteen reciters, Alafasy first because he was the only one (' + T.voices.length + ')');
+    /* a voice chosen is a voice remembered */
+    await page.selectOption('#o-reciter', 'ar.abdulbasitmurattal');
+    await page.waitForTimeout(200);
+    ok(await page.evaluate(() => { try { return localStorage.getItem('noor-quran-reciter'); } catch (e) { return null; } }) === 'ar.abdulbasitmurattal',
+      'and the one chosen is kept for the next visit');
+    await page.selectOption('#o-reciter', 'ar.alafasy');
+    await page.waitForTimeout(150);
+  }
+  {
+    /* The condition Tanzil's grant makes is that the Project is named and
+       linked. It was not, for as long as this room has existed. */
+    const foot = await page.evaluate(() => (document.querySelector('footer') || {}).innerHTML || '');
+    ok(/tanzil\.net/.test(foot) && /Tanzil Project/.test(foot),
+      'the text is credited to Tanzil and linked, which is what its permission asks for');
+    ok(/non-commercial/.test(foot), 'and the terms it is used under are stated');
+  }
   await page.locator('#p-more').click();
   await page.waitForTimeout(300);
   ok(await page.evaluate(() => !NOOR_MUSHAF.sheet), 'and the settings fold away again');

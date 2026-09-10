@@ -244,7 +244,7 @@ console.log('  scanned ' + scanned + ' page loads across ' + PAGES.length + ' pa
        card in the house stays a cream band. The floor catches the text uses it
        can name; the rest wants the token split in two.
      · nine shell pages keep a cream sticky header from the parchment cut. */
-const CEILING = { unreadable: 0, tiny: 362, inks: 72 };
+const CEILING = { unreadable: 0, tiny: 358, inks: 72 };
 const ratchet = (name, got, cap) => {
   if (got > cap) { fail++; console.log('  FAIL ' + name + ' got worse: ' + got + ' (ceiling ' + cap + ')'); }
   else { pass++; console.log('  ✓ ' + name + ': ' + got + (got ? ' left, ceiling ' + cap + (got < cap ? ' -- lower it to ' + got : '') : ' -- clear')); }
