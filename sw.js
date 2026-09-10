@@ -2,14 +2,15 @@
    Pages: network first, cached copy when the road is dark.
    Assets: cached first, refreshed quietly behind the scenes.
    APIs and other origins are never intercepted. */
-var V = "noor-v114";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
+var V = "noor-v115";  // bump this on EVERY release that changes an asset. Assets are served cache-first below, so a reader who does not get a new cache name keeps the old file for a whole visit.
 var CORE = [
   "/", "/quran", "/prophets", "/arabic", "/pillars", "/school", "/madrasa", "/kids", "/begin", "/donate", "/unseen", "/sermon", "/soul",
-  "/family","/protection","/dictionary","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",
+  "/family","/protection","/dictionary","/ask","/zh","/ja","/ko", "/heroes", "/stories/", "/feedback", "/masjid/", "/ramadan", "/hajj", "/hajj-plan", "/eid",
   "/assets/tw.css?v=49", "/noor-fx.js", "/noor-ink.js", "/sponsor.js", "/prophets-data.js", "/madrasa-data.js",
   /* The motion libraries and their loader are no longer deployed (see
      .vercelignore): no page called them, and a precache entry for a file
      that is not there is a failed fetch on every install. */
+  "/assets/noor-ask.js", "/assets/noor-ask.css", "/assets/questions.json",
   "/assets/noor-hijri.js", "/assets/noor-ramadan.js", "/assets/noor-ramadan.css", "/assets/noor-overrides.js",
   "/assets/brand/mark.svg", "/assets/brand/mark-192.png", "/assets/brand/mark-512.png",
   "/manifest.webmanifest"

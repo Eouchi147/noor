@@ -60,49 +60,24 @@
 <script src="/assets/noor-text.js?v=83" defer></script>
 <script src="/assets/noor-search.js?v=79" defer></script>
 <script src="/assets/noor-dials.js?v=109" defer></script>
+<link rel="stylesheet" href="/assets/noor-ask.css?v=1"/>
 <script src="/assets/noor-overrides.js?v=1" defer></script>
+<script src="/assets/noor-ask.js?v=1" defer></script>
 <style>
 /* what is particular to the home page; everything else is the shell.
    Every screen keeps the same rhythm: an eyebrow, then one statement, then
    one paragraph of prose at most, then rows with hairlines, then at most one
    action. 24 px between unlike things, 12 px between like ones. */
 
-/* --------------------------------------------------------- 1 · the signpost
-   A statement, one action, four doors, and one quiet way on. Nothing else:
-   the verse, the Names and the longer truth line have screens of their own. */
-#top{justify-content:flex-start;padding-top:calc(var(--n2-safe-top) + 104px);padding-bottom:24px}
-@media (max-width:379px){#top{padding-top:calc(var(--n2-safe-top) + 78px)}}
-.hm-eyebrow{letter-spacing:.1em;color:rgba(233,200,106,.78);margin-bottom:16px}
-#top .n2-h1{font-size:clamp(32px,9vw,36px);line-height:1.06;margin:0 0 14px}
-.hm-lead{font-size:16px;line-height:1.5;margin:0;max-width:34ch;color:var(--n2-parch2)}
-/* 28 px of air, then the one glowing action */
-.hm-search{display:flex;width:100%;justify-content:flex-start;text-align:start;font-weight:500;color:var(--n2-parch2);
-  padding:0 16px;min-height:52px;margin:26px 0 0;background:rgba(255,254,247,.06)}
-.hm-search svg{stroke:var(--n2-goldhi)}
-.hm-search span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hm-search kbd{font:12px/1 var(--n2-mono);color:var(--n2-parch3);border:1px solid var(--n2-line);border-radius:6px;padding:4px 7px}
-@media (hover:none){.hm-search kbd{display:none}}
-/* 24 px of air, then four destinations as rows: the human intent in
-   parchment, the library's own count under it, a gold chevron at the edge */
-.hm-doors{margin:22px 0 0}
-.hm-doors a{min-height:66px;gap:12px;padding:11px 2px}
-.hm-doors b{font-size:17px;font-weight:600;line-height:1.25}
-.hm-doors small{font-family:var(--n2-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--n2-parch3);margin-top:5px;line-height:1.4}
-.hm-doors svg{width:15px;height:15px;flex:none;stroke:var(--n2-goldhi);fill:none;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;opacity:.7;transition:opacity .25s var(--n2-ease)}
-.hm-doors a:hover svg{opacity:1}
-.hm-more{margin:18px 0 0;font-family:var(--n2-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-.hm-more a{color:var(--n2-parch3);text-underline-offset:4px}
-.hm-more a:hover{color:var(--n2-goldhi)}
+/* ------------------------------------------------------------- 1 · the field
+   The room-specific part only. Everything the asking field looks like lives in
+   assets/noor-ask.css, because /ask wears the same block and two copies of a
+   design is one copy too many. What is left here is where the screen sits. */
+#top{justify-content:center;padding-top:calc(var(--n2-safe-top) + 92px);padding-bottom:24px}
+@media (max-width:379px){#top{padding-top:calc(var(--n2-safe-top) + 72px)}}
 @media (min-width:900px){
   .n2-dots{right:calc(50% - 26rem - 26px)}
-  #top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:52px;align-items:center;align-content:center;
-    margin:0 -4rem;padding:calc(var(--n2-safe-top) + 88px) 0 40px}
-  #top>.hm-eyebrow{grid-column:1/-1;margin-bottom:30px}
-  #top .n2-h1{font-size:44px}
-  .hm-lead{font-size:17px}
-  .hm-search{margin-top:0}
+  #top{padding:calc(var(--n2-safe-top) + 84px) 0 40px}
 }
 
 /* ------------------------------------------------ 2 · the verse at the door
@@ -209,24 +184,36 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 
 <main class="n2-main">
 
-<!-- 1 · the signpost: a statement, one action, four destinations, one way
-     on. Nothing else stands here; the verse has the screen after it. -->
-<section class="n2-idea n2-in" id="top">
-<p class="n2-eyebrow hm-eyebrow">Free · No ads · No account</p>
-<div class="hm-say">
-<h1 class="n2-h1">A guide to God, <span class="n2-g">whole and free</span></h1>
-<p class="hm-lead">The religion in one library: to read, to hear, to learn, to teach.</p>
-</div>
-<div class="hm-do">
-<a class="n2-btn n2-glow hm-search" href="/dictionary" id="hm-search" role="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg><span data-i18n="hero2.search">Search anything: a word, a prophet, a place, a surah…</span><kbd aria-hidden="true">/</kbd></a>
-<ul class="n2-list hm-doors">
-<li><a href="/quran"><b>Read the Qur'an<small>114 surahs, recited</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
-<li><a href="/path"><b>The whole story<small>71 chapters, in order</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
-<li><a href="/kids"><b>For the children<small>The Kids' Codex</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
-<li><a href="/masjid"><b>For a masjid<small>Board, khutba, timetable, qibla</small></b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<!-- 1 · the field.
+     A stranger arrives from a reel with a question already in their head. The
+     first screen meets it in their own words rather than describing a library
+     at them: one line, one field, six questions people actually ask. Tapping
+     one opens its answer here, in the words of the room that answers it, with
+     that room's own evidence and a door into it -- so the distance from
+     landing to knowing something true is one tap and no page load.
+
+     Everything below ships as working HTML: a real search form and six real
+     links. assets/noor-ask.js upgrades them; nothing needs the upgrade. -->
+<section class="n2-idea n2-in ask" id="top" data-noor-ask>
+<p class="n2-eyebrow ask-eyebrow">Free · No ads · No account</p>
+<h1 class="n2-h1 ask-h1">What do you want <span class="g">to know?</span></h1>
+<p class="ask-lead">The whole religion in one library, free and complete, and every answer carries the source it came from. Ask in your own words.</p>
+<form class="ask-field" role="search" action="/ask" method="get">
+<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+<label class="notranslate" for="ask-in" hidden>Ask anything</label>
+<input id="ask-in" name="q" type="search" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Ask anything, or type a word…"/>
+<kbd aria-hidden="true">/</kbd>
+</form>
+<p class="ask-sr notranslate" data-ask-live aria-live="polite" role="status"></p>
+<ul class="ask-list" data-ask-list>
+<li><a class="ask-q" href="/dictionary/islam"><span>What is Islam, actually?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/tawhid"><span>Is Allah the same as God?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/theology#women"><span>What does Islam say about women?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/nuzul-isa"><span>Do Muslims believe in Jesus?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/salah"><span>How do Muslims pray?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/shahadah"><span>How do I become a Muslim?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
 </ul>
-<p class="hm-more"><a href="#library">Everything else in the library →</a></p>
-</div>
+<p class="ask-more"><a href="/ask">Every question →</a><span aria-hidden="true">·</span><a href="#library">The whole library →</a></p>
 </section>
 
 <!-- 2 · the verse at the door, and three of His Names -->
@@ -657,12 +644,22 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
        September 2026 the bar's Search carried the dial's attribute too and the
        dial won it, so the field and the bar opened two different products, a
        thumb apart. Without the script the field stays a link to the words. */
-    var sb = q("#hm-search"); if (sb) sb.addEventListener("click", function (e) {
-      if (W.NOOR_SEARCH && NOOR_SEARCH.open) { e.preventDefault(); NOOR_SEARCH.open(); }
-    });
-    /* arriving with #search from another room opens it too */
-    if (location.hash === "#search" && W.NOOR_SEARCH && NOOR_SEARCH.open) setTimeout(NOOR_SEARCH.open, 200);
+    /* The field is the first thing on the page now, so arriving with a question
+       already in the URL should land in it rather than open a sheet over it.
+       /?q=zakat from a reel, #search from the bar, both end in the same place:
+       the field, focused, with the answer already drawn. */
     var sp = new URLSearchParams(location.search);
+    var askIn = q("#ask-in");
+    if (askIn) {
+      var pre = (sp.get("q") || "").slice(0, 80);
+      if (pre) {
+        askIn.value = pre;
+        setTimeout(function () { askIn.dispatchEvent(new Event("input")); }, 60);
+      }
+      if (location.hash === "#search" || location.hash === "#ask" || pre) {
+        setTimeout(function () { askIn.focus({ preventScroll: true }); }, 260);
+      }
+    }
     var dn = sp.get("node") || (location.hash.match(/^#node-(\d+)$/) || [])[1];
     if (dn) setTimeout(function () { chapter(+dn); }, 250);
     var mz = q("#hm-mizan"); if (mz) mz.addEventListener("click", function (e) { if (W.NOOR2) { e.preventDefault(); mizan(); } });

@@ -1,42 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" data-n2="night reveal top bar">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Ask anything · NOOR Codex of Light</title>
+<meta name="description" content="51 questions about Islam, each answered in the words of the room that answers it, with its evidence named. Free, complete, no account. Ask in your own words and the whole library answers."/>
+<link rel="canonical" href="https://noorcodex.com/ask"/>
 <meta name="theme-color" content="#04060F"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="NOOR · Codex of Light"/>
+<meta property="og:title" content="Ask anything · NOOR Codex of Light"/>
+<meta property="og:description" content="51 questions about Islam, each answered in the words of the room that answers it, with its evidence named. Free, complete, no account."/>
+<meta property="og:url" content="https://noorcodex.com/ask"/>
+<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Ask anything · NOOR Codex of Light"/>
+<meta name="twitter:description" content="51 questions about Islam, answered in the library's own words, with the evidence named. Free, no account."/>
+<meta name="twitter:image" content="https://noorcodex.com/assets/brand/og.png"/>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/mark.svg"/>
-<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/mark-64.png"/>
+<link rel="icon" href="/assets/brand/mark-32.png" sizes="32x32"/>
 <link rel="apple-touch-icon" href="/assets/brand/mark-180.png"/>
 <link rel="manifest" href="/manifest.webmanifest"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="NOOR"/>
-<meta name="robots" content="noindex"/>
-<meta http-equiv="refresh" content="4; url=index.html"/>
-<title>The Lantern rests · NOOR Codex of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Inter:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap"/>
+<link rel="stylesheet" href="/assets/noor2.css?v=5"/>
+<link rel="stylesheet" href="/assets/noor-ask.css?v=1"/>
+<script src="/assets/noor2.js?v=5" defer></script>
+<script src="/noor-fx.js" defer></script>
+<script src="/assets/noor-text.js?v=85" defer></script>
+<script src="/assets/noor-search.js" defer></script>
+<script src="/assets/noor-ask.js?v=1" defer></script>
 <style>
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#04060F,#0B1230 60%,#17224e);font-family:Inter,system-ui,sans-serif;color:#FFFEF7;text-align:center;padding:2rem}
-.l{font-size:2.4rem;color:#E9C86A;filter:drop-shadow(0 0 20px rgba(233,200,106,.6))}
-h1{font-size:1.3rem;margin:.8rem 0 .4rem}
-p{font-size:.85rem;color:rgba(255,254,247,.65);line-height:1.7;max-width:26rem;margin:0 auto}
-a{color:#E9C86A;font-weight:700;text-decoration:none}
+/* The room is the block and nothing else. Its look lives in
+   assets/noor-ask.css, which the arrival wears too. */
+#ask{padding-top:calc(var(--n2-safe-top) + 88px);padding-bottom:40px;justify-content:flex-start}
+@media (max-width:379px){#ask{padding-top:calc(var(--n2-safe-top) + 70px)}}
+#ask .ask-list{margin-top:22px}
 </style>
-<link rel="stylesheet" href="/assets/noor-ramadan.css?v=1"/>
-<script src="/assets/noor-hijri.js?v=1" defer></script>
-<script src="/assets/noor-ramadan.js?v=1" defer></script>
-<script src="/assets/noor-overrides.js?v=1" defer></script>
-<script src="/assets/noor-text.js?v=83" defer></script>
-<link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
-<script src="/assets/noor-search.js?v=78" defer></script>
-  <script src="/assets/noor-dials.js?v=109" defer></script>
-<script src="/assets/noor-anime.js?v=1" defer></script>
 </head>
 <body>
-<div>
-<div class="l">✦</div>
-<h1>The Lantern rests</h1>
-<p>Its light now shines once a day on the <a href="/">home page of the Codex</a>, in Today's Light. Taking you there…</p>
-</div>
+<div class="n2-still"></div>
+<i class="n2-prog" aria-hidden="true"></i>
+<header class="n2-top">
+<a class="n2-brand" href="/"><span class="n2-ar notranslate" lang="ar" translate="no">نُور</span><span class="n2-en">Codex of Light</span></a>
+<a class="n2-pill" href="/">Home</a>
+</header>
+
+<main class="n2-main">
+<!-- Every question the library can answer, and the field that answers the rest.
+     The list ships as links: with no JavaScript this page is a plain index of
+     51 questions and the rooms that answer them, which is a perfectly good
+     page. assets/noor-ask.js turns each one into an answer that opens in place,
+     lifted verbatim out of its room by scripts/build-questions.py. -->
+<section class="n2-idea n2-in ask" id="ask" data-noor-ask>
+<p class="n2-eyebrow ask-eyebrow">Free · No ads · No account</p>
+<h1 class="n2-h1 ask-h1">Ask anything <span class="g">at all</span></h1>
+<p class="ask-lead">51 questions, each answered in the words of the room that answers it, with the evidence that room names. Or type your own and the whole library answers.</p>
+<form class="ask-field" role="search" action="/ask" method="get">
+<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+<label class="notranslate" for="ask-in" hidden>Ask anything</label>
+<input id="ask-in" name="q" type="search" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Ask anything, or type a word…"/>
+<kbd aria-hidden="true">/</kbd>
+</form>
+<p class="ask-sr notranslate" data-ask-live aria-live="polite" role="status"></p>
+<ul class="ask-list" data-ask-list>
+<li><a class="ask-q" href="/dictionary/islam"><span>What is Islam, actually?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/tawhid"><span>Is Allah the same as God?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/allah"><span>What is Allah like? Does He have a form?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/aqidah"><span>What do Muslims actually believe?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/shahadah"><span>How do I become a Muslim?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/begin"><span>I just said the shahada. What now?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/quran"><span>What is the Qur&#x27;an?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/jam-al-quran"><span>Has the Qur&#x27;an been changed?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/kutub"><span>Do Muslims believe in the Bible and the Torah?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/hadith"><span>What is a hadith?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/sunnah"><span>What is the Sunnah?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/salah"><span>How do Muslims pray?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/wudu"><span>Why do Muslims wash before praying?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/adhan"><span>What is that call you hear from mosques?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/qiblah"><span>Which way do Muslims face, and why?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/kabah"><span>Do Muslims worship the Kaaba?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/jumuah"><span>What happens at Friday prayer?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/zakat"><span>What is zakat?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/sawm"><span>Why do Muslims fast?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/ramadan"><span>What is Ramadan?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/laylat-al-qadr"><span>What is the Night of Power?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/eid"><span>What is Eid?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/hajj"><span>What is Hajj?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/haram"><span>What is actually forbidden in Islam?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/halal"><span>What does halal really mean?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/khamr"><span>Why is alcohol forbidden?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/riba"><span>Is interest really forbidden?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/hijab"><span>Why do Muslim women wear hijab?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/theology#women"><span>What does Islam say about women?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/shariah"><span>What is sharia law?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/marriage"><span>What is marriage in Islam?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/tawbah"><span>What if I have done something terrible?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/shirk"><span>What is the one sin that isn&#x27;t forgiven?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/qadr"><span>Is everything already decided? Do I have a choice?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/dua"><span>Does God actually answer prayers?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/malaikah"><span>Do Muslims believe in angels?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/jinn"><span>What are jinn?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/shaytan"><span>How much power does the devil have?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/protection"><span>Is magic real? Is the evil eye real?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/soul"><span>What happens when you die?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/jannah"><span>What is Paradise like?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/jahannam"><span>Is Hell forever?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/qiyamah"><span>What is the Day of Judgement?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/ashrat-al-saah"><span>What are the signs before the end?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/prophets"><span>How many prophets are there in Islam?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/nuzul-isa"><span>Do Muslims believe in Jesus? Was he crucified?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/sermon"><span>What did the Prophet ﷺ say at the end of his life?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/theology"><span>What is the difference between Sunni and Shia?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/madhhab"><span>What are the four schools of law?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/tasawwuf"><span>What is Sufism?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+<li><a class="ask-q" href="/dictionary/ahl-al-fatrah"><span>What happens to people who never heard of Islam?</span><svg class="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></li>
+</ul>
+<p class="ask-more"><a href="/dictionary">All 523 words →</a><span aria-hidden="true">·</span><a href="/">The whole library →</a></p>
+</section>
+</main>
+
+<footer class="n2-foot">
+<p data-i18n="footer.note">NOOR is free for everyone, forever. No ads, no trackers, no account.</p>
+<p><a href="/feedback">A question that isn't here?</a> Tell us and it will be.</p>
+</footer>
+
+<script>
+/* Arriving with the question already in the URL -- /ask?q=zakat from a reel or
+   a share -- lands in the field with the answer already drawn. */
+(function () {
+  var i = document.getElementById("ask-in");
+  if (!i) return;
+  var q = new URLSearchParams(location.search).get("q");
+  if (!q) return;
+  i.value = q.slice(0, 80);
+  setTimeout(function () {
+    i.dispatchEvent(new Event("input"));
+    i.focus({ preventScroll: true });
+  }, 120);
+})();
+</script>
 </body>
 </html>
