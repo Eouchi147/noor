@@ -346,8 +346,23 @@ console.log("\n=== the older rooms' skin ===");
 {
   const fx = fs.readFileSync("noor-fx.js", "utf8"), skin = fs.readFileSync("assets/noor2-skin.css", "utf8"), js = fs.readFileSync("assets/noor2.js", "utf8");
   const V = fs.readFileSync("api/page.js", "utf8").match(/const V = "(\d+)"/)[1];
-  ok(fx.includes('"/assets/noor2-skin.css?v=" + V') && fx.includes('"/assets/noor2.js?v=" + V') && fx.includes('"/assets/noor2.css?v=" + V') && fx.includes('var V = "' + V + '"'),
-     "noor-fx.js loads the shell, the skin and the script with the rooms' version tail (v=" + V + ")");
+  /* This used to look for three exact strings, which is a test of how the code
+     is spelled rather than what it does -- and it failed the day the list of
+     stylesheets became a list instead of three calls, with the loading itself
+     perfectly correct. It asks the real question now: every sheet and script
+     the house layer fetches carries the rooms' version tail, whatever shape
+     the code that fetches them happens to take. */
+  const SHEETS = (fx.match(/"\/assets\/noor2[^"]*\.css"/g) || []).map(x => x.slice(1, -1));
+  ok(SHEETS.length >= 3, "the house layer names its stylesheets in one place (" + SHEETS.length + ")");
+  ok(SHEETS.includes("/assets/noor2.css") && SHEETS.includes("/assets/noor2-skin.css") &&
+     SHEETS.includes("/assets/noor2-night.css") && SHEETS.includes("/assets/noor2-legible.css"),
+     "the shell, the skin, the night and the legibility floor are all among them");
+  ok(/\+ "\?v=" \+ V/.test(fx) && fx.includes('"/assets/noor2.js?v=" + V') && fx.includes('var V = "' + V + '"'),
+     "and every one of them is asked for with the rooms' version tail (v=" + V + ")");
+  /* the floor must be last: loading order is half of how a floor wins a tie */
+  ok(SHEETS[SHEETS.length - 1] === "/assets/noor2-legible.css",
+     "the legibility floor is asked for last, so it settles ties");
+  for (const f of SHEETS) ok(fs.existsSync(f.replace(/^\//, "")), "  " + f + " exists");
   ok(fx.includes('H.hasAttribute("data-n2")') && fx.includes('data-noor-embed') && fx.includes("NOOR2.inject()"), "noor-fx.js leaves a page in the shell and an embedded room alone, and runs inject() on the rest");
   ok(/\/\^\\\/kids\\\/\.\/\.test\(p\)/.test(fx), "the kids' games (kids/*.html, not kids.html) are exempt");
   ok(fx.includes('document.addEventListener("DOMContentLoaded", init)'), "the skin is appended after DOMContentLoaded");
