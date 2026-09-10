@@ -140,7 +140,7 @@
      all thirty five of its nodes on top of each other at the group's origin,
      which on screen is one dot. The matrix has to be applied here. */
   var LUME_VERT = [
-    "varying vec3 vN; varying vec3 vV; varying float vY;",
+    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ;",
     "void main(){",
     "  vec3 pos = position; vec3 nrm = normal;",
     "  #ifdef USE_INSTANCING",
@@ -151,6 +151,7 @@
     "  vN = normalize(normalMatrix * nrm);",
     "  vV = normalize(-mv.xyz);",
     "  vY = pos.y;",
+    "  vZ = -mv.z;",
     "  gl_Position = projectionMatrix * mv;",
     "}"
   ].join("\n");
@@ -166,20 +167,37 @@
 
      The body is the material and the rim is the light on its edge. A shell
      sets body to zero and keeps only the rim, which is what glass does. */
+  /* THREE TERMS AND THE ROOM.
+     body and rim make a solid. The third is a SHEEN -- a tight highlight off
+     one fixed direction -- which is the thing the eye reads as a surface
+     rather than a paint. Without it a sphere is a shape; with it, it has a
+     material and a light in the room with it.
+
+     And distance. Light in a dark room falls off, and a figure with no
+     falloff has every one of its parts equally near, which is why the first
+     chain of transmission read as a flat scatter of dots however far back the
+     nodes actually were. Depth cueing is one smoothstep and it is most of
+     what "there is space in this shot" means. */
   var LUME_FRAG = [
-    "varying vec3 vN; varying vec3 vV; varying float vY;",
+    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ;",
     "uniform vec3 core; uniform vec3 edge; uniform float rim;",
     "uniform float glow; uniform float alpha; uniform float body;",
-    "uniform float band;",
+    "uniform float band; uniform float sheen;",
+    "uniform float dnear; uniform float dfar; uniform float damt;",
+    "const vec3 KEY = normalize(vec3(-0.42, 0.68, 0.60));",
     "void main(){",
-    "  float ndv = abs(dot(normalize(vN), normalize(vV)));",
+    "  vec3 N = normalize(vN), V = normalize(vV);",
+    "  float ndv = abs(dot(N, V));",
     "  float f = pow(1.0 - ndv, rim);",
     "  float d = pow(ndv, 1.35);",
+    "  vec3 H = normalize(KEY + V);",
+    "  float sp = pow(max(dot(N, H), 0.0), 42.0) * sheen;",
     /* a whisper of latitude banding, so a sphere has a surface rather than a
        gradient. It is generated, not a texture, and it is a function of the
        geometry only, so it never crawls between frames. */
-    "  float b = 1.0 + band * 0.10 * sin(vY * 26.0);",
-    "  vec3 c = (core * d * body * b + edge * f) * glow;",
+    "  float b = 1.0 + band * 0.055 * sin(vY * 9.0);",
+    "  vec3 c = (core * d * body * b + edge * f + vec3(1.0, 0.97, 0.90) * sp) * glow;",
+    "  c *= 1.0 - smoothstep(dnear, dfar, vZ) * damt;",
     "  gl_FragColor = vec4(c, alpha);",
     "}"
   ].join("\n");
@@ -194,7 +212,11 @@
         glow:  { value: opt.glow === undefined ? 1.0 : opt.glow },
         alpha: { value: opt.alpha === undefined ? 1.0 : opt.alpha },
         body:  { value: opt.body === undefined ? 1.0 : opt.body },
-        band:  { value: opt.band === undefined ? 0.0 : opt.band }
+        band:  { value: opt.band === undefined ? 0.0 : opt.band },
+        sheen: { value: opt.sheen === undefined ? 0.55 : opt.sheen },
+        dnear: { value: opt.dnear === undefined ? 5.0 : opt.dnear },
+        dfar:  { value: opt.dfar === undefined ? 13.0 : opt.dfar },
+        damt:  { value: opt.damt === undefined ? 0.72 : opt.damt }
       },
       vertexShader: LUME_VERT, fragmentShader: LUME_FRAG,
       transparent: opt.alpha !== undefined && opt.alpha < 1,
@@ -228,10 +250,10 @@
      volume; one surface makes a disc. */
   FIG.orb = function (o) {
     var g = new T.Group();
-    var core = new T.Mesh(new T.SphereGeometry(1, 64, 40),
+    var core = new T.Mesh(new T.SphereGeometry(1, 96, 64),
       lumeMat(o.warm || C.gold, o.hot || C.pale,
               { rim: 2.4, glow: 1.0, body: 0.62, band: 1.0 }));
-    var shell = new T.Mesh(new T.SphereGeometry(1.46, 48, 32),
+    var shell = new T.Mesh(new T.SphereGeometry(1.46, 72, 48),
       lumeMat(new T.Color(0x000000), (o.hot || C.goldhi),
               { rim: 3.2, glow: 0.85, alpha: 0.55, add: true, depthWrite: false,
                 body: 0.0, side: T.BackSide }));
@@ -302,32 +324,53 @@
         here.push({ p: v, gen: r });
         nodes.push({ p: v, gen: r, i: i });
       }
-      /* every node takes from one in the generation before it */
+      /* EVERY NODE TAKES FROM THE NEAREST HAND BEFORE IT.
+         The first cut picked prev[j % prev.length], which is arithmetic, not
+         transmission: a node on one side of the ring took from one on the
+         other and the figure came out as a ball of wool with no direction in
+         it. Nearest parent makes it a tree, and a tree is what the eye
+         already knows how to read as "this came from that". */
       for (var j = 0; j < here.length; j++) {
         if (!prev.length) continue;
-        var from = prev[j % prev.length];
-        edges.push({ a: from.p, b: here[j].p, gen: r });
+        var best = prev[0], bd = 1e9;
+        for (var q = 0; q < prev.length; q++) {
+          var dx = prev[q].p.x - here[j].p.x, dy = prev[q].p.y - here[j].p.y;
+          var dd = dx * dx + dy * dy;
+          if (dd < bd) { bd = dd; best = prev[q]; }
+        }
+        edges.push({ a: best.p, b: here[j].p, gen: r });
       }
       prev = here;
     }
 
-    /* the edges, as one line soup: one draw call for the whole chain */
-    var lp = new Float32Array(edges.length * 6);
+    /* THE EDGES ARE THREADS, NOT LINES.
+       A WebGL line is one pixel wide whatever you ask for -- linewidth has
+       been ignored by every desktop driver for a decade -- and a one-pixel
+       line with no antialiasing is a scratch on the picture. That is what
+       the connections between generations looked like. They are thin
+       cylinders now: they have a thickness, they take the rim light, they
+       recede with distance like everything else, and they read as threads of
+       light between one hand and the next. One instanced draw for all of
+       them. */
+    var eg = new T.CylinderGeometry(0.0062, 0.0062, 1, 8, 1, true);
+    var em = lumeMat(C.goldhi, C.pale, { rim: 1.1, glow: 1.05, body: 0.75, sheen: 0.0, dnear: 4.6, dfar: 11.0, damt: 0.7 });
+    var lines = new T.InstancedMesh(eg, em, Math.max(1, edges.length));
+    var UP = new T.Vector3(0, 1, 0), DIR = new T.Vector3(), MID = new T.Vector3();
+    var EM = new T.Matrix4(), EQ = new T.Quaternion(), ES = new T.Vector3();
     for (var e = 0; e < edges.length; e++) {
-      lp[e * 6] = edges[e].a.x; lp[e * 6 + 1] = edges[e].a.y; lp[e * 6 + 2] = edges[e].a.z;
-      lp[e * 6 + 3] = edges[e].b.x; lp[e * 6 + 4] = edges[e].b.y; lp[e * 6 + 5] = edges[e].b.z;
+      DIR.subVectors(edges[e].b, edges[e].a);
+      MID.addVectors(edges[e].a, edges[e].b).multiplyScalar(0.5);
+      EQ.setFromUnitVectors(UP, DIR.clone().normalize());
+      ES.set(1, DIR.length(), 1);
+      EM.compose(MID, EQ, ES);
+      lines.setMatrixAt(e, EM);
     }
-    var lg = new T.BufferGeometry();
-    lg.setAttribute("position", new T.BufferAttribute(lp, 3));
-    var lines = new T.LineSegments(lg, new T.LineBasicMaterial({
-      color: C.goldhi.clone(), transparent: true, opacity: 0.5,
-      blending: T.AdditiveBlending, depthWrite: false
-    }));
+    lines.instanceMatrix.needsUpdate = true;
     g.add(lines);
 
     /* the nodes: instanced spheres, so a thousand of them cost one call */
-    var sg = new T.SphereGeometry(0.092, 14, 12);
-    var sm = lumeMat(C.goldhi, C.pale, { rim: 2.1, glow: 1.15, body: 1.0 });
+    var sg = new T.SphereGeometry(0.092, 24, 18);
+    var sm = lumeMat(C.gold, C.goldhi, { rim: 2.0, glow: 1.15, body: 1.0, sheen: 0.35, dnear: 4.6, dfar: 10.5, damt: 0.82 });
     var inst = new T.InstancedMesh(sg, sm, nodes.length);
     inst.instanceMatrix.setUsage(T.DynamicDrawUsage);
     g.add(inst);
@@ -352,8 +395,8 @@
           inst.setMatrixAt(i, M);
         }
         inst.instanceMatrix.needsUpdate = true;
-        sm.uniforms.glow.value = f;
-        lines.material.opacity = 0.5 * clamp01(front / maxGen) * f;
+        sm.uniforms.glow.value = 1.15 * f;
+        em.uniforms.glow.value = 1.05 * clamp01(front / maxGen) * f;
         /* the whole chain turns slowly: depth you can see rather than infer */
         g.rotation.y = -0.5 + Math.sin(tsec * 0.22) * 0.34;
         g.rotation.x = -0.14 + Math.cos(tsec * 0.17) * 0.06;
@@ -372,7 +415,7 @@
     ]).map(function (p) { return new T.Vector3(p[0], p[1], p[2]); }));
 
     var tubeM = lumeMat(C.gold, C.goldhi, { rim: 2.0, glow: 0.7, alpha: 0.6, add: true, depthWrite: false, body: 0.45 });
-    var tube = new T.Mesh(new T.TubeGeometry(curve, 160, 0.035, 8, false), tubeM);
+    var tube = new T.Mesh(new T.TubeGeometry(curve, 240, 0.036, 16, false), tubeM);
     g.add(tube);
 
     var n = o.motes || 420;
@@ -416,15 +459,15 @@
     var n = o.count || 3, parts = [];
     for (var i = 0; i < n; i++) {
       var rad = 1.0 + i * 0.62;
-      var m = new T.Mesh(new T.TorusGeometry(rad, 0.028 + i * 0.006, 12, 200),
-        lumeMat(i % 2 ? C.gold : C.goldhi, C.pale, { rim: 2.0, glow: 1.0, body: 0.55 }));
+      var m = new T.Mesh(new T.TorusGeometry(rad, 0.030 + i * 0.006, 24, 320),
+        lumeMat(i % 2 ? C.gold : C.goldhi, C.pale, { rim: 1.8, glow: 1.15, body: 0.8, sheen: 0.7, dnear: 5.2, dfar: 12.0, damt: 0.6 }));
       m.rotation.x = 1.1 - i * 0.34;
       m.rotation.y = i * 0.5;
       g.add(m);
       parts.push({ m: m, dir: i % 2 ? -1 : 1, rad: rad });
     }
     /* one mark riding the outermost ring, so the turn is readable */
-    var bead = new T.Mesh(new T.SphereGeometry(0.075, 16, 12),
+    var bead = new T.Mesh(new T.SphereGeometry(0.075, 28, 20),
       lumeMat(C.pale, C.parch, { rim: 1.4, glow: 1.4, body: 1.0 }));
     g.add(bead);
     var last = parts[parts.length - 1];
@@ -435,7 +478,7 @@
       at: function (u, tsec, f) {
         f = f === undefined ? 1 : f;
         var k = ease("open", u * 2.6);
-        g.scale.setScalar(lerp(0.7, 1, k));
+        g.scale.setScalar(lerp(0.62, 0.84, k));
         for (var i = 0; i < parts.length; i++) {
           var p = parts[i];
           p.m.rotation.z = tsec * 0.22 * p.dir * (1 + i * 0.3);
@@ -475,7 +518,9 @@
       var cv = document.createElement("canvas");
       cv.width = 768; cv.height = Math.round(768 * H / W);
       var cx = cv.getContext("2d");
-      cx.fillStyle = "#080D1C"; cx.fillRect(0, 0, cv.width, cv.height);
+      var bg = cx.createLinearGradient(0, 0, cv.width * 0.6, cv.height);
+      bg.addColorStop(0, "#141B30"); bg.addColorStop(1, "#070B18");
+      cx.fillStyle = bg; cx.fillRect(0, 0, cv.width, cv.height);
       if (f.draw && window[f.draw]) { window[f.draw](cx, cv.width, cv.height, f); }
       else {
         cx.strokeStyle = "rgba(233,200,106,.5)"; cx.lineWidth = 3;
@@ -489,8 +534,14 @@
       }
       var tex = new T.CanvasTexture(cv);
       tex.colorSpace = T.SRGBColorSpace || undefined;
+      /* THE FACE IS LIT PAPER, NOT A LAMP.
+         Drawn at full strength the pale numerals sat above the bloom's bright
+         pass, and every card drowned in a halo of its own contents -- a page
+         of a mushaf glowing like a bulb. The whole plane is multiplied down
+         until its brightest ink falls just under the threshold, so the card
+         is read and only its gold edge gives off light. */
       var plane = new T.Mesh(new T.PlaneGeometry(W, H),
-        new T.MeshBasicMaterial({ map: tex, transparent: false }));
+        new T.MeshBasicMaterial({ map: tex, color: 0x7C7C7C, transparent: false }));
       /* the lit edge: a slightly larger plane behind, in gold, additive.
          It is what makes a flat rectangle read as an object with a thickness
          rather than a sticker. */
@@ -534,44 +585,104 @@
      ======================================================================= */
 
   var canvas, renderer, scene, cam, W = 0, H = 0;
-  var rtScene, rtA, rtB, blurMat, quadScene, quadCam, comboMat;
-  var current = null, cues = [], BLOOM_DIV = 4, SCALE = 1;
+  var rtScene, rtA, rtB, rtC, blurMat, cutMat, quadScene, quadCam, comboMat, showMat, DEBUG = "";
+  var current = null, cues = [], BLOOM_DIV = 8, SCALE = 1, SS = 2;
 
   function makeTargets() {
+    var sw = Math.max(4, Math.round(W * SS)), sh = Math.max(4, Math.round(H * SS));
     var bw = Math.max(4, Math.round(W / BLOOM_DIV)), bh = Math.max(4, Math.round(H / BLOOM_DIV));
-    [rtScene, rtA, rtB].forEach(function (r) { if (r) r.dispose(); });
-    rtScene = new T.WebGLRenderTarget(W, H, { minFilter: T.LinearFilter, magFilter: T.LinearFilter });
+    [rtScene, rtA, rtB, rtC].forEach(function (r) { if (r) r.dispose(); });
+    rtScene = new T.WebGLRenderTarget(sw, sh, { minFilter: T.LinearFilter, magFilter: T.LinearFilter });
+    if (comboMat) comboMat.uniforms.texel.value.set(1 / sw, 1 / sh);
     rtA = new T.WebGLRenderTarget(bw, bh, { minFilter: T.LinearFilter, magFilter: T.LinearFilter });
     rtB = new T.WebGLRenderTarget(bw, bh, { minFilter: T.LinearFilter, magFilter: T.LinearFilter });
+    rtC = new T.WebGLRenderTarget(bw, bh, { minFilter: T.LinearFilter, magFilter: T.LinearFilter });
   }
+
+  /* THE THRESHOLD COMES BEFORE THE BLUR, NOT AFTER IT.
+     The first cut blurred the picture and then asked whether the result was
+     bright enough to bloom. That is backwards and it is self-defeating: the
+     blur is what makes a bright thing dim, by spreading its energy over a
+     hundred times the area, so the test threw away exactly the light it had
+     just spread. The halo went missing and the frames came back with hard,
+     unhaloed objects on a flat ground -- which is what "not cinema" looks
+     like more than any other single thing.
+
+     So: one bright pass decides what is a light source, at full sharpness,
+     and only that is blurred. */
+  var CUT_FRAG = [
+    "varying vec2 v; uniform sampler2D tex; uniform float cut; uniform float knee;",
+    "void main(){",
+    "  vec4 s = texture2D(tex, v);",
+    "  float l = dot(s.rgb, vec3(.2126,.7152,.0722));",
+    "  gl_FragColor = vec4(s.rgb * smoothstep(cut, cut + knee, l), 1.0);",
+    "}"
+  ].join("\n");
 
   var BLUR_FRAG = [
     "varying vec2 v; uniform sampler2D tex; uniform vec2 dir; uniform vec2 res;",
-    "uniform float cut;",
+    "uniform float spread;",
     "void main(){",
-    "  float w0=.227, w1=.194, w2=.121, w3=.054, w4=.016;",
+    "  float w0=.161, w1=.150, w2=.122, w3=.087, w4=.054, w5=.029, w6=.014;",
     "  vec4 s = texture2D(tex, v) * w0;",
-    "  vec2 o = dir / res;",
+    "  vec2 o = dir * spread / res;",
     "  s += texture2D(tex, v + o*1.0) * w1; s += texture2D(tex, v - o*1.0) * w1;",
     "  s += texture2D(tex, v + o*2.0) * w2; s += texture2D(tex, v - o*2.0) * w2;",
     "  s += texture2D(tex, v + o*3.0) * w3; s += texture2D(tex, v - o*3.0) * w3;",
     "  s += texture2D(tex, v + o*4.0) * w4; s += texture2D(tex, v - o*4.0) * w4;",
-    /* only what is already bright blooms; a dim thing that glows is fog */
-    "  float l = dot(s.rgb, vec3(.2126,.7152,.0722));",
-    "  s.rgb *= smoothstep(cut, cut + .35, l);",
+    "  s += texture2D(tex, v + o*5.0) * w5; s += texture2D(tex, v - o*5.0) * w5;",
+    "  s += texture2D(tex, v + o*6.0) * w6; s += texture2D(tex, v - o*6.0) * w6;",
     "  gl_FragColor = s;",
     "}"
   ].join("\n");
 
+  /* THE RESOLVE. Three things happen here and each of them is a reason the
+     first cut looked like a 3D render instead of a photograph of one.
+
+     SUPERSAMPLING. The scene is drawn into a buffer twice the width and twice
+     the height of the frame and boxed down here, four samples to a pixel.
+     That is real antialiasing and it is the whole answer to a hard, stepped
+     silhouette. The first cut did the opposite -- it drew the layer at 62% of
+     the frame and let the browser stretch it UP, on the reasoning that bloom
+     is low frequency and would not notice. Bloom does not notice. The EDGES
+     of the objects inside it are not low frequency at all, and magnifying
+     them magnified every step in them. It was the wrong saving and it is the
+     thing you can see in the picture.
+
+     TONE MAPPING. A filmic curve rolls the highlights off instead of letting
+     them clip flat at white. Clipped highlights are the single loudest tell
+     that a picture came out of a renderer: real light never ends at an edge,
+     it rolls.
+
+     DITHER. A quarter of a bit of noise, so a gradient across a dark frame
+     steps smoothly instead of banding. Eight bits is not enough for a room
+     this dark without it. */
   var COMBO_FRAG = [
-    "varying vec2 v; uniform sampler2D base; uniform sampler2D bloom; uniform float amt;",
+    "varying vec2 v;",
+    "uniform sampler2D base; uniform sampler2D bloom; uniform sampler2D bloom2;",
+    "uniform float amt; uniform float wide; uniform float exposure; uniform vec2 texel;",
+    "vec3 filmic(vec3 x){",
+    "  const float a=2.51, b=0.03, c=2.43, d=0.59, e=0.14;",
+    "  return clamp((x*(a*x+b))/(x*(c*x+d)+e), 0.0, 1.0);",
+    "}",
     "void main(){",
-    "  vec4 b = texture2D(base, v);",
-    "  vec3 g = texture2D(bloom, v).rgb * amt;",
-    /* screen, not add: the highlights keep their shape instead of clipping
-       to white, which is the difference between light and a blown-out mess */
-    "  vec3 c = 1.0 - (1.0 - b.rgb) * (1.0 - clamp(g, 0.0, 1.0));",
-    "  gl_FragColor = vec4(c, max(b.a, dot(g, vec3(.333))));",
+    "  vec4 b0 = texture2D(base, v + texel * vec2(-0.5,-0.5));",
+    "  vec4 b1 = texture2D(base, v + texel * vec2( 0.5,-0.5));",
+    "  vec4 b2 = texture2D(base, v + texel * vec2(-0.5, 0.5));",
+    "  vec4 b3 = texture2D(base, v + texel * vec2( 0.5, 0.5));",
+    "  vec4 b = (b0 + b1 + b2 + b3) * 0.25;",
+    /* A BLUR CONSERVES ENERGY, WHICH IS WHY ONE BLUR IS NOT A BLOOM.
+       Spreading a bright pixel over a hundred times the area divides its peak
+       by a hundred, so a single wide Gaussian comes back as a stain you can
+       barely see -- which is exactly what the bloom buffer looked like when I
+       finally rendered it on its own. Real glare is not one falloff, it is
+       several at once: a tight core around the source and a wide veil in the
+       air. Two scales, summed, at a gain that puts the light back. */
+    "  vec3 g = (texture2D(bloom, v).rgb + texture2D(bloom2, v).rgb * wide) * amt;",
+    "  vec3 c = filmic((b.rgb + g) * exposure);",
+    "  float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);",
+    "  c += (n - 0.5) / 255.0;",
+    "  gl_FragColor = vec4(c, clamp(max(b.a, dot(g, vec3(0.55))), 0.0, 1.0));",
     "}"
   ].join("\n");
 
@@ -590,28 +701,47 @@
       quadCam = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1);
       blurMat = new T.ShaderMaterial({
         uniforms: { tex: { value: null }, dir: { value: new T.Vector2(1, 0) },
-                    res: { value: new T.Vector2(1, 1) }, cut: { value: 0.22 } },
+                    res: { value: new T.Vector2(1, 1) }, spread: { value: 1.0 } },
         vertexShader: QUAD_VERT, fragmentShader: BLUR_FRAG, depthTest: false, depthWrite: false
       });
+      cutMat = new T.ShaderMaterial({
+        uniforms: { tex: { value: null }, cut: { value: 0.46 }, knee: { value: 0.22 } },
+        vertexShader: QUAD_VERT, fragmentShader: CUT_FRAG, depthTest: false, depthWrite: false
+      });
       comboMat = new T.ShaderMaterial({
-        uniforms: { base: { value: null }, bloom: { value: null }, amt: { value: 1.35 } },
+        uniforms: { base: { value: null }, bloom: { value: null }, bloom2: { value: null },
+                    amt: { value: 5.4 }, wide: { value: 1.05 },
+                    exposure: { value: 0.98 }, texel: { value: new T.Vector2(1, 1) } },
         vertexShader: QUAD_VERT, fragmentShader: COMBO_FRAG,
         depthTest: false, depthWrite: false, transparent: true
+      });
+      showMat = new T.ShaderMaterial({
+        uniforms: { tex: { value: null } }, vertexShader: QUAD_VERT,
+        fragmentShader: "varying vec2 v; uniform sampler2D tex;" +
+          "void main(){ gl_FragColor = vec4(texture2D(tex, v).rgb, 1.0); }",
+        depthTest: false, depthWrite: false
       });
       quadScene = new T.Scene();
       quadScene.add(new T.Mesh(new T.PlaneGeometry(2, 2), blurMat));
     }
-    /* THE LIGHT LAYER IS RENDERED SMALLER THAN THE FRAME AND STRETCHED.
-       Bloom is low frequency by definition: it is the picture with its high
-       frequencies removed. A glow drawn at sixty per cent and scaled up is
-       the same glow, and the edges that would show the difference are the
-       edges of objects that are themselves wearing a halo. The saving is
-       real and it is invisible, which is the only kind worth taking. */
-    W = Math.max(2, Math.round(window.innerWidth * SCALE));
-    H = Math.max(2, Math.round(window.innerHeight * SCALE));
+    /* THE CANVAS IS EXACTLY THE FRAME. THE BUFFER BEHIND IT IS BIGGER.
+       Measured: what costs the render is not drawing the scene -- that is 4
+       to 8 ms whatever size it is -- it is the browser compositing the canvas
+       ELEMENT and reading the page back as a picture, and that cost follows
+       the canvas's size on the page and nothing else:
+
+           canvas 1190x669   draw 8 ms   photograph 126 ms
+           canvas 1920x1080  draw 6 ms   photograph 206 ms
+           canvas 2880x1620  draw 7 ms   photograph 331 ms
+           canvas 3840x2160  draw 4 ms   photograph 489 ms
+
+       So the supersampling happens where it is free: in an offscreen buffer,
+       resolved down by the shader that already composites the bloom. The page
+       only ever sees a canvas the size of the frame. */
+    W = window.innerWidth; H = window.innerHeight;
     renderer.setSize(W, H, false);
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
     cam.aspect = W / H; cam.updateProjectionMatrix();
     makeTargets();
   }
@@ -657,7 +787,8 @@
       f.root.visible = false;
       scene.add(f.root);
       cues.push({ f: f, at: c.at, dur: c.dur, shot: c.shot || "push",
-                  fade: c.fade === undefined ? 520 : c.fade });
+                  fade: c.fade === undefined ? 520 : c.fade,
+                  dim: c.place === "over" ? 0.46 : 1 });
     });
   }
 
@@ -685,7 +816,7 @@
          each figure applies it where it knows how. */
       var a = clamp01((ms - (c.at - c.fade)) / c.fade) *
               clamp01(((c.at + c.dur + c.fade) - ms) / c.fade);
-      c.f.at(uu, t, a);
+      c.f.at(uu, t, a * c.dim);
       if (!live) { live = c; u = uu; }
     }
 
@@ -701,30 +832,56 @@
     renderer.clear(true, true, true);
     renderer.render(scene, cam);
 
-    /* two-tap separable bloom at a quarter size */
-    blurMat.uniforms.tex.value = rtScene.texture;
-    blurMat.uniforms.dir.value.set(1, 0);
-    blurMat.uniforms.res.value.set(rtA.width, rtA.height);
+    /* bright pass, then two separable blurs, all at a quarter of the frame */
+    var quad = quadScene.children[0];
+    quad.material = cutMat;
+    cutMat.uniforms.tex.value = rtScene.texture;
     renderer.setRenderTarget(rtA); renderer.clear(true, false, false);
     renderer.render(quadScene, quadCam);
 
-    blurMat.uniforms.tex.value = rtA.texture;
-    blurMat.uniforms.dir.value.set(0, 1);
-    renderer.setRenderTarget(rtB); renderer.clear(true, false, false);
-    renderer.render(quadScene, quadCam);
+    /* TWO PASSES, THE SECOND ONE WIDER.
+       One thirteen-tap blur at a quarter of the frame is a halo about twelve
+       pixels across, which on a 1920 frame is not a halo, it is a soft edge.
+       Looking at the bloom buffer on its own -- NOORLUME.debug("bloom") --
+       showed exactly that: twenty small smudges on black. Light in air does
+       not fall off in twelve pixels. So the blur runs twice, the second time
+       with the taps two and a half times further apart, which costs one more
+       pass at an eighth of the frame and buys a halo that reads as light
+       rather than as a rendering artefact. */
+    quad.material = blurMat;
+    blurMat.uniforms.res.value.set(rtA.width, rtA.height);
+    var pass = [[1.0, rtA, rtB], [1.0, rtB, rtC], [3.2, rtC, rtB], [3.2, rtB, rtA]];
+    for (var pi = 0; pi < pass.length; pi++) {
+      blurMat.uniforms.spread.value = pass[pi][0];
+      blurMat.uniforms.tex.value = pass[pi][1].texture;
+      blurMat.uniforms.dir.value.set(pi % 2 === 0 ? 1 : 0, pi % 2 === 0 ? 0 : 1);
+      renderer.setRenderTarget(pass[pi][2]); renderer.clear(true, false, false);
+      renderer.render(quadScene, quadCam);
+    }
+    /* rtC now holds the tight halo and rtA the wide one */
 
-    /* base + bloom, screened, to the canvas */
-    quadScene.children[0].material = comboMat;
+    /* resolve: supersampled base + bloom, tone mapped, to the canvas */
+    if (DEBUG === "bloom") {
+      quad.material = showMat; showMat.uniforms.tex.value = rtA.texture;
+      renderer.setRenderTarget(null); renderer.clear(true, true, true);
+      renderer.render(quadScene, quadCam); quad.material = blurMat; return;
+    }
+    quad.material = comboMat;
     comboMat.uniforms.base.value = rtScene.texture;
-    comboMat.uniforms.bloom.value = rtB.texture;
+    comboMat.uniforms.bloom.value = rtC.texture;
+    comboMat.uniforms.bloom2.value = rtA.texture;
     renderer.setRenderTarget(null);
     renderer.clear(true, true, true);
     renderer.render(quadScene, quadCam);
-    quadScene.children[0].material = blurMat;
+    quad.material = blurMat;
   }
 
   window.NOORLUME = {
     size: size, mount: mount, draw: draw,
+    /* how many samples a pixel of the finished frame is boxed down from.
+       2 means the scene is drawn at four times the area. */
+    supersample: function (v) { SS = Math.max(1, v); size(); },
+    debug: function (m) { DEBUG = m || ""; },
     scale: function (v) { SCALE = v; size(); },
     kinds: Object.keys(FIG),
     _three: T
