@@ -31,9 +31,13 @@
     text: "This library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
     href: "/donate",
     cta: "Keep it lit →",
-    tone: "rgba(44,36,22,.55)",
-    bg: "linear-gradient(90deg,rgba(44,36,22,.035),transparent 70%)",
-    border: "rgba(44,36,22,.06)",
+    /* The band paints itself with inline styles, which no stylesheet can
+       answer, so it reads the house's own ink token instead of naming a
+       colour: parchment by default, and the night wherever noor-fx.js has
+       turned the room over. One line, both lights. */
+    tone: "color-mix(in srgb, var(--ink,#2C2416) 62%, transparent)",
+    bg: "linear-gradient(90deg,color-mix(in srgb, var(--ink,#2C2416) 4%, transparent),transparent 70%)",
+    border: "color-mix(in srgb, var(--ink,#2C2416) 8%, transparent)",
   };
 
 
@@ -94,20 +98,18 @@
        and the arrival has none. A band is furniture and the eye learns to
        skip it; the day deserves better than a strip it has already learned
        to skip. What is left here is the one sentence, every day. */
-    var j = false, M = MISSION;
+    var M = MISSION;
     var d = document.createElement("div");
     d.setAttribute("data-noor-sponsor", "");
-    if (j) d.setAttribute("data-jumuah", "");
     d.style.cssText = "position:relative;z-index:35;background:" + M.bg +
       ";border-bottom:1px solid " + M.border;
     d.innerHTML =
-      '<div style="max-width:72rem;margin:0 auto;padding:' + (j ? ".5rem" : ".4rem") +
-      ' 1rem;display:flex;align-items:center;gap:.55rem;font-size:.71rem;line-height:1.6;color:' + M.tone +
+      '<div style="max-width:72rem;margin:0 auto;padding:.4rem 1rem;display:flex;' +
+      'align-items:center;gap:.55rem;font-size:.71rem;line-height:1.6;color:' + M.tone +
       ';font-family:Inter,system-ui,sans-serif;flex-wrap:wrap">' +
-      '<span aria-hidden="true" style="color:' + (j ? "#C9A227" : "rgba(201,162,39,.75)") +
-      ';font-size:' + (j ? ".95rem" : "inherit") + '">' + M.mark + "</span>" +
+      '<span aria-hidden="true" style="color:rgba(201,162,39,.9);font-size:inherit">' + M.mark + "</span>" +
       "<span class=\"nsp-t\" style=\"flex:1 1 16rem;min-width:0\">" + M.text + "</span>" +
-      '<a href="' + M.href + '" style="margin-inline-start:auto;flex:none;color:#8a6d13;font-weight:700;text-decoration:none;white-space:nowrap">' +
+      '<a href="' + M.href + '" style="margin-inline-start:auto;flex:none;color:var(--gold-hi,#8a6d13);font-weight:700;text-decoration:none;white-space:nowrap">' +
       M.cta + "</a></div>";
     hdr.parentNode.insertBefore(d, hdr.nextSibling);
   }

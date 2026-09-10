@@ -1015,12 +1015,26 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   var H = document.documentElement, p = location.pathname;
   if (H.hasAttribute("data-n2") || H.getAttribute("data-noor-embed") === "1") return;
   if (/^\/kids\/./.test(p) || /^\/admin/.test(p)) return;
-  var V = "2", left = 3;
+  var V = "3", left = 4;
   function done() { if (--left === 0 && window.NOOR2 && NOOR2.inject) NOOR2.inject(); }
   function css(href) { var l = document.createElement("link"); l.rel = "stylesheet"; l.href = href; l.onload = done; l.onerror = done; document.head.appendChild(l); }
   function init() {
     if (document.body && document.body.hasAttribute("data-n2")) return;
+    /* The night, on the rooms a person wrote. They were left in the first
+       cut's parchment when the shell went to the arrival, the words and the
+       generated rooms, so the site read in two lights at once and the older
+       one was on the rooms people actually came for. assets/noor2-night.css
+       turns their own palette over -- it is generated from their own styles
+       by scripts/build-night.py, so nothing is missed.
+
+       The class goes on before the sheet is asked for, and NOOR2.inject() is
+       held until every stylesheet has landed: it reads the page's computed
+       background to decide whether the bar and the footer's share button
+       should be dressed for night or for parchment, and it must not be asked
+       while the page is still the colour it is about to stop being. */
+    H.classList.add("n2-night");
     css("/assets/noor2.css?v=" + V); css("/assets/noor2-skin.css?v=" + V);
+    css("/assets/noor2-night.css?v=" + V);
     var s = document.createElement("script"); s.src = "/assets/noor2.js?v=" + V; s.defer = true; s.onload = done; s.onerror = function () {};
     document.head.appendChild(s);
   }
@@ -1217,4 +1231,219 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", start);
   else start();
+})();
+
+
+/* ================= More: the map of the house, and the search ============
+   The bar carries five doors and the library has forty-two rooms. Until 9
+   September 2026 the other thirty-seven were reachable only through the menu
+   dial, which lived on the arrival alone -- so a reader standing in any room
+   on a phone could not get to the Prophets at all. And the fifth door said
+   Search while the field on the arrival opened something else, so the one
+   control that was there answered two different ways.
+
+   This is the fifth door now. It opens one sheet that does both jobs:
+
+     empty        the map -- eight sections, forty-two rooms, each with the
+                  line that says what it is
+     two letters  the search -- every word, prophet, companion, place, hero,
+                  surah, station and room, ranked, best group first
+
+   The map is inlined (3 KB) because it changes when a room is built, which is
+   rarely, and a reader should never wait on a request to find out what is in
+   the house. The search index (assets/noor-search.js) is fetched only when
+   someone actually types. The dial and its 120 KB index are retired.
+
+   Closes on the backdrop, the close button, Escape, or a pull past 80 px.
+   Under prefers-reduced-motion nothing moves. */
+(function () {
+  "use strict";
+  var doc = document, W = window;
+  var MAP = [["The Qur'an","The text itself, and what is needed to hold it",[["The Mushaf","All 114 surahs, with recitation for every ayah","/quran"],["The Letters","Learn to read the Arabic script, letter by letter","/arabic"],["The Words of the Path","The du'as worth carrying, in Arabic and English","/words"]]],["Belief","Who He is, who He sent, and what is unseen",[["The Ninety-Nine Names","His names, what He is not, and the three doors of tawhid","/allah"],["The 25 Prophets","Every prophet named in the Qur'an","/prophets"],["The Seerah","Twenty-three years, his character and his habits","/muhammad"],["Theology","The branches, and where they parted","/theology"],["The Unseen","Angels, jinn, the barzakh, the signs of the Hour","/unseen"],["The Journey of the Soul","What happens after the last breath","/soul"]]],["Worship","How it is actually done",[["The Five Pillars","Shahadah, salah, zakat, sawm, hajj","/pillars"],["Begin","For anyone new to Islam, from the first day","/begin"],["Ramadan","The month, and the tools for it","/ramadan"],["Hajj & Umrah","The rites, step by step, with their evidence","/hajj"],["Your Pilgrim Plan","A plan written from your own answers","/hajj-plan"],["The Two Eids","Fitr and Adha","/eid"]]],["The Story","Where all of it came from, and where it is going",[["The Path of Creation","71 chapters, from Kun Fayakun to the Hour","/#timeline"],["The Companions","The men and women who saw him ﷺ","/companions"],["Heroes of Islam","The people who carried it after them","/heroes"],["Characters","Everyone the Codex names","/characters"],["Places","The ground it happened on","/places"],["The Last Sermon","The final khutbah, line by line","/sermon"],["Two Lives","The scale, and what is on it","/#mizan"]]],["Daily Life","The practice as it meets an ordinary week",[["How to Live a Good Life","Tayyiba: a good life, not an easy one","/good-life"],["Three Lives","Weigh your own against them","/three-lives"],["The Family Room","Children, parents, neighbours","/family"],["Marriage & the Home","From the proposal to the household","/marriage"],["Prophetic Health","The body, the plate, the fast, hijama","/health"],["For Teenagers","Written for them, not about them","/teens"],["Protection & the Light","Sihr, ruqya, the evil eye, and the myths","/protection"],["Are We in a Simulation?","The modern question, answered from the text","/simulation"]]],["Look It Up","When you need one thing, fast",[["The Encyclopedia of the Path","523 words this library uses, defined","/dictionary"],["The Classroom","The whole curriculum, in order","/madrasa"],["The School","The full course, for schools and organisations","/school"]]],["Children","Built for them, not simplified for them",[["The Kids' Codex","The Greatest Game","/kids"],["The Hall of Stories","His names, told as stories","/stories"],["The Lantern Sky","Light the whole day with prayer","/kids/lanterns"]]],["The House","The building itself",[["Give a Gift","Keep the lamp lit","/donate"],["The Masjid Toolbox","Boards, timetables and printables","/masjid"],["For Schools & Organisations","Use the Codex in your own place","/license"],["The Guardian's Journal","What the keeper is thinking about","/journal"],["Corrections & Ideas","Tell us what is wrong","/feedback"],["Terms & Transparency","Where the money goes, and what is collected","/legal"]]]];
+
+  var CSS = ''
+    + '.nmr{position:fixed;inset:0;z-index:60;display:none}'
+    + '.nmr.on{display:block}'
+    + '.nmr-back{position:absolute;inset:0;background:rgba(4,6,15,.72);opacity:0;'
+    + '-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .34s cubic-bezier(.2,.7,.2,1)}'
+    + '.nmr.on .nmr-back{opacity:1}'
+    + '.nmr-p{position:absolute;left:50%;bottom:0;width:min(680px,100%);max-height:92vh;'
+    + 'transform:translate(-50%,100%);display:flex;flex-direction:column;'
+    + 'background:rgba(10,16,36,.97);border:1px solid rgba(233,200,106,.26);border-bottom:0;'
+    + 'border-radius:22px 22px 0 0;box-shadow:0 -18px 60px rgba(0,0,0,.6);'
+    + '-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);'
+    + 'transition:transform .56s cubic-bezier(.2,.7,.2,1);font-family:Inter,system-ui,sans-serif}'
+    + '.nmr.on .nmr-p{transform:translate(-50%,0)}'
+    + '.nmr-grip{width:38px;height:4px;border-radius:2px;background:rgba(255,254,247,.22);'
+    + 'margin:9px auto 0;flex:none}'
+    + '.nmr-top{display:flex;align-items:center;gap:10px;padding:12px 16px 12px;flex:none}'
+    + '.nmr-f{flex:1;display:flex;align-items:center;gap:9px;min-width:0;min-height:48px;padding:0 15px;'
+    + 'background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.26);border-radius:14px;'
+    + 'transition:border-color .25s cubic-bezier(.2,.7,.2,1)}'
+    + '.nmr-f:focus-within{border-color:rgba(233,200,106,.6)}'
+    + '.nmr-f svg{width:17px;height:17px;flex:none;color:#E9C86A}'
+    + '.nmr-f input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:16px;'
+    + 'color:#FFFEF7;caret-color:#E9C86A}'
+    + '.nmr-f input::placeholder{color:rgba(255,254,247,.42)}'
+    + '.nmr-f input::-webkit-search-cancel-button{display:none}'
+    + '.nmr-x{flex:none;min-height:44px;padding:0 13px;cursor:pointer;background:none;'
+    + 'border:1px solid rgba(233,200,106,.22);border-radius:12px;'
+    + 'font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;'
+    + 'text-transform:uppercase;color:rgba(255,254,247,.62);transition:color .2s,border-color .2s}'
+    + '.nmr-x:hover{color:#E9C86A;border-color:rgba(233,200,106,.5)}'
+    + '.nmr-b{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;'
+    + 'padding:2px 16px calc(20px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}'
+    + '.nmr-s{margin:16px 0 6px;font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;'
+    + 'letter-spacing:.2em;text-transform:uppercase;color:#E9C86A}'
+    + '.nmr-s small{display:block;margin-top:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;'
+    + 'letter-spacing:0;text-transform:none;color:rgba(255,254,247,.44)}'
+    + '.nmr-r{display:flex;align-items:center;gap:12px;padding:11px 2px;text-decoration:none;'
+    + 'border-top:1px solid rgba(233,200,106,.12);transition:background .18s cubic-bezier(.2,.7,.2,1)}'
+    + '.nmr-r:first-of-type{border-top:0}'
+    + '.nmr-r:hover,.nmr-r:focus-visible{background:rgba(233,200,106,.08);outline:none}'
+    + '.nmr-r span{flex:1;min-width:0}'
+    + '.nmr-r b{display:block;font-size:15.5px;font-weight:600;color:#FFFEF7;line-height:1.3}'
+    + '.nmr-r i{display:block;font-style:normal;font-size:13px;line-height:1.5;color:rgba(255,254,247,.5);margin-top:2px}'
+    + '.nmr-r em{font-style:normal;font-family:Amiri,serif;font-size:15px;color:#E9C86A;margin-inline-start:7px}'
+    + '.nmr-r svg{width:14px;height:14px;flex:none;stroke:#E9C86A;fill:none;stroke-width:2;opacity:.6}'
+    + '.nmr-none{margin:18px 2px;font-size:14px;line-height:1.7;color:rgba(255,254,247,.5)}'
+    + '.nmr-none a{color:#E9C86A;font-weight:600}'
+    + '@media (min-width:620px){.nmr-cols{columns:2;column-gap:26px}'
+    + '.nmr-cols>div{break-inside:avoid;-webkit-column-break-inside:avoid}}'
+    + '@media (prefers-reduced-motion:reduce){.nmr-back,.nmr-p,.nmr-r,.nmr-f{transition:none!important}}'
+    + '@media print{.nmr{display:none!important}}';
+
+  var CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  var box = null, input = null, body = null, openNow = false, tid = 0;
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function row(title, line, url, ar) {
+    return '<a class="nmr-r" href="' + esc(url) + '"><span><b>' + esc(title) +
+      (ar ? '<em class="notranslate" translate="no">' + esc(ar) + "</em>" : "") + "</b>" +
+      (line ? "<i>" + esc(line) + "</i>" : "") + "</span>" + CHEV + "</a>";
+  }
+  function drawMap() {
+    body.innerHTML = '<div class="nmr-cols">' + MAP.map(function (s) {
+      return '<div><p class="nmr-s">' + esc(s[0]) + (s[1] ? "<small>" + esc(s[1]) + "</small>" : "") + "</p>" +
+        s[2].map(function (r) { return row(r[0], r[1], r[2]); }).join("") + "</div>";
+    }).join("") + "</div>";
+  }
+  function drawHits(groups, term) {
+    if (!groups.length) {
+      body.innerHTML = '<p class="nmr-none">Nothing under that spelling yet. Try fewer letters, or the ' +
+        'plain English word. <a href="/feedback">Tell us what was missing</a> and it gets added.</p>';
+      return;
+    }
+    var shown = 0, h = "";
+    for (var k = 0; k < groups.length && shown < 34; k++) {
+      var g = groups[k], cap = k === 0 ? 8 : 5;
+      h += '<p class="nmr-s">' + esc(g.name) + "</p>";
+      h += g.hits.slice(0, cap).map(function (x) { shown++; return row(x.t, x.s, x.u, x.a); }).join("");
+      if (g.hits.length > cap) h += '<p class="nmr-none" style="margin:6px 2px 0">and ' +
+        (g.hits.length - cap) + " more in " + esc(g.name) + "</p>";
+    }
+    body.innerHTML = h;
+  }
+  function look() {
+    var term = input.value.trim();
+    if (term.length < 2) return drawMap();
+    var S = W.NOOR_SEARCH;
+    if (!S || !S.find) return;                 /* the index is still arriving */
+    var mine = term;
+    S.find(term).then(function (groups) { if (input.value.trim() === mine) drawHits(groups, mine); });
+  }
+
+  function shell() {
+    if (box) return;
+    var st = doc.createElement("style"); st.id = "nmr-css"; st.textContent = CSS;
+    doc.head.appendChild(st);
+    box = doc.createElement("div");
+    box.className = "nmr";
+    box.innerHTML = '<div class="nmr-back"></div>' +
+      '<div class="nmr-p" role="dialog" aria-modal="true" aria-label="The library">' +
+      '<i class="nmr-grip" aria-hidden="true"></i>' +
+      '<div class="nmr-top"><label class="nmr-f">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">' +
+      '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
+      '<input type="search" id="nmr-q" autocomplete="off" spellcheck="false" ' +
+      'placeholder="Search, or read the whole library" aria-label="Search the library"/></label>' +
+      '<button type="button" class="nmr-x" aria-label="Close">esc</button></div>' +
+      '<div class="nmr-b" id="nmr-b"></div></div>';
+    doc.body.appendChild(box);
+    input = box.querySelector("#nmr-q");
+    body = box.querySelector("#nmr-b");
+    box.querySelector(".nmr-back").addEventListener("click", close);
+    box.querySelector(".nmr-x").addEventListener("click", close);
+    input.addEventListener("input", function () { clearTimeout(tid); tid = setTimeout(look, 90); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var a = body.querySelector(".nmr-r"); if (a) a.click();
+    });
+    body.addEventListener("click", function (e) { if (e.target.closest(".nmr-r")) close(); });
+    /* a pull down on the grip closes it, like the shell's own sheets */
+    var p = box.querySelector(".nmr-p"), y0 = null;
+    p.addEventListener("pointerdown", function (e) {
+      if (!e.target.closest(".nmr-grip") && !e.target.closest(".nmr-top")) return;
+      if (e.target.closest("input,button")) return;
+      y0 = e.clientY; p.setPointerCapture(e.pointerId);
+    });
+    p.addEventListener("pointermove", function (e) {
+      if (y0 === null) return;
+      var dy = Math.max(0, e.clientY - y0);
+      p.style.transform = "translate(-50%," + dy + "px)";
+    });
+    function end(e) {
+      if (y0 === null) return;
+      var dy = Math.max(0, e.clientY - y0); y0 = null; p.style.transform = "";
+      if (dy > 80) close();
+    }
+    p.addEventListener("pointerup", end);
+    p.addEventListener("pointercancel", end);
+  }
+  function esckey(e) { if (e.key === "Escape" && openNow) { e.preventDefault(); close(); } }
+
+  function open() {
+    shell();
+    openNow = true;
+    doc.documentElement.classList.add("nmr-open");
+    doc.body.style.overflow = "hidden";
+    drawMap();
+    requestAnimationFrame(function () { box.classList.add("on"); });
+    doc.addEventListener("keydown", esckey);
+    /* warm the index while a reader is reading the map */
+    if (W.NOOR_SEARCH && W.NOOR_SEARCH.find) W.NOOR_SEARCH.find("");
+    setTimeout(function () { if (matchMedia("(hover:hover)").matches) input.focus(); }, 60);
+  }
+  function close() {
+    if (!box) return;
+    openNow = false;
+    box.classList.remove("on");
+    doc.documentElement.classList.remove("nmr-open");
+    doc.body.style.overflow = "";
+    doc.removeEventListener("keydown", esckey);
+    input.value = "";
+    setTimeout(function () { if (!openNow) box.classList.remove("on"); }, 600);
+  }
+
+  /* every way in: the bar's fifth door, the arrival's field, the "/" key, the
+     old magnifiers on the pages that still carry one, and /#search from a link */
+  doc.addEventListener("click", function (e) {
+    var t = e.target.closest && e.target.closest("[data-n2-more],[data-n2-search],[data-nm-open],#hm-search,#search-toggle");
+    if (!t) return;
+    e.preventDefault(); e.stopPropagation();
+    open();
+  }, true);
+  W.addEventListener("keydown", function (e) {
+    if (openNow) return;
+    if (e.key !== "/" && !(e.key === "k" && (e.metaKey || e.ctrlKey))) return;
+    var n = e.target.tagName;
+    if (n === "INPUT" || n === "TEXTAREA" || e.target.isContentEditable) return;
+    e.preventDefault(); open();
+  });
+  if (location.hash === "#search") setTimeout(open, 300);
+  W.NOOR_MORE = { open: open, close: close };
 })();
