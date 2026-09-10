@@ -1021,7 +1021,16 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      never came back to zero afterwards, so inject() was never called and no
      page had a bar. A number that has to be kept in step with a list by hand
      will eventually not be. It counts the list now. */
-  var V = "3", left = 0, started = false;
+  /* The version tail. It must move whenever ANY file in SHEETS below changes,
+     or the change does not reach anybody: /assets/*.css is served with
+     stale-while-revalidate, so ?v=3 is its own cache key and it will happily
+     keep handing out the copy it already has. That is how a night sheet with
+     the masjid's sermon text finally readable in it sat on the server for an
+     hour while every visitor kept getting the one where it was 1.17:1.
+     Bumped to 4 for: the night reading four more stylesheets, --soft turning,
+     and noor2-legible.css. api/page.js carries the same number; tests/rooms.mjs
+     checks the two agree. */
+  var V = "4", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
