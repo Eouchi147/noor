@@ -15,10 +15,22 @@
    Results come back grouped, and the groups are ordered by their
    own best match, so a search for Uhud opens with Places and a
    search for riba opens with the encyclopedia.
+
+   This file drew its own sheet until 9 September 2026. It does not
+   any more: the sheet is the More door in noor-fx.js, which carries
+   the map of the house and the search in one place, because the bar
+   said Search while the field on the arrival opened something else
+   and the map of the forty-two rooms existed only behind a dial on
+   one page. What is left here is what was always the value --
+   the index and the ranking -- and one way in:
+
+     NOOR_SEARCH.find(term)
+       -> Promise<[{ key, name, hits: [{ t, a, s, u }] }]>
+       best group first; [] for a term under two letters; never rejects.
    ============================================================ */
 (function () {
   "use strict";
-  var IDX = null, loading = null, box = null, input = null, out = null, openNow = false;
+  var IDX = null, loading = null;
 
   function fold(s) {
     return (s || "").toLowerCase()
@@ -67,46 +79,20 @@
     return 0;
   }
 
-  function esc(s) {
-    return String(s).replace(/[&<>"]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-    });
-  }
-
-  function shell() {
-    if (box) return;
-    box = document.createElement("div");
-    box.id = "noor-search";
-    box.innerHTML =
-      '<div class="ns-back"></div>' +
-      '<div class="ns-panel" role="dialog" aria-modal="true" aria-label="Search the Codex">' +
-        '<label class="ns-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
-        'stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
-        '<input type="search" id="ns-q" autocomplete="off" spellcheck="false" ' +
-        'placeholder="Search the Path: a word, a prophet, a place, a room" aria-label="Search"/>' +
-        '<button type="button" class="ns-x" aria-label="Close">esc</button></label>' +
-        '<div class="ns-out" id="ns-out"></div>' +
-      "</div>";
-    document.body.appendChild(box);
-    input = box.querySelector("#ns-q");
-    out = box.querySelector("#ns-out");
-    box.querySelector(".ns-back").addEventListener("click", close);
-    box.querySelector(".ns-x").addEventListener("click", close);
-    input.addEventListener("input", function () { render(input.value); });
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") { var a = out.querySelector("a"); if (a) a.click(); }
-    });
-    out.addEventListener("click", function (e) { if (e.target.closest("a")) close(); });
-  }
-
-  function render(term) {
+  /* The ranking, without a UI around it. Resolves to
+     [{ key, name, hits: [{ t, a, s, u }] }], best group first, [] for a term
+     under two letters, and never rejects: a search that cannot answer shows
+     the map it was already showing rather than an error. */
+  function find(term) {
     var n = fold(term);
-    if (!n || n.length < 2) {
-      out.innerHTML = '<p class="ns-hint">Type two letters. Every word of the encyclopedia is in here, ' +
-        'with the prophets, the companions, the places, the surahs and every room.</p>';
-      return;
-    }
-    load().then(function (I) {
+    /* load() before the length check, so find("") is how the More sheet warms
+       the index while a reader is reading the map: 311 KB fetched during the
+       second or two before anyone types, instead of after the first letter.
+       Without this the first search on a page answered from an index that was
+       still arriving, and the map stayed on the screen underneath the query. */
+    var idx = load();
+    if (!n || n.length < 2) return Promise.resolve([]);
+    return idx.then(function (I) {
       var buckets = {}, best = {};
       for (var i = 0; i < I.all.length; i++) {
         var r = I.all[i], sc = score(r, n);
@@ -116,83 +102,16 @@
         if (sc > (best[r.g] || 0)) best[r.g] = sc;
       }
       /* the group that answered best comes first: that is the whole point */
-      var keys = Object.keys(buckets).sort(function (a, b) {
+      return Object.keys(buckets).sort(function (a, b) {
         if (best[b] !== best[a]) return best[b] - best[a];
         return (I.order[a] || 99) - (I.order[b] || 99);
+      }).map(function (g) {
+        var list = buckets[g].sort(function (a, b) { return b.s - a.s || a.r.e.t.length - b.r.e.t.length; });
+        return { key: g, name: I.names[g] || g,
+                 hits: list.map(function (x) { return { t: x.r.e.t, a: x.r.e.a || "", s: x.r.e.s || "", u: x.r.u }; }) };
       });
-      if (!keys.length) {
-        out.innerHTML = '<p class="ns-hint">Nothing under that spelling yet. Try fewer letters, or the ' +
-          'plain English word. <a href="/feedback">Tell us what was missing</a> and it gets added.</p>';
-        return;
-      }
-      var h = "", shown = 0;
-      for (var k = 0; k < keys.length && shown < 34; k++) {
-        var g = keys[k], list = buckets[g];
-        list.sort(function (a, b) { return b.s - a.s || a.r.e.t.length - b.r.e.t.length; });
-        /* the best answering group gets room to breathe; the rest stay tidy */
-        var cap = k === 0 ? 8 : 5;
-        h += '<p class="ns-g">' + esc(I.names[g] || g) + "</p>";
-        h += list.slice(0, cap).map(function (x) {
-          shown++;
-          return '<a class="ns-hit" href="' + esc(x.r.u) + '">' +
-            "<b>" + esc(x.r.e.t) + "</b>" +
-            (x.r.e.a ? '<span class="ns-ar notranslate" translate="no">' + esc(x.r.e.a) + "</span>" : "") +
-            (x.r.e.s ? '<span class="ns-s">' + esc(x.r.e.s) + "</span>" : "") +
-            "</a>";
-        }).join("");
-        if (list.length > cap) {
-          h += '<p class="ns-more">and ' + (list.length - cap) + " more in " +
-               esc(I.names[g] || g) + "</p>";
-        }
-      }
-      out.innerHTML = h;
-    });
+    }).catch(function () { return []; });
   }
 
-  function open() {
-    shell(); load();
-    openNow = true;
-    document.body.classList.add("ns-open");
-    box.classList.add("on");
-    render(input.value || "");
-    setTimeout(function () { input.focus(); input.select(); }, 30);
-  }
-  function close() {
-    if (!box) return;
-    openNow = false;
-    box.classList.remove("on");
-    document.body.classList.remove("ns-open");
-  }
-
-  /* One search on a page, not two.
-
-     The library has two doors and they are not the same job. The Menu pill
-     opens assets/noor-menu.js's dial: the map of the house, browsed by
-     section. Search -- the bar's Search, the field on the arrival, the "/"
-     key -- opens this sheet: you type a word and the answer is under your
-     thumb. Until 9 September 2026 the bar's Search carried the dial's own
-     attribute as well, so on one screen the field opened the sheet and the
-     bar opened the dial: two different products from two controls a finger
-     apart. Now Search is this, everywhere, and the Menu is the dial. */
-  addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && openNow) close();
-    else if ((e.key === "/" || (e.key === "k" && (e.metaKey || e.ctrlKey))) && !openNow) {
-      var t = e.target.tagName;
-      if (t === "INPUT" || t === "TEXTAREA" || e.target.isContentEditable) return;
-      e.preventDefault(); open();
-    }
-  });
-
-  function wire() {
-    var b = document.getElementById("search-toggle");
-    if (b) b.addEventListener("click", function (e) { e.preventDefault(); open(); });
-    /* the landing page keeps its own inline field; do not fight it */
-    if (document.getElementById("search-bar")) {
-      var bar = document.getElementById("search-bar");
-      if (bar) bar.remove();
-    }
-  }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
-  else wire();
-  window.NOOR_SEARCH = { open: open, close: close };
+  window.NOOR_SEARCH = { find: find };
 })();

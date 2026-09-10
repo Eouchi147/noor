@@ -223,7 +223,7 @@
     ["Qur'an", "/quran", '<path d="M12 6.4C10.4 4.9 8 4.4 3 4.7v13.8c5-.3 7.4.2 9 1.8 1.6-1.6 4-2.1 9-1.8V4.7c-5-.3-7.4.2-9 1.7z"/><path d="M12 6.4v13.9"/>'],
     ["Story", "/path", '<path d="M4.5 19.5c6.5 0 3.5-9 8-9s2-6 7-6"/><circle cx="4.5" cy="19.5" r="1.6"/><circle cx="19.5" cy="4.5" r="1.6"/>'],
     ["Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'],
-    ["Search", "/dictionary", '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/>']
+    ["More", "/#search", '<circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/>']
   ];
   var ALIAS = { "/verse": "/quran", "/verses": "/quran", "/surah": "/quran", "/words": "/dictionary" };
   function bar(active) {
@@ -231,8 +231,13 @@
     if (!nav) {
       nav = el("nav", "n2-bar"); nav.setAttribute("aria-label", "Rooms");
       nav.innerHTML = LINKS.map(function (l) {
-        /* Search opens the sheet; the dial is the Menu's (see api/page.js) */
-        return '<a href="' + l[1] + '"' + (l[0] === "Search" ? ' data-n2-search' : "") + '><svg viewBox="0 0 24 24" aria-hidden="true">' + l[2] + "</svg>" + l[0] + "</a>";
+        /* The fifth door is the map of the house and the search, one sheet,
+           drawn by noor-fx.js. Five doors cannot reach forty-two rooms, and
+           until this door existed the other thirty-seven were behind a dial
+           that only the arrival carried: on a phone, standing in a room,
+           there was no way to the Prophets at all. Without any script it is
+           a link to /#search, which the arrival answers. */
+        return '<a href="' + l[1] + '"' + (l[0] === "More" ? ' data-n2-more' : "") + '><svg viewBox="0 0 24 24" aria-hidden="true">' + l[2] + "</svg>" + l[0] + "</a>";
       }).join("");
       doc.body.appendChild(nav);
     }
@@ -241,7 +246,7 @@
     var links = all("a", nav), hit = null;
     links.forEach(function (a) {
       var p = a.getAttribute("href").split("#")[0].replace(/\/+$/, "") || "/";
-      if (!hit && !a.hasAttribute("data-n2-search") && (p === here || (p !== "/" && here.indexOf(p + "/") === 0))) hit = a;
+      if (!hit && !a.hasAttribute("data-n2-more") && (p === here || (p !== "/" && here.indexOf(p + "/") === 0))) hit = a;
     });
     if (hit || !q(".n2-on", nav)) links.forEach(function (a) { a.classList.toggle("n2-on", a === hit); });
     var pb = q(".n2-pill-bg", nav) || nav.insertBefore(el("i", "n2-pill-bg"), nav.firstChild), on = q(".n2-on", nav);
@@ -249,10 +254,6 @@
     else pb.classList.remove("n2-show");
     if (!nav.n2wired) {
       nav.n2wired = 1; W.addEventListener("resize", function () { bar(active); });
-      var s = q("[data-n2-search]", nav);
-      if (s) s.addEventListener("click", function (e) {
-        if (W.NOOR_SEARCH && W.NOOR_SEARCH.open) { e.preventDefault(); W.NOOR_SEARCH.open(); }
-      });
     }
     return nav;
   }
