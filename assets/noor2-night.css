@@ -648,8 +648,6 @@ html.n2-night.n2-room .gchip.md{color:#FFFEF7;background:#0D1428}
 html.n2-night.n2-room .gate .gct{color:rgba(255,254,247,.45)}
 html.n2-night.n2-room .ayah{border-bottom:1px solid rgba(255,254,247,.07)}
 html.n2-night.n2-room .ayah .ar{color:#FFFEF7}
-html.n2-night.n2-room .playbtn{border:1px solid rgba(255,254,247,.15);background:#0A1024}
-html.n2-night.n2-room .playbtn.on{color:#FFFEF7}
 html.n2-night.n2-room .bismillah{color:#FFFEF7}
 html.n2-night.n2-room .bismillah small{color:rgba(255,254,247,.5)}
 html.n2-night.n2-room .tool{border:1px solid rgba(255,254,247,.14);color:rgba(255,254,247,.75);background:#0A1024}
@@ -669,7 +667,6 @@ html.n2-night.n2-room .pbtn.main{box-shadow:0 4px 18px rgba(201,162,39,.45),inse
 html.n2-night.n2-room .pbtn.main:hover{box-shadow:0 8px 26px rgba(201,162,39,.62),inset 0 1px 0 rgba(10,16,36,.35)}
 html.n2-night.n2-room .olang{background:rgba(10,16,36,.05)}
 html.n2-night.n2-room #p-pill{background:linear-gradient(160deg,#121724,#0A0D14);box-shadow:0 8px 24px rgba(10,13,20,.35)}
-html.n2-night.n2-room .vx{color:rgba(255,254,247,.42)}
 html.n2-night.n2-room .vw{background:#0A1024;border:1px solid rgba(255,254,247,.1)}
 html.n2-night.n2-room .vw b{color:#FFFEF7}
 html.n2-night.n2-room .vw em{color:rgba(255,254,247,.58)}
@@ -682,7 +679,7 @@ html.n2-night.n2-room .vlinks h6{color:rgba(255,254,247,.42)}
 html.n2-night.n2-room .vlink{background:#0A1024;border:1px solid rgba(255,254,247,.1);color:rgba(255,254,247,.72)}
 html.n2-night.n2-room .vnone,html.n2-night.n2-room .vwait{color:rgba(255,254,247,.6)}
 html.n2-night.n2-room .ayah.playing .ar .w.now{color:#FFFEF7}
-html.n2-night.n2-room .copyb{color:rgba(255,254,247,.35)}
+html.n2-night.n2-room .vact{color:rgba(255,254,247,.55)}
 html.n2-night.n2-room #q-toast{background:#0F121A;box-shadow:0 10px 30px rgba(10,13,20,.35)}
 html.n2-night.n2-room #q-pick{background:linear-gradient(160deg,#0A1024,#0D1428)}
 html.n2-night.n2-room #s-scrim{background:rgba(10,13,20,.55)}
