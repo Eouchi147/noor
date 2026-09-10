@@ -7,7 +7,7 @@
    and every door can be tapped; nothing of the page's own fixed furniture
    is covered by the bar or covers it (the Kids' sound button is lifted
    above it); nothing scrolls sideways; the page's last line clears the bar;
-   a parchment page stays parchment and a night page's header goes
+   every room is read in the night now and a night page's header goes
    translucent night; the share sits in the footer (in ink on a light
    footer); the notice is hidden; the Mushaf's player, when it shows, sends
    the bar away and is usable, and the bar returns when it hides; a kids'
@@ -35,11 +35,29 @@ const BASE = "http://127.0.0.1:" + port;
 for (let i = 0; i < 50; i++) { try { const r = await fetch(BASE + "/robots.txt"); if (r.ok) break; } catch {} await new Promise(r => setTimeout(r, 100)); }
 
 const PAGES = [
-  ["quran", "/quran.html", "parch"],
+  ["quran", "/quran.html", "dark", "was parchment"],
   ["allah", "/allah.html", "dark"],
   ["kids", "/kids.html", "dark"],
-  ["prophets", "/prophets.html", "parch"]
+  ["prophets", "/prophets.html", "dark", "was parchment"]
 ];
+/* A night sheet answers what a room painted; it does not re-lay foundations.
+   scripts/build-night.py reads assets/tw.css among the rooms' shared styles,
+   and Tailwind's preflight carries `*, ::before, ::after { border: 0 solid
+   #e5e7eb }`. That grey is a neutral on an ink property, so the first build
+   turned it over and emitted it back universally -- later in the cascade and
+   equal in weight to every rule a room writes -- which reset `border` on
+   every element in all 76 rooms and deleted every border in the house. It
+   surfaced as two pixels of label overlap on one figure at one width. */
+{
+  const night = fs.readFileSync("assets/noor2-night.css", "utf8");
+  const universal = [...night.matchAll(/(^|\n)([^{}\n]+)\{/g)]
+    .map(m => m[2])
+    .filter(sel => sel.split(",").some(one => /(^|[\s,>+~])\*(?![-\w])/.test(one.trim())));
+  ok(universal.length === 0, "the night speaks to no element in general, only to the ones the rooms painted" +
+     (universal.length ? " (" + universal[0].trim().slice(0, 60) + ")" : ""));
+  ok(!/border\s*:\s*0/.test(night), "and it never resets a border to nothing");
+}
+
 const br = await chromium.launch();
 const ctx = await br.newContext({ ...devices["iPhone 13"], locale: "en-GB" });
 /* nothing leaves the machine: fonts and any other host are refused */
@@ -67,7 +85,7 @@ const measure = () => {
     ease: nav ? getComputedStyle(nav).transitionTimingFunction : "" };
 };
 
-for (const [name, p, tone] of PAGES) {
+for (const [name, p, tone, was] of PAGES) {
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", e => errors.push(String(e)));
@@ -80,7 +98,7 @@ for (const [name, p, tone] of PAGES) {
   console.log("\n=== " + p + " at " + m.vw + "x" + m.vh + " (" + m.body + ") ===");
   ok(errors.length === 0, "no script threw" + (errors.length ? " (" + errors[0] + ")" : ""));
   ok(m.skin && m.tone === tone, "the skin reads the page as " + tone + " (" + m.tone + ")");
-  ok(m.bar && m.doors.map(d => d.t).join(",") === "Today,Qur'an,Story,Words,Search", "the bar of five doors is there (" + m.doors.map(d => d.t).join(", ") + ")");
+  ok(m.bar && m.doors.map(d => d.t).join(",") === "Today,Qur'an,Story,Words,More", "the bar of five doors is there (" + m.doors.map(d => d.t).join(", ") + ")");
   ok(m.doors.length === 5 && m.doors.every(d => d.reach && d.h >= 46), "every door can be tapped, at 46 px or more");
   ok(Math.abs(m.barBottom - m.vh) < 1, "the bar sits on the bottom edge");
   ok(!m.sideways, "nothing scrolls sideways");
@@ -89,10 +107,19 @@ for (const [name, p, tone] of PAGES) {
   ok(m.share && m.shareH >= 46, "the share sits in the footer");
   ok(m.notice === "none", "the notice is hidden");
   ok(/linear\(|cubic-bezier/.test(m.ease), "the bar moves on the spring");
-  if (tone === "parch") {
-    ok(/rgb\(255, 254, 247\)/.test(m.body), "a parchment page stays parchment");
-    if (m.share) ok(m.footLight ? /rgb\(44, 36, 22\)/.test(m.shareInk) : /rgb\(255, 254, 247\)/.test(m.shareInk), "the share wears ink on a light footer, parchment on a dark one (" + m.shareInk + " on " + m.footBg + ")");
-  } else {
+  if (was) {
+    /* This used to hold the opposite -- "a parchment page stays parchment" --
+       because the shell's night went to the arrival, the words and the
+       generated rooms and left every room a person had written in the first
+       cut's light, with a dark bar bolted underneath it. Two lights on one
+       site, and the older one was on the rooms people came for. Now
+       assets/noor2-night.css turns their own palette over (generated from
+       their own styles by scripts/build-night.py), so the skin reads them as
+       night pages of their own accord and there is one light in the house. */
+    ok(/rgb\(10, 16, 36\)|rgb\(4, 6, 15\)/.test(m.body), "a room that was parchment is read in the night (" + m.body + ")");
+    if (m.share) ok(/rgb\(255, 254, 247\)/.test(m.shareInk), "and the share in its footer wears parchment (" + m.shareInk + ")");
+  }
+  {
     if (m.headerBg) ok(/rgba\(4, 6, 15/.test(m.headerBg) && /blur/.test(m.headerBlur), "the night page's header is translucent night with a blur (" + m.headerBg + ")");
   }
   await page.screenshot({ path: path.join(OUT, "skin-" + name + ".png") });
@@ -162,7 +189,7 @@ for (const p of ["/index.html", "/dictionary.html", "/dictionary/salah.html"]) {
     skinCss: !![...document.styleSheets].find(s => /noor2-skin/.test(s.href || "")), shells: [...document.querySelectorAll('link[href*="noor2.css"],script[src*="noor2.js"]')].length,
     sideways: document.documentElement.scrollWidth > innerWidth + 1, doors: [...document.querySelectorAll(".n2-bar a")].map(a => a.textContent.trim()).join(",") }));
   ok(h.n2 && h.bars === 1 && !h.skin && !h.skinCss && h.shells === 2, p + ": one bar, no skin, the shell loaded once (" + h.bars + " bar, " + h.shells + " shell files)");
-  ok(h.doors === "Today,Qur'an,Story,Words,Search" && !h.sideways && errors.length === 0, p + ": the five doors, nothing sideways, no script threw" + (errors.length ? " (" + errors[0] + ")" : ""));
+  ok(h.doors === "Today,Qur'an,Story,Words,More" && !h.sideways && errors.length === 0, p + ": the five doors, nothing sideways, no script threw" + (errors.length ? " (" + errors[0] + ")" : ""));
   await page.close();
 }
 

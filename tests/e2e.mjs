@@ -206,18 +206,18 @@ console.log('\n[7] reduced motion · search');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   ok(errors.length === 0 && await page.locator('.n2-idea').count() === 6, 'reduced motion healthy: the six screens are all there');
-  /* Search is a full overlay built by /assets/noor-search.js: the field is
-     #ns-q and the results live in #ns-out. The header magnifier itself now
-     opens the nav dial instead (see tests/menu.mjs), so this overlay is
-     reached the same way a keyboard-first reader reaches it: the "/" or
-     Cmd/Ctrl+K shortcut that noor-search.js listens for globally. */
+  /* The "/" key opens the one sheet the whole site now has: the map of the
+     house when it is empty, the search once two letters are typed. It used to
+     open assets/noor-search.js's own overlay while the bar's Search opened a
+     dial, which is the split this replaced. */
   await page.keyboard.press('/');
-  await page.waitForSelector('#ns-q', { timeout: 8000 });
-  await page.fill('#ns-q', 'kawthar');
-  await page.waitForTimeout(400);
-  ok(await page.locator('#ns-out a, #ns-out button').count() >= 1, 'search finds Kawthar (Hawd)');
-  const href = await page.locator('#ns-out a').first().getAttribute('href');
-  await page.locator('#ns-out a').first().click();
+  await page.waitForSelector('#nmr-q', { timeout: 8000 });
+  ok(await page.locator('.nmr .nmr-r').count() === 42, 'the whole library is under the key');
+  await page.fill('#nmr-q', 'kawthar');
+  await page.waitForTimeout(700);
+  ok(await page.locator('.nmr-r').count() >= 1, 'and two letters make it the search: Kawthar (Hawd)');
+  const href = await page.locator('.nmr-r').first().getAttribute('href');
+  await page.locator('.nmr-r').first().click();
   await page.waitForTimeout(900);
   const landed = await page.evaluate(() => ({
     modal: document.querySelectorAll('#modal-backdrop.open').length,

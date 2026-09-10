@@ -1,27 +1,37 @@
-/* NOOR · the dial menu, on the screens people actually hold.
+/* NOOR · the More sheet, on the screens people actually hold.
    ------------------------------------------------------------------
-   Two faults, both found by measuring rather than by looking.
+   This file used to hold the dial menu: an orrery of eight balls on a canvas
+   sky, opened from one page. It was retired on 9 September 2026 for two
+   reasons the owner named and one the measuring found.
 
-   1 · THE RING SAT ON TOP OF THE WORDS.
-       The radius was computed from the viewport and the hub inside it was
-       sized from the ball diameter, and the two numbers never spoke. On every
-       phone the balls closed over the hub: 19px of overlap on an iPhone 14,
-       20 on a Pro Max, 37 on an SE, 41 in landscape. Not one phone was clear.
-       Meanwhile a third of the screen sat empty above and below the ring.
+     · it existed only on the arrival, so a reader standing in any room on a
+       phone had no way to the Prophets at all -- the bar's five doors reach
+       five of the forty-two rooms, and the other thirty-seven were behind a
+       door that was not on the page they were standing on;
+     · it cost 161 KB, 41 of script and 120 of index, on every page carrying it;
+     · and it no longer looked like the site it belonged to.
 
-   2 · TAPPING A SECTION DID NOTHING AT ALL.
-       pointerdown captures the pointer to the stage, so on pointerup
-       e.target was always the stage and never the ball. The section never
-       opened, and because a plain left click is cancelled so the anchor does
-       not navigate instead, the dial's one job was dead on every device.
+   What replaced it is one sheet, drawn by noor-fx.js and opened by the bar's
+   fifth door on every page in the house: the map when the field is empty, the
+   search once two letters are typed. So this file's subject moved with it.
+   What is held here is what a map has to do:
 
-   This holds both fixed, at eleven real screen sizes, in both orientations.
+     · open from the bar, at every size a phone comes in
+     · carry the whole library -- 8 sections, 42 rooms, each with its line --
+       and agree with assets/menu-index.json, which is where the house keeps it
+     · every room in it is a real address, not a link to nowhere
+     · fit the screen it is on: nothing off the edge, nothing on top of
+       anything, and the field reachable before anything is scrolled
+     · close on Escape, on the ground behind it, and on its own button
+     · and never trap a reader
 
-   Needs a static server for the site on :8231 and playwright:
-     python3 -m http.server 8231 &   node tests/menu.mjs
+   Needs the static server on :8231:  python3 /tmp/vercelish.py 8231
+   Then:  node tests/menu.mjs
 */
 import { chromium } from 'playwright';
+import fs from 'fs';
 
+const EXE = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const BASE = process.env.NOOR_BASE || 'http://127.0.0.1:8231';
 const SIZES = [
   [320, 568, 'iPhone SE 1'], [360, 640, 'small Android'], [375, 667, 'iPhone SE 3'],
@@ -32,142 +42,134 @@ const SIZES = [
 let pass = 0, fail = 0;
 const ok = (c, m) => { c ? pass++ : (fail++, console.log('  FAIL ' + m)); };
 
-const open = async pg => {
-  await pg.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
-  await pg.evaluate(() => document.querySelector('[data-nm-open]')?.click());
-  await pg.waitForTimeout(1400);
-};
-/* every measurement the geometry has to satisfy, taken from the live DOM */
+const br = await chromium.launch({ executablePath: EXE, args: ['--no-sandbox'] });
+
+async function open(pg, path = '/index.html') {
+  await pg.goto(BASE + path, { waitUntil: 'domcontentloaded' });
+  await pg.waitForTimeout(2400);
+  await pg.evaluate(() => document.querySelector('.n2-bar [data-n2-more]').click());
+  await pg.waitForTimeout(900);
+}
+
+/* what the sheet has to satisfy, taken from the live DOM */
 const measure = pg => pg.evaluate(() => {
-  const nd = document.querySelector('.nd');
-  const cap = nd.classList.contains('cap');
-  const rs = [...document.querySelectorAll('.nd-node')].map(n => n.getBoundingClientRect());
-  const top = document.querySelector('.nd-top').getBoundingClientRect();
-  const under = (cap ? document.querySelector('.nd-cap') : document.querySelector('.nd-hint'))
-    .getBoundingClientRect();
-  const t = Math.min(...rs.map(r => r.top)), b = Math.max(...rs.map(r => r.bottom));
-  const l = Math.min(...rs.map(r => r.left)), rr = Math.max(...rs.map(r => r.right));
-  let hubGap = null, hubOff = null;
-  if (!cap) {
-    const hb = document.querySelector('.nd-hub').getBoundingClientRect();
-    const cx = hb.left + hb.width / 2, cy = hb.top + hb.height / 2;
-    hubGap = Math.min(...rs.map(r =>
-      Math.hypot(r.left + r.width / 2 - cx, r.top + r.height / 2 - cy) - r.width / 2 - hb.width / 2));
-    /* The hub has to sit on the ring's own centre, not the viewport's. The
-       bounding box is not that centre -- the near half of the ring is drawn
-       larger, so the box hangs lower than the geometry does. Eight balls evenly
-       spaced average to the true centre, so that is what this compares. */
-    const my = rs.reduce((a, r) => a + r.top + r.height / 2, 0) / rs.length;
-    hubOff = +Math.abs(cy - my).toFixed(1);
-  }
-  /* the closest pair of neighbours, which is the check that was missing: every
-     other measurement passed while all eight balls sat in one unreadable heap */
-  let minSep = Infinity;
-  for (let i = 0; i < rs.length; i++)
-    for (let j = i + 1; j < rs.length; j++){
-      const a = rs[i], b2 = rs[j];
-      const d = Math.hypot((a.left + a.width / 2) - (b2.left + b2.width / 2),
-                           (a.top + a.height / 2) - (b2.top + b2.height / 2));
-      const need = (a.width + b2.width) / 2;
-      minSep = Math.min(minSep, d - need);
-    }
-  return { on: nd.classList.contains('on'), cap, n: rs.length, minSep: +minSep.toFixed(1),
-    tight: nd.classList.contains('tight'),
-    underTop: +(top.bottom - t).toFixed(1), overUnder: +(b - under.top).toFixed(1),
-    offLeft: +(0 - l).toFixed(1), offRight: +(rr - innerWidth).toFixed(1),
-    hubGap: hubGap === null ? null : +hubGap.toFixed(1), hubOff,
-    ballD: +rs[0].width.toFixed(0) };
+  const box = document.querySelector('.nmr');
+  if (!box || !box.classList.contains('on')) return { on: false };
+  const p = box.querySelector('.nmr-p').getBoundingClientRect();
+  const f = box.querySelector('.nmr-f').getBoundingClientRect();
+  const body = box.querySelector('.nmr-b');
+  const rows = [...box.querySelectorAll('.nmr-r')];
+  const rs = rows.map(r => r.getBoundingClientRect());
+  return {
+    on: true, vw: innerWidth, vh: innerHeight,
+    sections: box.querySelectorAll('.nmr-s').length,
+    rooms: rows.length,
+    hrefs: rows.map(r => r.getAttribute('href')),
+    titles: rows.map(r => ((r.querySelector('b') || {}).firstChild || {}).nodeValue || ''),
+    left: Math.round(p.left), right: Math.round(p.right),
+    top: Math.round(p.top), bottom: Math.round(p.bottom),
+    /* the field has to be reachable without scrolling the sheet first */
+    fieldTop: Math.round(f.top), fieldH: Math.round(f.height),
+    shortest: rs.length ? Math.round(Math.min(...rs.map(r => r.height))) : 0,
+    /* no row may sit on top of another */
+    overlaps: rs.filter((r, i) => rs.some((q, j) => j > i &&
+      r.left < q.right - 1 && q.left < r.right - 1 && r.top < q.bottom - 1 && q.top < r.bottom - 1)).length,
+    pageLocked: getComputedStyle(document.body).overflow === 'hidden',
+    sideways: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  };
 });
 
-const br = await chromium.launch();
+/* the house's own list of what the map should contain */
+const HOUSE = JSON.parse(fs.readFileSync('assets/menu-index.json', 'utf8'));
+const WANT_ROOMS = HOUSE.sections.flatMap(s => (s.items || []).map(i => [i.t, i.u]));
 
-console.log('\n=== 1. nothing overlaps anything, at any size ===');
+console.log('\n=== the map is the house, and the house is in the map ===');
+{
+  const ctx = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const pg = await ctx.newPage();
+  const errors = [];
+  pg.on('pageerror', e => errors.push(String(e.message)));
+  await open(pg);
+  const m = await measure(pg);
+  ok(m.on, 'the fifth door opens the sheet');
+  ok(m.sections === HOUSE.sections.length, 'every section of the library is on it (' + m.sections + ' of ' + HOUSE.sections.length + ')');
+  ok(m.rooms === WANT_ROOMS.length, 'and every room (' + m.rooms + ' of ' + WANT_ROOMS.length + ')');
+  const missing = WANT_ROOMS.filter(([t]) => !m.titles.includes(t));
+  ok(missing.length === 0, 'nothing the house lists is left off it' + (missing.length ? ' (' + missing.slice(0, 3).map(x => x[0]).join(', ') + ')' : ''));
+  const wrong = WANT_ROOMS.filter(([t, u]) => { const i = m.titles.indexOf(t); return i >= 0 && m.hrefs[i] !== u; });
+  ok(wrong.length === 0, 'and every one of them points where the house says' + (wrong.length ? ' (' + wrong[0][0] + ')' : ''));
+  ok(m.titles.includes('The 25 Prophets'), 'the Prophets among them: the room that could not be reached at all');
+  ok(errors.length === 0, 'no page errors' + (errors.length ? ' → ' + errors[0].slice(0, 80) : ''));
+  await ctx.close();
+}
+
+console.log('\n=== every room in it is a real address ===');
+{
+  const ctx = await br.newContext({ viewport: { width: 390, height: 844 } });
+  const pg = await ctx.newPage();
+  await open(pg);
+  const hrefs = (await measure(pg)).hrefs;
+  const dead = [];
+  for (const h of hrefs) {
+    const r = await pg.request.get(BASE + h).catch(() => null);
+    if (!r || r.status() >= 400) dead.push(h + ' → ' + (r ? r.status() : 'no answer'));
+  }
+  ok(dead.length === 0, 'all ' + hrefs.length + ' rooms answer' + (dead.length ? ' (' + dead.slice(0, 3).join(', ') + ')' : ''));
+  await ctx.close();
+}
+
+console.log('\n=== it fits the screen it is on ===');
 for (const [w, h, name] of SIZES) {
-  const pg = await br.newPage({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500 });
+  const ctx = await br.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500 });
+  const pg = await ctx.newPage();
   await open(pg);
   const m = await measure(pg);
-  ok(m.on, name + ': the dial opens');
-  ok(m.n === 8, name + ': all eight sections are on the ring');
-  ok(m.underTop <= 0, name + ': the ring clears the search bar (' + m.underTop + ')');
-  ok(m.overUnder <= 0, name + ': the ring clears the caption below it (' + m.overUnder + ')');
-  ok(m.offLeft <= 0 && m.offRight <= 0, name + ': the ring is on screen');
-  ok(m.hubGap === null || m.hubGap >= 0, name + ': the balls stay out of the hub (' + m.hubGap + ')');
-  /* Not zero, and it cannot be: the ring is drawn inside a rig that is leaned
-     five degrees under a perspective, and the hub is not in that rig, so the
-     projection moves the ring's centre a little and not the hub's. Under twenty
-     pixels on a ring six hundred across is two per cent, and invisible. It was
-     fifty before the hub was given the same vertical lift as the ring. */
-  ok(m.hubOff === null || m.hubOff <= 20, name + ': the hub is concentric with the ring (' + m.hubOff + ')');
-  ok(m.ballD >= 52, name + ': a section is big enough to read and aim at (' + m.ballD + 'px)');
-  ok(m.minSep >= -2, name + ': the sections do not pile on each other (' + m.minSep + ')');
-  /* a phone has no room for words inside the ring, so they go under it */
-  if (w < 500 || h < 500) ok(m.cap, name + ': the name is set below the ring, not inside it');
-  await pg.close();
+  const label = name.padEnd(16) + w + '×' + h;
+  ok(m.on, label + ': it opens');
+  ok(m.on && m.left >= 0 && m.right <= w + 1, label + ': nothing hangs off the side');
+  ok(m.on && m.bottom <= h + 1, label + ': nor off the bottom');
+  ok(m.on && m.fieldTop >= 0 && m.fieldTop + m.fieldH <= h, label + ': the field is on screen before anything is scrolled');
+  ok(m.on && m.shortest >= 40, label + ': every row is a thumb tall (' + m.shortest + ' px)');
+  ok(m.on && m.overlaps === 0, label + ': no row sits on another (' + m.overlaps + ')');
+  ok(m.on && !m.sideways, label + ': the page behind it is not pushed sideways');
+  ok(m.on && m.pageLocked, label + ': and does not scroll under the sheet');
+  await ctx.close();
 }
 
-console.log('\n=== 2. tapping a section opens it ===');
-for (const [w, h, name, touch] of [[393, 852, 'phone', true], [1440, 900, 'laptop', false]]) {
-  const pg = await br.newPage({ viewport: { width: w, height: h }, isMobile: touch, hasTouch: touch });
-  const errs = []; pg.on('pageerror', e => errs.push(String(e)));
-  await open(pg);
-  const at = await pg.evaluate(() => {
-    const r = document.querySelector('.nd-node.on').getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-  });
-  if (touch) await pg.touchscreen.tap(at.x, at.y); else await pg.mouse.click(at.x, at.y);
-  await pg.waitForTimeout(800);
-  const opened = await pg.evaluate(() => ({
-    scrim: getComputedStyle(document.querySelector('.nd-scrim')).visibility,
-    rooms: document.querySelectorAll('.nd-room').length,
-    fits: (() => { const p = document.querySelector('.nd-panel').getBoundingClientRect();
-      return p.left >= -1 && p.right <= innerWidth + 1 && p.height <= innerHeight + 1; })(),
-    stillHere: location.pathname
-  }));
-  ok(opened.scrim === 'visible', name + ': a tap opens the section');
-  ok(opened.rooms > 0, name + ': and lists its rooms (' + opened.rooms + ')');
-  ok(opened.fits, name + ': and the panel fits the screen');
-  ok(opened.stillHere.endsWith('index.html'), name + ': and does not navigate away');
-  ok(errs.length === 0, name + ': no JS errors');
-  await pg.close();
-}
-
-console.log('\n=== 3. the caption follows the ring, and rotation is clean ===');
+console.log('\n=== a reader is never trapped ===');
 {
-  const pg = await br.newPage({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true });
+  const ctx = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const pg = await ctx.newPage();
+  const shut = () => pg.evaluate(() => !document.querySelector('.nmr').classList.contains('on'));
   await open(pg);
-  const first = await pg.evaluate(() => document.querySelector('.nd-node.on b').textContent);
-  await pg.keyboard.press('ArrowRight');
-  await pg.waitForTimeout(1100);
-  const p = await pg.evaluate(() => ({
-    focused: document.querySelector('.nd-node.on b').textContent.trim(),
-    caption: document.querySelector('.nd-cap .hn').textContent.trim()
-  }));
-  ok(p.focused !== first, 'an arrow key turns the ring one section');
-  ok(p.caption === p.focused, 'the caption names whatever is in focus');
-
-  await pg.setViewportSize({ width: 852, height: 393 });
-  await pg.waitForTimeout(900);
-  const m = await measure(pg);
-  ok(m.underTop <= 0 && m.overUnder <= 0 && m.offLeft <= 0 && m.offRight <= 0,
-     'still clean after the phone is rotated ' + JSON.stringify(m));
-  await pg.close();
+  await pg.keyboard.press('Escape'); await pg.waitForTimeout(800);
+  ok(await shut(), 'Escape closes it');
+  ok(await pg.evaluate(() => getComputedStyle(document.body).overflow !== 'hidden'), 'and the page can be scrolled again');
+  await pg.evaluate(() => document.querySelector('.n2-bar [data-n2-more]').click()); await pg.waitForTimeout(800);
+  await pg.evaluate(() => document.querySelector('.nmr-back').click()); await pg.waitForTimeout(800);
+  ok(await shut(), 'the ground behind it closes it');
+  await pg.evaluate(() => document.querySelector('.n2-bar [data-n2-more]').click()); await pg.waitForTimeout(800);
+  await pg.evaluate(() => document.querySelector('.nmr-x').click()); await pg.waitForTimeout(800);
+  ok(await shut(), 'and so does its own button');
+  await ctx.close();
 }
 
-console.log('\n=== 4. the glow is a circle, not a square ===');
+console.log('\n=== the dial it replaced is gone from the house ===');
 {
-  const pg = await br.newPage({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true });
-  await open(pg);
-  const glow = await pg.evaluate(() => {
-    const el = document.querySelector('.nd-node.on');
-    const cs = getComputedStyle(el, '::after');
-    return { r: cs.borderRadius, bg: cs.backgroundImage.slice(0, 22), shadow: getComputedStyle(el).boxShadow };
-  });
-  /* a blur that large on a promoted layer rasterises to the layer box, and the
-     glow came out as a visible square around the focused section */
-  const blurs = (glow.shadow.match(/(\d+(?:\.\d+)?)px/g) || []).map(Number);
-  ok(!blurs.some(b => b > 40), 'no huge blurred shadow is left to draw a box (' + glow.shadow.slice(0, 60) + ')');
-  ok(/radial-gradient/.test(glow.bg) && /50%/.test(glow.r), 'the glow is a round gradient');
-  await pg.close();
+  const ctx = await br.newContext({ viewport: { width: 390, height: 844 } });
+  const pg = await ctx.newPage();
+  for (const path of ['/index.html', '/quran', '/dictionary', '/prophets']) {
+    await pg.goto(BASE + path, { waitUntil: 'domcontentloaded' });
+    await pg.waitForTimeout(2200);
+    const s = await pg.evaluate(() => ({
+      dial: !!document.getElementById('nd'),
+      script: !!document.querySelector('script[src*="noor-menu"]'),
+      door: !!document.querySelector('.n2-bar [data-n2-more]')
+    }));
+    ok(!s.dial && !s.script, path + ': no dial, and its 161 KB is not fetched');
+    ok(s.door, path + ': the map is one tap away instead');
+  }
+  await ctx.close();
 }
 
 await br.close();

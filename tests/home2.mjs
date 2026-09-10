@@ -4,7 +4,8 @@
    noor2.js). Two things are held here.
 
    THE WIRING. Everything the old page wired that other rooms still lean on
-   is still there: the search and the menu dial, the language layer with its
+   is still there: the search -- which is the More sheet now, the map of the
+   house and the search in one door -- the language layer with its
    hreflang doors, the beacon and the service worker (noor-fx.js), the
    dials, the Path's ?node= and #node- deep links, the give door, the footer
    doors, the structured data, the meta tags and the canonical. Every room
@@ -77,9 +78,9 @@ console.log('\n=== 2. the shell and the wiring ===');
     'the shell\'s stylesheet, with a version tail': /<link[^>]+href="\/assets\/noor2\.css\?v=\d+"/,
     'the shell\'s script, with a version tail': /<script[^>]+src="\/assets\/noor2\.js\?v=\d+"[^>]*defer/,
     'the search overlay styles (noor-rtl.css)': /href="\/assets\/noor-rtl\.css/,
-    'the menu dial styles': /href="\/assets\/noor-menu\.css/,
+    
     'the search (noor-search.js)': /src="\/assets\/noor-search\.js/,
-    'the menu dial (noor-menu.js)': /src="\/assets\/noor-menu\.js/,
+    
     'the language prose layer (noor-text.js)': /src="\/assets\/noor-text\.js/,
     'the beacon, the service worker and NOOR_I18N (noor-fx.js)': /src="\/noor-fx\.js"/,
     'the Path index (nodes-index.js)': /src="\/nodes-index\.js/,
@@ -460,10 +461,16 @@ if (chromium) {
     ok(/Two lives, in true scale/.test(mz) && /Muslim 2858/.test(mz) && /Bukhari 6412/.test(mz), 'the Two Lives row opens the three narrations in a sheet');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-7-two-lives.png') });
     await pg.click('.n2-sheet [data-n2-close]'); await pg.waitForTimeout(600);
-    /* the search field opens the search */
+    /* The field opens the same sheet the bar's fifth door does: the map of the
+       house when it is empty, the search once two letters are typed. Before 9
+       September 2026 the field opened one thing and the bar another, and the
+       map existed only on this page, behind a dial. */
     await pg.evaluate(() => window.scrollTo(0, 0)); await pg.waitForTimeout(600);
-    await pg.click('#hm-search'); await pg.waitForTimeout(600);
-    ok(await pg.evaluate(() => !!document.querySelector('#noor-search.on')), 'the search field opens the search overlay');
+    await pg.click('#hm-search'); await pg.waitForTimeout(700);
+    ok(await pg.evaluate(() => !!document.querySelector('.nmr.on')), 'the search field opens the More sheet');
+    ok(await pg.evaluate(() => document.querySelectorAll('.nmr .nmr-r').length === 42),
+       'and it is the whole library: forty-two rooms');
+    ok(await pg.evaluate(() => !document.getElementById('nd')), 'and the dial it replaced is gone');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-10-search.png') });
     await pg.keyboard.press('Escape'); await pg.waitForTimeout(300);
     /* the language door */

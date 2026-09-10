@@ -147,12 +147,19 @@ console.log('\n=== 7. the word pages arrive quietly ===');
    the shell's own reveal holds is tests/dictionary2.mjs's job. */
 {
   const { ctx, page, errors } = await open('/dictionary/wudu.html');
-  const s = await page.evaluate(() => ({
+  /* the shell reveals a screen when it comes into view and settles it on the
+     spring; wait for the settling rather than for a clock */
+  const s = await page.evaluate(async () => {
+    for (let i = 0; i < 50; i++) {
+      if (getComputedStyle(document.querySelector('.n2-h1')).opacity === '1') break;
+      await new Promise(r => setTimeout(r, 100));
+    }
+    return {
     h1: getComputedStyle(document.querySelector('.n2-h1')).opacity,
     meaning: getComputedStyle(document.querySelector('.n2-meaning')).opacity,
     shell: document.documentElement.hasAttribute('data-n2'),
     engine: window.NOOR_MO && window.NOOR_MO.engine
-  }));
+  }; });
   ok(s.shell === true, 'a word page is in the shell');
   ok(!s.engine, 'the illumination layer stays out: the shell has its own arrival');
   ok(s.h1 === '1' && s.meaning === '1', 'the opening line and the meaning are fully there after the arrival');
@@ -160,49 +167,90 @@ console.log('\n=== 7. the word pages arrive quietly ===');
   await ctx.close();
 }
 
-console.log('\n=== 8. Search is one sheet, in the night, on every kind of page ===');
-/* assets/noor-search.js builds one sheet for the whole site; noor2.css gives
-   it its shape and its night wherever the shell is -- natively on a shell
-   page, appended by noor-fx.js on an older room. A word page loads neither
-   noor-search.js nor noor-rtl.css of its own, so noor-fx.js fetches the sheet
-   there and this file's CSS is the only thing shaping it: if that ever comes
-   apart, the reader arriving from a reel is the one who sees it. */
+console.log('\n=== 8. One door to the whole library, on every kind of page ===');
+/* The bar's fifth door was Search, and five doors could not reach forty-two
+   rooms: the other thirty-seven were behind a dial that only the arrival
+   carried, so a reader standing in a room on a phone could not get to the
+   Prophets at all. It is More now. One sheet, drawn by noor-fx.js: the map of
+   the house when it is empty, the search once two letters are typed. Held on
+   all three kinds of page, because each gets its bar a different way -- the
+   arrival writes it, the generator bakes it into a word page, and noor2.js
+   draws it on an older room. */
 for (const [where, path] of [['a shell page', '/index.html'],
                              ['an older room', '/heroes.html'],
                              ['a word page', '/dictionary/wudu.html']]) {
   const { ctx, page, errors } = await open(path);
   const s = await page.evaluate(async () => {
-    const open = document.querySelector('#hm-search,.n2-bar [data-n2-search]');
-    if (!open) return { open: false, why: 'no opener' };
-    open.click();
-    await new Promise(r => setTimeout(r, 700));
-    const box = document.querySelector('#noor-search');
-    if (!box || !box.classList.contains('on')) return { open: false };
+    const door = document.querySelector('.n2-bar [data-n2-more]');
+    if (!door) return { open: false, why: 'no More door' };
+    const label = door.textContent.trim();
+    door.click();
+    await new Promise(r => setTimeout(r, 800));
+    const box = document.querySelector('.nmr');
+    if (!box || !box.classList.contains('on')) return { open: false, label };
     const rgb = el => getComputedStyle(el).backgroundColor.match(/[\d.]+/g).map(Number);
     const lum = c => (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
-    const f = box.querySelector('.ns-field'), r = f.getBoundingClientRect();
-    const g = f.querySelector('svg').getBoundingClientRect();
+    const p = box.querySelector('.nmr-p'), r = p.getBoundingClientRect();
     return {
-      open: true,
-      dial: !!(document.getElementById('nd') || {}).classList,
-      dialOpen: !!document.querySelector('#nd.on'),
-      field: lum(rgb(f)),
-      out: lum(rgb(box.querySelector('.ns-out'))),
-      ink: getComputedStyle(box.querySelector('#ns-q')).color,
-      /* the shape, which a page without noor-rtl.css has only from noor2.css:
-         a field the width of the phone and a magnifier the size of a word */
-      w: Math.round(r.width), h: Math.round(r.height), icon: Math.round(g.height),
-      wide: document.documentElement.scrollWidth > innerWidth
+      open: true, label,
+      sections: box.querySelectorAll('.nmr-s').length,
+      rooms: box.querySelectorAll('.nmr-r').length,
+      prophets: !!box.querySelector('a[href="/prophets"]'),
+      night: lum(rgb(p)) < 0.2,
+      dial: !!document.getElementById('nd'),
+      w: Math.round(r.width), inView: r.top < innerHeight && r.bottom > 0,
+      wide: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
     };
   });
-  ok(s.open === true, where + ': Search opens the sheet');
-  ok(s.open && !s.dialOpen, where + ': and not the dial, which is the Menu’s');
-  ok(s.open && s.field < 0.2 && s.out < 0.2, where + ': the sheet is night, not parchment');
-  ok(s.open && /255,\s*254,\s*247/.test(s.ink), where + ': what you type is the parchment ink on it');
-  ok(s.open && s.w > 300 && s.w <= 640 && s.h > 40 && s.h < 80 && s.icon < 30,
-     where + ': the sheet has its shape');
-  ok(s.open && !s.wide, where + ': nothing of it pushes the page sideways');
-  ok(errors.length === 0, where + ': no page errors');
+  ok(s.label === 'More', where + ': the fifth door says More (' + s.label + ')');
+  ok(s.open === true, where + ': and it opens the sheet');
+  ok(s.open && s.sections === 8 && s.rooms === 42, where + ': the whole library, 8 sections and 42 rooms');
+  ok(s.open && s.prophets, where + ': the Prophets among them, two taps from anywhere');
+  ok(s.open && s.night, where + ': the sheet is night, not parchment');
+  ok(s.open && s.inView && !s.wide, where + ': it is on the screen and pushes nothing sideways');
+  ok(s.open && !s.dial, where + ': the dial it replaced is gone');
+  ok(errors.length === 0, where + ': no page errors' + (errors.length ? ' \u2192 ' + errors[0].slice(0, 80) : ''));
+  await ctx.close();
+}
+
+console.log('\n=== 9. two letters, and the map becomes the answer ===');
+{
+  const { ctx, page, errors } = await open('/index.html');
+  const s = await page.evaluate(async () => {
+    document.querySelector('.n2-bar [data-n2-more]').click();
+    await new Promise(r => setTimeout(r, 500));
+    const q = document.getElementById('nmr-q'), out = {};
+    for (const term of ['kahf', 'musa', 'sabr']) {
+      q.value = term; q.dispatchEvent(new Event('input', { bubbles: true }));
+      /* wait for the answer, not for a clock: on a cold index the first query
+         waits on 311 KB, and a fixed pause read the map that was still on the
+         screen underneath it as though it were the result */
+      for (let i = 0; i < 60; i++) {
+        await new Promise(r => setTimeout(r, 100));
+        if (document.querySelectorAll('.nmr-r').length !== 42) break;
+      }
+      out[term] = { n: document.querySelectorAll('.nmr-r').length,
+                    first: (document.querySelector('.nmr-r b') || {}).textContent || '',
+                    groups: [...document.querySelectorAll('.nmr-s')].map(e => e.firstChild.nodeValue.trim()) };
+    }
+    q.value = ''; q.dispatchEvent(new Event('input', { bubbles: true }));
+    await new Promise(r => setTimeout(r, 400));
+    out.empty = document.querySelectorAll('.nmr-r').length;
+    return out;
+  });
+  /* The index carries 523 words, 1,183 entities and 66 rooms. When the
+     dictionary was regenerated on 9 September 2026 the script rewrote the
+     whole file and knew how to build only the words, so for four hours the
+     search could find a word and thirty rooms and nothing else -- no prophet,
+     no companion, no place, no surah. These three terms each reach a
+     different half of it. */
+  ok(s.kahf.n > 0 && /Kahf/i.test(s.kahf.first), 'kahf finds the surah (' + s.kahf.first + ')');
+  ok(s.musa.n > 4, 'musa finds the prophet and what stands around him (' + s.musa.n + ')');
+  ok(s.sabr.n > 0 && /Sabr/i.test(s.sabr.first), 'sabr finds the word');
+  ok(s.musa.groups.length > 1, 'and the answers come grouped, best group first (' + s.musa.groups.join(', ') + ')');
+  ok(!s.musa.groups.some(g => /^(words|rooms|people|quran)$/.test(g)), 'the groups are named, not keyed');
+  ok(s.empty === 42, 'an empty field is the map again');
+  ok(errors.length === 0, 'no page errors');
   await ctx.close();
 }
 

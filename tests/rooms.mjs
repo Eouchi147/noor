@@ -126,20 +126,37 @@ ok(rendered.lights.split("/light/").length > 350, "the Lights shelf lists every 
 }
 ok(rendered.paths.split('href="/path/').length > 71, "the Path shelf lists every chapter");
 
+console.log("\n=== the house layer reaches these rooms too ===");
+{
+  /* Every other page in the house loads /noor-fx.js -- the language door, the
+     beacon, the service worker, the social row, the quiet guide's provider and
+     Friday's card. These rooms were the one kind that did not, so a chapter
+     could carry data-guide and nothing was listening for it, and Friday
+     reached every room in the house except the server-rendered ones. */
+  for (const [what, html] of [["a chapter", rendered.path], ["today", rendered.today], ["a verse", rendered.verse]]) {
+    ok(/<script src="\/noor-fx\.js" defer><\/script>/.test(html), what + " loads the house layer");
+  }
+  /* chapter 2, Adam from Clay, is one of the thirty that carry a topic */
+  ok(/data-guide="n:2"/.test(rendered.path), "and the chapter says which topic the guide should answer for");
+  const stray = ["verse", "today", "surah", "lights"].filter(k => /data-guide="/.test(rendered[k] || ""));
+  ok(stray.length === 0, "and a room with no topic to answer for asks for nothing" +
+     (stray.length ? " (" + stray.join(", ") + ")" : ""));
+}
+
 console.log("\n=== the bar's five doors, and which one each room lights ===");
 {
   const doors = html => html.match(/<nav class="n2-bar"[^>]*>([\s\S]*?)<\/nav>/)[1];
   const labels = html => [...doors(html).matchAll(/<\/svg>([^<]+)<\/a>/g)].map(m => m[1]);
   const lit = html => { const m = doors(html).match(/<a href="([^"]+)"[^>]*class="n2-on"[^>]*>[\s\S]*?<\/svg>([^<]+)<\/a>/); return m ? m[2] : ""; };
-  ok(labels(rendered.today).join(",") === "Today,Qur'an,Story,Words,Search", "the doors are Today, Qur'an, Story, Words, Search (" + labels(rendered.today).join(", ") + ")");
+  ok(labels(rendered.today).join(",") === "Today,Qur'an,Story,Words,More", "the doors are Today, Qur'an, Story, Words, More (" + labels(rendered.today).join(", ") + ")");
   ok(!/Listen|#listen|Read<\/a>/.test(doors(rendered.today)), "read and listen are one door, Qur'an");
-  /* Search opens the sheet and nothing else. It carried data-nm-open too until
-     9 September 2026, and on a page that loads assets/noor-menu.js that
-     listener captured the click and opened the dial instead -- so the bar's
-     Search and the field on the arrival were two different searches, a thumb
-     apart. The dial is the Menu's; the sheet is Search's, everywhere. */
-  ok(/<a href="\/path"[^>]*>/.test(doors(rendered.today)) && /<a href="\/dictionary" data-n2-search>/.test(doors(rendered.today)), "Story goes to /path; Search opens the sheet, and the words without script");
-  ok(!/data-nm-open/.test(doors(rendered.today)), "and the bar does not also reach for the menu's dial");
+  /* The fifth door was Search, and five doors could not reach forty-two rooms:
+     the other thirty-seven were behind a dial that only the arrival carried, so
+     a reader standing in a room on a phone could not get to the Prophets at
+     all. It is More now, and it opens one sheet -- the map of the house when it
+     is empty, the search once two letters are typed. The dial is retired. */
+  ok(/<a href="\/path"[^>]*>/.test(doors(rendered.today)) && /<a href="\/#search" data-n2-more>/.test(doors(rendered.today)), "Story goes to /path; More opens the map, and the arrival without script");
+  ok(!/data-nm-open/.test(doors(rendered.today)), "and nothing in the bar reaches for the retired dial");
   ok(lit(rendered.today) === "Today", "the day lights Today");
   ok(lit(rendered.light) === "Today", "the day's own Light lights Today");
   { const other = await call({ kind: "light", id: "ahmad-baba-timbuktu-1593" }); ok(other.code === 200 && lit(other.body) === "" && other.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", "any other Light lights no door, and keeps for a day"); }

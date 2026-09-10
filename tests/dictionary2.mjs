@@ -81,7 +81,7 @@ console.log("\n=== 1. the 523 word pages ===");
 const bad = {};
 const mark = (k, id) => { (bad[k] = bad[k] || []).push(id); };
 let largest = ["", 0];
-const DOORS = ["Today", "Qur'an", "Story", "Words", "Search"];
+const DOORS = ["Today", "Qur'an", "Story", "Words", "More"];
 for (const e of entries) {
   const html = fs.readFileSync(path.join("dictionary", e.id + ".html"), "utf8");
   const size = Buffer.byteLength(html);
@@ -95,7 +95,7 @@ for (const e of entries) {
   const doors = nav ? [...nav[1].matchAll(/<a href="([^"]+)"([^>]*)>[\s\S]*?<\/svg>([^<]+)<\/a>/g)] : [];
   if (doors.map(d => d[3]).join(" ") !== DOORS.join(" ")) mark("doors", e.id);
   if (!doors.some(d => d[3] === "Words" && / class="n2-on"/.test(d[2]))) mark("lit", e.id);
-  if (!doors.some(d => d[3] === "Search" && /data-n2-search/.test(d[2]))) mark("search", e.id);
+  if (!doors.some(d => d[3] === "More" && /data-n2-more/.test(d[2]))) mark("search", e.id);
   if (!html.includes('content="width=device-width,initial-scale=1,viewport-fit=cover"') || /user-scalable/.test(html)) mark("viewport", e.id);
   if (canon(html) !== SITE + "/dictionary/" + e.id) mark("canonical", e.id);
   if (meta(html, /<title>([^<]+)<\/title>/) !== esc(e.term) + " · meaning in Islam · NOOR Codex of Light") mark("title", e.id);
@@ -152,7 +152,7 @@ say("inline", "no page carries a <style> of its own: the shell is the two files"
 say("frame", "the top line, the main and the footer line are the rooms'");
 say("doors", "the bar is the five doors, in order: " + DOORS.join(" · "));
 say("lit", "Words is lit on every word page");
-say("search", "Search carries data-n2-search, so it opens the site's search where there is one");
+say("search", "More carries data-n2-more: the map of the house, and the search in the same sheet");
 say("viewport", "the viewport keeps viewport-fit=cover and never forbids zoom");
 say("canonical", "every canonical is https://noorcodex.com/dictionary/<id>");
 say("title", "every title is '<term> · meaning in Islam · NOOR Codex of Light'");
@@ -230,7 +230,14 @@ ok(inOrder, "every row sits under its own domain");
 const foldJs = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'ʻʼ`]/g, "").replace(/[^a-z0-9\u0600-\u06ff]+/g, " ").trim();
 ok(rows.every(r => { const e = byId.get(r[1]); return e.also.every(a => foldJs(a) === "" || r[2].split("|").includes(foldJs(a))); }), "every alternate spelling is folded into the row's data-k, whole, for the finder");
 ok(hub.includes('id="dq"') && hub.includes('type="search"') && hub.includes('id="dcount"') && hub.includes('id="dnone"'), "the finder: a field, a count, a line for nothing found");
-ok(hub.includes('/assets/noor-search.js?v=78') && hub.includes('/assets/noor-rtl.css?v=77') && /id="dsite"/.test(hub) && /NOOR_SEARCH\.open\(\)/.test(hub), "the whole library's search is loaded and wired the way the home page wires it");
+/* The whole-library door is data-n2-more: noor-fx.js answers it with the map of
+   the house and the search in one sheet, the same door the bar's fifth opens.
+   It used to call NOOR_SEARCH.open(), which is gone with the sheet that file
+   used to draw -- and a button wired to a function that no longer exists does
+   nothing at all when pressed, which is what this now catches. */
+ok(hub.includes('/assets/noor-search.js?v=78') && hub.includes('/assets/noor-rtl.css?v=77') &&
+   /id="dsite" data-n2-more/.test(hub) && !/NOOR_SEARCH\.open\(\)/.test(hub),
+   "the whole library's door is the More sheet, and nothing here is wired to the retired one");
 ok(/The Encyclopedia <span class="n2-g">of the Path<\/span>/.test(hub) && /Every word this library uses, defined plainly\./.test(hub), "one screen of introduction, the old page's own opening");
 ok(!/data-noor-social|noor-social/.test(hub), "the hub does not paste the social row");
 ok(!/\.n2-(idea|bar|top|list|main|eyebrow)\s*\{/.test(hub), "the hub's own <style> carries only what is particular to it, nothing of the shell");
@@ -289,7 +296,7 @@ const w = await page.evaluate(() => {
 });
 ok(w.live, "the shell wakes (html.n2-live)");
 ok(w.barIn && w.doors.length === 5 && w.doors.every(d => d.reach && d.h >= 44), "the bar sits at the foot of the phone, five doors, each a real thumb target");
-ok(w.doors.map(d => d.t).join(" ") === DOORS.join(" ") && w.doors.filter(d => d.on).map(d => d.t).join() === "Words", "Today · Qur'an · Story · Words · Search, with Words lit");
+ok(w.doors.map(d => d.t).join(" ") === DOORS.join(" ") && w.doors.filter(d => d.on).map(d => d.t).join() === "Words", "Today · Qur'an · Story · Words · More, with Words lit");
 ok(w.marks === 3, "three marks at the right edge, one per screen (" + w.marks + ")");
 ok(w.numeral === "01 / 03", "the first eyebrow is numbered 01 / 03 (" + w.numeral + ")");
 ok(w.sw <= w.cw, "nothing pushes the page sideways at 390 (" + w.sw + " ≤ " + w.cw + ")");
@@ -310,14 +317,14 @@ const h0 = await page.evaluate(() => ({
   count: document.getElementById("dcount").textContent,
   sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
   field: !!document.getElementById("dq"), fieldPx: parseFloat(getComputedStyle(document.getElementById("dq")).fontSize),
-  site: !!document.getElementById("dsite"), search: typeof NOOR_SEARCH === "object" && typeof NOOR_SEARCH.open === "function",
+  site: !!document.getElementById("dsite"), search: typeof NOOR_SEARCH === "object" && typeof NOOR_SEARCH.find === "function",
   marks: document.querySelectorAll(".n2-dots i").length,
   groups: [...document.querySelectorAll(".n2-group")].filter(g => !g.hidden).length
 }));
 ok(h0.rows === 523 && /^523 words$/.test(h0.count), "523 rows, and the count says so");
 ok(h0.sw <= h0.cw, "nothing pushes the hub sideways at 390");
 ok(h0.field && h0.fieldPx >= 16, "the field is there, at 16 px so the phone does not zoom into it");
-ok(h0.site && h0.search, "the whole library's search is loaded, and its door is beside the field");
+ok(h0.site && h0.search, "the whole library's index is loaded, and its door is beside the field");
 ok(h0.marks === 9 && h0.groups === 7, "nine screens carry marks: the introduction, seven domains, the rooms");
 await page.fill("#dq", "qadr");
 await page.waitForTimeout(250);
