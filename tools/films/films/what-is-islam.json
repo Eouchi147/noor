@@ -1,0 +1,127 @@
+{
+  "slug": "what-is-islam",
+  "title": "What is Islam, actually?",
+  "sub": "Five chapters, from the word itself to what it asks of you.",
+  "note": "Every claim here is one the library already carries with its source. Nothing is narrated over a verse: a verse is read on the screen, and where it is heard it is heard from a reciter.",
+  "voice": {
+    "model": "omnivoice",
+    "voice": "default",
+    "speed": 0.96
+  },
+  "chapters": [
+    {
+      "id": "01-the-word",
+      "eyebrow": "Chapter one",
+      "title": "The word itself",
+      "narration": "Before it was the name of a religion, islam was an ordinary Arabic word. It comes from a root of three letters — seen, laam, meem — and that same root gives another word you may already know: salaam, peace. The two are not neighbours by accident. To hand something over completely, and to be at peace, are in Arabic the same movement. So the word does not mean a set of rules. It means a handing over of the whole self. The Qur'an says of it, plainly: the religion with Allah is islam.",
+      "beats": [
+        {
+          "kind": "title",
+          "eyebrow": "Chapter one",
+          "text": "The word itself",
+          "sub": "Before it was the name of a religion, it was an ordinary word.",
+          "hold": 4.0,
+          "phrase": "Before it was the name of a religion",
+          "shot": "in"
+        },
+        {
+          "kind": "figure",
+          "figure": "grow",
+          "root": "س ل م",
+          "grew": [
+            {
+              "ar": "إِسْلَام",
+              "say": "islām",
+              "means": "handing the whole self over"
+            },
+            {
+              "ar": "سَلَام",
+              "say": "salām",
+              "means": "peace"
+            }
+          ],
+          "hold": 10.0,
+          "phrase": "a root of three letters",
+          "shot": "push"
+        },
+        {
+          "kind": "statement",
+          "size": "big",
+          "text": "To hand something over completely, and to be at peace, are the same movement.",
+          "hold": 5.2,
+          "phrase": "are in Arabic the same movement",
+          "shot": "drift"
+        },
+        {
+          "kind": "figure",
+          "figure": "card",
+          "src": "../../../assets/manuscripts/iqra-hira.jpg",
+          "caption": "A page of the Book, copied by hand",
+          "credit": "Public domain · the library's own plates",
+          "hold": 7.0,
+          "phrase": "the Qur'an says of it",
+          "shot": "pull"
+        },
+        {
+          "kind": "quote",
+          "ar": "إِنَّ ٱلدِّينَ عِندَ ٱللَّهِ ٱلْإِسْلَـٰمُ",
+          "en": "The religion with Allah is islam.",
+          "src": "Qur'an 3:19 · Aal Imran",
+          "hold": 6.6,
+          "phrase": "the religion with Allah is islam",
+          "shot": "hold"
+        }
+      ]
+    },
+    {
+      "id": "02-three-words",
+      "eyebrow": "Chapter two",
+      "title": "Three words, not one",
+      "narration": "When the angel Jibril came to the Prophet, peace be upon him, and asked him three questions in front of his companions, he asked them separately. What is islam? What is iman? What is ihsan? Three questions, three answers, and they are not synonyms. Islam was answered with the five pillars: the things a person does. Iman was answered with the six articles of belief: the things a person holds true. And ihsan was answered with a single sentence — to worship Allah as though you see Him, and if you do not see Him, knowing that He sees you. So islam is the outward frame. Iman is the inner conviction. Ihsan is the finish on both.",
+      "beats": [
+        {
+          "kind": "title",
+          "eyebrow": "Chapter two",
+          "text": "Three words, not one",
+          "sub": "The angel asked three questions, and got three different answers.",
+          "hold": 4.2,
+          "phrase": "he asked them separately",
+          "shot": "in"
+        },
+        {
+          "kind": "figure",
+          "figure": "shells",
+          "items": [
+            {
+              "ar": "إِسْلَام",
+              "name": "islām",
+              "means": "the five pillars — what a person does"
+            },
+            {
+              "ar": "إِيمَان",
+              "name": "īmān",
+              "means": "the six articles — what a person holds true"
+            },
+            {
+              "ar": "إِحْسَان",
+              "name": "iḥsān",
+              "means": "to worship as though you see Him"
+            }
+          ],
+          "hold": 11.0,
+          "phrase": "Three questions, three answers",
+          "src": "Hadith of Jibril · Bukhari 50 · Muslim 8",
+          "shot": "push"
+        },
+        {
+          "kind": "statement",
+          "size": "big",
+          "text": "The outward frame. The inner conviction. The finish on both.",
+          "hold": 5.4,
+          "phrase": "Ihsan is the finish on both",
+          "shot": "pull"
+        }
+      ]
+    }
+  ]
+}
