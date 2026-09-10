@@ -15,13 +15,16 @@
    This sheet is loaded last, after the room's own CSS and after the night, so
    it settles ties. It is the only place in the house that may do that.
    ---------------------------------------------------------------------------
-   88 colours lifted · 151 sizes floored */
+   94 colours lifted · 163 sizes floored */
 
 /* ---- the ink reaches its ground ---- */
+html .ref b{color:#a07e16}          /* was 3.83:1 on #0b1124 */
+html .evb.sunnah{color:#b08b18}          /* was 3.18:1 on #232425 */
 html.n2-night .gate .gct{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
+html .evb.quran{color:#2a9b5b}          /* was 2.65:1 on #0d1c28 */
 html.n2-night .les .mn{color:rgba(255,254,247,0.48)}          /* was 3.77:1 on #0a1024 */
 html .gchip.mk{color:#a58217}          /* was 3.73:1 on #0d1428 */
-html #site-header > div > a:first-child > div:last-child > div:last-child{color:rgba(44,36,22,0.68)}          /* was 2.59:1 on #e7e6e2 */
+html .evb.debated{color:#967eb9}          /* was 2.63:1 on #151730 */
 html.n2-night .ut-cat{color:rgba(255,254,247,0.48)}          /* was 4.04:1 on #0a1024 */
 html .ut-go{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html .ut-ar{color:#a07e16}          /* was 3.84:1 on #0a1024 */
@@ -30,26 +33,27 @@ html.n2-night .ks{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a102
 html .wday .d{color:#5b82bc}          /* was 2.32:1 on #0a1024 */
 html .ptile .mns{color:#a58217}          /* was 3.73:1 on #0d1428 */
 html .ad-n{color:#b08b18}          /* was 3.14:1 on #252424 */
-html.n2-night .pc-ck{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0b1124 */
+html.n2-night .pc-ck{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
 html .kn{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html .klang-pop button{color:#fffef7}          /* was 1.2:1 on #1b223d -- had vanished into it */
 html .subj a{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html.n2-night .rfoot p{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
 html.n2-night .rfoot p{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
-html .noor-social p.noor-social-label{color:rgba(201,162,39,0.84)}          /* was 2.92:1 on #2c2416 */
+html .noor-social p.noor-social-label{color:rgba(201,162,39,0.8)}          /* was 3.01:1 on #161c2c */
 html .tile-seal span{color:rgba(233,200,106,0.62)}          /* was 1.33:1 on #0d1428 */
 html.n2-night .trk-head .tt span{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html .tool .meta dt{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html a{color:#ce6960}          /* was 1.93:1 on #131528 */
 html .ev-quran{color:#5ca26c}          /* was 2.61:1 on #1a2732 */
 html.n2-night table.tt tbody tr.fri td{color:#725919}          /* was 2.03:1 on #f0dfae */
-html .f-chip{color:#729c6e}          /* was 2.57:1 on #1c2532 */
+html .f-chip{color:#6e996a}          /* was 2.64:1 on #1c2236 */
 html.n2-night table.tt tbody tr.fri .mer{color:#725919}          /* was 2.03:1 on #f0dfae */
+html .rk-o{color:#b08b18}          /* was 3.2:1 on #232324 */
 html.n2-night .amt .u{color:rgba(255,254,247,0.48)}          /* was 4.46:1 on #0d1428 */
 html.n2-night .door .wc{color:rgba(255,254,247,0.48)}          /* was 3.52:1 on #0a1024 */
 html .door .go{color:#a07e16}          /* was 2.65:1 on #0a1024 */
 html .srule .s{color:#a07e16}          /* was 3.84:1 on #0a1024 */
-html a{color:rgba(255,254,247,0.5)}          /* was 3.13:1 on #2c2416 */
+html a{color:rgba(255,254,247,0.5)}          /* was 3.18:1 on #161c2c */
 html.n2-night .wk-reset{color:rgba(255,254,247,0.48)}          /* was 3.77:1 on #0a1024 */
 html .ev-sunnah{color:#c6951a}          /* was 2.19:1 on #2e2d2f */
 html .hon b{color:#aa8617}          /* was 3.45:1 on #181d28 */
@@ -67,10 +71,8 @@ html .th-src{color:#b38e22}          /* was 3.06:1 on #272624 */
 html.n2-night main p{color:#ce6960}          /* was 1.93:1 on #131528 */
 html.n2-night .kmark{color:rgba(255,254,247,0.48)}          /* was 4.04:1 on #0a1024 */
 html .hall-l a{color:#a58217}          /* was 3.73:1 on #0d1428 */
-html .evb.quran{color:#2a9b5b}          /* was 2.64:1 on #0e1d27 */
-html .evb.sunnah{color:#b08b18}          /* was 3.16:1 on #242424 */
-html .evb.debated{color:#967eb9}          /* was 2.62:1 on #16182f */
 html .hjb.s{color:#b08b18}          /* was 3.2:1 on #232324 */
+html .aside .fa{color:#a07e16}          /* was 3.83:1 on #0a1024 */
 html.n2-night .snav .k{color:rgba(255,254,247,0.48)}          /* was 3.77:1 on #0a1024 */
 html.n2-night table.tt td.d span{color:#2c2416}          /* was 1.31:1 on #f0dfae -- had vanished into it */
 html.n2-night table.tt td.hj{color:#725919}          /* was 2.03:1 on #f0dfae */
@@ -78,6 +80,7 @@ html.n2-night #gate-count{color:rgba(255,254,247,0.48)}          /* was 3.78:1 o
 html .notranslate{color:rgba(255,254,247,0.48)}          /* was 4.46:1 on #0d1428 */
 html .door .dk{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html .door .dh .dar{color:#a07e16}          /* was 3.84:1 on #0a1024 */
+html .rk-c{color:#2a9b5b}          /* was 2.72:1 on #0c1927 */
 html.n2-night main p{color:#a07e16}          /* was 3.84:1 on #0a1024 */
 html.n2-night .wizk .of{color:rgba(255,254,247,0.48)}          /* was 3.77:1 on #0a1024 */
 html.n2-night main p{color:rgba(255,254,247,0.48)}          /* was 4.04:1 on #0a1024 */
@@ -85,6 +88,9 @@ html .w-title{color:#fffef7}          /* was 1.03:1 on #0d1428 -- had vanished i
 html.n2-night footer{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
 html.n2-night .mstrip .brand span span{color:rgba(255,254,247,0.48)}          /* was 4.47:1 on #0a1024 */
 html .freeline a{color:#a07e16}          /* was 3.84:1 on #0a1024 */
+html .ev-quran{color:#5ca26c}          /* was 2.61:1 on #1a2732 */
+html .ev-sunnah{color:#c6951a}          /* was 2.19:1 on #2e2d2f */
+html .ev-editorial{color:#808697}          /* was 2.83:1 on #101629 */
 html.n2-night main p{color:rgba(255,254,247,0.48)}          /* was 4.46:1 on #0d1428 */
 html.n2-night main p{color:rgba(255,254,247,0.48)}          /* was 3.18:1 on #0d1428 */
 html.n2-night .gcard p{color:#9f7d1e}          /* was 3.85:1 on #0a1024 */
@@ -108,12 +114,16 @@ html.n2-night .saved{color:rgba(255,254,247,0.48)}          /* was 4.04:1 on #0a
 html.n2-night main p{color:#a58217}          /* was 3.73:1 on #0d1428 */
 
 /* ---- nothing under 12px ---- */
+html span.rn,
 html .text-\[11px\],
 html .chip,
 html table.tt .mer,
+html .evb,
 html .gate .gmn,
 html .gate .gct,
+html .vplay,
 html .les .mn,
+html .ref,
 html .name .n,
 html .gchip,
 html .secnav a,
@@ -122,14 +132,15 @@ html #site-header > div > a:first-child > div:last-child > div:last-child,
 html .sh-n,
 html .ut-cat,
 html .ut-go,
+html .nsp-t,
 html .lb-a,
 html .ks,
 html .lt .n,
-html .ptile .meta,
-html .ptile .hint,
 html .trait,
 html .wday .d,
 html .wday .w,
+html .ptile .meta,
+html .ptile .hint,
 html .ptile .mns,
 html .ad-n,
 html .pc-ck,
@@ -145,10 +156,14 @@ html .ev-sm,
 html .f-chip,
 html .section-nav > div a,
 html .secnum,
+html .rk,
+html .card .tag,
+html .open .kk,
 html .amt .u,
 html .hy p,
 html .proj p,
 html .proj .lvl,
+html .beside .bk,
 html .door .tr,
 html .door .note,
 html .door .wc,
@@ -168,7 +183,6 @@ html .tbl thead th,
 html .epoch .yr,
 html .pcard h3,
 html .wk .d h4,
-html .ptile .azm,
 html .rung .wk,
 html .costrow .cs,
 html .da-t,
@@ -176,6 +190,7 @@ html .da-d,
 html .da-s,
 html .stage > summary .st span,
 html .src,
+html .ptile .azm,
 html .eyebrow,
 html .dg,
 html .dw,
@@ -186,16 +201,15 @@ html .th-src,
 html .brk .b p,
 html .hint,
 html .chip small,
-html .ayah-ref,
 html .lg,
+html .ev,
 html .cent-i p,
-html .ref,
 html .kmark,
 html .gview,
+html .ayah-ref,
 html .d-k,
 html .d-c,
 html .hall-k,
-html .evb,
 html .tcap,
 html .hadith-chip .src,
 html .qa,
@@ -208,7 +222,6 @@ html #timebar .lab,
 html #gate-count,
 html .alive-b,
 html .alive-note,
-html .scroll-cue,
 html .rib-read,
 html .door .dk,
 html .door .dfree,
@@ -226,10 +239,10 @@ html .jback a,
 html .th-kick,
 html .moons,
 html .ecn,
-html .rk,
 html .door p,
 html .tells .kk,
 html .tl-print,
+html .aside p,
 html .before b,
 html .snav .mid,
 html .hallnote,
