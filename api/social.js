@@ -1467,9 +1467,32 @@ async function sendWithin(ch, shaped, post, left, send) {
    Telegram, Pinterest. This only orders; the SET of channels is still the
    reel's `only` list met with what is live. A card keeps the old order. */
 const SEND_ORDER = ["youtube", "instagram", "facebook", "threads", "telegram", "pinterest"];
-export function orderChannels(chans, post) {
+
+/* THE RUN PAYS BACK WHOEVER IT STARVED.
+
+   Six networks share fifty five seconds, because the function dies at sixty.
+   YouTube goes first because it is the slowest and the widest, and it can
+   take half the budget on its own. Whatever is left is divided by a floor of
+   eight seconds a network, so the back of a fixed queue is not reached, and a
+   FIXED queue means the same three are never reached: Threads, Telegram and
+   Pinterest were last every hour of every day.
+
+   So the order is not fixed any more. A channel the previous attempt on this
+   same slot marked `late` -- cut by the clock, not refused by the network --
+   goes to the FRONT next time, keeping SEND_ORDER among themselves. Everyone
+   else follows in SEND_ORDER behind them. Nothing else changes: the SET of
+   channels is still the reel's `only` list met with what is live, and a
+   network that actually refused is still the healer's business, not this. */
+export function orderChannels(chans, post, prev) {
   if (!post || !post.video) return chans;
-  const rank = c => { const i = SEND_ORDER.indexOf(c); return i < 0 ? SEND_ORDER.length + Math.max(0, CH.ALL.indexOf(c)) : i; };
+  const starved = new Set();
+  const rs = prev && prev.results;
+  if (rs) for (const [ch, r] of Object.entries(rs)) if (r && r.late) starved.add(ch);
+  const rank = c => {
+    const i = SEND_ORDER.indexOf(c);
+    const base = i < 0 ? SEND_ORDER.length + Math.max(0, CH.ALL.indexOf(c)) : i;
+    return starved.has(c) ? base - 1000 : base;   /* owed first, in their own order */
+  };
   return chans.slice().sort((a, b) => rank(a) - rank(b));
 }
 
@@ -1594,7 +1617,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
      with the feed switched off names the story surfaces and nothing else */
   const storyOnly = cardIsStoryOnly(post, D);
   const chans = storyOnly ? storyChannels(post)
-    : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post);
+    : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post, prev);
 
   /* THE PRE-FLIGHT, ON THE PATH THAT ACTUALLY POSTS.
 
@@ -2163,8 +2186,12 @@ export async function runDue(host, date, now, opts = {}) {
      the rest of the day, ahead of slots that did have something to say, and on
      the middle rung it pushed a fresh copy into the queue each time. */
   const sent = [];
+  /* the records are read here anyway; keeping them lets orderChannels see who
+     the clock cut last time and put them first */
+  const before = new Map();
   for (const id of plan.slots) {
     const r = await readSlot(date, id);
+    if (r) before.set(id, r);
     /* "partial" is settled as far as COMPOSING goes: the slot has been said,
        and running it again would post a second time everywhere it landed. The
        channel that refused is healed one channel at a time, by healFailures. */
@@ -2234,7 +2261,7 @@ export async function runDue(host, date, now, opts = {}) {
        the feed switched off goes to the story surfaces and nowhere else. */
     const storyOnly = cardIsStoryOnly(post, D);
     const chans = storyOnly ? storyChannels(post)
-      : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post);
+      : orderChannels(post.only ? liveChannels(post).filter(c => post.only.includes(c)) : liveChannels(post), post, before.get(slot.id));
     if (storyOnly) results = await storyOnlyResults(post, date, chans, left, "");
     else for (const ch of chans) {
       const shaped = CH.shape(post, ch);
