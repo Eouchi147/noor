@@ -212,6 +212,9 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-list .n2-num{font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;color:var(--n2-parch3);min-width:2.6em}
 .n2-list .n2-ar{font-family:var(--n2-ar);font-size:20px;color:var(--n2-goldhi);direction:rtl;line-height:1.2}
 .n2-list small{display:block;font-size:14px;font-weight:400;color:var(--n2-parch3);margin-top:2px}
+/* a list whose line is a note rather than a name: the reference leads in the
+   number column and the sentence beside it reads as body text, not a heading */
+.n2-list.n2-notes b{font-weight:400;font-size:15px;color:var(--n2-parch2)}
 
 .n2-walk{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
 .n2-walk a{flex:1 1 40%;min-height:46px;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--n2-line);
@@ -246,6 +249,17 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-shield li{border:1px solid var(--n2-line);border-inline-start:2px solid rgba(233,200,106,.45);
   border-radius:12px;padding:11px 14px;background:rgba(233,200,106,.05);
   font-size:15px;line-height:1.5;color:var(--n2-parch2)}
+
+/* the evidence badge, in the shell's dialect. The parchment rooms have worn
+   one since the first cut -- Sunnah-confirmed, Scholars differ -- and the
+   surah study graded each of its 114 virtue reports with the same words.
+   The third state is the one the study needed and the rooms never had: a
+   surah for which no authentic virtue report exists at all. */
+.n2-ev{display:inline-block;font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  border:1px solid;border-radius:999px;padding:3px 10px;margin-inline-end:8px;white-space:nowrap;vertical-align:middle}
+.n2-ev-sunnah{color:var(--n2-goldhi);border-color:rgba(233,200,106,.45);background:rgba(233,200,106,.10)}
+.n2-ev-debated{color:rgba(226,214,186,.92);border-color:rgba(226,214,186,.35);background:rgba(226,214,186,.06)}
+.n2-ev-none{color:var(--n2-parch3);border-color:rgba(255,254,247,.22);background:rgba(255,254,247,.04)}
 
 .n2-quote{margin:0 0 14px;padding:0 0 0 16px;border-left:2px solid rgba(233,200,106,.4)}
 .n2-quote .n2-p{margin-bottom:6px}
