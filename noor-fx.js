@@ -1015,8 +1015,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   var H = document.documentElement, p = location.pathname;
   if (H.hasAttribute("data-n2") || H.getAttribute("data-noor-embed") === "1") return;
   if (/^\/kids\/./.test(p) || /^\/admin/.test(p)) return;
-  var V = "3", left = 4;
-  function done() { if (--left === 0 && window.NOOR2 && NOOR2.inject) NOOR2.inject(); }
+  /* left was a hand-kept number, and adding a fourth stylesheet to the list
+     below without changing it took the bar off every room in the house: the
+     count reached zero one callback early, when NOOR2 was not defined yet, and
+     never came back to zero afterwards, so inject() was never called and no
+     page had a bar. A number that has to be kept in step with a list by hand
+     will eventually not be. It counts the list now. */
+  var V = "3", left = 0, started = false;
+  function waitFor(n) { left += n; }
+  function done() {
+    if (--left > 0 || !started) return;
+    if (window.NOOR2 && NOOR2.inject) NOOR2.inject();
+  }
   function css(href) { var l = document.createElement("link"); l.rel = "stylesheet"; l.href = href; l.onload = done; l.onerror = done; document.head.appendChild(l); }
   function init() {
     if (document.body && document.body.hasAttribute("data-n2")) return;
@@ -1033,8 +1043,17 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
        should be dressed for night or for parchment, and it must not be asked
        while the page is still the colour it is about to stop being. */
     H.classList.add("n2-night");
-    css("/assets/noor2.css?v=" + V); css("/assets/noor2-skin.css?v=" + V);
-    css("/assets/noor2-night.css?v=" + V);
+    var SHEETS = ["/assets/noor2.css", "/assets/noor2-skin.css",
+                  "/assets/noor2-night.css", "/assets/noor2-legible.css"];
+    waitFor(SHEETS.length + 1);            /* the sheets, and noor2.js */
+    started = true;
+    for (var i = 0; i < SHEETS.length; i++) css(SHEETS[i] + "?v=" + V);
+    /* noor2-legible.css is last in that list on purpose: it is the legibility
+       floor, generated the same way the night is -- by walking the real pages
+       and measuring what the browser actually paints -- and it says only two
+       things. Every piece of text reaches 4.5:1 against the ground genuinely
+       behind it, and nothing meant to be read is under 12px. Loading it last
+       is half of how it wins; scripts/build-legible.mjs explains the other. */
     var s = document.createElement("script"); s.src = "/assets/noor2.js?v=" + V; s.defer = true; s.onload = done; s.onerror = function () {};
     document.head.appendChild(s);
   }
