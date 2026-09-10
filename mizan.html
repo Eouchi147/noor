@@ -398,7 +398,7 @@
       var to = +el.getAttribute("data-mcount");
       setTimeout(function () {
         if (window.NoorFX && NoorFX.countUp && !reduced) NoorFX.countUp(el, to, 1400);
-        else el.textContent = to.toLocaleString();
+        else el.textContent = to >= 1000 ? to.toLocaleString(document.documentElement.lang || undefined) : String(to);
       }, 200 + i * 160);
     });
   }

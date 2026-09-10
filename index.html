@@ -640,11 +640,19 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
       btn.addEventListener("click", function () { set(g.classList.contains("hm-shut")); });
     });
   }
-  /* a room asked for by its anchor (/#timeline, /mizan) opens its section */
-  function openFor(hash) {
+  /* A room asked for by its anchor (/#timeline, /#mizan) opens its section.
+     The browser's own jump to an anchor happens before the shell has laid the
+     screens out and before the library has unfolded, so by the time the page
+     is standing the reader is back at the top. The jump is made again here,
+     once, after the layout has settled. */
+  function openFor(hash, jump) {
     var el = hash && hash.length > 1 && doc.getElementById(hash.slice(1));
-    var g = el && el.closest && el.closest(".hm-grp");
+    if (!el) return;
+    var g = el.closest && el.closest(".hm-grp");
     if (g && g.n2open) g.n2open();
+    if (jump) setTimeout(function () {
+      el.scrollIntoView({ behavior: "auto", block: "start" });
+    }, 120);
   }
 
 
@@ -672,7 +680,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     light();
     verse();
     fold();
-    openFor(location.hash);
+    openFor(location.hash, true);
     doc.addEventListener("noor:lang", function () { light(); });
     var lb = q("#lang-btn"); if (lb) lb.addEventListener("click", langDoor);
     /* The field opens the search: the sheet, the same one the bar's Search and
