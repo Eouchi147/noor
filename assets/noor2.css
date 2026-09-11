@@ -129,7 +129,16 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-date{font-family:var(--n2-mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin:14px 0 0;line-height:1.7}
 .n2-src{font-family:var(--n2-mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin:6px 0 0;line-height:1.7}
 .n2-src a,.n2-date a{color:inherit}
-.n2-main a{color:var(--n2-goldhi);text-decoration-thickness:1px;text-underline-offset:3px}
+/* A FILLED CONTROL IS NOT A LINK IN A PARAGRAPH.
+   This rule is one point more specific than a page's own `.mz-cta`, so it
+   repainted every gold pill on the site with the gold it uses for prose
+   links -- gold ink on a gold button, about 1.05:1, invisible. The buttons
+   on /mizan were unreadable for exactly this reason.
+   :where() has no specificity of its own, so this still weighs (0,1,1) and
+   settles the same ties it settled before; it simply stops claiming
+   anything that has named itself a button or a call to action, and those
+   keep the ink they chose. */
+.n2-main a:where(:not([class*="cta"]):not([class*="btn"]):not([class*="chip"])){color:var(--n2-goldhi);text-decoration-thickness:1px;text-underline-offset:3px}
 .n2-list-a{color:var(--n2-parch)}
 
 /* the Arabic */
@@ -378,3 +387,42 @@ html[data-n2] .ng-in:focus,html.n2-skin .ng-in:focus{
   border-color:rgba(233,200,106,.6);box-shadow:0 0 0 3px rgba(233,200,106,.16)}
 html[data-n2] .ng-go,html.n2-skin .ng-go{color:var(--n2-night)}
 html[data-n2] .ng-think,html.n2-skin .ng-think{color:var(--n2-parch3)}
+
+/* ---------------------------------------------------------------------------
+   A GOLD GROUND KEEPS ITS DARK INK, WHATEVER THE NIGHT DOES TO THE TOKEN.
+
+   `.text-ink` is the house's word for "the colour you write in", and the night
+   sheet flips it from the parchment ink to the night ink -- which is right
+   everywhere the ground also turned dark, and wrong on the one kind of element
+   whose ground never turns: a filled gold control. `bg-gold text-ink` is a
+   correct pair in daylight and an unreadable one at night, because only half
+   of it moved. The night generator cannot see this: it spares a rule's ink
+   when that same rule paints an opaque ground, and here the ground is painted
+   by a different class entirely.
+   So the pair is named, once, here. Weighs (0,3,1) against the night's (0,2,1)
+   and settles it in favour of the ground that is actually behind the text. */
+html.n2-night .bg-gold.text-ink,
+html.n2-night .bg-gold-hi.text-ink,
+html.n2-night .bg-goldhi.text-ink{color:#2C2416}
+
+/* ---- THE GOLD LISTEN PILL KEEPS ITS DARK INK ----------------------------
+
+   Three rooms draw the ayah player as a filled gold pill: madrasa, pillars and
+   school all say `.vplay{background:linear-gradient(135deg,#C9A227,#E9C86A);
+   color:#1A160F}`. Twenty-nine other rooms draw the same button as an outline
+   on a gold wash, and on the night that wash is nearly the card behind it, so
+   the legibility floor lifted the ink to reach it: `html .vplay{color:#b58f19}`,
+   measured, its own note says, at 3:1 on #27282d. One ink, every room, because
+   .vplay carries no word for which of the two buttons it is.
+
+   On the three that fill the pill, that lift put a mid gold on a gold ground:
+   1.26:1, and "Listen" was gone from every verse on all three pages. The floor
+   is generated and loads last, so the rooms cannot answer it from their own
+   sheets; and lifting is right for the twenty-nine, so it cannot simply be
+   dropped. Named here instead, for the three grounds that never darkened. The
+   pill stays gold and the ink goes back to being dark on it, which is the pair
+   those rooms wrote. .playing is left alone: it is the same button turned over,
+   #1A160F ground and gold ink, and already reads. */
+html.n2-night[data-room="madrasa"] .vplay:not(.playing),
+html.n2-night[data-room="pillars"] .vplay:not(.playing),
+html.n2-night[data-room="school"] .vplay:not(.playing){color:#1A160F}
