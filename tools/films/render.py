@@ -75,6 +75,7 @@ class Stage:
         #  page composites is exactly the frame, which is the only size that
         #  costs anything -- see the measurements in web/lume.js.
         self.p.evaluate("n => NOORLUME.supersample(n)", LUME_SS)
+        self.p.evaluate("n => NOORLUME.frame(n)", frame["name"])
 
     def build(self, chapter):
         info = self.p.evaluate("([c, f]) => NOORFILM.build(c, f)", [chapter, self.f["name"]])
