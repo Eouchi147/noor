@@ -94,11 +94,23 @@
     var ideas = all(".n2-idea", root);
     if (!ideas.length) return;
     if (!("IntersectionObserver" in W)) { ideas.forEach(function (s) { s.classList.add("n2-in"); }); return; }
+    /* A THRESHOLD IS A FRACTION OF THE SECTION, NOT OF THE SCREEN.
+       At 0.18 a section must show a fifth of ITSELF before it arrives. The
+       encyclopedia's rooms are six thousand pixels tall, so a fifth of one is
+       eleven hundred pixels, which no screen can ever show: they never
+       arrived, and 523 words sat under the search bar at opacity zero. What
+       the rule meant is "a fifth of a screenful", and for anything shorter
+       than the screen that is the number it always was. */
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
-        if (e.isIntersecting && !e.target.classList.contains("n2-in")) { e.target.classList.add("n2-in"); bloom = 1; }
+        var t = e.target;
+        if (t.classList.contains("n2-in")) return;
+        if (e.isIntersecting && e.intersectionRect.height >=
+            Math.min(e.boundingClientRect.height, W.innerHeight) * 0.18) {
+          t.classList.add("n2-in"); bloom = 1; io.unobserve(t);
+        }
       });
-    }, { threshold: [0.18] });
+    }, { threshold: [0, 0.02, 0.06, 0.18] });
     ideas.forEach(function (s) { io.observe(s); });
   }
 
@@ -145,6 +157,14 @@
     var room = doc.documentElement.scrollHeight - vh;
     if (prog) prog.style.setProperty("--n2-p", room > 40 ? Math.max(0, Math.min(1, y / room)) : 0);
     var cur = null, idx = -1, ideas = all(".n2-idea");
+    /* and a sweep, because an observer that was never given a chance to fire
+       is the one thing a reader can see */
+    for (var si = 0; si < ideas.length; si++) {
+      var s2 = ideas[si];
+      if (s2.classList.contains("n2-in")) continue;
+      var r2 = s2.getBoundingClientRect();
+      if (Math.min(r2.bottom, vh) - Math.max(r2.top, 0) >= Math.min(r2.height, vh) * 0.18) s2.classList.add("n2-in");
+    }
     ideas.some(function (s, i) { var r = s.getBoundingClientRect(); if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = s; idx = i; return true; } });
     if (!cur) return;
     if (Date.now() > hold) mark(idx);
