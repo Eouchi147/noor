@@ -77,18 +77,69 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
   const over = (f, b) => ({ r: f.r * f.a + b.r * (1 - f.a), g: f.g * f.a + b.g * (1 - f.a), b: f.b * f.a + b.b * (1 - f.a), a: 1 });
   const lum = c => { const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
   const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
-  const ground = el => {
-    let st = [], n = el;
+  /* A GRADIENT IS A BACKGROUND YOU CAN MEASURE, AND NOT MEASURING IT WROTE
+     THE WORST RULE IN THIS FILE.
+
+     This walk gave up on any background-image at all and skipped the element.
+     A photograph is genuinely unknowable; a gradient is not -- the computed
+     value hands you its stops as plain rgb(). And every filled control in the
+     house is a two-stop gradient.
+
+     What that cost: `.vplay` is a gold pill with dark ink on /school and
+     /pillars, and a plain dark button on the one page that uses the class
+     without the gradient. The gold ones were skipped, so the only `.vplay`
+     this generator ever saw was the dark one -- it measured 3:1, called it
+     too dark, and wrote `html .vplay{color:#b58f19}`. Global. Which repainted
+     the dark ink on the gold pills to mid-gold and made the word "Listen"
+     disappear into its own button on two pages.
+
+     The cross-page guard below was already there and would have caught it: a
+     selector seen on a dark ground and a light one is reported, never
+     written. It never fired because the light ground was invisible to this
+     function. One line, and a sheet whose entire job is legibility was
+     producing the least legible text on the site.
+
+     Stops are read out and every one is a candidate ground; the score is the
+     WORST of them, because a reader sees the text over all of it. Only url()
+     stays unknowable. */
+  const stopsOf = img => {
+    if (!img || img === 'none') return null;
+    if (/url\(/i.test(img)) return null;
+    const m = img.match(/rgba?\([^)]*\)/g);
+    if (!m) return null;
+    const cs = m.map(parse).filter(Boolean);
+    return cs.length ? cs : null;
+  };
+  const grounds = el => {
+    const st = [];
+    let n = el;
     while (n && n !== document.documentElement) {
       const cs = getComputedStyle(n);
-      if (cs.backgroundImage && cs.backgroundImage !== 'none') return { unknown: 1 };
+      const stops = stopsOf(cs.backgroundImage);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && !stops) return { unknown: 1 };
+      if (stops) {
+        const under = n.parentElement ? grounds(n.parentElement) : null;
+        if (under && under.unknown) return { unknown: 1 };
+        const back = under ? under.list : [{ r: 255, g: 255, b: 255, a: 1 }];
+        const own = parse(cs.backgroundColor);
+        const out = [];
+        for (const sp of stops) for (const bk of back) {
+          let g = bk;
+          if (own && own.a > 0) g = over(own, g);
+          out.push(over(sp, g));
+        }
+        for (let i = st.length - 1; i >= 0; i--)
+          for (let j = 0; j < out.length; j++) out[j] = over(st[i], out[j]);
+        return { list: out.slice(0, 6) };
+      }
       const bg = parse(cs.backgroundColor);
       if (bg && bg.a > 0) { st.push(bg); if (bg.a === 1) break; }
       n = n.parentElement;
     }
     let base = parse(getComputedStyle(document.body).backgroundColor) || { r: 255, g: 255, b: 255, a: 1 };
     if (base.a < 1) base = { r: 255, g: 255, b: 255, a: 1 };
-    let o = base; for (let i = st.length - 1; i >= 0; i--) o = over(st[i], o); return o;
+    let o = base; for (let i = st.length - 1; i >= 0; i--) o = over(st[i], o);
+    return { list: [o] };
   };
   /* a selector that will still mean this element tomorrow: its own classes,
      minus the layout utilities that say nothing about what it is */
@@ -160,7 +211,7 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
     return best;
   };
 
-  const out = [];
+  const out = [], seen = [];
   for (const el of document.body.querySelectorAll('*')) {
     const own = [...el.childNodes].some(n => n.nodeType === 3 && n.nodeValue.trim().length > 1);
     if (!own) continue;
@@ -181,11 +232,31 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
     if (alpha < DECOR_ALPHA && size >= DECOR_SIZE) continue;
     fg = { ...fg, a: alpha };
 
-    const bg = ground(el); if (bg.unknown) continue;
-    const cr = ratio(over(fg, bg), bg);
+    const gs = grounds(el); if (gs.unknown) continue;
+    /* the worst ground wins: a pill that reads at one end of its gradient and
+       not at the other is not legible */
+    let bg = gs.list[0], cr = Infinity;
+    for (const cand of gs.list) {
+      const c = ratio(over(fg, cand), cand);
+      if (c < cr) { cr = c; bg = cand; }
+    }
     const large = size >= 24 || (size >= 18.66 && weight >= 700);
     const need = large ? AA_BIG : AA;
     const failsInk = cr < need, failsSize = size < MIN_PX;
+
+    /* EVERY GROUND THIS NAME STANDS ON, NOT ONLY THE ONES THAT FAIL.
+       The cross-page guard below refuses to recolour a selector that stands
+       on a dark ground on one page and a light one on another -- but it was
+       only ever shown the FAILING elements, and that is not the same set.
+       `.vplay` is dark ink on a gold pill on /school, which passes and was
+       therefore never recorded, and a dark button on one other page, which
+       fails. One ground, no conflict, write it globally -- and the fix for
+       the page that needed it went and blinded the two that did not.
+       A name is safe to repaint only if everywhere it appears wants the same
+       repair. So the ground is remembered for every element this generator
+       could name, whether or not that element needs help. */
+    const anySel = winner(el, 'color') || sel(el, true);
+    if (anySel) seen.push({ s: anySel, d: lum(bg) < 0.18 ? 1 : 0 });
     if (!failsInk && !failsSize) continue;
 
     /* the rule that is actually winning, if the house names one; otherwise the
@@ -202,7 +273,7 @@ const PROBE = ({ MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE }) => {
       failsInk, failsSize
     });
   }
-  return out;
+  return { rows: out, seen };
 };
 
 /* ---------------------------------------------------------------- node side */
@@ -254,6 +325,9 @@ const hex = c => '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
 const br = await chromium.launch({ executablePath: EXE, args: ['--no-sandbox'] });
 const ctx = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 const found = new Map();
+/* every ground each nameable selector stands on across the whole site: 0 light,
+   1 dark. A selector that carries both cannot be given one colour. */
+const standsOn = new Map();
 let seenPages = 0, unnamed = 0;
 
 for (const path of PAGES) {
@@ -276,7 +350,13 @@ for (const path of PAGES) {
       for (const sh of document.styleSheets) if (/noor2-legible/.test(sh.href || '')) sh.disabled = true;
     });
     await pg.waitForTimeout(250);
-    const rows = await pg.evaluate(PROBE, { MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE });
+    const res = await pg.evaluate(PROBE, { MIN_PX, AA, AA_BIG, DECOR_ALPHA, DECOR_SIZE });
+    const rows = res.rows || res;
+    for (const g of (res.seen || [])) {
+      let set = standsOn.get(g.s);
+      if (!set) { set = new Set(); standsOn.set(g.s, set); }
+      set.add(g.d);
+    }
     seenPages++;
     for (const r of rows) {
       /* One rule per selector -- but a selector is only safe to recolour if it
@@ -302,9 +382,12 @@ for (const path of PAGES) {
 await br.close();
 
 /* -------------------------------------------------------------------- write */
-const ink = [], small = [], stuck = [], mixed = [], vanished = []; let unnamedInk = 0;
+const ink = [], small = [], stuck = [], mixed = [], vanished = [], ceiling = []; let unnamedInk = 0;
 for (let r of [...found.values()].sort((a, b) => b.n - a.n)) {
-  if (r.failsInk && r.mixed) { mixed.push(r); }
+  /* and the same test against every place the name appears, not only the
+     places it failed -- see the note in the probe */
+  const everywhere = r.selInk ? standsOn.get(r.selInk) : null;
+  if (r.failsInk && (r.mixed || (everywhere && everywhere.size > 1))) { mixed.push(r); }
   else if (r.failsInk && r.cr < 1.25) {
     /* Not dim: absent. The ink and the ground are the same colour, which happens
        when a token that names a colour rather than a role gets turned. --parchment
@@ -337,6 +420,82 @@ for (let r of [...found.values()].sort((a, b) => b.n - a.n)) {
     if (decl && r.selInk) ink.push({ ...r, decl }); else if (decl) unnamedInk++; else stuck.push(r);
   }
   if (r.failsSize && r.selSize) small.push(r);
+}
+
+/* ---------------------------------------------------- the floor is a floor
+   A SIZE RULE IS WRITTEN AS `font-size:12px`, AND THAT IS ONLY A FLOOR WHERE
+   NOTHING THE NAME MATCHES IS ALREADY BIGGER.
+
+   `.text-gold` is 9px on a caption in one room and 30px on the Arabic display
+   line at the head of six others. `.font-amiri.notranslate` is 11px on a chip
+   and 21.6px on the surah name in the Mushaf. Floor either and the big one is
+   dragged DOWN to 12: the first sheet this guard was written against shrank
+   410 pieces of text across the house, the Qur'an's surah names among them --
+   by a sheet whose entire job is that nothing is too small to read.
+
+   The cross-page guard on colour asks what grounds a name stands on, and it
+   can do that from what the walk already measured, because it only needs the
+   elements it could name. This question is different: it is not "how big is
+   the element I named it after" but "how big is EVERYTHING this selector
+   matches", and the only thing that can answer that is the page. So the pages
+   are asked, once, with the finished list of names in hand. A name that
+   matches anything above its floor is reported instead of written -- and the
+   page that needed the floor is named in the report, so the repair can be
+   made in the room, where the two sizes can be told apart. */
+const floors = new Map();
+for (const r of small) {
+  const px = Math.max(MIN_PX, Math.ceil(r.size));
+  if (!(floors.get(r.selSize) >= px)) floors.set(r.selSize, px);
+}
+const biggestAt = new Map();
+if (floors.size) {
+  const br2 = await chromium.launch({ executablePath: EXE, args: ['--no-sandbox'] });
+  const ctx2 = await br2.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const want = [...floors.entries()].map(([s, px]) => ({ s, px }));
+  for (const path of PAGES) {
+    const pg = await ctx2.newPage();
+    try {
+      await pg.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await pg.waitForTimeout(2000);
+      await pg.evaluate(() => {
+        for (const sh of document.styleSheets) if (/noor2-legible/.test(sh.href || '')) sh.disabled = true;
+      });
+      await pg.waitForTimeout(250);
+      const got = await pg.evaluate(list => {
+        const out = [];
+        for (const w of list) {
+          let big = 0;
+          let els; try { els = document.querySelectorAll(w.s); } catch (e) { continue; }
+          for (const el of els) {
+            /* an empty wrapper cannot be shrunk; anything with writing in it can,
+               whether the writing is its own or inherited by a child */
+            if (!(el.textContent || '').trim()) continue;
+            const cs = getComputedStyle(el);
+            if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+            const px = parseFloat(cs.fontSize);
+            if (px > big) big = px;
+          }
+          if (big) out.push({ s: w.s, px: Math.round(big * 100) / 100 });
+        }
+        return out;
+      }, want);
+      for (const g of got) if (!(biggestAt.get(g.s) >= g.px)) biggestAt.set(g.s, g.px);
+    } catch (e) { console.log('  ?? (floors) ' + path + ': ' + e.message.slice(0, 50)); }
+    await pg.close();
+  }
+  await br2.close();
+}
+/* How much bigger is too big? Not "any". `.chip` is 9.6px on one page and
+   12.48px on another, and taking the second to 12 changes nothing a reader can
+   see -- it is still at the floor, which is the whole point of the floor. What
+   cannot happen is a floor RESTRUCTURING the page: 36px down to 12 is not a
+   nudge, it is the Arabic display line at the head of the room turned into a
+   caption. So the floor may move text that is within a quarter of it, and must
+   leave anything further alone. */
+const HEADROOM = 1.25;
+for (let i = small.length - 1; i >= 0; i--) {
+  const r = small[i], px = Math.max(MIN_PX, Math.ceil(r.size)), big = biggestAt.get(r.selSize);
+  if (big !== undefined && big > px * HEADROOM) { ceiling.push({ ...r, floor: px, biggest: big }); small.splice(i, 1); }
 }
 
 /* A floor has to win a tie. Naming the rule that is winning gets the specificity
@@ -399,6 +558,15 @@ function block(title, list, extra) {
 css += block('Left alone: the same name stands on a light ground on one page and a\n   dark one on another, so no single colour is right for both. These want a\n   look, not a floor:', mixed);
 css += block('Left alone: not dim, absent. Ink and ground are the same colour, which\n   is a bug in the room rather than a contrast problem:', vanished);
 css += block('Could not be reached by colour alone -- the ground itself is the problem,\n   and that is a design decision:', stuck);
+if (ceiling.length) {
+  css += '\n/* Left alone: the same name also carries text ABOVE the floor, so writing\n'
+       + '   the floor on it would shrink that text rather than raise this. A floor\n'
+       + '   that shrinks is a ceiling. These want their own name in the room:\n';
+  for (const r of ceiling.slice(0, 16))
+    css += `     ${r.selSize.padEnd(34)} ${String(r.size).padStart(6)}px here, ${String(r.biggest).padStart(6)}px elsewhere   ${[...r.pages].slice(0, 3).join(' ')}\n`;
+  if (ceiling.length > 16) css += `     \u2026 and ${ceiling.length - 16} more\n`;
+  css += '*/\n';
+}
 
 console.log(`\n  ${seenPages} pages read · ${found.size} selectors need help`);
 console.log(`  ${ink.length} colours lifted, ${small.length} sizes floored` + (unnamedInk ? `, ${unnamedInk} carried only utility classes and were left` : ''));
@@ -407,6 +575,8 @@ const say = (t, l) => { if (!l.length) return; console.log('  ' + l.length + ' '
 say('on two different grounds -- left alone', mixed);
 say('ink the same colour as its ground -- a bug, not a floor', vanished);
 say('unreachable by colour alone', stuck);
+if (ceiling.length) { console.log('  ' + ceiling.length + ' floors withheld -- the name also carries bigger text');
+  ceiling.slice(0, 8).forEach(r => console.log(`     ${r.selSize.padEnd(30)} ${String(r.size).padStart(6)}px here, ${String(r.biggest).padStart(6)}px elsewhere   ${[...r.pages].slice(0,3).join(' ')}`)); }
 console.log(`  ${css.length} bytes`);
 
 if (DRY) { console.log('\n--dry: not written\n'); console.log(css.slice(0, 2200)); }
