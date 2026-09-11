@@ -16,9 +16,26 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .shimmer-gold{background:linear-gradient(100deg,#8a7020 8%,#C9A227 26%,#F4E3A1 42%,#C9A227 58%,#8a7020 92%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5.5s linear infinite}
 @keyframes shimmer{to{background-position:-220% center}}
 
-/* reveals */
-.reveal{opacity:0;transform:translateY(22px) scale(.985);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms)}
+/* reveals
+   Two states, not one.
+   .visible is the flourish: a tile arriving at the fold waits out its stagger
+   and fades up over .65s. .lit is the plain truth: the reader has already
+   reached this, so it is simply there, stagger and transition both switched
+   off. Everything that rescues a stray reveal now uses .lit, because a rescue
+   that then waits out a delay and a fade is not a rescue, it is the same blank
+   screen arriving late.
+
+   revealFloor is the floor under all of it. The stylesheet hides every reveal
+   and hands the job of un-hiding it to noor-fx.js. If that file never runs
+   (blocked, 404, thrown on an older phone) nothing sets data-fx, no observer
+   is ever built, and every tile on the page stays at opacity 0 forever. Three
+   seconds later the animation lights them anyway. Text a reader cannot read is
+   not a slower animation, it is a broken page. */
+.reveal{opacity:0;transform:translateY(22px) scale(.985);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms);animation:revealFloor 1ms linear 3s forwards}
+html[data-fx] .reveal{animation:none}
+@keyframes revealFloor{to{opacity:1;transform:none}}
 .reveal.visible{opacity:1;transform:none}
+.reveal.lit{opacity:1;transform:none;transition:none;transition-delay:0s;animation:none}
 
 /* section gates */
 .sgate{position:relative;overflow:hidden;border-radius:18px;color:#FFFEF7;padding:20px 22px;isolation:isolate}
@@ -130,7 +147,7 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
   html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none}
+  .reveal{opacity:1;transform:none;animation:none}
   .mset{opacity:1;transform:none;animation:none}
 }
 

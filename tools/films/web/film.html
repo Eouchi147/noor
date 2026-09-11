@@ -30,7 +30,33 @@
      than the far one when the shot walks in. See web/lume.js. */
   #lume{position:fixed;inset:0;width:100%;height:100%;display:block;
     transform-origin:50% 50%;will-change:transform;pointer-events:none}
-  #vig{position:fixed;inset:0;pointer-events:none}
+  /* THE VIGNETTE WAS A SQUARE.
+     It was an <svg> with viewBox="0 0 100 100" and no width or height of its
+     own. An SVG is a replaced element: given left and right by inset:0 it
+     takes its WIDTH from them and then derives its height from the viewBox's
+     1:1 ratio, ignoring top and bottom. So it came out 1920x1920 on the wide
+     frame -- half of it hanging below the picture -- and 1080x1080 on the
+     tall one, where it covered the top 1080 rows and stopped dead. That is
+     the hard horizontal line across the middle of every 9:16 frame: not a
+     seam in the render, a darkening that ended.
+     A gradient does not need a document. */
+  /* THE CUT ITSELF IS A THING YOU CAN SEE.
+     Every beat used to leave by fading out over six hundred milliseconds
+     while the next one faded in over five, with half a second of nothing in
+     between -- so the film had no cuts in it at all, only dissolves, and a
+     film with no cuts cannot be dynamic however well the individual beats are
+     drawn. There are three ways out of a beat now: a dissolve, a straight
+     cut, and a blaze of light across the join. This is the blaze. It is a
+     screen-blended radial so it lifts the picture rather than covering it,
+     which is what a light leak does and what a white rectangle does not. */
+  #flare{position:fixed;inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;
+    background:radial-gradient(ellipse 90% 70% at 50% 52%,
+      rgba(255,252,240,.95) 0%, rgba(244,212,106,.62) 34%, rgba(201,162,39,.16) 68%,
+      rgba(0,0,0,0) 100%)}
+
+  #vig{position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 74% 66% at 50% 46%,
+      rgba(0,0,0,0) 42%, rgba(0,0,0,.38) 76%, rgba(0,0,0,.76) 100%)}
 
   /* THE CAMERA.
      A film that never moves is a slideshow with good typography. There are
@@ -60,21 +86,35 @@
   html[data-frame="wide"] .eyebrow{font-size:22px;letter-spacing:.34em}
   html[data-frame="tall"] .eyebrow{font-size:24px;letter-spacing:.30em}
 
-  .h1{font-weight:700;line-height:1.06;letter-spacing:-.015em;
-     text-shadow:0 0 60px rgba(233,200,106,.14)}
-  html[data-frame="wide"] .h1{font-size:96px}
-  html[data-frame="tall"] .h1{font-size:88px}
+  /* a chapter title is still a subtitle. It carries more weight than a line
+     of prose and it sits in the same band, at the same left and right edge,
+     so the eye never has to go looking for where the words are this time. */
+  .h1{font-weight:700;line-height:1.1;letter-spacing:-.012em;text-wrap:balance;
+     text-shadow:0 2px 28px rgba(0,0,0,.65)}
+  html[data-frame="wide"] .h1{font-size:58px;max-width:26ch}
+  html[data-frame="tall"] .h1{font-size:52px;max-width:16ch}
 
-  .h2{font-weight:700;line-height:1.1;letter-spacing:-.01em}
-  html[data-frame="wide"] .h2{font-size:62px}
-  html[data-frame="tall"] .h2{font-size:60px}
+  .h2{font-weight:700;line-height:1.14;letter-spacing:-.008em;text-wrap:balance;
+     text-shadow:0 2px 28px rgba(0,0,0,.65)}
+  html[data-frame="wide"] .h2{font-size:50px;max-width:34ch}
+  html[data-frame="tall"] .h2{font-size:44px;max-width:20ch}
 
-  .body{color:var(--p86);line-height:1.45;max-width:24ch}
-  html[data-frame="wide"] .body{font-size:42px;max-width:24ch}
-  html[data-frame="tall"] .body{font-size:44px;max-width:17ch}
+  /* A CAPTION IS NOT A COLUMN OF PROSE.
+     Twenty-four characters is a measure for a paragraph in a magazine, and
+     at forty-two pixels on a 1920 frame it broke every sentence in the film
+     into four ragged lines. A film caption wants to be ONE line, or two with
+     the break where the sentence breathes: wider measure, bigger type. */
+  /* the subtitle itself. One size, one measure, one place, for the whole
+     film. A shadow rather than a glow: it has to stay readable over a bright
+     diagram as well as over black, and a glow on white type over gold is a
+     smear. */
+  .body{color:var(--parch);line-height:1.3;max-width:40ch;text-wrap:balance;
+    text-shadow:0 2px 22px rgba(0,0,0,.72),0 0 4px rgba(0,0,0,.4)}
+  html[data-frame="wide"] .body{font-size:44px;max-width:40ch}
+  html[data-frame="tall"] .body{font-size:40px;max-width:22ch}
   .body.sm{color:var(--p62)}
-  html[data-frame="wide"] .body.sm{font-size:30px;max-width:20ch}
-  html[data-frame="tall"] .body.sm{font-size:32px;max-width:15ch}
+  html[data-frame="wide"] .body.sm{font-size:32px;max-width:22ch}
+  html[data-frame="tall"] .body.sm{font-size:33px;max-width:16ch}
 
   /* The Arabic is set in three sizes, each a class of its own. An em on top
      of a class that already declares a font-size is measured against the
@@ -90,12 +130,16 @@
   html[data-frame="tall"] .ar-md{font-size:62px}
   .quran{font-family:'AmiriQuran','Amiri',serif;direction:rtl;color:var(--parch);line-height:1.95;
      text-shadow:0 0 52px rgba(233,200,106,.30),0 0 14px rgba(255,254,247,.14)}
-  html[data-frame="wide"] .quran{font-size:74px}
-  html[data-frame="tall"] .quran{font-size:64px}
+  html[data-frame="wide"] .quran{font-size:104px}
+  html[data-frame="tall"] .quran{font-size:76px}
 
-  .src{font-family:'NoorMono',ui-monospace,monospace;color:var(--p38);text-transform:uppercase}
-  html[data-frame="wide"] .src{font-size:20px;letter-spacing:.2em}
-  html[data-frame="tall"] .src{font-size:22px;letter-spacing:.18em}
+  .src{font-family:'NoorMono',ui-monospace,monospace;color:rgba(233,200,106,.60);text-transform:uppercase}
+  /* THE SOURCE LINE IS A FEATURE OF THIS FILM, NOT AN APOLOGY.
+     Every claim in it is carried back to where it came from, and a viewer who
+     wants to check should be able to read the reference without pausing. It
+     stays quiet -- it is not the sentence -- but it is legible. */
+  html[data-frame="wide"] .src{font-size:25px;letter-spacing:.17em}
+  html[data-frame="tall"] .src{font-size:25px;letter-spacing:.15em}
 
   .gloss{font-family:'NoorMono',ui-monospace,monospace;color:var(--p62);text-transform:uppercase}
   html[data-frame="wide"] .gloss{font-size:22px;letter-spacing:.2em}
@@ -108,13 +152,57 @@
      hierarchy: the film is the animation, and the line under it is a caption
      on the thing you are already looking at. A beat can ask for the old
      behaviour with "place": "over", which is what a title wants. */
+  /* =========================================================================
+     EVERY WORD IS EITHER A SUBTITLE OR A LEGEND.
+
+     The film is the picture. Type set across the middle of the frame is not a
+     film, it is a slide with something moving behind it, and the first cut of
+     this was full of them: ninety six pixel titles and seventy four pixel
+     statements sitting in the centre of the screen with a diagram pushed up
+     out of the way to make room. That is the wrong way round. If the visuals
+     are good the words get read; if the words are in the way, neither gets
+     looked at properly.
+
+     So there are exactly two places a word may appear. A SUBTITLE, in a band
+     at the bottom, always the same size and always the same place, the way a
+     subtitle behaves in any film ever made. Or a LEGEND, drawn on the diagram
+     itself as part of the picture, which lives in web/diagrams.js and not
+     here. Nothing else.
+
+     The one thing that is set large is the Qur'anic line, and that is not an
+     exception: the verse IS the subject of its beat, so it is the picture,
+     and its translation is the subtitle underneath it like any other.
+     ========================================================================= */
   .beat{position:absolute;inset:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:inherit;opacity:0}
-  .beat.has-lume{justify-content:flex-end}
-  html[data-frame="wide"] .beat.has-lume{padding-bottom:74px}
-  html[data-frame="tall"] .beat.has-lume{padding-bottom:150px}
-  .beat.has-lume .body{max-width:30ch}
-  .beat.has-lume.over{justify-content:center;padding-bottom:0}
+    align-items:center;justify-content:flex-end;gap:0;opacity:0}
+  html[data-frame="wide"] .beat{padding-bottom:92px}
+  html[data-frame="tall"] .beat{padding-bottom:226px}
+  /* the picture area: everything above the band, where a figure lives and
+     where the verse is set. It takes the room and nothing crowds it. */
+  .sky{flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+    width:100%;min-height:0;padding-inline:6%}
+  .beat.has-lume .body{max-width:38ch}
+
+  /* the list: a column of rows, each one a thing and its name, with a rule
+     under it. The Arabic sits on the right because it is read from there. */
+  .listbox{display:flex;flex-direction:column;width:100%;align-items:stretch}
+  .listrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+    gap:1.6em;padding-block:.82em;border-bottom:1px solid rgba(233,200,106,.22);opacity:0}
+  .listrow:last-child{border-bottom:0}
+  .listmid{display:flex;flex-direction:column;align-items:flex-start;gap:.14em;text-align:left}
+  /* THE LINE HAS TO BE ALLOWED TO BE A LINE.
+     .body.sm carries a twenty-two character measure, which is right for a
+     caption under a figure and wrong inside a row of a list: it broke every
+     one of the five into three ragged lines against a column of empty space.
+     Inside a list the measure is the column. */
+  html[data-frame="wide"] .listmid .body.sm{max-width:none;font-size:37px;text-align:left}
+  html[data-frame="tall"] .listmid .body.sm{max-width:none;font-size:31px;text-align:left}
+  .listrow .ar{min-width:4.6em;text-align:center}
+  html[data-frame="wide"] .listrow .ar-md{font-size:70px}
+  html[data-frame="tall"] .listrow .ar-md{font-size:52px}
+  html[data-frame="wide"] .listbox{max-width:1330px;margin-inline:auto}
+  html[data-frame="tall"] .listbox{max-width:860px;margin-inline:auto}
+  html[data-frame="tall"] .listrow{gap:.9em;padding-block:.6em}
 
     .g{color:var(--goldhi)}
   .tok{display:inline-block;white-space:pre}
@@ -124,19 +212,13 @@
 <canvas id="ground"></canvas>
 <canvas id="lume"></canvas>
 <div id="stage"><div id="hold"></div></div>
-<svg id="vig" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-  <defs>
-    <radialGradient id="vg" cx="50%" cy="46%" r="72%">
-      <stop offset="48%" stop-color="#000" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#000" stop-opacity=".74"/>
-    </radialGradient>
-  </defs>
-  <rect width="100" height="100" fill="url(#vg)"/>
-</svg>
+<div id="vig" aria-hidden="true"></div>
+<div id="flare" aria-hidden="true"></div>
 
 <script src="anime.min.js"></script>
 <script src="three.min.js"></script>
 <script src="ground.js"></script>
 <script src="figures.js"></script>
+<script src="diagrams.js"></script>
 <script src="lume.js"></script>
 <script src="stage.js"></script>

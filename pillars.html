@@ -51,7 +51,17 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .col{position:relative;height:7.2rem;border-radius:12px 12px 8px 8px;background:linear-gradient(180deg,rgba(244,212,106,.9),rgba(201,162,39,.75));box-shadow:inset 0 0 18px rgba(122,92,16,.5),0 10px 24px rgba(4,6,15,.5);transform-origin:bottom;transform:scaleY(0);animation:rise .7s cubic-bezier(.34,1.3,.5,1) forwards;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.5rem}
 .col:nth-child(1){animation-delay:.2s}.col:nth-child(2){animation-delay:.65s}.col:nth-child(3){animation-delay:1.1s}.col:nth-child(4){animation-delay:1.55s}.col:nth-child(5){animation-delay:2s}
 @keyframes rise{to{transform:scaleY(1)}}
-.col b{font-family:Amiri,serif;color:#1A160F;font-size:1.1rem;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.06em}
+/* The five names are cut into five gold columns, so they are cut in dark ink.
+   The generated night sheet lifted them to #FFFEF7 -- `.n2-night .n2-room
+   [data-room="pillars"] .col b`, four classes against this rule's one, loaded
+   after the room -- because it reads a room's inks and turns them over for the
+   dark floor it is about to lay. The columns are not the floor. They are gold
+   ornament and the night leaves gold ornament alone, so it turned the writing
+   over and left the thing written on exactly where it was: cream on gold at
+   1.71:1, five pillar names worn away. Restated from the hero's id, which
+   outranks any pile of classes, because the night sheet is generated from this
+   file and would only lift them again. */
+#phero .col b{font-family:Amiri,serif;color:#1A160F;font-size:1.1rem;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.06em}
 @media (prefers-reduced-motion:reduce){.col,.roofbeam,.roofword{animation:none;transform:none;opacity:1}}
 .hero-hadith{max-width:34rem;margin:1.8rem auto 0;background:rgba(255,254,247,.06);border:1px solid rgba(233,200,106,.3);border-radius:16px;padding:.9rem 1.1rem;font-size:.8rem;line-height:1.7;color:rgba(255,254,247,.8)}
 .hero-hadith b{color:#F4D46A}
@@ -83,8 +93,25 @@ section.pillar{padding:3rem 0 .6rem}
 .fact .n{font-size:1.3rem;font-weight:800;color:var(--gold)}
 .fact .l{font-size:.62rem;color:rgba(44,36,22,.55);font-weight:700;margin-top:.15rem;line-height:1.4}
 /* ---------- salah day arc ---------- */
-.dayarc{position:relative;background:linear-gradient(180deg,#F4D46A 0%,#b98a2e 30%,#1d2a45 72%,#101527 100%);border-radius:18px;padding:1rem .9rem 1.1rem;border:1px solid rgba(233,200,106,.3);overflow:hidden}
+/* The sky opened at #F4D46A, which is the brightest gold in the house, and the
+   five prayer names are painted on it in cream. Fajr, Maghrib and Isha came out
+   at 1.44:1 -- three of the five times of prayer, unreadable on the picture
+   that exists to name them. Dhuhr and Asr were given dark ink instead, which
+   reads, but that only splits the group in two and leaves the sun, its dashed
+   path and the horizon line competing with a sky brighter than they are.
+   One panel cannot take both inks: the card also runs down into #101527 behind
+   the caption, and any ink dark enough for the top is lost at the bottom. So
+   the sky comes down to a depth that carries the one cream ink everywhere on
+   it -- 4.7:1 at its lightest point -- and stays gold the whole way. The sun
+   and the arc it travels read better on it too. */
+.dayarc{position:relative;background:linear-gradient(180deg,#8a6a14 0%,#6d5410 30%,#1d2a45 72%,#101527 100%);border-radius:18px;padding:1rem .9rem 1.1rem;border:1px solid rgba(233,200,106,.3);overflow:hidden}
 .dayarc svg{display:block;width:100%;height:auto}
+/* The labels are painted with fill="currentColor" so that the ink a reader
+   sees and the ink a contrast walk reads off them are the same one thing. That
+   makes the sky's ink inheritable, and what it would otherwise inherit is the
+   room's: parchment ink before the night lands, cream after. The sky is the
+   same colour in both, so its ink is said here and inherits from nothing. */
+.dayarc svg{color:#FFF7DF}
 .sunDot{animation:sunmove 14s linear infinite}
 @keyframes sunmove{from{offset-distance:0%}to{offset-distance:100%}}
 @media (prefers-reduced-motion:reduce){.sunDot{animation:none;offset-distance:50%}}
@@ -614,10 +641,15 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 <line x1="6" y1="130" x2="394" y2="130" stroke="rgba(255,254,247,.30)" stroke-width="1" stroke-dasharray="2 4"/>
 <path id="sunpath" d="M 18 138 Q 200 -55 382 138" fill="none" stroke="rgba(244,212,106,.35)" stroke-width="1.6" stroke-dasharray="5 6"/>
 <circle r="9" fill="#F4D46A" class="sunDot" style="offset-path:path('M 18 138 Q 200 -55 382 138');filter:drop-shadow(0 0 10px rgba(244,212,106,.9))"/>
-<g font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#FFF7DF" text-anchor="middle">
-<circle cx="34" cy="137" r="4.5" fill="#7FA3D8"/><text x="34" y="122" fill="#FFF7DF">Fajr</text>
-<circle cx="200" cy="49" r="4.5" fill="#8a6a14"/><text x="200" y="36" fill="#4a3a10">Dhuhr</text>
-<circle cx="291" cy="83" r="4.5" fill="#8a6a14"/><text x="291" y="70" fill="#4a3a10">Asr</text>
+<!-- fill="currentColor" so the ink a contrast walk reads off these labels is
+     the ink they are actually painted in. Per-label fills said one thing and
+     the inherited colour said another, and the two dark ones were dark for a
+     sky that is no longer that bright. The two midday dots were #8a6a14, which
+     is now the colour of the sky behind them, so they take the light gold. -->
+<g font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="currentColor" text-anchor="middle">
+<circle cx="34" cy="137" r="4.5" fill="#7FA3D8"/><text x="34" y="122">Fajr</text>
+<circle cx="200" cy="49" r="4.5" fill="#E9C86A"/><text x="200" y="36">Dhuhr</text>
+<circle cx="291" cy="83" r="4.5" fill="#E9C86A"/><text x="291" y="70">Asr</text>
 <circle cx="370" cy="122" r="4.5" fill="#f0965a"/><text x="370" y="108">Maghrib</text>
 <circle cx="352" cy="141" r="4.5" fill="#8A9BD8"/><text x="330" y="147" font-size="10">Isha</text>
 </g>

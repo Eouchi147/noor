@@ -48,8 +48,15 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 @media (prefers-reduced-motion:reduce){.shimmer{animation:none}}
 /* ---------- rings & chrome ---------- */
 .ring{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(255,254,247,.12) 0);position:relative}
-.ring::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#171d31}
-.ring b{position:relative;z-index:1;font-size:.78rem;color:#F4D46A}
+/* The dial's face used to be .ring::after, and the count sat over it with a
+   z-index. A pseudo element is not a ground anything can read: a contrast walk
+   climbing the count's ancestors goes straight past it to the conic gradient
+   and measures gold letters on the gold arc, and the night generator, which
+   reads the same way, cannot turn the face over with the room either. So the
+   count owns the face now. Same disc, same colour, same size (the 74px ring
+   less the old 5px inset) -- it is simply a real background on the element
+   that carries the text, which is what it was pretending to be. */
+.ring b{display:grid;place-items:center;width:calc(100% - 10px);aspect-ratio:1;border-radius:50%;background:#171d31;font-size:.78rem;color:#F4D46A}
 h2.sect{font-weight:800;font-size:1.32rem;margin:0 0 .3rem;display:flex;align-items:center;gap:.65rem}
 h2.sect .amiri{font-family:Amiri,serif;color:var(--gold);font-size:1.55rem}
 .sub{font-size:.84rem;color:rgba(44,36,22,.6);margin:0 0 1.1rem;line-height:1.6}
@@ -107,7 +114,15 @@ section.blk{padding:2.6rem 0 1rem}
 .smhero{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
 @media (max-width:640px){.smhero{grid-template-columns:1fr}}
 .smcard{border-radius:18px;padding:1.05rem 1.1rem;color:#FFFEF7}
-.smcard.sun{background:linear-gradient(150deg,#7a5c10,#C9A227)}
+/* The sun card is read in cream, like the moon card beside it, but its
+   gradient ended at #C9A227 while the moon's ends at #33507C. Cream on the
+   moon's lightest point is 8:1; on the sun's it was 2.39:1, so the name, the
+   transliteration and the note all faded out across the bottom right corner of
+   the card. The pair are meant to weigh the same, so the sun is taken down to
+   the same depth its own ink needs: still gold, still warm, still a gradient,
+   now dark enough at both ends to carry cream (6.17:1 at the light end, and
+   4.99:1 for .why, which is set at 85% opacity). */
+.smcard.sun{background:linear-gradient(150deg,#4A3708,#7A5C10)}
 .smcard.moon{background:linear-gradient(150deg,#1c2a4d,#33507C)}
 .smcard .big{font-family:Amiri,serif;font-size:2.1rem;direction:rtl}
 .smcard .say{font-weight:800;font-size:.95rem;margin-top:.15rem}
@@ -149,7 +164,15 @@ section.blk{padding:2.6rem 0 1rem}
 .qopt.bad{background:#5c2c2c;border-color:#d87f7f}
 .qmode{display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
 .qmode button{background:rgba(255,254,247,.07);border:1px solid rgba(233,200,106,.3);color:rgba(255,254,247,.75);border-radius:999px;padding:.4rem 1rem;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit}
-.qmode button.sel{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-color:transparent}
+/* The chosen mode is a gold pill with dark ink on it. The generated night
+   sheet says `.n2-night .n2-room [data-room="arabic"] .qmode button
+   {background:rgba(10,16,36,.07)}` -- four classes to this rule's two, and it
+   loads after the room -- so the gold was taken off the chosen pill while the
+   #1A160F meant to sit on that gold stayed where it was. The result was the
+   quest's own mode name at 1.07:1 on the panel: gone. The pill is restated
+   from the panel it lives in, because an id outranks any number of classes and
+   the night sheet is regenerated from this file, not edited. */
+#quest .qmode button.sel{background:linear-gradient(135deg,#C9A227,#E9C86A);color:#1A160F;border-color:transparent}
 #qend{text-align:center;display:none}
 #qend .score{font-size:2.4rem;font-weight:800;color:#F4D46A}
 #qend .title{font-size:1rem;font-weight:800;margin-top:.2rem}

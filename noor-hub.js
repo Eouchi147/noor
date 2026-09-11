@@ -23,6 +23,11 @@ function renderAll(){
   const stats = $("chero-stats");
   if (stats) stats.innerHTML = SECTIONS.map(s =>
     `<span class="px-3 py-1 rounded-full border border-parchment/20 bg-parchment/5">${t(s.tk)} <b class="text-gold">${(DATA[s.key]||[]).length}</b></span>`).join("");
+  /* The stagger is a courtesy, not a contract. It used to run (i%9)*50ms, so
+     the ninth tile in a row waited 400ms before it even began its .65s fade:
+     over a second of blank card for a reader who had already scrolled to it.
+     Six steps of 35ms tops out at 175ms, and anything the reader has actually
+     arrived at is lit outright by initReveal rather than staggered at all. */
   $("hub-main").innerHTML = SECTIONS.map(s => {
     const list = DATA[s.key]||[];
     return `
@@ -42,7 +47,7 @@ function renderAll(){
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
         ${list.map((c0,i)=>{const c=locRec(c0);return `
-        <article class="tile reveal" style="--d:${(i%9)*50}ms" data-key="${s.key}" data-id="${c.id}" role="button" tabindex="0" aria-label="${c.titleEn}">
+        <article class="tile reveal" style="--d:${(i%6)*35}ms" data-key="${s.key}" data-id="${c.id}" role="button" tabindex="0" aria-label="${c.titleEn}">
           <div class="tile-inner">
             <div class="tile-bg ${c.pattern||""}"></div>
             <div class="tile-seal ${s.smallSeal?"seal-sm":""}"><span>${s.smallSeal?(c.titleAr||""):glyph(c)}</span></div>
@@ -66,7 +71,11 @@ function renderAll(){
     tl.addEventListener("click", open);
     tl.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
   });
-  NoorFX.initReveal($("hub-main")); NoorFX.initTilt($("hub-main"));
+  /* Arm the reveals before anything else can throw. initTilt is decoration; if
+     it ever fails it must not take the reveals down with it and leave a room
+     of invisible tiles behind, which is precisely how a page ends up blank. */
+  try { NoorFX.initReveal($("hub-main")); } catch (e) {}
+  try { NoorFX.initTilt($("hub-main")); } catch (e) {}
 }
 
 function sect(title, inner){ return `<div class="mset mt-6"><h3 class="sect-h"><span class="g">۞</span>${title}</h3>${inner}</div>`; }

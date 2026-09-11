@@ -307,23 +307,52 @@
 
   function hideNotice() { var n = q("#noor-notice"); if (n && n.parentNode) n.parentNode.removeChild(n); }
 
+  /* THE GROUND IS NOT ONE READ OF background-color.
+     A floor that is a gradient computes background-color as rgba(0, 0, 0, 0), so
+     that read came back empty, fell through to white, and called the night
+     parchment. build-night.py writes such floors (/madrasa: linear-gradient(
+     180deg,#0A1024,#0A1024 20rem)), and /madrasa has worn n2-parch on the night
+     ever since. A room with a <footer> gets .n2-ink on its share row from the
+     same misread: the parchment's #2C2416 on #0B1123, 1.23:1, the word gone from
+     its own button. Reproduced on /health at exactly that.
+     Not a race: noor-fx.js holds inject() until all four sheets have loaded, and
+     the body already reads #0A1024 at the call under delayed CSS, delayed script
+     and an 8x CPU -- the read was blind, not early. So a gradient's stops count
+     as ground, a layer too faint to be one is walked past rather than given up
+     on, the walk ends at the canvas (white), and the tone scale is the one this
+     file already used, so nothing classified rightly moves. */
+  function tone(c) {
+    c = (c || "").trim();
+    if (!/^(rgba?\(|color\(\s*srgb)/i.test(c)) return -1;
+    var m = c.match(/[\d.]+/g);
+    if (!m || m.length < 3 || (m[3] !== undefined && +m[3] < 0.5)) return -1;
+    var u = /^color/i.test(c) ? 255 : 1;        /* color(srgb) is 0-1 */
+    return (0.2126 * m[0] * u + 0.7152 * m[1] * u + 0.0722 * m[2] * u) / 255;
+  }
+  /* what one element paints: its gradient's stops, meaned, else its colour */
+  function paints(cs) {
+    var i = cs.backgroundImage, m = (i && i !== "none" && !/url\(/i.test(i)) ? i.match(/(?:rgba?|color)\([^)]*\)/gi) : null;
+    var l = m || [cs.backgroundColor], t = 0, n = 0, j, v;
+    for (j = 0; j < l.length; j++) { v = tone(l[j]); if (v >= 0) { t += v; n++; } }
+    return n ? t / n : -1;
+  }
+  function lum(el) {
+    for (var n = el; n; n = n.parentElement) { var v = paints(getComputedStyle(n)); if (v >= 0) return v; }
+    return 1;                                   /* the canvas is white */
+  }
+
   /* the skin: a wide fixed thing of the page's own at the bottom edge (a
      player) sends the bar away while it shows; a small one is lifted */
-  function lum(c) {
-    var m = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/.exec(c || "");
-    if (!m || (m[4] !== undefined && +m[4] < 0.5)) return -1;
-    return (0.2126 * m[1] + 0.7152 * m[2] + 0.0722 * m[3]) / 255;
-  }
   function inject() {
     var H = doc.documentElement, B = doc.body;
     if (!B || H.hasAttribute("data-n2") || B.hasAttribute("data-n2") || H.classList.contains("n2-skin")) return;
-    var bg = lum(getComputedStyle(B).backgroundColor); if (bg < 0) bg = lum(getComputedStyle(H).backgroundColor); if (bg < 0) bg = 1;
+    var bg = lum(B);
     H.style.setProperty("--n2-skin-pad", getComputedStyle(B).paddingBottom || "0px");
     H.classList.add("n2-skin", bg < 0.5 ? "n2-dark" : "n2-parch");
     var nav = bar(); wireShare(); physics();
     var foot = q("footer");
     if (foot && !q("[data-n2-share]", foot)) {
-      var fl = lum(getComputedStyle(foot).backgroundColor); if (fl < 0) fl = bg;
+      var fl = lum(foot);
       var row = el("div", "n2-row n2-skin-share" + (fl >= 0.5 ? " n2-ink" : ""));
       var btn = el("button", "n2-btn", 'Share <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>');
       btn.type = "button"; btn.setAttribute("data-n2-share", doc.title); row.appendChild(btn);

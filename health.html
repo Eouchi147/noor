@@ -67,6 +67,18 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .d-tag{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;border-radius:999px;padding:.16rem .6rem;margin-bottom:.45rem}
 .d-s .d-tag{color:#8a6d1a;background:rgba(201,162,39,.14)}
 .d-sci .d-tag{color:#4c6b49;background:rgba(139,168,136,.18)}
+/* Both chips are a wash: a gold one and a sage one, each at a low alpha, so
+   whatever colour the card is showing through is most of what you see. On
+   parchment that is a pale tint and the dark inks above read on it. The night
+   generator turned this page's floor over and carried both cards' prose with
+   it -- `.d-s p` and `.d-sci p` are lifted to cream in the night sheet -- but a
+   chip's own ink was not in the set it lifted, so the washes went dark with the
+   room and the two labels stayed where parchment had left them: 2.68:1 and
+   2.06:1. Lifted here, under the same condition the night sheet sets for the
+   prose, and each keeps its own hue: the hadith chip stays gold, the research
+   chip stays sage. */
+html.n2-night.n2-room .d-s .d-tag{color:#E9C86A}
+html.n2-night.n2-room .d-sci .d-tag{color:#A8C4A5}
 .d-s p,.d-sci p{font-size:.84rem;line-height:1.7;color:rgba(44,36,22,.85)}
 .d-x{display:none;align-items:center;color:var(--gold);font-size:1rem}
 @media(min-width:768px){.d-x{display:flex}}

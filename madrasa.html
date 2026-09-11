@@ -95,8 +95,21 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(255,254,247,.92);bac
 .trk-head .tt b{font-size:.98rem;display:block}
 .trk-head .tt span{font-size:.68rem;color:rgba(44,36,22,.5)}
 .ringm{width:2.9rem;height:2.9rem;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p,0)*1%),rgba(44,36,22,.08) 0);position:relative;flex:none}
-.ringm::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#fff}
-.ringm b{position:relative;z-index:1;font-size:.6rem;color:#6b5510}
+/* The track's percentage was the worst thing on this page, and it took two
+   faults to get there. The dial's face was .ringm::after, a pseudo element, so
+   the night generator could not reach it: it lifted the number to #C19A1D for
+   the dark card it had just made, and left the face pure white underneath.
+   Light gold on white is 2.66:1 -- and a white disc punched into a #0A1024
+   card, which is the other half of what was wrong with it. So the number owns
+   the face now, as a real background on the element that carries the text
+   rather than a pseudo element floating behind it, and the face turns over
+   with the room the way the rest of the card already does: parchment and
+   #6b5510 while nothing has turned, and on the night a disc lifted a little
+   off the #0A1024 card, so the dial is still a dial at 0% -- the track alone
+   is 8% ink and shows on nothing -- carrying the night's own gold at 6.29:1.
+   Same disc as before, the 2.9rem ring less the old 4px inset. */
+.ringm b{display:grid;place-items:center;width:calc(100% - 8px);aspect-ratio:1;border-radius:50%;background:#fff;font-size:.6rem;color:#6b5510}
+html.n2-night.n2-room .ringm b{background:#171D31}
 .trk-desc{padding:0 1.1rem .6rem;font-size:.76rem;color:rgba(44,36,22,.6);line-height:1.6}
 .lessons{border-top:1px solid rgba(44,36,22,.07)}
 .les{display:flex;align-items:center;gap:.7rem;width:100%;text-align:start;background:none;border:0;border-bottom:1px solid rgba(44,36,22,.05);padding:.7rem 1.1rem;cursor:pointer;font-family:inherit;transition:background .15s}

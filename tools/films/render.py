@@ -94,15 +94,39 @@ class Stage:
 def encode(frames_iter, path, frame, n):
     """the frames go to ffmpeg as JPEG on stdin; the encoder decodes them
        itself, so no picture is ever carried through python"""
+    #  WHY THE VIDEO LOOKED WORSE THAN THE STILLS
+    #
+    #  Two reasons, and the grain was the larger one. noise=alls=7:allf=t+u is
+    #  a heavy grain -- a seventh of full scale, spatial AND temporal -- and on
+    #  a picture that is nine tenths near-black it does two bad things at once:
+    #  it sits on top of the soft falloff of every glow, and it is
+    #  incompressible, so it ate the bitrate that the gradients needed and
+    #  left them to band. Twenty eight seconds came to 160 MB and still looked
+    #  worse than a PNG of one frame of it.
+    #
+    #  A little grain is still the right answer for eight-bit video: it is what
+    #  stops a dark gradient stepping. But it wants to be a third of what it
+    #  was and temporal only, so it dithers the banding without printing a
+    #  texture over the light. With the weight off, CRF can come down too.
+    #
+    #  The other reason was mine: I was sending a re-encode of the master
+    #  rather than the master. Two generations of H.264 on a dark picture is
+    #  visible. Encode once, at quality, and hand over that file.
     cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
            "-f", "image2pipe", "-vcodec", "mjpeg", "-r", str(FPS), "-i", "-",
-           "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "17",
-           "-pix_fmt", "yuv420p", "-r", str(FPS),
-           #  The grain is added HERE and not in the browser. Drawn on the
-           #  page it was the single most expensive thing in the render;
-           #  added to the finished picture it is free, and it is the right
-           #  place for it -- grain belongs to the film, not to the drawing.
-           "-vf", "scale=%d:%d,noise=alls=7:allf=t+u" % (frame["w"], frame["h"]), path]
+           #  CRF 15 on this material is about nineteen megabits, which is a
+           #  third of a gigabyte for four minutes -- and the only way a file
+           #  that size reaches the person it is for is in seventeen pieces.
+           #  19 with a slower preset is visually the same picture on a dark
+           #  animated frame and a third of the bytes. The encoder gets the
+           #  time back because rendering the frames costs two hundred times
+           #  more than compressing them.
+           "-an", "-c:v", "libx264", "-preset", "slower", "-crf", "19",
+           "-x264-params", "aq-mode=3:aq-strength=1.1:deblock=-1,-1",
+           "-pix_fmt", "yuv420p", "-color_primaries", "bt709",
+           "-color_trc", "bt709", "-colorspace", "bt709",
+           "-movflags", "+faststart", "-r", str(FPS),
+           "-vf", "scale=%d:%d,noise=alls=2:allf=t" % (frame["w"], frame["h"]), path]
     pr = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     t0 = time.time()
     for i, buf in enumerate(frames_iter):
