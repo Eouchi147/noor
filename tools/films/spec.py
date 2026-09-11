@@ -8,7 +8,14 @@ into 16:9 reads as an accident. The layout is done in CSS off one attribute
 on <html>, so the scene description never mentions a pixel.
 """
 
-FPS = 30
+#  TWENTY FOUR, NOT THIRTY.
+#  Thirty is a broadcast rate and it reads like one: it is smooth in a way
+#  that says "screen recording". Twenty four is what the eye has been taught
+#  by a century of cinema to read as film, and every long-form animated
+#  explainer worth copying is cut at it. It is also a fifth fewer frames to
+#  render, which on this runner is the difference between a chapter overnight
+#  and a chapter tomorrow. Both reasons point the same way.
+FPS = 24
 
 WIDE = {"name": "wide", "w": 1920, "h": 1080}
 TALL = {"name": "tall", "w": 1080, "h": 1920}
@@ -36,4 +43,9 @@ JPEG_Q = 90
 #  frame and let the browser stretch it up, on the reasoning that bloom is low
 #  frequency. Bloom is. The silhouettes inside it are not, and magnifying them
 #  magnified every step. See the note in web/lume.js.
+#  Measured rather than assumed: 2 costs about 420 ms a frame and 3 costs
+#  1320. Three times the price for an edge that is already clean at two. The
+#  fragment work is real even though the draw call returns in five
+#  milliseconds -- WebGL is asynchronous and the bill arrives with the
+#  screenshot. The budget is better spent on the bloom and the encode.
 LUME_SS = 2
