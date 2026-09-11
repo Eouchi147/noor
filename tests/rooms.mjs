@@ -344,9 +344,16 @@ console.log("\n=== the shell ===");
      it says role="dialog", and one that will not answer Escape traps a reader
      on a keyboard -- and the bar's Search stopped reaching for the menu's
      dial. Both are behaviour, not decoration, and the file's own comments were
-     cut to their bone first; 25 KB is the new ceiling and it is still a
-     ceiling. Anything that only looks nice belongs in the CSS. */
-  ok(js.length < 25 * 1024, "noor2.js is under 25 KB (" + js.length + " bytes)");
+     cut to their bone first; 25 KB was the new ceiling and it is still a
+     ceiling. Anything that only looks nice belongs in the CSS.
+     26 KB on 11 September 2026, for inject() reading the ground it stands on by
+     compositing what is painted rather than by one background-color string. A
+     room whose floor is a gradient -- which is what build-night.py writes for
+     /madrasa -- read as rgba(0, 0, 0, 0), fell through to white, and was dressed
+     as parchment on the night; on a room with a footer that puts the parchment's
+     dark ink on the night's Share button at 1.23:1. That is behaviour, and the
+     comment explaining it was cut to the bone before the ceiling moved. */
+  ok(js.length < 26 * 1024, "noor2.js is under 26 KB (" + js.length + " bytes)");
   ok(css.includes("--n2-spring:linear(0, 0.006") && css.includes("@supports (transition-timing-function:linear(0,1))") && !/transition:[^;}]*\blinear\b/.test(css.replace(/linear\(/g, "L(")) && !/transition:[^;}]*\blinear\b/.test(css),
      "the spring is defined with a bezier fallback and nothing moves linearly");
   ok(css.includes("scroll-snap-type:y proximity") && css.includes("scroll-snap-stop:normal") && css.includes(".n2-shelf") && css.includes("overscroll-behavior-x:contain") && css.includes("mask-image"),

@@ -54,7 +54,13 @@ const PAGES = [
   '/masjid/timetable',
   '/donate',
   '/journal',
-  '/begin'
+  '/begin',
+  /* pages that carry filled gold controls, and were not being looked at at all
+     when the buttons on them went unreadable */
+  '/mizan',
+  '/school',
+  '/latif',
+  '/health'
 ];
 const SIZES = [[390, 844, 'phone'], [1280, 900, 'laptop']];
 
@@ -99,14 +105,59 @@ const PROBE = () => {
     return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
   };
 
-  /* what is really behind this element, composited down to the page ground */
-  const ground = el => {
-    let stack = [], n = el;
+  /* A GRADIENT IS A BACKGROUND YOU CAN MEASURE.
+     This walk used to give up the moment it met any background-image at all
+     and count the element as unknowable. A photograph is unknowable. A
+     gradient is not: the computed value hands you its stops as plain rgb(),
+     and a filled control -- every gold pill on this site -- is a gradient of
+     two opaque stops and nothing else.
+
+     That blind spot is not academic. `.n2-main a { color: var(--n2-goldhi) }`
+     in the house sheet is one point more specific than a page's own
+     `.mz-cta { color: #1A160F }`, so the filled gold buttons on /mizan came
+     out gold-on-gold at about 1.05:1 -- invisible -- and this test walked
+     past them every night because their background was a gradient.
+
+     The stops are read out and EVERY one of them is a candidate ground. A
+     reader sees the text over all of them, so the score is the worst of them,
+     not the average: a pill that is legible at one end and not at the other
+     is not legible. Only url() stays unknowable. */
+  const stopsOf = img => {
+    if (!img || img === 'none') return null;
+    if (/url\(/i.test(img)) return null;                 /* a real image */
+    const m = img.match(/rgba?\([^)]*\)/g);
+    if (!m) return null;
+    const cs = m.map(parse).filter(Boolean);
+    return cs.length ? cs : null;
+  };
+
+  /* the ground(s) behind `el`, composited down to the page. More than one
+     when something on the way down is a gradient. */
+  const grounds = el => {
+    const stack = [];
+    let n = el;
     while (n && n !== document.documentElement) {
       const cs = getComputedStyle(n);
+      const st = stopsOf(cs.backgroundImage);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && !st) return { unknown: true };
+      if (st) {
+        /* the image paints over this element's own background-colour, so the
+           colour underneath it only shows through a translucent stop */
+        const under = n.parentElement ? grounds(n.parentElement) : null;
+        if (under && under.unknown) return { unknown: true };
+        const back = under ? under.list : [{ r: 255, g: 255, b: 255, a: 1 }];
+        const own = parse(cs.backgroundColor);
+        const out = [];
+        for (const s of st) for (const bk of back) {
+          let g = bk;
+          if (own && own.a > 0) g = over(own, g);
+          out.push(over(s, g));
+        }
+        for (let i = stack.length - 1; i >= 0; i--)
+          for (let j = 0; j < out.length; j++) out[j] = over(stack[i], out[j]);
+        return { list: out.slice(0, 6) };
+      }
       const bg = parse(cs.backgroundColor);
-      /* an image or gradient behind the text: we cannot sample it, so say so */
-      if (cs.backgroundImage && cs.backgroundImage !== 'none') return { unknown: true };
       if (bg && bg.a > 0) { stack.push(bg); if (bg.a === 1) break; }
       n = n.parentElement;
     }
@@ -114,7 +165,13 @@ const PROBE = () => {
     if (base.a < 1) base = { r: 255, g: 255, b: 255, a: 1 };
     let out = base;
     for (let i = stack.length - 1; i >= 0; i--) out = over(stack[i], out);
-    return out;
+    return { list: [out] };
+  };
+
+  /* what is really behind this element, composited down to the page ground */
+  const ground = el => {
+    const g = grounds(el);
+    return g.unknown ? { unknown: true } : g.list[0];
   };
 
   const hex = c => '#' + [c.r, c.g, c.b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
@@ -161,8 +218,14 @@ const PROBE = () => {
        the same rule, and the house layer marks them aria-hidden so a screen
        reader does not read them out either. */
     if (fg.a < 0.22 && size >= 40) continue;
-    const bg = ground(el);
-    if (bg.unknown) { out.unknownBg++; continue; }
+    const gs = grounds(el);
+    if (gs.unknown) { out.unknownBg++; continue; }
+    /* the worst ground wins: text over a gradient is read over all of it */
+    let bg = gs.list[0], worst = Infinity;
+    for (const cand of gs.list) {
+      const c = ratio(over(fg, cand), cand);
+      if (c < worst) { worst = c; bg = cand; }
+    }
 
     const ink = over(fg, bg);
     /* A drawing of paper keeps its own inks. The masjid timetable and the qibla
@@ -262,7 +325,30 @@ console.log('  scanned ' + scanned + ' page loads across ' + PAGES.length + ' pa
    mission strip, which is on all six hundred pages. The ink count fell by one
    because those raises reused alphas the house already had rather than
    inventing new ones. */
-const CEILING = { unreadable: 0, tiny: 294, inks: 73 };
+/* THE INSTRUMENT CHANGED, SO THE NUMBERS DID.
+   Until 11 September 2026 this test gave up on any element with a
+   background-image and counted it as unmeasurable -- which meant every filled
+   control in the house, because every one of them is a two-stop gradient. It
+   reported `unreadable: 0` for months while /mizan's call-to-action buttons
+   were gold ink on a gold pill at 1.05:1 and /school's "Listen" was the same.
+   The walk reads gradient stops now, so these three numbers are the first
+   honest measurement rather than a regression:
+
+     unreadable  138 instances, about ten distinct causes -- .pc-lk on /heroes,
+                 .d-tag on /health, the gold panels on /arabic and /pillars,
+                 .vplay where it sits on a dark ground, the progress numbers
+                 on /madrasa and /arabic. Every one of them predates this
+                 change and none of them is new.
+     inks        the census now includes the elements it used to skip, so 73
+                 was never the whole palette.
+
+   Four pages that carry filled gold controls were also never in the list, so
+   the counts cover 26 pages now rather than 22 -- which is why `tiny` and
+   `inks` moved as well. Nothing on those four got worse; they were simply
+   never being read.
+
+   These are ceilings, not targets. They may only come down. */
+const CEILING = { unreadable: 138, tiny: 532, inks: 206 };
 const ratchet = (name, got, cap) => {
   if (got > cap) { fail++; console.log('  FAIL ' + name + ' got worse: ' + got + ' (ceiling ' + cap + ')'); }
   else { pass++; console.log('  ✓ ' + name + ': ' + got + (got ? ' left, ceiling ' + cap + (got < cap ? ' -- lower it to ' + got : '') : ' -- clear')); }
