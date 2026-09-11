@@ -5,10 +5,10 @@
   "note": "Every figure is generated from numbers and every claim carries its source. The Qur'anic text is the Tanzil Uthmani served by api.alquran.cloud, the same file the library's reels are set from.",
   "chapters": [
     {
-      "id": "00-the-question",
-      "eyebrow": "Cold open",
-      "title": "The question",
-      "narration": "In the year twenty twenty there were about two billion Muslims alive: twenty-six people in every hundred on earth. Two billion people have built their days around a single claim. And most of the rest of us could not say, in one sentence, what that claim is. So: what is Islam, actually? Not what its followers are like. Not what its critics say. What the thing itself claims to be. It makes a small number of claims, and it makes them plainly. We are going to take them one at a time, and show where every one of them comes from.",
+      "id": "the-film",
+      "eyebrow": "",
+      "title": "What is Islam, actually?",
+      "narration": "In the year twenty twenty there were about two billion Muslims alive: twenty-six people in every hundred on earth. Two billion people have built their days around a single claim. And most of the rest of us could not say, in one sentence, what that claim is. So: what is Islam, actually? Not what its followers are like. Not what its critics say. What the thing itself claims to be. It makes a small number of claims, and it makes them plainly. We are going to take them one at a time, and show where every one of them comes from. Start with the name, because the name is already a claim. Before it was the name of a religion, islam was an ordinary Arabic word. It is built from a root of three letters, seen, laam and meem, and that same root gives a word you may already know: salaam, peace. The two are not neighbours by accident. To hand the whole self over, and to be at peace, are in Arabic one movement. So the word is not a label stuck on a set of rules. It names a posture. The Qur'an uses it exactly that way: the religion with Allah is islam. And a posture can be described. That is the whole of what follows. English hands you one word for all of it: religion. Arabic does not. It has three words here, and they are not synonyms. They are three different questions, and the tradition keeps them apart on purpose. We know they are three because of a famous scene. A stranger no one recognised sat down in front of the Prophet, close enough that their knees touched, and asked him three questions in order. Tell me about islam. Tell me about iman. Tell me about ihsan. Islam is the outward frame: what is done. Iman is the inner conviction: what is held. And ihsan is the finish on both: to worship Allah as though you see Him, and if you do not see Him, then knowing that He sees you. Three questions, three answers, and no one of them is the whole thing. Of those three, everything rests on the first word of the first answer. The Qur'an puts it in four lines, a chapter short enough to say in a breath, and the one Muslims are told is worth a third of the whole book. Say: He is Allah, One. Allah, the Eternal Refuge. He neither begets nor is born, and there is none comparable to Him. Read it again and notice what it is doing. It is not saying that Allah is one of a kind, the best of a set. It is closing the set. Nothing is descended from Him, nothing produced Him, and nothing is in His class. Everything else in Islam, every prayer, every fast, every law, every argument for fourteen hundred years, is downstream of that sentence. The second claim follows from the first. If there is one God, and He made creatures who speak, then the obvious question is whether He has ever said anything. Islam's answer is yes, and it is unusually specific about the manner. Not a finished book let down from the sky. Twenty-three years of speech, arriving in pieces, in answer to what was actually happening: a battle lost, a marriage disputed, a question somebody asked out loud. And then it does something most scriptures never do. It makes a claim about itself in a form you could try to falsify: if you are in doubt about what We have sent down upon Our servant, then produce a chapter like it. Whatever you make of that, notice its shape. It is not an order to believe. It is an invitation to check. A claim to be the speech of God is worth exactly as much as the text you are holding. So: is this the same book? It was carried two ways at once, and that is the part people miss. In writing, which can be copied wrongly, and in memory, out loud, by people who had the whole of it by heart and recited it to each other in public, every day, in every generation, in a chain where each person can be named. A mistake in a copy is caught by a room that already knows the line. And the copies can be dated. In Birmingham there are two leaves of parchment in early Hijazi script. Oxford's radiocarbon unit put the parchment between 568 and 645 of the common era, with ninety-five per cent confidence. On them are parts of chapters nineteen and twenty, in the same words a reader recites today, with small differences of spelling. That is not proof that the book is what it says it is. It is evidence about the text, which is a different question, and the only one of the two that anybody can measure. Which brings us back to the stranger's first question. Tell me about islam, the outward frame, the part that is done rather than held. The answer given that day was five things. To say it: there is no god but Allah, and Muhammad is His messenger. To pray, at five fixed times a day. To give a fixed share of what you have kept for a year to people who have less. To fast the month of Ramadan. And, once, if you can afford it and your body allows it, to go to Makkah. That is the whole outward frame. Notice what it is: five habits, four of them repeating, all of them public, none of them requiring you to be clever. It is short enough to say in a minute, and long enough to take a life. And if you want to check any of it, every source in this film is in the library, free, with no account to make.",
       "beats": [
         {
           "kind": "statement",
@@ -95,15 +95,7 @@
           "lume": {
             "kind": "stream"
           }
-        }
-      ]
-    },
-    {
-      "id": "01-the-word",
-      "eyebrow": "Chapter one",
-      "title": "The word itself",
-      "narration": "Start with the name, because the name is already a claim. Before it was the name of a religion, islam was an ordinary Arabic word. It is built from a root of three letters, seen, laam and meem, and that same root gives a word you may already know: salaam, peace. The two are not neighbours by accident. To hand the whole self over, and to be at peace, are in Arabic one movement. So the word is not a label stuck on a set of rules. It names a posture. The Qur'an uses it exactly that way: the religion with Allah is islam. And a posture can be described. That is the whole of what follows.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter one",
@@ -179,15 +171,7 @@
           "hold": 7.4,
           "shot": "withdraw",
           "exit": "slow"
-        }
-      ]
-    },
-    {
-      "id": "02-three-words",
-      "eyebrow": "Chapter two",
-      "title": "Three words, not one",
-      "narration": "English hands you one word for all of it: religion. Arabic does not. It has three words here, and they are not synonyms. They are three different questions, and the tradition keeps them apart on purpose. We know they are three because of a famous scene. A stranger no one recognised sat down in front of the Prophet, close enough that their knees touched, and asked him three questions in order. Tell me about islam. Tell me about iman. Tell me about ihsan. Islam is the outward frame: what is done. Iman is the inner conviction: what is held. And ihsan is the finish on both: to worship Allah as though you see Him, and if you do not see Him, then knowing that He sees you. Three questions, three answers, and no one of them is the whole thing.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter two",
@@ -250,15 +234,7 @@
             "kind": "ring",
             "count": 3
           }
-        }
-      ]
-    },
-    {
-      "id": "03-one",
-      "eyebrow": "Chapter three",
-      "title": "One",
-      "narration": "Of those three, everything rests on the first word of the first answer. The Qur'an puts it in four lines, a chapter short enough to say in a breath, and the one Muslims are told is worth a third of the whole book. Say: He is Allah, One. Allah, the Eternal Refuge. He neither begets nor is born, and there is none comparable to Him. Read it again and notice what it is doing. It is not saying that Allah is one of a kind, the best of a set. It is closing the set. Nothing is descended from Him, nothing produced Him, and nothing is in His class. Everything else in Islam, every prayer, every fast, every law, every argument for fourteen hundred years, is downstream of that sentence.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter three",
@@ -349,15 +325,7 @@
           "shot": "approach",
           "enter": "dissolve",
           "exit": "slow"
-        }
-      ]
-    },
-    {
-      "id": "04-he-has-spoken",
-      "eyebrow": "Chapter four",
-      "title": "He has spoken",
-      "narration": "The second claim follows from the first. If there is one God, and He made creatures who speak, then the obvious question is whether He has ever said anything. Islam's answer is yes, and it is unusually specific about the manner. Not a finished book let down from the sky. Twenty-three years of speech, arriving in pieces, in answer to what was actually happening: a battle lost, a marriage disputed, a question somebody asked out loud. And then it does something most scriptures never do. It makes a claim about itself in a form you could try to falsify: if you are in doubt about what We have sent down upon Our servant, then produce a chapter like it. Whatever you make of that, notice its shape. It is not an order to believe. It is an invitation to check.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter four",
@@ -465,15 +433,7 @@
           "shot": "withdraw",
           "enter": "dissolve",
           "exit": "slow"
-        }
-      ]
-    },
-    {
-      "id": "05-and-it-was-kept",
-      "eyebrow": "Chapter five",
-      "title": "And it was kept",
-      "narration": "A claim to be the speech of God is worth exactly as much as the text you are holding. So: is this the same book? It was carried two ways at once, and that is the part people miss. In writing, which can be copied wrongly, and in memory, out loud, by people who had the whole of it by heart and recited it to each other in public, every day, in every generation, in a chain where each person can be named. A mistake in a copy is caught by a room that already knows the line. And the copies can be dated. In Birmingham there are two leaves of parchment in early Hijazi script. Oxford's radiocarbon unit put the parchment between 568 and 645 of the common era, with ninety-five per cent confidence. On them are parts of chapters nineteen and twenty, in the same words a reader recites today, with small differences of spelling. That is not proof that the book is what it says it is. It is evidence about the text, which is a different question, and the only one of the two that anybody can measure.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter five",
@@ -584,15 +544,7 @@
           "shot": "withdraw",
           "enter": "dissolve",
           "exit": "slow"
-        }
-      ]
-    },
-    {
-      "id": "06-what-it-asks",
-      "eyebrow": "Chapter six",
-      "title": "What it asks",
-      "narration": "Which brings us back to the stranger's first question. Tell me about islam, the outward frame, the part that is done rather than held. The answer given that day was five things. To say it: there is no god but Allah, and Muhammad is His messenger. To pray, at five fixed times a day. To give a fixed share of what you have kept for a year to people who have less. To fast the month of Ramadan. And, once, if you can afford it and your body allows it, to go to Makkah. That is the whole outward frame. Notice what it is: five habits, four of them repeating, all of them public, none of them requiring you to be clever. It is short enough to say in a minute, and long enough to take a life. And if you want to check any of it, every source in this film is in the library, free, with no account to make.",
-      "beats": [
+        },
         {
           "kind": "title",
           "eyebrow": "Chapter six",
