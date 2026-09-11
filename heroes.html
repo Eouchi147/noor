@@ -168,6 +168,15 @@ main{padding-bottom:1rem}
 .pc-light{margin-top:.9rem;background:linear-gradient(120deg,rgba(244,212,106,.2),rgba(244,212,106,.07));border:1px solid rgba(201,162,39,.3);border-radius:14px;padding:.75rem .85rem}
 .pc-lk{display:block;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#8a6d13;margin-bottom:.25rem}
 .pc-light p{font-size:.85rem;line-height:1.75;color:#5c4a12;margin:0;font-weight:600}
+/* The light panel is a gold wash at 20% and 7%, so it is only as light as the
+   card underneath it. The night generator turned that card dark and lifted the
+   sentence inside the panel with it (`.pc-light p` goes to #BF9925 in the night
+   sheet), but the eyebrow above the sentence was not in the set it lifted, so
+   every card on the page carried "The light he carried" at 2.42:1 -- 9px, all
+   caps, tracked wide, on a ground that had moved and left it behind. Lifted
+   here, on the same condition, and further than the sentence because it is
+   half the size of it. Still gold: the panel is gold and so is its label. */
+html.n2-night.n2-room .pc-lk{color:#E9C86A}
 .pc-cav{margin-top:.6rem;background:rgba(44,36,22,.035);border:1px dashed rgba(44,36,22,.18);border-radius:14px;padding:.7rem .85rem}
 .pc-ck{display:block;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:rgba(44,36,22,.45);margin-bottom:.25rem}
 .pc-cav p{font-size:.79rem;line-height:1.75;color:rgba(44,36,22,.6);margin:0}

@@ -28,6 +28,13 @@ var NOOR_SOCIAL = [
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+/* hub.css hides every .reveal and hands the job of un-hiding it to this file.
+   If this file never arrives, nothing un-hides and the room is blank, so the
+   stylesheet keeps a three second animation as the floor and stands it down
+   only when it can see the engine is actually here. This is that signal, and
+   it is the first thing the engine does. */
+try { document.documentElement.setAttribute("data-fx", "1"); } catch (e) {}
+
 /* ---------------- i18n (Phase A: EN master inline; packs fetched per-language) ---------------- */
 const UI_EN = {
   "nav.books":"Books","nav.path":"Path","nav.characters":"Characters","nav.places":"Places","nav.words":"Words","nav.mizan":"Two Lives","nav.about":"About","nav.kids":"Kids","nav.health":"Health",
@@ -266,13 +273,103 @@ function countUp(el, target, ms){
 }
 
 /* ---------------- scroll reveals (one observer, stagger via --d) ---------------- */
+/* A reveal has two jobs: play the flourish for a tile arriving at the fold,
+   and never leave text the reader has reached sitting at opacity 0. The second
+   job is the one that kept breaking, so it is the one written out here.
+
+   .visible starts the stagger and the .65s fade. .lit is instant. Everything
+   the reader has already arrived at gets .lit, because a fade that has to be
+   waited out is indistinguishable from a blank page. */
+const REVEAL_ARMED = new WeakSet();   /* roots this has already armed once */
+let REVEAL_IO = null;
+
+function revealFlourish(el){
+  el.__lit0 = Date.now();             /* the safety net's watchdog reads this */
+  el.classList.add("visible");
+}
+function revealNow(el){ el.classList.add("visible", "lit"); }
+
+/* The trigger sits BELOW the fold, not inside it. It used to want 8% of the
+   tile showing and then pulled the root up another 4% on top of that, so a
+   tile was not even a candidate until a third of it was on screen, and only
+   then did it start its delay and its .65s fade. A reader moving at any speed
+   met a card that was still blank. Firing 15% of a screen early hands the fade
+   the tile's whole travel up the page to finish in, so it is readable by the
+   time the reader's eye arrives. */
+function revealObserver(){
+  if (REVEAL_IO) return REVEAL_IO;
+  REVEAL_IO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    revealFlourish(e.target);
+    REVEAL_IO.unobserve(e.target);
+  }), { threshold: 0, rootMargin: "0px 0px 15% 0px" });
+  return REVEAL_IO;
+}
+
+/* Nothing re-arms an observer that was built before the nodes existed. A
+   filter, a search, openEntry, any later render: each can put a .reveal on the
+   page after initReveal ran, and such an element was dark forever because no
+   one thought to call it again. Watch the root instead of trusting every
+   future caller to remember.
+   Only a genuine new reveal is worth a pass. The text engine and the figure
+   fitter both churn this same subtree for their own reasons, and treating that
+   churn as a render would quietly cancel the reveal on every page they run. */
+function watchReveals(root){
+  if (!root || root.nodeType !== 1 || root.__revealMO || !window.MutationObserver) return;
+  root.__revealMO = new MutationObserver(ms => {
+    var fresh = false;
+    for (var i = 0; i < ms.length && !fresh; i++) {
+      var added = ms[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        var n = added[j];
+        if (n.nodeType !== 1) continue;
+        if (n.classList.contains("reveal") || n.querySelector(".reveal")) { fresh = true; break; }
+      }
+    }
+    if (!fresh || root.__revealQ) return;
+    root.__revealQ = 1;
+    requestAnimationFrame(() => { root.__revealQ = 0; initReveal(root); });
+  });
+  root.__revealMO.observe(root, { childList: true, subtree: true });
+}
+
 function initReveal(root){
-  const els = (root || document).querySelectorAll(".reveal:not(.visible)");
-  if (REDUCED) { els.forEach(el => el.classList.add("visible")); return; }
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
-  }), { threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
-  els.forEach(el => io.observe(el));
+  const host = root || document;
+  const els = host.querySelectorAll(".reveal:not(.lit)");
+  if (REDUCED) { els.forEach(revealNow); return; }
+  watchReveals(root);
+  if (!els.length) return;
+
+  /* WHY THE FIRST ARMING IS NOT LIKE THE ONES AFTER IT.
+     A page that has just loaded has nothing on screen to lose, so the first
+     screenful gets the flourish. A re-arm is a different animal. #hub-main is
+     rewritten wholesale when the language pack lands (NOOR_I18N.setLang calls
+     NoorPage.rerender), and that fetch finishes a second or more after load,
+     on a page the reader is already reading. Rebuilding those tiles at opacity
+     0 and then waiting on an observer that has not delivered yet blanked the
+     screen for a second and a half, every time, for every reader whose
+     language is not English. That was the bug.
+
+     A rewrite therefore gets no choreography at all, anywhere on the page, not
+     merely above the fold. The tiles below the fold move too: the replacement
+     text is a different length in every language, so the grid reflows for a
+     second afterwards and rows the reader never touched slide up into view.
+     Staging those as arrivals means a reader sitting perfectly still watching
+     blank cards fade in under them, which is the same bug wearing a different
+     hat. There is no arrival to stage on a rewrite. The page is simply there. */
+  if (REVEAL_ARMED.has(host)) { els.forEach(revealNow); return; }
+  REVEAL_ARMED.add(host);
+
+  /* Same reasoning for a first arming that starts part-way down the page: a
+     bfcache restore, a #hash, a reload that kept its scroll position. The
+     reader is looking at the middle of the page, so the middle of the page is
+     lit rather than animated. Only what is still below them earns a flourish. */
+  const arrived = scrollY > 4;
+  const io = revealObserver();
+  els.forEach(el => {
+    if (arrived && el.getBoundingClientRect().top < innerHeight) { revealNow(el); return; }
+    io.observe(el);
+  });
 }
 
 /* ---------------- lazy background images ---------------- */
@@ -440,7 +537,7 @@ function initProgress(bar){
 }
 
 /* ---------------- exports ---------------- */
-window.NoorFX = { initReveal, initLazyBg, initHeroCanvas, initParallax, initTilt, initTileDrift, initProgress, countUp, REDUCED, FINE };
+window.NoorFX = { initReveal, revealNow, initLazyBg, initHeroCanvas, initParallax, initTilt, initTileDrift, initProgress, countUp, REDUCED, FINE };
 window.NOOR_I18N = NOOR_I18N;
 window.t = t;
 window.toast = toast;
@@ -608,22 +705,86 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 })();
 
 /* ================= reveal safety net =================
-   Scroll-reveal sections start invisible and wait for an observer.
-   If any page's observer is missing or broken (the blank-prophets bug),
-   this net force-lights anything near the viewport that stayed dark.
-   The animation still plays normally; this only catches strays. */
+   Every .reveal starts at opacity 0 and waits for an observer. If that
+   observer is missing, was armed before its nodes were laid out, was throttled
+   while the tab was in the background, or simply never delivered, the reader
+   is left looking at a blank screen and concludes the room is empty. This net
+   catches those strays.
+
+   WHAT CHANGED, AND WHY IT MATTERED.
+   The net used to rescue an element by adding .visible. That does not show
+   anything: it starts the element's stagger (up to a fifth of a second) and
+   then its .65s fade, so the rescue landed the better part of a second after
+   the reader had already given up and flicked past. A rescue is not
+   decoration. The net now adds .lit, which is instant, and it only ever
+   touches what the observer actually missed, so a tile revealing normally
+   keeps its flourish untouched. */
 (function () {
   "use strict";
+  function lit(el)  { return el.classList.contains("lit"); }
+  function dark(el) { return !el.classList.contains("visible") && !lit(el); }
+
+  /* the scroll pass: cheap, geometry only, no style reads */
   function unveil() {
-    document.querySelectorAll(".reveal").forEach(function (el) {
-      if (el.classList.contains("in") && el.classList.contains("visible")) return;
+    var vh = innerHeight;
+    document.querySelectorAll(".reveal:not(.lit)").forEach(function (el) {
       var r = el.getBoundingClientRect();
-      /* anything the reader has reached or passed must be lit */
-      if (r.top < innerHeight + 120) { el.classList.add("in"); el.classList.add("visible"); }
+      /* Already scrolled past its top edge. Something the reader has arrived
+         at should simply be there; a tile still fading in above the fold reads
+         as a glitch, not a flourish. */
+      if (r.top < 0) { el.classList.add("in", "visible", "lit"); return; }
+      /* Three quarters of the way in is past arriving and into arrived. The
+         margin below the observer's own trigger point is deliberate: it lets
+         the observer win the race on a normal scroll and keep its fade, and
+         only steps in for what the observer never marked at all. */
+      if (r.top < vh * 0.75 && dark(el)) { el.classList.add("in", "visible", "lit"); }
     });
   }
-  setInterval(unveil, 1700);
-  window.addEventListener("scroll", function () { setTimeout(unveil, 900); }, { passive: true });
+
+  /* the sweep: the absolute guarantee. Nothing on screen may still be dark a
+     second and a half after it got there, whatever the reason. This is the one
+     pass that looks at the pixels rather than the classes, because a class
+     that says lit and a paint that never happened look identical from the
+     outside, and a dropped transition (backgrounded tab, a subtree that had
+     not been laid out, iOS throttling) produces exactly that. */
+  function sweep() {
+    unveil();
+    var vh = innerHeight, now = Date.now();
+    document.querySelectorAll(".reveal:not(.lit)").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      if (now - (el.__lit0 || 0) < 1200) return;        /* still inside its own fade */
+      if (parseFloat(getComputedStyle(el).opacity) < 0.99) el.classList.add("in", "visible", "lit");
+    });
+  }
+
+  /* THE NET HAS TO BE FASTER THAN THE READER.
+     It swept every 1.7 seconds, and on scroll only after a 900 ms delay, so in
+     the worst case a reader who scrolled into a section the observer had not
+     lit sat looking at a blank screen for two seconds. On a phone, with
+     momentum scrolling, that is most of a flick. It now runs on the scroll
+     itself, coalesced into the next frame, which costs one cheap pass over a
+     handful of elements. The interval stays as the last resort for the case
+     where no scroll ever happens: a short page, a tab restored from the
+     back/forward cache, or a page rewritten under a reader sitting still. */
+  var queued = false;
+  function soon() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; unveil(); });
+  }
+  setInterval(sweep, 1500);
+  addEventListener("scroll", soon, { passive: true });
+  addEventListener("resize", soon, { passive: true });
+  addEventListener("orientationchange", soon);
+  addEventListener("load", sweep);
+  /* restored from the back/forward cache, or brought back to the foreground:
+     an observer that was throttled while the tab was hidden may have missed
+     everything the reader scrolled past on the way out */
+  addEventListener("pageshow", sweep);
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) sweep();
+  });
 })();
 
 /* ================= the lamp counter =================
@@ -1232,8 +1393,14 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
      Bumped to 8 for: noor2-night.css rebuilt with every room's own rules
      addressed to that room, which is a change to every page that wears it.
      Bumped to 9 for: the Mushaf's reading surface rebuilt as one design, and
-     the shell's own bar on a converted room made opaque. */
-  var V = "10", left = 0, started = false;
+     the shell's own bar on a converted room made opaque.
+     Bumped to 11 for: the shell's sheet naming the gold Listen pill, so the
+     three rooms that fill that pill get their dark ink back.
+     Bumped to 12 for: noor2.js reading the ground it stands on by compositing
+     it rather than by one background-color string -- a room whose floor is a
+     gradient was being called parchment on the night -- and noor2-legible.css
+     regenerated by a generator that can now see a gradient. */
+  var V = "12", left = 0, started = false;
   function waitFor(n) { left += n; }
   function done() {
     if (--left > 0 || !started) return;
