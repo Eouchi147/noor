@@ -353,7 +353,10 @@ console.log("\n=== the shell ===");
      as parchment on the night; on a room with a footer that puts the parchment's
      dark ink on the night's Share button at 1.23:1. That is behaviour, and the
      comment explaining it was cut to the bone before the ceiling moved. */
-  ok(js.length < 26 * 1024, "noor2.js is under 26 KB (" + js.length + " bytes)");
+  /* 24 -> 25 was the gradient-ground fix; 25 -> 26 was the tone parser; 26 -> 28
+     is the reveal threshold, which was hiding 523 words behind a rule that
+     asked a six thousand pixel section to show a fifth of itself. */
+  ok(js.length < 28 * 1024, "noor2.js is under 28 KB (" + js.length + " bytes)");
   ok(css.includes("--n2-spring:linear(0, 0.006") && css.includes("@supports (transition-timing-function:linear(0,1))") && !/transition:[^;}]*\blinear\b/.test(css.replace(/linear\(/g, "L(")) && !/transition:[^;}]*\blinear\b/.test(css),
      "the spring is defined with a bezier fallback and nothing moves linearly");
   ok(css.includes("scroll-snap-type:y proximity") && css.includes("scroll-snap-stop:normal") && css.includes(".n2-shelf") && css.includes("overscroll-behavior-x:contain") && css.includes("mask-image"),
