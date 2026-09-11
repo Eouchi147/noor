@@ -140,7 +140,7 @@
      all thirty five of its nodes on top of each other at the group's origin,
      which on screen is one dot. The matrix has to be applied here. */
   var LUME_VERT = [
-    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ;",
+    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ; varying vec2 vU;",
     "void main(){",
     "  vec3 pos = position; vec3 nrm = normal;",
     "  #ifdef USE_INSTANCING",
@@ -152,6 +152,7 @@
     "  vV = normalize(-mv.xyz);",
     "  vY = pos.y;",
     "  vZ = -mv.z;",
+    "  vU = uv;",
     "  gl_Position = projectionMatrix * mv;",
     "}"
   ].join("\n");
@@ -179,11 +180,12 @@
      nodes actually were. Depth cueing is one smoothstep and it is most of
      what "there is space in this shot" means. */
   var LUME_FRAG = [
-    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ;",
+    "varying vec3 vN; varying vec3 vV; varying float vY; varying float vZ; varying vec2 vU;",
     "uniform vec3 core; uniform vec3 edge; uniform float rim;",
     "uniform float glow; uniform float alpha; uniform float body;",
     "uniform float band; uniform float sheen;",
     "uniform float dnear; uniform float dfar; uniform float damt;",
+    "uniform float headU; uniform float headOn;",
     "const vec3 KEY = normalize(vec3(-0.42, 0.68, 0.60));",
     "void main(){",
     "  vec3 N = normalize(vN), V = normalize(vV);",
@@ -197,6 +199,16 @@
        geometry only, so it never crawls between frames. */
     "  float b = 1.0 + band * 0.055 * sin(vY * 9.0);",
     "  vec3 c = (core * d * body * b + edge * f + vec3(1.0, 0.97, 0.90) * sp) * glow;",
+    /* A PATH THAT IS ALL ONE BRIGHTNESS IS A LINE, NOT A JOURNEY.
+       The stream was drawn at one strength end to end and read as a stray
+       curve lying in the dark. It is dim ahead of the wavefront and lit
+       behind it, with a hot band at the front, so the eye is told where the
+       thing has got to and which way it is going. Every other figure passes
+       headOn as zero and is untouched. */
+    "  float lit = smoothstep(headU + 0.05, headU - 0.05, vU.x);",
+    "  c *= mix(1.0, mix(0.14, 1.0, lit), headOn);",
+    "  float hot = exp(-pow((vU.x - headU) * 20.0, 2.0)) * headOn;",
+    "  c += edge * hot * 1.15;",
     "  c *= 1.0 - smoothstep(dnear, dfar, vZ) * damt;",
     "  gl_FragColor = vec4(c, alpha);",
     "}"
@@ -216,7 +228,9 @@
         sheen: { value: opt.sheen === undefined ? 0.55 : opt.sheen },
         dnear: { value: opt.dnear === undefined ? 5.0 : opt.dnear },
         dfar:  { value: opt.dfar === undefined ? 13.0 : opt.dfar },
-        damt:  { value: opt.damt === undefined ? 0.72 : opt.damt }
+        damt:  { value: opt.damt === undefined ? 0.72 : opt.damt },
+        headU: { value: 0.0 },
+        headOn:{ value: opt.head ? 1.0 : 0.0 }
       },
       vertexShader: LUME_VERT, fragmentShader: LUME_FRAG,
       transparent: opt.alpha !== undefined && opt.alpha < 1,
@@ -283,7 +297,7 @@
       at: function (u, tsec, f) {
         f = f === undefined ? 1 : f;
         var k = ease(o.ease || "lift", u * 3.2);
-        g.scale.setScalar(lerp(0.55, 1, k));
+        g.scale.setScalar(lerp(0.55, 1, k) * (PORTRAIT ? 0.88 : 1));
         core.material.uniforms.glow.value = lerp(0.15, 1, k) * f;
         shell.material.uniforms.glow.value = lerp(0.0, 0.8, k) * f;
         g.rotation.y = tsec * 0.16;
@@ -318,9 +332,13 @@
       var count = rings[r], here = [];
       var z = (r - (rings.length - 1) / 2) * span;
       var rad = r === 0 ? 0 : 0.46 + r * 0.44;
+      /* wide: a flat oval, so the chain spreads across the frame.
+         tall: a narrow upright one, so it grows up it. Same nodes, same
+         generations, same edges -- a different arrangement of them. */
+      var kx = PORTRAIT ? 0.58 : 1.0, ky = PORTRAIT ? 1.30 : 0.62;
       for (var i = 0; i < count; i++) {
         var a = (i / count) * Math.PI * 2 + r * 0.4;
-        var v = new T.Vector3(Math.cos(a) * rad, Math.sin(a) * rad * 0.62, z);
+        var v = new T.Vector3(Math.cos(a) * rad * kx, Math.sin(a) * rad * ky, z);
         here.push({ p: v, gen: r });
         nodes.push({ p: v, gen: r, i: i });
       }
@@ -398,9 +416,18 @@
         sm.uniforms.glow.value = 1.15 * f;
         em.uniforms.glow.value = 1.05 * clamp01(front / maxGen) * f;
         /* the whole chain turns slowly: depth you can see rather than infer */
-        g.rotation.y = -0.5 + Math.sin(tsec * 0.22) * 0.34;
-        g.rotation.x = -0.14 + Math.cos(tsec * 0.17) * 0.06;
-        g.scale.setScalar(lerp(0.70, 0.86, ease("open", u * 2.4)));
+        if (PORTRAIT) {
+          /* seen nearly end on, so the chain is compact across the frame,
+             and stretched in y so it fills the height it has been given */
+          g.rotation.y = -0.16 + Math.sin(tsec * 0.22) * 0.16;
+          g.rotation.x = -0.08 + Math.cos(tsec * 0.17) * 0.05;
+        } else {
+          g.rotation.y = -0.5 + Math.sin(tsec * 0.22) * 0.34;
+          g.rotation.x = -0.14 + Math.cos(tsec * 0.17) * 0.06;
+        }
+        var gs = lerp(0.70, 0.86, ease("open", u * 2.4)) * (PORTRAIT ? 0.68 : 1);
+        g.scale.setScalar(gs);
+        g.position.y = PORTRAIT ? 0.42 : 0;
       }
     };
   };
@@ -410,42 +437,81 @@
      says "and it travelled": a text out of a city, a practice down a century. */
   FIG.stream = function (o) {
     var g = new T.Group();
-    var curve = new T.CatmullRomCurve3((o.path || [
-      [-4.2, -1.1, 0], [-1.6, 1.0, 1.2], [1.4, -0.7, -1.0], [4.2, 1.0, 0]
-    ]).map(function (p) { return new T.Vector3(p[0], p[1], p[2]); }));
+    /* the path is shorter and deeper than the first one, which spanned the
+       whole frame and read as a horizon rather than a route */
+    var WIDE_PATH = o.path || [
+      [-2.75, -1.15, 1.0], [-1.25, 0.5, -0.55], [0.3, -0.3, 0.95], [1.75, 0.8, -0.45], [2.8, -0.1, 0.55]
+    ];
+    /* the same five waypoints, turned a quarter turn: across the wide frame,
+       down the tall one. It is one journey either way. */
+    var TALL_PATH = o.tallPath || WIDE_PATH.map(function (q) { return [-q[1] * 0.62, -q[0] * 0.74 + 0.35, q[2] * 0.8]; });
+    function makeCurve(pts) {
+      return new T.CatmullRomCurve3(pts.map(function (q) { return new T.Vector3(q[0], q[1], q[2]); }));
+    }
+    var curve = makeCurve(PORTRAIT ? TALL_PATH : WIDE_PATH);
 
-    var tubeM = lumeMat(C.gold, C.goldhi, { rim: 2.0, glow: 0.7, alpha: 0.6, add: true, depthWrite: false, body: 0.45 });
-    var tube = new T.Mesh(new T.TubeGeometry(curve, 240, 0.036, 16, false), tubeM);
+    var tubeM = lumeMat(C.gold, C.pale,
+      { rim: 1.5, glow: 1.25, body: 0.9, sheen: 0.4, head: true,
+        dnear: 5.0, dfar: 12.0, damt: 0.55 });
+    var tube = new T.Mesh(new T.TubeGeometry(curve, 320, 0.021, 16, false), tubeM);
     g.add(tube);
 
-    var n = o.motes || 420;
-    var pos = new Float32Array(n * 3), off = [];
-    for (var i = 0; i < n; i++) off.push(hash(i, 13));
+    /* THE SPECKS RIDE THE WAVEFRONT, THEY DO NOT FILL THE PIPE.
+       Scattered evenly along the whole path they were invisible: a few dozen
+       dim points spread over four units, none of them bright enough to reach
+       the bloom's bright pass. They are gathered behind the head now, where
+       there is something to see, and they thin out with the distance they
+       have travelled -- which is what carrying something looks like. */
+    var n = o.motes || 300;
+    var pos = new Float32Array(n * 3), lag = [];
+    for (var i = 0; i < n; i++) lag.push(Math.pow(hash(i, 13), 1.7) * 0.34 + hash(i, 29) * 0.02);
     var pg = new T.BufferGeometry();
     pg.setAttribute("position", new T.BufferAttribute(pos, 3));
     var pts = new T.Points(pg, new T.PointsMaterial({
-      color: C.pale.clone(), size: 0.14, map: dotTex(), transparent: true, opacity: 0.9,
-      blending: T.AdditiveBlending, depthWrite: false
+      color: C.pale.clone(), size: 0.145, map: dotTex(), transparent: true, opacity: 0.95,
+      blending: T.AdditiveBlending, depthWrite: false, sizeAttenuation: true
     }));
     g.add(pts);
-    var v = new T.Vector3();
+
+    /* and one bright bead at the very front, so the eye has a thing to follow
+       rather than a texture to watch */
+    var bead = new T.Mesh(new T.SphereGeometry(0.052, 24, 18),
+      lumeMat(C.goldhi, C.pale, { rim: 1.3, glow: 1.15, body: 1.0, sheen: 0.8, damt: 0.3 }));
+    g.add(bead);
+
+    var V3 = new T.Vector3();
 
     return {
       root: g,
       at: function (u, tsec, f) {
         f = f === undefined ? 1 : f;
-        var head = clamp01(ease("linear", u * 1.15));
+        /* the head crosses the whole path over the first four fifths of the
+           beat and then rests at the end, so the last second is the finished
+           journey rather than a cut mid-flight */
+        var head = clamp01(ease("outQuint", u / 0.8));
+        tubeM.uniforms.headU.value = head;
+        tubeM.uniforms.glow.value = 1.25 * f;
+
         var p = pg.attributes.position.array;
-        for (var i = 0; i < off.length; i++) {
-          var s = (off[i] + tsec * 0.14) % 1;
-          var live = s <= head ? 1 : 0;
-          curve.getPointAt(Math.min(0.9999, s), v);
-          p[i * 3] = v.x * live; p[i * 3 + 1] = live ? v.y : 999; p[i * 3 + 2] = v.z * live;
+        for (var i = 0; i < lag.length; i++) {
+          var s = head - lag[i] - Math.sin(tsec * 2.1 + i) * 0.006;
+          if (s <= 0.0005) { p[i * 3 + 1] = 9999; continue; }
+          curve.getPointAt(Math.min(0.9999, s), V3);
+          /* a little scatter across the pipe, steady in time so nothing crawls */
+          p[i * 3]     = V3.x + (hash(i, 41) - 0.5) * 0.085;
+          p[i * 3 + 1] = V3.y + (hash(i, 43) - 0.5) * 0.085;
+          p[i * 3 + 2] = V3.z + (hash(i, 47) - 0.5) * 0.085;
         }
         pg.attributes.position.needsUpdate = true;
-        tubeM.uniforms.glow.value = 0.7 * ease("outExpo", u * 3) * f;
-        pts.material.opacity = 0.9 * f;
-        g.rotation.y = Math.sin(tsec * 0.2) * 0.22;
+        pts.material.opacity = 0.95 * f;
+
+        curve.getPointAt(Math.min(0.9999, Math.max(0.0001, head)), V3);
+        bead.position.copy(V3);
+        bead.material.uniforms.glow.value = 1.15 * f * (head < 0.999 ? 1 : 0.6);
+        bead.visible = head > 0.004;
+
+        g.rotation.y = Math.sin(tsec * 0.17) * 0.16;
+        g.rotation.x = -0.05 + Math.cos(tsec * 0.13) * 0.045;
       }
     };
   };
@@ -478,7 +544,7 @@
       at: function (u, tsec, f) {
         f = f === undefined ? 1 : f;
         var k = ease("open", u * 2.6);
-        g.scale.setScalar(lerp(0.62, 0.84, k));
+        g.scale.setScalar(lerp(0.62, 0.84, k) * (PORTRAIT ? 0.72 : 1));
         for (var i = 0; i < parts.length; i++) {
           var p = parts[i];
           p.m.rotation.z = tsec * 0.22 * p.dir * (1 + i * 0.3);
@@ -541,7 +607,7 @@
          until its brightest ink falls just under the threshold, so the card
          is read and only its gold edge gives off light. */
       var plane = new T.Mesh(new T.PlaneGeometry(W, H),
-        new T.MeshBasicMaterial({ map: tex, color: 0x7C7C7C, transparent: false }));
+        new T.MeshBasicMaterial({ map: tex, color: 0x9E9E9E, transparent: false }));
       /* the lit edge: a slightly larger plane behind, in gold, additive.
          It is what makes a flat rectangle read as an object with a thickness
          rather than a sticker. */
@@ -554,23 +620,37 @@
       items.push({ card: card, plane: plane, edge: edge, i: i });
     }
 
-    var spread = o.spread === undefined ? 1.18 : o.spread;
+    var spread = o.spread === undefined ? 1.06 : o.spread;
 
     return {
       root: g,
       at: function (u, tsec, f) {
         f = f === undefined ? 1 : f;
-        var open = ease("open", u * 2.0);
+        /* they open from a little apart rather than from a stack: three
+           cards on top of each other are three captions on top of each other,
+           and the first half second of the beat was unreadable */
+        var open = lerp(0.58, 1.0, ease("open", u * 2.0));
+        g.position.y = PORTRAIT ? 0.60 : 0;
         for (var i = 0; i < items.length; i++) {
           var it = items[i];
           var mid = (items.length - 1) / 2;
           var slot = (i - mid);
           var k = ease("lift", (u * 2.4) - i * 0.13);
-          it.card.position.x = slot * (W * 0.78 * spread) * open;
-          it.card.position.y = Math.sin(tsec * 0.5 + i) * 0.045;
-          it.card.position.z = -Math.abs(slot) * 0.28 * open;
-          it.card.rotation.y = -slot * 0.20 * open + Math.sin(tsec * 0.24) * 0.05;
-          it.card.scale.setScalar(lerp(0.82, 1, k));
+          if (PORTRAIT) {
+            it.card.position.x = Math.sin(tsec * 0.4 + i) * 0.03;
+            it.card.position.y = -slot * (H * 1.02) * open;
+            it.card.position.z = -Math.abs(slot) * 0.22 * open;
+            it.card.rotation.y = Math.sin(tsec * 0.24) * 0.05;
+            it.card.rotation.x = slot * 0.16 * open;
+            it.card.scale.setScalar(lerp(0.82, 1, k) * 0.80);
+          } else {
+            it.card.position.x = slot * (W * 0.92 * spread) * open;
+            it.card.position.y = Math.sin(tsec * 0.5 + i) * 0.045;
+            it.card.position.z = -Math.abs(slot) * 0.28 * open;
+            it.card.rotation.y = -slot * 0.20 * open + Math.sin(tsec * 0.24) * 0.05;
+            it.card.rotation.x = 0;
+            it.card.scale.setScalar(lerp(0.82, 1, k));
+          }
           it.plane.material.opacity = f;
           it.plane.material.transparent = f < 1;
           it.edge.material.opacity = 0.62 * k * f;
@@ -586,6 +666,20 @@
 
   var canvas, renderer, scene, cam, W = 0, H = 0;
   var rtScene, rtA, rtB, rtC, blurMat, cutMat, quadScene, quadCam, comboMat, showMat, DEBUG = "";
+  /* THE TALL FRAME IS A SECOND COMPOSITION, NOT A CROP.
+     spec.py says it in words -- "a 16:9 film squeezed into 9:16 reads as a
+     mistake" -- and the CSS obeys it: the words are laid out twice. This
+     layer did not. It had one perspective camera with a fixed vertical field,
+     so in 9:16 the horizontal view collapsed to a third and every figure was
+     cut off at both edges: the chain lost its outer generations, the path ran
+     off both sides, two of the three cards were outside the picture.
+
+     Portrait cannot show a wide figure at the same size -- that is geometry,
+     not craft -- so the figures are ARRANGED differently for it. A chain that
+     spreads sideways in the wide frame grows upward in the tall one; a path
+     that crosses left to right falls top to bottom; cards that fan out stack
+     up. Same objects, same beat, same seconds: a second composition. */
+  var PORTRAIT = false;
   var current = null, cues = [], BLOOM_DIV = 8, SCALE = 1, SS = 2;
 
   function makeTargets() {
@@ -682,7 +776,18 @@
     "  vec3 c = filmic((b.rgb + g) * exposure);",
     "  float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);",
     "  c += (n - 0.5) / 255.0;",
-    "  gl_FragColor = vec4(c, clamp(max(b.a, dot(g, vec3(0.55))), 0.0, 1.0));",
+        /* THE COVERAGE IS THE LIGHT, NOT THE ALPHA CHANNEL.
+       Every additive material on this layer writes alpha as well as colour,
+       and three.js's additive blend ACCUMULATES it: a shell whose colour has
+       faded to nothing still leaves a4 behind. Composited over the room, that
+       is a black disc where the object used to be -- which is exactly what
+       appeared for a third of a second at the head of every beat, on the orb,
+       on the rings and on the cards.
+       Everything in this layer is light on black. So how much of a pixel is
+       covered IS how much light is in it, and reading coverage off the
+       luminance cannot go wrong the way an accumulated alpha can. */
+    "  float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));",
+    "  gl_FragColor = vec4(c, clamp(lum * 2.4 + dot(g, vec3(0.35)), 0.0, 1.0));",
     "}"
   ].join("\n");
 
@@ -705,12 +810,12 @@
         vertexShader: QUAD_VERT, fragmentShader: BLUR_FRAG, depthTest: false, depthWrite: false
       });
       cutMat = new T.ShaderMaterial({
-        uniforms: { tex: { value: null }, cut: { value: 0.46 }, knee: { value: 0.22 } },
+        uniforms: { tex: { value: null }, cut: { value: 0.57 }, knee: { value: 0.20 } },
         vertexShader: QUAD_VERT, fragmentShader: CUT_FRAG, depthTest: false, depthWrite: false
       });
       comboMat = new T.ShaderMaterial({
         uniforms: { base: { value: null }, bloom: { value: null }, bloom2: { value: null },
-                    amt: { value: 5.4 }, wide: { value: 1.05 },
+                    amt: { value: 5.8 }, wide: { value: 1.05 },
                     exposure: { value: 0.98 }, texel: { value: new T.Vector2(1, 1) } },
         vertexShader: QUAD_VERT, fragmentShader: COMBO_FRAG,
         depthTest: false, depthWrite: false, transparent: true
@@ -788,7 +893,7 @@
       scene.add(f.root);
       cues.push({ f: f, at: c.at, dur: c.dur, shot: c.shot || "push",
                   fade: c.fade === undefined ? 520 : c.fade,
-                  dim: c.place === "over" ? 0.46 : 1 });
+                  dim: c.place === "over" ? 0.62 : 1 });
     });
   }
 
@@ -823,7 +928,9 @@
     /* the camera answers the beat's own shot */
     var s = SHOT[(live && live.shot) || "hold"] || SHOT.hold;
     var k = ease(s.ease, u);
-    cam.position.set(lerp(s.x[0], s.x[1], k), lerp(s.y[0], s.y[1], k), lerp(s.z[0], s.z[1], k));
+    var zk = PORTRAIT ? 1.16 : 1;
+    cam.position.set(lerp(s.x[0], s.x[1], k) * (PORTRAIT ? 0.6 : 1),
+                     lerp(s.y[0], s.y[1], k), lerp(s.z[0], s.z[1], k) * zk);
     cam.lookAt(0, 0, 0);
 
     /* base pass */
@@ -880,6 +987,7 @@
     size: size, mount: mount, draw: draw,
     /* how many samples a pixel of the finished frame is boxed down from.
        2 means the scene is drawn at four times the area. */
+    frame: function (name) { PORTRAIT = (name === "tall"); },
     supersample: function (v) { SS = Math.max(1, v); size(); },
     debug: function (m) { DEBUG = m || ""; },
     scale: function (v) { SCALE = v; size(); },
