@@ -3296,9 +3296,18 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
     lead:  "A countdown, only when something is coming",
     light: "The day's card",
     word:  "One of 523 words, Arabic and plain English",
-    reelA: "A reel: the astonishing half of the library",
-    reelB: "A reel: the rooted half",
-    dusk:  "One of 71 chapters of the Path"
+    reelA: "A reel, the morning one",
+    reelC: "A reel, at noon",
+    /* The afternoon half was given to the silent shorts on 13 September 2026.
+       It REPLACED a reel rather than adding a twelfth post to the day, which
+       is the number at which an account starts getting looked at. The slot id
+       is deliberately unchanged, so nothing in the store, the sent history or
+       the healing pass has to be migrated: only what it draws from changed,
+       and that is one line of the rota in api/_schedule.js. */
+    reelD: "A silent short, in the afternoon",
+    reelB: "A reel, in the evening",
+    dusk:  "One of 71 chapters of the Path",
+    reelE: "A reel, the last of the night"
   };
   function drawSchedule(j) {
     var el = $("so-sched");

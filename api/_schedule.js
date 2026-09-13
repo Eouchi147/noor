@@ -197,7 +197,24 @@ const ROTA = {
      house and taught nothing. */
   morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
   noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-  afternoon: ["name", "word", "know", "verse", "verse", "know", "word"],
+  /* THE AFTERNOON IS THE SILENT SHORT, AND IT REPLACES RATHER THAN ADDS.
+     The owner asked for the new format to have a slot of its own and named
+     the real risk in the same breath: eleven posts a day is already a lot to
+     send from one account, and a twelfth is the sort of thing that gets an
+     account looked at. So nothing is added. The afternoon was the least
+     distinct of the six reel halves, and it is the one the shorts take. The
+     daily volume does not change by one post.
+
+     THIS LINE IS ALSO SELF DISABLING, which is why it needs no flag and no
+     switch to be safe to ship. chooseReel walks [want, ...FALLBACK]; "short"
+     is deliberately NOT in FALLBACK; and the filter under it yields nothing
+     for a kind with no rows. So until rows of kind "short" actually exist in
+     the manifest this line does nothing whatever and the afternoon behaves
+     exactly as it does today. The moment the shorts are on the site it
+     starts using them, and because "short" is absent from FALLBACK they can
+     never leak into any other half. Deleting this one line restores the old
+     rota exactly. */
+  afternoon: ["short", "short", "short", "short", "short", "short", "short"],
   evening:   ["word", "light", "know", "word", "verse", "name", "word"],
   night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"],
   late:      ["verse", "verse", "verse", "verse", "verse", "verse", "verse"]
