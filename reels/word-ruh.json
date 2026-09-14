@@ -1,5 +1,10 @@
 {
  "id": "word-ruh",
  "kind": "word",
- "secs": 10.43
+ "secs": 10.43,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-ruh.mp4",
+ "video_asset": 563586186,
+ "store": "release",
+ "bytes": 1533596,
+ "uploaded": "2026-09-14"
 }

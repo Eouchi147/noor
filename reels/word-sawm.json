@@ -1,5 +1,10 @@
 {
  "id": "word-sawm",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-sawm.mp4",
+ "video_asset": 563594556,
+ "store": "release",
+ "bytes": 2097666,
+ "uploaded": "2026-09-14"
 }

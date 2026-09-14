@@ -1,5 +1,10 @@
 {
  "id": "word-dunya",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-dunya.mp4",
+ "video_asset": 563503447,
+ "store": "release",
+ "bytes": 2101705,
+ "uploaded": "2026-09-14"
 }

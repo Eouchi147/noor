@@ -1,5 +1,10 @@
 {
  "id": "word-bath",
  "kind": "word",
- "secs": 10.43
+ "secs": 10.43,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-bath.mp4",
+ "video_asset": 563495953,
+ "store": "release",
+ "bytes": 1573741,
+ "uploaded": "2026-09-14"
 }

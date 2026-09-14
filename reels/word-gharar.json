@@ -1,5 +1,10 @@
 {
  "id": "word-gharar",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-gharar.mp4",
+ "video_asset": 563508619,
+ "store": "release",
+ "bytes": 2141647,
+ "uploaded": "2026-09-14"
 }

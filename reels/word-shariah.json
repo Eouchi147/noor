@@ -1,5 +1,10 @@
 {
  "id": "word-shariah",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-shariah.mp4",
+ "video_asset": 563597431,
+ "store": "release",
+ "bytes": 2148973,
+ "uploaded": "2026-09-14"
 }

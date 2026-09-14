@@ -1,5 +1,10 @@
 {
  "id": "word-kursi",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-kursi.mp4",
+ "video_asset": 563542886,
+ "store": "release",
+ "bytes": 2174513,
+ "uploaded": "2026-09-14"
 }
