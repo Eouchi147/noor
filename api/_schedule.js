@@ -535,7 +535,7 @@ function buildSlotInner(slot, ctx) {
    the machine used to send, which is worse than the full one and better than
    none.
 --------------------------------------------------------------------------- */
-export async function slotExtras(base, date, index, slot, hijri) {
+export async function slotExtras(base, date, index, slot, hijri, pin) {
   const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
@@ -546,7 +546,12 @@ export async function slotExtras(base, date, index, slot, hijri) {
   const half = reelHalf(slot);
   if (half) {
     const man = await grab(base + "/reels/index.json");
-    const c = chooseReel(man && Array.isArray(man.cards) ? man.cards : [], date, half, hijri || null);
+    const cards = man && Array.isArray(man.cards) ? man.cards : [];
+    /* a repair is pinned to the reel that went out: the record names it, and
+       the rota's walk moves when the shelf grows (every Monday), so a retry
+       composed from the rota came out as a different card and was refused
+       as drift (every reel of 15 September 2026 after the shelf grew) */
+    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null);
     /* the row carries the video's own URL once the shelf is on the Blob
        store; an older manifest has none, and the file is on the site */
     const isUrl = v => typeof v === "string" && /^https:\/\//.test(v);

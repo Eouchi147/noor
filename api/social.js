@@ -686,13 +686,24 @@ const IG_POLL_FLOOR = Number(process.env.IG_POLL_FLOOR_MS || 20000);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function igPublish(creationId, id, tok, G) {
-  const p = await fetch(`${G}/${id}/media_publish`, {
-    method: "POST", headers: { "content-type": "application/json" },
-    body: JSON.stringify({ creation_id: creationId, access_token: tok })
-  });
-  const pj = await p.json().catch(() => ({}));
-  if (!p.ok) return { ok: false, error: metaErr(pj, "publish http " + p.status), step: "publish", ...metaCode(pj) };
-  return { ok: true, id: pj.id || creationId };
+  /* "The media is not ready for publishing, please wait for a moment" (code
+     9007, subcode 2207027): a picture container asked to publish a few
+     seconds after it was made. The dusk story failed on it day after day
+     (the record of 15 September 2026). It is a wait, not a refusal: the
+     publish is asked again, four seconds apart, up to four times. */
+  let pj = {}, p = null;
+  for (let i = 0; i < 4; i++) {
+    if (i) await sleep(4000);
+    p = await fetch(`${G}/${id}/media_publish`, {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ creation_id: creationId, access_token: tok })
+    });
+    pj = await p.json().catch(() => ({}));
+    if (p.ok) return { ok: true, id: pj.id || creationId };
+    const code = metaCode(pj);
+    if (!(Number(code.code) === 9007 || /not ready for publishing/i.test(metaErr(pj, "")))) break;
+  }
+  return { ok: false, error: metaErr(pj, "publish http " + (p && p.status)), step: "publish", ...metaCode(pj) };
 }
 
 /* Publish a container that was still transcoding when its run ran out of
@@ -1610,6 +1621,17 @@ export async function freshVideoUrl(url, fetcher) {
   return url;
 }
 
+/* the same origin door to a reel's bytes, for a network that cannot fetch
+   the store's signed link; the store's link when the post is not a reel the
+   manifest knows */
+function reelDoor(p) {
+  if (!p || !p.reel || !p.key) return p && p.video;
+  let origin = "https://" + SITE();
+  try { origin = new URL(String(p.link || "")).origin; } catch { }
+  if (!/noorcodex\.(com|ca)$/.test(origin)) origin = "https://" + SITE();
+  return origin + "/api/reel?id=" + encodeURIComponent(String(p.key));
+}
+
 async function sendOne(ch, shaped, post, left) {
   const p = { ...post, caption: shaped.text };
   if (p.video) p.video = await freshVideoUrl(p.video);
@@ -1620,8 +1642,14 @@ async function sendOne(ch, shaped, post, left) {
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
   if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
-  /* a reel goes to the channel as a video, by url: Telegram fetches it */
-  if (ch === "telegram") return await fn({ ...shaped, video: p.video || null });
+  /* a reel goes to the channel as a video, by url: Telegram fetches it.
+     Not the signed release link: Telegram answered "failed to get HTTP URL
+     content" to every one of them (the record of 15 September 2026, four
+     tries a slot, never a reel on the channel). The house's own door,
+     /api/reel?id=, streams the file as video/mp4 with no redirect, which is
+     what api/reel.js was built for; every reel is under 8 MB, inside
+     Telegram's 20 MB for a url upload. */
+  if (ch === "telegram") return await fn({ ...shaped, video: p.video ? reelDoor(p) : null });
   /* and Threads takes it the same way, as a VIDEO container it processes */
   if (ch === "threads") return await fn({ ...shaped, video: p.video || null });
   return await fn(shaped);
@@ -1650,7 +1678,7 @@ export async function composeSlot(host, date, slotId, opts = {}) {
     if (r.ok) index = await r.json(); } catch { } }
   /* the day's chapter and word, in full, so the caption carries the material
      the library actually wrote rather than the index's one line */
-  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri);
+  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
@@ -1809,7 +1837,9 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
              note: (ch === "threads" ? "Threads" : "Instagram") + " already had this one; it was asked again rather than sent again" };
   }
 
-  const post = await composeSlot(host, date, slotId, opts);
+  /* a reel slot is rebuilt from the reel the record names, not from the
+     rota, which moves when the shelf grows */
+  const post = await composeSlot(host, date, slotId, { ...opts, reel: (rec && rec.reel) || null });
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
   if (post.only && !post.only.includes(ch))
     return { ...out, ok: false, error: "this post is not offered to " + ch };
@@ -2177,10 +2207,16 @@ const HEAL_MAX_TRIES = Number(process.env.HEAL_MAX_TRIES || 4);
    these is really "the very next run" and the rest space out from there. */
 const HEAL_BACKOFF = [0, 15, 60, 180];
 
-export function healable(r) {
+export function healable(r, rec) {
   if (!r || r.ok || r.pending) return false;
   if (r.skipped) return false;          /* never asked: not configured */
-  if (r.fatal) return false;            /* nothing to send, or nothing to send it with */
+  /* a reel refused as drift was the healer's own mistake (a retry composed
+     from a rota that had moved); repairs are pinned to the record's reel
+     since 15 September 2026, so on a record that names its reel a drift
+     stamp is tried again like any fault. A card's drift stays fatal: the
+     day's card composes from a memory and can truly come out different. */
+  const driftReel = r.drift && rec && rec.reel;
+  if (r.fatal && !driftReel) return false; /* nothing to send, or nothing to send it with */
   const hit = FAULTS.find(f => f.when(Number(r.code), Number(r.sub || 0)));
   /* a token or a permission is a person's job, not a retry's */
   if (hit && (hit.fix === "token" || hit.fix === "manual")) return false;
@@ -2229,7 +2265,7 @@ export async function healFailures(host, date, out, now, hasTime) {
       for (const ch of liveChannels()) {
         if (done >= HEAL_PER_RUN || !room()) return ran;
         const r = rec.results[ch];
-        if (!healable(r) || !healDue(r, nowMs)) continue;
+        if (!healable(r, rec) || !healDue(r, nowMs)) continue;
         if (isReel && (ch === "instagram" || ch === "pinterest") && !room(HEAL_REEL_RESERVE_MS)) continue;
         done++;
         /* one repair that throws must not take the others with it */
