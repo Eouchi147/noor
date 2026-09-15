@@ -215,6 +215,13 @@ const ROTA = {
      never leak into any other half. Deleting this one line restores the old
      rota exactly. */
   afternoon: ["short", "short", "short", "short", "short", "short", "short"],
+  /* what the afternoon showed before the shorts, and shows again on any day
+     the shelf has no short: the audit of 15 September 2026 found that "short"
+     with no rows fell through to FALLBACK, which begins with "verse", so the
+     afternoon had been a verse every day since the line went in (24 verses a
+     week for 19 planned, and only 479 distinct verses in six months). The
+     stand in is the old rota for that weekday, walked by step like any kind. */
+  afternoonUntilShorts: ["name", "word", "know", "verse", "verse", "know", "word"],
   evening:   ["word", "light", "know", "word", "verse", "name", "word"],
   night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"],
   late:      ["verse", "verse", "verse", "verse", "verse", "verse", "verse"]
@@ -239,15 +246,20 @@ const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
 const HALVES = ["morning", "noon", "afternoon", "evening", "late", "night"];
 const REEL_EPOCH = Date.UTC(2026, 8, 6);          /* Sunday 6 September 2026 */
 
-export function reelStep(kind, dateStr, half) {
+export function reelStep(kind, dateStr, half, noShorts) {
   const t = Date.parse(String(dateStr) + "T00:00:00Z");
   if (!isFinite(t)) return 0;
   const day = Math.floor((t - REEL_EPOCH) / 86400000);
   const week = Math.floor(day / 7), dow = ((day % 7) + 7) % 7;
   const hi = HALVES.indexOf(half);
+  /* the rota as it is walked: while the shelf has no short, the afternoon
+     is its stand in row, and the kinds on that row count their afternoon
+     slots as steps, or an afternoon word would share its step with the
+     evening word of the same day and could land on the same card */
+  const row = h => (h === "afternoon" && noShorts) ? ROTA.afternoonUntilShorts : (ROTA[h] || []);
   let perWeek = 0, before = 0;
   for (let d = 0; d < 7; d++) for (let h = 0; h < HALVES.length; h++) {
-    if ((ROTA[HALVES[h]] || [])[d] !== kind) continue;
+    if (row(HALVES[h])[d] !== kind) continue;
     perWeek++;
     if (d < dow || (d === dow && h < hi)) before++;
   }
@@ -274,7 +286,10 @@ export function chooseReel(cards, dateStr, half, hijri) {
     today.sort((a, b) => (String(a.id).startsWith("month-") ? 1 : 0) - (String(b.id).startsWith("month-") ? 1 : 0));
     if (today.length) return today[0];
   }
-  const want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
+  let want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
+  const noShorts = !all.some(c => kindOf(c) === "short");
+  if (want === "short" && noShorts)
+    want = ROTA.afternoonUntilShorts[isFinite(dow) ? dow : 0];
   const order = [want, ...FALLBACK.filter(k => k !== want)];
   for (const kind of order) {
     /* the old manifests carried no kind and no other kind than light; a card
@@ -288,7 +303,7 @@ export function chooseReel(cards, dateStr, half, hijri) {
       /* the kind the rota asked for walks by slot count; a stand-in kind (the
          shelf mid-render) and the day's card, which has one slot a half a
          week and cannot meet itself, walk by the day as before */
-      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half), "reel:" + kind);
+      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half, noShorts), "reel:" + kind);
       return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
     }
   }

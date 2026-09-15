@@ -37,7 +37,7 @@ const UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos?uploadTy
 export const SCOPE = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly";
 const K_ACCESS = "nsoc:yt:access";
 const K_DAY = d => "nsoc:yt:day:" + d;
-export const DAILY_CAP = 5;          /* 5 x 1,600 = 8,000 of the 10,000 units, with room for the rest */
+export const DAILY_CAP = 6;          /* six reel slots a day: 6 x 1,600 = 9,600 of the 10,000 units; the reads cost one to three each. It was 5, and the sixth reel of every day was refused as over quota, forever. */
 const CATEGORY_EDUCATION = "27";
 
 export const configured = () => !!(env("YT_CLIENT_ID") && env("YT_CLIENT_SECRET") && env("YT_REFRESH_TOKEN"));

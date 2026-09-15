@@ -74,16 +74,16 @@ export default async function handler(req, res) {
     }
   } catch (e) { out.lantern = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
-  /* The day's post. It sends only if the mode dial allows it, only once
-     per day whatever happens, and never before the owner has turned it on. */
-  try {
-    const { runDaily } = await import("./social.js");
-    out.social = await runDaily(String(host).replace(/^https?:\/\//, ""), today, {});
-    if (out.social && out.social.post) {
-      /* the caption is long and the console can read it from the log */
-      out.social.post = { id: out.social.post.light.id, title: out.social.post.light.title };
-    }
-  } catch (e) { out.social = { err: String(e && e.message || e).slice(0, 80) }; }
+  /* The day's post used to be sent from here, through runDaily, the one post
+     a day machine that the slot dispatcher in social.js replaced. It kept
+     running: every night at 04:00 it composed the day's card and, in auto
+     mode, put it on the Facebook and Instagram FEED, ignoring the owner's
+     rule of 9 September 2026 that the cards are stories only; at noon the
+     light slot then sent the same card as a story. Two records that never
+     read each other, one card twice. Retired 15 September 2026. The slots
+     are the only path that posts; the console's Post now on the old day
+     record goes through runDaily by hand, which is the owner's own act. */
+  out.social = { skipped: "the day's card is posted by its slot, not from here" };
 
   /* The night shift. The Lantern reads the house's own published passages and
      says which ones an editor should look at again, sorts the inbox so a

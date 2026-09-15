@@ -87,10 +87,24 @@ export const hijriName = m => HIJRI_NAMES[m] || "";
 /* ---------------------------------------------------------------------------
    the library itself, fetched from this deployment's own static files
 --------------------------------------------------------------------------- */
+/* the host the library is read from: the site's own name, never a
+   deployment address. Vercel Authentication walls every *.vercel.app
+   address of this project (all_except_custom_domains), and the hourly cron
+   arrives with that address as its host; until 15 September 2026 this fetched
+   lights/all.json from it, got the sign in page, kept an empty library, and
+   the day's card slot answered "the library is not reachable" every hour
+   from noon to dusk. The reels never suffered it: _reels.js already pins its
+   host the same way. */
+const SITE = () => (process.env.SITE_HOST || "noorcodex.com").replace(/^https?:\/\//, "").replace(/\/$/, "");
+export function libraryHost(host) {
+  const h = String(host || "").replace(/^https?:\/\//, "").split("/")[0];
+  return /(^|\.)noorcodex\.(com|ca)$/.test(h) ? h : SITE();
+}
+
 export async function library(host) {
   const now = Date.now();
   if (LIB.lights.length && now - LIB.at < SIX_HOURS) return LIB.lights;
-  const base = "https://" + String(host || "noorcodex.com").replace(/^https?:\/\//, "");
+  const base = "https://" + libraryHost(host);
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 5000);

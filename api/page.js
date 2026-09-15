@@ -241,7 +241,7 @@ const wordList = (ws, eyebrow) => ws.length ? `<p class="n2-eyebrow">${eyebrow}<
 const lightList = (ls, eyebrow) => ls.length ? `<p class="n2-eyebrow">${eyebrow}</p><ul class="n2-shelf">` + ls.map(L =>
   `<li><a href="/light/${attr(L.id)}"><b>${esc(L.t)}</b><small>${esc(L.d || L.c)}</small></a></li>`).join("") + "</ul>" : "";
 const jsonld = objs => `<script type="application/ld+json">${JSON.stringify(objs).replace(/</g, "\\u003c")}</script>`;
-const crumbs = list => ({ "@type": "BreadcrumbList", itemListElement: list.map(([name, url], i) => ({ "@type": "ListItem", position: i + 1, name, item: SITE + url })) });
+const crumbs = list => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: list.map(([name, url], i) => ({ "@type": "ListItem", position: i + 1, name, item: SITE + url })) });
 const walk = (prev, next) => (prev || next) ? `<div class="n2-walk">` +
   (prev ? `<a href="${attr(prev[0])}">${SVG.left}<span class="n2-walk-t"><small>${esc(prev[2] || "Before")}</small>${esc(prev[1])}</span></a>` : "<i></i>") +
   (next ? `<a class="n2-next" href="${attr(next[0])}"><span class="n2-walk-t"><small>${esc(next[2] || "After")}</small>${esc(next[1])}</span>${SVG.right}</a>` : "") + "</div>" : "";

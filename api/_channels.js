@@ -441,7 +441,16 @@ export async function sendPinterest(shaped, opts = {}) {
      so the path is exercised end to end before Standard access arrives */
   if (shaped.video && !pinSandbox()) {
     const v = await pinUploadVideo(shaped.video, tok, opts.fetch);
-    if (!v.ok) return v;
+    if (!v.ok) {
+      /* the same stage the pin call recognises below: Trial access refuses
+         the media step too, and until 15 September 2026 that refusal came
+         back as a plain fault, so every reel slot stayed partial, the healer
+         spent its tries on it, and no reel could ever leave the shelf */
+      if (/trial access/i.test(String(v.err)))
+        return { ok: false, fatal: true, trial: true, waiting: true,
+                 err: "Pinterest is waiting on its Standard-access review; video pins resume by themselves when it is granted" };
+      return v;
+    }
     media = v.id;
   }
   const body = {

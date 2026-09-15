@@ -957,8 +957,50 @@ async function postFacebookReel(post) {
     });
     const fj = await fin.json().catch(() => ({}));
     if (!fin.ok) return { ok: false, error: metaErr(fj, "finish http " + fin.status) };
-    return { ok: true, id: sj.video_id };
+    /* "finish" answers 200 before the page has the video: Meta fetches the
+       file and processes it afterwards, and a reel it could not fetch or
+       could not encode never appears, with nothing to say so. Until 15
+       September 2026 the 200 was recorded as sent and the reel retired.
+       Now the video is asked what became of it, and the answer is the
+       record: ready with its permalink, still processing (the finisher asks
+       again next hour), or an error in Meta's own words. */
+    return await fbReelStatus(sj.video_id, tok, 3);
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
+}
+
+/* the video's own state on the page, asked up to `tries` times four seconds
+   apart. ready: ok, with the permalink. processing: pending, for the
+   finisher. error: refused, in Meta's words. */
+export async function fbReelStatus(videoId, tok, tries) {
+  let last = null;
+  for (let i = 0; i < (tries || 1); i++) {
+    if (i) await new Promise(r => setTimeout(r, 4000));
+    let j = {};
+    try {
+      const r = await fetch(`${GRAPH_FB}/${videoId}?fields=status,permalink_url,published&access_token=${encodeURIComponent(tok)}`);
+      j = await r.json().catch(() => ({}));
+      if (!r.ok) { last = { ok: false, pending: { fb: videoId }, error: metaErr(j, "status http " + r.status) }; continue; }
+    } catch (e) { last = { ok: false, pending: { fb: videoId }, error: String(e && e.message || e).slice(0, 120) }; continue; }
+    const st = j.status || {};
+    const phase = String(st.video_status || "").toLowerCase();
+    const url = j.permalink_url ? (/^https?:/.test(j.permalink_url) ? j.permalink_url : "https://www.facebook.com" + j.permalink_url) : "";
+    if (phase === "ready" || (j.published === true && phase !== "error" && phase !== "processing"))
+      return { ok: true, id: videoId, url, published: true, verified: new Date().toISOString() };
+    if (phase === "error") {
+      const errs = (st.processing_phase && st.processing_phase.errors) || (st.uploading_phase && st.uploading_phase.errors) || [];
+      const why = errs.map(e => e && (e.message || e.code)).filter(Boolean).join("; ") || "Facebook could not process the video";
+      return { ok: false, id: videoId, error: "Facebook refused the reel after upload: " + String(why).slice(0, 160) };
+    }
+    last = { ok: false, pending: { fb: videoId }, id: videoId, phase: phase || "processing" };
+  }
+  return last || { ok: false, pending: { fb: videoId }, id: videoId };
+}
+
+/* the finisher's door: a reel Facebook was still processing at the last look */
+async function finishFacebookReel(pending) {
+  const videoId = pending && (pending.fb || pending.id || pending);
+  if (!videoId || !fbConfigured()) return { ok: false, error: "nothing to finish" };
+  return await fbReelStatus(String(videoId), await pageToken(), 1);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1012,6 +1054,7 @@ export function slotState(results) {
 const PENDING_MAX_MS = Number(process.env.PENDING_MAX_MS || 2 * 3600 * 1000);
 const NET_NAME = ch => ({ instagram: "Instagram", threads: "Threads" })[ch] || ch;
 const FINISHERS = {
+  facebook: finishFacebookReel,
   instagram: finishInstagramReel,
   threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; }
 };
@@ -1258,6 +1301,17 @@ export async function runDaily(host, date, opts = {}) {
    Sending five at once is how the network decides what you are.
 =========================================================================== */
 const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
+const K_CLAIM = (d, s) => "nsoc:claim:" + d + "#" + s;
+/* true when this run may send the slot: the claim was free and is now ours.
+   Without a store there is nothing to claim against, and the machine already
+   refuses to send without one (storeOk), so the answer there is yes. */
+export async function claimSlot(date, id) {
+  if (!kvReady()) return true;
+  try {
+    const r = (await kv([["SET", K_CLAIM(date, id), new Date().toISOString(), "NX", "EX", "600"]]))[0];
+    return r === "OK" || r === true;
+  } catch { return true; }
+}
 const K_RED = "nsoc:reddit:last";
 const K_SAID = "nsoc:said";        /* the last things actually published */
 const K_POSTED = "nsoc:reels:posted";   /* reel id -> the date every network had it */
@@ -1294,6 +1348,10 @@ export function reelDone(rec) {
   const rs = Object.values(rec.results || {});
   /* a video story still in a network's hands needs the file a little longer */
   if (rs.some(r => r && r.story && r.story.pending)) return false;
+  /* an upload YouTube kept private (the project has not passed its API
+     audit) is on YouTube and on nobody's screen: uploaded, not published.
+     It is not sent again, and it does not retire the reel. */
+  if (rs.some(r => r && r.ok && r.private)) return false;
   return true;
 }
 
@@ -2157,9 +2215,18 @@ export async function healFailures(host, date, out, now, hasTime) {
   return ran;
 }
 
-/* api/social.js is given sixty seconds. The scheduled post must own them:
-   whatever else this run would like to do, it does with what is left over. */
-const RUN_BUDGET_MS = Number(process.env.RUN_BUDGET_MS || 55000);
+/* api/social.js is given five minutes (vercel.json, maxDuration 300, the Pro
+   plan). It was sixty seconds until 15 September 2026, and the function log
+   of every reel slot read the same way: YouTube 2 s, Instagram 35 to 42 s of
+   container polling, Facebook 10 to 12 s and then "late" for Facebook on the
+   bad hours, and "0 late" for Threads, Telegram and Pinterest on EVERY hour:
+   three networks never got their turn, every reel slot stayed partial, the
+   healer spent its tries on them, and the ledger of posted reels stayed at
+   zero. A Facebook upload cut mid way could still land on the page and be
+   sent again by the healer the next hour, which is where the doubled reels
+   came from. The scheduled post owns the budget: whatever else this run
+   would like to do, it does with what is left over. */
+const RUN_BUDGET_MS = Number(process.env.RUN_BUDGET_MS || 280000);
 /* the longest a single repair can plausibly take -- a card fetch, a container,
    a wait, a publish -- so one is never STARTED without room to finish it */
 const HEAL_RESERVE_MS = Number(process.env.HEAL_RESERVE_MS || 22000);
@@ -2252,6 +2319,17 @@ export async function runDue(host, date, now, opts = {}) {
       if (kvReady()) { try { await kv([["LPUSH", K_Q, date + "#" + slot.id], ["LTRIM", K_Q, "0", "60"]]); } catch { } }
       out.ran.push({ slot: slot.id, state: "queued" });
       posted++;                       /* the rung says one a run, queued or sent */
+      continue;
+    }
+
+    /* the claim. The record is written only after every network has answered,
+       so until 15 September 2026 two runs in the same minute (a cron and a
+       Post now, or a cron that fired twice) both composed the slot and both
+       sent it. The claim is one SET NX with a ten minute life: the second
+       runner finds it taken and leaves the slot alone; a run that dies holds
+       the slot for ten minutes and no longer. */
+    if (!(await claimSlot(date, slot.id))) {
+      out.ran.push({ slot: slot.id, skipped: "another run is sending this slot" });
       continue;
     }
 
