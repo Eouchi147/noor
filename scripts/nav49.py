@@ -72,7 +72,13 @@ GROUPS = [
         ("hajj-plan.html", "m.hajjplan", "Your Pilgrim Plan"),
     ]),
     ("g.story", "The Story", [
-        ("index.html#timeline", "m.path", "The Path of Creation"),
+        # the Path, the day, the Lights and the verses are rooms api/page.js
+        # renders (rewrites in vercel.json), not files; href() leaves a bare
+        # name as /name. The Path used to go to /#timeline, a row on the home.
+        ("path", "m.path", "The Path of Creation"),
+        ("today", "m.today", "Today"),
+        ("light", "m.lights", "The Lights"),
+        ("verses", "m.verses", "The Verses"),
         ("prophets.html", "m.prophets", "The 25 Prophets"),
         ("muhammad.html", "m.seerah", "The Seerah &middot; Twenty-Three Years"),
         ("companions.html", "m.companions", "The Companions"),
