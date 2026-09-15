@@ -625,6 +625,41 @@ def target_for(kind):
     return VOICE_LUFS if kind == "verse" else TARGET_LUFS
 
 
+VOICE_CEILING_DB = -3.0  # the recitation's true peak ceiling, see _hold_voice()
+
+
+def _hold_voice(path, target, gain_db):
+    """the recitation's ceiling, held by a lookahead limiter rather than a bend.
+
+    The bend in _limit() is instantaneous: it folds every sample above the
+    knee and leaves the wave with corners, and the AAC encoder overshoots
+    those corners by two decibels and more (verse 10:6 came out of the
+    encoder at -0.1 dBFS from a bed written at -2). A recitation is speech
+    with a wide crest, so it meets the ceiling on every stressed syllable
+    and the fault repeats on the same reading every week.
+
+    ffmpeg's alimiter looks ahead and turns the gain down before the peak
+    instead of clipping it; run four times oversampled it holds the true
+    peak, not just the samples. The loudness is then measured on the held
+    file and the gain corrected once, so the reel still lands on target.
+    """
+    def hold(src, dst, gain_db):
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", src,
+                        "-af", ("volume=%.3fdB,aresample=%d,"
+                                "alimiter=limit=%.2fdB:attack=4:release=80:level=false:asc=true,"
+                                "aresample=%d"
+                                % (gain_db, SR * 4, VOICE_CEILING_DB, SR)),
+                        "-ar", str(SR), "-ac", "2", "-c:a", "pcm_s16le", dst], check=True)
+    tmp = path[:-4] + ".hold.wav"
+    hold(path, tmp, gain_db)
+    got, _ = measure(tmp)
+    if got is not None and abs(got - target) > 0.2:
+        # limiting took a little off the loud phrases: measured, put back
+        hold(path, tmp, gain_db + (target - got))
+    os.replace(tmp, path)
+    return path
+
+
 def bed(path, info, secs, seed, slot="morning", lines=3, target=None, kind="light", voice=None):
     """write one card's sound, trimmed to an exact loudness, and return its path"""
     if target is None: target = target_for(kind)
@@ -636,6 +671,12 @@ def bed(path, info, secs, seed, slot="morning", lines=3, target=None, kind="ligh
     got = _lufs(path)
     if got is None:
         got = NOMINAL_LUFS
+    if voice is not None:
+        # the recitation: the file as written sits with its peak at -6 dBFS;
+        # the decibels to the target are applied in ffmpeg, under a lookahead
+        # ceiling (a bend on speech comes out of the AAC encoder clipped; see
+        # _hold_voice)
+        return _hold_voice(path, target, target - got)
     gain = head * 10.0 ** ((target - got) / 20.0)
     gain = min(gain, 10.0 ** ((TRUE_PEAK_DB + 5.0) / 20.0) / peak)
     l2, r2 = _limit(left * gain, right * gain)

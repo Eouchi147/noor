@@ -235,7 +235,9 @@ def render(stage, name, out_dir="out"):
          # under two, at a quality difference nobody can see on a phone.
          "-c:v", "libx264", "-preset", "slow", "-crf", "25",
          "-profile:v", "high", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "96k", "-shortest",
+         # 128k: at 96k the encoder overshoots a held peak by up to two
+         # decibels on speech (verse 10:6 clipped); at 128k by under one
+         "-c:a", "aac", "-b:a", "128k", "-shortest",
          "-movflags", "+faststart", part], stdin=subprocess.PIPE)
     cover_at, cover = None, None
     for t, jpg, info in frames(stage, name, prep=prep):

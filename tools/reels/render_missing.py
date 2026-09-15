@@ -124,7 +124,10 @@ def main():
         sweep()
         manifest()
     for nm, why in bad: print("  OUT", nm, why)
-    for nm, fb in faults: print("  FAULT", nm, "; ".join(fb))
+    for nm, fb in faults:
+        print("  FAULT", nm, "; ".join(fb))
+        # on the run's own page, without opening a log
+        print("::warning title=reel removed, tried again next run::%s: %s" % (nm, "; ".join(fb)))
     if bad: print("%d card(s) set aside as unfit; they are named in reels/<id>.unfit.json" % len(bad))
     if faults:
         raise SystemExit("%d reel(s) failed and were removed so the next run tries again" % len(faults))
