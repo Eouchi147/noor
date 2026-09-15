@@ -2130,6 +2130,9 @@ function drawSystem(force){
       +'<p class="sec">The keys this house runs on</p><div class="list">'
       +keys.map(function(k){return '<div class="row"><div class="t" style="white-space:normal"><b style="white-space:normal"><code>'+esc(k[0])+'</code></b><span style="white-space:normal">'+esc(k[2])+'</span></div><div class="r"><span class="pill '+(k[1]?"good":"bad")+'">'+(k[1]?"set":"unset")+'</span></div></div>'}).join("")+'</div>'
       +'<p class="faint small" style="margin:10px 0 0">No key is ever shown here, only whether the house has one. They are set in Vercel, under Settings and Environment Variables, and take effect on the next deploy.</p>'
+      +'<p class="sec">The change archive</p><div class="card">'
+      +'<p class="muted small" style="margin:0">One line for every edit, addition and removal made to the site, newest first, kept as plain text at <code>/changes.txt</code> and appended with every change that ships.</p>'
+      +'<div class="acts"><a class="btn ghost" href="/changes.txt" target="_blank" rel="noopener">Read it</a><a class="btn ghost" href="/changes.txt" download="noor-changes.txt">Download it</a></div></div>'
       +'<div class="acts" style="margin-top:20px"><button class="btn ghost" id="sys-logout">Sign out</button></div>';
     el.onclick=function(e){
       var b=e.target.closest("button");if(!b)return;

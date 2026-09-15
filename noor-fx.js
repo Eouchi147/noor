@@ -105,7 +105,18 @@ const UI_EN = {
    than answering null. Unguarded it threw here, before the object existed, so
    NOOR_I18N was never defined at all and every page leaning on it went down
    with it. A remembered language is a convenience; English is the floor. */
-const NOOR_LANG_0 = (function(){ try { return localStorage.getItem("noor_lang") || "en"; } catch (e) { return "en"; } })();
+/* A door that declares its own language (/ar, /ur, /fa, /prs, /pa, /ps and
+   the other translated doors carry lang="xx" on <html>) keeps it: until 15
+   September 2026 this read the stored choice or "en", and apply() then wrote
+   lang="en" dir="ltr" over the Arabic door for every first visitor, two
+   seconds after it had rendered right to left. The page's own word comes
+   first; the stored choice decides on the English pages; English is the floor. */
+const NOOR_LANG_0 = (function(){
+  var own = "";
+  try { own = String(document.documentElement.getAttribute("lang") || "").toLowerCase().split("-")[0]; } catch (e) {}
+  if (own && own !== "en") return own;
+  try { return localStorage.getItem("noor_lang") || "en"; } catch (e) { return "en"; }
+})();
 const NOOR_I18N = {
   lang: NOOR_LANG_0,
   packs: { en: UI_EN },

@@ -511,14 +511,18 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
   var ROTA = {
     morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
     noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-    afternoon: ["name", "word", "know", "verse", "verse", "know", "word"],
+    afternoon: ["short", "short", "short", "short", "short", "short", "short"],
+    afternoonUntilShorts: ["name", "word", "know", "verse", "verse", "know", "word"],
     evening:   ["word", "light", "know", "word", "verse", "name", "word"],
     night:     ["name", "verse", "verse", "word", "dua", "verse", "verse"],
     late:      ["verse", "verse", "verse", "verse", "verse", "verse", "verse"]
   };
   var HALVES = ["morning", "noon", "afternoon", "evening", "late", "night"];
   var REEL_EPOCH = Date.UTC(2026, 8, 6);
-  function reelStep(kind, dateStr, half) {
+  /* the rota as it is walked: while the shelf has no short, the afternoon
+     is its stand in row (copied from api/_schedule.js with the rest) */
+  function rotaRow(h, noShorts) { return (h === "afternoon" && noShorts) ? ROTA.afternoonUntilShorts : (ROTA[h] || []); }
+  function reelStep(kind, dateStr, half, noShorts) {
     var t = Date.parse(String(dateStr) + "T00:00:00Z");
     if (!isFinite(t)) return 0;
     var day = Math.floor((t - REEL_EPOCH) / 86400000);
@@ -526,7 +530,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     var hi = HALVES.indexOf(half);
     var perWeek = 0, before = 0;
     for (var d = 0; d < 7; d++) for (var h = 0; h < HALVES.length; h++) {
-      if ((ROTA[HALVES[h]] || [])[d] !== kind) continue;
+      if (rotaRow(HALVES[h], noShorts)[d] !== kind) continue;
       perWeek++;
       if (d < dow || (d === dow && h < hi)) before++;
     }
@@ -546,9 +550,10 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
       var cards = (j && j.cards) || [];
       var list = cards.filter(function (c) { return c && c.id && (c.kind || "light") === "verse"; });
       if (!list.length) return;
+      var noShorts = !cards.some(function (c) { return c && (c.kind || "light") === "short"; });
       var dow = new Date(today + "T12:00:00Z").getUTCDay();
-      var half = HALVES.filter(function (h) { return ROTA[h][dow] === "verse"; })[0] || "morning";
-      var c = pickStep(list, reelStep("verse", today, half), "reel:verse");
+      var half = HALVES.filter(function (h) { return rotaRow(h, noShorts)[dow] === "verse"; })[0] || "morning";
+      var c = pickStep(list, reelStep("verse", today, half, noShorts), "reel:verse");
       if (!c) return;
       var isUrl = function (v) { return typeof v === "string" && /^https:\/\//.test(v); };
       var video = isUrl(c.video) ? c.video : "/reels/" + c.id + ".mp4";
