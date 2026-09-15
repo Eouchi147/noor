@@ -2,12 +2,15 @@
    ------------------------------------------------------------------
    The promise this file keeps: every one of the 523 word pages and the
    hub come out of scripts/gen-dictionary.py in the shell the rooms wear
-   (data-n2, assets/noor2.css and noor2.js at v2, the top line, the bar
-   of five doors with Words lit, the footer line), with nothing of the
+   (data-n2, assets/noor2.css and noor2.js at the version api/page.js
+   carries, the top line, the bar of five doors with Words lit and More
+   opening the map, the footer line), with nothing of the
    shell's CSS pasted in; each word page is three screens (the word, the
    meaning, what sits beside it) and stays under 14 KB; its canonical,
    title, description, Arabic, spellings, both definitions, evidence and
-   neighbours are the ones the old parchment page carried; its JSON-LD
+   neighbours are the ones the old parchment page carried; the rooms it
+   points at (a Light, a chapter, a surah whose own text names the word)
+   exist in the library's files; its JSON-LD
    still parses as DefinedTerm + WebPage + BreadcrumbList and now names
    its language and the shell's og:image; the Twitter card is there; the
    viewport keeps viewport-fit=cover and never forbids zoom; no page
@@ -40,6 +43,8 @@ process.chdir(ROOT);
 const SITE = "https://noorcodex.com";
 const OG = SITE + "/assets/brand/og.png";
 const CAP = 14 * 1024, HUB_CAP = 400 * 1024;
+/* the shell's version tail is api/page.js's: the hub and the word pages must link the same files the rooms link */
+const V = (fs.readFileSync("api/page.js", "utf8").match(/const V = "(\d+)"/) || [, "?"])[1];
 const SCRATCH = "/tmp/claude-0/-home-claude/5dedf661-c8ba-5c14-a599-be4645864117/scratchpad/live/dictionary/salah.html";
 
 let pass = 0, fail = 0;
@@ -80,15 +85,16 @@ info(secondPerson + " of the entries' own definitions use the second person; the
 console.log("\n=== 1. the 523 word pages ===");
 const bad = {};
 const mark = (k, id) => { (bad[k] = bad[k] || []).push(id); };
-let largest = ["", 0];
+let largest = ["", 0], withRooms = 0;
 const DOORS = ["Today", "Qur'an", "Story", "Words", "More"];
+const LIGHTS = new Set(((JSON.parse(fs.readFileSync("lights/all.json", "utf8")) || {}).lights || []).map(L => L.id));
 for (const e of entries) {
   const html = fs.readFileSync(path.join("dictionary", e.id + ".html"), "utf8");
   const size = Buffer.byteLength(html);
   if (size > largest[1]) largest = [e.id, size];
   if (size > CAP) mark("size", e.id + " (" + (size / 1024).toFixed(1) + " KB)");
   if (!/^<!DOCTYPE html>\n<html lang="en" dir="ltr" data-n2=""/.test(html)) mark("shell", e.id);
-  if (!html.includes('<link rel="stylesheet" href="/assets/noor2.css?v=2"/>') || !html.includes('<script src="/assets/noor2.js?v=2" defer></script>')) mark("links", e.id);
+  if (!html.includes('<link rel="stylesheet" href="/assets/noor2.css?v=' + V + '"/>') || !html.includes('<script src="/assets/noor2.js?v=' + V + '" defer></script>')) mark("links", e.id);
   if (/<style/.test(html)) mark("inline", e.id);
   if (!html.includes('<header class="n2-top">') || !html.includes('<footer class="n2-foot">') || !html.includes('<main class="n2-main">')) mark("frame", e.id);
   const nav = html.match(/<nav class="n2-bar" aria-label="Rooms">([\s\S]*?)<\/nav>/);
@@ -136,9 +142,20 @@ for (const e of entries) {
   if (e.see.some(s => !links.includes(s))) mark("see", e.id);
   if (!s3.includes('href="/dictionary#cat-' + e.cat + '"') || !s3.includes('href="/dictionary#' + e.id + '"')) mark("hub", e.id);
   for (const v of [...s3.matchAll(/href="\/verse\/(\d+-\d+(?:-\d+)?)"/g)]) if (!/^\d{1,3}-\d{1,3}(-\d{1,3})?$/.test(v[1])) mark("verse", e.id);
+  /* the rooms that name it: up to three, on the shell's own shelf, each a Light, a chapter or a surah the library has */
+  const shelf = s3.match(/<p class="n2-eyebrow">Rooms that name it<\/p><ul class="n2-shelf">([\s\S]*?)<\/ul>/);
+  const roomLinks = shelf ? [...shelf[1].matchAll(/<li><a href="\/(light|path|surah)\/([^"]+)"><b>[^<]+<\/b><small>[^<]*<\/small><\/a><\/li>/g)] : [];
+  if (shelf && (roomLinks.length < 1 || roomLinks.length > 3 || shelf[1].split("<li>").length - 1 !== roomLinks.length)) mark("roomshelf", e.id);
+  for (const r of roomLinks) {
+    if (r[1] === "light" && !LIGHTS.has(r[2])) mark("roomdead", e.id + " (light " + r[2] + ")");
+    if (r[1] === "path" && !(fs.existsSync(path.join("node", r[2] + ".json")) && /^\d+$/.test(r[2]))) mark("roomdead", e.id + " (chapter " + r[2] + ")");
+    if (r[1] === "surah" && !(/^\d+$/.test(r[2]) && +r[2] >= 1 && +r[2] <= 114)) mark("roomdead", e.id + " (surah " + r[2] + ")");
+  }
+  if (roomLinks.length) withRooms++;
   if ((html.match(/<section class="n2-idea/g) || []).length !== 3) mark("screens", e.id);
-  /* the generator's own words, with the entries' text lifted out */
-  let chrome = html.replace(/<li><a href="\/verse\/[^"]+"><span class="n2-num">[^<]*<\/span><b>[^<]*<\/b><\/a><\/li>/g, " ");
+  /* the generator's own words, with the entries' text lifted out (the shelf's verse labels and the rooms' own titles are the library's) */
+  let chrome = html.replace(/<li><a href="\/verse\/[^"]+"><span class="n2-num">[^<]*<\/span><b>[^<]*<\/b><\/a><\/li>/g, " ")
+    .replace(/<li><a href="\/(?:light|path|surah)\/[^"]+"><b>[^<]*<\/b><small>[^<]*<\/small><\/a><\/li>/g, " ");
   /* the definitions first, whole, then the spellings: a short spelling ("verse") would otherwise cut a definition in two */
   const own = [e.id, ...links].map(id => byId.get(id)).filter(Boolean);
   for (const t of [...own.flatMap(x => [x.long, x.short]), ...own.flatMap(x => x.also)]) if (t) chrome = chrome.split(esc(t)).join(" ").split(t).join(" ");
@@ -147,7 +164,7 @@ for (const e of entries) {
 const say = (k, m) => ok(!bad[k], m + (bad[k] ? " → " + bad[k].slice(0, 4).join(", ") + (bad[k].length > 4 ? " +" + (bad[k].length - 4) : "") : ""));
 say("size", "every page is under 14 KB · largest " + largest[0] + " at " + (largest[1] / 1024).toFixed(1) + " KB");
 say("shell", "every page opens <html lang=\"en\" dir=\"ltr\" data-n2>");
-say("links", "every page links assets/noor2.css and noor2.js at ?v=2");
+say("links", "every page links assets/noor2.css and noor2.js at ?v=" + V + ", the version api/page.js carries");
 say("inline", "no page carries a <style> of its own: the shell is the two files");
 say("frame", "the top line, the main and the footer line are the rooms'");
 say("doors", "the bar is the five doors, in order: " + DOORS.join(" · "));
@@ -176,6 +193,9 @@ say("dead", "every related link points at a page that exists");
 say("see", "every neighbour the editors named is on the page");
 say("hub", "every page has doors to its domain on the hub and to its own entry there");
 say("verse", "every verse door is /verse/<ref> as api/page.js reads it");
+say("roomshelf", "the rooms that name a word ride the shell's shelf, one to three of them, nothing else on it");
+say("roomdead", "every room a word points at is a Light, a chapter or a surah the library has");
+ok(withRooms > 100, withRooms + " word pages point at a room of the library (a Light, a chapter or a surah whose own text names the word)");
 say("you", "nothing the generator writes speaks in the second person (the entries' own text and the shelf's quoted labels aside)");
 const withVerses = entries.filter(e => /Verses on the shelf that name it/.test(fs.readFileSync(path.join("dictionary", e.id + ".html"), "utf8")));
 info(withVerses.length + " page" + (withVerses.length === 1 ? "" : "s") + " carr" + (withVerses.length === 1 ? "ies" : "y") + " verse doors, where the shelf's own labels name the word: " + withVerses.map(e => e.id).join(", "));
@@ -212,7 +232,7 @@ const hub = fs.readFileSync("dictionary.html", "utf8");
 const hubSize = Buffer.byteLength(hub);
 ok(hubSize < HUB_CAP, "dictionary.html is " + (hubSize / 1024).toFixed(0) + " KB, under 400");
 ok(/^<!DOCTYPE html>\n<html lang="en" dir="ltr" data-n2="reveal top bar share home"/.test(hub), "it is a shell page (reveal top bar share home; no shader over 523 rows)");
-ok(hub.includes('/assets/noor2.css?v=2') && hub.includes('/assets/noor2.js?v=2'), "it links the shell at v2");
+ok(hub.includes('/assets/noor2.css?v=' + V) && hub.includes('/assets/noor2.js?v=' + V), "it links the shell at v" + V + ", the version api/page.js carries");
 ok(canon(hub) === SITE + "/dictionary", "its canonical is " + SITE + "/dictionary");
 ok(hub.includes('<meta property="og:image" content="' + OG + '"/>') && hub.includes('<meta name="twitter:card" content="summary_large_image"/>'), "og image and Twitter card");
 ok(!/user-scalable/.test(hub) && hub.includes("viewport-fit=cover"), "viewport-fit=cover, zoom allowed");

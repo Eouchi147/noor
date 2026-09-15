@@ -1,6 +1,8 @@
 /* A page built with the old Search door must show the same fifth door as
    every other page: called More, drawn as the map, and opening the sheet. */
 import { chromium } from 'playwright';
+import fs from 'fs';
+const ROOMS = JSON.parse(fs.readFileSync(new URL('../assets/menu-index.json', import.meta.url), 'utf8')).sections.reduce((n, s) => n + (s.items || []).length, 0);
 const OLD = '<a href="/dictionary" data-n2-search data-nm-open>' +
   '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.4"/>' +
   '<path d="M15.6 15.6L21 21"/></svg>Search</a>';
@@ -41,7 +43,7 @@ for (const path of ['/dictionary/abu-bakr','/dictionary','/prophets']) {
   await pg.waitForTimeout(800);
   const m = await pg.evaluate(()=>{const b=document.querySelector('.nmr');
     return b && b.classList.contains('on') ? b.querySelectorAll('.nmr-r').length : 0;});
-  ok(m === 42, path+': and it still opens all 42 rooms ('+m+')');
+  ok(m === ROOMS, path+': and it still opens all '+ROOMS+' rooms ('+m+')');
   ok(errs.length===0, path+': no page errors'+(errs.length?' → '+errs[0].slice(0,80):''));
   await ctx.close();
 }

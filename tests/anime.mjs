@@ -16,6 +16,10 @@
    Then:  node tests/anime.mjs
 */
 import { chromium } from 'playwright';
+import fs from 'fs';
+/* the house's own count of its rooms, so a room added to the map is not a failure here */
+const HOUSE = JSON.parse(fs.readFileSync(new URL('../assets/menu-index.json', import.meta.url), 'utf8'));
+const ROOMS = HOUSE.sections.reduce((n, s) => n + (s.items || []).length, 0);
 
 const EXE = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const BASE = process.env.NOOR_BASE || 'http://127.0.0.1:8433';
@@ -204,7 +208,7 @@ for (const [where, path] of [['a shell page', '/index.html'],
   });
   ok(s.label === 'More', where + ': the fifth door says More (' + s.label + ')');
   ok(s.open === true, where + ': and it opens the sheet');
-  ok(s.open && s.sections === 8 && s.rooms === 42, where + ': the whole library, 8 sections and 42 rooms');
+  ok(s.open && s.sections === HOUSE.sections.length && s.rooms === ROOMS, where + ': the whole library, ' + HOUSE.sections.length + ' sections and ' + ROOMS + ' rooms (' + s.sections + ', ' + s.rooms + ')');
   ok(s.open && s.prophets, where + ': the Prophets among them, two taps from anywhere');
   ok(s.open && s.night, where + ': the sheet is night, not parchment');
   ok(s.open && s.inView && !s.wide, where + ': it is on the screen and pushes nothing sideways');
@@ -216,7 +220,7 @@ for (const [where, path] of [['a shell page', '/index.html'],
 console.log('\n=== 9. two letters, and the map becomes the answer ===');
 {
   const { ctx, page, errors } = await open('/index.html');
-  const s = await page.evaluate(async () => {
+  const s = await page.evaluate(async (ROOMS) => {
     document.querySelector('.n2-bar [data-n2-more]').click();
     await new Promise(r => setTimeout(r, 500));
     const q = document.getElementById('nmr-q'), out = {};
@@ -227,7 +231,7 @@ console.log('\n=== 9. two letters, and the map becomes the answer ===');
          screen underneath it as though it were the result */
       for (let i = 0; i < 60; i++) {
         await new Promise(r => setTimeout(r, 100));
-        if (document.querySelectorAll('.nmr-r').length !== 42) break;
+        if (document.querySelectorAll('.nmr-r').length !== ROOMS) break;
       }
       out[term] = { n: document.querySelectorAll('.nmr-r').length,
                     first: (document.querySelector('.nmr-r b') || {}).textContent || '',
@@ -237,7 +241,7 @@ console.log('\n=== 9. two letters, and the map becomes the answer ===');
     await new Promise(r => setTimeout(r, 400));
     out.empty = document.querySelectorAll('.nmr-r').length;
     return out;
-  });
+  }, ROOMS);
   /* The index carries 523 words, 1,183 entities and 66 rooms. When the
      dictionary was regenerated on 9 September 2026 the script rewrote the
      whole file and knew how to build only the words, so for four hours the
@@ -249,7 +253,7 @@ console.log('\n=== 9. two letters, and the map becomes the answer ===');
   ok(s.sabr.n > 0 && /Sabr/i.test(s.sabr.first), 'sabr finds the word');
   ok(s.musa.groups.length > 1, 'and the answers come grouped, best group first (' + s.musa.groups.join(', ') + ')');
   ok(!s.musa.groups.some(g => /^(words|rooms|people|quran)$/.test(g)), 'the groups are named, not keyed');
-  ok(s.empty === 42, 'an empty field is the map again');
+  ok(s.empty === ROOMS, 'an empty field is the map again (' + s.empty + ' of ' + ROOMS + ' rooms)');
   ok(errors.length === 0, 'no page errors');
   await ctx.close();
 }

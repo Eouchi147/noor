@@ -290,11 +290,13 @@ console.log('\n=== 5. every door is real ===');
   for (const s of menu.sections) for (const it of s.items) {
     if (it.u === '/donate') continue;                     /* the door of giving is its own screen */
     rooms++;
-    /* the menu sends the Path to /#timeline: on this page that is the row of the Path
-       itself, whose door is /path. Two Lives is a room of its own now, so its row is
-       an ordinary door like every other. */
+    /* the menu sends the Path to /path (until 16 September 2026 it sent it to
+       /#timeline): on this page that is the row of the Path itself, which keeps
+       the id "timeline" the house has always pointed at. Two Lives is a room of
+       its own now, so its row is an ordinary door like every other. */
+    const isPath = it.u === '/path' || it.u === '/#timeline';
     const u = it.u === '/#timeline' ? '/path' : it.u.replace(/^\/#/, '#');
-    const re = new RegExp((it.u === '/#timeline' ? '<li id="timeline">' : '<li>') + '<a href="' + u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"><b>' + it.t.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '<small>' + it.d.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</small>');
+    const re = new RegExp((isPath ? '<li id="timeline">' : '<li>') + '<a href="' + u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"><b>' + it.t.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '<small>' + it.d.replace(/&/g, '&amp;').replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</small>');
     if (!re.test(html)) lost.push(it.u);
   }
   ok(!lost.length, 'every room of the menu index is a door on the page' + (lost.length ? ' (lost: ' + lost.join(', ') + ')' : ' (' + rooms + ')'));
@@ -303,7 +305,7 @@ console.log('\n=== 5. every door is real ===');
   for (const s of menu.sections) ok(new RegExp('<div class="hm-grp">\\s*<h3 class="n2-h3">' + rx(s.n) + '</h3>\\s*<ul class="n2-list">').test(html), 'the section "' + s.n + '" is a name over its doors, without the group\'s blurb');
   ok(!/hm-sub/.test(html) && !menu.sections.some(s => html.includes(s.s)), 'no group blurb anywhere');
   ok(/function fold\(\)/.test(html) && /aria-expanded/.test(html) && /hm-fold-w/.test(html), 'the script folds the sections; the file itself leaves every room open');
-  ok(!/hm-shut|hm-fold"/.test(html.slice(html.indexOf('<main'), html.indexOf('</main>'))), 'nothing is folded in the markup, so a crawler and a reader without JavaScript see all 41 rooms');
+  ok(!/hm-shut|hm-fold"/.test(html.slice(html.indexOf('<main'), html.indexOf('</main>'))), 'nothing is folded in the markup, so a crawler and a reader without JavaScript see all ' + rooms + ' rooms');
   const src = fs.readFileSync(path.join(ROOT, 'nodes-index.js'), 'utf8');
   const NODES = JSON.parse(src.match(/const\s+NODES\s*=\s*(\[[\s\S]*?\]);/)[1]);
   ok(new RegExp(NODES.length + ' chapters, from Kun Fayakun').test(html), 'the Path counts ' + NODES.length + ' chapters in the library');
@@ -532,8 +534,11 @@ if (chromium) {
     });
     ok(lib.groups === 8 && lib.folded === 8 && lib.buttons === 8, 'the library is eight sections, each heading its own control');
     ok(lib.shut === 7 && lib.first === 'true', 'seven are folded shut and the first stands open');
-    ok(lib.rooms === 41 && lib.shown <= 12, 'all 41 rooms are in the DOM, only the open section reachable (' + lib.shown + ' shown)');
-    ok(lib.counts.join(' ') === '3 6 6 7 8 3 3 5', 'each heading carries its own count of rooms (' + lib.counts.join(' ') + ')');
+    /* the counts are the menu index's own, less the door of giving, which is its own screen */
+    const want = MENU.sections.map(s => s.items.filter(i => i.u !== '/donate').length);
+    const wantAll = want.reduce((n, k) => n + k, 0);
+    ok(lib.rooms === wantAll && lib.shown <= 12, 'all ' + wantAll + ' rooms are in the DOM, only the open section reachable (' + lib.rooms + ' in the DOM, ' + lib.shown + ' shown)');
+    ok(lib.counts.join(' ') === want.join(' '), 'each heading carries its own count of rooms (' + lib.counts.join(' ') + ' for ' + want.join(' ') + ')');
     ok(lib.heads.every(h => h >= 48), 'every heading is a 48 px control or taller (' + lib.heads.join(', ') + ')');
     ok(lib.height < lib.vh * 2, 'the library screen is under two phone heights, a directory rather than a wall (' + Math.round(lib.height) + ' vs ' + lib.vh + ')');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-5b-library-folded.png') });
@@ -604,8 +609,9 @@ if (chromium) {
        bar's fifth door: the map of the house, whole */
     await pg.click('.hm-menu'); await pg.waitForTimeout(900);
     ok(await pg.evaluate(() => !!document.querySelector('.nmr.on')), 'the menu door opens the More sheet');
-    ok(await pg.evaluate(() => document.querySelectorAll('.nmr .nmr-r').length === 42),
-       'and it is the whole library: forty-two rooms');
+    const ALL = MENU.sections.reduce((n, s) => n + s.items.length, 0);
+    ok(await pg.evaluate(n => document.querySelectorAll('.nmr .nmr-r').length === n, ALL),
+       'and it is the whole library: ' + ALL + ' rooms, as the menu index counts them');
     ok(await pg.evaluate(() => !document.getElementById('nd')), 'and the dial it replaced is gone');
     await pg.screenshot({ path: path.join(SHOTS, 'phone-10-search.png') });
     await pg.keyboard.press('Escape'); await pg.waitForTimeout(300);
