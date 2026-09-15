@@ -1,5 +1,10 @@
 {
  "id": "word-sur",
  "kind": "word",
- "secs": 10.43
+ "secs": 10.43,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-sur.mp4",
+ "video_asset": 563603423,
+ "store": "release",
+ "bytes": 1550570,
+ "uploaded": "2026-09-14"
 }

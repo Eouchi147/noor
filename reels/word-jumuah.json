@@ -1,5 +1,10 @@
 {
  "id": "word-jumuah",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-jumuah.mp4",
+ "video_asset": 563537307,
+ "store": "release",
+ "bytes": 2137083,
+ "uploaded": "2026-09-14"
 }

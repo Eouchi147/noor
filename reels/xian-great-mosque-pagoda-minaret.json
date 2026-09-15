@@ -1,5 +1,10 @@
 {
  "id": "xian-great-mosque-pagoda-minaret",
  "kind": "light",
- "secs": 20.55
+ "secs": 20.55,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-light/xian-great-mosque-pagoda-minaret.mp4",
+ "video_asset": 563627473,
+ "store": "release",
+ "bytes": 3127853,
+ "uploaded": "2026-09-14"
 }

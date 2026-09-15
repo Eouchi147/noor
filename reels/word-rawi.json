@@ -1,5 +1,10 @@
 {
  "id": "word-rawi",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-rawi.mp4",
+ "video_asset": 563582567,
+ "store": "release",
+ "bytes": 2101301,
+ "uploaded": "2026-09-14"
 }

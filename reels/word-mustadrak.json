@@ -1,5 +1,10 @@
 {
  "id": "word-mustadrak",
  "kind": "word",
- "secs": 14.93
+ "secs": 14.93,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-mustadrak.mp4",
+ "video_asset": 563567602,
+ "store": "release",
+ "bytes": 2128688,
+ "uploaded": "2026-09-14"
 }

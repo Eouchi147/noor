@@ -1,5 +1,10 @@
 {
  "id": "word-wudu",
  "kind": "word",
- "secs": 10.43
+ "secs": 10.43,
+ "video": "https://github.com/Eouchi147/noor/releases/download/reels-word/word-wudu.mp4",
+ "video_asset": 563623580,
+ "store": "release",
+ "bytes": 1552647,
+ "uploaded": "2026-09-14"
 }
