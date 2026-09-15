@@ -491,6 +491,10 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 .shead h2{margin:.44rem 0 0;font-size:1.85rem;font-weight:800;letter-spacing:-.022em;
   line-height:1.14;color:#2C2416;text-wrap:balance}
 .shead h2 em{font-style:normal;font-weight:500;color:rgba(44,36,22,.64)}
+/* the surah's name is a door to its own room (/surah/<n>: the context, the
+   themes, the verses worth knowing); the heading reads as it always did */
+.shead h2 a.shead-a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(201,162,39,.55)}
+.shead h2 a.shead-a:hover,.shead h2 a.shead-a:focus-visible{color:var(--gold);border-bottom-color:var(--gold);outline:none}
 .shead-ar{margin:0;font-family:'Amiri Quran',Amiri,serif;font-size:2.25rem;line-height:1.5;
   color:var(--gold);direction:rtl;white-space:nowrap}
 .shead-i{margin:1.05rem 0 0;font-size:.98rem;line-height:1.78;color:rgba(44,36,22,.84);max-width:38rem}
@@ -1406,7 +1410,7 @@ async function openSurah(n,gotoAyah,user){
    <header class="shead">
      <div>
        <p class="shead-k">Surah ${num} of 114 · ${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
-       <h2>${en}<em> · ${meaning}</em></h2>
+       <h2><a class="shead-a" href="/surah/${num}" title="The room for Surah ${en}: its context, its themes and the verses worth knowing">${en}</a><em> · ${meaning}</em></h2>
      </div>
      <p class="shead-ar" translate="no">${ar}</p>
    </header>

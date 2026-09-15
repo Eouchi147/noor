@@ -1500,7 +1500,15 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
    8KB, and only where it is missing: a page that already loads the sheet, or
    has no Search to open it, is left exactly as it is. The bar is drawn by
    noor2.js, which may still be arriving, so the wait is for the door and not
-   for the clock -- and it gives up rather than watch forever. */
+   for the clock -- and it gives up rather than watch forever.
+
+   A page that carries the v13 door (More, data-n2-more) needs none of this:
+   its sheet fetches the search itself the moment it opens, through
+   NOOR_NEED_SEARCH below, and again when two letters are typed. So on such a
+   page the eager fetch stands down and nothing is loaded until asked for.
+   The patch stays until the 523 word pages have been rebuilt with that door
+   and merged; on a page still carrying the retired Search door it runs as it
+   always did. */
 (function () {
   "use strict";
   /* A page counts as having the search when it can answer find(), not when
@@ -1526,7 +1534,9 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   function add() { window.NOOR_NEED_SEARCH(); }
   function look() {
     if (able()) return;
-    if (document.querySelector("[data-n2-search],[data-n2-more]")) return add();
+    /* the v13 door: the sheet loads the search on demand, so this is a no-op */
+    if (document.querySelector("[data-n2-more]")) return;
+    if (document.querySelector("[data-n2-search]")) return add();
     if (++tries > 20) return;                       /* ~5 s, then let it be */
     setTimeout(look, 250);
   }
@@ -1702,10 +1712,13 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
    This is the fifth door now. It opens one sheet that does both jobs:
 
-     empty        the map -- eight sections, forty-two rooms, each with the
-                  line that says what it is
+     empty        the map -- eight sections, forty-five rooms, each with the
+                  line that says what it is (the Path, the day, the Lights
+                  and the verses are rooms api/page.js renders; since 16
+                  September 2026 the map names them, where before it sent the
+                  Path to /#timeline and named none of the other three)
      two letters  the search -- every word, prophet, companion, place, hero,
-                  surah, station and room, ranked, best group first
+                  surah, station, Light, Name and room, ranked, best group first
 
    The map is inlined (3 KB) because it changes when a room is built, which is
    rarely, and a reader should never wait on a request to find out what is in
@@ -1717,7 +1730,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (function () {
   "use strict";
   var doc = document, W = window;
-  var MAP = [["The Qur'an","The text itself, and what is needed to hold it",[["The Mushaf","All 114 surahs, with recitation for every ayah","/quran"],["The Letters","Learn to read the Arabic script, letter by letter","/arabic"],["The Words of the Path","The du'as worth carrying, in Arabic and English","/words"]]],["Belief","Who He is, who He sent, and what is unseen",[["The Ninety-Nine Names","His names, what He is not, and the three doors of tawhid","/allah"],["The 25 Prophets","Every prophet named in the Qur'an","/prophets"],["The Seerah","Twenty-three years, his character and his habits","/muhammad"],["Theology","The branches, and where they parted","/theology"],["The Unseen","Angels, jinn, the barzakh, the signs of the Hour","/unseen"],["The Journey of the Soul","What happens after the last breath","/soul"]]],["Worship","How it is actually done",[["The Five Pillars","Shahadah, salah, zakat, sawm, hajj","/pillars"],["Begin","For anyone new to Islam, from the first day","/begin"],["Ramadan","The month, and the tools for it","/ramadan"],["Hajj & Umrah","The rites, step by step, with their evidence","/hajj"],["Your Pilgrim Plan","A plan written from your own answers","/hajj-plan"],["The Two Eids","Fitr and Adha","/eid"]]],["The Story","Where all of it came from, and where it is going",[["The Path of Creation","71 chapters, from Kun Fayakun to the Hour","/#timeline"],["The Companions","The men and women who saw him ﷺ","/companions"],["Heroes of Islam","The people who carried it after them","/heroes"],["Characters","Everyone the Codex names","/characters"],["Places","The ground it happened on","/places"],["The Last Sermon","The final khutbah, line by line","/sermon"],["Two Lives","The scale, and what is on it","/mizan"]]],["Daily Life","The practice as it meets an ordinary week",[["How to Live a Good Life","Tayyiba: a good life, not an easy one","/good-life"],["Three Lives","Weigh your own against them","/three-lives"],["The Family Room","Children, parents, neighbours","/family"],["Marriage & the Home","From the proposal to the household","/marriage"],["Prophetic Health","The body, the plate, the fast, hijama","/health"],["For Teenagers","Written for them, not about them","/teens"],["Protection & the Light","Sihr, ruqya, the evil eye, and the myths","/protection"],["Are We in a Simulation?","The modern question, answered from the text","/simulation"]]],["Look It Up","When you need one thing, fast",[["The Encyclopedia of the Path","523 words this library uses, defined","/dictionary"],["The Classroom","The whole curriculum, in order","/madrasa"],["The School","The full course, for schools and organisations","/school"]]],["Children","Built for them, not simplified for them",[["The Kids' Codex","The Greatest Game","/kids"],["The Hall of Stories","His names, told as stories","/stories"],["The Lantern Sky","Light the whole day with prayer","/kids/lanterns"]]],["The House","The building itself",[["Give a Gift","Keep the lamp lit","/donate"],["The Masjid Toolbox","Boards, timetables and printables","/masjid"],["For Schools & Organisations","Use the Codex in your own place","/license"],["The Guardian's Journal","What the keeper is thinking about","/journal"],["Corrections & Ideas","Tell us what is wrong","/feedback"],["Terms & Transparency","Where the money goes, and what is collected","/legal"]]]];
+  var MAP = [["The Qur'an","The text itself, and what is needed to hold it",[["The Mushaf","All 114 surahs, with recitation for every ayah","/quran"],["The Letters","Learn to read the Arabic script, letter by letter","/arabic"],["The Words of the Path","The du'as worth carrying, in Arabic and English","/words"]]],["Belief","Who He is, who He sent, and what is unseen",[["The Ninety-Nine Names","His names, what He is not, and the three doors of tawhid","/allah"],["The 25 Prophets","Every prophet named in the Qur'an","/prophets"],["The Seerah","Twenty-three years, his character and his habits","/muhammad"],["Theology","The branches, and where they parted","/theology"],["The Unseen","Angels, jinn, the barzakh, the signs of the Hour","/unseen"],["The Journey of the Soul","What happens after the last breath","/soul"]]],["Worship","How it is actually done",[["The Five Pillars","Shahadah, salah, zakat, sawm, hajj","/pillars"],["Begin","For anyone new to Islam, from the first day","/begin"],["Ramadan","The month, and the tools for it","/ramadan"],["Hajj & Umrah","The rites, step by step, with their evidence","/hajj"],["Your Pilgrim Plan","A plan written from your own answers","/hajj-plan"],["The Two Eids","Fitr and Adha","/eid"]]],["The Story","Where all of it came from, and where it is going",[["The Path of Creation","71 chapters, from Kun Fayakun to the Hour","/path"],["Today","One Light, one word and one chapter of the Path, every day","/today"],["The Lights","350 Lights of history and science, each with its date","/light"],["The Verses","One verse, one thought, each with its recitation and its meaning","/verses"],["The Companions","The men and women who saw him ﷺ","/companions"],["Heroes of Islam","The people who carried it after them","/heroes"],["Characters","Everyone the Codex names","/characters"],["Places","The ground it happened on","/places"],["The Last Sermon","The final khutbah, line by line","/sermon"],["Two Lives","The scale, and what is on it","/mizan"]]],["Daily Life","The practice as it meets an ordinary week",[["How to Live a Good Life","Tayyiba: a good life, not an easy one","/good-life"],["Three Lives","Weigh your own against them","/three-lives"],["The Family Room","Children, parents, neighbours","/family"],["Marriage & the Home","From the proposal to the household","/marriage"],["Prophetic Health","The body, the plate, the fast, hijama","/health"],["For Teenagers","Written for them, not about them","/teens"],["Protection & the Light","Sihr, ruqya, the evil eye, and the myths","/protection"],["Are We in a Simulation?","The modern question, answered from the text","/simulation"]]],["Look It Up","When you need one thing, fast",[["The Encyclopedia of the Path","523 words this library uses, defined","/dictionary"],["The Classroom","The whole curriculum, in order","/madrasa"],["The School","The full course, for schools and organisations","/school"]]],["Children","Built for them, not simplified for them",[["The Kids' Codex","The Greatest Game","/kids"],["The Hall of Stories","His names, told as stories","/stories"],["The Lantern Sky","Light the whole day with prayer","/kids/lanterns"]]],["The House","The building itself",[["Give a Gift","Keep the lamp lit","/donate"],["The Masjid Toolbox","Boards, timetables and printables","/masjid"],["For Schools & Organisations","Use the Codex in your own place","/license"],["The Guardian's Journal","What the keeper is thinking about","/journal"],["Corrections & Ideas","Tell us what is wrong","/feedback"],["Terms & Transparency","Where the money goes, and what is collected","/legal"]]]];
 
   var CSS = ''
     + '.nmr{position:fixed;inset:0;z-index:60;display:none}'
