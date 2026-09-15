@@ -55,6 +55,9 @@ globalThis.fetch = async (url, opt) => {
     /* Instagram's containers are the third and fourth handed out (Facebook's
        two reel phases come first): the reel's is ready at once, the story's
        only when the test says so */
+    /* the reel's own state once Facebook has it (asked since 15 September 2026) */
+    if (/\?fields=status,permalink_url/.test(url))
+      return { ok: true, status: 200, json: async () => ({ status: { video_status: 'ready' }, permalink_url: '/reel/v_1/', published: true }) };
     if (/status_code/.test(url)) {
       const story = /container_4/.test(url) && !storyReady;
       return { ok: true, status: 200, json: async () => ({ status_code: story ? 'IN_PROGRESS' : 'FINISHED', status: { video_status: 'ready' } }) };

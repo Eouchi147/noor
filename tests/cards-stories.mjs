@@ -47,6 +47,8 @@ function name(u, body) {
   if (u.includes('/456/media_publish')) return 'ig-publish';
   if (u.includes('/456/media')) return body.media_type === 'STORIES' ? 'ig-story' : (body.media_type === 'REELS' ? 'ig-reel' : 'ig-feed');
   if (u.includes('status_code')) return 'ig-status';
+  /* the reel asked what became of it once the page had it (15 September 2026) */
+  if (/\/V1\?fields=status/.test(u)) return 'fb-reel:status';
   return 'other:' + u.slice(0, 40);
 }
 
@@ -78,6 +80,7 @@ globalThis.fetch = async (url, opt) => {
     if (n === 'fb-reel:start') return J({ video_id: 'V1', upload_url: 'https://rupload.facebook.com/v1' });
     if (n === 'fb-upload') return J({ success: true });
     if (n === 'fb-reel:finish') return J({ success: true });
+    if (n === 'fb-reel:status') return J({ status: { video_status: 'ready' }, permalink_url: '/reel/V1/', published: true });
     if (n === 'fb-video-story:start') return J({ video_id: 'VS1', upload_url: 'https://rupload.facebook.com/vs1' });
     if (n === 'fb-video-story:finish') return J({ success: true, post_id: 'FBVSTORY' });
     if (n === 'ig-story' || n === 'ig-feed' || n === 'ig-reel') return J({ id: 'C1' });

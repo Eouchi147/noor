@@ -336,7 +336,7 @@ console.log('\n=== 6. the verse walks the shelf with the poster\'s stride ===');
   const S = await import('../api/_schedule.js');
   const inline = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
   const from = inline.indexOf('function hash32'), to = inline.indexOf('function verse()');
-  const walk = new Function(inline.slice(from, to) + '; return { reelStep: reelStep, pickStep: pickStep, ROTA: ROTA, HALVES: HALVES };')();
+  const walk = new Function(inline.slice(from, to) + '; return { reelStep: reelStep, pickStep: pickStep, ROTA: ROTA, HALVES: HALVES, rotaRow: rotaRow };')();
   const cards = [];
   for (let i = 0; i < 37; i++) cards.push({ id: 'verse-' + i, kind: 'verse', slot: i % 2 ? 'evening' : 'morning', hook: '1:' + (i + 1), caption: 'c' });
   let same = 0, tried = 0;
@@ -344,10 +344,10 @@ console.log('\n=== 6. the verse walks the shelf with the poster\'s stride ===');
     const date = new Date(Date.UTC(2026, 8, 6) + d * 86400000).toISOString().slice(0, 10);
     const dow = new Date(date + 'T12:00:00Z').getUTCDay();
     for (const half of walk.HALVES) {
-      if (walk.ROTA[half][dow] !== 'verse') continue;
+      if (walk.rotaRow(half, true)[dow] !== 'verse') continue;
       tried++;
       const theirs = S.chooseReel(cards, date, half, null);
-      const ours = walk.pickStep(cards, walk.reelStep('verse', date, half), 'reel:verse');
+      const ours = walk.pickStep(cards, walk.reelStep('verse', date, half, true), 'reel:verse');
       if (theirs && ours && theirs.id === ours.id) same++;
     }
   }
