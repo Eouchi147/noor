@@ -177,8 +177,11 @@ def verse_cards():
             "kind": "verse", "verse": ref, "ordinal": i, "slot": "evening" if i % 2 else "morning",
             "eyebrow": "One verse",
             # {ref}, {meaning} and {reciter} are filled by the renderer, which is
-            # the only place the translation and the voice are known
-            "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+            # the only place the translation and the voice are known. The link
+            # is the verse's own room, /verse/<s>-<a> (10:6 is /verse/10-6,
+            # 1:1-7 is /verse/1-1-7), which api/page.js renders with the text,
+            # the reel and the surah; it used to send everyone to the Mushaf.
+            "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/%s\n\n#OneVerse #Quran #Islam #NoorCodexOfLight" % ref.replace(":", "-"),
             "look": {"pal": PALS[h32(cid + "p") % len(PALS)], "seed": h32(cid) % 1000, "n": n, "k": k,
                      "scene": "halo"}
         }
@@ -267,23 +270,53 @@ def retire(cards):
     return len(gone)
 
 
+def light_ids():
+    """the Lights that have a room: every id in lights/all.json is /light/<id>"""
+    try:
+        return {c["id"] for c in json.load(open(os.path.join(ROOT, "lights", "all.json"), encoding="utf-8"))["lights"] if c.get("id")}
+    except (OSError, ValueError, KeyError, TypeError):
+        return set()
+
+
+BARE = re.compile(r"noorcodex\.com(?![/\w])")
+
+
+def room_link(caption, lid, rooms):
+    """A Light's caption and a Did you know's were written by hand with the bare
+    domain at the end, and the reel then sent the viewer to the front door of a
+    library with 350 Lights in it. Every Light id is a room, /light/<id>, so the
+    bare domain is pointed at the Light the card came from. The sentence around
+    it is the author's and is not touched; a caption that already carries a
+    path, or a card whose Light is not in the library, is left as written."""
+    if not lid or lid not in rooms or not BARE.search(caption or ""):
+        return caption
+    return BARE.sub("noorcodex.com/light/" + lid, caption, count=1)
+
+
 def main():
     doc = json.load(open(PLAN, encoding="utf-8")) if os.path.exists(PLAN) else {"_meta": {}, "cards": {}}
     old = doc.get("cards", {})
+    rooms = light_ids()
     # the two hand written kinds live in their own files now, light.json and
     # know.json, so a new card is a small file to commit rather than a line
     # in a megabyte of plan; a light card still in an old plan.json is kept
     kept = {k: v for k, v in old.items() if v.get("kind", "light") == "light"}
+    for k, v in kept.items():
+        v["caption"] = room_link(v.get("caption", ""), v.get("src") or k, rooms)
     try:
         light = json.load(open(os.path.join(HERE, "light.json"), encoding="utf-8"))["cards"]
     except FileNotFoundError:
         light = {}
     for k, v in light.items():
         v = dict(v); v["kind"] = "light"
+        # a Light card names its Light in src, or is named for it
+        v["caption"] = room_link(v.get("caption", ""), v.get("src") or k, rooms)
         kept[k] = v
     know = json.load(open(os.path.join(HERE, "know.json"), encoding="utf-8"))["cards"]
     for k, v in know.items():
         v = dict(v); v["kind"] = "know"
+        # a Did you know names the Light it came from in src
+        v["caption"] = room_link(v.get("caption", ""), v.get("src"), rooms)
         if "slot" not in v: v["slot"] = "morning" if h32(k) % 2 else "evening"
         if "look" not in v:
             n, kk = STARS[h32(k) % len(STARS)]
