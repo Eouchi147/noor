@@ -124,10 +124,7 @@ def main():
         sweep()
         manifest()
     for nm, why in bad: print("  OUT", nm, why)
-    for nm, fb in faults:
-        print("  FAULT", nm, "; ".join(fb))
-        # on the run's own page, without opening a log
-        print("::warning title=reel removed, tried again next run::%s: %s" % (nm, "; ".join(fb)))
+    for nm, fb in faults: print("  FAULT", nm, "; ".join(fb))
     if bad: print("%d card(s) set aside as unfit; they are named in reels/<id>.unfit.json" % len(bad))
     if faults:
         raise SystemExit("%d reel(s) failed and were removed so the next run tries again" % len(faults))
@@ -311,6 +308,9 @@ def manifest():
                 "name": c.get("translit"), "dua": c.get("translit")}.get(kind, c.get("hook"))
         row = {"id": cid, "kind": kind, "slot": c["slot"], "hook": hook or "",
                "caption": caption, "secs": meta.get("secs"),
+               # the card's source (a Light id, a word slug, a Name slug): the
+               # poster links a Did you know reel to its Light with it
+               "src": c.get("src") or "",
                "cover": os.path.exists(os.path.join(OUT, cid + "-cover.jpg")) or bool(meta.get("cover"))}
         # where the video is: on the store, the row carries the URLs and the
         # poster uses them as they are; in reels/, the poster builds the old
