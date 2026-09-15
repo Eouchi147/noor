@@ -1,6 +1,6 @@
 {
- "n": 1455,
- "written": "2026-09-14",
+ "n": 1457,
+ "written": "2026-09-15",
  "cards": [
   {
    "id": "abdurrahman-ibn-awf-market",
@@ -4494,6 +4494,17 @@
    "reciter": "Abdur-Rahman as-Sudais"
   },
   {
+   "id": "verse-10-6",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Yunus · 10:6",
+   "caption": "Yunus · 10:6\n\nIndeed, in the alternation of the night and the day and [in] what Allah has created in the heavens and the earth are signs for a people who fear Allah\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 22.55,
+   "cover": true,
+   "video": "https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-10-6.mp4",
+   "reciter": "Maher al-Muaiqly"
+  },
+  {
    "id": "verse-10-62",
    "kind": "verse",
    "slot": "morning",
@@ -8067,6 +8078,17 @@
    "cover": true,
    "video": "https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-39-53.mp4",
    "reciter": "Mohammad al-Tablawi"
+  },
+  {
+   "id": "verse-39-61",
+   "kind": "verse",
+   "slot": "morning",
+   "hook": "Az-Zumar · 39:61",
+   "caption": "Az-Zumar · 39:61\n\nAnd Allah will save those who feared Him by their attainment; no evil will touch them, nor will they grieve.\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, and hear every verse, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
+   "secs": 18.58,
+   "cover": true,
+   "video": "https://github.com/Eouchi147/noor/releases/download/reels-verse/verse-39-61.mp4",
+   "reciter": "Maher al-Muaiqly"
   },
   {
    "id": "verse-39-62",
