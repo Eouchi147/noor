@@ -43,6 +43,48 @@ jobs:
       - name: build the hub and every word page
         run: python3 scripts/gen-dictionary.py
 
+      # The guard. On 9 September 2026 this generator rewrote the search index
+      # from {w, r, e, g} down to {w, r}, and every reader lost every prophet,
+      # companion, place and surah from the search; it also put the hub back
+      # on the retired Search door and the shell's old version. The generator
+      # is fixed, and this step makes sure that class of result never opens a
+      # pull request again: it compares what was built with what is on main
+      # and fails the run if the index lost a key, a group, or more than five
+      # percent of any group's rows, or if the hub lost data-n2, the More door
+      # or the shell version api/page.js carries.
+      - name: refuse a result that lost something
+        run: |
+          git show HEAD:assets/search-index.json > /tmp/search-index.before.json
+          node - <<'EOF'
+          const fs = require("fs");
+          const before = JSON.parse(fs.readFileSync("/tmp/search-index.before.json", "utf8"));
+          const after = JSON.parse(fs.readFileSync("assets/search-index.json", "utf8"));
+          const hub = fs.readFileSync("dictionary.html", "utf8");
+          const V = (fs.readFileSync("api/page.js", "utf8").match(/const V = "(\d+)"/) || [])[1];
+          const bad = [];
+          const count = j => {
+            const c = { w: (j.w || []).length, r: (j.r || []).length, e: (j.e || []).length, g: (j.g || []).length };
+            for (const e of j.e || []) c["e:" + e.g] = (c["e:" + e.g] || 0) + 1;
+            return c;
+          };
+          for (const k of Object.keys(before)) if (!(k in after)) bad.push("the index lost its key '" + k + "'");
+          const b = count(before), a = count(after);
+          for (const k of Object.keys(b)) {
+            if (!(k in a)) { bad.push("the index lost the class " + k + " (" + b[k] + " rows)"); continue; }
+            if (a[k] < Math.ceil(b[k] * 0.95)) bad.push("the index lost " + (b[k] - a[k]) + " of " + b[k] + " rows in " + k + " (more than five percent)");
+          }
+          for (const g of before.g || []) if (!(after.g || []).some(x => x.k === g.k)) bad.push("the index lost the group " + g.k);
+          if (!/<html [^>]*data-n2=/.test(hub)) bad.push("dictionary.html lost data-n2: it is not in the shell");
+          if (!/<nav class="n2-bar"[^>]*>[\s\S]*<a href="\/#search" data-n2-more>/.test(hub)) bad.push("dictionary.html lost the More door (data-n2-more)");
+          if (!V) bad.push("api/page.js carries no shell version to compare with");
+          else if (!hub.includes("/assets/noor2.css?v=" + V) || !hub.includes("/assets/noor2.js?v=" + V)) bad.push("dictionary.html links the shell at a version other than api/page.js's v" + V);
+          console.log("search index before:", JSON.stringify(b));
+          console.log("search index after: ", JSON.stringify(a));
+          console.log("hub: shell v" + V + ", More door " + (/data-n2-more/.test(hub) ? "present" : "missing"));
+          if (bad.length) { for (const m of bad) console.log("FAIL " + m); process.exit(1); }
+          console.log("nothing was lost");
+          EOF
+
       - name: what changed
         run: |
           echo '### Encyclopedia' >> "$GITHUB_STEP_SUMMARY"
