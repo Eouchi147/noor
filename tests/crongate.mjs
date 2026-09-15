@@ -35,16 +35,27 @@ function cookie() {
 
 console.log("\n=== the cron must get in, and only for 'due' ===");
 {
-  /* this is the exact shape Vercel sends: no cookie, no key */
-  let r = await call({ query: { action: "due" }, headers: { "user-agent": "vercel-cron/1.0" } });
-  ok(r.code !== 401, "a vercel-cron user agent is admitted to 'due' (got " + r.code + ")");
+  /* with CRON_SECRET set, Vercel sends it as the bearer on every cron
+     request, and the bearer is the only proof (15 September 2026): a user
+     agent or a signature header can be typed by anyone */
+  let r = await call({ query: { action: "due" },
+                   headers: { authorization: "Bearer " + process.env.CRON_SECRET } });
+  ok(r.code !== 401, "a correct CRON_SECRET bearer is admitted to 'due' (got " + r.code + ")");
+
+  r = await call({ query: { action: "due" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code === 401, "a vercel-cron user agent alone is refused while a secret is set (got " + r.code + ")");
 
   r = await call({ query: { action: "due" }, headers: { "x-vercel-signature": "abc" } });
-  ok(r.code !== 401, "so is the x-vercel-signature header (got " + r.code + ")");
+  ok(r.code === 401, "so is the x-vercel-signature header alone (got " + r.code + ")");
 
-  r = await call({ query: { action: "due" },
-                   headers: { authorization: "Bearer " + process.env.CRON_SECRET } });
-  ok(r.code !== 401, "so is a correct CRON_SECRET bearer (got " + r.code + ")");
+  /* a house that never set the secret keeps its hours: the user agent and
+     the signature header are the proof there */
+  const saved = process.env.CRON_SECRET; delete process.env.CRON_SECRET;
+  r = await call({ query: { action: "due" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code !== 401, "without a secret, the vercel-cron user agent is admitted (got " + r.code + ")");
+  r = await call({ query: { action: "due" }, headers: { "x-vercel-signature": "abc" } });
+  ok(r.code !== 401, "and so is the signature header (got " + r.code + ")");
+  process.env.CRON_SECRET = saved;
 }
 
 console.log("\n=== and nothing else is opened up by it ===");

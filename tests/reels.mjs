@@ -190,11 +190,14 @@ console.log('\nFacebook');
     if (url.includes('?fields=access_token')) return { j: { access_token: 'page' } };
     if (url.includes('rupload')) return { j: { success: true } };
     if (url.includes('/video_reels')) return { j: { video_id: 'VID', upload_url: 'https://rupload/x' } };
+    /* the fourth call since 15 September 2026: the page is asked what became of the video */
+    if (url.includes('/VID?fields=status')) return { j: { status: { video_status: 'ready' }, permalink_url: '/reel/VID/', published: true } };
     return { j: {} };
   });
   const r = await SOC.publishAll({}, POST, { fb: true, ig: false });
   const fb = r.find(x => x.where === 'facebook');
-  ok(fb.ok && fb.id === 'VID', 'a reel goes out in three phases');
+  ok(fb.ok && fb.id === 'VID', 'a reel goes out in three phases, and is verified as ready');
+  ok(fb.url === 'https://www.facebook.com/reel/VID/', 'the permalink is on the record');
   const up = calls.find(c => c.url.includes('rupload'));
   ok(up && up.headers.file_url === REEL.video, 'Facebook is told where to fetch the file');
   ok(up && /^OAuth /.test(up.headers.authorization), 'and is given the page token as a header');

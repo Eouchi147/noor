@@ -97,5 +97,36 @@ console.log('\n=== the private Short ===');
   ok(S.reelDone(rec) === true, 'a public one does');
 }
 
+console.log('\n=== the caption keeps its closing line on the short networks ===');
+{
+  const TH = await import('../api/_threads.js');
+  const body = 'Indeed, in the alternation of the night and the day and in what Allah has created in the heavens and the earth are signs for a people who fear Allah. ';
+  const cap = 'Yunus · 10:6\n\n' + body.repeat(4) + '\n\nRecited by Maher al-Muaiqly. Read the whole surah with its meaning, free: noorcodex.com/quran\n\n#OneVerse #Quran #Islam #NoorCodexOfLight';
+  const cut = TH.cutKeepTail(cap, 500);
+  ok(cut.length <= 500, 'within 500 (' + cut.length + ')');
+  ok(/noorcodex\.com\/quran/.test(cut), 'the library line survives the cut');
+  ok(/#NoorCodexOfLight$/.test(cut), 'and the tags close it');
+  ok(/…/.test(cut), 'the body is what gave way');
+  ok(TH.cutKeepTail('a short caption\n\n#Islam', 500) === 'a short caption\n\n#Islam', 'a caption that fits is untouched');
+  const CH = await import('../api/_channels.js');
+  const pin = CH.shape({ caption: cap, title: 'Yunus 10:6', image: 'https://x/c.jpg', video: 'https://x/v.mp4', link: 'https://noorcodex.com/verse/10-6' }, 'pinterest');
+  ok(/noorcodex\.com\/quran/.test(pin.text) && pin.text.length <= 500, 'Pinterest gets the same cut');
+  const th = CH.shape({ caption: cap, title: 'Yunus 10:6', video: 'https://x/v.mp4', link: 'https://noorcodex.com/verse/10-6' }, 'threads');
+  ok(/#NoorCodexOfLight$/.test(th.text), 'and so does Threads');
+}
+
+console.log('\n=== every reel links its own room ===');
+{
+  const S = await import('../api/_schedule.js');
+  ok(S.reelRoom({ id: 'verse-10-6', kind: 'verse' }) === '/verse/10-6', 'a verse to its verse room');
+  ok(S.reelRoom({ id: 'word-abu-bakr', kind: 'word' }) === '/dictionary/abu-bakr', 'a word to its page');
+  ok(S.reelRoom({ id: 'al-sufi-andromeda-964', kind: 'light' }) === '/light/al-sufi-andromeda-964', 'a Light to its room');
+  ok(S.reelRoom({ id: 'know-sine', kind: 'know', src: 'sine-mistranslation' }) === '/light/sine-mistranslation', 'a Did you know to the Light it was written from');
+  ok(S.reelRoom({ id: 'know-sine', kind: 'know' }) === '/light', 'and to the shelf when the manifest has no source yet');
+  const p = S.buildSlot('reelA', { date: '2026-09-15', base: 'https://noorcodex.com', link: 'https://noorcodex.com/today?date=2026-09-15',
+    reel: { id: 'verse-10-6', kind: 'verse', hook: 'Yunus · 10:6', caption: 'c', video: 'https://x/v.mp4', cover: 'https://x/c.jpg' } });
+  ok(p && p.link === 'https://noorcodex.com/verse/10-6', 'the post carries the room, not the home page');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
