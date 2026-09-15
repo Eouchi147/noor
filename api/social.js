@@ -496,7 +496,7 @@ export async function compose(host, date, opts = {}) {
     caption: cap.text, polished: cap.polished, refused: cap.refused || "",
     image: base + "/api/card?date=" + date + "&fmt=png",
     imageSvg: base + "/api/card?date=" + date,
-    link: base + "/?light=" + date
+    link: base + "/today?date=" + date
   };
 }
 
@@ -708,6 +708,12 @@ export async function finishInstagramReel(creationId) {
     const code = sj && sj.status_code;
     if (code === "ERROR" || code === "EXPIRED")
       return { ok: false, error: metaErr(sj, "Instagram could not process the video: " + code) };
+    /* PUBLISHED: the container went out already (a publish whose answer the
+       clock cut, or the owner's Finish pressed twice). Until 15 September
+       2026 it read as still pending, was given up on after two hours, and
+       the healer sent the reel again as a fresh container: the doubled
+       Instagram reels. Published is published. */
+    if (code === "PUBLISHED") return { ok: true, id: (sj && (sj.id || sj.media_id)) || creationId, published: true, verified: new Date().toISOString() };
     if (code !== "FINISHED") return { ok: false, pending: creationId };
     return await igPublish(creationId, id, tok, G);
   } catch (e) { return { ok: false, error: String(e && e.message || e).slice(0, 160) }; }
@@ -1503,7 +1509,7 @@ const CHANNEL_MIN_MS = Number(process.env.CHANNEL_MIN_MS || 8000);
 const OUT_OF_TIME = "no time left in this run for this network; retried next hour";
 /* `send` is the sender put on the clock: the feed sender by default, the
    story-only sender for a card (it takes the channel and the post). */
-async function sendWithin(ch, shaped, post, left, send) {
+async function sendWithin(ch, shaped, post, left, send, onLate) {
   const began = Date.now();
   const go = send ? () => send(ch, post) : () => sendOne(ch, shaped, post, left);
   const stamp = r => { if (r && typeof r === "object") r.ms = Date.now() - began; return r; };
@@ -1512,8 +1518,35 @@ async function sendWithin(ch, shaped, post, left, send) {
   if (room < CHANNEL_MIN_MS) return stamp({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true });
   let timer;
   const clock = new Promise(r => { timer = setTimeout(() => r({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true }), room); });
-  try { return stamp(await Promise.race([go(), clock])); }
+  const flight = go();
+  try {
+    const r = stamp(await Promise.race([flight, clock]));
+    /* a request the clock cut is still running: until 15 September 2026 its
+       answer was thrown away, so a reel that landed on the page after the
+       cut was recorded late and sent again by the healer next hour. Now the
+       answer, when it comes, is written onto the record over the "late"
+       (lateArrival), and a network that said yes is never asked twice. */
+    if (r && r.cut && typeof onLate === "function")
+      flight.then(x => onLate(stamp(x))).catch(() => {});
+    return r;
+  }
   finally { clearTimeout(timer); }
+}
+
+/* the answer of a request the clock cut, arriving after the record was
+   written: if the record still says late for that network, the network's
+   own word replaces it and the slot's state follows */
+async function lateArrival(date, id, ch, r) {
+  if (!r || typeof r !== "object" || !kvReady()) return;
+  try {
+    const rec = await readSlot(date, id);
+    if (!rec || !rec.results || !rec.results[ch] || !rec.results[ch].late) return;
+    rec.results = { ...rec.results, [ch]: { ...r, arrivedLate: true } };
+    rec.state = slotState(rec.results);
+    if (r.ok && ch === "instagram") rec.igId = r.id || "posted";
+    await writeSlot(date, id, rec);
+    logRun("late", { slot: id, where: ch, ok: !!r.ok, state: rec.state });
+  } catch { }
 }
 
 /* THE ORDER A REEL IS OFFERED IN.
@@ -1622,7 +1655,7 @@ export async function composeSlot(host, date, slotId, opts = {}) {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
     node: extras.node, entry: extras.entry, reel: extras.reel,
-    link: base + "/?light=" + date,
+    link: base + "/today?date=" + date, base,
     /* its OWN card, not the day's light. Handing one url to every slot is what
        made four different posts a day look like one post four times. */
     image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slotId) + "&fmt=png"
@@ -1709,7 +1742,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
     if (CH.SPEC[ch].image === "required" && imgWhy) {
       results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
-    try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left); }
+    try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slotId, ch, r)); }
     catch (e) {
       const m = String(e && e.message || e).slice(0, 120);
       results[ch] = { ok: false, error: m, err: m };
@@ -2262,8 +2295,15 @@ export async function runDue(host, date, now, opts = {}) {
     /* "partial" is settled as far as COMPOSING goes: the slot has been said,
        and running it again would post a second time everywhere it landed. The
        channel that refused is healed one channel at a time, by healFailures. */
+    /* "failed" is settled the same way since 15 September 2026: every
+       network refused, and the healer mends them one at a time with its
+       counters and backoff; composing and sending the whole slot again
+       every hour erased those counters and asked every network again at
+       once, which is how an account looks automated. A slot with no
+       results at all (a run that died before writing) is not settled. */
     if (r && (r.state === "sent" || r.state === "skipped" ||
-              r.state === "queued" || r.state === "pending" || r.state === "partial"))
+              r.state === "queued" || r.state === "pending" || r.state === "partial" ||
+              (r.state === "failed" && r.results && Object.keys(r.results).length)))
       sent.push(id);
   }
 
@@ -2299,7 +2339,7 @@ export async function runDue(host, date, now, opts = {}) {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
         node: extras.node, entry: extras.entry, reel: extras.reel,
-        link: base + "/?light=" + date,
+        link: base + "/today?date=" + date, base,
         image: base + "/api/card?date=" + date + "&slot=" + encodeURIComponent(slot.id) + "&fmt=png"
       });
     }
@@ -2344,7 +2384,7 @@ export async function runDue(host, date, now, opts = {}) {
     else for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
-      try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left); }
+      try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slot.id, ch, r)); }
       catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
     }
     /* Reddit is composed and kept, never sent. What is paced here is how often
@@ -2517,7 +2557,13 @@ export default async function handler(req, res) {
   const cronSecret = process.env.CRON_SECRET || "";
   const bearerOk = !!cronSecret && bearer.length === cronSecret.length
     && crypto.timingSafeEqual(Buffer.from(bearer), Buffer.from(cronSecret));
-  const cronMayRun = String(q0.action || "") === "due" && (fromVercelCron || bearerOk);
+  /* With CRON_SECRET set, Vercel sends it as the bearer on every cron
+     request, and the bearer is the proof: a user agent can be typed by
+     anyone, and a spoofed "due" was a way to make the hour run twice (the
+     claim in runDue now refuses the second sender, and the door is closed
+     here as well). Without the secret the user agent and the signature
+     header stay the proof, so a house that never set one keeps its hours. */
+  const cronMayRun = String(q0.action || "") === "due" && (cronSecret ? bearerOk : fromVercelCron);
   /* Pinterest returns the owner to the callback in whatever browser he
      approved in, which may not be the one holding the console cookie. The
      signed, fifteen minute `state` this route issued is the proof instead. */

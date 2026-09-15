@@ -66,6 +66,7 @@ const cut = (s, n) => {
   return s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…";
 };
 
+
 /* ---------------------------------------------------------------------------
    the shape each network wants
 --------------------------------------------------------------------------- */
@@ -113,8 +114,15 @@ function capTags(text, max) {
   const hits = [...String(text).matchAll(RE)];
   if (hits.length <= max) return text;
   let out = String(text);
-  /* from the end, so the wall goes before any tag that is part of a sentence */
-  for (let i = hits.length - 1; i >= max; i--) {
+  /* from the end, so the wall goes before any tag that is part of a
+     sentence; the house's own tag stays whatever the limit (Threads allows
+     two, and until 15 September 2026 #NoorCodexOfLight, last in every
+     caption, was the first to go) */
+  const brand = i => /noorcodex/i.test(hits[i][0]);
+  const keep = new Set(hits.map((h, i) => i).filter(brand).slice(0, max));
+  for (let i = 0; i < hits.length && keep.size < max; i++) keep.add(i);
+  for (let i = hits.length - 1; i >= 0; i--) {
+    if (keep.has(i)) continue;
     const h = hits[i];
     out = out.slice(0, h.index) + out.slice(h.index + h[0].length);
   }
@@ -189,7 +197,7 @@ function shapeRaw(p, ch) {
   if (ch === "pinterest") {
     return {
       title: cut(p.title, 100),
-      text: cut([p.caption || p.body, p.caption ? "" : p.basis].filter(Boolean).join(" "), 500),
+      text: p.caption ? TH.cutKeepTail(p.caption, 500) : cut([p.body, p.basis].filter(Boolean).join(" "), 500),
       image: p.image, link,
       /* a reel is a video pin: the file, and the cover as its still */
       video: p.video || null,

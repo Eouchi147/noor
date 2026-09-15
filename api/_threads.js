@@ -84,6 +84,28 @@ const cut = (s, n) => {
   return s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…";
 };
 
+/* A reel's caption cut for a network with a short limit (Threads and
+   Pinterest, 500): the body gives way, the closing paragraphs stay. The
+   audited caption ends with the line that names the library and the tags,
+   and cut() took those first: 148 of 1,455 captions lost "noorcodex.com"
+   and every hashtag on both networks (audit of 15 September 2026). The tail
+   is the last paragraph when it is hashtags, plus the last paragraph before
+   it that carries the site's name; the rest is cut on a word. */
+export const cutKeepTail = (s, n) => {
+  s = String(s || "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n")
+       .split("\n").map(l => l.trim()).join("\n").trim();
+  if (s.length <= n) return s;
+  const paras = s.split(/\n\n+/);
+  const tail = [];
+  if (paras.length > 1 && /^(#[\p{L}\p{N}_]+\s*)+$/u.test(paras[paras.length - 1])) tail.unshift(paras.pop());
+  if (paras.length > 1 && /noorcodex\.com/i.test(paras[paras.length - 1])) tail.unshift(paras.pop());
+  if (!tail.length) return cut(s, n);
+  const keep = tail.join("\n\n");
+  const room = n - keep.length - 2;
+  if (room < 40) return cut(s, n);
+  return cut(paras.join("\n\n"), room) + "\n\n" + keep;
+};
+
 /* one line of the body: its first sentence, or its first line if the
    sentence never ends */
 export function oneLine(body) {
@@ -98,7 +120,7 @@ export function shape(p) {
   if (p.caption) {
     /* a reel's caption was written and audited beside the video: carried
        whole where it fits, cut on a word where it does not */
-    return { text: cut(p.caption, TEXT_MAX), image: p.image || null, video: p.video || null, link };
+    return { text: cutKeepTail(p.caption, TEXT_MAX), image: p.image || null, video: p.video || null, link };
   }
   /* a card: the title, one line, the link, and at most two tags. Not the
      caption wall the feeds get: Threads reads as sentences. The link is a

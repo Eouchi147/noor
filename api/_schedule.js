@@ -319,6 +319,25 @@ export function chooseReel(cards, dateStr, half, hijri) {
 /* ---------------------------------------------------------------------------
    what each slot actually says
 --------------------------------------------------------------------------- */
+/* the room a reel's viewer is sent to: the exact page the caption names,
+   never the home page. Until 15 September 2026 every reel carried
+   /?light=DATE, a parameter no page reads, and Pinterest used it as the
+   pin's destination. The id carries the room for a verse, a word and a
+   Light; a Did you know card names its Light in `src` when the manifest
+   has it; the rest go to their shelf. */
+export function reelRoom(r) {
+  if (!r || !r.id) return "/";
+  const id = String(r.id), kind = r.kind || "light";
+  if (kind === "verse") return "/verse/" + id.replace(/^verse-/, "");
+  if (kind === "word") return "/dictionary/" + id.replace(/^word-/, "");
+  if (kind === "light") return "/light/" + id;
+  if (kind === "know") return r.src ? "/light/" + String(r.src) : "/light";
+  if (kind === "name") return "/allah";
+  if (kind === "dua") return "/words";
+  if (kind === "day") return "/today";
+  return "/";
+}
+
 export function buildSlot(slot, ctx) {
   const p = buildSlotInner(slot, ctx);
   /* the slot rides along, so a channel that files things by kind (Pinterest's
@@ -348,7 +367,7 @@ function buildSlotInner(slot, ctx) {
       title: r.hook || "", oneLine: r.hook || "",
       body: r.caption || "", caption: r.caption || "",
       todo: [], basis: "", note: "", tags: [], invite: "",
-      link, image: r.cover || null, video: r.video, reel: true,
+      link: (ctx.base || "") + reelRoom(r), image: r.cover || null, video: r.video, reel: true,
       kind: r.kind || "light",
       only: ["facebook", "instagram", "youtube", "pinterest", "telegram", "threads"]
     };
