@@ -25,19 +25,18 @@
     {
       "text": "Paid for by waqf, an endowment",
       "sub": "money set aside for ever",
-      "steps": 3
+      "steps": 5
     },
     {
       "text": "Rich and poor, any faith, any country",
-      "steps": 2
+      "steps": 3
     },
     {
       "text": "No one turned away, no bill at the door",
-      "steps": 4
+      "steps": 2
     },
     {
-      "text": "Cairo gave music to the sleepless",
-      "steps": 1
+      "text": "Cairo gave music to the sleepless"
     },
     {
       "eyebrow": "The bimaristan",
@@ -47,14 +46,6 @@
   ],
   "motion": [
     {
-      "do": "travel",
-      "on": ".ln path",
-      "at": 2,
-      "for": 3.6,
-      "times": 2,
-      "size": 1.0
-    },
-    {
       "do": "pulse",
       "on": "rect",
       "at": 2,
@@ -62,11 +53,26 @@
       "stagger": 0.3
     },
     {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 3,
+      "for": 3.6,
+      "times": 2,
+      "size": 1.0
+    },
+    {
       "do": "pulse",
       "on": "rect",
       "at": 4,
       "for": 1.2,
       "stagger": 0.24
+    },
+    {
+      "do": "glow",
+      "on": "circle",
+      "at": 4,
+      "for": 2.6,
+      "size": 1.6
     },
     {
       "do": "travel",
@@ -85,11 +91,12 @@
       "size": 1.0
     },
     {
-      "do": "glow",
-      "on": "circle",
-      "at": 4,
-      "for": 2.6,
-      "size": 1.6
+      "do": "travel",
+      "on": ".rd path",
+      "at": 7,
+      "for": 2.8,
+      "times": 1,
+      "size": 1.0
     }
   ]
 }

@@ -25,12 +25,11 @@
     {
       "text": "Toledo and Cordoba translated them",
       "sub": "Arabic into Latin, in the 1100s",
-      "steps": 2
+      "steps": 4
     },
     {
       "text": "Europe taught them",
-      "sub": "in its first universities, the 1200s",
-      "steps": 2
+      "sub": "in its first universities, the 1200s"
     },
     {
       "text": "This is the paper road",
@@ -80,19 +79,19 @@
       "size": 1.2
     },
     {
-      "do": "flow",
-      "on": ".rd path",
+      "do": "glow",
+      "on": "text.t3",
       "at": 6,
-      "for": 6.0,
-      "times": 5,
-      "size": 1.4
+      "for": 2.2,
+      "size": 1.1
     },
     {
-      "do": "glow",
+      "do": "travel",
       "on": ".rd path",
-      "at": 6,
-      "for": 2.6,
-      "size": 0.7
+      "at": 7,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.0
     }
   ]
 }

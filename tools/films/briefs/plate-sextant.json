@@ -17,22 +17,22 @@
     {
       "text": "He sank an arc into the bedrock",
       "sub": "about forty metres across",
-      "steps": 3
+      "steps": 2
     },
     {
       "text": "Bigger means finer",
       "sub": "a minute of sky is a centimetre of stone",
-      "steps": 3
+      "steps": 1
     },
     {
       "text": "He paid a salaried staff",
       "sub": "and scholars came from many lands",
-      "steps": 2
+      "steps": 6
     },
     {
       "text": "They fixed a thousand stars",
       "sub": "the first fresh catalogue in 1,000 years",
-      "steps": 2
+      "steps": 1
     },
     {
       "text": "He was killed, the tower pulled down",
@@ -54,12 +54,10 @@
       "size": 1.0
     },
     {
-      "do": "travel",
-      "on": ".ln path",
+      "do": "pulse",
+      "on": "path.ln.thin:nth-of-type(1)",
       "at": 3,
-      "for": 4.6,
-      "times": 2,
-      "size": 1.0
+      "for": 1.4
     },
     {
       "do": "pulse",
@@ -68,19 +66,19 @@
       "for": 1.4
     },
     {
+      "do": "glow",
+      "on": "circle",
+      "at": 4,
+      "for": 2.6,
+      "size": 1.6
+    },
+    {
       "do": "travel",
       "on": ".ln path",
       "at": 6,
       "for": 4.4,
       "times": 2,
       "size": 0.9
-    },
-    {
-      "do": "glow",
-      "on": "circle",
-      "at": 4,
-      "for": 2.6,
-      "size": 1.6
     }
   ]
 }

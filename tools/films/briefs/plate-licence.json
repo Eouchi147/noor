@@ -7,30 +7,29 @@
   "lines": [
     {
       "text": "A book you were not allowed to copy",
-      "steps": 2
+      "steps": 1
     },
     {
       "text": "Makkah, in Arabia, about 1020",
-      "sub": "the scholar Karima al-Marwaziyya",
-      "steps": 1
+      "sub": "the scholar Karima al-Marwaziyya"
     },
     {
       "text": "Karima holds the most trusted copy",
       "sub": "of the most checked book after the Qur'an",
-      "steps": 2
+      "steps": 1
     },
     {
       "text": "Copying by hand puts errors in",
-      "steps": 1
+      "steps": 4
     },
     {
       "text": "So you read yours back to her",
       "sub": "out loud, line by line, against hers",
-      "steps": 3
+      "steps": 4
     },
     {
       "text": "One error caught is one error stopped",
-      "steps": 2
+      "steps": 1
     },
     {
       "text": "Only then would she sign your licence",
@@ -49,6 +48,13 @@
   ],
   "motion": [
     {
+      "do": "glow",
+      "on": "g.ln:nth-of-type(1)",
+      "at": 2,
+      "for": 2.4,
+      "size": 1.0
+    },
+    {
       "do": "travel",
       "on": ".rd path",
       "at": 4,
@@ -58,7 +64,7 @@
     },
     {
       "do": "pulse",
-      "on": "circle",
+      "on": ".rd circle",
       "at": 5,
       "for": 1.4
     },
@@ -79,9 +85,17 @@
     {
       "do": "glow",
       "on": "path.nd",
-      "at": 5,
+      "at": 6,
       "for": 2.6,
       "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 7,
+      "for": 3.0,
+      "times": 1,
+      "size": 1.0
     }
   ]
 }

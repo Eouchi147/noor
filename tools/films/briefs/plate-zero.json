@@ -29,12 +29,11 @@
     {
       "text": "Arabic called it sifr, the empty",
       "sub": "which became cipher, and zero",
-      "steps": 2
+      "steps": 4
     },
     {
       "text": "Al-Khwarizmi wrote the handbook",
-      "sub": "Latin copies carried it west",
-      "steps": 2
+      "sub": "Latin copies carried it west"
     },
     {
       "text": "Every price and every line of code",
@@ -56,14 +55,6 @@
       "stagger": 0.22
     },
     {
-      "do": "travel",
-      "on": "path.rd",
-      "at": 4,
-      "for": 2.4,
-      "times": 2,
-      "size": 0.9
-    },
-    {
       "do": "pulse",
       "on": "text.big",
       "at": 4,
@@ -71,17 +62,32 @@
       "stagger": 0.2
     },
     {
-      "do": "pulse",
-      "on": "text.big",
-      "at": 6,
-      "for": 1.2,
-      "stagger": 0.16
-    },
-    {
       "do": "glow",
       "on": "rect:nth-of-type(2)",
       "at": 4,
       "for": 2.6,
+      "size": 1.0
+    },
+    {
+      "do": "travel",
+      "on": "path.rd",
+      "at": 5,
+      "for": 2.4,
+      "times": 2,
+      "size": 0.9
+    },
+    {
+      "do": "pulse",
+      "on": "text.t2.gold",
+      "at": 5,
+      "for": 1.4
+    },
+    {
+      "do": "travel",
+      "on": "path.rd",
+      "at": 7,
+      "for": 2.6,
+      "times": 1,
       "size": 1.0
     }
   ]
