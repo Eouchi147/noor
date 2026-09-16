@@ -295,6 +295,12 @@ def do_compile(slug):
             refuse("scene %s camera has neither hfov nor fov" % sc["id"])
         if "hold" in cam:
             view["hold"] = round(retimed_hold(cam["hold"], sc["dur"], hold), 3)
+        #  END: where the glide inside this scene goes (eye and look at the
+        #  scene's end) when the scene has no next station or wants its own
+        #  move. The last scene needs it or it stands still, which the audit
+        #  of the first proof measured at 40 s (a mean change of 2.3 in 2 s).
+        if "end" in cam:
+            view["end"] = {"eye": cam["end"]["eye"], "look": cam["end"]["look"]}
         views.append(view)
 
         lan = sc["lantern"]
