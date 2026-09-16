@@ -3,6 +3,21 @@
 Dated, newest first, in his words where the words matter. A decision here binds every
 agent. `NOOR.md` holds the standing rules; this file holds the calls made along the way.
 
+## 16 September 2026, the night (Director's calls while the owner slept, to be confirmed)
+
+- The first prototype is "The dark room" (Ibn al-Haytham), first person, ten scenes, the
+  words and facts from the Light `camera-obscura-dark-room` and heroes.html only.
+- The engine keeps the frame exact browser renderer and puts the scene under it in the
+  existing light layer (`web/lume.js`), rather than a new renderer.
+- The spec's camera field of view is horizontal (`hfov`), so one spec composes both
+  shapes; the stage converts it.
+- A stand in voice (Piper, en-us-ryan-medium) speaks proofs and is marked as such; the
+  owner's voice replaces it. The spec's music is the Suno score C.
+- `music/`, `figs/`, `voice/` and renders stay out of the repository; the engine's code,
+  specs, briefs and compiled chapters go in.
+- "I am going to sleep, continue and finish everything possible from the masterplan. I
+  want to be able to see major progress when I wake up."
+
 ## 16 September 2026
 
 - **The workflow itself.** The Director orchestrates; specialists do the work: scout on

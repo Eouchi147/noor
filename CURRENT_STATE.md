@@ -5,6 +5,15 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 
 ## Live on main (16 September 2026)
 
+- **The video engine, rebuilt** (`VIDEO_ENGINE.md`): the film spec, the scene film in the
+  light layer (explicit camera stations and light cues, one figure as the world), the
+  dark room figure, the watermark, `film.py` (compile, voice, sound, render, mux, check,
+  all) and `audit.py`; the whole engine in `tools/films/` in the repository, out of the
+  deployment. The prototype "The dark room" (ten scenes, 44 s, both shapes) proofed at 12
+  fps with a stand in voice, in the owner's folder `NOOR Films/darkroom/`.
+- **Batch 5, the `/license` removal, the orphan removal and the house documents**: live
+  (rooms for prophets, companions, characters, places and the 99 Names; the sitemap at
+  1,386; `/license` redirected to `/school`; 97 orphan files gone by pull request 14).
 - **The change archive**: `changes.txt` at the root, one line per change, read and
   downloaded from the console's System room (`/admin2`).
 - **The social machine**: five minutes a run (was 60 s), a claim per slot before sending, a
@@ -31,30 +40,17 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 
 ## In flight
 
-- **Batch 5, reviewed SHIP WITH NOTES by the refuter on 16 September and shipping**: rooms
-  for 25 prophets, 58 companions, 40 characters, 34 places and the 99 Names in
-  `api/page.js` (256 rooms, the sitemap grows from 1,130 to 1,386); `.github/workflows/tests.yml`
-  (36 suites on every push); `.github/workflows/generators.yml` (drift guard); the first
-  screen of every room painted at once; `reels/home.json` for the home (appears at the next
-  render run); focus held in the sheets; a skip link; the Names canvas and the Prophets
-  stars quiet under reduced motion; the shell at version 14.
-- **The `/license` removal**, built by the builder and reviewed with batch 5: the page and
-  the function deleted (by the new `remove.yml` workflow's pull request), `/license`
-  redirected to `/school` for good, every menu, sitemap, index and page sentence true
-  without a subscription.
-- **The orchestration infrastructure**: `CLAUDE.md`, `.claude/agents`, `.claude/skills`,
-  the six state documents, shipping with this batch; tested end to end on the `/license`
-  removal (scout on haiku, builder on sonnet, refuter on opus).
+- **The dark room prototype, waiting on the owner**: the look, the voice, and whether
+  the architecture is locked (`VIDEO_ENGINE.md`, "What the owner decides"). The full
+  render (24 fps, shutter 3) is a Mac job.
+- **The dictionary rebuild at shell v14** (workflow run 35047391599): its pull request
+  is merged or waiting; `CURRENT_STATE.md` is updated when it lands.
 
 ## Decided and not yet done
 
-- Remove the orphan files by a workflow opened pull request (owner, 16 September):
-  `"study 2/"`, `console.html`, `sponsor.html`, `nodes-a.js`, `nodes-b.js`,
-  `shorts-rows.json`, root `quran-study.js`, `text/`, `locales/`, `assets/noor-menu.js`
-  and `.css`, root `lantern.js`, `tools/reels/web/type.html`, `assets/.DS_Store`,
-  `scripts/__pycache__`. `tools/films` stays (the engine's base).
-- Nudge Pinterest about the Standard access review (the owner is waiting on it).
-- Open a few of the recorded YouTube Shorts to confirm they are public.
+- Nudge Pinterest about the Standard access review (the owner sends the note himself;
+  the text is in the morning summary of 16 September).
+- The content corrections (content-001 to 006) and the old rooms diet (batch 6).
 
 ## Blocked or waiting
 
@@ -67,4 +63,5 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 - Reels on the shelf with video: 1,457 of 1,565 planned. Slots a day: 5 reels (08, 11, 14,
   17, 21 UTC) plus reelF at 19, and the cards (dawn 05, light 12, word 16, dusk 20).
 - Rooms rendered by `api/page.js`: 1,130 live, 1,386 once batch 5 ships.
-- Audit findings: 123 (23 high, 49 medium, 51 low); closed so far: about 30.
+- Audit findings: 123 (23 high, 49 medium, 51 low); closed so far: about 40, and the
+  engine rebuild (the audit's largest finding) has its first prototype.

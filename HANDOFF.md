@@ -61,12 +61,21 @@ claude-haiku-4-5, claude-sonnet-5, claude-opus-5 and claude-fable-5-1.
   inputs `ids`); the Monday run needs nothing.
 - The films: `VIDEO_ENGINE.md`.
 
+## The films
+
+`VIDEO_ENGINE.md` is the map. In a session: `cd tools/films`, `python3 film.py all
+darkroom` (compile, voice, sound), `python3 film.py render darkroom --run` (proof; add
+`--full` on the Mac), `python3 film.py mux darkroom --shape tall`, `python3 audit.py
+darkroom --shape tall`. Piper voices are fetched from GitHub's release assets
+(`https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-en-us-ryan-medium.tar.gz`
+into `/tmp/pipervoices/`); `music/` is on the Mac only. The refuter's purity test:
+seek 20000, 9500, 20000 and compare frames byte for byte.
+
 ## The first three things to do next
 
-1. Confirm batch 5, the `/license` removal and the documents are live on main (they were
-   shipping when this was written): `CURRENT_STATE.md` says which; the removal pull
-   requests (the two licence files, the orphan files) are merged from the browser.
-2. The video engine rebuild and the one prototype (`VIDEO_ENGINE.md`, masterplan steps 3
-   and 4).
-3. The content corrections (content-001 to 006) with the hadith numbers checked in the
+1. The owner's verdict on the dark room proof (look, voice, architecture); then the
+   revisions he asks for, the full render on the Mac, and the export through the reels
+   shelf and the social machine.
+2. The content corrections (content-001 to 006) with the hadith numbers checked in the
    owner's browser, and the diet of the old rooms (batch 6).
+3. The remaining medium and low findings of the audit, in the pack's order.
