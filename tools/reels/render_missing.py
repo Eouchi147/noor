@@ -336,6 +336,23 @@ def manifest():
     with open(path, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=1)
     print(f"{path}: {len(out)} rendered")
+    # The home page chooses one verse from this list and reads nothing else
+    # of it, and the whole manifest is 181 KB gzipped: three fifths of the
+    # home page's weight, fetched for one card. So the verse rows go into a
+    # file of their own, reels/home.json, with only the fields the home reads
+    # (id, kind, hook, caption, cover, video, secs, reciter), and beside them
+    # the count of shorts on the shelf, which decides the afternoon row of
+    # the rota there. The date is the manifest's, so a run that changed
+    # nothing changes nothing here either.
+    home = {"n": 0, "written": written,
+            "shorts": sum(1 for r in out if r.get("kind") == "short"),
+            "cards": [{k: r[k] for k in ("id", "kind", "hook", "caption", "cover", "video", "secs", "reciter") if k in r}
+                      for r in out if r.get("kind") == "verse"]}
+    home["n"] = len(home["cards"])
+    hpath = os.path.join(OUT, "home.json")
+    with open(hpath, "w", encoding="utf-8") as f:
+        json.dump(home, f, ensure_ascii=False, indent=1)
+    print(f"{hpath}: {home['n']} verses for the home page")
     return path
 
 
