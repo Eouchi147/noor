@@ -586,8 +586,13 @@ console.log("\n=== the deployment ===");
   ok(v.functions["api/page.js"] && /lights\/all\.json/.test(v.functions["api/page.js"].includeFiles) && /node\/\*\.json/.test(v.functions["api/page.js"].includeFiles), "api/page.js includes the library's files");
   /* a file not listed there does not exist on Vercel: the four families read
      these five, and the sitemap the four it lists */
-  ok(["prophets-data.js", "characters.js", "places.js", "allah.html", "assets/entity-graph.json"].every(f => v.functions["api/page.js"].includeFiles.includes(f)) && fs.existsSync("assets/entity-graph.json"),
-     "api/page.js includes the people, the places, the Names and the graph that ties them");
+  /* the list is a glob under Vercel's 256 character limit: the graph rides
+     on assets/*.json rather than by name */
+  const inc = v.functions["api/page.js"].includeFiles;
+  ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => inc.includes(f))
+     && (inc.includes("assets/entity-graph.json") || inc.includes("assets/*.json")) && inc.length <= 256
+     && fs.existsSync("assets/entity-graph.json"),
+     "api/page.js includes the people, the places, the Names and the graph that ties them, under 256 characters");
   ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => v.functions["api/sitemap.js"].includeFiles.includes(f)), "and api/sitemap.js includes what it lists");
   ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 6, "what was in vercel.json is still there");
   ok(/max-age=300/.test(cc("/reels/(index|home)\\.json")), "the reels manifests are kept five minutes and revalidated in the background");
