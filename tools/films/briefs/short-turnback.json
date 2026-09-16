@@ -1,0 +1,78 @@
+{
+  "slug": "short-turnback",
+  "title": "He turned the army back",
+  "theme": "nutvoid",
+  "note": "The plague of Amwas, and a rule that holds the healthy out and the exposed in.",
+  "figure": {
+    "kind": "nutvalley",
+    "n": 26,
+    "leave": 0,
+    "key": [
+      [
+        "base",
+        "Everyone inside"
+      ],
+      [
+        "line",
+        "The line drawn round them"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "A plague rule from the year 638"
+    },
+    {
+      "text": "Syria, the year 638",
+      "sub": "the caliph Umar is on the road there"
+    },
+    {
+      "call": "A town with plague in it",
+      "callsub": "Amwas, in Syria, in the year 638",
+      "at": "middle",
+      "to": [
+        -0.05,
+        0.06
+      ]
+    },
+    {
+      "call": "A line is drawn around it",
+      "callsub": "and it closes from both sides",
+      "at": "left",
+      "to": [
+        -0.54,
+        -0.27
+      ]
+    },
+    {
+      "text": "The rule has two halves"
+    },
+    {
+      "call": "If you are outside, stay out",
+      "callsub": "do not walk into a place with plague",
+      "at": "right",
+      "to": [
+        0.53,
+        -0.23
+      ]
+    },
+    {
+      "call": "If you are inside, stay in",
+      "callsub": "do not run out and take it with you",
+      "at": "middle",
+      "to": [
+        -0.09,
+        0.06
+      ]
+    },
+    {
+      "text": "So Umar turned his army around",
+      "sub": "he stopped at the edge and went back"
+    },
+    {
+      "eyebrow": "Amwas, Syria, 638",
+      "text": "That is quarantine, written down",
+      "src": "noorcodex.com"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "slug": "short-road",
+  "title": "The paper road",
+  "theme": "nutvoid",
+  "plate": "road",
+  "note": "How Greek and Indian learning reached Europe through Arabic.",
+  "lines": [
+    {
+      "text": "Greek science reached Europe in Arabic",
+      "steps": 1
+    },
+    {
+      "text": "Baghdad, the 800s",
+      "sub": "scholars gather, translate and correct",
+      "steps": 2
+    },
+    {
+      "text": "Then the road turns west",
+      "steps": 3
+    },
+    {
+      "text": "Baghdad wrote them down",
+      "steps": 2
+    },
+    {
+      "text": "Toledo and Cordoba translated them",
+      "sub": "Arabic into Latin, in the 1100s",
+      "steps": 2
+    },
+    {
+      "text": "Europe taught them",
+      "sub": "in its first universities, the 1200s",
+      "steps": 2
+    },
+    {
+      "text": "This is the paper road",
+      "steps": 1
+    },
+    {
+      "text": "Almost nothing here was invented",
+      "sub": "it was carried carefully, and improved"
+    },
+    {
+      "eyebrow": "Baghdad, Toledo, Cordoba",
+      "text": "Handing a thing on is its own glory",
+      "src": "NOOR Codex of Light, the Gifts"
+    }
+  ],
+  "motion": [
+    {
+      "do": "flow",
+      "on": ".rd path",
+      "at": 2,
+      "for": 7.0,
+      "times": 5,
+      "size": 1.4
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 3,
+      "for": 3.2,
+      "times": 1,
+      "size": 1.2
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 4,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.2
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 5,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.2
+    },
+    {
+      "do": "flow",
+      "on": ".rd path",
+      "at": 6,
+      "for": 6.0,
+      "times": 5,
+      "size": 1.4
+    },
+    {
+      "do": "glow",
+      "on": ".rd path",
+      "at": 6,
+      "for": 2.6,
+      "size": 0.7
+    }
+  ]
+}

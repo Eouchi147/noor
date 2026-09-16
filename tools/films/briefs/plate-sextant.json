@@ -1,0 +1,86 @@
+{
+  "slug": "short-sextant",
+  "title": "A ruler in the bedrock",
+  "theme": "nutvoid",
+  "plate": "sextant",
+  "note": "Ulugh Beg's forty metre sextant and the Samarkand star catalogue.",
+  "lines": [
+    {
+      "text": "A king measured the sky in stone",
+      "steps": 1
+    },
+    {
+      "text": "Samarkand, in Uzbekistan, the 1420s",
+      "sub": "the king is Ulugh Beg, an astronomer",
+      "steps": 1
+    },
+    {
+      "text": "He sank an arc into the bedrock",
+      "sub": "about forty metres across",
+      "steps": 3
+    },
+    {
+      "text": "Bigger means finer",
+      "sub": "a minute of sky is a centimetre of stone",
+      "steps": 3
+    },
+    {
+      "text": "He paid a salaried staff",
+      "sub": "and scholars came from many lands",
+      "steps": 2
+    },
+    {
+      "text": "They fixed a thousand stars",
+      "sub": "the first fresh catalogue in 1,000 years",
+      "steps": 2
+    },
+    {
+      "text": "He was killed, the tower pulled down",
+      "sub": "the numbers got to Oxford anyway"
+    },
+    {
+      "eyebrow": "Ulugh Beg, Samarkand",
+      "text": "Instruments break. Numbers travel",
+      "src": "Printed at Oxford, 1665"
+    }
+  ],
+  "motion": [
+    {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 2,
+      "for": 4.0,
+      "times": 1,
+      "size": 1.0
+    },
+    {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 3,
+      "for": 4.6,
+      "times": 2,
+      "size": 1.0
+    },
+    {
+      "do": "pulse",
+      "on": "circle",
+      "at": 4,
+      "for": 1.4
+    },
+    {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 6,
+      "for": 4.4,
+      "times": 2,
+      "size": 0.9
+    },
+    {
+      "do": "glow",
+      "on": "circle",
+      "at": 4,
+      "for": 2.6,
+      "size": 1.6
+    }
+  ]
+}

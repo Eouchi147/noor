@@ -1,0 +1,95 @@
+{
+  "slug": "short-hospital",
+  "title": "No bill at the door",
+  "theme": "nutvoid",
+  "plate": "hospital",
+  "note": "The bimaristan: endowed, free, teaching hospitals.",
+  "lines": [
+    {
+      "text": "A hospital that sent nobody a bill",
+      "steps": 2
+    },
+    {
+      "text": "Baghdad, Damascus, Cairo, from the 800s",
+      "sub": "they called it the bimaristan"
+    },
+    {
+      "text": "Wards for fevers, and for wounds",
+      "sub": "and a ward for illnesses of the mind",
+      "steps": 3
+    },
+    {
+      "text": "A pharmacy on site, and a teaching round",
+      "steps": 2
+    },
+    {
+      "text": "Paid for by waqf, an endowment",
+      "sub": "money set aside for ever",
+      "steps": 3
+    },
+    {
+      "text": "Rich and poor, any faith, any country",
+      "steps": 2
+    },
+    {
+      "text": "No one turned away, no bill at the door",
+      "steps": 4
+    },
+    {
+      "text": "Cairo gave music to the sleepless",
+      "steps": 1
+    },
+    {
+      "eyebrow": "The bimaristan",
+      "text": "The ancestor of the teaching hospital",
+      "src": "al-Mansuri, Cairo, opened 1284"
+    }
+  ],
+  "motion": [
+    {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 2,
+      "for": 3.6,
+      "times": 2,
+      "size": 1.0
+    },
+    {
+      "do": "pulse",
+      "on": "rect",
+      "at": 2,
+      "for": 1.2,
+      "stagger": 0.3
+    },
+    {
+      "do": "pulse",
+      "on": "rect",
+      "at": 4,
+      "for": 1.2,
+      "stagger": 0.24
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 6,
+      "for": 2.6,
+      "times": 2,
+      "size": 1.3
+    },
+    {
+      "do": "travel",
+      "on": ".ln path",
+      "at": 6,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.0
+    },
+    {
+      "do": "glow",
+      "on": "circle",
+      "at": 4,
+      "for": 2.6,
+      "size": 1.6
+    }
+  ]
+}

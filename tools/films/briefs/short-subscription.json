@@ -1,0 +1,114 @@
+{
+  "slug": "short-subscription",
+  "title": "Paid for by pilgrims",
+  "theme": "nutvoid",
+  "note": "The Hejaz railway, paid for in large part by donations from Muslims across the world, and how long it ran.",
+  "figure": {
+    "kind": "nutconverge",
+    "from": [
+      {
+        "a": 2.7,
+        "r": 2.55
+      },
+      {
+        "a": 2.25,
+        "r": 2.8
+      },
+      {
+        "a": 1.8,
+        "r": 2.35
+      },
+      {
+        "a": -1.85,
+        "r": 2.4
+      },
+      {
+        "a": -2.25,
+        "r": 2.75
+      },
+      {
+        "a": -2.7,
+        "r": 2.5
+      },
+      {
+        "a": 3.05,
+        "r": 2.25
+      },
+      {
+        "a": -3.05,
+        "r": 2.2
+      },
+      {
+        "a": 1.35,
+        "r": 2.1
+      }
+    ],
+    "key": [
+      [
+        "base",
+        "A donation"
+      ],
+      [
+        "line",
+        "The line it paid for"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "A railway paid for by donations"
+    },
+    {
+      "text": "Damascus to Madinah, 1900 to 1908",
+      "sub": "1,300 km of track, and no bank loan"
+    },
+    {
+      "call": "Money collected in mosques",
+      "callsub": "and asked for in the newspapers",
+      "at": "top",
+      "to": [
+        -0.04,
+        1.33
+      ]
+    },
+    {
+      "call": "Gifts came from many countries",
+      "callsub": "India, Egypt, Morocco and Java",
+      "at": "left",
+      "to": [
+        -1.08,
+        0.25
+      ]
+    },
+    {
+      "text": "No foreign loan was taken"
+    },
+    {
+      "call": "Soldiers laid the track",
+      "callsub": "Ottoman soldiers, most of it by hand",
+      "at": "new",
+      "to": [
+        0.19,
+        0.11
+      ]
+    },
+    {
+      "call": "1,300 km, Damascus to Madinah",
+      "callsub": "through the desert, station by station",
+      "at": "middle",
+      "to": [
+        0.09,
+        0.11
+      ]
+    },
+    {
+      "text": "The trip went from 40 days to 4",
+      "sub": "by camel before, by train after"
+    },
+    {
+      "eyebrow": "First train, 1 September 1908",
+      "text": "Paid for by ordinary people",
+      "src": "noorcodex.com"
+    }
+  ]
+}

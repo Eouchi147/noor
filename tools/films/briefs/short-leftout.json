@@ -1,0 +1,68 @@
+{
+  "slug": "short-leftout",
+  "title": "What he left out",
+  "theme": "nutvoid",
+  "note": "Al-Bukhari's sieve, and the idea underneath it: weigh the chain of names before you weigh the text.",
+  "figure": {
+    "kind": "nutsieve",
+    "total": 600,
+    "keep": 7
+  },
+  "beats": [
+    {
+      "text": "Al-Bukhari kept only what he could prove"
+    },
+    {
+      "text": "Born in Bukhara in the year 810",
+      "sub": "he spent 16 years collecting stories"
+    },
+    {
+      "call": "He gathered a huge pile",
+      "callsub": "from Iraq, Syria, Egypt and Arabia",
+      "at": "top",
+      "to": [
+        -0.07,
+        2.64
+      ]
+    },
+    {
+      "call": "He questioned every person",
+      "callsub": "where did you live, who did you meet",
+      "at": "middle",
+      "to": [
+        -0.12,
+        -1.67
+      ]
+    },
+    {
+      "text": "Then almost all of it goes"
+    },
+    {
+      "call": "Only about 7,275 are kept",
+      "callsub": "out of everything he had gathered",
+      "at": "bright",
+      "to": [
+        -1.25,
+        -0.59
+      ]
+    },
+    {
+      "call": "The rest he set aside",
+      "callsub": "and he wrote down why, by name",
+      "at": "gone",
+      "to": [
+        0.25,
+        -0.59
+      ]
+    },
+    {
+      "text": "Check the people, then the words",
+      "sub": "who said it, before what was said"
+    },
+    {
+      "eyebrow": "Al-Bukhari, 810 to 870",
+      "text": "One of the first tests of evidence",
+      "src": "Sahih al-Bukhari"
+    }
+  ]
+}

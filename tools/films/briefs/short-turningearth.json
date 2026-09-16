@@ -1,0 +1,85 @@
+{
+  "slug": "short-turningearth",
+  "title": "Looking cannot tell",
+  "theme": "nutvoid",
+  "note": "Ali Qushji on why no observation settles whether the earth turns, and what he wanted that to free astronomy from.",
+  "figure": {
+    "kind": "nutarc",
+    "marks": [
+      {
+        "t": 0.14
+      },
+      {
+        "t": 0.38
+      },
+      {
+        "t": 0.62
+      },
+      {
+        "t": 0.86
+      }
+    ],
+    "key": [
+      [
+        "base",
+        "A star, where you see it"
+      ],
+      [
+        "line",
+        "The arc it runs"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "You cannot see whether Earth spins"
+    },
+    {
+      "text": "Ali Qushji said so in the 1400s",
+      "sub": "an astronomer in Samarkand, then Istanbul"
+    },
+    {
+      "call": "Watch one star cross the sky",
+      "callsub": "it rises, arcs over, and it sets",
+      "at": "new",
+      "to": [
+        1.38,
+        -0.06
+      ]
+    },
+    {
+      "text": "Now ask what is moving"
+    },
+    {
+      "call": "If the sky turns around us",
+      "callsub": "you would see exactly this",
+      "at": "left",
+      "to": [
+        -1.44,
+        -0.18
+      ]
+    },
+    {
+      "call": "If Earth turns instead",
+      "callsub": "you would see exactly this too",
+      "at": "right",
+      "to": [
+        1.5,
+        -0.18
+      ]
+    },
+    {
+      "text": "The two look the same",
+      "sub": "so watching the sky cannot settle it"
+    },
+    {
+      "text": "He did not say Earth moves",
+      "sub": "he said nobody had proved it does not"
+    },
+    {
+      "eyebrow": "Ali Qushji, died 1474",
+      "text": "Go by what you can measure",
+      "src": "Samarkand, then Istanbul"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "short-starnames",
+  "title": "You are reading Arabic",
+  "theme": "nutvoid",
+  "note": "Six star names, what each of them means, and how much of the official list turned out to be Arabic.",
+  "figure": {
+    "kind": "nutdots",
+    "total": 100,
+    "lit": 60,
+    "sub": 6,
+    "cols": 10,
+    "key": [
+      [
+        "base",
+        "Named from Arabic"
+      ],
+      [
+        "rise",
+        "The six named here"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "Most star names are Arabic words"
+    },
+    {
+      "text": "They come from Arabic star lists",
+      "sub": "written in the 900s, later put into Latin"
+    },
+    {
+      "call": "Altair means the flying eagle",
+      "callsub": "from the Arabic al-nasr al-tair",
+      "at": "new",
+      "to": [
+        0.74,
+        -0.01
+      ]
+    },
+    {
+      "call": "Vega means the swooping eagle",
+      "callsub": "from the Arabic al-nasr al-waqi",
+      "at": "new",
+      "to": [
+        -1.03,
+        -0.15
+      ]
+    },
+    {
+      "text": "Two eagles, either side of the sky"
+    },
+    {
+      "call": "Aldebaran means the follower",
+      "callsub": "it follows a cluster of stars across",
+      "at": "new",
+      "to": [
+        0.85,
+        -0.01
+      ]
+    },
+    {
+      "call": "Algol means the ghoul",
+      "callsub": "and Rigel simply means a foot",
+      "at": "top",
+      "to": [
+        0.64,
+        0.92
+      ]
+    },
+    {
+      "text": "You use these names every night",
+      "sub": "without knowing they are Arabic"
+    },
+    {
+      "eyebrow": "Official star names, 2016",
+      "text": "A large share of the star map",
+      "src": "noorcodex.com"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "slug": "short-licence",
+  "title": "Read it back",
+  "theme": "nutvoid",
+  "plate": "checkcopy",
+  "note": "Karima al-Marwaziyya and the ijazah: verified transmission.",
+  "lines": [
+    {
+      "text": "A book you were not allowed to copy",
+      "steps": 2
+    },
+    {
+      "text": "Makkah, in Arabia, about 1020",
+      "sub": "the scholar Karima al-Marwaziyya",
+      "steps": 1
+    },
+    {
+      "text": "Karima holds the most trusted copy",
+      "sub": "of the most checked book after the Qur'an",
+      "steps": 2
+    },
+    {
+      "text": "Copying by hand puts errors in",
+      "steps": 1
+    },
+    {
+      "text": "So you read yours back to her",
+      "sub": "out loud, line by line, against hers",
+      "steps": 3
+    },
+    {
+      "text": "One error caught is one error stopped",
+      "steps": 2
+    },
+    {
+      "text": "Only then would she sign your licence",
+      "steps": 2
+    },
+    {
+      "text": "Fifty years as the checkpoint",
+      "sub": "chains still pass through her",
+      "steps": 1
+    },
+    {
+      "eyebrow": "Karima al-Marwaziyya",
+      "text": "She died in Makkah, near a hundred",
+      "src": "al-Khatib al-Baghdadi read it back to her"
+    }
+  ],
+  "motion": [
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 4,
+      "for": 4.6,
+      "times": 3,
+      "size": 1.0
+    },
+    {
+      "do": "pulse",
+      "on": "circle",
+      "at": 5,
+      "for": 1.4
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 5,
+      "for": 3.0,
+      "times": 2,
+      "size": 1.0
+    },
+    {
+      "do": "pulse",
+      "on": "path.nd",
+      "at": 6,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "path.nd",
+      "at": 5,
+      "for": 2.6,
+      "size": 1.6
+    }
+  ]
+}

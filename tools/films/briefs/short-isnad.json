@@ -1,0 +1,85 @@
+{
+  "slug": "short-isnad",
+  "title": "How they checked",
+  "theme": "nutvoid",
+  "note": "The isnad: why every report carries a chain of names, and what was done with those names.",
+  "figure": {
+    "kind": "nutsort",
+    "total": 120,
+    "share": [
+      0.45,
+      0.3,
+      0.25
+    ],
+    "key": [
+      [
+        "base",
+        "Strong, or fair"
+      ],
+      [
+        "rise",
+        "Weak, and marked weak"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "How Muslims checked if a story was true"
+    },
+    {
+      "text": "Iraq and Arabia, in the 800s",
+      "sub": "thousands of stories about the Prophet"
+    },
+    {
+      "call": "Every story lists its chain",
+      "callsub": "who heard it, and who told them, and back",
+      "at": "top",
+      "to": [
+        0.04,
+        1.22
+      ]
+    },
+    {
+      "text": "So they checked the people"
+    },
+    {
+      "call": "Did these two ever meet?",
+      "callsub": "same town, same years, or not",
+      "at": "left",
+      "to": [
+        -1.03,
+        -0.39
+      ]
+    },
+    {
+      "call": "Was this person honest?",
+      "callsub": "there are whole books on each name",
+      "at": "middle",
+      "to": [
+        -0.16,
+        -0.48
+      ]
+    },
+    {
+      "text": "Then each story gets a grade"
+    },
+    {
+      "call": "Strong, fair, or weak",
+      "callsub": "and the weak ones are marked weak",
+      "at": "right",
+      "to": [
+        1.0,
+        -0.64
+      ]
+    },
+    {
+      "text": "Nothing was quietly dropped",
+      "sub": "the weak ones were kept, and labelled"
+    },
+    {
+      "eyebrow": "Iraq and Arabia, the 800s",
+      "text": "A method you can check yourself",
+      "src": "noorcodex.com"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "short-alhazen",
+  "title": "Cairo to Kepler",
+  "theme": "nutvoid",
+  "note": "The Book of Optics from Cairo to Kepler, one printed link at a time.",
+  "figure": {
+    "kind": "nutchain",
+    "rows": [
+      {
+        "n": 5
+      }
+    ],
+    "stepx": 0.62
+  },
+  "beats": [
+    {
+      "text": "This book took 600 years to cross Europe"
+    },
+    {
+      "text": "It starts in Cairo, Egypt, about 1020",
+      "sub": "Ibn al-Haytham writes the Book of Optics"
+    },
+    {
+      "call": "Cairo, about the year 1020",
+      "callsub": "the book is written, in Arabic",
+      "at": "new",
+      "to": [
+        0.3,
+        0.0
+      ]
+    },
+    {
+      "call": "Latin, about the year 1200",
+      "callsub": "Europe translates it and calls him Alhazen",
+      "at": "new",
+      "to": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "text": "Then it is copied and taught"
+    },
+    {
+      "call": "Poland, about the year 1275",
+      "callsub": "a scholar rewrites the whole thing",
+      "at": "new",
+      "to": [
+        -0.01,
+        0.0
+      ]
+    },
+    {
+      "call": "Basel, the year 1572",
+      "callsub": "a printer prints both books as one",
+      "at": "new",
+      "to": [
+        -0.07,
+        0.01
+      ]
+    },
+    {
+      "text": "And that printed book reaches Kepler",
+      "sub": "in Germany, in the year 1604"
+    },
+    {
+      "text": "Every step here is on paper",
+      "sub": "you can look each book up by name"
+    },
+    {
+      "eyebrow": "Basel, 1572",
+      "text": "None of this chain is guessed",
+      "src": "Risner, Opticae thesaurus"
+    }
+  ]
+}

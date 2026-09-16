@@ -1,0 +1,74 @@
+{
+  "slug": "short-oneline",
+  "title": "One line in one book",
+  "theme": "nutvoid",
+  "note": "The single surviving line that records a woman who made astrolabes.",
+  "figure": {
+    "kind": "nutforty",
+    "total": 40,
+    "take": 1,
+    "cols": 8,
+    "key": [
+      [
+        "base",
+        "A maker in the list"
+      ],
+      [
+        "mark",
+        "Her one line"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "One line in one book is all we have"
+    },
+    {
+      "text": "Ibn al-Nadim, Baghdad, about 987",
+      "sub": "he lists every book and maker he knows"
+    },
+    {
+      "call": "A list of astrolabe makers",
+      "callsub": "an astrolabe measures where stars are",
+      "at": "new",
+      "to": [
+        0.53,
+        -0.27
+      ]
+    },
+    {
+      "text": "One of them is a woman"
+    },
+    {
+      "call": "The daughter of al-Ijli",
+      "callsub": "her father made astrolabes as well",
+      "at": "big",
+      "to": [
+        -0.56,
+        -0.11
+      ]
+    },
+    {
+      "call": "She worked in Aleppo, in Syria",
+      "callsub": "for the ruler there, Sayf al-Dawla",
+      "at": "big",
+      "to": [
+        -0.36,
+        0.3
+      ]
+    },
+    {
+      "text": "We do not know her first name",
+      "sub": "the book that lists her does not say"
+    },
+    {
+      "text": "And none of her work survives",
+      "sub": "one line is the whole record of her"
+    },
+    {
+      "eyebrow": "Ibn al-Nadim, about 987",
+      "text": "Later books invent a name for her",
+      "src": "The Fihrist"
+    }
+  ]
+}

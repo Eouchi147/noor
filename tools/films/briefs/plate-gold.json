@@ -1,0 +1,79 @@
+{
+  "slug": "short-gold",
+  "title": "The price of gold",
+  "theme": "nutvoid",
+  "plate": "goldprice",
+  "note": "Mansa Musa's 1324 pilgrimage and the Cairo gold market.",
+  "lines": [
+    {
+      "text": "One man's giving broke a market",
+      "steps": 1
+    },
+    {
+      "text": "Cairo, Egypt, the year 1324",
+      "sub": "the king of Mali, Mansa Musa, arrives",
+      "steps": 1
+    },
+    {
+      "text": "He is walking to Makkah",
+      "sub": "and giving gold away the whole way",
+      "steps": 1
+    },
+    {
+      "text": "So much that the price of gold sags",
+      "steps": 2
+    },
+    {
+      "text": "It took years to climb back",
+      "steps": 1
+    },
+    {
+      "text": "But the gold is not the story",
+      "steps": 1
+    },
+    {
+      "text": "He went home with scholars and jurists",
+      "sub": "and an architect from Spain",
+      "steps": 2
+    },
+    {
+      "text": "And built Timbuktu into a city of books",
+      "steps": 1
+    },
+    {
+      "eyebrow": "Mansa Musa, Mali",
+      "text": "The gold went back into vaults",
+      "src": "Cairo chronicles; the Catalan Atlas, 1375"
+    }
+  ],
+  "motion": [
+    {
+      "do": "trace",
+      "on": ".rd path",
+      "at": 3,
+      "for": 4.2,
+      "size": 1.2
+    },
+    {
+      "do": "pulse",
+      "on": "circle.nd",
+      "at": 3,
+      "for": 1.2,
+      "stagger": 0.5
+    },
+    {
+      "do": "trace",
+      "on": ".rd path",
+      "at": 4,
+      "for": 5.0,
+      "size": 1.0
+    },
+    {
+      "do": "glow",
+      "on": "circle.nd",
+      "at": 3,
+      "for": 2.6,
+      "size": 1.4
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "short-sine",
+  "title": "One word, two readings",
+  "theme": "nutvoid",
+  "note": "jya to jiba to jayb to sinus: the word sine is a misreading, kept.",
+  "figure": {
+    "kind": "nutsplit",
+    "key": [
+      [
+        "base",
+        "The sound, carried"
+      ],
+      [
+        "rise",
+        "The meaning, swapped"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "The word sine is a mistake"
+    },
+    {
+      "text": "Spain, about the year 1150",
+      "sub": "translating Arabic books into Latin"
+    },
+    {
+      "call": "In India it was called jya",
+      "callsub": "the name for a line across a circle",
+      "at": "left",
+      "to": [
+        -1.83,
+        0.02
+      ]
+    },
+    {
+      "call": "Arabic copied the sound: jiba",
+      "callsub": "the sound only, not the meaning",
+      "at": "middle",
+      "to": [
+        0.27,
+        0.01
+      ]
+    },
+    {
+      "text": "Arabic leaves out its vowels"
+    },
+    {
+      "call": "So on the page it is j and b",
+      "callsub": "and jiba looks just like jayb",
+      "at": "bottom",
+      "to": [
+        1.79,
+        -0.51
+      ]
+    },
+    {
+      "call": "Jayb means a fold, or a pocket",
+      "callsub": "the Latin translator read it that way",
+      "at": "top",
+      "to": [
+        1.69,
+        0.53
+      ]
+    },
+    {
+      "text": "In Latin a fold is sinus",
+      "sub": "and English cut sinus down to sine"
+    },
+    {
+      "eyebrow": "Toledo, Spain, the 1100s",
+      "text": "The maths is Indian. The name is a slip.",
+      "src": "noorcodex.com"
+    }
+  ]
+}

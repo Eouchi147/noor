@@ -1,0 +1,78 @@
+{
+  "slug": "short-goldprice",
+  "title": "One caravan, one market",
+  "theme": "nutvoid",
+  "note": "Mansa Musa's hajj of 1324 and the Cairo gold price, on al-Umari's testimony twelve years later.",
+  "figure": {
+    "kind": "nutscale",
+    "give": 7,
+    "get": 1,
+    "key": [
+      [
+        "base",
+        "What Cairo already held"
+      ],
+      [
+        "mark",
+        "What one caravan brought"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "A king of Mali crashed Egypt's gold price"
+    },
+    {
+      "text": "Mansa Musa, king of Mali, in 1324",
+      "sub": "on pilgrimage, passing through Cairo"
+    },
+    {
+      "call": "Cairo's gold, before he came",
+      "callsub": "a normal amount, at the normal price",
+      "at": "left",
+      "to": [
+        -1.79,
+        -0.35
+      ]
+    },
+    {
+      "call": "Then his caravan arrives",
+      "callsub": "carrying gold, and giving it away",
+      "at": "right",
+      "to": [
+        1.45,
+        -0.42
+      ]
+    },
+    {
+      "text": "Watch which way it tips"
+    },
+    {
+      "call": "Too much gold in one city",
+      "callsub": "so gold in Cairo became cheap",
+      "at": "top",
+      "to": [
+        -1.54,
+        0.19
+      ]
+    },
+    {
+      "call": "Still cheap twelve years later",
+      "callsub": "the price had not come back up",
+      "at": "bottom",
+      "to": [
+        1.27,
+        -0.91
+      ]
+    },
+    {
+      "text": "More of a thing makes it worth less",
+      "sub": "seen for real, seven hundred years ago"
+    },
+    {
+      "eyebrow": "Al-Umari, Cairo, about 1337",
+      "text": "An Egyptian official wrote it down",
+      "src": "noorcodex.com"
+    }
+  ]
+}

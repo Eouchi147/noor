@@ -1,0 +1,80 @@
+{
+  "slug": "short-twice",
+  "title": "The same drawing, twice",
+  "theme": "nutvoid",
+  "note": "The Tusi couple: a small circle rolling inside a big one traces a straight line, and the same drawing turns up in Copernicus 300 years later with no credit.",
+  "figure": {
+    "kind": "nuttwin",
+    "key": [
+      [
+        "base",
+        "The two circles"
+      ],
+      [
+        "mark",
+        "The point you watch"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "The same drawing, 300 years apart"
+    },
+    {
+      "text": "Maragha, in Iran, the year 1247",
+      "sub": "an astronomer called Nasir al-Din al-Tusi"
+    },
+    {
+      "call": "Roll a small circle inside a big one",
+      "callsub": "the big circle is twice as wide",
+      "at": "left",
+      "to": [
+        -1.68,
+        0.05
+      ]
+    },
+    {
+      "call": "One point on it moves dead straight",
+      "callsub": "circles only, and yet a straight line",
+      "at": "left",
+      "to": [
+        -1.62,
+        0.05
+      ]
+    },
+    {
+      "text": "That solved an old problem",
+      "sub": "the sky was supposed to move in circles"
+    },
+    {
+      "text": "Now jump 300 years, to Poland"
+    },
+    {
+      "call": "Copernicus, the year 1543",
+      "callsub": "the same drawing, in his own book",
+      "at": "right",
+      "to": [
+        1.57,
+        0.0
+      ]
+    },
+    {
+      "call": "Drawn in exactly the same way",
+      "callsub": "and no mention of al-Tusi anywhere",
+      "at": "middle",
+      "to": [
+        0.02,
+        0.0
+      ]
+    },
+    {
+      "text": "Did it travel, or was it found twice?",
+      "sub": "nobody has settled that question"
+    },
+    {
+      "eyebrow": "Al-Tusi, Maragha, 1247",
+      "text": "Still an open question",
+      "src": "Copernicus, 1543"
+    }
+  ]
+}

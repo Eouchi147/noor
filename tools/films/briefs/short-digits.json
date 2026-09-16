@@ -1,0 +1,125 @@
+{
+  "slug": "short-digits",
+  "title": "The road of the digits",
+  "theme": "nutvoid",
+  "note": "How the Indian numerals reached Europe, stop by stop, and who carried them at each stage.",
+  "figure": {
+    "kind": "nutpath",
+    "hub": [
+      1.45,
+      -0.1
+    ],
+    "legs": [
+      {
+        "from": [
+          1.45,
+          -0.1
+        ],
+        "to": [
+          0.35,
+          0.55
+        ],
+        "bow": 0.18,
+        "at": 0.0,
+        "span": 0.26
+      },
+      {
+        "from": [
+          0.35,
+          0.55
+        ],
+        "to": [
+          -0.85,
+          0.1
+        ],
+        "bow": -0.18,
+        "at": 0.32,
+        "span": 0.26
+      },
+      {
+        "from": [
+          -0.85,
+          0.1
+        ],
+        "to": [
+          -1.55,
+          0.88
+        ],
+        "bow": 0.14,
+        "at": 0.64,
+        "span": 0.26
+      }
+    ],
+    "key": [
+      [
+        "base",
+        "A place it reached"
+      ],
+      [
+        "line",
+        "The road between"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "The numbers 1 to 9 came from India"
+    },
+    {
+      "text": "They took 400 years to reach Europe",
+      "sub": "from about the year 700 to about 1200"
+    },
+    {
+      "call": "India",
+      "callsub": "the shapes 1 to 9, and a sign for zero",
+      "at": "new",
+      "to": [
+        0.09,
+        0.37
+      ]
+    },
+    {
+      "call": "Baghdad, the year 773",
+      "callsub": "an Indian book arrives at the palace",
+      "at": "new",
+      "to": [
+        -1.31,
+        0.71
+      ]
+    },
+    {
+      "text": "Then they moved west"
+    },
+    {
+      "call": "North Africa",
+      "callsub": "written in dust on a flat board",
+      "at": "new",
+      "to": [
+        -1.44,
+        0.84
+      ]
+    },
+    {
+      "call": "Bugia, in Algeria",
+      "callsub": "an Italian boy learns them there",
+      "at": "new",
+      "to": [
+        0.83,
+        0.13
+      ]
+    },
+    {
+      "text": "That boy grew up to be Fibonacci",
+      "sub": "his book taught Europe to use them"
+    },
+    {
+      "text": "We call them Arabic numbers",
+      "sub": "the Arabs called them Indian numbers"
+    },
+    {
+      "eyebrow": "Baghdad, 773",
+      "text": "Both names point back to India",
+      "src": "noorcodex.com"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "short-onehill",
+  "title": "One hill, one angle",
+  "theme": "nutvoid",
+  "note": "Al-Biruni measures the radius of the earth from a single hill, and how much of that accuracy his instrument could really carry.",
+  "figure": {
+    "kind": "nutbar",
+    "frac": 0.005,
+    "w": 3.0,
+    "key": [
+      [
+        "base",
+        "The radius he found"
+      ],
+      [
+        "rise",
+        "How far out he was"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "One man measured Earth from a hill"
+    },
+    {
+      "text": "Al-Biruni, in the year 1018",
+      "sub": "at a hill fort in what is now Pakistan"
+    },
+    {
+      "call": "Earth's radius is 6,371 km",
+      "callsub": "that is the number we use today",
+      "at": "big",
+      "to": [
+        -0.05,
+        0.07
+      ]
+    },
+    {
+      "text": "He had a hill and one angle",
+      "sub": "measure the hill, climb it, look out"
+    },
+    {
+      "call": "His answer: about 6,340 km",
+      "callsub": "worked out from a single triangle",
+      "at": "big",
+      "to": [
+        0.86,
+        0.14
+      ]
+    },
+    {
+      "text": "Now look at the gap"
+    },
+    {
+      "call": "This small piece is his error",
+      "callsub": "half of one per cent, in the year 1018",
+      "at": "right",
+      "to": [
+        -0.05,
+        0.42
+      ]
+    },
+    {
+      "text": "No ships and no survey teams",
+      "sub": "one man, one hill, one afternoon"
+    },
+    {
+      "text": "Some of that was luck",
+      "sub": "his tools were not really that exact"
+    },
+    {
+      "eyebrow": "Al-Biruni, Nandana, 1018",
+      "text": "Still, one hill was enough",
+      "src": "noorcodex.com"
+    }
+  ]
+}

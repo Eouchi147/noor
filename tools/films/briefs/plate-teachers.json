@@ -1,0 +1,85 @@
+{
+  "slug": "short-teachers",
+  "title": "A school with no building",
+  "theme": "nutvoid",
+  "plate": "teachers",
+  "note": "Nana Asma'u's yan-taru: a self-replicating rural school.",
+  "lines": [
+    {
+      "text": "A school with no building at all",
+      "steps": 1
+    },
+    {
+      "text": "Sokoto, northern Nigeria, the 1830s",
+      "sub": "built by a scholar, Nana Asma'u",
+      "steps": 1
+    },
+    {
+      "text": "The countryside is full of women",
+      "steps": 1
+    },
+    {
+      "text": "So the teachers go to them",
+      "steps": 1
+    },
+    {
+      "text": "Trained women walk out to the villages",
+      "sub": "carrying her lessons as poems",
+      "steps": 7
+    },
+    {
+      "text": "Learned by heart, in her language"
+    },
+    {
+      "text": "Village women come in, study",
+      "sub": "and walk home as teachers themselves",
+      "steps": 4
+    },
+    {
+      "text": "It ran for generations",
+      "sub": "and outlasted the state that held it",
+      "steps": 1
+    },
+    {
+      "eyebrow": "Nana Asma'u, Sokoto",
+      "text": "Its leaders are still called jaji",
+      "src": "She wrote over sixty works, died 1864"
+    }
+  ],
+  "motion": [
+    {
+      "do": "sweep",
+      "on": ".rd path",
+      "at": 3,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.0,
+      "stagger": 0.14
+    },
+    {
+      "do": "sweep",
+      "on": ".rd path",
+      "at": 4,
+      "for": 4.2,
+      "times": 1,
+      "size": 1.0,
+      "stagger": 0.1
+    },
+    {
+      "do": "sweep",
+      "on": ".rd path",
+      "at": 6,
+      "for": 4.4,
+      "times": 2,
+      "size": 1.0,
+      "stagger": 0.12
+    },
+    {
+      "do": "glow",
+      "on": "path.nd",
+      "at": 3,
+      "for": 2.6,
+      "size": 1.4
+    }
+  ]
+}

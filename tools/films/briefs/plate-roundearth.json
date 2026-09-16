@@ -1,0 +1,81 @@
+{
+  "slug": "short-roundearth",
+  "title": "Bent around a ball",
+  "theme": "nutvoid",
+  "plate": "roundearth",
+  "note": "Spherical trigonometry, driven by the qibla.",
+  "lines": [
+    {
+      "text": "Prayer set a hard geometry problem",
+      "steps": 2
+    },
+    {
+      "text": "Raqqa and Baghdad, the 800s",
+      "sub": "al-Battani, and Abu al-Wafa after him",
+      "steps": 1
+    },
+    {
+      "text": "Five times a day, face Makkah",
+      "sub": "from any village on a round earth",
+      "steps": 2
+    },
+    {
+      "text": "On a flat page a triangle makes 180",
+      "steps": 4
+    },
+    {
+      "text": "On a ball it always makes more",
+      "steps": 4
+    },
+    {
+      "text": "So the way to Makkah is an arc",
+      "sub": "not a straight line on a flat map",
+      "steps": 3
+    },
+    {
+      "text": "The old flat rules quietly fail",
+      "steps": 1
+    },
+    {
+      "text": "So they built the maths of curves",
+      "sub": "planets, oceans, orbits, signals",
+      "steps": 1
+    },
+    {
+      "eyebrow": "al-Battani, Raqqa",
+      "text": "Copernicus cites him by name",
+      "src": "His tables measured the year to minutes"
+    }
+  ],
+  "motion": [
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 2,
+      "for": 3.2,
+      "times": 2,
+      "size": 1.1
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 5,
+      "for": 4.0,
+      "times": 2,
+      "size": 1.1
+    },
+    {
+      "do": "pulse",
+      "on": "circle",
+      "at": 5,
+      "for": 1.3
+    },
+    {
+      "do": "glow",
+      "on": ".rd path",
+      "at": 5,
+      "for": 2.6,
+      "size": 0.8
+    }
+  ]
+}

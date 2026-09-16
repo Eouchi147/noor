@@ -1,0 +1,81 @@
+{
+  "slug": "short-darkroom",
+  "title": "The dark room",
+  "theme": "nutvoid",
+  "note": "Ibn al-Haytham's lamp experiment: the proof that light travels in straight lines, and the word it left behind on every camera.",
+  "figure": {
+    "kind": "nutlamps",
+    "lamps": 3,
+    "key": [
+      [
+        "base",
+        "A lamp, outside"
+      ],
+      [
+        "mark",
+        "Its image, inside"
+      ]
+    ]
+  },
+  "beats": [
+    {
+      "text": "Your camera is named after a room"
+    },
+    {
+      "text": "Cairo, Egypt, about a thousand years ago",
+      "sub": "a scientist called Ibn al-Haytham"
+    },
+    {
+      "call": "He sealed a room dark",
+      "callsub": "one small hole in the wall, nothing else",
+      "at": "hold",
+      "to": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "call": "Outside, he lit three lamps",
+      "callsub": "set apart, each burning on its own",
+      "at": "hold",
+      "to": [
+        -1.36,
+        0.0
+      ]
+    },
+    {
+      "text": "Now look at the far wall"
+    },
+    {
+      "call": "Three patches of light show up",
+      "callsub": "one patch for each lamp outside",
+      "at": "hold",
+      "to": [
+        1.22,
+        0.0
+      ]
+    },
+    {
+      "call": "Cover one lamp with your hand",
+      "callsub": "that patch goes dark, the other two stay",
+      "at": "gone",
+      "to": [
+        -1.39,
+        -0.54
+      ]
+    },
+    {
+      "text": "So light moves in straight lines",
+      "sub": "lamp, then hole, then wall, in a line"
+    },
+    {
+      "text": "That is how a camera works",
+      "sub": "a dark box with one small hole in it"
+    },
+    {
+      "eyebrow": "Ibn al-Haytham, Cairo",
+      "text": "He wrote this down about the year 1020",
+      "src": "The Book of Optics"
+    }
+  ]
+}

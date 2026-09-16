@@ -1,0 +1,93 @@
+{
+  "slug": "short-darkroom",
+  "title": "The dark room",
+  "theme": "nutvoid",
+  "plate": "darkroom",
+  "note": "Ibn al-Haytham's dark room. The picture lands upside down, and seeing is light arriving rather than rays going out.",
+  "lines": [
+    {
+      "text": "Your camera is named after a room",
+      "steps": 2
+    },
+    {
+      "text": "Cairo, Egypt, 1020",
+      "sub": "here, Ibn al-Haytham lights a candle",
+      "steps": 2
+    },
+    {
+      "text": "One small hole in the wall",
+      "sub": "and light only travels straight",
+      "steps": 2
+    },
+    {
+      "text": "It lands on the wall opposite",
+      "steps": 3
+    },
+    {
+      "text": "Upside down",
+      "sub": "the top crossed over at the hole",
+      "steps": 1
+    },
+    {
+      "text": "That is a camera"
+    },
+    {
+      "text": "Then he broke an older idea",
+      "sub": "eyes shoot rays out to see",
+      "steps": 4
+    },
+    {
+      "text": "No eye was in that room",
+      "sub": "the picture formed anyway",
+      "steps": 2
+    },
+    {
+      "text": "Light comes in. The eye reads it",
+      "steps": 5
+    },
+    {
+      "eyebrow": "Ibn al-Haytham, Cairo",
+      "text": "Camera obscura means dark room",
+      "src": "The Book of Optics, about 1020"
+    }
+  ],
+  "motion": [
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 2,
+      "for": 3.2,
+      "times": 2,
+      "size": 1.1
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 3,
+      "for": 4.0,
+      "times": 3,
+      "size": 1.1
+    },
+    {
+      "do": "pulse",
+      "on": "circle.nd",
+      "at": 2,
+      "for": 1.2
+    },
+    {
+      "do": "travel",
+      "on": ".rd path",
+      "at": 8,
+      "for": 3.6,
+      "times": 2,
+      "size": 1.0
+    },
+    {
+      "do": "glow",
+      "on": "circle.nd",
+      "at": 2,
+      "for": 2.6,
+      "size": 1.6
+    }
+  ]
+}
