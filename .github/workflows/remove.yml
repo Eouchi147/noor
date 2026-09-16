@@ -1,0 +1,82 @@
+# NOOR - remove files by pull request
+#
+# The house's upload page can add a file and change one, but it cannot
+# delete one. This workflow is the door that can: give it a list of
+# repository paths and it removes them and opens a pull request with the
+# result, reviewed and merged like any other change to this repository.
+# Nothing is pushed to main directly.
+#
+# It runs by hand from the Actions tab only, and never on a schedule.
+
+name: remove
+
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: "repository paths to remove, space separated"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: remove
+  cancel-in-progress: false
+
+jobs:
+  remove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: remove each path that exists
+        id: rm
+        env:
+          PATHS: ${{ github.event.inputs.paths }}
+        run: |
+          removed=""
+          missing=""
+          for p in $PATHS; do
+            if [ -e "$p" ]; then
+              git rm -r --quiet -- "$p"
+              removed="$removed- $p"$'\n'
+              echo "removed: $p"
+            else
+              missing="$missing- $p"$'\n'
+              echo "did not exist, left alone: $p"
+            fi
+          done
+          {
+            echo "removed<<NOOR_EOF"
+            echo "$removed"
+            echo "NOOR_EOF"
+          } >> "$GITHUB_OUTPUT"
+          if [ -n "$missing" ]; then
+            echo "### Paths that did not exist" >> "$GITHUB_STEP_SUMMARY"
+            echo "$missing" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: open a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: remove/files
+          delete-branch: true
+          commit-message: |
+            remove: delete the requested files
+
+            Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+            Claude-Session: https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
+          title: "Remove: delete the requested files"
+          body: |
+            Run by hand from the Actions tab, because the house's upload page
+            can add and change files but cannot delete one.
+
+            Paths removed:
+            ${{ steps.rm.outputs.removed }}
+
+            🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+            https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj

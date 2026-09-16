@@ -180,12 +180,13 @@ jobs:
           python render_missing.py ${{ github.event.inputs.ids }}
 
       # only what this machine made goes on: a reel, its cover, its sidecar,
-      # or the note that a card was set aside
+      # or the note that a card was set aside (the two manifests, index.json
+      # and the home page's home.json, are written whole by the assemble job)
       - name: what this machine made
         if: always()
         run: |
           mkdir -p /tmp/made
-          find reels -type f -newer /tmp/before ! -name '*.part.mp4' ! -name 'index.json' -exec cp -v {} /tmp/made/ \; | wc -l
+          find reels -type f -newer /tmp/before ! -name '*.part.mp4' ! -name 'index.json' ! -name 'home.json' -exec cp -v {} /tmp/made/ \; | wc -l
 
       - uses: actions/upload-artifact@v4
         if: always()

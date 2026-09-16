@@ -1,0 +1,95 @@
+# NOOR - the tests, on every push
+#
+# The suite under tests/ is the house's memory of every outage, and until 16
+# September 2026 it ran only when somebody remembered: five suites were
+# failing on main and nobody was told. This runs, on every push to main and
+# by hand from the Actions tab, every suite that needs no browser, no server
+# on a port and no secret, each under a 90 second cap, and fails if any one
+# of them fails. The list is explicit, so a new suite is added here on
+# purpose, and read below for the ones that are left out and why.
+#
+# Left out, because they need a browser (playwright and a Chromium, and most
+# of them a clean-URL server on a port the suite names): anime, ask,
+# beaconclient, console-reels, console2, consoledial, dials, dictionary2,
+# e2e, figures, i18n, legible, menu, mushaf, mushaf-engine, pulse,
+# quran-player, relabel, rooms-shots, search-index, skin, social-footer,
+# socialrow. Left out because they import from a neighbouring checkout
+# (/root/repo/noor-main) rather than from this tree: lightlang,
+# pinterest-flow. Left out because it cannot start: esm-cjs imports esbuild,
+# which package.json does not list. home2 is in: it spawns its own static
+# server with python3, and its browser half skips itself when playwright is
+# not installed, which it is not here.
+#
+# npm ci would be the right install, but package-lock.json is behind
+# package.json (@resvg/resvg-js, which tests/card-fonts.mjs and api/card.js
+# read, is not in the lock), and npm ci refuses a lock that is out of step.
+# npm install with --no-save puts the two resvg packages in place and leaves
+# the lock file exactly as it is; playwright is a devDependency and stays out.
+
+name: tests
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  suites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: the runtime dependencies (resvg, for the cards)
+        run: npm install --omit=dev --no-audit --no-fund --no-save
+
+      - name: every suite that needs no browser, no server and no secret
+        run: |
+          SUITES="api-audit art calendar card-fonts card cards-stories cards claim clock crongate heal home2 house insights lantern lights names nightshift no-dashes norepeat pinterest podcast reel-proxy reels-kinds reels retire retry rooms seerah social stories symbols telegram threads traffic youtube"
+          failed=""
+          n=0
+          echo '### Tests' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '| suite | result | last line |' >> "$GITHUB_STEP_SUMMARY"
+          echo '|---|---|---|' >> "$GITHUB_STEP_SUMMARY"
+          for s in $SUITES; do
+            n=$((n + 1))
+            echo "::group::$s"
+            log=$(mktemp)
+            if timeout 90 node "tests/$s.mjs" > "$log" 2>&1; then
+              code=0
+            else
+              code=$?
+            fi
+            cat "$log"
+            last=$(grep -E 'passed|failed|checks' "$log" | tail -1)
+            if [ "$code" -eq 0 ]; then
+              echo "PASS $s"
+              echo "| $s | pass | $last |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              if [ "$code" -eq 124 ]; then why="over 90 s"; else why="exit $code"; fi
+              echo "FAIL $s ($why)"
+              echo "| $s | FAIL ($why) | $last |" >> "$GITHUB_STEP_SUMMARY"
+              failed="$failed $s"
+            fi
+            echo "::endgroup::"
+          done
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$failed" ]; then
+            echo "$n suites ran; failed:$failed"
+            echo "**Failed:**$failed" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "$n suites ran, all passed"
+          echo "All $n suites passed." >> "$GITHUB_STEP_SUMMARY"

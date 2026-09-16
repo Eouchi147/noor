@@ -1,0 +1,132 @@
+# NOOR - the drift guard: does each generator still produce the page it made?
+#
+# There is no build on Vercel. The generators under scripts/ run by hand and
+# their output is committed, so a page and its generator can quietly part
+# ways: the audit of 15 September 2026 ran every one of them in a scratch copy
+# and found fifteen page generators that would each change the page they
+# generate, by 24 to 151 lines, in both directions. This runs the generators
+# that do reproduce their output, in the checked out tree, and fails if
+# `git status --porcelain` is not empty afterwards, with the diff stat of every
+# drift in the job summary. It runs weekly and by hand from the Actions tab.
+# Nothing is pushed and nothing is committed: a failure is a report.
+#
+# In: the six that reproduce their output byte for byte on the tree as it
+# stands (measured on 16 September 2026):
+#   scripts/gen-lights.py         lights/all.json, lights/index.json
+#   scripts/gen-quran-study.py    study/<n>.json, build/quran-study.js
+#   scripts/gen-dict-index.py     assets/dict-index.json
+#   scripts/build.mjs             nodes.js, characters.js, places.js, words.js
+#   scripts/build-questions.py    assets/questions.json
+#   scripts/gen-dictionary.py     dictionary.html, dictionary/<word>.html,
+#                                 assets/search-index.json (reproducible since
+#                                 the correction of 16 September 2026; the word
+#                                 pages it writes are the ones the dictionary
+#                                 workflow's pull request carried, so on a main
+#                                 that has not merged that pull request this
+#                                 step reports the 523 pages as drift)
+#
+# Left out until they are fixed, because on 15 September 2026 each one
+# changed the page it generates (the drift, in lines, as the audit measured
+# it; arch-010 in the audit):
+#   gen-three-lives.py 36, gen-good-life.py 36, gen-heroes.py 151 (the page
+#   links tw.css?v=16, the generator writes ?v=49), gen-family.py 64,
+#   gen-eid.py 52, gen-hajj.py 58, gen-hajj-plan.py 110, gen-journal-rules.py
+#   41, gen-journal.py 57, gen-protection.py 38, gen-ramadan.py 24,
+#   gen-sermon-soul.py 67 on sermon.html and 67 on soul.html,
+#   gen-simulation.py 45, gen-stories.py 62 on each of the nine story pages,
+#   gen-unseen.py 24; build-night.py 6 on assets/noor2-night.css;
+#   build-i18n.mjs 48 on i18n/en.json; gen-verse-notes.py rewrites verse/2.json
+#   and verse/112.json; gen-card-fonts.py rewrites api/_cardfont.js and the two
+#   card fonts. Port the hand patches into a generator, then add it here.
+#
+# Every generator here is plain Python 3 or Node with no package to install.
+# PYTHONDONTWRITEBYTECODE keeps Python from writing a .pyc beside a script,
+# which would show as an untracked file and not as drift.
+
+name: generators
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 5 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: generators
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: run each generator and compare with what is committed
+        run: |
+          GENERATORS="scripts/gen-lights.py scripts/gen-quran-study.py scripts/gen-dict-index.py scripts/build.mjs scripts/build-questions.py scripts/gen-dictionary.py"
+          drifted=""
+          n=0
+          echo '### Generators' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '| generator | result | files |' >> "$GITHUB_STEP_SUMMARY"
+          echo '|---|---|---|' >> "$GITHUB_STEP_SUMMARY"
+          for g in $GENERATORS; do
+            n=$((n + 1))
+            echo "::group::$g"
+            case "$g" in
+              *.py) run="python3" ;;
+              *)    run="node" ;;
+            esac
+            if timeout 300 "$run" "$g"; then code=0; else code=$?; fi
+            changed=$(git status --porcelain | wc -l)
+            if [ "$code" -ne 0 ]; then
+              echo "FAIL $g (exit $code)"
+              echo "| $g | FAIL (exit $code) | $changed |" >> "$GITHUB_STEP_SUMMARY"
+              drifted="$drifted $g"
+            elif [ "$changed" -ne 0 ]; then
+              echo "DRIFT $g: $changed file(s) differ from what is committed"
+              git status --porcelain
+              git --no-pager diff --stat
+              echo "| $g | DRIFT | $changed |" >> "$GITHUB_STEP_SUMMARY"
+              drifted="$drifted $g"
+              {
+                echo ''
+                echo "<details><summary>$g: the diff stat</summary>"
+                echo ''
+                echo '```'
+                git status --porcelain --untracked-files=all | sed -n '1,40p'
+                git --no-pager diff --stat | tail -n 60
+                echo '```'
+                echo '</details>'
+              } >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "SAME $g"
+              echo "| $g | reproduces its output | 0 |" >> "$GITHUB_STEP_SUMMARY"
+            fi
+            # the tree is put back before the next generator runs, so every
+            # drift is that generator's own
+            git checkout -q -- .
+            git clean -fdq
+            echo "::endgroup::"
+          done
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$drifted" ]; then
+            echo "$n generators ran; drifted or failed:$drifted"
+            echo "**Drifted or failed:**$drifted" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "$n generators ran and every one reproduces its output"
+          echo "All $n generators reproduce their output." >> "$GITHUB_STEP_SUMMARY"
