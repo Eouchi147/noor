@@ -5461,6 +5461,18 @@
     /* every viewpoint in order: where the camera stands, what it looks at,
        the focal length, and the roll */
     var P = [], L = [], F = [], R = [], T0 = [], T1 = [];
+    /* A VIEW MAY END SOMEWHERE OF ITS OWN, NOT JUST TOWARD THE NEXT ONE
+       (round six). Every other beat travels knot to knot, which is the
+       right shape for a camera that is going somewhere new -- but the
+       last beat has no next knot to travel toward (findEnd is null for
+       it and it holds the whole scene through, which was the last scene
+       reading as almost still to the audit that opened this round).
+       end.eye / end.look, when a view carries them, are this beat's OWN
+       private destination: EE / EL hold them, null where a view has
+       none, and boardCamera below reads them instead of the shared knot
+       curve for exactly that beat, in the same eye-glides / aim-holds-
+       then-turns shape every other beat already uses. */
+    var EE = [], EL = [];
     for (var i = 0; i < list.length; i++) {
       var v = list[i];
       P.push(vec(v.eye));
@@ -5469,9 +5481,12 @@
       R.push(v.roll || 0);
       T0.push(v.at);
       T1.push(v.at + v.dur);
+      EE.push(v.end ? vec(v.end.eye) : null);
+      EL.push(v.end ? vec(v.end.look) : null);
     }
     if (P.length < 2) { P.push(P[0].clone().add(new T.Vector3(0, 0, -0.6))); L.push(L[0].clone());
-                        F.push(F[0]); R.push(R[0]); T0.push(T0[0] + 1); T1.push(T1[0] + 1); }
+                        F.push(F[0]); R.push(R[0]); T0.push(T0[0] + 1); T1.push(T1[0] + 1);
+                        EE.push(EE[0]); EL.push(EL[0]); }
     /* HOW FAR A VIEWPOINT IS ALLOWED TO DRIFT WHILE IT IS BEING READ.
        The dwell is not a freeze: the camera keeps pushing a little, which is
        what keeps a held shot alive. But "a little" is measured along the
@@ -5502,6 +5517,7 @@
     }
     return {
       n: P.length, P: P, L: L, F: F, R: R, t0: T0, t1: T1, DW: DW, HOLD: HOLD,
+      EE: EE, EL: EL,
       /* centripetal: a uniform Catmull-Rom loops on itself where two knots sit
          close together, which on a camera path is a lurch */
       cp: new T.CatmullRomCurve3(P, false, "centripetal", 0.5),
@@ -5569,20 +5585,38 @@
         var travelMs = Math.max(1, dur - holdMs);
         aimU = 0.5 - 0.5 * Math.cos(Math.PI * clamp01((elapsedMs - holdMs) / travelMs));
       }
-      return { i: i, u: u, s: clamp01(s2), local: clamp01(aimU) };
+      /* gu carried out alongside s2 (round six): a view with its own end
+         glides eye and aim across ITS OWN pair, not the shared knot curve,
+         and needs the very same whole-beat ease s2 was built from rather
+         than a second copy of it. */
+      return { i: i, u: u, s: clamp01(s2), local: clamp01(aimU), gu: gu };
     }
     var HOLD = 0.62, dw = PACE === "even" ? HOLD : (b.DW ? b.DW[i] : 0.10);
     var local = u <= HOLD ? (u / HOLD) * dw
                           : dw + ease("inOutQuad", (u - HOLD) / (1 - HOLD)) * (1 - dw);
     var s = (i + local) / Math.max(1, n - 1);
-    return { i: i, u: u, s: clamp01(s), local: clamp01(local) };
+    return { i: i, u: u, s: clamp01(s), local: clamp01(local), gu: local };
   }
 
   var _BP = new T.Vector3(), _BL = new T.Vector3();
 
   function boardCamera(ms, tsec) {
     var b = BOARD, w = boardAt(ms);
-    b.cp.getPoint(w.s, _BP);
+    /* A VIEW WITH end IS A BEAT OF ITS OWN, NOT A KNOT ON THE SHARED
+       CURVE (round six). Every other beat rides b.cp / lerps toward the
+       next knot because it is going somewhere else next; the last scene
+       has nowhere else to go, so it used to sit on the tail of the curve
+       and barely move -- exactly what the audit's own numbers said. Eye
+       and aim here glide and hold-then-turn the same as always, just
+       between this view's own eye/look and its own end instead of the
+       next view's, so the shape of the motion (round four, finding 4) is
+       unchanged; only where it goes is. */
+    var endEye = b.EE ? b.EE[w.i] : null, endLook = b.EL ? b.EL[w.i] : null;
+    if (endEye) {
+      _BP.copy(b.P[w.i]).lerp(endEye, w.gu);
+    } else {
+      b.cp.getPoint(w.s, _BP);
+    }
     /* THE AIM IS NOT ON A CURVE, AND THAT IS NOT A SHORTCUT.
        Four beats in a row may look at the same figure from four sides, which
        puts four identical knots in the aim curve -- and a Catmull-Rom through
@@ -5593,7 +5627,11 @@
        rides the curve, so the camera never stops moving; the aim walks
        straight from one subject to the next, so a held subject is held. */
     var jj = Math.min(b.n - 1, w.i + 1);
-    _BL.copy(b.L[w.i]).lerp(b.L[jj], w.local);
+    if (endLook) {
+      _BL.copy(b.L[w.i]).lerp(endLook, w.local);
+    } else {
+      _BL.copy(b.L[w.i]).lerp(b.L[jj], w.local);
+    }
     /* THE BREATH, AND IT HAS TO BE BIG ENOUGH TO SEE.
        The idea was right and the number was not. At a standing distance of
        7.7 units on a 35 degree lens the half frame is about 2.5 world units
@@ -6829,13 +6867,26 @@
           _A.copy(R.base); _A.y += dy;                    /* the lamp, lifted */
           var lit = ramp("lamp", id, tsec, 0);
           anyLit = Math.max(anyLit, lit);
+          /* CANDLES FLICKER (round six). wander() is already a smooth,
+             seeded, exact function of time -- built for a camera's slow
+             breath, one cycle every several seconds. Fed a scaled-up tsec
+             it is the same organic, non-repeating curve at candle speed
+             instead, a few hertz rather than a few tenths: still pure in
+             tsec, never Math.random, so frame N is frame N on any machine.
+             Seeded 60 apart per lamp (wander spends 37 per octave across
+             its own three) so three candles never breathe in lockstep.
+             Plus or minus six percent, applied everywhere this lamp's own
+             light shows -- the flame, its ray, its image on the wall --
+             so all three move together as one burning thing rather than a
+             steady ray off a flickering flame. */
+          var flicker = 1 + 0.06 * wander(tsec * 40, 211 + i * 60);
           R.lamp.flame.position.copy(_A);
           R.lamp.halo.position.copy(_A);
           var flameS = Math.max(0.0001, 0.09 * lit), haloS = Math.max(0.0001, 0.7 * lit);
           R.lamp.flame.scale.setScalar(flameS);
           R.lamp.halo.scale.setScalar(haloS);
-          R.lamp.flame.material.uniforms.glow.value = 0.55 * lit * f;
-          R.lamp.halo.material.uniforms.gain.value = 0.20 * lit * f;
+          R.lamp.flame.material.uniforms.glow.value = 0.55 * lit * flicker * f;
+          R.lamp.halo.material.uniforms.gain.value = 0.20 * lit * flicker * f;
 
           /* the image point, recomputed every frame from where the lamp
              actually is: a lift moves it live and nothing here has to know
@@ -6871,8 +6922,8 @@
           placeRod(R.leg2, APOS, _B);
           placeRod(R.beam, APOS, _B);
           if (lit <= 0.02) { R.leg1.visible = false; R.leg2.visible = false; R.beam.visible = false; }
-          R.leg1.material.uniforms.glow.value = 0.30 * lit * f;
-          R.leg2.material.uniforms.glow.value = 0.30 * lit * f;
+          R.leg1.material.uniforms.glow.value = 0.30 * lit * flicker * f;
+          R.leg2.material.uniforms.glow.value = 0.30 * lit * flicker * f;
           /* the dust the ray passes through, not the ray itself (finding 1):
              fat, faint, pale, and only present where the ray has actually
              drawn (d2), so it never shows ahead of the light */
@@ -6890,7 +6941,7 @@
           var bloom = ramp("image", id, tsec, 0);
           R.image.position.set(_IMG.x, _IMG.y, _IMG.z - 0.02);
           R.image.scale.setScalar(Math.max(0.0001, bloom));
-          R.image.material.uniforms.gain.value = 0.55 * bloom * imgBoost * f;
+          R.image.material.uniforms.gain.value = 0.55 * bloom * imgBoost * flicker * f;
         }
 
         /* the hole (finding 1): a faint cold point before any lamp is lit,
