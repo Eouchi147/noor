@@ -1,7 +1,7 @@
 /* ================= The Madrasa of Light · the living curriculum =================
    Sixteen tracks, one hundred and six lessons, from the cradle to the academy.
    Every claim sourced; free for every person forever. Free for every
-   person forever; organizations embed it under license (/license).
+   person forever; organizations use it directly, no subscription.
    Card types: read (h,p) · letters (set) · pairs (rows) · steps (list) ·
    ayah (ref, ar, en) · tip (p). Quizzes pass at 70%. */
 window.NOOR_CURRICULUM = {

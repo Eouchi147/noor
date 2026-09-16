@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
-<link rel="stylesheet" href="/assets/noor2.css?v=3"/>
+<link rel="stylesheet" href="/assets/noor2.css?v=14"/>
 <link rel="stylesheet" href="/assets/noor-rtl.css?v=77"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://noorcodex.com/#org", "name": "NOOR · Codex of Light", "url": "https://noorcodex.com/", "logo": "https://noorcodex.com/assets/brand/mark-512.png", "description": "A free illuminated library of Islam: no ads, no trackers, carried by reader gifts.", "sameAs": ["https://www.instagram.com/noorcodexoflight", "https://www.facebook.com/profile.php?id=61592864417863", "https://www.youtube.com/@noorcodex", "https://www.pinterest.com/noorcodex", "https://t.me/noorcodex", "https://www.threads.com/@noorcodexoflight"]}, {"@type": "WebSite", "@id": "https://noorcodex.com/#site", "url": "https://noorcodex.com/", "name": "NOOR · Codex of Light", "publisher": {"@id": "https://noorcodex.com/#org"}, "inLanguage": "en", "about": {"@type": "Thing", "name": "Islam"}}]}</script>
 <!-- The shell (assets/noor2.js) draws the night, the arrivals, the top line,
@@ -54,7 +54,7 @@
      the service worker, noor-text.js for the prose in other languages, the
      search, the menu dial, the dials (the notice and the journal switch)
      and the corrections layer. -->
-<script src="/assets/noor2.js?v=3" defer></script>
+<script src="/assets/noor2.js?v=14" defer></script>
 <script src="/nodes-index.js?v=101" defer></script>
 <script src="/noor-fx.js" defer></script>
 <script src="/assets/noor-text.js?v=86" defer></script>
@@ -272,7 +272,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <section class="n2-idea n2-short" id="library">
 <p class="n2-eyebrow">The library</p>
 <h2 class="n2-h2" data-noor-1>The whole library, <span class="n2-g">free</span></h2>
-<p class="hm-count">44 rooms · 8 sections · all free</p>
+<p class="hm-count">43 rooms · 8 sections · all free</p>
 <div class="hm-lib">
 <div class="hm-grp">
 <h3 class="n2-h3">The Qur'an</h3>
@@ -352,7 +352,6 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
 <h3 class="n2-h3">The House</h3>
 <ul class="n2-list">
 <li><a href="/masjid"><b>The Masjid Toolbox<small>Boards, timetables and printables</small></b></a></li>
-<li><a href="/license"><b>For Schools &amp; Organisations<small>Use the Codex in your own place</small></b></a></li>
 <li><a href="/journal"><b>The Guardian's Journal<small>What the keeper is thinking about</small></b></a></li>
 <li><a href="/feedback"><b>Corrections &amp; Ideas<small>Tell us what is wrong</small></b></a></li>
 <li><a href="/legal"><b>Terms &amp; Transparency<small>Where the money goes, and what is collected</small></b></a></li>
@@ -418,7 +417,7 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
      that markup itself. -->
 <footer class="n2-foot">
 <p>NOOR Codex of Light · free, no ads, no account</p>
-<p><a href="/license">For schools &amp; organisations</a> · <a href="/journal">The Guardian's Journal</a> · <a href="/feedback">Corrections &amp; ideas</a> · <a href="/legal">Terms &amp; transparency</a></p>
+<p><a href="/school">For schools &amp; organisations</a> · <a href="/journal">The Guardian's Journal</a> · <a href="/feedback">Corrections &amp; ideas</a> · <a href="/legal">Terms &amp; transparency</a></p>
 <p data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah</p>
 <nav aria-label="Languages" class="hm-langs" id="langs" translate="no"><a href="/ar" lang="ar">العربية</a> · <a href="/fr" lang="fr">Français</a> · <a href="/es" lang="es">Español</a> · <a href="/de" lang="de">Deutsch</a> · <a href="/ru" lang="ru">Русский</a> · <a href="/tr" lang="tr">Türkçe</a> · <a href="/ur" lang="ur">اردو</a> · <a href="/hi" lang="hi">हिन्दी</a> · <a href="/bn" lang="bn">বাংলা</a> · <a href="/id" lang="id">Bahasa Indonesia</a> · <a href="/fa" lang="fa">فارسی</a> · <a href="/prs" lang="prs">دری</a> · <a href="/pa" lang="pa">پنجابی</a> · <a href="/ps" lang="ps">پښتو</a> · <a href="/ku" lang="ku">Kurdî</a> · <a href="/ha" lang="ha">Hausa</a> · <a href="/so" lang="so">Soomaali</a> · <a href="/sw" lang="sw">Kiswahili</a> · <a href="/zh" lang="zh">中文</a> · <a href="/ja" lang="ja">日本語</a> · <a href="/ko" lang="ko">한국어</a></nav>
 <p class="hm-note hm-tr">This page is in all twenty one languages. The rest of the library is in English, French and Arabic today, and the other eighteen are being written as gifts allow. Nothing behind a language that is not finished is hidden: it is simply still in English.</p>
@@ -549,11 +548,17 @@ footer.n2-foot>div>ul[class]{justify-content:flex-start;margin-inline-start:-11p
     return list[(((step * stride + off) % n) + n) % n];
   }
   function verse() {
-    getJSON("/reels/index.json").then(function (j) {
+    /* reels/home.json is the verse rows alone, with only the fields this
+       function reads, written beside index.json by the same render run
+       (tools/reels/render_missing.py): the whole manifest is 181 KB gzipped,
+       three fifths of the home page, and was fetched to choose one verse.
+       Until a render run has written the small file, the whole one answers. */
+    getJSON("/reels/home.json").then(function (j) { return (j && j.cards) ? j : getJSON("/reels/index.json"); }).then(function (j) {
       var cards = (j && j.cards) || [];
       var list = cards.filter(function (c) { return c && c.id && (c.kind || "light") === "verse"; });
       if (!list.length) return;
-      var noShorts = !cards.some(function (c) { return c && (c.kind || "light") === "short"; });
+      /* the small file carries the count of shorts on the shelf instead of the rows */
+      var noShorts = (j && typeof j.shorts === "number") ? j.shorts === 0 : !cards.some(function (c) { return c && (c.kind || "light") === "short"; });
       var dow = new Date(today + "T12:00:00Z").getUTCDay();
       var half = HALVES.filter(function (h) { return rotaRow(h, noShorts)[dow] === "verse"; })[0] || "morning";
       var c = pickStep(list, reelStep("verse", today, half, noShorts), "reel:verse");

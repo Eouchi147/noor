@@ -14,10 +14,10 @@
       "maxDuration": 60
     },
     "api/page.js": {
-      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"
+      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json,prophets-data.js,characters.js,places.js,allah.html,assets/entity-graph.json}"
     },
     "api/sitemap.js": {
-      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"
+      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,assets/dict-index.json,assets/menu-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json,prophets-data.js,characters.js,places.js,allah.html}"
     },
     "api/reel.js": {
       "maxDuration": 60
@@ -25,9 +25,25 @@
   },
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/license",
+      "destination": "/school",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(study|verse|lights)/(.*)\\.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/reels/(index|home)\\.json",
       "headers": [
         {
           "key": "Cache-Control",
@@ -134,6 +150,26 @@
     {
       "source": "/today",
       "destination": "/api/page?kind=today"
+    },
+    {
+      "source": "/prophet/:id",
+      "destination": "/api/page?kind=prophet&id=:id"
+    },
+    {
+      "source": "/companion/:id",
+      "destination": "/api/page?kind=companion&id=:id"
+    },
+    {
+      "source": "/character/:id",
+      "destination": "/api/page?kind=character&id=:id"
+    },
+    {
+      "source": "/place/:id",
+      "destination": "/api/page?kind=place&id=:id"
+    },
+    {
+      "source": "/name/:n",
+      "destination": "/api/page?kind=name&n=:n"
     },
     {
       "source": "/sitemap-rooms.xml",

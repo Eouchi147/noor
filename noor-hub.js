@@ -16,6 +16,17 @@ let lastFocus = null;
 const glyph = HUB.glyph || (c => (c.titleAr || "·").split(" ")[0]);
 const SECMAP = { char: "characters", place: "places", word: "words" };
 const locRec = c => NOOR_I18N.loc(SECMAP[HUB.type] || "characters", c);
+/* Since 16 September 2026 every companion, character and place has a room of
+   its own, rendered by api/page.js from this same data: /companion/<id> for
+   the companions, /character/<id> for the angels, jinn, animals and end time
+   figures, /place/<id> for a place. The du'as of the Words page have none.
+   Each tile carries an anchor to its room beside the tap that opens the
+   modal, and the modal offers the same door. */
+const roomOf = (key, id) => {
+  if (HUB.type === "char") return (key === "companions" ? "/companion/" : "/character/") + encodeURIComponent(id);
+  if (HUB.type === "place") return "/place/" + encodeURIComponent(id);
+  return "";
+};
 
 function renderAll(){
   $("section-nav-links").innerHTML = SECTIONS.map(s =>
@@ -46,8 +57,8 @@ function renderAll(){
         </div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
-        ${list.map((c0,i)=>{const c=locRec(c0);return `
-        <article class="tile reveal" style="--d:${(i%6)*35}ms" data-key="${s.key}" data-id="${c.id}" role="button" tabindex="0" aria-label="${c.titleEn}">
+        ${list.map((c0,i)=>{const c=locRec(c0);const room=roomOf(s.key,c.id);return `
+        <div class="tile-cell"><article class="tile reveal" style="--d:${(i%6)*35}ms" data-key="${s.key}" data-id="${c.id}" role="button" tabindex="0" aria-label="${c.titleEn}">
           <div class="tile-inner">
             <div class="tile-bg ${c.pattern||""}"></div>
             <div class="tile-seal ${s.smallSeal?"seal-sm":""}"><span>${s.smallSeal?(c.titleAr||""):glyph(c)}</span></div>
@@ -62,7 +73,7 @@ function renderAll(){
               <p class="text-xs opacity-70 mt-1 line-clamp-2">${c.summary||""}</p>
             </div>
           </div>
-        </article>`}).join("")}
+        </article>${room?`<a class="tile-room reveal" style="--d:${(i%6)*35}ms" href="${room}" aria-label="${c.titleEn}: its own page">Its page →</a>`:""}</div>`}).join("")}
       </div>
     </section>`;
   }).join("");
@@ -125,7 +136,9 @@ function openEntry(key, id){
       const txt = typeof h === "object" ? h.text : h, src = typeof h === "object" ? h.source : "";
       return `<div class="hadith-item">${linkify(txt)}${src?`<br><span class="hadith-src">${src}</span>`:""}</div>`;
     }).join(""));
-  html += `<div class="mset mt-7 pt-4 border-t border-ink/8 flex items-center justify-end">
+  const room = roomOf(key, id);
+  html += `<div class="mset mt-7 pt-4 border-t border-ink/8 flex items-center ${room?"justify-between":"justify-end"}">
+    ${room?`<a href="${room}" class="text-gold text-sm font-semibold hover:underline">Its own page →</a>`:""}
     <button id="modal-close-2" class="text-gold text-sm font-semibold hover:underline">${t("modal.close")}</button></div>`;
   body.innerHTML = html;
 

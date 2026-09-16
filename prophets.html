@@ -49,6 +49,16 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .trow.full{justify-content:center;margin-top:1.6rem}
 .trow::before{content:"";position:absolute;inset-inline-start:50%;top:1.5rem;width:11px;height:11px;transform:translate(-50%,0);border-radius:999px;background:#F4D46A;box-shadow:0 0 0 3px rgba(201,162,39,.22),0 0 12px rgba(244,212,106,.8);z-index:2}
 .trow.full::before{display:none}
+.pt-cell{position:relative;width:calc(50% - 1.15rem);display:grid}
+.pt-cell.rasul{width:min(100%,30rem)}
+.pt-cell.alive{width:min(100%,26rem)}
+.pt-cell .ptile,.pt-cell .ptile.rasul,.pt-cell .ptile.alive{width:100%}
+.proom{position:absolute;top:.45rem;inset-inline-start:.55rem;z-index:3;display:inline-flex;align-items:center;min-height:24px;padding:.1rem .5rem;border-radius:999px;font-size:.5rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6d13;background:#FFF7DF;border:1px solid rgba(201,162,39,.4);text-decoration:none;transition:background .25s,color .25s,border-color .25s}
+.proom:hover,.proom:focus-visible{background:#C9A227;color:#1A160F;border-color:#C9A227;outline:none}
+.pt-cell.rasul .proom,.pt-cell.alive .proom{background:rgba(244,212,106,.14);color:#F4D46A;border-color:rgba(244,212,106,.45)}
+.art .aroom{margin:-.4rem 0 .9rem;font-size:.74rem}
+.art .aroom a{color:#F4D46A;text-decoration:none;border-bottom:1px solid rgba(244,212,106,.45)}
+.art .aroom a:hover,.art .aroom a:focus-visible{border-bottom-color:#F4D46A;outline:none}
 .ptile{position:relative;width:calc(50% - 1.15rem);background:#fff;border:1px solid rgba(44,36,22,.1);border-radius:1.1rem;padding:.95rem .6rem;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;font-family:inherit}
 .trow.L .ptile::after,.trow.R .ptile::after{content:"";position:absolute;top:1.78rem;width:1.15rem;height:1.5px;background:rgba(201,162,39,.45)}
 .trow.L .ptile::after{inset-inline-end:-1.15rem}
@@ -654,6 +664,7 @@ function artHTML(p,i){
   var h='<div class="inner">';
   h+='<h3>'+esc(p.en)+'<span class="amiri" translate="no">'+p.ar+'</span></h3>';
   h+='<div class="line">'+esc(p.epithet)+(p.azm?' · one of the five of firm resolve':'')+' · '+esc(p.era)+'</div>';
+  h+='<p class="aroom"><a href="/prophet/'+esc(p.id)+'">His own page, whole, with everything the library ties to him →</a></p>';
   h+='<div class="story">'+p.story.map(function(t){return '<p>'+esc(t)+'</p>'}).join('')+'</div>';
   if(p.split){
     h+='<div class="kick2">Twenty-three years, two cities</div>';
@@ -692,7 +703,11 @@ chain.innerHTML=P.map(function(p,i){
      so the Seal keeps the brightest light. */
   var alive=(p.id==="isa");
   var side=(last||alive)?'full':(i%2===0?'L':'R');
-  var tile='<div class="trow '+side+'" id="row-'+p.id+'">'+
+  /* since 16 September 2026 each prophet has a room of his own,
+     /prophet/<id>, rendered by api/page.js from this same data: the anchor
+     stands beside the tile (an anchor cannot sit inside a button), and the
+     opened story offers the same door */
+  var tile='<div class="trow '+side+'" id="row-'+p.id+'"><div class="pt-cell'+(last?' rasul':'')+(alive?' alive':'')+'">'+
     '<button class="ptile'+(last?' rasul':'')+(alive?' alive':'')+'" type="button" data-i="'+i+'" aria-expanded="false" aria-controls="art-'+i+'">'+
     (alive?'<span class="rise-col" aria-hidden="true"></span><span class="rise-motes" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="alive-b"><i></i>RAISED · AWAITED</span>':'')+
     (last?'<span class="aura" aria-hidden="true"></span><span class="aura a2" aria-hidden="true"></span>':'')+
@@ -703,7 +718,7 @@ chain.innerHTML=P.map(function(p,i){
     '<span class="mns">named '+p.mentions+(p.id==="muhammad"?" times · once as Ahmad":" times")+'</span>'+
     (alive?'<span class="alive-note">Alive, raised to Allah, and he will return: a sign of the Hour (4:157-158, 43:61)</span>':'')+
     '<span class="hint">Open the story ✦</span>'+
-    '</button></div>';
+    '</button><a class="proom" href="/prophet/'+esc(p.id)+'" aria-label="'+esc(p.en)+', his own page">page →</a></div></div>';
   return tile+'<div class="art" id="art-'+i+'" data-id="'+p.id+'">'+artHTML(p,i)+'</div>';
 }).join('');
 
@@ -762,17 +777,42 @@ if(want){for(var k=0;k<P.length;k++)if(P[k].id===want){setTimeout(function(idx){
   var sf=document.getElementById("starfield");
   var still=matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(sf){
-    if(!still){
-      var css=document.createElement("style");
-      css.textContent="@keyframes ptw{0%,100%{opacity:.12}50%{opacity:.75}}";
-      document.head.appendChild(css);
+    /* One canvas for the whole field. Until 16 September 2026 it was 220
+       spans, each with its own infinite opacity animation: 231 running
+       animations at idle and the most style recalculation on the site, for
+       a decoration below the fold. The same stars, the same twinkle (.12 to
+       .75 over 2.5 to 6.5 s, each on its own delay), drawn at most thirty
+       times a second, only while the field is on screen and the tab is
+       visible; under reduced motion 120 stars are drawn once and left. */
+    var cv=document.createElement("canvas");
+    cv.style.cssText="position:absolute;inset:0;width:100%;height:100%";
+    cv.setAttribute("aria-hidden","true");
+    sf.appendChild(cv);
+    var g=cv.getContext("2d"),stars=[],W=0,H=0,raf=0,last=0,seen=false;
+    for(var i=0;i<(still?120:220);i++)stars.push({x:Math.random(),y:Math.random(),r:(Math.random()*2+1)/2,o:Math.random()*.5+.15,d:Math.random()*4+2.5,ph:Math.random()*4});
+    function size(){var d=Math.min(devicePixelRatio||1,2);W=sf.clientWidth;H=sf.clientHeight;cv.width=Math.max(1,Math.round(W*d));cv.height=Math.max(1,Math.round(H*d));g.setTransform(d,0,0,d,0,0)}
+    function draw(now){
+      raf=0;
+      if(!still&&now-last<33){raf=requestAnimationFrame(draw);return}
+      last=now||0;
+      g.clearRect(0,0,W,H);g.fillStyle="#F4D46A";
+      var s=(now||0)/1000;
+      for(var k=0;k<stars.length;k++){
+        var st=stars[k],a=st.o;
+        if(!still){var ph=((s-st.ph)/st.d)%1;if(ph<0)ph+=1;a=.12+.63*(.5-.5*Math.cos(ph*6.2832))}
+        g.globalAlpha=a;g.beginPath();g.arc(st.x*W,st.y*H,st.r,0,6.2832);g.fill();
+      }
+      g.globalAlpha=1;
+      if(!still&&seen&&!document.hidden)raf=requestAnimationFrame(draw);
     }
-    for(var i=0;i<(still?120:220);i++){
-      var st=document.createElement("span");
-      var sz=(Math.random()*2+1).toFixed(1);
-      st.style.cssText="position:absolute;border-radius:50%;background:#F4D46A;width:"+sz+"px;height:"+sz+"px;left:"+(Math.random()*100)+"%;top:"+(Math.random()*100)+"%;opacity:"+(Math.random()*.5+.15)+(still?"":";animation:ptw "+(Math.random()*4+2.5)+"s ease-in-out "+(Math.random()*4)+"s infinite");
-      sf.appendChild(st);
-    }
+    function start(){if(!raf)raf=requestAnimationFrame(draw)}
+    function stop(){if(raf)cancelAnimationFrame(raf);raf=0}
+    size();start();
+    addEventListener("resize",function(){size();start()},{passive:true});
+    document.addEventListener("visibilitychange",function(){if(document.hidden)stop();else if(seen&&!still)start()});
+    if(!still&&"IntersectionObserver" in window){
+      new IntersectionObserver(function(es){es.forEach(function(e){seen=e.isIntersecting;if(seen)start();else stop()})},{threshold:0}).observe(sf);
+    }else seen=true;
   }
   var el=document.getElementById("unnamed-count");
   if(el && "IntersectionObserver" in window){

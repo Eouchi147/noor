@@ -62,9 +62,13 @@ specs
 #     node/*                      study/*
 #     reels/index.json            nodes-index.js
 #     noor-guide-data.js          tools/reels/quran-uthmani.json
-#                                 tools/reels/verses.txt
+#     prophets-data.js            tools/reels/verses.txt
+#     characters.js               places.js
+#     allah.html                  assets/entity-graph.json
+#     (the last five since 16 September 2026: the prophet, companion,
+#     character, place and Name rooms of api/page.js read them)
 #
-# Those last two are why tools/ is trimmed rather than dropped: vercel.json
+# The two under tools/ are why tools/ is trimmed rather than dropped: vercel.json
 # lists them in includeFiles, and a parent directory that never arrives cannot
 # have a file included out of it. Everything else under tools/ goes.
 #

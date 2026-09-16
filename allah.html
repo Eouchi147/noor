@@ -215,6 +215,20 @@ h2{
   transition:border-color .3s,color .3s;
 }
 .step button:hover,.step button:focus-visible{border-color:var(--gold-dim); color:var(--gold); outline:none}
+.step a{
+  display:inline-flex; align-items:center; background:var(--panel); border:1px solid var(--rule); color:var(--ink);
+  border-radius:2rem; padding:.45rem 1.1rem; font-size:.82rem; text-decoration:none; transition:border-color .3s,color .3s;
+}
+.step a:hover,.step a:focus-visible{border-color:var(--gold-dim); color:var(--gold); outline:none}
+/* the grid: each card's anchor to its room, beside the button */
+.names > li{position:relative}
+.nroom{
+  position:absolute; top:.5rem; right:.7rem; z-index:2; display:inline-flex; align-items:center; min-height:24px;
+  padding:.1rem .5rem; border:1px solid var(--rule); border-radius:999px; font-size:.62rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s,border-color .3s;
+}
+.nroom:hover,.nroom:focus-visible{color:var(--gold); border-color:var(--gold-dim); outline:none}
+.name[hidden] + .nroom{display:none}
 
 /* ---- the opened Name: a reading surface, not a label ---- */
 .panel{width:min(41rem,100%); max-height:min(92svh,54rem); grid-template-rows:auto auto auto auto 1fr auto auto}
@@ -959,6 +973,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="zh"] h1,html
 
     <div class="step">
       <button id="prev">&larr; Before</button>
+      <a id="p-room" href="/allah">Its own page</a>
       <button id="next">After &rarr;</button>
     </div>
     <p class="tally" id="p-n"></p>
@@ -1465,11 +1480,15 @@ const NAMES = [
   "His patience with you has a term and is not indifference. Use the part of it you are standing in."]]
 ];
 
-/* ---- the field of light: no shape, ever, only light ---- */
+/* ---- the field of light: no shape, ever, only light ----
+   Under prefers-reduced-motion it is drawn once and left; with motion it is
+   drawn at most thirty times a second, and not at all while the tab is
+   hidden. Until 16 September 2026 it redrew the whole screen every frame for
+   as long as the page was open, reduced motion or not. */
 (function(){
   const c = document.getElementById("field"), x = c.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let w, h, motes = [], t = 0;
+  let w, h, motes = [], t = 0, raf = 0, last = 0;
   function size(){
     const d = Math.min(devicePixelRatio || 1, 2);
     w = c.width = innerWidth * d; h = c.height = innerHeight * d;
@@ -1482,7 +1501,13 @@ const NAMES = [
       o: Math.random() * .5 + .12, p: Math.random() * 6.283
     }));
   }
-  function frame(){
+  function frame(now){
+    raf = 0;
+    if (!reduce && now - last < 33) { raf = requestAnimationFrame(frame); return; }
+    /* the motes move by the time that passed, so thirty frames a second
+       carry them exactly as far as sixty did */
+    const dt = last ? Math.min(3, (now - last) / 16.7) : 1;
+    last = now || 0;
     x.clearRect(0, 0, innerWidth, innerHeight);
     const cx = innerWidth / 2, cy = innerHeight * .34;
     /* the centre glows and never resolves into anything */
@@ -1493,15 +1518,19 @@ const NAMES = [
     g.addColorStop(1, "rgba(232,200,116,0)");
     x.fillStyle = g; x.fillRect(0, 0, innerWidth, innerHeight);
     for (const m of motes){
-      if (!reduce){ m.y -= m.s; m.p += .008; if (m.y < -6) { m.y = innerHeight + 6; m.x = Math.random() * innerWidth; } }
+      if (!reduce){ m.y -= m.s * dt; m.p += .008 * dt; if (m.y < -6) { m.y = innerHeight + 6; m.x = Math.random() * innerWidth; } }
       const o = m.o * (reduce ? 1 : (.55 + Math.sin(m.p) * .45));
       x.beginPath(); x.arc(m.x, m.y, m.r, 0, 6.2832);
       x.fillStyle = "rgba(255,240,196," + o.toFixed(3) + ")"; x.fill();
     }
-    t++; requestAnimationFrame(frame);
+    t += dt;
+    if (!reduce && !document.hidden) raf = requestAnimationFrame(frame);
   }
-  addEventListener("resize", size, { passive: true });
-  size(); frame();
+  function start(){ if (!raf) raf = requestAnimationFrame(frame); }
+  function stop(){ if (raf) cancelAnimationFrame(raf); raf = 0; }
+  addEventListener("resize", function(){ size(); if (reduce) start(); }, { passive: true });
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) stop(); else if (!reduce) start(); });
+  size(); start();
 })();
 
 /* ---- the names ---- */
@@ -1517,7 +1546,14 @@ NAMES.forEach(([a, t, m], i) => {
   b.querySelector(".a").textContent = a;
   b.querySelector(".t").textContent = t;
   b.querySelector(".m").textContent = m;
-  li.appendChild(b); list.appendChild(li);
+  li.appendChild(b);
+  /* since 16 September 2026 each Name has a room of its own, /name/<n>,
+     rendered by api/page.js from this same list: the anchor stands beside
+     the button, and the opened panel offers the same door */
+  const r = document.createElement("a");
+  r.className = "nroom"; r.href = "/name/" + (i + 1); r.textContent = "page";
+  r.setAttribute("aria-label", t + ", its own page");
+  li.appendChild(r); list.appendChild(li);
 });
 
 const q = document.getElementById("q");
@@ -1562,6 +1598,7 @@ function show(i, push){
     P("p-body").scrollTop = 0;
   }
   P("p-n").textContent = (at + 1) + " of 99";
+  P("p-room").href = "/name/" + (at + 1);
   veil.classList.add("on");
   document.body.classList.add("reading");
   document.documentElement.style.overflow = "hidden";
