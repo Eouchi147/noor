@@ -330,7 +330,7 @@ console.log('\n=== 5. every door is real ===');
   const social = [...fx.matchAll(/href: "(https:[^"]+)"/g)].map(m => m[1]);
   ok(social.length === 6 && !social.some(u => links.has(u)) && !/noor-social/.test(html), 'the page carries none of the six doors of NOOR_SOCIAL itself: noor-fx.js draws the row');
   ok(/<p data-i18n="footer.note">Qur'an · authentic Hadith · classical sirah<\/p>\s*<nav aria-label="Languages"/.test(html), 'the footer has the note line and the languages nav the row is placed between');
-  for (const h of ['/license', '/journal', '/feedback', '/legal']) ok(new RegExp('<footer[\\s\\S]*href="' + h + '"').test(html), 'the footer links ' + h);
+  for (const h of ['/school', '/journal', '/feedback', '/legal']) ok(new RegExp('<footer[\\s\\S]*href="' + h + '"').test(html), 'the footer links ' + h);
 }
 
 console.log('\n=== 6. the verse walks the shelf with the poster\'s stride ===');
@@ -399,6 +399,10 @@ if (chromium) {
   const withFixtures = async pg => {
     await pg.route('**/api/illuminations**', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(LIGHT) }));
     await pg.route('**/reels/index.json', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(REELS) }));
+    /* since 16 September 2026 the home asks first for reels/home.json, the
+       verse rows alone with a count of shorts, and falls back to the whole
+       manifest while no render run has written it */
+    await pg.route('**/reels/home.json', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ n: REELS.cards.length, written: REELS.written, shorts: 0, cards: REELS.cards }) }));
     await pg.route('**/reels/*-cover.jpg', r => r.fulfill({ status: 200, contentType: 'image/png', body: PNG }));
   };
   const errors = [];

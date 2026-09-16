@@ -56,6 +56,9 @@ globalThis.fetch = async (url, opt) => {
   /* a reel on Facebook, in its three phases, quickly */
   if (u.includes('/video_reels')) { sent.push('fb-reel'); return { ok: true, json: async () => ({ video_id: 'VID', upload_url: 'https://rupload/x' }), text: async () => '' }; }
   if (u.includes('rupload')) return { ok: true, json: async () => ({ success: true }), text: async () => '' };
+  /* since 15 September 2026 the poster asks the finished video what became
+     of it (tests/claim.mjs holds the three answers); here it is ready at once */
+  if (/\/VID\?fields=status,permalink_url/.test(u)) return { ok: true, json: async () => ({ status: { video_status: 'ready' }, permalink_url: '/reel/VID', published: true }), text: async () => '' };
   if (u.includes('?fields=access_token')) return { ok: true, json: async () => ({ access_token: 'page' }), text: async () => '' };
   if (reelMode && u.includes('CONT') && u.includes('status_code')) return { ok: true, json: async () => ({ status_code: 'IN_PROGRESS' }), text: async () => '' };
   if (u.includes('/photos') || u.includes('/feed')) { sent.push('facebook'); return { ok: true, json: async () => ({ id: 'FB' }), text: async () => '' }; }

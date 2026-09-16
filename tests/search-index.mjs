@@ -40,10 +40,17 @@ for (const [term, what] of WANT) {
 const kinds = await pg.evaluate(()=>Promise.all(['yusuf','baqara','bilal','uhud']
   .map(t=>window.NOOR_SEARCH.find(t))).then(rs=>[...new Set(rs.flat().map(g=>g.key))]));
 ok(kinds.some(k=>k!=='words'&&k!=='rooms'), 'the 1,183 entities are searched, not just words and rooms → '+JSON.stringify(kinds));
-/* a Name, a surah room, a Light and a chapter room each answer in their own group, at their own address */
-const rooms = await pg.evaluate(()=>Promise.all([['ar-rahman','names','/allah#1'],['al-baqarah','surahs','/surah/2'],['badr','lights','/light/'],['adam from clay','path','/path/2']]
+/* a Name, a surah room, a Light and a chapter room each answer in their own group, at their own address;
+   and the prophets, companions, characters and places answer at their rooms, not at a hub's anchor */
+/* since 16 September 2026 a Name's row opens its own room, /name/<n> */
+const rooms = await pg.evaluate(()=>Promise.all([['ar-rahman','names','/name/1'],['al-baqarah','surahs','/surah/2'],['badr','lights','/light/'],['adam from clay','path','/path/2']]
   .map(([t,g,u])=>window.NOOR_SEARCH.find(t).then(gs=>{const grp=gs.find(x=>x.key===g); return {t, g, hit: !!grp && grp.hits.some(h=>h.u.startsWith(u))};}))));
 for (const r of rooms) ok(r.hit, '"'+r.t+'" answers in the group '+r.g+' with the room\'s own address');
+const ents = await pg.evaluate(()=>Promise.all([['yusuf','prophets','/prophet/yusuf'],['abu bakr','people','/companion/c-abubakr'],['jibril','people','/character/a-jibril'],['kaaba','places','/place/p-kaaba']]
+  .map(([t,g,u])=>window.NOOR_SEARCH.find(t).then(gs=>{const grp=gs.find(x=>x.key===g); return {t, g, hit: !!grp && grp.hits.some(h=>h.u===u)};}))));
+for (const r of ents) ok(r.hit, '"'+r.t+'" answers in the group '+r.g+' at its own room');
+const anchors = await pg.evaluate(()=>fetch('/assets/search-index.json').then(r=>r.json()).then(j=>j.e.filter(x=>/^\/(allah#\d+|prophets#art-|characters#(companions|angels|jinn|animals|endtime)|places#)/.test(x.u)).length));
+ok(anchors===0, 'no entity row points at a hub anchor where a room exists ('+anchors+')');
 const three = await pg.evaluate(()=>fetch('/assets/search-index.json').then(r=>r.json()).then(j=>({
   rooms: j.r.map(x=>x.u), groups: j.g.map(x=>x.k), lights: j.e.filter(x=>x.g==='lights').length, surahs: j.e.filter(x=>x.g==='surahs').length, names: j.e.filter(x=>x.g==='names').length, chapters: j.e.filter(x=>/^\/path\/\d+$/.test(x.u)).length })));
 ok(!three.rooms.includes('/404') && !three.rooms.includes('/masjid/board') && !three.rooms.includes('/license'), 'the 404, the noindex board and the retired licence door are not offered');

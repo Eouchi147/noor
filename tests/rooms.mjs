@@ -22,6 +22,17 @@ import { execFileSync } from "node:child_process";
 
 const ROOT = path.resolve(new URL(".", import.meta.url).pathname, "..");
 process.chdir(ROOT);
+/* api/page.js reads reels/index.json from disk before it asks the site for
+   it, and since the shelf's pull request landed the file is on disk: four
+   verse assertions written against the stub below were reading the live
+   manifest (a different reciter, no example.org video). The handler now runs
+   in a copy of the tree made of links, everything but reels/, so the stub is
+   the manifest again and the file keeps its promise without a network. */
+import os from "node:os";
+const FARM = fs.mkdtempSync(path.join(os.tmpdir(), "noor-rooms-"));
+for (const f of fs.readdirSync(ROOT)) if (f !== "reels" && f !== "node_modules") fs.symlinkSync(path.join(ROOT, f), path.join(FARM, f));
+process.chdir(FARM);
+process.on("exit", () => { try { fs.rmSync(FARM, { recursive: true, force: true }); } catch { } });
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log("  PASS " + m); } else { fail++; console.log("  FAIL " + m); } };
@@ -285,6 +296,78 @@ console.log("\n=== all 114 surah pages ===");
     "every surah draws all of it: " + mv + " movements, " + ps + " passages, " + cn + " connections, " + badged + " virtue gradings");
 }
 
+console.log("\n=== the people, the places and the Names ===");
+/* Since 16 September 2026 the prophets (prophets-data.js), the companions
+   and the other characters (characters.js), the places (places.js) and the
+   99 Names (allah.html's NAMES) have rooms of their own, rendered from the
+   same files the hubs read: about 46,000 sourced words that showed only in a
+   modal on tap. One room of each family is rendered here whole, and every
+   room of every family is rendered and checked for what a room must have. */
+const families = {};
+{
+  const FAM = [
+    ["prophet", { kind: "prophet", id: "musa" }, "/prophet/musa", "Person", ["The Prophets", "/prophets"]],
+    ["companion", { kind: "companion", id: "c-abubakr" }, "/companion/c-abubakr", "Person", ["The Companions", "/companions"]],
+    ["character", { kind: "character", id: "a-jibril" }, "/character/a-jibril", "Thing", ["The Characters", "/characters"]],
+    ["place", { kind: "place", id: "p-kaaba" }, "/place/p-kaaba", "Place", ["The Places", "/places"]],
+    ["name", { kind: "name", n: "1" }, "/name/1", "DefinedTerm", ["The Ninety-Nine Names", "/allah"]]
+  ];
+  for (const [name, q, canon, type, crumb] of FAM) {
+    const r = await call(q);
+    families[name] = r.body;
+    ok(r.code === 200 && r.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", name + " answers 200 and keeps for a day");
+    ok(r.body.includes('<link rel="canonical" href="https://noorcodex.com' + canon + '"/>') && /<title>[^<]+· NOOR Codex of Light<\/title>/.test(r.body), name + " has its canonical " + canon + " and a title");
+    ok((r.body.match(/<h1\b/g) || []).length === 1 && /<section class="n2-idea n2-in">/.test(r.body), name + " has one h1 and its first screen arrives already there");
+    let data = []; try { data = ld(r.body); } catch { }
+    const types = data.flat().map(x => x["@type"]);
+    ok(types.includes("BreadcrumbList") && types.includes(type) && JSON.stringify(data).includes(crumb[1]), name + " carries JSON-LD of the right type (" + types.join(", ") + ") and a breadcrumb through " + crumb[0]);
+    ok(hasShell(r.body) && r.body.includes('<meta property="og:image" content="https://noorcodex.com/assets/brand/og.png"/>') && !/<img\b/i.test(r.body), name + " is in the shell, shares the house's own og.png and carries no picture");
+    ok(!/[\u2013\u2014]/.test(r.body), name + " prints no em dash and no en dash");
+    ok(!/\{\{[a-z]+:/.test(r.body), name + " leaves no cross link token unresolved");
+  }
+  ok(families.prophet.includes('lang="ar"') && families.prophet.includes("The story") && families.prophet.includes("/verse/") && families.prophet.includes("From the Sunnah".replace("From the Sunnah", "The narrations")) && families.prophet.includes('href="/prophets#musa"'),
+     "Musa's room carries his Arabic name, his story, his verses as rooms, his narrations, and the way back to the chain");
+  ok(families.prophet.includes('href="/prophet/shuayb"') && families.prophet.includes('href="/prophet/harun"'), "and walks to the prophets before and after him, Shuayb and Harun");
+  ok(families.companion.includes('href="/companion/c-uthman"') && families.companion.includes('href="/place/p-makkah"') && families.companion.includes('href="/path/32"'), "Abu Bakr's account links the companions, the places and the chapters its tokens name");
+  ok(families.companion.includes('href="/dictionary/abu-bakr"') && families.companion.includes("Lights that name it") && families.companion.includes('href="/light/cave-of-thawr-hijra"') && families.companion.includes("On the Path") && families.companion.includes('href="/companions?open=c-abubakr"'),
+     "and reads beside his word, the Lights that name him, the chapters, and the hub's own modal");
+  ok(families.companion.includes("Bukhari 3656") && families.companion.includes('href="/verse/9-40"'), "his narration keeps its source and his verse opens its room");
+  ok(families.character.includes('href="/unseen#jibril"') && /<meta name="description" content="[^"]{40,}/.test(families.character), "Jibril's room links the same figure on the Unseen page and has a description");
+  ok(families.place.includes("The facts") && families.place.includes("The Qur'an on it") && families.place.includes('href="/verse/3-96"') && families.place.includes('href="/places?open=p-kaaba"'), "the Kaaba's room carries its facts, its verses and the way back to the Places page");
+  ok(families.name.includes("Ar-Rahman") && families.name.includes("The essay") && families.name.includes("What it asks of you") && families.name.includes('href="/verse/55-1"') && families.name.includes('href="/allah#1"') && families.name.includes('href="/name/2"'),
+     "Ar-Rahman's room carries the essay, the practice, its verse, the way back to the page and the walk to the second Name");
+  ok(/"@type":"DefinedTermSet"/.test(families.name) && /"termCode":"1"/.test(families.name), "a Name is a DefinedTerm in the set of ninety-nine, numbered");
+  ok(families.name.includes("rahim: the womb"), "the root's gloss prints a colon where allah.html writes an em dash");
+  { const r = await call({ kind: "name", n: "65" }); ok(r.code === 200 && r.body.includes("Al-Majid") && r.body.includes('href="https://noorcodex.com/name/65"/>'), "the second Al-Majid has its own room by number"); }
+  for (const [q, what] of [[{ kind: "companion", id: "a-jibril" }, "an angel asked for as a companion"], [{ kind: "character", id: "c-abubakr" }, "a companion asked for as a character"], [{ kind: "prophet", id: "nope" }, "a prophet that is not"], [{ kind: "name", n: "100" }, "a hundredth Name"]]) {
+    const r = await call(q); ok(r.code === 404 && r.body.includes("There is no room"), what + " is a 404 in the shell");
+  }
+  /* every room of every family: 200, one h1, its canonical, no dash, no
+     undefined or null printed, JSON-LD that parses, no picture */
+  const every = { prophet: page.prophets().map(p => [{ kind: "prophet", id: p.id }, "/prophet/" + p.id]),
+    companion: page.characters().filter(c => c.group === "companions").map(c => [{ kind: "companion", id: c.id }, "/companion/" + c.id]),
+    character: page.characters().filter(c => c.group !== "companions").map(c => [{ kind: "character", id: c.id }, "/character/" + c.id]),
+    place: page.places().map(p => [{ kind: "place", id: p.id }, "/place/" + p.id]),
+    name: page.names().map((_, i) => [{ kind: "name", n: String(i + 1) }, "/name/" + (i + 1)]) };
+  const want = { prophet: 25, companion: 58, character: 40, place: 34, name: 99 };
+  for (const [fam, list] of Object.entries(every)) {
+    let good = 0; const why = [];
+    for (const [q, canon] of list) {
+      const r = await call(q); const h = r.body, text = h.replace(/<script[\s\S]*?<\/script>/g, "");
+      const probs = [];
+      if (r.code !== 200) probs.push("status");
+      if ((h.match(/<h1\b/g) || []).length !== 1) probs.push("h1");
+      if (!h.includes('<link rel="canonical" href="https://noorcodex.com' + canon + '"/>')) probs.push("canonical");
+      if (/[\u2013\u2014]/.test(h)) probs.push("dash");
+      if (/\bundefined\b|\bnull\b|\bNaN\b/.test(text)) probs.push("undefined");
+      try { ld(h); } catch { probs.push("jsonld"); }
+      if (/<img\b/i.test(h)) probs.push("img");
+      if (probs.length) why.push(canon + " " + probs.join("+")); else good++;
+    }
+    ok(good === want[fam] && list.length === want[fam], "all " + want[fam] + " " + fam + " rooms render whole (" + good + " of " + list.length + (why.length ? "; " + why.slice(0, 3).join(", ") : "") + ")");
+  }
+}
+
 console.log("\n=== the rooms' sitemap ===");
 {
   const r = await call({}, sitemap.default);
@@ -297,6 +380,9 @@ console.log("\n=== the rooms' sitemap ===");
   let surahMissing = 0; for (let n = 1; n <= 114; n++) if (!locs.includes("https://noorcodex.com/surah/" + n)) surahMissing++;
   ok(surahMissing === 0, "every surah is listed (114)");
   ok(locs.includes("https://noorcodex.com/verse/94-5-6") && locs.includes("https://noorcodex.com/today"), "the shelved verses and the day are listed");
+  const fam = k => locs.filter(u => u.startsWith("https://noorcodex.com/" + k + "/")).length;
+  ok(fam("prophet") === 25 && fam("companion") === 58 && fam("character") === 40 && fam("place") === 34 && fam("name") === 99,
+     "the 25 prophets, 58 companions, 40 characters, 34 places and 99 Names are listed (" + [fam("prophet"), fam("companion"), fam("character"), fam("place"), fam("name")].join(", ") + ")");
   ok((r.body.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length === locs.length, "every entry carries a lastmod");
   const today = new Date().toISOString().slice(0, 10);
   ok(r.body.includes("<loc>https://noorcodex.com/light/battle-of-badr-624</loc><lastmod>" + sitemap.LAST_CONTENT_CHANGE + "</lastmod>") && /LAST_CONTENT_CHANGE = "\d{4}-\d{2}-\d{2}"/.test(fs.readFileSync("api/sitemap.js", "utf8")),
@@ -355,8 +441,10 @@ console.log("\n=== the shell ===");
      comment explaining it was cut to the bone before the ceiling moved. */
   /* 24 -> 25 was the gradient-ground fix; 25 -> 26 was the tone parser; 26 -> 28
      is the reveal threshold, which was hiding 523 words behind a rule that
-     asked a six thousand pixel section to show a fifth of itself. */
-  ok(js.length < 28 * 1024, "noor2.js is under 28 KB (" + js.length + " bytes)");
+     asked a six thousand pixel section to show a fifth of itself. 28 -> 30 on
+     16 September 2026 is the sheet keeping its word as a modal (focus in,
+     Tab inside, focus back) and the two skip links, both behaviour. */
+  ok(js.length < 30 * 1024, "noor2.js is under 30 KB (" + js.length + " bytes)");
   ok(css.includes("--n2-spring:linear(0, 0.006") && css.includes("@supports (transition-timing-function:linear(0,1))") && !/transition:[^;}]*\blinear\b/.test(css.replace(/linear\(/g, "L(")) && !/transition:[^;}]*\blinear\b/.test(css),
      "the spring is defined with a bezier fallback and nothing moves linearly");
   ok(css.includes("scroll-snap-type:y proximity") && css.includes("scroll-snap-stop:normal") && css.includes(".n2-shelf") && css.includes("overscroll-behavior-x:contain") && css.includes("mask-image"),
@@ -366,6 +454,19 @@ console.log("\n=== the shell ===");
   const rm = css.slice(css.indexOf("@media (prefers-reduced-motion:reduce)"));
   ok(/\.n2-glow\{animation:none!important\}/.test(rm) && /\.n2-btn,\.n2-bar a\{transform:none!important\}/.test(rm), "reduced motion switches the glow and the magnets off");
   ok(js.includes("sheet:") && js.includes("--mx") && js.includes("n2-press") && js.includes("n2-release") && js.includes("focusTo") && js.includes("--n2-p"), "noor2.js carries the magnets, the press, the sheet, the following glow and the hairline");
+  /* it says aria-modal, so it is one: the sheet is named, focus goes in when
+     it opens, Tab stays inside it, and focus returns to the opener on close */
+  ok(/role="dialog" aria-modal="true" tabindex="-1"/.test(js) && /from = doc\.activeElement/.test(js) && /e\.key !== "Tab"/.test(js) && /box\.setAttribute\("aria-label"/.test(js) && /from\.focus\(/.test(js),
+     "the shell's sheet is named, takes focus, keeps Tab inside and gives focus back");
+  const fx2 = fs.readFileSync("noor-fx.js", "utf8");
+  ok(/class="nmr-p" role="dialog" aria-modal="true" aria-label="The library" tabindex="-1"/.test(fx2) && /from = doc\.activeElement/.test(fx2) && /e\.key !== "Tab"/.test(fx2) && /from\.focus\(/.test(fx2),
+     "and the More sheet does the same");
+  /* the bar is last in the document: two skip links come first, in the rooms'
+     shell and, on every other page, drawn where the bar is built */
+  ok(/<div class="n2-skips"><a class="n2-skip" href="#n2-content">Skip to the content<\/a><a class="n2-skip" href="#n2-rooms">Skip to the rooms<\/a><\/div>\s*<div class="n2-still">/.test(rendered.today) && /<main class="n2-main" id="n2-content" tabindex="-1">/.test(rendered.today) && /<nav class="n2-bar" id="n2-rooms" aria-label="Rooms" tabindex="-1">/.test(rendered.today),
+     "a room opens with the two skip links, and the content and the bar can take focus");
+  ok(js.includes("n2-skips") && js.includes("Skip to the content") && js.includes("Skip to the rooms") && /skips\(\);/.test(js), "noor2.js draws the same two links on every page whose bar it builds");
+  ok(/\.n2-skip\{[^}]*opacity:0[^}]*transform:translateY\(-200%\)/.test(css) && /\.n2-skip:focus,\.n2-skip:focus-visible\{[^}]*opacity:1[^}]*transform:none/.test(css), "the skip links are off screen until focused, in the shell's own tokens");
   for (const [name, html] of Object.entries(rendered)) {
     const many = [...html.matchAll(/<section class="n2-idea[^"]*"[^>]*>([\s\S]*?)<\/section>/g)].filter(m => (m[1].match(/n2-glow/g) || []).length > 1).length;
     ok(many === 0, name + ": no screen carries more than one glowing button");
@@ -473,25 +574,32 @@ console.log("\n=== the deployment ===");
   let v = null;
   try { v = JSON.parse(fs.readFileSync("vercel.json", "utf8")); } catch { }
   ok(!!v, "vercel.json parses");
+  const cc = src => ((v && v.headers || []).find(h => h.source === src) || { headers: [{}] }).headers[0].value || "";
   for (const rw of (v && v.rewrites) || []) {
     const file = "api/" + rw.destination.replace(/^\/api\//, "").split("?")[0] + ".js";
     if (rw.destination.startsWith("/api/podcast")) { if (fs.existsSync(file)) ok(true, rw.source + " → " + file + " exists"); else skip(rw.source + " → " + file + " is owed by the podcast work"); continue; }
     ok(fs.existsSync(file), rw.source + " → " + file + " exists");
   }
-  const want = ["/light", "/light/:id", "/lights", "/path/:n", "/path", "/verse/:ref", "/verses", "/surah/:n", "/today", "/sitemap-rooms.xml", "/podcast.xml", "/journal/:slug"];
+  const want = ["/light", "/light/:id", "/lights", "/path/:n", "/path", "/verse/:ref", "/verses", "/surah/:n", "/today", "/sitemap-rooms.xml", "/podcast.xml", "/journal/:slug",
+    "/prophet/:id", "/companion/:id", "/character/:id", "/place/:id", "/name/:n"];
   ok(want.every(s => (v.rewrites || []).some(r => r.source === s)), "every room has its rewrite, and the old ones remain");
   ok(v.functions["api/page.js"] && /lights\/all\.json/.test(v.functions["api/page.js"].includeFiles) && /node\/\*\.json/.test(v.functions["api/page.js"].includeFiles), "api/page.js includes the library's files");
-  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 5, "what was in vercel.json is still there");
+  /* a file not listed there does not exist on Vercel: the four families read
+     these five, and the sitemap the four it lists */
+  ok(["prophets-data.js", "characters.js", "places.js", "allah.html", "assets/entity-graph.json"].every(f => v.functions["api/page.js"].includeFiles.includes(f)) && fs.existsSync("assets/entity-graph.json"),
+     "api/page.js includes the people, the places, the Names and the graph that ties them");
+  ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => v.functions["api/sitemap.js"].includeFiles.includes(f)), "and api/sitemap.js includes what it lists");
+  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 6, "what was in vercel.json is still there");
+  ok(/max-age=300/.test(cc("/reels/(index|home)\\.json")), "the reels manifests are kept five minutes and revalidated in the background");
   /* The scripts and stylesheets under /assets were immutable for a year while
      the pages asked for them at a hand-written ?v= that nobody moved, so an
      edit to any of them reached new readers only. They revalidate now; the
      fonts and pictures, whose names change when their contents do, do not. */
-  const cc = src => (v.headers.find(h => h.source === src) || { headers: [{}] }).headers[0].value || "";
   ok(/max-age=300/.test(cc("/assets/(.*)\\.(js|css|mjs|map)")), "a change to a script or a stylesheet reaches a reader who has been here before");
   ok(/immutable/.test(cc("/assets/(.*)\\.(woff2|woff|ttf|otf|eot|png|jpg|jpeg|gif|svg|webp|avif|ico|mp3|m4a|wav|mp4|webm|pdf|txt)")), "and a font or a picture is still kept for a year");
   ok(v.functions["api/reel.js"] && v.functions["api/reel.js"].maxDuration === 60 && fs.existsSync("api/reel.js"), "api/reel.js may run for a minute");
-  ok(!["path.html", "lights.html", "today.html", "verses.html", "surah.html", "light.html"].some(f => fs.existsSync(f)), "no static page collides with a room");
-  ok(!["light", "path", "today", "verses", "surah"].some(d => fs.existsSync(d) && fs.statSync(d).isDirectory()), "no folder collides with a shelf (lights/ is why the shelf is /light)");
+  ok(!["path.html", "lights.html", "today.html", "verses.html", "surah.html", "light.html", "prophet.html", "companion.html", "character.html", "place.html", "name.html"].some(f => fs.existsSync(f)), "no static page collides with a room");
+  ok(!["light", "path", "today", "verses", "surah", "prophet", "companion", "character", "place", "name"].some(d => fs.existsSync(d) && fs.statSync(d).isDirectory()), "no folder collides with a shelf (lights/ is why the shelf is /light)");
   ok(fs.readFileSync("index.html", "utf8").includes('href="/light"') && !fs.readFileSync("index.html", "utf8").includes('href="/lights"'), "the home page links the shelf at /light");
   ok(!/href="\/lights"/.test(Object.values(rendered).join("")) && !fs.readFileSync("api/sitemap.js", "utf8").includes('"/lights"'), "no room and no sitemap entry points at /lights");
   const robots = fs.readFileSync("robots.txt", "utf8");
@@ -499,14 +607,14 @@ console.log("\n=== the deployment ===");
   ok(robots.includes("Disallow: /admin2\n") && robots.includes("Disallow: /admin2.html"), "robots.txt keeps the new console out");
   const sm = fs.readFileSync("sitemap.xml", "utf8");
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  ok(locs.length === 608, "the static sitemap holds 608 pages (" + locs.length + ")");
+  ok(locs.length === 607, "the static sitemap holds 607 pages (" + locs.length + ")");
   ok(!["ha", "ja", "ko", "ku", "so", "sw", "zh"].some(l => locs.includes("https://noorcodex.com/" + l)), "the seven thin language roots are gone");
   ok((sm.match(/<lastmod>/g) || []).length === locs.length && sm.includes("<lastmod>2026-09-09</lastmod>"), "every static page carries a lastmod");
   const ign = fs.readFileSync(".vercelignore", "utf8");
   const lines = ign.split("\n").filter(l => l && !l.startsWith("#"));
   ok(["/text/", "/study 2/", "/locales/", "/quran-study.js", "/nodes.js", "/assets/gsap.min.js", "/assets/images/kaaba-night.jpg"].every(x => lines.includes(x)), ".vercelignore lists the dead weight");
   ok(lines.filter(l => /^(text|study 2|locales|i18n|assets|nodes|unseen|quran-study)/.test(l)).length === 0, "every dead-weight entry is anchored to the root (a bare text/ would take i18n/text/ with it)");
-  const ignored = (f) => { try { execFileSync("git", ["-c", "core.excludesFile=.vercelignore", "check-ignore", "--no-index", "-q", f], { stdio: "pipe" }); return true; } catch { return false; } };
+  const ignored = (f) => { try { execFileSync("git", ["-c", "core.excludesFile=.vercelignore", "check-ignore", "--no-index", "-q", f], { stdio: "pipe", cwd: ROOT }); return true; } catch { return false; } };
   ok(ignored("text/ar.json") && ignored("study 2/x.json") && ignored("nodes.js"), "git's own matcher ignores text/, study 2/ and nodes.js");
   ok(!ignored("i18n/text/ar.json") && !ignored("nodes-index.js") && !ignored("lights/all.json") && !ignored("assets/noor2.js"), "and does not ignore i18n/text/, nodes-index.js, the Lights or the shell");
   ok(!fs.readFileSync("sw.js", "utf8").includes('"/assets/noor-motion-boot.js"'), "sw.js no longer precaches the motion loader");
