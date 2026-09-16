@@ -84,7 +84,8 @@
         -4.0
       ],
       "note": "Lamps stand outside the back wall (z below -4). A ray runs straight from a lamp through the aperture to the front wall at z=4; its image point is aperture + (aperture - lamp) * (8 / (-4 - lamp.z)). LampA lands near (1.07, 0.85, 4), lampB near (-0.91, 2.29, 4), lampC near (-0.25, 0.65, 4): inverted, a high lamp lands low."
-    }
+    },
+    "lamps_note": "the lamps are candles: a lit lamp, its ray and its image flicker together, gently, from a seeded noise of the film time (never random), so the picture is never still while a lamp burns"
   },
   "scenes": [
     {
@@ -660,8 +661,20 @@
         "hfov": 48,
         "roll": 0.0,
         "ease": "inOutSine",
-        "move": "settle; a slow drift only",
-        "hold": 5.2
+        "move": "a slow push toward the hole over the whole scene, the sphere growing a little as it comes",
+        "hold": 5.2,
+        "end": {
+          "eye": [
+            0.0,
+            1.6,
+            1.15
+          ],
+          "look": [
+            0.0,
+            1.6,
+            -4.0
+          ]
+        }
       },
       "figure": {
         "events": [],
@@ -722,7 +735,7 @@
     "time": "scene k starts at the sum of the retimed durations before it; event.at and sound.at are seconds after the scene start; the compiler writes absolute seconds",
     "compiled": "film.py compile writes films/<slug>.json (the chapter stage.js renders) from this file; never edit the compiled file by hand",
     "no_dashes": "no em dash or en dash anywhere on screen or in narration",
-    "camera": "hfov is the HORIZONTAL field of view in degrees; the stage converts it to the vertical field of view of the frame it renders (vertical = 2*atan(tan(hfov/2)/aspect)), so one spec composes both shapes. hold is how many seconds the camera keeps LOOKING at this scene's look point before it turns toward the next scene's; the eye glides toward the next eye over the whole scene regardless. A hold equal to the scene length means the aim never turns during the scene.",
+    "camera": "hfov is the HORIZONTAL field of view in degrees; the stage converts it to the vertical field of view of the frame it renders (vertical = 2*atan(tan(hfov/2)/aspect)), so one spec composes both shapes. hold is how many seconds the camera keeps LOOKING at this scene's look point before it turns toward the next scene's; the eye glides toward the next eye over the whole scene regardless. A hold equal to the scene length means the aim never turns during the scene. A scene may carry camera.end (eye, look): the glide within that scene goes to end instead of the next scene's station (used on the last scene, which has no next).",
     "lantern": "lantern.pos is where the light is at the scene start; hold is how many seconds it stays there before travelling to the next scene's pos (hold equal to the scene length means it does not move during the scene); a hidden cue is scale 0.0001 and bright 0",
     "retime": "when a scene grows to fit the spoken line, a hold that equalled the written duration grows with it (it means the whole scene); a shorter hold keeps its seconds"
   }
