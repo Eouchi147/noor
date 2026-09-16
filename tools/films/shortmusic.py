@@ -46,6 +46,7 @@ rendered from, so the sound cannot drift from the frame.
 """
 import argparse, hashlib, json, os, re, subprocess, sys, wave
 import numpy as np
+from scipy.signal import fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "out")
@@ -272,12 +273,57 @@ def thin(times, gap=1.15, keep=()):
 
 
 # ------------------------------------------------------------------ the film
+#  MOTION MARKS: the sound tied to what the drawing itself does, not just to
+#  when a new piece of it is revealed. WHAT WAS MISSING BEFORE THIS: every
+#  mark came from the beat's own `at` array (when a piece of the SVG is
+#  switched on) and from the first step under a new sentence -- so a ray
+#  that travelled for three seconds got the same one soft tick as a line of
+#  the drawing simply appearing, and the moment it actually ARRIVED where it
+#  was going had no sound at all. web/behave.js runs `travel`, `flow`,
+#  `pour` and `trace` as a start and a duration (`for`); `glow` and `pulse`
+#  as a single moment. This reads the beat's own `motion` list the same way
+#  behave.js does and turns each entry into the event or two it plays on
+#  screen, so the ear gets the same two beats the eye does: the thing
+#  leaving, and the thing landing.
+def motion_marks(b):
+    """One or two marks per motion entry, timed exactly as
+    web/behave.js's NOORMOTION.apply times the same entry:
+    `at` is a LINE INDEX into the beat's own `lines` (not a second) when it
+    is under 100 and a line exists there; `sec` is used instead when it is
+    not. `delay` (seconds) is added after that, and `for` (seconds, 3.0 if
+    absent) is the run's own length -- see behave.js around "var when =".
+    travel/flow/pour/trace get a start mark (felt, something leaving) and
+    an arrival mark at start + for (glass, something landing). glow/pulse
+    get one mark at their start (felt). Every other kind (sweep, orbit,
+    count) is not asked for here and gets none."""
+    lines = [float(L.get("at", 0.0)) for L in b.get("lines", [])]
+    out = []
+    for i, m in enumerate(b.get("motion", []) or []):
+        do = m.get("do")
+        at_field = m.get("at")
+        if at_field is not None and at_field < 100 and lines:
+            start = lines[min(int(at_field), len(lines) - 1)]
+        else:
+            start = float(m.get("sec", 0.0))
+        start += float(m.get("delay", 0.0))
+        dur = float(m.get("for", 3.0))
+        arrival = start + dur
+        if do in ("travel", "flow", "pour", "trace"):
+            out.append({"at": start, "voice": "felt", "source": "%s#%d start" % (do, i)})
+            out.append({"at": arrival, "voice": "glass", "source": "%s#%d arrival" % (do, i)})
+        elif do in ("glow", "pulse"):
+            out.append({"at": start, "voice": "felt", "source": "%s#%d start" % (do, i)})
+    out.sort(key=lambda e: e["at"])
+    return out
+
+
 def events(slug):
     d = json.load(open(os.path.join(HERE, "films", slug + ".json"), encoding="utf-8"))
     b = d["chapters"][0]["beats"][0]
     return {"total": float(b.get("hold", 40.0)) + 1.0,
             "lines": [float(L.get("at", 0.0)) for L in b.get("lines", [])],
             "steps": [float(ms) / 1000.0 for ms in (b.get("at") or [])],
+            "motion": motion_marks(b),
             "title": d.get("title", slug)}
 
 
@@ -327,21 +373,63 @@ def build(ev, slug, which=None, start=None, voice="glass"):
     #  so the sound carries the shape of the lesson. Thinned, so it marks
     #  rather than drums, and set a long way under the music: a mark is meant
     #  to be noticed the way a page turning is noticed.
+    #
+    #  MOTION MARKS ARE NEVER THINNED AWAY. A step mark is punctuation and
+    #  there can be too much of it; the moment a travel starts or a ray
+    #  arrives is the argument itself, so ev["motion"]'s times go straight
+    #  into thin()'s keep list alongside the first step under each sentence,
+    #  and only the ordinary step marks still have to earn their place by
+    #  the 1.15 s gap. Two or three motion entries can share one line's own
+    #  `at` (a travel, a pulse and a glow all cued to the same sentence);
+    #  those collapse to one mark rather than three identical hits stacked
+    #  on the same sample, with an arrival ("glass") outranking a start
+    #  ("felt") when they tie exactly.
     DEG = [0, 3, 5, 7, 10, 12, 14, 15]
     firsts = []
     for L in ev["lines"]:
         nxt = [t for t in ev["steps"] if t >= L - 0.1]
         if nxt: firsts.append(nxt[0])
-    hits = thin(ev["steps"], 1.15, firsts)
+
+    motion_by_time = {}
+    for e in ev.get("motion", []):
+        key = round(e["at"], 3)
+        if key not in motion_by_time:
+            motion_by_time[key] = {"voice": e["voice"], "sources": [e["source"]]}
+        else:
+            slot = motion_by_time[key]
+            slot["sources"].append(e["source"])
+            if e["voice"] == "glass":
+                slot["voice"] = "glass"
+    motion_times = sorted(motion_by_time)
+
+    step_times = sorted(set(round(t, 3) for t in ev["steps"]))
+    combined = sorted(set(step_times) | set(motion_times))
+    keep = set(round(t, 3) for t in firsts) | set(motion_times)
+    hits = thin(combined, 1.15, keep)
+
     marks = np.zeros(n, dtype=np.float32)
+    marklog = []
     for i, t in enumerate(hits):
         u = i / max(1, len(hits) - 1)
         d = DEG[min(len(DEG) - 1, int(round((len(DEG) - 1) *
                                             (u if u < 0.78 else 0.78 - (u - 0.78) * 1.4))))]
         f = hz((pc + d) % 12 + 12 * ((pc + d) // 12), 5)
-        marks += struck(n, t, f, voice, 0.36 if i % 2 else 0.42)
-    marks = lowpass(marks, VOICE.get(voice, VOICE["glass"])["top"], 2)
+        mt = motion_by_time.get(round(t, 3))
+        v = mt["voice"] if mt else voice
+        src = " + ".join(mt["sources"]) if mt else "step"
+        marks += struck(n, t, f, v, 0.36 if i % 2 else 0.42)
+        marklog.append({"at": round(t, 3), "source": src, "voice": v})
+    #  the lowpass used to be keyed to the one --voice every mark shared;
+    #  a mark can now carry its own voice (felt/glass on top of whatever
+    #  --voice asked for), so the cutoff is the highest "top" among the
+    #  voices actually struck, never narrower than before for any of them.
+    used_voices = set(m["voice"] for m in marklog) or {voice}
+    marks = lowpass(marks, max(VOICE[v]["top"] for v in used_voices), 2)
     air = np.zeros(n, dtype=np.float32)
+
+    print("  marks (%d):" % len(marklog))
+    for m in marklog:
+        print("    %6.2fs  %-28s %s" % (m["at"], m["source"], m["voice"]))
 
     #  ---- BALANCE -------------------------------------------------------
     ml = at_db(ml, -15.5); mr = at_db(mr, -15.5)
@@ -354,7 +442,13 @@ def build(ev, slug, which=None, start=None, voice="glass"):
     #  five seconds deep in a dark room is part of the piece. The music keeps
     #  its own space; only the marks are sent to this one.
     room = hall(5.2, 320, (seed % 7919) + 13)
-    wet = at_db(np.convolve(marks, room)[:n], -31.0)
+    #  fftconvolve, not np.convolve: the room impulse is 5.2 s at 48 kHz
+    #  against a marks track as long as the whole film, and a direct
+    #  convolution of two arrays that size is O(n*m) -- on a forty second
+    #  short that is past the two minute mark and reads as a hang, not a
+    #  slow filter. Same "full" mode result, found and fixed the same way
+    #  in tools/films/filmsound.py.
+    wet = at_db(fftconvolve(marks, room)[:n], -31.0)
     marks = marks + wet
 
     #  ---- AND THE MUSIC STEPS BACK FOR THEM -----------------------------
@@ -376,7 +470,8 @@ def build(ev, slug, which=None, start=None, voice="glass"):
     left = ml + marks + air
     right = mr + marks * 0.96 + air
     return left, right, {"track": os.path.basename(path), "at": at,
-                         "key": name, "marks": len(hits), "voice": voice}
+                         "key": name, "marks": len(hits), "voice": voice,
+                         "marklog": marklog}
 
 
 # ------------------------------------------------------------------ output
@@ -436,6 +531,18 @@ def main():
         write(path, Lc, Rc)
         print("  %.1f LUFS -> %.1f" % (cur, lufs(path) or 0.0))
     print("  -> %s" % path)
+
+    #  out/<slug>-<shape>.marks.json: what audit.py reads to check a mark
+    #  actually landed where the drawing said it would, without asking it to
+    #  re-derive the motion timing itself. Cheap to write, and the only
+    #  record on disk of which mark came from a step and which came from the
+    #  drawing's own motion.
+    marks_path = os.path.join(OUT, "%s-%s.marks.json" % (a.slug, a.shape))
+    with open(marks_path, "w", encoding="utf-8") as f:
+        json.dump({"slug": a.slug, "shape": a.shape, "track": info["track"],
+                   "key": info["key"], "marks": info["marklog"]}, f, indent=2)
+        f.write("\n")
+    print("  -> %s" % marks_path)
 
     if a.mux:
         mp4 = os.path.join(HERE, "%s-%s-60fps.mp4" % (a.slug, a.shape))

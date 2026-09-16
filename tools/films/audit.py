@@ -40,6 +40,40 @@ MARGINS = {
     "wide": {"sides": 60, "bottom": 48, "top": 60},
 }
 
+#  A PLATE SHORT'S MOTION MARKS, THE SAME WAY SHORTMUSIC.PY TIMES THEM.
+#  shortmusic.py is in scope this round and already carries the one true
+#  copy of "when does a travel/flow/pour/trace/glow/pulse entry start and
+#  land" (it reads web/behave.js's own NOORMOTION.apply to get it right);
+#  imported here rather than re-derived so the audit can never quietly
+#  drift from what actually drew the picture. If the import fails for any
+#  reason (shortmusic.py missing, scipy not installed, whatever), a slug
+#  that does not exist must still print one clean line and exit 2 rather
+#  than a traceback, so the same algorithm is kept, by hand, as a fallback.
+sys.path.insert(0, HERE)
+try:
+    from shortmusic import motion_marks as _motion_marks
+except Exception:
+    def _motion_marks(b):
+        lines = [float(L.get("at", 0.0)) for L in b.get("lines", [])]
+        out = []
+        for i, m in enumerate(b.get("motion", []) or []):
+            do = m.get("do")
+            at_field = m.get("at")
+            if at_field is not None and at_field < 100 and lines:
+                start = lines[min(int(at_field), len(lines) - 1)]
+            else:
+                start = float(m.get("sec", 0.0))
+            start += float(m.get("delay", 0.0))
+            dur = float(m.get("for", 3.0))
+            arrival = start + dur
+            if do in ("travel", "flow", "pour", "trace"):
+                out.append({"at": start, "voice": "felt", "source": "%s#%d start" % (do, i)})
+                out.append({"at": arrival, "voice": "glass", "source": "%s#%d arrival" % (do, i)})
+            elif do in ("glow", "pulse"):
+                out.append({"at": start, "voice": "felt", "source": "%s#%d start" % (do, i)})
+        out.sort(key=lambda e: e["at"])
+        return out
+
 
 def has_dash(s):
     return bool(s) and (EM_DASH in s or EN_DASH in s)
@@ -97,6 +131,139 @@ def spec_cue_times(spec, exit_kind="slow"):
     return sorted(times), total
 
 
+# ------------------------------------------------------------- plate shorts
+#  A PLATE SHORT IS ONE BEAT, NOT A ROW OF SCENES. shortplate.py's own
+#  output (films/short-<slug>.json) has no "scene" key and no per-beat
+#  text/sub/eyebrow/src -- one beat of kind "plate" carries a `lines` list
+#  instead, each line with its own at/until, plus the `at` array of step
+#  times and the `motion` list web/behave.js and web/plate.js read. Every
+#  function below reads that shape; nothing above this comment is touched
+#  by it, so darkroom.json's own scene-format audit still runs exactly as
+#  it did before this round.
+def is_plate_chapter(chapter):
+    beats = chapter.get("beats") or []
+    return bool(beats) and beats[0].get("kind") == "plate"
+
+
+def plate_cue_times(beat):
+    """The plate short's own cue times, used only when there are no frames
+    yet to diff against: each line's own start, each step's own moment
+    (beat["at"], milliseconds), and the start and arrival of every motion
+    entry -- exactly the events shortmusic.py marks (see motion_marks
+    there) and the events the drawing itself is judged against."""
+    times = set(round(float(L.get("at", 0.0)), 3) for L in beat.get("lines", []))
+    times |= set(round(float(ms) / 1000.0, 3) for ms in (beat.get("at") or []))
+    for e in _motion_marks(beat):
+        times.add(round(e["at"], 3))
+    return sorted(times)
+
+
+def line_sample_times(beat):
+    """Each line's own midpoint: (at + until) / 2 when the line has an
+    until, else at + 1.5s -- a line missing an until still runs well past
+    a second and a half, so that lands inside it either way."""
+    out = []
+    for L in beat.get("lines", []):
+        at = float(L.get("at", 0.0))
+        until = L.get("until")
+        out.append(at + 1.5 if until is None else (at + float(until)) / 2.0)
+    return out
+
+
+def check_words_plate(beat):
+    bad = []
+    lines = beat.get("lines", [])
+    for L in lines:
+        for field in ("text", "sub", "eyebrow", "src"):
+            if has_dash(L.get(field)):
+                bad.append("line %r field %s" % (L.get("text", "?")[:24], field))
+    return (not bad, "no em dash or en dash in %d lines" % len(lines), "; ".join(bad))
+
+
+def check_text_safe_plate(frames_dir, beat, fps, shape, note):
+    if not frames_dir:
+        return None, note, None
+    safe = MARGINS[shape]
+    top, bottom, sides = safe["top"], safe["bottom"], safe["sides"]
+    lines = beat.get("lines", [])
+    bad = []
+    for L, sample_t in zip(lines, line_sample_times(beat)):
+        idx = int(round(sample_t * fps))
+        rgb = frame_rgb(frames_dir, idx)
+        if rgb is None:
+            continue
+        h, w = rgb.shape[:2]
+        top_band = rgb[0:top, :]
+        bottom_band = rgb[h - bottom:h, sides:w]  # the watermark corner is excluded
+        bright = max(float((top_band.mean(axis=2) > 90).mean()) if top_band.size else 0.0,
+                    float((bottom_band.mean(axis=2) > 90).mean()) if bottom_band.size else 0.0)
+        if bright > 0.01:
+            bad.append("line %r frame %d bright fraction %.3f" % (L.get("text", "?")[:20], idx, bright))
+    return (not bad, "sampled at each line's own midpoint, %d lines" % len(lines), "; ".join(bad[:5]))
+
+
+def measure_ebur128(path):
+    """Integrated loudness and true peak off the finished audio. The same
+    ffmpeg filter and the same regex as filmsound.py's own measure_ebur128;
+    filmsound.py is out of this round's scope to touch, so this is a copy
+    kept in step with it by eye, not a shared import."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", path,
+                        "-af", "ebur128=peak=true", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    out = r.stderr
+    Im = re.findall(r"\bI:\s*(-?\d+(?:\.\d+)?)\s*LUFS", out)
+    Pm = re.findall(r"Peak:\s*(-?\d+(?:\.\d+)?)\s*dBFS", out)
+    return (float(Im[-1]) if Im else None, float(Pm[-1]) if Pm else None)
+
+
+def check_loudness_plate(slug, shape, mp4_path):
+    #  the mixed mp4 once it is muxed; shortmusic.py's own wav (already
+    #  normalised to its own target, see its main()) stands in before that.
+    src = mp4_path if (mp4_path and os.path.exists(mp4_path)) else None
+    wav_path = os.path.join(OUT, "%s.wav" % slug)
+    if src is None and os.path.exists(wav_path):
+        src = wav_path
+    if src is None:
+        return None, "no mp4 or wav yet (run: python3 shortmusic.py %s)" % slug, None
+    lufs_i, peak = measure_ebur128(src)
+    bad = []
+    target_i, ceiling_p = -14.0, -1.5  # shortmusic.py's own target and its limiter's own ceiling
+    if lufs_i is None or abs(lufs_i - target_i) > 1.0:
+        bad.append("integrated loudness %s LUFS, target %.1f +/- 1 LU" %
+                  ("%.1f" % lufs_i if lufs_i is not None else "?", target_i))
+    if peak is None or peak > ceiling_p + 0.1:
+        bad.append("true peak %s dBTP, ceiling %.1f" %
+                  ("%.1f" % peak if peak is not None else "?", ceiling_p))
+    detail = "%s LUFS, %s dBTP (measured on %s)" % (
+        "%.1f" % lufs_i if lufs_i is not None else "?",
+        "%.1f" % peak if peak is not None else "?", os.path.basename(src))
+    return (not bad, detail, "; ".join(bad))
+
+
+def check_marks_plate(slug, shape, beat):
+    mj_path = os.path.join(OUT, "%s-%s.marks.json" % (slug, shape))
+    if not os.path.exists(mj_path):
+        return None, "no marks yet (run: python3 shortmusic.py %s --shape %s)" % (slug, shape), None
+    mj = load_json(mj_path)
+    marks = mj.get("marks", [])
+    cand = plate_cue_times(beat)
+    bad = []
+    for m in marks:
+        try:
+            t = round(float(m.get("at")), 3)
+        except (TypeError, ValueError):
+            bad.append("mark with no usable at: %r" % (m,))
+            continue
+        if not any(abs(t - c) <= 0.05 for c in cand):
+            bad.append("mark at %.2fs (%s) is not on a line, step or motion event" %
+                      (t, m.get("source", "?")))
+    has_arrival = any("arrival" in (m.get("source") or "") for m in marks)
+    if beat.get("motion") and not has_arrival:
+        bad.append("the beat has motion but no arrival mark was struck for any of it")
+    detail = "%d marks checked against %d candidate events" % (len(marks), len(cand))
+    return (not bad, detail, "; ".join(bad[:6]))
+
+
 # ------------------------------------------------------------------ frames
 def planned_frame_count(chapter, fps):
     """holds plus the last beat's fade, times fps: exactly noor.py's own
@@ -105,21 +272,25 @@ def planned_frame_count(chapter, fps):
     return int(round(chapter_length(chapter)[1] * fps))
 
 
-def find_frames_dir(slug, shape):
+def find_frames_dir(slug, shape, fps=None):
     """The frames folder with the most numbered jpgs for this slug and
     shape, and how many of them there are. Returns (dir_or_None, fps,
     actual_count); the caller decides against the PLANNED count whether
-    that is enough to read from, not this function."""
-    hits = sorted(glob.glob(os.path.join(HERE, "frames", "%s-%s-*fps-*" % (slug, shape))))
+    that is enough to read from, not this function. With an explicit fps
+    (a plate short's own --fps, default 30, or a scene film's), only that
+    fps's own folder is looked at rather than whichever happens to have
+    the most frames on disk."""
+    pattern = "%s-%s-%dfps-*" % (slug, shape, fps) if fps else "%s-%s-*fps-*" % (slug, shape)
+    hits = sorted(glob.glob(os.path.join(HERE, "frames", pattern)))
     if not hits:
-        return None, None, 0
+        return None, fps, 0
     best = max(hits, key=lambda d: len(glob.glob(os.path.join(d, "??????.jpg"))))
     m = re.search(r"-(\d+)fps-", os.path.basename(best))
-    fps = int(m.group(1)) if m else None
+    found_fps = int(m.group(1)) if m else fps
     n = len(glob.glob(os.path.join(best, "??????.jpg")))
     if n == 0:
-        return None, fps, 0
-    return best, fps, n
+        return None, found_fps, 0
+    return best, found_fps, n
 
 
 def frame_gray(d, i):
@@ -154,7 +325,7 @@ def check_words(chapter, timings):
             "; ".join(bad))
 
 
-def check_pacing(chapter, frames_dir, fps, spec=None):
+def check_pacing(chapter, frames_dir, fps, spec=None, beat=None):
     if frames_dir:
         n = len(glob.glob(os.path.join(frames_dir, "??????.jpg")))
         step = max(1, int(round(2.0 * fps)))
@@ -169,6 +340,15 @@ def check_pacing(chapter, frames_dir, fps, spec=None):
             i += step
         ok = worst is not None and worst > 4.0
         return ok, "quietest 2s window mean abs diff %.2f (frame %s)" % (worst or 0.0, worst_i), None
+    if beat is not None:
+        ct = plate_cue_times(beat)
+        total = chapter_length(chapter)[1]
+        gaps = [b - a for a, b in zip([0.0] + ct, ct + [total])]
+        worst = max(gaps) if gaps else 0.0
+        ok = worst <= 4.05
+        detail = ("largest gap between cues %.2fs (from the compiled beat's "
+                  "lines, steps and motion, no frames yet)" % worst)
+        return ok, detail, None
     ct = cue_times(chapter)
     gaps = [b - a for a, b in zip([0.0] + ct, ct + [chapter_length(chapter)[1]])]
     worst = max(gaps) if gaps else 0.0
@@ -338,6 +518,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("slug")
     ap.add_argument("--shape", default="tall", choices=["tall", "wide"])
+    ap.add_argument("--fps", type=int, default=None,
+                    help="frame rate to look for; default 24 for a scene film, 30 for a plate short")
     a = ap.parse_args()
     slug, shape = a.slug, a.shape
 
@@ -349,19 +531,26 @@ def main():
     try:
         chapter = load_json(chapter_path)["chapters"][0]
     except FileNotFoundError:
-        print("no compiled film at %s (run: python3 film.py compile %s)" % (chapter_path, slug))
+        print("no compiled film at %s (run: python3 film.py compile %s, or python3 shortplate.py for a plate short)" % (chapter_path, slug))
         sys.exit(2)
     except (json.JSONDecodeError, KeyError, IndexError) as e:
         print("films/%s.json is not a valid compiled chapter (%s)" % (slug, e))
         sys.exit(2)
 
-    spec_path = os.path.join(SPECS, slug + ".json")
-    spec = load_json(spec_path) if os.path.exists(spec_path) else None
-    timings_path = os.path.join(VOICEDIR, slug, "timings.json")
-    timings = load_json(timings_path) if os.path.exists(timings_path) else None
+    plate = is_plate_chapter(chapter)
+    beat = chapter["beats"][0] if plate else None
 
-    frames_dir_found, fps_frames, actual = find_frames_dir(slug, shape)
-    fps = fps_frames or 24
+    #  A PLATE SHORT HAS NO SPEC (it comes from a brief, not a spec/darkroom
+    #  style scene file) and no piper stand in narration timings -- both are
+    #  scene-format-only sidecars, so neither is looked for on a plate slug.
+    spec_path = os.path.join(SPECS, slug + ".json")
+    spec = load_json(spec_path) if (not plate and os.path.exists(spec_path)) else None
+    timings_path = os.path.join(VOICEDIR, slug, "timings.json")
+    timings = load_json(timings_path) if (not plate and os.path.exists(timings_path)) else None
+
+    default_fps = 30 if plate else 24
+    frames_dir_found, fps_frames, actual = find_frames_dir(slug, shape, a.fps)
+    fps = fps_frames or a.fps or default_fps
     planned = planned_frame_count(chapter, fps)
     #  A CHECK MUST NEVER PASS ON FRAMES IT DID NOT READ.
     #  WHAT BROKE BEFORE: any jpgs at all made frames_dir truthy, so a render
@@ -373,17 +562,34 @@ def main():
     frames_ready = frames_dir_found is not None and actual >= planned
     frames_dir = frames_dir_found if frames_ready else None
     frames_note = "%d of %d frames present" % (actual, planned)
-    mp4_path = os.path.join(OUT, "%s-%s.mp4" % (slug, shape))
+    #  the mp4 convention itself differs: a plate short's picture sits next
+    #  to noor.py named for its own fps (noor.py's own encode(), no tag);
+    #  a scene film's lives in out/ named for slug and shape alone.
+    if plate:
+        mp4_path = os.path.join(HERE, "%s-%s-%dfps.mp4" % (slug, shape, fps))
+    else:
+        mp4_path = os.path.join(OUT, "%s-%s.mp4" % (slug, shape))
 
     rows = []
-    rows.append(("words: no dashes anywhere", *check_words(chapter, timings)))
-    rows.append(("pacing: a change every 2 to 4s", *check_pacing(chapter, frames_dir, fps, spec)))
-    rows.append(("first frame has something to look at", *check_first_frame(frames_dir, frames_note)))
-    rows.append(("no frame black or blown", *check_no_black_blown(frames_dir, frames_note)))
-    rows.append(("watermark corner lit, elsewhere dark", *check_watermark(frames_dir, chapter, shape, frames_note)))
-    rows.append(("text stays out of the safe margins", *check_text_safe(frames_dir, chapter, fps, shape, frames_note)))
-    rows.append(("sound: loudness, peak, marks, narration", *check_sound(slug, shape, chapter, timings)))
-    rows.append(("length agrees: chapter, frames, mp4", *check_length(chapter, frames_dir, fps, mp4_path, frames_note)))
+    if plate:
+        rows.append(("words: no dashes anywhere", *check_words_plate(beat)))
+        rows.append(("pacing: a change every 2 to 4s", *check_pacing(chapter, frames_dir, fps, None, beat)))
+        rows.append(("first frame has something to look at", *check_first_frame(frames_dir, frames_note)))
+        rows.append(("no frame black or blown", *check_no_black_blown(frames_dir, frames_note)))
+        rows.append(("watermark corner lit, elsewhere dark", *check_watermark(frames_dir, chapter, shape, frames_note)))
+        rows.append(("text stays out of the safe margins", *check_text_safe_plate(frames_dir, beat, fps, shape, frames_note)))
+        rows.append(("sound: loudness and true peak", *check_loudness_plate(slug, shape, mp4_path)))
+        rows.append(("marks land on the drawing's own events", *check_marks_plate(slug, shape, beat)))
+        rows.append(("length agrees: chapter, frames, mp4", *check_length(chapter, frames_dir, fps, mp4_path, frames_note)))
+    else:
+        rows.append(("words: no dashes anywhere", *check_words(chapter, timings)))
+        rows.append(("pacing: a change every 2 to 4s", *check_pacing(chapter, frames_dir, fps, spec)))
+        rows.append(("first frame has something to look at", *check_first_frame(frames_dir, frames_note)))
+        rows.append(("no frame black or blown", *check_no_black_blown(frames_dir, frames_note)))
+        rows.append(("watermark corner lit, elsewhere dark", *check_watermark(frames_dir, chapter, shape, frames_note)))
+        rows.append(("text stays out of the safe margins", *check_text_safe(frames_dir, chapter, fps, shape, frames_note)))
+        rows.append(("sound: loudness, peak, marks, narration", *check_sound(slug, shape, chapter, timings)))
+        rows.append(("length agrees: chapter, frames, mp4", *check_length(chapter, frames_dir, fps, mp4_path, frames_note)))
 
     print("%s %s audit" % (slug, shape))
     failed = False
