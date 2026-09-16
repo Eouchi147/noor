@@ -38,13 +38,43 @@ Director.
 
 Slot: none, queued, skipped, pending, partial, sent, failed. Per network: ok (with id, and a
 url for YouTube, Threads, Telegram, and since 15 September Facebook's permalink), pending
-(a container or a processing video), skipped (not configured), fatal, trial or waiting,
-late or cut (the clock; the answer is written on arrival since 15 September), pre (the
-card's picture unreachable), drift (a repair that rebuilt as a different card; no longer
-possible for reels), gaveUp, quota, private, tries and lastTry, verified (the moment a
-platform confirmed a Facebook reel). Missing still: a per network publish time on every
-network, the asset version from the sidecar, the method (hosted upload, url, multipart),
-and a permalink for Instagram and Pinterest.
+(a container or a processing video, or, since 16 September, `pending: { fb: <id> }` on a
+Facebook reel the clock cut after its upload had an id, or `pending: { fb: null, since:
+<iso> }` on one cut before the upload even answered; a healer never touches a pending
+result, the finisher alone asks the network what became of it, and for the id-less kind it
+searches the page's own recent videos for one whose title or description matches the
+record's caption, giving up into a plain, healable failure after 30 minutes with nothing
+found), skipped (not configured, or, since 16 September, a reel over Telegram's own 50 MB
+upload ceiling, or one the door could not deliver whole -- a body shorter than its own
+declared length, or under 100 KB, is read as a fetch failure and never handed to Telegram
+as a file), fatal, unverified (a Facebook pending WITH a known id that outlived
+PENDING_MAX_MS: the id is kept on the record and it is never healed into a second upload,
+because the video may still be live on the page; only a deliberate retry, `opts.force`,
+sends it again), trial or waiting, late or cut (the clock; the answer is written on arrival
+since 15 September, and since 16 September a late answer that turns out to have succeeded
+after a NEWER result already landed is kept, not dropped: `dup: [{id, url, at}]` beside the
+newer result, with `dupWarn: true` so the console shows it -- carried forward across every
+later write to that channel, not erased by the next finish or retry), pre (the card's
+picture unreachable), drift (a repair that rebuilt as a different card; no longer possible
+for reels), gaveUp, quota, private, tries and lastTry, verified (the moment a platform
+confirmed a Facebook reel).
+Since 16 September, a reel whose id already answered ok on a channel within the last 21
+days is never sent again to it: the result is `{ ok: true, already: true, id, url, at }`
+(named `already` so it cannot collide with the `dup` list above), the earlier send's own
+words, and nothing is asked of the network -- unless the caller passes `opts.force`, which
+skips the guard the same way it skips every other refusal. The guard itself reads a second
+hash, `<reel>|<channel>` to `date#slot`, written the moment any ONE network says ok, before
+falling back to the ledger below; this is what lets it catch a reel ok on Facebook while
+Telegram was still failing, which the ledger alone (needing every network) could not see.
+Missing still: a per network publish time on every network, the asset version from the
+sidecar, the method (hosted upload, url, multipart), and a permalink for Instagram and
+Pinterest.
+
+The ledger (`?action=posted`, `reelDone`): a reel retires once its slot reads `sent`, which
+already means every live network answered ok OR was skipped for a reason that will not
+change on its own (not configured, on trial, waiting for review, or, since 16 September,
+Telegram's own 50 MB ceiling). A network still failing for a real, retryable reason keeps
+the slot `partial` on purpose, and the reel stays on the shelf until someone looks.
 
 ## What was fixed (15 and 16 September 2026)
 
@@ -58,6 +88,40 @@ a verse; captions cut from the end for Threads and Pinterest; every reel linking
 page; a failed slot resent whole every hour; the cron door open to a typed user agent;
 Telegram handed a link it could not fetch; repairs refused as drift after every Monday;
 the dusk story failing on Instagram's 9007. All on `changes.txt`.
+
+16 September: the Al-Basit and Az-Zumar duplicates, diagnosed the same day. A Facebook send
+the clock cut kept no id (the upload learns it early, but nothing carried it out), so
+`healable` let a plain "late" through and the healer started a second, real upload over the
+first; when the first one's own answer arrived, `lateArrival` found the record already said
+something else and threw the answer away. Now `postFacebookReel` writes the id to a flight
+the moment the start phase answers, a cut with the id known is `pending` (never healable),
+and a late answer that succeeded after a newer result already landed is kept beside it
+(`dup`, `dupWarn`) instead of discarded. A second, separate guard refuses to send the same
+reel id to a network that already has it, inside the last 21 days, whatever record it is
+under. Telegram failing "could not fetch the file from its url" on every reel of every day:
+its own fetch of a url is on ITS clock, and two hops to reach a reel (first the store's
+signed link, then this house's own door) outran it more than not; `_telegram.js` now reads
+the video itself and uploads it to Telegram directly, and the ledger's rule above (already
+correct) fills once Telegram does.
+
+The same day, on review: the guard above only ever read the ledger, which needs every
+network before it names a reel, so a reel ok on Facebook while Telegram was still failing
+was invisible to it and got a second Facebook upload. A second hash closes that, written on
+every single ok (`notePostedChannels`, read first by `findDuplicate`). PENDING_MAX_MS was
+turning a Facebook pending back into a healable failure after two hours even with a real id
+on it, which is exactly the second upload the whole change exists to stop; that id now goes
+`fatal`, `unverified`, kept on the record, never healed. `dup` and `dupWarn` were erased by
+the next write to the channel (the finisher, a retry); both are carried forward now
+(`carryDup`), and the console shows the duplicate chip whatever state the channel is in, not
+only inside the ok branch. A Facebook cut with no id yet (before the start phase even
+answered) was still plain "late" and still got resent; it is `pending` too now, with a
+`since` mark, and the next run's finisher looks for a matching video by name on the page
+before giving up after 30 minutes. The guard's own `dup: true` collided with `lateArrival`'s
+`dup` list on one field name; the guard's flag is `already: true` now. And `opts.force` now
+reaches the guard the same way it reaches every other refusal, instead of being blocked by
+it. Telegram: a door answer shorter than its own declared length, or under 100 KB either
+way, is read as a fetch failure now, not an upload -- a truncated or too-small file is never
+handed to Telegram as if it were the whole reel.
 
 ## How it is read
 

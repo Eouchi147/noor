@@ -861,15 +861,35 @@ function drawPosts(force){
       var storyOnly=Object.keys(r).some(function(k){return r[k]&&r[k].storyOnly});
       var more=(s.state==="sent"||s.state==="partial")?LIVE.filter(function(c){return !r[c.id]&&(isReel||!(c.spec&&c.spec.video==="required"))&&(!storyOnly||c.id==="facebook"||c.id==="instagram")&&!INFLIGHT[s.id+"|"+c.id]}).map(function(c){return '<button class="chan more" data-retry="'+esc(s.id)+'|'+esc(c.id)+'" title="'+esc(c.id)+' was not live when this went out; send it there too">+ '+esc(c.id)+'</button>'}).join(""):"";
       var where=Object.keys(r).filter(function(k){return k!=="reddit"}).map(function(k){var x=r[k]||{};
+        /* a flight the clock cut landed AFTER a healer's retry already had
+           this channel: both are live on the network and neither id is
+           thrown away (lateArrival, 16 September 2026). The record follows
+           the newer one; this says the older one exists too -- whatever
+           state the newer result itself is in, since carryDup (social.js)
+           keeps this mark on every write to the channel, not only an ok
+           one, and it is worth showing wherever it lands. */
+        var dupBadge=x.dupWarn?'<span class="chan bad" title="an earlier upload also landed on '+esc(k)+' and is still live, id '+esc((x.dup&&x.dup[x.dup.length-1]&&x.dup[x.dup.length-1].id)||'')+'">'+esc(k)+' has a duplicate ⚠</span>':'';
         /* the owner's own hand (the Reels room's Share) is a note, drawn as one */
         if(k==="phone")return '<span class="chan ok" title="shared from the phone '+esc(ago(x.at))+'">by hand ✓</span>';
         /* a story-only card: the story IS the post, and the chip says so */
-        if(x.storyOnly&&x.ok)return '<span class="chan ok" title="went as a story only">'+esc(k)+' story</span>';
-        if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>';
-        if(x.pending)return '<span class="chan pending">'+esc(k)+' …</span>';
-        if(x.trial||x.waiting)return '<span class="chan wait" title="'+esc(x.err||x.error||'not open yet')+'">'+esc(k)+' · waiting</span>';
+        if(x.storyOnly&&x.ok)return '<span class="chan ok" title="went as a story only">'+esc(k)+' story</span>'+dupBadge;
+        /* the duplicate guard: this channel already had the reel, from an
+           earlier day, and nothing new was sent. Named `already` since 16
+           September 2026 -- `dup` is the list just above, of a different
+           kind of duplicate, and one field cannot honestly be both. */
+        if(x.ok&&x.already===true)return '<span class="chan ok" title="'+esc(k)+' already had this reel, from '+esc(x.at||'an earlier send')+'; not sent again">'+esc(k)+' (already had it)</span>'+dupBadge;
+        if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>'+dupBadge;
+        /* a Facebook pending that outlived PENDING_MAX_MS with a real video
+           id on it: never given up into a resend (social.js), because the
+           id may still be live on the page. The console shows the id and
+           offers a retry only as a deliberate second post, not an automatic
+           one -- opts.force is what a press of this button sends. */
+        if(x.unverified)return '<span class="chan bad" title="'+esc(x.error||x.err||'Facebook never confirmed this one')+'">'+esc(k)+' unverified, id '+esc(x.id||'')+'</span>'+dupBadge
+          +'<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="send it again anyway; the earlier id may still be live on the page">retry anyway ↻</button>';
+        if(x.pending)return '<span class="chan pending">'+esc(k)+' …</span>'+dupBadge;
+        if(x.trial||x.waiting)return '<span class="chan wait" title="'+esc(x.err||x.error||'not open yet')+'">'+esc(k)+' · waiting</span>'+dupBadge;
         if(INFLIGHT[s.id+"|"+k])return '<button class="chan bad" disabled>'+esc(k)+' …</button>';
-        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="'+(x.storyOnly?"send the story again":"send this one again")+'">'+esc(k)+(x.storyOnly?' story':'')+' ↻</button>'}).join("")+more;
+        broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="'+(x.storyOnly?"send the story again":"send this one again")+'">'+esc(k)+(x.storyOnly?' story':'')+' ↻</button>'+dupBadge}).join("")+more;
       var owed=(s.state==="due"||s.state==="failed")&&!INFLIGHT[s.id];
       var acts='<button class="btn ghost sm" data-prev="'+esc(s.id)+'">Preview</button>'
         +(INFLIGHT[s.id]?'<button class="btn sm" disabled>Sending…</button>':'')
@@ -2133,12 +2153,16 @@ function drawSystem(force){
       +'<p class="sec">The change archive</p><div class="card">'
       +'<p class="muted small" style="margin:0">One line for every edit, addition and removal made to the site, newest first, kept as plain text at <code>/changes.txt</code> and appended with every change that ships.</p>'
       +'<div class="acts"><a class="btn ghost" href="/changes.txt" target="_blank" rel="noopener">Read it</a><a class="btn ghost" href="/changes.txt" download="noor-changes.txt">Download it</a></div></div>'
+      +'<p class="sec">Backfill the posted hash</p><div class="card">'
+      +'<p class="muted small" style="margin:0">The duplicate guard reads a hash that only grows forward from 16 September 2026, one field per reel and network, written the moment a send says ok. A reel that went out before that date, or whose record nothing has touched since, has no field yet. This walks the last 21 days of reel slots once and writes what is missing; safe to run more than once, and safe to run while the machine is sending.</p>'
+      +'<div class="acts"><button class="btn ghost" id="sys-backfill">Run</button></div><div id="sys-backfill-out"></div></div>'
       +'<div class="acts" style="margin-top:20px"><button class="btn ghost" id="sys-logout">Sign out</button></div>';
     el.onclick=function(e){
       var b=e.target.closest("button");if(!b)return;
       if(b.dataset.door)return void window.open(b.dataset.door,"_blank","noopener");
       if(b.id==="sys-logout")return void post("/api/admin-auth",{logout:true}).then(function(){location.reload()}).catch(unreachable(b));
       if(b.id==="sys-lantern")return sysLantern(b);
+      if(b.id==="sys-backfill")return sysBackfill(b);
     };
   }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The machinery could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
 }
@@ -2160,6 +2184,17 @@ function sysLantern(b){
       +((d.tried||[]).length?'<div class="list" style="margin-top:10px">'+d.tried.map(function(t){
         return '<div class="row"><div class="t" style="min-width:0"><b style="font-family:var(--f-mono);font-size:12px">'+esc(t.model)+'</b><span>'+esc(String(t.ms||0))+' ms</span></div><div class="r"><span class="pill '+(t.err?"bad":"good")+'">'+esc(t.err||"answered")+'</span></div></div>'}).join("")+'</div>':'')
       +'</div>';
+  }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">Could not reach the house.</p>'});
+}
+function sysBackfill(b){
+  var was=b.textContent,out=$("sys-backfill-out");
+  b.disabled=true;b.textContent="Running…";
+  out.innerHTML='<p class="muted small" style="margin:12px 0 0">Reading the last 21 days of reel slots, six a day.</p>';
+  get("/api/social?action=backfillposted").then(function(r){
+    b.disabled=false;b.textContent=was;var j=r.j||{};
+    if(r.locked)return;
+    if(!j.ok){out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">'+esc(j.error||j.reason||"could not run it")+'</p>';return}
+    out.innerHTML='<div class="row" style="margin-top:12px"><div class="ic" style="color:var(--good)">'+ICO.ok+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">Done.</b><span style="white-space:normal">'+esc(j.days)+' days read, '+esc(j.records)+' record'+(j.records===1?"":"s")+' had an ok result somewhere, '+esc(j.written)+' field'+(j.written===1?"":"s")+' written to the hash.</span></div></div>';
   }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">Could not reach the house.</p>'});
 }
 
