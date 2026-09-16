@@ -246,6 +246,25 @@
     ["More", "/#search", '<circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/>']
   ];
   var ALIAS = { "/verse": "/quran", "/verses": "/quran", "/surah": "/quran", "/words": "/dictionary" };
+  /* two links first in the page, shown only while focused: to the content and
+     to the bar, which is last in the document and from a keyboard came after
+     every link on the page (Tab 70 on the home, 551 on the dictionary) */
+  function skips() {
+    var box = q(".n2-skips"), main = q(".n2-main") || q("main"), nav = q(".n2-bar");
+    if (!box) {
+      if (!main) return;
+      if (!main.id) main.id = "n2-content";
+      if (nav && !nav.id) nav.id = "n2-rooms";
+      box = el("div", "n2-skips", '<a class="n2-skip" href="#' + main.id + '">Skip to the content</a>' + (nav ? '<a class="n2-skip" href="#' + nav.id + '">Skip to the rooms</a>' : ""));
+      doc.body.insertBefore(box, doc.body.firstChild);
+    }
+    if (box.n2wired) return; box.n2wired = 1;
+    box.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a"), t = a && q(a.getAttribute("href"));
+      if (!t) return;
+      e.preventDefault(); if (!t.hasAttribute("tabindex")) t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); t.scrollIntoView({ block: "start" });
+    });
+  }
   function bar(active) {
     var nav = q(".n2-bar");
     if (!nav) {
@@ -274,20 +293,34 @@
     else pb.classList.remove("n2-show");
     if (!nav.n2wired) {
       nav.n2wired = 1; W.addEventListener("resize", function () { bar(active); });
+      skips();
     }
     return nav;
   }
 
   /* a sheet: rises on the spring; closes on a tap outside, its close button, a
      pull past 80 px, or Escape (it says role="dialog", and one that will not
-     answer Escape traps a keyboard); the marks step aside while it is open */
+     answer Escape traps a keyboard); the marks step aside while it is open.
+     It says aria-modal, so it is one: named by its first eyebrow or bold line,
+     focus goes in on open, Tab stays inside, focus returns to the opener. */
   function sheet(html) {
-    var wrap = el("div", "n2-sheet-wrap", '<div class="n2-sheet" role="dialog" aria-modal="true"><i class="n2-handle"></i>' + html + "</div>");
-    var box = q(".n2-sheet", wrap), y0 = null, dy = 0, raf = 0;
+    var wrap = el("div", "n2-sheet-wrap", '<div class="n2-sheet" role="dialog" aria-modal="true" tabindex="-1"><i class="n2-handle"></i>' + html + "</div>");
+    var box = q(".n2-sheet", wrap), y0 = null, dy = 0, raf = 0, from = doc.activeElement;
+    var name = q(".n2-eyebrow,b,h2,h3", box); if (name) box.setAttribute("aria-label", name.textContent.trim().slice(0, 80));
     doc.body.appendChild(wrap);
-    function esc(e) { if (e.key === "Escape") close(); }
-    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); doc.documentElement.classList.add("n2-sheet-open"); doc.addEventListener("keydown", esc); bloom = 1; }
-    function close() { doc.removeEventListener("keydown", esc); wrap.classList.remove("n2-show"); doc.documentElement.classList.remove("n2-sheet-open"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500); }
+    function ctl() { return all("a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex='-1'])", box).filter(function (e) { return e.offsetParent !== null; }); }
+    function keys(e) {
+      if (e.key === "Escape") return close();
+      if (e.key !== "Tab") return;
+      var f = ctl(), a = doc.activeElement;
+      if (!f.length) { e.preventDefault(); box.focus(); return; }
+      if (e.shiftKey && (a === f[0] || a === box || !box.contains(a))) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && (a === f[f.length - 1] || !box.contains(a))) { e.preventDefault(); f[0].focus(); }
+    }
+    function open() { requestAnimationFrame(function () { wrap.classList.add("n2-show"); }); doc.documentElement.classList.add("n2-sheet-open"); doc.addEventListener("keydown", keys); bloom = 1;
+      setTimeout(function () { if (wrap.parentNode) (ctl()[0] || box).focus({ preventScroll: true }); }, 30); }
+    function close() { doc.removeEventListener("keydown", keys); wrap.classList.remove("n2-show"); doc.documentElement.classList.remove("n2-sheet-open"); setTimeout(function () { wrap.remove(); }, reduce ? 0 : 500);
+      if (from && from.focus && doc.contains(from) && from !== doc.body) { try { from.focus({ preventScroll: true }); } catch (e) {} } }
     wrap.addEventListener("click", function (e) { if (e.target === wrap || (e.target.closest && e.target.closest("[data-n2-close]"))) close(); });
     box.addEventListener("pointerdown", function (e) { if (e.target.closest("a,button,input")) return; y0 = e.clientY; box.classList.add("n2-drag"); box.setPointerCapture(e.pointerId); });
     box.addEventListener("pointermove", function (e) {

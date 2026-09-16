@@ -52,7 +52,21 @@ html[data-fx] .reveal{animation:none}
 .sg-end{background:radial-gradient(1.4px 1.4px at 18% 30%,rgba(255,253,242,.8),transparent 55%),radial-gradient(1.3px 1.3px at 70% 22%,rgba(255,253,242,.7),transparent 55%),radial-gradient(120% 150% at 50% -15%,rgba(124,58,237,.26),transparent 58%),linear-gradient(150deg,#0B0912,#1A1030)}
 .sg-word{background:radial-gradient(120% 140% at 50% -10%,rgba(233,200,106,.36),transparent 55%),radial-gradient(1.3px 1.3px at 22% 34%,rgba(255,253,242,.7),transparent 55%),radial-gradient(1.2px 1.2px at 76% 20%,rgba(255,253,242,.65),transparent 55%),linear-gradient(150deg,#171208,#33290F)}
 
-/* tiles */
+/* tiles. A cell holds the tile and, beside it in the tree, the anchor to
+   the entity's own room (/companion, /character, /place), so the tap that
+   opens the modal and the link that leaves the page are two controls, not
+   one inside the other. */
+.tile-cell{position:relative;display:grid}
+.tile-room{position:absolute;top:14px;right:14px;z-index:6;display:inline-flex;align-items:center;min-height:30px;padding:0 .7rem;border-radius:999px;
+  font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#FFFEF7;
+  background:rgba(20,16,10,.62);border:1px solid rgba(233,200,106,.45)}
+.tile-room:hover,.tile-room:focus-visible{background:rgba(201,162,39,.92);color:#1A160F;border-color:#E9C86A;outline:none}
+/* The anchor is a reveal of its own, with the tile's delay, so it arrives by
+   whichever path the tile takes (the flourish, .lit, or the floor) and sets
+   no transition of its own that would override the reveal's. It used to be
+   hidden by :has() until the tile was .lit, and a tile that arrived by the
+   flourish is .visible and never .lit, so its anchor never showed. */
+[dir="rtl"] .tile-room{right:auto;left:14px}
 .tile{position:relative;border-radius:18px;min-height:235px;cursor:pointer;-webkit-tap-highlight-color:transparent;outline-offset:3px}
 .tile-inner{position:relative;overflow:hidden;border-radius:18px;min-height:235px;height:100%;isolation:isolate;transform:translateZ(0);transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s;box-shadow:0 4px 12px rgba(26,22,15,.1)}
 .tile:hover .tile-inner{box-shadow:0 20px 40px rgba(26,22,15,.22)}

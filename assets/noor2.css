@@ -71,6 +71,17 @@ html[data-n2] ::selection{background:rgba(233,200,106,.35);color:var(--n2-parch)
   transform:translateY(calc(var(--n2-vy,46vh) - 100vh));transition:transform 1.1s var(--n2-spring),opacity .6s var(--n2-ease);opacity:0}
 html.n2-live .n2-vig{opacity:1}
 
+/* the skip links: first in the page, off screen until one is focused, then a
+   pill at the top left in the shell's own tokens (tests/rooms.mjs: what
+   moves rides the spring, what fades the bezier) */
+.n2-skips{position:fixed;left:16px;top:calc(var(--n2-safe-top) + 12px);z-index:40;display:flex;gap:8px;pointer-events:none}
+.n2-skip{position:relative;display:inline-flex;align-items:center;min-height:46px;padding:0 16px;border-radius:999px;
+  font-family:var(--n2-mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+  color:var(--n2-parch);background:var(--n2-night2);border:1px solid var(--n2-goldhi);box-shadow:0 8px 30px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(-200%);pointer-events:none;transition:transform .5s var(--n2-spring),opacity .35s var(--n2-ease)}
+.n2-skip:focus,.n2-skip:focus-visible{opacity:1;transform:none;pointer-events:auto;outline:2px solid var(--n2-goldhi);outline-offset:3px}
+@media print{.n2-skips{display:none!important}}
+
 /* ------------------------------------------------- one line at the top */
 .n2-top{position:fixed;top:0;left:0;right:0;z-index:20;
   padding:calc(var(--n2-safe-top) + 10px) 20px 12px;
@@ -239,6 +250,7 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
 .n2-facts li{border:1px solid var(--n2-line);border-radius:12px;padding:10px 12px;background:rgba(255,254,247,.03)}
 .n2-facts span{display:block;font-family:var(--n2-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--n2-parch3);margin-bottom:4px}
 .n2-facts b{font-weight:600;font-size:15px;line-height:1.35}
+.n2-facts b[lang="ar"]{font-family:var(--n2-ar);font-size:22px;line-height:1.2;color:var(--n2-goldhi)}
 /* the order of events a chapter names: a spine down the side with a mark at
    each step, the event on the line and its source under it. Written in
    logical properties so the spine moves to the right of the text in Arabic,
