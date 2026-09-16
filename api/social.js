@@ -946,8 +946,12 @@ function recordWay(rec) {
 }
 
 /* Facebook takes a reel in three phases and fetches the file itself, so none
-   of the bytes pass through here. */
-async function postFacebookReel(post) {
+   of the bytes pass through here. `flight`, when handed one, learns the
+   video id the moment the start phase answers -- before the upload and the
+   finish poll -- so a send the clock cuts mid flight still has an id to
+   carry, rather than nothing (see sendWithin, and the duplicate of 14
+   September 2026 that came from having nothing). */
+async function postFacebookReel(post, flight) {
   if (!fbConfigured()) return { ok: false, skipped: "FB_PAGE_ID or FB_PAGE_TOKEN is not set" };
   if (!post.video) return { ok: false, error: "no video for the reel" };
   const id = process.env.FB_PAGE_ID, tok = await pageToken();
@@ -959,6 +963,7 @@ async function postFacebookReel(post) {
     const sj = await st.json().catch(() => ({}));
     if (!st.ok || !sj.video_id || !sj.upload_url)
       return { ok: false, error: metaErr(sj, "start http " + st.status) };
+    if (flight) flight.videoId = sj.video_id;
 
     const up = await fetch(sj.upload_url, {
       method: "POST",
@@ -1013,11 +1018,69 @@ export async function fbReelStatus(videoId, tok, tries) {
   return last || { ok: false, pending: { fb: videoId }, id: videoId };
 }
 
-/* the finisher's door: a reel Facebook was still processing at the last look */
-async function finishFacebookReel(pending) {
-  const videoId = pending && (pending.fb || pending.id || pending);
-  if (!videoId || !fbConfigured()) return { ok: false, error: "nothing to finish" };
-  return await fbReelStatus(String(videoId), await pageToken(), 1);
+/* THE CUT THAT LEFT NO ID.
+   sendWithin marks a Facebook send `pending: { fb: null, since }` when the
+   clock cut it before the start phase had even answered: nothing was ever
+   learned to ask about, but the request itself does not stop just because
+   this house stopped waiting on it (fetch has no such handle), so Facebook
+   may still have taken it. What it made, if anything, is looked for by
+   name instead of by a number nobody was told: the page's own recent
+   videos, searched for one whose title or description carries this
+   record's caption and whose created_time is after the cut. */
+const GRAPH_VIDEO_FIELDS = "id,title,description,created_time";
+async function recentFacebookVideos(tok) {
+  const id = process.env.FB_PAGE_ID;
+  try {
+    const r = await fetch(`${GRAPH_FB}/${id}/videos?fields=${GRAPH_VIDEO_FIELDS}&limit=10&access_token=${encodeURIComponent(tok)}`);
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !Array.isArray(j.data)) return [];
+    return j.data;
+  } catch { return []; }
+}
+
+/* how long the page's own list is checked for the cut's own video before it
+   is treated as never having landed at all */
+const FB_ADOPT_MAX_MS = Number(process.env.FB_ADOPT_MAX_MS || 30 * 60 * 1000);
+async function adoptFacebookReel(pending, rec) {
+  const since = pending && pending.since;
+  const sinceMs = Date.parse(since || "") || 0;
+  const caption = String((rec && (rec.caption || rec.title)) || "").trim().slice(0, 60).toLowerCase();
+  const tok = await pageToken();
+  if (caption) {
+    const vids = await recentFacebookVideos(tok);
+    const hit = vids.find(v => {
+      const created = Date.parse(v.created_time || "") || 0;
+      if (sinceMs && created < sinceMs) return false;
+      const text = String((v.title || "") + " " + (v.description || "")).toLowerCase();
+      return text.includes(caption);
+    });
+    if (hit) return await fbReelStatus(String(hit.id), tok, 1);
+  }
+  /* nothing matched yet: still worth a look next hour, up to half an hour
+     from the cut -- Facebook's own list can lag a minute or two behind the
+     upload actually landing */
+  if (sinceMs && Date.now() - sinceMs > FB_ADOPT_MAX_MS)
+    return { ok: false, error: "no matching video appeared on the page within 30 minutes of the cut; it may be sent again" };
+  return { ok: false, pending, error: "waiting to see whether the cut send reached the page" };
+}
+
+/* the finisher's door: a reel Facebook was still processing at the last
+   look (an id was known), or a reel the clock cut before an id was ever
+   learned (adopted by name, above). `rec` is the whole slot record, for
+   its caption; callers with no record to hand (a video story's own
+   container, which never carries this shape) simply get the first branch
+   or "nothing to finish". */
+async function finishFacebookReel(pending, rec) {
+  const videoId = pending && (pending.fb || pending.id || (typeof pending === "string" ? pending : null));
+  if (videoId) {
+    if (!fbConfigured()) return { ok: false, error: "nothing to finish" };
+    return await fbReelStatus(String(videoId), await pageToken(), 1);
+  }
+  if (pending && typeof pending === "object" && pending.since) {
+    if (!fbConfigured()) return { ok: false, pending, error: "nothing to finish" };
+    return await adoptFacebookReel(pending, rec);
+  }
+  return { ok: false, error: "nothing to finish" };
 }
 
 /* ---------------------------------------------------------------------------
@@ -1076,6 +1139,21 @@ const FINISHERS = {
   threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; }
 };
 
+/* dup and dupWarn are a record of history -- an id that turned out to be
+   real, discovered after the fact by lateArrival -- and must never vanish
+   just because the channel's result is rewritten by whatever settles it
+   next: the finisher here, or a retry. Until 16 September 2026 both of
+   those replaced results[ch] wholesale, and the note the console was built
+   to show disappeared the moment the pending container it sat beside
+   finished. Carried forward now, merged, never replaced. */
+function carryDup(had, r) {
+  if (!had || !r || typeof r !== "object") return r;
+  const out = { ...r };
+  if (had.dup && out.dup === undefined) out.dup = had.dup;
+  if (had.dupWarn && out.dupWarn === undefined) out.dupWarn = had.dupWarn;
+  return out;
+}
+
 export async function finishPendingReels(date, out) {
   const ran = (out && out.ran) || [];
   for (const d of [prevDate(date), date]) {
@@ -1098,19 +1176,33 @@ export async function finishPendingReels(date, out) {
           continue;
         }
         if (had.ok || !had.pending) continue;
-        let r = await FINISHERS[ch](had.pending);
-        /* A container Instagram never finishes is not transcoding, whatever
-           its status says: the 14:00 reel sat IN_PROGRESS from two in the
-           afternoon until evening while the owner pressed Finish. After this
-           long the container is given up on and the network is recorded as
-           refused in words, so the healer sends the reel again as a fresh
-           container next hour. Nothing was published from the old one, so
-           nothing can be doubled. */
-        if (r.pending && rec.at && Date.now() - Date.parse(rec.at) > PENDING_MAX_MS) {
+        let r = ch === "facebook" ? await finishFacebookReel(had.pending, rec) : await FINISHERS[ch](had.pending);
+        /* A container Instagram or Threads never finishes is not
+           transcoding, whatever its status says: the 14:00 reel sat
+           IN_PROGRESS from two in the afternoon until evening while the
+           owner pressed Finish. After this long it is given up on and the
+           network is recorded as refused in words, so the healer sends the
+           reel again as a fresh container next hour -- nothing was
+           published from the old one, so nothing can be doubled.
+
+           A Facebook id is different: it is not a container this house
+           holds, it is a real upload Facebook already has, and Facebook
+           may still publish it long after this house stops asking. Giving
+           up into a fresh upload here is exactly the mistake that put two
+           real videos of Al-Basit and Az-Zumar on the page on 14 September.
+           So a Facebook id that outlasts the max is never resent: it is
+           marked fatal (never healed) with the id kept on the record, and
+           the console shows it as unverified rather than a plain failure. */
+        if (r.pending && r.pending.fb && rec.at && Date.now() - Date.parse(rec.at) > PENDING_MAX_MS) {
+          const hours = Math.round((Date.now() - Date.parse(rec.at)) / 3600000);
+          r = { ok: false, fatal: true, unverified: true, id: r.pending.fb,
+                error: "Facebook never confirmed reel " + r.pending.fb + " within " + hours + " hours; its id is kept, not resent, since the video may still be live" };
+        } else if (r.pending && ch !== "facebook" && rec.at && Date.now() - Date.parse(rec.at) > PENDING_MAX_MS) {
           const hours = Math.round((Date.now() - Date.parse(rec.at)) / 3600000);
           r = { ok: false, gaveUp: true, error: NET_NAME(ch) + " never finished the video in " + hours + " hours; sent again as a fresh one next hour" };
         }
         if (r.pending) { ran.push({ slot: id, date: d, state: "pending", where: ch }); continue; }
+        r = carryDup(had, r);
         rec.results = { ...rec.results, [ch]: r };
         rec.state = slotState(rec.results);
         if (r.ok && ch === "instagram") rec.igId = r.id || "posted";
@@ -1360,6 +1452,19 @@ const K_POSTED = "nsoc:reels:posted";   /* reel id -> the date every network had
 --------------------------------------------------------------------------- */
 const POSTED_GRACE_DAYS = Number(process.env.POSTED_GRACE_DAYS) > 0 ? Number(process.env.POSTED_GRACE_DAYS) : 3;
 
+/* "every live network has it" is the slot's own state, and has been since 9
+   September 2026: `sent` (slotState, above) already means every live
+   channel answered ok, OR was skipped for a reason that is not going to
+   change on its own -- not configured, on trial, waiting for review, or,
+   since 16 September 2026, a reel Telegram's own 50 MB ceiling refuses
+   (`{skipped:true, reason:"too big"}`, _telegram.js). None of those count
+   as a failure in slotState, so none of them ever held the ledger; what
+   held it was Telegram answering a REAL error on every reel of every day
+   (fixed the same day, see _telegram.js), which is not a skip and rightly
+   still reads partial until it is fixed. So the rule here has not changed:
+   only `sent` retires a reel, and a genuinely broken network -- one still
+   failing for a real, retryable reason, or one a person has to fix by hand
+   -- still holds it, on purpose, until someone looks. */
 export function reelDone(rec) {
   if (!rec || !rec.reel || rec.state !== "sent") return false;
   const rs = Object.values(rec.results || {});
@@ -1373,10 +1478,19 @@ export function reelDone(rec) {
 }
 
 /* a reel's record names the card, so the ledger can say which reel went;
-   a record written again (a retry, a finished container) keeps the name */
+   a record written again (a retry, a finished container) keeps the name.
+   The caption (trimmed short) rides along too, since 16 September 2026: it
+   is the one thing that lets a cut Facebook send with no id ever learned be
+   found again by NAME on the page's own video list (adoptFacebookReel,
+   above) rather than by a number nobody was told. */
 function nameReel(rec, post, prev) {
-  if (post && post.reel && post.key) { rec.reel = String(post.key); rec.kind = post.kind || "light"; }
-  else if (prev && prev.reel) { rec.reel = prev.reel; rec.kind = prev.kind; }
+  if (post && post.reel && post.key) {
+    rec.reel = String(post.key); rec.kind = post.kind || "light";
+    rec.caption = String(post.caption || post.title || "").slice(0, 200);
+  } else if (prev && prev.reel) {
+    rec.reel = prev.reel; rec.kind = prev.kind;
+    if (prev.caption) rec.caption = prev.caption;
+  }
   return rec;
 }
 
@@ -1388,6 +1502,62 @@ async function notePosted(date, rec) {
   const cmd = reelDone(rec) ? ["HSET", K_POSTED, String(rec.reel), String(date)]
                             : ["HDEL", K_POSTED, String(rec.reel)];
   try { await kv([cmd]); } catch { }
+}
+
+/* THE GAP THE LEDGER ABOVE CANNOT CLOSE.
+   K_POSTED only ever names a reel once EVERY live network has it (reelDone),
+   because that is the day the shelf may let it go. But the duplicate guard
+   (findDuplicate, below) needs to know the moment ANY ONE network has a
+   reel, not the day all of them do: a reel ok on Facebook while Telegram
+   was still failing (the exact shape of 14 September's record) sat outside
+   K_POSTED forever, so a second send to Facebook alone went uncaught. This
+   hash is the fix: one field per reel and channel, `<reel>|<channel>`
+   pointing at `date#slot`, written the moment that ONE network says ok,
+   read by the guard before the ledger. */
+const K_POSTED_CH = "nsoc:reels:postedch";
+/* returns how many fields it actually wrote (0 on nothing to write, or on a
+   store fault), so backfillPosted below can report an honest count rather
+   than guessing from what it merely attempted */
+async function notePostedChannels(date, rec) {
+  if (!kvReady() || !rec || !rec.reel || !rec.results) return 0;
+  const at = date + "#" + (rec.slot || "");
+  const cmds = [];
+  for (const [ch, r] of Object.entries(rec.results)) {
+    if (!r || !r.ok || CH.draftOnly.has(ch) || ch === "phone") continue;
+    cmds.push(["HSET", K_POSTED_CH, rec.reel + "|" + ch, at]);
+  }
+  if (!cmds.length) return 0;
+  try { await kv(cmds); return cmds.length; } catch { return 0; }
+}
+
+/* THE ONE TIME CATCH UP, NOT A READ ON EVERY SEND.
+   findDuplicate above trusts K_POSTED_CH, and that hash only ever grows
+   forward: a record written before this fix shipped, or one nothing has
+   rewritten since, carries no field yet, and the guard falls back to the
+   old ledger for it (still blind to a reel that is not fully "sent"). This
+   is the one time fix for that, run by hand from the console after a
+   release, never from a send: it walks the guard's own window, the last
+   DUP_WINDOW_DAYS of reel slots, REEL_SLOTS a day, and calls
+   notePostedChannels on every record that has an ok result on any network.
+   Bounded (DUP_WINDOW_DAYS times REEL_SLOTS.length reads, 126 today, well
+   inside one run) and idempotent: writing the same field to the same value
+   twice changes nothing, so running it again after a fresh send, or twice
+   by mistake, costs a few reads and nothing more. */
+export async function backfillPosted(today) {
+  const base = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z");
+  const days = [];
+  for (let i = 0; i < DUP_WINDOW_DAYS; i++) days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
+  let records = 0, written = 0;
+  for (const d of days) {
+    for (const slot of REEL_SLOTS) {
+      const rec = await readSlot(d, slot);
+      if (!rec || !rec.reel || !rec.results) continue;
+      if (!Object.values(rec.results).some(r => r && r.ok)) continue;
+      records++;
+      written += await notePostedChannels(d, rec.slot ? rec : { ...rec, slot });
+    }
+  }
+  return { days: days.length, records, written };
 }
 
 /* the ledger, less the last few days: what the render run may retire */
@@ -1454,6 +1624,7 @@ async function writeSlot(date, slot, rec) {
      container finished later) writes its record here, so here is the one
      place the ledger is kept */
   await notePosted(date, rec);
+  await notePostedChannels(date, rec);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1520,15 +1691,36 @@ const CHANNEL_MIN_MS = Number(process.env.CHANNEL_MIN_MS || 8000);
 const OUT_OF_TIME = "no time left in this run for this network; retried next hour";
 /* `send` is the sender put on the clock: the feed sender by default, the
    story-only sender for a card (it takes the channel and the post). */
-async function sendWithin(ch, shaped, post, left, send, onLate) {
+async function sendWithin(ch, shaped, post, left, send, onLate, opts) {
   const began = Date.now();
-  const go = send ? () => send(ch, post) : () => sendOne(ch, shaped, post, left);
+  /* a Facebook reel writes its video id here the moment postFacebookReel's
+     start phase answers, win or lose against the clock below; every other
+     channel leaves it empty and it is never read */
+  const carry = {};
+  const go = send ? () => send(ch, post) : () => sendOne(ch, shaped, post, left, carry, opts);
   const stamp = r => { if (r && typeof r === "object") r.ms = Date.now() - began; return r; };
   if (typeof left !== "function") return stamp(await go());
   const room = left() - WRITE_RESERVE_MS;
   if (room < CHANNEL_MIN_MS) return stamp({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true });
   let timer;
-  const clock = new Promise(r => { timer = setTimeout(() => r({ ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true }), room); });
+  /* a Facebook send the clock cuts after the id is known is pending, not
+     late with nothing to show: healable refuses a pending result outright
+     (below), so the healer leaves it for the finisher to ask Facebook what
+     became of that id, instead of starting a second, real upload over the
+     first -- which is where the duplicated reels of 14 September 2026 came
+     from. A cut with NO id yet (still inside the start phase, before it
+     ever answered) is ALSO pending now, not plain late: the request itself
+     is still running underneath, Facebook may still take it, and what it
+     made -- if anything -- is looked for by name once the run is given
+     room again (adoptFacebookReel, above), marked with when the cut
+     happened so that search does not run forever. Only a Facebook reel
+     gets this; every other channel's no-answer cut is unchanged. */
+  const cutResult = () => carry.videoId
+    ? { ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true, pending: { fb: carry.videoId } }
+    : (ch === "facebook" && post && post.video)
+      ? { ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true, pending: { fb: null, since: new Date().toISOString() } }
+      : { ok: false, err: OUT_OF_TIME, error: OUT_OF_TIME, late: true, cut: true };
+  const clock = new Promise(r => { timer = setTimeout(() => r(cutResult()), room); });
   const flight = go();
   try {
     const r = stamp(await Promise.race([flight, clock]));
@@ -1546,17 +1738,41 @@ async function sendWithin(ch, shaped, post, left, send, onLate) {
 
 /* the answer of a request the clock cut, arriving after the record was
    written: if the record still says late for that network, the network's
-   own word replaces it and the slot's state follows */
+   own word replaces it and the slot's state follows.
+
+   If the record has MOVED ON -- a healer already wrote a newer result for
+   this channel while the cut flight was still in the air -- that newer
+   result is never overwritten. Until 16 September 2026 it was: whatever the
+   late flight had actually posted (a second, real video, live on the
+   network) was thrown away right here, with nothing left pointing at it.
+   Now, when the late flight turns out to have succeeded, its id and url are
+   kept beside the newer result, in `dup`, with `dupWarn` set so the console
+   can show it and the Director can decide what happens to the extra post.
+   A late flight that did NOT succeed says nothing worth keeping; the newer
+   result already on the record is simply left alone. */
 async function lateArrival(date, id, ch, r) {
   if (!r || typeof r !== "object" || !kvReady()) return;
   try {
     const rec = await readSlot(date, id);
-    if (!rec || !rec.results || !rec.results[ch] || !rec.results[ch].late) return;
-    rec.results = { ...rec.results, [ch]: { ...r, arrivedLate: true } };
-    rec.state = slotState(rec.results);
-    if (r.ok && ch === "instagram") rec.igId = r.id || "posted";
-    await writeSlot(date, id, rec);
-    logRun("late", { slot: id, where: ch, ok: !!r.ok, state: rec.state });
+    const had = rec && rec.results && rec.results[ch];
+    if (!had) return;
+    if (had.late) {
+      rec.results = { ...rec.results, [ch]: { ...r, arrivedLate: true } };
+      rec.state = slotState(rec.results);
+      if (r.ok && ch === "instagram") rec.igId = r.id || "posted";
+      await writeSlot(date, id, rec);
+      logRun("late", { slot: id, where: ch, ok: !!r.ok, state: rec.state });
+      return;
+    }
+    if (r.ok) {
+      const already = Array.isArray(had.dup) && had.dup.some(x => x && x.id === (r.id || ""));
+      if (already) return;
+      const entry = { id: r.id || "", url: r.url || "", at: new Date().toISOString() };
+      const dup = Array.isArray(had.dup) ? had.dup.concat(entry) : [entry];
+      rec.results = { ...rec.results, [ch]: { ...had, dup, dupWarn: true } };
+      await writeSlot(date, id, rec);
+      logRun("dup", { slot: id, where: ch, id: entry.id });
+    }
   } catch { }
 }
 
@@ -1632,23 +1848,82 @@ function reelDoor(p) {
   return origin + "/api/reel?id=" + encodeURIComponent(String(p.key));
 }
 
-async function sendOne(ch, shaped, post, left) {
+/* THE SAME REEL, TWICE, ON A DIFFERENT RECORD.
+   The flight/pending path above (see postFacebookReel, sendWithin) and
+   lateArrival's dup capture keep ONE upload from turning into two answers
+   on the SAME slot's record. This guards the different mistake: the same
+   reel id sent again under a DIFFERENT record -- a repair that recomposed
+   the wrong card, a hand pressing Post now on an old day, a step in the
+   rota landing twice.
+
+   Until 16 September 2026 this read only the posted ledger (notePosted),
+   which only ever names a reel once EVERY live network has it -- so a reel
+   ok on Facebook while Telegram was still failing was invisible here and
+   got a second Facebook upload (the 14 September shape). The fix reads
+   K_POSTED_CH first: one HGETALL, `<reel>|<channel>` to `date#slot`,
+   written the moment THIS channel said ok (notePostedChannels, above), so
+   a hit needs exactly one more read -- the named slot -- to get the id and
+   url back. Only when that hash has nothing for this reel and channel does
+   the ledger get consulted, the same walk as before, for the case the hash
+   itself predates 16 September or was never written (KV down that day).
+   Never more than a couple of reads either way. A card is not a reel and
+   carries no id worth guarding here. */
+const DUP_WINDOW_DAYS = 21;
+async function findDuplicate(reelId, ch, date) {
+  if (!reelId || !kvReady()) return null;
+  const cutoff = Date.parse(date + "T00:00:00Z") - DUP_WINDOW_DAYS * 86400000;
+  let chRaw = [];
+  try { chRaw = (await kv([["HGETALL", K_POSTED_CH]]))[0] || []; } catch { chRaw = []; }
+  const chPairs = Array.isArray(chRaw) ? chRaw : Object.entries(chRaw).flat();
+  for (let i = 0; i + 1 < chPairs.length; i += 2) {
+    const field = String(chPairs[i]), at = String(chPairs[i + 1]);
+    const bar = field.lastIndexOf("|");
+    if (bar < 0) continue;
+    const id = field.slice(0, bar), fch = field.slice(bar + 1);
+    if (id !== reelId || fch !== ch) continue;
+    const hash = at.indexOf("#");
+    const d = hash < 0 ? at : at.slice(0, hash), slot = hash < 0 ? "" : at.slice(hash + 1);
+    if (Date.parse(d + "T00:00:00Z") < cutoff) return null;
+    const rec = slot ? await readSlot(d, slot) : null;
+    const r = rec && rec.results && rec.results[ch];
+    if (rec && r && r.ok) return { id: r.id || "", url: r.url || "", at };
+    return { id: "", url: "", at };
+  }
+  let posted = {};
+  try { posted = await postedReels(date, 0); } catch { return null; }
+  const d = posted[reelId];
+  if (!d || Date.parse(d + "T00:00:00Z") < cutoff) return null;
+  for (const slot of REEL_SLOTS) {
+    const rec = await readSlot(d, slot);
+    const r = rec && rec.results && rec.results[ch];
+    if (rec && rec.reel === reelId && r && r.ok) return { id: r.id || "", url: r.url || "", at: d + "#" + slot };
+  }
+  return null;
+}
+
+async function sendOne(ch, shaped, post, left, flight, opts) {
+  if (post && post.reel && post.key && !(opts && opts.force)) {
+    const dup = await findDuplicate(post.key, ch, post.date);
+    if (dup) return { ok: true, already: true, id: dup.id, url: dup.url, at: dup.at };
+  }
   const p = { ...post, caption: shaped.text };
   if (p.video) p.video = await freshVideoUrl(p.video);
   if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
     return { ok: false, err: "no time left in this run for the video pin; retried next hour", error: "no time left in this run for the video pin; retried next hour" };
-  if (ch === "facebook")  return await (p.video ? postFacebookReel(p) : postFacebook(p));
+  if (ch === "facebook")  return await (p.video ? postFacebookReel(p, flight) : postFacebook(p));
   if (ch === "instagram") return await (p.video ? postInstagramReel(p, left) : postInstagram(p));
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
   if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
-  /* a reel goes to the channel as a video, by url: Telegram fetches it.
-     Not the signed release link: Telegram answered "failed to get HTTP URL
-     content" to every one of them (the record of 15 September 2026, four
-     tries a slot, never a reel on the channel). The house's own door,
-     /api/reel?id=, streams the file as video/mp4 with no redirect, which is
-     what api/reel.js was built for; every reel is under 8 MB, inside
-     Telegram's 20 MB for a url upload. */
+  /* a reel goes to Telegram as a video too, but not fetched by Telegram: the
+     signed release link and, after that, this house's own door were both
+     handed to Telegram to fetch and both came back "failed to get HTTP URL
+     content" (the record of 15 and 16 September 2026, four tries a slot,
+     never a reel on the channel) -- Telegram's own fetch is on ITS clock,
+     and two hops to reach a reel outrun it more than it allows. So as of 16
+     September 2026 the door is still where the bytes come from, but this
+     function reads it, on the five minutes this run is given, and hands
+     Telegram the file directly; see _telegram.js. */
   if (ch === "telegram") return await fn({ ...shaped, video: p.video ? reelDoor(p) : null });
   /* and Threads takes it the same way, as a VIDEO container it processes */
   if (ch === "threads") return await fn({ ...shaped, video: p.video || null });
@@ -1770,7 +2045,7 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       results[ch] = { ok: false, fatal: true, error: "needs an image", err: "needs an image" }; continue; }
     if (CH.SPEC[ch].image === "required" && imgWhy) {
       results[ch] = { ok: false, error: imgWhy, err: imgWhy, pre: true }; continue; }
-    try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slotId, ch, r)); }
+    try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slotId, ch, r), opts); }
     catch (e) {
       const m = String(e && e.message || e).slice(0, 120);
       results[ch] = { ok: false, error: m, err: m };
@@ -1884,7 +2159,7 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   }
 
   let r;
-  try { r = asStory ? await sendStoryOnly(ch, { ...post, date }) : await sendOne(ch, shaped, { ...post, date }); }
+  try { r = asStory ? await sendStoryOnly(ch, { ...post, date }) : await sendOne(ch, shaped, { ...post, date }, undefined, undefined, opts); }
   catch (e) { const m = String(e && e.message || e).slice(0, 160); r = { ok: false, error: m, err: m }; }
 
   /* every attempt is stamped on the result, so the healer can be bounded and
@@ -1901,7 +2176,7 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
     ? { ...r, hands: Number((had && had.hands) || 0) + 1, lastTry: out.at,
         tries: Number((had && had.tries) || 1) }
     : { ...r, tries: Number((had && had.tries) || 1) + 1, lastTry: out.at };
-  const results = { ...((rec && rec.results) || {}), [ch]: r };
+  const results = { ...((rec && rec.results) || {}), [ch]: carryDup(had, r) };
   const next = { at: (rec && rec.at) || out.at, slot: slotId, state: slotState(results),
                  title: post.title, lvl: (rec && rec.lvl) || post.lvl, results };
   /* the reel's name stays on the record through a retry, so the slot the
@@ -2208,6 +2483,11 @@ const HEAL_MAX_TRIES = Number(process.env.HEAL_MAX_TRIES || 4);
 const HEAL_BACKOFF = [0, 15, 60, 180];
 
 export function healable(r, rec) {
+  /* r.pending covers a container Instagram or Threads is still transcoding
+     AND, since 16 September 2026, a Facebook reel the clock cut after its
+     upload had an id: both are left for the finisher (FINISHERS, above)
+     to ask the network what became of them, never started over as a fresh
+     upload, which is how the same reel went out twice on 14 September. */
   if (!r || r.ok || r.pending) return false;
   if (r.skipped) return false;          /* never asked: not configured */
   /* a reel refused as drift was the healer's own mistake (a retry composed
@@ -2420,7 +2700,7 @@ export async function runDue(host, date, now, opts = {}) {
     else for (const ch of chans) {
       const shaped = CH.shape(post, ch);
       if (CH.SPEC[ch].image === "required" && !shaped.image) { results[ch] = { ok: false, err: "needs an image" }; continue; }
-      try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slot.id, ch, r)); }
+      try { results[ch] = await sendWithin(ch, shaped, { ...post, date }, left, undefined, r => lateArrival(date, slot.id, ch, r), opts); }
       catch (e) { results[ch] = { ok: false, err: String(e && e.message || e).slice(0, 120) }; }
     }
     /* Reddit is composed and kept, never sent. What is paced here is how often
@@ -2623,6 +2903,10 @@ export default async function handler(req, res) {
       res.setHeader("Cache-Control", "public, max-age=300");
       return res.status(200).json({ ok: true, n: Object.keys(posted).length, grace_days: POSTED_GRACE_DAYS, posted });
     }
+    /* the owner's own one time catch up for K_POSTED_CH, run by hand from
+       the console's System room after a release; owner only, unlike
+       `posted` just above, since this one writes */
+    if (action === "backfillposted") return json(res, 200, { ok: true, ...(await backfillPosted(date)) });
     /* Step one: send the owner to Pinterest. */
     if (action === "pin-auth") {
       const id = process.env.PIN_APP_ID, secret = process.env.ADMIN_SECRET || "";

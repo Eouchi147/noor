@@ -15,11 +15,21 @@
    rate limit, which it states as a number of seconds to wait; that number is
    handed back so the healer waits it rather than guessing.
 
-   HOW A FILE TRAVELS. Telegram fetches the picture or the video from its URL
-   itself, so nothing is downloaded and forwarded here: one JSON call, and the
-   file is on the channel. The limit for a URL upload is 20 MB, and a reel of
-   this house is 1080x1920 and three to eight; a reel that ever grew past
-   twenty would be refused with a sentence that says so.
+   HOW A FILE TRAVELS. A picture goes by url: Telegram fetches it itself, one
+   JSON call, and the picture is on the channel. A REEL used to go the same
+   way -- first the store's own signed link, then this house's own door
+   (api/reel.js) -- and failed both times with the same words, "failed to
+   get HTTP URL content" (the record of 15 and 16 September 2026, four tries
+   a slot, never a reel on Telegram). Telegram's own fetch of a url is on
+   ITS clock, not this house's, and two hops to reach a reel (the door reads
+   the manifest, then resolves the store's redirect) outran it far more
+   often than not. So as of 16 September 2026 a video is not handed over as
+   a url at all: this module fetches the bytes itself, on the five minutes
+   the run is given, and uploads them to Telegram directly, the way a
+   person attaching a video would. A reel of this house is a few megabytes;
+   Telegram's own ceiling for a file handed to it this way is 50 MB, and
+   anything over that is skipped, not guessed at, with a reason a person can
+   read (MULTIPART_MAX below).
 
    THE ONE RULE. The token is in the URL of every call, which is how the Bot
    API is built, so any error that echoes a URL would echo the token. Nothing
@@ -134,6 +144,54 @@ function explain(status, j) {
   return { ok: false, code: status, err: said };
 }
 
+/* Telegram's own ceiling for a file handed to it as an upload rather than
+   fetched by it. A reel of this house is a few megabytes (every one under
+   8 MB, the sidecar's own bytes field), so this is headroom, not a wall
+   anything here is expected to hit. */
+const MULTIPART_MAX = 50 * 1024 * 1024;
+
+/* the floor under a real reel. Every reel this house makes is several
+   megabytes; a body under 100 KB is not a small reel, it is a door that
+   answered 200 with a stub, an error page, or nothing much -- fetched
+   fully, never truncated by a client-side size guess. Sending that on
+   as a video would put a broken file, or a page of HTML wearing a
+   video/mp4 header, on the channel in front of people. */
+const MULTIPART_MIN = 100 * 1024;
+
+/* the bytes, read by this function rather than by Telegram: a network
+   fault reading them is retried, same as any other network fault, and a
+   file too big to hand over is skipped, in words, rather than attempted
+   and left to Telegram's own refusal (which a url upload never reached
+   here anyway -- see HOW A FILE TRAVELS, above).
+
+   Two more shapes count as a fetch failure, not an upload, since 16
+   September 2026: a body that came back shorter than the content-length
+   the door itself declared (the connection died partway and Node handed
+   back whatever arrived, not an error -- so without this check a
+   truncated file was sent to Telegram as if it were whole), and a body
+   under MULTIPART_MIN, too small for a real reel whatever the door said
+   about its length. Both are retried next hour like any other fetch
+   failure; neither is ever handed to Telegram. */
+async function fetchVideoBytes(url, fetcher) {
+  let r;
+  try { r = await fetcher(url); }
+  catch (e) { return { ok: false, err: "could not read the reel to send it: " + mask(String(e && e.message || e)).slice(0, 120) }; }
+  if (!r || !r.ok) return { ok: false, err: "could not read the reel to send it: http " + (r ? r.status : "no answer") };
+  const tooBig = n => ({ ok: false, skipped: true, reason: "too big",
+    err: "the reel is " + Math.round(n / 1048576) + " MB, over Telegram's 50 MB upload limit" });
+  const len = r.headers && typeof r.headers.get === "function" ? Number(r.headers.get("content-length") || 0) : 0;
+  if (len > MULTIPART_MAX) return tooBig(len);
+  let buf;
+  try { buf = Buffer.from(await r.arrayBuffer()); }
+  catch (e) { return { ok: false, err: "could not read the reel to send it: " + mask(String(e && e.message || e)).slice(0, 120) }; }
+  if (buf.length > MULTIPART_MAX) return tooBig(buf.length);
+  if (len && buf.length < len)
+    return { ok: false, err: "could not read the reel to send it: got " + buf.length + " of " + len + " bytes; the connection dropped partway, not sent" };
+  if (buf.length < MULTIPART_MIN)
+    return { ok: false, err: "could not read the reel to send it: only " + buf.length + " bytes came back, too small to be a real reel; not sent" };
+  return { ok: true, buf };
+}
+
 /* the send. Never throws: a sender that throws takes the slot's other
    networks down with it, and the poster's own catch would still log the url. */
 export async function send(shaped, opts = {}) {
@@ -143,10 +201,17 @@ export async function send(shaped, opts = {}) {
   const text = String((shaped && shaped.text) || "");
   if (!text) return { ok: false, fatal: true, err: "nothing to say" };
 
-  let method, body;
+  let method, body, form;
   if (shaped.video) {
+    const got = await fetchVideoBytes(shaped.video, fetcher);
+    if (!got.ok) return got;
     method = "sendVideo";
-    body = { chat_id: chat, video: shaped.video, caption: text, parse_mode: "HTML", supports_streaming: true };
+    form = new FormData();
+    form.append("chat_id", String(chat));
+    form.append("caption", text);
+    form.append("parse_mode", "HTML");
+    form.append("supports_streaming", "true");
+    form.append("video", new Blob([got.buf], { type: "video/mp4" }), "reel.mp4");
   } else if (shaped.image) {
     method = "sendPhoto";
     body = { chat_id: chat, photo: shaped.image, caption: text, parse_mode: "HTML" };
@@ -158,9 +223,9 @@ export async function send(shaped, opts = {}) {
 
   let r, j = null;
   try {
-    r = await fetcher(API + "/bot" + tok + "/" + method, {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body)
-    });
+    const init = form ? { method: "POST", body: form }
+                       : { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) };
+    r = await fetcher(API + "/bot" + tok + "/" + method, init);
     const t = await r.text();
     try { j = JSON.parse(t); } catch { }
   } catch (e) {
