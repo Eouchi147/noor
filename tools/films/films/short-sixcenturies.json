@@ -1,0 +1,187 @@
+{
+  "slug": "short-sixcenturies",
+  "id": "short-sixcenturies",
+  "title": "Six centuries of one book",
+  "note": "The Canon of Medicine in the European schools, and the cost of a textbook being good enough to stop arguing with.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Six centuries of one book",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "One medical book was used for 600 years",
+          "hold": 5.3,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nuttime",
+            "from": 1000,
+            "to": 1660,
+            "w": 3.1,
+            "bands": [
+              {
+                "a": 1025,
+                "b": 1600
+              },
+              {
+                "a": 1600,
+                "b": 1660,
+                "rise": true
+              }
+            ],
+            "marks": [
+              {
+                "y": 1025,
+                "hot": true
+              },
+              {
+                "y": 1150
+              },
+              {
+                "y": 1473,
+                "hot": true
+              },
+              {
+                "y": 1600,
+                "hot": true
+              }
+            ],
+            "key": [
+              [
+                "base",
+                "While it was taught"
+              ],
+              [
+                "rise",
+                "After"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 14540,
+                "holdMs": 7960,
+                "text": "Finished about the year 1025",
+                "sub": "the Canon of Medicine, in five books",
+                "to": [
+                  0.93,
+                  -0.01
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 23140,
+                "holdMs": 6360,
+                "text": "Spain, the 1100s",
+                "sub": "translated into Latin at Toledo",
+                "to": [
+                  0.11,
+                  -0.01
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 34140,
+                "holdMs": 8260,
+                "text": "Printed in Latin in the 1470s",
+                "sub": "one of the first medical books printed",
+                "to": [
+                  0.19,
+                  -0.07
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 43040,
+                "holdMs": 7360,
+                "text": "Still taught in the 1500s",
+                "sub": "in the medical schools of Europe",
+                "to": [
+                  1.07,
+                  -0.05
+                ],
+                "at": "right",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 23140,
+            "keyHoldMs": 6160
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Written by Ibn Sina about the year 1025",
+          "sub": "in Persia, in Arabic, in five volumes",
+          "hold": 8.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Then Europe kept using it",
+          "hold": 4.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Being that good has a cost",
+          "sub": "people stop testing a book they trust",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Ibn Sina, the Canon, 1025",
+          "text": "600 years on one textbook",
+          "src": "noorcodex.com",
+          "hold": 6.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,552 @@
+{
+  "slug": "darkroom",
+  "id": "darkroom",
+  "title": "The dark room",
+  "note": "compiled from specs/darkroom.json by film.py compile. holds sum to 43.05 s, plus a 1.0 s slow fade on the last beat, total 44.05 s.",
+  "chapters": [
+    {
+      "id": "the-film",
+      "title": "The dark room",
+      "theme": "night",
+      "scene": {
+        "figure": {
+          "kind": "darkroom",
+          "room": {
+            "w": 4.4,
+            "h": 3.2,
+            "d": 8.0
+          },
+          "aperture": {
+            "y": 1.6,
+            "r": 0.06
+          },
+          "lamps": [
+            {
+              "id": "lampA",
+              "pos": [
+                -1.0,
+                2.3,
+                -11.5
+              ]
+            },
+            {
+              "id": "lampB",
+              "pos": [
+                0.8,
+                1.0,
+                -11.0
+              ]
+            },
+            {
+              "id": "lampC",
+              "pos": [
+                0.25,
+                2.55,
+                -12.0
+              ]
+            }
+          ],
+          "events": [
+            {
+              "at": 0.0,
+              "do": "wallglow",
+              "to": 0.08,
+              "dur": 1.0
+            },
+            {
+              "at": 4.8,
+              "do": "lamp",
+              "id": "lampA",
+              "dur": 0.9
+            },
+            {
+              "at": 9.341,
+              "do": "ray",
+              "id": "lampA",
+              "dur": 3.0
+            },
+            {
+              "at": 13.941,
+              "do": "image",
+              "id": "lampA",
+              "dur": 1.2
+            },
+            {
+              "at": 18.141,
+              "do": "lamp",
+              "id": "lampB",
+              "dur": 0.8
+            },
+            {
+              "at": 18.741,
+              "do": "lamp",
+              "id": "lampC",
+              "dur": 0.8
+            },
+            {
+              "at": 18.941,
+              "do": "ray",
+              "id": "lampB",
+              "dur": 1.8
+            },
+            {
+              "at": 19.341,
+              "do": "ray",
+              "id": "lampC",
+              "dur": 1.6
+            },
+            {
+              "at": 20.741,
+              "do": "image",
+              "id": "lampB",
+              "dur": 0.8
+            },
+            {
+              "at": 20.941,
+              "do": "image",
+              "id": "lampC",
+              "dur": 0.8
+            },
+            {
+              "at": 23.141,
+              "do": "lift",
+              "id": "lampA",
+              "dy": 0.6,
+              "dur": 1.6
+            },
+            {
+              "at": 26.341,
+              "do": "outrays",
+              "to": 1.0,
+              "dur": 2.2
+            },
+            {
+              "at": 30.194,
+              "do": "outrays",
+              "to": 0.0,
+              "dur": 1.3
+            },
+            {
+              "at": 33.794,
+              "do": "images",
+              "to": 1.15,
+              "dur": 2.0
+            }
+          ]
+        },
+        "views": [
+          {
+            "eye": [
+              0.0,
+              1.55,
+              2.6
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 56,
+            "hold": 2.2
+          },
+          {
+            "eye": [
+              0.0,
+              1.55,
+              1.0
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 50,
+            "hold": 3.0
+          },
+          {
+            "eye": [
+              0.0,
+              1.6,
+              0.2
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 46,
+            "hold": 3.2
+          },
+          {
+            "eye": [
+              0.5,
+              1.55,
+              -0.6
+            ],
+            "look": [
+              0.4,
+              1.3,
+              4.0
+            ],
+            "roll": 0.0,
+            "hfov": 50,
+            "hold": 2.4
+          },
+          {
+            "eye": [
+              1.3,
+              1.85,
+              -1.0
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 54,
+            "hold": 3.2
+          },
+          {
+            "eye": [
+              1.7,
+              2.2,
+              -2.6
+            ],
+            "look": [
+              -0.2,
+              1.3,
+              2.8
+            ],
+            "roll": 0.0,
+            "hfov": 62,
+            "hold": 2.6
+          },
+          {
+            "eye": [
+              0.55,
+              1.85,
+              2.3
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 50,
+            "hold": 3.0
+          },
+          {
+            "eye": [
+              0.3,
+              1.6,
+              -0.2
+            ],
+            "look": [
+              0.2,
+              1.4,
+              4.0
+            ],
+            "roll": 0.0,
+            "hfov": 48,
+            "hold": 2.6
+          },
+          {
+            "eye": [
+              0.0,
+              1.6,
+              1.0
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 44,
+            "hold": 3.0
+          },
+          {
+            "eye": [
+              0.0,
+              1.6,
+              1.6
+            ],
+            "look": [
+              0.0,
+              1.6,
+              -4.0
+            ],
+            "roll": 0.0,
+            "hfov": 48,
+            "hold": 5.26
+          }
+        ],
+        "lantern": [
+          {
+            "pos": [
+              0.0,
+              1.6,
+              -3.7
+            ],
+            "scale": 0.0001,
+            "bright": 0,
+            "hold": 3.6
+          },
+          {
+            "pos": [
+              0.0,
+              1.6,
+              -3.7
+            ],
+            "scale": 0.0001,
+            "bright": 0,
+            "hold": 5.341
+          },
+          {
+            "pos": [
+              0.0,
+              1.6,
+              -3.7
+            ],
+            "scale": 0.1,
+            "bright": 0.8,
+            "hold": 0.6
+          },
+          {
+            "pos": [
+              0.85,
+              1.0,
+              3.3
+            ],
+            "scale": 0.24,
+            "bright": 0.6,
+            "hold": 2.4
+          },
+          {
+            "pos": [
+              0.38,
+              1.78,
+              -3.25
+            ],
+            "scale": 0.14,
+            "bright": 0.6,
+            "hold": 4.6
+          },
+          {
+            "pos": [
+              0.38,
+              1.78,
+              -3.25
+            ],
+            "scale": 0.14,
+            "bright": 0.5,
+            "hold": 3.8
+          },
+          {
+            "pos": [
+              0.3,
+              1.75,
+              -3.3
+            ],
+            "scale": 0.16,
+            "bright": 0.4,
+            "hold": 2.6
+          },
+          {
+            "pos": [
+              1.35,
+              2.3,
+              2.5
+            ],
+            "scale": 0.22,
+            "bright": 0.6,
+            "hold": 2.2
+          },
+          {
+            "pos": [
+              0.0,
+              1.6,
+              -3.3
+            ],
+            "scale": 0.22,
+            "bright": 0.7,
+            "hold": 0.8
+          },
+          {
+            "pos": [
+              0.42,
+              1.32,
+              0.35
+            ],
+            "scale": 0.2,
+            "bright": 0.55,
+            "hold": 5.26
+          }
+        ],
+        "watermark": {
+          "text": "noorcodex.com",
+          "safe": {
+            "top": 130,
+            "bottom": 320,
+            "sides": 60
+          }
+        },
+        "breath": 0.35
+      },
+      "beats": [
+        {
+          "kind": "title",
+          "text": "Your camera is named after a room",
+          "hold": 3.6,
+          "shot": "hold",
+          "enter": "slow"
+        },
+        {
+          "kind": "title",
+          "text": "Cairo, Egypt, 1020",
+          "sub": "here, Ibn al-Haytham lights a candle",
+          "hold": 5.341,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "One small hole in the wall",
+          "sub": "and light only travels straight",
+          "hold": 4.4,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "It lands on the wall opposite",
+          "hold": 3.8,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "Upside down",
+          "sub": "the top crossed over at the hole",
+          "hold": 4.6,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "That is a camera",
+          "hold": 3.8,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "Then he broke an older idea",
+          "sub": "eyes shoot rays out to see",
+          "hold": 4.453,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "No eye was in that room",
+          "sub": "the picture formed anyway",
+          "hold": 3.8,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "Light comes in. The eye reads it",
+          "hold": 4.0,
+          "shot": "hold"
+        },
+        {
+          "kind": "title",
+          "text": "Camera obscura means dark room",
+          "eyebrow": "Ibn al-Haytham, Cairo",
+          "sub": "al-bayt al-muzlim, the dark house",
+          "src": "The Book of Optics, about 1020",
+          "hold": 5.26,
+          "shot": "hold",
+          "exit": "slow"
+        }
+      ],
+      "sound": [
+        {
+          "at": 0.0,
+          "event": "roomtone"
+        },
+        {
+          "at": 0.9,
+          "event": "music_in"
+        },
+        {
+          "at": 4.8,
+          "event": "lamp_lit",
+          "voice": "glass"
+        },
+        {
+          "at": 9.341,
+          "event": "ray_start",
+          "voice": "air"
+        },
+        {
+          "at": 12.341,
+          "event": "ray_lands",
+          "voice": "glass"
+        },
+        {
+          "at": 13.941,
+          "event": "image_appears",
+          "voice": "felt"
+        },
+        {
+          "at": 18.141,
+          "event": "lamp_lit",
+          "voice": "glass"
+        },
+        {
+          "at": 18.741,
+          "event": "lamp_lit",
+          "voice": "glass"
+        },
+        {
+          "at": 20.741,
+          "event": "rays_cross",
+          "voice": "felt"
+        },
+        {
+          "at": 23.141,
+          "event": "lamp_moves",
+          "voice": "wood"
+        },
+        {
+          "at": 26.341,
+          "event": "old_idea",
+          "voice": "air_low"
+        },
+        {
+          "at": 30.194,
+          "event": "silence"
+        },
+        {
+          "at": 36.594,
+          "event": "arrival",
+          "voice": "glass_low"
+        },
+        {
+          "at": 36.794,
+          "event": "music_release"
+        },
+        {
+          "at": 38.394,
+          "event": "final_mark",
+          "voice": "felt"
+        },
+        {
+          "at": 41.794,
+          "event": "music_out"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "slug": "short-starnames",
+  "id": "short-starnames",
+  "title": "You are reading Arabic",
+  "note": "Six star names, what each of them means, and how much of the official list turned out to be Arabic.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "You are reading Arabic",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "Most star names are Arabic words",
+          "hold": 4.6,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutdots",
+            "total": 100,
+            "lit": 60,
+            "sub": 6,
+            "cols": 10,
+            "key": [
+              [
+                "base",
+                "Named from Arabic"
+              ],
+              [
+                "rise",
+                "The six named here"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 13540,
+                "holdMs": 7560,
+                "text": "Altair means the flying eagle",
+                "sub": "from the Arabic al-nasr al-tair",
+                "to": [
+                  0.74,
+                  -0.01
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 21740,
+                "holdMs": 7560,
+                "text": "Vega means the swooping eagle",
+                "sub": "from the Arabic al-nasr al-waqi",
+                "to": [
+                  -1.03,
+                  -0.15
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 34840,
+                "holdMs": 7960,
+                "text": "Aldebaran means the follower",
+                "sub": "it follows a cluster of stars across",
+                "to": [
+                  0.85,
+                  -0.01
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 43440,
+                "holdMs": 6660,
+                "text": "Algol means the ghoul",
+                "sub": "and Rigel simply means a foot",
+                "to": [
+                  0.64,
+                  0.92
+                ],
+                "at": "top",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 21740,
+            "keyHoldMs": 7360
+          }
+        },
+        {
+          "kind": "title",
+          "text": "They come from Arabic star lists",
+          "sub": "written in the 900s, later put into Latin",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Two eagles, either side of the sky",
+          "hold": 4.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "You use these names every night",
+          "sub": "without knowing they are Arabic",
+          "hold": 7.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Official star names, 2016",
+          "text": "A large share of the star map",
+          "src": "noorcodex.com",
+          "hold": 6.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

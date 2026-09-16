@@ -1,0 +1,379 @@
+{
+  "slug": "what-did-they-build",
+  "id": "what-did-they-build",
+  "title": "What did they actually build?",
+  "note": "Film three. The argument is the method, and the losses are part of the record.",
+  "chapters": [
+    {
+      "id": "the-film",
+      "title": "What did they actually build?",
+      "theme": "nutvoid",
+      "beats": [
+        {
+          "kind": "title",
+          "eyebrow": "Film three",
+          "text": "What did they actually build?",
+          "sub": "Start with the story you have already heard, because it is half wrong.",
+          "hold": 9.5,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutconverge",
+            "span": 5
+          }
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The building",
+          "text": "probably a library, not an academy",
+          "sub": "Most Greek into Arabic translation was commissioned privately, by wealthy families.",
+          "hold": 12.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Dimitri Gutas, via NOOR Codex of Light"
+        },
+        {
+          "kind": "statement",
+          "hold": 12.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "What the Banu Musa reportedly paid",
+          "text": "Gold matching the weight of the books",
+          "sub": "Aristotle. Plato. Galen. Euclid. Ptolemy. Persian statecraft. Indian mathematics.",
+          "hold": 12.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "statement",
+          "hold": 12.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "A thousand years of the opposite",
+          "text": "The eye was thought to send something out",
+          "sub": "Ibn al-Haytham settled it a different way. He built the test.",
+          "hold": 11.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutlamps",
+            "span": 4,
+            "lamps": 3
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 11.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The lamps stay separate",
+          "text": "Light travels in straight lines",
+          "sub": "If rays mixed on the way, the patches would smear into one. They do not.",
+          "hold": 11.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Ibn al-Haytham · Book of Optics, Book I"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "al-bayt al-muzlim, the dark house",
+          "text": "Vision is reception, not emission",
+          "sub": "Which is the camera obscura. Which is the camera.",
+          "hold": 11.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Ibn al-Haytham · Kitab al-Manazir"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Two centuries later, the same knife",
+          "text": "The wall is solid",
+          "sub": "Blood reaches the left side of the heart only by going out through the lungs.",
+          "hold": 9.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Ibn al-Nafis · Cairo, about 1242",
+          "lume": {
+            "kind": "nutarc",
+            "span": 2,
+            "marks": [
+              {
+                "t": 0.06
+              },
+              {
+                "t": 0.34
+              },
+              {
+                "t": 0.62
+              },
+              {
+                "t": 0.94
+              }
+            ]
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 8.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "A fort in the Punjab, about 1018",
+          "text": "One hill was enough to measure the earth",
+          "sub": "Two sightings from the plain, then a climb, and how far the horizon had dropped.",
+          "hold": 12.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "al-Biruni · Nandana",
+          "lume": {
+            "kind": "nutbar",
+            "span": 5,
+            "frac": 0.0049,
+            "w": 3.0
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 13.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "His answer",
+          "text": "About 6,340 kilometres",
+          "sub": "Within a fraction of a per cent of the modern figure.",
+          "hold": 13.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And the honest part",
+          "text": "His instrument could not support that accuracy",
+          "sub": "So some of the agreement is luck. The library says so, and so does this film.",
+          "hold": 13.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Raqqa, observing from 877 to 918",
+          "text": "Short by two minutes and twenty seconds",
+          "sub": "Al-Battani on the length of the solar year, with instruments he built and checked himself.",
+          "hold": 13.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "al-Battani"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Damascus",
+          "text": "The man who kept the prayer times",
+          "sub": "Ibn al-Shatir built the sundial for the minaret of the Umayyad Mosque.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "lume": {
+            "kind": "nuttwin",
+            "span": 5
+          }
+        },
+        {
+          "kind": "title",
+          "eyebrow": "He also rebuilt planetary astronomy",
+          "text": "Uniform circular motions only",
+          "sub": "Ptolemy's equant, thrown out.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Beirut, 1957",
+          "text": "Mathematically identical to Copernicus, 1543",
+          "sub": "Victor Roberts, working with E. S. Kennedy. Several parameters match.",
+          "hold": 14.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Roberts and Kennedy"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And here the film stops",
+          "text": "What nobody has found is a route",
+          "sub": "No Latin translation is known. Copernicus never names him.",
+          "hold": 15.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "statement",
+          "hold": 15.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "10 February 1258",
+          "text": "Five centuries of libraries",
+          "sub": "The caliph surrendered, and the city was sacked over the following week.",
+          "hold": 12.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The library's own caution",
+          "text": "The chroniclers' numbers are unreliable",
+          "sub": "What is certain is that the intellectual capital stopped being one.",
+          "hold": 12.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And one thing was saved deliberately",
+          "text": "Books, instruments, and an observatory",
+          "sub": "Al-Tusi was travelling with the army, and talked its commander into funding one.",
+          "hold": 12.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Istanbul, 1577",
+          "text": "Built as Tycho Brahe was building Uraniborg",
+          "sub": "Instruments of comparable size and design. Both men watched the same comet.",
+          "hold": 12.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "lume": {
+            "kind": "nuttime",
+            "span": 3,
+            "from": 1570,
+            "to": 1600,
+            "bands": [
+              {
+                "a": 1576,
+                "b": 1597
+              },
+              {
+                "a": 1577,
+                "b": 1580,
+                "rise": true
+              }
+            ],
+            "marks": [
+              {
+                "y": 1580,
+                "hot": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Then the campaign went badly, and plague came",
+          "text": "Prying into the secrets of the heavens brought misfortune",
+          "sub": "The opinion of the chief mufti.",
+          "src": "NOOR · Istanbul observatory",
+          "hold": 13.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "January 1580",
+          "text": "Pulled down by a detachment of the navy",
+          "sub": "Uraniborg ran for twenty years and produced the observations Kepler used.",
+          "hold": 13.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "So what did they actually build",
+          "text": "Not a golden age",
+          "sub": "A phrase that flatters and explains nothing.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "quote",
+          "src": "Ibn al-Haytham, paraphrased · NOOR Codex of Light",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "dissolve",
+          "exit": "dissolve",
+          "en": "The seeker of truth must suspect every claim, including his own."
+        },
+        {
+          "kind": "title",
+          "eyebrow": "A habit",
+          "text": "Measure it, write the method, let the next person check",
+          "sub": "Numbers you can still test, and corrections nobody had dared make.",
+          "hold": 11.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "NOOR Codex of Light",
+          "text": "noorcodex.com",
+          "sub": "Public, dated and checkable. 21 languages. Free, with no account to make.",
+          "hold": 10.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

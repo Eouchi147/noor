@@ -1,0 +1,158 @@
+{
+  "slug": "short-turnback",
+  "id": "short-turnback",
+  "title": "He turned the army back",
+  "note": "The plague of Amwas, and a rule that holds the healthy out and the exposed in.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "He turned the army back",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "A plague rule from the year 638",
+          "hold": 4.6,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutvalley",
+            "n": 26,
+            "leave": 0,
+            "key": [
+              [
+                "base",
+                "Everyone inside"
+              ],
+              [
+                "line",
+                "The line drawn round them"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 11940,
+                "holdMs": 7360,
+                "text": "A town with plague in it",
+                "sub": "Amwas, in Syria, in the year 638",
+                "to": [
+                  -0.05,
+                  0.06
+                ],
+                "at": "middle",
+                "side": "up"
+              },
+              {
+                "atMs": 19940,
+                "holdMs": 7160,
+                "text": "A line is drawn around it",
+                "sub": "and it closes from both sides",
+                "to": [
+                  -0.54,
+                  -0.27
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 31540,
+                "holdMs": 8160,
+                "text": "If you are outside, stay out",
+                "sub": "do not walk into a place with plague",
+                "to": [
+                  0.53,
+                  -0.23
+                ],
+                "at": "right",
+                "side": "up"
+              },
+              {
+                "atMs": 40340,
+                "holdMs": 7960,
+                "text": "If you are inside, stay in",
+                "sub": "do not run out and take it with you",
+                "to": [
+                  -0.09,
+                  0.06
+                ],
+                "at": "middle",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 19940,
+            "keyHoldMs": 6960
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Syria, the year 638",
+          "sub": "the caliph Umar is on the road there",
+          "hold": 7.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "The rule has two halves",
+          "hold": 3.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "So Umar turned his army around",
+          "sub": "he stopped at the edge and went back",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Amwas, Syria, 638",
+          "text": "That is quarantine, written down",
+          "src": "noorcodex.com",
+          "hold": 6.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

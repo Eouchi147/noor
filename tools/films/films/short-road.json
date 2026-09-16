@@ -1,0 +1,197 @@
+{
+  "slug": "short-road",
+  "id": "short-road",
+  "title": "The paper road",
+  "note": "How Greek and Indian learning reached Europe through Arabic.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The paper road",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "road",
+          "hold": 42.0,
+          "lines": [
+            {
+              "text": "Greek science reached Europe in Arabic",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.69
+            },
+            {
+              "text": "Baghdad, the 800s",
+              "sub": "scholars gather, translate and correct",
+              "size": "h1",
+              "at": 4.03,
+              "until": 9.02
+            },
+            {
+              "text": "Then the road turns west",
+              "size": "h1",
+              "at": 9.36,
+              "until": 12.07
+            },
+            {
+              "text": "Baghdad wrote them down",
+              "size": "h1",
+              "at": 12.41,
+              "until": 15.0
+            },
+            {
+              "text": "Toledo and Cordoba translated them",
+              "sub": "Arabic into Latin, in the 1100s",
+              "size": "h1",
+              "at": 15.34,
+              "until": 21.15
+            },
+            {
+              "text": "Europe taught them",
+              "sub": "in its first universities, the 1200s",
+              "size": "h1",
+              "at": 21.49,
+              "until": 26.47
+            },
+            {
+              "text": "This is the paper road",
+              "size": "h1",
+              "at": 26.81,
+              "until": 29.39
+            },
+            {
+              "text": "Almost nothing here was invented",
+              "sub": "it was carried carefully, and improved",
+              "size": "h1",
+              "at": 29.73,
+              "until": 35.87
+            },
+            {
+              "eyebrow": "Baghdad, Toledo, Cordoba",
+              "text": "Handing a thing on is its own glory",
+              "src": "NOOR Codex of Light, the Gifts",
+              "size": "h1",
+              "at": 36.21,
+              "until": 41.62
+            }
+          ],
+          "at": [
+            100,
+            4480,
+            6525,
+            9810,
+            10413,
+            11017,
+            12860,
+            13705,
+            15790,
+            18245,
+            21940,
+            23980,
+            27260
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 4.03,
+              "i0": 1,
+              "i1": 2
+            },
+            {
+              "at": 9.36,
+              "i0": 3,
+              "i1": 5
+            },
+            {
+              "at": 12.41,
+              "i0": 6,
+              "i1": 7
+            },
+            {
+              "at": 15.34,
+              "i0": 8,
+              "i1": 9
+            },
+            {
+              "at": 21.49,
+              "i0": 10,
+              "i1": 11
+            },
+            {
+              "at": 26.81,
+              "i0": 12,
+              "i1": 12
+            },
+            {
+              "at": 29.73,
+              "i0": 12,
+              "i1": 12
+            },
+            {
+              "at": 36.21,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "flow",
+              "on": ".rd path",
+              "at": 2,
+              "for": 7.0,
+              "times": 5,
+              "size": 1.4
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 3,
+              "for": 3.2,
+              "times": 1,
+              "size": 1.2
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 4,
+              "for": 3.4,
+              "times": 1,
+              "size": 1.2
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 5,
+              "for": 3.4,
+              "times": 1,
+              "size": 1.2
+            },
+            {
+              "do": "flow",
+              "on": ".rd path",
+              "at": 6,
+              "for": 6.0,
+              "times": 5,
+              "size": 1.4
+            },
+            {
+              "do": "glow",
+              "on": ".rd path",
+              "at": 6,
+              "for": 2.6,
+              "size": 0.7
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

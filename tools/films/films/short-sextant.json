@@ -1,0 +1,177 @@
+{
+  "slug": "short-sextant",
+  "id": "short-sextant",
+  "title": "A ruler in the bedrock",
+  "note": "Ulugh Beg's forty metre sextant and the Samarkand star catalogue.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "A ruler in the bedrock",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "sextant",
+          "hold": 45.3,
+          "lines": [
+            {
+              "text": "A king measured the sky in stone",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.56
+            },
+            {
+              "text": "Samarkand, in Uzbekistan, the 1420s",
+              "sub": "the king is Ulugh Beg, an astronomer",
+              "size": "h1",
+              "at": 3.9,
+              "until": 10.16
+            },
+            {
+              "text": "He sank an arc into the bedrock",
+              "sub": "about forty metres across",
+              "size": "h1",
+              "at": 10.5,
+              "until": 15.71
+            },
+            {
+              "text": "Bigger means finer",
+              "sub": "a minute of sky is a centimetre of stone",
+              "size": "h1",
+              "at": 16.05,
+              "until": 21.44
+            },
+            {
+              "text": "He paid a salaried staff",
+              "sub": "and scholars came from many lands",
+              "size": "h1",
+              "at": 21.78,
+              "until": 27.06
+            },
+            {
+              "text": "They fixed a thousand stars",
+              "sub": "the first fresh catalogue in 1,000 years",
+              "size": "h1",
+              "at": 27.4,
+              "until": 33.39
+            },
+            {
+              "text": "He was killed, the tower pulled down",
+              "sub": "the numbers got to Oxford anyway",
+              "size": "h1",
+              "at": 33.73,
+              "until": 39.84
+            },
+            {
+              "eyebrow": "Ulugh Beg, Samarkand",
+              "text": "Instruments break. Numbers travel",
+              "src": "Printed at Oxford, 1665",
+              "size": "h1",
+              "at": 40.18,
+              "until": 44.99
+            }
+          ],
+          "at": [
+            100,
+            4350,
+            10950,
+            12387,
+            13823,
+            16500,
+            17997,
+            19493,
+            22230,
+            24420,
+            27850,
+            30395
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 3.9,
+              "i0": 1,
+              "i1": 1
+            },
+            {
+              "at": 10.5,
+              "i0": 2,
+              "i1": 4
+            },
+            {
+              "at": 16.05,
+              "i0": 5,
+              "i1": 7
+            },
+            {
+              "at": 21.78,
+              "i0": 8,
+              "i1": 9
+            },
+            {
+              "at": 27.4,
+              "i0": 10,
+              "i1": 11
+            },
+            {
+              "at": 33.73,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 40.18,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": ".ln path",
+              "at": 2,
+              "for": 4.0,
+              "times": 1,
+              "size": 1.0
+            },
+            {
+              "do": "travel",
+              "on": ".ln path",
+              "at": 3,
+              "for": 4.6,
+              "times": 2,
+              "size": 1.0
+            },
+            {
+              "do": "pulse",
+              "on": "circle",
+              "at": 4,
+              "for": 1.4
+            },
+            {
+              "do": "travel",
+              "on": ".ln path",
+              "at": 6,
+              "for": 4.4,
+              "times": 2,
+              "size": 0.9
+            },
+            {
+              "do": "glow",
+              "on": "circle",
+              "at": 4,
+              "for": 2.6,
+              "size": 1.6
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

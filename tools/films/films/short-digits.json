@@ -1,0 +1,210 @@
+{
+  "slug": "short-digits",
+  "id": "short-digits",
+  "title": "The road of the digits",
+  "note": "How the Indian numerals reached Europe, stop by stop, and who carried them at each stage.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The road of the digits",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "The numbers 1 to 9 came from India",
+          "hold": 4.9,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutpath",
+            "hub": [
+              1.45,
+              -0.1
+            ],
+            "legs": [
+              {
+                "from": [
+                  1.45,
+                  -0.1
+                ],
+                "to": [
+                  0.35,
+                  0.55
+                ],
+                "bow": 0.18,
+                "at": 0.0,
+                "span": 0.26
+              },
+              {
+                "from": [
+                  0.35,
+                  0.55
+                ],
+                "to": [
+                  -0.85,
+                  0.1
+                ],
+                "bow": -0.18,
+                "at": 0.32,
+                "span": 0.26
+              },
+              {
+                "from": [
+                  -0.85,
+                  0.1
+                ],
+                "to": [
+                  -1.55,
+                  0.88
+                ],
+                "bow": 0.14,
+                "at": 0.64,
+                "span": 0.26
+              }
+            ],
+            "key": [
+              [
+                "base",
+                "A place it reached"
+              ],
+              [
+                "line",
+                "The road between"
+              ]
+            ],
+            "span": 10,
+            "calls": [
+              {
+                "atMs": 13840,
+                "holdMs": 6160,
+                "text": "India",
+                "sub": "the shapes 1 to 9, and a sign for zero",
+                "to": [
+                  0.09,
+                  0.37
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 20640,
+                "holdMs": 7360,
+                "text": "Baghdad, the year 773",
+                "sub": "an Indian book arrives at the palace",
+                "to": [
+                  -1.31,
+                  0.71
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 32140,
+                "holdMs": 6060,
+                "text": "North Africa",
+                "sub": "written in dust on a flat board",
+                "to": [
+                  -1.44,
+                  0.84
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 38840,
+                "holdMs": 6560,
+                "text": "Bugia, in Algeria",
+                "sub": "an Italian boy learns them there",
+                "to": [
+                  0.83,
+                  0.13
+                ],
+                "at": "new",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 20640,
+            "keyHoldMs": 7160
+          }
+        },
+        {
+          "kind": "title",
+          "text": "They took 400 years to reach Europe",
+          "sub": "from about the year 700 to about 1200",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 6.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Then they moved west",
+          "hold": 3.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 6.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "That boy grew up to be Fibonacci",
+          "sub": "his book taught Europe to use them",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "We call them Arabic numbers",
+          "sub": "the Arabs called them Indian numbers",
+          "hold": 7.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Baghdad, 773",
+          "text": "Both names point back to India",
+          "src": "noorcodex.com",
+          "hold": 5.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

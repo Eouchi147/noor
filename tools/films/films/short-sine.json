@@ -1,0 +1,156 @@
+{
+  "slug": "short-sine",
+  "id": "short-sine",
+  "title": "One word, two readings",
+  "note": "jya to jiba to jayb to sinus: the word sine is a misreading, kept.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One word, two readings",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "The word sine is a mistake",
+          "hold": 4.6,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutsplit",
+            "key": [
+              [
+                "base",
+                "The sound, carried"
+              ],
+              [
+                "rise",
+                "The meaning, swapped"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 12340,
+                "holdMs": 7860,
+                "text": "In India it was called jya",
+                "sub": "the name for a line across a circle",
+                "to": [
+                  -1.83,
+                  0.02
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 20840,
+                "holdMs": 7560,
+                "text": "Arabic copied the sound: jiba",
+                "sub": "the sound only, not the meaning",
+                "to": [
+                  0.27,
+                  0.01
+                ],
+                "at": "middle",
+                "side": "up"
+              },
+              {
+                "atMs": 33240,
+                "holdMs": 7560,
+                "text": "So on the page it is j and b",
+                "sub": "and jiba looks just like jayb",
+                "to": [
+                  1.79,
+                  -0.51
+                ],
+                "at": "bottom",
+                "side": "up"
+              },
+              {
+                "atMs": 41440,
+                "holdMs": 8360,
+                "text": "Jayb means a fold, or a pocket",
+                "sub": "the Latin translator read it that way",
+                "to": [
+                  1.69,
+                  0.53
+                ],
+                "at": "top",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 20840,
+            "keyHoldMs": 7360
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Spain, about the year 1150",
+          "sub": "translating Arabic books into Latin",
+          "hold": 7.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Arabic leaves out its vowels",
+          "hold": 4.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "In Latin a fold is sinus",
+          "sub": "and English cut sinus down to sine",
+          "hold": 7.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Toledo, Spain, the 1100s",
+          "text": "The maths is Indian. The name is a slip.",
+          "src": "noorcodex.com",
+          "hold": 7.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

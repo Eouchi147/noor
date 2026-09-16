@@ -1,0 +1,157 @@
+{
+  "slug": "short-onehill",
+  "id": "short-onehill",
+  "title": "One hill, one angle",
+  "note": "Al-Biruni measures the radius of the earth from a single hill, and how much of that accuracy his instrument could really carry.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One hill, one angle",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "One man measured Earth from a hill",
+          "hold": 4.9,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutbar",
+            "frac": 0.005,
+            "w": 3.0,
+            "key": [
+              [
+                "base",
+                "The radius he found"
+              ],
+              [
+                "rise",
+                "How far out he was"
+              ]
+            ],
+            "span": 10,
+            "calls": [
+              {
+                "atMs": 13140,
+                "holdMs": 7460,
+                "text": "Earth's radius is 6,371 km",
+                "sub": "that is the number we use today",
+                "to": [
+                  -0.05,
+                  0.07
+                ],
+                "at": "big",
+                "side": "up"
+              },
+              {
+                "atMs": 29040,
+                "holdMs": 7560,
+                "text": "His answer: about 6,340 km",
+                "sub": "worked out from a single triangle",
+                "to": [
+                  0.86,
+                  0.14
+                ],
+                "at": "big",
+                "side": "up"
+              },
+              {
+                "atMs": 40740,
+                "holdMs": 8460,
+                "text": "This small piece is his error",
+                "sub": "half of one per cent, in the year 1018",
+                "to": [
+                  -0.05,
+                  0.42
+                ],
+                "at": "right",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 29040,
+            "keyHoldMs": 7360
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Al-Biruni, in the year 1018",
+          "sub": "at a hill fort in what is now Pakistan",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "He had a hill and one angle",
+          "sub": "measure the hill, climb it, look out",
+          "hold": 7.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Now look at the gap",
+          "hold": 3.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "No ships and no survey teams",
+          "sub": "one man, one hill, one afternoon",
+          "hold": 7.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Some of that was luck",
+          "sub": "his tools were not really that exact",
+          "hold": 7.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Al-Biruni, Nandana, 1018",
+          "text": "Still, one hill was enough",
+          "src": "noorcodex.com",
+          "hold": 6.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

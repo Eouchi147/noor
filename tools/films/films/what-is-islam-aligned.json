@@ -1,0 +1,631 @@
+{
+ "slug": "what-is-islam-aligned",
+ "id": "what-is-islam",
+ "title": "What is Islam, actually?",
+ "note": "Every figure is generated from numbers and every claim carries its source. The Qur'anic text is the Tanzil Uthmani served by api.alquran.cloud, the same file the library's reels are set from.",
+ "chapters": [
+  {
+   "id": "the-film",
+   "eyebrow": "",
+   "title": "What is Islam, actually?",
+   "narration": "In the year twenty twenty there were about two billion Muslims alive: twenty-six people in every hundred on earth. Two billion people have built their days around a single claim. And most of the rest of us could not say, in one sentence, what that claim is. So: what is Islam, actually? Not what its followers are like. Not what its critics say. What the thing itself claims to be. It makes a small number of claims, and it makes them plainly. We are going to take them one at a time, and show where every one of them comes from. Start with the name, because the name is already a claim. Before it was the name of a religion, islam was an ordinary Arabic word. It is built from a root of three letters, seen, laam and meem, and that same root gives a word you may already know: salaam, peace. The two are not neighbours by accident. To hand the whole self over, and to be at peace, are in Arabic one movement. So the word is not a label stuck on a set of rules. It names a posture. The Qur'an uses it exactly that way: the religion with Allah is islam. And a posture can be described. That is the whole of what follows. English hands you one word for all of it: religion. Arabic does not. It has three words here, and they are not synonyms. They are three different questions, and the tradition keeps them apart on purpose. We know they are three because of a famous scene. A stranger no one recognised sat down in front of the Prophet, close enough that their knees touched, and asked him three questions in order. Tell me about islam. Tell me about iman. Tell me about ihsan. Islam is the outward frame: what is done. Iman is the inner conviction: what is held. And ihsan is the finish on both: to worship Allah as though you see Him, and if you do not see Him, then knowing that He sees you. Three questions, three answers, and no one of them is the whole thing. Of those three, everything rests on the first word of the first answer. The Qur'an puts it in four lines, a chapter short enough to say in a breath, and the one Muslims are told is worth a third of the whole book. Say: He is Allah, One. Allah, the Eternal Refuge. He neither begets nor is born, and there is none comparable to Him. Read it again and notice what it is doing. It is not saying that Allah is one of a kind, the best of a set. It is closing the set. Nothing is descended from Him, nothing produced Him, and nothing is in His class. Everything else in Islam, every prayer, every fast, every law, every argument for fourteen hundred years, is downstream of that sentence. The second claim follows from the first. If there is one God, and He made creatures who speak, then the obvious question is whether He has ever said anything. Islam's answer is yes, and it is unusually specific about the manner. Not a finished book let down from the sky. Twenty-three years of speech, arriving in pieces, in answer to what was actually happening: a battle lost, a marriage disputed, a question somebody asked out loud. And then it does something most scriptures never do. It makes a claim about itself in a form you could try to falsify: if you are in doubt about what We have sent down upon Our servant, then produce a chapter like it. Whatever you make of that, notice its shape. It is not an order to believe. It is an invitation to check. A claim to be the speech of God is worth exactly as much as the text you are holding. So: is this the same book? It was carried two ways at once, and that is the part people miss. In writing, which can be copied wrongly, and in memory, out loud, by people who had the whole of it by heart and recited it to each other in public, every day, in every generation, in a chain where each person can be named. A mistake in a copy is caught by a room that already knows the line. And the copies can be dated. In Birmingham there are two leaves of parchment in early Hijazi script. Oxford's radiocarbon unit put the parchment between 568 and 645 of the common era, with ninety-five per cent confidence. On them are parts of chapters nineteen and twenty, in the same words a reader recites today, with small differences of spelling. That is not proof that the book is what it says it is. It is evidence about the text, which is a different question, and the only one of the two that anybody can measure. Which brings us back to the stranger's first question. Tell me about islam, the outward frame, the part that is done rather than held. The answer given that day was five things. To say it: there is no god but Allah, and Muhammad is His messenger. To pray, at five fixed times a day. To give a fixed share of what you have kept for a year to people who have less. To fast the month of Ramadan. And, once, if you can afford it and your body allows it, to go to Makkah. That is the whole outward frame. Notice what it is: five habits, four of them repeating, all of them public, none of them requiring you to be clever. It is short enough to say in a minute, and long enough to take a life. And if you want to check any of it, every source in this film is in the library, free, with no account to make.",
+   "beats": [
+    {
+     "kind": "statement",
+     "text": "In 2020 there were two billion Muslims alive.",
+     "hold": 3.975,
+     "shot": "study",
+     "enter": "slow",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "hundred",
+      "span": 4
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Twenty-six in every hundred people on earth.",
+     "src": "Pew Research Center · Muslim population change, 2010-2020",
+     "hold": 3.975,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Two billion people have built their days around a single claim.",
+     "hold": 4.32,
+     "shot": "study",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "Most of the rest of us could not say what the claim is.",
+     "hold": 5.97,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "NOOR · Codex of Light",
+     "text": "What is Islam, actually?",
+     "hold": 2.33,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 4
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Not what its followers are like. Not what its critics say.",
+     "hold": 3.92,
+     "shot": "approach",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "What the thing itself claims to be.",
+     "hold": 2.73,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "It makes a small number of claims, and it makes them plainly.",
+     "hold": 4.46,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "We take them one at a time, and show where each one comes from.",
+     "hold": 7.1,
+     "shot": "drift",
+     "enter": "dissolve",
+     "exit": "slow",
+     "lume": {
+      "kind": "stream"
+     }
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter one",
+     "text": "The word itself",
+     "sub": "Before it was the name of a religion, it was an ordinary word.",
+     "hold": 5.1,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "The name is already a claim.",
+     "hold": 6.15,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "hold": 12.61,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "root"
+     },
+     "text": "One root, three letters, and two words that both stand on it."
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "To hand the whole self over, and to be at peace, are one movement.",
+     "hold": 3.94,
+     "shot": "drift",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "stream",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Not a set of rules with a name on it. A posture, and a name for the posture.",
+     "hold": 9.99,
+     "shot": "hold",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "quote",
+     "ar": "إِنَّ ٱلدِّينَ عِندَ ٱللَّهِ ٱلْإِسْلَٰمُ",
+     "en": "The religion with Allah is islam.",
+     "src": "Qur'an 3:19 · Āl ʿImrān · opening of the verse",
+     "hold": 9.0,
+     "shot": "descend",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "A posture can be described. That is the whole of what follows.",
+     "hold": 10.41,
+     "shot": "withdraw",
+     "exit": "slow"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter two",
+     "text": "Three words, not one",
+     "sub": "English has one word for all of it. Arabic has three.",
+     "hold": 2.29,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 3
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "They are not synonyms. They are three different questions.",
+     "hold": 7.7,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "A stranger nobody recognised sat down in front of the Prophet, and asked all three.",
+     "hold": 2.31,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "hold": 29.57,
+     "shot": "study",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "layers"
+     },
+     "text": "Three questions, asked in order, and answered in order."
+    },
+    {
+     "kind": "quote",
+     "ar": "أَنْ تَعْبُدَ ٱللَّهَ كَأَنَّكَ تَرَاهُ فَإِنْ لَمْ تَكُنْ تَرَاهُ فَإِنَّهُ يَرَاكَ",
+     "en": "To worship Allah as though you see Him; and if you do not see Him, He sees you.",
+     "src": "Ṣaḥīḥ Muslim 8a · Book of Faith · ʿUmar ibn al-Khaṭṭāb",
+     "hold": 10.5,
+     "shot": "drift",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Three questions. Three answers. No one of them is the whole thing.",
+     "hold": 6.5,
+     "shot": "withdraw",
+     "exit": "slow",
+     "lume": {
+      "kind": "ring",
+      "count": 3
+     }
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter three",
+     "text": "One",
+     "sub": "Everything rests on the first word of the first answer.",
+     "hold": 3.58,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "The Qur'an puts it in four lines.",
+     "hold": 10.87,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "quote",
+     "ar": "قُلْ هُوَ ٱللَّهُ أَحَدٌ ۝ ٱللَّهُ ٱلصَّمَدُ",
+     "en": "Say: He is Allah, One. Allah, the Eternal Refuge.",
+     "src": "Qur'an 112:1-2 · al-Ikhlāṣ",
+     "hold": 9.5,
+     "shot": "descend",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "quote",
+     "ar": "لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+     "en": "He neither begets nor is born, and there is none comparable to Him.",
+     "src": "Qur'an 112:3-4 · al-Ikhlāṣ",
+     "hold": 9.5,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "Read it again, and notice what it is doing.",
+     "hold": 3.55,
+     "shot": "study",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "closingSet",
+      "span": 4
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "It is not saying that Allah is one of a kind, the best of a set.",
+     "hold": 5.09,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "It is closing the set.",
+     "hold": 2.2,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "Nothing is descended from Him. Nothing produced Him. Nothing is in His class.",
+     "hold": 6.62,
+     "shot": "study",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "Everything else in Islam is downstream of that sentence.",
+     "hold": 9.49,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "slow"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter four",
+     "text": "He has spoken",
+     "sub": "The second claim follows from the first.",
+     "hold": 3.12,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "If there is one God, and He made creatures who speak, has He ever said anything?",
+     "hold": 8.59,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Islam's answer is yes.",
+     "hold": 5.75,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "stream",
+      "span": 1
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Not a finished book let down from the sky.",
+     "hold": 3.06,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "years",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Twenty-three years of speech, arriving in answer to what was happening.",
+     "hold": 13.6,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Then it does something most scriptures never do.",
+     "hold": 3.42,
+     "shot": "approach",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "ring",
+      "count": 3,
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "It makes a claim about itself in a form you could try to falsify.",
+     "hold": 5.77,
+     "shot": "hold",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "quote",
+     "ar": "وَإِن كُنتُمْ فِى رَيْبٍۢ مِّمَّا نَزَّلْنَا عَلَىٰ عَبْدِنَا فَأْتُوا۟ بِسُورَةٍۢ مِّن مِّثْلِهِۦ",
+     "en": "And if you are in doubt about what We have sent down upon Our servant, then produce a sūrah the like of it.",
+     "src": "Qur'an 2:23 · al-Baqarah · opening of the verse",
+     "hold": 10.5,
+     "shot": "descend",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 3
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Whatever you make of that, notice its shape.",
+     "hold": 5.69,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "It is not an order to believe. It is an invitation to check.",
+     "hold": 2.3,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "slow"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter five",
+     "text": "And it was kept",
+     "sub": "A claim is worth as much as the text you are holding.",
+     "hold": 5.65,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Is this the same book?",
+     "hold": 2.2,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "It was carried two ways at once, and that is the part people miss.",
+     "hold": 2.41,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "lattice",
+      "rings": [
+       1,
+       3,
+       6,
+       10,
+       15
+      ],
+      "span": 4
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "In writing, which can be copied wrongly.",
+     "hold": 2.41,
+     "shot": "orbit",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "And in memory. Out loud, in public, by people who had all of it by heart.",
+     "hold": 16.95,
+     "shot": "drift",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "A mistake in a copy is caught by a room that already knows the line.",
+     "hold": 6.53,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "And the copies can be dated.",
+     "hold": 2.2,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "hold": 13.62,
+     "shot": "study",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "dated",
+      "span": 3
+     },
+     "text": "Two leaves of parchment, and a date anybody can check."
+    },
+    {
+     "kind": "statement",
+     "text": "Two leaves, written within a lifetime of the man who recited them.",
+     "hold": 10.54,
+     "shot": "study",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "That is not proof that the book is what it says it is.",
+     "hold": 4.17,
+     "shot": "study",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "It is evidence about the text, the only one of the two anybody can measure.",
+     "hold": 7.97,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "slow"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "Chapter six",
+     "text": "What it asks",
+     "sub": "Back to the stranger's first question.",
+     "hold": 5.53,
+     "shot": "reveal",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 2
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Tell me about islam. The part that is done, rather than held.",
+     "hold": 4.33,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "hold": 26.19,
+     "shot": "study",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "plate",
+      "draw": "five",
+      "span": 2
+     },
+     "text": "The answer given that day was five things."
+    },
+    {
+     "kind": "statement",
+     "text": "Five habits. Four of them repeating. All of them public.",
+     "hold": 2.69,
+     "shot": "study",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "text": "None of them requiring you to be clever.",
+     "hold": 9.91,
+     "shot": "drift",
+     "enter": "dissolve",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "statement",
+     "size": "big",
+     "text": "Short enough to say in a minute. Long enough to take a life.",
+     "hold": 5.18,
+     "shot": "withdraw",
+     "enter": "dissolve",
+     "exit": "dissolve",
+     "lume": {
+      "kind": "orb",
+      "place": "over",
+      "span": 3
+     }
+    },
+    {
+     "kind": "statement",
+     "text": "Every source in this film is in the library. Free, with no account to make.",
+     "hold": 9.06,
+     "shot": "hold",
+     "exit": "dissolve"
+    },
+    {
+     "kind": "title",
+     "eyebrow": "NOOR · Codex of Light",
+     "text": "noorcodex.com",
+     "sub": "620 pages · 21 languages · no advertisements, no trackers",
+     "hold": 8.6,
+     "shot": "approach",
+     "enter": "dissolve",
+     "exit": "slow"
+    }
+   ]
+  }
+ ]
+}

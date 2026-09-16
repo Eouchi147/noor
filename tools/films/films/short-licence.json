@@ -1,0 +1,186 @@
+{
+  "slug": "short-licence",
+  "id": "short-licence",
+  "title": "Read it back",
+  "note": "Karima al-Marwaziyya and the ijazah: verified transmission.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Read it back",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "checkcopy",
+          "hold": 45.5,
+          "lines": [
+            {
+              "text": "A book you were not allowed to copy",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.59
+            },
+            {
+              "text": "Makkah, in Arabia, about 1020",
+              "sub": "the scholar Karima al-Marwaziyya",
+              "size": "h1",
+              "at": 3.93,
+              "until": 9.37
+            },
+            {
+              "text": "Karima holds the most trusted copy",
+              "sub": "of the most checked book after the Qur'an",
+              "size": "h1",
+              "at": 9.71,
+              "until": 16.34
+            },
+            {
+              "text": "Copying by hand puts errors in",
+              "size": "h1",
+              "at": 16.68,
+              "until": 19.84
+            },
+            {
+              "text": "So you read yours back to her",
+              "sub": "out loud, line by line, against hers",
+              "size": "h1",
+              "at": 20.18,
+              "until": 26.14
+            },
+            {
+              "text": "One error caught is one error stopped",
+              "size": "h1",
+              "at": 26.48,
+              "until": 30.16
+            },
+            {
+              "text": "Only then would she sign your licence",
+              "size": "h1",
+              "at": 30.5,
+              "until": 34.18
+            },
+            {
+              "text": "Fifty years as the checkpoint",
+              "sub": "chains still pass through her",
+              "size": "h1",
+              "at": 34.52,
+              "until": 39.81
+            },
+            {
+              "eyebrow": "Karima al-Marwaziyya",
+              "text": "She died in Makkah, near a hundred",
+              "src": "al-Khatib al-Baghdadi read it back to her",
+              "size": "h1",
+              "at": 40.15,
+              "until": 45.13
+            }
+          ],
+          "at": [
+            100,
+            1795,
+            4380,
+            10160,
+            13025,
+            17130,
+            20630,
+            22317,
+            24003,
+            26930,
+            28320,
+            30950,
+            32340,
+            34970
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 1
+            },
+            {
+              "at": 3.93,
+              "i0": 2,
+              "i1": 2
+            },
+            {
+              "at": 9.71,
+              "i0": 3,
+              "i1": 4
+            },
+            {
+              "at": 16.68,
+              "i0": 5,
+              "i1": 5
+            },
+            {
+              "at": 20.18,
+              "i0": 6,
+              "i1": 8
+            },
+            {
+              "at": 26.48,
+              "i0": 9,
+              "i1": 10
+            },
+            {
+              "at": 30.5,
+              "i0": 11,
+              "i1": 12
+            },
+            {
+              "at": 34.52,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 40.15,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 4,
+              "for": 4.6,
+              "times": 3,
+              "size": 1.0
+            },
+            {
+              "do": "pulse",
+              "on": "circle",
+              "at": 5,
+              "for": 1.4
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 5,
+              "for": 3.0,
+              "times": 2,
+              "size": 1.0
+            },
+            {
+              "do": "pulse",
+              "on": "path.nd",
+              "at": 6,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "path.nd",
+              "at": 5,
+              "for": 2.6,
+              "size": 1.6
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "slug": "short-sieve",
+  "id": "short-sieve",
+  "title": "The sieve",
+  "note": "Bukhari tested 600,000 reports and kept about 2,600.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The sieve",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "sieve",
+          "hold": 44.8,
+          "lines": [
+            {
+              "text": "One book was checked 600,000 times",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.56
+            },
+            {
+              "text": "Bukhara, in Uzbekistan, the year 846",
+              "sub": "a scholar, Muhammad al-Bukhari",
+              "size": "h1",
+              "at": 3.9,
+              "until": 9.73
+            },
+            {
+              "text": "He gathers everything people report",
+              "sub": "from over a thousand teachers",
+              "size": "h1",
+              "at": 10.07,
+              "until": 15.76
+            },
+            {
+              "text": "Then he tests every single one",
+              "size": "h1",
+              "at": 16.1,
+              "until": 19.26
+            },
+            {
+              "text": "Did these two men really meet?",
+              "sub": "how good was his memory, and his character",
+              "size": "h1",
+              "at": 19.6,
+              "until": 26.03
+            },
+            {
+              "text": "He threw out a man he saw",
+              "sub": "tricking his horse with an empty bag",
+              "size": "h1",
+              "at": 26.37,
+              "until": 32.06
+            },
+            {
+              "text": "Out of 600,000 reports",
+              "sub": "about 2,600 came through",
+              "size": "h1",
+              "at": 32.4,
+              "until": 36.79
+            },
+            {
+              "text": "Doubt, made a method",
+              "size": "h1",
+              "at": 37.13,
+              "until": 39.52
+            },
+            {
+              "eyebrow": "Muhammad al-Bukhari",
+              "text": "He died poor, in exile, in 870",
+              "src": "Sahih al-Bukhari, counts by the tradition",
+              "size": "h1",
+              "at": 39.86,
+              "until": 44.5
+            }
+          ],
+          "at": [
+            100,
+            1780,
+            4350,
+            10520,
+            16550,
+            20050,
+            21893,
+            23737,
+            26820,
+            32850,
+            34013,
+            35177
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 1
+            },
+            {
+              "at": 3.9,
+              "i0": 2,
+              "i1": 2
+            },
+            {
+              "at": 10.07,
+              "i0": 3,
+              "i1": 3
+            },
+            {
+              "at": 16.1,
+              "i0": 4,
+              "i1": 4
+            },
+            {
+              "at": 19.6,
+              "i0": 5,
+              "i1": 7
+            },
+            {
+              "at": 26.37,
+              "i0": 8,
+              "i1": 8
+            },
+            {
+              "at": 32.4,
+              "i0": 9,
+              "i1": 11
+            },
+            {
+              "at": 37.13,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 39.86,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "pour",
+              "on": ".ln",
+              "into": ".ln",
+              "at": 1,
+              "for": 5.2,
+              "count": 110,
+              "keep": 0.14,
+              "size": 0.42,
+              "rise": 2.6
+            },
+            {
+              "do": "pour",
+              "on": ".ln",
+              "into": ".ln",
+              "at": 4,
+              "for": 5.2,
+              "count": 110,
+              "keep": 0.1,
+              "size": 0.42,
+              "rise": 2.6
+            },
+            {
+              "do": "count",
+              "on": "text.t1",
+              "at": 6,
+              "for": 2.2,
+              "stagger": 0.25
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 6,
+              "for": 2.0,
+              "times": 1,
+              "size": 0.9
+            },
+            {
+              "do": "glow",
+              "on": "text.t1",
+              "at": 6,
+              "for": 2.6,
+              "size": 1.0
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

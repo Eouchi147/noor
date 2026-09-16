@@ -1,0 +1,194 @@
+{
+  "slug": "short-subscription",
+  "id": "short-subscription",
+  "title": "Paid for by pilgrims",
+  "note": "The Hejaz railway, paid for in large part by donations from Muslims across the world, and how long it ran.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Paid for by pilgrims",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "A railway paid for by donations",
+          "hold": 4.6,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutconverge",
+            "from": [
+              {
+                "a": 2.7,
+                "r": 2.55
+              },
+              {
+                "a": 2.25,
+                "r": 2.8
+              },
+              {
+                "a": 1.8,
+                "r": 2.35
+              },
+              {
+                "a": -1.85,
+                "r": 2.4
+              },
+              {
+                "a": -2.25,
+                "r": 2.75
+              },
+              {
+                "a": -2.7,
+                "r": 2.5
+              },
+              {
+                "a": 3.05,
+                "r": 2.25
+              },
+              {
+                "a": -3.05,
+                "r": 2.2
+              },
+              {
+                "a": 1.35,
+                "r": 2.1
+              }
+            ],
+            "key": [
+              [
+                "base",
+                "A donation"
+              ],
+              [
+                "line",
+                "The line it paid for"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 13140,
+                "holdMs": 7260,
+                "text": "Money collected in mosques",
+                "sub": "and asked for in the newspapers",
+                "to": [
+                  -0.04,
+                  1.33
+                ],
+                "at": "top",
+                "side": "up"
+              },
+              {
+                "atMs": 21040,
+                "holdMs": 7560,
+                "text": "Gifts came from many countries",
+                "sub": "India, Egypt, Morocco and Java",
+                "to": [
+                  -1.08,
+                  0.25
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 33240,
+                "holdMs": 7560,
+                "text": "Soldiers laid the track",
+                "sub": "Ottoman soldiers, most of it by hand",
+                "to": [
+                  0.19,
+                  0.11
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 41440,
+                "holdMs": 8160,
+                "text": "1,300 km, Damascus to Madinah",
+                "sub": "through the desert, station by station",
+                "to": [
+                  0.09,
+                  0.11
+                ],
+                "at": "middle",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 21040,
+            "keyHoldMs": 7360
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Damascus to Madinah, 1900 to 1908",
+          "sub": "1,300 km of track, and no bank loan",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "No foreign loan was taken",
+          "hold": 4.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "The trip went from 40 days to 4",
+          "sub": "by camel before, by train after",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "First train, 1 September 1908",
+          "text": "Paid for by ordinary people",
+          "src": "noorcodex.com",
+          "hold": 6.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

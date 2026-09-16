@@ -1,0 +1,159 @@
+{
+  "slug": "short-alhazen",
+  "id": "short-alhazen",
+  "title": "Cairo to Kepler",
+  "note": "The Book of Optics from Cairo to Kepler, one printed link at a time.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Cairo to Kepler",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "This book took 600 years to cross Europe",
+          "hold": 5.4,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutchain",
+            "rows": [
+              {
+                "n": 5
+              }
+            ],
+            "stepx": 0.62,
+            "span": 10,
+            "calls": [
+              {
+                "atMs": 14640,
+                "holdMs": 7260,
+                "text": "Cairo, about the year 1020",
+                "sub": "the book is written, in Arabic",
+                "to": [
+                  0.3,
+                  0.0
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 22540,
+                "holdMs": 8360,
+                "text": "Latin, about the year 1200",
+                "sub": "Europe translates it and calls him Alhazen",
+                "to": [
+                  0.0,
+                  0.0
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 35840,
+                "holdMs": 7660,
+                "text": "Poland, about the year 1275",
+                "sub": "a scholar rewrites the whole thing",
+                "to": [
+                  -0.01,
+                  0.0
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 44140,
+                "holdMs": 7060,
+                "text": "Basel, the year 1572",
+                "sub": "a printer prints both books as one",
+                "to": [
+                  -0.07,
+                  0.01
+                ],
+                "at": "new",
+                "side": "up"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "title",
+          "text": "It starts in Cairo, Egypt, about 1020",
+          "sub": "Ibn al-Haytham writes the Book of Optics",
+          "hold": 8.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Then it is copied and taught",
+          "hold": 4.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "And that printed book reaches Kepler",
+          "sub": "in Germany, in the year 1604",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Every step here is on paper",
+          "sub": "you can look each book up by name",
+          "hold": 7.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Basel, 1572",
+          "text": "None of this chain is guessed",
+          "src": "Risner, Opticae thesaurus",
+          "hold": 5.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

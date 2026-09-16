@@ -1,0 +1,174 @@
+{
+  "slug": "short-gold",
+  "id": "short-gold",
+  "title": "The price of gold",
+  "note": "Mansa Musa's 1324 pilgrimage and the Cairo gold market.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The price of gold",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "goldprice",
+          "hold": 41.6,
+          "lines": [
+            {
+              "text": "One man's giving broke a market",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.56
+            },
+            {
+              "text": "Cairo, Egypt, the year 1324",
+              "sub": "the king of Mali, Mansa Musa, arrives",
+              "size": "h1",
+              "at": 3.9,
+              "until": 9.69
+            },
+            {
+              "text": "He is walking to Makkah",
+              "sub": "and giving gold away the whole way",
+              "size": "h1",
+              "at": 10.03,
+              "until": 15.36
+            },
+            {
+              "text": "So much that the price of gold sags",
+              "size": "h1",
+              "at": 15.7,
+              "until": 19.29
+            },
+            {
+              "text": "It took years to climb back",
+              "size": "h1",
+              "at": 19.63,
+              "until": 22.59
+            },
+            {
+              "text": "But the gold is not the story",
+              "size": "h1",
+              "at": 22.93,
+              "until": 26.07
+            },
+            {
+              "text": "He went home with scholars and jurists",
+              "sub": "and an architect from Spain",
+              "size": "h1",
+              "at": 26.41,
+              "until": 32.27
+            },
+            {
+              "text": "And built Timbuktu into a city of books",
+              "size": "h1",
+              "at": 32.61,
+              "until": 36.47
+            },
+            {
+              "eyebrow": "Mansa Musa, Mali",
+              "text": "The gold went back into vaults",
+              "src": "Cairo chronicles; the Catalan Atlas, 1375",
+              "size": "h1",
+              "at": 36.81,
+              "until": 41.25
+            }
+          ],
+          "at": [
+            100,
+            4350,
+            10480,
+            16150,
+            17495,
+            20080,
+            23380,
+            26860,
+            29340,
+            33060
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 3.9,
+              "i0": 1,
+              "i1": 1
+            },
+            {
+              "at": 10.03,
+              "i0": 2,
+              "i1": 2
+            },
+            {
+              "at": 15.7,
+              "i0": 3,
+              "i1": 4
+            },
+            {
+              "at": 19.63,
+              "i0": 5,
+              "i1": 5
+            },
+            {
+              "at": 22.93,
+              "i0": 6,
+              "i1": 6
+            },
+            {
+              "at": 26.41,
+              "i0": 7,
+              "i1": 8
+            },
+            {
+              "at": 32.61,
+              "i0": 9,
+              "i1": 9
+            },
+            {
+              "at": 36.81,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "trace",
+              "on": ".rd path",
+              "at": 3,
+              "for": 4.2,
+              "size": 1.2
+            },
+            {
+              "do": "pulse",
+              "on": "circle.nd",
+              "at": 3,
+              "for": 1.2,
+              "stagger": 0.5
+            },
+            {
+              "do": "trace",
+              "on": ".rd path",
+              "at": 4,
+              "for": 5.0,
+              "size": 1.0
+            },
+            {
+              "do": "glow",
+              "on": "circle.nd",
+              "at": 3,
+              "for": 2.6,
+              "size": 1.4
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

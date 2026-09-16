@@ -1,0 +1,146 @@
+{
+  "slug": "short-leftout",
+  "id": "short-leftout",
+  "title": "What he left out",
+  "note": "Al-Bukhari's sieve, and the idea underneath it: weigh the chain of names before you weigh the text.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "What he left out",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "Al-Bukhari kept only what he could prove",
+          "hold": 5.4,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutsieve",
+            "total": 600,
+            "keep": 7,
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 13740,
+                "holdMs": 7360,
+                "text": "He gathered a huge pile",
+                "sub": "from Iraq, Syria, Egypt and Arabia",
+                "to": [
+                  -0.07,
+                  2.64
+                ],
+                "at": "top",
+                "side": "up"
+              },
+              {
+                "atMs": 21740,
+                "holdMs": 7860,
+                "text": "He questioned every person",
+                "sub": "where did you live, who did you meet",
+                "to": [
+                  -0.12,
+                  -1.67
+                ],
+                "at": "middle",
+                "side": "up"
+              },
+              {
+                "atMs": 34340,
+                "holdMs": 7460,
+                "text": "Only about 7,275 are kept",
+                "sub": "out of everything he had gathered",
+                "to": [
+                  -1.25,
+                  -0.59
+                ],
+                "at": "bright",
+                "side": "up"
+              },
+              {
+                "atMs": 42440,
+                "holdMs": 6960,
+                "text": "The rest he set aside",
+                "sub": "and he wrote down why, by name",
+                "to": [
+                  0.25,
+                  -0.59
+                ],
+                "at": "gone",
+                "side": "up"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Born in Bukhara in the year 810",
+          "sub": "he spent 16 years collecting stories",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Then almost all of it goes",
+          "hold": 4.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Check the people, then the words",
+          "sub": "who said it, before what was said",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Al-Bukhari, 810 to 870",
+          "text": "One of the first tests of evidence",
+          "src": "Sahih al-Bukhari",
+          "hold": 7.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

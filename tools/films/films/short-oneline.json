@@ -1,0 +1,149 @@
+{
+  "slug": "short-oneline",
+  "id": "short-oneline",
+  "title": "One line in one book",
+  "note": "The single surviving line that records a woman who made astrolabes.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One line in one book",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "One line in one book is all we have",
+          "hold": 5.1,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutforty",
+            "total": 40,
+            "take": 1,
+            "cols": 8,
+            "key": [
+              [
+                "base",
+                "A maker in the list"
+              ],
+              [
+                "mark",
+                "Her one line"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 13740,
+                "holdMs": 7860,
+                "text": "A list of astrolabe makers",
+                "sub": "an astrolabe measures where stars are",
+                "to": [
+                  0.53,
+                  -0.27
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 26040,
+                "holdMs": 7260,
+                "text": "The daughter of al-Ijli",
+                "sub": "her father made astrolabes as well",
+                "to": [
+                  -0.56,
+                  -0.11
+                ],
+                "at": "big",
+                "side": "up"
+              },
+              {
+                "atMs": 33940,
+                "holdMs": 7960,
+                "text": "She worked in Aleppo, in Syria",
+                "sub": "for the ruler there, Sayf al-Dawla",
+                "to": [
+                  -0.36,
+                  0.3
+                ],
+                "at": "big",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 26040,
+            "keyHoldMs": 15660
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Ibn al-Nadim, Baghdad, about 987",
+          "sub": "he lists every book and maker he knows",
+          "hold": 8.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "One of them is a woman",
+          "hold": 3.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "We do not know her first name",
+          "sub": "the book that lists her does not say",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "And none of her work survives",
+          "sub": "one line is the whole record of her",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Ibn al-Nadim, about 987",
+          "text": "Later books invent a name for her",
+          "src": "The Fihrist",
+          "hold": 7.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

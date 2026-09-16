@@ -1,0 +1,170 @@
+{
+  "slug": "short-isnad",
+  "id": "short-isnad",
+  "title": "How they checked",
+  "note": "The isnad: why every report carries a chain of names, and what was done with those names.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "How they checked",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "How Muslims checked if a story was true",
+          "hold": 5.3,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutsort",
+            "total": 120,
+            "share": [
+              0.45,
+              0.3,
+              0.25
+            ],
+            "key": [
+              [
+                "base",
+                "Strong, or fair"
+              ],
+              [
+                "rise",
+                "Weak, and marked weak"
+              ]
+            ],
+            "span": 10,
+            "calls": [
+              {
+                "atMs": 13540,
+                "holdMs": 8460,
+                "text": "Every story lists its chain",
+                "sub": "who heard it, and who told them, and back",
+                "to": [
+                  0.04,
+                  1.22
+                ],
+                "at": "top",
+                "side": "up"
+              },
+              {
+                "atMs": 26740,
+                "holdMs": 7060,
+                "text": "Did these two ever meet?",
+                "sub": "same town, same years, or not",
+                "to": [
+                  -1.03,
+                  -0.39
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 34440,
+                "holdMs": 7360,
+                "text": "Was this person honest?",
+                "sub": "there are whole books on each name",
+                "to": [
+                  -0.16,
+                  -0.48
+                ],
+                "at": "middle",
+                "side": "up"
+              },
+              {
+                "atMs": 46740,
+                "holdMs": 7060,
+                "text": "Strong, fair, or weak",
+                "sub": "and the weak ones are marked weak",
+                "to": [
+                  1.0,
+                  -0.64
+                ],
+                "at": "right",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 26740,
+            "keyHoldMs": 14860
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Iraq and Arabia, in the 800s",
+          "sub": "thousands of stories about the Prophet",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "So they checked the people",
+          "hold": 4.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Then each story gets a grade",
+          "hold": 4.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Nothing was quietly dropped",
+          "sub": "the weak ones were kept, and labelled",
+          "hold": 7.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Iraq and Arabia, the 800s",
+          "text": "A method you can check yourself",
+          "src": "noorcodex.com",
+          "hold": 7.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "slug": "short-zero",
+  "id": "short-zero",
+  "title": "The empty one",
+  "note": "Sifr, the empty: zero as a number you can calculate with.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The empty one",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "placevalue",
+          "hold": 45.6,
+          "lines": [
+            {
+              "text": "Zero is not nothing. It is a number",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.59
+            },
+            {
+              "text": "From India to Baghdad, the 700s",
+              "sub": "tested there, taught there",
+              "size": "h1",
+              "at": 3.93,
+              "until": 9.16
+            },
+            {
+              "text": "Try writing three hundred and seven",
+              "size": "h1",
+              "at": 9.5,
+              "until": 12.99
+            },
+            {
+              "text": "Without a zero the places collapse",
+              "sub": "37 and 307 look alike",
+              "size": "h1",
+              "at": 13.33,
+              "until": 18.47
+            },
+            {
+              "text": "Zero holds the empty place open",
+              "size": "h1",
+              "at": 18.81,
+              "until": 22.04
+            },
+            {
+              "text": "Arabic called it sifr, the empty",
+              "sub": "which became cipher, and zero",
+              "size": "h1",
+              "at": 22.38,
+              "until": 27.92
+            },
+            {
+              "text": "Al-Khwarizmi wrote the handbook",
+              "sub": "Latin copies carried it west",
+              "size": "h1",
+              "at": 28.26,
+              "until": 33.57
+            },
+            {
+              "text": "Every price and every line of code",
+              "sub": "is written in those ten signs",
+              "size": "h1",
+              "at": 33.91,
+              "until": 39.69
+            },
+            {
+              "eyebrow": "India, Baghdad, Damascus, Pisa",
+              "text": "Three civilisations, one gift",
+              "src": "al-Uqlidisi, about 952; Fibonacci, 1202",
+              "size": "h1",
+              "at": 40.03,
+              "until": 45.29
+            }
+          ],
+          "at": [
+            100,
+            9950,
+            10813,
+            11677,
+            13780,
+            15193,
+            16607,
+            19260,
+            20037,
+            20813,
+            22830,
+            25150,
+            28710,
+            30915,
+            34360
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 3.93,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 9.5,
+              "i0": 1,
+              "i1": 3
+            },
+            {
+              "at": 13.33,
+              "i0": 4,
+              "i1": 6
+            },
+            {
+              "at": 18.81,
+              "i0": 7,
+              "i1": 9
+            },
+            {
+              "at": 22.38,
+              "i0": 10,
+              "i1": 11
+            },
+            {
+              "at": 28.26,
+              "i0": 12,
+              "i1": 13
+            },
+            {
+              "at": 33.91,
+              "i0": 14,
+              "i1": 14
+            },
+            {
+              "at": 40.03,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "pulse",
+              "on": "rect",
+              "at": 2,
+              "for": 1.1,
+              "stagger": 0.22
+            },
+            {
+              "do": "travel",
+              "on": "path.rd",
+              "at": 4,
+              "for": 2.4,
+              "times": 2,
+              "size": 0.9
+            },
+            {
+              "do": "pulse",
+              "on": "text.big",
+              "at": 4,
+              "for": 1.3,
+              "stagger": 0.2
+            },
+            {
+              "do": "pulse",
+              "on": "text.big",
+              "at": 6,
+              "for": 1.2,
+              "stagger": 0.16
+            },
+            {
+              "do": "glow",
+              "on": "rect:nth-of-type(2)",
+              "at": 4,
+              "for": 2.6,
+              "size": 1.0
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

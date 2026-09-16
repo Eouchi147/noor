@@ -1,0 +1,158 @@
+{
+  "slug": "short-goldprice",
+  "id": "short-goldprice",
+  "title": "One caravan, one market",
+  "note": "Mansa Musa's hajj of 1324 and the Cairo gold price, on al-Umari's testimony twelve years later.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One caravan, one market",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "A king of Mali crashed Egypt's gold price",
+          "hold": 5.5,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutscale",
+            "give": 7,
+            "get": 1,
+            "key": [
+              [
+                "base",
+                "What Cairo already held"
+              ],
+              [
+                "mark",
+                "What one caravan brought"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 14040,
+                "holdMs": 7960,
+                "text": "Cairo's gold, before he came",
+                "sub": "a normal amount, at the normal price",
+                "to": [
+                  -1.79,
+                  -0.35
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 22640,
+                "holdMs": 7260,
+                "text": "Then his caravan arrives",
+                "sub": "carrying gold, and giving it away",
+                "to": [
+                  1.45,
+                  -0.42
+                ],
+                "at": "right",
+                "side": "up"
+              },
+              {
+                "atMs": 34340,
+                "holdMs": 7160,
+                "text": "Too much gold in one city",
+                "sub": "so gold in Cairo became cheap",
+                "to": [
+                  -1.54,
+                  0.19
+                ],
+                "at": "top",
+                "side": "up"
+              },
+              {
+                "atMs": 42140,
+                "holdMs": 7660,
+                "text": "Still cheap twelve years later",
+                "sub": "the price had not come back up",
+                "to": [
+                  1.27,
+                  -0.91
+                ],
+                "at": "bottom",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 22640,
+            "keyHoldMs": 7060
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Mansa Musa, king of Mali, in 1324",
+          "sub": "on pilgrimage, passing through Cairo",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Watch which way it tips",
+          "hold": 3.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "More of a thing makes it worth less",
+          "sub": "seen for real, seven hundred years ago",
+          "hold": 8.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Al-Umari, Cairo, about 1337",
+          "text": "An Egyptian official wrote it down",
+          "src": "noorcodex.com",
+          "hold": 7.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,517 @@
+{
+  "slug": "who-was-muhammad",
+  "id": "who-was-muhammad",
+  "title": "Who was Muhammad, actually?",
+  "note": "Film two. The subject is not the biography, it is how anyone knows any of it.",
+  "chapters": [
+    {
+      "id": "the-film",
+      "title": "Who was Muhammad, actually?",
+      "theme": "nutvoid",
+      "beats": [
+        {
+          "kind": "title",
+          "eyebrow": "Film two",
+          "text": "Who was Muhammad, actually?",
+          "sub": "Not whether he was a prophet. What the evidence is, and what it is worth.",
+          "hold": 9.0,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutdots",
+            "span": 5,
+            "total": 100,
+            "lit": 100,
+            "sub": 0,
+            "cols": 10
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The narrower question",
+          "text": "How much of it is actually his?",
+          "sub": "Two billion people order their days around what he is reported to have said.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "A hadith is two things",
+          "text": "The chain, then the text",
+          "sub": "I heard it from him, who heard it from her, who heard it from the Prophet.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · isnad",
+          "lume": {
+            "kind": "nutchain",
+            "span": 4,
+            "rows": [
+              {
+                "n": 6
+              }
+            ],
+            "stepx": 0.62
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "A science of vetting people",
+          "text": "Tens of thousands of narrators",
+          "sub": "Catalogued by generation: who was reliable, who was careless, who met whom, and when each died.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · ilm al-rijal"
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Three verdicts",
+          "text": "Sound, good, weak",
+          "sub": "Five conditions: unbroken chain, upright, accurate, uncontradicted, and no hidden defect.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · the hadith sciences",
+          "lume": {
+            "kind": "nutsort",
+            "span": 4,
+            "total": 130,
+            "share": [
+              0.44,
+              0.3,
+              0.26
+            ],
+            "rows": 12
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And the third column stays",
+          "text": "Weak is not deleted",
+          "sub": "It is kept, and labelled, and passed on with its verdict attached.",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Makkah, late sixth century",
+          "text": "A trading town around a sanctuary",
+          "sub": "Two caravans a year: south to Yemen in winter, north to Sham in summer.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · Surah 106",
+          "lume": {
+            "kind": "nutpath",
+            "span": 5,
+            "hub": [
+              0,
+              0
+            ],
+            "legs": [
+              {
+                "from": [
+                  0,
+                  0
+                ],
+                "to": [
+                  -0.9,
+                  -1.35
+                ],
+                "bow": 0.28,
+                "at": 0.05,
+                "span": 0.34
+              },
+              {
+                "from": [
+                  0,
+                  0
+                ],
+                "to": [
+                  0.75,
+                  1.3
+                ],
+                "bow": -0.24,
+                "at": 0.42,
+                "span": 0.34
+              }
+            ]
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Decades before anything else",
+          "text": "They called him al-Amin",
+          "sub": "The Trustworthy. It was the city's own word for him.",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The first revelation",
+          "text": "He answered that he was not one who reads",
+          "sub": "Three times, the seizure and the release.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Sahih al-Bukhari 3 · Sahih Muslim 160"
+        },
+        {
+          "kind": "quote",
+          "src": "Qur'an 96:1",
+          "hold": 9.0,
+          "shot": "study",
+          "enter": "dissolve",
+          "exit": "dissolve",
+          "en": "Recite, in the name of your Lord who created.",
+          "ar": "ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "He went home and said, cover me",
+          "text": "It was Waraqah who named it",
+          "sub": "Her cousin, an old man who knew the earlier scriptures. Not Muhammad.",
+          "src": "Sahih al-Bukhari 3",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And the first to believe him",
+          "text": "was his wife",
+          "sub": "If you were inventing a founder, this is not the scene you would invent.",
+          "hold": 12.3,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Makkah",
+          "text": "Thirteen years of being refused",
+          "sub": "Almost no power and almost no protection.",
+          "hold": 10.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light",
+          "lume": {
+            "kind": "nutvalley",
+            "n": 26,
+            "leave": 5,
+            "span": 4
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 9.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Penned in a valley, about three years",
+          "text": "A written pact, hung in the sanctuary",
+          "sub": "It broke when several of the men who signed it tore the document up.",
+          "hold": 9.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · Shib Abi Talib"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Not agreement, protection",
+          "text": "To shelter him as they sheltered their own",
+          "sub": "Six men from a town to the north, met at the pilgrimage fairs.",
+          "hold": 11.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutforty",
+            "span": 5,
+            "total": 12,
+            "take": 1,
+            "cols": 3
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "622",
+          "text": "The calendar counts from here",
+          "sub": "Not his birth, not the first revelation. The year the community got somewhere to stand.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · the hijri calendar"
+        },
+        {
+          "kind": "statement",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Put in writing",
+          "text": "One community for defence",
+          "sub": "The emigrants, the people of the town, and the Jewish tribes. The Jews their religion, the Muslims theirs.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Ibn Ishaq · Sahifat al-Madinah"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "628 · Hudaybiyyah",
+          "text": "A truce his own followers found humiliating",
+          "sub": "Go home this year. Ten years of peace. He held to it.",
+          "hold": 11.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Sahih al-Bukhari 2732",
+          "lume": {
+            "kind": "nutscale",
+            "give": 7,
+            "get": 1,
+            "span": 4
+          }
+        },
+        {
+          "kind": "statement",
+          "hold": 11.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "630 · the city that drove him out",
+          "text": "A general amnesty, with limited exceptions",
+          "sub": "Not no reprisals. A general amnesty with named exceptions, which is a different thing.",
+          "hold": 11.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "Sahih Muslim 1780 · NOOR Codex of Light"
+        },
+        {
+          "kind": "statement",
+          "hold": 11.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "632 · the only pilgrimage",
+          "text": "Two lines, and they are not from one report",
+          "sub": "This is the film showing its own working.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutsplit",
+            "span": 6
+          }
+        },
+        {
+          "kind": "quote",
+          "src": "Sahih Muslim 1218",
+          "hold": 9.5,
+          "shot": "study",
+          "enter": "dissolve",
+          "exit": "dissolve",
+          "en": "Your blood and your wealth are sacred to one another."
+        },
+        {
+          "kind": "quote",
+          "src": "Musnad Ahmad 23489 · the sermon of the days of Tashriq",
+          "hold": 10.5,
+          "shot": "study",
+          "enter": "dissolve",
+          "exit": "dissolve",
+          "en": "No Arab has superiority over a non-Arab, nor a non-Arab over an Arab."
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Two narrations, two collections",
+          "text": "The reports of that day are scattered",
+          "sub": "Printed versions that read as one flowing speech have blended them. This film does not.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · khutbat al-wada"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Eighty one days later",
+          "text": "His shield was still held as security",
+          "sub": "By a Jewish man of Madinah, against a debt of barley taken for his family.",
+          "hold": 9.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "What is actually known",
+          "text": "Refused for thirteen years, then governing for ten",
+          "sub": "He was about forty when it began.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut",
+          "src": "NOOR Codex of Light · node 52"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "And within a century of his death",
+          "text": "From the Atlantic edge of the Maghrib to the Indus",
+          "sub": "A fact about maps and dates, and not an argument about the claim.",
+          "src": "NOOR Codex of Light · node 52",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "The reason we can argue about the details",
+          "text": "They wrote down who told them",
+          "sub": "What you do with the claim at the centre of it is yours.",
+          "hold": 11.0,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "NOOR Codex of Light",
+          "text": "noorcodex.com",
+          "sub": "620 pages. 21 languages. Free, with no account to make.",
+          "hold": 10.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

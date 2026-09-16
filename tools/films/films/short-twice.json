@@ -1,0 +1,165 @@
+{
+  "slug": "short-twice",
+  "id": "short-twice",
+  "title": "The same drawing, twice",
+  "note": "The Tusi couple: a small circle rolling inside a big one traces a straight line, and the same drawing turns up in Copernicus 300 years later with no credit.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The same drawing, twice",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "The same drawing, 300 years apart",
+          "hold": 4.7,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nuttwin",
+            "key": [
+              [
+                "base",
+                "The two circles"
+              ],
+              [
+                "mark",
+                "The point you watch"
+              ]
+            ],
+            "span": 10,
+            "calls": [
+              {
+                "atMs": 13440,
+                "holdMs": 8460,
+                "text": "Roll a small circle inside a big one",
+                "sub": "the big circle is twice as wide",
+                "to": [
+                  -1.68,
+                  0.05
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 22540,
+                "holdMs": 8760,
+                "text": "One point on it moves dead straight",
+                "sub": "circles only, and yet a straight line",
+                "to": [
+                  -1.62,
+                  0.05
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 44240,
+                "holdMs": 7460,
+                "text": "Copernicus, the year 1543",
+                "sub": "the same drawing, in his own book",
+                "to": [
+                  1.57,
+                  0.0
+                ],
+                "at": "right",
+                "side": "up"
+              },
+              {
+                "atMs": 52340,
+                "holdMs": 7960,
+                "text": "Drawn in exactly the same way",
+                "sub": "and no mention of al-Tusi anywhere",
+                "to": [
+                  0.02,
+                  0.0
+                ],
+                "at": "middle",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 22540,
+            "keyHoldMs": 8560
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Maragha, in Iran, the year 1247",
+          "sub": "an astronomer called Nasir al-Din al-Tusi",
+          "hold": 8.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 9.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "That solved an old problem",
+          "sub": "the sky was supposed to move in circles",
+          "hold": 7.9,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Now jump 300 years, to Poland",
+          "hold": 4.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.1,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Did it travel, or was it found twice?",
+          "sub": "nobody has settled that question",
+          "hold": 8.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Al-Tusi, Maragha, 1247",
+          "text": "Still an open question",
+          "src": "Copernicus, 1543",
+          "hold": 5.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

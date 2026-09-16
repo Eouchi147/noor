@@ -1,0 +1,160 @@
+{
+  "slug": "short-turningearth",
+  "id": "short-turningearth",
+  "title": "Looking cannot tell",
+  "note": "Ali Qushji on why no observation settles whether the earth turns, and what he wanted that to free astronomy from.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Looking cannot tell",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "title",
+          "size": "hook",
+          "text": "You cannot see whether Earth spins",
+          "hold": 4.8,
+          "shot": "study",
+          "enter": "slow",
+          "exit": "cut",
+          "lume": {
+            "kind": "nutarc",
+            "marks": [
+              {
+                "t": 0.14
+              },
+              {
+                "t": 0.38
+              },
+              {
+                "t": 0.62
+              },
+              {
+                "t": 0.86
+              }
+            ],
+            "key": [
+              [
+                "base",
+                "A star, where you see it"
+              ],
+              [
+                "line",
+                "The arc it runs"
+              ]
+            ],
+            "span": 9,
+            "calls": [
+              {
+                "atMs": 13640,
+                "holdMs": 7760,
+                "text": "Watch one star cross the sky",
+                "sub": "it rises, arcs over, and it sets",
+                "to": [
+                  1.38,
+                  -0.06
+                ],
+                "at": "new",
+                "side": "up"
+              },
+              {
+                "atMs": 25740,
+                "holdMs": 6960,
+                "text": "If the sky turns around us",
+                "sub": "you would see exactly this",
+                "to": [
+                  -1.44,
+                  -0.18
+                ],
+                "at": "left",
+                "side": "up"
+              },
+              {
+                "atMs": 33340,
+                "holdMs": 6860,
+                "text": "If Earth turns instead",
+                "sub": "you would see exactly this too",
+                "to": [
+                  1.5,
+                  -0.18
+                ],
+                "at": "right",
+                "side": "up"
+              }
+            ],
+            "keyAtMs": 25740,
+            "keyHoldMs": 14260
+          }
+        },
+        {
+          "kind": "title",
+          "text": "Ali Qushji said so in the 1400s",
+          "sub": "an astronomer in Samarkand, then Istanbul",
+          "hold": 8.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 8.4,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "Now ask what is moving",
+          "hold": 3.7,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.6,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "statement",
+          "hold": 7.5,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "The two look the same",
+          "sub": "so watching the sky cannot settle it",
+          "hold": 7.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "text": "He did not say Earth moves",
+          "sub": "he said nobody had proved it does not",
+          "hold": 7.8,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "cut"
+        },
+        {
+          "kind": "title",
+          "eyebrow": "Ali Qushji, died 1474",
+          "text": "Go by what you can measure",
+          "src": "Samarkand, then Istanbul",
+          "hold": 6.2,
+          "shot": "study",
+          "enter": "cut",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

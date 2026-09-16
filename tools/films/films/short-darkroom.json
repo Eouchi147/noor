@@ -1,0 +1,207 @@
+{
+  "slug": "short-darkroom",
+  "id": "short-darkroom",
+  "title": "The dark room",
+  "note": "Ibn al-Haytham's dark room. The picture lands upside down, and seeing is light arriving rather than rays going out.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The dark room",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "darkroom",
+          "hold": 44.4,
+          "lines": [
+            {
+              "text": "Your camera is named after a room",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.56
+            },
+            {
+              "text": "Cairo, Egypt, 1020",
+              "sub": "here, Ibn al-Haytham lights a candle",
+              "size": "h1",
+              "at": 3.9,
+              "until": 8.88
+            },
+            {
+              "text": "One small hole in the wall",
+              "sub": "and light only travels straight",
+              "size": "h1",
+              "at": 9.22,
+              "until": 14.5
+            },
+            {
+              "text": "It lands on the wall opposite",
+              "size": "h1",
+              "at": 14.84,
+              "until": 17.93
+            },
+            {
+              "text": "Upside down",
+              "sub": "the top crossed over at the hole",
+              "size": "h1",
+              "at": 18.27,
+              "until": 22.51
+            },
+            {
+              "text": "That is a camera",
+              "size": "h1",
+              "at": 22.85,
+              "until": 24.98
+            },
+            {
+              "text": "Then he broke an older idea",
+              "sub": "eyes shoot rays out to see",
+              "size": "h1",
+              "at": 25.32,
+              "until": 30.38
+            },
+            {
+              "text": "No eye was in that room",
+              "sub": "the picture formed anyway",
+              "size": "h1",
+              "at": 30.72,
+              "until": 35.35
+            },
+            {
+              "text": "Light comes in. The eye reads it",
+              "size": "h1",
+              "at": 35.69,
+              "until": 39.03
+            },
+            {
+              "eyebrow": "Ibn al-Haytham, Cairo",
+              "text": "Camera obscura means dark room",
+              "src": "The Book of Optics, about 1020",
+              "size": "h1",
+              "at": 39.37,
+              "until": 44.1
+            }
+          ],
+          "at": [
+            100,
+            1780,
+            4350,
+            6390,
+            9670,
+            11860,
+            15290,
+            16020,
+            16750,
+            18720,
+            25770,
+            26810,
+            27850,
+            28890,
+            31170,
+            33035,
+            36140,
+            36628,
+            37116,
+            37604,
+            38092
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 1
+            },
+            {
+              "at": 3.9,
+              "i0": 2,
+              "i1": 3
+            },
+            {
+              "at": 9.22,
+              "i0": 4,
+              "i1": 5
+            },
+            {
+              "at": 14.84,
+              "i0": 6,
+              "i1": 8
+            },
+            {
+              "at": 18.27,
+              "i0": 9,
+              "i1": 9
+            },
+            {
+              "at": 22.85,
+              "i0": 9,
+              "i1": 9
+            },
+            {
+              "at": 25.32,
+              "i0": 10,
+              "i1": 13
+            },
+            {
+              "at": 30.72,
+              "i0": 14,
+              "i1": 15
+            },
+            {
+              "at": 35.69,
+              "i0": 16,
+              "i1": 20
+            },
+            {
+              "at": 39.37,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 2,
+              "for": 3.2,
+              "times": 2,
+              "size": 1.1
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 3,
+              "for": 4.0,
+              "times": 3,
+              "size": 1.1
+            },
+            {
+              "do": "pulse",
+              "on": "circle.nd",
+              "at": 2,
+              "for": 1.2
+            },
+            {
+              "do": "travel",
+              "on": ".rd path",
+              "at": 8,
+              "for": 3.6,
+              "times": 2,
+              "size": 1.0
+            },
+            {
+              "do": "glow",
+              "on": "circle.nd",
+              "at": 2,
+              "for": 2.6,
+              "size": 1.6
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}
