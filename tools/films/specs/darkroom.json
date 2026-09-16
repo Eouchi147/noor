@@ -1,0 +1,729 @@
+{
+  "slug": "darkroom",
+  "title": "The dark room",
+  "format": "NOOR Light",
+  "theme": "night",
+  "fps": 24,
+  "aspects": [
+    "9:16",
+    "16:9"
+  ],
+  "research": {
+    "light": "camera-obscura-dark-room",
+    "sources": [
+      "lights/all.json: camera-obscura-dark-room (Ibn al-Haytham, Cairo, early eleventh century; several lamps outside the aperture, images separate on the wall; light in straight lines; his term the dark room; Kepler 1604 camera obscura)",
+      "heroes.html: Ibn al-Haytham (al-bayt al-muzlim, the dark house; vision is reception, not emission; many held that the eye sends out rays)",
+      "The Book of Optics, about 1020"
+    ],
+    "facts": [
+      "Make a small hole in the wall of a dark room and the scene outside appears on the opposite wall, upside down.",
+      "Ibn al-Haytham, in Cairo in the early eleventh century, set several lamps outside the aperture and showed their images stayed separate on the wall: light travels in straight lines and rays do not mix.",
+      "His term was the dark room, al-bayt al-muzlim. Kepler put it into Latin in 1604 as camera obscura.",
+      "Many had held that the eye sends out rays that touch the world; he showed vision is reception, not emission."
+    ]
+  },
+  "story": "We are inside the dark house, looking down the room at one point of light in the far wall. Beyond it, lamps. The NOOR sphere enters through the hole on a ray of light, shows that the rays cross at the hole and land upside down on the wall behind us, then brushes the old idea of rays leaving the eye away, and comes to rest at the eye of the viewer: light comes in.",
+  "figure": {
+    "kind": "darkroom",
+    "room": {
+      "w": 4.4,
+      "h": 3.2,
+      "d": 8.0
+    },
+    "aperture": {
+      "wall": "back",
+      "y": 1.6,
+      "r": 0.06
+    },
+    "lamps": [
+      {
+        "id": "lampA",
+        "pos": [
+          -1.0,
+          2.3,
+          -11.5
+        ]
+      },
+      {
+        "id": "lampB",
+        "pos": [
+          0.8,
+          1.0,
+          -11.0
+        ]
+      },
+      {
+        "id": "lampC",
+        "pos": [
+          0.25,
+          2.55,
+          -12.0
+        ]
+      }
+    ],
+    "world": {
+      "up": "y",
+      "floor_y": 0.0,
+      "x": [
+        -2.2,
+        2.2
+      ],
+      "y": [
+        0.0,
+        3.2
+      ],
+      "z": [
+        -4.0,
+        4.0
+      ],
+      "back_wall_z": -4.0,
+      "front_wall_z": 4.0,
+      "aperture": [
+        0.0,
+        1.6,
+        -4.0
+      ],
+      "note": "Lamps stand outside the back wall (z below -4). A ray runs straight from a lamp through the aperture to the front wall at z=4; its image point is aperture + (aperture - lamp) * (8 / (-4 - lamp.z)). LampA lands near (1.07, 0.85, 4), lampB near (-0.91, 2.29, 4), lampC near (-0.25, 0.65, 4): inverted, a high lamp lands low."
+    }
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "dur": 3.6,
+      "words": {
+        "text": "Your camera is named after a room"
+      },
+      "camera": {
+        "eye": [
+          0.0,
+          1.55,
+          2.6
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 56,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "a slow push down the room toward the one point of light in the back wall",
+        "hold": 2.2
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.0,
+            "do": "wallglow",
+            "to": 0.08,
+            "dur": 1.0
+          }
+        ],
+        "note": "dark room; the hole a cold pinprick; the seams of the room just legible"
+      },
+      "lantern": {
+        "visible": false,
+        "pos": [
+          0.0,
+          1.6,
+          -3.7
+        ],
+        "scale": 0.0001,
+        "bright": 0,
+        "hold": 3.6
+      },
+      "sound": [
+        {
+          "at": 0.0,
+          "event": "roomtone"
+        },
+        {
+          "at": 0.9,
+          "event": "music_in"
+        }
+      ],
+      "narration": "Your camera is named after a room."
+    },
+    {
+      "id": "s2",
+      "dur": 4.2,
+      "words": {
+        "text": "Cairo, Egypt, 1020",
+        "sub": "here, Ibn al-Haytham lights a candle"
+      },
+      "camera": {
+        "eye": [
+          0.0,
+          1.55,
+          1.0
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 50,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "turn to face the back wall and its small hole; the corners of the room in frame",
+        "hold": 3.0
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 1.2,
+            "do": "lamp",
+            "id": "lampA",
+            "dur": 0.9
+          }
+        ],
+        "note": "lampA_lights"
+      },
+      "lantern": {
+        "visible": false,
+        "pos": [
+          0.0,
+          1.6,
+          -3.7
+        ],
+        "scale": 0.0001,
+        "bright": 0,
+        "hold": 4.2
+      },
+      "sound": [
+        {
+          "at": 1.2,
+          "event": "lamp_lit",
+          "voice": "glass"
+        }
+      ],
+      "narration": "Cairo, Egypt, the year ten twenty. Here, Ibn al-Haytham lights a candle."
+    },
+    {
+      "id": "s3",
+      "dur": 4.4,
+      "words": {
+        "text": "One small hole in the wall",
+        "sub": "and light only travels straight"
+      },
+      "camera": {
+        "eye": [
+          0.0,
+          1.6,
+          0.2
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 46,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "dolly toward the hole along the ray",
+        "hold": 3.2
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.4,
+            "do": "ray",
+            "id": "lampA",
+            "dur": 3.0
+          }
+        ],
+        "note": "rayA_draws"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.0,
+          1.6,
+          -3.7
+        ],
+        "scale": 0.1,
+        "bright": 0.8,
+        "hold": 0.6,
+        "path": "emerges from the hole at the scene start, then rides rayA to the front wall (arrives at the s4 cue)"
+      },
+      "sound": [
+        {
+          "at": 0.4,
+          "event": "ray_start",
+          "voice": "air"
+        },
+        {
+          "at": 3.4,
+          "event": "ray_lands",
+          "voice": "glass"
+        }
+      ],
+      "narration": "One small hole in the wall, and light only travels straight."
+    },
+    {
+      "id": "s4",
+      "dur": 3.8,
+      "words": {
+        "text": "It lands on the wall opposite"
+      },
+      "camera": {
+        "eye": [
+          0.5,
+          1.55,
+          -0.6
+        ],
+        "look": [
+          0.4,
+          1.3,
+          4.0
+        ],
+        "hfov": 50,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "turn back to the front wall where the image lands",
+        "hold": 2.4
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.6,
+            "do": "image",
+            "id": "lampA",
+            "dur": 1.2
+          }
+        ],
+        "note": "imageA_on_wall"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.85,
+          1.0,
+          3.3
+        ],
+        "scale": 0.24,
+        "bright": 0.6,
+        "hold": 2.4,
+        "path": "rests beside image A on the front wall, then goes back to the hole"
+      },
+      "sound": [
+        {
+          "at": 0.6,
+          "event": "image_appears",
+          "voice": "felt"
+        }
+      ],
+      "narration": "It lands on the wall opposite."
+    },
+    {
+      "id": "s5",
+      "dur": 4.6,
+      "words": {
+        "text": "Upside down",
+        "sub": "the top crossed over at the hole"
+      },
+      "camera": {
+        "eye": [
+          1.3,
+          1.85,
+          -1.0
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 54,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "step to the side so the hole, the side wall and the crossing rays are in view",
+        "hold": 3.2
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 1.0,
+            "do": "lamp",
+            "id": "lampB",
+            "dur": 0.8
+          },
+          {
+            "at": 1.6,
+            "do": "lamp",
+            "id": "lampC",
+            "dur": 0.8
+          },
+          {
+            "at": 1.8,
+            "do": "ray",
+            "id": "lampB",
+            "dur": 1.8
+          },
+          {
+            "at": 2.2,
+            "do": "ray",
+            "id": "lampC",
+            "dur": 1.6
+          },
+          {
+            "at": 3.6,
+            "do": "image",
+            "id": "lampB",
+            "dur": 0.8
+          },
+          {
+            "at": 3.8,
+            "do": "image",
+            "id": "lampC",
+            "dur": 0.8
+          }
+        ],
+        "note": "lampsBC_light_rays_cross"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.38,
+          1.78,
+          -3.25
+        ],
+        "scale": 0.14,
+        "bright": 0.6,
+        "hold": 4.6,
+        "path": "just beside the hole, small, so the crossing of the rays stays visible"
+      },
+      "sound": [
+        {
+          "at": 1.0,
+          "event": "lamp_lit",
+          "voice": "glass"
+        },
+        {
+          "at": 1.6,
+          "event": "lamp_lit",
+          "voice": "glass"
+        },
+        {
+          "at": 3.6,
+          "event": "rays_cross",
+          "voice": "felt"
+        }
+      ],
+      "narration": "Upside down. The top crossed over at the hole."
+    },
+    {
+      "id": "s6",
+      "dur": 3.8,
+      "words": {
+        "text": "That is a camera"
+      },
+      "camera": {
+        "eye": [
+          1.7,
+          2.2,
+          -2.6
+        ],
+        "look": [
+          -0.2,
+          1.3,
+          2.8
+        ],
+        "hfov": 62,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "from the far corner, across the room: the rays cross behind us at the hole and land on the front wall as three separate images",
+        "hold": 2.6
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 1.4,
+            "do": "lift",
+            "id": "lampA",
+            "dy": 0.6,
+            "dur": 1.6
+          }
+        ],
+        "note": "lampA_lifts_image_slides"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.38,
+          1.78,
+          -3.25
+        ],
+        "scale": 0.14,
+        "bright": 0.5,
+        "hold": 3.8,
+        "path": "holds beside the hole"
+      },
+      "sound": [
+        {
+          "at": 1.4,
+          "event": "lamp_moves",
+          "voice": "wood"
+        }
+      ],
+      "narration": "That is a camera."
+    },
+    {
+      "id": "s7",
+      "dur": 4.2,
+      "words": {
+        "text": "Then he broke an older idea",
+        "sub": "eyes shoot rays out to see"
+      },
+      "camera": {
+        "eye": [
+          0.55,
+          1.85,
+          2.3
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 50,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "beside the viewer's place, facing the hole; the old rays leave from the eye below and to the left",
+        "hold": 3.0
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.8,
+            "do": "outrays",
+            "to": 1.0,
+            "dur": 2.2
+          }
+        ],
+        "note": "old_idea_rays_out"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.3,
+          1.75,
+          -3.3
+        ],
+        "scale": 0.16,
+        "bright": 0.4,
+        "hold": 2.6,
+        "path": "holds at the hole, dimmer, then drifts toward the images"
+      },
+      "sound": [
+        {
+          "at": 0.8,
+          "event": "old_idea",
+          "voice": "air_low"
+        }
+      ],
+      "narration": "Then he broke an older idea: that eyes shoot rays out to see."
+    },
+    {
+      "id": "s8",
+      "dur": 3.8,
+      "words": {
+        "text": "No eye was in that room",
+        "sub": "the picture formed anyway"
+      },
+      "camera": {
+        "eye": [
+          0.3,
+          1.6,
+          -0.2
+        ],
+        "look": [
+          0.2,
+          1.4,
+          4.0
+        ],
+        "hfov": 48,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "turn to the images on the front wall; the outward rays fade",
+        "hold": 2.6
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.2,
+            "do": "outrays",
+            "to": 0.0,
+            "dur": 1.3
+          }
+        ],
+        "note": "outrays_fade_images_remain"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          1.35,
+          2.3,
+          2.5
+        ],
+        "scale": 0.22,
+        "bright": 0.6,
+        "hold": 2.2,
+        "path": "up and to the side of the images on the front wall so all three stay clear, then returns to the hole"
+      },
+      "sound": [
+        {
+          "at": 0.2,
+          "event": "silence"
+        }
+      ],
+      "narration": "No eye was in that room. The picture formed anyway."
+    },
+    {
+      "id": "s9",
+      "dur": 4.0,
+      "words": {
+        "text": "Light comes in. The eye reads it"
+      },
+      "camera": {
+        "eye": [
+          0.0,
+          1.6,
+          1.0
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 44,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "hold; the sphere comes from the hole to the lens",
+        "hold": 3.0
+      },
+      "figure": {
+        "events": [
+          {
+            "at": 0.0,
+            "do": "images",
+            "to": 1.15,
+            "dur": 2.0
+          }
+        ],
+        "note": "all_images_lit"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.0,
+          1.6,
+          -3.3
+        ],
+        "scale": 0.22,
+        "bright": 0.7,
+        "hold": 0.8,
+        "path": "from the hole toward the lens, arriving low and to the right of the axis (the s10 cue) so the hole stays visible behind it"
+      },
+      "sound": [
+        {
+          "at": 2.8,
+          "event": "arrival",
+          "voice": "glass_low"
+        },
+        {
+          "at": 3.0,
+          "event": "music_release"
+        }
+      ],
+      "narration": "Light comes in. The eye reads it."
+    },
+    {
+      "id": "s10",
+      "dur": 5.2,
+      "words": {
+        "eyebrow": "Ibn al-Haytham, Cairo",
+        "text": "Camera obscura means dark room",
+        "sub": "al-bayt al-muzlim, the dark house",
+        "src": "The Book of Optics, about 1020"
+      },
+      "camera": {
+        "eye": [
+          0.0,
+          1.6,
+          1.6
+        ],
+        "look": [
+          0.0,
+          1.6,
+          -4.0
+        ],
+        "hfov": 48,
+        "roll": 0.0,
+        "ease": "inOutSine",
+        "move": "settle; a slow drift only",
+        "hold": 5.2
+      },
+      "figure": {
+        "events": [],
+        "note": "rest"
+      },
+      "lantern": {
+        "visible": true,
+        "pos": [
+          0.42,
+          1.32,
+          0.35
+        ],
+        "scale": 0.2,
+        "bright": 0.55,
+        "hold": 5.2,
+        "path": "rests low and to the right of the lens axis, the hole still visible behind it, breathing with the voice"
+      },
+      "sound": [
+        {
+          "at": 0.6,
+          "event": "final_mark",
+          "voice": "felt"
+        },
+        {
+          "at": 4.0,
+          "event": "music_out"
+        }
+      ],
+      "narration": "Camera obscura means dark room. Al-bayt al-muzlim, the dark house."
+    }
+  ],
+  "music": {
+    "track": "C",
+    "window": "rise",
+    "level_lufs": -16.5,
+    "duck_under_voice_db": -10
+  },
+  "narration": {
+    "voice": "stand-in (piper en-us-ryan-medium) until the owner's voice tool speaks the script",
+    "level_lufs": -16,
+    "timing": "each line starts 0.3 s after its scene starts; a scene grows to line length plus 0.9 s if the spoken line is longer than the written duration"
+  },
+  "watermark": {
+    "logo": "assets/brand/mark.svg",
+    "text": "noorcodex.com",
+    "corner": "bottom-left",
+    "safe": {
+      "top": 130,
+      "bottom": 320,
+      "sides": 60
+    }
+  },
+  "export": {
+    "master_lufs": -14,
+    "true_peak_db": -2
+  },
+  "conventions": {
+    "time": "scene k starts at the sum of the retimed durations before it; event.at and sound.at are seconds after the scene start; the compiler writes absolute seconds",
+    "compiled": "film.py compile writes films/<slug>.json (the chapter stage.js renders) from this file; never edit the compiled file by hand",
+    "no_dashes": "no em dash or en dash anywhere on screen or in narration",
+    "camera": "hfov is the HORIZONTAL field of view in degrees; the stage converts it to the vertical field of view of the frame it renders (vertical = 2*atan(tan(hfov/2)/aspect)), so one spec composes both shapes. hold is how many seconds the camera keeps LOOKING at this scene's look point before it turns toward the next scene's; the eye glides toward the next eye over the whole scene regardless. A hold equal to the scene length means the aim never turns during the scene.",
+    "lantern": "lantern.pos is where the light is at the scene start; hold is how many seconds it stays there before travelling to the next scene's pos (hold equal to the scene length means it does not move during the scene); a hidden cue is scale 0.0001 and bright 0",
+    "retime": "when a scene grows to fit the spoken line, a hold that equalled the written duration grows with it (it means the whole scene); a shorter hold keeps its seconds"
+  }
+}
