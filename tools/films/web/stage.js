@@ -358,17 +358,24 @@
 
       var inAt = t0 + (L.at || 0) * 1000;
       var out = (L.until != null) ? t0 + L.until * 1000 : null;
-      /* THE FIRST LINE DOES NOT FADE IN, IT ARRIVES.
-         Half the people who leave a short leave inside the first three
-         seconds, and nine hundred milliseconds of the hook fading up is a
-         third of that spent on a frame with nothing readable on it. The
-         opening line takes four hundred; every line after it takes the
-         full nine hundred, because by then the viewer has stayed. */
-      tl.add(row, { opacity: [0, 1], translateY: [i ? 26 : 14, 0], ease: SP.settle,
-                    duration: i ? 900 : 400 }, inAt);
+      /* SMOOTH AND SLOW, FADING IN FROM A TRANSPARENT BLUR (the owner's own
+         words, round seven). A line used to fade up sharp on a spring and
+         rise most of an inch; now it also comes out of a soft focus, the
+         way an eye finds something rather than a shape already in focus.
+         anime v4 animates the filter string itself, blur(14px) easing down
+         to blur(0px) alongside the opacity and a small rise, eight pixels
+         at most, on one outCubic. The opening line still arrives faster
+         than the rest -- seven hundred milliseconds instead of eleven
+         hundred -- because a frame with nothing readable on it for over a
+         second is where a short loses its first three. The cross between
+         one line and the next is unchanged: only what each half of it
+         looks like. */
+      tl.add(row, { opacity: [0, 1], filter: ["blur(14px)", "blur(0px)"],
+                    translateY: [8, 0], ease: "outCubic",
+                    duration: i ? 1100 : 700 }, inAt);
       if (out !== null) {
-        tl.add(row, { opacity: [1, 0], translateY: [0, -18], ease: "outQuart",
-                      duration: 520 }, out);
+        tl.add(row, { opacity: [1, 0], filter: ["blur(0px)", "blur(10px)"],
+                      ease: "inOutSine", duration: 700 }, out);
       }
     });
   };
@@ -478,14 +485,16 @@
 
   function build(chapter, frame) {
     document.documentElement.setAttribute("data-frame", frame);
-    /* THE MARK ONLY SHOWS ON A SCENE.
-       A scene film stands alone (it is not part of the corridor a longer
-       film shares with its own end card), so it carries its own watermark
-       in the DOM, set here rather than per beat because it never animates
-       and never leaves: see div#mark in film.html. A chapter with no scene
-       clears it, so a multi-chapter film cannot leave it stuck on from an
-       earlier chapter that had one. */
-    if (chapter.scene) document.documentElement.setAttribute("data-mark", "1");
+    /* THE MARK SHOWS ON ANYTHING THAT STANDS ALONE.
+       A scene film and a plate short both stand alone (neither is part of
+       the corridor a longer film shares with its own end card), so both
+       carry their own watermark in the DOM, set here rather than per beat
+       because it never animates and never leaves: see div#mark in
+       film.html. Same attribute, same positions either way (round seven:
+       a plate short did not set it at all before this). A chapter with
+       neither clears it, so a multi-chapter film cannot leave it stuck on
+       from an earlier chapter that had one. */
+    if (chapter.scene || chapter.short) document.documentElement.setAttribute("data-mark", "1");
     else document.documentElement.removeAttribute("data-mark");
     hold.innerHTML = "";
     TL = A.createTimeline({ autoplay: false, defaults: { ease: OUT } });
