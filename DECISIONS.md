@@ -3,7 +3,23 @@
 Dated, newest first, in his words where the words matter. A decision here binds every
 agent. `NOOR.md` holds the standing rules; this file holds the calls made along the way.
 
-## 16 September 2026, the night (Director's calls while the owner slept, to be confirmed)
+## 16 September 2026, the morning (the owner's verdict on the night)
+
+- The night's proof was rejected: "lagging and stuttery" (a 12 fps proof was handed
+  over as the thing to watch), a voice that "sounds clearly like an AI voice with no
+  rhythm", and a picture that "doesn't show a wall when the narrator talks about the light
+  path going into the hole and on the opposite wall". "It is even worse than before when
+  you used the SVG animated infographics from the website ... the illustrations on the
+  website are accurate and simple. All I really want is a clean result."
+- **The picture**: the site's SVG plate, animated (the plate engine). The 3D room is set
+  aside.
+- **The voice**: none. "Words, score and marks" until the owner records the lines; and
+  the captions must be "smooth and slow fading in from transparent blur", never popping.
+- **Delivery**: rendered on the owner's Mac (`./plates.sh plate-darkroom`), both shapes;
+  the missing horizontal video was called out.
+- No proof at a low frame rate is ever handed over as the thing to judge again.
+
+## 16 September 2026, the night (Director's calls while the owner slept; the picture was overruled in the morning, the pipeline stands)
 
 - The first prototype is "The dark room" (Ibn al-Haytham), first person, ten scenes, the
   words and facts from the Light `camera-obscura-dark-room` and heroes.html only.

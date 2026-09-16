@@ -2,7 +2,21 @@
 
 The map of what exists, how a film is made from one terminal command, what the first
 prototype taught, and what remains against the masterplan. Kept current by the Director
-when the engine changes shape. Last rebuilt: the night of 16 September 2026.
+when the engine changes shape. Last rebuilt: the night of 16 September 2026; the
+direction corrected by the owner the same morning (below).
+
+## The direction (the owner, 16 September 2026)
+
+The picture is the site's own SVG plate, animated by the plate engine: accurate, simple,
+clean. A film is `./plates.sh <brief>` on the Mac: the brief compiled by `shortplate.py`,
+rendered by `noor.py` at 30 fps with a three sample shutter in both shapes, the score
+and the struck marks laid under by `shortmusic.py --mux`. Captions fade in slowly from
+transparent and blurred to sharp and leave into blur; the watermark is on every frame;
+there is no synthetic narration in any NOOR film (the owner's own recording, when it
+exists, replaces the silence and the film retimes to it). The night's scene film and
+the 3D dark room (next sections) stay in the tree behind the `scene` flag, verified not
+to touch the plate shorts; the spec, the sound plan, the watermark and the audit script
+are the parts of the night that carry over.
 
 ## Where it lives
 
@@ -74,29 +88,26 @@ directions (verified by the refuter: byte identical frames from either side).
   on its event; narration on its line; the film's length agreed between chapter, frames
   and mp4. PASS, FAIL or SKIPPED with "n of m frames present"; exit 1 on a FAIL.
 
-## The prototype: "The dark room" (step 4)
+## The prototype: "The dark room" (step 4), what it taught
 
-`specs/darkroom.json`, ten scenes, 44.05 s after retiming to the stand in voice, both
-shapes. Words and facts from the Light `camera-obscura-dark-room` and heroes.html's
-Ibn al-Haytham; the source line "The Book of Optics, about 1020". Built in five rounds
-of render, look, revise (the contact sheet and the stills, then the refuter's review):
-the room did not read, the light flooded the lens, the headlines were missing in scene
-mode, the aim left its subject early; each fixed in turn and recorded in `changes.txt`.
-The proof (12 fps, stand in narration) is in the owner's folder `NOOR Films/darkroom/`;
-the audit table beside it. The full render (24 fps, shutter 3) is a Mac job
-(`python3 film.py render darkroom --run` after `python3 film.py all darkroom`).
-
-What the owner decides after seeing it: the look (the room's tone, the size of the
-hole, the sphere's presence), the voice (Piper is a stand in; his own voice tool
-replaces `film.py voice`), and whether the architecture is locked (masterplan: lock it
-only when the prototype convinces).
+The night's version (`specs/darkroom.json`, the 3D room, a Piper stand in voice, a 12
+fps proof) was built in six rounds of render, look, revise with the refuter's review,
+and the owner rejected it in the morning: the proof stuttered, the voice was a machine,
+and the picture showed no wall when the words named one. The lesson is written in
+`DECISIONS.md`: a clean, accurate picture (the site's own plate) beats an ambitious
+murky one; never a synthetic voice; never a low frame rate proof as the thing to judge.
+The plate version is `briefs/plate-darkroom.json` rendered by `./plates.sh plate-darkroom`
+on the Mac (both shapes, 30 fps): the candle, the wall with its hole, the rays crossing,
+the image upside down, the crossed out eye rays, light entering the eye.
 
 ## What remains (masterplan steps 3 and 4, then 6 and 12)
 
+- The plate engine, made cinematic on the owner's notes: the camera's push per sentence,
+  the marks on the drawing's events, depth and light around the plate without changing
+  the plate; the sound plan of `filmsound.py` (marks on named events, the score ducked
+  under words) brought to the plate shorts.
 - Golden ratio primitives as a module (`web/phi.js`): frames, margins, focal points,
-  type scale and durations from phi; today the spec places cameras by hand.
-- The Lantern as a true storyteller in scene mode: a thread of light between two
-  things it names; today it travels, breathes and rests.
+  type scale and durations from phi.
 - Depth of field driven by the spec (focus as storytelling); today the theme's lens.
 - More figure kinds for more films (the sieve, the balance, the road); each a pure
   function of the events list like the dark room.

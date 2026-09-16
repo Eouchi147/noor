@@ -5,12 +5,12 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 
 ## Live on main (16 September 2026)
 
-- **The video engine, rebuilt** (`VIDEO_ENGINE.md`): the film spec, the scene film in the
-  light layer (explicit camera stations and light cues, one figure as the world), the
-  dark room figure, the watermark, `film.py` (compile, voice, sound, render, mux, check,
-  all) and `audit.py`; the whole engine in `tools/films/` in the repository, out of the
-  deployment. The prototype "The dark room" (ten scenes, 44 s, both shapes) proofed at 12
-  fps with a stand in voice, in the owner's folder `NOOR Films/darkroom/`.
+- **The video engine** (`VIDEO_ENGINE.md`): the whole engine in `tools/films/` in the
+  repository, out of the deployment. The direction after the owner's verdict of 16
+  September: the site's own SVG plates animated by the plate engine (`plates.sh`), both
+  shapes at 30 fps, captions fading from blur, the watermark, no synthetic voice. The
+  night's scene film and 3D room stay behind a flag. "The dark room" renders on the
+  owner's Mac (`./plates.sh plate-darkroom`).
 - **Batch 5, the `/license` removal, the orphan removal and the house documents**: live
   (rooms for prophets, companions, characters, places and the 99 Names; the sitemap at
   1,386; `/license` redirected to `/school`; 97 orphan files gone by pull request 14).
@@ -40,9 +40,8 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 
 ## In flight
 
-- **The dark room prototype, waiting on the owner**: the look, the voice, and whether
-  the architecture is locked (`VIDEO_ENGINE.md`, "What the owner decides"). The full
-  render (24 fps, shutter 3) is a Mac job.
+- **The dark room, plate version**: rendering on the owner's Mac; his notes on it drive
+  the next round (the plate engine's camera, the marks, the words).
 - **The dictionary rebuild at shell v14** (workflow run 35047391599): its pull request
   is merged or waiting; `CURRENT_STATE.md` is updated when it lands.
 
