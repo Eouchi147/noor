@@ -26,14 +26,34 @@ const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fai
 
 /* ---------- a Telegram that answers ---------- */
 const reply = (status, obj) => ({ ok: status >= 200 && status < 300, status, text: async () => JSON.stringify(obj), json: async () => obj });
+const API_HOST = "https://api.telegram.org/";
+/* a FormData, read back the way the assertions below want it: every field
+   as its value, the file kept as the Blob it is so its type and size can
+   be checked */
+const formToObj = fd => { const o = {}; for (const [k, v] of fd.entries()) o[k] = v; return o; };
 function telegram(opts = {}) {
   const calls = [];
   return {
     calls,
     fetch: async (url, init = {}) => {
       const u = String(url);
-      const body = init.body ? JSON.parse(init.body) : {};
+      if (!u.startsWith(API_HOST)) {
+        /* the video's own url, not Telegram's: since 16 September 2026 this
+           module fetches the bytes itself, so a test that never sets one up
+           gets a small, ordinary "video" back rather than a thrown error */
+        calls.push({ url: u, method: "GET" });
+        if (opts.videoFetch) return opts.videoFetch(u);
+        /* a stand-in reel, sized past MULTIPART_MIN (_telegram.js): since 16
+           September 2026 anything under 100 KB is read as a fetch failure
+           (a truncated body, a stub, a door's error page), never uploaded,
+           so a test of a reel that actually sends needs a body that size */
+        const bytes = opts.videoBytes || Buffer.alloc(200 * 1024, 7);
+        return { ok: true, status: 200,
+          headers: { get: k => (String(k).toLowerCase() === "content-length" ? String(bytes.length) : null) },
+          arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) };
+      }
       const method = u.slice(u.lastIndexOf("/") + 1);
+      const body = init.body instanceof FormData ? formToObj(init.body) : (init.body ? JSON.parse(init.body) : {});
       calls.push({ url: u, method, body });
       if (opts.answer) return opts.answer(method, body);
       return reply(200, { ok: true, result: { message_id: 4471, chat: { id: -1001, username: "noorcodex" } } });
@@ -110,8 +130,12 @@ console.log('\nthe send');
 
   const T3 = telegram();
   const r3 = await TG.send({ text: "caption", image: "https://h/c.jpg", video: "https://h/r.mp4" }, { fetch: T3.fetch });
-  ok(r3.ok && T3.calls[0].method === "sendVideo" && T3.calls[0].body.video === "https://h/r.mp4" && T3.calls[0].body.supports_streaming === true, 'a video is sendVideo by url, streaming on');
-  ok(!("photo" in T3.calls[0].body), 'and the cover is not sent as a photo beside it');
+  ok(r3.ok, 'a reel sends');
+  ok(T3.calls.some(c => c.url === "https://h/r.mp4"), 'its bytes are fetched from the url first, by this module, not handed to Telegram to fetch');
+  const v = T3.calls.find(c => c.method === "sendVideo");
+  ok(v && v.body.chat_id === "@noorcodex" && v.body.supports_streaming === "true", 'and posted to Telegram directly, as a video');
+  ok(v.body.video instanceof Blob && v.body.video.type === "video/mp4", 'the file itself, not a url');
+  ok(!("photo" in v.body), 'and the cover is not sent as a photo beside it');
 }
 
 console.log('\nwhat Telegram can say back');
@@ -133,10 +157,35 @@ console.log('\nwhat Telegram can say back');
 
   const auth = await TG.send(sh, { fetch: mk(401, "Unauthorized").fetch });
   ok(!auth.ok && auth.fatal && /BotFather/.test(auth.err), 'a token Telegram does not know is fatal and points at BotFather');
-  const big = await TG.send({ ...sh, video: "https://h/r.mp4" }, { fetch: mk(400, "Bad Request: file is too big").fetch });
-  ok(!big.ok && big.fatal && /20 MB/.test(big.err), 'a file over the url limit is refused with the limit named');
+  /* the url limit is gone with the url upload: since 16 September 2026 this
+     module reads the file itself and checks ITS OWN 50 MB ceiling before
+     ever calling Telegram, so the refusal is a skip, not a fatal answer
+     from the network */
+  const bigT = telegram({ videoBytes: Buffer.alloc(0), videoFetch: () => ({ ok: true, status: 200,
+    headers: { get: k => (String(k).toLowerCase() === "content-length" ? "60000000" : null) }, arrayBuffer: async () => new ArrayBuffer(0) }) });
+  const big = await TG.send({ ...sh, video: "https://h/r.mp4" }, { fetch: bigT.fetch });
+  ok(!big.ok && big.skipped && /50 MB/.test(big.err), 'a file over the upload limit is skipped, the limit named, before Telegram is ever asked');
+  ok(!SOC.healable(big), 'and the healer leaves a permanent size skip alone');
+  ok(!bigT.calls.some(c => c.url.startsWith(API_HOST)), 'and Telegram is never called for it');
   const cold = await TG.send(sh, { fetch: mk(400, "Bad Request: failed to get HTTP URL content").fetch });
   ok(!cold.ok && !cold.fatal && /retried next hour/.test(cold.err), 'a card Telegram could not fetch is retried, not abandoned');
+
+  /* the refuter's two notes, 16 September 2026: a body shorter than its own
+     declared content-length is a dropped connection, not a small file, and
+     a body under 100 KB whatever its length said is not a real reel -- both
+     are read as a fetch failure and never handed to Telegram as an upload */
+  const declaredLen = 200 * 1024, gotShort = Buffer.alloc(9, 7);
+  const short = telegram({ videoFetch: () => ({ ok: true, status: 200,
+    headers: { get: k => (String(k).toLowerCase() === "content-length" ? String(declaredLen) : null) },
+    arrayBuffer: async () => gotShort.buffer.slice(gotShort.byteOffset, gotShort.byteOffset + gotShort.byteLength) }) });
+  const truncated = await TG.send({ ...sh, video: "https://h/r.mp4" }, { fetch: short.fetch });
+  ok(!truncated.ok && !truncated.skipped && /dropped partway|9 of/.test(truncated.err), 'a body shorter than its own declared length is a fetch failure, not an upload: ' + truncated.err);
+  ok(!short.calls.some(c => c.url.startsWith(API_HOST)), 'and Telegram is never called with the partial file');
+
+  const tiny = telegram({ videoBytes: Buffer.alloc(9, 7) });
+  const small = await TG.send({ ...sh, video: "https://h/r.mp4" }, { fetch: tiny.fetch });
+  ok(!small.ok && !small.skipped && /too small/.test(small.err), 'a body under 100 KB is a fetch failure too, whatever it claims to be: ' + small.err);
+  ok(!tiny.calls.some(c => c.url.startsWith(API_HOST)), 'and Telegram is never called with it either');
   const other = await TG.send(sh, { fetch: mk(400, "Bad Request: something else").fetch });
   ok(!other.ok && other.err === "Bad Request: something else" && other.code === 400, 'anything else is quoted verbatim with its code');
   const html = await TG.send(sh, { fetch: telegram({ answer: () => ({ ok: false, status: 502, text: async () => "<html>bad gateway</html>" }) }).fetch });
@@ -169,7 +218,10 @@ console.log('\na reel, end to end through the channel table');
   ok(sh.video === REEL.video && sh.text === REEL.caption, 'the shape carries the video and the caption whole');
   const T = telegram();
   const r = await CH.SENDERS.telegram(sh, { fetch: T.fetch });
-  ok(r.ok && T.calls[0].method === "sendVideo" && T.calls[0].body.video === REEL.video && T.calls[0].body.caption === REEL.caption, 'the sender posts it as a video by url with the caption');
+  ok(r.ok, 'the reel sends');
+  ok(T.calls.some(c => c.url === REEL.video), 'the sender reads the video from its own url first');
+  const v = T.calls.find(c => c.method === "sendVideo");
+  ok(v && v.body.caption === REEL.caption && v.body.video instanceof Blob, 'and hands Telegram the file directly, with the caption');
   const card = S.buildSlot('word', { date: '2026-09-07', link: 'https://h/', image: 'https://h/api/card?slot=word', entry: { term: 'Sabr', ar: 'ص', short: 's', long: 'l', id: 'sabr' }, words: [] });
   ok(!card || !CH.shape(card, 'telegram').video, 'a word card carries no video to it');
 }
