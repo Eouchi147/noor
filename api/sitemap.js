@@ -5,7 +5,7 @@
 // Reached as /sitemap-rooms.xml through a rewrite in vercel.json, and named
 // in robots.txt.
 
-import { lights, chapters, verseRows } from "./page.js";
+import { lights, chapters, verseRows, prophets, characters, characterRoom, places, names } from "./page.js";
 
 const SITE = "https://noorcodex.com";
 /* The Lights, the chapters and the surah study are edited by hand, so their
@@ -25,6 +25,12 @@ export async function urls() {
   for (const c of chapters()) out.push(["/path/" + c.id, LAST_CONTENT_CHANGE]);
   for (let n = 1; n <= 114; n++) out.push(["/surah/" + n, LAST_CONTENT_CHANGE]);
   for (const r of await verseRows()) out.push(["/verse/" + r.ref.replace(":", "-"), day(r.uploaded) || day(r.written) || LAST_CONTENT_CHANGE]);
+  /* the people, the places and the Names: prophets-data.js, characters.js,
+     places.js and allah.html, edited by hand like the Lights */
+  for (const p of prophets()) out.push(["/prophet/" + p.id, LAST_CONTENT_CHANGE]);
+  for (const c of characters()) out.push([characterRoom(c), LAST_CONTENT_CHANGE]);
+  for (const p of places()) out.push(["/place/" + p.id, LAST_CONTENT_CHANGE]);
+  for (let n = 1; n <= names().length; n++) out.push(["/name/" + n, LAST_CONTENT_CHANGE]);
   return out;
 }
 

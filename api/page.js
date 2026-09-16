@@ -21,10 +21,17 @@
 //   /path/<n>     ?kind=path&n=        /path     ?kind=paths
 //   /verse/<ref>  ?kind=verse&ref=     /verses   ?kind=verses
 //   /surah/<n>    ?kind=surah&n=       /today    ?kind=today[&date=]
+//   /prophet/<id>    ?kind=prophet&id=      (prophets-data.js, 25)
+//   /companion/<id>  ?kind=companion&id=    (characters.js, the companions)
+//   /character/<id>  ?kind=character&id=    (characters.js, the angels, jinn,
+//                                            animals and end time figures)
+//   /place/<id>      ?kind=place&id=        (places.js, 34)
+//   /name/<n>        ?kind=name&n=          (allah.html's NAMES, the 99)
 // The loaders are exported so api/sitemap.js lists the same rooms.
 
 import fs from "node:fs";
 import path from "node:path";
+import vm from "node:vm";
 import { kv, kvReady } from "./_kv.js";
 import { pickWord, pickChapter } from "./_schedule.js";
 import { scoreLights, hijriOf, hijriName } from "./_lights.js";
@@ -32,7 +39,7 @@ import { manifestHost } from "./_reels.js";
 
 const SITE = "https://noorcodex.com";
 const OG_DEFAULT = SITE + "/assets/brand/og.png";
-const V = "13";                                 /* the shell's cache-buster; noor-fx.js carries the same */
+const V = "14";                                 /* the shell's cache-buster; noor-fx.js carries the same */
 const CACHE = "public, s-maxage=86400, stale-while-revalidate=604800";
 const API = "https://api.alquran.cloud/v1";
 const MANIFEST_URL = SITE + "/reels/index.json";
@@ -75,6 +82,60 @@ const quranTable = () => once("quran", () => readJSON("tools/reels/quran-uthmani
 export const surahRow = n => (quranTable().surahs || {})[String(n)] || null;
 const shelfRefs = () => once("shelf", () => (readText("tools/reels/verses.txt") || "").split("\n")
   .map(l => l.split("#")[0].trim()).filter(l => /^\d{1,3}:\d{1,3}(-\d{1,3})?$/.test(l)));
+
+/* The people, the places and the Names. prophets-data.js, characters.js and
+   places.js are page scripts, object literals rather than JSON
+   (window.NOOR_PROPHETS = [...]; const CHARACTERS = {...}), so each is run
+   once in an empty sandbox with nothing in it but a window object, and the
+   literal is what comes out; a file that will not run costs its family of
+   rooms and never an error. allah.html keeps the 99 Names as `const NAMES =
+   [...]`, written as JSON, and is read the way tools/reels/library.py reads
+   it: the literal between "const NAMES" and the line that closes it. */
+const scriptObject = (rel, name) => once("js:" + rel, () => {
+  const s = readText(rel);
+  if (!s) return null;
+  try {
+    const ctx = { window: {} };
+    vm.runInNewContext(s + "\n;__n2 = (typeof " + name + ' !== "undefined") ? ' + name + " : window." + name + ";", ctx, { timeout: 3000 });
+    return ctx.__n2 || null;
+  } catch { return null; }
+});
+export const prophets = () => once("prophets", () => { const w = scriptObject("prophets-data.js", "NOOR_PROPHETS"); return Array.isArray(w) ? w.filter(p => p && p.id && p.en) : []; });
+export const prophetById = id => prophets().find(p => p.id === id) || null;
+/* the hubs' own order of their sections, which is the order of the rooms */
+const CHAR_GROUPS = ["companions", "angels", "jinn", "animals", "endtime"];
+const PLACE_GROUPS = ["sanctuaries", "mountains", "cities", "waters", "endtimes"];
+const grouped = (rel, name, groups) => once("list:" + rel, () => {
+  const o = scriptObject(rel, name);
+  return (o && typeof o === "object") ? groups.flatMap(g => (Array.isArray(o[g]) ? o[g] : []).filter(e => e && e.id && e.titleEn).map(e => ({ ...e, group: g }))) : [];
+});
+export const characters = () => grouped("characters.js", "CHARACTERS", CHAR_GROUPS);
+export const places = () => grouped("places.js", "PLACES", PLACE_GROUPS);
+export const characterById = id => characters().find(c => c.id === id) || null;
+export const placeById = id => places().find(p => p.id === id) || null;
+/* a companion's room is /companion/<id>; an angel's, a jinn's, an animal's or
+   an end time figure's is /character/<id>: one family, two doors */
+export const characterRoom = c => (c.group === "companions" ? "/companion/" : "/character/") + c.id;
+export const names = () => once("names", () => {
+  const s = readText("allah.html") || "";
+  const i = s.indexOf("const NAMES");
+  const j = i < 0 ? -1 : s.indexOf("\n];", i);
+  if (j < 0) return [];
+  try { const rows = JSON.parse(s.slice(s.indexOf("[", i), j + 2)); return Array.isArray(rows) ? rows.filter(r => Array.isArray(r) && r.length >= 3) : []; } catch { return []; }
+});
+/* the n-th Name (1 to 99) as a record: [ar, translit, meaning, [root, gloss,
+   essay, ref, verse_ar, verse_en, fromList, practice]] */
+export const nameRow = n => {
+  const r = names()[n - 1];
+  if (!r) return null;
+  const x = Array.isArray(r[3]) ? r[3] : [];
+  return { n, ar: r[0], translit: r[1], meaning: r[2], root: x[0] || "", gloss: x[1] || "", essay: x[2] || "", ref: x[3] || "", verseAr: x[4] || "", verseEn: x[5] || "", fromList: !!x[6], practice: x[7] || "" };
+};
+/* what the Content Graph ties each of these rooms to (assets/entity-graph.json,
+   derived from the audit's graph at confidence 0.8 and above): the Lights that
+   name it, the chapters, its word, the words that name it, people, places */
+const entityGraph = () => once("egraph", () => { const j = readJSON("assets/entity-graph.json"); return (j && typeof j === "object") ? j : {}; });
+const edgesOf = key => { const e = entityGraph()[key]; return (e && typeof e === "object") ? e : {}; };
 
 /* the manifest of rendered reels: on disk when the shelf's pull request has
    landed, else fetched from the site; absent, the shelf is the reference list */
@@ -151,8 +212,29 @@ const attr = esc;
 const clip = (s, n) => { s = String(s || "").replace(/\s+/g, " ").trim(); return s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…"; };
 const fold = s => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[‘’'ʻʼ`]/g, "").replace(/[^a-z0-9\u0600-\u06ff]+/g, " ").trim();
 const paras = (text, cls = "n2-p") => String(text || "").split(/\n\s*\n/).map(p => p.trim()).filter(Boolean).map(p => `<p class="${cls}">${p}</p>`).join("\n");
-/* the Path's own cross links: {{n:2|Adam}} is a chapter, {{c:id|Iblis}} a figure */
-const unmark = s => esc(s).replace(/\{\{n:(\d+)\|([^{}]*)\}\}/g, (m, n, l) => `<a href="/path/${n}">${l}</a>`).replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1");
+/* the Path's own cross links: {{n:2|Adam}} is a chapter, {{c:id|Iblis}} a
+   character, {{p:id|Makkah}} a place, {{w:id|the shahada}} a du'a of the
+   Words page. A chapter, a companion and a place all carry them; each one
+   that has a room of its own is a link to it, and one that has none is its
+   label alone. */
+const tokenHref = (typ, id) => {
+  if (typ === "n") return "/path/" + id;
+  if (typ === "c") { const c = characterById(id); return c ? characterRoom(c) : ""; }
+  if (typ === "p") return placeById(id) ? "/place/" + id : "";
+  if (typ === "w") return "/words?open=" + encodeURIComponent(id);
+  return "";
+};
+const unmark = s => esc(s).replace(/\{\{([a-z]+):([^|{}]+)\|([^{}]*)\}\}/g, (m, typ, id, label) => { const h = tokenHref(typ, id); return h ? `<a href="${attr(h)}">${label}</a>` : label; });
+/* The house prints no em dash and no en dash. The 99 Names in allah.html
+   carry 179 em dashes, written as the page was written (the content audit's
+   content-006 asks for them to go); until the data is corrected the room
+   prints what scripts/i18n.py prints for the translation packs, a comma, and
+   a colon where the dash introduces a root's gloss ("rahim: the womb"). */
+const dedash = (s, colon) => String(s || "").replace(/\s*[\u2014\u2013]\s*/g, colon ? ": " : ", ");
+/* a reference as the data writes it (2:31, 4:157-158) opens its verse room
+   when it parses as one, else the Mushaf at its first verse */
+const refHref = ref => { const r = parseRef(ref); if (r) return "/verse/" + r.id; const m = String(ref || "").match(/^(\d{1,3}):(\d{1,3})/); return m ? "/quran?surah=" + m[1] + "&ayah=" + m[2] : "/quran"; };
+const ordinal = n => { const s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); };
 const SVG = {
   share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>',
   down: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>',
@@ -282,6 +364,9 @@ export function shell(o) {
      thirty-seven used to be behind a dial that only the arrival carried, so a
      reader standing in a room on a phone could not get to the Prophets at all.
      Without any script it is a link to /#search, which the arrival answers. */
+  /* The two skip links are first in the body, off screen until focused: the
+     bar is last in the document, so from a keyboard it came after every link
+     on the page. assets/noor2.js draws the same two on every other page. */
   const bar = BAR.map(l => `<a href="${l[1]}"${l[0] === "More" ? " data-n2-more" : ""}${l[1] === o.active ? ' class="n2-on"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true">${l[2]}</svg>${l[0]}</a>`).join("");
   const ld = [crumbs([["NOOR Codex of Light", "/"], ...(o.crumbs || [])]), ...(o.ld || [])];
   return `<!DOCTYPE html>
@@ -315,17 +400,18 @@ ${o.noindex ? '<meta name="robots" content="noindex"/>' : ""}<meta name="theme-c
 ${jsonld(ld)}
 </head>
 <body>
+<div class="n2-skips"><a class="n2-skip" href="#n2-content">Skip to the content</a><a class="n2-skip" href="#n2-rooms">Skip to the rooms</a></div>
 <div class="n2-still"></div>
 <i class="n2-prog" aria-hidden="true"></i>
 <header class="n2-top">
   <a class="n2-brand" href="/"><span class="n2-ar" lang="ar">نُور</span><span class="n2-en">Codex of Light</span></a>
   ${o.pill ? `<a class="n2-pill" href="${attr(o.pill[0])}">${esc(o.pill[1])}</a>` : ""}
 </header>
-<main class="n2-main">
+<main class="n2-main" id="n2-content" tabindex="-1">
 ${o.body}
 </main>
 <footer class="n2-foot">NOOR Codex of Light · free, no ads, no account · <a href="/">the library</a> · <a href="/legal">legal</a></footer>
-<nav class="n2-bar" aria-label="Rooms"><i class="n2-pill-bg" aria-hidden="true"></i>${bar}</nav>
+<nav class="n2-bar" id="n2-rooms" aria-label="Rooms" tabindex="-1"><i class="n2-pill-bg" aria-hidden="true"></i>${bar}</nav>
 ${o.tail || ""}
 </body>
 </html>`;
@@ -362,7 +448,13 @@ async function lightPage(id, host) {
   const isToday = !!(card && card.id === L.id);
   const words = relatedWords(L.t + " " + L.s);
   const more = relatedLights(L);
-  const body = `<section class="n2-idea">
+  /* The first screen of every room arrives already there (n2-in), the way
+     the home and the shelves ship theirs: noor2.css holds a screen's children
+     at opacity 0 until noor2.js marks it arrived, and on these rooms that
+     was 1.3 s of blank night before the first words on a desktop served from
+     the same box that paints the home at 144 ms. The screens below still
+     arrive as the reader reaches them. */
+  const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">${esc(L.c || "Light")} <small>· a Light</small></p>
 <h1 class="n2-h1">${keyPhrase(L.t)}</h1>
 ${paras(esc(L.s))}
@@ -450,7 +542,7 @@ function chapterPage(nRaw) {
   const hook = chapterHook(N.titleEn);
   const words = relatedWords(N.titleEn + " " + N.summary + " " + (N.lessons || []).join(" "));
   const conns = (N.connections || []).map(i => list.find(c => c.id === i)).filter(Boolean);
-  const body = `<section class="n2-idea">
+  const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">The Path <small>· chapter ${n} of ${list.length} · ${esc(periodName(N.period))}</small></p>
 ${N.titleAr ? `<p class="n2-title-ar" lang="ar">${esc(N.titleAr)}</p>` : ""}
 <h1 class="n2-h1">${hook}</h1>
@@ -571,7 +663,7 @@ async function versePage(refRaw) {
 ${reciter ? `<p class="n2-credit">Recited by ${esc(reciter)}</p>` : ""}`;
   const words = relatedWords((row && row.caption ? row.caption : "") + " " + english);
   const others = (await verseRows()).filter(r => r.ref && r.ref.split(":")[0] === String(ref.s) && r.id !== "verse-" + ref.id).slice(0, 8);
-  const body = `<section class="n2-idea">
+  const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">One verse${name ? ` <small>· ${esc(name)}</small>` : ""}</p>
 ${textBlock}
 <div class="n2-row">${row ? go("#reel", "The reel", true) : ""}${go(mushaf, "The Mushaf", !row)}${shareBtn(shareText, SITE + url)}</div>
@@ -675,7 +767,7 @@ async function surahPage(nRaw) {
   const S = study(n) || {};
   const verses = (await verseRows()).filter(r => +r.ref.split(":")[0] === n);
   const prevRow = n > 1 ? surahRow(n - 1) : null, nextRow = n < 114 ? surahRow(n + 1) : null;
-  const body = `<section class="n2-idea">
+  const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">Surah ${n} of 114${placeName ? ` <small>· ${esc(placeName)}</small>` : ""}</p>
 ${ar ? `<p class="n2-title-ar" lang="ar">${esc(ar)}</p>` : ""}
 <h1 class="n2-h1">${esc(name)}${meaning ? ` <span class="n2-g">${esc(meaning)}</span>` : ""}</h1>
@@ -750,7 +842,7 @@ async function todayPage(dateRaw, host) {
   const shift = k => { const d = new Date(date + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + k); return isoDate(d); };
   const prev = age < 30 ? ["/today?date=" + shift(-1), longDate(shift(-1)), "The day before"] : null;
   const next = age > 0 ? [(age === 1 ? "/today" : "/today?date=" + shift(1)), longDate(shift(1)), "The day after"] : null;
-  const body = `<section class="n2-idea">
+  const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">${isToday ? "Today's light" : "The light of the day"} <small>· ${esc(shortDate(date))}</small></p>
 ${card ? `<h1 class="n2-h1">${keyPhrase(card.title)}</h1>
 ${paras(esc(card.story))}
@@ -793,6 +885,198 @@ ${walk(prev, next)}
 }
 
 /* ---------------------------------------------------------------------------
+   the prophets, the companions and the other characters, the places, the Names
+--------------------------------------------------------------------------- */
+/* About 46,000 sourced words sat in three script files and one page and
+   showed only in a modal on tap: no title, no address, no preview, no
+   structured data, nothing a crawler could read or a reader could keep.
+   These rooms are those files, whole, in the shell: the concise answer
+   first, the Arabic, the account, the facts, the Qur'an and the narrations
+   with their sources as the data carries them, then what the library ties
+   the entity to. No room carries a picture of a person; the share image is
+   the house's own og.png. */
+const PUBLISHER = { "@type": "Organization", name: "NOOR Codex of Light", url: SITE, logo: { "@type": "ImageObject", url: SITE + "/assets/brand/mark-512.png" } };
+const factsList = rows => (rows && rows.length) ? `<ul class="n2-facts">${rows.filter(f => f && f.label != null && f.value != null).map(f => `<li><span>${esc(f.label)}</span><b>${esc(f.value)}</b></li>`).join("")}</ul>` : "";
+const quranBlock = rows => (rows && rows.length) ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The Qur'an on it</p>` + rows.filter(q => q && q.ref).map(q =>
+  `<div class="n2-quote">${q.ar ? `<p class="n2-quran" lang="ar">${esc(q.ar)}</p>` : ""}${q.en ? `<p class="n2-p">${esc(q.en)}</p>` : ""}${q.note ? `<p class="n2-p">${esc(q.note)}</p>` : ""}<p class="n2-ref"><a href="${attr(refHref(q.ref))}">Qur'an ${esc(q.ref)}</a></p></div>`).join("") + "</section>" : "";
+const hadithBlock = rows => (rows && rows.length) ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The narrations</p>` + rows.filter(Boolean).map(h =>
+  `<div class="n2-quote"><p class="n2-p">${esc(typeof h === "string" ? h : h.text)}</p>${(h.source || h.src) ? `<p class="n2-src">${esc(h.source || h.src)}</p>` : ""}</div>`).join("") + "</section>" : "";
+/* a person or a place of the graph as a row: its room, its name, its Arabic */
+function entityRef(key) {
+  const [fam, id] = String(key || "").split(":");
+  if (fam === "prophet") { const p = prophetById(id); return p && { href: "/prophet/" + p.id, t: p.en, ar: p.ar || "", s: p.epithet || "" }; }
+  if (fam === "companion" || fam === "character") { const c = characterById(id); return c && { href: characterRoom(c), t: c.titleEn, ar: c.titleAr || "", s: c.role || "" }; }
+  if (fam === "place") { const p = placeById(id); return p && { href: "/place/" + p.id, t: p.titleEn, ar: p.titleAr || "", s: p.role || "" }; }
+  return null;
+}
+const refList = (rows, eyebrow) => rows.length ? `<p class="n2-eyebrow">${eyebrow}</p><ul class="n2-list">${rows.map(r =>
+  `<li><a href="${attr(r.href)}"><b>${esc(r.t)}${r.s ? `<small>${esc(r.s)}</small>` : ""}</b>${r.ar ? `<span class="n2-ar" lang="ar">${esc(r.ar)}</span>` : ""}</a></li>`).join("")}</ul>` : "";
+const chapterList = (ns, eyebrow) => { const rows = ns.map(n => chapters().find(c => c.id === n)).filter(Boolean); return rows.length ? `<p class="n2-eyebrow">${eyebrow}</p><ul class="n2-list">${rows.map(c =>
+  `<li><a href="/path/${c.id}"><span class="n2-num">${c.id}</span><b>${esc(c.titleEn)}</b><span class="n2-ar" lang="ar">${esc(c.titleAr || "")}</span></a></li>`).join("")}</ul>` : ""; };
+/* "Read beside it" for one of these rooms: the word for the same entity
+   first, then the words its own text names, then the words that name it;
+   the Lights that name it; the chapters; the people and places named either
+   way; the stories written from a Name. All of it from the graph's edges,
+   except the words the text names, which relatedWords() reads as every
+   room does. */
+function besideEntity(key, text, extra) {
+  const E = edgesOf(key), D = dictionary();
+  const word = id => (id && D[id]) ? { id, ...D[id] } : null;
+  const seen = new Set(), words = [];
+  for (const w of [word(E.word), ...relatedWords(text), ...(Array.isArray(E.words) ? E.words : []).map(word)]) if (w && !seen.has(w.id)) { seen.add(w.id); words.push(w); }
+  const lightsL = (Array.isArray(E.lights) ? E.lights : []).map(lightById).filter(Boolean).slice(0, 8);
+  const people = (Array.isArray(E.people) ? E.people : []).map(entityRef).filter(Boolean);
+  const placesL = (Array.isArray(E.places) ? E.places : []).map(id => entityRef("place:" + id)).filter(Boolean);
+  /* the eight stories are static pages, not in this function's bundle, so
+     their existence cannot be asked of the disk here: the graph's ids were
+     read from stories/ itself and are trusted as read */
+  const stories = (Array.isArray(E.stories) ? E.stories : []).filter(s => /^[a-z0-9-]+$/.test(s));
+  return `<section class="n2-idea n2-short" id="beside">
+<p class="n2-eyebrow">Read beside it</p>
+${wordList(words.slice(0, 8), "The words")}
+${lightList(lightsL, "Lights that name it")}
+${chapterList(Array.isArray(E.chapters) ? E.chapters : [], "On the Path")}
+${refList(people, "People beside it")}
+${refList(placesL, "Places")}
+${stories.length ? `<p class="n2-eyebrow">A story</p><ul class="n2-list">${stories.map(s => `<li><a href="/stories/${attr(s)}"><b>${esc(s.charAt(0).toUpperCase() + s.slice(1))}<small>one of the eight stories of the Names</small></b></a></li>`).join("")}</ul>` : ""}
+${typeof E.unseen === "string" && /^\/unseen#[\w-]+$/.test(E.unseen) ? `<p class="n2-eyebrow">The Unseen</p><ul class="n2-list"><li><a href="${attr(E.unseen)}"><b>The same figure on the Unseen page</b></a></li></ul>` : ""}
+${extra || ""}
+</section>`;
+}
+
+function prophetPage(idRaw) {
+  const list = prophets();
+  const i = list.findIndex(p => p.id === String(idRaw || ""));
+  const P = i >= 0 ? list[i] : null;
+  if (!P) return notFound("prophet");
+  const url = "/prophet/" + P.id;
+  const prev = list[i - 1], next = list[i + 1];
+  const story = Array.isArray(P.story) ? P.story.filter(t => typeof t === "string") : [];
+  const text = [P.en, P.epithet, P.blurb, ...story].join(" ");
+  const facts = [P.era && { label: "Era", value: P.era }, P.place && { label: "Place", value: P.place },
+    Number.isFinite(P.mentions) && { label: "Named in the Qur'an", value: P.mentions + " times" + (P.id === "muhammad" ? ", once as Ahmad" : "") }].filter(Boolean);
+  const split = P.split && P.split.a && P.split.b ? [{ label: P.split.a.label, value: P.split.a.years + " years" }, { label: P.split.b.label, value: P.split.b.years + " years" }] : [];
+  const body = `<section class="n2-idea n2-in">
+<p class="n2-eyebrow">A prophet <small>· link ${i + 1} of ${list.length} in the chain</small></p>
+${P.ar ? `<p class="n2-title-ar" lang="ar" translate="no">${esc(P.ar)}</p>` : ""}
+<h1 class="n2-h1">${esc(P.en)}</h1>
+<p class="n2-meaning">${esc(P.epithet || "")}${P.azm ? (P.epithet ? " · " : "") + "one of the five of firm resolve" : ""}</p>
+${P.blurb ? `<p class="n2-p">${esc(P.blurb)}</p>` : ""}
+${factsList(facts)}
+<div class="n2-row">${go("#story", "The story", true)}${shareBtn(P.en + ", " + (P.epithet || "a prophet") + " · NOOR Codex of Light", SITE + url)}</div>
+</section>
+<section class="n2-idea n2-short" id="story">
+<p class="n2-eyebrow">The story</p>
+${story.map(t => `<p class="n2-p">${esc(t)}</p>`).join("\n")}
+</section>
+${split.length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">Twenty-three years, two cities</p>${factsList(split)}</section>` : ""}
+${Array.isArray(P.seerah) && P.seerah.length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The Seerah at a glance</p><ol class="n2-tl">${P.seerah.map(e => `<li><b>${esc(e.t)}</b>${e.y ? `<small>${esc(e.y)}</small>` : ""}</li>`).join("")}</ol></section>` : ""}
+${quranBlock(Array.isArray(P.verses) ? P.verses : [])}
+${hadithBlock(Array.isArray(P.hadith) ? P.hadith : [])}
+${Array.isArray(P.figures) && P.figures.length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">In numbers</p>${factsList(P.figures)}</section>` : ""}
+${Array.isArray(P.journey) && P.journey.length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The journey</p><ol class="n2-tl">${P.journey.map(s => `<li><b>${esc(s)}</b></li>`).join("")}</ol></section>` : ""}
+${besideEntity("prophet:" + P.id, text,
+  walk(prev && ["/prophet/" + prev.id, prev.en, "Link " + i], next && ["/prophet/" + next.id, next.en, "Link " + (i + 2)]) +
+  `<div class="n2-row">${go("/prophets#" + P.id, "On the chain of " + list.length)}${P.id === "muhammad" ? go("/muhammad", "The Seerah, at length") : ""}${go("/path", "The Path")}</div>`)}`;
+  return { status: 200, html: shell({
+    title: P.en + " · " + (P.epithet || "a prophet"), path: url, desc: clip(P.blurb || story[0] || P.epithet, 158), active: "",
+    crumbs: [["The Prophets", "/prophets"], [P.en, url]], pill: ["/prophets", "All prophets"],
+    ld: [{ "@context": "https://schema.org", "@type": "Person", name: P.en, alternateName: P.ar || undefined, description: clip(P.blurb || story[0], 200),
+      url: SITE + url, mainEntityOfPage: SITE + url, subjectOf: { "@type": "Article", headline: P.en + " · " + (P.epithet || ""), url: SITE + url, inLanguage: "en", publisher: PUBLISHER } }],
+    body }) };
+}
+
+/* a companion, or one of the other characters: the same file, the same room */
+function characterPage(idRaw, family) {
+  const C = characterById(String(idRaw || ""));
+  if (!C || (family === "companion") !== (C.group === "companions")) return notFound(family);
+  const group = characters().filter(x => x.group === C.group);
+  const i = group.findIndex(x => x.id === C.id);
+  const hub = C.group === "companions" ? "/companions" : "/characters";
+  return entityRoom({ url: characterRoom(C), hub, hubLabel: C.group === "companions" ? "The Companions" : "The Characters",
+    key: (C.group === "companions" ? "companion:" : "character:") + C.id, E: C, label: labels()["chars." + C.group] || groupLabel(C.group),
+    i, n: group.length, prev: group[i - 1], next: group[i + 1], type: C.group === "companions" ? "Person" : "Thing",
+    roomOf: characterRoom, pill: [hub, C.group === "companions" ? "All companions" : "All characters"] });
+}
+function placePage(idRaw) {
+  const P = placeById(String(idRaw || ""));
+  if (!P) return notFound("place");
+  const group = places().filter(x => x.group === P.group);
+  const i = group.findIndex(x => x.id === P.id);
+  return entityRoom({ url: "/place/" + P.id, hub: "/places", hubLabel: "The Places", key: "place:" + P.id, E: P, label: labels()["places." + P.group] || groupLabel(P.group),
+    i, n: group.length, prev: group[i - 1], next: group[i + 1], type: "Place", roomOf: x => "/place/" + x.id, pill: ["/places", "All places"] });
+}
+/* the room a companion, a character and a place share: titleEn, titleAr,
+   role, summary, details with the Path's tokens, facts, quran, hadith */
+function entityRoom(o) {
+  const E = o.E, url = o.url;
+  const text = [E.titleEn, E.role, E.summary, String(E.details || "").replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1")].join(" ");
+  const body = `<section class="n2-idea n2-in">
+<p class="n2-eyebrow">${esc(o.label)}${E.role ? ` <small>· ${esc(E.role)}</small>` : ""}</p>
+${E.titleAr ? `<p class="n2-title-ar" lang="ar" translate="no">${esc(E.titleAr)}</p>` : ""}
+<h1 class="n2-h1">${esc(E.titleEn)}</h1>
+<p class="n2-meaning">${esc(E.summary || "")}</p>
+<div class="n2-row">${go("#account", "The whole account", true)}${shareBtn(E.titleEn + (E.summary ? ": " + clip(E.summary, 160) : "") + " · NOOR Codex of Light", SITE + url)}</div>
+</section>
+<section class="n2-idea n2-short" id="account">
+<p class="n2-eyebrow">The account</p>
+${paras(unmark(E.details || E.summary || ""))}
+</section>
+${Array.isArray(E.facts) && E.facts.length ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">The facts</p>${factsList(E.facts)}</section>` : ""}
+${quranBlock(Array.isArray(E.quran) ? E.quran : [])}
+${hadithBlock(Array.isArray(E.hadith) ? E.hadith : [])}
+${besideEntity(o.key, text,
+  walk(o.prev && [o.roomOf(o.prev), o.prev.titleEn], o.next && [o.roomOf(o.next), o.next.titleEn]) +
+  `<div class="n2-row">${go(o.hub + "?open=" + encodeURIComponent(E.id), "On the " + o.hubLabel.replace(/^The /, "") + " page")}${go("/path", "The Path")}</div>`)}`;
+  return { status: 200, html: shell({
+    title: E.titleEn, path: url, desc: clip(E.summary || E.role, 158), active: "",
+    crumbs: [[o.hubLabel, o.hub], [E.titleEn, url]], pill: o.pill,
+    ld: [{ "@context": "https://schema.org", "@type": o.type, name: E.titleEn, alternateName: E.titleAr || undefined, description: clip(E.summary, 200),
+      url: SITE + url, mainEntityOfPage: SITE + url, subjectOf: { "@type": "Article", headline: E.titleEn + (E.role ? " · " + E.role : ""), url: SITE + url, inLanguage: "en", publisher: PUBLISHER } }],
+    body }) };
+}
+
+/* one of the 99 Names, by its number: the page addresses them /allah#n */
+function namePage(nRaw) {
+  const n = Number(nRaw);
+  const N = (Number.isInteger(n) && n >= 1) ? nameRow(n) : null;
+  if (!N) return notFound("Name");
+  const url = "/name/" + n, count = names().length;
+  const prev = n > 1 ? nameRow(n - 1) : null, next = n < count ? nameRow(n + 1) : null;
+  const essay = dedash(N.essay), gloss = dedash(N.gloss, true), practice = dedash(N.practice);
+  const head = String(N.meaning || "").split(/[,;]/)[0].trim();
+  /* the verse's own note, in the page's words: whether the Name is in the
+     Qur'an as written, or comes from the enumeration with the verse that
+     carries its meaning */
+  const where = N.fromList ? "from the enumeration · the verse carries the meaning" : "this Name is in the Qur’an";
+  const body = `<section class="n2-idea n2-in">
+<p class="n2-eyebrow">The Ninety-Nine Names <small>· the ${ordinal(n)} name</small></p>
+<p class="n2-word-ar" lang="ar" translate="no">${esc(N.ar)}</p>
+<h1 class="n2-h1">${esc(N.translit)}</h1>
+<p class="n2-meaning">${esc(N.meaning)}</p>
+${N.root ? `<ul class="n2-facts"><li><span>The root</span><b lang="ar">${esc(N.root)}</b></li>${gloss ? `<li><span>From the root</span><b>${esc(gloss)}</b></li>` : ""}</ul>` : ""}
+<div class="n2-row">${go("#essay", "The essay", true)}${shareBtn(N.translit + ", " + N.ar + ": " + N.meaning + " · NOOR Codex of Light", SITE + url)}</div>
+</section>
+${essay ? `<section class="n2-idea n2-short" id="essay">
+<p class="n2-eyebrow">The essay</p>
+${paras(esc(essay))}
+</section>` : ""}
+${N.ref ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">In the Qur'an</p>
+<div class="n2-quote">${N.verseAr ? `<p class="n2-quran" lang="ar">${esc(N.verseAr)}</p>` : ""}${N.verseEn ? `<p class="n2-p">${esc(N.verseEn)}</p>` : ""}<p class="n2-ref"><a href="${attr(refHref(N.ref))}">Qur'an ${esc(N.ref)}</a></p><p class="n2-credit">${esc(where)}</p></div></section>` : ""}
+${practice ? `<section class="n2-idea n2-short"><p class="n2-eyebrow">What it asks of you</p><p class="n2-p">${esc(practice)}</p></section>` : ""}
+${besideEntity("name:" + n, [N.translit, N.meaning, essay].join(" "),
+  walk(prev && ["/name/" + (n - 1), prev.translit, "Name " + (n - 1)], next && ["/name/" + (n + 1), next.translit, "Name " + (n + 1)]) +
+  `<div class="n2-row">${go("/allah#" + n, "All " + count + " Names")}</div>`)}`;
+  return { status: 200, html: shell({
+    title: N.translit + (head ? ", " + head : ""), path: url, desc: clip(N.meaning + ". " + essay, 158), active: "",
+    crumbs: [["The Ninety-Nine Names", "/allah"], [N.translit, url]], pill: ["/allah", "The Names"],
+    ld: [{ "@context": "https://schema.org", "@type": "DefinedTerm", name: N.translit, alternateName: N.ar, description: clip(N.meaning + (gloss ? ". " + gloss : ""), 200),
+      termCode: String(n), url: SITE + url, inLanguage: ["ar", "en"],
+      inDefinedTermSet: { "@type": "DefinedTermSet", name: "The Ninety-Nine Names of Allah", url: SITE + "/allah" } }],
+    body }) };
+}
+
+/* ---------------------------------------------------------------------------
    the handler
 --------------------------------------------------------------------------- */
 export async function render(kind, q = {}, host = "") {
@@ -805,6 +1089,11 @@ export async function render(kind, q = {}, host = "") {
     case "verses": return versesIndex();
     case "surah": return surahPage(q.n);
     case "today": return todayPage(q.date, host);
+    case "prophet": return prophetPage(q.id);
+    case "companion": return characterPage(q.id, "companion");
+    case "character": return characterPage(q.id, "character");
+    case "place": return placePage(q.id);
+    case "name": return namePage(q.n);
     default: return notFound("kind");
   }
 }
