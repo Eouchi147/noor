@@ -25,8 +25,16 @@ def run(cmd):
 def dur(p):
     r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                         "-of", "default=nw=1:nk=1", p], capture_output=True, text=True)
-    try: return float(r.stdout.strip())
-    except Exception: return 0.0
+    #  NOT 0.0 ON FAILURE. A swallowed ffprobe used to give d = 0.0, which
+    #  pinned the bitrate at the ceiling, passed ffmpeg -t 0.000, wrote an
+    #  empty mp4, reported ok, recorded "fits" as true, and then cut every
+    #  later chapter from the wrong offset. A missing duration is not a
+    #  duration of zero; it is a reason to stop.
+    try:
+        return float(r.stdout.strip())
+    except Exception:
+        sys.exit("ffprobe could not read a duration from %s\n%s"
+                 % (p, (r.stderr or "").strip()[:300]))
 
 
 def main():

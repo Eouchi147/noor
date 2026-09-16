@@ -155,8 +155,15 @@ def chapter_score(ch, root, seed, first=False, last=False):
     air = S._band(rng.standard_normal(n).astype(np.float32), 150, 2800) * 0.013
     air = air * (0.5 + 0.5 * S._lfo(t, 0.037, 0.4, 0.0, 1.0))
 
-    left = pad[0] * 0.17 + sub * 0.21 + air
-    right = pad[1] * 0.17 + sub * 0.21 + air * 0.93
+    #  KEPT APART, THEN SUMMED. The mix below is exactly what it always was;
+    #  the parts are held separately as well so they can be written as stems
+    #  for a mix done by hand. See --stems.
+    STEM = {}
+    STEM["pad"]  = [pad[0] * 0.17, pad[1] * 0.17]
+    STEM["sub"]  = [sub * 0.21, sub * 0.21]
+    STEM["air"]  = [air, air * 0.93]
+    left = STEM["pad"][0] + STEM["sub"][0] + STEM["air"][0]
+    right = STEM["pad"][1] + STEM["sub"][1] + STEM["air"][1]
 
     #  THE STRUCK NOTES.
     #  Placed on the openings of the longer beats, so they land with a thought
@@ -185,8 +192,10 @@ def chapter_score(ch, root, seed, first=False, last=False):
         at += 5.4 + hash01(seed * 7 + k) * 2.6
     pl = S._conv(pl, HALL) * 0.52 + pl * 0.48
     pr = S._conv(pr, HALL) * 0.52 + pr * 0.48
-    left += pl * 0.185
-    right += pr * 0.185
+    STEM["plucks"] = [pl * 0.185, pr * 0.185]
+    left += STEM["plucks"][0]
+    right += STEM["plucks"][1]
+    STEM["perc"] = [np.zeros(n, dtype=np.float32), np.zeros(n, dtype=np.float32)]
 
     #  ONE STROKE TO OPEN THE FILM AND ONE TO CLOSE IT, AND NONE IN BETWEEN.
     #  Nine of them in seven minutes was the "random sounds" problem: a drum
@@ -198,13 +207,45 @@ def chapter_score(ch, root, seed, first=False, last=False):
         if j > i:
             left[i:j] += st[: j - i] * gain
             right[i:j] += st[: j - i] * gain
+            STEM["perc"][0][i:j] += st[: j - i] * gain
+            STEM["perc"][1][i:j] += st[: j - i] * gain
 
     if first:
         stroke_at("boom", 0.35, 0.52)
     if last:
         stroke_at("deep", max(0.0, secs - 9.0), 0.46)
 
-    return left, right
+    return left, right, STEM
+
+
+def movements(ch):
+    """Cut a chapter into the stretches the picture already believes in.
+
+    score.py was written for a film in seven chapters and gave each of them
+    its own root, its own swell and its own turn between voicings. Films two
+    and three are ONE chapter of eight minutes, so the same code gave them one
+    root and one swell across the whole thing: a drone with a shape drawn on
+    it, which is the exact failure the note at the top of chapter_score is
+    about, stretched eight times longer.
+
+    They are not shapeless, though. Each figure in the picture carries one
+    stretch of the argument, and the film file already says where those start.
+    So a movement is a figure span: eight of them in film two, six in film
+    three, running 17 to 105 seconds, which is the length the swell was
+    written for. The music now turns where the argument turns, because it is
+    reading the same marks the picture is."""
+    bs = ch.get("beats", [])
+    heads = [i for i, b in enumerate(bs) if b.get("lume")] or [0]
+    if heads[0] != 0:
+        heads = [0] + heads
+    out = []
+    for k, h in enumerate(heads):
+        end = heads[k + 1] if k + 1 < len(heads) else len(bs)
+        seg = dict(ch)
+        seg["beats"] = bs[h:end]
+        seg["id"] = "%s-m%d" % (ch.get("id", "ch"), k + 1)
+        out.append(seg)
+    return out
 
 
 def hash01(i):
@@ -214,11 +255,64 @@ def hash01(i):
     return ((n ^ (n >> 16)) & 0xFFFFFFFF) / 4294967295.0
 
 
+def cue_sheet(F, path_txt, path_mid):
+    """What Logic needs to arrive with the timeline already understood.
+
+    A marker per beat, named with its kind and its first words, plus one per
+    movement. Written twice: a plain text list to read, and a type 0 MIDI file
+    whose only content is marker meta events, which Logic imports straight
+    onto its marker track. Open the stems, import this, and every cut in the
+    film is already labelled on the ruler."""
+    rows, t = [], 0.0
+    for ch in F["chapters"]:
+        heads = set(i for i, b in enumerate(ch.get("beats", [])) if b.get("lume"))
+        for i, b in enumerate(ch.get("beats", [])):
+            words = (b.get("text") or b.get("en") or b.get("eyebrow") or "").strip()
+            words = " ".join(words.split())[:44]
+            tag = "FIGURE %s | " % b["lume"]["kind"] if i in heads else ""
+            rows.append((t, "%s%02d %s%s" % (tag, i, b.get("kind", "?"),
+                                             " · " + words if words else "")))
+            t += max(1.2, float(b.get("hold", 4))) + float(b.get("gap", 0) or 0)
+
+    with open(path_txt, "w", encoding="utf-8") as fh:
+        fh.write("# %s · %d markers · %.1f s\n" % (F.get("slug", "film"), len(rows), t))
+        for at, name in rows:
+            fh.write("%02d:%02d:%06.3f\t%s\n" % (int(at // 3600), int(at % 3600 // 60),
+                                                  at % 60, name))
+
+    #  a type 0 MIDI file containing nothing but markers. 500000 us per quarter
+    #  at 480 ticks means one quarter is half a second, so ticks = seconds*960.
+    def vlq(v):
+        out = bytearray([v & 0x7F]); v >>= 7
+        while v:
+            out.insert(0, 0x80 | (v & 0x7F)); v >>= 7
+        return bytes(out)
+    trk, last = bytearray(), 0
+    trk += b"\x00\xff\x51\x03" + (500000).to_bytes(3, "big")
+    for at, name in rows:
+        tick = int(round(at * 960))
+        nm = name.encode("utf-8", "replace")[:120]
+        trk += vlq(tick - last) + b"\xff\x06" + vlq(len(nm)) + nm
+        last = tick
+    trk += b"\x00\xff\x2f\x00"
+    with open(path_mid, "wb") as fh:
+        fh.write(b"MThd" + (6).to_bytes(4, "big") + (0).to_bytes(2, "big")
+                 + (1).to_bytes(2, "big") + (480).to_bytes(2, "big"))
+        fh.write(b"MTrk" + len(trk).to_bytes(4, "big") + bytes(trk))
+    return len(rows), t
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("slug")
     ap.add_argument("--chapter", action="append")
     ap.add_argument("--lufs", type=float, default=-26.0)
+    ap.add_argument("--stems", action="store_true",
+                    help="also write pad, sub, air, plucks and perc as separate "
+                         "files, for a mix done by hand in a DAW")
+    ap.add_argument("--flat", action="store_true",
+                    help="score by chapter only, the old behaviour. Use it on a "
+                         "film that really is in chapters.")
     a = ap.parse_args()
 
     F = film(a.slug)
@@ -227,32 +321,57 @@ def main():
         want = tuple(a.chapter)
         chapters = [c for c in chapters if c["id"].startswith(want)]
 
+    #  a film in one chapter is cut into its figure spans; a film already in
+    #  chapters is left alone, because its author already said where it turns
+    if not a.flat and len(chapters) == 1:
+        chapters = movements(chapters[0])
+
     os.makedirs(OUT, exist_ok=True)
-    L, R = [], []
+    L, R, ST = [], [], {}
     for i, ch in enumerate(chapters):
         root = ROOTS[i % len(ROOTS)]
-        l, r = chapter_score(ch, root, seed=9173 + i * 131,
-                             first=(i == 0), last=(i == len(chapters) - 1))
-        print("    %-22s %5.1fs  root %.1f Hz" % (ch["id"], len(l) / SR, root))
+        l, r, stem = chapter_score(ch, root, seed=9173 + i * 131,
+                                   first=(i == 0), last=(i == len(chapters) - 1))
+        print("    %-24s %6.1fs  root %.1f Hz" % (ch["id"], len(l) / SR, root))
         L.append(l); R.append(r)
+        for k, v in stem.items():
+            ST.setdefault(k, [[], []])
+            ST[k][0].append(v[0]); ST[k][1].append(v[1])
     left = np.concatenate(L); right = np.concatenate(R)
 
     #  peak the whole film at about twelve decibels down before the glue, so
     #  the compressor's threshold means what it was written to mean
     pk = max(1e-9, float(max(np.abs(left).max(), np.abs(right).max())))
-    left *= 0.25 / pk; right *= 0.25 / pk
+    scale = 0.25 / pk
+    left *= scale; right *= scale
     left, right = S._master(left, right, kind="light")
     left, right = S._limit(left, right)
     path = os.path.join(OUT, "%s-score.wav" % a.slug)
     S._write(path, left, right)
 
     #  set it where a narration track can sit on top of it without ducking
+    gain = 1.0
     have = S._lufs(path)
     if have is not None:
         gain = 10.0 ** ((a.lufs - have) / 20.0)
         S._write(path, left, right, gain=gain)
         print("    %.1f LUFS -> %.1f LUFS" % (have, a.lufs))
     print("    score -> " + path)
+
+    if a.stems:
+        d = os.path.join(OUT, "%s-stems" % a.slug)
+        os.makedirs(d, exist_ok=True)
+        #  the same scale and the same final gain the mix got, so the stems
+        #  sum back to the mix rather than to something louder
+        for k in sorted(ST):
+            sl = np.concatenate(ST[k][0]) * scale
+            sr = np.concatenate(ST[k][1]) * scale
+            S._write(os.path.join(d, "%s.wav" % k), sl, sr, gain=gain)
+            print("    stem  %-8s %6.1fs" % (k, len(sl) / SR))
+        n, secs = cue_sheet(F, os.path.join(d, "markers.txt"),
+                            os.path.join(d, "markers.mid"))
+        print("    %d markers over %.1fs -> markers.mid and markers.txt" % (n, secs))
+    return 0
 
 
 HALL = S._ir(secs=4.2, pre=0.034)

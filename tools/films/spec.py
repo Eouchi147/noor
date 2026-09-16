@@ -31,7 +31,9 @@ FRAMES = {"wide": WIDE, "tall": TALL}
 #  95 and 90 encode in the same time and 90 is forty per cent of the bytes,
 #  which is forty per cent less for ffmpeg to decode on the other end of the
 #  pipe. The frames are an intermediate; the film is encoded from them at
-#  CRF 17, and no eye has ever met the JPEGs.
+#  CRF 16 on the Mac and 19 in the cloud, and no eye has ever met the JPEGs.
+#  (This line said 17 for a long time. No encoder in the tree has ever used
+#  17, which is the kind of thing that makes a comment worse than none.)
 JPEG_Q = 90
 
 #  How many samples of the light layer each finished pixel is boxed down from,
@@ -48,4 +50,12 @@ JPEG_Q = 90
 #  fragment work is real even though the draw call returns in five
 #  milliseconds -- WebGL is asynchronous and the bill arrives with the
 #  screenshot. The budget is better spent on the bloom and the encode.
-LUME_SS = 2
+#  Three, now, not two -- but only where three is affordable.
+#  On the cloud runner with no GPU, 2 cost 420 ms a frame and 3 cost 1320:
+#  three times the price for an edge that was already clean. On an M4 with
+#  Metal the whole frame is 11 ms, so the same trade is a rounding error and
+#  it buys a real thing: the sub-pixel elements -- dust, thin threads, the
+#  rim of the orb -- stop scintillating, because they are resolved from nine
+#  samples instead of four. Set NOOR_SS to override.
+import os as _os
+LUME_SS = int(_os.environ.get("NOOR_SS", "3"))

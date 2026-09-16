@@ -22,14 +22,41 @@ from playwright.sync_api import sync_playwright
 from spec import FPS, FRAMES, JPEG_Q, LUME_SS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PAGE = "file://" + os.path.join(HERE, "web", "film.html")
+# A file:// URL must be percent-encoded. Built by hand this breaks the
+# moment the checkout sits in a folder with a space in its name, which
+# is exactly what "NOOR Films" is: the page half-loaded and every font
+# fetch failed with a NetworkError.
+PAGE = __import__("pathlib").Path(HERE, "web", "film.html").as_uri()
 OUT = os.path.join(HERE, "out")
 
 
 def film(slug):
     p = os.path.join(HERE, "films", slug + ".json")
     with open(p, encoding="utf-8") as f:
-        return json.load(f)
+        f = json.load(f)
+    voice(slug, f)
+    return f
+
+
+def voice(slug, f):
+    """Hand each chapter the Lantern's breath, when this cut has one.
+
+    films/<slug>.envelope.json is a 50Hz amplitude envelope of the finished
+    narration, written by scratchpad/voice/envelope.py. It rides in on the
+    chapter object rather than being fetched by the page, because the page is
+    a file:// URL held open for the whole render and a fetch there is one more
+    thing that can fail eleven thousand frames in.
+
+    A cut with no envelope renders exactly as before: the light keeps its own
+    slow wander and simply does not breathe."""
+    p = os.path.join(HERE, "films", slug + ".envelope.json")
+    if not os.path.exists(p):
+        return
+    with open(p, encoding="utf-8") as fh:
+        env = json.load(fh)
+    for ch in f.get("chapters", []):
+        ch["voice"] = env
+    print("    voice          %.1fs of breath at %dHz" % (env["n"] / float(env["hz"]), env["hz"]))
 
 
 class Stage:
@@ -54,13 +81,44 @@ class Stage:
         #  of a render is the picture and which half is the photograph of it.
         #  The one flag that stays lets a software WebGL context be created
         #  at all, which newer Chromium refuses without it.
-        self.b = pw.chromium.launch(args=[
-            "--force-color-profile=srgb", "--font-render-hinting=none",
-            "--enable-unsafe-swiftshader"])
+        #
+        #  ON A MAC NONE OF THE ABOVE APPLIES, AND IT COST HOURS.
+        #  Everything above is reasoning about a cloud runner with no GPU,
+        #  where software WebGL is the only option. This file was then run
+        #  unchanged on an Apple Silicon machine, which has a GPU that
+        #  Chromium can reach through Metal, and it kept asking for the
+        #  software path: every pixel of a nine minute film drawn on the CPU.
+        #  mac_render.py already knew the three flags that fix it, but that
+        #  file is hardwired to one film and one frame count, so the moment
+        #  there was a second and a third film they all went back through the
+        #  slow door. Pick the door by the machine it is running on.
+        args = ["--force-color-profile=srgb", "--font-render-hinting=none"]
+        args += (["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"]
+                 if sys.platform == "darwin" else
+                 ["--enable-unsafe-swiftshader"])
+        self.b = pw.chromium.launch(args=args)
         self.p = self.b.new_page(viewport={"width": frame["w"], "height": frame["h"]},
                                  device_scale_factor=1)
         self.errs = []
+        self._checked = False
         self.p.on("pageerror", lambda e: self.errs.append(str(e)))
+        #  A DEAD SHADER IS NOT A PAGE ERROR, AND IT LOOKS LIKE A DEAD RENDER.
+        #  One reserved identifier in the compositor (a local named gl_something,
+        #  which GLSL forbids) failed the program to link. Nothing threw. The
+        #  page ran, the timeline built, every seek succeeded, and 3,000 frames
+        #  came back black, because a WebGL program that will not link reports
+        #  itself through console.error and not through an exception. An hour of
+        #  unattended rendering can be spent on that. Watch the console too, and
+        #  only for the words that mean the GPU refused, so ordinary chatter from
+        #  a library does not stop a good render.
+        def _con(m):
+            if m.type != "error":
+                return
+            t = m.text or ""
+            if ("THREE.WebGLProgram" in t or "shader" in t.lower()
+                    or "Program Info Log" in t or "WebGL" in t and "error" in t.lower()):
+                self.errs.append("the GPU refused the shader: " + t.strip()[:400])
+        self.p.on("console", _con)
         self.p.goto(PAGE)
         # every face fetched now, not on first use: a font-display:block face
         # loads when text first asks for it, and the first beat set in Amiri
@@ -85,7 +143,26 @@ class Stage:
 
     def shot(self, ms):
         self.p.evaluate("t => NOORFILM.seek(t)", ms)
-        return self.p.screenshot(type="jpeg", quality=JPEG_Q)
+        px = self.p.screenshot(type="jpeg", quality=JPEG_Q)
+        #  THE FIRST FRAME IS THE ONLY ONE THAT CAN TELL YOU THIS.
+        #  A WebGL program is compiled and linked lazily, on the first draw
+        #  that needs it, which is AFTER the page has loaded and AFTER the
+        #  timeline has built. So both earlier checks pass and the console
+        #  error arrives here, on frame one. Checking once at the first shot
+        #  is what turns an hour of black frames into an error in a second.
+        #  It also catches the quieter version of the same failure, where the
+        #  shader links but the picture is empty: a frame with nothing in it
+        #  is never correct in this film, and it is cheap to notice.
+        if not self._checked:
+            self._checked = True
+            if self.errs:
+                raise RuntimeError("the first frame did not draw: " + self.errs[0])
+            if len(px) < 3500:
+                raise RuntimeError(
+                    "the first frame came back empty (%d bytes of JPEG). The "
+                    "compositor draws a lit room on every frame, so a frame "
+                    "this small means nothing was drawn at all." % len(px))
+        return px
 
     def close(self):
         self.b.close()
