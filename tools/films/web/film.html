@@ -133,27 +133,40 @@
      shrank the element under the drawing and, because the box is clipped to
      give the breath an edge, sliced a label off both ends. It came out as
      "andle outside" on the left and "the image arriv" on the right. */
-  .beat.has-plate .sky{padding-inline:0;flex:0 0 auto}
-  /* AND IT IS COMPOSED AS ONE BLOCK.
-     The normal beat pins its words a fixed distance off the bottom of the
-     frame and lets the picture have everything above. On a plate that left
-     four hundred pixels of nothing between the foot of the drawing and the
-     first word, which reads as two unrelated things on one screen rather
-     than a caption under a picture. The picture and its words are one block
-     now, held together by a single gap and centred as a unit, and the air
-     that is left over is shared between the top and the bottom of the frame
-     instead of pooling in the middle of it. */
-  .beat.has-plate{justify-content:center}
+  .beat.has-plate .sky{padding-inline:0}
+  /* THE FRAME IS CUT ONCE, AT 0.618 OF ITS OWN HEIGHT.
+     A centred sky-plus-words column drifted with every line: a tall caption
+     pushed the picture up, a short one let it sink, so the plate never sat
+     still against the frame even when the camera did. PHI (the golden
+     section, where the small part is to the large part as the large part is
+     to the whole) is written once, below, and both frame shapes derive their
+     own split from it, so a change to the ratio moves both together rather
+     than needing to be retuned twice. The picture owns the top, from the
+     safe margin down to the cut, and is centred in it; the caption owns the
+     cut down to the watermark's own clearance, and is centred in THAT. */
+  :root{ --phi:.618 }
+  .beat.has-plate{padding-bottom:0}
+  .beat.has-plate .sky,.beat.has-plate .words{position:absolute;left:0;right:0}
+  .beat.has-plate .sky{top:calc(var(--safe-top) - var(--hold-off));
+    height:calc(var(--frame-h) * var(--phi) - var(--safe-top))}
+  .beat.has-plate .words{top:calc(var(--frame-h) * var(--phi) - var(--hold-off));
+    bottom:calc(var(--safe-bottom) - var(--hold-off));justify-content:center}
   /* ---- THE SAFE ZONE -------------------------------------------------
      A phone does not show all 1920 rows of this. Instagram lays its caption,
      its handle and its audio strip over the bottom 320; TikTok takes 250 at
      the bottom and 130 at the top; both put a column of buttons down the
      right. Anything that has to be READ lives between row 130 and row 1600,
      and the room under it is not wasted, it is where their interface goes.
-     The block is shifted up so the picture sits high and the last line of
-     type clears 1600 with room to spare. */
-  html[data-frame="tall"] .beat.has-plate{padding-bottom:0;gap:70px;
-    transform:translateY(24px)}
+     --frame-h is the render frame itself (spec.py FRAMES); --hold-off is
+     half of what #hold gives up against it (#hold's own size is set below);
+     --safe-bottom is read off THE WATERMARK further down, its own clearance,
+     so the caption band never runs under the mark. Tall: picture 130 to
+     1187, words centred near 1394. Wide: picture 60 to 667, words centred
+     in 667 to 1032. */
+  html[data-frame="tall"] .beat.has-plate{--frame-h:1920px;
+    --hold-off:calc((1920px - 1740px) / 2);--safe-top:130px;--safe-bottom:320px}
+  html[data-frame="wide"] .beat.has-plate{--frame-h:1080px;
+    --hold-off:calc((1080px - 860px) / 2);--safe-top:60px;--safe-bottom:48px}
   /* the words hang from the TOP of their band rather than the bottom of it,
      so the first line is always the same distance under the picture whether
      the line runs to one row or to four. */

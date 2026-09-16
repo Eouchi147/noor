@@ -102,11 +102,15 @@
   /* how far back a thing goes when the sentence is about something else, and
      how far forward the thing the sentence IS about comes */
     /*  How far back a thing goes when the sentence is about something else.
-      0.42 was tried first and it is too deep: at forty seconds the candle,
-      the wall and both rays -- the entire argument so far -- were a ghost
-      behind two labels. Everything that has been explained stays clearly
-      readable; the thing being explained now is simply brighter than it. */
-  var DIM = 0.60, FOCUS_DUR = 780, BLUR = true;
+      0.42 was tried first and sent back as too deep: at forty seconds the
+      candle, the wall and both rays -- the entire argument so far -- were a
+      ghost behind two labels. 0.60 answered that, and the owner's next note
+      was the opposite fault: more focus on the active elements. Split the
+      difference and the rack focus itself is slower to arrive (round eight),
+      so 0.42 is legible on the way there rather than a cut. Everything that
+      has been explained is still readable at that depth; the thing being
+      explained now simply reads first. */
+  var DIM = 0.42, FOCUS_DUR = 1200, BLUR = true;
   /*  AND THE FOCUS DOES NOT SCALE ANYTHING.
       The first version lifted the active step to 1.045 about its own centre,
       which is a lovely gesture on a small group and a bug on a wide one. The
@@ -536,7 +540,7 @@
         var want = sh.all ? 1 : ((k >= sh.i0 && k <= sh.i1) ? 1 : DIM);
         if (want === now[k]) return;
         (function (k) {
-          tl.add(F[k], { v: [now[k], want], ease: "outQuad", duration: FOCUS_DUR,
+          tl.add(F[k], { v: [now[k], want], ease: "inOutSine", duration: FOCUS_DUR,
                          onUpdate: function () { paint(k); } }, Math.max(0, when));
         })(k);
         now[k] = want;
@@ -572,9 +576,21 @@
        =================================================================== */
     var AR = B.w / B.h;
     var PAD = Math.max(10, B.w * 0.020);        // breathing room round a label
-    var PARK = 0.085;                            // how hard the parallax bites
-    var PARMAX = B.w * 0.030;                    // and how far it may ever go
-    var MINW = B.w * 0.42;                       // the tightest the camera goes
+    /* THE PARALLAX IS OFF BY DEFAULT (round eight).
+       Depth was taken from a step's own size and used to slide it against
+       the camera at its own rate, so a small mark could end up drifting off
+       the plane of the line it sits on. On this figure that meant a ray's
+       own far end, drawn on the same flat page as the flame and the wall it
+       points at, could visibly stop touching either one mid-shot -- the
+       parallax was overlapping lines that belong to a single plane. A brief
+       may ask for the old drift back with "parallax": 1; left unset, or set
+       to 0, PARK and PARMAX both collapse to nothing and put() below never
+       writes a transform onto any step at all, so every stroke, label and
+       glow stays exactly where it was drawn. */
+    var PARALLAX_ON = !!(b.parallax);
+    var PARK = PARALLAX_ON ? 0.085 : 0;          // how hard the parallax bites
+    var PARMAX = PARALLAX_ON ? B.w * 0.030 : 0;  // and how far it may ever go
+    var MINW = B.w * 0.50;                       // the tightest the camera goes
 
     var cam = { x: vb[0], y: vb[1], w: vb[2], h: vb[3] };
     var cx0 = vb[0] + vb[2] / 2, cy0 = vb[1] + vb[3] / 2;
@@ -582,6 +598,9 @@
     function put() {
       svg.setAttribute("viewBox", cam.x.toFixed(2) + " " + cam.y.toFixed(2) + " " +
                                   cam.w.toFixed(2) + " " + cam.h.toFixed(2));
+      /* with the parallax off (the default, see above) no step's transform
+         is ever touched, so this stops here */
+      if (!PARALLAX_ON) return;
       /* the parallax rides the camera rather than being animated beside it,
          so it can never drift out of step with the move it belongs to */
       var ox = (cam.x + cam.w / 2) - cx0, oy = (cam.y + cam.h / 2) - cy0;
@@ -635,7 +654,7 @@
          contains the union of what it is LOOKING at and what it must not
          CUT. Whatever slack is left over after that is spent leaning toward
          the subject, which is where the emphasis comes from. */
-      var pad = tight ? 1.06 : 1.26;
+      var pad = tight ? 1.12 : 1.30;
       var lx = (look.x1 - look.x0) * pad, ly = (look.y1 - look.y0) * pad;
       var lcx = (look.x0 + look.x1) / 2, lcy = (look.y0 + look.y1) / 2;
       var U = { x0: lcx - lx / 2, y0: lcy - ly / 2, x1: lcx + lx / 2, y1: lcy + ly / 2 };
@@ -660,39 +679,46 @@
     }
 
     /* ---- the moves ------------------------------------------------------
-       ONE MOVE PER SENTENCE, AND THE MOVE NEVER ENDS.
+       ONE MOVE PER SENTENCE, AND ONLY ONE (round eight).
 
-       The first cut of this arrived at a shot and then held it, with a two
-       per cent creep that was invisible. Half way through a short the
-       drawing is complete, every label is on the screen, and the rule that
-       no label may be cut pins the camera to the whole figure -- so the last
-       twenty five seconds did not move at all, which on a feed is twenty
-       five seconds of somebody else's video.
+       The first cut arrived at a shot in two stages -- wide of the mark
+       first, then a second settle onto it, with a small sway thrown in so a
+       long hold never looked static -- and the owner sent it back: better,
+       slower and smoother, more focus on the active elements, and no
+       movement that is not carrying the story. A sentence gets exactly one
+       move now, straight from wherever the camera already sits to where this
+       line needs it, on a single ease (inOutSine, so it leaves and lands
+       soft rather than snapping in and coasting out) for the length of the
+       sentence itself less three hundred milliseconds, so it has settled
+       before the next line's own move begins rather than landing on top of
+       it. It starts two hundred milliseconds ahead of the line's own
+       arrival, so the frame is already under way as the words land instead
+       of catching up to them afterwards.
 
-       A shot is therefore not a place, it is a PUSH. The camera arrives
-       thirteen per cent wide of where the sentence wants it and closes on it
-       for as long as the sentence is up. The far end of that push is the
-       safe frame, so the whole push is safe, and there is a continuous
-       thirteen per cent zoom running under every line of the film with the
-       parallax riding on top of it.
-       ------------------------------------------------------------------ */
-    var OPEN = 1.13;                    //  how wide of the mark it arrives
+       A line that draws nothing new (there is one here: "That is a camera")
+       is not a reason to freeze the frame dead, which reads as a stall
+       rather than a held beat. It keeps looking at exactly what it was
+       already looking at and pulls back two and a half per cent over the
+       sentence -- movement too small to name, and enough that nothing on
+       screen ever simply stops.
+
+       The last line always ends on the whole drawing, and that pull is a
+       move like any other: one ease, the length of its own sentence, and
+       nothing pushed on after it once the words are gone. */
     function grow(T, k) {
       var w = Math.min(T.w * k, vb[2] * 1.38), h = w / AR;
       return { x: T.x + T.w / 2 - w / 2, y: T.y + T.h / 2 - h / 2, w: w, h: h };
     }
     var prev = null;
-    function push(T, when, dur, hold, sway) {
-      var A = grow(T, OPEN);
-      A.x += (sway || 0) * A.w * 0.030;
-      if (!prev) { prev = A; cam.x = A.x; cam.y = A.y; cam.w = A.w; cam.h = A.h; put(); }
-      tl.add(cam, { x: [prev.x, A.x], y: [prev.y, A.y], w: [prev.w, A.w], h: [prev.h, A.h],
-                    ease: "inOutQuart", duration: dur, onUpdate: put }, Math.max(0, when));
-      var B = { x: T.x, y: T.y, w: T.w, h: T.h };
-      tl.add(cam, { x: [A.x, B.x], y: [A.y, B.y], w: [A.w, B.w], h: [A.h, B.h],
-                    ease: "outSine", duration: Math.max(900, hold),
-                    onUpdate: put }, Math.max(0, when) + dur);
-      prev = B;
+    /* the whole of a move: from wherever the camera already is, to T, on one
+       ease, over dur. The very first shot has nowhere to move from, so it is
+       set cold instead of tweened. */
+    function moveTo(T, when, dur) {
+      if (!prev) { prev = T; cam.x = T.x; cam.y = T.y; cam.w = T.w; cam.h = T.h; put(); return; }
+      var from = prev;
+      tl.add(cam, { x: [from.x, T.x], y: [from.y, T.y], w: [from.w, T.w], h: [from.h, T.h],
+                    ease: "inOutSine", duration: dur, onUpdate: put }, Math.max(0, when));
+      prev = T;
     }
 
     var run = 0;
@@ -702,16 +728,16 @@
     shots.forEach(function (sh, i) {
       var last = i === shots.length - 1;
       var upto = sh.all ? (i === 0 ? 0 : list.length - 1) : sh.i1;
+      //  a line that names no new step is a hold, not a fresh shot: the
+      //  window stays the one already on screen and only breathes back
+      var addsNothing = !sh.all && i > 0 && upto <= run;
       run = Math.max(run, upto);
       var T = (last && sh.all) ? whole(1.0)
+            : addsNothing ? grow(prev, 1.025)
             : frameFor(sh.all ? 0 : sh.i0, sh.all ? list.length - 1 : sh.i1,
                        run, i === 0);
-      var dur = i ? 1400 : 1000;
-      push(T, t0 + (sh.at || 0) * 1000 - 360, dur,
-           ends[i] * 1000 - dur + 400, (i % 2) ? 1 : -1);
+      moveTo(T, t0 + (sh.at || 0) * 1000 - 200, ends[i] * 1000 - 300);
     });
-    //  and it always finishes on the whole drawing, closing on it
-    push(whole(1.0), t0 + span - 2600, 1600, 1400, 0);
 
     /* ---- AND WHAT THE DRAWING ACTUALLY DOES ---------------------------
        Everything above reveals a figure and moves a camera over it. That is
