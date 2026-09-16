@@ -531,8 +531,8 @@ for _slug, _cards in STORY_EXITS.items():
 
 room("masjid/index.html", "</main>",
      cards=[
-         ("/license", "For schools and organizations",
-          "Whole rooms of the Codex inside your own website. Houses that teach for free embed for free."),
+         ("/school", "For schools and organizations",
+          "The full course, free for any school or organisation to teach from directly, no subscription."),
          ("/donate", "Keep the lamp lit",
           "These tools have no account, no advertising and no price. Gifts are the only thing holding them up."),
          ("/ramadan", "The Ramadan Room",
@@ -545,8 +545,8 @@ room("masjid/start.html", "</main>",
      cards=[
          ("/masjid/setup", "The prayer board",
           "Later, when a screen arrives: real astronomy on the wall, set once and then left alone."),
-         ("/license", "For schools and organizations",
-          "When the house has a website, whole rooms of the Codex can live inside it, free for those who teach for free."),
+         ("/school", "For schools and organizations",
+          "When the house is ready to teach a class, the whole course is free to use directly, no subscription."),
          ("/donate", "Keep the lamp lit",
           "Nothing in this toolbox is sold. Gifts are what keep it free for the next house with nothing."),
      ])
@@ -583,8 +583,8 @@ room("masjid/timetable.html", '<p class="kmark">', kit=True,
 
 room("masjid/setup.html", '\n\n</div>\n<script>', kit=True,
      cards=[
-         ("/license", "For schools and organizations",
-          "Whole rooms of the Codex inside your own website. Houses that teach for free embed for free."),
+         ("/school", "For schools and organizations",
+          "The full course, free for any school or organisation to teach from directly, no subscription."),
          ("/donate", "Keep the lamp lit",
           "The board has no account and no price. Gifts are the only thing holding it up."),
          ("/ramadan", "The Ramadan Room",
@@ -613,16 +613,16 @@ room("donate.html", '<footer class="border-t', width="w",
           "Where the money goes, in plain words: the zakat share, the masjid fund, and what is kept."),
          ("/masjid", "The masjid toolbox",
           "What the gifts pay for at the far end: free tools inside houses of prayer with no budget."),
-         ("/license", "For schools and organizations",
-          "The other lifeline. Institutions that charge tuition license the Codex so readers never have to."),
+         ("/school", "For schools and organizations",
+          "The Madrasa of Light is free for institutions to teach from directly, no subscription."),
      ])
 
 room("legal.html", '<footer class="border-t',
      cards=[
          ("/donate", "Keep the lamp lit",
           "The gifts these terms describe, and the ledger they are counted in."),
-         ("/license", "For schools and organizations",
-          "The license terms above, with the prices and the free path for houses that teach for free."),
+         ("/school", "For schools and organizations",
+          "How schools and organizations use the Codex, free to teach from directly, no subscription."),
          ("/feedback", "Corrections and Ideas",
           "If something on this page is wrong, or something anywhere else is, this is the door."),
      ])
@@ -631,8 +631,8 @@ room("feedback.html", "</main>",
      cards=[
          ("/legal", "Terms and Transparency",
           "What happens to a note once you send it, and what we keep, which is almost nothing."),
-         ("/license", "For schools and organizations",
-          "If you are writing on behalf of a masjid, a school or an app, the terms are here."),
+         ("/school", "For schools and organizations",
+          "If you are writing on behalf of a masjid, a school or an app, this is where their course lives."),
          ("/donate", "Keep the lamp lit",
           "Corrections cost nothing and always will. Gifts are what keep the rooms they fix open."),
      ])

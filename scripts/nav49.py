@@ -98,7 +98,6 @@ GROUPS = [
     ]),
     ("g.house", "The House", [
         ("masjid/", "m.masjid", "The Masjid Toolbox"),
-        ("license.html", "m.orgs", "For Schools &amp; Organizations"),
         ("journal.html", "m.journal", "The Guardian's Journal"),
         ("donate.html", "m.give", "Give a Gift"),
         ("feedback.html", "m.feedback", "Corrections &amp; Ideas"),

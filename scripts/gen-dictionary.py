@@ -18,7 +18,7 @@ ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "dictionary.html")
 SITE = "https://noorcodex.com"
 OG = SITE + "/assets/brand/og.png"
-V = "13"                                  # the shell's cache-buster; api/page.js and noor-fx.js carry the same
+V = "14"                                  # the shell's cache-buster; api/page.js and noor-fx.js carry the same
 CATS = [("aqidah", "Belief", "العَقِيدَة"), ("ibadah", "Worship", "العِبَادَة"),
         ("quran", "The Qur’an", "القُرْآن"), ("hadith", "Hadith", "الحَدِيث"),
         ("fiqh", "Law & life", "الفِقْه"), ("tazkiyah", "The heart", "التَّزْكِيَة"),
@@ -483,7 +483,8 @@ def load_surahs():
 
 def load_names():
     """the 99 Names from allah.html's NAMES table: the Arabic, how it is said,
-       its one line of meaning. /allah#<k> opens the k-th."""
+       its one line of meaning. /allah#<k> opens the k-th on the page and
+       /name/<k> is its own room."""
     out = []
     try:
         src = open(os.path.join(ROOT, "allah.html"), encoding="utf-8").read()
@@ -811,7 +812,9 @@ def build_search_index(D, lib):
     names = []
     for k, N in enumerate(lib["names"], 1):
         alt = [x for x in (_bare(N["translit"]), N["translit"].replace("-", " ")) if x]
-        names.append({"g": "names", "t": N["translit"], "a": N["ar"], "s": N["meaning"], "u": "/allah#%d" % k, "l": list(dict.fromkeys(alt))})
+        # a Name's row opens its own room, /name/<k> (api/page.js), since 16
+        # September 2026; /allah#<k> opens the same Name on the page
+        names.append({"g": "names", "t": N["translit"], "a": N["ar"], "s": N["meaning"], "u": "/name/%d" % k, "l": list(dict.fromkeys(alt))})
     fresh = {"path": chapters, "lights": lights, "surahs": surahs, "names": names}
     kept_owned = {}
     for e in (old.get("e") or []):
