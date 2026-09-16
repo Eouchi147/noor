@@ -86,6 +86,15 @@
      own tweens on the timeline at absolute positions measured from t0, in ms.
      Every beat is faded up by the caller and faded out by the caller, so a
      builder only ever describes what happens INSIDE its own time.           */
+  /* THE STYLESHEET'S OWN TRACKING, so the tweens can land on it.
+     These read the frame off the document rather than closing over it,
+     because the KIND builders are module scope and `frame` is an argument
+     to build(). See film.html .eyebrow / .gloss. */
+  function eyeLS()   { return document.documentElement.getAttribute("data-frame")
+                              === "tall" ? ".30em" : ".34em"; }
+  function glossLS() { return document.documentElement.getAttribute("data-frame")
+                              === "tall" ? ".18em" : ".2em"; }
+
   var KIND = {};
 
   /* an opening line: an eyebrow, a headline, a line under it */
@@ -106,12 +115,22 @@
       return;
     }
     if (b.eyebrow) wrap.appendChild(el("p", "eyebrow", b.eyebrow));
-    var h = el("h1", "h1"); wrap.appendChild(h);
+    /* THE HOOK IS SET AT HOOK SIZE, and only the hook. A short opens on a
+       claim rather than a title, and that claim is the only thing standing
+       between the film and a thumb that is already moving. Everything after
+       it is a headline. See the .hook rule in film.html for the arithmetic. */
+    var h = el("h1", b.size === "hook" ? "hook" : "h1"); wrap.appendChild(h);
     if (b.sub) wrap.appendChild(el("p", "body", ""));
     var toks = words(h, b.text || "");
     if (b.eyebrow) {
       tl.add(wrap.querySelector(".eyebrow"),
-        { opacity: [0, 1], letterSpacing: [".55em", null], ease: OUT, duration: 900 }, t0);
+        /* NOT null. anime v4 resolves a null "to" as 0, so this opened the
+           eyebrow from .55em and then closed it to NO tracking at all, and
+           held it there for the rest of the beat. The DOM eyebrows and the
+           pane eyebrows, which lume.js draws itself, therefore disagreed
+           inside the same film. The stylesheet value is named instead. */
+        { opacity: [0, 1], letterSpacing: [".55em", eyeLS()], ease: OUT,
+          duration: 900 }, t0);
     }
     tl.add(toks, { opacity: [0, 1], y: [46, 0], ease: SP.settle, duration: 1100,
                    delay: A.stagger(70) }, t0 + 140);
@@ -120,6 +139,17 @@
       var st = words(s, b.sub);
       tl.add(st, { opacity: [0, 1], y: [22, 0], ease: SP.settle, duration: 900,
                    delay: A.stagger(28) }, t0 + 620);
+    }
+    /* THE SOURCE HAS NEVER HAD A LINE HERE (round four defect). Every other
+       KIND that can carry a citation sets it as a ".src" footnote under the
+       rest of the text; a title never gained the same three lines, so a
+       title beat with a src (only the closing beat of the darkroom scene,
+       so far) silently dropped it even once the pane stopped eating the
+       headline. Same class, same footnote timing as KIND.statement's own
+       below. */
+    if (b.src) {
+      var sr = el("p", "src", b.src); wrap.appendChild(sr);
+      tl.add(sr, { opacity: [0, .96], y: [14, 0], ease: OUT, duration: 700 }, t0 + 1300);
     }
   };
 
@@ -247,7 +277,7 @@
     if (b.head) {
       var hh = el("p", "gloss", b.head);
       wrap.appendChild(hh);
-      tl.add(hh, { opacity: [0, .92], letterSpacing: [".42em", null], ease: OUT,
+      tl.add(hh, { opacity: [0, .92], letterSpacing: [".42em", glossLS()], ease: OUT,
                    duration: 900 }, t0);
     }
     var box = el("div", "listbox");
@@ -268,6 +298,79 @@
       tl.add(sr, { opacity: [0, .95], ease: OUT, duration: 800 },
              t0 + 420 + (b.items || []).length * 620);
     }
+  };
+
+  /* ===================================================================
+     THE PLATE BEAT, which is the whole of a silent short.
+
+     A short used to be nine or ten beats, each one cutting to the next, with
+     an abstract figure running underneath on its own clock and callout labels
+     pointing into it. That format produced the two faults the owner sent
+     back: a frame with too many lines in it, and a legend naming a colour
+     the drawing did not contain.
+
+     This is one beat. One of the library's own figures fills the picture
+     area and BUILDS across the whole length of the short, piece by piece, in
+     the order the figure was drawn in. Under it, one line at a time, the
+     words change. There is no legend, because every label is already written
+     inside the drawing beside the thing it names. There are no callouts and
+     no leader lines, because there is nothing to point at that is not
+     already named.
+
+     What is left on screen at any moment is: a picture, and one sentence.
+     =================================================================== */
+  KIND.plate = function (b, node, tl, t0) {
+    node.classList.add("has-plate");
+    var holder = el("div", "plate");
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    holder.appendChild(svg);
+    (sky(node) || node).appendChild(holder);
+
+    var span = b.hold ? b.hold * 1000 : 60000;
+    if (window.NOORFIG && window.NOORFIG.plate) {
+      window.NOORFIG.plate({ plate: b.plate, dur: span, at: b.at,
+                             shots: b.shots, lines: b.lines, motion: b.motion,
+                             aspect: document.documentElement.getAttribute("data-frame") === "tall"
+                                       ? 1010 / 1390 : 1180 / 620 },
+                           svg, tl, t0);
+    }
+
+    /* ---- THE WORDS UNDERNEATH -------------------------------------------
+       A track of lines, each with the moment it arrives. One is on screen at
+       a time: the one before it leaves as the next one comes, on a short
+       cross so the band is never empty and never doubled. A line rises as it
+       fades, which is the same movement the type makes everywhere else in
+       this film, so a short and a long film feel like one thing. */
+    var wrap = el("div", "wordstack");
+    (band(node) || node).appendChild(wrap);
+    (b.lines || []).forEach(function (L, i) {
+      var row = el("div");
+      row.style.opacity = 0;
+      if (L.eyebrow) {
+        var ey = el("p", "eyebrow", L.eyebrow);
+        ey.style.letterSpacing = eyeLS();
+        row.appendChild(ey);
+      }
+      if (L.text) row.appendChild(el("p", L.size === "hook" ? "hook" : "h1", L.text));
+      if (L.sub) row.appendChild(el("p", "body", L.sub));
+      if (L.src) row.appendChild(el("p", "src", L.src));
+      wrap.appendChild(row);
+
+      var inAt = t0 + (L.at || 0) * 1000;
+      var out = (L.until != null) ? t0 + L.until * 1000 : null;
+      /* THE FIRST LINE DOES NOT FADE IN, IT ARRIVES.
+         Half the people who leave a short leave inside the first three
+         seconds, and nine hundred milliseconds of the hook fading up is a
+         third of that spent on a frame with nothing readable on it. The
+         opening line takes four hundred; every line after it takes the
+         full nine hundred, because by then the viewer has stayed. */
+      tl.add(row, { opacity: [0, 1], translateY: [i ? 26 : 14, 0], ease: SP.settle,
+                    duration: i ? 900 : 400 }, inAt);
+      if (out !== null) {
+        tl.add(row, { opacity: [1, 0], translateY: [0, -18], ease: "outQuart",
+                      duration: 520 }, out);
+      }
+    });
   };
 
   /* THE FIGURE BEAT.
@@ -375,6 +478,15 @@
 
   function build(chapter, frame) {
     document.documentElement.setAttribute("data-frame", frame);
+    /* THE MARK ONLY SHOWS ON A SCENE.
+       A scene film stands alone (it is not part of the corridor a longer
+       film shares with its own end card), so it carries its own watermark
+       in the DOM, set here rather than per beat because it never animates
+       and never leaves: see div#mark in film.html. A chapter with no scene
+       clears it, so a multi-chapter film cannot leave it stuck on from an
+       earlier chapter that had one. */
+    if (chapter.scene) document.documentElement.setAttribute("data-mark", "1");
+    else document.documentElement.removeAttribute("data-mark");
     hold.innerHTML = "";
     TL = A.createTimeline({ autoplay: false, defaults: { ease: OUT } });
     var t = 0;
@@ -409,7 +521,22 @@
        change of type over a continuous move is the one thing that would give
        the join away. Everything dissolves, and slowly enough that the type is
        leaving while the camera is already carrying you somewhere else. */
-    var FADE = { cut: 520, dissolve: 700, flash: 700, slow: 1000 };
+    /*  A CUT THAT TAKES HALF A SECOND IS A DISSOLVE.
+        The note above says a cut is ninety milliseconds and the table said
+        five hundred and twenty, so every beat marked "cut" was crossfading
+        with the one before it for half a second -- both cards on screen at
+        once, at full strength, which is exactly the double exposure that
+        keeps turning up in the stills. The table now says what the note
+        says. */
+    /*  AND NOW IT ACTUALLY DOES.
+        110 was still 110: measured at the beat 0/1 join, both headlines
+        were on screen together at 0.62/0.38 and again at 0.25/0.75, which
+        is the ghost the note above describes, twice a join, at every one
+        of the 148 joins in the corpus. One millisecond is shorter than a
+        frame at any rate, so the boundary frame belongs entirely to the
+        outgoing beat and the next one entirely to the incoming one. */
+    var FADE = { cut: 1, dissolve: 700, flash: 700, slow: 1000 };
+    var LASTOUT = 0;
     var flare = document.getElementById("flare");
     /* A beat may ask for an object in the light layer as well as words. It is
        collected here rather than built by the beat, because that layer is not
@@ -474,7 +601,17 @@
     });
     beats.forEach(function (b, i) {
       var k = ownK[i];
-      b._speak = !k || k === "orb";
+      /* A SCENE HAS NO PER-BEAT lume, SO ownK IS ALWAYS EMPTY FOR ONE
+         (round four defect). !k then read as "nobody owns this beat, the
+         Lantern may speak it", which is right for a corridor beat with no
+         figure at all but wrong for a scene: a scene figure stands under
+         EVERY beat, and its cues carry no pane text or bp (finding 2 said
+         as much when it hid the pane in scene mode) -- so _pane routed the
+         eyebrow and the headline to a pane that was never going to draw
+         them, and KIND.title's own branch above left only the sub behind.
+         Ten beats, four of which have no sub at all, showed no headline.
+         A scene always speaks in the DOM band; never through the pane. */
+      b._speak = !chapter.scene && (!k || k === "orb");
       b._pane = b._speak && !!b.text &&
                 (b.kind === "title" || (b.kind === "statement" && b.size === "big"));
     });
@@ -504,7 +641,15 @@
         L.shot = b.shot || "push"; L.fade = FADE_IN;
         lume.push(L);
       }
-      if (covered[i]) node.classList.add("has-lume");
+      /* A SCENE HAS NO PER-BEAT lume FIELD, SO "covered" IS ALWAYS EMPTY FOR
+         ONE. Every other kind of chapter marks which beats a figure stands
+         over from each beat's own b.lume; a scene names its whole figure
+         once, in chapter.scene, so no beat ever sets b.lume and the words
+         fell back to the centre of the frame -- straight over the aperture
+         at frame centre, which is exactly the one place they may never
+         sit. A scene figure is on screen for the whole film, so every beat
+         of it gets the lower band. */
+      if (covered[i] || chapter.scene) node.classList.add("has-lume");
       if (overed[i]) node.classList.add("over");
       TL.add(node, { opacity: [1, 0], y: [0, outK === "cut" ? 0 : -34],
                      ease: outK === "cut" ? "linear" : OUT, duration: FADE_OUT }, t + hold_ms);
@@ -515,10 +660,17 @@
                Math.max(0, t - 130));
         TL.add(flare, { opacity: [b.flare || 0.82, 0], ease: "outQuart", duration: 620 }, t);
       }
+      LASTOUT = FADE_OUT;
       t += hold_ms + Math.round((b.gap != null ? b.gap : 0) * 1000);
     });
 
-    DUR = t;
+    /* THE LAST FADE HAS TO FIT INSIDE THE FILM.
+       The out-fade of the final beat was scheduled at exactly t, and t was
+       DUR, and the renderer stops one frame before DUR. So every chapter
+       ended on a card at full brightness and then simply stopped, and at
+       each join of a multi-chapter film that read as a hard cut to black
+       where a one second dissolve was written. */
+    DUR = t + LASTOUT;
     TL.pause();
     /* =====================================================================
        THE BOARD: every figure gets a place, every beat gets a viewpoint.
@@ -565,7 +717,20 @@
          fifth of the frame off centre, which reads as a mistake rather than as
          a camera angle. Diagrams get the variation in distance and in focal
          length, and almost none in angle, and they are aimed at dead centre. */
-      var flat = kind === "plate";
+      /* WHICH KINDS ARE READ RATHER THAN LOOKED AT.
+         This was a single equality against "plate", written when "plate"
+         was the only diagram there was. Every nut* figure since is also a
+         flat vector drawing meant to be seen square on, and every one of
+         them was taking the full swing: measured on who-was-muhammad, up
+         to 39 degrees of azimuth, and 35 degrees of it INSIDE a single
+         figure span. A time axis rendered on a slope does not read as a
+         camera angle. It reads as a broken render. */
+      var FLATK = { plate: 1, bars: 1, nutdots: 1, nutarc: 1, nutforty: 1,
+                    nutsieve: 1, nutchain: 1, nuttime: 1, nutsort: 1,
+                    nutpath: 1, nutlamps: 1, nutbar: 1,
+                    nutvalley: 1, nutscale: 1, nutsplit: 1,
+                    nutconverge: 1, nuttwin: 1 };
+      var flat = !!FLATK[kind];
       if (flat) { az *= 0.11; el *= 0.16; }
       var eye = [ home[0] + Math.sin(az) * d,
                   home[1] + Math.sin(el) * d * 0.55,
@@ -576,8 +741,8 @@
             home[1] + Math.cos(n * 1.7) * 0.18,
             home[2] ];
       return { eye: eye, look: look,
-               fov: kind === "plate" ? 35 + 2.0 * Math.sin(n * 0.6)
-                                     : 38 + 5.0 * Math.sin(n * 0.53 + 0.9),
+               fov: flat ? 35 + 2.0 * Math.sin(n * 0.6)
+                         : 38 + 5.0 * Math.sin(n * 0.53 + 0.9),
                roll: (flat ? 0.004 : 0.016) * Math.sin(n * 1.13) };
     }
 
@@ -593,6 +758,62 @@
     var PRX   = frame === "tall" ? 0.00 : 0.50;
     var PRY   = frame === "tall" ? 0.58 : 0.40;
     var PASP  = frame === "tall" ? 1080 / 1920 : 1920 / 1080;
+
+    /* ---- THE CAMERA FOR A SILENT SHORT ---------------------------------
+       A long film travels: a station for each stretch of the argument, and a
+       camera that walks between them. A short has ONE figure and therefore
+       one station, so there is nowhere to walk to, and viewFor's per beat
+       viewpoints would put eight unrelated angles on the same object in
+       thirty seconds. On a phone that is not a camera, it is a slideshow with
+       a wobble.
+
+       So a short gets one move. The whole thing is a single slow push from
+       wide and slightly above down to eye level and in, with fourteen degrees
+       of orbit across the entire length and the lens closing five degrees at
+       the same time. Because every viewpoint is computed from the beat's
+       position in the WHOLE short rather than from its index, consecutive
+       beats land on consecutive points of one path, and the board curve joins
+       them into a move with no joins in it.
+
+       The push and the lens close together is the cheap half of a dolly zoom,
+       which is the most dramatic thing a camera can do while still letting
+       somebody read. */
+    function shortView(p, home, near) {
+      var e = p * p * (3 - 2 * p);
+      var az = -0.130 + 0.245 * e;
+      var el =  0.100 - 0.140 * e;
+      /* HOW CLOSE THE PUSH MAY GET, AND WHY IT IS NO LONGER 0.90.
+         This ran from 1.20 to 0.90 of the figure's standing distance, and
+         that was tuned against nutsort, which is a compact cloud of motes
+         that never fills more than the middle of the frame. Every figure
+         wider than it walked out of the picture as the camera came in.
+         Measured off contact sheets: in nutscale both pans of the balance
+         were cut off by the fifth beat, and in nuttwin the second spiral,
+         which is the entire point of that figure, was outside the frame by
+         the last one.
+
+         The arithmetic, in 9:16. Half the frame width is
+         d * tan(fov/2) * 9/16. At the old closing distance that is
+         0.90 * near * tan(16.5 deg) * 0.5625 = 0.150 * near. For nutscale's
+         standing distance of 7.8 that is 1.17 world units, against a figure
+         whose arm alone is 1.62 either side of centre. It could never have
+         fitted, at any point of the move.
+
+         So the push now ends at 1.16, putting the closing half width at
+         0.193 * near, and the wide figures get a standing distance to match
+         in the table below. It is still a move: thirteen per cent closer
+         across the short, and the orbit and the lens carry the rest. A
+         camera that ends up outside its own subject is not a move at all. */
+      var d  = near * (1.34 - 0.18 * e);
+      return {
+        eye: [home[0] + Math.sin(az) * d,
+              home[1] + Math.sin(el) * d * 0.55,
+              home[2] + Math.cos(az) * d],
+        look: [home[0], home[1], home[2]],
+        fov: 38.0 - 5.0 * e,
+        roll: 0.006 * Math.sin(p * 2.4 - 0.4)
+      };
+    }
 
     function paneFor(v, lp) {
       var ex = v.eye, lk = v.look;
@@ -614,8 +835,153 @@
                     lp[2] + rz * halfW * PRX + uz * halfH * PRY] };
     }
 
+    /* WHERE EACH FIGURE ACTUALLY SITS INSIDE ITS OWN STATION, measured by
+       measure.py. Declared here rather than inside the beat loop because two
+       things need it: the camera, so it looks at the figure instead of the
+       empty point the figure hangs on, and the label bands, so they sit above
+       and below the picture rather than above and below nothing. */
+    /* HOISTED OUT OF THE BEAT LOOP. The standing distance is now read twice:
+       once to place the camera, and once to size the words. Both need it
+       before the loop runs, so it is declared here rather than halfway
+       down the body of the loop where only the camera could see it. */
+    var NEAR = { plate: 7.70, orb: 10.2, field: 9.4, lattice: 8.6,
+                 stream: 9.2, ring: 8.2, card: 8.2,
+                   nutarc:         11.44,
+                   nutbar:         22.34,
+                   nutchain:        6.55,
+                   nutconverge:      9.60,
+                   nutdots:         7.97,
+                   nutforty:        7.88,
+                   nutlamps:        8.61,
+                   nutpath:         10.10,
+                   nutscale:       12.31,
+                   nutsieve:       17.54,
+                   nutsort:         7.00,
+                   nutsplit:       12.10,
+                   nuttime:        10.49,
+                   nuttwin:        10.54,
+                   nutvalley:       7.63,
+                 };
+
+    /* WHEN EACH FIGURE ACTUALLY FINISHES, measured by settle.py. See the
+       SHORT WARP below for what is done with it. Two numbers per figure: the
+       point on its own clock where it starts to do something, and the point
+       after which less than one and a half per cent of its total change is
+       still to come. Do not edit by hand; change a figure and run settle.py
+       again. */
+    var SETTLE = {
+      nutarc:        [0.04, 0.94],
+      nutbar:        [0.05, 0.87],
+      nutchain:      [0.04, 0.96],
+      nutconverge:   [0.03, 0.92],
+      nutdots:       [0.03, 0.88],
+      nutforty:      [0.03, 0.82],
+      nutlamps:      [0.03, 0.93],
+      nutpath:       [0.03, 0.95],
+      nutscale:      [0.01, 0.93],
+      nutsieve:      [0.03, 0.87],
+      nutsort:       [0.04, 0.70],
+      nutsplit:      [0.04, 0.93],
+      nuttime:       [0.04, 0.95],
+      nuttwin:       [0.04, 0.93],
+      nutvalley:     [0.05, 0.82],
+    };
+
+    var LOOKUP = {
+      nutarc:          1.03,
+      nutbar:          1.35,
+      nutchain:        0.86,
+      nutconverge:     0.92,
+      nutdots:         0.88,
+      nutforty:        1.06,
+      nutlamps:        0.86,
+      nutpath:         1.22,
+      nutscale:        0.43,
+      nutsieve:        0.07,
+      nutsort:         0.44,
+      nutsplit:        0.90,
+      nuttime:         0.88,
+      nuttwin:         0.90,
+      nutvalley:       0.88,
+    };
+
+    /* a short is one figure, one move, and words that cut */
+    var SHORT = !!chapter.short;
+    var TOTAL = span.length ? span[span.length - 1].at + span[span.length - 1].dur : 1;
     var board = [], views = [], lcues = [];
     if (window.NOORLUME) {
+      /* ---- SCENE MODE ----------------------------------------------------
+         darkroom, and any future film built the same way, names its own
+         camera views and lantern cues per beat instead of asking the
+         corridor's figHome()/viewFor() to invent them. WHAT BROKE BEFORE
+         THIS BRANCH EXISTED: a chapter with a scene fell straight through
+         to the corridor below, which built the figure's home from
+         figHome() -- a point on the corridor's own sine wave -- and built
+         views from viewFor(), and neither has any idea a room's aperture
+         sits at a fixed point in space. The aperture was never at frame
+         centre and the lamps stood in empty air behind where the wall
+         should have been. A scene skips all of that and hands the board
+         exactly what the spec already worked out. */
+      if (chapter.scene) {
+        var SC = chapter.scene;
+        if (!SC.views || SC.views.length !== beats.length)
+          throw new Error("scene.views has " + ((SC.views || []).length) +
+                           " entries, needs exactly one per beat (" + beats.length + ")");
+        if (!SC.lantern || SC.lantern.length !== beats.length)
+          throw new Error("scene.lantern has " + ((SC.lantern || []).length) +
+                           " entries, needs exactly one per beat (" + beats.length + ")");
+        /* one figure, standing at the room's own origin, carrying the
+           whole film: see WORLD CONVENTION in the darkroom spec, "the
+           figure's root sits at pos [0, 0, 0]; nothing is offset" */
+        var SF = {}; for (var scK in SC.figure) SF[scK] = SC.figure[scK];
+        SF.pos = [0, 0, 0]; SF.turn = 0; SF.at = 0; SF.dur = TOTAL; SF.dim = 1;
+        board = [SF];
+        /* each view and lantern cue takes the beat's own span, exactly as
+           the corridor does below for its own views and lcues */
+        views = SC.views.map(function (v, i) {
+          var vv = {}; for (var vk in v) vv[vk] = v[vk];
+          vv.at = span[i].at; vv.dur = span[i].dur;
+          /* THE SPEC NOW GIVES A HORIZONTAL FIELD OF VIEW (finding 3).
+             lume.js's board camera has always read view.fov as the VERTICAL
+             field of view of a three.js PerspectiveCamera; one spec composing
+             both a tall and a wide frame needs the number that stays true
+             across an aspect change, which is the horizontal one, not the
+             vertical one a portrait and a landscape frame disagree about by
+             a wide margin. Converted once here, at build time, so lume.js
+             keeps reading fov as vertical exactly as it always has and never
+             has to know hfov exists; a view with no hfov keeps its own fov
+             untouched, which is how a corridor view would arrive here too if
+             one ever did. aspect is this frame's own actual width over
+             height, taken from the same two numbers spec.py's own FRAMES
+             uses (1080x1920 tall, 1920x1080 wide), not the 2.2326 wide
+             figure in these orders, which does not match a 1920x1080 frame;
+             see the report. */
+          if (vv.hfov !== undefined) {
+            var asp = frame === "tall" ? (1080 / 1920) : (1920 / 1080);
+            var hrad = vv.hfov * Math.PI / 180;
+            vv.fov = 2 * Math.atan(Math.tan(hrad / 2) / asp) * 180 / Math.PI;
+          }
+          return vv;
+        });
+        lcues = SC.lantern.map(function (c, i) {
+          var cc = {}; for (var ck in c) cc[ck] = c[ck];
+          cc.at = span[i].at; cc.dur = span[i].dur; return cc;
+        });
+        /* THE DWELL PARKS THE CAMERA IN A SIX UNIT ROOM.
+           The corridor's own dwell/travel split (see boardAt in lume.js)
+           holds near a knot for 62% of a beat and travels only the last
+           38%: fine when the next knot is twenty units down a corridor, a
+           lurch when it is across a room six units wide, because the
+           travel then covers the whole distance in a third of the time.
+           Glide removes the dwell and eases the WHOLE beat with one
+           inOutSine, so a six second beat between two views a few units
+           apart is one continuous move rather than a park and a dash. */
+        if (NOORLUME.pace) NOORLUME.pace("glide");
+        /* the corridor's breath (BREATH in lume.js) was tuned for a twenty
+           unit corridor; in this six unit room it read as a small
+           earthquake, so a scene names its own fraction of it */
+        if (NOORLUME.breath) NOORLUME.breath(SC.breath == null ? 0.35 : SC.breath);
+      } else {
       var fk = -1;
       beats.forEach(function (b, i) {
         var owner = null;
@@ -639,6 +1005,93 @@
           o.at = span[i].at;
           var lastB = Math.min(beats.length - 1, i + Math.max(1, owner.lume.span || 1) - 1);
           o.dur = (span[lastB].at + span[lastB].dur) - span[i].at;
+          /* THE SHORT WARP: THE FIGURE FILLS THE FILM, BOTH ENDS.
+             Every figure is written to arrive somewhere before the end of its
+             own span, because in a long film the last beats of a span are
+             spent reading about what already happened. In a silent short
+             there is no reading about it: the picture IS the argument, and a
+             figure that completes at 26 seconds leaves the last 17 staring at
+             a finished drawing.
+
+             The first attempt at this multiplied the figure's duration, which
+             does slow the arrival but also slows the DEPARTURE. nutsort fades
+             its motes in over u 0.04 to 0.16; at a 1.6x duration on a 42.8 s
+             short that fade did not finish until 11 s, so the first two beats
+             played over an empty frame. Measured on the contact sheet: beat 0
+             had nothing on it but the words. A silent short cannot afford a
+             blank opening, because there is no voice covering it.
+
+             So the clock is not scaled, it is REMAPPED, in two straight
+             pieces. The first 5.5% of the short covers the figure's own first
+             16%, which is every figure's fade-in, so the picture is on screen
+             inside two and a half seconds. The remaining 94.5% covers 0.16 up
+             to the end mark, which is where the motion lives.
+
+             The end mark is 0.70, and that number is measured rather than
+             chosen. These figures ease their arrival and give every element
+             its own lag, so the last third of a figure's clock carries almost
+             none of its visible change: nutsort is analytically still moving
+             until u = 0.79, but on a contact sheet it reads as finished at
+             about u = 0.58. Ending the map at 0.86 therefore looked WORSE
+             than ending it early, because the picture settled at 26 s of 43
+             and the last four beats were one still image. At 0.70 the settle
+             lands near four fifths of the way in, which leaves the closing
+             card reading over a finished picture and a camera still moving,
+             and that is the shape wanted. Continuous at the join, monotonic,
+             still a pure function of time. */
+          if (SHORT) {
+            /* ONE WARP CANNOT FIT FIFTEEN FIGURES, and the cost of pretending
+               it could was not a slightly mistimed picture, it was shorts
+               that did not make sense.
+
+               0.16 to 0.70 was measured, honestly, on nutsort. Applied to the
+               rest: nuttime does everything it does by 0.16 of its clock, so
+               the entire film ran over a still image. nuttwin does nothing at
+               all until 0.66, so the film was thirty seconds of an empty
+               frame and then a rush at the end. nutlamps throws its three
+               patches of light onto the wall between 0.62 and 0.86, and
+               stopping at 0.70 delivered them at a third of their size in the
+               last second -- on a short whose entire subject is that three
+               separate images appear on that wall.
+
+               So the two ends of the map are per figure and they are
+               measured. A hair before the figure starts, so the opening
+               frame is not blank, and a little past where it finishes, so
+               the settle reads as a settle rather than as a cut. */
+            var sf = SETTLE[o.kind] || [0.16, 0.70];
+            /* AND THE OPENING SLICE HAS TO LAND ON SOMETHING VISIBLE.
+               settle.py's start is the point where one per cent of the
+               figure's total change has happened, which is the right
+               definition for "it has begun" and the wrong one for "there is
+               a picture". On the lamps it is 0.03, and the lamps themselves
+               do not start growing until 0.06: the opening slice was
+               delivering the viewer to a frame that was still empty, and the
+               first six seconds of the short were a headline over black.
+               A feed gives about one second. Eleven one-hundredths of the
+               figure's clock past the first stirring is where something is
+               actually on screen, and it costs the argument almost nothing. */
+            var u0 = Math.max(0, Math.min(0.45, sf[0] + 0.11));
+            var u1 = Math.min(1, Math.max(u0 + 0.10, sf[1] + 0.05));
+            /* three pieces, not two: see THE SHORT WARP IN THREE PIECES in
+               web/lume.js. The figure's whole argument is over by 80% of the
+               film, which is where the closing cards begin. */
+            o.warp = [0.055, u0, u1, 0.80];
+          }
+          /* the label bands hang off the same point the camera looks at, so
+             the figure gets the middle of the frame and the words get the
+             air above and below it */
+          o.lift = (SHORT && LOOKUP[o.kind]) ? LOOKUP[o.kind] : 0;
+          /* AND HOW FAR BACK THE CAMERA STANDS, because a word is not a
+             world object. Every figure is composed to the same fraction of
+             the frame, which means each one is shot from its own distance:
+             nutdots from 7.18 units and nutsieve from 13.75. A label sized
+             in world units is therefore twice the height of the frame on
+             one short and a third of it on another, and that is exactly the
+             disproportion that showed up on the contact sheets. Passing the
+             distance down lets the labels and the bands be sized as a
+             FRACTION of the frame instead, so a callout is the same size on
+             screen in all fifteen. */
+          o.near = (SHORT && NEAR[o.kind]) ? NEAR[o.kind] : 0;
           board.push(o);
         }
         var kind = owner ? owner.lume.kind : null;
@@ -655,14 +1108,52 @@
            and the diagram plate is seven and a half; parked at one distance
            the first fills the frame with white and the second sits in the
            middle of it like a postage stamp. */
-        var NEAR = { plate: 7.70, orb: 10.2, field: 9.4, lattice: 8.6,
-                     stream: 9.2, ring: 8.2, card: 8.2 };
-        var near = NEAR[kind] || 8.0;
-        var v = viewFor(i, home, kind, near);
+        /* HOW FAR TO STAND, MEASURED RATHER THAN CHOSEN.
+           Every number in the NEAR table above came out of measure.py, which
+           builds each figure, lets it finish moving, asks three.js for the
+           actual size of its marks and then solves for the distance that
+           composes it. It is not a taste judgement and it should not be
+           edited by hand: change a figure, run measure.py again.
+
+           WHY THE HAND PICKED ONES WERE WRONG, AND WRONG BOTH WAYS. They
+           were chosen against 16:9 and then nudged for 9:16 by eye. Measured:
+           the sieve is 2.27 units tall and was being shot from 7.4, which is
+           half the distance it needs, so it ran off the top and bottom; the
+           chain of five links is 1.04 across and 0.08 tall and was being shot
+           from 10.1, which is why it came back as a thumbnail in an empty
+           frame. One was twice too close and the other half again too far,
+           and both were arrived at the same way.
+
+           The solve is in measure.py and it is three constraints: the figure
+           takes 82% of the width, or 48% of the height, or the label bands
+           have to fit, whichever binds first. A wide figure is therefore
+           sized by its width and a tall one by its height, and neither is
+           ever sized by the wrong one. */
+        /* and nothing multiplies it afterwards. There was a hand written
+           table here that pushed the horizontal figures further back in a
+           tall frame, and it is gone: the measurement already knows the
+           shape of each figure and the solve already knows the shape of the
+           frame, so a correction applied on top is a guess overruling a
+           measurement. That is exactly what made the chain a thumbnail. */
+        /* the measured offset from the station to the figure. See LOOKUP. */
+        var near = NEAR[kind] || (kind ? 8.0 : 6.2);
+        var lift = (SHORT && LOOKUP[kind]) ? LOOKUP[kind] : 0;
+        var aim = [home[0], home[1] + lift, home[2]];
+        var v = SHORT
+              ? shortView(span[i].at / Math.max(1, TOTAL - span[i].dur), aim, near)
+              : viewFor(i, home, kind, near);
         v.at = span[i].at;
         v.dur = span[i].dur;
         views.push(v);
 
+        /* A PLATE BEAT HAS NO LANTERN. The lantern is the light the long
+           films speak through, and on a beat that does not speak it is
+           parked small and dim off to one side. On a plate short that is a
+           soft gold smudge sitting behind the words for the whole minute,
+           which is the blur the owner saw under every line. There is nothing
+           for it to light here: the picture is its own light. */
+        if (b.kind === "plate") { lcues.push({ at: v.at, dur: v.dur,
+              pos: [home[0], home[1], home[2]], scale: 0.0001, bright: 0 }); return; }
         var speak = b._speak;
         var lp = speak
           ? [home[0] + LOFF[0],  home[1] + LOFF[1],  home[2] + LOFF[2]]
@@ -677,9 +1168,17 @@
         }
         lcues.push(cue);
       });
+      /* the direction first: the figures clone their colours out of the
+         palette when they are built, so the theme has to be set before the
+         board is mounted or it changes nothing that is already standing */
+      if (NOORLUME.pace) NOORLUME.pace(SHORT ? "even" : "dwell");
+      }
+      if (NOORLUME.theme) NOORLUME.theme(chapter.theme || "night");
       NOORLUME.shots(shots);
       NOORLUME.board(board, views);
       NOORLUME.lantern(lcues);
+      /* her breath, if this cut has a voice yet */
+      NOORLUME.voice(chapter.voice || null);
     }
     return { duration: DUR, beats: (chapter.beats || []).length, lume: lume.length };
   }

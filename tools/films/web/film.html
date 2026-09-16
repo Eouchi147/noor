@@ -4,12 +4,20 @@
 <!-- The faces are the reels' own, not a second copy: one set of files, one
      set of licences, and a card and a film that are set in the same type. -->
 <style>
-  @font-face{font-family:'NoorCard';src:url(../../reels/web/noor-card-regular.ttf) format('truetype');font-weight:400;font-display:block}
-  @font-face{font-family:'NoorCard';src:url(../../reels/web/noor-card-bold.ttf) format('truetype');font-weight:700;font-display:block}
-  @font-face{font-family:'NoorMono';src:url(../../reels/web/noor-mono.ttf) format('truetype');font-weight:400;font-display:block}
-  @font-face{font-family:'Amiri';src:url(../../reels/web/amiri-regular.ttf) format('truetype');font-weight:400;font-display:block}
-  @font-face{font-family:'Amiri';src:url(../../reels/web/amiri-bold.ttf) format('truetype');font-weight:700;font-display:block}
-  @font-face{font-family:'AmiriQuran';src:url(../../reels/web/amiri-quran.ttf) format('truetype');font-weight:400;font-display:block}
+  /* TWO SOURCES PER FACE, ON PURPOSE.
+     This file lives in two layouts: the repo, where the faces sit in
+     ../../reels/web, and the Mac render folder, where they sit in
+     fonts/. It used to name only one of them, so copying the file from
+     one to the other made every face fail with a NetworkError, which
+     kills Stage() before a single frame is drawn and takes all eight
+     workers with it. A font-face may list several sources and the
+     browser takes the first that loads, so it now names both. */
+  @font-face{font-family:'NoorCard';src:url(fonts/noor-card-regular.ttf) format('truetype'),url(../../reels/web/noor-card-regular.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'NoorCard';src:url(fonts/noor-card-bold.ttf) format('truetype'),url(../../reels/web/noor-card-bold.ttf) format('truetype');font-weight:700;font-display:block}
+  @font-face{font-family:'NoorMono';src:url(fonts/noor-mono.ttf) format('truetype'),url(../../reels/web/noor-mono.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'Amiri';src:url(fonts/amiri-regular.ttf) format('truetype'),url(../../reels/web/amiri-regular.ttf) format('truetype');font-weight:400;font-display:block}
+  @font-face{font-family:'Amiri';src:url(fonts/amiri-bold.ttf) format('truetype'),url(../../reels/web/amiri-bold.ttf) format('truetype');font-weight:700;font-display:block}
+  @font-face{font-family:'AmiriQuran';src:url(fonts/amiri-quran.ttf) format('truetype'),url(../../reels/web/amiri-quran.ttf) format('truetype');font-weight:400;font-display:block}
 
   :root{
     --night:#04060F; --night2:#0A1024; --deep:#02030A;
@@ -18,6 +26,44 @@
     --p86:rgba(255,254,247,.86); --p62:rgba(255,254,247,.62); --p38:rgba(255,254,247,.38);
     --line:rgba(233,200,106,.22);
   }
+  /* ---- the five directions, as they reach the type --------------------
+     The room, the light and the objects are themed in the shader (see
+     THEMES in web/lume.js). The words are DOM, so they take their share
+     here, off one attribute on <html>. Only the ink direction really moves:
+     a lit page needs dark type on it, and everything else is a shift of
+     warmth. */
+  html[data-theme="ink"]{
+    --parch:#241808; --gold:#7A5A1E; --goldhi:#4A3512;
+    --p86:rgba(36,24,8,.90); --p62:rgba(36,24,8,.70); --p38:rgba(36,24,8,.46);
+    --line:rgba(74,53,18,.34);
+  }
+  html[data-theme="orrery"]{ --gold:#B98A34; --goldhi:#E7BE72; --parch:#FBF3E0;
+    --line:rgba(231,190,114,.24) }
+  html[data-theme="girih"]{ --gold:#D9B23F; --goldhi:#F2D98A; --parch:#FFF7E4;
+    --line:rgba(242,217,138,.30) }
+  /* the flat vector language: night and void keep light type, the day mood
+     is dark type on paper and everything in it has to follow */
+  /* the same derived system reaching the type. Amber is the hero at every
+     register; the type sits at the top of the lightness ladder on dark and
+     at the bottom of it on paper. */
+  html[data-theme="nutshell"], html[data-theme="nutvoid"]{
+    --gold:#EFB229; --goldhi:#FBF4DA; --parch:#FBF4DA;
+    --p86:rgba(251,244,218,.90); --p62:rgba(251,244,218,.68); --p38:rgba(251,244,218,.42);
+    --line:rgba(239,178,41,.26);
+  }
+  html[data-theme="nutday"]{
+    --parch:#3C2A13; --gold:#A15B00; --goldhi:#6E3E00;
+    --p86:rgba(60,42,19,.92); --p62:rgba(60,42,19,.70); --p38:rgba(60,42,19,.44);
+    --line:rgba(161,91,0,.34);
+  }
+  /* the page's own ink, not only the tokens: a light ground needs the body
+     colour changed too or every element that never asked for a token stays
+     the colour it was on black */
+  html[data-theme="nutday"] body, html[data-theme="nutday"] #stage,
+  html[data-theme="ink"] body, html[data-theme="ink"] #stage { color: #2B2016 }
+  html[data-theme="relief"]{ --gold:#A99A80; --goldhi:#E4D8BE; --parch:#FFFCF5;
+    --line:rgba(228,216,190,.20) }
+
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;height:100%;overflow:hidden;background:var(--deep)}
   body{font-family:'NoorCard',system-ui,sans-serif;color:var(--parch);-webkit-font-smoothing:antialiased}
@@ -54,9 +100,12 @@
       rgba(255,252,240,.95) 0%, rgba(244,212,106,.62) 34%, rgba(201,162,39,.16) 68%,
       rgba(0,0,0,0) 100%)}
 
-  #vig{position:fixed;inset:0;pointer-events:none;
-    background:radial-gradient(ellipse 74% 66% at 50% 46%,
-      rgba(0,0,0,0) 42%, rgba(0,0,0,.38) 76%, rgba(0,0,0,.76) 100%)}
+  /* THE VIGNETTE IS IN THE SHADER NOW, for the reason written at the top of
+     web/ground.js: a CSS radial gradient across a dark frame is a second
+     eight bit gradient, dithered by the browser, laid over a first. Two
+     weaves crossing is the interlacing. The element stays so nothing that
+     looks it up breaks; it paints nothing. */
+  #vig{display:none}
 
   /* THE CAMERA.
      A film that never moves is a slideshow with good typography. There are
@@ -68,9 +117,55 @@
   #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
     transform-origin:50% 50%;will-change:transform;backface-visibility:hidden}
   #hold{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  /* THE TALL COMPOSITION.
+     Centring the whole column looked right on paper and wrong on the frame:
+     the picture floated in the middle, the words hung under it, and four
+     hundred pixels of nothing sat below them at the bottom of the phone. A
+     nine by sixteen frame is read in two parts. The picture takes the upper
+     two thirds and is centred in that space; the words hold a band of fixed
+     depth at the foot, and sit at the bottom of it, so the last line always
+     lands the same distance from the edge of the screen however many lines
+     there are above it. */
+  /* A PLATE BEAT TAKES THE WHOLE COLUMN.
+     .sky pads six per cent in on either side, which is right for a figure
+     the film draws itself and wrong for a plate: the plate is already sized
+     in pixels to the frame's own 1010, so a sixty pixel pad on each side
+     shrank the element under the drawing and, because the box is clipped to
+     give the breath an edge, sliced a label off both ends. It came out as
+     "andle outside" on the left and "the image arriv" on the right. */
+  .beat.has-plate .sky{padding-inline:0;flex:0 0 auto}
+  /* AND IT IS COMPOSED AS ONE BLOCK.
+     The normal beat pins its words a fixed distance off the bottom of the
+     frame and lets the picture have everything above. On a plate that left
+     four hundred pixels of nothing between the foot of the drawing and the
+     first word, which reads as two unrelated things on one screen rather
+     than a caption under a picture. The picture and its words are one block
+     now, held together by a single gap and centred as a unit, and the air
+     that is left over is shared between the top and the bottom of the frame
+     instead of pooling in the middle of it. */
+  .beat.has-plate{justify-content:center}
+  /* ---- THE SAFE ZONE -------------------------------------------------
+     A phone does not show all 1920 rows of this. Instagram lays its caption,
+     its handle and its audio strip over the bottom 320; TikTok takes 250 at
+     the bottom and 130 at the top; both put a column of buttons down the
+     right. Anything that has to be READ lives between row 130 and row 1600,
+     and the room under it is not wasted, it is where their interface goes.
+     The block is shifted up so the picture sits high and the last line of
+     type clears 1600 with room to spare. */
+  html[data-frame="tall"] .beat.has-plate{padding-bottom:0;gap:70px;
+    transform:translateY(24px)}
+  /* the words hang from the TOP of their band rather than the bottom of it,
+     so the first line is always the same distance under the picture whether
+     the line runs to one row or to four. */
+  .beat.has-plate .wordstack>div{top:0;bottom:auto}
 
   html[data-frame="wide"] #hold{width:1440px;height:860px;gap:56px}
-  html[data-frame="tall"] #hold{width:920px;height:1480px;gap:76px}
+  /* 1740 of the 1920 is the frame less a ninety pixel safe edge top and
+     bottom, which is what every platform crops into on some surface or
+     other. The column is the plate's own 1010 rather than the caption's 920,
+     because the picture is the wider of the two and the words are centred
+     inside it anyway. */
+  html[data-frame="tall"] #hold{width:1010px;height:1740px;gap:58px}
 
   /* The figure is the film. It takes the room, and the words live under it. */
   .fig{position:relative;display:flex;align-items:center;justify-content:center;width:100%}
@@ -79,6 +174,21 @@
   .fig svg{overflow:visible;width:100%;height:100%}
 
   .words{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+  /* THE LINES CROSS IN ONE PLACE.
+     On a plate short there is one sentence on screen at a time and the next
+     one takes its place. Stacked in the normal flow they would push each
+     other about as they overlap; laid one on top of another in a band of
+     fixed height they cross cleanly, and the picture above never moves
+     because the band never changes size. */
+  .wordstack{position:relative;width:100%}
+  /* deep enough for the largest thing that can be in it -- a three line hook
+     at 78 with a subtitle under it -- so a long line never grows up out of
+     the band and into the picture. NOTHING OVERLAPS TEXT is a standing rule
+     here and this is where it is kept. */
+  html[data-frame="tall"] .wordstack{min-height:410px}
+  html[data-frame="wide"] .wordstack{min-height:210px}
+  .wordstack>div{position:absolute;left:0;right:0;bottom:0;
+    display:flex;flex-direction:column;align-items:center;gap:.30em}
   html[data-frame="tall"] .words{gap:26px}
   .rule{width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--goldhi),transparent);opacity:0}
 
@@ -93,6 +203,23 @@
      text-shadow:0 2px 28px rgba(0,0,0,.65)}
   html[data-frame="wide"] .h1{font-size:58px;max-width:26ch}
   html[data-frame="tall"] .h1{font-size:52px;max-width:16ch}
+
+  /* ---- THE HOOK -------------------------------------------------------
+     THE FIRST SECOND IS THE WHOLE NEGOTIATION.
+     On a feed nobody has agreed to watch anything. They are moving, and a
+     short has about one second to give them a reason to stop, which means
+     the opening line is not a title, it is a claim, and it has to be the
+     largest thing that will ever be on the screen.
+
+     52px on a 1080 frame is under five per cent of the width, which is a
+     caption. A hook is set at seven and a half, and its measure is pulled in
+     to eleven characters so it breaks into two or three short lines and
+     stacks rather than running as a strip. Slightly tighter tracking,
+     because large type set at caption tracking looks loose. */
+  .hook{font-weight:700;line-height:1.04;letter-spacing:-.022em;text-wrap:balance;
+     text-shadow:0 2px 34px rgba(0,0,0,.72)}
+  html[data-frame="wide"] .hook{font-size:84px;max-width:21ch}
+  html[data-frame="tall"] .hook{font-size:78px;max-width:14ch}
 
   .h2{font-weight:700;line-height:1.14;letter-spacing:-.008em;text-wrap:balance;
      text-shadow:0 2px 28px rgba(0,0,0,.65)}
@@ -132,6 +259,53 @@
      text-shadow:0 0 52px rgba(233,200,106,.30),0 0 14px rgba(255,254,247,.14)}
   html[data-frame="wide"] .quran{font-size:104px}
   html[data-frame="tall"] .quran{font-size:76px}
+
+  /* ---- THE PLATES ------------------------------------------------------
+     The figure styles from noorcodex.com, carried over unchanged in
+     everything that decides how a plate reads: the same stroke weights, the
+     same three text sizes, the same gold. Two things are different, and both
+     are because this is a 1080 by 1920 film frame and not a page.
+
+     The type is set from the viewBox rather than in pixels, because a plate
+     drawn in a 660 unit box and shown 1080 wide is being enlarged by 1.6 and
+     its 20 unit labels arrive at 33 pixels, which is right. And the stroke
+     alphas are lifted a little, because the film's ground is darker than the
+     card the figures sit on, and the grade and the vignette take a further
+     bite out of a thin line. */
+  /* THE PLATE TAKES THE FRAME, NOT THE COLUMN, AND ITS BOX IS THE SHAPE OF
+     THE DRAWING.
+     The text column is 920 of 1080 wide, which is right for a caption and
+     wrong for a picture. The plate breaks out to 1010, the frame less a
+     thumb's width either side.
+     It used to be given a FIXED 1010 by 1390 box whatever was in it, because
+     a camera was travelling inside that box. It is not any more, and a fixed
+     box was the reason a figure half as tall as it is wide sat in a hole two
+     and a half times too deep with the frame empty above the words. The box
+     is sized in web/plate.js, from the artwork's own proportions at the
+     enlargement its labels need, and set on the element in pixels -- so this
+     rule declares no size at all. See THE BOX there. */
+  .plate{position:relative;display:flex;align-items:center;justify-content:center;
+    width:100%}
+  .plate svg{display:block;overflow:hidden;max-width:100%}
+  .figsvg{display:block;overflow:visible}
+  .figsvg .ln,.figsvg .rd,.figsvg .strike{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .figsvg .ln{stroke:rgba(255,254,247,.72);stroke-width:2.4}
+  .figsvg .rd{stroke:#F4D46A;stroke-width:3.4}
+  .figsvg .thin{stroke:rgba(255,254,247,.40);stroke-width:1.6}
+  .figsvg .strike{stroke:rgba(226,138,128,.90);stroke-width:2.6}
+  .figsvg .nd{fill:#F4D46A;stroke:none}
+  .figsvg .flame{fill:#F4D46A;stroke:none}
+  .figsvg .halo,.figsvg .halo2{fill:rgba(244,212,106,.16);stroke:none}
+  .figsvg .wait{fill:none;stroke:rgba(244,212,106,.5);stroke-width:1.2}
+  .figsvg text{text-anchor:middle;font-family:'NoorCard',system-ui,sans-serif}
+  .figsvg .ts{text-anchor:start}
+  .figsvg .te{text-anchor:end}
+  .figsvg .t1{font-size:34px;font-weight:700;fill:#FFFEF7}
+  .figsvg .t2{font-size:26px;fill:rgba(255,254,247,.82)}
+  .figsvg .t3{font-size:22px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;fill:rgba(244,212,106,.90)}
+  .figsvg .t4{font-size:22px;fill:rgba(255,254,247,.74)}
+  .figsvg .big{font-size:34px}
+  .figsvg .gold{fill:#F4D46A}
 
   .src{font-family:'NoorMono',ui-monospace,monospace;color:rgba(233,200,106,.60);text-transform:uppercase}
   /* THE SOURCE LINE IS A FEATURE OF THIS FILM, NOT AN APOLOGY.
@@ -181,7 +355,13 @@
      where the verse is set. It takes the room and nothing crowds it. */
   .sky{flex:1 1 auto;display:flex;align-items:center;justify-content:center;
     width:100%;min-height:0;padding-inline:6%}
-  .beat.has-lume .body{max-width:38ch}
+  /* SPECIFICITY. Three classes (0,3,0) beat the tall-frame rule's one
+     attribute plus one class (0,2,1), so on 9:16 this did not narrow the
+     caption from 40ch to 38ch as intended -- it WIDENED it from 22ch to
+     38ch, edge to edge of the layout box, on every figure-covered beat.
+     37 of 45 beats of film two. Each frame now states its own number. */
+  html[data-frame="wide"] .beat.has-lume .body{max-width:38ch}
+  html[data-frame="tall"] .beat.has-lume .body{max-width:21ch}
 
   /* the list: a column of rows, each one a thing and its name, with a rule
      under it. The Arabic sits on the right because it is read from there. */
@@ -207,6 +387,41 @@
     .g{color:var(--goldhi)}
   .tok{display:inline-block;white-space:pre}
   .lt{display:inline-block}
+
+  /* ---- THE WATERMARK -----------------------------------------------------
+     A SCENE FILM STANDS ALONE, SO IT CARRIES ITS OWN MARK.
+     Every other film in this house is a corridor of many figures, ending on
+     a card the reels tools stamp once; a scene like darkroom is a single
+     continuous shot with no such card, so the mark has to be on screen for
+     the whole thing. It is DOM, not a WebGL plane, so it renders into every
+     frame noor.py takes with no post step and no risk of the bloom or the
+     depth of field touching it -- and it never animates, because the one
+     thing worse than no mark is one that draws attention to itself.
+     Hidden by default; stage.js sets data-mark="1" on <html> only in scene
+     mode (see THE MARK ONLY SHOWS ON A SCENE in stage.js). Position mirrors
+     the safe margins named in the darkroom spec's own watermark.safe: 60px
+     of side margin on both frame shapes, 320px off the bottom of the tall
+     frame (TikTok's own caption and audio strip live there) and 48px off
+     the bottom of the wide one, which has no such strip to clear. */
+  #mark{position:fixed;left:60px;display:none;align-items:center;gap:12px;
+    pointer-events:none;z-index:5}
+  html[data-mark="1"] #mark{display:flex}
+  html[data-frame="tall"] #mark{bottom:320px}
+  html[data-frame="wide"] #mark{bottom:48px}
+  /* THE MARK NEEDS ITS OWN CLEARANCE, NOT JUST THE GENERIC SAFE ZONE
+     (round four). .beat's own padding-bottom (226 tall, 92 wide) reserves
+     the generic platform safe zone, not the mark's -- and the mark sits
+     lower, at 320 on the tall frame. A beat with enough lines in it (s10
+     alone carries an eyebrow, a headline, a sub AND a src) grew tall
+     enough, anchored to that shallower padding, that its last line landed
+     inside the mark's own row: "THE BOOK OF OPTICS, ABOUT 1020" sitting on
+     top of "noorcodex.com". Raised only while data-mark is set, so every
+     other film's captions keep the padding tuned for them. */
+  html[data-mark="1"][data-frame="tall"] .beat{padding-bottom:360px}
+  html[data-mark="1"][data-frame="wide"] .beat{padding-bottom:130px}
+  .mark-badge{width:40px;height:40px;display:block;flex:0 0 auto}
+  .mark-text{font-family:'NoorMono',ui-monospace,monospace;font-size:20px;
+    letter-spacing:.06em;color:rgba(255,254,247,.78)}
 </style>
 
 <canvas id="ground"></canvas>
@@ -214,11 +429,34 @@
 <div id="stage"><div id="hold"></div></div>
 <div id="vig" aria-hidden="true"></div>
 <div id="flare" aria-hidden="true"></div>
+<!-- the house mark, copied from assets/brand/mark.svg: see THE WATERMARK
+     above for why this is DOM and not a figure in the light layer -->
+<div id="mark" aria-hidden="true">
+  <svg class="mark-badge" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="markN" cx="50%" cy="38%" r="75%">
+        <stop offset="0%" stop-color="#182452"/><stop offset="55%" stop-color="#0B1230"/><stop offset="100%" stop-color="#04060F"/>
+      </radialGradient>
+      <linearGradient id="markG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#F4D46A"/><stop offset="100%" stop-color="#C9A227"/>
+      </linearGradient>
+    </defs>
+    <circle cx="32" cy="32" r="31" fill="url(#markN)"/>
+    <circle cx="32" cy="32" r="28.5" fill="none" stroke="url(#markG)" stroke-width="1.6" opacity=".85"/>
+    <path fill="url(#markG)" d="M32 12 L35.2 25.4 L45.9 18.1 L38.6 28.8 L52 32 L38.6 35.2 L45.9 45.9 L35.2 38.6 L32 52 L28.8 38.6 L18.1 45.9 L25.4 35.2 L12 32 L25.4 28.8 L18.1 18.1 L28.8 25.4 Z"/>
+    <circle cx="32" cy="32" r="3.1" fill="#0B1230"/>
+    <circle cx="32" cy="32" r="1.7" fill="#F4D46A"/>
+  </svg>
+  <span class="mark-text">noorcodex.com</span>
+</div>
 
 <script src="anime.min.js"></script>
 <script src="three.min.js"></script>
 <script src="ground.js"></script>
+<script src="plates.js"></script>
 <script src="figures.js"></script>
+<script src="plate.js"></script>
+<script src="behave.js"></script>
 <script src="diagrams.js"></script>
 <script src="lume.js"></script>
 <script src="stage.js"></script>

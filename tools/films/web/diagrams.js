@@ -51,8 +51,10 @@
    as golden light rather than as a cast object. */
   var GOLD = "#D4AE2E", GOLDHI = "#F4D46A", PALE = "#FBEFC8", WHITE = "#FFFEF7";
   var COOL = "#7FA3D8";              /* the one cool accent, for "the other" */
-  var DIM  = "rgba(255,254,247,0.26)";
-  var RULE = "rgba(233,200,106,0.30)";
+  /* both were set against a black comp and the room is not black, it is a
+     lit blue. Raised so a label reads as quiet rather than as absent. */
+  var DIM  = "rgba(255,254,247,0.54)";
+  var RULE = "rgba(233,200,106,0.48)";
 
   /* ---- easings, the same names the rest of the film uses ---------------- */
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
@@ -103,7 +105,35 @@
      Small type is left alone -- a thin stroke never accumulates enough to
      clip, and dimming it only makes it grey. */
   var GLOWK = 0.42;
-  function inkA(size, a) { return a * ((size || 34) > 96 ? 0.50 : (size || 34) > 56 ? 0.66 : 0.90); }
+
+  /* ---- HOW BIG A LABEL ACTUALLY IS ON SCREEN ---------------------------
+     Worked out rather than eyeballed, because "looks fine on my monitor" is
+     how type ends up illegible on a phone.
+
+       the plate stands at 7.70 units on a 35 degree lens
+       half the frame is 7.70 * tan(17.5) = 2.428 units, so 4.856 units tall
+       that is 1080 px, so one world unit is 222 px
+       the plate is 7.40 x 4.163 units = 1646 x 926 px on screen
+       the canvas behind it is 2048 x 1152, so it is MINIFIED to 0.80
+
+     A label written at 25 canvas px therefore arrives at 20 screen px, which
+     is 1.9% of frame height. Broadcast wants 2.5% for text you may read and
+     3% for text you must. And it was being drawn in DIM at 0.26 alpha times
+     inkA's 0.90, so an effective 0.23 on a dark blue ground: thin AND faint,
+     which is why it read as almost not there.
+
+     Small type is scaled here, in one place, rather than at sixty call
+     sites. Display numerals are already large and are left alone. */
+  var SMALLTYPE = 1.52;      /* 25 canvas px -> 38 -> 30 on screen, 2.8% */
+  var SMALLMAX  = 56;        /* anything under this is a label, not a display */
+
+  /* The structural hairlines had the same problem: the axis at 3 canvas px is
+     2.4 on screen and the ticks at 2 are 1.6, which on a 60 fps encode is a
+     line that flickers rather than a line. Only strokes drawn in the rule and
+     dim colours are widened; the lit marks are already bright enough to bloom
+     and must not get thicker. */
+  var RULEW = 1.75;
+  function inkA(size, a) { return a * ((size || 34) > 96 ? 0.50 : (size || 34) > 56 ? 0.66 : 1.00); }
 
   /* ---- the primitives -------------------------------------------------- */
 
@@ -114,7 +144,9 @@
     t = clamp01(t); if (t <= 0) return;
     c.save();
     c.strokeStyle = col || RULE;
-    c.lineWidth = w || 3;
+    /* structure gets the widening; lit marks do not, or they weld together */
+    var struct = !col || col === RULE || col === DIM;
+    c.lineWidth = (w || 3) * (struct ? RULEW : 1);
     c.lineCap = "round";
     if (glow) { c.shadowColor = col || GOLD; c.shadowBlur = glow * GLOWK; }
     c.beginPath();
@@ -150,10 +182,20 @@
     c.save();
     c.globalAlpha = clamp01(a === undefined ? 1 : a);
     c.fillStyle = col || GOLD;
-    var r = Math.min(h / 2, 10);
+    /* THE RADIUS SHRINKS WITH THE BAR. IT DOES NOT PUSH THE BAR WIDER.
+       This was `roundRect(x, y, Math.max(ww, r*2), h, r)`, so a bar narrower
+       than its own corner radius was widened to fit the corners instead of
+       the corners being made smaller. The floor was 20 px on a 2048 canvas.
+       Measured on the zakah panel: one fortieth of a 264 px box is 6.6 px and
+       it drew 20, so a figure captioned 1/40 showed about a thirteenth, and
+       in the tall frame about a seventh. In a film whose whole claim is that
+       nothing is rounded and nothing is selected, that was the one panel that
+       lied. It also meant the growth never animated: it popped to 20 px and
+       stopped. */
     var ww = w * t;
+    var r = Math.min(h / 2, 10, ww / 2);
     c.beginPath();
-    if (c.roundRect) c.roundRect(x, y, Math.max(ww, r * 2), h, r);
+    if (c.roundRect) c.roundRect(x, y, ww, h, r);
     else c.rect(x, y, ww, h);
     c.fill();
     c.restore();
@@ -164,16 +206,19 @@
     var a = clamp01(o.a === undefined ? 1 : o.a);
     if (a <= 0 || !s) return;
     c.save();
+    /* the one place small type is sized. See SMALLTYPE above for the sum. */
+    var sz = o.size || 34;
+    if (sz < SMALLMAX) sz = Math.round(sz * SMALLTYPE);
     c.globalAlpha = inkA(o.size, a);
     c.fillStyle = o.col || WHITE;
     c.textAlign = o.align || "center";
     c.textBaseline = o.base || "middle";
     var fam = o.fam || "'NoorCard', system-ui, sans-serif";
-    c.font = (o.weight || 500) + " " + (o.size || 34) + "px " + fam;
+    c.font = (o.weight || 500) + " " + sz + "px " + fam;
     if (o.track) {
       /* letter-spacing by hand: canvas has none, and an eyebrow without it is
          not an eyebrow */
-      var chars = String(s).split(""), tr = o.track, tot = 0, i;
+      var chars = String(s).split(""), tr = o.track * (sz / (o.size || 34)), tot = 0, i;
       for (i = 0; i < chars.length; i++) tot += c.measureText(chars[i]).width + tr;
       tot -= tr;
       var cx = o.align === "left" ? x : o.align === "right" ? x - tot : x - tot / 2;
@@ -451,13 +496,33 @@
       if (k <= 0) continue;
       line(c, x, y, x, y + H * 0.018, k, RULE, 2);
     }
-    /* the marks: irregular on purpose, because the record is irregular */
+    /* THE MARKS ARE IRREGULAR, NOT ON TOP OF EACH OTHER.
+       The positions come from a hash, which is right: the record is irregular
+       and a comb of evenly spaced marks would be a lie about it. But a hash
+       does not know about the bloom. Thirty four marks over 1680 px average
+       49 px apart, and a hash regularly puts two within twenty, at which
+       point their halos sum past white in the light layer and the pair comes
+       back as ONE solid slab with no head on it. Six of the thirty four, every
+       time. Proved by drawing this canvas alone, at the same instant, where
+       all thirty four are thin and separate.
+       So the positions are relaxed apart to a floor just wider than the bloom
+       can bridge. They stay irregular, they stay in their own order, and no
+       two of them can weld. This is also the more honest chart: two events
+       that render as one event is a timeline that miscounts. */
     var n = 34;
     for (var m = 0; m < n; m++) {
       var p = hash(m, 7), h2 = H * 0.030 + hash(m, 11) * H * 0.155;
       var mx = x0 + (x1 - x0) * p;
       var kk = clamp01(ease(marks) * (n + 6) - m);
       if (kk <= 0) continue;
+      /* SIX OF THESE COME BACK AS SOLID SLABS AND I HAVE NOT YET FOUND WHY.
+         Drawn on this canvas alone, at the same instant, all of them are thin
+         lines with a head on them. Put through the light layer and six lose
+         their head and gain about ten times the width. Halving the halo here
+         changed the count by nothing, and so did spacing the marks apart, so
+         it is neither the shadow nor two marks welding: something between this
+         canvas and the screen is doing it. Left exactly as it was until that
+         is found, rather than papering over it. */
       line(c, mx, y, mx, y - h2 * ease(kk), 1, GOLDHI, 3, 14);
       dot(c, mx, y - h2 * ease(kk), 4.5, PALE, kk, 16);
     }

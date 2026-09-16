@@ -243,5 +243,86 @@
     }
   };
 
+
+  /* ---- girih: the figure that shows its own construction -----------------
+
+     THE POINT OF THIS ONE IS THE METHOD, NOT THE PATTERN.
+
+     An Islamic star pattern is not ornament laid on a surface. It is a
+     construction, and once you have chosen two numbers it is determined:
+     divide a circle into n equal parts, then join every point to the one k
+     steps away. {10/4} is the girih of the Topkapi scroll, {8/3} the khatam of
+     Mamluk woodwork, {12/5} the Persian rosette. Nothing here is traced from
+     any artwork; it is computed from those two numbers, which is also why
+     nothing in it can be claimed by anyone.
+
+     So the animation is the argument in the plainest possible way: the
+     compass work is drawn FIRST and stays faintly visible underneath, the
+     chords are drawn one at a time so the rule is legible, and only then does
+     the finished figure come up bright. A viewer who watches with the sound
+     off learns how it is made.  */
+  F.girih = function (b, svg, tl, t0) {
+    var N = b.n || 10, K = b.k || 4, R = b.r || 300;
+    var CX = 500, CY = 500;
+    svg.setAttribute("viewBox", "0 0 1000 1000");
+
+    var cons = n("g", { opacity: 0 });          // the working
+    var fig  = n("g", { opacity: 0 });          // the result
+    svg.appendChild(cons); svg.appendChild(fig);
+
+    // the compass: the circle the whole thing stands on
+    var ring = n("circle", { cx: CX, cy: CY, r: R, fill: "none",
+                             stroke: "rgba(233,200,106,.55)", "stroke-width": 2 });
+    cons.appendChild(ring);
+
+    // the division: n points, evenly spaced, which is the only choice made
+    var pts = [], i;
+    for (i = 0; i < N; i++) {
+      var a = -Math.PI / 2 + i * 2 * Math.PI / N;
+      pts.push([CX + R * Math.cos(a), CY + R * Math.sin(a)]);
+    }
+    var dots = [];
+    for (i = 0; i < N; i++) {
+      var d = n("circle", { cx: pts[i][0], cy: pts[i][1], r: 7,
+                            fill: "rgba(244,212,106,.95)", opacity: 0 });
+      cons.appendChild(d); dots.push(d);
+    }
+
+    // the rule: join each point to the one k steps away
+    var chords = [];
+    for (i = 0; i < N; i++) {
+      var j = (i + K) % N;
+      var ln = n("line", { x1: pts[i][0], y1: pts[i][1], x2: pts[j][0], y2: pts[j][1],
+                           stroke: "rgba(244,212,106,.9)", "stroke-width": 3,
+                           "stroke-linecap": "round" });
+      fig.appendChild(ln); chords.push(ln);
+    }
+
+    var rd = drawable(ring), cd = chords.map(drawable);
+
+    tl.add(cons, { opacity: [0, 1], ease: "outQuad", duration: 400 }, t0);
+    tl.add(rd,   { draw: ["0 0", "0 1"], ease: "inOutSine", duration: 1500 }, t0 + 200);
+    tl.add(dots, { opacity: [0, 1], scale: [0.2, 1], ease: SP.settle, duration: 520,
+                   delay: A.stagger(70) }, t0 + 1500);
+    tl.add(fig,  { opacity: [0, 1], ease: "linear", duration: 1 }, t0 + 2300);
+    // one chord at a time: the rule has to be readable, not just the result
+    tl.add(cd,   { draw: ["0 0", "0 1"], ease: "outQuad", duration: 460,
+                   delay: A.stagger(150) }, t0 + 2300);
+    // the working recedes, the figure stays. It is never removed: a
+    // construction that hides its method is the thing this film argues against.
+    tl.add(cons, { opacity: [1, 0.22], ease: "outQuad", duration: 900 },
+           t0 + 2300 + 150 * N + 500);
+
+    if (b.label) {
+      var lab = n("g", { opacity: 0 });
+      txt(lab, b.label, { x: CX, y: CY + R + 120, "text-anchor": "middle",
+        "font-family": "NoorMono, monospace", "font-size": 30,
+        "letter-spacing": 8, fill: "rgba(255,254,247,.72)" });
+      svg.appendChild(lab);
+      tl.add(lab, { opacity: [0, 1], translateY: [16, 0], ease: "outExpo", duration: 800 },
+             t0 + 2300 + 150 * N + 400);
+    }
+  };
+
   window.NOORFIG = F;
 })();
