@@ -1,0 +1,207 @@
+{
+  "slug": "short-saee",
+  "id": "short-saee",
+  "title": "Seven trips between two hills",
+  "note": "The page's seven numbered arrows between Safa and Marwah, odd numbers going, even numbers returning.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Seven trips between two hills",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "two-hills-with-seven-numbered-arrows-b",
+          "hold": 51.7,
+          "lines": [
+            {
+              "text": "Sa'i is seven legs between two hills",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.61
+            },
+            {
+              "text": "Safa and Marwah, the tenth of Dhul Hijjah",
+              "size": "h1",
+              "at": 3.95,
+              "until": 7.94
+            },
+            {
+              "text": "At Safa, begin with what Allah began with",
+              "sub": "Safa and Marwah are among Allah's symbols",
+              "size": "h1",
+              "at": 8.28,
+              "until": 15.42
+            },
+            {
+              "text": "Walk to Marwah: that first leg is one",
+              "size": "h1",
+              "at": 15.76,
+              "until": 19.49
+            },
+            {
+              "text": "Seven legs end you at Marwah, not Safa",
+              "sub": "between the green markers, men jog, a sunnah",
+              "size": "h1",
+              "at": 19.83,
+              "until": 27.02
+            },
+            {
+              "text": "Sa'i remembers Hajar, alone with an infant",
+              "sub": "seven times, alone, looking for help",
+              "size": "h1",
+              "at": 27.36,
+              "until": 34.14
+            },
+            {
+              "text": "Maliki, Shafi'i, Hanbali: sa'i is a pillar",
+              "sub": "Hanafis: a duty, a sacrifice repairs it",
+              "size": "h1",
+              "at": 34.48,
+              "until": 41.51
+            },
+            {
+              "text": "Sa'i is the memory of a woman running",
+              "size": "h1",
+              "at": 41.85,
+              "until": 45.58
+            },
+            {
+              "eyebrow": "Sa'i, Safa to Marwah",
+              "text": "No one walks this Hajj without her path",
+              "src": "Umrah, step by step",
+              "size": "h1",
+              "at": 45.92,
+              "until": 51.38
+            }
+          ],
+          "at": [
+            100,
+            1353,
+            2257,
+            4400,
+            5172,
+            5945,
+            6718,
+            8730,
+            16210,
+            17153,
+            18097,
+            20280,
+            21179,
+            22077,
+            22976,
+            23874,
+            24773,
+            25671
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 2
+            },
+            {
+              "at": 3.95,
+              "i0": 3,
+              "i1": 6
+            },
+            {
+              "at": 8.28,
+              "i0": 7,
+              "i1": 7
+            },
+            {
+              "at": 15.76,
+              "i0": 8,
+              "i1": 10
+            },
+            {
+              "at": 19.83,
+              "i0": 11,
+              "i1": 17
+            },
+            {
+              "at": 27.36,
+              "i0": 17,
+              "i1": 17
+            },
+            {
+              "at": 34.48,
+              "i0": 17,
+              "i1": 17
+            },
+            {
+              "at": 41.85,
+              "i0": 17,
+              "i1": 17
+            },
+            {
+              "at": 45.92,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs1, path.hs2",
+              "at": 0,
+              "for": 3.6,
+              "times": 1,
+              "size": 1.1
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11)",
+              "at": 2,
+              "for": 2.4,
+              "delay": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(10)",
+              "at": 3,
+              "for": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": "path.hs3",
+              "at": 4,
+              "for": 2.6,
+              "delay": 2.3,
+              "size": 1.6
+            },
+            {
+              "do": "count",
+              "on": "text.hts.htgold.ta-e",
+              "at": 4,
+              "for": 3.0
+            },
+            {
+              "do": "glow",
+              "on": "text.htg",
+              "at": 6,
+              "for": 2.6,
+              "delay": 2.2,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs1, path.hs2",
+              "at": 7,
+              "for": 3.4,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

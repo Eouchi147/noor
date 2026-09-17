@@ -1,0 +1,127 @@
+{
+  "slug": "short-miqat",
+  "title": "Five gates around Makkah",
+  "theme": "nutvoid",
+  "plate": "five-gates-set-on-a-ring-around-makkah",
+  "room": "hajj.html#ihram",
+  "note": "The page's five miqat gates around Makkah, one for each direction, each an arrow pointing inward to the House.",
+  "lines": [
+    {
+      "text": "Five roads into Makkah, one rule for all",
+      "steps": 4
+    },
+    {
+      "text": "Five lines ring Makkah, before Dhul Hijjah",
+      "sub": "crossing for Hajj or Umrah needs ihram",
+      "steps": 4
+    },
+    {
+      "text": "From Madinah, the north: Dhul Hulayfah",
+      "steps": 2
+    },
+    {
+      "text": "From Sham and Egypt: Al-Juhfah, northwest",
+      "sub": "Rabigh stands in its place today",
+      "steps": 2
+    },
+    {
+      "text": "Najd east, Iraq north east: two more lines",
+      "steps": 2
+    },
+    {
+      "text": "From Yemen, the south: Yalamlam waits",
+      "steps": 2
+    },
+    {
+      "text": "Come back and the sacrifice is not owed",
+      "sub": "Hanafi and Shafi'i differ on the timing",
+      "steps": 2
+    },
+    {
+      "text": "For Hajj, the nearer begin where they are"
+    },
+    {
+      "eyebrow": "The miqat, around Makkah",
+      "text": "Five lines, one for each direction",
+      "src": "Ihram, entering the sacred state"
+    }
+  ],
+  "research": {
+    "retell": "Five fixed boundary lines ring Makkah, one for each direction of travel, and no one heading to Hajj or Umrah may cross theirs without first entering ihram.",
+    "proof": [
+      "Five gates set on a ring around Makkah, one for each direction of arrival, each with an arrow pointing inward to the House.; no one crosses a line without ihram",
+      "no one crosses a line without ihram; A miqat is a boundary line in space. The Prophet ﷺ appointed one for the people of each direction, and no person intending Hajj or Umrah may cross his line without being in ihram.",
+      "Dhul Hulayfah, for the people of Madinah and anyone coming through it, about four hundred and fifty kilometres out and the furthest of them, known today as Abyar Ali.",
+      "Al-Juhfah, for the people of Sham, Egypt and the west, north of Makkah, with Rabigh used in its place today.; the north west",
+      "Qarn al-Manazil, for the people of Najd, to the east.; And Dhat Irq, for the people of Iraq, to the north east.",
+      "Yalamlam, for the people of Yemen, to the south, used also by many arriving from South and Southeast Asia.",
+      "The four schools agree that crossing the miqat without ihram while intending the rites obliges either a return to the line or a sacrifice.; Hanafi hold that if he returns to the miqat and enters ihram there, the sacrifice falls away; the Shafi’is hold similarly, and the difference between them lies in whether the return must be before he begins any rite.",
+      "Whoever lives nearer than a miqat enters ihram from where he is, until the people of Makkah enter from Makkah itself.; whoever is nearer begins where he is",
+      "one for each direction of arrival; al-ihram, entering the sacred state"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs3",
+      "at": 0,
+      "for": 3.6,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(10), :scope > g:nth-last-of-type(9)",
+      "at": 2,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(2), :scope > g:nth-last-of-type(1)",
+      "at": 3,
+      "for": 2.4,
+      "delay": 2.0,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(5)",
+      "at": 4,
+      "for": 2.4,
+      "delay": 0.8,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(7)",
+      "at": 4,
+      "for": 2.4,
+      "delay": 0.8,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(4), :scope > g:nth-last-of-type(3)",
+      "at": 5,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(12)",
+      "at": 6,
+      "for": 2.6,
+      "delay": 2.1,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs3",
+      "at": 7,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    }
+  ]
+}

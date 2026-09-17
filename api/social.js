@@ -2493,7 +2493,7 @@ export async function diagnoseSlot(host, date, slotId, ch, opts = {}) {
     if (broke.length) {
       out.cause = broke.map(c => c.name + " is wrong: " + c.detail).join("; ");
       out.fix = broke.some(c => c.name === "the card image") ? "retry" : "manual";
-      out.steps = broke.map(c => "Fix " + c.name + " -- " + c.detail);
+      out.steps = broke.map(c => "Fix " + c.name + ": " + c.detail);
       if (out.fix === "retry") out.steps.push("Then press Retry on this row.");
     } else if (/hashtag|character|too long|caption/i.test(String(out.said || ""))) {
       /* It failed on the shape, and the shape it would go out with now is

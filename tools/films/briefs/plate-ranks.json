@@ -1,0 +1,111 @@
+{
+  "slug": "short-ranks",
+  "title": "What a missing act costs you",
+  "theme": "nutvoid",
+  "plate": "three-stacked-bands-pillar-obligation",
+  "room": "hajj.html#ranks",
+  "note": "The page's three stacked bands, pillar, obligation and sunnah, each with the cost of leaving it written beside it.",
+  "lines": [
+    {
+      "text": "One of three ranks holds every Hajj act",
+      "steps": 1
+    },
+    {
+      "text": "Hajj is once in a life, in Dhul Hijjah"
+    },
+    {
+      "text": "A pillar: leave it and there is no Hajj",
+      "sub": "money cannot buy a pillar back",
+      "steps": 3
+    },
+    {
+      "text": "An obligation: a sacrifice repairs it",
+      "steps": 3
+    },
+    {
+      "text": "A sunnah: better, and nothing is owed",
+      "steps": 3
+    },
+    {
+      "text": "Only Arafah has no way back at all"
+    },
+    {
+      "text": "The schools do not rank every act the same",
+      "sub": "sa'i: a pillar for three, a duty for Hanafi",
+      "steps": 1
+    },
+    {
+      "text": "Read the row you were taught, not all four"
+    },
+    {
+      "eyebrow": "The three ranks, of the Hajj",
+      "text": "A dam is meat for the poor, not a fine",
+      "sub": "dam, a sacrifice: a sheep or a goat",
+      "src": "The pillars and the obligations"
+    }
+  ],
+  "research": {
+    "retell": "Every act of Hajj is ranked a pillar, an obligation, or a sunnah, and the schools do not always agree which act belongs in which band.",
+    "proof": [
+      "Every act of the Hajj sits in one of three ranks, and the rank tells you what happens if it is missed.; what a missing act costs you",
+      "rukn, a pillar; wajib, an obligation; sunnah",
+      "rukn, a pillar: leave it and there is no Hajj; Rukn, pillar: the act is part of the thing itself. If you omit it, you have not performed the Hajj... Money cannot buy it back.",
+      "wajib, an obligation: a sacrifice repairs it; Wajib, obligation: the act is commanded but is not part of the essence. Omit it and the Hajj is valid, and a dam is due",
+      "sunnah: better, and nothing is owed; Sunnah: the Prophet ﷺ did it or encouraged it. Omitting it costs nothing but loses something. Most of what makes the Hajj beautiful lives here.",
+      "Only one act in the entire Hajj sits in the top band with no way back at all, and that is the standing at Arafah.",
+      "the schools do not all put the same act in the same band; Sa’i, seven between Safa and Marwah: Pillar for Maliki, Shafi’i and Hanbali; obligation for Hanafi.",
+      "Read across the row you were taught, not across all four at once. This table exists so that when a person in your group says the Hajj is only two things and another says it is five, you know that both of them are quoting a school and neither is inventing.",
+      "It literally means blood, and in these books it means a sacrifice, not a fine paid to anyone. It is meat for the poor of the sanctuary.; al-arkan wa al-wajibat, the pillars and the obligations"
+    ]
+  },
+  "motion": [
+    {
+      "do": "glow",
+      "on": "path.hband1, :scope > g:nth-last-of-type(7), :scope > g:nth-last-of-type(6)",
+      "at": 2,
+      "for": 2.6,
+      "delay": 1.8,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "path.hband2, :scope > g:nth-last-of-type(5), :scope > g:nth-last-of-type(4)",
+      "at": 3,
+      "for": 2.6,
+      "delay": 0.5,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "path.hband3, :scope > g:nth-last-of-type(3), :scope > g:nth-last-of-type(2)",
+      "at": 4,
+      "for": 2.6,
+      "delay": 0.5,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "path.hband1, :scope > g:nth-last-of-type(7), :scope > g:nth-last-of-type(6)",
+      "at": 5,
+      "for": 2.2,
+      "delay": 0.7,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "path.hband1, path.hband2, :scope > g:nth-last-of-type(7), :scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(5), :scope > g:nth-last-of-type(4)",
+      "at": 6,
+      "for": 2.8,
+      "delay": 2.3,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "path.hband1, path.hband2, path.hband3",
+      "at": 7,
+      "for": 3.0,
+      "delay": 0.6,
+      "size": 1.8
+    }
+  ]
+}

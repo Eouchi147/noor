@@ -1,0 +1,222 @@
+{
+  "slug": "short-hajjdays",
+  "id": "short-hajjdays",
+  "title": "Six days, one disc each",
+  "note": "The page's ribbon of the six days of Hajj, the eighth to the thirteenth of Dhul Hijjah, each day a disc with its acts underneath.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Six days, one disc each",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-ribbon-of-six-days-from-the-eighth-t",
+          "hold": 51.4,
+          "lines": [
+            {
+              "text": "One ribbon, six days, the whole Hajj",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.61
+            },
+            {
+              "text": "Mina, from the eighth of Dhul Hijjah",
+              "sub": "staying at Mina is sunnah, nothing owed",
+              "size": "h1",
+              "at": 3.95,
+              "until": 10.58
+            },
+            {
+              "text": "The ninth is Arafah: it cannot be missed",
+              "sub": "then Muzdalifah, and sleep there",
+              "size": "h1",
+              "at": 10.92,
+              "until": 17.3
+            },
+            {
+              "text": "The tenth: stone, sacrifice, shave, tawaf",
+              "size": "h1",
+              "at": 17.64,
+              "until": 21.53
+            },
+            {
+              "text": "Tashriq: three days, all three pillars",
+              "size": "h1",
+              "at": 21.87,
+              "until": 25.56
+            },
+            {
+              "text": "After the twelfth, leave, or stay one more",
+              "sub": "leave Mina before sunset on the twelfth",
+              "size": "h1",
+              "at": 25.9,
+              "until": 32.98
+            },
+            {
+              "text": "The farewell tawaf: three call it a duty",
+              "sub": "a sacrifice if left; sunnah for Maliki",
+              "size": "h1",
+              "at": 33.32,
+              "until": 40.2
+            },
+            {
+              "text": "That slowness after the tenth is the point",
+              "size": "h1",
+              "at": 40.54,
+              "until": 44.6
+            },
+            {
+              "eyebrow": "The six days, Mina and Arafah",
+              "text": "Each day is a disc with its acts below",
+              "src": "Hajj, day by day",
+              "size": "h1",
+              "at": 44.94,
+              "until": 51.08
+            }
+          ],
+          "at": [
+            100,
+            696,
+            943,
+            1189,
+            1435,
+            1682,
+            1928,
+            2175,
+            2421,
+            2667,
+            2914,
+            11370,
+            11827,
+            12283,
+            12740,
+            13197,
+            13653,
+            14110,
+            14567,
+            15023,
+            15480,
+            15937,
+            16393,
+            22320,
+            22630,
+            22940,
+            23250,
+            23560,
+            23870,
+            24180,
+            24490,
+            24800,
+            26350,
+            27895,
+            29440,
+            30985
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 10
+            },
+            {
+              "at": 3.95,
+              "i0": 10,
+              "i1": 10
+            },
+            {
+              "at": 10.92,
+              "i0": 11,
+              "i1": 22
+            },
+            {
+              "at": 17.64,
+              "i0": 22,
+              "i1": 22
+            },
+            {
+              "at": 21.87,
+              "i0": 23,
+              "i1": 31
+            },
+            {
+              "at": 25.9,
+              "i0": 32,
+              "i1": 35
+            },
+            {
+              "at": 33.32,
+              "i0": 35,
+              "i1": 35
+            },
+            {
+              "at": 40.54,
+              "i0": 35,
+              "i1": 35
+            },
+            {
+              "at": 44.94,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs3",
+              "at": 0,
+              "for": 3.4,
+              "times": 1,
+              "size": 1.1
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+26):nth-last-of-type(-n+30)",
+              "at": 1,
+              "for": 2.8,
+              "delay": 1.9,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+14):nth-last-of-type(-n+17)",
+              "at": 3,
+              "for": 3.0,
+              "delay": 0.3,
+              "size": 1.7
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+5):nth-last-of-type(-n+8)",
+              "at": 5,
+              "for": 2.6,
+              "delay": 2.2,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+1):nth-last-of-type(-n+4)",
+              "at": 6,
+              "for": 2.8,
+              "delay": 2.0,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs3",
+              "at": 7,
+              "for": 3.2,
+              "times": 1,
+              "delay": 0.4,
+              "size": 1.1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

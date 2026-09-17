@@ -1,0 +1,216 @@
+{
+  "slug": "short-miqat",
+  "id": "short-miqat",
+  "title": "Five gates around Makkah",
+  "note": "The page's five miqat gates around Makkah, one for each direction, each an arrow pointing inward to the House.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Five gates around Makkah",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "five-gates-set-on-a-ring-around-makkah",
+          "hold": 47.9,
+          "lines": [
+            {
+              "text": "Five roads into Makkah, one rule for all",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.93
+            },
+            {
+              "text": "Five lines ring Makkah, before Dhul Hijjah",
+              "sub": "crossing for Hajj or Umrah needs ihram",
+              "size": "h1",
+              "at": 4.27,
+              "until": 11.23
+            },
+            {
+              "text": "From Madinah, the north: Dhul Hulayfah",
+              "size": "h1",
+              "at": 11.57,
+              "until": 15.26
+            },
+            {
+              "text": "From Sham and Egypt: Al-Juhfah, northwest",
+              "sub": "Rabigh stands in its place today",
+              "size": "h1",
+              "at": 15.6,
+              "until": 21.99
+            },
+            {
+              "text": "Najd east, Iraq north east: two more lines",
+              "size": "h1",
+              "at": 22.33,
+              "until": 26.39
+            },
+            {
+              "text": "From Yemen, the south: Yalamlam waits",
+              "size": "h1",
+              "at": 26.73,
+              "until": 30.36
+            },
+            {
+              "text": "Come back and the sacrifice is not owed",
+              "sub": "Hanafi and Shafi'i differ on the timing",
+              "size": "h1",
+              "at": 30.7,
+              "until": 37.58
+            },
+            {
+              "text": "For Hajj, the nearer begin where they are",
+              "size": "h1",
+              "at": 37.92,
+              "until": 41.91
+            },
+            {
+              "eyebrow": "The miqat, around Makkah",
+              "text": "Five lines, one for each direction",
+              "src": "Ihram, entering the sacred state",
+              "size": "h1",
+              "at": 42.25,
+              "until": 47.54
+            }
+          ],
+          "at": [
+            100,
+            1208,
+            1965,
+            2722,
+            4720,
+            6235,
+            7750,
+            9265,
+            12020,
+            13415,
+            16050,
+            18795,
+            22780,
+            24360,
+            27180,
+            28545,
+            31150,
+            34140
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 3
+            },
+            {
+              "at": 4.27,
+              "i0": 4,
+              "i1": 7
+            },
+            {
+              "at": 11.57,
+              "i0": 8,
+              "i1": 9
+            },
+            {
+              "at": 15.6,
+              "i0": 10,
+              "i1": 11
+            },
+            {
+              "at": 22.33,
+              "i0": 12,
+              "i1": 13
+            },
+            {
+              "at": 26.73,
+              "i0": 14,
+              "i1": 15
+            },
+            {
+              "at": 30.7,
+              "i0": 16,
+              "i1": 17
+            },
+            {
+              "at": 37.92,
+              "i0": 17,
+              "i1": 17
+            },
+            {
+              "at": 42.25,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs3",
+              "at": 0,
+              "for": 3.6,
+              "times": 1,
+              "size": 1.1
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(10), :scope > g:nth-last-of-type(9)",
+              "at": 2,
+              "for": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(2), :scope > g:nth-last-of-type(1)",
+              "at": 3,
+              "for": 2.4,
+              "delay": 2.0,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(5)",
+              "at": 4,
+              "for": 2.4,
+              "delay": 0.8,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(7)",
+              "at": 4,
+              "for": 2.4,
+              "delay": 0.8,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(4), :scope > g:nth-last-of-type(3)",
+              "at": 5,
+              "for": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(12)",
+              "at": 6,
+              "for": 2.6,
+              "delay": 2.1,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs3",
+              "at": 7,
+              "for": 3.4,
+              "times": 1,
+              "size": 1.1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

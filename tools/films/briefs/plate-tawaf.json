@@ -1,0 +1,114 @@
+{
+  "slug": "short-tawaf",
+  "title": "Seven circuits around the House",
+  "theme": "nutvoid",
+  "plate": "seven-loops-spiralling-outward-around",
+  "room": "hajj.html#umrah",
+  "note": "The page's seven spiralling circuits of tawaf, the Black Stone corner marked as start and finish of every lap.",
+  "lines": [
+    {
+      "text": "Seven circuits, one direction, one corner",
+      "steps": 2
+    },
+    {
+      "text": "Makkah's House, the tenth of Dhul Hijjah",
+      "sub": "seven circuits return here every time",
+      "steps": 3
+    },
+    {
+      "text": "Walk anticlockwise, the House on your left",
+      "steps": 2
+    },
+    {
+      "text": "Face the Black Stone and say Allahu akbar",
+      "steps": 2
+    },
+    {
+      "text": "Seven passes, counted from that corner",
+      "steps": 8
+    },
+    {
+      "text": "Lose count, and you build on the lower one"
+    },
+    {
+      "text": "Maliki, Shafi'i, Hanbali require wudu",
+      "sub": "Hanafis: a duty, a sacrifice repairs it"
+    },
+    {
+      "text": "Tawaf is a pillar; nothing replaces it"
+    },
+    {
+      "eyebrow": "Tawaf, the House at Makkah",
+      "text": "The Black Stone marks the start and end",
+      "sub": "every circuit starts and ends there",
+      "src": "Umrah, step by step"
+    }
+  ],
+  "research": {
+    "retell": "Tawaf is walking around the Kaaba seven times counterclockwise starting and ending at the Black Stone, and all four schools agree it is a pillar that nothing else can replace.",
+    "proof": [
+      "Seven loops spiralling outward around a central cube, with the corner of the Black Stone marked as the start and the finish of every circuit.; with the House on your left",
+      "tawaf and sa’i return in the middle of the fifth day when you are tired... the tenth of Dhul Hijjah will be far easier",
+      "Tawaf is circling the Kaaba seven times, anticlockwise, with the House on your left. It starts at the corner of al-Hajar al-Aswad, the Black Stone, and it ends there.",
+      "face it, raise your right hand toward it and say Allahu akbar, and keep walking",
+      "Every circuit is one full pass from that corner back to it.; seven, counted from the Stone",
+      "Counting matters more than speed; lose count and you build on the lower number you are certain of.",
+      "Maliki, Shafi’i and Hanbali: purity ... is a condition of tawaf; a tawaf performed without wudu is not valid. Hanafi: purity is wajib, an obligation, not a condition; a tawaf performed without wudu is valid and a sacrifice repairs it.",
+      "Tawaf, seven circuits: Pillar, by agreement; Nothing replaces it. You remain in ihram until you perform it.",
+      "every circuit starts and ends here; Umrah, step by step"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs1.hspiral",
+      "at": 0,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": "path.hs1:not(.hspiral)",
+      "at": 2,
+      "for": 2.2,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "path.hf2, path.hs3",
+      "at": 3,
+      "for": 2.6,
+      "size": 1.6
+    },
+    {
+      "do": "count",
+      "on": "text.hts.htgold",
+      "at": 4,
+      "for": 3.0
+    },
+    {
+      "do": "glow",
+      "on": "path.hs2.hopen",
+      "at": 4,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "text.htg",
+      "at": 6,
+      "for": 2.6,
+      "delay": 2.0,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs1.hspiral",
+      "at": 7,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    }
+  ]
+}

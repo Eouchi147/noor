@@ -1,0 +1,227 @@
+{
+  "slug": "short-jamarat",
+  "id": "short-jamarat",
+  "title": "Three pillars, seven pebbles each",
+  "note": "The page's three pillars of the Jamarat at Mina, numbered in the order they are stoned, seven pebbles above each.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Three pillars, seven pebbles each",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "three-pillars-numbered-one-to-three-in",
+          "hold": 47.5,
+          "lines": [
+            {
+              "text": "Twenty one pebbles a day, after the tenth",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.99
+            },
+            {
+              "text": "Mina, the tenth of Dhul Hijjah",
+              "size": "h1",
+              "at": 4.33,
+              "until": 7.49
+            },
+            {
+              "text": "On the tenth, seven at al-Aqabah alone",
+              "sub": "the large pillar, nearest to Makkah",
+              "size": "h1",
+              "at": 7.83,
+              "until": 14.27
+            },
+            {
+              "text": "On 11 and 12, all three; on 13 if you stay",
+              "size": "h1",
+              "at": 14.61,
+              "until": 18.82
+            },
+            {
+              "text": "After the first two, a sunnah: make du'a",
+              "size": "h1",
+              "at": 19.16,
+              "until": 23.09
+            },
+            {
+              "text": "There is no devil standing at the pillars",
+              "size": "h1",
+              "at": 23.43,
+              "until": 27.42
+            },
+            {
+              "text": "Hanafis allow the thirteenth before noon",
+              "sub": "the other three require after noon each day",
+              "size": "h1",
+              "at": 27.76,
+              "until": 34.92
+            },
+            {
+              "text": "Throw pebbles the size of a chickpea",
+              "size": "h1",
+              "at": 35.26,
+              "until": 38.87
+            },
+            {
+              "eyebrow": "The Jamarat, Mina",
+              "text": "Three pillars, named small, middle, large",
+              "sub": "one at a time, saying Allahu akbar",
+              "src": "Hajj, day by day",
+              "size": "h1",
+              "at": 39.21,
+              "until": 47.14
+            }
+          ],
+          "at": [
+            100,
+            1223,
+            1995,
+            2768,
+            4780,
+            4931,
+            5081,
+            5232,
+            5383,
+            5533,
+            5684,
+            5835,
+            5985,
+            6136,
+            6287,
+            6437,
+            6588,
+            6739,
+            6889
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 3
+            },
+            {
+              "at": 4.33,
+              "i0": 4,
+              "i1": 18
+            },
+            {
+              "at": 7.83,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 14.61,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 19.16,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 23.43,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 27.76,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 35.26,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 39.21,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs2",
+              "at": 0,
+              "for": 3.2,
+              "times": 1,
+              "size": 1.1
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(3), :scope > g:nth-last-of-type(2), :scope > g:nth-last-of-type(1)",
+              "at": 2,
+              "for": 2.6,
+              "delay": 1.9,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(9), :scope > g:nth-last-of-type(8)",
+              "at": 3,
+              "for": 2.2,
+              "delay": 1.2,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(5)",
+              "at": 3,
+              "for": 2.2,
+              "delay": 1.2,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(3), :scope > g:nth-last-of-type(2)",
+              "at": 3,
+              "for": 2.2,
+              "delay": 1.2,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(9)",
+              "at": 4,
+              "for": 2.0,
+              "delay": 1.1,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(5), :scope > g:nth-last-of-type(6)",
+              "at": 4,
+              "for": 2.0,
+              "delay": 1.1,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": "text.htg",
+              "at": 6,
+              "for": 2.4,
+              "delay": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "travel",
+              "on": "path.hs2",
+              "at": 7,
+              "for": 3.2,
+              "times": 1,
+              "size": 1.1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

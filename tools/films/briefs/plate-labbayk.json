@@ -1,0 +1,116 @@
+{
+  "slug": "short-labbayk",
+  "title": "One call, still being answered",
+  "theme": "nutvoid",
+  "plate": "paths-converging-from-every-direction",
+  "room": "hajj.html#why",
+  "note": "The page's paths converging from every direction on the House, under the word labbayk, here I am.",
+  "lines": [
+    {
+      "text": "Hajj is Islam's fifth pillar, and a call",
+      "steps": 2
+    },
+    {
+      "text": "The House, once in a life, in Dhul Hijjah",
+      "sub": "for whoever can find a way there",
+      "steps": 2
+    },
+    {
+      "text": "Ibrahim was told to make the call",
+      "steps": 1
+    },
+    {
+      "text": "One man called out in an empty valley",
+      "sub": "every crowd since has been the echo",
+      "steps": 1
+    },
+    {
+      "text": "You answer labbayk: here I am",
+      "steps": 1
+    },
+    {
+      "text": "The verse says whoever is able, just once"
+    },
+    {
+      "text": "Hanafis, Malikis excuse permanent illness",
+      "sub": "Shafi'is, Hanbalis: he must send someone"
+    },
+    {
+      "text": "The accepted Hajj's only reward: Paradise"
+    },
+    {
+      "eyebrow": "Labbayk, at the House",
+      "text": "One call still being answered today",
+      "src": "The fifth pillar, and its verse"
+    }
+  ],
+  "research": {
+    "retell": "Hajj is Islam's fifth pillar, a single call Ibrahim was told to make in an empty valley, and every pilgrim still answers it by saying labbayk, here I am, once in a lifetime.",
+    "proof": [
+      "Islam is built on five things, and the fifth is Hajj to the House for whoever can find a way to it.; one call, made in an empty valley, still being answered",
+      "to Allah, from the people, is a pilgrimage to the House, for whoever is able to find a way there.",
+      "Allah settled Ibrahim at the place of the House and told him to purify it for those who circle it, and then to proclaim the pilgrimage to the people; they will come to you on foot and on every lean camel, from every distant mountain pass",
+      "One man called out in an empty valley. Every crowd since has been the echo.",
+      "the first thing you say when you enter ihram is not a request but an answer. Labbayk. Here I am. The word is a reply to a call, and the call is older than every person in the crowd around you.",
+      "The verse does not say every year, and it does not say everyone. It says whoever is able, once.; Everything after that is a gift you give, not a debt you pay.",
+      "Hanafi and Maliki hold that a person unable to travel because of permanent illness is not obliged in himself... Shafi’i and Hanbali hold that the one who is permanently unable in body but able in wealth must have someone perform Hajj on his behalf.",
+      "the accepted Hajj, al-Hajj al-mabrur, has no reward except Paradise.",
+      "one call, made in an empty valley, still being answered; The fifth pillar, and its verse"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs2",
+      "at": 0,
+      "for": 3.6,
+      "times": 2,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(4) > g:nth-last-of-type(1)",
+      "at": 1,
+      "for": 2.4,
+      "delay": 2.1,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "text.htg",
+      "at": 2,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "pulse",
+      "on": ":scope > g:nth-last-of-type(2)",
+      "at": 3,
+      "for": 1.6,
+      "delay": 2.4
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(1)",
+      "at": 4,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "text.htg",
+      "at": 6,
+      "for": 2.6,
+      "delay": 2.1,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs2",
+      "at": 7,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    }
+  ]
+}

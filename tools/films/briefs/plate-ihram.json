@@ -1,0 +1,113 @@
+{
+  "slug": "short-ihram",
+  "title": "Nine things ihram forbids",
+  "theme": "nutvoid",
+  "plate": "a-grid-of-nine-drawn-marks-each-struck",
+  "room": "hajj.html#ihram",
+  "note": "The page's grid of nine things forbidden in ihram, each struck through and priced by what it costs to break it.",
+  "lines": [
+    {
+      "text": "Nine ordinary things: forbidden in ihram",
+      "steps": 3
+    },
+    {
+      "text": "In ihram, until the tenth of Dhul Hijjah"
+    },
+    {
+      "text": "Cut your hair or nails: pay a fidyah",
+      "steps": 12
+    },
+    {
+      "text": "A marriage contract: forbidden, no fidyah",
+      "sub": "most scholars void it; Hanafis hold it valid",
+      "steps": 3
+    },
+    {
+      "text": "One thing voids the Hajj: intercourse",
+      "sub": "before the first release",
+      "steps": 3
+    },
+    {
+      "text": "Hunting land game: owe a like animal",
+      "steps": 3
+    },
+    {
+      "text": "Hanafis, Malikis charge it by mistake too",
+      "sub": "Shafi'is and Hanbalis excuse it, if he stops",
+      "steps": 6
+    },
+    {
+      "text": "Fidyah: fast three days, feed six, a sheep"
+    },
+    {
+      "eyebrow": "Ihram's limits, at Makkah",
+      "text": "Washing and a watch stay lawful throughout",
+      "sub": "not everything in ihram is forbidden",
+      "src": "Ihram, entering the sacred state"
+    }
+  ],
+  "research": {
+    "retell": "In ihram nine ordinary things become forbidden, and each one has its own named price, from a simple fidyah to one act that invalidates the whole Hajj.",
+    "proof": [
+      "A grid of nine drawn marks, each struck through, naming what is forbidden while in ihram and what it costs.",
+      "do not shave until the sacrifice reaches its place; With this comes at-tahallul al-awwal, the first release... 10 Dhul Hijjah",
+      "Cutting hair, or clipping nails: fidyah; Perfume, including scented soap: fidyah; fast three days, or feed six poor people, or slaughter a sheep",
+      "A marriage contract, made, given, or proposed: no expiation; Most scholars therefore hold such a contract void with no expiation.",
+      "Touching with desire, and intimacy in ihram: invalidates; Only one thing in this grid invalidates the Hajj itself",
+      "Hunting land game, or helping another hunt it: a like animal; Arguing and obscenity, the sins of the tongue: repentance; There is no sheep for these. There is repentance",
+      "The standard summary is that the Hanafis and Malikis hold the expiation due even from one who forgot or did not know... The Shafi’is and Hanbalis excuse the forgetful in several of these, provided he stops the moment he realises.",
+      "A fidyah is your choice of three: fast three days, feed six poor people, or slaughter a sheep",
+      "Washing, unscented soap, a watch, glasses, a ring, a belt with a pocket, an umbrella and sandals that leave the ankle open all stay lawful throughout.; al-ihram, entering the sacred state"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hx",
+      "at": 0,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(27), :scope > g:nth-last-of-type(26), :scope > g:nth-last-of-type(25)",
+      "at": 2,
+      "for": 2.6,
+      "delay": 0.5,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(15), :scope > g:nth-last-of-type(14), :scope > g:nth-last-of-type(13)",
+      "at": 3,
+      "for": 2.6,
+      "delay": 2.35,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11), :scope > g:nth-last-of-type(10)",
+      "at": 4,
+      "for": 2.8,
+      "delay": 1.3,
+      "size": 1.7
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(9), :scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(7)",
+      "at": 5,
+      "for": 2.4,
+      "delay": 0.6,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(25), :scope > g:nth-last-of-type(22), :scope > g:nth-last-of-type(19), :scope > g:nth-last-of-type(16)",
+      "at": 7,
+      "for": 3.0,
+      "delay": 0.5,
+      "size": 1.6
+    }
+  ]
+}

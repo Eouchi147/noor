@@ -3511,7 +3511,7 @@ fetch("/api/admin-data",{credentials:"same-origin"}).then(function(r){if(r.ok)sh
   function diagBox(id, j) {
     var chk = (j.checks || []).map(function (c) {
       return '<li><span class="' + (c.ok ? "chk-ok" : "chk-no") + '">'
-           + (c.ok ? "\u2713" : "\u2717") + '</span> ' + esc(c.name) + ' &mdash; ' + esc(c.detail) + '</li>';
+           + (c.ok ? "\u2713" : "\u2717") + '</span> ' + esc(c.name) + ' &middot; ' + esc(c.detail) + '</li>';
     }).join("");
     var steps = (j.steps || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("");
     return '<div class="diag">'

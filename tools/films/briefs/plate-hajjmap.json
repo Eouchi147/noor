@@ -1,0 +1,125 @@
+{
+  "slug": "short-hajjmap",
+  "title": "The one map of the whole Hajj",
+  "theme": "nutvoid",
+  "plate": "a-map-of-the-pilgrimage-makkah-out-to",
+  "room": "hajj.html#days",
+  "note": "The page's own map of the pilgrimage: Makkah out to Mina, Arafah, back through Muzdalifah, and home, each leg numbered by its day.",
+  "lines": [
+    {
+      "text": "Six legs, four places, one Hajj map",
+      "sub": "the road from the eighth to the thirteenth",
+      "steps": 5
+    },
+    {
+      "text": "Makkah to Mina, the eighth of Dhul Hijjah",
+      "sub": "ihram again for tamattu, then out to Mina",
+      "steps": 2
+    },
+    {
+      "text": "On the ninth the road runs out to Arafah",
+      "steps": 2
+    },
+    {
+      "text": "At sunset it turns back to Muzdalifah",
+      "steps": 2
+    },
+    {
+      "text": "The tenth: Mina at dawn, then the House",
+      "steps": 4
+    },
+    {
+      "text": "The last days circle home through Makkah",
+      "sub": "the farewell tawaf, then home",
+      "steps": 2
+    },
+    {
+      "text": "Only the road to Arafah cannot be missed",
+      "steps": 5
+    },
+    {
+      "text": "Learn this shape and the days make sense",
+      "steps": 1
+    },
+    {
+      "eyebrow": "The pilgrimage map, Makkah",
+      "text": "Four places, six legs, six dates",
+      "sub": "each leg numbered by its day",
+      "src": "Hajj, day by day"
+    }
+  ],
+  "research": {
+    "retell": "The Hajj follows one fixed map of six legs and six dates from Makkah to Mina, Arafah, Muzdalifah and back, and only the trip to Arafah on the ninth can never be missed.",
+    "proof": [
+      "the road of the five days; Four places, six legs, six dates.",
+      "8 Dhul Hijjah. Ihram again for tamattu’, out to Mina, five prayers there, shortened and not joined.",
+      "9 to Arafah; The standing at Arafah is the pillar; Pillar, by the agreement of all four",
+      "9 at sunset; Then to Muzdalifah, where Maghrib and Isha are prayed on arrival.",
+      "10 Dhul Hijjah. Back to Mina at dawn: seven pebbles at the large pillar, the sacrifice, the hair, then down to the House for tawaf al-ifadah.",
+      "11, 12 and 13. At Mina, stoning all three pillars each afternoon. Leave after the twelfth if you hurry, then the farewell tawaf, and home.",
+      "Everything on this map can be repaired with a sacrifice or performed late, except the leg to Arafah on the ninth. Miss that one and there is no Hajj this year.",
+      "Learn this shape before you fly and the days stop being a blur of buses.",
+      "Four places, six legs, six dates.; ayyam al-Hajj, the days of the pilgrimage"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs1.hroad",
+      "at": 0,
+      "for": 3.6,
+      "times": 1,
+      "delay": 1.6,
+      "size": 1.2
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(18), :scope > g:nth-last-of-type(17)",
+      "at": 1,
+      "for": 2.4,
+      "delay": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(16), :scope > g:nth-last-of-type(15)",
+      "at": 2,
+      "for": 2.6,
+      "delay": 0.7,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(14), :scope > g:nth-last-of-type(13)",
+      "at": 3,
+      "for": 2.4,
+      "delay": 0.6,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11), :scope > g:nth-last-of-type(10), :scope > g:nth-last-of-type(9)",
+      "at": 4,
+      "for": 2.8,
+      "delay": 0.5,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "text.ht1.htgold",
+      "at": 6,
+      "for": 2.4,
+      "delay": 0.8,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs1.hroad",
+      "at": 7,
+      "for": 3.2,
+      "times": 1,
+      "delay": 0.4,
+      "size": 1.2
+    }
+  ]
+}

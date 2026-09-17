@@ -1,0 +1,218 @@
+{
+  "slug": "short-hajjmap",
+  "id": "short-hajjmap",
+  "title": "The one map of the whole Hajj",
+  "note": "The page's own map of the pilgrimage: Makkah out to Mina, Arafah, back through Muzdalifah, and home, each leg numbered by its day.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The one map of the whole Hajj",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-map-of-the-pilgrimage-makkah-out-to",
+          "hold": 50.1,
+          "lines": [
+            {
+              "text": "Six legs, four places, one Hajj map",
+              "sub": "the road from the eighth to the thirteenth",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.81
+            },
+            {
+              "text": "Makkah to Mina, the eighth of Dhul Hijjah",
+              "sub": "ihram again for tamattu, then out to Mina",
+              "size": "h1",
+              "at": 7.15,
+              "until": 14.34
+            },
+            {
+              "text": "On the ninth the road runs out to Arafah",
+              "size": "h1",
+              "at": 14.68,
+              "until": 18.66
+            },
+            {
+              "text": "At sunset it turns back to Muzdalifah",
+              "size": "h1",
+              "at": 19.0,
+              "until": 22.68
+            },
+            {
+              "text": "The tenth: Mina at dawn, then the House",
+              "size": "h1",
+              "at": 23.02,
+              "until": 26.88
+            },
+            {
+              "text": "The last days circle home through Makkah",
+              "sub": "the farewell tawaf, then home",
+              "size": "h1",
+              "at": 27.22,
+              "until": 33.35
+            },
+            {
+              "text": "Only the road to Arafah cannot be missed",
+              "size": "h1",
+              "at": 33.69,
+              "until": 37.62
+            },
+            {
+              "text": "Learn this shape and the days make sense",
+              "size": "h1",
+              "at": 37.96,
+              "until": 41.89
+            },
+            {
+              "eyebrow": "The pilgrimage map, Makkah",
+              "text": "Four places, six legs, six dates",
+              "sub": "each leg numbered by its day",
+              "src": "Hajj, day by day",
+              "size": "h1",
+              "at": 42.23,
+              "until": 49.76
+            }
+          ],
+          "at": [
+            100,
+            1632,
+            2814,
+            3996,
+            5178,
+            7600,
+            10745,
+            15130,
+            16670,
+            19450,
+            20840,
+            23470,
+            24210,
+            24950,
+            25690,
+            27670,
+            30285,
+            34140,
+            34746,
+            35352,
+            35958,
+            36564,
+            38410
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 4
+            },
+            {
+              "at": 7.15,
+              "i0": 5,
+              "i1": 6
+            },
+            {
+              "at": 14.68,
+              "i0": 7,
+              "i1": 8
+            },
+            {
+              "at": 19.0,
+              "i0": 9,
+              "i1": 10
+            },
+            {
+              "at": 23.02,
+              "i0": 11,
+              "i1": 14
+            },
+            {
+              "at": 27.22,
+              "i0": 15,
+              "i1": 16
+            },
+            {
+              "at": 33.69,
+              "i0": 17,
+              "i1": 21
+            },
+            {
+              "at": 37.96,
+              "i0": 22,
+              "i1": 22
+            },
+            {
+              "at": 42.23,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs1.hroad",
+              "at": 0,
+              "for": 3.6,
+              "times": 1,
+              "delay": 1.6,
+              "size": 1.2
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(18), :scope > g:nth-last-of-type(17)",
+              "at": 1,
+              "for": 2.4,
+              "delay": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(16), :scope > g:nth-last-of-type(15)",
+              "at": 2,
+              "for": 2.6,
+              "delay": 0.7,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(14), :scope > g:nth-last-of-type(13)",
+              "at": 3,
+              "for": 2.4,
+              "delay": 0.6,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11), :scope > g:nth-last-of-type(10), :scope > g:nth-last-of-type(9)",
+              "at": 4,
+              "for": 2.8,
+              "delay": 0.5,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "text.ht1.htgold",
+              "at": 6,
+              "for": 2.4,
+              "delay": 0.8,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs1.hroad",
+              "at": 7,
+              "for": 3.2,
+              "times": 1,
+              "delay": 0.4,
+              "size": 1.2
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

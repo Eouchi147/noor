@@ -209,6 +209,20 @@ let row = null, rowFielda = null, rowFieldno = null, stderrOut = '';
 }
 
 /* =========================================================================
+   THE PUT: blobput.py, the Mac's uploader, against a local stand in shelf
+   ========================================================================= */
+console.log('\nthe put blobput.py makes');
+{
+  const r = spawnSync('python3', [path.join(ROOT, 'tools', 'films', 'test_blobput.py')], { encoding: 'utf8' });
+  ok(r.status === 0, 'blobput.py sends the request @vercel/blob sends, retries a 5xx, stops on a 4xx, never shows the token: ' + String(r.stdout || '').trim().split('\n').pop() + (r.status === 0 ? '' : ' ' + String(r.stderr || '').slice(-300)));
+  const sh = fs.readFileSync(path.join(ROOT, 'tools', 'films', 'publish-shorts.sh'), 'utf8');
+  ok(/python3 blobput\.py put /.test(sh) && !/\bnode /.test(sh.replace(/#.*$/gm, '')), 'publish-shorts.sh uploads with blobput.py and needs no node');
+  ok(/shelf\/index\.json/.test(sh) && /shelf\/know\.json/.test(fs.readFileSync(path.join(ROOT, 'tools', 'films', 'shortmanifest.py'), 'utf8')), 'both fall back to the shelf/ folder that travels to the Mac');
+  ok(/out\/main\/reels/.test(sh), 'the merged shelf is also written under out/main/reels with its real name');
+  ok(!/BLOB_READ_WRITE_TOKEN=/.test(sh.replace(/#.*$/gm, '')), 'the token is never assigned in the script');
+}
+
+/* =========================================================================
    THE MERGE: publish-shorts.sh's own python, extracted and run for real
    ========================================================================= */
 console.log('\nthe merge into reels/index.json');
@@ -224,7 +238,7 @@ console.log('\nthe merge into reels/index.json');
     fs.mkdirSync(path.join(scratch, 'out'));
     fs.writeFileSync(path.join(scratch, 'merge.py'), m[1]);
 
-    const up = [{ id: 'short-stub', video: 'https://blob.example/reels/short-stub.mp4', wide: 'https://blob.example/reels/short-stub-wide.mp4' }];
+    const up = [{ id: 'short-stub', video: 'https://blob.example/reels/short-stub.mp4', wide: 'https://blob.example/reels/short-stub-wide.mp4', cover: 'https://blob.example/reels/short-stub-cover.jpg' }];
     fs.writeFileSync(path.join(scratch, 'up.json'), JSON.stringify(up));
     fs.writeFileSync(path.join(scratch, 'rows.json'), JSON.stringify({ n: 1, kind: 'short', cards: [row || { id: 'short-stub', kind: 'short' }] }));
     const existingIndex = {
@@ -248,6 +262,7 @@ console.log('\nthe merge into reels/index.json');
     ok(merged.cards.filter(c => c.id === 'short-stub').length === 1, 'the short is replaced in place, not appended a second time');
     ok(!!merged_short && merged_short.video === 'https://blob.example/reels/short-stub.mp4', 'the merged row carries the uploaded video url');
     ok(!!merged_short && merged_short.wide === 'https://blob.example/reels/short-stub-wide.mp4', 'and the uploaded wide url');
+    ok(!!merged_short && merged_short.cover === 'https://blob.example/reels/short-stub-cover.jpg', 'and the uploaded cover url, not the bare true shortmanifest wrote');
     ok(!!merged_short && merged_short.hook !== 'old, before the merge', 'the old row content is replaced, not kept beside the new one');
 
     const appendIndex = { n: 1, written: '', cards: [{ id: 'know-foo', kind: 'know' }] };
@@ -276,6 +291,52 @@ console.log('\nthe merge into reels/index.json');
     ok(shorts3.length === 1, 'a shelf that already carried the id twice holds exactly one row after the merge: ' + shorts3.length);
     ok(shorts3[0] && shorts3[0].video === 'https://blob.example/reels/short-stub.mp4', 'and it is the freshly uploaded row, not either stale copy');
     ok(merged3.cards.length === 3, 'the shelf itself lost the duplicate rather than gaining a third row: ' + merged3.cards.length);
+
+    /* =====================================================================
+       A ROW MAY NOT PROMISE A COVER THAT IS NOT THERE
+
+       This is the 17 September fault, in the only place that can prevent it.
+       The row shortmanifest writes carries cover: true, which sends the
+       poster to reels/<id>-cover.jpg on the site; nothing made that file, and
+       Instagram is the one network that refuses a reel without a cover. Every
+       other network took the film, so the shelf looked healthy and the
+       failure appeared once an afternoon, in public, reading "could not
+       process the video" when the video was fine.
+
+       Two things are proved. A film whose cover did not reach the shelf is
+       held back rather than listed. And when the shelf ALREADY carries that
+       film, holding it back would take it off the live site, so the whole run
+       refuses and writes nothing instead: broken is better than missing, and
+       neither is allowed to happen quietly.
+       ===================================================================== */
+    const noCover = [{ id: 'short-stub', video: 'https://blob.example/reels/short-stub.mp4' }];
+    fs.writeFileSync(path.join(scratch, 'up.json'), JSON.stringify(noCover));
+
+    /* a shelf with no film on it yet: the run may proceed, and must simply
+       not list the one whose cover is missing */
+    fs.writeFileSync(path.join(scratch, 'index.json'), JSON.stringify({ n: 1, written: '', cards: [{ id: 'know-foo', kind: 'know' }] }));
+    fs.rmSync(path.join(scratch, 'out', 'index.merged.json'), { force: true });
+    const r5 = spawnSync('python3', ['merge.py', 'up.json', 'rows.json', 'index.json', 'home.json'], { cwd: scratch, encoding: 'utf8' });
+    const merged5 = fs.existsSync(path.join(scratch, 'out', 'index.merged.json'))
+      ? JSON.parse(fs.readFileSync(path.join(scratch, 'out', 'index.merged.json'), 'utf8')) : { cards: [] };
+    ok(!merged5.cards.some(c => c.id === 'short-stub'),
+       'a film whose cover never reached the shelf is not listed on the shelf');
+    ok(/no cover uploaded/.test(String(r5.stdout || '')),
+       'and the run says so by name rather than dropping it in silence');
+
+    /* the same missing cover, but the film is already live: taking it off
+       would be worse, so nothing at all is written */
+    fs.writeFileSync(path.join(scratch, 'index.json'), JSON.stringify({
+      n: 2, written: '', cards: [{ id: 'know-foo', kind: 'know' }, { id: 'short-stub', kind: 'short', video: 'https://blob.example/reels/short-stub.mp4' }],
+    }));
+    fs.rmSync(path.join(scratch, 'out', 'index.merged.json'), { force: true });
+    const r6 = spawnSync('python3', ['merge.py', 'up.json', 'rows.json', 'index.json', 'home.json'], { cwd: scratch, encoding: 'utf8' });
+    ok(r6.status !== 0, 'a missing cover on a film the shelf already carries stops the run: exit ' + r6.status);
+    ok(!fs.existsSync(path.join(scratch, 'out', 'index.merged.json')),
+       'and nothing is written, so the live shelf cannot lose the film either');
+
+    /* put the good upload back for anything after this */
+    fs.writeFileSync(path.join(scratch, 'up.json'), JSON.stringify(up));
 
     ok(fs.existsSync(path.join(scratch, 'out', 'home.merged.json')), 'home.merged.json is written when reels/home.json exists');
     const home = JSON.parse(fs.readFileSync(path.join(scratch, 'out', 'home.merged.json'), 'utf8'));
@@ -623,6 +684,77 @@ console.log('\nYouTube: a short with a wide file goes twice, in one slot (api/so
   } finally {
     CH.SENDERS.youtube = origYT;
     globalThis.fetch = origFetch;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   THE COVER
+
+   On 17 September the first film went to YouTube, Facebook, Threads and
+   Telegram and was refused by Instagram. The message read "could not process
+   the video: ERROR", so two hours went into the encode, which was correct.
+   The real answer came from the house's own retry: "the card URL answered
+   404". Instagram is the one network whose spec marks the image required, and
+   shortmanifest writes cover: true into every film's row, which makes the
+   poster look for reels/<id>-cover.jpg on the site. Nothing in the film
+   pipeline ever made that file. Every one of the twenty two films carried the
+   same hole and every one of them would have been refused in turn.
+
+   The shape of the bug is what matters: a row PROMISED a picture that was
+   never made, and nothing anywhere compared the promise against the folder.
+   So that comparison is the test. It runs against the real shelf and the real
+   reels folder, so a film added later without a cover fails here rather than
+   at two o'clock on a Tuesday in front of an audience.
+--------------------------------------------------------------------------- */
+{
+  console.log('\n  the cover every row promises');
+  const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+  const ixPath = path.join(root, 'reels', 'index.json');
+  if (!fs.existsSync(ixPath)) {
+    console.log('  (no reels/index.json in this tree, skipped)');
+  } else {
+    const ix = JSON.parse(fs.readFileSync(ixPath, 'utf8'));
+    const cards = ix.cards || [];
+    /* api/_reels.js and api/_schedule.js both build the same url: a cover
+       that is not already a url becomes reels/<id>-cover.jpg on the site. */
+    const promised = cards.filter(c => c && c.cover && !/^https?:\/\//.test(String(c.cover)));
+    const missing = promised.filter(c => !fs.existsSync(path.join(root, 'reels', c.id + '-cover.jpg')));
+    /* A WORKING TREE WITHOUT THE BINARIES IS NOT THE BUG. The covers are
+       fifteen hundred jpegs and several trees here carry the json sidecars
+       without them. None present at all means a partial checkout; SOME
+       present and some not is the fault this test exists for, and that is the
+       shape the twenty two films had: 1,479 covers on disk and 22 rows
+       promising one that nobody made. */
+    const onDisk = promised.length - missing.length;
+    if (onDisk === 0 && promised.length > 0) {
+      console.log('  (this tree carries no cover files at all, so it is a partial'
+                  + ' checkout rather than a shelf with holes in it: skipped)');
+    } else {
+    ok(promised.length > 0, 'the shelf has rows promising a cover file: ' + promised.length);
+    ok(missing.length === 0,
+       missing.length === 0
+         ? 'every row promising a cover has one on disk'
+         : missing.length + ' rows promise a cover that is not there, the first being '
+           + missing.slice(0, 3).map(c => c.id).join(', '));
+
+    /* and the films specifically, because they are the ones that were wrong
+       and the ones still being added */
+    const films = promised.filter(c => c.kind === 'short');
+    const filmsMissing = films.filter(c => !fs.existsSync(path.join(root, 'reels', c.id + '-cover.jpg')));
+    ok(filmsMissing.length === 0,
+       filmsMissing.length === 0
+         ? 'every film on the shelf has its cover: ' + films.length + ' of ' + films.length
+         : filmsMissing.length + ' films have no cover: ' + filmsMissing.map(c => c.id).join(', '));
+
+    /* a cover Instagram will not take is as bad as one that is not there */
+    const tooBig = promised
+      .map(c => path.join(root, 'reels', c.id + '-cover.jpg'))
+      .filter(f => fs.existsSync(f) && fs.statSync(f).size > 8 * 1024 * 1024);
+    ok(tooBig.length === 0,
+       tooBig.length === 0
+         ? 'no cover is over the 8MB Meta refuses'
+         : tooBig.length + ' covers are over 8MB');
+    }
   }
 }
 

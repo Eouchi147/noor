@@ -1,0 +1,132 @@
+{
+  "slug": "short-jamarat",
+  "title": "Three pillars, seven pebbles each",
+  "theme": "nutvoid",
+  "plate": "three-pillars-numbered-one-to-three-in",
+  "room": "hajj.html#days",
+  "note": "The page's three pillars of the Jamarat at Mina, numbered in the order they are stoned, seven pebbles above each.",
+  "lines": [
+    {
+      "text": "Twenty one pebbles a day, after the tenth",
+      "steps": 4
+    },
+    {
+      "text": "Mina, the tenth of Dhul Hijjah",
+      "steps": 15
+    },
+    {
+      "text": "On the tenth, seven at al-Aqabah alone",
+      "sub": "the large pillar, nearest to Makkah"
+    },
+    {
+      "text": "On 11 and 12, all three; on 13 if you stay"
+    },
+    {
+      "text": "After the first two, a sunnah: make du'a"
+    },
+    {
+      "text": "There is no devil standing at the pillars"
+    },
+    {
+      "text": "Hanafis allow the thirteenth before noon",
+      "sub": "the other three require after noon each day"
+    },
+    {
+      "text": "Throw pebbles the size of a chickpea"
+    },
+    {
+      "eyebrow": "The Jamarat, Mina",
+      "text": "Three pillars, named small, middle, large",
+      "sub": "one at a time, saying Allahu akbar",
+      "src": "Hajj, day by day"
+    }
+  ],
+  "research": {
+    "retell": "At Mina the pilgrim throws seven pebbles at named stone pillars on set days, alone at the large one on the tenth and at all three afterward, in a fixed order.",
+    "proof": [
+      "Twenty one pebbles a day.; three pillars, seven pebbles at each",
+      "the Jamarat; 10 Dhul Hijjah. Back to Mina at dawn: seven pebbles at the large pillar",
+      "on the 10th, this one alone; throw seven pebbles, one at a time, at the largest pillar, the one nearest Makkah... Today you throw at this one only, not at the other two.",
+      "on 11, 12 and 13, all three in order; stone the three pillars in order: the small one first, then the middle one, then the large one, seven pebbles at each, saying Allahu akbar with every throw.",
+      "stand and make du’a after the first two, and not after the third; After the large one, do not stop: he ﷺ threw at it and left without standing.",
+      "There is no devil standing at these pillars. The throwing is obedience and remembrance",
+      "Hanafi permit stoning before midday on the thirteenth day only; the other three schools require after midday on every day of Tashriq.",
+      "he ﷺ held up pebbles the size of beans and said: with the like of these, throw, and warned in the same breath against exaggeration in religion.",
+      "as-Sughra, the small; al-Wusta, the middle; al-Aqabah, the large; Hajj, day by day"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs2",
+      "at": 0,
+      "for": 3.2,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(3), :scope > g:nth-last-of-type(2), :scope > g:nth-last-of-type(1)",
+      "at": 2,
+      "for": 2.6,
+      "delay": 1.9,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(9), :scope > g:nth-last-of-type(8)",
+      "at": 3,
+      "for": 2.2,
+      "delay": 1.2,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(5)",
+      "at": 3,
+      "for": 2.2,
+      "delay": 1.2,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(3), :scope > g:nth-last-of-type(2)",
+      "at": 3,
+      "for": 2.2,
+      "delay": 1.2,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(9)",
+      "at": 4,
+      "for": 2.0,
+      "delay": 1.1,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(5), :scope > g:nth-last-of-type(6)",
+      "at": 4,
+      "for": 2.0,
+      "delay": 1.1,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "text.htg",
+      "at": 6,
+      "for": 2.4,
+      "delay": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "travel",
+      "on": "path.hs2",
+      "at": 7,
+      "for": 3.2,
+      "times": 1,
+      "size": 1.1
+    }
+  ]
+}

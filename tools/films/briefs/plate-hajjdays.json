@@ -1,0 +1,112 @@
+{
+  "slug": "short-hajjdays",
+  "title": "Six days, one disc each",
+  "theme": "nutvoid",
+  "plate": "a-ribbon-of-six-days-from-the-eighth-t",
+  "room": "hajj.html#days",
+  "note": "The page's ribbon of the six days of Hajj, the eighth to the thirteenth of Dhul Hijjah, each day a disc with its acts underneath.",
+  "lines": [
+    {
+      "text": "One ribbon, six days, the whole Hajj",
+      "steps": 11
+    },
+    {
+      "text": "Mina, from the eighth of Dhul Hijjah",
+      "sub": "staying at Mina is sunnah, nothing owed"
+    },
+    {
+      "text": "The ninth is Arafah: it cannot be missed",
+      "sub": "then Muzdalifah, and sleep there",
+      "steps": 12
+    },
+    {
+      "text": "The tenth: stone, sacrifice, shave, tawaf"
+    },
+    {
+      "text": "Tashriq: three days, all three pillars",
+      "steps": 9
+    },
+    {
+      "text": "After the twelfth, leave, or stay one more",
+      "sub": "leave Mina before sunset on the twelfth",
+      "steps": 4
+    },
+    {
+      "text": "The farewell tawaf: three call it a duty",
+      "sub": "a sacrifice if left; sunnah for Maliki"
+    },
+    {
+      "text": "That slowness after the tenth is the point"
+    },
+    {
+      "eyebrow": "The six days, Mina and Arafah",
+      "text": "Each day is a disc with its acts below",
+      "src": "Hajj, day by day"
+    }
+  ],
+  "research": {
+    "retell": "Hajj runs for six named days from the eighth to the thirteenth of Dhul Hijjah, each with its own acts, and the ninth at Arafah is the one day that cannot be missed.",
+    "proof": [
+      "A ribbon of six days from the eighth to the thirteenth of Dhul Hijjah, each day a disc on the line with its acts listed underneath.",
+      "Makkah, then Mina; Yawm at-Tarwiyah, the day of watering",
+      "the one that cannot be missed; to Arafah until sunset; Muzdalifah, sleep there",
+      "Nahr; stone the large; the sacrifice; shave or shorten; tawaf al-ifadah; This is the second pillar of the Hajj and the one every school agrees on.",
+      "Tashriq; all three; stay at Mina; the takbir; Say the takbir aloud, in the camp and after every prayer",
+      "after the twelfth you may leave Mina, or stay for the thirteenth; the farewell",
+      "Hanafi, Shafi’i and Hanbali: the farewell tawaf is an obligation; whoever leaves without it owes a sacrifice. Maliki: it is a sunnah; nothing is owed by one who omits it.",
+      "After the tenth they feel slow, and that slowness is the point.",
+      "each day a disc on the line with its acts listed underneath; Hajj, day by day"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs3",
+      "at": 0,
+      "for": 3.4,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+26):nth-last-of-type(-n+30)",
+      "at": 1,
+      "for": 2.8,
+      "delay": 1.9,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+14):nth-last-of-type(-n+17)",
+      "at": 3,
+      "for": 3.0,
+      "delay": 0.3,
+      "size": 1.7
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+5):nth-last-of-type(-n+8)",
+      "at": 5,
+      "for": 2.6,
+      "delay": 2.2,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+1):nth-last-of-type(-n+4)",
+      "at": 6,
+      "for": 2.8,
+      "delay": 2.0,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs3",
+      "at": 7,
+      "for": 3.2,
+      "times": 1,
+      "delay": 0.4,
+      "size": 1.1
+    }
+  ]
+}

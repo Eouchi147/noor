@@ -1,0 +1,215 @@
+{
+  "slug": "short-ihram",
+  "id": "short-ihram",
+  "title": "Nine things ihram forbids",
+  "note": "The page's grid of nine things forbidden in ihram, each struck through and priced by what it costs to break it.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Nine things ihram forbids",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-grid-of-nine-drawn-marks-each-struck",
+          "hold": 51.0,
+          "lines": [
+            {
+              "text": "Nine ordinary things: forbidden in ihram",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.83
+            },
+            {
+              "text": "In ihram, until the tenth of Dhul Hijjah",
+              "size": "h1",
+              "at": 4.17,
+              "until": 8.1
+            },
+            {
+              "text": "Cut your hair or nails: pay a fidyah",
+              "size": "h1",
+              "at": 8.44,
+              "until": 12.1
+            },
+            {
+              "text": "A marriage contract: forbidden, no fidyah",
+              "sub": "most scholars void it; Hanafis hold it valid",
+              "size": "h1",
+              "at": 12.44,
+              "until": 19.73
+            },
+            {
+              "text": "One thing voids the Hajj: intercourse",
+              "sub": "before the first release",
+              "size": "h1",
+              "at": 20.07,
+              "until": 25.56
+            },
+            {
+              "text": "Hunting land game: owe a like animal",
+              "size": "h1",
+              "at": 25.9,
+              "until": 29.51
+            },
+            {
+              "text": "Hanafis, Malikis charge it by mistake too",
+              "sub": "Shafi'is and Hanbalis excuse it, if he stops",
+              "size": "h1",
+              "at": 29.85,
+              "until": 37.19
+            },
+            {
+              "text": "Fidyah: fast three days, feed six, a sheep",
+              "size": "h1",
+              "at": 37.53,
+              "until": 41.59
+            },
+            {
+              "eyebrow": "Ihram's limits, at Makkah",
+              "text": "Washing and a watch stay lawful throughout",
+              "sub": "not everything in ihram is forbidden",
+              "src": "Ihram, entering the sacred state",
+              "size": "h1",
+              "at": 41.93,
+              "until": 50.64
+            }
+          ],
+          "at": [
+            100,
+            1427,
+            2403,
+            8890,
+            9120,
+            9350,
+            9580,
+            9810,
+            10040,
+            10270,
+            10500,
+            10730,
+            10960,
+            11190,
+            11420,
+            12890,
+            15020,
+            17150,
+            20520,
+            22050,
+            23580,
+            26350,
+            27253,
+            28157,
+            30300,
+            31373,
+            32447,
+            33520,
+            34593,
+            35667
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 2
+            },
+            {
+              "at": 4.17,
+              "i0": 2,
+              "i1": 2
+            },
+            {
+              "at": 8.44,
+              "i0": 3,
+              "i1": 14
+            },
+            {
+              "at": 12.44,
+              "i0": 15,
+              "i1": 17
+            },
+            {
+              "at": 20.07,
+              "i0": 18,
+              "i1": 20
+            },
+            {
+              "at": 25.9,
+              "i0": 21,
+              "i1": 23
+            },
+            {
+              "at": 29.85,
+              "i0": 24,
+              "i1": 29
+            },
+            {
+              "at": 37.53,
+              "i0": 29,
+              "i1": 29
+            },
+            {
+              "at": 41.93,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hx",
+              "at": 0,
+              "for": 3.4,
+              "times": 1,
+              "size": 1.1
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(27), :scope > g:nth-last-of-type(26), :scope > g:nth-last-of-type(25)",
+              "at": 2,
+              "for": 2.6,
+              "delay": 0.5,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(15), :scope > g:nth-last-of-type(14), :scope > g:nth-last-of-type(13)",
+              "at": 3,
+              "for": 2.6,
+              "delay": 2.35,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11), :scope > g:nth-last-of-type(10)",
+              "at": 4,
+              "for": 2.8,
+              "delay": 1.3,
+              "size": 1.7
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(9), :scope > g:nth-last-of-type(8), :scope > g:nth-last-of-type(7)",
+              "at": 5,
+              "for": 2.4,
+              "delay": 0.6,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(25), :scope > g:nth-last-of-type(22), :scope > g:nth-last-of-type(19), :scope > g:nth-last-of-type(16)",
+              "at": 7,
+              "for": 3.0,
+              "delay": 0.5,
+              "size": 1.6
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

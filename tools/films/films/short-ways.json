@@ -1,0 +1,214 @@
+{
+  "slug": "short-ways",
+  "id": "short-ways",
+  "title": "Three ways to perform the Hajj",
+  "note": "The page's three parallel tracks of tamattu', qiran and ifrad, marking where ihram opens, closes, and where a sacrifice falls.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Three ways to perform the Hajj",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "three-parallel-tracks-showing-tamattu",
+          "hold": 51.6,
+          "lines": [
+            {
+              "text": "Hajj has three shapes; you pick one first",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.99
+            },
+            {
+              "text": "At the miqat, for a Hajj in Dhul Hijjah",
+              "size": "h1",
+              "at": 4.33,
+              "until": 8.24
+            },
+            {
+              "text": "Tamattu: Umrah first, then out, then Hajj",
+              "size": "h1",
+              "at": 8.58,
+              "until": 12.52
+            },
+            {
+              "text": "Qiran: one ihram holds both, start to end",
+              "sub": "a sacrifice is due, as it is for tamattu",
+              "size": "h1",
+              "at": 12.86,
+              "until": 20.04
+            },
+            {
+              "text": "Ifrad: Hajj alone, and no sacrifice falls",
+              "size": "h1",
+              "at": 20.38,
+              "until": 24.32
+            },
+            {
+              "text": "For qiran, most say one tawaf serves both",
+              "sub": "Hanafis require two tawafs, two sa'is",
+              "size": "h1",
+              "at": 24.66,
+              "until": 31.49
+            },
+            {
+              "text": "Maliki and Shafi'i say ifrad is best",
+              "sub": "Hanafi picks qiran; Hanbali picks tamattu",
+              "size": "h1",
+              "at": 31.83,
+              "until": 38.54
+            },
+            {
+              "text": "Whichever you pick, choose it before ihram",
+              "size": "h1",
+              "at": 38.88,
+              "until": 42.89
+            },
+            {
+              "eyebrow": "The three ways, at the miqat",
+              "text": "Tamattu, qiran, ifrad: three shapes",
+              "sub": "chosen before ihram, not after",
+              "src": "The three ways to perform Hajj",
+              "size": "h1",
+              "at": 43.23,
+              "until": 51.22
+            }
+          ],
+          "at": [
+            100,
+            965,
+            1480,
+            1995,
+            2510,
+            3025,
+            4780,
+            5382,
+            5984,
+            6586,
+            7188,
+            9030,
+            9537,
+            10043,
+            10550,
+            11057,
+            11563,
+            20830,
+            22350
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 5
+            },
+            {
+              "at": 4.33,
+              "i0": 6,
+              "i1": 10
+            },
+            {
+              "at": 8.58,
+              "i0": 11,
+              "i1": 16
+            },
+            {
+              "at": 12.86,
+              "i0": 16,
+              "i1": 16
+            },
+            {
+              "at": 20.38,
+              "i0": 17,
+              "i1": 18
+            },
+            {
+              "at": 24.66,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 31.83,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 38.88,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 43.23,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs1.hband",
+              "at": 0,
+              "for": 3.4,
+              "times": 1,
+              "delay": 0.3,
+              "size": 1.2
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+9):nth-last-of-type(-n+13)",
+              "at": 1,
+              "for": 2.6,
+              "delay": 0.7,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+6):nth-last-of-type(-n+8)",
+              "at": 2,
+              "for": 2.6,
+              "delay": 0.7,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(n+3):nth-last-of-type(-n+5)",
+              "at": 3,
+              "for": 2.8,
+              "delay": 2.2,
+              "size": 1.7
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(n+1):nth-last-of-type(-n+2)",
+              "at": 4,
+              "for": 2.4,
+              "delay": 0.8,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": "text.ht1.htgold.ta-s",
+              "at": 6,
+              "for": 2.8,
+              "delay": 2.0,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs1.hband",
+              "at": 7,
+              "for": 3.0,
+              "times": 1,
+              "delay": 0.5,
+              "size": 1.1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

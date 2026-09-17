@@ -104,6 +104,30 @@ obeys this before anything is staged:
 8. **The test**: read the nine lines with no picture. If a twelve year old cannot retell
    the story in one sentence, rewrite. The refuter runs this test on every brief.
 
+## The worship films (the owner's call, 17 September 2026)
+
+The library's history and discovery plates are used up at forty one films. The drawings that
+remain are mostly worship and belief, and the owner chose to open a second series on them:
+how the Hajj is actually made, Ramadan, the prayer. Everything above still holds. Four
+things are added, because a film that teaches a practice can do a kind of harm a film about
+a dead astronomer cannot.
+
+1. **When** is a month of the Hijri year, not a year that happened once. "The eighth of Dhul
+   Hijjah" answers the template's own question as precisely as "the year 1020", and
+   `shortplate.py` now accepts the twelve month names for exactly this.
+2. **Where the schools differ, the film says so**, on screen, in the same plain words as
+   everything else: "the Hanafis hold ..., the others ...". A practice film that flattens a
+   real disagreement into one answer is teaching the viewer something false about his own
+   religion, and it is worse than no film.
+3. **Nothing is graded above what the page grades it.** The pages already mark what is a
+   pillar, what is an obligation, what is a sunnah and what the cost of leaving each is. The
+   film carries that grading exactly, and never turns a sunnah into a duty by omission.
+4. **The source card names the page, not a person.** A practice has no author. The eyebrow
+   is the practice and its place, the src is where in the library it is set out.
+
+The refuter checks every worship brief twice: once against the page as usual, and once
+against these four.
+
 ## The sound law (the same evening)
 
 Subtle, with reverb. At most eight struck marks a film: the first step under the hook,

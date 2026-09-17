@@ -1,0 +1,121 @@
+{
+  "slug": "short-ways",
+  "title": "Three ways to perform the Hajj",
+  "theme": "nutvoid",
+  "plate": "three-parallel-tracks-showing-tamattu",
+  "room": "hajj.html#ways",
+  "note": "The page's three parallel tracks of tamattu', qiran and ifrad, marking where ihram opens, closes, and where a sacrifice falls.",
+  "lines": [
+    {
+      "text": "Hajj has three shapes; you pick one first",
+      "steps": 6
+    },
+    {
+      "text": "At the miqat, for a Hajj in Dhul Hijjah",
+      "steps": 5
+    },
+    {
+      "text": "Tamattu: Umrah first, then out, then Hajj",
+      "steps": 6
+    },
+    {
+      "text": "Qiran: one ihram holds both, start to end",
+      "sub": "a sacrifice is due, as it is for tamattu"
+    },
+    {
+      "text": "Ifrad: Hajj alone, and no sacrifice falls",
+      "steps": 2
+    },
+    {
+      "text": "For qiran, most say one tawaf serves both",
+      "sub": "Hanafis require two tawafs, two sa'is"
+    },
+    {
+      "text": "Maliki and Shafi'i say ifrad is best",
+      "sub": "Hanafi picks qiran; Hanbali picks tamattu"
+    },
+    {
+      "text": "Whichever you pick, choose it before ihram"
+    },
+    {
+      "eyebrow": "The three ways, at the miqat",
+      "text": "Tamattu, qiran, ifrad: three shapes",
+      "sub": "chosen before ihram, not after",
+      "src": "The three ways to perform Hajj"
+    }
+  ],
+  "research": {
+    "retell": "There are three ways to perform Hajj, tamattu, qiran and ifrad, chosen before entering ihram, and they differ in whether a sacrifice is owed and how the schools rank them.",
+    "proof": [
+      "There is not one Hajj, there are three shapes of it, and you choose your shape before you enter ihram, not after.; The choice decides whether you owe a sacrifice, whether you get out of ihram in the middle, and how many times you perform tawaf and sa’i.",
+      "Nearly every group from outside Arabia performs the first one.; 8 Dhul Hijjah",
+      "Tamattu’, Umrah, out, then Hajj; You enter ihram for Umrah at the miqat, perform the Umrah, cut your hair, and come completely out of ihram... Then on the eighth of Dhul Hijjah you enter ihram again",
+      "Qiran, both in one ihram; You stay in the two cloths from the miqat until the tenth of Dhul Hijjah. A sacrifice is due, as it is for tamattu’.",
+      "Ifrad, Hajj alone; no hady due; no sacrifice is due from you, because you have not joined an Umrah to it; the only one of the three with no hady, no sacrifice, attached to it",
+      "Most schools hold that one tawaf and one sa’i serve for both the Umrah and the Hajj of the qarin. The Hanafis hold that he performs two tawafs and two sa’is, one set for each.",
+      "This is a famous four way disagreement, and every school has an argument that is not silly.; Hanafi: Qiran is best, because it joins two rites in one journey; Hanbali: Tamattu’ is best",
+      "Whichever you choose, choose it before you enter ihram, and tell your group leader, because the sacrifice, the timing of your hair cutting, and whether you repeat the sa’i all follow from it.",
+      "where ihram is entered, released, and where a sacrifice falls; The three ways to perform Hajj"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs1.hband",
+      "at": 0,
+      "for": 3.4,
+      "times": 1,
+      "delay": 0.3,
+      "size": 1.2
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+9):nth-last-of-type(-n+13)",
+      "at": 1,
+      "for": 2.6,
+      "delay": 0.7,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+6):nth-last-of-type(-n+8)",
+      "at": 2,
+      "for": 2.6,
+      "delay": 0.7,
+      "size": 1.6
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(6), :scope > g:nth-last-of-type(n+3):nth-last-of-type(-n+5)",
+      "at": 3,
+      "for": 2.8,
+      "delay": 2.2,
+      "size": 1.7
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(n+1):nth-last-of-type(-n+2)",
+      "at": 4,
+      "for": 2.4,
+      "delay": 0.8,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "text.ht1.htgold.ta-s",
+      "at": 6,
+      "for": 2.8,
+      "delay": 2.0,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs1.hband",
+      "at": 7,
+      "for": 3.0,
+      "times": 1,
+      "delay": 0.5,
+      "size": 1.1
+    }
+  ]
+}

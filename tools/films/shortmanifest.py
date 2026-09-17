@@ -42,14 +42,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BRIEFS = os.path.join(HERE, "briefs")
 FILMS = os.path.join(HERE, "films")
 OUT = os.path.join(HERE, "out")
+#  Two homes, one file (see publish-shorts.sh): inside the site's tree the
+#  cards are ../reels/know.json; on the owner's Mac, where this folder stands
+#  alone, the same file travels with it as shelf/know.json, refreshed from
+#  main with every update. Whichever exists is read.
 KNOW = os.path.join(HERE, "..", "reels", "know.json")
+if not os.path.exists(KNOW):
+    KNOW = os.path.join(HERE, "shelf", "know.json")
 
 #  Where heroes.html and lights/all.json live once this file sits at
 #  tools/films/ inside the site's own tree, two levels up. NOOR_SITE_ROOT
 #  overrides it for a dry run made from the engine's working copy alone,
-#  which has no site tree beside it.
+#  which has no site tree beside it; on the Mac the pages a story is read
+#  from travel as shelf/site/ (heroes.html), refreshed the same way.
 SITE_ROOT = os.environ.get("NOOR_SITE_ROOT") or os.path.normpath(
     os.path.join(HERE, "..", ".."))
+if not os.environ.get("NOOR_SITE_ROOT") and not os.path.exists(os.path.join(SITE_ROOT, "heroes.html")) \
+        and os.path.exists(os.path.join(HERE, "shelf", "site", "heroes.html")):
+    SITE_ROOT = os.path.join(HERE, "shelf", "site")
 
 #  The shortest LIVE network limit in api/_channels.js's SPEC, checked 16
 #  September 2026: facebook 2200, instagram 2200, youtube 4900, telegram

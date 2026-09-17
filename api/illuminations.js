@@ -294,6 +294,30 @@ function dayIndexOf(dateStr) {
 }
 const clean = x => String(x || "").replace(/—|–/g, "·").trim();
 
+/* ---- A FREE MODEL SOMETIMES ANSWERS WITH NOTHING AT ALL ----------------
+   On 17 September the owner sent a screenshot of the Mushaf with the Verse
+   Lamp reading "...". The lamp was not broken and the fallback was not
+   reached: the model had answered `{"reflection":"..."}` and every check
+   here passed it, because the only test on a piece of writing was that the
+   string was not empty. Three dots are not empty.
+
+   A piece of prose from the Lantern is now required to BE prose: long
+   enough to be the thing that was asked for, and made mostly of letters
+   rather than punctuation. Anything else throws, which is exactly what a
+   refusal or a timeout already does, so every kind falls back to its own
+   hand written light and no tile on the site goes dark or goes silly.
+   `words` is the least number of words the piece must carry.            */
+function prose(x, words) {
+  const t = clean(x);
+  const w = t.split(/\s+/).filter(z => /[\p{L}\p{N}]/u.test(z));
+  if (w.length < (words || 12)) return "";
+  //  punctuation and ellipses only, or a single repeated token
+  const letters = (t.match(/\p{L}/gu) || []).length;
+  if (letters < t.length * 0.5) return "";
+  if (new Set(w.map(z => z.toLowerCase())).size < Math.min(6, w.length)) return "";
+  return t;
+}
+
 /* The Codex speaks 21 languages, and until now its daily light spoke one.
    A reader who switched to Arabic met an English paragraph sitting inside an
    otherwise Arabic page. The lantern is simply told which language to write
@@ -453,8 +477,9 @@ async function kindVerse(today) {
        "reflection: 55 to 85 words on this verse's meaning for an ordinary person's day, grounded in its classical context. Do not paraphrase the whole verse; illuminate it. Address the reader gently as you.",
        BASE_RULES].join("\n"),
       "The reflection for Qur'an " + ref + " on " + today + ".", 260);
-    if (!p.reflection) throw 0;
-    return { date: today, ref, reflection: clean(p.reflection).slice(0, 600), theme: clean(p.theme).slice(0, 24), source: "lantern" };
+    const reflection = prose(p.reflection, 35);
+    if (!reflection) throw 0;
+    return { date: today, ref, reflection: reflection.slice(0, 600), theme: clean(p.theme).slice(0, 24), source: "lantern" };
   } catch { return Object.assign({ date: today, source: "treasury" }, VERSE_FALLBACK, { ref }); }
 }
 async function kindThread(today, lang) {

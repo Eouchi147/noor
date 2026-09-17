@@ -1,0 +1,116 @@
+{
+  "slug": "short-saee",
+  "title": "Seven trips between two hills",
+  "theme": "nutvoid",
+  "plate": "two-hills-with-seven-numbered-arrows-b",
+  "room": "hajj.html#umrah",
+  "note": "The page's seven numbered arrows between Safa and Marwah, odd numbers going, even numbers returning.",
+  "lines": [
+    {
+      "text": "Sa'i is seven legs between two hills",
+      "steps": 3
+    },
+    {
+      "text": "Safa and Marwah, the tenth of Dhul Hijjah",
+      "steps": 4
+    },
+    {
+      "text": "At Safa, begin with what Allah began with",
+      "sub": "Safa and Marwah are among Allah's symbols",
+      "steps": 1
+    },
+    {
+      "text": "Walk to Marwah: that first leg is one",
+      "steps": 3
+    },
+    {
+      "text": "Seven legs end you at Marwah, not Safa",
+      "sub": "between the green markers, men jog, a sunnah",
+      "steps": 7
+    },
+    {
+      "text": "Sa'i remembers Hajar, alone with an infant",
+      "sub": "seven times, alone, looking for help"
+    },
+    {
+      "text": "Maliki, Shafi'i, Hanbali: sa'i is a pillar",
+      "sub": "Hanafis: a duty, a sacrifice repairs it"
+    },
+    {
+      "text": "Sa'i is the memory of a woman running"
+    },
+    {
+      "eyebrow": "Sa'i, Safa to Marwah",
+      "text": "No one walks this Hajj without her path",
+      "src": "Umrah, step by step"
+    }
+  ],
+  "research": {
+    "retell": "Sa'i is walking seven times between the hills of Safa and Marwah, retracing Hajar's search for help, and three of the four schools count it a pillar without which the rite fails.",
+    "proof": [
+      "Two hills with seven numbered arrows between them, the odd numbers pointing from Safa to Marwah and the even numbers pointing back.; seven traversals, not seven round trips",
+      "The pilgrim of tamattu’ then performs sa’i again, because his earlier sa’i belonged to his Umrah.",
+      "The Prophet ﷺ recited, as he approached it, the verse that Safa and Marwah are among the symbols of Allah, and said: I begin with what Allah began with.",
+      "Safa to Marwah is one. Marwah back to Safa is two.",
+      "Seven ends you at Marwah, not back at Safa.; between the green markers, men jog",
+      "Hajar, alone with an infant in a valley with no water, went up one hill and then the other, seven times, looking for help.",
+      "Maliki, Shafi’i and Hanbali: sa’i is a pillar; without it the rite is not complete and nothing repairs it but performing it. Hanafi: sa’i is wajib, an obligation; whoever leaves it has a valid Hajj or Umrah and owes a sacrifice.",
+      "Sa’i is the memory of a woman running.",
+      "so that no one performs this Hajj without walking her path; Umrah, step by step"
+    ]
+  },
+  "motion": [
+    {
+      "do": "travel",
+      "on": "path.hs1, path.hs2",
+      "at": 0,
+      "for": 3.6,
+      "times": 1,
+      "size": 1.1
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(12), :scope > g:nth-last-of-type(11)",
+      "at": 2,
+      "for": 2.4,
+      "delay": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": ":scope > g:nth-last-of-type(10)",
+      "at": 3,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "glow",
+      "on": "path.hs3",
+      "at": 4,
+      "for": 2.6,
+      "delay": 2.3,
+      "size": 1.6
+    },
+    {
+      "do": "count",
+      "on": "text.hts.htgold.ta-e",
+      "at": 4,
+      "for": 3.0
+    },
+    {
+      "do": "glow",
+      "on": "text.htg",
+      "at": 6,
+      "for": 2.6,
+      "delay": 2.2,
+      "size": 1.6
+    },
+    {
+      "do": "travel",
+      "on": "path.hs1, path.hs2",
+      "at": 7,
+      "for": 3.4,
+      "times": 1
+    }
+  ]
+}

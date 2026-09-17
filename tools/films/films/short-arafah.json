@@ -1,0 +1,206 @@
+{
+  "slug": "short-arafah",
+  "id": "short-arafah",
+  "title": "You arrive full, and leave empty",
+  "note": "The page's single arc from a filled point up to the standing at Arafah and down to an empty circle, a folded cloth at each end.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "You arrive full, and leave empty",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-single-arc-rising-from-a-filled-poin",
+          "hold": 51.2,
+          "lines": [
+            {
+              "text": "You arrive full, and you leave empty",
+              "sub": "the same two cloths mark both ends",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.29
+            },
+            {
+              "text": "Arafah, the ninth of Dhul Hijjah, the peak",
+              "size": "h1",
+              "at": 6.63,
+              "until": 10.69
+            },
+            {
+              "text": "A man in ihram wears two unstitched sheets",
+              "size": "h1",
+              "at": 11.03,
+              "until": 15.09
+            },
+            {
+              "text": "At the line, every marker is taken off",
+              "sub": "a citizen and a refugee, side by side",
+              "size": "h1",
+              "at": 15.43,
+              "until": 22.16
+            },
+            {
+              "text": "The same clothing on the Day of Standing",
+              "size": "h1",
+              "at": 22.5,
+              "until": 26.43
+            },
+            {
+              "text": "You return as the day your mother bore you",
+              "sub": "the condition: no obscenity, no quarrel",
+              "size": "h1",
+              "at": 26.77,
+              "until": 33.85
+            },
+            {
+              "text": "The circle is drawn empty on purpose",
+              "size": "h1",
+              "at": 34.19,
+              "until": 37.8
+            },
+            {
+              "text": "A newborn has no history: that is the gift",
+              "size": "h1",
+              "at": 38.14,
+              "until": 42.25
+            },
+            {
+              "eyebrow": "The standing, at Arafah",
+              "text": "The sign is what changed afterwards",
+              "sub": "not what you felt while standing there",
+              "src": "The heart of it",
+              "size": "h1",
+              "at": 42.59,
+              "until": 50.83
+            }
+          ],
+          "at": [
+            100,
+            1528,
+            2606,
+            3684,
+            4762,
+            7080,
+            11480,
+            15880,
+            18795,
+            27220,
+            30310
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 4
+            },
+            {
+              "at": 6.63,
+              "i0": 5,
+              "i1": 5
+            },
+            {
+              "at": 11.03,
+              "i0": 6,
+              "i1": 6
+            },
+            {
+              "at": 15.43,
+              "i0": 7,
+              "i1": 8
+            },
+            {
+              "at": 22.5,
+              "i0": 8,
+              "i1": 8
+            },
+            {
+              "at": 26.77,
+              "i0": 9,
+              "i1": 10
+            },
+            {
+              "at": 34.19,
+              "i0": 10,
+              "i1": 10
+            },
+            {
+              "at": 38.14,
+              "i0": 10,
+              "i1": 10
+            },
+            {
+              "at": 42.59,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "travel",
+              "on": "path.hs1:not(.hopen)",
+              "at": 0,
+              "for": 3.4,
+              "times": 1,
+              "delay": 1.4,
+              "size": 1.2
+            },
+            {
+              "do": "glow",
+              "on": "text.ht2.htgold",
+              "at": 1,
+              "for": 2.4,
+              "delay": 0.8,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": "path.hs2",
+              "at": 2,
+              "for": 2.8,
+              "delay": 0.6,
+              "size": 1.7
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(4), :scope > g:nth-last-of-type(3)",
+              "at": 3,
+              "for": 2.4,
+              "delay": 2.1,
+              "size": 1.5
+            },
+            {
+              "do": "glow",
+              "on": ":scope > g:nth-last-of-type(2), :scope > g:nth-last-of-type(1)",
+              "at": 5,
+              "for": 2.6,
+              "delay": 2.2,
+              "size": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "path.hs1.hopen",
+              "at": 6,
+              "for": 2.4,
+              "delay": 0.6,
+              "size": 1.6
+            },
+            {
+              "do": "travel",
+              "on": "path.hs1:not(.hopen)",
+              "at": 7,
+              "for": 3.0,
+              "times": 1,
+              "delay": 0.5,
+              "size": 1.1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}
