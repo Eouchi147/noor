@@ -343,10 +343,25 @@
       var feather = document.createElementNS(NS, "filter");
       var fid = "noorfeather", mid = "noorknock";
       feather.setAttribute("id", fid);
-      feather.setAttribute("x", "-40%"); feather.setAttribute("y", "-60%");
-      feather.setAttribute("width", "180%"); feather.setAttribute("height", "220%");
+      /* ROUND TEN: the same wide-region rule behave.js's own halos follow
+         (see web/behave.js, ROUND NINE). A Gaussian's falloff reaches well
+         past three or four times its own stdDeviation, and this filter's
+         region used to give it only forty to sixty per cent of room, so
+         every knockout hole clipped its own feather at a straight edge --
+         a softer looking hard edge, still a hard edge. Minus a hundred and
+         fifty per cent on every side, four hundred per cent wide and tall,
+         is room enough for any stdDeviation this file will ever ask for. */
+      feather.setAttribute("filterUnits", "objectBoundingBox");
+      feather.setAttribute("x", "-150%"); feather.setAttribute("y", "-150%");
+      feather.setAttribute("width", "400%"); feather.setAttribute("height", "400%");
       var blur = document.createElementNS(NS, "feGaussianBlur");
-      blur.setAttribute("stdDeviation", Math.max(1.6, vb[2] * 0.006).toFixed(2));
+      /* THE FEATHER WAS FAR TOO TIGHT. At six tenths of one per cent of the
+         viewBox width the blur was a couple of units on a four hundred
+         unit figure -- next to a soft light behind a word it read as no
+         feather at all, a hard rounded rectangle. At least three per cent
+         of the viewBox width now, so the hole's own edge is as gradual as
+         anything it sits behind. */
+      blur.setAttribute("stdDeviation", Math.max(4.5, vb[2] * 0.03).toFixed(2));
       feather.appendChild(blur);
       defs.appendChild(feather);
 

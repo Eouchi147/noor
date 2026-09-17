@@ -299,7 +299,24 @@
      rule declares no size at all. See THE BOX there. */
   .plate{position:relative;display:flex;align-items:center;justify-content:center;
     width:100%}
-  .plate svg{display:block;overflow:hidden;max-width:100%}
+  /* ROUND TEN: A HARD LINE UNDER THE COUNT.
+     .figsvg{overflow:visible} was already here, on purpose (see plate.js,
+     THE FRAME THAT MOVES: "line work is allowed to run off the edge; a
+     letter is not"), so a soft light could fade out past the camera's own
+     current window rather than stop dead at it. But .plate svg matches the
+     same element (the figure's own <svg> carries both classes) and its
+     selector is more specific -- one class plus a type versus one class
+     alone -- so overflow:hidden always won the cascade regardless of which
+     rule came first, and every glow was clipped hard at whatever the
+     camera's viewBox happened to be at that instant. The count's own glow
+     (text.t1, "7,275" and "2,600") sits low enough in its shot that the
+     camera's tight bottom edge cut its lower half off in a straight line.
+     Both rules now agree: overflow is visible on this svg, the page frame
+     itself (html,body, above) is still the outer clip nothing can pass, and
+     a label's own safety was never this rule's job anyway -- that is the
+     camera's, which already grows every shot to hold every revealed label's
+     full box plus a margin before it moves. */
+  .plate svg{display:block;overflow:visible;max-width:100%}
   .figsvg{display:block;overflow:visible}
   .figsvg .ln,.figsvg .rd,.figsvg .strike{fill:none;stroke-linecap:round;stroke-linejoin:round}
   .figsvg .ln{stroke:rgba(255,254,247,.72);stroke-width:2.4}
