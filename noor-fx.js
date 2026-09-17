@@ -1460,8 +1460,21 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       lit = (0.2126 * +m[1] + 0.7152 * +m[2] + 0.0722 * +m[3]) / 255;
       break;
     }
+    /* A ROOM MAY SAY WHAT IT IS, AND THEN IT IS NOT GUESSED AT.
+       The guess above reads the floor's colour. The old rooms' diet stub
+       paints that floor dark itself, so there would be no white flash before
+       the sheets land, and the guess then read them as rooms written dark
+       and withheld .n2-room from every one of them: the whole generated
+       night sheet stopped applying, and on 17 September the Qur'an page's
+       114 surah names sat at 1.23:1, ink #2C2416 on #0A1024. A stub now
+       declares --n2-parchment-room, and a room that declares itself is
+       believed; the guess stays for every room that says nothing. */
+    var declared = "";
+    try {
+      declared = (getComputedStyle(H).getPropertyValue("--n2-parchment-room") || "").trim();
+    } catch (e) {}
     H.classList.add("n2-night");
-    if (lit >= 0.45) H.classList.add("n2-room");
+    if (declared === "1" || lit >= 0.45) H.classList.add("n2-room");
     /* Which room this is. A handful of the night's rules were read out of a
        room's <style> and have no class in them at all -- main p, footer, label,
        input, h3 -- and a bare element name is not a namespace: the language

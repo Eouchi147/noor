@@ -109,7 +109,17 @@ MARKER = "<!--oldrooms-v1-->"
 # -- the identical colour, just reached by a class instead of an
 # exclamation mark -- so this never fights the shell once it lands; it only
 # ever stands in for it.
-BASE_STYLE = "html,body{background:#0A1024!important;color:#FFFEF7!important}#site-header{display:none}"
+#  --n2-parchment-room is the room saying out loud what it is. The stub
+#  below paints the floor dark so there is no white flash before the
+#  sheets land, and noor-fx.js decides whether to turn a room's palette
+#  over by looking at that same floor. A stub-darkened floor read as a
+#  room written dark, so noor-fx withheld html.n2-room and the whole
+#  generated night sheet stopped applying: on 17 September that left the
+#  Qur'an page's 114 surah names at 1.23:1, ink #2C2416 on #0A1024. The
+#  room now declares itself and the guess is only a fallback.
+BASE_STYLE = ("html,body{background:#0A1024!important;color:#FFFEF7!important}"
+              ":root{--n2-parchment-room:1}"
+              "#site-header{display:none}")
 SHEET_LINKS = "".join('<link rel="stylesheet" href="/assets/%s?v=%s"/>' % (s, V) for s in SHEETS)
 # the head insert is recomputed and replaced whole on every run, marker and
 # all, rather than left alone once seen: the ink overrides below are read
