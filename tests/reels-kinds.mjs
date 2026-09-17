@@ -157,5 +157,28 @@ console.log('\nsix months on the full shelf');
   ok(shown('name') === 99 && max('name') <= 2, 'the 99 Names all come round before any is shown a second time');
 }
 
+console.log('\nthe afternoon short, four days a week');
+{
+  /* a shelf that also carries silent shorts: chooseReel only uses the new
+     afternoon row once rows of kind "short" actually exist (noShorts) */
+  const withShorts = MAN.concat([
+    { id: 'short-a', kind: 'short', hook: 's', caption: 'c' },
+    { id: 'short-b', kind: 'short', hook: 's', caption: 'c' },
+  ]);
+  const aft = week.map(d => kind(S.chooseReel(withShorts, d, 'afternoon', null)));
+  ok(aft.join() === 'short,word,short,verse,short,know,short', 'afternoons Sun..Sat: ' + aft.join(' '));
+  ok(aft.filter(k => k === 'short').length === 4, 'a short goes out four afternoons a week');
+  ok(aft[1] === 'word' && aft[3] === 'verse' && aft[5] === 'know', 'Monday, Wednesday and Friday keep the old stand in row');
+  /* the same shelf, and the afternoon's OLD kinds still walk their own step
+     count rather than colliding with their noon/evening slots */
+  const wordAft = S.chooseReel(withShorts, week[1], 'afternoon', null);
+  ok(wordAft && wordAft.kind === 'word', 'Monday afternoon is a word, not silence');
+
+  /* a shelf with no shorts rendered yet: every day of the week keeps the
+     original stand in row, exactly as before this change */
+  const noShorts = week.map(d => kind(S.chooseReel(MAN, d, 'afternoon', null)));
+  ok(noShorts.join() === 'name,word,know,verse,verse,know,word', 'with no shorts on the shelf, every afternoon is still the old row: ' + noShorts.join(' '));
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

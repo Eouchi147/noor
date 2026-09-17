@@ -168,7 +168,7 @@ console.log('\n=== 3. the promises ===');
     ok(count(html.slice(html.indexOf('id="top"'), html.indexOf('id="ayah"')), /<p class="(n2-p|n2-dim|ask-lead)"/g) === 1, 'the arrival carries exactly one paragraph of prose');
   }
   ok(/<p class="n2-quran" lang="ar" translate="no">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ<\/p>/.test(html), 'Qur\'an 2:186, the first half, in the Uthmani script');
-  ok(html.includes('<p class="n2-meaning">And when My servants ask you concerning Me — indeed I am near.</p>'), 'with the first sentence of the Saheeh International meaning; the rest is on /verse/2-186');
+  ok(html.includes('<p class="n2-meaning">And when My servants ask you concerning Me: indeed I am near.</p>'), 'with the first sentence of the Saheeh International meaning; the rest is on /verse/2-186');
   ok(/<p class="n2-ref"><a href="\/verse\/2-186">Qur'an 2:186 · Al-Baqarah<\/a><\/p>/.test(html), 'and its reference links to /verse/2-186');
   {
     const q = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/reels/quran-uthmani.json'), 'utf8'));

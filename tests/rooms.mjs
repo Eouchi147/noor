@@ -267,7 +267,7 @@ console.log("\n=== a verse range parses ===");
   const r = await call({ kind: "verse", ref: "94:5-6" });
   ok(r.code === 200 && r.body.includes("94:5–6") && r.body.split('class="n2-s"').length === 3, "the range page renders both ayahs");
   const v3 = await call({ kind: "verse", ref: "3:139" });
-  ok(v3.body.includes("Surah Al &lt;b&gt;Imran&lt;/b&gt;") && !v3.body.includes("Surah Al <b>Imran"), "a surah name from the API is escaped in the button label");
+  ok(v3.body.includes("Surah Ali &#39;Imran") && !v3.body.includes("Imran</b>") && !v3.body.includes("Al <b>Imran"), "the surah name comes from the uthmani table even when the live API offers a different, unescaped one (content-009)");
 }
 
 console.log("\n=== the Qur'an API being down ===");
@@ -278,6 +278,34 @@ console.log("\n=== the Qur'an API being down ===");
   const s = await call({ kind: "surah", n: "112" });
   ok(s.code === 200 && s.body.includes("Al-Ikhlas") && s.body.includes("4 verses"), "a surah the API cannot give still renders from the reels' Qur'an table");
   apiDown = false;
+}
+
+console.log("\n=== verse rooms and reel captions carry the uthmani surah names ===");
+/* Two tables have named the surahs since 2026: the reels' own
+   tools/reels/quran-uthmani.json ("Al-Fatiha", "Ali 'Imran") and whatever
+   the live Qur'an API happens to send ("Al-Faatiha", "Aal-i-Imraan"). 63 of
+   the 109 surahs with shelf verses disagreed (content-009). This checks the
+   uthmani table is the one name every room and every already-rendered reel
+   caption actually carries, not the file that ships beside it. */
+{
+  const escApos = s => s.replace(/'/g, "&#39;");
+  for (const n of [1, 2, 3, 94, 112]) {
+    const row = page.surahRow(n);
+    const r = await call({ kind: "surah", n: String(n) });
+    ok(row && r.body.includes(">" + escApos(row.translit)), "surah " + n + "'s room prints the uthmani name " + (row && row.translit));
+  }
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "reels", "index.json"), "utf8"));
+  const uthmani = JSON.parse(fs.readFileSync(path.join(ROOT, "tools", "reels", "quran-uthmani.json"), "utf8")).surahs;
+  const verseCards = manifest.cards.filter(c => c.kind === "verse" && c.hook);
+  let mismatched = 0;
+  for (const c of verseCards) {
+    const m = /^(.*) · (\d+):/.exec(c.hook);
+    if (!m) continue;
+    const want = (uthmani[m[2]] || {}).translit;
+    if (want && m[1] !== want) mismatched++;
+  }
+  ok(verseCards.length > 500 && mismatched === 0,
+     verseCards.length + " already-rendered reel captions checked against the uthmani table, " + mismatched + " mismatched");
 }
 
 /* The sweep is last on purpose: rendering all 114 surah pages caches each
@@ -338,7 +366,7 @@ const families = {};
      "Ar-Rahman's room carries the essay, the practice, its verse, the way back to the page and the walk to the second Name");
   ok(/"@type":"DefinedTermSet"/.test(families.name) && /"termCode":"1"/.test(families.name), "a Name is a DefinedTerm in the set of ninety-nine, numbered");
   ok(families.name.includes("rahim: the womb"), "the root's gloss prints a colon where allah.html writes an em dash");
-  { const r = await call({ kind: "name", n: "65" }); ok(r.code === 200 && r.body.includes("Al-Majid") && r.body.includes('href="https://noorcodex.com/name/65"/>'), "the second Al-Majid has its own room by number"); }
+  { const r = await call({ kind: "name", n: "65" }); ok(r.code === 200 && r.body.includes("Al-Maajid") && r.body.includes('href="https://noorcodex.com/name/65"/>'), "Al-Maajid, the second Name from that root, has its own room by number"); }
   for (const [q, what] of [[{ kind: "companion", id: "a-jibril" }, "an angel asked for as a companion"], [{ kind: "character", id: "c-abubakr" }, "a companion asked for as a character"], [{ kind: "prophet", id: "nope" }, "a prophet that is not"], [{ kind: "name", n: "100" }, "a hundredth Name"]]) {
     const r = await call(q); ok(r.code === 404 && r.body.includes("There is no room"), what + " is a 404 in the shell");
   }
@@ -567,6 +595,140 @@ console.log("\n=== the older rooms' skin ===");
     ok((hi + 0.05) / (lo + 0.05) >= 4.5, "over parchment the bar's labels clear 4.5:1 (" + ((hi + 0.05) / (lo + 0.05)).toFixed(2) + ":1 at " + a + ")");
   }
   ok(fs.existsSync("tests/skin.mjs"), "tests/skin.mjs looks at the skin on a phone");
+}
+
+console.log("\n=== the diet of the 52 old rooms (audit batch 6) ===");
+{
+  /* the same 51 pages scripts/oldrooms.py carries (the map's own list; its
+     header count of 52 does not match the list it gives, which sums to 51) */
+  const OLD_ROOMS = [
+    "allah.html", "arabic.html", "begin.html", "characters.html", "companions.html",
+    "donate.html", "eid.html", "family.html", "feedback.html", "good-life.html",
+    "hajj-plan.html", "hajj.html", "health.html", "heroes.html", "journal-rules.html",
+    "journal.html", "latif.html", "legal.html", "madrasa.html", "marriage.html",
+    "muhammad.html", "pillars.html", "places.html", "prophets.html", "protection.html",
+    "quran.html", "ramadan.html", "school.html", "sermon.html", "simulation.html",
+    "soul.html", "teens.html", "theology.html", "three-lives.html", "unseen.html",
+    "words.html",
+    "masjid/index.html", "masjid/khutba.html", "masjid/qibla.html", "masjid/setup.html",
+    "masjid/start.html", "masjid/timetable.html",
+    "stories/adl.html", "stories/ghaffar.html", "stories/hadi.html", "stories/index.html",
+    "stories/jabbar.html", "stories/razzaq.html", "stories/sabur.html",
+    "stories/shakur.html", "stories/wadud.html",
+  ];
+  ok(OLD_ROOMS.length === 51, "the batch's own list is 51 pages (" + OLD_ROOMS.length + ")");
+  const KEEP_SEASON = new Set(["ramadan.html", "eid.html"]);
+  let underWeight = 0, hasIds = 0, noSearchJs = 0, hasNightStyle = 0, hasFourSheets = 0,
+      seasonGone = 0, seasonKept = 0, keptKitPresent = 0;
+  for (const rel of OLD_ROOMS) {
+    const h = fs.readFileSync(rel, "utf8");
+    const hm = h.match(/<header id="site-header"[\s\S]*?<\/header>/);
+    if (hm && Buffer.byteLength(hm[0], "utf8") < 500) underWeight++;
+    if (hm && /id="site-header"/.test(hm[0]) && /id="search-toggle"/.test(hm[0]) && /id="hm-search"/.test(hm[0])) hasIds++;
+    if (!/noor-search\.js/.test(h)) noSearchJs++;
+    if (h.includes("html,body{background:#0A1024!important;color:#FFFEF7!important}") && h.includes("#site-header{display:none}")) hasNightStyle++;
+    if (["noor2.css", "noor2-skin.css", "noor2-night.css", "noor2-legible.css"].every(s => h.includes('href="/assets/' + s + '?v=14"'))) hasFourSheets++;
+    const seasonTags = /noor-ramadan\.css|noor-hijri\.js|noor-ramadan\.js/.test(h);
+    if (KEEP_SEASON.has(rel)) { if (seasonTags) seasonKept++; }
+    else if (!seasonTags) seasonGone++;
+    /* noor-ink.js is not universal: 14 of the 51 rooms never carried a
+       data-ink hero and so never carried the tag either, before or after
+       this pass. noor-anime.js, noor-overrides.js and noor-dials.js are. */
+    if (["noor-anime.js", "noor-overrides.js", "noor-dials.js"].every(k => h.includes(k))) keptKitPresent++;
+  }
+  ok(underWeight === OLD_ROOMS.length, "every old room's header block weighs under 500 bytes (" + underWeight + "/" + OLD_ROOMS.length + ")");
+  ok(hasIds === OLD_ROOMS.length, "every stub keeps #site-header, #search-toggle and #hm-search (" + hasIds + "/" + OLD_ROOMS.length + ")");
+  ok(noSearchJs === OLD_ROOMS.length, "noor-search.js is off every old room; noor-fx.js loads it on demand (" + noSearchJs + "/" + OLD_ROOMS.length + ")");
+  ok(hasNightStyle === OLD_ROOMS.length, "every old room paints the night before any stylesheet lands (" + hasNightStyle + "/" + OLD_ROOMS.length + ")");
+  ok(hasFourSheets === OLD_ROOMS.length, "every old room links the shell's four stylesheets in its own head (" + hasFourSheets + "/" + OLD_ROOMS.length + ")");
+  ok(seasonGone === OLD_ROOMS.length - KEEP_SEASON.size, "the season kit is off every old room except ramadan.html and eid.html (" + seasonGone + "/" + (OLD_ROOMS.length - KEEP_SEASON.size) + ")");
+  ok(seasonKept === KEEP_SEASON.size, "ramadan.html and eid.html keep the season kit, reading NOOR_HIJRI/NOOR_RAMADAN directly (" + seasonKept + "/" + KEEP_SEASON.size + ")");
+  ok(keptKitPresent === OLD_ROOMS.length, "the kit noor-fx.js does not load on demand stays on the page (" + keptKitPresent + "/" + OLD_ROOMS.length + ")");
+  const fx = fs.readFileSync("noor-fx.js", "utf8");
+  ok(/if \(document\.querySelector\('script\[src\*="noor-ramadan\.js"\]'\)\) return;/.test(fx) && /RAMADAN = \[/.test(fx) && /DHUL_HIJJAH = \[/.test(fx),
+     "noor-fx.js carries the season gate that loads noor-ramadan.js only when it is due");
+  ok(fs.existsSync("scripts/oldrooms.py"), "scripts/oldrooms.py, the one-off pass, is in the tree");
+
+  /* the refuter's review (D1): with no script, html,body{color:...} never
+     reaches an element with a color rule of its own, and nearly every
+     heading and paragraph in these rooms has one -- so the room's own ink
+     rules are read back and answered, same selector, same alpha, in the
+     night's own #FFFEF7, !important; and the header stub carries a
+     <noscript> menu so there is still somewhere to go. This walks each
+     room's <style> the same way scripts/oldrooms.py does (a brace-depth
+     walk, not a regex that stops at the first nested rule) and checks that
+     every ink rule it finds has a matching override on the page -- an
+     independent JS re-derivation of the fix, not a call into the script
+     that made it. */
+  function ruleWalk(css, out) {
+    let i = 0;
+    while (i < css.length) {
+      const brace = css.indexOf("{", i);
+      if (brace === -1) break;
+      const head = css.slice(i, brace).trim();
+      let depth = 1, j = brace + 1;
+      while (j < css.length && depth) { if (css[j] === "{") depth++; else if (css[j] === "}") depth--; j++; }
+      const body = css.slice(brace + 1, j - 1);
+      if (head.startsWith("@media")) ruleWalk(body, out);
+      else if (head && !head.startsWith("@")) out.push([head, body]);
+      i = j;
+    }
+  }
+  /* the night overrides: read the same authority scripts/oldrooms.py reads,
+     assets/noor2-night.css, room by room, rather than re-deriving a color
+     swap by hand a second time -- that generator already worked out which
+     of a room's own rules (ink text, a card's own white background, a few
+     gradients) flip for the night, gated behind a data-room the room
+     itself has never needed a script to carry. The two pages the generator
+     never saw (allah.html, muhammad.html) are checked against their own
+     ink and white-card rules directly, the same fallback oldrooms.py falls
+     back to. */
+  const nightRules = [];
+  ruleWalk(fs.readFileSync("assets/noor2-night.css", "utf8"), nightRules);
+  const dataRoomFor = rel => { let k = rel.replace(/\.html$/, ""); if (k.endsWith("/index")) k = k.slice(0, -"/index".length); return k; };
+  const propRe = /(background(?:-color)?|color)\s*:\s*([^;]+?)\s*(?:;|$)/g;
+  function roomOverrides(rel) {
+    const gate = 'html.n2-night.n2-room[data-room="' + dataRoomFor(rel) + '"] ';
+    const merged = new Map();
+    for (const [selList, decls] of nightRules) {
+      const props = [...decls.matchAll(propRe)];
+      if (!props.length) continue;
+      for (let member of selList.split(",")) {
+        member = member.trim();
+        if (!member.startsWith(gate)) continue;
+        const rest = member.slice(gate.length).trim();
+        if (!rest) continue;
+        if (!merged.has(rest)) merged.set(rest, new Map());
+        for (const [, p, v] of props) merged.get(rest).set(p, v.trim());
+      }
+    }
+    if (merged.size) return [...merged].map(([sel, props]) => sel + "{" + [...props].map(([p, v]) => p + ":" + v + "!important").join(";") + "}");
+    // the fallback, for the two pages with no data-room of their own
+    const h = fs.readFileSync(rel, "utf8");
+    const out = [], seen = new Set();
+    const rules = [];
+    for (const block of h.matchAll(/<style>([\s\S]*?)<\/style>/g)) ruleWalk(block[1], rules);
+    for (const [sel, decls] of rules) {
+      const s = sel.trim();
+      const m = decls.match(/(?<![\w-])color\s*:\s*(#2[Cc]2416|rgba?\(\s*44\s*,\s*36\s*,\s*22\s*(?:,\s*([\d.]+)\s*)?\))\s*(?:!important)?\s*(?:;|$)/);
+      if (m && !seen.has(s + "|color")) { seen.add(s + "|color"); out.push(s + "{color:" + (m[1][0] === "#" ? "#FFFEF7" : "rgba(255,254,247," + m[2] + ")") + "!important}"); }
+      if (/(?<![\w-])background\s*:\s*(#fff|#ffffff)\s*(?:!important)?\s*(?:;|$)/i.test(decls) && !seen.has(s + "|bg")) { seen.add(s + "|bg"); out.push(s + "{background:#0A1024!important}"); }
+    }
+    return out;
+  }
+  let noscriptOk = 0, nightAnswered = 0, nightTotal = 0;
+  for (const rel of OLD_ROOMS) {
+    const h = fs.readFileSync(rel, "utf8");
+    const hm = h.match(/<header id="site-header"[\s\S]*?<\/header>/)[0];
+    if (/<noscript><style>#site-header\{display:block!important\}#site-header a\{color:#FFFEF7!important\}<\/style>/.test(hm)
+        && ["/", "/today", "/light", "/verses", "/#search"].every(href => hm.includes('href="' + href + '"'))
+        && ["Home", "Today", "The Lights", "The Verses", "Search"].every(t => hm.includes(">" + t + "<"))) noscriptOk++;
+    const expected = roomOverrides(rel);
+    nightTotal += expected.length;
+    for (const rule of expected) if (h.includes(rule)) nightAnswered++;
+  }
+  ok(noscriptOk === OLD_ROOMS.length, "every stub's header carries a noscript menu of the five doors, forced visible with no script (" + noscriptOk + "/" + OLD_ROOMS.length + ")");
+  ok(nightTotal > 0 && nightAnswered === nightTotal, "every night override assets/noor2-night.css carries for a room's own rules lands on the page, no script needed (" + nightAnswered + "/" + nightTotal + ")");
 }
 
 console.log("\n=== the deployment ===");

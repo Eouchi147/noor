@@ -6,6 +6,12 @@
    cap and `partial`. A token without instagram_manage_insights is named,
    and one media that Meta refuses does not stop the rest.
 
+   And the daily snapshot (masterplan step 8): ytStats, a batch read of
+   statistics and contentDetails together; snapshot(), which writes one
+   photograph a day per record, Short and wide upload both, bounded by a
+   day count and a clock; and numbers(), the arithmetic that folds a
+   fortnight of those photographs into this week against the one before it.
+
    Meta and Google are stubbed. This repository has no credentials.
 
    Run:  node tests/insights.mjs
@@ -82,6 +88,8 @@ globalThis.fetch = async (url, opt) => {
 const FB_OK = new Set(['post_total_media_view_unique', 'post_media_view', 'post_clicks', 'post_reactions_like_total']);
 const FBV_OK = new Set(['post_total_media_view_unique', 'blue_reels_play_count', 'post_video_avg_time_watched']);
 const INS = await import('../api/_insights.js');
+const YT = await import('../api/_youtube.js');
+const { SLOT_IDS } = await import('../api/_schedule.js');
 
 /* ---------- fixed records: fourteen days, a kind per slot, an id per network ---------- */
 const MANIFEST = { cards: [
@@ -289,6 +297,143 @@ console.log('\nFacebook and YouTube');
   ok(y.yt1 && y.yt1.views === 900 && y.yt1.likes === 12 && y.yt1.reach === null, 'a Short: views and likes, no reach');
   const none = await INS.fetchYouTube(['zz'], { now: NOW, fetch: async u => /youtube\/v3/.test(String(u)) ? ({ ok: true, status: 200, json: async () => ({ items: [] }) }) : ({ ok: true, status: 200, json: async () => ({ access_token: 'a' }) }) });
   ok(none.zz && /no such video/.test(none.zz.error), 'a video YouTube does not list is an error, not a zero');
+}
+
+console.log('\nytStats: a batch of videos.list, statistics and contentDetails together');
+{
+  const calls2 = [];
+  const fx = async (url) => {
+    calls2.push(String(url));
+    const u = String(url);
+    const ids = decodeURIComponent(u.split('id=')[1]).split(',');
+    return { ok: true, status: 200, json: async () => ({ items: ids.filter(id => id !== 'gone').map(id =>
+      ({ id, statistics: { viewCount: '111', likeCount: '22', commentCount: '3' }, contentDetails: { duration: 'PT1M30S' } })) }) };
+  };
+  const s = await YT.ytStats(['a', 'b', 'gone'], 'yt-tok', { fetch: fx });
+  ok(s.a.viewCount === 111 && s.a.likeCount === 22 && s.a.commentCount === 3 && s.a.duration === 'PT1M30S',
+     'statistics and contentDetails both read, numbers not strings: ' + JSON.stringify(s.a));
+  ok(s.gone && /no such video/.test(s.gone.error), 'an id YouTube does not list back is an error, not a silent zero');
+  ok(calls2.every(u => /part=statistics,contentDetails/.test(u)), 'both parts asked in the one call');
+  ok(calls2.every(u => !/authorization|bearer|yt-tok/i.test(u)), 'the token rides in the header, never the url');
+
+  const many = Array.from({ length: 120 }, (_, i) => 'v' + i);
+  calls2.length = 0;
+  const got = await YT.ytStats(many, 'yt-tok', { fetch: fx });
+  ok(calls2.length === 3, 'fifty ids a call, so a hundred and twenty is three calls: ' + calls2.length);
+  ok(Object.keys(got).length === 120, 'every id answered');
+
+  const noTok = await YT.ytStats(['x'], '', { fetch: fx });
+  ok(noTok.x && /no YouTube token/.test(noTok.x.error), 'no token, no call, an error naming why');
+  const nothing = await YT.ytStats([], 'yt-tok', { fetch: fx });
+  ok(Object.keys(nothing).length === 0, 'no ids, nothing asked');
+  const failing = await YT.ytStats(['a'], 'yt-tok', { fetch: async () => { throw new Error('offline'); } });
+  ok(failing.a && /offline/.test(failing.a.error), 'a network failure is an error on the id, never thrown');
+}
+
+console.log('\nthe snapshot: one photograph a day, per network, per record, Short and wide both');
+{
+  store.clear(); calls = [];
+  const SDATE = '2026-09-08';
+  const srec = { at: SDATE + 'T08:02:00Z', slot: 'reelA', date: SDATE, title: 'One verse about light', state: 'sent',
+    results: { instagram: { ok: true, id: 'igS1' }, facebook: { ok: true, id: 'fbS_1' },
+               youtube: { ok: true, id: 'ytS1', wide: { id: 'ytS1wide' } } } };
+  const readOne = async (d, s) => (d === SDATE && s === 'reelA') ? srec : null;
+
+  const r = await INS.snapshot({ readSlot: readOne, manifest: MANIFEST, now: SDATE + 'T12:00:00Z', ytToken: 'ss-yt-tok' });
+  ok(r.ok && r.written === 1 && r.skipped === 0, 'one record with something to say gets one write: ' + JSON.stringify(r));
+  const saved = JSON.parse(store.get(INS.K_STATS(SDATE, 'reelA')));
+  ok(saved && saved.kind === 'reel:verse' && saved.hour === 8 && saved.reel === true, 'the record is named by the hook on the shelf, with its hour, the same as collect()');
+  ok(saved.stats.instagram && saved.stats.facebook && saved.stats.youtube && saved.stats.youtubeWide,
+     'a row for every id the record had, including the wide upload beside the Short: ' + Object.keys(saved.stats).join(','));
+  ok(saved.stats.instagram.views === 330 && saved.stats.instagram.reach === 110 && saved.stats.instagram.watch === 4200,
+     'instagram\'s row is fetchInstagram\'s own answer, folded to the one shape: ' + JSON.stringify(saved.stats.instagram));
+  ok(saved.stats.facebook.views === 80 && saved.stats.facebook.reach === 55, 'facebook\'s row, the same fold');
+  ok(saved.stats.youtube.views === 900 && saved.stats.youtube.likes === 12 && saved.stats.youtube.reach === null,
+     'the Short\'s own row, from ytStats, no reach (YouTube gives none)');
+  ok(saved.stats.youtubeWide.views === 900, 'and the wide upload beside it gets its own row, the same shape');
+  ok(!JSON.stringify(saved).match(/ss-yt-tok|igtok|pagetok/), 'no token travels into what gets written to the store');
+
+  const again = await INS.snapshot({ readSlot: readOne, manifest: MANIFEST, now: SDATE + 'T18:00:00Z', ytToken: 'ss-yt-tok' });
+  ok(again.written === 0 && again.skipped === 1, 'the same day is not asked twice: idempotent');
+  const forced = await INS.snapshot({ readSlot: readOne, manifest: MANIFEST, now: SDATE + 'T18:00:00Z', ytToken: 'ss-yt-tok', force: true });
+  ok(forced.written === 1, 'unless the owner\'s Refresh asks for it again');
+
+  const nextDay = await INS.snapshot({ readSlot: readOne, manifest: MANIFEST, now: '2026-09-09T08:00:00Z', ytToken: 'ss-yt-tok' });
+  ok(nextDay.written === 1, 'a new day takes a new photograph even without force');
+}
+
+console.log('\nthe walk is bounded: a day count first, then a clock');
+{
+  store.clear(); calls = [];
+  const big = await INS.snapshot({ readSlot: async () => null, now: NOW, days: 999 });
+  ok(big.slots === 30 * SLOT_IDS.length, 'a day count past the ceiling is clamped to thirty, as many as a snapshot is kept: ' + big.slots);
+  const def = await INS.snapshot({ readSlot: async () => null, now: NOW });
+  ok(def.slots === 14 * SLOT_IDS.length, 'and the ordinary walk is a fortnight, every slot a day: ' + def.slots);
+  const stopped = await INS.snapshot({ readSlot: opts.readSlot, manifest: MANIFEST, now: NOW, budgetMs: -1 });
+  ok(stopped.partial === true && stopped.walked === 0 && stopped.written === 0,
+     'a budget already spent stops the walk before a single network is asked, and says so: ' + JSON.stringify(stopped));
+}
+
+console.log('\nthe numbers: two weeks side by side, from the snapshots alone, no network call');
+{
+  store.clear(); calls = [];
+  const dates = INS.datesBack(14, new Date(NOW));
+  const put = (i, slot, kind, title, stats) => store.set(INS.K_STATS(dates[i], slot),
+    JSON.stringify({ date: dates[i], slot, hour: INS.hourOf(slot), kind, reel: /^reel/.test(slot), title, at: NOW, stats }));
+  /* this week: dates[0..4] */
+  put(0, 'reelA', 'reel:verse', 'Light on the heart', { instagram: { views: 1000, reach: 500, likes: 40, comments: 10, shares: 0, saves: 0, at: NOW } });
+  put(1, 'reelC', 'reel:verse', 'The straight path', { instagram: { views: 800, reach: 400, likes: 20, comments: 5, shares: 0, saves: 0, at: NOW } });
+  put(2, 'reelD', 'reel:word', 'Sabr', { instagram: { views: 600, reach: 300, likes: 54, comments: 6, shares: 0, saves: 0, at: NOW } });
+  put(3, 'light', 'card:light', "Today's light", { facebook: { views: 200, reach: 150, likes: 10, comments: 2, shares: 1, saves: 0, at: NOW } });
+  put(4, 'reelE', 'reel:short', 'The sieve of al-Khwarizmi', {
+    youtube: { views: 4000, reach: null, likes: 180, comments: 20, shares: 0, saves: 0, at: NOW },
+    youtubeWide: { views: 1000, reach: null, likes: 40, comments: 10, shares: 0, saves: 0, at: NOW }
+  });
+  /* last week: dates[7..9], seven days behind the first three of this week, same weekdays */
+  put(7, 'reelA', 'reel:verse', 'Light on the heart, a fortnight back', { instagram: { views: 500, reach: 250, likes: 10, comments: 2, shares: 0, saves: 0, at: NOW } });
+  put(8, 'reelC', 'reel:verse', 'The straight path, a fortnight back', { instagram: { views: 400, reach: 200, likes: 5, comments: 1, shares: 0, saves: 0, at: NOW } });
+  put(9, 'reelD', 'reel:word', 'Sabr, a fortnight back', { instagram: { views: 300, reach: 150, likes: 5, comments: 0, shares: 0, saves: 0, at: NOW } });
+
+  const n = await INS.numbers({ now: NOW });
+  ok(calls.length === 0, 'numbers() asks the store, never a network');
+  const rate = (eng, base) => Math.round((eng / base) * 1000) / 1000;
+
+  ok(n.ok && n.thisWeek.to === dates[0] && n.thisWeek.from === dates[6] && n.lastWeek.to === dates[7] && n.lastWeek.from === dates[13],
+     'the two windows are named by their own dates: ' + JSON.stringify([n.thisWeek, n.lastWeek]));
+  ok(n.read === 9 && n.unread === 14 * SLOT_IDS.length - 8, 'nine readings across eight records; the rest of the fortnight is simply unread');
+
+  const ig = n.byNetwork.find(x => x.net === 'instagram');
+  ok(ig.thisWeek.posts === 3 && ig.thisWeek.views === 2400 && ig.thisWeek.reach === 1200, 'instagram this week: three readings, summed views and reach');
+  ok(ig.thisWeek.engagement === rate(50 + 25 + 60, 500 + 400 + 300), 'and the engagement rate is the bucket\'s own engagement over its own reach: ' + ig.thisWeek.engagement);
+  ok(ig.lastWeek.posts === 3 && ig.lastWeek.engagement === rate(12 + 6 + 5, 250 + 200 + 150), 'instagram last week, the same arithmetic');
+  ok(ig.delta.views === 2400 - (500 + 400 + 300), 'the delta is this week minus last: ' + ig.delta.views);
+
+  const yt = n.byNetwork.find(x => x.net === 'youtube'), fb = n.byNetwork.find(x => x.net === 'facebook');
+  ok(yt.thisWeek.posts === 1 && yt.thisWeek.views === 5000 && yt.thisWeek.reach === null,
+     'the wide upload beside the Short is the same post as its Short: one post, views summed, still no reach');
+  ok(fb.thisWeek.posts === 1 && fb.lastWeek.posts === 0, 'facebook only posted this week; last week reads as nothing, not an error');
+
+  ok(!n.byKind.some(k => k.kind === 'card:light'), 'a card kind never enters "per kind": the rota does not choose a card the way it chooses a reel');
+  const verse = n.byKind.find(k => k.kind === 'reel:verse'), word = n.byKind.find(k => k.kind === 'reel:word'), short = n.byKind.find(k => k.kind === 'reel:short');
+  ok(verse.thisWeek.engagement === rate(50 + 25, 500 + 400) && verse.label === 'verse reels', 'verse reels: two readings folded into one rate');
+  ok(word.thisWeek.engagement === rate(60, 300), 'word reels, their own rate');
+  ok(short.thisWeek.engagement === rate(200, 4000 + 1000) && short.label === 'silent films',
+     'the silent films count once, likes from the Short, views from both: ' + short.thisWeek.engagement);
+  ok(n.best.kind === 'reel:word', 'the best kind by engagement this week: ' + n.best.kind);
+  ok(n.worst.kind === 'reel:short', 'and the worst: ' + n.worst.kind);
+
+  ok(n.films.length === 1 && n.films[0].title === 'The sieve of al-Khwarizmi' && n.films[0].week === 'this', 'the one silent film so far, named, once any exist');
+  ok(n.films[0].stats.youtube.views === 4000 && n.films[0].stats.youtubeWide.views === 1000, 'the film\'s own numbers travel whole, Short and wide both');
+
+  const wd0 = new Date(dates[0] + 'T00:00:00Z').getUTCDay();
+  const wdThis = n.byWeekday.find(w => w.weekday === wd0);
+  ok(wdThis.thisWeek.posts === 1 && wdThis.thisWeek.views === 1000, 'the weekday of the first record carries just its own reading this week');
+  ok(wdThis.lastWeek.posts === 1 && wdThis.lastWeek.views === 500, 'dates[0] and dates[7] are seven days apart, so they share a weekday, and the pairing finds it');
+
+  const slotA = n.bySlot.find(x => x.slot === 'reelA');
+  ok(slotA && slotA.hour === 8 && slotA.thisWeek.posts === 1, 'per slot hour, reelA carries its own hour and its own reading');
+
+  ok(!/igtok|pagetok|ss-yt-tok|yt-access/.test(JSON.stringify(n)), 'no token or secret name leaks into the aggregate');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
