@@ -88,7 +88,24 @@ for (const p of patches) {
       for (const it of items) if (!have.has(keyFn(it))) n[key].push(it);
     };
     addTo('hadith', (m.hadith||m.addHadith||[]).map(normHadith), h => (typeof h==='object'?h.text:String(h)).slice(0,40));
-    addTo('facts', m.addFacts, f => f.label);
+    // a fact merges by its normalised value as well as its label: a patch
+    // that adds "Pledgers under the tree: ~1,400" beside a base fact
+    // "Companions: ~1,400" is the same number under a second label, not a
+    // second fact, and the strip repeats it rather than reporting it once
+    // (content-008)
+    const factValue = f => { const v = String(f.value).match(/[\d][\d,]*/); return v ? v[0].replace(/,/g, '') : null; };
+    if (m.addFacts && m.addFacts.length) {
+      n.facts = n.facts || [];
+      const haveLabel = new Set(n.facts.map(f => f.label));
+      const haveValue = new Set(n.facts.map(factValue).filter(Boolean));
+      for (const f of m.addFacts) {
+        const v = factValue(f);
+        if (haveLabel.has(f.label) || (v && haveValue.has(v))) continue;
+        n.facts.push(f);
+        haveLabel.add(f.label);
+        if (v) haveValue.add(v);
+      }
+    }
     addTo('lessons', m.addLessons, l => l);
     addTo('quran', m.addQuran, q => q.ref);
   }

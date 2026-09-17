@@ -21,6 +21,26 @@ from room import shell  # noqa: E402
 SRC = [os.path.join(ROOT, "build", "stories-a.json"),
        os.path.join(ROOT, "build", "stories-b.json")]
 OUTDIR = os.path.join(ROOT, "stories")
+NAMES_HTML = os.path.join(ROOT, "allah.html")
+
+
+def _norm_translit(t):
+    """Strip everything but letters so Al-Adl and Al-'Adl are one lookup key.
+    The apostrophe variant is allah.html's own spelling (content-003); this
+    generator only needs to find the row, not settle how it is spelled."""
+    return re.sub(r"[^a-z]", "", t.lower())
+
+
+def names_by_translit():
+    """The 99 Names, read straight from allah.html's own NAMES row, so a
+    story can never define a Name differently from the page that owns it
+    (content-006). Keyed by a normalised transliteration."""
+    s = open(NAMES_HTML, encoding="utf-8").read()
+    m = re.search(r"const NAMES = (\[.*?\n\]);", s, re.S)
+    if not m:
+        raise SystemExit("gen-stories: could not find NAMES in allah.html")
+    data = json.loads(m.group(1))
+    return {_norm_translit(row[1]): row[2] for row in data}
 
 # Surah names for the references the stories cite. Anything unlisted simply
 # shows its number, which is still a complete citation.
@@ -337,8 +357,13 @@ def build():
     stories = []
     for path in SRC:
         stories.extend(json.load(open(path, encoding="utf-8"))["stories"])
+    names = names_by_translit()
     for s in stories:
         s["words"] = sum(len(p.split()) for m in s["movements"] for p in m["ps"])
+        meaning = names.get(_norm_translit(s["name_en"]))
+        if not meaning:
+            raise SystemExit("gen-stories: %r is not a Name on allah.html" % s["name_en"])
+        s["name_meaning"] = meaning
 
     latif = dict(LATIF)
     latif["words"] = latif_words()
