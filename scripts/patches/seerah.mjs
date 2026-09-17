@@ -381,7 +381,7 @@ addHadith:[
  {text:"Anas ibn an-Nadr said at Uhud: O Sa'd — Jannah! By the Lord of an-Nadr, I smell its fragrance from beyond Uhud. He was found with more than eighty wounds, and only his sister knew him by his fingertips.",source:"Bukhari 2805 · Muslim 1903"},
  {text:"The Prophet ﷺ gathered his parents for Sa'd ibn Abi Waqqas at Uhud: Shoot, may my father and mother be ransomed for you.",source:"Bukhari 4055 · Muslim 2412"},
  {text:"Uhud is a mountain that loves us and we love it.",source:"Bukhari 4083 · Muslim 1365"}],
-addFacts:[{label:"Martyrs",value:"70 of the Muslims"},{label:"Archers' post",value:"50 — Jabal ar-Rumat"}],
+addFacts:[],
 addLessons:["Anas ibn an-Nadr smelled Jannah where others saw defeat — certainty changes the battlefield"]
 }},
 
@@ -402,7 +402,7 @@ addHadith:[
  {text:"No one who pledged allegiance under the tree will enter the Fire.",source:"Muslim 2496 · cf. Tirmidhi 3860"},
  {text:"Last night a surah was revealed to me that is dearer to me than all that the sun rises upon — “Indeed We have granted you a clear opening.”",source:"Bukhari 4177 (cf. 5012)"},
  {text:"You will surely come to the House and circle it (in the following year).",source:"Bukhari 2732 (the Miswar narration)"}],
-addFacts:[{label:"Pledgers under the tree",value:"~1,400"},{label:"Truce",value:"10 years"}],
+addFacts:[{label:"Truce",value:"10 years"}],
 addLessons:["Umm Salamah's counsel — act first, speak after — saved the camp: consult women of wisdom"]
 }},
 
@@ -413,7 +413,7 @@ addHadith:[
  {text:"He entered Makkah reciting Surat al-Fath, and struck the idols saying: Truth has come and falsehood has vanished — falsehood is ever bound to vanish.",source:"Bukhari 4287 · Muslim 1781 (17:81)"},
  {text:"There is no hijrah after the Opening — but jihad and intention; and when you are called to march, march.",source:"Bukhari 1834 · Muslim 1353"},
  {text:"This city was made sacred by Allah the day He created the heavens and the earth — it is sacred by Allah's sanctifying until the Day of Resurrection.",source:"Bukhari 1834 · Muslim 1353"}],
-addFacts:[{label:"Army",value:"10,000"},{label:"Idols removed",value:"360"},{label:"Blood spilled",value:"Almost none"}],
+addFacts:[{label:"Idols removed",value:"360"},{label:"Blood spilled",value:"Almost none"}],
 addLessons:["The key of the Kaaba returned to Uthman ibn Talha — conquest restored trusts instead of seizing them"]
 }},
 
