@@ -240,6 +240,15 @@ def check_loudness_plate(slug, shape, mp4_path):
     return (not bad, detail, "; ".join(bad))
 
 
+#  THE SOUND LAW (round five, from the owner watching the finished films:
+#  "relax with the bell sounds, they are too loud and too present, I said
+#  subtle, with reverb"): at most eight marks a film, never two of them
+#  inside 1.6 seconds. Not a density preference any more, a number to
+#  check exactly like the LUFS reading below it.
+MAX_MARKS = 8
+MARK_GAP = 1.6
+
+
 def check_marks_plate(slug, shape, beat):
     mj_path = os.path.join(OUT, "%s-%s.marks.json" % (slug, shape))
     if not os.path.exists(mj_path):
@@ -248,19 +257,29 @@ def check_marks_plate(slug, shape, beat):
     marks = mj.get("marks", [])
     cand = plate_cue_times(beat)
     bad = []
+    times = []
     for m in marks:
         try:
             t = round(float(m.get("at")), 3)
         except (TypeError, ValueError):
             bad.append("mark with no usable at: %r" % (m,))
             continue
+        times.append(t)
         if not any(abs(t - c) <= 0.05 for c in cand):
             bad.append("mark at %.2fs (%s) is not on a line, step or motion event" %
                       (t, m.get("source", "?")))
+    if len(marks) > MAX_MARKS:
+        bad.append("%d marks, the sound law's own ceiling is %d" % (len(marks), MAX_MARKS))
+    times.sort()
+    for x, y in zip(times, times[1:]):
+        if y - x < MARK_GAP - 1e-6:
+            bad.append("marks at %.2fs and %.2fs are only %.2fs apart, the law's own floor is %.1fs" %
+                      (x, y, y - x, MARK_GAP))
     has_arrival = any("arrival" in (m.get("source") or "") for m in marks)
     if beat.get("motion") and not has_arrival:
         bad.append("the beat has motion but no arrival mark was struck for any of it")
-    detail = "%d marks checked against %d candidate events" % (len(marks), len(cand))
+    detail = "%d marks (law: at most %d, none within %.1fs), checked against %d candidate events" % (
+        len(marks), MAX_MARKS, MARK_GAP, len(cand))
     return (not bad, detail, "; ".join(bad[:6]))
 
 

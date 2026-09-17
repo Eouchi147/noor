@@ -9,7 +9,7 @@ house. `VIDEO_ENGINE.md` is the map of the engine; this page is the standard.
 
 1. The picture is one of the library's own plates (`figs/*.svg`, the illustration on the
    Light's page), never invented, never redrawn. Parallax off: every stroke on one plane.
-2. Nine to ten sentences, 36 to 46 seconds; every fact on screen from the Light's own
+2. Nine to ten sentences, 36 to 52 seconds; every fact on screen from the Light's own
    text and sources; the last card carries the person, the place, the work and the date.
 3. One slow, continuous camera move per sentence, easing in and out across the sentence;
    no sway, no pre arrival, no closing push; a sentence that adds nothing holds with a
@@ -76,3 +76,39 @@ Two to four a week for ninety days and beyond: each takes a reel's slot in the r
 an extra slot on a network with room), with its own caption, its sources in the first
 comment where a network allows it, and the Light's room as the link. The film is the
 library's own illustration, moving; the room is where the reader goes next.
+
+## The writing law (the owner, the evening of 16 September 2026)
+
+The films are for people who scroll fast and will not break their heads. Every brief
+obeys this before anything is staged:
+
+1. **Line one says the whole point** in plain words a stranger understands with no
+   context, in the viewer's own world, in at most 42 characters. A claim, never a
+   riddle, never a metaphor. "Your camera is named after a room." "One man checked
+   600,000 hadith reports."
+2. **Line two names the person with what he was**, the place and the year: "Cairo, the
+   year 1020" with the sub "Ibn al-Haytham, a scientist, lights a candle". A stranger
+   does not know who Ibn Khaldun is; the film tells him: a historian.
+3. **One plain step per line**, lines three to six: a complete sentence that stands on
+   its own, cause then effect, everyday words, present tense, a number where there is
+   one. No line refers to a thing the viewer has not seen yet; no pronoun without its
+   name in the same line or the one before.
+4. **The turn**: "Before him, everyone thought ..." or "The old way was ...", a plain
+   contrast the viewer can picture.
+5. **The payoff**: what it means for the viewer today, in the viewer's world: "Every
+   phone camera works this way." "Every hadith you read passed his test."
+6. **The source card**: the person, the place, the work, the date.
+7. **Words**: everyday English; a technical word never appears without its plain word
+   beside it (asabiyya, group loyalty); sentences of eight words where possible; concrete
+   nouns; no cleverness that costs a second of understanding.
+8. **The test**: read the nine lines with no picture. If a twelve year old cannot retell
+   the story in one sentence, rewrite. The refuter runs this test on every brief.
+
+## The sound law (the same evening)
+
+Subtle, with reverb. At most eight struck marks a film: the first step under the hook,
+one arrival per sentence that has a travelling light, and the payoff; never two inside
+1.6 s. The marks sit about 9 dB lower than before (minus 38 dB RMS against the music at
+minus 15.5), the felt voice by default, the hall wetter and longer so each mark is a
+distant touch under the music, never a strike in front of it. The score carries the
+film; the marks only agree with it.

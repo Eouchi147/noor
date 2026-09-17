@@ -65,7 +65,7 @@ FLOOR = 2.2
 #  foot of the picture and the bottom of the frame.
 CAP = {"hook": 42, "text": 42, "sub": 44, "eyebrow": 30, "src": 44}
 
-LEN_MIN, LEN_MAX = 22.0, 46.0
+LEN_MIN, LEN_MAX = 22.0, 52.0
 
 #  the same writing law the first format was given, because the law was never
 #  about the format. See THE FOUR QUESTIONS in shorts.py.

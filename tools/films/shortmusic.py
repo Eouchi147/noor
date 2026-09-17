@@ -46,7 +46,27 @@ rendered from, so the sound cannot drift from the frame.
 """
 import argparse, hashlib, json, os, re, subprocess, sys, wave
 import numpy as np
-from scipy.signal import fftconvolve
+#  THE ROOM IS CONVOLVED WITH OR WITHOUT SCIPY.
+#  The 16 September rewrite imported scipy.signal.fftconvolve and the owner's
+#  Mac venv has numpy only: shortmusic died on the import, plates.sh printed
+#  SCORE FAILED and every film came out silent, which is what "the videos
+#  have no sound" meant. scipy is used when it is there; otherwise the same
+#  full mode convolution is done with numpy's FFT, which is the identical
+#  arithmetic and about as fast for a 40 s film against a 5 s room.
+try:
+    from scipy.signal import fftconvolve
+except ImportError:
+    def fftconvolve(a, b, mode="full"):
+        a = np.asarray(a, dtype=np.float64); b = np.asarray(b, dtype=np.float64)
+        n = a.size + b.size - 1
+        m = 1 << (n - 1).bit_length()
+        out = np.fft.irfft(np.fft.rfft(a, m) * np.fft.rfft(b, m), m)[:n]
+        if mode == "same":
+            lo = (b.size - 1) // 2
+            out = out[lo:lo + a.size]
+        elif mode == "valid":
+            out = out[b.size - 1:a.size]
+        return out
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "out")
@@ -222,9 +242,11 @@ def struck(n, at, f, voice="glass", level=1.0):
       milliseconds long. Leave it out and the note begins out of nowhere,
       which is the tell of a synthesised sound.
 
-      IT IS NOT INSTANT. Four milliseconds of attack, shaped, not a step. A
-      step is a click, and a click on a phone speaker is the whole reason
-      the first version of this was called cheap.
+      IT IS NOT INSTANT. Nine milliseconds of attack, shaped, not a step
+      (four, before the sound law asked for the strike itself softened a
+      touch, so a mark reads as a distant touch and not a hit). A step is
+      a click, and a click on a phone speaker is the whole reason the
+      first version of this was called cheap.
     """
     V = VOICE.get(voice, VOICE["glass"])
     out = np.zeros(n, dtype=np.float32)
@@ -247,29 +269,42 @@ def struck(n, at, f, voice="glass", level=1.0):
         tk = np.arange(k, dtype=np.float32) / SR
         out[i0:i0 + k] += (V["knock"] * np.sin(2 * np.pi * 96.0 * tk) *
                            np.exp(-6.91 * tk / 0.045)).astype(np.float32)
-    a0 = min(int(0.004 * SR), m)
+    a0 = min(int(0.009 * SR), m)
     out[i0:i0 + a0] *= rc(a0)
     return (out * level).astype(np.float32)
 
 
-def thin(times, gap=1.15, keep=()):
+def thin(times, gap=1.6, keep=(), rank=None):
     """WHICH MOMENTS ACTUALLY GET A SOUND.
 
-    A short has twenty one pieces of drawing in forty four seconds. Marking
-    every one of them is a sound every two seconds for the whole film, which
-    stops being punctuation and becomes a rhythm section nobody asked for,
-    and it is most of what "not subtle at all" meant.
+    THE SOUND LAW (round five, from the owner watching the finished films:
+    "relax with the bell sounds, they are too loud and too present, I said
+    subtle, with reverb"): at most a small, named handful of marks a film,
+    never two of them within `gap` seconds of each other. This used to
+    thin a dense stream of ordinary step marks down to something
+    bearable; build() now only ever hands it the short, deliberate list
+    the law names (the hook's own first step, one arrival per travelling
+    sentence, the payoff), so its job here is purely to enforce the floor
+    on THAT list.
 
-    So a mark is only struck if a second and a bit has passed since the last
-    one, and the first piece under each new sentence is always struck. Twenty
-    one events become about ten, each of them landing on something the words
-    are talking about."""
-    out, last = [], -9.0
+    Every item in `keep` is meant to survive; where two keep items still
+    fall inside the gap of each other, `rank` says which one does (the
+    higher rank wins -- an arrival outranks a step, the law's own
+    "arrivals win" rule), so that tie break lives here once instead of
+    being reimplemented by every caller. An item not in `keep` never
+    survives inside the gap of one that is already kept, whatever its
+    rank."""
     keep = set(round(k, 2) for k in keep)
-    for t in times:
-        if round(t, 2) in keep or t - last >= gap:
-            out.append(t); last = t
-    return out
+    rank = rank or {}
+    out = []
+    for t in sorted(round(x, 2) for x in times):
+        hit = next((o for o in out if abs(o - t) < gap), None)
+        if hit is None:
+            out.append(t)
+        elif t in keep and rank.get(t, 0) > rank.get(hit, 0):
+            out.remove(hit)
+            out.append(t)
+    return sorted(out)
 
 
 # ------------------------------------------------------------------ the film
@@ -334,7 +369,7 @@ def tracks():
                   if f.lower().endswith((".m4a", ".mp3", ".wav", ".flac", ".aac", ".ogg")))
 
 
-def build(ev, slug, which=None, start=None, voice="glass"):
+def build(ev, slug, which=None, start=None, voice="felt"):
     tl = tracks()
     if not tl:
         raise SystemExit("no music in %s. Put the score files there." % MUSIC)
@@ -368,44 +403,65 @@ def build(ev, slug, which=None, start=None, voice="glass"):
     pc, name = find_key(mono[i0:i0 + n])
 
     #  ---- THE MARKS -----------------------------------------------------
-    #  One note as each piece of the drawing lands, walking up the piece's
-    #  own minor scale as the argument builds and easing back for the close,
-    #  so the sound carries the shape of the lesson. Thinned, so it marks
-    #  rather than drums, and set a long way under the music: a mark is meant
-    #  to be noticed the way a page turning is noticed.
-    #
-    #  MOTION MARKS ARE NEVER THINNED AWAY. A step mark is punctuation and
-    #  there can be too much of it; the moment a travel starts or a ray
-    #  arrives is the argument itself, so ev["motion"]'s times go straight
-    #  into thin()'s keep list alongside the first step under each sentence,
-    #  and only the ordinary step marks still have to earn their place by
-    #  the 1.15 s gap. Two or three motion entries can share one line's own
-    #  `at` (a travel, a pulse and a glow all cued to the same sentence);
-    #  those collapse to one mark rather than three identical hits stacked
-    #  on the same sample, with an arrival ("glass") outranking a start
-    #  ("felt") when they tie exactly.
+    #  THE SOUND LAW (round five, from the owner watching the finished
+    #  films): at most eight marks in the whole picture, chosen by name,
+    #  not thinned down from a dense stream of every step and every piece
+    #  of motion. Three things get a mark:
+    #    THE HOOK'S OWN FIRST STEP -- the film announcing itself.
+    #    ONE ARRIVAL PER SENTENCE WITH A TRAVELLING LIGHT -- the light
+    #    LEAVING gets nothing now, only its landing: a start is a intake
+    #    of breath, an arrival is the argument.
+    #    THE PAYOFF -- its own arrival if one lands under it (the last
+    #    ray, timed to land as the closing line does), its own first step
+    #    if none does.
+    #  Never two of these within 1.6 s of each other; where two would
+    #  collide the arrival wins, per thin()'s own rank rule.
     DEG = [0, 3, 5, 7, 10, 12, 14, 15]
-    firsts = []
-    for L in ev["lines"]:
-        nxt = [t for t in ev["steps"] if t >= L - 0.1]
-        if nxt: firsts.append(nxt[0])
+    lines, steps = ev["lines"], ev["steps"]
+    arrivals = [e for e in ev.get("motion", []) if e["source"].endswith("arrival")]
 
-    motion_by_time = {}
-    for e in ev.get("motion", []):
-        key = round(e["at"], 3)
-        if key not in motion_by_time:
-            motion_by_time[key] = {"voice": e["voice"], "sources": [e["source"]]}
+    cands = []   # {"at", "voice", "source", "rank"}: rank 1 an arrival, 0 a step
+    if lines:
+        #  a card that reveals all at once (an "all": true shot, no typewriter
+        #  steps under it -- the payoff often is one) has no entry in the
+        #  step array at all; its own reveal time still counts as its first
+        #  step, so the law's promise of one mark here is never silently
+        #  broken by a card with nothing in `steps` under it.
+        nxt = [t for t in steps if t >= lines[0] - 0.1]
+        t0 = nxt[0] if nxt else lines[0]
+        cands.append({"at": round(t0, 3), "voice": voice,
+                      "source": "hook first step", "rank": 0})
+    for e in arrivals:
+        cands.append({"at": round(e["at"], 3), "voice": e["voice"],
+                      "source": e["source"], "rank": 1})
+    if lines:
+        payoff = lines[-1]
+        under = [e for e in arrivals if e["at"] >= payoff - 0.1]
+        if under:
+            e = min(under, key=lambda e: e["at"])
+            t = round(e["at"], 3)
+            hit = next((c for c in cands if c["at"] == t and c["source"] == e["source"]), None)
+            if hit is not None:
+                hit["source"] = "payoff " + hit["source"]
+            else:
+                cands.append({"at": t, "voice": e["voice"],
+                              "source": "payoff " + e["source"], "rank": 1})
         else:
-            slot = motion_by_time[key]
-            slot["sources"].append(e["source"])
-            if e["voice"] == "glass":
-                slot["voice"] = "glass"
-    motion_times = sorted(motion_by_time)
+            nxt = [t for t in steps if t >= payoff - 0.1]
+            tp = nxt[0] if nxt else payoff
+            cands.append({"at": round(tp, 3), "voice": voice,
+                          "source": "payoff first step", "rank": 0})
 
-    step_times = sorted(set(round(t, 3) for t in ev["steps"]))
-    combined = sorted(set(step_times) | set(motion_times))
-    keep = set(round(t, 3) for t in firsts) | set(motion_times)
-    hits = thin(combined, 1.15, keep)
+    voice_at = {c["at"]: c["voice"] for c in cands}
+    source_at = {c["at"]: c["source"] for c in cands}
+    rank_at = {c["at"]: c["rank"] for c in cands}
+    times = [c["at"] for c in cands]
+    hits = thin(times, 1.6, keep=times, rank=rank_at)
+    if len(hits) > 8:
+        #  the law's own ceiling: keep the highest ranked (the arrivals)
+        #  first, earliest first among a tie, then put the survivors back
+        #  in time order.
+        hits = sorted(sorted(hits, key=lambda t: (-rank_at.get(t, 0), t))[:8])
 
     marks = np.zeros(n, dtype=np.float32)
     marklog = []
@@ -414,11 +470,10 @@ def build(ev, slug, which=None, start=None, voice="glass"):
         d = DEG[min(len(DEG) - 1, int(round((len(DEG) - 1) *
                                             (u if u < 0.78 else 0.78 - (u - 0.78) * 1.4))))]
         f = hz((pc + d) % 12 + 12 * ((pc + d) // 12), 5)
-        mt = motion_by_time.get(round(t, 3))
-        v = mt["voice"] if mt else voice
-        src = " + ".join(mt["sources"]) if mt else "step"
+        v = voice_at.get(t, voice)
+        src = source_at.get(t, "step")
         marks += struck(n, t, f, v, 0.36 if i % 2 else 0.42)
-        marklog.append({"at": round(t, 3), "source": src, "voice": v})
+        marklog.append({"at": t, "source": src, "voice": v})
     #  the lowpass used to be keyed to the one --voice every mark shared;
     #  a mark can now carry its own voice (felt/glass on top of whatever
     #  --voice asked for), so the cutoff is the highest "top" among the
@@ -433,22 +488,33 @@ def build(ev, slug, which=None, start=None, voice="glass"):
 
     #  ---- BALANCE -------------------------------------------------------
     ml = at_db(ml, -15.5); mr = at_db(mr, -15.5)
-    #  FOURTEEN DECIBELS UNDER THE MUSIC. The first mix put them six under,
-    #  which is not punctuation, it is a duet.
-    marks = at_db(marks, -29.5)
+    #  THE SOUND LAW, ROUND FIVE: about nine decibels quieter than round
+    #  four's -29.5 -- the owner watching the finished films: "relax with
+    #  the bell sounds, they are too loud and too present, I said subtle,
+    #  with reverb". The score carries the film; the marks only agree
+    #  with it.
+    marks = at_db(marks, -38.0)
 
     #  ---- AND A ROOM TO PUT THEM IN -------------------------------------
     #  A piano note dry on top of a piece of music is a sample. The same note
-    #  five seconds deep in a dark room is part of the piece. The music keeps
-    #  its own space; only the marks are sent to this one.
-    room = hall(5.2, 320, (seed % 7919) + 13)
-    #  fftconvolve, not np.convolve: the room impulse is 5.2 s at 48 kHz
+    #  six and a half seconds deep in a dark room is part of the piece. The
+    #  music keeps its own space; only the marks are sent to this one.
+    room = hall(6.5, 320, (seed % 7919) + 13)
+    #  fftconvolve, not np.convolve: the room impulse is 6.5 s at 48 kHz
     #  against a marks track as long as the whole film, and a direct
     #  convolution of two arrays that size is O(n*m) -- on a forty second
     #  short that is past the two minute mark and reads as a hang, not a
     #  slow filter. Same "full" mode result, found and fixed the same way
     #  in tools/films/filmsound.py.
-    wet = at_db(fftconvolve(marks, room)[:n], -31.0)
+    #
+    #  ROUND FIVE, WETTER AND LONGER: the impulse itself grew from 5.2 s to
+    #  6.5 s (a longer decay, so a mark keeps dying long after the music
+    #  has moved on) and the wet target dropped only one decibel more than
+    #  the dry one did (-40, against the dry's -38), so the tail is barely
+    #  quieter than the strike rather than well under it -- each mark now
+    #  reads as a distant touch heard mostly through the room around it,
+    #  never a strike in front of the music.
+    wet = at_db(fftconvolve(marks, room)[:n], -40.0)
     marks = marks + wet
 
     #  ---- AND THE MUSIC STEPS BACK FOR THEM -----------------------------
@@ -506,8 +572,9 @@ def main():
     ap.add_argument("slug")
     ap.add_argument("--track", default=None, help="part of a filename in music/")
     ap.add_argument("--at", type=float, default=None, help="seconds into the track")
-    ap.add_argument("--voice", default="glass", choices=sorted(VOICE),
-                    help="what the mark is made of: felt, glass or wood")
+    ap.add_argument("--voice", default="felt", choices=sorted(VOICE),
+                    help="what the mark is made of: felt by default (the "
+                         "sound law), glass or wood where a brief asks")
     ap.add_argument("--lufs", type=float, default=-14.0,
                     help="where the platforms normalise to")
     ap.add_argument("--mux", action="store_true")
