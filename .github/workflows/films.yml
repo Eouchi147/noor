@@ -1,0 +1,543 @@
+# NOOR - render the films
+#
+# tools/films/plates.sh is the Mac's own way to turn a staged plate brief
+# into two finished shorts: compile it, render both shapes, lay the score
+# under each. This is the same chain run on GitHub's machines instead, so a
+# film reaches the shelf with one click on the Actions tab and no Terminal.
+# Nothing is pushed to main: the run opens a pull request with the finished
+# rows, reviewed and merged the way every other change to this repository is.
+#
+# Three jobs. "plan" lists the staged briefs (every briefs/plate-*.json, or
+# only the ones the "briefs" input names), compiles each with shortplate.py
+# to catch a refused brief before any machine is spent rendering it, and
+# splits the good ones across machines. "render" is a matrix: each machine
+# takes its own share, and for every brief in it calls render_ci.py, which
+# compiles, renders tall then wide at 30 fps with a three sample shutter (12
+# fps, shutter 1 for a quick look when "proof" is set), lays the score under
+# each, audits each and draws a contact sheet of each; a render or a mux
+# that fails stops that brief, an audit FAIL does not. "assemble" gathers
+# every machine's mp4s and audit tables, uploads the finished shorts to the
+# shelf (the same Vercel Blob store the owner's own `publish-shorts.sh`
+# uploads to, at the same pathname, so a film built here and a film the
+# owner publishes by hand are the same row with the same url either way),
+# builds the manifest rows with `shortmanifest.py`, merges them into
+# reels/index.json and reels/home.json, and opens one pull request with the
+# audit tables in its body. A machine that dies takes only its own share
+# with it; the others' films still reach the shelf.
+#
+# The two Suno scores (tools/films/music/*.m4a) are never committed: see
+# tools/films/README.md, "The music release", for the owner's own steps to
+# put them on a GitHub Release this workflow reads.
+
+name: films
+
+on:
+  workflow_dispatch:
+    inputs:
+      briefs:
+        description: "brief names to render, comma separated, without the plate- prefix (e.g. darkroom,zero). Empty renders every briefs/plate-*.json."
+        required: false
+        default: ""
+      machines:
+        description: "how many machines may render at once, each taking one or more films in turn (max 8)"
+        required: false
+        default: "4"
+      proof:
+        description: "render at 12 fps, shutter 1, for a quick look rather than the shelf copy"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: films
+  cancel-in-progress: false
+
+env:
+  MAX_MACHINES: "8"
+  MUSIC_TAG: "films-music"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      shards: ${{ steps.split.outputs.shards }}
+      n: ${{ steps.split.outputs.n }}
+      count: ${{ steps.split.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # every named brief, or every staged one, compiled once here with no
+      # picture and no browser: a brief shortplate.py refuses stops the run
+      # with its own PROBLEMS lines, before any machine renders anything
+      - name: which briefs, and are they all sound
+        id: split
+        working-directory: tools/films
+        env:
+          # a workflow_dispatch input read through an env var and $NAME, not
+          # ${{ }} inside the shell script itself: interpolated straight in,
+          # a dispatcher's own text becomes a command this job runs, under
+          # contents:write and pull-requests:write
+          BRIEFS_INPUT: ${{ github.event.inputs.briefs }}
+          MACHINES_INPUT: ${{ github.event.inputs.machines }}
+        run: |
+          if [ -n "$BRIEFS_INPUT" ]; then
+            NAMES=$(echo "$BRIEFS_INPUT" | tr ',' ' ' | tr -s ' ')
+          else
+            NAMES=$(ls briefs/plate-*.json | sed 's#briefs/plate-##;s#\.json##')
+          fi
+          echo "briefs asked for: $NAMES"
+          bad=0
+          for n in $NAMES; do
+            b="briefs/plate-$n.json"
+            if [ ! -f "$b" ]; then
+              echo "no such brief: $b"; bad=1; continue
+            fi
+            python3 shortplate.py "$b" --check || { echo "  ^ $n refused, see the PROBLEMS above"; bad=1; }
+          done
+          if [ "$bad" -ne 0 ]; then
+            echo "one or more briefs are not sound; fix them first, nothing was rendered"
+            exit 1
+          fi
+          # a whole number from 1 to 8, or a clear line here rather than a
+          # Python ValueError three steps downstream
+          max="${MACHINES_INPUT:-4}"
+          case "$max" in
+            ''|*[!0-9]*)
+              echo "the 'machines' input must be a whole number from 1 to 8, got: '$max'"
+              exit 1
+              ;;
+          esac
+          [ "$max" -lt 1 ] && max=1
+          [ "$max" -gt "$MAX_MACHINES" ] && max="$MAX_MACHINES"
+          python3 - "$max" $NAMES <<'PY'
+          import json, sys
+          max_n = int(sys.argv[1])
+          names = sys.argv[2:]
+          n = max(1, min(max_n, len(names)) if names else 1)
+          shards = [names[i::n] for i in range(n)]
+          with open("films-plan.json", "w", encoding="utf-8") as f:
+              json.dump({"n": n, "count": len(names), "shards": shards}, f)
+          PY
+          n=$(python3 -c "import json; print(json.load(open('films-plan.json'))['n'])")
+          count=$(python3 -c "import json; print(json.load(open('films-plan.json'))['count'])")
+          shards=$(python3 -c "import json; print(json.dumps(list(range($n))))")
+          echo "n=$n" >> "$GITHUB_OUTPUT"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "shards=$shards" >> "$GITHUB_OUTPUT"
+          echo "$count brief(s) on $n machine(s)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: films-plan
+          path: tools/films/films-plan.json
+          retention-days: 3
+
+  render:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.shards) }}
+    env:
+      PYTHONUNBUFFERED: "1"
+      # read as $PROOF_INPUT below, never ${{ }} inside a run: script (see
+      # the plan job's own note on this)
+      PROOF_INPUT: ${{ github.event.inputs.proof }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: films-plan
+          path: tools/films
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # ffmpeg is NOT on the ubuntu-24.04 runner image (see reels.yml's own
+      # note on this); numpy, pillow and playwright pin the same versions
+      # tools/reels/requirements.txt does, since noor.py, shortmusic.py's
+      # numpy fallback, audit.py and this file's own contact sheet all read
+      # the same two libraries the reels engine already depends on. scipy is
+      # not required (shortmusic.py falls back to a numpy FFT convolution
+      # when it is missing) but is installed anyway: the real convolution is
+      # faster, and every machine here renders on the clock.
+      - name: install
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
+          pip install numpy==2.4.4 pillow==12.2.0 playwright==1.56.0 scipy
+          python -m playwright install --with-deps chromium
+
+      # the two Suno scores are never committed (12 MB, the owner's own
+      # files); tools/films/README.md, "The music release", names the exact
+      # steps to put them on a release tagged films-music, which this reads
+      # with the gh CLI already on the runner and the run's own token
+      - name: the score, from the films-music release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p tools/films/music
+          if ! gh release download "$MUSIC_TAG" --repo "${{ github.repository }}" \
+                --dir tools/films/music --pattern "*.m4a" --clobber; then
+            echo "no '$MUSIC_TAG' release, or it carries no .m4a files: see tools/films/README.md, 'The music release'."
+            exit 1
+          fi
+          ls -la tools/films/music
+          [ -n "$(ls tools/films/music/*.m4a 2>/dev/null)" ] || { echo "the release has no .m4a assets"; exit 1; }
+
+      - name: this machine's films
+        id: mine
+        working-directory: tools/films
+        run: |
+          names=$(python3 - "${{ matrix.shard }}" <<'PY'
+          import json, sys
+          shard = int(sys.argv[1])
+          plan = json.load(open("films-plan.json", encoding="utf-8"))
+          print(" ".join(plan["shards"][shard]))
+          PY
+          )
+          echo "names=$names" >> "$GITHUB_OUTPUT"
+          echo "this machine takes: $names"
+
+      - name: render
+        if: steps.mine.outputs.names != ''
+        working-directory: tools/films
+        run: |
+          touch /tmp/before
+          fail=""
+          for n in ${{ steps.mine.outputs.names }}; do
+            echo
+            echo "=============================================================="
+            echo "  $n"
+            echo "=============================================================="
+            if [ "$PROOF_INPUT" = "true" ]; then
+              python3 render_ci.py "$n" --proof || fail="$fail $n"
+            else
+              python3 render_ci.py "$n" || fail="$fail $n"
+            fi
+          done
+          if [ -n "$fail" ]; then
+            echo "render failed for:$fail"
+            exit 1
+          fi
+
+      # only what this machine made goes on: its mp4s, its audit jsons, its
+      # contact sheets. reels/index.json and reels/home.json are written
+      # whole by the assemble job, same as the reels workflow.
+      - name: what this machine made
+        if: always()
+        run: |
+          mkdir -p /tmp/made/out
+          find tools/films -maxdepth 1 -type f -name '*.mp4' -newer /tmp/before \
+            -exec cp -v {} /tmp/made/ \;
+          find tools/films/out -maxdepth 1 -type f \
+            \( -name '*.audit.json' -o -name 'contact-*.png' \) -newer /tmp/before \
+            -exec cp -v {} /tmp/made/out/ \;
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: films-made-${{ matrix.shard }}
+          path: /tmp/made
+          if-no-files-found: ignore
+          retention-days: 7
+
+  assemble:
+    needs: [plan, render]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      # a pattern matching zero artifacts (every machine made nothing, so no
+      # films-made-* was ever uploaded) fails this action outright; caught
+      # here rather than failing the job, so a bad batch still ends in a
+      # clear summary line below instead of a red run with no pull request
+      - uses: actions/download-artifact@v4
+        if: needs.plan.outputs.count != '0'
+        continue-on-error: true
+        with:
+          pattern: films-made-*
+          path: /tmp/gathered
+          merge-multiple: true
+
+      # the mp4s land beside noor.py, exactly where shortmanifest.py looks
+      # for them (<slug>-tall-30fps.mp4); the audit jsons and contact
+      # sheets land in out/, where audit.py itself already writes them
+      - name: lay what was gathered where the tools expect it
+        if: needs.plan.outputs.count != '0'
+        run: |
+          mkdir -p tools/films/out
+          if [ -d /tmp/gathered ]; then
+            find /tmp/gathered -maxdepth 1 -type f -name '*.mp4' -exec cp -v {} tools/films/ \;
+            [ -d /tmp/gathered/out ] && find /tmp/gathered/out -maxdepth 1 -type f -exec cp -v {} tools/films/out/ \;
+          else
+            echo "no films-made-* artifacts: every machine made nothing this run"
+          fi
+          true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: ffmpeg, and the blob client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          cd tools/reels && npm install --no-save --silent @vercel/blob
+
+      # shortmanifest.py, unedited: the caption, the story and the room link
+      # for every brief with a rendered tall file, exactly as
+      # tools/films/README.md and tools/reels/README.md ("Shorts") describe
+      - name: the rows, from shortmanifest.py
+        working-directory: tools/films
+        run: python3 shortmanifest.py || echo "some rows were not built; see NOT BUILT above (a real problem, not just 'not rendered yet', which is never an error)"
+
+      # THE SAME SHELF THE OWNER'S OWN publish-shorts.sh PUTS A FILM ON.
+      # publish-shorts.sh is not called here (it is written to be run by
+      # hand, in the owner's own shell, ending with the merged files handed
+      # to the Director to carry to main; this job commits and opens the
+      # pull request itself instead), but it is read for two things kept
+      # identical on purpose: the pathname a film uploads to (reels/<slug>.mp4,
+      # reels/<slug>-wide.mp4, so a film this workflow renders and a film the
+      # owner publishes by hand are the same row at the same url either way)
+      # and the 50 MB ceiling below it, Telegram's own upload limit. The
+      # actual PUT is shelf_store.py's own blob_put, imported rather than
+      # re-typed: the same helper the reels engine's own assemble job calls
+      # by way of shelf_store.move(). No REELS_STORE is set and move() is
+      # never called here; blob_put itself does not read REELS_STORE at all
+      # (only move() picks release or blob by it), so calling blob_put
+      # directly always writes to Vercel Blob, which is the one road this
+      # job ever takes.
+      - name: the finished shorts, to the shelf
+        working-directory: tools/films
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: |
+          if [ -z "$BLOB_READ_WRITE_TOKEN" ]; then
+            echo "no BLOB_READ_WRITE_TOKEN secret: see tools/films/README.md, 'The shelf'. Nothing was uploaded; the rows stay without a video url and are not merged below."
+          fi
+          mkdir -p out/deliver
+          python3 - <<'PY'
+          import json, os, subprocess, sys
+
+          HERE = os.getcwd()
+          sys.path.insert(0, os.path.join(HERE, "..", "reels"))
+          import shelf_store
+
+          MAXBYTES = 52428800
+          DELIVER = os.path.join(HERE, "out", "deliver")
+
+          def deliver_copy(master, copy):
+              #  the same ffmpeg command publish-shorts.sh's own
+              #  make_delivery_copy runs (read there, not imported: that
+              #  script is bash), so a film built here and one made by hand
+              #  are transcoded the same way
+              r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", master,
+                                   "-c:v", "libx264", "-preset", "slow", "-crf", "21",
+                                   "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                                   "-c:a", "copy", copy])
+              return r.returncode == 0
+
+          def upload(master, pathname):
+              if not os.path.exists(master):
+                  return None
+              copy = os.path.join(DELIVER, os.path.basename(pathname))
+              if not deliver_copy(master, copy):
+                  print("  ffmpeg failed on %s" % master); return None
+              n = os.path.getsize(copy)
+              if n > MAXBYTES:
+                  print("  %s is %d bytes, over the 50 MB ceiling, skipped" % (copy, n))
+                  return None
+              try:
+                  return shelf_store.blob_put(copy, "reels/" + pathname)
+              except Exception as e:
+                  print("  upload failed for %s: %s" % (pathname, e)); return None
+
+          rows_path = os.path.join("out", "shorts-rows.json")
+          if not os.path.exists(rows_path):
+              print("no out/shorts-rows.json; shortmanifest.py wrote nothing"); sys.exit(0)
+          doc = json.load(open(rows_path, encoding="utf-8"))
+          n_up = 0
+          if os.environ.get("BLOB_READ_WRITE_TOKEN"):
+              for row in doc["cards"]:
+                  slug = row["id"]
+                  tall = slug + "-tall-30fps.mp4"
+                  if not os.path.exists(tall):
+                      continue
+                  url = upload(tall, slug + ".mp4")
+                  if not url:
+                      continue
+                  row["video"] = url
+                  n_up += 1
+                  print("  uploaded %s -> %s" % (slug, url))
+                  wide = slug + "-wide-30fps.mp4"
+                  if os.path.exists(wide):
+                      wurl = upload(wide, slug + "-wide.mp4")
+                      if wurl:
+                          row["wide"] = wurl
+                          print("  uploaded %s (wide) -> %s" % (slug, wurl))
+          open(rows_path, "w", encoding="utf-8").write(
+              json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+          print("%d of %d rows uploaded" % (n_up, len(doc["cards"])))
+          PY
+
+      # THE SAME MERGE publish-shorts.sh's OWN HEREDOC PERFORMS: a row per
+      # id, replaced if the shelf already carries it, appended otherwise,
+      # every other row untouched, an existing shelf carrying the same id
+      # twice collapsed to one first (the refuter's fix, kept here byte for
+      # byte since a bash heredoc cannot be imported into this step). Only a
+      # row with a real uploaded url is merged: a row with no video is not
+      # yet on the shelf and is tried again next run.
+      - name: the rows, into reels/index.json and reels/home.json
+        run: |
+          python3 - <<'PY'
+          import datetime, json, os
+
+          ROWS = "tools/films/out/shorts-rows.json"
+          INDEX = "reels/index.json"
+          HOME = "reels/home.json"
+
+          if not os.path.exists(ROWS):
+              print("no rows to merge"); raise SystemExit
+          doc = json.load(open(ROWS, encoding="utf-8"))
+          rows = [r for r in doc["cards"] if str(r.get("video", "")).startswith("https://")]
+          if not rows:
+              print("no row has a video url yet; nothing to merge"); raise SystemExit
+
+          idx = json.load(open(INDEX, encoding="utf-8")) if os.path.exists(INDEX) \
+              else {"n": 0, "written": "", "cards": []}
+          before = list(idx["cards"])
+
+          by_id, deduped = {}, []
+          for c in idx["cards"]:
+              cid = c.get("id")
+              if not cid:
+                  deduped.append(c); continue
+              if cid in by_id:
+                  deduped[by_id[cid]] = c
+              else:
+                  by_id[cid] = len(deduped); deduped.append(c)
+          idx["cards"] = deduped
+
+          for row in rows:
+              i = by_id.get(row["id"])
+              if i is None:
+                  idx["cards"].append(row); by_id[row["id"]] = len(idx["cards"]) - 1
+              else:
+                  idx["cards"][i] = row
+          idx["n"] = len(idx["cards"])
+          changed = idx["cards"] != before
+          if changed:
+              idx["written"] = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+          open(INDEX, "w", encoding="utf-8").write(
+              json.dumps(idx, ensure_ascii=False, indent=1) + "\n")
+          print("%d short row(s) merged, %d row(s) on the shelf, %s"
+                % (len(rows), idx["n"], "written" if changed else "no change"))
+
+          if os.path.exists(HOME):
+              home = json.load(open(HOME, encoding="utf-8"))
+              shorts = sum(1 for c in idx["cards"] if c.get("kind") == "short")
+              if shorts != home.get("shorts"):
+                  home["shorts"] = shorts
+                  home["written"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+                  open(HOME, "w", encoding="utf-8").write(
+                      json.dumps(home, ensure_ascii=False, indent=1) + "\n")
+                  print("%d shorts on the shelf" % shorts)
+          PY
+
+      # the pull request's body: every audit table this run produced (a FAIL
+      # still ships its film; this is what tells the Director where to look
+      # first) and where to find each film's contact sheet. The sheets
+      # themselves are not committed, on purpose: they are a look at the
+      # picture, not a record the site needs, and this house keeps heavy
+      # files off the shelf that does not need them (see shelf_store.py's
+      # own reasoning for the reels). They stay in this run's own
+      # films-made-* artifacts.
+      - name: the pull request's body
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, json, os
+
+          lines = [
+              "Rendered from `tools/films/briefs/plate-*.json` by the `films` workflow,",
+              "on as many machines as the batch needed, gathered here into one change.",
+              "",
+              "Each film is one of the library's own plates (`figs/*.svg`), animated by",
+              "the plate engine, both shapes at 30 fps with the score laid under; `audit.py`",
+              "checked every rule `TEMPLATE.md` sets before this pull request opened. A FAIL",
+              "still shipped its film here: the Director's own eye, frame by frame, is the",
+              "last check `TEMPLATE.md` asks for, not this workflow.",
+              "",
+          ]
+          jsons = sorted(glob.glob("tools/films/out/*.audit.json"))
+          if not jsons:
+              lines.append("No audit ran this time (nothing new was rendered).")
+          for p in jsons:
+              doc = json.load(open(p, encoding="utf-8"))
+              slug, shape, rows = doc["slug"], doc["shape"], doc["rows"]
+              passed = sum(1 for r in rows if r["state"] == "PASS")
+              failed = [r for r in rows if r["state"] == "FAIL"]
+              lines.append("### %s, %s : %s (%d of %d rules pass)"
+                            % (slug, shape, "FAIL" if failed else "PASS", passed, len(rows)))
+              for r in failed:
+                  why = r.get("problem") or r.get("detail") or ""
+                  lines.append("- FAIL `%s`: %s" % (r["check"], why))
+              lines.append("")
+          lines.append(
+              "Every film's contact sheet (ten tiles, one at each line's own midpoint) "
+              "is in this run's own `films-made-*` artifacts, alongside the audit json "
+              "above; they are not committed, the same way the reels themselves are not.")
+          lines.append("")
+          lines.append("🤖 Generated with [Claude Code](https://claude.com/claude-code)")
+          lines.append("")
+          lines.append("https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj")
+          os.makedirs("/tmp/films-pr", exist_ok=True)
+          open("/tmp/films-pr/body.md", "w", encoding="utf-8").write("\n".join(lines) + "\n")
+          PY
+
+      - name: what came out
+        if: always()
+        run: |
+          echo '### Films' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/films-pr/body.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      # even after a failed machine: what the others finished is complete on
+      # its own. With nothing to commit this step simply does nothing.
+      - name: open a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: |
+            reels/index.json
+            reels/home.json
+          branch: films/built
+          delete-branch: true
+          commit-message: |
+            films: render staged plate briefs, put them on the shelf
+
+            Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+            Claude-Session: https://claude.ai/code/session_01LBF73E2KX2HnNb3mugWroj
+          title: "Films: newly rendered shorts"
+          body-path: /tmp/films-pr/body.md
