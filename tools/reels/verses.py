@@ -146,7 +146,11 @@ def fetch_translations(refs):
                 j = _get(API % k)
                 d = j.get("data") or {}
                 if not d.get("text"): raise IOError("no text in the answer")
-                V[k] = {"text": d["text"].strip(), "surah": (d.get("surah") or {}).get("englishName", "")}
+                # the surah name is always the uthmani table's own, never the
+                # API's englishName: the two spell 63 of 109 surahs
+                # differently, and the copy audit must read the same name
+                # every room and caption already prints (content-009)
+                V[k] = {"text": d["text"].strip(), "surah": text()["surahs"][str(s)]["translit"]}
                 got += 1
                 json.dump(T, open(TRANS, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
             except Exception as e:

@@ -278,6 +278,73 @@ adding cards: verse references to `verses.txt`, Did you knows to
 `know.json`, day's cards to `light.json`; the dictionary is on the shelf
 whole.
 
+## Shorts
+
+A silent short is a different kind of film from everything above: not a card rendered from
+`plan.json` by this folder's own engine, but a plate film from `tools/films/`, the library's
+own illustrated page staged to motion (hook, mechanism, turn, payoff, source), rendered on
+the owner's Mac by `plates.sh`, no voice, both shapes at 30 fps (`short-<slug>-tall-30fps.mp4`
+for every feed, `short-<slug>-wide-30fps.mp4` for YouTube when the brief has one). It reaches
+the same shelf as every card here, as a row of kind "short" in `reels/index.json`, because
+`chooseReel` already routes by kind and needed no new door.
+
+**How a film becomes a row.** Once a brief's tall file exists beside `noor.py`,
+`tools/films/shortmanifest.py` builds its row: the caption (the brief's title, hook, payoff
+sentence and source, the room link, the tags, all inside the shortest live network's limit),
+the long `story` (the full account in the library's own words, read off the hero card the
+brief's `room` points at, or, when nothing on that page shares a word with the brief, the
+brief's own lines instead, with a warning printed rather than a silent wrong guess; then the
+sources named on that page, then the room link, under 4,500 characters), and `secs` from the
+compiled film's own length. No `wide` here: a bare filename is not a url, and the key is
+written only once, by `publish-shorts.sh`'s own merge, after an upload of that file has
+actually succeeded. The fifteen shorts written before the plate engine keep their old, hand
+written caption from a `know.json` card, verbatim, so a caption is never rewritten in two
+places.
+
+**How the row reaches the post.** `api/_schedule.js`'s `buildSlot`, which every reel slot
+runs through, carries a short's own fields onto the post it hands to the channels: `story`,
+`title` (the film's own title, not its hook), `hook`, `payoff`, `tags`, `wide`, `src` and
+`room`, alongside the caption and video every reel already carries. This is not optional
+decoration: `api/_channels.js`'s short-shaping branch, below, reads every one of those fields
+directly off the post, and an ordinary reel's post carries none of them, unchanged.
+
+**The owner's command**, once BLOB_READ_WRITE_TOKEN is exported in his own shell (never in a
+file, never through Claude):
+
+    cd tools/films
+    ./publish-shorts.sh
+
+This uploads every finished tall file (and its wide file, when there is one) to the same
+pathname every time, so a re-render overwrites the file and its URL never changes; builds the
+rows again; and merges them into a COPY of `reels/index.json` at `out/index.merged.json` (a
+row per id, replaced if it already exists there, appended otherwise, every other row
+untouched), and `out/home.merged.json` when `reels/home.json` exists, with its `shorts` count
+brought up to date, since that count decides the rota below. Nothing is pushed: the script
+prints the exact next step, handing the merged files to the Director for the upload to main,
+the same way every other reels update reaches the site.
+
+The masters are never uploaded. `plates.sh` renders at CRF 16, 90 to 180 MB a file, heavier
+than any network needs and, for Telegram, over its 50 MB upload ceiling outright. Before each
+upload, `publish-shorts.sh` makes a delivery copy of that shape with ffmpeg (libx264, preset
+slow, crf 21, yuv420p, faststart, the audio stream copied, not re-encoded) at
+`out/deliver/<slug>-<shape>.mp4`, and uploads that; the transcode is skipped once the copy is
+already newer than its master. A copy still over 50 MB is refused, its size printed, and the
+run moves on to the next file rather than hand Telegram a file it would only reject.
+
+**How the rota picks it.** `api/_schedule.js`'s `ROTA.afternoon` gives the afternoon slot to
+a short on Sunday, Tuesday, Thursday and Saturday (the owner's own words of 16 September
+2026, "two to four films a week"), and keeps the afternoon's old kind on Monday, Wednesday
+and Friday. The row is self disabling: `chooseReel` only reaches for kind "short" once a row
+of that kind actually exists on the shelf, and "short" is deliberately left out of
+`FALLBACK`, so it can never leak into another half by accident. Each network then shapes the
+row for its own posting guidelines: YouTube gets the wide file when the row has one, the tall
+file otherwise (api/social.js's sendOne keeps whichever video the shaper chose, rather than
+overwriting it with the tall file the way it once did), and a long description built from the
+full `story`; Facebook and Instagram take the `story` cut to their own limit with the source
+and the room link kept; Threads and Pinterest take the hook and the payoff sentence;
+Telegram's 1,024 characters already holds the caption whole. See `SOCIAL_ENGINE.md`, "Shorts",
+for the exact shape each network gets.
+
 ## Adding a card
 
 1. Pick it from `lights/all.json`.
