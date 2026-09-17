@@ -1,0 +1,102 @@
+{
+  "slug": "short-ledger",
+  "title": "The ledger, put right",
+  "theme": "nutvoid",
+  "plate": "a-ledger-in-which-seized-property-a-wi",
+  "note": "Umar ibn Abd al-Aziz returned his own family's seized wealth first, and ruled thirty months as an act of repentance.",
+  "room": "heroes.html#umar-ibn-abd-al-aziz",
+  "research": {
+    "quotes": "heroes.html#umar-ibn-abd-al-aziz: 'in 717 CE, a cousin's deathbed will made him caliph.' 'He refused the royal stables and rode his own mule. He asked his wife Fatima to surrender her jewels to the public treasury, and she did. He began returning property his own family had seized.' 'Non-Arab converts, long taxed as though they had never entered Islam, received the equality the faith had promised them.' 'In 720 CE, after roughly thirty months of rule, he died.' 'power is not automatically corruption; held rightly, it can be an act of repentance.'",
+    "retell": "A new caliph named Umar ibn Abd al-Aziz gave back all the wealth and land his own family had unfairly taken, refused royal luxuries, and even ended an unfair tax on new Muslims, showing that power can be used to make things right."
+  },
+  "lines": [
+    {
+      "text": "A ruler gave back what a family took",
+      "sub": "the ruler's own family, starting at home",
+      "steps": 1
+    },
+    {
+      "text": "Damascus, Syria, in the year 717",
+      "sub": "a new caliph, Umar ibn Abd al-Aziz"
+    },
+    {
+      "text": "First he returns his own estates",
+      "steps": 1
+    },
+    {
+      "text": "Then his wife Fatima gives up her jewels"
+    },
+    {
+      "text": "He refuses the royal stables outright",
+      "sub": "a luxury every ruler before him kept"
+    },
+    {
+      "text": "All of it flows to the public treasury",
+      "steps": 8
+    },
+    {
+      "text": "Before him, converts paid an outsider tax",
+      "sub": "he ruled only thirty months in all",
+      "steps": 2
+    },
+    {
+      "text": "Power can still be used as repentance"
+    },
+    {
+      "eyebrow": "Umar ibn Abd al-Aziz, Damascus",
+      "text": "Ruled the empire, kept almost none of it",
+      "src": "Early Umayyad chronicles, 717 to 720"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(1) text:nth-of-type(1)",
+      "at": 2,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(1) text:nth-of-type(2)",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(1) text:nth-of-type(3)",
+      "at": 4,
+      "for": 1.6
+    },
+    {
+      "do": "trace",
+      "on": "path.rd",
+      "at": 5,
+      "for": 2.4
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(3)",
+      "at": 5,
+      "for": 2.4
+    },
+    {
+      "do": "pulse",
+      "on": "text:nth-of-type(2)",
+      "at": 6,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(3)",
+      "at": 6,
+      "for": 2.0
+    },
+    {
+      "do": "travel",
+      "on": "path.rd",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

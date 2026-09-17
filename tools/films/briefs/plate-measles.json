@@ -1,0 +1,103 @@
+{
+  "slug": "short-measles",
+  "title": "One fever, two names",
+  "theme": "nutvoid",
+  "plate": "one-patient-with-fever-and-a-rash-and",
+  "note": "Al-Razi separated smallpox from measles symptom by symptom, founding the practice of differential diagnosis.",
+  "room": "heroes.html#f-medicine",
+  "research": {
+    "quotes": "heroes.html#f-medicine: 'Abu Bakr al-Razi, about 865 to 925, Rayy and Baghdad.' 'His short book on smallpox and measles... took two fevers everyone lumped together and described, symptom by careful symptom, how they differ.' 'a book called Doubts About Galen, questioning antiquity's greatest medical authority wherever observation disagreed with him.' 'That is the ancestor of every differential diagnosis.'",
+    "retell": "A physician named Abu Bakr al-Razi noticed that smallpox and measles were being treated as one disease, so he carefully compared their symptoms and split them into two, and doctors still diagnose by comparing evidence that way today."
+  },
+  "lines": [
+    {
+      "text": "One doctor first told two fevers apart",
+      "sub": "smallpox and measles, both fever and rash"
+    },
+    {
+      "text": "Rayy and Baghdad, about the year 900",
+      "sub": "a physician named Abu Bakr al-Razi"
+    },
+    {
+      "text": "One fever and rash look like one disease",
+      "steps": 2
+    },
+    {
+      "text": "He sorts them into two: smallpox",
+      "steps": 4
+    },
+    {
+      "text": "Measles sits on the other side",
+      "steps": 2
+    },
+    {
+      "text": "The same questions get asked of each",
+      "sub": "fever pattern, rash type, timing",
+      "steps": 2
+    },
+    {
+      "text": "He judges by evidence, not by habit",
+      "sub": "and he writes the answer down each time",
+      "steps": 2
+    },
+    {
+      "text": "Every diagnosis today follows that split"
+    },
+    {
+      "eyebrow": "Abu Bakr al-Razi, Baghdad",
+      "text": "Diagnosis by evidence: still his method",
+      "src": "On Smallpox and Measles, about 865 to 925"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(1)",
+      "at": 2,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(1)",
+      "at": 2,
+      "for": 1.8
+    },
+    {
+      "do": "trace",
+      "on": "path.rd",
+      "at": 3,
+      "for": 2.2
+    },
+    {
+      "do": "glow",
+      "on": "path.rd",
+      "at": 3,
+      "for": 2.4
+    },
+    {
+      "do": "glow",
+      "on": "g.mo-pop",
+      "at": 4,
+      "for": 2.0
+    },
+    {
+      "do": "glow",
+      "on": "g.ln.thin",
+      "at": 5,
+      "for": 2.2
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(2)",
+      "at": 6,
+      "for": 2.4
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(4)",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

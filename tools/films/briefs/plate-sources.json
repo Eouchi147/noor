@@ -1,0 +1,117 @@
+{
+  "slug": "short-sources",
+  "title": "Four sources, one answer",
+  "theme": "nutvoid",
+  "plate": "foursources",
+  "note": "Al-Shafi'i ordered the sources of Islamic law into one shared grammar that jurists still argue by.",
+  "room": "heroes.html#ash-shafii",
+  "research": {
+    "quotes": "heroes.html#ash-shafii: 'ar-Risala, the Epistle: the first systematic book on usul al-fiqh... It set out the sources of law, Qur'an, the Sunnah... consensus, and analogy, and how they rank and interlock.' 'In 814 CE he moved to Egypt, and there did the thing scholars fear most: he publicly revised himself... his school transmits an old opinion and a new opinion side by side.' 'Before Shafi'i, brilliant jurists disagreed. After him, they disagreed by shared rules.'",
+    "retell": "A jurist named Ash-Shafi'i figured out a fixed order for checking Islamic law, the Qur'an first, then the Prophet's example, then scholarly agreement, then similar cases, and judges still follow that same order today."
+  },
+  "lines": [
+    {
+      "text": "Every Islamic ruling follows four steps",
+      "sub": "always in the same fixed order",
+      "steps": 4
+    },
+    {
+      "text": "Cairo, Egypt, around the year 814",
+      "sub": "a jurist named Ash-Shafi'i arrives",
+      "steps": 4
+    },
+    {
+      "text": "First, what does the Qur'an itself say",
+      "steps": 1
+    },
+    {
+      "text": "Then the Sunnah, the Prophet's practice",
+      "steps": 1
+    },
+    {
+      "text": "Then ijma, what the scholars agreed",
+      "steps": 1
+    },
+    {
+      "text": "Then qiyas, likeness to a case settled",
+      "steps": 1
+    },
+    {
+      "text": "Before him, jurists just disagreed",
+      "sub": "after him, they disagreed by shared rules"
+    },
+    {
+      "text": "Every school of law still uses his four",
+      "sub": "Qur'an, Sunnah, agreement, then likeness",
+      "steps": 5
+    },
+    {
+      "eyebrow": "Ash-Shafi'i, Cairo",
+      "text": "He wrote the grammar for the argument",
+      "src": "Ar-Risala, principles of law, 767 to 820"
+    }
+  ],
+  "motion": [
+    {
+      "do": "pulse",
+      "on": "rect:nth-of-type(1)",
+      "at": 2,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(2)",
+      "at": 2,
+      "for": 1.8
+    },
+    {
+      "do": "pulse",
+      "on": "rect:nth-of-type(2)",
+      "at": 3,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(3)",
+      "at": 3,
+      "for": 1.8
+    },
+    {
+      "do": "pulse",
+      "on": "rect:nth-of-type(3)",
+      "at": 4,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(4)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "pulse",
+      "on": "rect:nth-of-type(4)",
+      "at": 5,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(5)",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "travel",
+      "on": "g.rd",
+      "at": 7,
+      "for": 3.2,
+      "times": 1
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(6)",
+      "at": 7,
+      "for": 2.6
+    }
+  ]
+}

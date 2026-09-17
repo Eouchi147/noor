@@ -1,0 +1,92 @@
+{
+  "slug": "short-sutures",
+  "title": "The stitch the body keeps",
+  "theme": "nutvoid",
+  "plate": "instruments-drawn-in-al-tasrif-around",
+  "note": "Al-Zahrawi drew two hundred surgical instruments and introduced dissolving sutures still used today.",
+  "room": "heroes.html#f-medicine",
+  "research": {
+    "quotes": "heroes.html#f-medicine: 'Abu al-Qasim al-Zahrawi, about 936 to 1013, Madinat al-Zahra, near Cordoba.' 'al-Tasrif... Around two hundred of them, scalpels, forceps, hooks, bone saws... illustrated precisely enough that a surgeon far away could have them made.' 'a surgeon who does not know anatomy has no business holding a blade.' 'sutures of catgut, thread made from animal intestine, which the body slowly and safely absorbs... Dissolving stitches still work on his principle today.'",
+    "retell": "A surgeon named Al-Zahrawi drew about two hundred surgical tools so precisely that other surgeons could copy them, and he also invented dissolving stitches that surgeons still use today."
+  },
+  "lines": [
+    {
+      "text": "Your surgeon's tools were drawn in 1000",
+      "sub": "drawn precisely enough for surgeons to copy",
+      "steps": 1
+    },
+    {
+      "text": "Cordoba, Spain, about the year 1000",
+      "sub": "a surgeon named Abu al-Qasim al-Zahrawi"
+    },
+    {
+      "text": "He draws each tool, precise enough to copy",
+      "steps": 8
+    },
+    {
+      "text": "Centuries later, the shapes sit on a tray",
+      "steps": 4
+    },
+    {
+      "text": "He stitches wounds with thread of catgut",
+      "sub": "thread made from animal gut",
+      "steps": 1
+    },
+    {
+      "text": "The body slowly absorbs the thread itself"
+    },
+    {
+      "text": "Old thread had to be cut back out",
+      "sub": "his stitches leave with no second cut"
+    },
+    {
+      "text": "Dissolving stitches work on his principle"
+    },
+    {
+      "eyebrow": "Al-Zahrawi, Cordoba",
+      "text": "He drew around two hundred instruments",
+      "src": "Al-Tasrif, about the year 1000"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(2), g:nth-of-type(3), g:nth-of-type(4), g:nth-of-type(5)",
+      "at": 2,
+      "for": 2.6,
+      "stagger": 0.2
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(6), g:nth-of-type(7)",
+      "at": 3,
+      "for": 2.2,
+      "stagger": 0.2
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(8) text:nth-of-type(1)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(8) text:nth-of-type(2)",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(8) text:nth-of-type(3)",
+      "at": 6,
+      "for": 2.0
+    },
+    {
+      "do": "travel",
+      "on": "path.rd",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

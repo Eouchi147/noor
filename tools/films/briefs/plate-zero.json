@@ -4,14 +4,19 @@
   "theme": "nutvoid",
   "plate": "placevalue",
   "note": "Sifr, the empty: zero as a number you can calculate with.",
+  "room": "heroes.html#f-mathematics",
+  "research": {
+    "quotes": "heroes.html#f-mathematics: 'The ten digits on your keyboard were born in India, where mathematicians had learned to treat zero not as a blank but as a number you could calculate with.' 'In the eighth century these numerals reached Baghdad with Indian astronomical texts, and Muslim scholars recognized what they held.' 'Al-Khwarizmi wrote the handbook on reckoning with them, the book whose Latin translation carried the digits west.' 'The Arabic word sifr, meaning empty, named the zero, and later gave European languages both cipher and zero itself.' 'Every price tag, phone number, and line of code is written in the digits that came down this road.'",
+    "retell": "A mathematician named Al-Khwarizmi helped spread the idea of zero as a real number from India through Baghdad, and without it the numbers used for prices and computer code today would not work."
+  },
   "lines": [
     {
       "text": "Zero is not nothing. It is a number",
       "steps": 1
     },
     {
-      "text": "From India to Baghdad, the 700s",
-      "sub": "tested there, taught there"
+      "text": "Baghdad, Iraq, the 800s",
+      "sub": "al-Khwarizmi, a mathematician, writes"
     },
     {
       "text": "Try writing three hundred and seven",
@@ -27,7 +32,7 @@
       "steps": 3
     },
     {
-      "text": "Arabic called it sifr, the empty",
+      "text": "Arabic calls it sifr, the empty",
       "sub": "which became cipher, and zero",
       "steps": 4
     },
@@ -42,7 +47,7 @@
     },
     {
       "eyebrow": "India, Baghdad, Damascus, Pisa",
-      "text": "Three civilisations, one gift",
+      "text": "From India, through Baghdad, to the world",
       "src": "al-Uqlidisi, about 952; Fibonacci, 1202"
     }
   ],

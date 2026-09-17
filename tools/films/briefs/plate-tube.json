@@ -1,0 +1,99 @@
+{
+  "slug": "short-tube",
+  "title": "Nine tubes, bundled like reeds",
+  "theme": "nutvoid",
+  "plate": "three-towers-the-old-way-with-its-stre",
+  "note": "Fazlur Rahman Khan moved a skyscraper's strength to its skin, and modern towers still stand on that idea.",
+  "room": "heroes.html#fazlur-rahman-khan",
+  "research": {
+    "quotes": "heroes.html#fazlur-rahman-khan: 'He was born in Dhaka in 1929 CE.' 'he arrived in America in 1952 on scholarship.' 'braced on the outside for the John Hancock Center in 1969, bundled like a handful of reeds for the Sears Tower in 1973.' 'warning that the technical man must not be lost in his own technology.' 'Nearly every very tall building raised anywhere since rests on his structural ideas.'",
+    "retell": "An engineer named Fazlur Rahman Khan figured out how to make a skyscraper's outer walls hold up the whole building and fight the wind, and almost every super tall tower built since uses his idea."
+  },
+  "lines": [
+    {
+      "text": "One idea reshaped every tall building",
+      "sub": "moving the strength to the outer walls",
+      "steps": 1
+    },
+    {
+      "text": "Dhaka, then Chicago, arriving in 1952",
+      "sub": "an engineer named Fazlur Rahman Khan"
+    },
+    {
+      "text": "The old way piles heavy steel inside"
+    },
+    {
+      "text": "In 1969 the tube moves it outside",
+      "steps": 3
+    },
+    {
+      "text": "In 1973 nine tubes bundle like reeds",
+      "sub": "nine columns tied together for strength",
+      "steps": 1
+    },
+    {
+      "text": "The outer skin grips the wind instead",
+      "steps": 10
+    },
+    {
+      "text": "Yet he warned against his own fame",
+      "sub": "the engineer must not be lost in his tools",
+      "steps": 1
+    },
+    {
+      "text": "Nearly every supertall tower rests on it",
+      "steps": 1
+    },
+    {
+      "eyebrow": "Fazlur Rahman Khan, Chicago",
+      "text": "The bundled tube reached the sky in 1973",
+      "src": "Sears Tower, completed in 1973"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(3)",
+      "at": 3,
+      "for": 2.0
+    },
+    {
+      "do": "pulse",
+      "on": "g:nth-of-type(2)",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(5)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "trace",
+      "on": "path.rd",
+      "at": 5,
+      "for": 2.6,
+      "stagger": 0.08
+    },
+    {
+      "do": "glow",
+      "on": "path.rd",
+      "at": 5,
+      "for": 2.8
+    },
+    {
+      "do": "glow",
+      "on": "g.mo",
+      "at": 7,
+      "for": 2.4
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(6)",
+      "at": 7,
+      "for": 3.4,
+      "times": 1
+    }
+  ]
+}

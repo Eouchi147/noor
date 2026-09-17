@@ -4,9 +4,15 @@
   "theme": "nutvoid",
   "plate": "goldprice",
   "note": "Mansa Musa's 1324 pilgrimage and the Cairo gold market.",
+  "room": "heroes.html#mansa-musa",
+  "research": {
+    "quotes": "heroes.html#mansa-musa: 'in 1324 CE he went on hajj, the pilgrimage to Makkah, in a style no one has matched before or since.' 'giving so lavish that the price of gold in Cairo sagged and took years to recover.' 'He came back with scholars, jurists, and the Andalusian architect Abu Ishaq as-Sahili, and he spent on institutions: the Djinguereber mosque in Timbuktu.' 'The gold settled back into markets and vaults.' Person meta line: 'Mansa Musa, around 1280 to around 1337 CE · Mali Empire, West Africa.'",
+    "retell": "Mansa Musa, the king of Mali, gave away so much gold on his way to Mecca in 1324 that it crashed the price of gold in Cairo for years, but he came home with scholars who helped turn Timbuktu into a city of books."
+  },
   "lines": [
     {
-      "text": "One man's giving broke a market",
+      "text": "One pilgrim's gold crashed a market",
+      "sub": "Cairo's gold price sank for years",
       "steps": 1
     },
     {
@@ -15,7 +21,7 @@
       "steps": 1
     },
     {
-      "text": "He is walking to Makkah",
+      "text": "His caravan is crossing to Makkah",
       "sub": "and giving gold away the whole way",
       "steps": 4
     },
@@ -24,7 +30,7 @@
       "steps": 1
     },
     {
-      "text": "It took years to climb back",
+      "text": "It takes years to climb back",
       "steps": 1
     },
     {
@@ -32,16 +38,16 @@
       "steps": 1
     },
     {
-      "text": "He went home with scholars and jurists",
+      "text": "He returns home with scholars and jurists",
       "sub": "and an architect from Spain",
       "steps": 1
     },
     {
-      "text": "And built Timbuktu into a city of books"
+      "text": "He builds Timbuktu into a city of books"
     },
     {
       "eyebrow": "Mansa Musa, Mali",
-      "text": "The gold went back into vaults",
+      "text": "The gold settled back into vaults",
       "src": "Cairo chronicles; the Catalan Atlas, 1375"
     }
   ],

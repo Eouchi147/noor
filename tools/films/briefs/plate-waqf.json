@@ -1,0 +1,111 @@
+{
+  "slug": "short-waqf",
+  "title": "One gift, still paying",
+  "theme": "nutvoid",
+  "plate": "one-endowment-made-in-859-still-paying",
+  "note": "Fatima al-Fihri's ninth century endowment in Fez has outlived every dynasty that rose and fell around it.",
+  "room": "heroes.html#fatima-al-fihri",
+  "research": {
+    "quotes": "heroes.html#fatima-al-fihri: 'In 859 CE Fatima founded al-Qarawiyyin, named for her family's home city, overseeing the project herself.' 'Dynasties rose and fell around it, roughly forty of them by some counts, and the lesson circles simply continued.' 'she built something so much larger than her biography that the building survived and the biography thinned.' 'wealth converted into a school that has outlived every dynasty around it.'",
+    "retell": "A woman named Fatima al-Fihri gave her inheritance to found a mosque school in Fez in 859, and it has kept teaching students ever since, longer than any of the roughly forty dynasties that have risen and fallen around it."
+  },
+  "lines": [
+    {
+      "text": "One gift never stopped paying out",
+      "sub": "founded in 859, still teaching today",
+      "steps": 1
+    },
+    {
+      "text": "Fez, Morocco, in the year 859",
+      "sub": "a founder, Fatima al-Fihri, gives her wealth"
+    },
+    {
+      "text": "She endows a mosque with her inheritance"
+    },
+    {
+      "text": "Dynasties rise, then fall, again and again",
+      "steps": 6
+    },
+    {
+      "text": "Beneath them, one line runs unbroken",
+      "sub": "the school itself just keeps teaching",
+      "steps": 3
+    },
+    {
+      "text": "It is called waqf, an endowment forever",
+      "steps": 3
+    },
+    {
+      "text": "Her own story thinned. The school did not",
+      "sub": "recognized as the oldest still teaching",
+      "steps": 4
+    },
+    {
+      "text": "Her gift still outlives every dynasty",
+      "steps": 2
+    },
+    {
+      "eyebrow": "Fatima al-Fihri, Fez",
+      "text": "She endowed it, and it never stopped",
+      "src": "Al-Qarawiyyin, founded 859, still teaching"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(1)",
+      "at": 3,
+      "for": 2.4
+    },
+    {
+      "do": "pulse",
+      "on": "text:nth-of-type(2)",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(2)",
+      "at": 4,
+      "for": 2.0
+    },
+    {
+      "do": "glow",
+      "on": "circle.nd",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(1)",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "pulse",
+      "on": "g.mo",
+      "at": 6,
+      "for": 2.6,
+      "stagger": 0.2
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(5)",
+      "at": 6,
+      "for": 2.4
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(2)",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(4)",
+      "at": 7,
+      "for": 2.2
+    }
+  ]
+}

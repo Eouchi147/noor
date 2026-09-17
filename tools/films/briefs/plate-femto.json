@@ -1,0 +1,105 @@
+{
+  "slug": "short-femto",
+  "title": "The flash between atoms",
+  "theme": "nutvoid",
+  "plate": "three-frames-of-a-chemical-reaction-th",
+  "note": "Ahmed Zewail built lasers fast enough to film a chemical bond breaking, and won Egypt's first science Nobel.",
+  "room": "heroes.html#f-our-century",
+  "research": {
+    "quotes": "heroes.html#f-our-century: 'Ahmed Zewail, born in Damanhur, Egypt, educated in Alexandria and then in America.' 'you could know the before and the after, never the during.' 'At Caltech in the 1980s his team learned to fire laser pulses brief enough to catch molecules in mid transformation.' 'In 1999 the Nobel committee gave him the chemistry prize alone, an undivided honor.' 'Chemistry acquired slow motion.'",
+    "retell": "A chemist named Ahmed Zewail built a camera made of laser flashes so fast it could catch atoms in the exact middle of breaking apart, giving chemistry its own slow motion replay."
+  },
+  "lines": [
+    {
+      "text": "A camera once caught a bond breaking",
+      "sub": "the bond between two atoms lets go",
+      "steps": 1
+    },
+    {
+      "text": "Egypt, then California, the 1980s",
+      "sub": "a chemist named Ahmed Zewail, 1946 to 2016"
+    },
+    {
+      "text": "Two atoms start out joined by a bond",
+      "steps": 1
+    },
+    {
+      "text": "The middle frame catches the moment itself",
+      "sub": "the instant the bond actually snaps",
+      "steps": 4
+    },
+    {
+      "text": "Then the same two atoms sit apart",
+      "steps": 1
+    },
+    {
+      "text": "The flash is briefer than the change",
+      "steps": 5
+    },
+    {
+      "text": "Chemists once could not see the during",
+      "sub": "only ever the before and the after",
+      "steps": 1
+    },
+    {
+      "text": "Chemistry still has its own slow motion",
+      "steps": 5
+    },
+    {
+      "eyebrow": "Ahmed Zewail, Caltech",
+      "text": "He founded femtochemistry, filming atoms",
+      "src": "Nobel Prize in Chemistry, 1999"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(2)",
+      "at": 2,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(3)",
+      "at": 3,
+      "for": 2.0
+    },
+    {
+      "do": "pulse",
+      "on": "g:nth-of-type(3)",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(4)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(1)",
+      "at": 5,
+      "for": 2.2
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(5)",
+      "at": 6,
+      "for": 2.0
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(6)",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(2)",
+      "at": 7,
+      "for": 2.2
+    }
+  ]
+}

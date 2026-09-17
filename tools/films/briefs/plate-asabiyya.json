@@ -1,0 +1,101 @@
+{
+  "slug": "short-asabiyya",
+  "title": "The curve every empire follows",
+  "theme": "nutvoid",
+  "plate": "a-curve-showing-a-group-with-strong-so",
+  "note": "Ibn Khaldun charted how group solidarity carries a dynasty to power and then lets it fall.",
+  "room": "heroes.html#f-word-and-page",
+  "research": {
+    "quotes": "heroes.html#f-word-and-page: 'Ibn Khaldun, 1332 to 1406, Tunis to Cairo.' 'he withdrew to a castle in Algeria... His Muqaddimah, the Introduction, written in 1377.' 'Asabiyya, group feeling, the solidarity of people bound together, lets a hardy folk take power; comfort then dissolves that solidarity over the generations until a hungrier group replaces them.' 'a report that violates the nature of society should be doubted, whoever tells it.'",
+    "retell": "A historian named Ibn Khaldun found that a united people takes power, gets comfortable, loses its unity and is replaced by a hungrier united people, and nations still rise and fall that way."
+  },
+  "lines": [
+    {
+      "text": "Why every empire falls the same way",
+      "steps": 2,
+      "sub": "a pattern found 650 years ago"
+    },
+    {
+      "text": "In Algeria, the year 1377",
+      "sub": "Ibn Khaldun, a historian, writes a book",
+      "steps": 5
+    },
+    {
+      "text": "A united people rises and takes power",
+      "steps": 1,
+      "sub": "their strength: they stick together"
+    },
+    {
+      "text": "In power, life gets comfortable",
+      "steps": 1
+    },
+    {
+      "text": "Generation after generation, it fades",
+      "steps": 1
+    },
+    {
+      "text": "A hungrier, united people takes over",
+      "steps": 1
+    },
+    {
+      "text": "Before him, history was just stories",
+      "sub": "he made it a science with laws",
+      "steps": 1
+    },
+    {
+      "text": "Nations still rise and fall his way"
+    },
+    {
+      "eyebrow": "Ibn Khaldun, Tunis to Cairo",
+      "text": "He called that unity asabiyya",
+      "src": "The Muqaddimah, 1377",
+      "sub": "group feeling, the bond that holds people"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(1)",
+      "at": 2,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(2)",
+      "at": 3,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(3)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(4)",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "g.mo text:nth-of-type(5)",
+      "at": 6,
+      "for": 1.8
+    },
+    {
+      "do": "travel",
+      "on": "g.rd",
+      "at": 7,
+      "for": 3.4,
+      "times": 1
+    },
+    {
+      "do": "glow",
+      "on": "circle.nd",
+      "at": 7,
+      "for": 2.2,
+      "stagger": 0.15
+    }
+  ]
+}

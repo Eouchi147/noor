@@ -4,6 +4,11 @@
   "theme": "nutvoid",
   "plate": "teachers",
   "note": "Nana Asma'u's yan-taru: a self-replicating rural school.",
+  "room": "heroes.html#nana-asmau",
+  "research": {
+    "quotes": "heroes.html#nana-asmau: 'She was born in 1793 CE, daughter of Usman dan Fodio.' 'she built the yan-taru, the associates: a network in which trained women leaders called jajis traveled from Sokoto to the villages and back, carrying her teaching poems as curriculum.' 'Verse was the technology, composed in the languages women actually spoke, easy to memorize.' 'Village women came to Sokoto in groups, studied, and went home as teachers themselves. It was a school with no building.' 'In northern Nigeria today, learned women leaders still carry the title jaji, and schools still carry her name.'",
+    "retell": "A scholar named Nana Asma'u trained women teachers who walked from village to village teaching other women poems by heart in their own language, and people still use her title for teachers today."
+  },
   "lines": [
     {
       "text": "A school with no building at all",
@@ -11,11 +16,11 @@
     },
     {
       "text": "Sokoto, northern Nigeria, the 1830s",
-      "sub": "built by a scholar, Nana Asma'u",
+      "sub": "a scholar, Nana Asma'u, builds it",
       "steps": 2
     },
     {
-      "text": "The countryside is full of women",
+      "text": "The villages are full of unschooled women",
       "steps": 1
     },
     {
@@ -28,7 +33,7 @@
       "steps": 6
     },
     {
-      "text": "Learned by heart, in her language"
+      "text": "They memorize her poems in their tongue"
     },
     {
       "text": "Village women come in, study",
@@ -36,12 +41,12 @@
       "steps": 5
     },
     {
-      "text": "It ran for generations",
-      "sub": "and outlasted the state that held it"
+      "text": "Her school outlasted the state itself",
+      "sub": "and schools still carry her name"
     },
     {
       "eyebrow": "Nana Asma'u, Sokoto",
-      "text": "Its leaders are still called jaji",
+      "text": "jaji: her title for a trained teacher",
       "src": "She wrote over sixty works, died 1864"
     }
   ],

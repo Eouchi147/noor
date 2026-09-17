@@ -4,14 +4,19 @@
   "theme": "nutvoid",
   "plate": "sextant",
   "note": "Ulugh Beg's forty metre sextant and the Samarkand star catalogue.",
+  "room": "heroes.html#f-sky-and-sea",
+  "research": {
+    "quotes": "heroes.html#f-sky-and-sea: 'In Samarkand in the 1420s, the astronomer was the king. Ulugh Beg, Tamerlane's grandson, sank a sextant of some forty meters' radius into bedrock, a stone arc so vast it read the sky to fractions of an arcminute.' 'His team fixed the positions of about a thousand stars, the first great catalog in over a millennium built from fresh observation rather than inherited numbers.' 'Ulugh Beg was murdered in 1449 and his observatory was pulled down, but the catalog escaped, reaching Oxford's presses by 1665.' 'Instruments can be demolished; numbers, once true, keep traveling.'",
+    "retell": "A king named Ulugh Beg built a giant stone instrument in Samarkand to measure the stars precisely, and even after he was killed and his observatory destroyed, his star catalogue survived and reached Oxford."
+  },
   "lines": [
     {
-      "text": "A king measured the sky in stone",
+      "text": "A king measured the sky with a stone arc",
       "steps": 1
     },
     {
       "text": "Samarkand, in Uzbekistan, the 1420s",
-      "sub": "the king is Ulugh Beg, an astronomer",
+      "sub": "Ulugh Beg, a king and astronomer, rules",
       "steps": 1
     },
     {
@@ -20,23 +25,23 @@
       "steps": 2
     },
     {
-      "text": "Bigger means finer",
+      "text": "A bigger instrument reads a finer sky",
       "sub": "a minute of sky is a centimetre of stone",
       "steps": 1
     },
     {
-      "text": "He paid a salaried staff",
-      "sub": "and scholars came from many lands",
+      "text": "His team measures the year's length",
+      "sub": "to within about one minute",
       "steps": 6
     },
     {
-      "text": "They fixed a thousand stars",
+      "text": "They fix a thousand stars",
       "sub": "the first fresh catalogue in 1,000 years",
       "steps": 1
     },
     {
       "text": "He was killed, the tower pulled down",
-      "sub": "the numbers got to Oxford anyway"
+      "sub": "but the numbers still reached Oxford"
     },
     {
       "eyebrow": "Ulugh Beg, Samarkand",

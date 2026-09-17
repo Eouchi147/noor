@@ -4,6 +4,7 @@
   "theme": "nutvoid",
   "plate": "darkroom",
   "note": "Ibn al-Haytham's dark room. The picture lands upside down, and seeing is light arriving rather than rays going out.",
+  "room": "heroes.html#f-seeing",
   "lines": [
     {
       "text": "Your camera is named after a room",
@@ -11,7 +12,7 @@
     },
     {
       "text": "Cairo, Egypt, 1020",
-      "sub": "here, Ibn al-Haytham lights a candle",
+      "sub": "a scientist, Ibn al-Haytham, lights a candle",
       "steps": 2
     },
     {
@@ -24,7 +25,7 @@
       "steps": 3
     },
     {
-      "text": "Upside down",
+      "text": "The picture lands upside down",
       "sub": "the top crossed over at the hole",
       "steps": 1
     },

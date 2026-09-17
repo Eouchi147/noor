@@ -4,14 +4,20 @@
   "theme": "nutvoid",
   "plate": "hospital",
   "note": "The bimaristan: endowed, free, teaching hospitals.",
+  "room": "heroes.html#f-medicine",
+  "research": {
+    "quotes": "heroes.html#f-medicine: 'Al-Razi ran hospitals in Rayy and Baghdad and wrote with a clinical honesty rare in any age.' 'The bimaristan, a Persian word meaning place of the sick, was the Islamic world's hospital, and it ran on a radical rule: no one is turned away.' 'Funded by waqf, a charitable endowment set aside in perpetuity, the great hospitals of Baghdad, Damascus, and Cairo treated rich and poor, resident and stranger, of any faith, without a bill.' 'separate wards for fevers, wounds, and illnesses of the mind, pharmacies on site, physicians on rotation, students trailing their teachers from bed to bed.' 'Cairo's al-Mansuri hospital, opened in 1284, offered music for the sleepless.' 'the ancestor of the teaching hospital and of the conviction that medicine is a public trust.'",
+    "retell": "A doctor named al-Razi worked in early hospitals that treated everyone for free no matter their religion or wealth, and that same idea of a free teaching hospital is still followed by hospitals today."
+  },
   "lines": [
     {
       "text": "A hospital that sent nobody a bill",
+      "sub": "free care in Baghdad, Damascus and Cairo",
       "steps": 2
     },
     {
-      "text": "Baghdad, Damascus, Cairo, from the 800s",
-      "sub": "they called it the bimaristan"
+      "text": "Baghdad, Iraq, the 800s",
+      "sub": "a doctor named Al-Razi works here"
     },
     {
       "text": "Wards for fevers, and for wounds",
@@ -28,7 +34,7 @@
       "steps": 5
     },
     {
-      "text": "Rich and poor, any faith, any country",
+      "text": "Everyone is treated, any faith or country",
       "steps": 3
     },
     {
@@ -36,10 +42,10 @@
       "steps": 2
     },
     {
-      "text": "Cairo gave music to the sleepless"
+      "text": "Every teaching hospital still follows this"
     },
     {
-      "eyebrow": "The bimaristan",
+      "eyebrow": "Bimaristan: place of the sick",
       "text": "The ancestor of the teaching hospital",
       "src": "al-Mansuri, Cairo, opened 1284"
     }

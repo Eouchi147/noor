@@ -4,9 +4,15 @@
   "theme": "nutvoid",
   "plate": "checkcopy",
   "note": "Karima al-Marwaziyya and the ijazah: verified transmission.",
+  "room": "heroes.html#karima-al-marwaziyya",
+  "research": {
+    "quotes": "heroes.html#karima-al-marwaziyya: 'she made them collate. A student's manuscript had to be read back against her own verified original, error by error, before she would certify it with her ijazah, her formal license to transmit.' 'She died in Makkah around 1070 CE, close to a hundred years old, having spent perhaps half a century as a living checkpoint.' 'some classical chains of the Sahih recited in mosques pass through her name.' Person meta line: 'Karima al-Marwaziyya, around 975 to 1070 CE · Merv, then Makkah.'",
+    "retell": "A scholar named Karima al-Marwaziyya spent about fifty years in Makkah making students read their handwritten copies of a famous hadith book back to her out loud so she could catch every mistake before she would sign off on them."
+  },
   "lines": [
     {
-      "text": "A book you were not allowed to copy",
+      "text": "One woman checked every copy by ear",
+      "sub": "every copy read back, out loud, line by line",
       "steps": 1
     },
     {
@@ -15,16 +21,16 @@
     },
     {
       "text": "Karima holds the most trusted copy",
-      "sub": "of the most checked book after the Qur'an",
+      "sub": "the most checked book after the Qur'an",
       "steps": 1
     },
     {
-      "text": "Copying by hand puts errors in",
+      "text": "Copying by hand lets errors creep in",
       "steps": 4
     },
     {
       "text": "So you read yours back to her",
-      "sub": "out loud, line by line, against hers",
+      "sub": "out loud, checked line by line",
       "steps": 4
     },
     {
@@ -32,18 +38,18 @@
       "steps": 1
     },
     {
-      "text": "Only then would she sign your licence",
+      "text": "Only then does she sign your licence",
       "steps": 2
     },
     {
       "text": "Fifty years as the checkpoint",
-      "sub": "chains still pass through her",
+      "sub": "the hadith you hear still pass through her",
       "steps": 1
     },
     {
-      "eyebrow": "Karima al-Marwaziyya",
+      "eyebrow": "Karima al-Marwaziyya, Makkah",
       "text": "She died in Makkah, near a hundred",
-      "src": "al-Khatib al-Baghdadi read it back to her"
+      "src": "Sahih al-Bukhari, her checked copy, 1070"
     }
   ],
   "motion": [

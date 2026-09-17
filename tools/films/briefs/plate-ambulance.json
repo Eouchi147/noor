@@ -1,0 +1,112 @@
+{
+  "slug": "short-ambulance",
+  "title": "One van, then a nation",
+  "theme": "nutvoid",
+  "plate": "one-battered-van-in-karachi-and-the-am",
+  "note": "Abdul Sattar Edhi grew one donated van into the world's largest volunteer ambulance service, asking no one's faith.",
+  "room": "heroes.html#abdul-sattar-edhi",
+  "research": {
+    "quotes": "heroes.html#abdul-sattar-edhi: 'in 1951 bought a tiny dispensary.' 'A donation bought a battered old van, and Edhi himself drove it to accidents, floods, and riots. From that van grew what Guinness World Records recognized as the world's largest volunteer ambulance network.' 'homes for orphans, the disabled, the mentally ill, and abandoned women; kitchens; morgues.' 'because the ambulance is more Muslim than you.'",
+    "retell": "A poor cloth seller named Edhi turned one donated van into the world's largest volunteer ambulance fleet that helps anyone, whatever their faith."
+  },
+  "lines": [
+    {
+      "text": "One old van became a giant rescue fleet",
+      "steps": 1,
+      "sub": "the largest volunteer fleet on earth"
+    },
+    {
+      "text": "Karachi, Pakistan, 1951",
+      "sub": "Abdul Sattar Edhi, a poor cloth seller"
+    },
+    {
+      "text": "He opens a tiny free clinic",
+      "steps": 4
+    },
+    {
+      "text": "A donation buys one battered van",
+      "steps": 4,
+      "sub": "Edhi drives it himself to every disaster"
+    },
+    {
+      "text": "From that van grows a whole fleet",
+      "steps": 3
+    },
+    {
+      "text": "Outside each centre he puts a cradle",
+      "steps": 2,
+      "sub": "so no unwanted baby is ever killed"
+    },
+    {
+      "text": "Critics asked why he carried non Muslims",
+      "sub": "the ambulance is more Muslim than you",
+      "steps": 1
+    },
+    {
+      "text": "His ambulances still ask no one's faith",
+      "steps": 1
+    },
+    {
+      "eyebrow": "Abdul Sattar Edhi, Karachi",
+      "text": "He owned two sets of clothes",
+      "src": "The Edhi Foundation, since 1951"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "g.rd",
+      "at": 2,
+      "for": 2.0
+    },
+    {
+      "do": "trace",
+      "on": "g.ln.thin",
+      "at": 3,
+      "for": 2.2
+    },
+    {
+      "do": "glow",
+      "on": "g.ln.thin",
+      "at": 3,
+      "for": 2.4
+    },
+    {
+      "do": "pulse",
+      "on": "path.nd",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(3)",
+      "at": 4,
+      "for": 2.0
+    },
+    {
+      "do": "glow",
+      "on": "g.mo",
+      "at": 5,
+      "for": 2.0
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(1)",
+      "at": 6,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(2)",
+      "at": 7,
+      "for": 2.0
+    },
+    {
+      "do": "travel",
+      "on": "path.nd",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

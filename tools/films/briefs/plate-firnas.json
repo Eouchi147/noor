@@ -1,0 +1,93 @@
+{
+  "slug": "short-firnas",
+  "title": "The leap, held lightly",
+  "theme": "nutvoid",
+  "plate": "a-winged-figure-gliding-from-a-height",
+  "note": "Abbas ibn Firnas is said to have glided from a height in Cordoba, a story the house holds lightly for its late written record.",
+  "room": "heroes.html#f-engineering",
+  "research": {
+    "quotes": "heroes.html#f-engineering (The leap of Abbas ibn Firnas): 'Abbas ibn Firnas, about 810 to 887, Cordoba.' 'built himself wings of silk and feathers, leapt from a height before a watching crowd, glided some distance, and crash landed, hurting his back.' 'six centuries before Leonardo sketched his machines.' 'the court poet Mu'min ibn Said mocked him for flying faster than the phoenix.' 'A rival's joke is not a flight log.' 'The full account appears in al-Maqqari, writing about seven hundred years later.'",
+    "retell": "An inventor named Abbas ibn Firnas may have glided through the air on homemade wings six hundred years before anyone else tried, but the only evidence from his own time is a rival's mocking joke, and the full story was not written down until centuries later."
+  },
+  "lines": [
+    {
+      "text": "A man tried to fly six centuries early",
+      "sub": "six hundred years before Leonardo's wings",
+      "steps": 1
+    },
+    {
+      "text": "Cordoba, about 810 to 887",
+      "sub": "an inventor named Abbas ibn Firnas leaps",
+      "steps": 1
+    },
+    {
+      "text": "He builds wings of silk and feathers",
+      "steps": 3
+    },
+    {
+      "text": "He leaps from a height before a crowd"
+    },
+    {
+      "text": "He glides some distance through the air",
+      "steps": 1
+    },
+    {
+      "text": "Then he lands hard, hurting his back",
+      "steps": 3
+    },
+    {
+      "text": "Only a rival's joke survives from his time",
+      "sub": "the full tale was written centuries later",
+      "steps": 3
+    },
+    {
+      "text": "A rival's joke is not a flight log",
+      "sub": "a poet mocked him for flying like a bird",
+      "steps": 2
+    },
+    {
+      "eyebrow": "Abbas ibn Firnas, Cordoba",
+      "text": "We hold this story lightly, not proven",
+      "src": "Al-Maqqari's account, about 700 years later"
+    }
+  ],
+  "motion": [
+    {
+      "do": "trace",
+      "on": "path.ln",
+      "at": 2,
+      "for": 1.8
+    },
+    {
+      "do": "pulse",
+      "on": "g:nth-of-type(2)",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "trace",
+      "on": "g:nth-of-type(3)",
+      "at": 4,
+      "for": 2.0
+    },
+    {
+      "do": "pulse",
+      "on": "g:nth-of-type(4)",
+      "at": 5,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(7)",
+      "at": 6,
+      "for": 2.0
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(7)",
+      "at": 7,
+      "for": 3.4,
+      "times": 1
+    }
+  ]
+}

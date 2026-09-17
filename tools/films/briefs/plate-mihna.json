@@ -1,0 +1,105 @@
+{
+  "slug": "short-mihna",
+  "title": "The one who would not bend",
+  "theme": "nutvoid",
+  "plate": "a-row-of-figures-bent-under-pressure-w",
+  "note": "Ahmad ibn Hanbal endured the mihna without ever blaming the scholars who gave in around him.",
+  "room": "heroes.html#ahmad-ibn-hanbal",
+  "research": {
+    "quotes": "heroes.html#ahmad-ibn-hanbal: 'In 833 CE the caliph al-Ma'mun began the mihna, the inquisition: scholars were required to affirm... that the Qur'an was created.' 'Under interrogation, prison, and finally public flogging before the caliph al-Mu'tasim... Ahmad would not say the words. Most others had complied under duress, and he never condemned them for it.' 'creed is settled by evidence and conscience, not by decree.' 'a collection of some twenty-seven thousand hadith reports.'",
+    "retell": "A scholar named Ahmad ibn Hanbal was flogged for refusing to say the Qur'an was created, and even though almost every other scholar gave in under the pressure, he never blamed them for it."
+  },
+  "lines": [
+    {
+      "text": "Everyone else bent. One man refused",
+      "sub": "a test forced on every scholar in 833",
+      "steps": 1
+    },
+    {
+      "text": "Baghdad, Iraq, from the year 833",
+      "sub": "a scholar named Ahmad ibn Hanbal"
+    },
+    {
+      "text": "Pressure comes down on the whole row",
+      "sub": "say the Qur'an was created, or be ruined",
+      "steps": 12
+    },
+    {
+      "text": "One man alone contradicts the state",
+      "steps": 3
+    },
+    {
+      "text": "His stand becomes a standard for others",
+      "steps": 1
+    },
+    {
+      "text": "Flogged before the caliph, he refuses",
+      "steps": 1
+    },
+    {
+      "text": "Yet he never blames those who give in",
+      "steps": 1
+    },
+    {
+      "text": "Creed still rests on evidence, not decree"
+    },
+    {
+      "eyebrow": "Ahmad ibn Hanbal, Baghdad",
+      "text": "He would not say the words demanded",
+      "src": "The Musnad, 27,000 reports, 780 to 855",
+      "sub": "his collection of hadith reports"
+    }
+  ],
+  "motion": [
+    {
+      "do": "pulse",
+      "on": "g.ln",
+      "at": 2,
+      "for": 2.6,
+      "stagger": 0.15
+    },
+    {
+      "do": "glow",
+      "on": "g.ln",
+      "at": 2,
+      "for": 3.0
+    },
+    {
+      "do": "glow",
+      "on": "g.rd",
+      "at": 3,
+      "for": 2.0
+    },
+    {
+      "do": "pulse",
+      "on": "circle.halo2",
+      "at": 3,
+      "for": 1.6
+    },
+    {
+      "do": "glow",
+      "on": "g:nth-of-type(4)",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(2)",
+      "at": 5,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text:nth-of-type(3)",
+      "at": 6,
+      "for": 2.2
+    },
+    {
+      "do": "travel",
+      "on": "g:nth-of-type(4)",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

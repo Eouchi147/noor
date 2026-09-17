@@ -1,0 +1,111 @@
+{
+  "slug": "short-algebra",
+  "title": "The restored scale",
+  "theme": "nutvoid",
+  "plate": "balance",
+  "note": "Al-Khwarizmi turned a balance scale into a general method, and gave algebra its name.",
+  "room": "heroes.html#f-mathematics",
+  "research": {
+    "quotes": "heroes.html#f-mathematics: 'In Baghdad, in the young House of Wisdom, a scholar from Khwarazm wrote a book with a modest purpose.' 'He called his method al-jabr, the restoration, the setting of a broken thing back in its place: move what is subtracted across an equation and balance is restored.' 'He stepped back from particular puzzles and taught the general method, a way of solving every problem of a given shape rather than one problem at a time.' 'Latin scribes rendered al-Khwarizmi as Algoritmi, and algorithm slowly came to mean any clear, step by step procedure that anyone can follow and check.' Person meta line: 'Muhammad ibn Musa al-Khwarizmi, about 780 to 850 · Baghdad.'",
+    "retell": "Al-Khwarizmi showed that any equation can be solved by doing the same thing to both sides of a scale until only the unknown is left, and that trick became algebra."
+  },
+  "lines": [
+    {
+      "text": "One trick can solve any equation",
+      "sub": "found by balancing a scale",
+      "steps": 3
+    },
+    {
+      "text": "Baghdad, Iraq, the young House of Wisdom",
+      "sub": "a scholar, al-Khwarizmi, 780 to 850",
+      "steps": 4
+    },
+    {
+      "text": "One pan holds an unknown, plus five",
+      "steps": 2
+    },
+    {
+      "text": "The other pan holds twelve alone"
+    },
+    {
+      "text": "He takes five away from each side",
+      "sub": "the scale must stay level",
+      "steps": 3
+    },
+    {
+      "text": "What remains: the unknown equals seven",
+      "steps": 3
+    },
+    {
+      "text": "Before him, each puzzle needed its own fix",
+      "sub": "he taught one method for every shape"
+    },
+    {
+      "text": "Every \"solve for x\" still uses his rule"
+    },
+    {
+      "eyebrow": "Muhammad al-Khwarizmi, Baghdad",
+      "text": "He called it al-jabr, the restoration",
+      "src": "Al-Khwarizmi's algebra, about 780 to 850"
+    }
+  ],
+  "motion": [
+    {
+      "do": "pulse",
+      "on": "text.t1.big:nth-of-type(1)",
+      "at": 2,
+      "for": 1.4
+    },
+    {
+      "do": "glow",
+      "on": "text.t1.big:nth-of-type(1)",
+      "at": 2,
+      "for": 1.6
+    },
+    {
+      "do": "pulse",
+      "on": "text.t1.big:nth-of-type(2)",
+      "at": 2,
+      "for": 1.4,
+      "delay": 0.9
+    },
+    {
+      "do": "glow",
+      "on": "text.t1.big:nth-of-type(2)",
+      "at": 3,
+      "for": 1.8
+    },
+    {
+      "do": "trace",
+      "on": "g.rd",
+      "at": 4,
+      "for": 1.8
+    },
+    {
+      "do": "glow",
+      "on": "text.t2",
+      "at": 4,
+      "for": 2.0
+    },
+    {
+      "do": "pulse",
+      "on": "text.gold",
+      "at": 5,
+      "for": 1.6,
+      "stagger": 0.2
+    },
+    {
+      "do": "glow",
+      "on": "text.gold",
+      "at": 5,
+      "for": 2.4
+    },
+    {
+      "do": "travel",
+      "on": "g.ln path:nth-of-type(1)",
+      "at": 7,
+      "for": 3.0,
+      "times": 1
+    }
+  ]
+}

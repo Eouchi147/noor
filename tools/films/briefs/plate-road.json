@@ -4,45 +4,51 @@
   "theme": "nutvoid",
   "plate": "road",
   "note": "How Greek and Indian learning reached Europe through Arabic.",
+  "room": "heroes.html#f-word-and-page",
+  "research": {
+    "quotes": "heroes.html#f-word-and-page: 'Between the eighth and tenth centuries, Baghdad paid fortunes to move the mind of the ancient world into Arabic.' 'The greatest of the translators, Hunayn ibn Ishaq, was an Arab Christian who hunted manuscripts across the Near East and translated for meaning rather than word by word.' 'the translators' heirs did something better: they argued back. Ptolemy's star positions were remeasured and corrected.' 'When Europe grew hungry in the twelfth century, it came to Toledo and translated the Arabic, corrections, commentaries, and all; Gerard of Cremona alone carried some seventy works into Latin.' 'not as a sealed box passed hand to hand but as a working library, used hard and improved.'",
+    "retell": "Long ago, scholars in Baghdad translated Greek science into Arabic and even corrected mistakes in it, and later translators in Spain carried that improved knowledge into Latin, which is how it reached the science books people use today."
+  },
   "lines": [
     {
-      "text": "Greek science reached Europe in Arabic",
+      "text": "Your science passed through Arabic first",
+      "sub": "even math and medicine came this way",
       "steps": 1
     },
     {
-      "text": "Baghdad, the 800s",
-      "sub": "scholars gather, translate and correct",
+      "text": "Baghdad, Iraq, the 800s",
+      "sub": "Hunayn ibn Ishaq, a translator",
       "steps": 2
     },
     {
-      "text": "Then the road turns west",
+      "text": "He hunts down rare Greek manuscripts",
       "steps": 3
     },
     {
-      "text": "Baghdad wrote them down",
+      "text": "He translates meaning, not each word",
       "steps": 2
     },
     {
-      "text": "Toledo and Cordoba translated them",
-      "sub": "Arabic into Latin, in the 1100s",
+      "text": "Toledo then translates his Arabic work",
+      "sub": "into Latin, the 1100s",
       "steps": 4
     },
     {
-      "text": "Europe taught them",
-      "sub": "in its first universities, the 1200s"
+      "text": "Then Europe teaches from his translation",
+      "sub": "corrections and commentaries included"
     },
     {
-      "text": "This is the paper road",
+      "text": "This was correction, not mere copying",
       "steps": 1
     },
     {
-      "text": "Almost nothing here was invented",
+      "text": "Your textbook still carries his work",
       "sub": "it was carried carefully, and improved"
     },
     {
-      "eyebrow": "Baghdad, Toledo, Cordoba",
+      "eyebrow": "Hunayn ibn Ishaq, Baghdad",
       "text": "Handing a thing on is its own glory",
-      "src": "NOOR Codex of Light, the Gifts"
+      "src": "Gerard of Cremona's Toledo work, 1100s"
     }
   ],
   "motion": [

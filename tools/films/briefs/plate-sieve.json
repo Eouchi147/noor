@@ -4,13 +4,18 @@
   "theme": "nutvoid",
   "plate": "sieve",
   "note": "Bukhari tested 600,000 reports and kept about 2,600.",
+  "room": "heroes.html#al-bukhari",
+  "research": {
+    "quotes": "heroes.html#al-bukhari: 'He was born in Bukhara in 810 CE.' 'he gathered, by the tradition's own count, around six hundred thousand reports, counting repetitions and variant chains, and tested every link: each narrator's memory, accuracy, and character, and proof that each had truly met the next.' 'He rejected the report of a man he saw luring his horse with an empty feedbag, reasoning that a man who deceives his animal cannot be trusted with the Prophet's words.' 'What survived the sieve, near seven thousand entries with repetitions, roughly two thousand six hundred distinct reports, became his Sahih.' 'he died in exile in the village of Khartank near Samarkand in 870 CE.'",
+    "retell": "A scholar named Muhammad al-Bukhari personally tested six hundred thousand reported sayings of the Prophet and only kept about twenty six hundred he could fully verify, and people still trust that same book today."
+  },
   "lines": [
     {
-      "text": "One book was checked 600,000 times",
+      "text": "One man tested 600,000 hadith reports",
       "steps": 2
     },
     {
-      "text": "Bukhara, in Uzbekistan, the year 846",
+      "text": "Bukhara, in Uzbekistan, the 800s",
       "sub": "a scholar, Muhammad al-Bukhari",
       "steps": 1
     },
@@ -24,21 +29,21 @@
     },
     {
       "text": "Did these two men really meet?",
-      "sub": "how good was his memory, and his character",
+      "sub": "how good was his memory and character",
       "steps": 3
     },
     {
-      "text": "He threw out a man he saw",
-      "sub": "tricking his horse with an empty bag",
+      "text": "He drops one man for a small lie",
+      "sub": "the man tricked his horse with an empty bag",
       "steps": 1
     },
     {
       "text": "Out of 600,000 reports",
-      "sub": "about 2,600 came through",
+      "sub": "about 2,600 come through",
       "steps": 4
     },
     {
-      "text": "Doubt, made a method"
+      "text": "Every hadith you read passed his test"
     },
     {
       "eyebrow": "Muhammad al-Bukhari",

@@ -4,14 +4,19 @@
   "theme": "nutvoid",
   "plate": "roundearth",
   "note": "Spherical trigonometry, driven by the qibla.",
+  "room": "heroes.html#f-mathematics",
+  "research": {
+    "quotes": "heroes.html#f-mathematics: 'Islam set its scholars a daily geometry problem: from any village on a round earth, find the direction of Makkah.' 'Al-Battani, observing from Raqqa on the Euphrates, sharpened the sine and cosine into working tools and measured the length of the solar year to within a couple of minutes of the modern value.' 'A triangle drawn on a ball behaves differently from a triangle drawn on a page.' 'Al-Battani's zij, his book of astronomical tables, was translated into Latin, and Copernicus cites him by name.' 'Every GPS fix and long haul flight path is computed with triangles on a sphere, their mathematics.' Person meta line: 'al-Battani, about 858 to 929 · Raqqa and Baghdad.'",
+    "retell": "Because Muslims everywhere need to face Mecca to pray, an astronomer named al-Battani had to work out math for triangles on a curved earth instead of a flat page, and that same math still helps map things like planets and satellite signals today."
+  },
   "lines": [
     {
       "text": "Prayer set a hard geometry problem",
       "steps": 1
     },
     {
-      "text": "Raqqa and Baghdad, the 800s",
-      "sub": "al-Battani, and Abu al-Wafa after him",
+      "text": "Raqqa, Syria, the 800s",
+      "sub": "an astronomer, Al-Battani, works here",
       "steps": 3
     },
     {
@@ -37,13 +42,13 @@
       "steps": 1
     },
     {
-      "text": "So they built the maths of curves",
-      "sub": "planets, oceans, orbits, signals"
+      "text": "So he built the mathematics of curves",
+      "sub": "your GPS still uses triangles on a ball"
     },
     {
       "eyebrow": "al-Battani, Raqqa",
       "text": "Copernicus cites him by name",
-      "src": "His tables measured the year to minutes"
+      "src": "His zij, astronomical tables, 858 to 929"
     }
   ],
   "motion": [
