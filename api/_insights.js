@@ -178,6 +178,7 @@ export async function fbMetricSet(id, tok, opts = {}) {
 export const KIND_LABEL = {
   "reel:verse": "verse reels", "reel:word": "word reels", "reel:know": "Did you know reels",
   "reel:day": "This day reels", "reel:light": "day's-card reels", "reel:name": "Name reels", "reel:dua": "du'a reels", "reel:reel": "reels",
+  "reel:short": "silent films",
   "card:dawn": "dawn cards", "card:light": "day's cards", "card:word": "word cards", "card:dusk": "chapter cards", "card:lead": "coming-up cards"
 };
 export const kindLabel = k => KIND_LABEL[k] || String(k || "").replace(/^(reel|card):/, "");
@@ -292,8 +293,21 @@ function rows(j) {
   return out;
 }
 
+/* no single Meta or YouTube call is left to hang past eight seconds: the
+   night shift has one clock for everything it does, and a stuck fetch that
+   never rejects on its own would otherwise spend the whole run waiting on
+   one post while the rest of the batch, and the store write after it, never
+   get their turn. */
+const FETCH_TIMEOUT_MS = 8000;
+async function timedFetch(fetcher, url, init) {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), FETCH_TIMEOUT_MS);
+  try { return await (fetcher || fetch)(url, { ...init, signal: ac.signal }); }
+  finally { clearTimeout(timer); }
+}
+
 async function graphGet(url, tok, fetcher) {
-  const r = await (fetcher || fetch)(url, { headers: { authorization: "Bearer " + tok } });
+  const r = await timedFetch(fetcher, url, { headers: { authorization: "Bearer " + tok } });
   const j = await r.json().catch(() => ({}));
   return { ok: r.ok, status: r.status, j };
 }
@@ -367,7 +381,7 @@ export async function fetchYouTube(ids, opts = {}) {
     const chunk = ids.slice(i, i + 50);
     let r, j;
     try {
-      r = await fetcher(YT_VIDEOS + "?part=statistics&id=" + chunk.map(encodeURIComponent).join(","),
+      r = await timedFetch(fetcher, YT_VIDEOS + "?part=statistics&id=" + chunk.map(encodeURIComponent).join(","),
                         { headers: { authorization: "Bearer " + tok } });
       j = await r.json().catch(() => ({}));
     } catch (e) { chunk.forEach(id => { out[id] = { at: now, error: String(e && e.message || e).slice(0, 160) }; }); continue; }
@@ -601,4 +615,258 @@ export async function read(days, opts = {}) {
      that nothing has been read at all. */
   if (!all.length) out.note = "No post of the last " + days + " days carries a network id yet.";
   return out;
+}
+
+/* ---------------------------------------------------------------------------
+   THE DAILY SNAPSHOT (masterplan step 8)
+
+   Everything above answers "what does the cache hold right now" -- a
+   photograph of this moment, good for six hours and then retaken. A rota fed
+   by "now" cannot tell a Friday from a Monday, because the photograph of
+   Friday is gone by the time Monday asks. This takes one photograph a day
+   instead and keeps it: nsoc:stats:<date>#<slot>, a small record of its own
+   (kind, hour, title, and a `stats` map of what each live network said),
+   thirty of them kept per slot before Redis lets the oldest go.
+
+   A separate key, not a rewrite of nsoc:slot:<date>#<slot>: the poster
+   (api/social.js) owns that record, writes to it on its own cron every hour,
+   and keeps a ledger keyed off its shape; reading it back here and writing a
+   `stats` field onto it would mean this file and the poster's could race on
+   the same key, and this file must not touch the poster's own writing.
+
+   THE WALK is bounded twice over: SNAPSHOT_DAYS worth of slots, oldest date
+   first, and a clock -- stop at the budget, however far the walk got, and
+   say so with partial: true, so whatever calls this (the console's Refresh,
+   or the nightly warm run) can call it again rather than wait on one run to
+   finish everything. A slot already snapshotted today is skipped, not
+   re-read, unless opts.force asks for it again -- the same idempotence the
+   owner's Read again button already leans on above. */
+export const K_STATS = (date, slot) => "nsoc:stats:" + date + "#" + slot;
+export const SNAPSHOT_DAYS = 14;
+export const SNAPSHOT_KEEP_DAYS = 30;
+export const SNAPSHOT_BUDGET_MS = 40000;
+
+/* one network's answer, folded to the one shape every network's row keeps in
+   the snapshot: views, reach, likes, comments, shares, saves, watch (only
+   when a metric actually gave it) and when it was asked */
+function statRow(v, atIso) {
+  if (!v) return { error: "no answer", at: atIso };
+  if (v.error) return { error: String(v.error).slice(0, 200), code: v.code, at: v.at || atIso };
+  return { views: v.views != null ? v.views : null, reach: v.reach != null ? v.reach : null,
+           likes: v.likes != null ? v.likes : null, comments: v.comments != null ? v.comments : null,
+           shares: v.shares != null ? v.shares : null, saves: v.saved != null ? v.saved : null,
+           watch: v.watch != null ? v.watch : null, at: v.at || atIso };
+}
+/* YT.ytStats answers viewCount/likeCount/commentCount/duration, not the
+   reach/shares/saves the two Meta networks can give; a Short has no reach
+   metric at all (fetchYouTube, above, has never had one either) and no
+   retention figure comes back from videos.list, so watch stays null rather
+   than standing in for something it is not */
+function statRowYT(v, atIso) {
+  if (!v) return { error: "no answer", at: atIso };
+  if (v.error) return { error: String(v.error).slice(0, 200), at: atIso };
+  return { views: v.viewCount != null ? v.viewCount : null, reach: null,
+           likes: v.likeCount != null ? v.likeCount : null, comments: v.commentCount != null ? v.commentCount : null,
+           shares: null, saves: null, watch: null, at: atIso };
+}
+
+export async function snapshot(opts = {}) {
+  const t0 = Date.now();
+  const read = opts.readSlot || readSlot;
+  const nowMs = nowMsOf(opts.now);
+  const today = new Date(nowMs).toISOString().slice(0, 10);
+  const budget = opts.budgetMs != null ? opts.budgetMs : SNAPSHOT_BUDGET_MS;
+  const dates = datesBack(Math.max(1, Math.min(30, Number(opts.days) || SNAPSHOT_DAYS)), opts.now);
+  const wanted = [];
+  for (const d of dates) for (const s of SLOT_IDS) wanted.push([d, s]);
+
+  const out = { ok: true, date: today, days: dates.length, slots: wanted.length, walked: 0, written: 0, skipped: 0, errors: 0, partial: false };
+
+  const canIG = opts.igToken || igConfigured();
+  const canFB = opts.fbToken || fbConfigured();
+  let ytToken = opts.ytToken || "";
+  if (!ytToken && YT.configured()) {
+    const t = await YT.accessToken(opts.fetch).catch(e => ({ ok: false, err: String(e && e.message || e) }));
+    if (t.ok) ytToken = t.token;
+  }
+
+  /* the token exchange above is a network call this file does not time (it
+     lives in _youtube.js); if it alone ran the clock out, the store is
+     never touched at all, rather than paying for a batched read the budget
+     has no room left to use */
+  if (Date.now() - t0 > budget) { out.partial = true; out.ms = Date.now() - t0; return out; }
+
+  /* two batch reads, not one per slot: a hundred and twenty six round trips
+     to the store before a single network is asked would be its own kind of
+     slow, the same reasoning collect() gives above for the poster's records */
+  const recs = [];
+  for (let i = 0; i < wanted.length; i += 10) {
+    const chunk = wanted.slice(i, i + 10);
+    const got = await Promise.all(chunk.map(([d, s]) => read(d, s).catch(() => null)));
+    got.forEach(r => recs.push(r));
+  }
+  const prior = await cacheRead(wanted.map(([d, s]) => K_STATS(d, s)), opts);
+  for (let n = 0; n < wanted.length; n++) {
+    if (Date.now() - t0 > budget) { out.partial = true; break; }
+    const [d, s] = wanted[n];
+    out.walked++;
+    const rec = recs[n];
+    if (!rec || !rec.results) continue;
+
+    const already = prior[n] && prior[n].at && String(prior[n].at).slice(0, 10) === today;
+    if (already && !opts.force) { out.skipped++; continue; }
+
+    const atIso = new Date(nowMs).toISOString();
+    const stats = {};
+    const ig = rec.results.instagram;
+    if (ig && ig.ok && ig.id && !ig.storyOnly)
+      stats.instagram = canIG ? statRow(await fetchInstagram(ig.id, REEL_SLOTS.includes(s), opts), atIso)
+                               : { error: "Instagram is not configured", at: atIso };
+    const fb = rec.results.facebook;
+    if (fb && fb.ok && fb.id && !fb.storyOnly)
+      stats.facebook = canFB ? statRow(await fetchFacebook(fb.id, opts), atIso)
+                              : { error: "Facebook is not configured", at: atIso };
+    const yt = rec.results.youtube;
+    const ytWanted = [];
+    if (yt && yt.ok && yt.id) ytWanted.push(["youtube", yt.id]);
+    if (yt && yt.wide && yt.wide.id) ytWanted.push(["youtubeWide", yt.wide.id]);
+    if (ytWanted.length) {
+      if (ytToken) {
+        const got = await YT.ytStats(ytWanted.map(x => x[1]), ytToken, opts);
+        for (const [key, id] of ytWanted) stats[key] = statRowYT(got[id], atIso);
+      } else for (const [key] of ytWanted) stats[key] = { error: "YouTube is not connected", at: atIso };
+    }
+    if (!Object.keys(stats).length) continue;
+
+    for (const k of Object.keys(stats)) if (stats[k].error) out.errors++;
+    /* date and slot forced from the walk's own loop, not trusted from the
+       record: the same defensiveness collect() keeps above, for a record
+       whatever shape an older write left it in */
+    const kind = kindOf({ ...rec, date: d, slot: s }, opts.manifest);
+    const record = { date: d, slot: s, hour: hourOf(s), kind, reel: REEL_SLOTS.includes(s),
+                      title: String(rec.title || ""), at: atIso, stats };
+    try {
+      const store = opts.kv || kv;
+      if ((opts.kvReady || kvReady)()) {
+        await store([["SET", K_STATS(d, s), JSON.stringify(record), "EX", String(SNAPSHOT_KEEP_DAYS * 86400)]]);
+        out.written++;
+      }
+    } catch { }
+  }
+  out.ms = Date.now() - t0;
+  return out;
+}
+
+/* ---------------------------------------------------------------------------
+   THE NUMBERS (masterplan step 8)
+
+   What the daily snapshots above add up to: this week against the seven
+   days before it, per network, per kind, per weekday and per slot hour, so
+   the console can show the owner a trend and not just a photograph. Every
+   figure here is read from nsoc:stats:*, never the network -- no call
+   leaves the building for this action, the same restraint read() keeps
+   above it. */
+const WEEKDAY_LABEL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const NET_LABEL = { instagram: "Instagram", facebook: "Facebook", youtube: "YouTube" };
+const sum = xs => { const a = xs.filter(x => typeof x === "number" && isFinite(x)); return a.length ? a.reduce((s, x) => s + x, 0) : null; };
+function weekBucket(rows) {
+  let eng = 0, base = 0;
+  for (const r of rows) {
+    eng += (r.likes || 0) + (r.comments || 0) + (r.shares || 0) + (r.saves || 0);
+    base += r.reach != null ? r.reach : (r.views != null ? r.views : 0);
+  }
+  return { posts: rows.length, views: sum(rows.map(r => r.views)), reach: sum(rows.map(r => r.reach)),
+           engagement: base > 0 ? Math.round((eng / base) * 1000) / 1000 : null };
+}
+/* a week with nothing at all the week before is not a change of zero, it is
+   nothing to compare against; "new" says that in the console instead of a
+   blank dash that reads as "no data" for every other reason too */
+const delta1 = (av, bv, noPrior, round) => {
+  if (av == null) return null;
+  if (bv == null) return noPrior ? "new" : null;
+  const d = av - bv;
+  return round ? Math.round(d * 1000) / 1000 : d;
+};
+const bucketDelta = (a, b) => {
+  const noPrior = !b.posts;
+  return {
+    posts: a.posts - b.posts,
+    views: delta1(a.views, b.views, noPrior),
+    reach: delta1(a.reach, b.reach, noPrior),
+    engagement: delta1(a.engagement, b.engagement, noPrior, true)
+  };
+};
+function sideBySide(thisRows, lastRows, keyOf, labelOf) {
+  const put = (rows, into) => { for (const r of rows) { const k = keyOf(r); if (k == null) continue; (into[k] = into[k] || []).push(r); } };
+  const t = {}, l = {}; put(thisRows, t); put(lastRows, l);
+  const keys = new Set([...Object.keys(t), ...Object.keys(l)]);
+  return [...keys].map(k => {
+    const tw = weekBucket(t[k] || []), lw = weekBucket(l[k] || []);
+    return { key: k, label: labelOf ? labelOf(k, t[k] || l[k]) : k, thisWeek: tw, lastWeek: lw, delta: bucketDelta(tw, lw) };
+  });
+}
+
+export async function numbers(opts = {}) {
+  const dates = datesBack(14, opts.now);              /* dates[0] is today, dates[6..13] is the week before */
+  const keys = [];
+  for (const d of dates) for (const s of SLOT_IDS) keys.push(K_STATS(d, s));
+  const recs = await cacheRead(keys, opts);
+
+  const rowsThis = [], rowsLast = [], films = [];
+  let read = 0, unread = 0;
+  recs.forEach((rec, i) => {
+    const d = dates[Math.floor(i / SLOT_IDS.length)];
+    if (!rec || !rec.stats) { unread++; return; }
+    const thisWeek = dates.indexOf(d) < 7;
+    const weekday = new Date(d + "T00:00:00Z").getUTCDay();
+    /* the wide upload beside a short's own Short is the same post, not a
+       second one: its views are folded into the "youtube" row below rather
+       than counted as a row of its own, so byKind/byWeekday/bySlot (which
+       group by kind, weekday and slot, none of them net) count that slot
+       once, the same as byNetwork already did */
+    const wideStat = rec.stats.youtubeWide;
+    const flat = [];
+    for (const net of Object.keys(rec.stats)) {
+      const v = rec.stats[net];
+      if (!v || v.error) continue;
+      read++;
+      if (net === "youtubeWide") continue;
+      const views = (net === "youtube" && wideStat && !wideStat.error) ? sum([v.views, wideStat.views]) : v.views;
+      flat.push({ net, kind: rec.kind, hour: rec.hour, weekday, date: d, slot: rec.slot, title: rec.title,
+                  views, reach: v.reach, likes: v.likes, comments: v.comments, shares: v.shares, saves: v.saves });
+    }
+    (thisWeek ? rowsThis : rowsLast).push(...flat);
+    if (rec.kind === "reel:short" && flat.length)
+      films.push({ date: d, slot: rec.slot, title: rec.title, week: thisWeek ? "this" : "last", stats: rec.stats });
+  });
+
+  /* rowsThis/rowsLast already fold the wide upload's views into its Short's
+     own "youtube" row, above, so no remap is needed here */
+  const byNetwork = sideBySide(rowsThis, rowsLast, r => r.net)
+    .sort((a, b) => (b.thisWeek.posts) - (a.thisWeek.posts));
+  /* "per kind" here means the reel kinds and the silent films, the choices
+     the rota actually makes; a dawn card and a verse reel are not the same
+     kind of thing to compare, so the five card slots stay out of this one
+     bucket (they still count in byNetwork, byWeekday and bySlot below) */
+  const reelRows = rows => rows.filter(r => String(r.kind).startsWith("reel:"));
+  const byKind = sideBySide(reelRows(rowsThis), reelRows(rowsLast), r => r.kind, k => kindLabel(k))
+    .sort((a, b) => (b.thisWeek.engagement || 0) - (a.thisWeek.engagement || 0));
+  const byWeekday = sideBySide(rowsThis, rowsLast, r => r.weekday, w => WEEKDAY_LABEL[w]).sort((a, b) => Number(a.key) - Number(b.key));
+  const bySlot = sideBySide(rowsThis, rowsLast, r => r.slot, (s, rows) => hourOf(s) != null ? HH(hourOf(s)) : s).sort((a, b) => (hourOf(a.key) || 0) - (hourOf(b.key) || 0));
+
+  const ranked = byKind.filter(k => k.thisWeek.engagement != null);
+  const best = ranked[0] || null;
+  const worst = ranked.length > 1 ? ranked[ranked.length - 1] : null;
+
+  return {
+    ok: true, thisWeek: { from: dates[6], to: dates[0] }, lastWeek: { from: dates[13], to: dates[7] },
+    byNetwork: byNetwork.map(x => ({ net: x.key, label: NET_LABEL[x.key] || x.key, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
+    byKind: byKind.map(x => ({ kind: x.key, label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
+    byWeekday: byWeekday.map(x => ({ weekday: Number(x.key), label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
+    bySlot: bySlot.map(x => ({ slot: x.key, hour: hourOf(x.key), label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
+    best: best && { kind: best.key, label: best.label, engagement: best.thisWeek.engagement },
+    worst: worst && { kind: worst.key, label: worst.label, engagement: worst.thisWeek.engagement },
+    films, read, unread,
+    missingToken: { instagram: !(opts.igToken || igConfigured()), facebook: !(opts.fbToken || fbConfigured()), youtube: !YT.configured() }
+  };
 }

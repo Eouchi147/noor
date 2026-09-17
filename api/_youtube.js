@@ -110,11 +110,34 @@ export function title(p) {
   return t + tail;
 }
 
+/* the plain title, no #Shorts: for the ordinary 16:9 video beside a
+   short's own Short (shapeWide, below), which is not filed as one and so
+   is titled the film's own name rather than the reel's hook. */
+export function titlePlain(p) {
+  let t = String(p.title || p.hook || "NOOR").replace(/\s+/g, " ").trim();
+  if (t.length > 100) t = t.slice(0, 99).replace(/\s+\S*$/, "") + "…";
+  return t;
+}
+
 /* what the sender needs from the post, in one place */
 export function shape(p) {
   const desc = String(p.caption || p.body || "").replace(/[ \t]+/g, " ").trim();
   const tags = (desc.match(/#\w+/g) || []).map(t => t.slice(1)).slice(0, 15);
   return { title: title(p), description: desc.slice(0, 4900), tags: [...new Set(["NOOR", "Islam", ...tags])].slice(0, 15),
+           video: p.video || null, image: p.image || null, text: desc };
+}
+
+/* THE ORDINARY 16:9 VIDEO BESIDE A SHORT'S OWN SHORT.
+   The owner's instruction of 16 September 2026: a short with a wide file
+   goes to YouTube twice, the tall file as a Short and the wide file as a
+   normal, longer-form video -- same channel, same category and language
+   (upload(), below, sets both the same way for every video it sends), no
+   #Shorts, the film's own title rather than the hook. Built the same way
+   shape() is, minus the suffix. */
+export function shapeWide(p) {
+  const desc = String(p.caption || p.body || "").replace(/[ \t]+/g, " ").trim();
+  const tags = (desc.match(/#\w+/g) || []).map(t => t.slice(1)).slice(0, 15);
+  return { title: titlePlain(p), description: desc.slice(0, 4900), tags: [...new Set(["NOOR", "Islam", ...tags])].slice(0, 15),
            video: p.video || null, image: p.image || null, text: desc };
 }
 
@@ -165,10 +188,91 @@ export async function upload(shaped, opts = {}) {
   }
   await countOne(date);
   const st = j.status || {};
-  const out = { ok: true, id: j.id, url: "https://youtube.com/shorts/" + j.id, privacy: st.privacyStatus || "" };
+  /* opts.short: true (the default, every call before 16 September 2026) is
+     the Short's own /shorts/ url; false is shapeWide's ordinary video,
+     which the same path would misfile -- a 16:9 upload has no business
+     under /shorts/. */
+  const isShort = opts.short !== false;
+  const out = { ok: true, id: j.id,
+    url: isShort ? ("https://youtube.com/shorts/" + j.id) : ("https://www.youtube.com/watch?v=" + j.id),
+    privacy: st.privacyStatus || "" };
   if (st.privacyStatus && st.privacyStatus !== "public") {
     out.note = "YouTube kept it " + st.privacyStatus + ": the project has not passed the API audit yet, so only you can see it. It is uploaded; it is not published.";
     out.private = true;
+  }
+  return out;
+}
+
+const VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos";
+/* WHAT BECAME OF A VIDEO ALREADY UPLOADED, READ THE WAY fbReelStatus (in
+   api/social.js) READS FACEBOOK'S: one look, not a poll held open. A
+   duplicate refusal -- YouTube's own guard against the same file landing
+   twice, which the wide upload beside a short's own Short can trip --
+   sometimes only surfaces once YouTube has finished processing the file,
+   which can run well past this run's own clock; a look that lands before
+   then is reported pending rather than treated as a failure, and nothing
+   here starts the upload over because of it, the same restraint a
+   Facebook reel the clock cut is given by the finisher rather than a
+   fresh attempt. */
+export async function status(id, opts = {}) {
+  const fetcher = opts.fetch || fetch;
+  const tok = await accessToken(fetcher, opts);
+  if (!tok.ok) return { ok: false, pending: true, error: tok.err };
+  try {
+    const r = await fetcher(VIDEOS_URL + "?part=status&id=" + encodeURIComponent(id),
+      { headers: { authorization: "Bearer " + tok.token } });
+    const j = await r.json().catch(() => null);
+    const item = j && Array.isArray(j.items) && j.items[0];
+    if (!r.ok || !item) return { ok: false, pending: true, error: "status http " + (r && r.status) };
+    const st = item.status || {};
+    if (st.uploadStatus === "rejected")
+      return { ok: false, duplicate: st.rejectionReason === "duplicate", reason: st.rejectionReason || "rejected" };
+    if (st.uploadStatus === "processed") return { ok: true };
+    /* "uploaded": accepted, not yet processed -- YouTube's normal state in
+       the seconds right after an insert, and the common answer here */
+    return { ok: false, pending: true };
+  } catch (e) {
+    return { ok: false, pending: true, error: String(e && e.message || e).slice(0, 80) };
+  }
+}
+
+/* WHAT A SHORT DID, IN NUMBERS. api/_insights.js already asks for statistics
+   alone, on demand, for the Readers room's read-back; this is the same edge
+   asked with contentDetails alongside it, for the daily snapshot (masterplan
+   step 8), which wants a video's length as well as its counts, and takes the
+   access token handed to it rather than minting its own -- one snapshot walk
+   reads many ids and a token good for the hour is not re-fetched per id. Up
+   to fifty ids in one call, YouTube's own ceiling; a call that fails names
+   the whole chunk's error rather than throwing, the same restraint every
+   network read in this house keeps, so one bad id never stops the rest. */
+export async function ytStats(ids, tok, opts = {}) {
+  const fetcher = opts.fetch || fetch;
+  const out = {};
+  const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+  if (!list.length) return out;
+  if (!tok) { list.forEach(id => { out[id] = { error: "no YouTube token" }; }); return out; }
+  for (let i = 0; i < list.length; i += 50) {
+    const chunk = list.slice(i, i + 50);
+    let r, j;
+    try {
+      r = await fetcher(VIDEOS_URL + "?part=statistics,contentDetails&id=" + chunk.map(encodeURIComponent).join(","),
+                        { headers: { authorization: "Bearer " + tok } });
+      j = await r.json().catch(() => ({}));
+    } catch (e) { chunk.forEach(id => { out[id] = { error: String(e && e.message || e).slice(0, 160) }; }); continue; }
+    if (!r.ok) {
+      const why = (j && j.error && (j.error.message || j.error.status)) || ("http " + r.status);
+      chunk.forEach(id => { out[id] = { error: "YouTube refused: " + why }; });
+      continue;
+    }
+    const seen = {};
+    for (const it of (j && Array.isArray(j.items) ? j.items : [])) {
+      const s = it.statistics || {}, cd = it.contentDetails || {};
+      seen[it.id] = { viewCount: s.viewCount != null ? Number(s.viewCount) : null,
+                      likeCount: s.likeCount != null ? Number(s.likeCount) : null,
+                      commentCount: s.commentCount != null ? Number(s.commentCount) : null,
+                      duration: cd.duration || null };
+    }
+    chunk.forEach(id => { out[id] = seen[id] || { error: "YouTube lists no such video" }; });
   }
   return out;
 }

@@ -54,6 +54,7 @@ import { planDay, buildSlot, dueNow, slotExtras, chooseReel, SLOT_IDS, SLOTS, RE
 import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
+import * as YT from "./_youtube.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
 import { ownerGate } from "./_owner.js";
@@ -1130,13 +1131,25 @@ export function slotState(results) {
    { pending } when it still is not, and { error } when the network gave up
    on it; the walk below is the same for both. A channel is added by adding
    its finisher. */
+/* A wide upload left as { pending: id } by sendYouTubeBoth (its duplicate
+   check landed before YouTube had finished processing the file). Read the
+   same one-look way YT.status always reads it; never uploads again, since
+   the id it holds is a real video YouTube already has. */
+async function finishYouTubeWide(id) {
+  const st = await YT.status(id, {});
+  if (st.pending) return { pending: id };
+  if (st.ok) return { id, url: "https://www.youtube.com/watch?v=" + id };
+  return { refused: st.reason || "rejected" };
+}
+
 /* how long a handed-back container may stay pending before it is given up on */
 const PENDING_MAX_MS = Number(process.env.PENDING_MAX_MS || 2 * 3600 * 1000);
 const NET_NAME = ch => ({ instagram: "Instagram", threads: "Threads" })[ch] || ch;
 const FINISHERS = {
   facebook: finishFacebookReel,
   instagram: finishInstagramReel,
-  threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; }
+  threads: async cid => { const r = await TH.finish(cid); return r.ok ? r : { ...r, error: r.error || r.err || "" }; },
+  youtube: finishYouTubeWide
 };
 
 /* dup and dupWarn are a record of history -- an id that turned out to be
@@ -1172,6 +1185,18 @@ export async function finishPendingReels(date, out) {
             rec.results = { ...rec.results, [ch]: { ...had, story: st } };
             changed = true;
             ran.push({ slot: id, date: d, state: rec.state, finished: true, where: ch + " story", ok: !!st.ok, error: st.error || "" });
+          }
+          continue;
+        }
+        /* a wide upload left pending beside a Short that already sent: the
+           Short's ok must not hide it from this walk, and settling it never
+           touches the slot's state (the Short alone decides that) */
+        if (had.ok && had.wide && had.wide.pending) {
+          const st = await FINISHERS[ch](had.wide.pending);
+          if (!st.pending) {
+            rec.results = { ...rec.results, [ch]: { ...had, wide: st } };
+            changed = true;
+            ran.push({ slot: id, date: d, state: rec.state, finished: true, where: ch + " wide", ok: !!st.id, error: st.refused || "" });
           }
           continue;
         }
@@ -1901,6 +1926,45 @@ async function findDuplicate(reelId, ch, date) {
   return null;
 }
 
+/* ---------------------------------------------------------------------------
+   YOUTUBE, TWICE IN ONE SLOT
+
+   The owner's instruction of 16 September 2026: a short with a wide file
+   goes to YouTube as both a Short (the tall file) and an ordinary, longer
+   video (the wide file), never one in place of the other. The Short goes
+   first and always counts against the daily cap first; the wide upload is
+   only attempted once the cap still has room after it, so a full day costs
+   the Short its slot and nothing more -- "if only one upload fits, the
+   Short goes." Both live under the one "youtube" result this returns, never
+   a second top-level key, so findDuplicate and notePostedChannels (above)
+   see one send of the reel to the channel, exactly as they did before this
+   existed.
+
+   A wide upload YouTube refuses outright is recorded wide.refused without
+   touching the Short's own ok. One it accepts is looked at once more,
+   status() (api/_youtube.js), the same restraint fbReelStatus is given for
+   Facebook: a confirmed duplicate is also wide.refused; still processing,
+   the ordinary state in the seconds right after an insert, is wide.pending,
+   left for a person to check later rather than started over. */
+async function sendYouTubeBoth(fn, shapedShort, p, opts) {
+  const short = await fn(shapedShort, opts);
+  if (!short.ok || p.kind !== "short" || !p.wide) return short;
+  const used = await YT.usedToday(opts.date);
+  if (used >= YT.DAILY_CAP) { short.wide = { skipped: "cap" }; return short; }  /* the Short took the only room there was; no later retry */
+  const wideShaped = CH.shapeYouTubeWide(p);
+  if (!wideShaped || !wideShaped.video) return short;
+  const wideUp = await fn(wideShaped, { ...opts, short: false });
+  if (!wideUp.ok) {
+    short.wide = { refused: wideUp.error || wideUp.err || "youtube refused the video" };
+    return short;
+  }
+  const st = await YT.status(wideUp.id, opts);
+  if (st && st.duplicate) short.wide = { refused: st.reason || "duplicate" };
+  else if (st && st.ok) short.wide = { id: wideUp.id, url: wideUp.url };
+  else short.wide = { pending: wideUp.id };
+  return short;
+}
+
 async function sendOne(ch, shaped, post, left, flight, opts) {
   if (post && post.reel && post.key && !(opts && opts.force)) {
     const dup = await findDuplicate(post.key, ch, post.date);
@@ -1908,13 +1972,18 @@ async function sendOne(ch, shaped, post, left, flight, opts) {
   }
   const p = { ...post, caption: shaped.text };
   if (p.video) p.video = await freshVideoUrl(p.video);
+  if (p.wide) p.wide = await freshVideoUrl(p.wide);
   if (ch === "pinterest" && shaped.video && typeof left === "function" && left() < PIN_VIDEO_RESERVE_MS)
     return { ok: false, err: "no time left in this run for the video pin; retried next hour", error: "no time left in this run for the video pin; retried next hour" };
   if (ch === "facebook")  return await (p.video ? postFacebookReel(p, flight) : postFacebook(p));
   if (ch === "instagram") return await (p.video ? postInstagramReel(p, left) : postInstagram(p));
   const fn = CH.SENDERS[ch];
   if (!fn) return { ok: false, err: "no sender for " + ch };
-  if (ch === "youtube") return await fn({ ...shaped, video: p.video }, { date: p.date });
+  /* the Short always uses the tall file: shapeRaw's short branch (as of 16
+     September 2026) builds it that way already, so shaped.video already
+     IS p.video for a short, and p.video for an ordinary reel exactly as
+     before; sendYouTubeBoth handles the wide upload beside it. */
+  if (ch === "youtube") return await sendYouTubeBoth(fn, { ...shaped, video: p.video }, p, { date: p.date });
   /* a reel goes to Telegram as a video too, but not fetched by Telegram: the
      signed release link and, after that, this house's own door were both
      handed to Telegram to fetch and both came back "failed to get HTTP URL

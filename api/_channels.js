@@ -160,6 +160,66 @@ function shapeRaw(p, ch) {
   const tags = (p.tags || []).slice(0, s.tags).join(" ");
   const link = p.link || "";
 
+  /* ---------------------------------------------------------------------
+     A SILENT SHORT CARRIES A LONG STORY BESIDE ITS SHORT CAPTION.
+     A reel's caption is written once and carried whole to every network
+     below (the `if (p.caption) return ...` fallback). A short is written
+     with more to say than a caption can hold, so youtube, facebook and
+     instagram take the full `story` here, shaped to what each one allows;
+     threads and pinterest, both capped at 500, take the hook and the
+     payoff rather than either the caption or the story, because neither
+     fits both and a shorter, truer sentence beats a cut one. Telegram
+     needs nothing special: the row's own caption already ends with the
+     source, the room link and the tags inside 500 characters, well under
+     Telegram's 1,024, so it falls through to the ordinary caption path
+     below like any other channel this brief did not name. A reel is never
+     touched here. Most rows of kind "short" carry a `story`; the few that
+     do not (older briefs, or a room-clipped short with nothing more to
+     say) still belong on this branch rather than the generic path below,
+     so the Short keeps its hook title and the wide upload keeps firing --
+     `body` falls back to the row's own caption when there is no story. */
+  if (p.kind === "short") {
+    const srcLine = p.src ? "Source: " + p.src : "";
+    const tagsLine = (p.tags || []).join(" ");
+    const body = p.story || p.caption || "";
+
+    if (ch === "youtube") {
+      /* the Short itself: always the tall (9:16) file, titled the hook
+         with #Shorts, the same as any other reel's Short -- the owner's
+         instruction of 16 September 2026 was two uploads, tall as a
+         Short and wide as an ordinary video, never wide IN PLACE of the
+         Short the way an earlier version of this branch briefly had it.
+         `title: p.hook` overrides post.title, which for a short carries
+         the film's own name (for Pinterest, above) rather than the hook
+         YT.shape()'s title() would otherwise prefer. The wide video, when
+         the row has one, is a second, separate upload this function never
+         builds: see shapeYouTubeWide, below, called directly by sendOne's
+         dual upload (api/social.js), not through shape()/shapeRaw(). */
+      const desc = [body, srcLine, link, tagsLine].filter(Boolean).join("\n\n");
+      return YT.shape({ ...p, title: p.hook, caption: desc, video: p.video });
+    }
+    if (ch === "facebook" || ch === "instagram") {
+      /* the story (or, lacking one, the caption) cut to the network's own
+         limit, keeping the tail: the source and the room link never fall
+         off the end the way a plain cut would drop them */
+      const full = [body, srcLine, link, tagsLine].filter(Boolean).join("\n\n");
+      return { text: TH.cutKeepTail(full, s.chars), image: p.image || null };
+    }
+    if (ch === "threads") {
+      const text = cut([p.hook, p.payoff, link].filter(Boolean).join("\n\n"), s.chars);
+      return { text, image: null, video: null, link };
+    }
+    if (ch === "pinterest") {
+      return {
+        title: cut(p.title || p.hook, 100),
+        text: cut([p.hook, p.payoff, link].filter(Boolean).join(" "), 500),
+        image: p.image, link,
+        video: null,     /* silent and long: offered as an image pin, not the tall video */
+        board: pinBoardFor(p)
+      };
+    }
+  }
+
   if (ch === "x") {
     /* 280 is not a truncated caption, it is a different sentence.
        And on X the link is not free in the ordinary sense: since the 2026 move
@@ -246,6 +306,26 @@ function shapeRaw(p, ch) {
   parts.push("", link);
   if (tags) parts.push("", tags);
   return { text: cut(parts.join("\n"), s.chars), image: p.image || null };
+}
+
+/* ---------------------------------------------------------------------------
+   THE 16:9 VIDEO THAT RIDES BESIDE A SHORT'S OWN SHORT ON YOUTUBE
+
+   Not part of shape()/shapeRaw() above: "youtube" already names the Short
+   there, one channel to one shape, and this is a SECOND shape for the same
+   channel, for a second upload. sendOne's dual upload (api/social.js) calls
+   this directly, after the Short itself has already gone, only when the row
+   has a wide file and the day's YouTube cap still has room. The film's own
+   title (never the hook: this upload is not filed as a Short), the same
+   long story, source, link and tags the Short's own description carries.
+--------------------------------------------------------------------------- */
+export function shapeYouTubeWide(p) {
+  if (!p || p.kind !== "short" || !p.wide) return null;
+  const srcLine = p.src ? "Source: " + p.src : "";
+  const tagsLine = (p.tags || []).join(" ");
+  const link = p.link || "";
+  const desc = [p.story || p.caption || "", srcLine, link, tagsLine].filter(Boolean).join("\n\n");
+  return YT.shapeWide({ ...p, caption: desc, video: p.wide });
 }
 
 /* ---------------------------------------------------------------------------

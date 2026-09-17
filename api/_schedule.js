@@ -197,24 +197,32 @@ const ROTA = {
      house and taught nothing. */
   morning:   ["verse", "verse", "know", "light", "name", "verse", "know"],
   noon:      ["word", "name", "verse", "word", "know", "word", "verse"],
-  /* THE AFTERNOON IS THE SILENT SHORT, AND IT REPLACES RATHER THAN ADDS.
-     The owner asked for the new format to have a slot of its own and named
-     the real risk in the same breath: eleven posts a day is already a lot to
-     send from one account, and a twelfth is the sort of thing that gets an
-     account looked at. So nothing is added. The afternoon was the least
-     distinct of the six reel halves, and it is the one the shorts take. The
-     daily volume does not change by one post.
+  /* THE AFTERNOON IS THE SILENT SHORT ON FOUR DAYS, AND IT REPLACES RATHER
+     THAN ADDS. The owner asked for the new format to have a slot of its own
+     and named the real risk in the same breath: eleven posts a day is
+     already a lot to send from one account, and a twelfth is the sort of
+     thing that gets an account looked at. So nothing is added. The
+     afternoon was the least distinct of the six reel halves, and it is the
+     one the shorts take. The daily volume does not change by one post.
 
-     THIS LINE IS ALSO SELF DISABLING, which is why it needs no flag and no
+     FOUR DAYS, NOT SEVEN. A silent short is a bigger, slower thing to make
+     than a reel, and the owner's own words on 16 September 2026 were "two
+     to four films a week": Sunday, Tuesday, Thursday and Saturday carry a
+     short; Monday, Wednesday and Friday keep exactly what the afternoon
+     showed before a single short existed, position for position out of
+     afternoonUntilShorts below, so nothing on those three days changes.
+
+     THIS ROW IS ALSO SELF DISABLING, which is why it needs no flag and no
      switch to be safe to ship. chooseReel walks [want, ...FALLBACK]; "short"
      is deliberately NOT in FALLBACK; and the filter under it yields nothing
      for a kind with no rows. So until rows of kind "short" actually exist in
-     the manifest this line does nothing whatever and the afternoon behaves
-     exactly as it does today. The moment the shorts are on the site it
-     starts using them, and because "short" is absent from FALLBACK they can
-     never leak into any other half. Deleting this one line restores the old
-     rota exactly. */
-  afternoon: ["short", "short", "short", "short", "short", "short", "short"],
+     the manifest this row does nothing whatever and the afternoon behaves
+     exactly as it does today (afternoonUntilShorts, every day). The moment
+     the shorts are on the site it starts using them on its four days, and
+     because "short" is absent from FALLBACK they can never leak into any
+     other half. Emptying this row back to afternoonUntilShorts restores the
+     old rota exactly. */
+  afternoon: ["short", "word", "short", "verse", "short", "know", "short"],
   /* what the afternoon showed before the shorts, and shows again on any day
      the shelf has no short: the audit of 15 September 2026 found that "short"
      with no rows fell through to FALLBACK, which begins with "verse", so the
@@ -331,6 +339,11 @@ export function reelRoom(r) {
   if (kind === "verse") return "/verse/" + id.replace(/^verse-/, "");
   if (kind === "word") return "/dictionary/" + id.replace(/^word-/, "");
   if (kind === "light") return "/light/" + id;
+  /* a silent short carries its own room, a page and anchor (heroes.html#..)
+     or a Light's room, written on the row by shortmanifest.py; with none on
+     the row (an old or malformed one) this falls back to the shelf like a
+     Did you know with no src, rather than the home page. */
+  if (kind === "short") return r.room ? "/" + String(r.room).replace(/^\/+/, "") : "/";
   if (kind === "know") return r.src ? "/light/" + String(r.src) : "/light";
   if (kind === "name") return "/allah";
   if (kind === "dua") return "/words";
@@ -362,7 +375,7 @@ function buildSlotInner(slot, ctx) {
   if (reelHalf(slot)) {
     const r = ctx.reel;
     if (!r || !r.id || !r.video) return null;
-    return {
+    const out = {
       lvl: "editorial", key: r.id,
       title: r.hook || "", oneLine: r.hook || "",
       body: r.caption || "", caption: r.caption || "",
@@ -371,6 +384,24 @@ function buildSlotInner(slot, ctx) {
       kind: r.kind || "light",
       only: ["facebook", "instagram", "youtube", "pinterest", "telegram", "threads"]
     };
+    /* A SILENT SHORT CARRIES MORE THAN A CAPTION. shapeRaw's short branch
+       (api/_channels.js) reads p.story, p.title, p.hook, p.payoff, p.tags,
+       p.wide, p.src and p.room; none of those existed on the post this
+       function built, only on the row itself, so that whole branch never
+       fired -- every network fell through to the plain caption path and the
+       long story, the wide file and the row's own tag set never reached
+       anyone. Carried here, for a short only; an ordinary reel is untouched. */
+    if ((r.kind || "light") === "short") {
+      out.title = r.title || r.hook || "";
+      out.story = r.story || "";
+      out.hook = r.hook || "";
+      out.payoff = r.payoff || "";
+      out.tags = r.tags || [];
+      out.wide = r.wide || "";
+      out.src = r.src || "";
+      out.room = r.room || "";
+    }
+    return out;
   }
 
   if (slot === "dawn") {

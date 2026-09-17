@@ -74,6 +74,26 @@ export default async function handler(req, res) {
     }
   } catch (e) { out.lantern = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
+  /* THE NUMBERS, ONCE A DAY (masterplan step 8). Reading what a post did per
+     network, per kind and per weekday wants one photograph taken daily, not
+     a fourth cron: vercel.json already carries two, and tests/rooms.mjs
+     holds the project to exactly that count, the same restraint the monthly
+     journal triage below was already given on 16 September 2026. So the
+     snapshot rides this run instead, a direct call rather than an HTTP round
+     trip back to this same host, since warm.js already runs server side.
+     Budgeted tighter than api/insights.js's own ?action=snapshot door (25 s,
+     not 40): the rest of this run still has the night shift and, on the
+     first of the month, the journal triage to get to, and a snapshot that
+     ran out of room simply says partial and finishes tomorrow. */
+  if (!kvReady()) {
+    out.stats = { ok: false, skipped: "store not ready" };
+  } else try {
+    const { snapshot } = await import("./_insights.js");
+    let manifest = null;
+    try { const rm = await fetch(base + "/reels/index.json", { cache: "no-store" }); manifest = rm.ok ? await rm.json() : null; } catch { }
+    out.stats = await snapshot({ manifest, budgetMs: 25000 });
+  } catch (e) { out.stats = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
+
   /* The day's post used to be sent from here, through runDaily, the one post
      a day machine that the slot dispatcher in social.js replaced. It kept
      running: every night at 04:00 it composed the day's card and, in auto

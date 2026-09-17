@@ -505,6 +505,7 @@ var held=function(f){return cached("held",function(){return post("/api/journal",
 var house=function(f){return cached("house",function(){return get("/api/admin-data").then(function(r){return r.j})},f)};
 var lantern=function(f){return cached("lantern",function(){return get("/api/admin-data?probe=lantern").then(function(r){return r.j})},f)};
 var insights=function(f){return cached("insights",function(){return get("/api/insights?days=14").then(function(r){return r.j})},f)};
+var numbersQ=function(f){return cached("numbers",function(){return get("/api/insights?action=numbers").then(function(r){return r.j})},f)};
 /* the six rooms read these, and House reads them too so each room's card on
    the hub can carry one live number instead of a promise of one */
 var nightQ=function(f){return cached("night",function(){return get("/api/admin-data?probe=night").then(function(r){return r.j})},f)};
@@ -1004,11 +1005,49 @@ function insRead(b){var was=b.textContent;b.disabled=true;var done=0;
       if(j.partial)return step();
       INS_NEEDS="";toast(done?"Read "+done+".":"Nothing new to read.");C.insights=null;return drawReaders(true)})};
   step().catch(unreachable(b,was))}
+
+/* ---- The numbers: one photograph a day (api/_insights.js, snapshot),
+   folded into this week against the one before it (numbers). Posts, views
+   and engagement per network, the best and worst reel kind, and the films
+   one by one once any exist. Refresh takes a fresh photograph, then reads
+   the fold again; a network with no token reads as "not connected", not
+   as a zero. ---- */
+function pct(x){return x==null?"·":(Math.round(x*1000)/10)+"%"}
+function numRow(net,nb){
+  if(nb.missingToken&&nb.missingToken[net])return '<div class="row"><div class="t"><b>'+esc(NET_NAME[net])+'</b><span class="faint">not connected</span></div></div>';
+  var row=(nb.byNetwork||[]).find(function(r){return r.net===net})||{thisWeek:{posts:0,views:null,engagement:null},delta:null};
+  var t=row.thisWeek,d=row.delta;
+  var dv=(d&&d.views!=null)?((d.views>=0?"+":"")+d.views.toLocaleString()+" views"):"";
+  return '<div class="row"><div class="t"><b>'+esc(NET_NAME[net])+'</b><span>'+(t.posts||0)+' posts · '+(t.views!=null?t.views.toLocaleString():"·")+' views · '+pct(t.engagement)+' engagement</span></div>'
+    +(dv?'<div class="r small" style="color:'+(d.views>=0?"var(--good)":"var(--bad)")+'">'+esc(dv)+'</div>':'')+'</div>';
+}
+function numHtml(nb){
+  if(!nb||nb.ok===false)return '<div class="card"><div class="empty">'+esc((nb&&nb.error)||"No snapshot yet. Press Refresh to take the first one.")+'</div></div>';
+  var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">This week vs last</b><button class="btn ghost sm" id="nb-refresh">Refresh</button></div>'
+    +'<p class="muted small" style="margin:6px 0 0">'+esc(nb.thisWeek?nb.thisWeek.from+' to '+nb.thisWeek.to:"")+'</p>'
+    +'<div class="list" style="margin-top:8px">'+["instagram","facebook","youtube"].map(function(n){return numRow(n,nb)}).join("")+'</div></div>';
+  var bw=(nb.best||nb.worst)?'<div class="card"><p class="small" style="margin:0;color:var(--text)">'
+    +(nb.best?'Best this week: <b style="color:var(--cream)">'+esc(nb.best.label)+'</b>, '+pct(nb.best.engagement)+' engagement.':'')
+    +(nb.worst?' Worst: <b style="color:var(--cream)">'+esc(nb.worst.label)+'</b>, '+pct(nb.worst.engagement)+'.':'')+'</p></div>':'';
+  var films=(nb.films||[]);
+  var filmsHtml=films.length?'<details class="fold"><summary>The films<span class="pill">'+films.length+'</span></summary><div class="in"><div class="list">'
+    +films.map(function(f){var yt=(f.stats&&f.stats.youtube)||{},wide=(f.stats&&f.stats.youtubeWide)||{};
+      return '<div class="row"><div class="t"><b>'+esc(f.title||f.slot)+'</b><span>'+esc(f.date)+' · '+(yt.views!=null?yt.views.toLocaleString()+" views":"not read")+(wide.views!=null?' · '+wide.views.toLocaleString()+" views (wide)":"")+'</span></div></div>'}).join("")
+    +'</div></div></details>':'';
+  return head+bw+filmsHtml;
+}
+/* Refresh: one snapshot, forced, then the fold is read again */
+function nbRefresh(b){var was=b.textContent;b.disabled=true;b.textContent="Reading…";
+  post("/api/insights",{action:"snapshot",force:true}).then(function(r){if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false){toast(j.error||"It refused.",true);b.disabled=false;b.textContent=was;return}
+    toast(j.partial?"Read "+(j.written||0)+", more tomorrow.":"Read "+(j.written||0)+".");
+    C.numbers=null;return drawReaders(true)}).catch(unreachable(b,was))}
+
 function drawReaders(force){
   var el=$("s-readers");
   if(!el.dataset.built){el.innerHTML='<div class="stat">'+'<div class="c"><div class="sk" style="height:26px"></div></div>'.repeat(4)+'</div><p class="sec">The last 30 days</p><div class="card"><div class="sk" style="height:150px"></div></div>';el.dataset.built="1"}
-  return Promise.all([visitors(force),inbox(force),held(force),insights(force)]).then(function(a){
-    var v=a[0]||{},ib=a[1]||{},hq=a[2]||{},ins=a[3]||{};
+  return Promise.all([visitors(force),inbox(force),held(force),insights(force),soft(numbersQ(force))]).then(function(a){
+    var v=a[0]||{},ib=a[1]||{},hq=a[2]||{},ins=a[3]||{},nb=a[4];
     var days=v.days||[],people=(v.totals&&v.totals.people30)||days.reduce(function(s,d){return s+(d.people||0)},0),views=(v.totals&&v.totals.views30)||0;
     var tod=days.length?days[days.length-1].people||0:0,pp=people?(views/people).toFixed(1):"·";
     var me=false;try{me=localStorage.getItem("noor_nocount")==="1"}catch(e){}
@@ -1030,12 +1069,14 @@ function drawReaders(force){
       +'<details class="fold"><summary>From where<span class="pill">'+(v.countries||[]).length+' countries</span></summary><div class="in">'+bars(v.countries||[],people,function(r){return r.c})+'</div></details>'
       +'<details class="fold"><summary>Which rooms<span class="pill">'+((v.rooms||[])[0]?esc(v.rooms[0].r)+" leads":"")+'</span></summary><div class="in">'+bars(v.rooms||[],views,function(r){return r.r})+'</div></details>'
       +'<p class="sec" id="anchor-insights">What strangers watch</p>'+insHtml(ins)
+      +'<p class="sec" id="anchor-numbers">The numbers</p>'+numHtml(nb)
       +'<p class="sec" id="anchor-inbox">The inbox</p>'+(ib.ok===false?'<div class="empty">The inbox is not set up.</div>':(items.length?'<div class="list">'+items.slice(0,20).map(function(m,i){return '<div class="row tap" data-msg="'+i+'"><div class="ic" style="color:'+(m.status==="new"?"var(--gold)":"var(--faint)")+'">'+ICO.mail+'</div><div class="t"><b>'+esc(m.from||m.kind||"someone")+(m.status==="new"?' <span class="pill good" style="margin-left:6px">new</span>':'')+'</b><span>'+esc(String(m.body||"").slice(0,90))+'</span></div><div class="r small muted">'+esc(ago(m.at))+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing has arrived.</div>'))
       +'<p class="sec" id="anchor-journal">Replies waiting to be read</p>'+(q.length?'<div class="list">'+q.map(function(c,i){return '<div class="row hold"><div class="ic">'+ICO.pen+'</div><div class="t tap" data-held="'+i+'"><b>'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b><span>'+esc(String(c.body||"").slice(0,90))+(c.why?' · <i style="color:var(--wait);font-style:normal">flagged: '+esc(c.why)+'</i>':'')+'</span></div><div class="acts2"><button class="btn sm" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger sm" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button></div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>');
     setTimeout(function(){el.querySelectorAll(".bars .t i").forEach(function(i){i.style.width=i.dataset.w+"%"})},50);
     el.onclick=function(e){var b=e.target.closest("button,[data-msg],[data-held]");if(!b)return;
       if(b.dataset.held!=null){var c=q[+b.dataset.held]||{};return sheet('<h2 style="font-size:18px">'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</h2><p class="sub">'+esc(ago(c.at))+(c.why?' · <span style="color:var(--wait)">flagged: '+esc(c.why)+'</span>':'')+' · read it whole before it goes on the wall</p><div class="msg">'+esc(c.body||"")+'</div><div class="acts"><button class="btn" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button><button class="btn ghost" id="cl">Close</button></div>')}
       if(b.id==="ins-read")return insRead(b);
+      if(b.id==="nb-refresh")return nbRefresh(b);
       if(b.id==="mytoggle"){var on=false;try{on=localStorage.getItem("noor_nocount")==="1"}catch(x){}try{on?localStorage.removeItem("noor_nocount"):localStorage.setItem("noor_nocount","1")}catch(x){}toast(on?"This browser is counted again.":"This browser is no longer counted.");drawReaders(false);return}
       if(b.dataset.msg!=null){var m=items[+b.dataset.msg]||{};return sheet('<h2 style="font-size:18px">'+esc(m.from||m.kind||"A message")+'</h2><p class="sub">'+esc(m.page||"")+(m.cc?' · '+esc(m.cc):'')+' · '+esc(ago(m.at))+'</p><div class="msg">'+esc(m.body||"")+'</div><div class="acts">'+(m.from&&/@/.test(m.from)?'<a class="btn" href="mailto:'+esc(m.from)+'">Reply by mail</a>':'')+'<a class="btn ghost" href="/admin#inbox">Open in the full console</a></div>')}
       var rel=b.dataset.rel||b.dataset.rm;if(rel){var p=rel.split("|");b.disabled=true;post("/api/journal",{action:"comment-state",id:p[0],cid:p[1],state:b.dataset.rel?"approve":"reject"}).then(function(r){toast(r.ok?(b.dataset.rel?"Released.":"Removed."):"It refused.",!r.ok);C.held=null;drawReaders(true)})}};

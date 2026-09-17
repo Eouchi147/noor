@@ -637,8 +637,11 @@ async function versePage(refRaw) {
   const cover = row ? (isUrl(row.cover) ? row.cover : (row.cover ? "/reels/" + row.id + "-cover.jpg" : "")) : "";
   const texts = [];
   for (let a = ref.a; a <= ref.b; a++) { const t = await ayah(ref.s, a); if (!t) { texts.length = 0; break; } texts.push(t); }
-  const meta = texts[0] ? texts[0].surah : (surahRow(ref.s) ? { number: ref.s, name: surahRow(ref.s).name, englishName: surahRow(ref.s).translit } : null);
-  const name = meta ? meta.englishName : "";
+  /* the surah's name always comes from the reels' own uthmani table, never
+     the live API's englishName: the API and the table spell 63 of the 109
+     surahs with shelf verses differently, and a room, a caption and a
+     sitemap must all print the same one (content-009) */
+  const name = (surahRow(ref.s) || {}).translit || "";
   const mushaf = "/quran?surah=" + ref.s + "&ayah=" + ref.a;
   const english = texts.map(t => t.en).join(" ");
   const reciter = row && row.reciter ? String(row.reciter) : "";
@@ -758,7 +761,10 @@ async function surahPage(nRaw) {
   const url = "/surah/" + n;
   const api = await surahMeta(n);
   const row = surahRow(n);
-  const name = (api && api.englishName) || (row && row.translit) || ("Surah " + n);
+  /* the name is always the reels' own uthmani table, never the live API's
+     englishName (content-009); the API still supplies the meaning, the
+     ayah count and the place of revelation, none of which the table has */
+  const name = (row && row.translit) || ("Surah " + n);
   const ar = (api && api.name) || (row && row.name) || "";
   const meaning = api && api.englishNameTranslation || "";
   const count = (api && api.numberOfAyahs) || (row && row.count) || 0;
